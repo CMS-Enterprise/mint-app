@@ -1,0 +1,50 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+
+# testing
+/coverage
+.nyc_output
+cypress.env.json
+/cypress/videos
+/cypress/screenshots
+go-coverage.*
+/results
+
+# production
+/build
+/storybook-static
+
+# misc
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.idea
+.envrc.local
+.eslintcache
+.eslintrc
+.tool-versions
+
+
+# npm/js ignores
+tmp
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+node_modules
+package-lock.json
+
+# Various temp files
+tmp
+*.swp
+
+# Binaries
+/bin/
+
+# devlocal cert, keys
+devlocal-https.*
