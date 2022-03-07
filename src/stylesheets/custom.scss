@@ -1,0 +1,58 @@
+// Custom USWDS Button
+.easi-button {
+  &__save {
+    background-color: #f3966d;
+    color: #171717;
+    &:hover {
+      background-color: #f3966d;
+      color: #171717;
+    }
+  }
+}
+
+//  Global changes to usa-label
+.usa-label {
+  margin-top: 2rem;
+  font-weight: bold;
+}
+
+// <Card> components (which have .usa-card) are <li> elements, and render a bullet point without this.
+.usa-card {
+  list-style-type: none;
+}
+
+// Textarea
+.usa-textarea {
+  height: 300px;
+  max-width: 830px;
+  width: 100%;
+}
+
+// The default font for this project should be Public Sans
+[class*='font-heading-'],
+.usa-accordion,
+.usa-header {
+  font-family: 'Public Sans';
+  z-index: 300;
+}
+
+.usa-alert.easi-inline-alert {
+  background-color: white;
+  background-size: 1.6rem;
+  background-position: 0.5rem 0.5rem;
+  padding: 0;
+  &::before {
+    width: 0.2rem;
+    background: #585c62;
+  }
+  .usa-alert__body {
+    padding-left: 2.8rem;
+  }
+  .usa-alert__text:only-child {
+    margin-bottom: 0;
+  }
+}
+
+.bg-transparent {
+  background-color: transparent;
+}

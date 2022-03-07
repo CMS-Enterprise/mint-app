@@ -1,0 +1,8 @@
+FROM flyway/flyway:7.8.2-alpine
+
+COPY migrations/ /flyway/sql
+
+ENV FLYWAY_CONNECT_RETRIES=10
+ENV FLYWAY_CLEAN_DISABLED="true"
+
+ENTRYPOINT ["flyway", "-validateMigrationNaming=true", "migrate"]

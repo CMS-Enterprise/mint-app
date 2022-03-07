@@ -1,0 +1,49 @@
+.accessibility-request {
+
+  &__side-nav {
+    border-top: 4px solid $easi-bright-blue;
+    h3 {
+      font-size: 1rem;
+      margin-top: 1.5rem;
+    }
+    dd {
+      margin-bottom: 1.5rem;
+    }
+  }
+
+  &__other-details {
+    border-bottom: 1px solid color($theme-color-base-lighter);
+    border-top: 1px solid color($theme-color-base-lighter);
+  }
+
+  &__remove-request {
+    margin: 1.5em 0;
+    padding: 0;
+    background: none;
+    border: none;
+    text-align: left;
+    text-decoration: underline;
+    color: color($theme-color-error);
+  }
+
+  &__note-field {
+    &.usa-textarea {
+      height: 5rem;
+    }
+  }
+
+  &__add-note-btn {
+    position: absolute;
+    left: -999em;
+    right: auto;
+    margin-top: 1em;
+
+    &:focus {
+      position: initial;
+    }
+  }
+}
+
+.report-problem-link-area {
+  margin-top: 100px;
+}

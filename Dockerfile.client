@@ -1,0 +1,40 @@
+FROM node:16.14.0 AS base
+
+WORKDIR /app
+
+ENV PATH /app/node_modules/.bin:$PATH
+
+FROM base AS modules
+
+COPY package.json ./
+COPY yarn.lock ./
+
+RUN yarn install --frozen-lockfile
+
+FROM modules AS src
+
+COPY craco.config.js ./
+COPY tsconfig.json ./
+COPY .eslintrc ./
+COPY public ./public
+COPY src ./src
+
+FROM src AS build
+
+ARG REACT_APP_APP_ENV
+ARG REACT_APP_API_ADDRESS
+ARG REACT_APP_GRAPHQL_ADDRESS
+ARG REACT_APP_OKTA_CLIENT_ID
+ARG REACT_APP_OKTA_DOMAIN
+ARG REACT_APP_OKTA_ISSUER
+ARG REACT_APP_OKTA_REDIRECT_URI
+ARG REACT_APP_OKTA_SERVER_ID
+ARG REACT_APP_LOCAL_AUTH_ENABLED
+
+RUN yarn run build
+
+FROM node:16.14.0 as srv
+
+RUN yarn global add serve
+WORKDIR /app
+COPY --from=build /app/build .

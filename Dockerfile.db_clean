@@ -1,0 +1,6 @@
+FROM flyway/flyway:7.8.2-alpine
+
+ENV FLYWAY_CONNECT_RETRIES=10
+ENV FLYWAY_IGNORE_INVALID_MIGRATION_NAMES="false"
+
+ENTRYPOINT ["flyway", "clean"]

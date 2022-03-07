@@ -1,0 +1,21 @@
+.easi-footer {
+  // Since we don't have the "Return to top" enabled, there isn't padding by
+  // default to display the top outline when the link is focus.
+  &--slim {
+    padding-top: .25em;
+  }
+
+  &__secondary-logo-wrap {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1em;
+  }
+}
+
+body .usa-footer {
+  &__primary-link {
+      &:visited {
+        color: $black;
+      }
+    }
+}

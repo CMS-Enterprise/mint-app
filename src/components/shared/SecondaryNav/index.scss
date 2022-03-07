@@ -1,0 +1,27 @@
+.easi-secondary-nav {
+  border-bottom: 1px solid color($theme-color-base-lighter);
+  // This breaks responsiveness; no plans for now
+  white-space: nowrap;
+
+  &__nav-link {
+    display: inline-block;
+    margin: 0 1em;
+    padding: 1em 0;
+    color: #000;
+    text-decoration: none;
+    font-weight: bold;
+
+    &--active {
+      border-bottom: 4px solid $easi-bright-blue;
+    }
+
+    &:hover {
+      color: $easi-bright-blue;
+      cursor: pointer;
+    }
+
+    &:first-child {
+      margin-left: 0;
+    }
+  }
+}
