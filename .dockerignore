@@ -1,0 +1,15 @@
+.git
+
+# direnv
+.envrc.local
+
+# dependencies
+node_modules
+
+# Cypress integration tests
+cypress/videos
+cypress/screenshots
+cypress/results
+
+# build artifacts
+bin

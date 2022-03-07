@@ -1,0 +1,41 @@
+linters-settings:
+  govet:
+    check-shadowing: true
+    settings:
+      printf:
+        funcs:
+          - (github.com/golangci/golangci-lint/pkg/logutils.Log).Infof
+          - (github.com/golangci/golangci-lint/pkg/logutils.Log).Warnf
+          - (github.com/golangci/golangci-lint/pkg/logutils.Log).Errorf
+          - (github.com/golangci/golangci-lint/pkg/logutils.Log).Fatalf
+  goimports:
+    # put imports beginning with prefix after 3rd-party packages;
+    # it's a comma-separated list of prefixes
+    local-prefixes: github.com/cmsgov/easi-app
+  revive:
+    confidence: 0
+
+linters:
+  enable:
+     - gosec
+     - gofmt
+     - goimports
+     - govet
+     - varcheck
+     - typecheck
+     - structcheck
+     - deadcode
+     - ineffassign
+     - revive
+     - staticcheck
+     - gosimple #will be deprecated in golangci-lint v2.0 in favor of staticcheck https://github.com/golangci/golangci-lint/issues/357
+     - unused #will be deprecated in golangci-lint v2.0 in favor of staticcheck https://github.com/golangci/golangci-lint/issues/357
+  disable:
+    - errcheck #requires patching code
+issues:
+  exclude-use-default: false
+
+run:
+  # timeout for analysis, e.g. 30s, 5m, default is 1m
+  deadline: 8m
+  concurrency: 1

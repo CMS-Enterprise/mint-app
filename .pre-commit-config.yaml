@@ -1,0 +1,97 @@
+---
+repos:
+  - repo: git://github.com/detailyang/pre-commit-shell
+    rev: 1.0.5
+    hooks:
+      - id: shell-lint
+
+  - repo: git://github.com/pre-commit/pre-commit-hooks
+    rev: v4.0.1
+    hooks:
+      - id: check-yaml
+      - id: detect-private-key
+
+  - repo: git://github.com/trussworks/pre-commit-hooks
+    rev: v1.1.0
+    hooks:
+      - id: gen-docs
+        args: ['docs/adr']
+      - id: mdspell
+        exclude: >
+          (?x)^(
+            .github/PULL_REQUEST_TEMPLATE.md|
+            node_modules/|
+            vendor/|
+            docs/adr/index.md
+          )$
+
+  - repo: git://github.com/Bahjat/pre-commit-golang
+    rev: c3086eea8af86847dbdff2e46b85a5fe3c9d9656
+    hooks:
+      - id: go-fmt-import
+
+  - repo: git://github.com/golangci/golangci-lint
+    rev: v1.41.1
+    hooks:
+      - id: golangci-lint
+        entry: bash -c 'exec golangci-lint run -j=${GOLANGCI_LINT_CONCURRENCY:-1}' # custom bash so we can override concurrency for faster dev runs
+
+  - repo: https://github.com/pryorda/dockerfilelint-precommit-hooks
+    rev: v0.1.0
+    hooks:
+      - id: dockerfilelint
+
+  - repo: local
+    hooks:
+      - id: eslint
+        name: eslint
+        entry: scripts/pre-commit-eslint
+        language: script
+        files: \.(js|jsx|ts|tsx)$
+
+  - repo: local
+    hooks:
+      - id: graphql-schema
+        name: graphql-schema
+        entry: scripts/pre-commit-graphql-schema-lint
+        language: script
+        files: pkg/graph/schema.graphql
+
+  - repo: local
+    hooks:
+      - id: check-code-generation
+        name: check-code-generation
+        entry: scripts/pre-commit-check-code-generation
+        language: script
+        files: "pkg/graph/schema\\.graphql|pkg/graph/schema\\.resolvers\\.go|src/queries/.*\\.ts"
+
+  # for some reason, trying to call "go run cmd/intake_schema_gen/main.go" directly from this config doesn't work;
+  # so call scripts/gen_intake_schema, which calls that command and works 
+  - repo: local
+    hooks:
+      - id: check-intake-schema-generation
+        name: check-intake-schema-generation
+        entry: scripts/gen_intake_schema
+        language: script
+        files: cmd/gen_intake_schema/main\.go|pkg/cedar/intake/models/.*\.go|pkg/cedar/intake/schemas/.*\.json
+
+  - repo: local
+    hooks:
+      - id: preprocess-intake-swagger
+        name: preprocess-intake-swagger
+        entry: scripts/generate_cedar_intake_client
+        language: script
+        files: pkg/cedar/intake/cedar_intake.json
+
+  - repo: git://github.com/awslabs/git-secrets
+    rev: 80230afa8c8bdeac766a0fece36f95ffaa0be778
+    hooks:
+      - id: git-secrets
+        entry: git-secrets --pre_commit_hook
+
+  - repo: git://github.com/pre-commit/pre-commit-hooks
+    rev: v4.1.0
+    hooks:
+      - id: end-of-file-fixer
+        name: Add newlines to end of files
+        files: \.(sql|scss|md|js|ts|tsx|go)$
