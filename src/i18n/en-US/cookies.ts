@@ -20,7 +20,7 @@ const cookies = {
     omBudgetMemo:
       'The Office of Management and Budget Memo M-10-22, Guidance for Online Use of Web Measurement and Customization Technologies, allows federal agencies to use session and persistent cookies.',
     generationOfCookies:
-      'When you visit any website, its server may generate a piece of text known as a "cookie to place on your computer. The cookie allows the server to "remember" specific information about your visit while you are connected. The cookie makes it easier for you to use the dynamic features of Web pages. Cookies from CMS websites collect only information about your browser\'s visit to the site. They do not collect personal information about you.',
+      'When you visit any website, its server may generate a piece of text known as a "cookie to place on your computer. The cookie allows the server to "remember" specific information about your visit while you are connected. The cookie makes it CMMIer for you to use the dynamic features of Web pages. Cookies from CMS websites collect only information about your browser\'s visit to the site. They do not collect personal information about you.',
     typesOfCookies:
       'There are two types of cookies: single session (temporary) and multi-session (persistent). Session cookies last only as long as your Web browser is open. Once you close your browser, the cookie disappears. Persistent cookies are stored on your computer for longer periods.',
 

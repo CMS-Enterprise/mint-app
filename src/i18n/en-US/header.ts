@@ -4,7 +4,7 @@ const header = {
   help: 'Help',
   home: 'Home',
   navigation: 'Navigation Bar',
-  returnHome: 'EASi home',
+  returnHome: 'CMMI home',
   signIn: 'Sign In',
   signOut: 'Sign Out',
   systems: 'Systems',
