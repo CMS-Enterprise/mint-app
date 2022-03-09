@@ -29,7 +29,7 @@ const GlobalClientFilter = ({
   tableName,
   className
 }: GlobalClientFilterProps) => {
-  const { t } = useTranslation('systemProfile');
+  const { t } = useTranslation('tableAndPagination');
   // Set a debounce to capture set input before re-rendering on each character.  Preparation for BE fetching/filtering.
   // May not be necessary until then
   const onChange = useAsyncDebounce(value => {
@@ -47,7 +47,7 @@ const GlobalClientFilter = ({
       }}
     >
       <Label srOnly htmlFor={`${tableID}-search`}>
-        {t('systemTable.search')}
+        {t('search')}
       </Label>
       <TextInput
         id={`${tableID}-search`}
