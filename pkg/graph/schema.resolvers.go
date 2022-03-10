@@ -11,11 +11,6 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/google/uuid"
-	"github.com/guregu/null"
-	"github.com/vektah/gqlparser/v2/gqlerror"
-	"golang.org/x/sync/errgroup"
-
 	"github.com/cmsgov/easi-app/pkg/appcontext"
 	"github.com/cmsgov/easi-app/pkg/apperrors"
 	cedarcore "github.com/cmsgov/easi-app/pkg/cedar/core"
@@ -24,8 +19,37 @@ import (
 	"github.com/cmsgov/easi-app/pkg/graph/model"
 	"github.com/cmsgov/easi-app/pkg/models"
 	"github.com/cmsgov/easi-app/pkg/services"
+	"github.com/google/uuid"
+	"github.com/guregu/null"
+	"github.com/vektah/gqlparser/v2/gqlerror"
+	"golang.org/x/sync/errgroup"
 )
 
+func (r *queryResolver) CurrentUser(ctx context.Context) (*model.CurrentUser, error) {
+	ldUser := flags.Principal(ctx)
+	userKey := ldUser.GetKey()
+	signedHash := r.ldClient.SecureModeHash(ldUser)
+
+	currentUser := model.CurrentUser{
+		LaunchDarkly: &model.LaunchDarklySettings{
+			UserKey:    userKey,
+			SignedHash: signedHash,
+		},
+	}
+	return &currentUser, nil
+}
+
+// Query returns generated.QueryResolver implementation.
+func (r *Resolver) Query() generated.QueryResolver { return &queryResolver{r} }
+
+type queryResolver struct{ *Resolver }
+
+// !!! WARNING !!!
+// The code below was going to be deleted when updating resolvers. It has been copied here so you have
+// one last chance to move it out of harms way if you want. There are two reasons this happens:
+//  - When renaming or deleting a resolver the old code will be put in here. You can safely delete
+//    it when you're done.
+//  - You have helper methods in this file. Move them out to keep these resolver files clean.
 func (r *accessibilityRequestResolver) Documents(ctx context.Context, obj *models.AccessibilityRequest) ([]*models.AccessibilityRequestDocument, error) {
 	documents, documentsErr := r.store.FetchDocumentsByAccessibilityRequestID(ctx, obj.ID)
 
@@ -61,7 +85,6 @@ func (r *accessibilityRequestResolver) Documents(ctx context.Context, obj *model
 
 	return documents, nil
 }
-
 func (r *accessibilityRequestResolver) RelevantTestDate(ctx context.Context, obj *models.AccessibilityRequest) (*models.TestDate, error) {
 	allDates, err := r.store.FetchTestDatesByRequestID(ctx, obj.ID)
 	if err != nil {
@@ -94,7 +117,6 @@ func (r *accessibilityRequestResolver) RelevantTestDate(ctx context.Context, obj
 	// either recentPast is defined or it is nil
 	return recentPast, nil
 }
-
 func (r *accessibilityRequestResolver) System(ctx context.Context, obj *models.AccessibilityRequest) (*models.System, error) {
 	system, systemErr := r.store.FetchSystemByIntakeID(ctx, obj.IntakeID)
 	if systemErr != nil {
@@ -107,38 +129,30 @@ func (r *accessibilityRequestResolver) System(ctx context.Context, obj *models.A
 
 	return system, nil
 }
-
 func (r *accessibilityRequestResolver) TestDates(ctx context.Context, obj *models.AccessibilityRequest) ([]*models.TestDate, error) {
 	return r.store.FetchTestDatesByRequestID(ctx, obj.ID)
 }
-
 func (r *accessibilityRequestResolver) StatusRecord(ctx context.Context, obj *models.AccessibilityRequest) (*models.AccessibilityRequestStatusRecord, error) {
 	return r.store.FetchLatestAccessibilityRequestStatusRecordByRequestID(ctx, obj.ID)
 }
-
 func (r *accessibilityRequestResolver) Notes(ctx context.Context, obj *models.AccessibilityRequest) ([]*models.AccessibilityRequestNote, error) {
 	return r.store.FetchAccessibilityRequestNotesByRequestID(ctx, obj.ID)
 }
-
 func (r *accessibilityRequestResolver) CedarSystemID(ctx context.Context, obj *models.AccessibilityRequest) (*string, error) {
 	return obj.CedarSystemID.Ptr(), nil
 }
-
 func (r *accessibilityRequestDocumentResolver) DocumentType(ctx context.Context, obj *models.AccessibilityRequestDocument) (*model.AccessibilityRequestDocumentType, error) {
 	return &model.AccessibilityRequestDocumentType{
 		CommonType:           obj.CommonDocumentType,
 		OtherTypeDescription: &obj.OtherType,
 	}, nil
 }
-
 func (r *accessibilityRequestDocumentResolver) MimeType(ctx context.Context, obj *models.AccessibilityRequestDocument) (string, error) {
 	return obj.FileType, nil
 }
-
 func (r *accessibilityRequestDocumentResolver) UploadedAt(ctx context.Context, obj *models.AccessibilityRequestDocument) (*time.Time, error) {
 	return obj.CreatedAt, nil
 }
-
 func (r *accessibilityRequestNoteResolver) AuthorName(ctx context.Context, obj *models.AccessibilityRequestNote) (string, error) {
 	user, err := r.service.FetchUserInfo(ctx, obj.EUAUserID)
 	if err != nil {
@@ -146,7 +160,6 @@ func (r *accessibilityRequestNoteResolver) AuthorName(ctx context.Context, obj *
 	}
 	return user.CommonName, nil
 }
-
 func (r *businessCaseResolver) AlternativeASolution(ctx context.Context, obj *models.BusinessCase) (*model.BusinessCaseSolution, error) {
 	return &model.BusinessCaseSolution{
 		AcquisitionApproach:     obj.AlternativeAAcquisitionApproach.Ptr(),
@@ -163,7 +176,6 @@ func (r *businessCaseResolver) AlternativeASolution(ctx context.Context, obj *mo
 		Title:                   obj.AlternativeATitle.Ptr(),
 	}, nil
 }
-
 func (r *businessCaseResolver) AlternativeBSolution(ctx context.Context, obj *models.BusinessCase) (*model.BusinessCaseSolution, error) {
 	return &model.BusinessCaseSolution{
 		AcquisitionApproach:     obj.AlternativeBAcquisitionApproach.Ptr(),
@@ -180,7 +192,6 @@ func (r *businessCaseResolver) AlternativeBSolution(ctx context.Context, obj *mo
 		Title:                   obj.AlternativeBTitle.Ptr(),
 	}, nil
 }
-
 func (r *businessCaseResolver) AsIsSolution(ctx context.Context, obj *models.BusinessCase) (*model.BusinessCaseAsIsSolution, error) {
 	return &model.BusinessCaseAsIsSolution{
 		Cons:        obj.AsIsCons.Ptr(),
@@ -190,19 +201,15 @@ func (r *businessCaseResolver) AsIsSolution(ctx context.Context, obj *models.Bus
 		Title:       obj.AsIsTitle.Ptr(),
 	}, nil
 }
-
 func (r *businessCaseResolver) BusinessNeed(ctx context.Context, obj *models.BusinessCase) (*string, error) {
 	return obj.BusinessNeed.Ptr(), nil
 }
-
 func (r *businessCaseResolver) BusinessOwner(ctx context.Context, obj *models.BusinessCase) (*string, error) {
 	return obj.BusinessOwner.Ptr(), nil
 }
-
 func (r *businessCaseResolver) CmsBenefit(ctx context.Context, obj *models.BusinessCase) (*string, error) {
 	return obj.CMSBenefit.Ptr(), nil
 }
-
 func (r *businessCaseResolver) LifecycleCostLines(ctx context.Context, obj *models.BusinessCase) ([]*models.EstimatedLifecycleCost, error) {
 	lifeCycleCostLines := obj.LifecycleCostLines
 
@@ -225,7 +232,6 @@ func (r *businessCaseResolver) LifecycleCostLines(ctx context.Context, obj *mode
 
 	return costLines, nil
 }
-
 func (r *businessCaseResolver) PreferredSolution(ctx context.Context, obj *models.BusinessCase) (*model.BusinessCaseSolution, error) {
 	return &model.BusinessCaseSolution{
 		AcquisitionApproach:     obj.PreferredAcquisitionApproach.Ptr(),
@@ -242,183 +248,138 @@ func (r *businessCaseResolver) PreferredSolution(ctx context.Context, obj *model
 		Title:                   obj.PreferredTitle.Ptr(),
 	}, nil
 }
-
 func (r *businessCaseResolver) PriorityAlignment(ctx context.Context, obj *models.BusinessCase) (*string, error) {
 	return obj.PriorityAlignment.Ptr(), nil
 }
-
 func (r *businessCaseResolver) ProjectName(ctx context.Context, obj *models.BusinessCase) (*string, error) {
 	return obj.ProjectName.Ptr(), nil
 }
-
 func (r *businessCaseResolver) Requester(ctx context.Context, obj *models.BusinessCase) (*string, error) {
 	return obj.Requester.Ptr(), nil
 }
-
 func (r *businessCaseResolver) RequesterPhoneNumber(ctx context.Context, obj *models.BusinessCase) (*string, error) {
 	return obj.RequesterPhoneNumber.Ptr(), nil
 }
-
 func (r *businessCaseResolver) SuccessIndicators(ctx context.Context, obj *models.BusinessCase) (*string, error) {
 	return obj.SuccessIndicators.Ptr(), nil
 }
-
 func (r *businessCaseResolver) SystemIntake(ctx context.Context, obj *models.BusinessCase) (*models.SystemIntake, error) {
 	return r.store.FetchSystemIntakeByID(ctx, obj.SystemIntakeID)
 }
-
 func (r *cedarDataCenterResolver) ID(ctx context.Context, obj *models.CedarDataCenter) (*string, error) {
 	return obj.ID.Ptr(), nil
 }
-
 func (r *cedarDataCenterResolver) Name(ctx context.Context, obj *models.CedarDataCenter) (*string, error) {
 	return obj.Name.Ptr(), nil
 }
-
 func (r *cedarDataCenterResolver) Version(ctx context.Context, obj *models.CedarDataCenter) (*string, error) {
 	return obj.Version.Ptr(), nil
 }
-
 func (r *cedarDataCenterResolver) Description(ctx context.Context, obj *models.CedarDataCenter) (*string, error) {
 	return obj.Description.Ptr(), nil
 }
-
 func (r *cedarDataCenterResolver) State(ctx context.Context, obj *models.CedarDataCenter) (*string, error) {
 	return obj.State.Ptr(), nil
 }
-
 func (r *cedarDataCenterResolver) Status(ctx context.Context, obj *models.CedarDataCenter) (*string, error) {
 	return obj.Status.Ptr(), nil
 }
-
 func (r *cedarDataCenterResolver) StartDate(ctx context.Context, obj *models.CedarDataCenter) (*time.Time, error) {
 	return obj.StartDate.Ptr(), nil
 }
-
 func (r *cedarDataCenterResolver) EndDate(ctx context.Context, obj *models.CedarDataCenter) (*time.Time, error) {
 	return obj.EndDate.Ptr(), nil
 }
-
 func (r *cedarDataCenterResolver) Address1(ctx context.Context, obj *models.CedarDataCenter) (*string, error) {
 	return obj.Address1.Ptr(), nil
 }
-
 func (r *cedarDataCenterResolver) Address2(ctx context.Context, obj *models.CedarDataCenter) (*string, error) {
 	return obj.Address2.Ptr(), nil
 }
-
 func (r *cedarDataCenterResolver) City(ctx context.Context, obj *models.CedarDataCenter) (*string, error) {
 	return obj.City.Ptr(), nil
 }
-
 func (r *cedarDataCenterResolver) AddressState(ctx context.Context, obj *models.CedarDataCenter) (*string, error) {
 	return obj.AddressState.Ptr(), nil
 }
-
 func (r *cedarDataCenterResolver) Zip(ctx context.Context, obj *models.CedarDataCenter) (*string, error) {
 	return obj.Zip.Ptr(), nil
 }
-
 func (r *cedarDeploymentResolver) StartDate(ctx context.Context, obj *models.CedarDeployment) (*time.Time, error) {
 	return obj.StartDate.Ptr(), nil
 }
-
 func (r *cedarDeploymentResolver) EndDate(ctx context.Context, obj *models.CedarDeployment) (*time.Time, error) {
 	return obj.EndDate.Ptr(), nil
 }
-
 func (r *cedarDeploymentResolver) IsHotSite(ctx context.Context, obj *models.CedarDeployment) (*string, error) {
 	return obj.IsHotSite.Ptr(), nil
 }
-
 func (r *cedarDeploymentResolver) Description(ctx context.Context, obj *models.CedarDeployment) (*string, error) {
 	return obj.Description.Ptr(), nil
 }
-
 func (r *cedarDeploymentResolver) ContractorName(ctx context.Context, obj *models.CedarDeployment) (*string, error) {
 	return obj.ContractorName.Ptr(), nil
 }
-
 func (r *cedarDeploymentResolver) SystemVersion(ctx context.Context, obj *models.CedarDeployment) (*string, error) {
 	return obj.SystemVersion.Ptr(), nil
 }
-
 func (r *cedarDeploymentResolver) HasProductionData(ctx context.Context, obj *models.CedarDeployment) (*string, error) {
 	return obj.HasProductionData.Ptr(), nil
 }
-
 func (r *cedarDeploymentResolver) DeploymentType(ctx context.Context, obj *models.CedarDeployment) (*string, error) {
 	return obj.DeploymentType.Ptr(), nil
 }
-
 func (r *cedarDeploymentResolver) SystemName(ctx context.Context, obj *models.CedarDeployment) (*string, error) {
 	return obj.SystemName.Ptr(), nil
 }
-
 func (r *cedarDeploymentResolver) DeploymentElementID(ctx context.Context, obj *models.CedarDeployment) (*string, error) {
 	return obj.DeploymentElementID.Ptr(), nil
 }
-
 func (r *cedarDeploymentResolver) State(ctx context.Context, obj *models.CedarDeployment) (*string, error) {
 	return obj.State.Ptr(), nil
 }
-
 func (r *cedarDeploymentResolver) Status(ctx context.Context, obj *models.CedarDeployment) (*string, error) {
 	return obj.Status.Ptr(), nil
 }
-
 func (r *cedarDeploymentResolver) WanType(ctx context.Context, obj *models.CedarDeployment) (*string, error) {
 	return obj.WanType.Ptr(), nil
 }
-
 func (r *cedarRoleResolver) AssigneeUsername(ctx context.Context, obj *models.CedarRole) (*string, error) {
 	return obj.AssigneeUsername.Ptr(), nil
 }
-
 func (r *cedarRoleResolver) AssigneeEmail(ctx context.Context, obj *models.CedarRole) (*string, error) {
 	return obj.AssigneeEmail.Ptr(), nil
 }
-
 func (r *cedarRoleResolver) AssigneeOrgID(ctx context.Context, obj *models.CedarRole) (*string, error) {
 	return obj.AssigneeOrgID.Ptr(), nil
 }
-
 func (r *cedarRoleResolver) AssigneeOrgName(ctx context.Context, obj *models.CedarRole) (*string, error) {
 	return obj.AssigneeOrgName.Ptr(), nil
 }
-
 func (r *cedarRoleResolver) AssigneeFirstName(ctx context.Context, obj *models.CedarRole) (*string, error) {
 	return obj.AssigneeFirstName.Ptr(), nil
 }
-
 func (r *cedarRoleResolver) AssigneeLastName(ctx context.Context, obj *models.CedarRole) (*string, error) {
 	return obj.AssigneeLastName.Ptr(), nil
 }
-
 func (r *cedarRoleResolver) AssigneePhone(ctx context.Context, obj *models.CedarRole) (*string, error) {
 	return obj.AssigneePhone.Ptr(), nil
 }
-
 func (r *cedarRoleResolver) AssigneeDesc(ctx context.Context, obj *models.CedarRole) (*string, error) {
 	return obj.AssigneeDesc.Ptr(), nil
 }
-
 func (r *cedarRoleResolver) RoleTypeName(ctx context.Context, obj *models.CedarRole) (*string, error) {
 	return obj.RoleTypeName.Ptr(), nil
 }
-
 func (r *cedarRoleResolver) RoleTypeDesc(ctx context.Context, obj *models.CedarRole) (*string, error) {
 	return obj.RoleTypeDesc.Ptr(), nil
 }
-
 func (r *cedarRoleResolver) RoleID(ctx context.Context, obj *models.CedarRole) (*string, error) {
 	return obj.RoleID.Ptr(), nil
 }
-
 func (r *cedarRoleResolver) ObjectType(ctx context.Context, obj *models.CedarRole) (*string, error) {
 	return obj.ObjectType.Ptr(), nil
 }
-
 func (r *mutationResolver) AddGRTFeedbackAndKeepBusinessCaseInDraft(ctx context.Context, input model.AddGRTFeedbackInput) (*model.AddGRTFeedbackPayload, error) {
 	grtFeedback, err := r.service.AddGRTFeedback(
 		ctx,
@@ -439,7 +400,6 @@ func (r *mutationResolver) AddGRTFeedbackAndKeepBusinessCaseInDraft(ctx context.
 
 	return &model.AddGRTFeedbackPayload{ID: &grtFeedback.ID}, nil
 }
-
 func (r *mutationResolver) AddGRTFeedbackAndProgressToFinalBusinessCase(ctx context.Context, input model.AddGRTFeedbackInput) (*model.AddGRTFeedbackPayload, error) {
 	grtFeedback, err := r.service.AddGRTFeedback(
 		ctx,
@@ -460,7 +420,6 @@ func (r *mutationResolver) AddGRTFeedbackAndProgressToFinalBusinessCase(ctx cont
 
 	return &model.AddGRTFeedbackPayload{ID: &grtFeedback.ID}, nil
 }
-
 func (r *mutationResolver) AddGRTFeedbackAndRequestBusinessCase(ctx context.Context, input model.AddGRTFeedbackInput) (*model.AddGRTFeedbackPayload, error) {
 	grtFeedback, err := r.service.AddGRTFeedback(
 		ctx,
@@ -481,7 +440,6 @@ func (r *mutationResolver) AddGRTFeedbackAndRequestBusinessCase(ctx context.Cont
 
 	return &model.AddGRTFeedbackPayload{ID: &grtFeedback.ID}, nil
 }
-
 func (r *mutationResolver) CreateAccessibilityRequest(ctx context.Context, input model.CreateAccessibilityRequestInput) (*model.CreateAccessibilityRequestPayload, error) {
 	requesterEUAID := appcontext.Principal(ctx).ID()
 	requesterInfo, err := r.service.FetchUserInfo(ctx, requesterEUAID)
@@ -541,7 +499,6 @@ func (r *mutationResolver) CreateAccessibilityRequest(ctx context.Context, input
 		UserErrors:           nil,
 	}, nil
 }
-
 func (r *mutationResolver) DeleteAccessibilityRequest(ctx context.Context, input model.DeleteAccessibilityRequestInput) (*model.DeleteAccessibilityRequestPayload, error) {
 	request, err := r.store.FetchAccessibilityRequestByID(ctx, input.ID)
 	if err != nil {
@@ -583,7 +540,6 @@ func (r *mutationResolver) DeleteAccessibilityRequest(ctx context.Context, input
 
 	return &model.DeleteAccessibilityRequestPayload{ID: &input.ID}, nil
 }
-
 func (r *mutationResolver) CreateAccessibilityRequestDocument(ctx context.Context, input model.CreateAccessibilityRequestDocumentInput) (*model.CreateAccessibilityRequestDocumentPayload, error) {
 	parsedURL, urlErr := url.Parse(input.URL)
 	if urlErr != nil {
@@ -645,7 +601,6 @@ func (r *mutationResolver) CreateAccessibilityRequestDocument(ctx context.Contex
 		AccessibilityRequestDocument: doc,
 	}, nil
 }
-
 func (r *mutationResolver) CreateAccessibilityRequestNote(ctx context.Context, input model.CreateAccessibilityRequestNoteInput) (*model.CreateAccessibilityRequestNotePayload, error) {
 	if input.Note == "" {
 		return &model.CreateAccessibilityRequestNotePayload{
@@ -682,7 +637,6 @@ func (r *mutationResolver) CreateAccessibilityRequestNote(ctx context.Context, i
 
 	return &model.CreateAccessibilityRequestNotePayload{AccessibilityRequestNote: created}, nil
 }
-
 func (r *mutationResolver) DeleteAccessibilityRequestDocument(ctx context.Context, input model.DeleteAccessibilityRequestDocumentInput) (*model.DeleteAccessibilityRequestDocumentPayload, error) {
 	accessibilityRequestDocument, err := r.store.FetchAccessibilityRequestDocumentByID(ctx, input.ID)
 	if err != nil {
@@ -707,7 +661,6 @@ func (r *mutationResolver) DeleteAccessibilityRequestDocument(ctx context.Contex
 
 	return &model.DeleteAccessibilityRequestDocumentPayload{ID: &input.ID}, nil
 }
-
 func (r *mutationResolver) UpdateAccessibilityRequestStatus(ctx context.Context, input *model.UpdateAccessibilityRequestStatus) (*model.UpdateAccessibilityRequestStatusPayload, error) {
 	requesterEUAID := appcontext.Principal(ctx).ID()
 
@@ -764,7 +717,6 @@ func (r *mutationResolver) UpdateAccessibilityRequestStatus(ctx context.Context,
 		UserErrors: []*model.UserError{{Message: "Invalid status", Path: []string{"status"}}},
 	}, nil
 }
-
 func (r *mutationResolver) CreateSystemIntakeActionBusinessCaseNeeded(ctx context.Context, input model.BasicActionInput) (*model.UpdateSystemIntakePayload, error) {
 	intake, err := r.service.CreateActionUpdateStatus(
 		ctx,
@@ -781,7 +733,6 @@ func (r *mutationResolver) CreateSystemIntakeActionBusinessCaseNeeded(ctx contex
 		SystemIntake: intake,
 	}, err
 }
-
 func (r *mutationResolver) CreateSystemIntakeActionBusinessCaseNeedsChanges(ctx context.Context, input model.BasicActionInput) (*model.UpdateSystemIntakePayload, error) {
 	intake, err := r.service.CreateActionUpdateStatus(
 		ctx,
@@ -798,7 +749,6 @@ func (r *mutationResolver) CreateSystemIntakeActionBusinessCaseNeedsChanges(ctx 
 		SystemIntake: intake,
 	}, err
 }
-
 func (r *mutationResolver) CreateSystemIntakeActionGuideReceievedClose(ctx context.Context, input model.BasicActionInput) (*model.UpdateSystemIntakePayload, error) {
 	intake, err := r.service.CreateActionUpdateStatus(
 		ctx,
@@ -815,7 +765,6 @@ func (r *mutationResolver) CreateSystemIntakeActionGuideReceievedClose(ctx conte
 		SystemIntake: intake,
 	}, err
 }
-
 func (r *mutationResolver) CreateSystemIntakeActionNoGovernanceNeeded(ctx context.Context, input model.BasicActionInput) (*model.UpdateSystemIntakePayload, error) {
 	intake, err := r.service.CreateActionUpdateStatus(
 		ctx,
@@ -832,7 +781,6 @@ func (r *mutationResolver) CreateSystemIntakeActionNoGovernanceNeeded(ctx contex
 		SystemIntake: intake,
 	}, err
 }
-
 func (r *mutationResolver) CreateSystemIntakeActionNotItRequest(ctx context.Context, input model.BasicActionInput) (*model.UpdateSystemIntakePayload, error) {
 	intake, err := r.service.CreateActionUpdateStatus(
 		ctx,
@@ -849,7 +797,6 @@ func (r *mutationResolver) CreateSystemIntakeActionNotItRequest(ctx context.Cont
 		SystemIntake: intake,
 	}, err
 }
-
 func (r *mutationResolver) CreateSystemIntakeActionNotRespondingClose(ctx context.Context, input model.BasicActionInput) (*model.UpdateSystemIntakePayload, error) {
 	intake, err := r.service.CreateActionUpdateStatus(
 		ctx,
@@ -866,7 +813,6 @@ func (r *mutationResolver) CreateSystemIntakeActionNotRespondingClose(ctx contex
 		SystemIntake: intake,
 	}, err
 }
-
 func (r *mutationResolver) CreateSystemIntakeActionReadyForGrt(ctx context.Context, input model.BasicActionInput) (*model.UpdateSystemIntakePayload, error) {
 	intake, err := r.service.CreateActionUpdateStatus(
 		ctx,
@@ -883,7 +829,6 @@ func (r *mutationResolver) CreateSystemIntakeActionReadyForGrt(ctx context.Conte
 		SystemIntake: intake,
 	}, err
 }
-
 func (r *mutationResolver) CreateSystemIntakeActionSendEmail(ctx context.Context, input model.BasicActionInput) (*model.UpdateSystemIntakePayload, error) {
 	intake, err := r.service.CreateActionUpdateStatus(
 		ctx,
@@ -900,7 +845,6 @@ func (r *mutationResolver) CreateSystemIntakeActionSendEmail(ctx context.Context
 		SystemIntake: intake,
 	}, err
 }
-
 func (r *mutationResolver) CreateSystemIntakeActionExtendLifecycleID(ctx context.Context, input model.CreateSystemIntakeActionExtendLifecycleIDInput) (*model.CreateSystemIntakeActionExtendLifecycleIDPayload, error) {
 	requesterEUAID := appcontext.Principal(ctx).ID()
 	requesterInfo, err := r.service.FetchUserInfo(ctx, requesterEUAID)
@@ -950,7 +894,6 @@ func (r *mutationResolver) CreateSystemIntakeActionExtendLifecycleID(ctx context
 		SystemIntake: intake,
 	}, nil
 }
-
 func (r *mutationResolver) CreateSystemIntakeNote(ctx context.Context, input model.CreateSystemIntakeNoteInput) (*model.SystemIntakeNote, error) {
 	note, err := r.store.CreateNote(ctx, &models.Note{
 		AuthorEUAID:    appcontext.Principal(ctx).ID(),
@@ -968,7 +911,6 @@ func (r *mutationResolver) CreateSystemIntakeNote(ctx context.Context, input mod
 		CreatedAt: *note.CreatedAt,
 	}, err
 }
-
 func (r *mutationResolver) CreateSystemIntake(ctx context.Context, input model.CreateSystemIntakeInput) (*models.SystemIntake, error) {
 	systemIntake := models.SystemIntake{
 		EUAUserID:   null.StringFrom(appcontext.Principal(ctx).ID()),
@@ -979,7 +921,6 @@ func (r *mutationResolver) CreateSystemIntake(ctx context.Context, input model.C
 	createdIntake, err := r.store.CreateSystemIntake(ctx, &systemIntake)
 	return createdIntake, err
 }
-
 func (r *mutationResolver) CreateTestDate(ctx context.Context, input model.CreateTestDateInput) (*model.CreateTestDatePayload, error) {
 	testDate, err := r.service.CreateTestDate(ctx, &models.TestDate{
 		TestType:  input.TestType,
@@ -992,7 +933,6 @@ func (r *mutationResolver) CreateTestDate(ctx context.Context, input model.Creat
 	}
 	return &model.CreateTestDatePayload{TestDate: testDate, UserErrors: nil}, nil
 }
-
 func (r *mutationResolver) UpdateTestDate(ctx context.Context, input model.UpdateTestDateInput) (*model.UpdateTestDatePayload, error) {
 	testDate, err := r.store.UpdateTestDate(ctx, &models.TestDate{
 		TestType: input.TestType,
@@ -1005,7 +945,6 @@ func (r *mutationResolver) UpdateTestDate(ctx context.Context, input model.Updat
 	}
 	return &model.UpdateTestDatePayload{TestDate: testDate, UserErrors: nil}, nil
 }
-
 func (r *mutationResolver) DeleteTestDate(ctx context.Context, input model.DeleteTestDateInput) (*model.DeleteTestDatePayload, error) {
 	testDate, err := r.store.DeleteTestDate(ctx, &models.TestDate{
 		ID: input.ID,
@@ -1015,7 +954,6 @@ func (r *mutationResolver) DeleteTestDate(ctx context.Context, input model.Delet
 	}
 	return &model.DeleteTestDatePayload{TestDate: testDate, UserErrors: nil}, nil
 }
-
 func (r *mutationResolver) GeneratePresignedUploadURL(ctx context.Context, input model.GeneratePresignedUploadURLInput) (*model.GeneratePresignedUploadURLPayload, error) {
 	url, err := r.s3Client.NewPutPresignedURL(input.MimeType)
 	if err != nil {
@@ -1025,7 +963,6 @@ func (r *mutationResolver) GeneratePresignedUploadURL(ctx context.Context, input
 		URL: &url.URL,
 	}, nil
 }
-
 func (r *mutationResolver) IssueLifecycleID(ctx context.Context, input model.IssueLifecycleIDInput) (*model.UpdateSystemIntakePayload, error) {
 	intake, err := r.service.IssueLifecycleID(
 		ctx,
@@ -1045,7 +982,6 @@ func (r *mutationResolver) IssueLifecycleID(ctx context.Context, input model.Iss
 		SystemIntake: intake,
 	}, err
 }
-
 func (r *mutationResolver) MarkSystemIntakeReadyForGrb(ctx context.Context, input model.AddGRTFeedbackInput) (*model.AddGRTFeedbackPayload, error) {
 	grtFeedback, err := r.service.AddGRTFeedback(
 		ctx,
@@ -1066,7 +1002,6 @@ func (r *mutationResolver) MarkSystemIntakeReadyForGrb(ctx context.Context, inpu
 
 	return &model.AddGRTFeedbackPayload{ID: &grtFeedback.ID}, nil
 }
-
 func (r *mutationResolver) RejectIntake(ctx context.Context, input model.RejectIntakeInput) (*model.UpdateSystemIntakePayload, error) {
 	intake, err := r.service.RejectIntake(
 		ctx,
@@ -1083,7 +1018,6 @@ func (r *mutationResolver) RejectIntake(ctx context.Context, input model.RejectI
 		SystemIntake: intake,
 	}, err
 }
-
 func (r *mutationResolver) SubmitIntake(ctx context.Context, input model.SubmitIntakeInput) (*model.UpdateSystemIntakePayload, error) {
 	intake, err := r.store.FetchSystemIntakeByID(ctx, input.ID)
 	if err != nil {
@@ -1119,7 +1053,6 @@ func (r *mutationResolver) SubmitIntake(ctx context.Context, input model.SubmitI
 		SystemIntake: intake,
 	}, err
 }
-
 func (r *mutationResolver) UpdateSystemIntakeAdminLead(ctx context.Context, input model.UpdateSystemIntakeAdminLeadInput) (*model.UpdateSystemIntakePayload, error) {
 	savedAdminLead, err := r.store.UpdateAdminLead(ctx, input.ID, input.AdminLead)
 	systemIntake := models.SystemIntake{
@@ -1130,14 +1063,12 @@ func (r *mutationResolver) UpdateSystemIntakeAdminLead(ctx context.Context, inpu
 		SystemIntake: &systemIntake,
 	}, err
 }
-
 func (r *mutationResolver) UpdateSystemIntakeReviewDates(ctx context.Context, input model.UpdateSystemIntakeReviewDatesInput) (*model.UpdateSystemIntakePayload, error) {
 	intake, err := r.store.UpdateReviewDates(ctx, input.ID, input.GrbDate, input.GrtDate)
 	return &model.UpdateSystemIntakePayload{
 		SystemIntake: intake,
 	}, err
 }
-
 func (r *mutationResolver) UpdateSystemIntakeContactDetails(ctx context.Context, input model.UpdateSystemIntakeContactDetailsInput) (*model.UpdateSystemIntakePayload, error) {
 	intake, err := r.store.FetchSystemIntakeByID(ctx, input.ID)
 	if err != nil {
@@ -1191,7 +1122,6 @@ func (r *mutationResolver) UpdateSystemIntakeContactDetails(ctx context.Context,
 		SystemIntake: savedIntake,
 	}, err
 }
-
 func (r *mutationResolver) UpdateSystemIntakeRequestDetails(ctx context.Context, input model.UpdateSystemIntakeRequestDetailsInput) (*model.UpdateSystemIntakePayload, error) {
 	intake, err := r.store.FetchSystemIntakeByID(ctx, input.ID)
 	if err != nil {
@@ -1218,7 +1148,6 @@ func (r *mutationResolver) UpdateSystemIntakeRequestDetails(ctx context.Context,
 		SystemIntake: savedIntake,
 	}, err
 }
-
 func (r *mutationResolver) UpdateSystemIntakeContractDetails(ctx context.Context, input model.UpdateSystemIntakeContractDetailsInput) (*model.UpdateSystemIntakePayload, error) {
 	intake, err := r.store.FetchSystemIntakeByID(ctx, input.ID)
 	if err != nil {
@@ -1283,7 +1212,6 @@ func (r *mutationResolver) UpdateSystemIntakeContractDetails(ctx context.Context
 		SystemIntake: savedIntake,
 	}, err
 }
-
 func (r *mutationResolver) CreateCedarSystemBookmark(ctx context.Context, input model.CreateCedarSystemBookmarkInput) (*model.CreateCedarSystemBookmarkPayload, error) {
 	bookmark := models.CedarSystemBookmark{
 		EUAUserID:     appcontext.Principal(ctx).ID(),
@@ -1294,7 +1222,6 @@ func (r *mutationResolver) CreateCedarSystemBookmark(ctx context.Context, input 
 		CedarSystemBookmark: createdBookmark,
 	}, err
 }
-
 func (r *mutationResolver) DeleteCedarSystemBookmark(ctx context.Context, input model.CreateCedarSystemBookmarkInput) (*model.DeleteCedarSystemBookmarkPayload, error) {
 	_, err := r.store.DeleteCedarSystemBookmark(ctx, &models.CedarSystemBookmark{
 		CedarSystemID: input.CedarSystemID,
@@ -1304,7 +1231,6 @@ func (r *mutationResolver) DeleteCedarSystemBookmark(ctx context.Context, input 
 	}
 	return &model.DeleteCedarSystemBookmarkPayload{CedarSystemID: input.CedarSystemID}, nil
 }
-
 func (r *queryResolver) AccessibilityRequest(ctx context.Context, id uuid.UUID) (*models.AccessibilityRequest, error) {
 	// deleted requests need to be returned to be able to show a deleted request view
 	accessibilityRequest, err := r.store.FetchAccessibilityRequestByIDIncludingDeleted(ctx, id)
@@ -1320,7 +1246,6 @@ func (r *queryResolver) AccessibilityRequest(ctx context.Context, id uuid.UUID) 
 	}
 	return accessibilityRequest, nil
 }
-
 func (r *queryResolver) AccessibilityRequests(ctx context.Context, after *string, first int) (*model.AccessibilityRequestsConnection, error) {
 	requests, queryErr := r.store.FetchAccessibilityRequests(ctx)
 	if queryErr != nil {
@@ -1338,7 +1263,6 @@ func (r *queryResolver) AccessibilityRequests(ctx context.Context, after *string
 
 	return &model.AccessibilityRequestsConnection{Edges: edges}, nil
 }
-
 func (r *queryResolver) Requests(ctx context.Context, after *string, first int) (*model.RequestsConnection, error) {
 	requests, queryErr := r.store.FetchMyRequests(ctx)
 	if queryErr != nil {
@@ -1365,7 +1289,6 @@ func (r *queryResolver) Requests(ctx context.Context, after *string, first int) 
 
 	return &model.RequestsConnection{Edges: edges}, nil
 }
-
 func (r *queryResolver) SystemIntake(ctx context.Context, id uuid.UUID) (*models.SystemIntake, error) {
 	intake, err := r.store.FetchSystemIntakeByID(ctx, id)
 	if err != nil {
@@ -1382,7 +1305,6 @@ func (r *queryResolver) SystemIntake(ctx context.Context, id uuid.UUID) (*models
 
 	return intake, nil
 }
-
 func (r *queryResolver) Systems(ctx context.Context, after *string, first int) (*model.SystemConnection, error) {
 	systems, err := r.store.ListSystems(ctx)
 	if err != nil {
@@ -1401,21 +1323,6 @@ func (r *queryResolver) Systems(ctx context.Context, after *string, first int) (
 	}
 	return conn, nil
 }
-
-func (r *queryResolver) CurrentUser(ctx context.Context) (*model.CurrentUser, error) {
-	ldUser := flags.Principal(ctx)
-	userKey := ldUser.GetKey()
-	signedHash := r.ldClient.SecureModeHash(ldUser)
-
-	currentUser := model.CurrentUser{
-		LaunchDarkly: &model.LaunchDarklySettings{
-			UserKey:    userKey,
-			SignedHash: signedHash,
-		},
-	}
-	return &currentUser, nil
-}
-
 func (r *queryResolver) CedarSystem(ctx context.Context, id string) (*models.CedarSystem, error) {
 	cedarSystem, err := r.cedarCoreClient.GetSystem(ctx, id)
 	if err != nil {
@@ -1423,7 +1330,6 @@ func (r *queryResolver) CedarSystem(ctx context.Context, id string) (*models.Ced
 	}
 	return cedarSystem, nil
 }
-
 func (r *queryResolver) CedarSystems(ctx context.Context) ([]*models.CedarSystem, error) {
 	cedarSystems, err := r.cedarCoreClient.GetSystemSummary(ctx, true)
 	if err != nil {
@@ -1431,7 +1337,6 @@ func (r *queryResolver) CedarSystems(ctx context.Context) ([]*models.CedarSystem
 	}
 	return cedarSystems, nil
 }
-
 func (r *queryResolver) CedarSystemBookmarks(ctx context.Context) ([]*models.CedarSystemBookmark, error) {
 	cedarSystemBookmarks, err := r.store.FetchCedarSystemBookmarks(ctx)
 	if err != nil {
@@ -1439,7 +1344,6 @@ func (r *queryResolver) CedarSystemBookmarks(ctx context.Context) ([]*models.Ced
 	}
 	return cedarSystemBookmarks, nil
 }
-
 func (r *queryResolver) Deployments(ctx context.Context, systemID string, deploymentType *string, state *string, status *string) ([]*models.CedarDeployment, error) {
 	var optionalParams *cedarcore.GetDeploymentsOptionalParams
 	if deploymentType != nil || state != nil || status != nil {
@@ -1469,7 +1373,6 @@ func (r *queryResolver) Deployments(ctx context.Context, systemID string, deploy
 
 	return cedarDeployments, nil
 }
-
 func (r *queryResolver) Roles(ctx context.Context, systemID string, roleTypeID *string) ([]*models.CedarRole, error) {
 	cedarRoles, err := r.cedarCoreClient.GetRolesBySystem(ctx, systemID, null.StringFromPtr(roleTypeID))
 	if err != nil {
@@ -1482,7 +1385,6 @@ func (r *queryResolver) Roles(ctx context.Context, systemID string, roleTypeID *
 
 	return cedarRoles, nil
 }
-
 func (r *queryResolver) DetailedCedarSystemInfo(ctx context.Context, id string) (*model.DetailedCedarSystem, error) {
 	g := new(errgroup.Group)
 	var cedarSystem *models.CedarSystem
@@ -1518,7 +1420,6 @@ func (r *queryResolver) DetailedCedarSystemInfo(ctx context.Context, id string) 
 
 	return &dCedarSys, nil
 }
-
 func (r *systemIntakeResolver) Actions(ctx context.Context, obj *models.SystemIntake) ([]*model.SystemIntakeAction, error) {
 	actions, actionsErr := r.store.GetActionsByRequestID(ctx, obj.ID)
 	if actionsErr != nil {
@@ -1554,33 +1455,27 @@ func (r *systemIntakeResolver) Actions(ctx context.Context, obj *models.SystemIn
 	}
 	return results, nil
 }
-
 func (r *systemIntakeResolver) AdminLead(ctx context.Context, obj *models.SystemIntake) (*string, error) {
 	return obj.AdminLead.Ptr(), nil
 }
-
 func (r *systemIntakeResolver) BusinessCase(ctx context.Context, obj *models.SystemIntake) (*models.BusinessCase, error) {
 	if obj.BusinessCaseID == nil {
 		return nil, nil
 	}
 	return r.store.FetchBusinessCaseByID(ctx, *obj.BusinessCaseID)
 }
-
 func (r *systemIntakeResolver) BusinessNeed(ctx context.Context, obj *models.SystemIntake) (*string, error) {
 	return obj.BusinessNeed.Ptr(), nil
 }
-
 func (r *systemIntakeResolver) BusinessOwner(ctx context.Context, obj *models.SystemIntake) (*model.SystemIntakeBusinessOwner, error) {
 	return &model.SystemIntakeBusinessOwner{
 		Component: obj.BusinessOwnerComponent.Ptr(),
 		Name:      obj.BusinessOwner.Ptr(),
 	}, nil
 }
-
 func (r *systemIntakeResolver) BusinessSolution(ctx context.Context, obj *models.SystemIntake) (*string, error) {
 	return obj.Solution.Ptr(), nil
 }
-
 func (r *systemIntakeResolver) Contract(ctx context.Context, obj *models.SystemIntake) (*model.SystemIntakeContract, error) {
 	contractEnd := model.ContractDate{}
 	if len(obj.ContractEndMonth.String) > 0 {
@@ -1634,34 +1529,27 @@ func (r *systemIntakeResolver) Contract(ctx context.Context, obj *models.SystemI
 		Vehicle:     obj.ContractVehicle.Ptr(),
 	}, nil
 }
-
 func (r *systemIntakeResolver) Costs(ctx context.Context, obj *models.SystemIntake) (*model.SystemIntakeCosts, error) {
 	return &model.SystemIntakeCosts{
 		ExpectedIncreaseAmount: obj.CostIncreaseAmount.Ptr(),
 		IsExpectingIncrease:    obj.CostIncrease.Ptr(),
 	}, nil
 }
-
 func (r *systemIntakeResolver) CurrentStage(ctx context.Context, obj *models.SystemIntake) (*string, error) {
 	return obj.ProcessStatus.Ptr(), nil
 }
-
 func (r *systemIntakeResolver) DecisionNextSteps(ctx context.Context, obj *models.SystemIntake) (*string, error) {
 	return obj.DecisionNextSteps.Ptr(), nil
 }
-
 func (r *systemIntakeResolver) EaCollaborator(ctx context.Context, obj *models.SystemIntake) (*string, error) {
 	return obj.EACollaborator.Ptr(), nil
 }
-
 func (r *systemIntakeResolver) EaCollaboratorName(ctx context.Context, obj *models.SystemIntake) (*string, error) {
 	return obj.EACollaboratorName.Ptr(), nil
 }
-
 func (r *systemIntakeResolver) EuaUserID(ctx context.Context, obj *models.SystemIntake) (string, error) {
 	return obj.EUAUserID.String, nil
 }
-
 func (r *systemIntakeResolver) FundingSource(ctx context.Context, obj *models.SystemIntake) (*model.SystemIntakeFundingSource, error) {
 	return &model.SystemIntakeFundingSource{
 		IsFunded:      obj.ExistingFunding.Ptr(),
@@ -1669,7 +1557,6 @@ func (r *systemIntakeResolver) FundingSource(ctx context.Context, obj *models.Sy
 		Source:        obj.FundingSource.Ptr(),
 	}, nil
 }
-
 func (r *systemIntakeResolver) GovernanceTeams(ctx context.Context, obj *models.SystemIntake) (*model.SystemIntakeGovernanceTeam, error) {
 	var teams []*model.SystemIntakeCollaborator
 
@@ -1724,11 +1611,9 @@ func (r *systemIntakeResolver) GovernanceTeams(ctx context.Context, obj *models.
 		Teams:     teams,
 	}, nil
 }
-
 func (r *systemIntakeResolver) GrtFeedbacks(ctx context.Context, obj *models.SystemIntake) ([]*models.GRTFeedback, error) {
 	return r.store.FetchGRTFeedbacksByIntakeID(ctx, obj.ID)
 }
-
 func (r *systemIntakeResolver) Isso(ctx context.Context, obj *models.SystemIntake) (*model.SystemIntakeIsso, error) {
 	isPresent := len(obj.ISSOName.String) > 0
 
@@ -1737,23 +1622,18 @@ func (r *systemIntakeResolver) Isso(ctx context.Context, obj *models.SystemIntak
 		Name:      obj.ISSOName.Ptr(),
 	}, nil
 }
-
 func (r *systemIntakeResolver) Lcid(ctx context.Context, obj *models.SystemIntake) (*string, error) {
 	return obj.LifecycleID.Ptr(), nil
 }
-
 func (r *systemIntakeResolver) LcidScope(ctx context.Context, obj *models.SystemIntake) (*string, error) {
 	return obj.LifecycleScope.Ptr(), nil
 }
-
 func (r *systemIntakeResolver) LcidCostBaseline(ctx context.Context, obj *models.SystemIntake) (*string, error) {
 	return obj.LifecycleCostBaseline.Ptr(), nil
 }
-
 func (r *systemIntakeResolver) NeedsEaSupport(ctx context.Context, obj *models.SystemIntake) (*bool, error) {
 	return obj.EASupportRequest.Ptr(), nil
 }
-
 func (r *systemIntakeResolver) Notes(ctx context.Context, obj *models.SystemIntake) ([]*model.SystemIntakeNote, error) {
 	notes, notesErr := r.store.FetchNotesBySystemIntakeID(ctx, obj.ID)
 	if notesErr != nil {
@@ -1774,34 +1654,27 @@ func (r *systemIntakeResolver) Notes(ctx context.Context, obj *models.SystemInta
 	}
 	return graphNotes, nil
 }
-
 func (r *systemIntakeResolver) OitSecurityCollaborator(ctx context.Context, obj *models.SystemIntake) (*string, error) {
 	return obj.OITSecurityCollaborator.Ptr(), nil
 }
-
 func (r *systemIntakeResolver) OitSecurityCollaboratorName(ctx context.Context, obj *models.SystemIntake) (*string, error) {
 	return obj.OITSecurityCollaboratorName.Ptr(), nil
 }
-
 func (r *systemIntakeResolver) ProductManager(ctx context.Context, obj *models.SystemIntake) (*model.SystemIntakeProductManager, error) {
 	return &model.SystemIntakeProductManager{
 		Component: obj.ProductManagerComponent.Ptr(),
 		Name:      obj.ProductManager.Ptr(),
 	}, nil
 }
-
 func (r *systemIntakeResolver) ProjectAcronym(ctx context.Context, obj *models.SystemIntake) (*string, error) {
 	return obj.ProjectAcronym.Ptr(), nil
 }
-
 func (r *systemIntakeResolver) RejectionReason(ctx context.Context, obj *models.SystemIntake) (*string, error) {
 	return obj.RejectionReason.Ptr(), nil
 }
-
 func (r *systemIntakeResolver) RequestName(ctx context.Context, obj *models.SystemIntake) (*string, error) {
 	return obj.ProjectName.Ptr(), nil
 }
-
 func (r *systemIntakeResolver) Requester(ctx context.Context, obj *models.SystemIntake) (*model.SystemIntakeRequester, error) {
 	return &model.SystemIntakeRequester{
 		Component: obj.Component.Ptr(),
@@ -1809,68 +1682,42 @@ func (r *systemIntakeResolver) Requester(ctx context.Context, obj *models.System
 		Name:      obj.Requester,
 	}, nil
 }
-
 func (r *systemIntakeResolver) TrbCollaborator(ctx context.Context, obj *models.SystemIntake) (*string, error) {
 	return obj.TRBCollaborator.Ptr(), nil
 }
-
 func (r *systemIntakeResolver) TrbCollaboratorName(ctx context.Context, obj *models.SystemIntake) (*string, error) {
 	return obj.TRBCollaboratorName.Ptr(), nil
 }
-
 func (r *systemIntakeResolver) GrtReviewEmailBody(ctx context.Context, obj *models.SystemIntake) (*string, error) {
 	return obj.GrtReviewEmailBody.Ptr(), nil
 }
-
 func (r *systemIntakeResolver) LastAdminNote(ctx context.Context, obj *models.SystemIntake) (*model.LastAdminNote, error) {
 	return &model.LastAdminNote{
 		Content:   obj.LastAdminNoteContent.Ptr(),
 		CreatedAt: obj.LastAdminNoteCreatedAt,
 	}, nil
 }
-
 func (r *systemIntakeResolver) CedarSystemID(ctx context.Context, obj *models.SystemIntake) (*string, error) {
 	return obj.CedarSystemID.Ptr(), nil
 }
-
-// AccessibilityRequest returns generated.AccessibilityRequestResolver implementation.
 func (r *Resolver) AccessibilityRequest() generated.AccessibilityRequestResolver {
 	return &accessibilityRequestResolver{r}
 }
-
-// AccessibilityRequestDocument returns generated.AccessibilityRequestDocumentResolver implementation.
 func (r *Resolver) AccessibilityRequestDocument() generated.AccessibilityRequestDocumentResolver {
 	return &accessibilityRequestDocumentResolver{r}
 }
-
-// AccessibilityRequestNote returns generated.AccessibilityRequestNoteResolver implementation.
 func (r *Resolver) AccessibilityRequestNote() generated.AccessibilityRequestNoteResolver {
 	return &accessibilityRequestNoteResolver{r}
 }
-
-// BusinessCase returns generated.BusinessCaseResolver implementation.
 func (r *Resolver) BusinessCase() generated.BusinessCaseResolver { return &businessCaseResolver{r} }
-
-// CedarDataCenter returns generated.CedarDataCenterResolver implementation.
 func (r *Resolver) CedarDataCenter() generated.CedarDataCenterResolver {
 	return &cedarDataCenterResolver{r}
 }
-
-// CedarDeployment returns generated.CedarDeploymentResolver implementation.
 func (r *Resolver) CedarDeployment() generated.CedarDeploymentResolver {
 	return &cedarDeploymentResolver{r}
 }
-
-// CedarRole returns generated.CedarRoleResolver implementation.
-func (r *Resolver) CedarRole() generated.CedarRoleResolver { return &cedarRoleResolver{r} }
-
-// Mutation returns generated.MutationResolver implementation.
-func (r *Resolver) Mutation() generated.MutationResolver { return &mutationResolver{r} }
-
-// Query returns generated.QueryResolver implementation.
-func (r *Resolver) Query() generated.QueryResolver { return &queryResolver{r} }
-
-// SystemIntake returns generated.SystemIntakeResolver implementation.
+func (r *Resolver) CedarRole() generated.CedarRoleResolver       { return &cedarRoleResolver{r} }
+func (r *Resolver) Mutation() generated.MutationResolver         { return &mutationResolver{r} }
 func (r *Resolver) SystemIntake() generated.SystemIntakeResolver { return &systemIntakeResolver{r} }
 
 type accessibilityRequestResolver struct{ *Resolver }
@@ -1881,5 +1728,4 @@ type cedarDataCenterResolver struct{ *Resolver }
 type cedarDeploymentResolver struct{ *Resolver }
 type cedarRoleResolver struct{ *Resolver }
 type mutationResolver struct{ *Resolver }
-type queryResolver struct{ *Resolver }
 type systemIntakeResolver struct{ *Resolver }
