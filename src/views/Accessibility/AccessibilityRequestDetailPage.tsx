@@ -20,7 +20,6 @@ import {
 import { useFlags } from 'launchdarkly-react-client-sdk';
 import { DateTime } from 'luxon';
 
-import AccessibilityDocumentsList from 'components/AccessibilityDocumentsList';
 import UswdsReactLink from 'components/LinkWrapper';
 import Modal from 'components/Modal';
 import {
@@ -42,7 +41,6 @@ import { NavLink, SecondaryNav } from 'components/shared/SecondaryNav';
 import TextAreaField from 'components/shared/TextAreaField';
 import TestDateCard from 'components/TestDateCard';
 import useMessage from 'hooks/useMessage';
-import { DeleteAccessibilityRequestDocumentQuery } from 'queries/AccessibilityRequestDocumentQueries';
 import CreateAccessibilityRequestNoteQuery from 'queries/CreateAccessibilityRequestNoteQuery';
 import DeleteAccessibilityRequestQuery from 'queries/DeleteAccessibilityRequestQuery';
 import DeleteTestDateQuery from 'queries/DeleteTestDateQuery';
@@ -57,10 +55,6 @@ import {
   DeleteAccessibilityRequest,
   DeleteAccessibilityRequestVariables
 } from 'queries/types/DeleteAccessibilityRequest';
-import {
-  DeleteAccessibilityRequestDocument,
-  DeleteAccessibilityRequestDocumentVariables
-} from 'queries/types/DeleteAccessibilityRequestDocument';
 import { DeleteTestDate } from 'queries/types/DeleteTestDate';
 import { GetAccessibilityRequest_accessibilityRequest_testDates as TestDateType } from 'queries/types/GetAccessibilityRequest';
 import {
@@ -211,31 +205,6 @@ const AccessibilityRequestDetailPage = () => {
     });
   };
 
-  const [removeDocumentMutation] = useMutation<
-    DeleteAccessibilityRequestDocument,
-    DeleteAccessibilityRequestDocumentVariables
-  >(DeleteAccessibilityRequestDocumentQuery);
-
-  const removeDocument = (
-    id: string,
-    documentTypeAsString: string,
-    callback: () => void
-  ) => {
-    removeDocumentMutation({
-      variables: {
-        input: {
-          id
-        }
-      }
-    }).then(() => {
-      refetch();
-      if (document) {
-        showMessage(`${documentTypeAsString} removed from ${requestName}`);
-      }
-      callback();
-    });
-  };
-
   const requestName = data?.accessibilityRequest?.name || '';
   const requestOwnerEuaId = data?.accessibilityRequest?.euaUserId || '';
   const systemName = data?.accessibilityRequest?.system.name || '';
@@ -270,13 +239,6 @@ const AccessibilityRequestDetailPage = () => {
       </p>
       <h2 className="margin-top-0">{t('requestDetails.documents.label')}</h2>
       {uploadDocumentLink}
-      <div className="margin-top-6">
-        <AccessibilityDocumentsList
-          documents={documents}
-          requestName={requestName}
-          removeDocument={removeDocument}
-        />
-      </div>
     </div>
   );
 
