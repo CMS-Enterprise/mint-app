@@ -5,8 +5,8 @@ package graph
 
 import (
 	"context"
-	"github.com/cmsgov/easi-app/pkg/flags"
 
+	"github.com/cmsgov/easi-app/pkg/flags"
 	"github.com/cmsgov/easi-app/pkg/graph/generated"
 	"github.com/cmsgov/easi-app/pkg/graph/model"
 )
