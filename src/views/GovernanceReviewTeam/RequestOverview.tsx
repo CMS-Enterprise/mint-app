@@ -7,7 +7,6 @@ import classnames from 'classnames';
 
 import MainContent from 'components/MainContent';
 import PageLoading from 'components/PageLoading';
-import AddGRTFeedbackKeepDraftBizCase from 'queries/AddGRTFeedbackKeepDraftBizCase';
 import AddGRTFeedbackProgressToFinal from 'queries/AddGRTFeedbackProgressToFinal';
 import AddGRTFeedbackRequestBizCaseQuery from 'queries/AddGRTFeedbackRequestBizCaseQuery';
 import CreateSystemIntakeActionBusinessCaseNeeded from 'queries/CreateSystemIntakeActionBusinessCaseNeededQuery';
@@ -40,7 +39,6 @@ import Decision from './Decision';
 import IntakeReview from './IntakeReview';
 import LifecycleID from './LifecycleID';
 import Notes from './Notes';
-import Summary from './Summary';
 
 import './index.scss';
 
@@ -85,18 +83,7 @@ const RequestOverview = () => {
 
   return (
     <MainContent className="easi-grt" data-testid="grt-request-overview">
-      {systemIntake && (
-        <Summary
-          id={systemIntake.id}
-          requester={systemIntake.requester}
-          requestName={systemIntake.requestName || ''}
-          requestType={systemIntake.requestType}
-          status={systemIntake.status}
-          adminLead={systemIntake.adminLead}
-          submittedAt={systemIntake.submittedAt}
-          lcid={systemIntake.lcid}
-        />
-      )}
+      {systemIntake}
       <section className="grid-container grid-row margin-y-5 ">
         <nav className="tablet:grid-col-2 margin-right-2">
           <ul className="easi-grt__nav-list">
@@ -244,15 +231,6 @@ const RequestOverview = () => {
                 <ProvideGRTFeedbackToBusinessOwner
                   query={AddGRTFeedbackRequestBizCaseQuery}
                   actionName={actionsT('actions.provideFeedbackNeedBizCase')}
-                />
-              )}
-            />
-            <Route
-              path="/governance-review-team/:systemId/actions/provide-feedback-keep-draft"
-              render={() => (
-                <ProvideGRTFeedbackToBusinessOwner
-                  query={AddGRTFeedbackKeepDraftBizCase}
-                  actionName={actionsT('actions.provideGrtFeedbackKeepDraft')}
                 />
               )}
             />
