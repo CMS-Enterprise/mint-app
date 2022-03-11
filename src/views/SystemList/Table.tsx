@@ -113,7 +113,7 @@ export const Table = ({
         )
       }
     ];
-  }, "[t, savedBookmarks, deleteMutate, refetchBookmarks]);
+  }, [t, savedBookmarks, deleteMutate, refetchBookmarks]);
 
   const {
     getTableProps,

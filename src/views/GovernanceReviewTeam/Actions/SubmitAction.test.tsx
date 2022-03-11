@@ -12,7 +12,6 @@ import configureMockStore from 'redux-mock-store';
 
 import { businessCaseInitialData } from 'data/businessCase';
 import { initialSystemIntakeForm } from 'data/systemIntake';
-import CreateSystemIntakeActionBusinessCaseNeeded from 'queries/CreateSystemIntakeActionBusinessCaseNeededQuery';
 import CreateSystemIntakeActionBusinessCaseNeedsChanges from 'queries/CreateSystemIntakeActionBusinessCaseNeedsChangesQuery';
 import CreateSystemIntakeActionGuideReceievedClose from 'queries/CreateSystemIntakeActionGuideReceievedCloseQuery';
 import CreateSystemIntakeActionNoGovernanceNeeded from 'queries/CreateSystemIntakeActionNoGovernanceNeededQuery';
@@ -223,45 +222,6 @@ describe('Submit Action', () => {
 
       expect(
         screen.getByText(/Not an IT governance request/i)
-      ).toBeInTheDocument();
-
-      const emailField = screen.getByRole('textbox', { name: /email/i });
-      userEvent.type(emailField, 'Test email');
-      expect(emailField).toHaveValue('Test email');
-
-      screen.getByRole('button', { name: /send email/i }).click();
-
-      expect(await screen.findByTestId('intake-review')).toBeInTheDocument();
-    });
-
-    it('executes need business case mutation', async () => {
-      const needBizCaseMutation = {
-        request: {
-          query: CreateSystemIntakeActionBusinessCaseNeeded,
-          variables: {
-            input: {
-              feedback: 'Test email',
-              intakeId: 'a4158ad8-1236-4a55-9ad5-7e15a5d49de2'
-            }
-          }
-        },
-        result: {
-          data: {
-            createSystemIntakeActionBusinessCaseNeeded: {
-              systemIntake: {
-                id: 'a4158ad8-1236-4a55-9ad5-7e15a5d49de2',
-                status: 'NEED_BIZ_CASE'
-              }
-            }
-          }
-        }
-      };
-
-      renderActionPage('need-biz-case', [intakeQuery, needBizCaseMutation]);
-      await waitForPageLoad();
-
-      expect(
-        screen.getByText(/Request a draft business case/i)
       ).toBeInTheDocument();
 
       const emailField = screen.getByRole('textbox', { name: /email/i });

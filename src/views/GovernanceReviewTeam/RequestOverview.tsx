@@ -7,7 +7,6 @@ import classnames from 'classnames';
 
 import MainContent from 'components/MainContent';
 import PageLoading from 'components/PageLoading';
-import CreateSystemIntakeActionBusinessCaseNeeded from 'queries/CreateSystemIntakeActionBusinessCaseNeededQuery';
 import CreateSystemIntakeActionBusinessCaseNeedsChanges from 'queries/CreateSystemIntakeActionBusinessCaseNeedsChangesQuery';
 import CreateSystemIntakeActionGuideReceievedClose from 'queries/CreateSystemIntakeActionGuideReceievedCloseQuery';
 import CreateSystemIntakeActionNoGovernanceNeeded from 'queries/CreateSystemIntakeActionNoGovernanceNeededQuery';
@@ -169,11 +168,7 @@ const RequestOverview = () => {
             />
             <Route
               path="/governance-review-team/:systemId/business-case"
-              render={() => (
-                <BusinessCaseReview
-                  businessCase={businessCase}
-                />
-              )}
+              render={() => <BusinessCaseReview businessCase={businessCase} />}
             />
             <Route
               path="/governance-review-team/:systemId/notes"
@@ -209,15 +204,6 @@ const RequestOverview = () => {
                 <SubmitAction
                   query={CreateSystemIntakeActionNotItRequest}
                   actionName={actionsT('actions.notItRequest')}
-                />
-              )}
-            />
-            <Route
-              path="/governance-review-team/:systemId/actions/need-biz-case"
-              render={() => (
-                <SubmitAction
-                  query={CreateSystemIntakeActionBusinessCaseNeeded}
-                  actionName={actionsT('actions.needBizCase')}
                 />
               )}
             />
