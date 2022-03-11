@@ -7,7 +7,6 @@ import classnames from 'classnames';
 
 import MainContent from 'components/MainContent';
 import PageLoading from 'components/PageLoading';
-import CreateSystemIntakeActionGuideReceievedClose from 'queries/CreateSystemIntakeActionGuideReceievedCloseQuery';
 import CreateSystemIntakeActionNoGovernanceNeeded from 'queries/CreateSystemIntakeActionNoGovernanceNeededQuery';
 import CreateSystemIntakeActionNotItRequest from 'queries/CreateSystemIntakeActionNotItRequestQuery';
 import CreateSystemIntakeActionNotRespondingClose from 'queries/CreateSystemIntakeActionNotRespondingCloseQuery';
@@ -234,15 +233,6 @@ const RequestOverview = () => {
                 <SubmitAction
                   query={CreateSystemIntakeActionSendEmail}
                   actionName={actionsT('actions.sendEmail')}
-                />
-              )}
-            />
-            <Route
-              path="/governance-review-team/:systemId/actions/guide-received-close"
-              render={() => (
-                <SubmitAction
-                  query={CreateSystemIntakeActionGuideReceievedClose}
-                  actionName={actionsT('actions.guideReceivedClose')}
                 />
               )}
             />

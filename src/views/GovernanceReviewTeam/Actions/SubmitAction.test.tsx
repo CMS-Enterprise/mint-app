@@ -12,7 +12,6 @@ import configureMockStore from 'redux-mock-store';
 
 import { businessCaseInitialData } from 'data/businessCase';
 import { initialSystemIntakeForm } from 'data/systemIntake';
-import CreateSystemIntakeActionGuideReceievedClose from 'queries/CreateSystemIntakeActionGuideReceievedCloseQuery';
 import CreateSystemIntakeActionNoGovernanceNeeded from 'queries/CreateSystemIntakeActionNoGovernanceNeededQuery';
 import CreateSystemIntakeActionNotItRequest from 'queries/CreateSystemIntakeActionNotItRequestQuery';
 import CreateSystemIntakeActionNotRespondingClose from 'queries/CreateSystemIntakeActionNotRespondingCloseQuery';
@@ -332,48 +331,6 @@ describe('Submit Action', () => {
 
       renderActionPage('send-email', [intakeQuery, sendEmailMutation]);
       await waitForPageLoad();
-
-      const emailField = screen.getByRole('textbox', { name: /email/i });
-      userEvent.type(emailField, 'Test email');
-      expect(emailField).toHaveValue('Test email');
-
-      screen.getByRole('button', { name: /send email/i }).click();
-
-      expect(await screen.findByTestId('intake-review')).toBeInTheDocument();
-    });
-
-    it('executes guide received close mutation (SHUTDOWN)', async () => {
-      const guideReceivedCloseMutation = {
-        request: {
-          query: CreateSystemIntakeActionGuideReceievedClose,
-          variables: {
-            input: {
-              feedback: 'Test email',
-              intakeId: 'a4158ad8-1236-4a55-9ad5-7e15a5d49de2'
-            }
-          }
-        },
-        result: {
-          data: {
-            createSystemIntakeActionGuideReceievedClose: {
-              systemIntake: {
-                id: 'a4158ad8-1236-4a55-9ad5-7e15a5d49de2',
-                status: 'SHUTDOWN_COMPLETE'
-              }
-            }
-          }
-        }
-      };
-
-      renderActionPage('guide-received-close', [
-        intakeQuery,
-        guideReceivedCloseMutation
-      ]);
-      await waitForPageLoad();
-
-      expect(
-        screen.getByText(/Decomission guide received/i)
-      ).toBeInTheDocument();
 
       const emailField = screen.getByRole('textbox', { name: /email/i });
       userEvent.type(emailField, 'Test email');
