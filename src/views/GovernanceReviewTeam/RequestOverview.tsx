@@ -7,7 +7,6 @@ import classnames from 'classnames';
 
 import MainContent from 'components/MainContent';
 import PageLoading from 'components/PageLoading';
-import AddGRTFeedbackProgressToFinal from 'queries/AddGRTFeedbackProgressToFinal';
 import AddGRTFeedbackRequestBizCaseQuery from 'queries/AddGRTFeedbackRequestBizCaseQuery';
 import CreateSystemIntakeActionBusinessCaseNeeded from 'queries/CreateSystemIntakeActionBusinessCaseNeededQuery';
 import CreateSystemIntakeActionBusinessCaseNeedsChanges from 'queries/CreateSystemIntakeActionBusinessCaseNeedsChangesQuery';
@@ -231,15 +230,6 @@ const RequestOverview = () => {
                 <ProvideGRTFeedbackToBusinessOwner
                   query={AddGRTFeedbackRequestBizCaseQuery}
                   actionName={actionsT('actions.provideFeedbackNeedBizCase')}
-                />
-              )}
-            />
-            <Route
-              path="/governance-review-team/:systemId/actions/provide-feedback-need-final"
-              render={() => (
-                <ProvideGRTFeedbackToBusinessOwner
-                  query={AddGRTFeedbackProgressToFinal}
-                  actionName={actionsT('actions.provideGrtFeedbackNeedFinal')}
                 />
               )}
             />

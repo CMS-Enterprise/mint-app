@@ -12,8 +12,6 @@ import configureMockStore from 'redux-mock-store';
 
 import { businessCaseInitialData } from 'data/businessCase';
 import { initialSystemIntakeForm } from 'data/systemIntake';
-import AddGRTFeedbackKeepDraftBizCase from 'queries/AddGRTFeedbackKeepDraftBizCase';
-import AddGRTFeedbackProgressToFinal from 'queries/AddGRTFeedbackProgressToFinal';
 import AddGRTFeedbackRequestBizCaseQuery from 'queries/AddGRTFeedbackRequestBizCaseQuery';
 import GetAdminNotesAndActionsQuery from 'queries/GetAdminNotesAndActionsQuery';
 import GetSystemIntakeQuery from 'queries/GetSystemIntakeQuery';
@@ -240,100 +238,6 @@ describe('Provide GRT Feedback to GRT Business Owner', () => {
 
       expect(
         screen.getByText(/Provide GRT Feedback and progress to business case/i)
-      ).toBeInTheDocument();
-
-      const feedbackField = screen.getByRole('textbox', { name: /feedback/i });
-      userEvent.type(feedbackField, 'Test feedback');
-      expect(feedbackField).toHaveValue('Test feedback');
-
-      const emailField = screen.getByRole('textbox', { name: /email/i });
-      userEvent.type(emailField, 'Test email');
-      expect(emailField).toHaveValue('Test email');
-
-      screen.getByRole('button', { name: /email decision/i }).click();
-
-      expect(await screen.findByTestId('grt-notes-view')).toBeInTheDocument();
-    });
-
-    it('executes provide feedback, keep business case in draft mutation', async () => {
-      const provideFeedbackKeepDraftBizCaseMutation = {
-        request: {
-          query: AddGRTFeedbackKeepDraftBizCase,
-          variables: {
-            input: {
-              emailBody: 'Test email',
-              feedback: 'Test feedback',
-              intakeID: 'a4158ad8-1236-4a55-9ad5-7e15a5d49de2'
-            }
-          }
-        },
-        result: {
-          data: {
-            addGRTFeedbackAndKeepBusinessCaseInDraft: {
-              id: 'a4158ad8-1236-4a55-9ad5-7e15a5d49de2'
-            }
-          }
-        }
-      };
-
-      renderActionPage('provide-feedback-keep-draft', [
-        intakeQuery,
-        provideFeedbackKeepDraftBizCaseMutation,
-        noteActionQuery
-      ]);
-      await waitForPageLoad();
-
-      expect(
-        screen.getByText(
-          /Provide GRT feedback and keep working on draft business case/i
-        )
-      ).toBeInTheDocument();
-
-      const feedbackField = screen.getByRole('textbox', { name: /feedback/i });
-      userEvent.type(feedbackField, 'Test feedback');
-      expect(feedbackField).toHaveValue('Test feedback');
-
-      const emailField = screen.getByRole('textbox', { name: /email/i });
-      userEvent.type(emailField, 'Test email');
-      expect(emailField).toHaveValue('Test email');
-
-      screen.getByRole('button', { name: /email decision/i }).click();
-
-      expect(await screen.findByTestId('grt-notes-view')).toBeInTheDocument();
-    });
-
-    it('executes provide feedback, progress to final business case mutation', async () => {
-      const provideFeedbackProgressToFinalBizCaseMutation = {
-        request: {
-          query: AddGRTFeedbackProgressToFinal,
-          variables: {
-            input: {
-              emailBody: 'Test email',
-              feedback: 'Test feedback',
-              intakeID: 'a4158ad8-1236-4a55-9ad5-7e15a5d49de2'
-            }
-          }
-        },
-        result: {
-          data: {
-            addGRTFeedbackAndProgressToFinalBusinessCase: {
-              id: 'a4158ad8-1236-4a55-9ad5-7e15a5d49de2'
-            }
-          }
-        }
-      };
-
-      renderActionPage('provide-feedback-need-final', [
-        intakeQuery,
-        provideFeedbackProgressToFinalBizCaseMutation,
-        noteActionQuery
-      ]);
-      await waitForPageLoad();
-
-      expect(
-        screen.getByText(
-          /Provide GRT feedback and request final business case for GRB/i
-        )
       ).toBeInTheDocument();
 
       const feedbackField = screen.getByRole('textbox', { name: /feedback/i });
