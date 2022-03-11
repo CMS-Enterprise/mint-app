@@ -3,6 +3,7 @@ const tableAndPagination = {
     previous: 'Previous',
     next: 'Next'
   },
+  search: 'Search Table',
   results: {
     noResults: 'No results found',
     results:
