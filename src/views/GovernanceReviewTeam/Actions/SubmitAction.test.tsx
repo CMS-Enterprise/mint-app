@@ -12,7 +12,6 @@ import configureMockStore from 'redux-mock-store';
 
 import { businessCaseInitialData } from 'data/businessCase';
 import { initialSystemIntakeForm } from 'data/systemIntake';
-import CreateSystemIntakeActionBusinessCaseNeedsChanges from 'queries/CreateSystemIntakeActionBusinessCaseNeedsChangesQuery';
 import CreateSystemIntakeActionGuideReceievedClose from 'queries/CreateSystemIntakeActionGuideReceievedCloseQuery';
 import CreateSystemIntakeActionNoGovernanceNeeded from 'queries/CreateSystemIntakeActionNoGovernanceNeededQuery';
 import CreateSystemIntakeActionNotItRequest from 'queries/CreateSystemIntakeActionNotItRequestQuery';
@@ -260,50 +259,6 @@ describe('Submit Action', () => {
       await waitForPageLoad();
 
       expect(screen.getByText(/Mark as ready for GRT/i)).toBeInTheDocument();
-
-      const emailField = screen.getByRole('textbox', { name: /email/i });
-      userEvent.type(emailField, 'Test email');
-      expect(emailField).toHaveValue('Test email');
-
-      screen.getByRole('button', { name: /send email/i }).click();
-
-      expect(await screen.findByTestId('intake-review')).toBeInTheDocument();
-    });
-
-    it('executes business case needs changes mutation', async () => {
-      const needsChangesMutation = {
-        request: {
-          query: CreateSystemIntakeActionBusinessCaseNeedsChanges,
-          variables: {
-            input: {
-              feedback: 'Test email',
-              intakeId: 'a4158ad8-1236-4a55-9ad5-7e15a5d49de2'
-            }
-          }
-        },
-        result: {
-          data: {
-            createSystemIntakeActionBusinessCaseNeedsChanges: {
-              systemIntake: {
-                id: 'a4158ad8-1236-4a55-9ad5-7e15a5d49de2',
-                status: 'BIZ_CASE_CHANGES_NEEDED'
-              }
-            }
-          }
-        }
-      };
-
-      renderActionPage('biz-case-needs-changes', [
-        intakeQuery,
-        needsChangesMutation
-      ]);
-      await waitForPageLoad();
-
-      expect(
-        screen.getByText(
-          /Business case needs changes and is not ready for GRT/i
-        )
-      ).toBeInTheDocument();
 
       const emailField = screen.getByRole('textbox', { name: /email/i });
       userEvent.type(emailField, 'Test email');

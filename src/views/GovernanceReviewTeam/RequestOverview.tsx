@@ -7,7 +7,6 @@ import classnames from 'classnames';
 
 import MainContent from 'components/MainContent';
 import PageLoading from 'components/PageLoading';
-import CreateSystemIntakeActionBusinessCaseNeedsChanges from 'queries/CreateSystemIntakeActionBusinessCaseNeedsChangesQuery';
 import CreateSystemIntakeActionGuideReceievedClose from 'queries/CreateSystemIntakeActionGuideReceievedCloseQuery';
 import CreateSystemIntakeActionNoGovernanceNeeded from 'queries/CreateSystemIntakeActionNoGovernanceNeededQuery';
 import CreateSystemIntakeActionNotItRequest from 'queries/CreateSystemIntakeActionNotItRequestQuery';
@@ -219,15 +218,6 @@ const RequestOverview = () => {
             <Route
               path="/governance-review-team/:systemId/actions/ready-for-grb"
               render={() => <ProvideGRTRecommendationsToGRB />}
-            />
-            <Route
-              path="/governance-review-team/:systemId/actions/biz-case-needs-changes"
-              render={() => (
-                <SubmitAction
-                  query={CreateSystemIntakeActionBusinessCaseNeedsChanges}
-                  actionName={actionsT('actions.bizCaseNeedsChanges')}
-                />
-              )}
             />
             <Route
               path="/governance-review-team/:systemId/actions/no-governance"
