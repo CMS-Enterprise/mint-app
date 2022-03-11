@@ -12,7 +12,6 @@ import configureMockStore from 'redux-mock-store';
 
 import { businessCaseInitialData } from 'data/businessCase';
 import { initialSystemIntakeForm } from 'data/systemIntake';
-import CreateSystemIntakeActionNotItRequest from 'queries/CreateSystemIntakeActionNotItRequestQuery';
 import CreateSystemIntakeActionNotRespondingClose from 'queries/CreateSystemIntakeActionNotRespondingCloseQuery';
 import CreateSystemIntakeActionReadyForGRT from 'queries/CreateSystemIntakeActionReadyForGRTQuery';
 import CreateSystemIntakeActionSendEmail from 'queries/CreateSystemIntakeActionSendEmailQuery';
@@ -191,45 +190,6 @@ describe('Submit Action', () => {
   });
 
   describe('actions', () => {
-    it('executes not an IT request mutation', async () => {
-      const notITRequestMutation = {
-        request: {
-          query: CreateSystemIntakeActionNotItRequest,
-          variables: {
-            input: {
-              feedback: 'Test email',
-              intakeId: 'a4158ad8-1236-4a55-9ad5-7e15a5d49de2'
-            }
-          }
-        },
-        result: {
-          data: {
-            createSystemIntakeActionNotItRequest: {
-              systemIntake: {
-                id: 'a4158ad8-1236-4a55-9ad5-7e15a5d49de2',
-                status: 'NOT_IT_REQUEST'
-              }
-            }
-          }
-        }
-      };
-
-      renderActionPage('not-it-request', [intakeQuery, notITRequestMutation]);
-      await waitForPageLoad();
-
-      expect(
-        screen.getByText(/Not an IT governance request/i)
-      ).toBeInTheDocument();
-
-      const emailField = screen.getByRole('textbox', { name: /email/i });
-      userEvent.type(emailField, 'Test email');
-      expect(emailField).toHaveValue('Test email');
-
-      screen.getByRole('button', { name: /send email/i }).click();
-
-      expect(await screen.findByTestId('intake-review')).toBeInTheDocument();
-    });
-
     it('executes ready for GRT mutation', async () => {
       const readyForGRTMutation = {
         request: {

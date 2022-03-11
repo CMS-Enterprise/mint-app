@@ -7,7 +7,6 @@ import classnames from 'classnames';
 
 import MainContent from 'components/MainContent';
 import PageLoading from 'components/PageLoading';
-import CreateSystemIntakeActionNotItRequest from 'queries/CreateSystemIntakeActionNotItRequestQuery';
 import CreateSystemIntakeActionNotRespondingClose from 'queries/CreateSystemIntakeActionNotRespondingCloseQuery';
 import CreateSystemIntakeActionReadyForGRT from 'queries/CreateSystemIntakeActionReadyForGRTQuery';
 import CreateSystemIntakeActionSendEmail from 'queries/CreateSystemIntakeActionSendEmailQuery';
@@ -192,15 +191,6 @@ const RequestOverview = () => {
                 <ChooseAction
                   systemIntake={systemIntake}
                   businessCase={businessCase}
-                />
-              )}
-            />
-            <Route
-              path="/governance-review-team/:systemId/actions/not-it-request"
-              render={() => (
-                <SubmitAction
-                  query={CreateSystemIntakeActionNotItRequest}
-                  actionName={actionsT('actions.notItRequest')}
                 />
               )}
             />
