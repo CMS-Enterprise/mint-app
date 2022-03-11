@@ -9,14 +9,7 @@ import {
   BreadcrumbLink,
   Button
 } from '@trussworks/react-uswds';
-import {
-  Field,
-  Form,
-  Formik,
-  FormikErrors,
-  FormikHelpers,
-  FormikProps
-} from 'formik';
+import { Field, Form, Formik, FormikErrors, FormikProps } from 'formik';
 import { useFlags } from 'launchdarkly-react-client-sdk';
 import { DateTime } from 'luxon';
 
@@ -41,16 +34,11 @@ import { NavLink, SecondaryNav } from 'components/shared/SecondaryNav';
 import TextAreaField from 'components/shared/TextAreaField';
 import TestDateCard from 'components/TestDateCard';
 import useMessage from 'hooks/useMessage';
-import CreateAccessibilityRequestNoteQuery from 'queries/CreateAccessibilityRequestNoteQuery';
 import DeleteAccessibilityRequestQuery from 'queries/DeleteAccessibilityRequestQuery';
 import DeleteTestDateQuery from 'queries/DeleteTestDateQuery';
 import GetAccessibilityRequestAccessibilityTeamOnlyQuery from 'queries/GetAccessibilityRequestAccessibilityTeamOnlyQuery';
 import GetAccessibilityRequestQuery from 'queries/GetAccessibilityRequestQuery';
-import {
-  CreateAccessibilityRequestNote,
-  CreateAccessibilityRequestNote_createAccessibilityRequestNote_userErrors as noteUserErrors,
-  CreateAccessibilityRequestNoteVariables
-} from 'queries/types/CreateAccessibilityRequestNote';
+import { CreateAccessibilityRequestNote_createAccessibilityRequestNote_userErrors as noteUserErrors } from 'queries/types/CreateAccessibilityRequestNote';
 import {
   DeleteAccessibilityRequest,
   DeleteAccessibilityRequestVariables
@@ -117,11 +105,6 @@ const AccessibilityRequestDetailPage = () => {
     DeleteAccessibilityRequestVariables
   >(DeleteAccessibilityRequestQuery);
 
-  const [mutateCreateNote, { error: noteMutationError }] = useMutation<
-    CreateAccessibilityRequestNote,
-    CreateAccessibilityRequestNoteVariables
-  >(CreateAccessibilityRequestNoteQuery);
-
   const userEuaId = useSelector((state: AppState) => state.auth.euaId);
 
   const removeRequest = (values: DeleteAccessibilityRequestForm) => {
@@ -148,36 +131,6 @@ const AccessibilityRequestDetailPage = () => {
     showMessage(undefined);
     setFormikErrors({});
     setReturnedUserErrors(null);
-  };
-
-  const createNote = (
-    values: CreateNoteForm,
-    { resetForm }: FormikHelpers<CreateNoteForm>
-  ) => {
-    mutateCreateNote({
-      variables: {
-        input: {
-          requestID: accessibilityRequestId,
-          note: values.noteText,
-          shouldSendEmail: values.shouldSendEmail
-        }
-      }
-    })
-      .then(response => {
-        const userErrors =
-          response.data?.createAccessibilityRequestNote?.userErrors;
-        if (userErrors) {
-          resetAlerts();
-          setReturnedUserErrors(userErrors);
-        }
-        if (!userErrors) {
-          refetch();
-          resetAlerts();
-          showMessage(t('requestDetails.notes.confirmation', { requestName }));
-          resetForm({});
-        }
-      })
-      .catch(() => {});
   };
 
   const [deleteTestDateMutation] = useMutation<DeleteTestDate>(
@@ -295,77 +248,65 @@ const AccessibilityRequestDetailPage = () => {
         {t('requestDetails.notes.skipToExistingNotes')}
       </Button>
       <div role="region" aria-label="add new note" id="notes-form">
-        <Formik
-          initialValues={{
-            noteText: '',
-            shouldSendEmail: false
-          }}
-          onSubmit={createNote}
-          validationSchema={accessibilitySchema.noteForm}
-          validateOnBlur={false}
-          validateOnChange={false}
-          validateOnMount={false}
-        >
-          {(formikProps: FormikProps<CreateNoteForm>) => {
-            const {
-              values,
-              errors,
-              setFieldValue,
-              validateForm,
-              submitForm
-            } = formikProps;
-            const flatErrors = flattenErrors(errors);
-            return (
-              <>
-                <Form className="usa-form maxw-full">
-                  <FieldGroup className="margin-top-0">
-                    <Label htmlFor="CreateAccessibilityRequestNote-NoteText">
-                      {t('requestDetails.notes.form.note')}
-                    </Label>
-                    <FieldErrorMsg>{flatErrors.noteText}</FieldErrorMsg>
-                    <Field
-                      as={TextAreaField}
-                      id="CreateAccessibilityRequestNote-NoteText"
-                      name="noteText"
-                      className="accessibility-request__note-field"
-                      error={!!flatErrors.noteText}
-                      maxLength={2000}
-                    />
-                  </FieldGroup>
-                  <FieldGroup>
-                    <Field
-                      as={CheckboxField}
-                      checked={values.shouldSendEmail}
-                      id="CreateAccessibilityRequestNote-ShouldSendEmail"
-                      name="shouldSendEmail"
-                      label={t('requestDetails.notes.form.sendEmail')}
-                      value="ShouldSendEmail"
-                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                        setFieldValue(`shouldSendEmail`, e.target.checked);
-                      }}
-                    />
-                  </FieldGroup>
-                  <Button
-                    className="margin-top-2"
-                    type="button"
-                    onClick={() =>
-                      validateForm().then(err => {
-                        if (Object.keys(err).length > 0) {
-                          resetAlerts();
-                          setFormikErrors(err);
-                        } else {
-                          submitForm();
-                        }
-                      })
-                    }
-                  >
-                    {t('requestDetails.notes.submit')}
-                  </Button>
-                </Form>
-              </>
-            );
-          }}
-        </Formik>
+        {(formikProps: FormikProps<CreateNoteForm>) => {
+          const {
+            values,
+            errors,
+            setFieldValue,
+            validateForm,
+            submitForm
+          } = formikProps;
+          const flatErrors = flattenErrors(errors);
+          return (
+            <>
+              <Form className="usa-form maxw-full">
+                <FieldGroup className="margin-top-0">
+                  <Label htmlFor="CreateAccessibilityRequestNote-NoteText">
+                    {t('requestDetails.notes.form.note')}
+                  </Label>
+                  <FieldErrorMsg>{flatErrors.noteText}</FieldErrorMsg>
+                  <Field
+                    as={TextAreaField}
+                    id="CreateAccessibilityRequestNote-NoteText"
+                    name="noteText"
+                    className="accessibility-request__note-field"
+                    error={!!flatErrors.noteText}
+                    maxLength={2000}
+                  />
+                </FieldGroup>
+                <FieldGroup>
+                  <Field
+                    as={CheckboxField}
+                    checked={values.shouldSendEmail}
+                    id="CreateAccessibilityRequestNote-ShouldSendEmail"
+                    name="shouldSendEmail"
+                    label={t('requestDetails.notes.form.sendEmail')}
+                    value="ShouldSendEmail"
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                      setFieldValue(`shouldSendEmail`, e.target.checked);
+                    }}
+                  />
+                </FieldGroup>
+                <Button
+                  className="margin-top-2"
+                  type="button"
+                  onClick={() =>
+                    validateForm().then(err => {
+                      if (Object.keys(err).length > 0) {
+                        resetAlerts();
+                        setFormikErrors(err);
+                      } else {
+                        submitForm();
+                      }
+                    })
+                  }
+                >
+                  {t('requestDetails.notes.submit')}
+                </Button>
+              </Form>
+            </>
+          );
+        }}
       </div>
       <div
         role="region"
@@ -437,16 +378,6 @@ const AccessibilityRequestDetailPage = () => {
               heading="Success"
             >
               {message}
-            </Alert>
-          )}
-          {noteMutationError && (
-            <Alert
-              className="margin-top-4"
-              type="error"
-              role="alert"
-              heading="There is a problem"
-            >
-              {t('requestDetails.notes.formErrorMessage')}
             </Alert>
           )}
           {returnedUserErrors && (

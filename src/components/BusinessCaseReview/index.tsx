@@ -1,9 +1,7 @@
 import React from 'react';
 import { DateTime } from 'luxon';
 
-import GRTFeedbackView from 'components/GRTFeedbackView';
 import PDFExport from 'components/PDFExport';
-import { GetSystemIntake_systemIntake_grtFeedbacks as GRTFeedback } from 'queries/types/GetSystemIntake';
 import { BusinessCaseModel } from 'types/businessCase';
 import { getFiscalYear } from 'utils/date';
 
@@ -15,13 +13,9 @@ import './index.scss';
 
 type BusinessCaseReviewProps = {
   values: BusinessCaseModel;
-  grtFeedbacks?: GRTFeedback[] | null;
 };
 
-const BusinessCaseReview = ({
-  values,
-  grtFeedbacks
-}: BusinessCaseReviewProps) => {
+const BusinessCaseReview = ({ values }: BusinessCaseReviewProps) => {
   const filename = `Business case for ${values.requestName}.pdf`;
   return (
     <>
@@ -72,13 +66,6 @@ const BusinessCaseReview = ({
             />
           </div>
         </div>
-        {grtFeedbacks && grtFeedbacks.length > 0 && (
-          <div className="bg-gray-10 margin-top-3 padding-x-3 padding-top-3 padding-bottom-1">
-            <div className="grid-container">
-              <GRTFeedbackView grtFeedbacks={grtFeedbacks} />
-            </div>
-          </div>
-        )}
       </PDFExport>
     </>
   );

@@ -5,23 +5,17 @@ import { DateTime } from 'luxon';
 import AlternativeAnalysisReview from 'components/BusinessCaseReview/AlternativeAnalysisReview';
 import GeneralRequestInfoReview from 'components/BusinessCaseReview/GeneralRequestInfoReview';
 import RequestDescriptionReview from 'components/BusinessCaseReview/RequestDescriptionReview';
-import GRTFeedbackView from 'components/GRTFeedbackView';
 import UswdsReactLink from 'components/LinkWrapper';
 import PageHeading from 'components/PageHeading';
 import PDFExport from 'components/PDFExport';
 import { AnythingWrongSurvey } from 'components/Survey';
-import { GetSystemIntake_systemIntake_grtFeedbacks as GRTFeedback } from 'queries/types/GetSystemIntake';
 import { BusinessCaseModel } from 'types/businessCase';
 import { getFiscalYear } from 'utils/date';
 
 type BusinessCaseReviewProps = {
   businessCase: BusinessCaseModel;
-  grtFeedbacks?: GRTFeedback[] | null;
 };
-const BusinessCaseReview = ({
-  businessCase,
-  grtFeedbacks
-}: BusinessCaseReviewProps) => {
+const BusinessCaseReview = ({ businessCase }: BusinessCaseReviewProps) => {
   const { t } = useTranslation('governanceReviewTeam');
   const filename = `Business case for ${businessCase.requestName}.pdf`;
 
@@ -79,11 +73,6 @@ const BusinessCaseReview = ({
           alternativeA={businessCase.alternativeA}
           alternativeB={businessCase.alternativeB}
         />
-        {grtFeedbacks && grtFeedbacks.length > 0 && (
-          <div className="bg-gray-10 margin-top-3 padding-x-3 padding-top-3 padding-bottom-1">
-            <GRTFeedbackView grtFeedbacks={grtFeedbacks} />
-          </div>
-        )}
       </PDFExport>
       <UswdsReactLink
         className="usa-button margin-top-5"
