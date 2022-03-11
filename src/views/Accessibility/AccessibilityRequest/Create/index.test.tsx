@@ -12,8 +12,6 @@ import userEvent from '@testing-library/user-event';
 import configureMockStore from 'redux-mock-store';
 
 import { MessageProvider } from 'hooks/useMessage';
-import CreateAccessibilityRequestQuery from 'queries/CreateAccessibilityRequestQuery';
-import GetAccessibilityRequestAccessibilityTeamOnlyQuery from 'queries/GetAccessibilityRequestAccessibilityTeamOnlyQuery';
 import GetSystemsQuery from 'queries/GetSystems';
 import AccessibilityRequestDetailPage from 'views/Accessibility/AccessibilityRequestDetailPage';
 
@@ -77,65 +75,6 @@ describe('Create 508 Request page', () => {
       }
     }
   };
-
-  const create508Request = {
-    request: {
-      query: CreateAccessibilityRequestQuery,
-      variables: {
-        input: {
-          name: 'TACO',
-          intakeID: '702af838-15be-4ddd-adf0-d99fc55a1eca'
-        }
-      }
-    },
-    result: {
-      data: {
-        createAccessibilityRequest: {
-          accessibilityRequest: {
-            id: 'bc142c4d-fc41-499c-ac31-482d6eb09e01',
-            name: 'TACO'
-          },
-          userErrors: null
-        }
-      }
-    }
-  };
-
-  const get508RequestQuery = {
-    request: {
-      query: GetAccessibilityRequestAccessibilityTeamOnlyQuery,
-      variables: {
-        id: 'bc142c4d-fc41-499c-ac31-482d6eb09e01'
-      }
-    },
-    result: {
-      data: {
-        accessibilityRequest: {
-          id: 'bc142c4d-fc41-499c-ac31-482d6eb09e01',
-          name: 'TACO',
-          submittedAt: '2021-07-13T02:09:00Z',
-          euaUserId: 'AAAA',
-          documents: [],
-          notes: [],
-          testDates: [],
-          statusRecord: {
-            status: 'OPEN',
-            submittedAt: '2021-07-13T02:09:00Z'
-          },
-          system: {
-            id: '702af838-15be-4ddd-adf0-d99fc55a1eca',
-            name: 'TACO',
-            lcid: '000001',
-            businessOwner: {
-              name: 'Shane Clark',
-              component: 'OIT'
-            }
-          }
-        }
-      }
-    }
-  };
-
   const waitForPageLoad = async () => {
     await waitForElementToBeRemoved(() => screen.getByTestId('page-loading'));
   };
@@ -165,10 +104,7 @@ describe('Create 508 Request page', () => {
     render(
       <MemoryRouter initialEntries={['/508/requests/new']}>
         <MessageProvider>
-          <MockedProvider
-            mocks={[defaultQuery, create508Request, get508RequestQuery]}
-            addTypename={false}
-          >
+          <MockedProvider addTypename={false}>
             <Provider store={defaultStore}>
               <Route path="/508/requests/new">
                 <Create />
