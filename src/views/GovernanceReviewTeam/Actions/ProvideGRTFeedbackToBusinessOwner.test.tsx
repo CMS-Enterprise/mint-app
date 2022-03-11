@@ -12,7 +12,6 @@ import configureMockStore from 'redux-mock-store';
 
 import { businessCaseInitialData } from 'data/businessCase';
 import { initialSystemIntakeForm } from 'data/systemIntake';
-import AddGRTFeedbackRequestBizCaseQuery from 'queries/AddGRTFeedbackRequestBizCaseQuery';
 import GetAdminNotesAndActionsQuery from 'queries/GetAdminNotesAndActionsQuery';
 import GetSystemIntakeQuery from 'queries/GetSystemIntakeQuery';
 import Notes from 'views/GovernanceReviewTeam/Notes';
@@ -208,49 +207,5 @@ describe('Provide GRT Feedback to GRT Business Owner', () => {
         </MemoryRouter>
       );
     };
-
-    it('executes provide feedback, need business case mutation', async () => {
-      const provideFeedbackNeedBizCaseMutation = {
-        request: {
-          query: AddGRTFeedbackRequestBizCaseQuery,
-          variables: {
-            input: {
-              emailBody: 'Test email',
-              feedback: 'Test feedback',
-              intakeID: 'a4158ad8-1236-4a55-9ad5-7e15a5d49de2'
-            }
-          }
-        },
-        result: {
-          data: {
-            addGRTFeedbackAndRequestBusinessCase: {
-              id: 'a4158ad8-1236-4a55-9ad5-7e15a5d49de2'
-            }
-          }
-        }
-      };
-      renderActionPage('provide-feedback-need-biz-case', [
-        intakeQuery,
-        provideFeedbackNeedBizCaseMutation,
-        noteActionQuery
-      ]);
-      await waitForPageLoad();
-
-      expect(
-        screen.getByText(/Provide GRT Feedback and progress to business case/i)
-      ).toBeInTheDocument();
-
-      const feedbackField = screen.getByRole('textbox', { name: /feedback/i });
-      userEvent.type(feedbackField, 'Test feedback');
-      expect(feedbackField).toHaveValue('Test feedback');
-
-      const emailField = screen.getByRole('textbox', { name: /email/i });
-      userEvent.type(emailField, 'Test email');
-      expect(emailField).toHaveValue('Test email');
-
-      screen.getByRole('button', { name: /email decision/i }).click();
-
-      expect(await screen.findByTestId('grt-notes-view')).toBeInTheDocument();
-    });
   });
 });

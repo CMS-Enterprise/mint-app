@@ -7,7 +7,6 @@ import classnames from 'classnames';
 
 import MainContent from 'components/MainContent';
 import PageLoading from 'components/PageLoading';
-import AddGRTFeedbackRequestBizCaseQuery from 'queries/AddGRTFeedbackRequestBizCaseQuery';
 import CreateSystemIntakeActionBusinessCaseNeeded from 'queries/CreateSystemIntakeActionBusinessCaseNeededQuery';
 import CreateSystemIntakeActionBusinessCaseNeedsChanges from 'queries/CreateSystemIntakeActionBusinessCaseNeedsChangesQuery';
 import CreateSystemIntakeActionGuideReceievedClose from 'queries/CreateSystemIntakeActionGuideReceievedCloseQuery';
@@ -23,7 +22,6 @@ import {
 } from 'queries/types/GetSystemIntake';
 import { AppState } from 'reducers/rootReducer';
 import { fetchBusinessCase } from 'types/routines';
-import ProvideGRTFeedbackToBusinessOwner from 'views/GovernanceReviewTeam/Actions/ProvideGRTFeedbackToBusinessOwner';
 import ProvideGRTRecommendationsToGRB from 'views/GovernanceReviewTeam/Actions/ProvideGRTRecommendationsToGRB';
 import NotFound from 'views/NotFound';
 
@@ -221,15 +219,6 @@ const RequestOverview = () => {
                 <SubmitAction
                   query={CreateSystemIntakeActionBusinessCaseNeeded}
                   actionName={actionsT('actions.needBizCase')}
-                />
-              )}
-            />
-            <Route
-              path="/governance-review-team/:systemId/actions/provide-feedback-need-biz-case"
-              render={() => (
-                <ProvideGRTFeedbackToBusinessOwner
-                  query={AddGRTFeedbackRequestBizCaseQuery}
-                  actionName={actionsT('actions.provideFeedbackNeedBizCase')}
                 />
               )}
             />

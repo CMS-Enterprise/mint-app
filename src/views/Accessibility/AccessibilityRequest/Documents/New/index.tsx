@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link, useHistory, useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
-import { Button, Label } from '@trussworks/react-uswds';
-import axios from 'axios';
-import { Field, Form, Formik, FormikProps } from 'formik';
+import { Label } from '@trussworks/react-uswds';
+import { Field, Form, FormikProps } from 'formik';
 import { isUndefined } from 'lodash';
 
 import FileUpload from 'components/FileUpload';
@@ -17,29 +16,19 @@ import FieldGroup from 'components/shared/FieldGroup';
 import { RadioField } from 'components/shared/RadioField';
 import { NavLink, SecondaryNav } from 'components/shared/SecondaryNav';
 import TextField from 'components/shared/TextField';
-import { useMessage } from 'hooks/useMessage';
-import { CreateAccessibilityRequestDocumentQuery } from 'queries/AccessibilityRequestDocumentQueries';
 import GeneratePresignedUploadURLQuery from 'queries/GeneratePresignedUploadURLQuery';
 import GetAccessibilityRequestQuery from 'queries/GetAccessibilityRequestQuery';
-import {
-  CreateAccessibilityRequestDocument,
-  CreateAccessibilityRequestDocumentVariables
-} from 'queries/types/CreateAccessibilityRequestDocument';
 import { GeneratePresignedUploadURL } from 'queries/types/GeneratePresignedUploadURL';
 import { GetAccessibilityRequest } from 'queries/types/GetAccessibilityRequest';
 import { FileUploadForm } from 'types/files';
 import { AccessibilityRequestDocumentCommonType } from 'types/graphql-global-types';
 import { translateDocumentCommonType } from 'utils/accessibilityRequest';
 import flattenErrors from 'utils/flattenErrors';
-import { DocumentUploadValidationSchema } from 'validations/documentUploadSchema';
 
 import RequestDeleted from '../../../RequestDeleted';
 
 const New = () => {
-  const history = useHistory();
   const { t } = useTranslation('accessibility');
-
-  const { showMessageOnNextPage } = useMessage();
 
   const { accessibilityRequestId } = useParams<{
     accessibilityRequestId: string;
@@ -53,15 +42,11 @@ const New = () => {
     }
   );
 
-  const [s3URL, setS3URL] = useState('');
+  const [, setS3URL] = useState('');
   const [
     generateURL,
     generateURLStatus
   ] = useMutation<GeneratePresignedUploadURL>(GeneratePresignedUploadURLQuery);
-  const [createDocument, createDocumentStatus] = useMutation<
-    CreateAccessibilityRequestDocument,
-    CreateAccessibilityRequestDocumentVariables
-  >(CreateAccessibilityRequestDocumentQuery);
 
   const [
     isErrorGeneratingPresignedUrl,
@@ -118,246 +103,165 @@ const New = () => {
       });
   };
 
-  const onSubmit = (values: FileUploadForm) => {
-    const { file } = values;
-    if (file && file.name && file.size >= 0 && file.type) {
-      const options = {
-        headers: {
-          'Content-Type': file.type
-        }
-      };
-
-      axios.put(s3URL, values.file, options).then(() => {
-        createDocument({
-          variables: {
-            input: {
-              mimeType: file.type,
-              size: file.size,
-              name: file.name,
-              url: s3URL,
-              requestID: accessibilityRequestId,
-              commonDocumentType: values.documentType
-                .commonType as AccessibilityRequestDocumentCommonType,
-              otherDocumentTypeDescription: values.documentType.otherType
-            }
-          }
-        })
-          .then(response => {
-            if (!response.errors) {
-              showMessageOnNextPage(
-                `${file.name} uploaded to ${data?.accessibilityRequest?.name}`
-              );
-              history.push(`/508/requests/${accessibilityRequestId}/documents`);
-            }
-          })
-          .catch(() => {
-            setErrorGeneratingPresignedUrl(true);
-          });
-      });
-    }
-  };
-
   return (
     <>
       <SecondaryNav>
         <NavLink to="/">{t('tabs.accessibilityRequests')}</NavLink>
       </SecondaryNav>
       <div className="grid-container">
-        <Formik
-          initialValues={{
-            file: null,
-            documentType: {
-              commonType: null,
-              otherType: ''
-            }
-          }}
-          onSubmit={onSubmit}
-          validationSchema={DocumentUploadValidationSchema}
-          validateOnBlur={false}
-          validateOnChange={false}
-          validateOnMount={false}
-        >
-          {(formikProps: FormikProps<FileUploadForm>) => {
-            const {
-              errors,
-              setFieldValue,
-              values,
-              handleSubmit,
-              isSubmitting
-            } = formikProps;
-            const flatErrors = flattenErrors(errors);
-            return (
-              <>
-                {Object.keys(errors).length > 0 && (
-                  <ErrorAlert
-                    testId="document-upload-errors"
-                    classNames="margin-bottom-4 margin-top-4"
-                    heading="There is a problem"
-                  >
-                    {Object.keys(flatErrors).map(key => {
-                      return (
-                        <ErrorAlertMessage
-                          key={`Error.${key}`}
-                          errorKey={key}
-                          message={flatErrors[key]}
-                        />
-                      );
-                    })}
-                  </ErrorAlert>
-                )}
-                {isErrorGeneratingPresignedUrl && (
-                  <Alert
-                    type="error"
-                    heading={t('uploadDocument.presignedUrlErrorHeader')}
-                  >
-                    {t('uploadDocument.presignedUrlErrorBody')}
-                  </Alert>
-                )}
-                {createDocumentStatus.error && (
-                  <ErrorAlert heading="Error uploading document">
-                    <ErrorAlertMessage
-                      message={createDocumentStatus.error.message}
-                      errorKey="accessibilityRequest"
-                    />
-                  </ErrorAlert>
-                )}
-                <PageHeading>
-                  Upload a document to {data?.accessibilityRequest?.name}
-                </PageHeading>
-                <div className="grid-col-9">
-                  <Form
-                    className="usa-form usa-form--large"
-                    onSubmit={e => {
-                      handleSubmit(e);
-                      window.scrollTo(0, 0);
-                    }}
-                  >
-                    <FieldGroup scrollElement="file" error={!!flatErrors.file}>
-                      <Label htmlFor="FileUpload-File">Document Upload</Label>
-                      <FieldErrorMsg>{flatErrors.file}</FieldErrorMsg>
-                      <Field
-                        as={FileUpload}
-                        id="FileUpload-File"
-                        name="file"
-                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                          onChange(e);
-                          setFieldValue('file', e.currentTarget?.files?.[0]);
-                        }}
-                        accept=".pdf,.doc,.docx,.xls,.xlsx"
-                        inputProps={{
-                          'aria-expanded': !!values.file,
-                          'aria-controls': 'file-type'
-                        }}
+        {(formikProps: FormikProps<FileUploadForm>) => {
+          const { errors, setFieldValue, values, handleSubmit } = formikProps;
+          const flatErrors = flattenErrors(errors);
+          return (
+            <>
+              {Object.keys(errors).length > 0 && (
+                <ErrorAlert
+                  testId="document-upload-errors"
+                  classNames="margin-bottom-4 margin-top-4"
+                  heading="There is a problem"
+                >
+                  {Object.keys(flatErrors).map(key => {
+                    return (
+                      <ErrorAlertMessage
+                        key={`Error.${key}`}
+                        errorKey={key}
+                        message={flatErrors[key]}
                       />
-                    </FieldGroup>
-                    {values.file && (
-                      <FieldGroup
-                        id="file-type"
-                        scrollElement="documentType.commonType"
-                        error={!!flatErrors['documentType.commonType']}
-                      >
-                        <fieldset className="usa-fieldset margin-top-4">
-                          <legend className="usa-label">
-                            What type of document are you uploading?
-                          </legend>
-                          <FieldErrorMsg>
-                            {flatErrors['documentType.commonType']}
-                          </FieldErrorMsg>
-                          {([
-                            'AWARDED_VPAT',
-                            'TEST_PLAN',
-                            'TESTING_VPAT',
-                            'TEST_RESULTS',
-                            'REMEDIATION_PLAN'
-                          ] as AccessibilityRequestDocumentCommonType[]).map(
-                            commonType => {
-                              return (
-                                <Field
-                                  key={`FileUpload-CommonType${commonType}`}
-                                  as={RadioField}
-                                  checked={
-                                    values.documentType.commonType ===
+                    );
+                  })}
+                </ErrorAlert>
+              )}
+              {isErrorGeneratingPresignedUrl && (
+                <Alert
+                  type="error"
+                  heading={t('uploadDocument.presignedUrlErrorHeader')}
+                >
+                  {t('uploadDocument.presignedUrlErrorBody')}
+                </Alert>
+              )}
+              <PageHeading>
+                Upload a document to {data?.accessibilityRequest?.name}
+              </PageHeading>
+              <div className="grid-col-9">
+                <Form
+                  className="usa-form usa-form--large"
+                  onSubmit={e => {
+                    handleSubmit(e);
+                    window.scrollTo(0, 0);
+                  }}
+                >
+                  <FieldGroup scrollElement="file" error={!!flatErrors.file}>
+                    <Label htmlFor="FileUpload-File">Document Upload</Label>
+                    <FieldErrorMsg>{flatErrors.file}</FieldErrorMsg>
+                    <Field
+                      as={FileUpload}
+                      id="FileUpload-File"
+                      name="file"
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                        onChange(e);
+                        setFieldValue('file', e.currentTarget?.files?.[0]);
+                      }}
+                      accept=".pdf,.doc,.docx,.xls,.xlsx"
+                      inputProps={{
+                        'aria-expanded': !!values.file,
+                        'aria-controls': 'file-type'
+                      }}
+                    />
+                  </FieldGroup>
+                  {values.file && (
+                    <FieldGroup
+                      id="file-type"
+                      scrollElement="documentType.commonType"
+                      error={!!flatErrors['documentType.commonType']}
+                    >
+                      <fieldset className="usa-fieldset margin-top-4">
+                        <legend className="usa-label">
+                          What type of document are you uploading?
+                        </legend>
+                        <FieldErrorMsg>
+                          {flatErrors['documentType.commonType']}
+                        </FieldErrorMsg>
+                        {([
+                          'AWARDED_VPAT',
+                          'TEST_PLAN',
+                          'TESTING_VPAT',
+                          'TEST_RESULTS',
+                          'REMEDIATION_PLAN'
+                        ] as AccessibilityRequestDocumentCommonType[]).map(
+                          commonType => {
+                            return (
+                              <Field
+                                key={`FileUpload-CommonType${commonType}`}
+                                as={RadioField}
+                                checked={
+                                  values.documentType.commonType === commonType
+                                }
+                                id={`FileUpload-CommonType${commonType}`}
+                                name="documentType.commonType"
+                                label={translateDocumentCommonType(commonType)}
+                                onChange={() => {
+                                  setFieldValue(
+                                    'documentType.commonType',
                                     commonType
-                                  }
-                                  id={`FileUpload-CommonType${commonType}`}
-                                  name="documentType.commonType"
-                                  label={translateDocumentCommonType(
-                                    commonType
-                                  )}
-                                  onChange={() => {
-                                    setFieldValue(
-                                      'documentType.commonType',
-                                      commonType
-                                    );
-                                    setFieldValue('documentType.otherType', '');
-                                  }}
-                                  value={commonType}
-                                />
-                              );
-                            }
+                                  );
+                                  setFieldValue('documentType.otherType', '');
+                                }}
+                                value={commonType}
+                              />
+                            );
+                          }
+                        )}
+                        <Field
+                          as={RadioField}
+                          checked={values.documentType.commonType === 'OTHER'}
+                          id="FileUpload-CommonTypeOTHER"
+                          name="documentType.commonType"
+                          label={translateDocumentCommonType(
+                            AccessibilityRequestDocumentCommonType.OTHER
                           )}
-                          <Field
-                            as={RadioField}
-                            checked={values.documentType.commonType === 'OTHER'}
-                            id="FileUpload-CommonTypeOTHER"
-                            name="documentType.commonType"
-                            label={translateDocumentCommonType(
-                              AccessibilityRequestDocumentCommonType.OTHER
-                            )}
-                            value="OTHER"
-                          />
-                          {values.documentType.commonType === 'OTHER' && (
-                            <div className="width-card-lg margin-left-4 margin-bottom-1">
-                              <FieldGroup
-                                scrollElement="documentType.otherType"
-                                error={!!flatErrors['documentType.otherType']}
+                          value="OTHER"
+                        />
+                        {values.documentType.commonType === 'OTHER' && (
+                          <div className="width-card-lg margin-left-4 margin-bottom-1">
+                            <FieldGroup
+                              scrollElement="documentType.otherType"
+                              error={!!flatErrors['documentType.otherType']}
+                            >
+                              <Label
+                                htmlFor="FileUpload-OtherType"
+                                className="margin-bottom-1"
                               >
-                                <Label
-                                  htmlFor="FileUpload-OtherType"
-                                  className="margin-bottom-1"
-                                >
-                                  Document name
-                                </Label>
-                                <FieldErrorMsg>
-                                  {flatErrors['documentType.otherType']}
-                                </FieldErrorMsg>
-                                <Field
-                                  as={TextField}
-                                  error={!!flatErrors['documentType.otherType']}
-                                  className="margin-top-0"
-                                  id="FileUpload-OtherType"
-                                  name="documentType.otherType"
-                                />
-                              </FieldGroup>
-                            </div>
-                          )}
-                        </fieldset>
-                      </FieldGroup>
-                    )}
-                    <div className="padding-top-2">
-                      <p>
-                        To keep CMS safe, documents are scanned for viruses
-                        after uploading. If something goes wrong, we&apos;ll let
-                        you know.
-                      </p>
-                      <Button
-                        type="submit"
-                        disabled={
-                          isSubmitting ||
-                          generateURLStatus.loading ||
-                          createDocumentStatus.loading
-                        }
-                        data-testid="upload-document"
-                      >
-                        Upload document
-                      </Button>
-                    </div>
-                  </Form>
-                </div>
-              </>
-            );
-          }}
-        </Formik>
+                                Document name
+                              </Label>
+                              <FieldErrorMsg>
+                                {flatErrors['documentType.otherType']}
+                              </FieldErrorMsg>
+                              <Field
+                                as={TextField}
+                                error={!!flatErrors['documentType.otherType']}
+                                className="margin-top-0"
+                                id="FileUpload-OtherType"
+                                name="documentType.otherType"
+                              />
+                            </FieldGroup>
+                          </div>
+                        )}
+                      </fieldset>
+                    </FieldGroup>
+                  )}
+                  <div className="padding-top-2">
+                    <p>
+                      To keep CMS safe, documents are scanned for viruses
+                      after uploading. If something goes wrong, we&apos;ll let
+                      you know.
+                    </p>
+                    Upload document
+                  </div>
+                </Form>
+              </div>
+            </>
+          );
+        }}
 
         <p className="padding-top-2">
           <Link to={`/508/requests/${accessibilityRequestId}`}>
