@@ -25,7 +25,6 @@ import GlobalClientFilter from 'components/TableFilter';
 import TablePagination from 'components/TablePagination';
 import TableResults from 'components/TableResults';
 import cmsDivisionsAndOffices from 'constants/enums/cmsDivisionsAndOffices'; // May be temporary if we want to hard code all the CMS acronyms.  For now it creates an acronym for all capitalized words
-import CreateCedarSystemBookmarkQuery from 'queries/CreateCedarSystemBookmarkQuery';
 import DeleteCedarSystemBookmarkQuery from 'queries/DeleteCedarSystemBookmarkQuery';
 import { GetCedarSystems_cedarSystems as CedarSystem } from 'queries/types/GetCedarSystems';
 import { GetCedarSystemsAndBookmarks_cedarSystemBookmarks as CedarSystemBookmark } from 'queries/types/GetCedarSystemsAndBookmarks';
@@ -51,30 +50,9 @@ export const Table = ({
 }: TableProps) => {
   const { t } = useTranslation('systemProfile');
 
-  const [createMutate] = useMutation(CreateCedarSystemBookmarkQuery);
   const [deleteMutate] = useMutation(DeleteCedarSystemBookmarkQuery);
 
   const columns = useMemo<Column<CedarSystem>[]>(() => {
-    const handleCreateBookmark = (cedarSystemId: string) => {
-      createMutate({
-        variables: {
-          input: {
-            cedarSystemId
-          }
-        }
-      }).then(refetchBookmarks);
-    };
-
-    const handleDeleteBookmark = (cedarSystemId: string) => {
-      deleteMutate({
-        variables: {
-          input: {
-            cedarSystemId
-          }
-        }
-      }).then(refetchBookmarks);
-    };
-
     const bookmarkIdSet: Set<string> = new Set(
       savedBookmarks.map(bm => bm.cedarSystemId)
     );
@@ -88,20 +66,7 @@ export const Table = ({
         sortType: (rowOne, rowTwo, columnName) => {
           const rowOneElem = rowOne.values[columnName];
           return bookmarkIdSet.has(rowOneElem) ? 1 : -1;
-        },
-        Cell: ({ row }: { row: Row<CedarSystem> }) =>
-          bookmarkIdSet.has(row.original.id) ? (
-            <BookmarkCardIcon
-              size="sm"
-              onClick={() => handleDeleteBookmark(row.original.id)}
-            />
-          ) : (
-            <BookmarkCardIcon
-              color="lightgrey"
-              size="sm"
-              onClick={() => handleCreateBookmark(row.original.id)}
-            />
-          )
+        }
       },
       {
         Header: t<string>('systemTable.header.systemAcronym'),
@@ -148,7 +113,7 @@ export const Table = ({
         )
       }
     ];
-  }, [t, savedBookmarks, createMutate, deleteMutate, refetchBookmarks]);
+  }, "[t, savedBookmarks, deleteMutate, refetchBookmarks]);
 
   const {
     getTableProps,
