@@ -12,7 +12,6 @@ import configureMockStore from 'redux-mock-store';
 
 import { businessCaseInitialData } from 'data/businessCase';
 import { initialSystemIntakeForm } from 'data/systemIntake';
-import CreateSystemIntakeActionNoGovernanceNeeded from 'queries/CreateSystemIntakeActionNoGovernanceNeededQuery';
 import CreateSystemIntakeActionNotItRequest from 'queries/CreateSystemIntakeActionNotItRequestQuery';
 import CreateSystemIntakeActionNotRespondingClose from 'queries/CreateSystemIntakeActionNotRespondingCloseQuery';
 import CreateSystemIntakeActionReadyForGRT from 'queries/CreateSystemIntakeActionReadyForGRTQuery';
@@ -258,43 +257,6 @@ describe('Submit Action', () => {
       await waitForPageLoad();
 
       expect(screen.getByText(/Mark as ready for GRT/i)).toBeInTheDocument();
-
-      const emailField = screen.getByRole('textbox', { name: /email/i });
-      userEvent.type(emailField, 'Test email');
-      expect(emailField).toHaveValue('Test email');
-
-      screen.getByRole('button', { name: /send email/i }).click();
-
-      expect(await screen.findByTestId('intake-review')).toBeInTheDocument();
-    });
-
-    it('executes the no governance needed mutation', async () => {
-      const noGovernanceMutation = {
-        request: {
-          query: CreateSystemIntakeActionNoGovernanceNeeded,
-          variables: {
-            input: {
-              feedback: 'Test email',
-              intakeId: 'a4158ad8-1236-4a55-9ad5-7e15a5d49de2'
-            }
-          }
-        },
-        result: {
-          data: {
-            createSystemIntakeActionNoGovernanceNeeded: {
-              systemIntake: {
-                id: 'a4158ad8-1236-4a55-9ad5-7e15a5d49de2',
-                status: 'NO_GOVERNANCE'
-              }
-            }
-          }
-        }
-      };
-
-      renderActionPage('no-governance', [intakeQuery, noGovernanceMutation]);
-      await waitForPageLoad();
-
-      expect(screen.getByText(/Close project/i)).toBeInTheDocument();
 
       const emailField = screen.getByRole('textbox', { name: /email/i });
       userEvent.type(emailField, 'Test email');
