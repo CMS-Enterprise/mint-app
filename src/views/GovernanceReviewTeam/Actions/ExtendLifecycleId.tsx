@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link, useHistory, useParams } from 'react-router-dom';
-import { ApolloQueryResult, useMutation } from '@apollo/client';
+import { Link, useParams } from 'react-router-dom';
+import { ApolloQueryResult } from '@apollo/client';
 import { Button } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
 import { DateTime } from 'luxon';
@@ -19,11 +19,6 @@ import FieldGroup from 'components/shared/FieldGroup';
 import HelpText from 'components/shared/HelpText';
 import Label from 'components/shared/Label';
 import TextAreaField from 'components/shared/TextAreaField';
-import CreateSystemIntakeActionExtendLifecycleIdQuery from 'queries/CreateSystemIntakeActionExtendLifecycleIdQuery';
-import {
-  CreateSystemIntakeActionExtendLifecycleId,
-  CreateSystemIntakeActionExtendLifecycleIdVariables
-} from 'queries/types/CreateSystemIntakeActionExtendLifecycleId';
 import { GetSystemIntake } from 'queries/types/GetSystemIntake';
 import { formatDateAndIgnoreTimezone } from 'utils/date';
 import flattenErrors from 'utils/flattenErrors';
@@ -48,6 +43,7 @@ type ExtendLifecycleIdProps = {
   lcidScope: string;
   lcidNextSteps: string;
   lcidCostBaseline: string;
+  // eslint-disable-next-line react/no-unused-prop-types
   onSubmit(): Promise<ApolloQueryResult<GetSystemIntake>>;
 };
 
@@ -58,12 +54,10 @@ const ExtendLifecycleId = ({
   lcidExpiresAt,
   lcidScope,
   lcidNextSteps,
-  lcidCostBaseline,
-  onSubmit
+  lcidCostBaseline
 }: ExtendLifecycleIdProps) => {
   const { t } = useTranslation('action');
   const { systemId } = useParams<{ systemId: string }>();
-  const history = useHistory();
   const initialValues: ExtendLCIDForm = {
     currentExpiresAt: lcidExpiresAt,
     newExpirationDay: '',
@@ -77,41 +71,17 @@ const ExtendLifecycleId = ({
     newCostBaseline: ''
   };
 
-  const [extendLifecycleID, extendLifecycleIDStatus] = useMutation<
-    CreateSystemIntakeActionExtendLifecycleId,
-    CreateSystemIntakeActionExtendLifecycleIdVariables
-  >(CreateSystemIntakeActionExtendLifecycleIdQuery);
-
   const handleSubmit = (values: ExtendLCIDForm) => {
     const {
       newExpirationMonth = '',
       newExpirationDay = '',
-      newExpirationYear = '',
-      newScope = '',
-      newNextSteps = '',
-      newCostBaseline = ''
+      newExpirationYear = ''
     } = values;
-    const expiresAt = DateTime.utc(
+    DateTime.utc(
       parseInt(newExpirationYear, RADIX),
       parseInt(newExpirationMonth, RADIX),
       parseInt(newExpirationDay, RADIX)
     ).toISO();
-    extendLifecycleID({
-      variables: {
-        input: {
-          id: systemId,
-          expirationDate: expiresAt,
-          scope: newScope,
-          nextSteps: newNextSteps,
-          costBaseline: newCostBaseline
-        }
-      }
-    }).then(response => {
-      if (!response.errors) {
-        history.push(`/governance-review-team/${systemId}/notes`);
-        onSubmit();
-      }
-    });
   };
 
   return (
@@ -289,11 +259,7 @@ const ExtendLifecycleId = ({
                 <p className="margin-top-6 line-height-body-3">
                   {t('extendLcid.submissionInfo')}
                 </p>
-                <Button
-                  className="margin-y-2"
-                  type="submit"
-                  disabled={extendLifecycleIDStatus.loading}
-                >
+                <Button className="margin-y-2" type="submit">
                   {t('extendLcid.submit')}
                 </Button>
               </Form>
