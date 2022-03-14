@@ -3,7 +3,7 @@ version: '3.7'
 services:
   db:
     ports:
-      - 5432:5432
+      - 5437:5437
   db_migrate:
     build:
       context: .
@@ -18,9 +18,10 @@ services:
     image: easi-backend:latest
     volumes:
       - ./:/easi
-    entrypoint: air
+    entrypoint: air ${AIR_CONFIG}
     ports:
-      - 8080:8080
+      - 8085:8085
+      - 2350:2350
     environment:
       - LOCAL_AUTH_ENABLED
   easi_client:
@@ -49,16 +50,16 @@ services:
       - .:/app
       - /app/node_modules
     ports:
-      - 3000:3000
+      - 3005:3005
   minio:
     ports:
-      - '9000:9000'
+      - '9005:9005'
     volumes:
       - ./tmp/minio:/data
   prince:
     image: lambci/lambda:go1.x
     ports:
-      - 9001:9001
+      - 9006:9006
     environment:
       - DOCKER_LAMBDA_STAY_OPEN=1
       - LICENSE_KEY
