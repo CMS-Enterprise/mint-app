@@ -11,15 +11,8 @@ services:
     environment:
       - FLYWAY_USER=postgres
       - FLYWAY_PASSWORD=mysecretpassword
-      # - FLYWAY_URL=jdbc:postgresql://db/postgres
+      - FLYWAY_URL=jdbc:postgresql://db:${PGPORT}/postgres
       - FLYWAY_PLACEHOLDERS_APP_USER_PASSWORD=supersecretapp
-      - FLYWAY_URL=jdbc:postgresql://${PGHOST}:${PGPORT}/
-      # - FLYWAY_URL=jdbc:postgresql://${PGHOST}:${PGPORT}/db/postgres
-      # - FLYWAY_URL=jdbc:postgresql://db/postgres/${PGHOST}:${PGPORT}/db/postgres
-      # - FLYWAY_URL=jdbc:postgresql://${PGHOST}:${PGPORT}/postgres
-      # - FLYWAY_URL=jdbc:postgresql://${PGHOST}:${PGPORT}/postgres
-      # - FLYWAY_URL=jdbc:postgresql://db/postgres
-      # - FLYWAY_URL=jdbc:postgresql://db/postgres:$PGPORT
       
     depends_on:
       - db

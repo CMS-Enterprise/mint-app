@@ -20,7 +20,7 @@ services:
       - ./:/easi
     entrypoint: air ${AIR_CONFIG}
     ports:
-      - 8085:8085
+      - 8085:8080
       - 2350:2350
     environment:
       - LOCAL_AUTH_ENABLED
@@ -50,7 +50,7 @@ services:
       - .:/app
       - /app/node_modules
     ports:
-      - 3005:3005
+      - 3005:3000
   minio:
     ports:
       - '9005:9005'

@@ -138,7 +138,7 @@ def up(frontend_included, *args, debug:false, wait:false)
   end
 
   if frontend_included
-    wait_for_success("Waiting for the front end to build...", "curl --silent --output /dev/null -m 1 localhost:3000")
+    wait_for_success("Waiting for the front end to build...", "curl --silent --output /dev/null -m 1 localhost:3005")
   end
 end
 
