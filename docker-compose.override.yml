@@ -10,12 +10,12 @@ services:
       dockerfile: Dockerfile.db_migrations
     volumes:
       - ./migrations:/flyway/sql
-  easi:
+  mint:
     build:
       context: .
       dockerfile: Dockerfile
       target: dev
-    image: easi-backend:latest
+    image: mint-backend:latest
     volumes:
       - ./:/easi
     entrypoint: air ${AIR_CONFIG}
@@ -24,7 +24,7 @@ services:
       - 2350:2350
     environment:
       - LOCAL_AUTH_ENABLED
-  easi_client:
+  mint_client:
     profiles: ["frontend"]
     build:
       context: .
@@ -53,13 +53,13 @@ services:
       - 3005:3000
   minio:
     ports:
-      - '9005:9005'
+      - '9005:9000'
     volumes:
       - ./tmp/minio:/data
   prince:
     image: lambci/lambda:go1.x
     ports:
-      - 9006:9006
+      - 9006:9001
     environment:
       - DOCKER_LAMBDA_STAY_OPEN=1
       - LICENSE_KEY

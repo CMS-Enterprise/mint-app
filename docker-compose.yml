@@ -7,7 +7,7 @@ services:
     environment:
       - POSTGRES_PASSWORD=mysecretpassword
   db_migrate:
-    image: easi-db-migrate:latest
+    image: mint-db-migrate:latest
     environment:
       - FLYWAY_USER=postgres
       - FLYWAY_PASSWORD=mysecretpassword
@@ -16,7 +16,7 @@ services:
       
     depends_on:
       - db
-  easi:
+  mint:
     environment:
       - CEDAR_API_KEY
       - CEDAR_API_URL
@@ -64,8 +64,8 @@ services:
       - USE_TLS
     depends_on:
       - db_migrate
-  easi_client:
-    image: easi-frontend:latest
+  mint_client:
+    image: mint-frontend:latest
   minio:
     restart: always
     image: minio/minio:latest
