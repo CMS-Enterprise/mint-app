@@ -8,14 +8,11 @@ package main
 // on that model in the Go code.
 
 import (
-	"context"
 	"encoding/json"
 	"fmt"
 	"log"
 	"os"
 
-	"github.com/google/uuid"
-	"github.com/guregu/null"
 	_ "github.com/lib/pq" // required for postgres driver in sql
 	"github.com/spf13/cobra"
 	"go.uber.org/zap"
@@ -98,27 +95,6 @@ func connect() {
 
 func main() {
 	execute()
-}
-
-func makeAccessibilityRequest(accessibilityRequest *models.AccessibilityRequest, store *storage.Store) *models.AccessibilityRequest {
-	ctx := context.Background()
-
-	if accessibilityRequest.IntakeID == uuid.Nil {
-		intake := models.SystemIntake{
-			Status:                 models.SystemIntakeStatusLCIDISSUED,
-			RequestType:            models.SystemIntakeRequestTypeNEW,
-			ProjectName:            null.StringFrom("System Intake"),
-			BusinessOwner:          null.StringFrom("Shane Clark"),
-			BusinessOwnerComponent: null.StringFrom("OIT"),
-			LifecycleID:            null.StringFrom("000001"),
-		}
-		must(store.CreateSystemIntake(ctx, &intake))
-		must(store.UpdateSystemIntake(ctx, &intake)) // required to set lifecycle id
-
-		accessibilityRequest.IntakeID = intake.ID
-	}
-	must(store.CreateAccessibilityRequestAndInitialStatusRecord(ctx, accessibilityRequest))
-	return accessibilityRequest
 }
 
 func must(_ interface{}, err error) {

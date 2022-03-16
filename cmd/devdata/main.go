@@ -2,7 +2,6 @@ package main
 
 import (
 	"context"
-	"fmt"
 	"time"
 
 	"github.com/google/uuid"
@@ -45,15 +44,8 @@ func main() {
 		panic(storeErr)
 	}
 
-	makeAccessibilityRequest("TACO", store)
-	makeAccessibilityRequest("Big Project", store)
-
 	now := time.Now()
 	yyyy, mm, dd := now.Date()
-
-	makeAccessibilityRequest("Seeded 508 Request", store, func(i *models.AccessibilityRequest) {
-		i.ID = uuid.MustParse("6e224030-09d5-46f7-ad04-4bb851b36eab")
-	})
 
 	// Test date is one day after the 508 request is created
 	makeTestDate(logger, store, func(i *models.TestDate) {
@@ -302,35 +294,6 @@ func makeBusinessCase(name string, logger *zap.Logger, store *storage.Store, int
 }
 
 var lcid = 0
-
-func makeAccessibilityRequest(name string, store *storage.Store, callbacks ...func(*models.AccessibilityRequest)) *models.AccessibilityRequest {
-	ctx := context.Background()
-
-	lifecycleID := fmt.Sprintf("%06d", lcid)
-	lcid = lcid + 1
-
-	intake := models.SystemIntake{
-		Status:                 models.SystemIntakeStatusLCIDISSUED,
-		RequestType:            models.SystemIntakeRequestTypeNEW,
-		ProjectName:            null.StringFrom(name),
-		BusinessOwner:          null.StringFrom("Shane Clark"),
-		BusinessOwnerComponent: null.StringFrom("OIT"),
-		LifecycleID:            null.StringFrom(lifecycleID),
-	}
-	must(store.CreateSystemIntake(ctx, &intake))
-	must(store.UpdateSystemIntake(ctx, &intake)) // required to set lifecycle id
-
-	accessibilityRequest := models.AccessibilityRequest{
-		Name:      fmt.Sprintf("%s v2", name),
-		IntakeID:  intake.ID,
-		EUAUserID: "ABCD",
-	}
-	for _, cb := range callbacks {
-		cb(&accessibilityRequest)
-	}
-	must(store.CreateAccessibilityRequestAndInitialStatusRecord(ctx, &accessibilityRequest))
-	return &accessibilityRequest
-}
 
 func makeTestDate(logger *zap.Logger, store *storage.Store, callbacks ...func(*models.TestDate)) {
 	ctx := appcontext.WithLogger(context.Background(), logger)
