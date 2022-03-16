@@ -186,15 +186,6 @@ func (s *Server) routes(
 				services.AuthorizeHasEASiRole,
 				store.CreateTestDate,
 			),
-			AddGRTFeedback: services.NewProvideGRTFeedback(
-				serviceConfig,
-				store.FetchSystemIntakeByID,
-				store.UpdateSystemIntake,
-				saveAction,
-				store.CreateGRTFeedback,
-				cedarLDAPClient.FetchUserInfo,
-				emailClient.SendSystemIntakeReviewEmail,
-			),
 			CreateActionUpdateStatus: services.NewCreateActionUpdateStatus(
 				serviceConfig,
 				store.UpdateSystemIntakeStatus,

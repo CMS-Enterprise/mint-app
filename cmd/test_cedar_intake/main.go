@@ -22,7 +22,6 @@ import (
 type testData struct {
 	action       *models.Action
 	businessCase *models.BusinessCase
-	feedback     *models.GRTFeedback
 	note         *models.Note
 	systemIntake *models.SystemIntake
 }
@@ -154,19 +153,9 @@ func makeTestData() *testData {
 		AlternativeBCostSavings: null.StringFrom(""),
 	}
 
-	feedback := &models.GRTFeedback{
-		ID:           uuid.New(),
-		IntakeID:     systemIntake.ID,
-		FeedbackType: models.GRTFeedbackTypeGRB,
-		Feedback:     "Example feedback",
-		CreatedAt:    &now,
-		UpdatedAt:    &now,
-	}
-
 	return &testData{
 		action,
 		businessCase,
-		feedback,
 		note,
 		systemIntake,
 	}
@@ -222,11 +211,6 @@ func main() {
 	err = client.PublishBusinessCase(ctx, *testData.businessCase)
 	noErr(err)
 	fmt.Println("Successfully sent business case")
-
-	fmt.Println("Sending GRT feedback")
-	err = client.PublishGRTFeedback(ctx, *testData.feedback)
-	noErr(err)
-	fmt.Println("Successfully sent GRT feedback")
 
 	/*
 		fmt.Println("Sending note")
