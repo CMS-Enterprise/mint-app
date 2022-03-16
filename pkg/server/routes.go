@@ -180,11 +180,6 @@ func (s *Server) routes(
 	resolver := graph.NewResolver(
 		store,
 		graph.ResolverService{
-			CreateTestDate: services.NewCreateTestDate(
-				serviceConfig,
-				services.AuthorizeHasEASiRole,
-				store.CreateTestDate,
-			),
 			CreateActionUpdateStatus: services.NewCreateActionUpdateStatus(
 				serviceConfig,
 				store.UpdateSystemIntakeStatus,

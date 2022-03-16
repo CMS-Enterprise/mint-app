@@ -44,17 +44,6 @@ func main() {
 		panic(storeErr)
 	}
 
-	now := time.Now()
-	yyyy, mm, dd := now.Date()
-
-	// Test date is one day after the 508 request is created
-	makeTestDate(logger, store, func(i *models.TestDate) {
-		i.ID = uuid.MustParse("18624c5b-4c00-49a7-960f-ac6d8b2c58df")
-		i.RequestID = uuid.MustParse("6e224030-09d5-46f7-ad04-4bb851b36eab")
-		i.TestType = models.TestDateTestTypeInitial
-		i.Date = time.Date(yyyy, mm, dd+1, 0, 0, 0, 0, time.UTC)
-	})
-
 	makeSystemIntake("A Completed Intake Form", logger, store, func(i *models.SystemIntake) {
 		i.ID = uuid.MustParse("af7a3924-3ff7-48ec-8a54-b8b4bc95610b")
 	})
@@ -183,20 +172,6 @@ func makeSystemIntake(name string, logger *zap.Logger, store *storage.Store, cal
 	}))
 
 	return &intake
-}
-
-var lcid = 0
-
-func makeTestDate(logger *zap.Logger, store *storage.Store, callbacks ...func(*models.TestDate)) {
-	ctx := appcontext.WithLogger(context.Background(), logger)
-
-	testDate := models.TestDate{}
-	for _, cb := range callbacks {
-		cb(&testDate)
-	}
-
-	must(store.CreateTestDate(ctx, &testDate))
-
 }
 
 func must(_ interface{}, err error) {
