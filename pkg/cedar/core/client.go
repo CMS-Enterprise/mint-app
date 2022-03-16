@@ -64,7 +64,8 @@ func NewClient(ctx context.Context, cedarHost string, cedarAPIKey string, ldClie
 	}
 
 	// Start cache refresh for systems
-	client.startCacheRefresh(ctx, time.Minute*5, client.populateSystemSummaryCache)
+	// -- Commented out pending a populateSystemSummaryCache implementation
+	// client.startCacheRefresh(ctx, time.Minute*5, client.populateSystemSummaryCache)
 
 	return client
 }
