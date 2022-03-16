@@ -183,7 +183,6 @@ const (
 
 type entry struct {
 	Intake models.SystemIntake `json:"intake"`
-	Notes  []models.Note       `json:"notes"`
 }
 
 func convert(row []string) (*entry, error) {
@@ -291,27 +290,6 @@ func convert(row []string) (*entry, error) {
 	}
 
 	data.Intake.AdminLead = null.StringFrom(row[colAdminLead])
-
-	if row[colGRTNotes] != "" {
-		data.Notes = append(data.Notes, models.Note{
-			Content:    null.StringFrom(row[colGRTNotes]),
-			AuthorName: null.StringFrom(row[colAdminLead]),
-		})
-	}
-
-	if row[colPeriod] != "" {
-		data.Notes = append(data.Notes, models.Note{
-			Content:    null.StringFrom(fmt.Sprintf("Period of Performance - %s", row[colPeriod])),
-			AuthorName: null.StringFrom(row[colAdminLead]),
-		})
-	}
-
-	if row[colCostFree] != "" {
-		data.Notes = append(data.Notes, models.Note{
-			Content:    null.StringFrom(fmt.Sprintf("Anticipated Cost Increase - %s", row[colCostFree])),
-			AuthorName: null.StringFrom(row[colAdminLead]),
-		})
-	}
 
 	// SEND IT BACK!
 	return data, nil

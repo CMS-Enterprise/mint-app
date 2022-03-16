@@ -22,7 +22,6 @@ import (
 type testData struct {
 	action       *models.Action
 	businessCase *models.BusinessCase
-	note         *models.Note
 	systemIntake *models.SystemIntake
 }
 
@@ -34,7 +33,6 @@ func date(year, month, day int) *time.Time {
 
 func makeTestData() *testData {
 	now := time.Now()
-	fiveMinutesAgo := now.Add(-5 * time.Minute)
 	tenMinutesAgo := now.Add(-10 * time.Minute)
 
 	projectName := "Intake API Test Project"
@@ -86,16 +84,6 @@ func makeTestData() *testData {
 		ActorEmail:     "actor@example.com",
 		ActorEUAUserID: "ACT1",
 		CreatedAt:      &tenMinutesAgo,
-	}
-
-	// borrowed from cmd/devdata/main.go makeSystemIntake()
-	note := &models.Note{
-		ID:             uuid.New(),
-		SystemIntakeID: systemIntake.ID,
-		AuthorEUAID:    "QQQQ",
-		AuthorName:     null.StringFrom("Author Name"),
-		Content:        null.StringFrom("a clever remark"),
-		CreatedAt:      &fiveMinutesAgo,
 	}
 
 	// borrowed from cmd/devdata/main.go makeBusinessCase()
@@ -156,7 +144,6 @@ func makeTestData() *testData {
 	return &testData{
 		action,
 		businessCase,
-		note,
 		systemIntake,
 	}
 }

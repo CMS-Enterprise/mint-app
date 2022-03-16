@@ -10,7 +10,7 @@ import (
 	"github.com/cmsgov/easi-app/pkg/models"
 )
 
-type saver func(ctx context.Context, intake models.SystemIntake, notes []models.Note) (bool, error)
+type saver func(ctx context.Context, intake models.SystemIntake) (bool, error)
 
 // NewBackfillHandler is quick & dirty
 func NewBackfillHandler(base HandlerBase, s saver) BackfillHandler {
@@ -43,14 +43,13 @@ func (h BackfillHandler) Handle() http.HandlerFunc {
 			decoder := json.NewDecoder(r.Body)
 			data := struct {
 				Intake models.SystemIntake `json:"intake"`
-				Notes  []models.Note       `json:"notes"`
 			}{}
 			if err := decoder.Decode(&data); err != nil {
 				h.WriteErrorResponse(r.Context(), w, &apperrors.BadRequestError{Err: err})
 				return
 			}
 
-			create, saveErr := h.Saver(r.Context(), data.Intake, data.Notes)
+			create, saveErr := h.Saver(r.Context(), data.Intake)
 			if saveErr != nil {
 				h.WriteErrorResponse(r.Context(), w, &apperrors.BadRequestError{Err: saveErr})
 				return

@@ -116,12 +116,6 @@ func (c *Client) PublishAction(ctx context.Context, action models.Action) error 
 	return c.publishIntakeObject(ctx, &intakeObject)
 }
 
-// PublishNote sends a note to CEDAR through the Intake API for eventual storage in Alfabet
-func (c *Client) PublishNote(ctx context.Context, note models.Note) error {
-	intakeObject := translation.TranslatableNote(note)
-	return c.publishIntakeObject(ctx, &intakeObject)
-}
-
 // private method for publishing anything that satisfies the translation.IntakeObject interface to CEDAR through the Intake API
 func (c *Client) publishIntakeObject(ctx context.Context, model translation.IntakeObject) error {
 	// constant values for now; may become non-constant if/when we revisit handling CEDAR validation errors

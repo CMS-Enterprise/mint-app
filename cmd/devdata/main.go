@@ -199,7 +199,6 @@ func makeSystemIntake(name string, logger *zap.Logger, store *storage.Store, cal
 	must(store.UpdateSystemIntake(ctx, &intake)) // required to set lifecycle id
 
 	tenMinutesAgo := time.Now().Add(-10 * time.Minute)
-	fiveMinutesAgo := time.Now().Add(-5 * time.Minute)
 
 	must(store.CreateAction(ctx, &models.Action{
 		IntakeID:       &intake.ID,
@@ -216,14 +215,6 @@ func makeSystemIntake(name string, logger *zap.Logger, store *storage.Store, cal
 		ActorEmail:     "actor@example.com",
 		ActorEUAUserID: "ACT2",
 		Feedback:       null.StringFrom("This business case needs feedback"),
-	}))
-
-	must(store.CreateNote(ctx, &models.Note{
-		SystemIntakeID: intake.ID,
-		AuthorEUAID:    "QQQQ",
-		AuthorName:     null.StringFrom("Author Name"),
-		Content:        null.StringFrom("a clever remark"),
-		CreatedAt:      &fiveMinutesAgo,
 	}))
 
 	return &intake
