@@ -89,12 +89,4 @@ func (s ClientTestSuite) TestTranslation() {
 		s.NoError(err)
 		s.NotNil(ii)
 	})
-
-	s.Run("biz case", func() {
-		bc := translation.TranslatableBusinessCase(testhelpers.NewBusinessCase())
-
-		ii, err := bc.CreateIntakeModel()
-		s.NoError(err)
-		s.NotNil(ii)
-	})
 }

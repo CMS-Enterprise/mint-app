@@ -450,13 +450,9 @@ func (s StoreTestSuite) TestFetchSystemIntakeByID() {
 	s.Run("fetches biz case id if exists", func() {
 		intake := testhelpers.NewSystemIntake()
 		id := intake.ID
-		bizCase := testhelpers.NewBusinessCase()
-		bizCase.SystemIntakeID = id
 
 		tx := s.db.MustBegin()
 		_, err := tx.NamedExec(insertBasicIntakeSQL, &intake)
-		s.NoError(err)
-		_, err = tx.NamedExec(insertRelatedBizCaseSQL, &bizCase)
 		s.NoError(err)
 		err = tx.Commit()
 		s.NoError(err)
@@ -465,7 +461,6 @@ func (s StoreTestSuite) TestFetchSystemIntakeByID() {
 
 		s.NoError(err, "failed to fetch system intake")
 		s.Equal(intake.ID, fetched.ID)
-		s.Equal(&bizCase.ID, fetched.BusinessCaseID)
 	})
 }
 
@@ -525,15 +520,10 @@ func (s StoreTestSuite) TestFetchSystemIntakesByEuaID() {
 		id := intake.ID
 		intake2.EUAUserID = intake.EUAUserID
 
-		bizCase := testhelpers.NewBusinessCase()
-		bizCase.SystemIntakeID = id
-
 		tx := s.db.MustBegin()
 		_, err := tx.NamedExec(insertBasicIntakeSQL, &intake)
 		s.NoError(err)
 		_, err = tx.NamedExec(insertBasicIntakeSQL, &intake2)
-		s.NoError(err)
-		_, err = tx.NamedExec(insertRelatedBizCaseSQL, &bizCase)
 		s.NoError(err)
 		err = tx.Commit()
 		s.NoError(err)
@@ -542,14 +532,7 @@ func (s StoreTestSuite) TestFetchSystemIntakesByEuaID() {
 
 		s.NoError(err, "failed to fetch system intakes")
 		s.Len(fetched, 2)
-		fetchedIntakeWithBizCase := func(fetched models.SystemIntakes) models.SystemIntake {
-			for _, intake := range fetched {
-				if intake.ID == id {
-					return intake
-				}
-			}
-			return models.SystemIntake{}
-		}
+
 		fetchedIntakeWithoutBizCase := func(fetched models.SystemIntakes) models.SystemIntake {
 			for _, intake := range fetched {
 				if intake.ID != id {
@@ -558,7 +541,6 @@ func (s StoreTestSuite) TestFetchSystemIntakesByEuaID() {
 			}
 			return models.SystemIntake{}
 		}
-		s.Equal(&bizCase.ID, fetchedIntakeWithBizCase(fetched).BusinessCaseID)
 		s.Equal((*uuid.UUID)(nil), fetchedIntakeWithoutBizCase(fetched).BusinessCaseID)
 	})
 }

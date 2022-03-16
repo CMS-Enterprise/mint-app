@@ -6,8 +6,6 @@ import (
 
 	"github.com/google/uuid"
 	"github.com/guregu/null"
-
-	"github.com/cmsgov/easi-app/pkg/models"
 )
 
 // RequireNullBool checks if it's a valid nullBool
@@ -47,9 +45,4 @@ func FundingNumberInvalid(fundingNumber string) bool {
 		return false
 	}
 	return true
-}
-
-// RequireCostPhase checks if it's not nil
-func RequireCostPhase(p *models.LifecycleCostPhase) bool {
-	return p == nil
 }

@@ -23,7 +23,6 @@ import (
 	"github.com/cmsgov/easi-app/pkg/appconfig"
 	"github.com/cmsgov/easi-app/pkg/appcontext"
 	"github.com/cmsgov/easi-app/pkg/appses"
-	"github.com/cmsgov/easi-app/pkg/appvalidation"
 	"github.com/cmsgov/easi-app/pkg/authorization"
 	"github.com/cmsgov/easi-app/pkg/cedar/cedarldap"
 
@@ -192,11 +191,6 @@ func (s *Server) routes(
 				saveAction,
 				cedarLDAPClient.FetchUserInfo,
 				emailClient.SendSystemIntakeReviewEmail,
-				services.NewCloseBusinessCase(
-					serviceConfig,
-					store.FetchBusinessCaseByID,
-					store.UpdateBusinessCase,
-				),
 			),
 			CreateActionExtendLifecycleID: services.NewCreateActionExtendLifecycleID(
 				serviceConfig,
@@ -283,11 +277,6 @@ func (s *Server) routes(
 			serviceConfig,
 			store.FetchSystemIntakeByID,
 			store.UpdateSystemIntake,
-			services.NewCloseBusinessCase(
-				serviceConfig,
-				store.FetchBusinessCaseByID,
-				store.UpdateBusinessCase,
-			),
 			services.AuthorizeUserIsIntakeRequester,
 			emailClient.SendWithdrawRequestEmail,
 		),
@@ -305,33 +294,8 @@ func (s *Server) routes(
 			services.AuthorizeHasEASiRole,
 		),
 	)
-	api.Handle("/system_intakes", systemIntakesHandler.Handle())
 
-	businessCaseHandler := handlers.NewBusinessCaseHandler(
-		base,
-		services.NewFetchBusinessCaseByID(
-			serviceConfig,
-			store.FetchBusinessCaseByID,
-			services.AuthorizeHasEASiRole,
-		),
-		services.NewCreateBusinessCase(
-			serviceConfig,
-			store.FetchSystemIntakeByID,
-			services.AuthorizeUserIsIntakeRequester,
-			store.CreateAction,
-			cedarLDAPClient.FetchUserInfo,
-			store.CreateBusinessCase,
-			store.UpdateSystemIntake,
-		),
-		services.NewUpdateBusinessCase(
-			serviceConfig,
-			store.FetchBusinessCaseByID,
-			services.AuthorizeUserIsBusinessCaseRequester,
-			store.UpdateBusinessCase,
-		),
-	)
-	api.Handle("/business_case/{business_case_id}", businessCaseHandler.Handle())
-	api.Handle("/business_case", businessCaseHandler.Handle())
+	api.Handle("/system_intakes", systemIntakesHandler.Handle())
 
 	metricsHandler := handlers.NewSystemIntakeMetricsHandler(
 		base,
@@ -346,28 +310,7 @@ func (s *Server) routes(
 		services.NewTakeAction(
 			store.FetchSystemIntakeByID,
 			map[models.ActionType]services.ActionExecuter{
-				models.ActionTypeSUBMITBIZCASE: services.NewSubmitBusinessCase(
-					serviceConfig,
-					services.AuthorizeUserIsIntakeRequester,
-					store.FetchOpenBusinessCaseByIntakeID,
-					appvalidation.BusinessCaseForSubmit,
-					saveAction,
-					store.UpdateSystemIntake,
-					store.UpdateBusinessCase,
-					emailClient.SendBusinessCaseSubmissionEmail,
-					models.SystemIntakeStatusBIZCASEDRAFTSUBMITTED,
-				),
-				models.ActionTypeSUBMITFINALBIZCASE: services.NewSubmitBusinessCase(
-					serviceConfig,
-					services.AuthorizeUserIsIntakeRequester,
-					store.FetchOpenBusinessCaseByIntakeID,
-					appvalidation.BusinessCaseForSubmit,
-					saveAction,
-					store.UpdateSystemIntake,
-					store.UpdateBusinessCase,
-					emailClient.SendBusinessCaseSubmissionEmail,
-					models.SystemIntakeStatusBIZCASEFINALSUBMITTED,
-				), models.ActionTypeSUBMITINTAKE: services.NewSubmitSystemIntake(
+				models.ActionTypeSUBMITINTAKE: services.NewSubmitSystemIntake(
 					serviceConfig,
 					services.AuthorizeUserIsIntakeRequester,
 					store.UpdateSystemIntake,

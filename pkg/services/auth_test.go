@@ -53,48 +53,6 @@ func (s ServicesTestSuite) TestAuthorizeUserIsIntakeRequester() {
 	})
 }
 
-func (s ServicesTestSuite) TestAuthorizeUserIsBusinessCaseRequester() {
-	authorizeSaveBizCase := AuthorizeUserIsBusinessCaseRequester
-
-	s.Run("No EASi job code fails auth", func() {
-		ctx := context.Background()
-		ctx = appcontext.WithPrincipal(ctx, &authentication.EUAPrincipal{JobCodeEASi: false})
-
-		ok, err := authorizeSaveBizCase(ctx, &models.BusinessCase{})
-
-		s.False(ok)
-		s.NoError(err)
-	})
-
-	s.Run("Mismatched EUA ID fails auth", func() {
-		ctx := context.Background()
-		ctx = appcontext.WithPrincipal(ctx, &authentication.EUAPrincipal{EUAID: "ZYXW", JobCodeEASi: true})
-
-		bizCase := models.BusinessCase{
-			EUAUserID: "ABCD",
-		}
-
-		ok, err := authorizeSaveBizCase(ctx, &bizCase)
-
-		s.False(ok)
-		s.NoError(err)
-	})
-
-	s.Run("Matched EUA ID passes auth", func() {
-		ctx := context.Background()
-		ctx = appcontext.WithPrincipal(ctx, &authentication.EUAPrincipal{EUAID: "ABCD", JobCodeEASi: true})
-
-		bizCase := models.BusinessCase{
-			EUAUserID: "ABCD",
-		}
-
-		ok, err := authorizeSaveBizCase(ctx, &bizCase)
-
-		s.True(ok)
-		s.NoError(err)
-	})
-}
-
 func (s ServicesTestSuite) TestHasRole() {
 	fnAuth := HasRole
 	nonGRT := authentication.EUAPrincipal{EUAID: "FAKE", JobCodeEASi: true, JobCodeGRT: false}

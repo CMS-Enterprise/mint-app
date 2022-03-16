@@ -116,41 +116,6 @@ func main() {
 	makeSystemIntake("Closable Request", logger, store, func(i *models.SystemIntake) {
 		i.ID = uuid.MustParse("20cbcfbf-6459-4c96-943b-e76b83122dbf")
 	})
-
-	intake := makeSystemIntake("Draft Business Case", logger, store, func(i *models.SystemIntake) {
-		i.Status = models.SystemIntakeStatusBIZCASEDRAFT
-	})
-	makeBusinessCase("Draft Business Case", logger, store, intake)
-
-	intake = makeSystemIntake("With GRB scheduled", logger, store, func(i *models.SystemIntake) {
-		i.Status = models.SystemIntakeStatusREADYFORGRB
-		tomorrow := time.Now().Add(24 * time.Hour)
-		nextMonth := time.Now().Add(30 * 24 * time.Hour)
-		i.GRBDate = &tomorrow
-		i.GRTDate = &nextMonth
-	})
-	makeBusinessCase("With GRB scheduled", logger, store, intake)
-
-	intake = makeSystemIntake("With GRT scheduled", logger, store, func(i *models.SystemIntake) {
-		i.Status = models.SystemIntakeStatusREADYFORGRT
-		lastMonth := time.Now().Add(-30 * 24 * time.Hour)
-		tomorrow := time.Now().Add(24 * time.Hour)
-		i.GRBDate = &lastMonth
-		i.GRTDate = &tomorrow
-	})
-	makeBusinessCase("With GRT scheduled", logger, store, intake)
-
-	intake = makeSystemIntake("With LCID Issued", logger, store, func(i *models.SystemIntake) {
-		lifecycleExpiresAt := time.Now().Add(30 * 24 * time.Hour)
-		submittedAt := time.Now().Add(-365 * 24 * time.Hour)
-		i.LifecycleID = null.StringFrom("210001")
-		i.LifecycleExpiresAt = &lifecycleExpiresAt
-		i.Status = models.SystemIntakeStatusLCIDISSUED
-		i.SubmittedAt = &submittedAt
-	})
-	makeBusinessCase("With LCID Issued", logger, store, intake, func(c *models.BusinessCase) {
-		c.Status = models.BusinessCaseStatusCLOSED
-	})
 }
 
 func makeSystemIntake(name string, logger *zap.Logger, store *storage.Store, callbacks ...func(*models.SystemIntake)) *models.SystemIntake {
@@ -218,70 +183,6 @@ func makeSystemIntake(name string, logger *zap.Logger, store *storage.Store, cal
 	}))
 
 	return &intake
-}
-
-func makeBusinessCase(name string, logger *zap.Logger, store *storage.Store, intake *models.SystemIntake, callbacks ...func(*models.BusinessCase)) {
-	ctx := appcontext.WithLogger(context.Background(), logger)
-	if intake == nil {
-		intake = makeSystemIntake(name, logger, store)
-	}
-
-	phase := models.LifecycleCostPhaseDEVELOPMENT
-	cost := 123456
-	noCost := 0
-	businessCase := models.BusinessCase{
-		SystemIntakeID:       intake.ID,
-		EUAUserID:            "ABCD",
-		Requester:            null.StringFrom("Shane Clark"),
-		RequesterPhoneNumber: null.StringFrom("3124567890"),
-		Status:               models.BusinessCaseStatusOPEN,
-		ProjectName:          null.StringFrom(name),
-		BusinessOwner:        null.StringFrom("Shane Clark"),
-		BusinessNeed:         null.StringFrom("business need"),
-		LifecycleCostLines: []models.EstimatedLifecycleCost{
-			{
-				Solution: models.LifecycleCostSolutionASIS,
-				Year:     models.LifecycleCostYear1,
-				Phase:    &phase,
-				Cost:     &cost,
-			},
-			{
-				Solution: models.LifecycleCostSolutionA,
-				Year:     models.LifecycleCostYear2,
-			},
-			{
-				Solution: models.LifecycleCostSolutionA,
-				Year:     models.LifecycleCostYear3,
-				Cost:     &noCost,
-			},
-		},
-		CMSBenefit:        null.StringFrom(""),
-		PriorityAlignment: null.StringFrom(""),
-		SuccessIndicators: null.StringFrom(""),
-
-		AsIsTitle:       null.StringFrom(""),
-		AsIsSummary:     null.StringFrom(""),
-		AsIsPros:        null.StringFrom(""),
-		AsIsCons:        null.StringFrom(""),
-		AsIsCostSavings: null.StringFrom(""),
-
-		AlternativeATitle:       null.StringFrom(""),
-		AlternativeASummary:     null.StringFrom(""),
-		AlternativeAPros:        null.StringFrom(""),
-		AlternativeACons:        null.StringFrom(""),
-		AlternativeACostSavings: null.StringFrom(""),
-
-		AlternativeBTitle:       null.StringFrom(""),
-		AlternativeBSummary:     null.StringFrom(""),
-		AlternativeBPros:        null.StringFrom(""),
-		AlternativeBCons:        null.StringFrom(""),
-		AlternativeBCostSavings: null.StringFrom(""),
-	}
-	for _, cb := range callbacks {
-		cb(&businessCase)
-	}
-
-	must(store.CreateBusinessCase(ctx, &businessCase))
 }
 
 var lcid = 0

@@ -244,9 +244,6 @@ func (s ServicesTestSuite) TestSystemIntakeArchiver() {
 	update := func(ctx context.Context, intake *models.SystemIntake) (*models.SystemIntake, error) {
 		return intake, nil
 	}
-	archiveBusinessCase := func(ctx context.Context, id uuid.UUID) error {
-		return nil
-	}
 	authorize := func(ctx context.Context, intake *models.SystemIntake) (bool, error) {
 		return true, nil
 	}
@@ -255,7 +252,7 @@ func (s ServicesTestSuite) TestSystemIntakeArchiver() {
 	}
 
 	s.Run("golden path archive system intake", func() {
-		archiveSystemIntake := NewArchiveSystemIntake(serviceConfig, fetch, update, archiveBusinessCase, authorize, sendWithdrawEmail)
+		archiveSystemIntake := NewArchiveSystemIntake(serviceConfig, fetch, update, authorize, sendWithdrawEmail)
 		err := archiveSystemIntake(ctx, fakeID)
 		s.NoError(err)
 	})
@@ -264,7 +261,7 @@ func (s ServicesTestSuite) TestSystemIntakeArchiver() {
 		failFetch := func(ctx context.Context, id uuid.UUID) (*models.SystemIntake, error) {
 			return &models.SystemIntake{}, errors.New("fetch failed")
 		}
-		archiveSystemIntake := NewArchiveSystemIntake(serviceConfig, failFetch, update, archiveBusinessCase, authorize, sendWithdrawEmail)
+		archiveSystemIntake := NewArchiveSystemIntake(serviceConfig, failFetch, update, authorize, sendWithdrawEmail)
 		err := archiveSystemIntake(ctx, fakeID)
 		s.IsType(&apperrors.QueryError{}, err)
 	})
@@ -274,7 +271,7 @@ func (s ServicesTestSuite) TestSystemIntakeArchiver() {
 		failAuthorize := func(ctx context.Context, intake *models.SystemIntake) (bool, error) {
 			return false, actualError
 		}
-		archiveSystemIntake := NewArchiveSystemIntake(serviceConfig, fetch, update, archiveBusinessCase, failAuthorize, sendWithdrawEmail)
+		archiveSystemIntake := NewArchiveSystemIntake(serviceConfig, fetch, update, failAuthorize, sendWithdrawEmail)
 		err := archiveSystemIntake(ctx, fakeID)
 		s.Error(err)
 		s.Equal(actualError, err)
@@ -284,27 +281,24 @@ func (s ServicesTestSuite) TestSystemIntakeArchiver() {
 		failAuthorize := func(ctx context.Context, intake *models.SystemIntake) (bool, error) {
 			return false, nil
 		}
-		archiveSystemIntake := NewArchiveSystemIntake(serviceConfig, fetch, update, archiveBusinessCase, failAuthorize, sendWithdrawEmail)
+		archiveSystemIntake := NewArchiveSystemIntake(serviceConfig, fetch, update, failAuthorize, sendWithdrawEmail)
 		err := archiveSystemIntake(ctx, fakeID)
 		s.IsType(&apperrors.UnauthorizedError{}, err)
 	})
 
 	s.Run("returns error from archive business case", func() {
 		actualError := errors.New("failed to archive business case")
-		failArchiveBusinessCase := func(ctx context.Context, id uuid.UUID) error {
-			return actualError
-		}
-		archiveSystemIntake := NewArchiveSystemIntake(serviceConfig, fetch, update, failArchiveBusinessCase, authorize, sendWithdrawEmail)
+		archiveSystemIntake := NewArchiveSystemIntake(serviceConfig, fetch, update, authorize, sendWithdrawEmail)
 		err := archiveSystemIntake(ctx, fakeID)
 		s.Error(err)
 		s.Equal(actualError, err)
 	})
 
 	s.Run("returns query error when update fails", func() {
-		failUpdate := func(ctx context.Context, businessCase *models.SystemIntake) (*models.SystemIntake, error) {
+		failUpdate := func(ctx context.Context, intake *models.SystemIntake) (*models.SystemIntake, error) {
 			return &models.SystemIntake{}, errors.New("update failed")
 		}
-		archiveSystemIntake := NewArchiveSystemIntake(serviceConfig, fetch, failUpdate, archiveBusinessCase, authorize, sendWithdrawEmail)
+		archiveSystemIntake := NewArchiveSystemIntake(serviceConfig, fetch, failUpdate, authorize, sendWithdrawEmail)
 		err := archiveSystemIntake(ctx, fakeID)
 		s.IsType(&apperrors.QueryError{}, err)
 	})

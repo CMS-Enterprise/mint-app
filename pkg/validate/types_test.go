@@ -5,8 +5,6 @@ import (
 
 	"github.com/google/uuid"
 	"github.com/guregu/null"
-
-	"github.com/cmsgov/easi-app/pkg/models"
 )
 
 func (s ValidateTestSuite) TestRequireNullBool() {
@@ -77,16 +75,5 @@ func (s ValidateTestSuite) TestFundingNumberInvalid() {
 	})
 	s.Run("funding number is valid", func() {
 		s.False(FundingNumberInvalid("123456"))
-	})
-}
-
-func (s ValidateTestSuite) TestRequireCostPhase() {
-	s.Run("cost phase pointer is nil", func() {
-		var p *models.LifecycleCostPhase
-		s.True(RequireCostPhase(p))
-	})
-	s.Run("int pointer is nil", func() {
-		p := models.LifecycleCostPhaseOPERATIONMAINTENANCE
-		s.False(RequireCostPhase(&p))
 	})
 }

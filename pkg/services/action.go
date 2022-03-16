@@ -153,93 +153,6 @@ func NewSubmitSystemIntake(
 	}
 }
 
-// NewSubmitBusinessCase returns a function that
-// executes submit of a business case
-func NewSubmitBusinessCase(
-	config Config,
-	authorize func(context.Context, *models.SystemIntake) (bool, error),
-	fetchOpenBusinessCase func(context.Context, uuid.UUID) (*models.BusinessCase, error),
-	validateForSubmit func(businessCase *models.BusinessCase) error,
-	saveAction func(context.Context, *models.Action) error,
-	updateIntake func(context.Context, *models.SystemIntake) (*models.SystemIntake, error),
-	updateBusinessCase func(context.Context, *models.BusinessCase) (*models.BusinessCase, error),
-	sendEmail func(ctx context.Context, requestName string, intakeID uuid.UUID) error,
-	newIntakeStatus models.SystemIntakeStatus,
-) ActionExecuter {
-	return func(ctx context.Context, intake *models.SystemIntake, action *models.Action) error {
-		ok, err := authorize(ctx, intake)
-		if err != nil {
-			return err
-		}
-		if !ok {
-			return &apperrors.UnauthorizedError{Err: err}
-		}
-
-		businessCase, err := fetchOpenBusinessCase(ctx, intake.ID)
-		if err != nil {
-			return &apperrors.QueryError{
-				Err:       err,
-				Operation: apperrors.QueryFetch,
-				Model:     intake,
-			}
-		}
-		// Uncomment below when UI has changed for unique lifecycle costs
-		//err = appvalidation.BusinessCaseForUpdate(businessCase)
-		//if err != nil {
-		//	return &models.BusinessCase{}, err
-		//}
-		updatedAt := config.clock.Now()
-		businessCase.UpdatedAt = &updatedAt
-
-		if businessCase.InitialSubmittedAt == nil {
-			businessCase.InitialSubmittedAt = &updatedAt
-		}
-		businessCase.LastSubmittedAt = &updatedAt
-		if businessCase.SystemIntakeStatus == models.SystemIntakeStatusBIZCASEFINALNEEDED {
-			err = validateForSubmit(businessCase)
-			if err != nil {
-				return err
-			}
-		}
-
-		err = saveAction(ctx, action)
-		if err != nil {
-			return &apperrors.QueryError{
-				Err:       err,
-				Model:     action,
-				Operation: apperrors.QueryPost,
-			}
-		}
-
-		businessCase, err = updateBusinessCase(ctx, businessCase)
-		if err != nil {
-			return &apperrors.QueryError{
-				Err:       err,
-				Model:     businessCase,
-				Operation: apperrors.QuerySave,
-			}
-		}
-
-		intake.Status = newIntakeStatus
-		intake.UpdatedAt = &updatedAt
-		intake, err = updateIntake(ctx, intake)
-		if err != nil {
-			return &apperrors.QueryError{
-				Err:       err,
-				Model:     intake,
-				Operation: apperrors.QuerySave,
-			}
-		}
-
-		err = sendEmail(ctx, businessCase.ProjectName.String, businessCase.SystemIntakeID)
-		if err != nil {
-			appcontext.ZLogger(ctx).Error("Submit Business Case email failed to send: ", zap.Error(err))
-		}
-
-		return nil
-	}
-}
-
 // NewTakeActionUpdateStatus returns a function that
 // updates the status of a request
 func NewTakeActionUpdateStatus(
@@ -317,7 +230,6 @@ func NewCreateActionUpdateStatus(
 	saveAction func(context.Context, *models.Action) error,
 	fetchUserInfo func(context.Context, string) (*models.UserInfo, error),
 	sendReviewEmail func(ctx context.Context, emailText string, recipientAddress models.EmailAddress, intakeID uuid.UUID) error,
-	closeBusinessCase func(context.Context, uuid.UUID) error,
 ) func(context.Context, *models.Action, uuid.UUID, models.SystemIntakeStatus, bool) (*models.SystemIntake, error) {
 	return func(
 		ctx context.Context,
@@ -337,12 +249,6 @@ func NewCreateActionUpdateStatus(
 				Err:       err,
 				Model:     intake,
 				Operation: apperrors.QuerySave,
-			}
-		}
-
-		if shouldCloseBusinessCase && intake.BusinessCaseID != nil {
-			if err = closeBusinessCase(ctx, *intake.BusinessCaseID); err != nil {
-				return nil, err
 			}
 		}
 

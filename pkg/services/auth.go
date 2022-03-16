@@ -78,28 +78,6 @@ func AuthorizeUserIsIntakeRequester(
 	return false, nil
 }
 
-// AuthorizeUserIsBusinessCaseRequester authorizes a user as being the requester of the given Business Case
-func AuthorizeUserIsBusinessCaseRequester(
-	ctx context.Context,
-	bizCase *models.BusinessCase,
-) (bool, error) {
-	logger := appcontext.ZLogger(ctx)
-	principal := appcontext.Principal(ctx)
-	if !principal.AllowEASi() {
-		logger.Info("does not have EASi job code")
-		return false, nil
-	}
-
-	// If business case is owned by user, authorize
-	if principal.ID() == bizCase.EUAUserID {
-		return true, nil
-	}
-	// Default to failure to authorize and create a quick audit log
-	logger.With(zap.Bool("Authorized", false)).
-		Info("user unauthorized as owning the business case")
-	return false, nil
-}
-
 // AuthorizeHasEASiRole authorizes that the user can use EASi
 func AuthorizeHasEASiRole(ctx context.Context) (bool, error) {
 	return HasRole(ctx, model.RoleEasiUser)
