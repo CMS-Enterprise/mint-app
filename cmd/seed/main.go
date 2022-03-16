@@ -8,9 +8,7 @@ package main
 // on that model in the Go code.
 
 import (
-	"encoding/json"
 	"fmt"
-	"log"
 	"os"
 
 	_ "github.com/lib/pq" // required for postgres driver in sql
@@ -19,7 +17,6 @@ import (
 	ld "gopkg.in/launchdarkly/go-server-sdk.v5"
 
 	"github.com/cmsgov/easi-app/pkg/appconfig"
-	"github.com/cmsgov/easi-app/pkg/models"
 	"github.com/cmsgov/easi-app/pkg/storage"
 	"github.com/cmsgov/easi-app/pkg/testhelpers"
 )
@@ -30,7 +27,7 @@ var rootCmd = &cobra.Command{
 	Long:  "Generates models for use in Cypress tests",
 }
 
-var accessibilityRequestCmd = &cobra.Command{
+/*var accessibilityRequestCmd = &cobra.Command{
 	Use:   "accessibilityRequest",
 	Short: "Generate an Accessibility Request",
 	Run: func(cmd *cobra.Command, args []string) {
@@ -49,7 +46,7 @@ var accessibilityRequestCmd = &cobra.Command{
 		}
 		fmt.Printf("%s", serialized)
 	},
-}
+}*/
 
 func execute() {
 	if err := rootCmd.Execute(); err != nil {
@@ -59,7 +56,7 @@ func execute() {
 }
 
 func init() {
-	rootCmd.AddCommand(accessibilityRequestCmd)
+	//rootCmd.AddCommand(accessibilityRequestCmd)
 }
 
 var store *storage.Store
