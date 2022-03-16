@@ -2,9 +2,6 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { NavLink } from 'react-router-dom';
 import { PrimaryNav } from '@trussworks/react-uswds';
-import { useFlags } from 'launchdarkly-react-client-sdk';
-
-import { Flags } from 'types/flags';
 
 import './index.scss';
 
@@ -15,36 +12,10 @@ export type NavigationProps = {
   userName?: string;
 };
 
-export const navLinks = (flags: Flags) => [
+export const navLinks = () => [
   {
     link: '/',
-    label: 'home',
-    isEnabled: true
-  },
-  {
-    link: '/systems',
-    label: 'systems',
-    isEnabled: flags.systemProfile
-  },
-  {
-    link: '/system/making-a-request',
-    label: 'addSystem',
-    isEnabled: true
-  },
-  {
-    link: '/508',
-    label: 'add508Request',
-    isEnabled: true
-  },
-  {
-    link: '/sandbox',
-    label: 'sandbox',
-    isEnabled: flags.sandbox
-  },
-  {
-    link: '/help',
-    label: 'help',
-    isEnabled: flags.help
+    label: 'home'
   }
 ];
 
@@ -55,29 +26,25 @@ const NavigationBar = ({
   userName
 }: NavigationProps) => {
   const { t } = useTranslation();
-  const flags = useFlags();
 
-  const primaryLinks = navLinks(flags).map(
-    route =>
-      route.isEnabled && (
-        <div className="easi-nav" key={route.label}>
-          <NavLink
-            to={route.link}
-            activeClassName="usa-current"
-            className="easi-nav__link"
-            onClick={() => toggle(false)}
-            exact={route.link === '/'}
-          >
-            <em
-              className="usa-logo__text easi-nav__label"
-              aria-label={t(`header:${route.label}`)}
-            >
-              {t(`header:${route.label}`)}
-            </em>
-          </NavLink>
-        </div>
-      )
-  );
+  const primaryLinks = navLinks().map(route => (
+    <div className="easi-nav" key={route.label}>
+      <NavLink
+        to={route.link}
+        activeClassName="usa-current"
+        className="easi-nav__link"
+        onClick={() => toggle(false)}
+        exact={route.link === '/'}
+      >
+        <em
+          className="usa-logo__text easi-nav__label"
+          aria-label={t(`header:${route.label}`)}
+        >
+          {t(`header:${route.label}`)}
+        </em>
+      </NavLink>
+    </div>
+  ));
 
   const userLinks = (
     <div className="easi-nav__signout-container">
