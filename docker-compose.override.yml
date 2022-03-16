@@ -45,23 +45,29 @@ services:
       - REACT_APP_LOCAL_AUTH_ENABLED
       - CHOKIDAR_USEPOLLING=true
       - ESLINT_NO_DEV_ERRORS=true
+      # - PORT=3005
     entrypoint: ['yarn', 'start']
     volumes:
       - .:/app
       - /app/node_modules
     ports:
       - 3005:3000
+      # - 3005:3005
   minio:
     ports:
       - '9005:9000'
+      # - '9005:900'
     volumes:
       - ./tmp/minio:/data
   prince:
     image: lambci/lambda:go1.x
     ports:
       - 9006:9001
+      # - 9006:9006
     environment:
       - DOCKER_LAMBDA_STAY_OPEN=1
       - LICENSE_KEY
+      # - DOCKER_LAMBDA_API_PORT=9006
+    # entrypoint: ['/var/runtime/aws-lambda-go']
     volumes:
       - ./../easi-infra-modules/lambda/prince/build:/var/task:ro,delegated
