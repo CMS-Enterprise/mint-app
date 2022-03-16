@@ -11,12 +11,9 @@ import (
 
 	"github.com/cmsgov/easi-app/pkg/appconfig"
 	"github.com/cmsgov/easi-app/pkg/cedar/intake"
-	"github.com/cmsgov/easi-app/pkg/models"
 )
 
 type testData struct {
-	action       *models.Action
-	systemIntake *models.SystemIntake
 }
 
 // borrowed from cmd/devdata/main.go

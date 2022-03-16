@@ -35,7 +35,6 @@ import (
 	"github.com/cmsgov/easi-app/pkg/graph/model"
 	"github.com/cmsgov/easi-app/pkg/handlers"
 	"github.com/cmsgov/easi-app/pkg/local"
-	"github.com/cmsgov/easi-app/pkg/models"
 	"github.com/cmsgov/easi-app/pkg/okta"
 	"github.com/cmsgov/easi-app/pkg/services"
 	"github.com/cmsgov/easi-app/pkg/storage"
@@ -172,61 +171,9 @@ func (s *Server) routes(
 
 	gql.Use(requirePrincipalMiddleware)
 
-	saveAction := services.NewSaveAction(
-		store.CreateAction,
-		cedarLDAPClient.FetchUserInfo,
-	)
-
 	resolver := graph.NewResolver(
 		store,
 		graph.ResolverService{
-			CreateActionUpdateStatus: services.NewCreateActionUpdateStatus(
-				serviceConfig,
-				store.UpdateSystemIntakeStatus,
-				saveAction,
-				cedarLDAPClient.FetchUserInfo,
-				emailClient.SendSystemIntakeReviewEmail,
-			),
-			CreateActionExtendLifecycleID: services.NewCreateActionExtendLifecycleID(
-				serviceConfig,
-				saveAction,
-				cedarLDAPClient.FetchUserInfo,
-				store.FetchSystemIntakeByID,
-				store.UpdateSystemIntake,
-				emailClient.SendSystemIntakeReviewEmail,
-			),
-			IssueLifecycleID: services.NewUpdateLifecycleFields(
-				serviceConfig,
-				services.AuthorizeRequireGRTJobCode,
-				store.FetchSystemIntakeByID,
-				store.UpdateSystemIntake,
-				saveAction,
-				cedarLDAPClient.FetchUserInfo,
-				emailClient.SendIssueLCIDEmail,
-				store.GenerateLifecycleID,
-			),
-			RejectIntake: services.NewUpdateRejectionFields(
-				serviceConfig,
-				services.AuthorizeRequireGRTJobCode,
-				store.FetchSystemIntakeByID,
-				store.UpdateSystemIntake,
-				saveAction,
-				cedarLDAPClient.FetchUserInfo,
-				emailClient.SendRejectRequestEmail,
-			),
-			SubmitIntake: services.NewSubmitSystemIntake(
-				serviceConfig,
-				services.AuthorizeUserIsIntakeRequester,
-				store.UpdateSystemIntake,
-				// quick adapter to retrofit the new interface to take the place
-				// of the old interface
-				func(ctx context.Context, si *models.SystemIntake) (string, error) {
-					err := publisher.PublishSystemIntake(ctx, *si)
-					return "", err
-				},
-				saveAction,
-				emailClient.SendSystemIntakeSubmissionEmail,
-			),
 			FetchUserInfo: cedarLDAPClient.FetchUserInfo,
 		},
 		&s3Client,
@@ -255,73 +202,11 @@ func (s *Server) routes(
 	api := s.router.PathPrefix("/api/v1").Subrouter()
 	api.Use(requirePrincipalMiddleware)
 
-	systemIntakeHandler := handlers.NewSystemIntakeHandler(
-		base,
-		services.NewUpdateSystemIntake(
-			serviceConfig,
-			store.FetchSystemIntakeByID,
-			store.UpdateSystemIntake,
-			services.AuthorizeUserIsIntakeRequesterOrHasGRTJobCode,
-		),
-		services.NewFetchSystemIntakeByID(
-			serviceConfig,
-			store.FetchSystemIntakeByID,
-			services.AuthorizeHasEASiRole,
-		),
-		services.NewArchiveSystemIntake(
-			serviceConfig,
-			store.FetchSystemIntakeByID,
-			store.UpdateSystemIntake,
-			services.AuthorizeUserIsIntakeRequester,
-			emailClient.SendWithdrawRequestEmail,
-		),
-	)
-	api.Handle("/system_intake/{intake_id}", systemIntakeHandler.Handle())
-	api.Handle("/system_intake", systemIntakeHandler.Handle())
-
-	systemIntakesHandler := handlers.NewSystemIntakesHandler(
-		base,
-		services.NewFetchSystemIntakes(
-			serviceConfig,
-			store.FetchSystemIntakesByEuaID,
-			store.FetchSystemIntakes,
-			store.FetchSystemIntakesByStatuses,
-			services.AuthorizeHasEASiRole,
-		),
-	)
-
-	api.Handle("/system_intakes", systemIntakesHandler.Handle())
-
 	metricsHandler := handlers.NewSystemIntakeMetricsHandler(
 		base,
-		services.NewFetchMetrics(
-			serviceConfig,
-			store.FetchSystemIntakeMetrics),
+		services.NewFetchMetrics(serviceConfig),
 	)
 	api.Handle("/metrics", metricsHandler.Handle())
-
-	actionHandler := handlers.NewActionHandler(
-		base,
-		services.NewTakeAction(
-			store.FetchSystemIntakeByID,
-			map[models.ActionType]services.ActionExecuter{
-				models.ActionTypeSUBMITINTAKE: services.NewSubmitSystemIntake(
-					serviceConfig,
-					services.AuthorizeUserIsIntakeRequester,
-					store.UpdateSystemIntake,
-					// quick adapter to retrofit the new interface to take the place
-					// of the old interface
-					func(ctx context.Context, si *models.SystemIntake) (string, error) {
-						err := publisher.PublishSystemIntake(ctx, *si)
-						return "", err
-					},
-					saveAction,
-					emailClient.SendSystemIntakeSubmissionEmail,
-				),
-			},
-		),
-	)
-	api.Handle("/system_intake/{intake_id}/actions", actionHandler.Handle())
 
 	s.router.PathPrefix("/").Handler(handlers.NewCatchAllHandler(
 		base,

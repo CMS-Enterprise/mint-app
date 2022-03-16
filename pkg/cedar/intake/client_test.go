@@ -4,14 +4,11 @@ import (
 	"context"
 	"testing"
 
-	"github.com/google/uuid"
 	"github.com/stretchr/testify/suite"
 	"go.uber.org/zap"
 	ld "gopkg.in/launchdarkly/go-server-sdk.v5"
 
 	"github.com/cmsgov/easi-app/pkg/appcontext"
-	"github.com/cmsgov/easi-app/pkg/cedar/intake/translation"
-	"github.com/cmsgov/easi-app/pkg/testhelpers"
 )
 
 type ClientTestSuite struct {
@@ -42,12 +39,6 @@ func (s ClientTestSuite) TestClient() {
 		c := NewClient("fake", "fake", ldClient)
 		err := c.CheckConnection(ctx)
 		s.NoError(err)
-
-		si := testhelpers.NewSystemIntake()
-		si.CreatedAt = si.ContractStartDate
-		si.UpdatedAt = si.ContractStartDate
-		err = c.PublishSystemIntake(ctx, si)
-		s.NoError(err)
 	})
 
 	// s.Run("functional test", func() {
@@ -67,26 +58,4 @@ func (s ClientTestSuite) TestClient() {
 	// 	err = c.PublishSnapshot(ctx, &si, nil, nil, nil, nil)
 	// 	s.NoError(err)
 	// })
-}
-
-func (s ClientTestSuite) TestTranslation() {
-	s.Run("action", func() {
-		action := translation.TranslatableAction(testhelpers.NewAction())
-		id := uuid.New()
-		action.IntakeID = &id
-
-		ii, err := action.CreateIntakeModel()
-		s.NoError(err)
-		s.NotNil(ii)
-	})
-
-	s.Run("system intake", func() {
-		si := translation.TranslatableSystemIntake(testhelpers.NewSystemIntake())
-		si.CreatedAt = si.ContractStartDate
-		si.UpdatedAt = si.ContractStartDate
-
-		ii, err := si.CreateIntakeModel()
-		s.NoError(err)
-		s.NotNil(ii)
-	})
 }
