@@ -6,8 +6,8 @@ import (
 	"errors"
 	"time"
 
-	"github.com/cmsgov/easi-app/pkg/apperrors"
-	"github.com/cmsgov/easi-app/pkg/models"
+	"github.com/cmsgov/mint-app/pkg/apperrors"
+	"github.com/cmsgov/mint-app/pkg/models"
 )
 
 type issueLCID struct {

@@ -5,17 +5,17 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/cmsgov/easi-app/pkg/appcontext"
+	"github.com/cmsgov/mint-app/pkg/appcontext"
 
 	"github.com/go-openapi/runtime"
 	httptransport "github.com/go-openapi/runtime/client"
 	"github.com/go-openapi/strfmt"
 
-	"github.com/cmsgov/easi-app/pkg/apperrors"
-	apiclient "github.com/cmsgov/easi-app/pkg/cedar/cedarldap/gen/client"
-	"github.com/cmsgov/easi-app/pkg/cedar/cedarldap/gen/client/operations"
-	"github.com/cmsgov/easi-app/pkg/cedar/cedarldap/gen/models"
-	models2 "github.com/cmsgov/easi-app/pkg/models"
+	"github.com/cmsgov/mint-app/pkg/apperrors"
+	apiclient "github.com/cmsgov/mint-app/pkg/cedar/cedarldap/gen/client"
+	"github.com/cmsgov/mint-app/pkg/cedar/cedarldap/gen/client/operations"
+	"github.com/cmsgov/mint-app/pkg/cedar/cedarldap/gen/models"
+	models2 "github.com/cmsgov/mint-app/pkg/models"
 )
 
 // TranslatedClient is an API client for CEDAR LDAP using EASi language

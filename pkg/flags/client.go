@@ -6,12 +6,12 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/cmsgov/easi-app/pkg/appcontext"
+	"github.com/cmsgov/mint-app/pkg/appcontext"
 
 	"gopkg.in/launchdarkly/go-sdk-common.v2/lduser"
 	ld "gopkg.in/launchdarkly/go-server-sdk.v5"
 
-	"github.com/cmsgov/easi-app/pkg/appconfig"
+	"github.com/cmsgov/mint-app/pkg/appconfig"
 )
 
 // Config has all the parts for creating a new LD Client

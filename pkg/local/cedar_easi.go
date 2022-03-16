@@ -3,7 +3,7 @@ package local
 import (
 	"context"
 
-	"github.com/cmsgov/easi-app/pkg/appcontext"
+	"github.com/cmsgov/mint-app/pkg/appcontext"
 
 	"go.uber.org/zap"
 )

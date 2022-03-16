@@ -11,7 +11,7 @@ import (
 
 	strfmt "github.com/go-openapi/strfmt"
 
-	"github.com/cmsgov/easi-app/pkg/cedar/cedarldap/gen/client/operations"
+	"github.com/cmsgov/mint-app/pkg/cedar/cedarldap/gen/client/operations"
 )
 
 // Default l d a p HTTP client.

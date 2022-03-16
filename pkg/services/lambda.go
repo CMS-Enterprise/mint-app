@@ -9,7 +9,7 @@ import (
 	"github.com/aws/aws-sdk-go/service/lambda"
 	"go.uber.org/zap"
 
-	"github.com/cmsgov/easi-app/pkg/appcontext"
+	"github.com/cmsgov/mint-app/pkg/appcontext"
 )
 
 type generateRequest struct {
