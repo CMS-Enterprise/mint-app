@@ -671,13 +671,6 @@ func (s StoreTestSuite) TestFetchSystemIntakesByFilter() {
 		}
 	})
 }
-func mustParseTime(value string) *time.Time {
-	parsed, err := time.Parse("2006-01-02", value)
-	if err != nil {
-		panic(err)
-	}
-	return &parsed
-}
 
 func (s StoreTestSuite) TestFetchSystemIntakeMetrics() {
 	ctx := context.Background()
