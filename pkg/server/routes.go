@@ -346,8 +346,7 @@ func (s *Server) routes(
 		base,
 		services.NewFetchMetrics(
 			serviceConfig,
-			store.FetchSystemIntakeMetrics,
-			store.FetchAccessibilityRequestMetrics),
+			store.FetchSystemIntakeMetrics),
 	)
 	api.Handle("/metrics", metricsHandler.Handle())
 
@@ -400,14 +399,6 @@ func (s *Server) routes(
 	).Handle())
 
 	api.Handle("/pdf/generate", handlers.NewPDFHandler(services.NewInvokeGeneratePDF(serviceConfig, lambdaClient, princeLambdaName)).Handle())
-
-	api.Handle(
-		"/metrics/508",
-		handlers.NewAccessibilityMetricsHandler(
-			services.NewFetchAccessibilityMetrics(store.FetchAccessibilityMetrics),
-			base,
-		).Handle(),
-	)
 
 	if ok, _ := strconv.ParseBool(os.Getenv("DEBUG_ROUTES")); ok {
 		// useful for debugging route issues

@@ -48,11 +48,6 @@ func (s StoreTestSuite) TestFetchAccessibilityRequestMetrics() {
 			request := testhelpers.NewAccessibilityRequest(intake.ID)
 			_, err := s.store.CreateAccessibilityRequestAndInitialStatusRecord(ctx, &request)
 			s.NoError(err)
-
-			metrics, err := s.store.FetchAccessibilityRequestMetrics(ctx, startDate, endDate)
-
-			s.NoError(err)
-			s.Equal(tt.expectedCount, metrics.CreatedAndOpen)
 		})
 	}
 }
