@@ -15,14 +15,7 @@ import (
 
 func (s HandlerTestSuite) TestMetricsHandler() {
 
-	expectedMetrics := models.MetricsDigest{
-		SystemIntakeMetrics: models.SystemIntakeMetrics{
-			Started:            5,
-			CompletedOfStarted: 2,
-			Completed:          3,
-			Funded:             2,
-		},
-	}
+	expectedMetrics := models.MetricsDigest{}
 	fetchMetrics := func(ctx context.Context, startTime time.Time, endTime time.Time) (models.MetricsDigest, error) {
 		return expectedMetrics, nil
 	}

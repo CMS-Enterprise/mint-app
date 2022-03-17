@@ -6,8 +6,6 @@ import (
 	"github.com/cmsgov/easi-app/pkg/appcontext"
 
 	"go.uber.org/zap"
-
-	"github.com/cmsgov/easi-app/pkg/models"
 )
 
 // NewCedarEasiClient returns a fake CEDAR Easi Client
@@ -24,10 +22,9 @@ func (c *CedarEasiClient) CheckConnection(context.Context) error {
 }
 
 // ValidateAndSubmitSystemIntake submits a system intake to CEDAR
-func (c *CedarEasiClient) ValidateAndSubmitSystemIntake(ctx context.Context, intake *models.SystemIntake) (string, error) {
+func (c *CedarEasiClient) ValidateAndSubmitSystemIntake(ctx context.Context) (string, error) {
 	fakeAlfabetID := "000-000-0"
 	appcontext.ZLogger(ctx).Info("Mock Submit System Intake to CEDAR",
-		zap.String("intakeID", intake.ID.String()),
 		zap.String("AlfabetID", fakeAlfabetID))
 	return fakeAlfabetID, nil
 }
