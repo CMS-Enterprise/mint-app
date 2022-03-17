@@ -3,27 +3,28 @@ version: '3.7'
 services:
   db:
     ports:
-      - 5432:5432
+      - 5437:5432
   db_migrate:
     build:
       context: .
       dockerfile: Dockerfile.db_migrations
     volumes:
       - ./migrations:/flyway/sql
-  easi:
+  mint:
     build:
       context: .
       dockerfile: Dockerfile
       target: dev
-    image: easi-backend:latest
+    image: mint-backend:latest
     volumes:
       - ./:/easi
-    entrypoint: air
+    entrypoint: air ${AIR_CONFIG}
     ports:
-      - 8080:8080
+      - 8085:8080
+      - 2350:2350
     environment:
       - LOCAL_AUTH_ENABLED
-  easi_client:
+  mint_client:
     profiles: ["frontend"]
     build:
       context: .
@@ -44,21 +45,22 @@ services:
       - REACT_APP_LOCAL_AUTH_ENABLED
       - CHOKIDAR_USEPOLLING=true
       - ESLINT_NO_DEV_ERRORS=true
+      - PORT=3005
     entrypoint: ['yarn', 'start']
     volumes:
       - .:/app
       - /app/node_modules
     ports:
-      - 3000:3000
+      - 3005:3005
   minio:
     ports:
-      - '9000:9000'
+      - '9005:9000'
     volumes:
       - ./tmp/minio:/data
   prince:
     image: lambci/lambda:go1.x
     ports:
-      - 9001:9001
+      - 9006:9001
     environment:
       - DOCKER_LAMBDA_STAY_OPEN=1
       - LICENSE_KEY

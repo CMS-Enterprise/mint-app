@@ -58,7 +58,7 @@ each time changes are made to `.envrc` or `.envrc.local`.
   development.
 
 - You should be able to visit the application by visiting
-  [http://localhost:3000](http://localhost:3000) in a browser.
+  [http://localhost:3005](http://localhost:3005) in a browser.
 
   
 ## Build
