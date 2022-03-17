@@ -8,21 +8,15 @@ package main
 // on that model in the Go code.
 
 import (
-	"context"
-	"encoding/json"
 	"fmt"
-	"log"
 	"os"
 
-	"github.com/google/uuid"
-	"github.com/guregu/null"
 	_ "github.com/lib/pq" // required for postgres driver in sql
 	"github.com/spf13/cobra"
 	"go.uber.org/zap"
 	ld "gopkg.in/launchdarkly/go-server-sdk.v5"
 
 	"github.com/cmsgov/easi-app/pkg/appconfig"
-	"github.com/cmsgov/easi-app/pkg/models"
 	"github.com/cmsgov/easi-app/pkg/storage"
 	"github.com/cmsgov/easi-app/pkg/testhelpers"
 )
@@ -33,7 +27,7 @@ var rootCmd = &cobra.Command{
 	Long:  "Generates models for use in Cypress tests",
 }
 
-var accessibilityRequestCmd = &cobra.Command{
+/*var accessibilityRequestCmd = &cobra.Command{
 	Use:   "accessibilityRequest",
 	Short: "Generate an Accessibility Request",
 	Run: func(cmd *cobra.Command, args []string) {
@@ -52,7 +46,7 @@ var accessibilityRequestCmd = &cobra.Command{
 		}
 		fmt.Printf("%s", serialized)
 	},
-}
+}*/
 
 func execute() {
 	if err := rootCmd.Execute(); err != nil {
@@ -62,7 +56,7 @@ func execute() {
 }
 
 func init() {
-	rootCmd.AddCommand(accessibilityRequestCmd)
+	//rootCmd.AddCommand(accessibilityRequestCmd)
 }
 
 var store *storage.Store
@@ -98,27 +92,6 @@ func connect() {
 
 func main() {
 	execute()
-}
-
-func makeAccessibilityRequest(accessibilityRequest *models.AccessibilityRequest, store *storage.Store) *models.AccessibilityRequest {
-	ctx := context.Background()
-
-	if accessibilityRequest.IntakeID == uuid.Nil {
-		intake := models.SystemIntake{
-			Status:                 models.SystemIntakeStatusLCIDISSUED,
-			RequestType:            models.SystemIntakeRequestTypeNEW,
-			ProjectName:            null.StringFrom("System Intake"),
-			BusinessOwner:          null.StringFrom("Shane Clark"),
-			BusinessOwnerComponent: null.StringFrom("OIT"),
-			LifecycleID:            null.StringFrom("000001"),
-		}
-		must(store.CreateSystemIntake(ctx, &intake))
-		must(store.UpdateSystemIntake(ctx, &intake)) // required to set lifecycle id
-
-		accessibilityRequest.IntakeID = intake.ID
-	}
-	must(store.CreateAccessibilityRequestAndInitialStatusRecord(ctx, accessibilityRequest))
-	return accessibilityRequest
 }
 
 func must(_ interface{}, err error) {

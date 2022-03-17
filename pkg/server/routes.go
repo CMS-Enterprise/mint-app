@@ -23,7 +23,6 @@ import (
 	"github.com/cmsgov/easi-app/pkg/appconfig"
 	"github.com/cmsgov/easi-app/pkg/appcontext"
 	"github.com/cmsgov/easi-app/pkg/appses"
-	"github.com/cmsgov/easi-app/pkg/appvalidation"
 	"github.com/cmsgov/easi-app/pkg/authorization"
 	"github.com/cmsgov/easi-app/pkg/cedar/cedarldap"
 
@@ -36,7 +35,6 @@ import (
 	"github.com/cmsgov/easi-app/pkg/graph/model"
 	"github.com/cmsgov/easi-app/pkg/handlers"
 	"github.com/cmsgov/easi-app/pkg/local"
-	"github.com/cmsgov/easi-app/pkg/models"
 	"github.com/cmsgov/easi-app/pkg/okta"
 	"github.com/cmsgov/easi-app/pkg/services"
 	"github.com/cmsgov/easi-app/pkg/storage"
@@ -173,80 +171,9 @@ func (s *Server) routes(
 
 	gql.Use(requirePrincipalMiddleware)
 
-	saveAction := services.NewSaveAction(
-		store.CreateAction,
-		cedarLDAPClient.FetchUserInfo,
-	)
-
 	resolver := graph.NewResolver(
 		store,
 		graph.ResolverService{
-			CreateTestDate: services.NewCreateTestDate(
-				serviceConfig,
-				services.AuthorizeHasEASiRole,
-				store.CreateTestDate,
-			),
-			AddGRTFeedback: services.NewProvideGRTFeedback(
-				serviceConfig,
-				store.FetchSystemIntakeByID,
-				store.UpdateSystemIntake,
-				saveAction,
-				store.CreateGRTFeedback,
-				cedarLDAPClient.FetchUserInfo,
-				emailClient.SendSystemIntakeReviewEmail,
-			),
-			CreateActionUpdateStatus: services.NewCreateActionUpdateStatus(
-				serviceConfig,
-				store.UpdateSystemIntakeStatus,
-				saveAction,
-				cedarLDAPClient.FetchUserInfo,
-				emailClient.SendSystemIntakeReviewEmail,
-				services.NewCloseBusinessCase(
-					serviceConfig,
-					store.FetchBusinessCaseByID,
-					store.UpdateBusinessCase,
-				),
-			),
-			CreateActionExtendLifecycleID: services.NewCreateActionExtendLifecycleID(
-				serviceConfig,
-				saveAction,
-				cedarLDAPClient.FetchUserInfo,
-				store.FetchSystemIntakeByID,
-				store.UpdateSystemIntake,
-				emailClient.SendSystemIntakeReviewEmail,
-			),
-			IssueLifecycleID: services.NewUpdateLifecycleFields(
-				serviceConfig,
-				services.AuthorizeRequireGRTJobCode,
-				store.FetchSystemIntakeByID,
-				store.UpdateSystemIntake,
-				saveAction,
-				cedarLDAPClient.FetchUserInfo,
-				emailClient.SendIssueLCIDEmail,
-				store.GenerateLifecycleID,
-			),
-			RejectIntake: services.NewUpdateRejectionFields(
-				serviceConfig,
-				services.AuthorizeRequireGRTJobCode,
-				store.FetchSystemIntakeByID,
-				store.UpdateSystemIntake,
-				saveAction,
-				cedarLDAPClient.FetchUserInfo,
-				emailClient.SendRejectRequestEmail,
-			),
-			SubmitIntake: services.NewSubmitSystemIntake(
-				serviceConfig,
-				services.AuthorizeUserIsIntakeRequester,
-				store.UpdateSystemIntake,
-				// quick adapter to retrofit the new interface to take the place
-				// of the old interface
-				func(ctx context.Context, si *models.SystemIntake) (string, error) {
-					err := publisher.PublishSystemIntake(ctx, *si)
-					return "", err
-				},
-				saveAction,
-				emailClient.SendSystemIntakeSubmissionEmail,
-			),
 			FetchUserInfo: cedarLDAPClient.FetchUserInfo,
 		},
 		&s3Client,
@@ -275,139 +202,17 @@ func (s *Server) routes(
 	api := s.router.PathPrefix("/api/v1").Subrouter()
 	api.Use(requirePrincipalMiddleware)
 
-	systemIntakeHandler := handlers.NewSystemIntakeHandler(
-		base,
-		services.NewUpdateSystemIntake(
-			serviceConfig,
-			store.FetchSystemIntakeByID,
-			store.UpdateSystemIntake,
-			services.AuthorizeUserIsIntakeRequesterOrHasGRTJobCode,
-		),
-		services.NewFetchSystemIntakeByID(
-			serviceConfig,
-			store.FetchSystemIntakeByID,
-			services.AuthorizeHasEASiRole,
-		),
-		services.NewArchiveSystemIntake(
-			serviceConfig,
-			store.FetchSystemIntakeByID,
-			store.UpdateSystemIntake,
-			services.NewCloseBusinessCase(
-				serviceConfig,
-				store.FetchBusinessCaseByID,
-				store.UpdateBusinessCase,
-			),
-			services.AuthorizeUserIsIntakeRequester,
-			emailClient.SendWithdrawRequestEmail,
-		),
-	)
-	api.Handle("/system_intake/{intake_id}", systemIntakeHandler.Handle())
-	api.Handle("/system_intake", systemIntakeHandler.Handle())
-
-	systemIntakesHandler := handlers.NewSystemIntakesHandler(
-		base,
-		services.NewFetchSystemIntakes(
-			serviceConfig,
-			store.FetchSystemIntakesByEuaID,
-			store.FetchSystemIntakes,
-			store.FetchSystemIntakesByStatuses,
-			services.AuthorizeHasEASiRole,
-		),
-	)
-	api.Handle("/system_intakes", systemIntakesHandler.Handle())
-
-	businessCaseHandler := handlers.NewBusinessCaseHandler(
-		base,
-		services.NewFetchBusinessCaseByID(
-			serviceConfig,
-			store.FetchBusinessCaseByID,
-			services.AuthorizeHasEASiRole,
-		),
-		services.NewCreateBusinessCase(
-			serviceConfig,
-			store.FetchSystemIntakeByID,
-			services.AuthorizeUserIsIntakeRequester,
-			store.CreateAction,
-			cedarLDAPClient.FetchUserInfo,
-			store.CreateBusinessCase,
-			store.UpdateSystemIntake,
-		),
-		services.NewUpdateBusinessCase(
-			serviceConfig,
-			store.FetchBusinessCaseByID,
-			services.AuthorizeUserIsBusinessCaseRequester,
-			store.UpdateBusinessCase,
-		),
-	)
-	api.Handle("/business_case/{business_case_id}", businessCaseHandler.Handle())
-	api.Handle("/business_case", businessCaseHandler.Handle())
-
 	metricsHandler := handlers.NewSystemIntakeMetricsHandler(
 		base,
-		services.NewFetchMetrics(
-			serviceConfig,
-			store.FetchSystemIntakeMetrics,
-			store.FetchAccessibilityRequestMetrics),
+		services.NewFetchMetrics(serviceConfig),
 	)
 	api.Handle("/metrics", metricsHandler.Handle())
-
-	actionHandler := handlers.NewActionHandler(
-		base,
-		services.NewTakeAction(
-			store.FetchSystemIntakeByID,
-			map[models.ActionType]services.ActionExecuter{
-				models.ActionTypeSUBMITBIZCASE: services.NewSubmitBusinessCase(
-					serviceConfig,
-					services.AuthorizeUserIsIntakeRequester,
-					store.FetchOpenBusinessCaseByIntakeID,
-					appvalidation.BusinessCaseForSubmit,
-					saveAction,
-					store.UpdateSystemIntake,
-					store.UpdateBusinessCase,
-					emailClient.SendBusinessCaseSubmissionEmail,
-					models.SystemIntakeStatusBIZCASEDRAFTSUBMITTED,
-				),
-				models.ActionTypeSUBMITFINALBIZCASE: services.NewSubmitBusinessCase(
-					serviceConfig,
-					services.AuthorizeUserIsIntakeRequester,
-					store.FetchOpenBusinessCaseByIntakeID,
-					appvalidation.BusinessCaseForSubmit,
-					saveAction,
-					store.UpdateSystemIntake,
-					store.UpdateBusinessCase,
-					emailClient.SendBusinessCaseSubmissionEmail,
-					models.SystemIntakeStatusBIZCASEFINALSUBMITTED,
-				), models.ActionTypeSUBMITINTAKE: services.NewSubmitSystemIntake(
-					serviceConfig,
-					services.AuthorizeUserIsIntakeRequester,
-					store.UpdateSystemIntake,
-					// quick adapter to retrofit the new interface to take the place
-					// of the old interface
-					func(ctx context.Context, si *models.SystemIntake) (string, error) {
-						err := publisher.PublishSystemIntake(ctx, *si)
-						return "", err
-					},
-					saveAction,
-					emailClient.SendSystemIntakeSubmissionEmail,
-				),
-			},
-		),
-	)
-	api.Handle("/system_intake/{intake_id}/actions", actionHandler.Handle())
 
 	s.router.PathPrefix("/").Handler(handlers.NewCatchAllHandler(
 		base,
 	).Handle())
 
 	api.Handle("/pdf/generate", handlers.NewPDFHandler(services.NewInvokeGeneratePDF(serviceConfig, lambdaClient, princeLambdaName)).Handle())
-
-	api.Handle(
-		"/metrics/508",
-		handlers.NewAccessibilityMetricsHandler(
-			services.NewFetchAccessibilityMetrics(store.FetchAccessibilityMetrics),
-			base,
-		).Handle(),
-	)
 
 	if ok, _ := strconv.ParseBool(os.Getenv("DEBUG_ROUTES")); ok {
 		// useful for debugging route issues
