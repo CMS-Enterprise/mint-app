@@ -39,7 +39,7 @@ services:
       - AWS_REGION=us-west-2
       - AWS_SES_SOURCE=no-reply-$APP_ENV@info.easi.cms.gov
       - AWS_SES_SOURCE_ARN
-      - AWS_S3_FILE_UPLOAD_BUCKET=easi-app-file-uploads
+      - AWS_S3_FILE_UPLOAD_BUCKET=mint-app-file-uploads
       - AWS_ACCESS_KEY_ID=1
       - AWS_SECRET_ACCESS_KEY=1
       - PGHOST=db
@@ -76,7 +76,7 @@ services:
     entrypoint: >
       /bin/sh -c "
       /usr/bin/mc alias set local http://minio:9000 minioadmin minioadmin;
-      /usr/bin/mc rb --force local/easi-app-file-uploads/;
-      /usr/bin/mc mb --quiet local/easi-app-file-uploads/;
-      /usr/bin/mc policy set public local/easi-app-file-uploads;
+      /usr/bin/mc rb --force local/mint-app-file-uploads/;
+      /usr/bin/mc mb --quiet local/mint-app-file-uploads/;
+      /usr/bin/mc policy set public local/mint-app-file-uploads;
       "

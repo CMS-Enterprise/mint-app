@@ -351,7 +351,7 @@ jobs:
           AWS_REGION: us-west-2 # easi app tests expect AWS_REGION instead of AWS_DEFAULT_REGION
           AWS_SES_SOURCE: '"EASi Test" <no-reply-test@info.easi.cms.gov>'
           AWS_SES_SOURCE_ARN: ${{ secrets.AWS_SES_SOURCE_ARN }}
-          AWS_S3_FILE_UPLOAD_BUCKET: easi-app-file-uploads
+          AWS_S3_FILE_UPLOAD_BUCKET: mint-app-file-uploads
           CLIENT_PROTOCOL: http
           CLIENT_PORT: 3000
           CLIENT_HOSTNAME: localhost:3000
@@ -550,22 +550,22 @@ jobs:
           role-skip-session-tagging: true
       - name: Clean the database
         run: |
-          ./scripts/db_lambda_invoke "easi-app-db-clean-tmp" "2" "easi-app-db-clean"
+          ./scripts/db_lambda_invoke "mint-app-db-clean-tmp" "2" "mint-app-db-clean"
       - name: Run migrations
         env:
           AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
           ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
           ECR_REPOSITORY: easi-db-migrate
         run: |
-          ./scripts/deploy_service "easi-app-db-migrate" "dev-ecs-manager-docker" "8" "easi-db-migrate" "$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
-          ./scripts/db_lambda_invoke "dev-ecs-manager-docker" "8" "easi-app-db-migrate"
+          ./scripts/deploy_service "mint-app-db-migrate" "dev-ecs-manager-docker" "8" "easi-db-migrate" "$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+          ./scripts/db_lambda_invoke "dev-ecs-manager-docker" "8" "mint-app-db-migrate"
       - name: Deploy ECS service
         env:
           AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
           ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
           ECR_REPOSITORY: easi-backend
         run: |
-          ./scripts/deploy_service "easi-app" "dev-ecs-manager-docker" "8" "easi-backend" "$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+          ./scripts/deploy_service "mint-app" "dev-ecs-manager-docker" "8" "easi-backend" "$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
           ./scripts/healthcheck "$IMAGE_TAG"
       - name: Build static assets and release to S3
         env:
@@ -627,15 +627,15 @@ jobs:
           ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
           ECR_REPOSITORY: easi-db-migrate
         run: |
-          ./scripts/deploy_service "easi-app-db-migrate" "impl-ecs-manager-docker" "7" "easi-db-migrate" "$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
-          ./scripts/db_lambda_invoke "impl-ecs-manager-docker" "7" "easi-app-db-migrate"
+          ./scripts/deploy_service "mint-app-db-migrate" "impl-ecs-manager-docker" "7" "easi-db-migrate" "$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+          ./scripts/db_lambda_invoke "impl-ecs-manager-docker" "7" "mint-app-db-migrate"
       - name: Deploy ECS service
         env:
           AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
           ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
           ECR_REPOSITORY: easi-backend
         run: |
-          ./scripts/deploy_service "easi-app" "impl-ecs-manager-docker" "7" "easi-backend" "$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+          ./scripts/deploy_service "mint-app" "impl-ecs-manager-docker" "7" "easi-backend" "$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
           ./scripts/healthcheck "$IMAGE_TAG"
       - name: Build static assets and release to S3
         env:
@@ -697,15 +697,15 @@ jobs:
           ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
           ECR_REPOSITORY: easi-db-migrate
         run: |
-          ./scripts/deploy_service "easi-app-db-migrate" "prod-ecs-manager-docker" "6" "easi-db-migrate" "$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
-          ./scripts/db_lambda_invoke "prod-ecs-manager-docker" "6" "easi-app-db-migrate"
+          ./scripts/deploy_service "mint-app-db-migrate" "prod-ecs-manager-docker" "6" "easi-db-migrate" "$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+          ./scripts/db_lambda_invoke "prod-ecs-manager-docker" "6" "mint-app-db-migrate"
       - name: Deploy ECS service
         env:
           AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
           ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
           ECR_REPOSITORY: easi-backend
         run: |
-          ./scripts/deploy_service "easi-app" "prod-ecs-manager-docker" "6" "easi-backend" "$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+          ./scripts/deploy_service "mint-app" "prod-ecs-manager-docker" "6" "easi-backend" "$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
           ./scripts/healthcheck "$IMAGE_TAG"
       - name: Build static assets and release to S3
         env:

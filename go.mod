@@ -1,4 +1,4 @@
-module github.com/cmsgov/easi-app
+module github.com/cmsgov/mint-app
 
 go 1.16
 
