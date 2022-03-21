@@ -7,15 +7,16 @@ services:
     environment:
       - POSTGRES_PASSWORD=mysecretpassword
   db_migrate:
-    image: easi-db-migrate:latest
+    image: mint-db-migrate:latest
     environment:
       - FLYWAY_USER=postgres
       - FLYWAY_PASSWORD=mysecretpassword
       - FLYWAY_URL=jdbc:postgresql://db/postgres
       - FLYWAY_PLACEHOLDERS_APP_USER_PASSWORD=supersecretapp
+      
     depends_on:
       - db
-  easi:
+  mint:
     environment:
       - CEDAR_API_KEY
       - CEDAR_API_URL
@@ -27,9 +28,9 @@ services:
       - APPLICATION_TS
       - CLIENT_PROTOCOL=http
       - CLIENT_DOMAIN=localhost
-      - CLIENT_PORT=3000
-      - CLIENT_HOSTNAME=localhost:3000
-      - CLIENT_ADDRESS=http://localhost:3000
+      - CLIENT_PORT=3005
+      - CLIENT_HOSTNAME=localhost:3005
+      - CLIENT_ADDRESS=http://localhost:3005
       - API_PORT=8080
       - OKTA_CLIENT_ID=0oa2e913coDQeG19S297
       - OKTA_ISSUER=https://test.idp.idm.cms.gov/oauth2/aus2e96etlbFPnBHt297
@@ -63,8 +64,8 @@ services:
       - USE_TLS
     depends_on:
       - db_migrate
-  easi_client:
-    image: easi-frontend:latest
+  mint_client:
+    image: mint-frontend:latest
   minio:
     restart: always
     image: minio/minio:latest
@@ -73,7 +74,7 @@ services:
     image: minio/mc:latest
     depends_on:
       - minio
-    entrypoint: >
+    entrypoint: > 
       /bin/sh -c "
       /usr/bin/mc alias set local http://minio:9000 minioadmin minioadmin;
       /usr/bin/mc rb --force local/mint-app-file-uploads/;

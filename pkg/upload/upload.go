@@ -11,7 +11,7 @@ import (
 	"github.com/aws/aws-sdk-go/service/s3"
 	"github.com/aws/aws-sdk-go/service/s3/s3iface"
 
-	"github.com/cmsgov/mint-app/pkg/appconfig"
+	"github.com/cmsgov/easi-app/pkg/appconfig"
 )
 
 // Config holds the configuration to interact with s3
