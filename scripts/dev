@@ -289,7 +289,7 @@ task :reset => :up do
   Rake::Task["db:seed"].invoke
 
   # The backend may have lost its database connection
-  sh("docker-compose restart easi", verbose: true)
+  sh("docker-compose restart mint", verbose: true)
 end
 
 namespace :hosts do
