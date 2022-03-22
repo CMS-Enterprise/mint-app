@@ -2,7 +2,7 @@
 version: '3.7'
 services:
   db_migrate:
-    image: '${ECR_REGISTRY}/easi-db-migrate:${IMAGE_TAG}'
+    image: '${ECR_REGISTRY}/mint-db-migrate:${IMAGE_TAG}'
   db_seed:
     build:
       context: .
@@ -15,16 +15,16 @@ services:
       - PGPASS=mysecretpassword
       - PGSSLMODE=disable
       - DB_MAX_CONNECTIONS=20
-  easi:
-    image: '${ECR_REGISTRY}/easi-backend:${IMAGE_TAG}'
+  mint:
+    image: '${ECR_REGISTRY}/mint-backend:${IMAGE_TAG}'
     environment:
       - APP_ENV=test
-      - EMAIL_TEMPLATE_DIR=/easi/templates
+      - EMAIL_TEMPLATE_DIR=/mint/templates
       - SERVER_CERT
       - SERVER_KEY
       - LOCAL_AUTH_ENABLED=true
       - FLAG_SOURCE=LOCAL
-  easi_client:
+  mint_client:
     build:
       context: .
       dockerfile: Dockerfile.client_ci
@@ -35,12 +35,12 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.cypress
-    image: easi-cypress:latest
+    image: mint-cypress:latest
     environment:
       - OKTA_TEST_USERNAME
       - OKTA_TEST_PASSWORD
       - OKTA_TEST_SECRET
-      - REACT_APP_API_ADDRESS=http://easi:8080/api/v1
+      - REACT_APP_API_ADDRESS=http://mint:8080/api/v1
       - MINIO_ACCESS_KEY=minioadmin
       - MINIO_SECRET_KEY=minioadmin
       - MINIO_HOST=minio:9000
@@ -51,6 +51,6 @@ services:
       - PGPASS=mysecretpassword
       - PGSSLMODE=disable
       - DB_MAX_CONNECTIONS=20
-    network_mode: 'service:easi_client'
+    network_mode: 'service:mint_client'
     depends_on:
-      - easi_client
+      - mint_client
