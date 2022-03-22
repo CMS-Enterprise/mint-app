@@ -1,6 +1,6 @@
 FROM golang:1.16.6 AS base
 
-WORKDIR /easi/
+WORKDIR /mint/
 
 FROM base AS modules
 
@@ -26,7 +26,7 @@ COPY tsconfig.json /
 COPY src /src
 COPY scripts/tag_minio_file /scripts/tag_minio_file
 COPY scripts/seed_database /scripts/seed_database
-COPY --from=build /easi/bin/seed /build/seed
+COPY --from=build /mint/bin/seed /build/seed
 
 ENTRYPOINT ["/node_modules/.bin/cypress"]
 CMD ["run"]
