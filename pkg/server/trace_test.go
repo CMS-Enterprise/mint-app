@@ -6,7 +6,7 @@ import (
 
 	"github.com/google/uuid"
 
-	"github.com/cmsgov/easi-app/pkg/appcontext"
+	"github.com/cmsgov/mint-app/pkg/appcontext"
 )
 
 func (s ServerTestSuite) TestTraceMiddleware() {

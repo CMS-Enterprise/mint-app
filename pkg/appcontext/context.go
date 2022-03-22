@@ -8,7 +8,7 @@ import (
 	"github.com/google/uuid"
 	"go.uber.org/zap"
 
-	"github.com/cmsgov/easi-app/pkg/authentication"
+	"github.com/cmsgov/mint-app/pkg/authentication"
 )
 
 type contextKey int

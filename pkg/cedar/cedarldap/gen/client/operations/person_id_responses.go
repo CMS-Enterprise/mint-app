@@ -13,7 +13,7 @@ import (
 
 	strfmt "github.com/go-openapi/strfmt"
 
-	models "github.com/cmsgov/easi-app/pkg/cedar/cedarldap/gen/models"
+	models "github.com/cmsgov/mint-app/pkg/cedar/cedarldap/gen/models"
 )
 
 // PersonIDReader is a Reader for the PersonID structure.

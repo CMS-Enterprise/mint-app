@@ -9,8 +9,8 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/cmsgov/easi-app/pkg/apperrors"
-	"github.com/cmsgov/easi-app/pkg/models"
+	"github.com/cmsgov/mint-app/pkg/apperrors"
+	"github.com/cmsgov/mint-app/pkg/models"
 )
 
 type fetchMetrics func(context context.Context, startTime time.Time, endTime time.Time) (models.MetricsDigest, error)

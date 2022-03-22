@@ -8,8 +8,8 @@ import (
 	"github.com/go-openapi/swag"
 	"go.uber.org/zap"
 
-	"github.com/cmsgov/easi-app/pkg/appcontext"
-	"github.com/cmsgov/easi-app/pkg/authentication"
+	"github.com/cmsgov/mint-app/pkg/appcontext"
+	"github.com/cmsgov/mint-app/pkg/authentication"
 )
 
 // DevUserConfig is the set of values that can be passed in a request header

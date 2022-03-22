@@ -2,7 +2,7 @@
 
 set -eu -o pipefail
 
-PROJECT_NAME=easi-app
+PROJECT_NAME=mint-app
 CYPRESS_CONTAINER="${PROJECT_NAME}"_cypress_1
 EASI_CONTAINER="${PROJECT_NAME}"_easi_1
 

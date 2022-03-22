@@ -1,7 +1,7 @@
 module.exports = {
   client: {
     service: {
-      name: 'easi-app',
+      name: 'mint-app',
       localSchemaFile: './pkg/graph/schema.graphql'
     }
   }

@@ -9,8 +9,8 @@ import (
 	"gopkg.in/launchdarkly/go-server-sdk.v5/ldcomponents"
 	"gopkg.in/launchdarkly/go-server-sdk.v5/testhelpers/ldtestdata"
 
-	"github.com/cmsgov/easi-app/pkg/appconfig"
-	"github.com/cmsgov/easi-app/pkg/cedar/intake"
+	"github.com/cmsgov/mint-app/pkg/appconfig"
+	"github.com/cmsgov/mint-app/pkg/cedar/intake"
 )
 
 type testData struct {

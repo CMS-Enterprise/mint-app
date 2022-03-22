@@ -5,8 +5,8 @@ import (
 
 	"go.uber.org/zap"
 
-	"github.com/cmsgov/easi-app/pkg/appcontext"
-	"github.com/cmsgov/easi-app/pkg/authentication"
+	"github.com/cmsgov/mint-app/pkg/appcontext"
+	"github.com/cmsgov/mint-app/pkg/authentication"
 )
 
 func requirePrincipalMiddleware(logger *zap.Logger, next http.Handler) http.Handler {

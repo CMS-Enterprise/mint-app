@@ -3,7 +3,7 @@ package handlers
 import (
 	"net/http"
 
-	"github.com/cmsgov/easi-app/pkg/apperrors"
+	"github.com/cmsgov/mint-app/pkg/apperrors"
 )
 
 // NewCatchAllHandler is a constructor for CatchAllHanlder

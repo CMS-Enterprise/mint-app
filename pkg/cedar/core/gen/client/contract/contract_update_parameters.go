@@ -16,7 +16,7 @@ import (
 	"github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 
-	"github.com/cmsgov/easi-app/pkg/cedar/core/gen/models"
+	"github.com/cmsgov/mint-app/pkg/cedar/core/gen/models"
 )
 
 // NewContractUpdateParams creates a new ContractUpdateParams object,

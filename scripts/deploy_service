@@ -22,12 +22,12 @@ fi
 
 _payload() {
   local image_tag="${1:-}"
-  local cluster_id="${3:-$APP_ENV-easi-app}"
+  local cluster_id="${3:-$APP_ENV-mint-app}"
 
 
   result=$(jq --null-input '.command = "deploy" | .body.cluster_id = "'"$cluster_id"'" | .body.service_ids = ["'"$service_id"'"]') || return
-  if [[ "$service_id" == "easi-app" ]] ; then
-    secrets_regex="^/$APP_ENV/easi-app/\\\S+$"
+  if [[ "$service_id" == "mint-app" ]] ; then
+    secrets_regex="^/$APP_ENV/mint-app/\\\S+$"
     result="$(jq '.body.secrets = ["'"$secrets_regex"'"]' <<< "$result")"
   fi
 

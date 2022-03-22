@@ -4,13 +4,13 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/cmsgov/easi-app/pkg/appconfig"
-	"github.com/cmsgov/easi-app/pkg/appses"
-	"github.com/cmsgov/easi-app/pkg/email"
-	"github.com/cmsgov/easi-app/pkg/flags"
-	"github.com/cmsgov/easi-app/pkg/models"
-	"github.com/cmsgov/easi-app/pkg/storage"
-	"github.com/cmsgov/easi-app/pkg/upload"
+	"github.com/cmsgov/mint-app/pkg/appconfig"
+	"github.com/cmsgov/mint-app/pkg/appses"
+	"github.com/cmsgov/mint-app/pkg/email"
+	"github.com/cmsgov/mint-app/pkg/flags"
+	"github.com/cmsgov/mint-app/pkg/models"
+	"github.com/cmsgov/mint-app/pkg/storage"
+	"github.com/cmsgov/mint-app/pkg/upload"
 )
 
 const configMissingMessage = "Must set config: %v"

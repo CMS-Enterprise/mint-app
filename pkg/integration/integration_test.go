@@ -15,11 +15,11 @@ import (
 	"go.uber.org/zap"
 	ld "gopkg.in/launchdarkly/go-server-sdk.v5"
 
-	"github.com/cmsgov/easi-app/pkg/appconfig"
-	"github.com/cmsgov/easi-app/pkg/handlers"
-	"github.com/cmsgov/easi-app/pkg/server"
-	"github.com/cmsgov/easi-app/pkg/storage"
-	"github.com/cmsgov/easi-app/pkg/testhelpers"
+	"github.com/cmsgov/mint-app/pkg/appconfig"
+	"github.com/cmsgov/mint-app/pkg/handlers"
+	"github.com/cmsgov/mint-app/pkg/server"
+	"github.com/cmsgov/mint-app/pkg/storage"
+	"github.com/cmsgov/mint-app/pkg/testhelpers"
 )
 
 // test user for authorization

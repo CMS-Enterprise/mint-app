@@ -5,8 +5,8 @@ import (
 
 	"github.com/99designs/gqlgen/client"
 
-	"github.com/cmsgov/easi-app/pkg/appcontext"
-	"github.com/cmsgov/easi-app/pkg/authentication"
+	"github.com/cmsgov/mint-app/pkg/appcontext"
+	"github.com/cmsgov/mint-app/pkg/authentication"
 )
 
 // NewRequesterPrincipal returns what represents an EASi user

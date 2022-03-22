@@ -50,22 +50,22 @@ jobs:
           role-skip-session-tagging: true
       - name: Clean the database
         run: |
-          ./scripts/db_lambda_invoke "easi-app-db-clean-tmp" "2" "easi-app-db-clean"
+          ./scripts/db_lambda_invoke "mint-app-db-clean-tmp" "2" "mint-app-db-clean"
       - name: Run migrations
         env:
           AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
           ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
           ECR_REPOSITORY: easi-db-migrate
         run: |
-          ./scripts/deploy_service "easi-app-db-migrate" "dev-ecs-manager-docker" "8" "easi-db-migrate" "$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
-          ./scripts/db_lambda_invoke "dev-ecs-manager-docker" "8" "easi-app-db-migrate"
+          ./scripts/deploy_service "mint-app-db-migrate" "dev-ecs-manager-docker" "8" "easi-db-migrate" "$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+          ./scripts/db_lambda_invoke "dev-ecs-manager-docker" "8" "mint-app-db-migrate"
       - name: Deploy ECS service
         env:
           AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
           ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
           ECR_REPOSITORY: easi-backend
         run: |
-          ./scripts/deploy_service "easi-app" "dev-ecs-manager-docker" "8" "easi-backend" "$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+          ./scripts/deploy_service "mint-app" "dev-ecs-manager-docker" "8" "easi-backend" "$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
           ./scripts/healthcheck "$IMAGE_TAG"
       - name: Build static assets and release to S3
         env:

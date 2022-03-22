@@ -9,10 +9,10 @@ import (
 	jwtverifier "github.com/okta/okta-jwt-verifier-golang"
 	"go.uber.org/zap"
 
-	"github.com/cmsgov/easi-app/pkg/appcontext"
-	"github.com/cmsgov/easi-app/pkg/apperrors"
-	"github.com/cmsgov/easi-app/pkg/authentication"
-	"github.com/cmsgov/easi-app/pkg/handlers"
+	"github.com/cmsgov/mint-app/pkg/appcontext"
+	"github.com/cmsgov/mint-app/pkg/apperrors"
+	"github.com/cmsgov/mint-app/pkg/authentication"
+	"github.com/cmsgov/mint-app/pkg/handlers"
 )
 
 const (

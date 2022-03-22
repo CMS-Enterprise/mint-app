@@ -6,9 +6,9 @@ package graph
 import (
 	"context"
 
-	"github.com/cmsgov/easi-app/pkg/flags"
-	"github.com/cmsgov/easi-app/pkg/graph/generated"
-	"github.com/cmsgov/easi-app/pkg/graph/model"
+	"github.com/cmsgov/mint-app/pkg/flags"
+	"github.com/cmsgov/mint-app/pkg/graph/generated"
+	"github.com/cmsgov/mint-app/pkg/graph/model"
 )
 
 func (r *queryResolver) CurrentUser(ctx context.Context) (*model.CurrentUser, error) {

@@ -6,11 +6,11 @@ import (
 
 	ldclient "gopkg.in/launchdarkly/go-server-sdk.v5"
 
-	cedarcore "github.com/cmsgov/easi-app/pkg/cedar/core"
-	"github.com/cmsgov/easi-app/pkg/email"
-	"github.com/cmsgov/easi-app/pkg/models"
-	"github.com/cmsgov/easi-app/pkg/storage"
-	"github.com/cmsgov/easi-app/pkg/upload"
+	cedarcore "github.com/cmsgov/mint-app/pkg/cedar/core"
+	"github.com/cmsgov/mint-app/pkg/email"
+	"github.com/cmsgov/mint-app/pkg/models"
+	"github.com/cmsgov/mint-app/pkg/storage"
+	"github.com/cmsgov/mint-app/pkg/upload"
 
 	"github.com/google/uuid"
 )

@@ -8,7 +8,7 @@ import (
 	"github.com/99designs/gqlgen/graphql/handler/extension"
 	"go.uber.org/zap"
 
-	"github.com/cmsgov/easi-app/pkg/appcontext"
+	"github.com/cmsgov/mint-app/pkg/appcontext"
 )
 
 // NewGQLResponseMiddleware returns a handler with a request based logger

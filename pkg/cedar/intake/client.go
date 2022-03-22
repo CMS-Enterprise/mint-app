@@ -16,10 +16,10 @@ import (
 	"go.uber.org/zap"
 	ld "gopkg.in/launchdarkly/go-server-sdk.v5"
 
-	"github.com/cmsgov/easi-app/pkg/appcontext"
-	apiclient "github.com/cmsgov/easi-app/pkg/cedar/intake/gen/client"
-	"github.com/cmsgov/easi-app/pkg/cedar/intake/gen/client/health_check"
-	"github.com/cmsgov/easi-app/pkg/flags"
+	"github.com/cmsgov/mint-app/pkg/appcontext"
+	apiclient "github.com/cmsgov/mint-app/pkg/cedar/intake/gen/client"
+	"github.com/cmsgov/mint-app/pkg/cedar/intake/gen/client/health_check"
+	"github.com/cmsgov/mint-app/pkg/flags"
 )
 
 const (

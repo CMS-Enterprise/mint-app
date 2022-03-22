@@ -12,7 +12,7 @@ import (
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/strfmt"
 
-	"github.com/cmsgov/easi-app/pkg/cedar/intake/gen/models"
+	"github.com/cmsgov/mint-app/pkg/cedar/intake/gen/models"
 )
 
 // IntakeStatusFindListReader is a Reader for the IntakeStatusFindList structure.

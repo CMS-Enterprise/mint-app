@@ -8,7 +8,7 @@ import (
 	"net/url"
 	"path"
 
-	"github.com/cmsgov/easi-app/pkg/models"
+	"github.com/cmsgov/mint-app/pkg/models"
 )
 
 // Config holds EASi application specific configs for SES

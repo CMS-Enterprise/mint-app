@@ -6,7 +6,7 @@ import (
 
 	"go.uber.org/zap"
 
-	"github.com/cmsgov/easi-app/pkg/appcontext"
+	"github.com/cmsgov/mint-app/pkg/appcontext"
 )
 
 func (s ServerTestSuite) TestLoggerMiddleware() {

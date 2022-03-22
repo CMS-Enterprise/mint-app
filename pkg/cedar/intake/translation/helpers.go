@@ -7,7 +7,7 @@ import (
 	"github.com/go-openapi/strfmt"
 	"github.com/guregu/null"
 
-	wire "github.com/cmsgov/easi-app/pkg/cedar/intake/gen/models"
+	wire "github.com/cmsgov/mint-app/pkg/cedar/intake/gen/models"
 )
 
 // IntakeObject represents a type that can be submitted to the CEDAR Intake API

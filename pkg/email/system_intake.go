@@ -9,7 +9,7 @@ import (
 
 	"github.com/google/uuid"
 
-	"github.com/cmsgov/easi-app/pkg/apperrors"
+	"github.com/cmsgov/mint-app/pkg/apperrors"
 )
 
 type systemIntakeSubmission struct {

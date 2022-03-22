@@ -6,8 +6,8 @@ import (
 
 	"github.com/google/uuid"
 
-	"github.com/cmsgov/easi-app/pkg/apperrors"
-	"github.com/cmsgov/easi-app/pkg/models"
+	"github.com/cmsgov/mint-app/pkg/apperrors"
+	"github.com/cmsgov/mint-app/pkg/models"
 )
 
 func (s *EmailTestSuite) TestSendIntakeReviewEmail() {
