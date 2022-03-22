@@ -1,6 +1,6 @@
 FROM golang:1.16.6 AS base
 
-WORKDIR /easi/
+WORKDIR /mint/
 
 FROM base AS modules
 
@@ -13,7 +13,7 @@ FROM modules AS build
 COPY cmd ./cmd
 COPY pkg ./pkg
 
-RUN CGO_ENABLED=0 GOOS=linux go build -a -o bin/easi ./cmd/easi
+RUN CGO_ENABLED=0 GOOS=linux go build -a -o bin/mint ./cmd/mint
 
 COPY config/tls/rds-ca-2019-root.pem /usr/local/share/ca-certificates/rds-ca-2019-root.crt
 COPY config/tls/hhs-fpki-intermediate-ca.pem /usr/local/share/ca-certificates/hhs-fpki-intermediate-ca.crt
@@ -33,14 +33,14 @@ COPY config/tls/Entrust_Managed_Services_Root_CA.cer /usr/local/share/ca-certifi
 COPY config/tls/Federal_Common_Policy_CA_G2.crt /usr/local/share/ca-certificates/Federal_Common_Policy_CA_G2.crt
 RUN update-ca-certificates
 
-CMD ["./bin/easi"]
+CMD ["./bin/mint"]
 
 FROM gcr.io/distroless/base:latest
 
-WORKDIR /easi/
+WORKDIR /mint/
 
-COPY --from=build /easi/bin/easi .
-COPY --from=build /easi/pkg/email/templates ./templates
+COPY --from=build /mint/bin/mint .
+COPY --from=build /mint/pkg/email/templates ./templates
 COPY --from=build /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs
 
 ARG ARG_APPLICATION_VERSION
@@ -49,10 +49,10 @@ ARG ARG_APPLICATION_TS
 ENV APPLICATION_VERSION=${ARG_APPLICATION_VERSION}
 ENV APPLICATION_DATETIME=${ARG_APPLICATION_DATETIME}
 ENV APPLICATION_TS=${ARG_APPLICATION_TS}
-ENV EMAIL_TEMPLATE_DIR=/easi/templates
+ENV EMAIL_TEMPLATE_DIR=/mint/templates
 
 USER 1000
 
-ENTRYPOINT ["/easi/easi"]
+ENTRYPOINT ["/mint/mint"]
 
 CMD ["serve"]
