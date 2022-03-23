@@ -40,9 +40,9 @@ const CollapsableLink = ({
 
   const renderEyeIcon = () => {
     return isOpen ? (
-      <IconVisibilityOff className="easi-collapsable-link__eye-icon" />
+      <IconVisibilityOff className="mint-collapsable-link__eye-icon" />
     ) : (
-      <IconVisiblity className="easi-collapsable-link__eye-icon" />
+      <IconVisiblity className="mint-collapsable-link__eye-icon" />
     );
   };
 
@@ -65,15 +65,15 @@ const CollapsableLink = ({
     </Button>
   );
   return (
-    <div className="easi-collapsable-link">
+    <div className="mint-collapsable-link">
       {labelPosition === 'top' && collapseButton}
       {isOpen && (
         <div
           id={id}
           className={
             styleLeftBar
-              ? 'easi-collapsable-link__content'
-              : 'easi-collapsable-link__content-no-bar'
+              ? 'mint-collapsable-link__content'
+              : 'mint-collapsable-link__content-no-bar'
           }
         >
           {children}
