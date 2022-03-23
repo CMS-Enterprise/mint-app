@@ -10,7 +10,7 @@ type HelpTextProps = {
 };
 
 const HelpText = ({ id, children, className }: HelpTextProps) => {
-  const classNames = classnames('easi-help-text', className);
+  const classNames = classnames('mint-help-text', className);
   return (
     <div id={id} className={classNames}>
       {children}
