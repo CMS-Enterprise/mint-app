@@ -35,7 +35,7 @@ describe('The Search Bar component', () => {
       const fixture = jest.fn();
       const event = {
         target: {
-          value: 'EASi'
+          value: 'MINT'
         }
       };
 
@@ -84,7 +84,7 @@ describe('The Search Bar component', () => {
       );
 
       const inputField = wrapper.find(
-        'input.easi-search-bar__autocomplete-input'
+        'input.mint-search-bar__autocomplete-input'
       );
 
       inputField.simulate('change', { target: { value: 'o' } });
@@ -125,7 +125,7 @@ describe('The Search Bar component', () => {
       );
 
       const inputField = wrapper.find(
-        'input.easi-search-bar__autocomplete-input'
+        'input.mint-search-bar__autocomplete-input'
       );
       inputField.simulate('change', event);
       inputField.simulate('focus');
@@ -159,7 +159,7 @@ describe('The Search Bar component', () => {
       );
 
       const inputField = wrapper.find(
-        'input.easi-search-bar__autocomplete-input'
+        'input.mint-search-bar__autocomplete-input'
       );
       inputField.simulate('change', event);
       inputField.simulate('focus');
@@ -195,13 +195,13 @@ describe('The Search Bar component', () => {
       };
 
       const inputField = wrapper.find(
-        'input.easi-search-bar__autocomplete-input'
+        'input.mint-search-bar__autocomplete-input'
       );
-      expect(wrapper.find('.easi-search-bar__no-results').length).toEqual(0);
+      expect(wrapper.find('.mint-search-bar__no-results').length).toEqual(0);
       inputField.simulate('change', event);
       inputField.simulate('focus');
 
-      expect(wrapper.find('.easi-search-bar__no-results').length).toEqual(1);
+      expect(wrapper.find('.mint-search-bar__no-results').length).toEqual(1);
     });
   });
 });
