@@ -19,11 +19,11 @@ const SectionWrapper = ({
   borderTop
 }: SectionWrapperProps) => {
   const classNames = classnames(
-    'easi-section',
+    'mint-section',
     {
-      'easi-section__border': border,
-      'easi-section__border-bottom': borderBottom,
-      'easi-section__border-top': borderTop
+      'mint-section__border': border,
+      'mint-section__border-bottom': borderBottom,
+      'mint-section__border-top': borderTop
     },
     className
   );
