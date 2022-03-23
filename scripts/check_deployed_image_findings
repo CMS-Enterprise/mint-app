@@ -58,7 +58,7 @@ slack_payload=$( jq -n \
   --arg title "$title" \
   --arg now "$NOW" \
   '{
-    "channel": "#oit-mint-alerts",
+    "channel": "#cmmi-mint-alerts",
     "attachments": [
         {
             "fallback": $message,
