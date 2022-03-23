@@ -10,11 +10,11 @@ type SpinnerProps = {
 
 const Spinner = ({ className, size, ...props }: SpinnerProps) => {
   const classes = classnames(
-    'easi-spinner',
+    'mint-spinner',
     {
-      'easi-spinner--small': size === 'small',
-      'easi-spinner--large': size === 'large',
-      'easi-spinner--xl': size === 'xl'
+      'mint-spinner--small': size === 'small',
+      'mint-spinner--large': size === 'large',
+      'mint-spinner--xl': size === 'xl'
     },
     className
   );
