@@ -23,7 +23,7 @@ case "$APP_ENV" in
 esac
 
 # Get image version currently deployed
-image_tag=$(curl --silent "$EASI_URL"/api/v1/healthcheck | jq -r .version) || exit
+image_tag=$(curl --silent "$MINT_URL"/api/v1/healthcheck | jq -r .version) || exit
 
 # Check scan findings for image
 payload="$(jq --null-input ".repository= \"$repository\" | .imageTag = \"$image_tag\"")"
@@ -58,7 +58,7 @@ slack_payload=$( jq -n \
   --arg title "$title" \
   --arg now "$NOW" \
   '{
-    "channel": "#oit-easi-alerts",
+    "channel": "#oit-mint-alerts",
     "attachments": [
         {
             "fallback": $message,
