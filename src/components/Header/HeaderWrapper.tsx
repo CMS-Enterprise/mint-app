@@ -6,7 +6,7 @@ type HeaderWrapperProps = {
   children: React.ReactNode;
 };
 const HeaderWrapper = ({ className, children }: HeaderWrapperProps) => {
-  const classNames = classnames('easi-header__wrapper', className);
+  const classNames = classnames('mint-header__wrapper', className);
   return <div className={classNames}>{children}</div>;
 };
 
