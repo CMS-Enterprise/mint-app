@@ -9,7 +9,7 @@ export const AnythingWrongSurvey = () => {
         href="https://www.surveymonkey.com/r/DM6NYRX"
         target="_blank"
         rel="noopener noreferrer"
-        aria-label="Open EASi survey in a new tab"
+        aria-label="Open MINT survey in a new tab"
       >
         {t('general:feedback.anythingWrong')}
       </a>
@@ -17,7 +17,7 @@ export const AnythingWrongSurvey = () => {
   );
 };
 
-export const ImproveEasiSurvey = () => {
+export const ImproveMINTSurvey = () => {
   const { t } = useTranslation();
   return (
     <p className="margin-top-4">
@@ -26,7 +26,7 @@ export const ImproveEasiSurvey = () => {
         href="https://www.surveymonkey.com/r/JNYSMZP"
         target="_blank"
         rel="noopener noreferrer"
-        aria-label="Open EASi survey in a new tab"
+        aria-label="Open MINT survey in a new tab"
       >
         {t('general:feedback.whatYouThink')}
       </a>
