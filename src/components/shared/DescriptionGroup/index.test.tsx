@@ -11,7 +11,7 @@ describe('The Description List component', () => {
   const component = shallow(
     <DescriptionList title="Test Title">
       <dt>Name</dt>
-      <dd>EASi</dd>
+      <dd>MINT</dd>
     </DescriptionList>
   );
 
@@ -19,7 +19,7 @@ describe('The Description List component', () => {
     shallow(
       <DescriptionList title="">
         <dt>Name</dt>
-        <dd>EASi</dd>
+        <dd>MINT</dd>
       </DescriptionList>
     );
   });
