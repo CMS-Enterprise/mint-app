@@ -1,4 +1,4 @@
-.easi-responsive-tabs {
+.mint-responsive-tabs {
   box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
   border-radius: 4px;
   border: 1px solid #E0E0E0;
@@ -26,25 +26,25 @@
     &--selected {
       background-color: #fff;
 
-      .easi-responsive-tabs__tab-btn {
+      .mint-responsive-tabs__tab-btn {
         font-weight: bold;
       }
 
-      .easi-responsive-tabs__tab-text {
+      .mint-responsive-tabs__tab-text {
         border-bottom: 4px solid #009bc3;
       }
     }
   }
 
   &__tab + &__tab {
-    .easi-responsive-tabs__tab-divider {
+    .mint-responsive-tabs__tab-divider {
       border-left: 2px solid #c7c7c7;
     }
   }
 
   &__tab--selected + &__tab,
   &__tab + &__tab--selected {
-    .easi-responsive-tabs__tab-divider {
+    .mint-responsive-tabs__tab-divider {
       border-left: 0;
     }
   }
