@@ -1,4 +1,4 @@
-.easi-secondary-nav {
+.mint-secondary-nav {
   border-bottom: 1px solid color($theme-color-base-lighter);
   // This breaks responsiveness; no plans for now
   white-space: nowrap;
@@ -12,11 +12,11 @@
     font-weight: bold;
 
     &--active {
-      border-bottom: 4px solid $easi-bright-blue;
+      border-bottom: 4px solid $mint-bright-blue;
     }
 
     &:hover {
-      color: $easi-bright-blue;
+      color: $mint-bright-blue;
       cursor: pointer;
     }
 
