@@ -45,7 +45,7 @@ export const Alert = ({
       'usa-alert--info': type === 'info',
       'usa-alert--slim': slim,
       'usa-alert--no-icon': noIcon,
-      'easi-inline-alert': inline
+      'mint-inline-alert': inline
     },
     className
   );
