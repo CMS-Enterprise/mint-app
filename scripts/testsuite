@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# run `easi` app tests
+# run `mint` app tests
 #
 
 set -eu -o pipefail
@@ -11,7 +11,7 @@ export EMAIL_TEMPLATE_DIR=$builddir/pkg/email/templates
 red_color_code="\e[31m"
 reset_color_code="\e[0m"
 
-"$builddir"/bin/easi test
+"$builddir"/bin/mint test
 
 # Convert go-coverage.out to txt and html
 go tool cover -func=go-coverage.out -o "go-coverage.txt"
