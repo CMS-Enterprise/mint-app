@@ -18,7 +18,7 @@ describe('The Tabs component', () => {
       </Tabs>
     );
 
-    expect(getByTestId('easi-tabs')).toBeInTheDocument();
+    expect(getByTestId('mint-tabs')).toBeInTheDocument();
   });
 
   it('renders the first tab panel', () => {
@@ -35,7 +35,7 @@ describe('The Tabs component', () => {
     );
 
     expect(getByTestId('Tab1-tab').classList).toContain(
-      'easi-tabs__tab--selected'
+      'mint-tabs__tab--selected'
     );
     expect(getByTestId('panel-1').textContent).toEqual(fixture);
   });
@@ -53,10 +53,10 @@ describe('The Tabs component', () => {
     );
 
     expect(getByTestId('Tab2-tab').classList).toContain(
-      'easi-tabs__tab--selected'
+      'mint-tabs__tab--selected'
     );
     expect(getByTestId('Tab2-panel').classList).not.toContain(
-      'easi-print-only'
+      'mint-print-only'
     );
   });
 
@@ -95,10 +95,10 @@ describe('The Tabs component', () => {
 
     userEvent.click(getByTestId('Tab3-tab-btn'));
     expect(getByTestId('Tab3-tab').classList).toContain(
-      'easi-tabs__tab--selected'
+      'mint-tabs__tab--selected'
     );
     expect(getByTestId('Tab3-panel').classList).not.toContain(
-      'easi-print-only'
+      'mint-print-only'
     );
   });
 
@@ -123,10 +123,10 @@ describe('The Tabs component', () => {
 
       expect(getByTestId('Tab2-tab-btn')).toHaveFocus();
       expect(getByTestId('Tab2-tab').classList).toContain(
-        'easi-tabs__tab--selected'
+        'mint-tabs__tab--selected'
       );
       expect(getByTestId('Tab2-panel').classList).not.toContain(
-        'easi-print-only'
+        'mint-print-only'
       );
     });
 
@@ -150,10 +150,10 @@ describe('The Tabs component', () => {
 
       expect(getByTestId('Tab2-tab-btn')).toHaveFocus();
       expect(getByTestId('Tab2-tab').classList).toContain(
-        'easi-tabs__tab--selected'
+        'mint-tabs__tab--selected'
       );
       expect(getByTestId('Tab2-panel').classList).not.toContain(
-        'easi-print-only'
+        'mint-print-only'
       );
     });
 
@@ -177,10 +177,10 @@ describe('The Tabs component', () => {
 
       expect(getByTestId('Tab3-tab-btn')).toHaveFocus();
       expect(getByTestId('Tab3-tab').classList).toContain(
-        'easi-tabs__tab--selected'
+        'mint-tabs__tab--selected'
       );
       expect(getByTestId('Tab3-panel').classList).not.toContain(
-        'easi-print-only'
+        'mint-print-only'
       );
     });
 
@@ -204,10 +204,10 @@ describe('The Tabs component', () => {
 
       expect(getByTestId('Tab1-tab-btn')).toHaveFocus();
       expect(getByTestId('Tab1-tab').classList).toContain(
-        'easi-tabs__tab--selected'
+        'mint-tabs__tab--selected'
       );
       expect(getByTestId('Tab1-panel').classList).not.toContain(
-        'easi-print-only'
+        'mint-print-only'
       );
     });
 
@@ -232,7 +232,7 @@ describe('The Tabs component', () => {
 
       expect(getByTestId('Tab1-panel')).toHaveFocus();
       expect(getByTestId('Tab1-panel').classList).not.toContain(
-        'easi-print-only'
+        'mint-print-only'
       );
     });
 
@@ -257,10 +257,10 @@ describe('The Tabs component', () => {
 
       expect(getByTestId('Tab1-tab-btn')).toHaveFocus();
       expect(getByTestId('Tab1-tab').classList).toContain(
-        'easi-tabs__tab--selected'
+        'mint-tabs__tab--selected'
       );
       expect(getByTestId('Tab1-panel').classList).not.toContain(
-        'easi-print-only'
+        'mint-print-only'
       );
     });
 
@@ -285,10 +285,10 @@ describe('The Tabs component', () => {
 
       expect(getByTestId('Tab3-tab-btn')).toHaveFocus();
       expect(getByTestId('Tab3-tab').classList).toContain(
-        'easi-tabs__tab--selected'
+        'mint-tabs__tab--selected'
       );
       expect(getByTestId('Tab3-panel').classList).not.toContain(
-        'easi-print-only'
+        'mint-print-only'
       );
     });
   });
