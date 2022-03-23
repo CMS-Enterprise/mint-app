@@ -15,7 +15,7 @@ describe('Spinner', () => {
       <Spinner size="small" data-testid="spinner" />
     );
 
-    expect(getByTestId('spinner')).toHaveClass('easi-spinner--small');
+    expect(getByTestId('spinner')).toHaveClass('mint-spinner--small');
   });
 
   it('renders a large spinner', () => {
@@ -23,12 +23,12 @@ describe('Spinner', () => {
       <Spinner size="large" data-testid="spinner" />
     );
 
-    expect(getByTestId('spinner')).toHaveClass('easi-spinner--large');
+    expect(getByTestId('spinner')).toHaveClass('mint-spinner--large');
   });
 
   it('renders a xl spinner', () => {
     const { getByTestId } = render(<Spinner size="xl" data-testid="spinner" />);
 
-    expect(getByTestId('spinner')).toHaveClass('easi-spinner--xl');
+    expect(getByTestId('spinner')).toHaveClass('mint-spinner--xl');
   });
 });
