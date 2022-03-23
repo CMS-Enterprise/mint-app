@@ -9,7 +9,7 @@ type DividerProps = {
 };
 
 const Divider = ({ id, className }: DividerProps) => {
-  const classNames = classnames('easi-divider', className);
+  const classNames = classnames('mint-divider', className);
   return <div id={id} className={classNames} />;
 };
 
