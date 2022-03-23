@@ -22,8 +22,8 @@ const Modal = ({ children, isOpen, openModal, closeModal }: ModalProps) => {
   return (
     <ReactModal
       isOpen={isOpen}
-      overlayClassName="easi-modal__overlay"
-      className="easi-modal__content"
+      overlayClassName="mint-modal__overlay"
+      className="mint-modal__content"
       onAfterOpen={handleOpenModal}
       onAfterClose={noScroll.off}
       onRequestClose={closeModal}
@@ -32,13 +32,13 @@ const Modal = ({ children, isOpen, openModal, closeModal }: ModalProps) => {
     >
       <button
         type="button"
-        className="easi-modal__x-button"
+        className="mint-modal__x-button"
         aria-label="Close Modal"
         onClick={closeModal}
       >
         <i className="fa fa-times" />
       </button>
-      <div className="easi-modal__body">{children}</div>
+      <div className="mint-modal__body">{children}</div>
     </ReactModal>
   );
 };
