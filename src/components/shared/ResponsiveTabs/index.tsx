@@ -40,7 +40,7 @@ const ResponsiveTabs = ({
   // Set tabs/widths on component mount
   useEffect(() => {
     const tabElements: any = document.querySelectorAll(
-      '.easi-responsive-tabs__tab'
+      '.mint-responsive-tabs__tab'
     );
     const arr: { name: string; width: number }[] = [];
     tabElements.forEach((tab: HTMLElement) => {
@@ -56,10 +56,10 @@ const ResponsiveTabs = ({
   useEffect(() => {
     const handleResize = () => {
       const component: any = document.querySelector(
-        '.easi-responsive-tabs__navigation'
+        '.mint-responsive-tabs__navigation'
       );
       const tabList: any = document.querySelector(
-        '.easi-responsive-tabs__tab-list'
+        '.mint-responsive-tabs__tab-list'
       );
 
       setComponentWidth(component.offsetWidth);
@@ -74,7 +74,7 @@ const ResponsiveTabs = ({
   useLayoutEffect(() => {
     if (componentWidth > 0 && tabListWidth > 0) {
       const tabElements = document.querySelectorAll(
-        '.easi-responsive-tabs__tab'
+        '.mint-responsive-tabs__tab'
       );
       const availableSpace = componentWidth - moreButtonWidth;
       let updatedTabListWidth = tabListWidth;
@@ -138,24 +138,24 @@ const ResponsiveTabs = ({
   }, []);
 
   return (
-    <div className={classnames('easi-responsive-tabs', 'bg-base-lightest')}>
-      <div className="easi-responsive-tabs__navigation">
-        <div className="easi-responsive-tabs__tabs-wrapper">
-          <ul className="easi-responsive-tabs__tab-list">
+    <div className={classnames('mint-responsive-tabs', 'bg-base-lightest')}>
+      <div className="mint-responsive-tabs__navigation">
+        <div className="mint-responsive-tabs__tabs-wrapper">
+          <ul className="mint-responsive-tabs__tab-list">
             {displayedTabs.map(tab => (
               <li
                 key={tab}
-                className={classnames('easi-responsive-tabs__tab', {
-                  'easi-responsive-tabs__tab--selected': activeTab === tab
+                className={classnames('mint-responsive-tabs__tab', {
+                  'mint-responsive-tabs__tab--selected': activeTab === tab
                 })}
               >
                 <button
                   type="button"
-                  className="easi-responsive-tabs__tab-btn"
+                  className="mint-responsive-tabs__tab-btn"
                   onClick={() => handleTabClick(tab)}
                 >
-                  <span className="easi-responsive-tabs__tab-divider">
-                    <span className="easi-responsive-tabs__tab-text">
+                  <span className="mint-responsive-tabs__tab-divider">
+                    <span className="mint-responsive-tabs__tab-text">
                       {tab}
                     </span>
                   </span>
@@ -169,7 +169,7 @@ const ResponsiveTabs = ({
             <button
               type="button"
               // ref={dropdownNode}
-              className="easi-responsive-tabs__more-btn"
+              className="mint-responsive-tabs__more-btn"
               onClick={() => {
                 setIsMoreMenuOpen(prevOpen => !prevOpen);
               }}
@@ -188,7 +188,7 @@ const ResponsiveTabs = ({
                     'fa-angle-right': !isMoreMenuOpen,
                     'fa-angle-down': isMoreMenuOpen
                   },
-                  'easi-responsive-tabs__angle-right'
+                  'mint-responsive-tabs__angle-right'
                 )}
               />
               <span>More</span>
@@ -197,13 +197,13 @@ const ResponsiveTabs = ({
           {isMoreMenuOpen && (
             <ul
               id="ResponsiveTabs-MoreMenu"
-              className="easi-responsive-tabs__more-menu bg-base-lightest"
+              className="mint-responsive-tabs__more-menu bg-base-lightest"
             >
               {moreTabsList.map(tab => (
                 <li key={`menu-tab-${tab}`}>
                   <button
                     type="button"
-                    className="easi-responsive-tabs__tab-btn"
+                    className="mint-responsive-tabs__tab-btn"
                     onClick={() => {
                       handleTabClick(tab);
                       setIsMoreMenuOpen(false);
