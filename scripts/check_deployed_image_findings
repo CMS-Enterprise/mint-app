@@ -7,13 +7,13 @@ function_qualifier="$2"
 
 case "$APP_ENV" in
   "dev")
-    EASI_URL="https://dev.easi.cms.gov"
+    MINT_URL="https://dev.mint.cms.gov"
     ;;
   "impl")
-    EASI_URL="https://impl.easi.cms.gov"
+    MINT_URL="https://impl.mint.cms.gov"
     ;;
   "prod")
-    EASI_URL="https://easi.cms.gov"
+    MINT_URL="https://mint.cms.gov"
     ;;
   *)
     echo "APP_ENV value not recognized: ${APP_ENV:-unset}"
