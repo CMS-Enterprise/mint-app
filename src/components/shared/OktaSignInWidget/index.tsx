@@ -45,7 +45,7 @@ const OktaSignInWidget = ({ onSuccess, onError }: OktaSignInWidgetProps) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return <div id="easi-okta-sign-in" ref={widgetRef} />;
+  return <div id="mint-okta-sign-in" ref={widgetRef} />;
 };
 
 export default OktaSignInWidget;
