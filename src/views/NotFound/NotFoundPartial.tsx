@@ -15,7 +15,7 @@ const NotFoundPartial = () => {
       <PageHeading>{t('error:notFound.heading')}</PageHeading>
       <p>{t('error:notFound.thingsToTry')}</p>
 
-      <ul className="easi-not-found__error_suggestions">
+      <ul className="mint-not-found__error_suggestions">
         {listItems.map(item => {
           return <li key={item}>{item}</li>;
         })}
