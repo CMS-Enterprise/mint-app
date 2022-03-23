@@ -116,15 +116,15 @@ const Tabs = ({ defaultActiveTab, children }: TabsProps) => {
   }, [tabEls]);
 
   return (
-    <div className={classnames('easi-tabs')} data-testid="easi-tabs">
-      <ul className="easi-tabs__tab-list" role="tablist" ref={tabsRef}>
+    <div className={classnames('mint-tabs')} data-testid="mint-tabs">
+      <ul className="mint-tabs__tab-list" role="tablist" ref={tabsRef}>
         {tabObjs.map(tab => {
           const { id, name } = tab;
           return (
             <li
               key={id}
-              className={classnames('easi-tabs__tab', {
-                'easi-tabs__tab--selected': activeTab === name
+              className={classnames('mint-tabs__tab', {
+                'mint-tabs__tab--selected': activeTab === name
               })}
               role="presentation"
               data-testid={`${id}-tab`}
@@ -133,14 +133,14 @@ const Tabs = ({ defaultActiveTab, children }: TabsProps) => {
                 id={`${id}-tab-btn`}
                 type="button"
                 role="tab"
-                className="easi-tabs__tab-btn"
+                className="mint-tabs__tab-btn"
                 aria-selected={activeTab === name}
                 tabIndex={activeTab === name ? undefined : -1}
                 aria-controls={id}
                 onClick={() => setActiveTab(name)}
                 data-testid={`${id}-tab-btn`}
               >
-                <span className="easi-tabs__tab-text">{name}</span>
+                <span className="mint-tabs__tab-text">{name}</span>
               </button>
             </li>
           );
