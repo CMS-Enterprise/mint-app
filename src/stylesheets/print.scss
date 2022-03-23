@@ -1,5 +1,5 @@
 @media screen {
-  .easi-only-print {
+  .mint-only-print {
     display: none;
   }
 }
@@ -17,11 +17,11 @@
 }
 
 @media print {
-  .easi-no-print {
+  .mint-no-print {
     display: none;
   }
 
-  .easi-only-print {
+  .mint-only-print {
     display: block;
   }
 
@@ -38,7 +38,7 @@
     clear: both;
   }
 
-  .easi-review-row {
+  .mint-review-row {
     break-inside: avoid;
     display: flex;
     & > div {
@@ -52,16 +52,16 @@
     border-bottom: solid 5px black;
   }
 
-  .easi-responsive-tabs__navigation {
+  .mint-responsive-tabs__navigation {
     display: none;
   }
 
-  .easi-responsive-tabs {
+  .mint-responsive-tabs {
     border: 0;
     box-shadow: none;
   }
 
-  .easi-business-case__review-solutions-wrapper {
+  .mint-business-case__review-solutions-wrapper {
     padding: 0;
   }
 
