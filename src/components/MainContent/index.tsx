@@ -13,7 +13,7 @@ const MainContent = ({
   children,
   'data-testid': dataTestid
 }: MainContentProps) => {
-  const classes = classnames('easi-main-content', className);
+  const classes = classnames('mint-main-content', className);
 
   return (
     <main
