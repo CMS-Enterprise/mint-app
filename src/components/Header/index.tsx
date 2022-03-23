@@ -93,9 +93,9 @@ export const Header = ({ children }: HeaderProps) => {
   };
 
   return (
-    <header className="usa-header easi-header" role="banner" ref={navbarRef}>
+    <header className="usa-header mint-header" role="banner" ref={navbarRef}>
       <UsGovBanner />
-      <div className="grid-container easi-header__basic">
+      <div className="grid-container mint-header__basic">
         <div className="usa-logo site-logo" id="logo">
           <Link to="/">
             <em className="usa-logo__text" aria-label={t('header:returnHome')}>
@@ -105,8 +105,8 @@ export const Header = ({ children }: HeaderProps) => {
         </div>
         {authState?.isAuthenticated ? (
           <div>
-            <div className="navbar--container easi-nav__user">
-              <div className="easi-header__user">{userName}</div>
+            <div className="navbar--container mint-nav__user">
+              <div className="mint-header__user">{userName}</div>
               <div>&nbsp; | &nbsp;</div>
               <button
                 type="button"
@@ -128,7 +128,7 @@ export const Header = ({ children }: HeaderProps) => {
             </button>
           </div>
         ) : (
-          <Link className="easi-header__nav-link" to="/signin">
+          <Link className="mint-header__nav-link" to="/signin">
             {t('header:signIn')}
           </Link>
         )}
@@ -142,7 +142,7 @@ export const Header = ({ children }: HeaderProps) => {
         />
       )}
 
-      <div className="grid-container easi-header--desktop ">{children}</div>
+      <div className="grid-container mint-header--desktop ">{children}</div>
       <div
         className={classnames('usa-overlay', {
           'is-visible': isMobileSideNavExpanded
@@ -160,7 +160,7 @@ export const Header = ({ children }: HeaderProps) => {
               userName={userName}
             />
           ) : (
-            <UswdsReactLink className="easi-header__nav-link" to="/signin">
+            <UswdsReactLink className="mint-header__nav-link" to="/signin">
               {t('header:signIn')}
             </UswdsReactLink>
           )}
