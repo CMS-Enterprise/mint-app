@@ -55,8 +55,8 @@ const AppRoutes = () => {
       <SecureRoute path="/user-diagnostics" component={UserInfo} />
 
       {/* Model Routes */}
-      <Route path="/models" exact component={ModelPlan} />
-      <Route path="/models/new-plan" exact component={NewModelPlan} />
+      <SecureRoute path="/models" exact component={ModelPlan} />
+      <SecureRoute path="/models/new-plan" exact component={NewModelPlan} />
 
       {/* Static Page Routes  */}
       <Route path="/privacy-policy" exact component={PrivacyPolicy} />
