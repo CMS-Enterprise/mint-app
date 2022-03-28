@@ -19,6 +19,8 @@ import Cookies from 'views/Cookies';
 import FlagsWrapper from 'views/FlagsWrapper';
 import Home from 'views/Home';
 import Login from 'views/Login';
+import ModelPlan from 'views/ModelPlan';
+import NewModelPlan from 'views/ModelPlan/NewPlan';
 import NotFound from 'views/NotFound';
 import PrivacyPolicy from 'views/PrivacyPolicy';
 import Sandbox from 'views/Sandbox';
@@ -51,6 +53,10 @@ const AppRoutes = () => {
       <Redirect exact from="/login" to="/signin" />
       <Route path="/signin" exact component={Login} />
       <SecureRoute path="/user-diagnostics" component={UserInfo} />
+
+      {/* Model Routes */}
+      <Route path="/models" exact component={ModelPlan} />
+      <Route path="/models/new-plan" exact component={NewModelPlan} />
 
       {/* Static Page Routes  */}
       <Route path="/privacy-policy" exact component={PrivacyPolicy} />
