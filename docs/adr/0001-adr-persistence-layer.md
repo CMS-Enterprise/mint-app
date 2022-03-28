@@ -88,3 +88,7 @@ The existing EASi paradigm uses [sqlx](https://github.com/CMSgov/easi-app/blob/m
 
 
 ## 5. Are there any areas that caching solutions might be helpful?  
+For initial needs, we likely won't need any caching. However there are a few potential scenarios that could take advantage of caching. 
+* Concurrent Editing
+  * Sockets
+* Slow API responses
