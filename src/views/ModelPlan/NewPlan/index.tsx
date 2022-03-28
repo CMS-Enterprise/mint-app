@@ -1,10 +1,6 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 const NewModelPlan = () => {
-  useEffect(() => {
-    document.title = 'New Model Plan';
-  }, []);
-
   return <></>;
 };
 
