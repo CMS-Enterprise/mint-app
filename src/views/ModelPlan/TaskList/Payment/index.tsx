@@ -1,7 +1,7 @@
 import React from 'react';
 
-const NewPlan = () => {
+const Payment = () => {
   return <></>;
 };
 
-export default NewPlan;
+export default Payment;

@@ -1,7 +1,7 @@
 import React from 'react';
 
-const NewPlan = () => {
+const Basics = () => {
   return <></>;
 };
 
-export default NewPlan;
+export default Basics;

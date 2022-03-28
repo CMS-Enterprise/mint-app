@@ -20,7 +20,16 @@ import FlagsWrapper from 'views/FlagsWrapper';
 import Home from 'views/Home';
 import Login from 'views/Login';
 import ModelPlan from 'views/ModelPlan';
-import NewModelPlan from 'views/ModelPlan/NewPlan';
+import NewPlan from 'views/ModelPlan/NewPlan';
+import TaskList from 'views/ModelPlan/TaskList';
+import Basics from 'views/ModelPlan/TaskList/Basics';
+import Characteristics from 'views/ModelPlan/TaskList/Characteristics';
+import CostEstimate from 'views/ModelPlan/TaskList/CostEstimate';
+import Operations from 'views/ModelPlan/TaskList/Operations';
+import Participants from 'views/ModelPlan/TaskList/Participants';
+import Payment from 'views/ModelPlan/TaskList/Payment';
+import Population from 'views/ModelPlan/TaskList/Population';
+import SubmitRequest from 'views/ModelPlan/TaskList/SubmitRequest';
 import NotFound from 'views/NotFound';
 import PrivacyPolicy from 'views/PrivacyPolicy';
 import Sandbox from 'views/Sandbox';
@@ -56,7 +65,40 @@ const AppRoutes = () => {
 
       {/* Model Routes */}
       <SecureRoute path="/models" exact component={ModelPlan} />
-      <SecureRoute path="/models/new-plan" exact component={NewModelPlan} />
+      <SecureRoute path="/models/new-plan" exact component={NewPlan} />
+      <SecureRoute path="/models/task-list" exact component={TaskList} />
+      <SecureRoute path="/models/task-list/basics" exact component={Basics} />
+      <SecureRoute
+        path="/models/task-list/characteristics"
+        exact
+        component={Characteristics}
+      />
+      <SecureRoute
+        path="/models/task-list/cost-estimate"
+        exact
+        component={CostEstimate}
+      />
+      <SecureRoute
+        path="/models/task-list/operations"
+        exact
+        component={Operations}
+      />
+      <SecureRoute
+        path="/models/task-list/participants"
+        exact
+        component={Participants}
+      />
+      <SecureRoute path="/models/task-list/payment" exact component={Payment} />
+      <SecureRoute
+        path="/models/task-list/population"
+        exact
+        component={Population}
+      />
+      <SecureRoute
+        path="/models/task-list/submit-request"
+        exact
+        component={SubmitRequest}
+      />
 
       {/* Static Page Routes  */}
       <Route path="/privacy-policy" exact component={PrivacyPolicy} />
