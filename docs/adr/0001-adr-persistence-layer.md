@@ -1,9 +1,17 @@
-# *[short title of solved problem and solution]*
+# Persistance Layer Planning
 
 [EASI - 1700](https://jiraent.cms.gov/browse/EASI-1700)
 
-*[context and problem statement]*
-*[decision drivers | forces]* <!-- optional -->
+As we begin to develop MINT as a new application based on EASi, we need to evaluate the persistence layer needs.
+
+*Questions this Spike Should Answer*
+ * What kind of persistence layer makes sense for the CMMI work?
+ ** Relational Database?
+ ** Document Store / NoSQL?
+ * What kinds of data are we going to be storing? 
+ * Is there value in stored procedures over inline SQL for a relational database?
+ * Do we need anything else on top of a relational data store?
+ * Are there any areas that caching solutions might be helpful?
 
 ## Considered Alternatives
 
