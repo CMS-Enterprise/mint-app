@@ -27,7 +27,6 @@ import (
 	"github.com/cmsgov/mint-app/pkg/graph/generated"
 	"github.com/cmsgov/mint-app/pkg/graph/model"
 	"github.com/cmsgov/mint-app/pkg/local"
-	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/storage"
 	"github.com/cmsgov/mint-app/pkg/testhelpers"
 	"github.com/cmsgov/mint-app/pkg/upload"
@@ -132,11 +131,9 @@ func TestGraphQLTestSuite(t *testing.T) {
 
 	// set up Email Client
 	emailConfig := email.Config{
-		GRTEmail:               models.NewEmailAddress(config.GetString(appconfig.GRTEmailKey)),
-		AccessibilityTeamEmail: models.NewEmailAddress(config.GetString(appconfig.AccessibilityTeamEmailKey)),
-		URLHost:                config.GetString(appconfig.ClientHostKey),
-		URLScheme:              config.GetString(appconfig.ClientProtocolKey),
-		TemplateDirectory:      config.GetString(appconfig.EmailTemplateDirectoryKey),
+		URLHost:           config.GetString(appconfig.ClientHostKey),
+		URLScheme:         config.GetString(appconfig.ClientProtocolKey),
+		TemplateDirectory: config.GetString(appconfig.EmailTemplateDirectoryKey),
 	}
 	localSender := local.NewSender()
 	emailClient, err := email.NewClient(emailConfig, localSender)

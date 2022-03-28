@@ -8,7 +8,6 @@ import (
 	"github.com/cmsgov/mint-app/pkg/appses"
 	"github.com/cmsgov/mint-app/pkg/email"
 	"github.com/cmsgov/mint-app/pkg/flags"
-	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/storage"
 	"github.com/cmsgov/mint-app/pkg/upload"
 )
@@ -52,11 +51,9 @@ func (s Server) NewEmailConfig() email.Config {
 	s.checkRequiredConfig(appconfig.EmailTemplateDirectoryKey)
 
 	return email.Config{
-		GRTEmail:               models.NewEmailAddress(s.Config.GetString(appconfig.GRTEmailKey)),
-		AccessibilityTeamEmail: models.NewEmailAddress(s.Config.GetString(appconfig.AccessibilityTeamEmailKey)),
-		URLHost:                s.Config.GetString(appconfig.ClientHostKey),
-		URLScheme:              s.Config.GetString(appconfig.ClientProtocolKey),
-		TemplateDirectory:      s.Config.GetString(appconfig.EmailTemplateDirectoryKey),
+		URLHost:           s.Config.GetString(appconfig.ClientHostKey),
+		URLScheme:         s.Config.GetString(appconfig.ClientProtocolKey),
+		TemplateDirectory: s.Config.GetString(appconfig.EmailTemplateDirectoryKey),
 	}
 }
 
