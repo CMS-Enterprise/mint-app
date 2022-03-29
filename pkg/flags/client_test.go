@@ -30,7 +30,7 @@ func TestPrincipal(t *testing.T) {
 		"submitter": {
 			appcontext.WithPrincipal(
 				context.Background(),
-				&authentication.EUAPrincipal{EUAID: "EASi", JobCodeEASi: true},
+				&authentication.EUAPrincipal{EUAID: "MINT", JobCodeMINT: true},
 			),
 			false,
 		},
