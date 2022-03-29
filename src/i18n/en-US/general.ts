@@ -1,5 +1,5 @@
 const general = {
-  appName: 'CMMI',
+  appName: 'MINT',
   intake: 'Intake Request',
   businessCase: 'Business Case',
   date: {
@@ -8,7 +8,7 @@ const general = {
     year: 'Year'
   },
   feedback: {
-    improvement: 'Help us improve CMMI',
+    improvement: 'Help us improve MINT',
     whatYouThink: 'Tell us what you think of this service (opens in a new tab)',
     anythingWrong: 'Is there anything wrong on this page? (opens in a new tab)'
   },
