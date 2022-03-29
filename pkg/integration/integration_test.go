@@ -44,8 +44,8 @@ func TestIntegrationTestSuite(t *testing.T) {
 		t.Skip("skipping integration tests in `-short` mode")
 	}
 	config := testhelpers.NewConfig()
-	easiServer := server.NewServer(config)
-	testServer := httptest.NewServer(easiServer)
+	MINTServer := server.NewServer(config)
+	testServer := httptest.NewServer(MINTServer)
 	defer testServer.Close()
 
 	accessToken, err := testhelpers.OktaAccessToken(config)
