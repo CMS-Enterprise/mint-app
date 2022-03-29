@@ -10,7 +10,7 @@ import (
 	ld "gopkg.in/launchdarkly/go-server-sdk.v5"
 )
 
-// Store performs database operations for EASi
+// Store performs database operations for MINT
 type Store struct {
 	db        *sqlx.DB
 	logger    *zap.Logger
