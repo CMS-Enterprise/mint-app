@@ -50,7 +50,7 @@ const Home = () => {
                   {t('newModelSummaryBox.copy')}
                 </p>
                 <UswdsReactLink
-                  className="usa-button"
+                  className="usa-button usa-button--outline"
                   variant="unstyled"
                   to="/models"
                 >
