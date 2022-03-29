@@ -66,37 +66,41 @@ const AppRoutes = () => {
       {/* Model Routes */}
       <SecureRoute path="/models" exact component={ModelPlan} />
       <SecureRoute path="/models/new-plan" exact component={NewPlan} />
-      <SecureRoute path="/models/task-list" exact component={TaskList} />
-      <SecureRoute path="/models/task-list/basics" exact component={Basics} />
       <SecureRoute
-        path="/models/task-list/characteristics"
+        path="/models/:modelId/task-list"
         exact
+        component={TaskList}
+      />
+      <SecureRoute
+        path="/models/:modelId/task-list/basics"
+        component={Basics}
+      />
+      <SecureRoute
+        path="/models/:modelId/task-list/characteristics"
         component={Characteristics}
       />
       <SecureRoute
-        path="/models/task-list/cost-estimate"
-        exact
+        path="/models/:modelId/task-list/cost-estimate"
         component={CostEstimate}
       />
       <SecureRoute
-        path="/models/task-list/operations"
-        exact
+        path="/models/:modelId/task-list/operations"
         component={Operations}
       />
       <SecureRoute
-        path="/models/task-list/participants"
-        exact
+        path="/models/:modelId/task-list/participants"
         component={Participants}
       />
-      <SecureRoute path="/models/task-list/payment" exact component={Payment} />
       <SecureRoute
-        path="/models/task-list/population"
-        exact
+        path="/models/:modelId/task-list/payment"
+        component={Payment}
+      />
+      <SecureRoute
+        path="/models/:modelId/task-list/population"
         component={Population}
       />
       <SecureRoute
-        path="/models/task-list/submit-request"
-        exact
+        path="/models/:modelId/task-list/submit-request"
         component={SubmitRequest}
       />
 

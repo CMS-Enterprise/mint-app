@@ -16,6 +16,14 @@ export const navLinks = () => [
   {
     link: '/',
     label: 'home'
+  },
+  {
+    link: '/models',
+    label: 'models'
+  },
+  {
+    link: '/help',
+    label: 'help'
   }
 ];
 

@@ -1,7 +1,24 @@
 import React from 'react';
+import { Route, Switch } from 'react-router-dom';
 
-const Characteristics = () => {
-  return <></>;
+import MainContent from 'components/MainContent';
+import NotFound, { NotFoundPartial } from 'views/NotFound';
+
+export const Characteristics = () => {
+  return (
+    <MainContent
+      className="grid-container margin-bottom-5"
+      data-testid="model-characteristics"
+    >
+      <Switch>
+        <Route
+          path="/models/:modelId/task-list/characteristics/page-1" // page-* may change pending UX clarifcation
+          render={() => <NotFound />}
+        />
+        <Route path="*" render={() => <NotFoundPartial />} />
+      </Switch>
+    </MainContent>
+  );
 };
 
 export default Characteristics;
