@@ -1,1 +1,0 @@
-ALTER TYPE action_type ADD VALUE 'READY_FOR_GRB';
