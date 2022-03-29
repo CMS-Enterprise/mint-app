@@ -6,6 +6,14 @@ const home = {
   newModelSummaryBox: {
     copy: 'Have a new model or demonstration?',
     cta: 'Start a draft model plan'
+  },
+  requestsTable: {
+    basic: {
+      heading: 'My draft model plans'
+    },
+    admin: {
+      heading: 'Draft model plans'
+    }
   }
 };
 
