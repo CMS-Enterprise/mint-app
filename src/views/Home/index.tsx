@@ -12,6 +12,7 @@ import PageHeading from 'components/PageHeading';
 import useMessage from 'hooks/useMessage';
 import { AppState } from 'reducers/rootReducer';
 import user from 'utils/user';
+import Table from 'views/ModelPlan/Table';
 
 // import List from 'views/Accessibility/AccessibilityRequest/List';
 // import Table from 'views/MyRequests/Table';
@@ -90,9 +91,9 @@ const Home = () => {
                 {t('requestsTable.basic.heading')}
               </h2>
             </div>
-            {/* <div className="tablet:grid-col-12">
+            <div className="tablet:grid-col-12">
               <Table />
-            </div> */}
+            </div>
           </div>
         );
       }
