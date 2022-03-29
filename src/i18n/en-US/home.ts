@@ -13,6 +13,11 @@ const home = {
     },
     admin: {
       heading: 'Draft model plans'
+    },
+    empty: {
+      heading: 'You don’t have any draft model plans yet',
+      body:
+        'Start a new plan by clicking the button above. Once you start one, it will appear in this section.'
     }
   }
 };
