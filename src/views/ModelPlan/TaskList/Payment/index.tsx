@@ -6,10 +6,7 @@ import NotFound, { NotFoundPartial } from 'views/NotFound';
 
 export const Payment = () => {
   return (
-    <MainContent
-      className="grid-container margin-bottom-5"
-      data-testid="model-payment"
-    >
+    <MainContent className="grid-container" data-testid="model-payment">
       <Switch>
         <Route
           path="/models/:modelId/task-list/payment/page-1" // page-* may change pending UX clarifcation

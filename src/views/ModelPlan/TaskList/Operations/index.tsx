@@ -6,10 +6,7 @@ import NotFound, { NotFoundPartial } from 'views/NotFound';
 
 export const Operations = () => {
   return (
-    <MainContent
-      className="grid-container margin-bottom-5"
-      data-testid="model-operations"
-    >
+    <MainContent className="grid-container" data-testid="model-operations">
       <Switch>
         <Route
           path="/models/:modelId/task-list/operations/page-1" // page-* may change pending UX clarifcation

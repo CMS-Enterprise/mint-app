@@ -6,13 +6,18 @@ import NotFound, { NotFoundPartial } from 'views/NotFound';
 
 export const Basics = () => {
   return (
-    <MainContent
-      className="grid-container margin-bottom-5"
-      data-testid="model-basics"
-    >
+    <MainContent className="grid-container" data-testid="model-basics">
       <Switch>
         <Route
-          path="/models/:modelId/task-list/basics/page-1" // page-* may change pending UX clarifcation
+          path="/models/:modelId/task-list/basics/info"
+          render={() => <NotFound />}
+        />
+        <Route
+          path="/models/:modelId/task-list/basics/overview"
+          render={() => <NotFound />}
+        />
+        <Route
+          path="/models/:modelId/task-list/basics/milestones"
           render={() => <NotFound />}
         />
         <Route path="*" render={() => <NotFoundPartial />} />

@@ -6,10 +6,7 @@ import NotFound, { NotFoundPartial } from 'views/NotFound';
 
 export const SubmitRequest = () => {
   return (
-    <MainContent
-      className="grid-container margin-bottom-5"
-      data-testid="model-submit-request"
-    >
+    <MainContent className="grid-container" data-testid="model-submit-request">
       <Switch>
         <Route
           path="/models/:modelId/task-list/submit-request/page-1" // page-* may change pending UX clarifcation

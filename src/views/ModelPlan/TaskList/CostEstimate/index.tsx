@@ -6,10 +6,7 @@ import NotFound, { NotFoundPartial } from 'views/NotFound';
 
 export const CostEstimate = () => {
   return (
-    <MainContent
-      className="grid-container margin-bottom-5"
-      data-testid="model-cost-estimate"
-    >
+    <MainContent className="grid-container" data-testid="model-cost-estimate">
       <Switch>
         <Route
           path="/models/:modelId/task-list/cost-estimate/page-1" // page-* may change pending UX clarifcation
