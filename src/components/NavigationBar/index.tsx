@@ -28,16 +28,16 @@ const NavigationBar = ({
   const { t } = useTranslation();
 
   const primaryLinks = navLinks().map(route => (
-    <div className="easi-nav" key={route.label}>
+    <div className="mint-nav" key={route.label}>
       <NavLink
         to={route.link}
         activeClassName="usa-current"
-        className="easi-nav__link"
+        className="mint-nav__link"
         onClick={() => toggle(false)}
         exact={route.link === '/'}
       >
         <em
-          className="usa-logo__text easi-nav__label"
+          className="usa-logo__text mint-nav__label"
           aria-label={t(`header:${route.label}`)}
         >
           {t(`header:${route.label}`)}
@@ -47,8 +47,8 @@ const NavigationBar = ({
   ));
 
   const userLinks = (
-    <div className="easi-nav__signout-container">
-      <div className="easi-nav__user margin-bottom-1">{userName}</div>
+    <div className="mint-nav__signout-container">
+      <div className="mint-nav__user margin-bottom-1">{userName}</div>
       <NavLink
         to="/"
         onClick={e => {

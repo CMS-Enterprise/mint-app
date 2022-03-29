@@ -14,10 +14,10 @@ const PageNumber = ({
   currentPage,
   totalPages
 }: PageNumberProps) => {
-  const classNames = classnames('easi-page-number', className);
+  const classNames = classnames('mint-page-number', className);
   return (
     <div className={classNames}>
-      <span className="easi-page-number__page-num">
+      <span className="mint-page-number__page-num">
         {`Page ${currentPage} of ${totalPages}`}
       </span>
     </div>

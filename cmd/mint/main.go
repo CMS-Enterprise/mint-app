@@ -9,10 +9,9 @@ import (
 )
 
 var rootCmd = &cobra.Command{
-	Use:   "easi",
-	Short: "EASi is an application for managing the CMS IT project workflow",
-	Long: `EASi (Easy Access to System Information)
-			is an application for managing the CMS IT project workflow`,
+	Use:   "mint",
+	Short: "MINT is an application for managing CMMI models",
+	Long:  "MINT is an application for managing CMMI models",
 }
 
 func execute() {

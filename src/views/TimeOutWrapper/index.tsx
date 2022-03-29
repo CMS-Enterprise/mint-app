@@ -18,7 +18,7 @@ const TimeOutWrapper = ({ children }: TimeOutWrapperProps) => {
   const [lastActiveAt, setLastActiveAt] = useState(DateTime.local().toMillis());
   const [expirationTime, setExpirationTime] = useState(0);
 
-  const LAST_ACTIVE_AT_KEY = 'easiLastActiveAt';
+  const LAST_ACTIVE_AT_KEY = 'mintLastActiveAt';
   const isLocalAuth =
     isLocalAuthEnabled() &&
     window.localStorage[localAuthStorageKey] &&

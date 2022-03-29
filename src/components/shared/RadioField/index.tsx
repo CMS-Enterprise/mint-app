@@ -31,13 +31,13 @@ export const RadioField = ({
   const radioClasses = classnames(
     'usa-radio',
     {
-      'easi-radio--inline': inline
+      'mint-radio--inline': inline
     },
     className
   );
 
   const radioLabelClasses = classnames('usa-radio__label', {
-    'easi-radio__label--inline': inline
+    'mint-radio__label--inline': inline
   });
   return (
     <div className={radioClasses}>
@@ -65,8 +65,8 @@ type RadioGroupProps = {
 } & JSX.IntrinsicElements['div'];
 
 export const RadioGroup = ({ children, inline, ...props }: RadioGroupProps) => {
-  const classes = classnames('easi-radio__group', {
-    'easi-radio__group--inline': inline
+  const classes = classnames('mint-radio__group', {
+    'mint-radio__group--inline': inline
   });
   return (
     <div className={classes} role="radiogroup" {...props}>

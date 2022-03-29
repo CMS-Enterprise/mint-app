@@ -17,7 +17,7 @@ services:
       target: dev
     image: mint-backend:latest
     volumes:
-      - ./:/easi
+      - ./:/mint
     entrypoint: air ${AIR_CONFIG}
     ports:
       - 8085:8080
@@ -65,4 +65,4 @@ services:
       - DOCKER_LAMBDA_STAY_OPEN=1
       - LICENSE_KEY
     volumes:
-      - ./../easi-infra-modules/lambda/prince/build:/var/task:ro,delegated
+      - ./../mint-infra-modules/lambda/prince/build:/var/task:ro,delegated

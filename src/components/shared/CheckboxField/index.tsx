@@ -24,7 +24,7 @@ const CheckboxField = ({
   value,
   inputProps
 }: CheckboxFieldProps) => {
-  const checkboxClassNames = classnames('easi-checkbox', 'usa-checkbox', {
+  const checkboxClassNames = classnames('mint-checkbox', 'usa-checkbox', {
     'easy-checkbox--disabled': disabled
   });
   return (

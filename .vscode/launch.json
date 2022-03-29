@@ -9,7 +9,7 @@
             "mode": "remote",
             "port": 2350,
             "substitutePath": [
-                { "from": "${workspaceFolder}", "to": "/easi" },
+                { "from": "${workspaceFolder}", "to": "/mint" },
             ]
         }
     ]

@@ -10,7 +10,7 @@ type SecondaryNavProps = {
 
 const SecondaryNav = ({ children }: SecondaryNavProps) => {
   return (
-    <nav aria-label="Secondary Navigation" className="easi-secondary-nav">
+    <nav aria-label="Secondary Navigation" className="mint-secondary-nav">
       <div className="grid-container">{children}</div>
     </nav>
   );
@@ -24,8 +24,8 @@ type NavLinkProps = {
 const NavLink = ({ to, children }: NavLinkProps) => {
   const { pathname } = useLocation();
 
-  const classNames = classnames('easi-secondary-nav__nav-link', {
-    'easi-secondary-nav__nav-link--active': pathname === to
+  const classNames = classnames('mint-secondary-nav__nav-link', {
+    'mint-secondary-nav__nav-link--active': pathname === to
   });
 
   return (

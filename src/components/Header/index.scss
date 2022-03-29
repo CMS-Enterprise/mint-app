@@ -1,4 +1,4 @@
-.easi-header {
+.mint-header {
   // HACK: Remove mystery 1px space underneath the border
   margin-bottom: -1px;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
@@ -142,7 +142,7 @@
       margin-bottom: 2em;
     }
 
-    .easi-header {
+    .mint-header {
       &--desktop {
         display: block;
       }

@@ -1,4 +1,4 @@
-.easi-tabs {
+.mint-tabs {
   display: flex;
   justify-content: space-between;
   flex-direction: column;
@@ -22,7 +22,7 @@
     border-right: 1px solid color($theme-color-base-lighter);
 
     &:after {
-      background-color: $easi-bright-blue;
+      background-color: $mint-bright-blue;
       content: "";
       height: 4px;
       left: -1px;
@@ -36,8 +36,8 @@
     &--selected {
       border-bottom: 1px solid #fff;
 
-      .easi-tabs__tab-btn {
-        color: $easi-bright-blue;
+      .mint-tabs__tab-btn {
+        color: $mint-bright-blue;
       }
 
       &:after {

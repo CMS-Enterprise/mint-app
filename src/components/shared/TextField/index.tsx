@@ -33,7 +33,7 @@ const TextField = ({
 }: TextFieldProps) => {
   const inputClasses = classnames(
     'usa-input',
-    { 'easi-textfield--disabled': disabled },
+    { 'mint-textfield--disabled': disabled },
     { 'usa-input--error': error },
     { 'display-inline-block': inline },
     className

@@ -27,7 +27,6 @@ import (
 	"github.com/cmsgov/mint-app/pkg/cedar/cedarldap"
 
 	cedarcore "github.com/cmsgov/mint-app/pkg/cedar/core"
-	cedarintake "github.com/cmsgov/mint-app/pkg/cedar/intake"
 	"github.com/cmsgov/mint-app/pkg/email"
 	"github.com/cmsgov/mint-app/pkg/flags"
 	"github.com/cmsgov/mint-app/pkg/graph"
@@ -80,19 +79,6 @@ func (s *Server) routes(
 	ldClient, err := flags.NewLaunchDarklyClient(s.NewFlagConfig())
 	if err != nil {
 		s.logger.Fatal("Failed to create LaunchDarkly client", zap.Error(err))
-	}
-
-	// set up CEDAR intake client
-	publisher := cedarintake.NewClient(
-		s.Config.GetString(appconfig.CEDARAPIURL),
-		s.Config.GetString(appconfig.CEDARAPIKey),
-		ldClient,
-	)
-	if s.environment.Deployed() {
-		s.NewCEDARClientCheck()
-		if cerr := publisher.CheckConnection(context.Background()); cerr != nil {
-			s.logger.Info("Non-Fatal - Failed to connect to CEDAR Intake API on startup", zap.Error(cerr))
-		}
 	}
 
 	var cedarLDAPClient cedarldap.Client

@@ -51,7 +51,7 @@ const Footer = () => {
       }
       secondary={
         <div>
-          <div className="easi-footer__secondary-logo-wrap">
+          <div className="mint-footer__secondary-logo-wrap">
             <img alt={t('altText.cmsLogo')} src={cmsGovLogo} />
             <img
               className="margin-left-1"

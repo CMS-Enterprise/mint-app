@@ -9,8 +9,8 @@ on:
       - master
 
 env:
-  EASI_APP_NODE_VERSION: '16.14.0'
-  EASI_APP_GO_VERSION: '1.16.6'
+  MINT_APP_NODE_VERSION: '16.14.0'
+  MINT_APP_GO_VERSION: '1.16.6'
   # Set the IMAGE_TAG in a way that works for both pull_request and push events.
   # For pull_request events, use github.event.pull_request.head.sha (see
   # https://github.com/actions/checkout#Checkout-pull-request-HEAD-commit-instead-of-merge-commit).
@@ -48,11 +48,11 @@ jobs:
       - name: Set up node
         uses: actions/setup-node@9ced9a43a244f3ac94f13bfd896db8c8f30da67a
         with:
-          node-version: ${{ env.EASI_APP_NODE_VERSION }}
+          node-version: ${{ env.MINT_APP_NODE_VERSION }}
       - name: Set up go
         uses: actions/setup-go@bfdd3570ce990073878bf10f6b2d79082de49492
         with:
-          go-version: ${{ env.EASI_APP_GO_VERSION }}
+          go-version: ${{ env.MINT_APP_GO_VERSION }}
       - name: Configure go cache
         uses: actions/cache@937d24475381cd9c75ae6db12cb4e79714b926ed
         with:
@@ -94,11 +94,11 @@ jobs:
       - name: Set up node
         uses: actions/setup-node@9ced9a43a244f3ac94f13bfd896db8c8f30da67a
         with:
-          node-version: ${{ env.EASI_APP_NODE_VERSION }}
+          node-version: ${{ env.MINT_APP_NODE_VERSION }}
       - name: Set up go
         uses: actions/setup-go@bfdd3570ce990073878bf10f6b2d79082de49492
         with:
-          go-version: ${{ env.EASI_APP_GO_VERSION }}
+          go-version: ${{ env.MINT_APP_GO_VERSION }}
       - name: Set up python
         uses: actions/setup-python@0ebf233433c08fb9061af664d501c3f3ff0e9e20
         with:
@@ -160,7 +160,7 @@ jobs:
       - name: Set up node
         uses: actions/setup-node@9ced9a43a244f3ac94f13bfd896db8c8f30da67a # v2.1.5
         with:
-          node-version: ${{ env.EASI_APP_NODE_VERSION }}
+          node-version: ${{ env.MINT_APP_NODE_VERSION }}
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn cache dir)"
@@ -220,7 +220,7 @@ jobs:
       - name: Set up node
         uses: actions/setup-node@9ced9a43a244f3ac94f13bfd896db8c8f30da67a
         with:
-          node-version: ${{ env.EASI_APP_NODE_VERSION }}
+          node-version: ${{ env.MINT_APP_NODE_VERSION }}
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn cache dir)"
@@ -251,7 +251,7 @@ jobs:
       - name: Set up node
         uses: actions/setup-node@9ced9a43a244f3ac94f13bfd896db8c8f30da67a
         with:
-          node-version: ${{ env.EASI_APP_NODE_VERSION }}
+          node-version: ${{ env.MINT_APP_NODE_VERSION }}
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn cache dir)"
@@ -302,7 +302,7 @@ jobs:
       - name: Build, tag, and push image to Amazon ECR
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: easi-db-migrate
+          ECR_REPOSITORY: mint-db-migrate
         run: |
           docker image build --quiet --no-cache --tag "$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" --file Dockerfile.db_migrations .
           docker image push "$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
@@ -330,7 +330,7 @@ jobs:
       - name: Set up go
         uses: actions/setup-go@bfdd3570ce990073878bf10f6b2d79082de49492
         with:
-          go-version: ${{ env.EASI_APP_GO_VERSION }}
+          go-version: ${{ env.MINT_APP_GO_VERSION }}
       - name: Login to Docker Hub
         uses: docker/login-action@42d299face0c5c43a0487c477f595ac9cf22f1a7
         with:
@@ -348,7 +348,7 @@ jobs:
       - name: Run backend server tests
         env:
           APP_ENV: test
-          AWS_REGION: us-west-2 # easi app tests expect AWS_REGION instead of AWS_DEFAULT_REGION
+          AWS_REGION: us-west-2 # mint app tests expect AWS_REGION instead of AWS_DEFAULT_REGION
           AWS_SES_SOURCE: '"EASi Test" <no-reply-test@info.easi.cms.gov>'
           AWS_SES_SOURCE_ARN: ${{ secrets.AWS_SES_SOURCE_ARN }}
           AWS_S3_FILE_UPLOAD_BUCKET: mint-app-file-uploads
@@ -356,7 +356,7 @@ jobs:
           CLIENT_PORT: 3000
           CLIENT_HOSTNAME: localhost:3000
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: easi-db-migrate
+          ECR_REPOSITORY: mint-db-migrate
           GRT_EMAIL: success@simulator.amazonses.com
           ACCESSIBILITY_TEAM_EMAIL: success@simulator.amazonses.com
           OKTA_CLIENT_ID: 0oa2e913coDQeG19S297
@@ -375,11 +375,11 @@ jobs:
           DB_MAX_CONNECTIONS: 20
           FLAG_SOURCE: LOCAL
         run: |
-          docker-compose --project-name easi-server-test -f docker-compose.ci_server_test.yml up -d db
-          docker-compose --project-name easi-server-test -f docker-compose.ci_server_test.yml up --exit-code-from db_migrate db_migrate
+          docker-compose --project-name mint-server-test -f docker-compose.ci_server_test.yml up -d db
+          docker-compose --project-name mint-server-test -f docker-compose.ci_server_test.yml up --exit-code-from db_migrate db_migrate
           ./scripts/build_app
           ./scripts/testsuite
-          docker-compose --project-name easi-server-test -f docker-compose.ci_server_test.yml down
+          docker-compose --project-name mint-server-test -f docker-compose.ci_server_test.yml down
       - name: Upload backend test artifacts
         uses: actions/upload-artifact@82c141cc518b40d92cc801eee768e7aafc9c2fa2
         with:
@@ -415,7 +415,7 @@ jobs:
       - name: Build, tag, and push image to Amazon ECR
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: easi-backend
+          ECR_REPOSITORY: mint-backend
         run: |
           APPLICATION_DATETIME="$(date --rfc-3339='seconds' --utc)"
           APPLICATION_TS="$(date --date="$APPLICATION_DATETIME" '+%s')"
@@ -423,7 +423,7 @@ jobs:
           docker image push "$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
       - name: Check for vulnerability scan findings
         run: |
-          ./scripts/check_ecr_findings "easi-backend" "$IMAGE_TAG" "7"
+          ./scripts/check_ecr_findings "mint-backend" "$IMAGE_TAG" "7"
       - name: Announce failure
         if: ${{ failure() }}
         run: |
@@ -440,7 +440,7 @@ jobs:
       - name: Set up node
         uses: actions/setup-node@9ced9a43a244f3ac94f13bfd896db8c8f30da67a
         with:
-          node-version: ${{ env.EASI_APP_NODE_VERSION }}
+          node-version: ${{ env.MINT_APP_NODE_VERSION }}
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn cache dir)"
@@ -456,8 +456,8 @@ jobs:
             v1-yarn-
       - name: Build frontend code
         env:
-          REACT_APP_API_ADDRESS: http://easi:8080/api/v1
-          REACT_APP_GRAPHQL_ADDRESS: http://easi:8080/api/graph/query
+          REACT_APP_API_ADDRESS: http://mint:8080/api/v1
+          REACT_APP_GRAPHQL_ADDRESS: http://mint:8080/api/graph/query
           REACT_APP_APP_ENV: test
           REACT_APP_OKTA_CLIENT_ID: 0oa2e913coDQeG19S297
           REACT_APP_OKTA_DOMAIN: https://test.idp.idm.cms.gov
@@ -525,7 +525,7 @@ jobs:
       - name: Set up node
         uses: actions/setup-node@9ced9a43a244f3ac94f13bfd896db8c8f30da67a
         with:
-          node-version: ${{ env.EASI_APP_NODE_VERSION }}
+          node-version: ${{ env.MINT_APP_NODE_VERSION }}
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn cache dir)"
@@ -555,17 +555,17 @@ jobs:
         env:
           AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
           ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
-          ECR_REPOSITORY: easi-db-migrate
+          ECR_REPOSITORY: mint-db-migrate
         run: |
-          ./scripts/deploy_service "mint-app-db-migrate" "dev-ecs-manager-docker" "8" "easi-db-migrate" "$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+          ./scripts/deploy_service "mint-app-db-migrate" "dev-ecs-manager-docker" "8" "mint-db-migrate" "$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
           ./scripts/db_lambda_invoke "dev-ecs-manager-docker" "8" "mint-app-db-migrate"
       - name: Deploy ECS service
         env:
           AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
           ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
-          ECR_REPOSITORY: easi-backend
+          ECR_REPOSITORY: mint-backend
         run: |
-          ./scripts/deploy_service "mint-app" "dev-ecs-manager-docker" "8" "easi-backend" "$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+          ./scripts/deploy_service "mint-app" "dev-ecs-manager-docker" "8" "mint-backend" "$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
           ./scripts/healthcheck "$IMAGE_TAG"
       - name: Build static assets and release to S3
         env:
@@ -595,7 +595,7 @@ jobs:
       - name: Set up node
         uses: actions/setup-node@9ced9a43a244f3ac94f13bfd896db8c8f30da67a
         with:
-          node-version: ${{ env.EASI_APP_NODE_VERSION }}
+          node-version: ${{ env.MINT_APP_NODE_VERSION }}
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn cache dir)"
@@ -625,17 +625,17 @@ jobs:
         env:
           AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
           ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
-          ECR_REPOSITORY: easi-db-migrate
+          ECR_REPOSITORY: mint-db-migrate
         run: |
-          ./scripts/deploy_service "mint-app-db-migrate" "impl-ecs-manager-docker" "7" "easi-db-migrate" "$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+          ./scripts/deploy_service "mint-app-db-migrate" "impl-ecs-manager-docker" "7" "mint-db-migrate" "$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
           ./scripts/db_lambda_invoke "impl-ecs-manager-docker" "7" "mint-app-db-migrate"
       - name: Deploy ECS service
         env:
           AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
           ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
-          ECR_REPOSITORY: easi-backend
+          ECR_REPOSITORY: mint-backend
         run: |
-          ./scripts/deploy_service "mint-app" "impl-ecs-manager-docker" "7" "easi-backend" "$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+          ./scripts/deploy_service "mint-app" "impl-ecs-manager-docker" "7" "mint-backend" "$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
           ./scripts/healthcheck "$IMAGE_TAG"
       - name: Build static assets and release to S3
         env:
@@ -665,7 +665,7 @@ jobs:
       - name: Set up node
         uses: actions/setup-node@9ced9a43a244f3ac94f13bfd896db8c8f30da67a
         with:
-          node-version: ${{ env.EASI_APP_NODE_VERSION }}
+          node-version: ${{ env.MINT_APP_NODE_VERSION }}
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn cache dir)"
@@ -695,17 +695,17 @@ jobs:
         env:
           AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
           ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
-          ECR_REPOSITORY: easi-db-migrate
+          ECR_REPOSITORY: mint-db-migrate
         run: |
-          ./scripts/deploy_service "mint-app-db-migrate" "prod-ecs-manager-docker" "6" "easi-db-migrate" "$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+          ./scripts/deploy_service "mint-app-db-migrate" "prod-ecs-manager-docker" "6" "mint-db-migrate" "$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
           ./scripts/db_lambda_invoke "prod-ecs-manager-docker" "6" "mint-app-db-migrate"
       - name: Deploy ECS service
         env:
           AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
           ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
-          ECR_REPOSITORY: easi-backend
+          ECR_REPOSITORY: mint-backend
         run: |
-          ./scripts/deploy_service "mint-app" "prod-ecs-manager-docker" "6" "easi-backend" "$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+          ./scripts/deploy_service "mint-app" "prod-ecs-manager-docker" "6" "mint-backend" "$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
           ./scripts/healthcheck "$IMAGE_TAG"
       - name: Build static assets and release to S3
         env:

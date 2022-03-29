@@ -23,7 +23,7 @@ const PageHeading = ({
 }: PageHeadingProps) => {
   const headingRef = useRef<HTMLHeadingElement>(null);
   const Component = headingLevel || 'h1';
-  const classes = classnames('easi-h1', className);
+  const classes = classnames('mint-h1', className);
 
   useEffect(() => {
     headingRef.current?.focus();

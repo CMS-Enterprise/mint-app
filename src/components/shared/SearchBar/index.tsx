@@ -23,7 +23,7 @@ const SearchBar = ({
   const [suggestions, setSuggestions] = useState([]);
   const [isInputFocused, setIsInputFocused] = useState(false);
   const inputProps = {
-    className: 'usa-input easi-search-bar__autocomplete-input',
+    className: 'usa-input mint-search-bar__autocomplete-input',
     type: 'search',
     'aria-label': 'Search',
     name,
@@ -53,7 +53,7 @@ const SearchBar = ({
         {searchValue.trim().length >= 2 &&
           suggestions.length <= 0 &&
           isInputFocused && (
-            <div className="easi-search-bar__no-results">
+            <div className="mint-search-bar__no-results">
               No matching results were found
             </div>
           )}
@@ -76,7 +76,7 @@ const SearchBar = ({
   };
 
   return (
-    <form className="easi-search-bar" onSubmit={handleSubmit}>
+    <form className="mint-search-bar" onSubmit={handleSubmit}>
       {results && getSuggestionValue && renderSuggestion ? (
         <Autosuggest
           suggestions={suggestions}
@@ -89,7 +89,7 @@ const SearchBar = ({
         />
       ) : (
         <input
-          className="usa-input easi-search-bar__input"
+          className="usa-input mint-search-bar__input"
           type="search"
           aria-label="Search"
           name={name}

@@ -9,7 +9,7 @@ type PageWrapperProps = {
 } & JSX.IntrinsicElements['div'];
 
 const PageWrapper = ({ className, children, ...props }: PageWrapperProps) => {
-  const classes = classnames('easi-page-wrapper', className);
+  const classes = classnames('mint-page-wrapper', className);
   return (
     <div className={classes} {...props}>
       {children}

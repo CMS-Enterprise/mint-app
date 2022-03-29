@@ -3,7 +3,7 @@ name: deploy-dev
 on: workflow_dispatch
 
 env:
-  EASI_APP_NODE_VERSION: '12.22.1'
+  MINT_APP_NODE_VERSION: '12.22.1'
   # Set the IMAGE_TAG in a way that works for both pull_request and push events.
   # For pull_request events, use github.event.pull_request.head.sha (see
   # https://github.com/actions/checkout#Checkout-pull-request-HEAD-commit-instead-of-merge-commit).
@@ -25,7 +25,7 @@ jobs:
       - name: Set up node
         uses: actions/setup-node@9ced9a43a244f3ac94f13bfd896db8c8f30da67a
         with:
-          node-version: ${{ env.EASI_APP_NODE_VERSION }}
+          node-version: ${{ env.MINT_APP_NODE_VERSION }}
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn cache dir)"
@@ -55,17 +55,17 @@ jobs:
         env:
           AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
           ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
-          ECR_REPOSITORY: easi-db-migrate
+          ECR_REPOSITORY: mint-db-migrate
         run: |
-          ./scripts/deploy_service "mint-app-db-migrate" "dev-ecs-manager-docker" "8" "easi-db-migrate" "$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+          ./scripts/deploy_service "mint-app-db-migrate" "dev-ecs-manager-docker" "8" "mint-db-migrate" "$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
           ./scripts/db_lambda_invoke "dev-ecs-manager-docker" "8" "mint-app-db-migrate"
       - name: Deploy ECS service
         env:
           AWS_ACCOUNT_ID: ${{ secrets.AWS_ACCOUNT_ID }}
           ECR_REGISTRY: ${{ secrets.ECR_REGISTRY }}
-          ECR_REPOSITORY: easi-backend
+          ECR_REPOSITORY: mint-backend
         run: |
-          ./scripts/deploy_service "mint-app" "dev-ecs-manager-docker" "8" "easi-backend" "$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+          ./scripts/deploy_service "mint-app" "dev-ecs-manager-docker" "8" "mint-backend" "$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
           ./scripts/healthcheck "$IMAGE_TAG"
       - name: Build static assets and release to S3
         env:

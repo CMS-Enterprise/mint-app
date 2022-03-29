@@ -8,7 +8,7 @@ import './index.scss';
 
 const NotFound = () => {
   return (
-    <MainContent className="easi-not-found grid-container">
+    <MainContent className="mint-not-found grid-container">
       <NotFoundPartial />
     </MainContent>
   );

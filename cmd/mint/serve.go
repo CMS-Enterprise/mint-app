@@ -9,8 +9,8 @@ import (
 
 var serveCmd = &cobra.Command{
 	Use:   "serve",
-	Short: "Serve the EASi application",
-	Long:  `Serve the EASi application`,
+	Short: "Serve the MINT application",
+	Long:  `Serve the MINT application`,
 	Run: func(cmd *cobra.Command, args []string) {
 		config := viper.New()
 		config.AutomaticEnv()

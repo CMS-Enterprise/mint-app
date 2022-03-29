@@ -11,7 +11,7 @@ describe('The Page Number component', () => {
   it('renders the correct page numbers', () => {
     const component = shallow(<PageNumber currentPage={2} totalPages={10} />);
 
-    expect(component.find('.easi-page-number__page-num').text()).toEqual(
+    expect(component.find('.mint-page-number__page-num').text()).toEqual(
       'Page 2 of 10'
     );
   });

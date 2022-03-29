@@ -26,10 +26,10 @@ export const DropdownField = ({
   ...props
 }: DropdownFieldProps) => {
   const dropdownClassNames = classnames(
-    'easi-dropdown',
+    'mint-dropdown',
     'usa-select',
-    { 'easi-dropdown--error': error },
-    { 'easi-dropdown--disabled': disabled }
+    { 'mint-dropdown--error': error },
+    { 'mint-dropdown--disabled': disabled }
   );
   return (
     <select

@@ -2,14 +2,14 @@
 
 exports[`The Cookies static page matches the snapshot 1`] = `
 <main
-  className="easi-main-content grid-container line-height-body-5"
+  className="mint-main-content grid-container line-height-body-5"
   id="main-content"
   role="main"
   tabIndex={-1}
 >
   <h1
     aria-live="polite"
-    className="easi-h1"
+    className="mint-h1"
     tabIndex={-1}
   >
     Cookies

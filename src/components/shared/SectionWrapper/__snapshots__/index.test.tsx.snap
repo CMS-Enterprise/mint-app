@@ -3,7 +3,7 @@
 exports[`SectionWrapper matches the snapshot 1`] = `
 <DocumentFragment>
   <div
-    class="easi-section"
+    class="mint-section"
     data-testid="section-wrapper"
   />
 </DocumentFragment>

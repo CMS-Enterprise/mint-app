@@ -7,13 +7,13 @@ function_qualifier="$2"
 
 case "$APP_ENV" in
   "dev")
-    EASI_URL="https://dev.easi.cms.gov"
+    MINT_URL="https://dev.mint.cms.gov"
     ;;
   "impl")
-    EASI_URL="https://impl.easi.cms.gov"
+    MINT_URL="https://impl.mint.cms.gov"
     ;;
   "prod")
-    EASI_URL="https://easi.cms.gov"
+    MINT_URL="https://mint.cms.gov"
     ;;
   *)
     echo "APP_ENV value not recognized: ${APP_ENV:-unset}"
@@ -23,7 +23,7 @@ case "$APP_ENV" in
 esac
 
 # Get image version currently deployed
-image_tag=$(curl --silent "$EASI_URL"/api/v1/healthcheck | jq -r .version) || exit
+image_tag=$(curl --silent "$MINT_URL"/api/v1/healthcheck | jq -r .version) || exit
 
 # Check scan findings for image
 payload="$(jq --null-input ".repository= \"$repository\" | .imageTag = \"$image_tag\"")"
@@ -58,7 +58,7 @@ slack_payload=$( jq -n \
   --arg title "$title" \
   --arg now "$NOW" \
   '{
-    "channel": "#oit-easi-alerts",
+    "channel": "#cmmi-mint-alerts",
     "attachments": [
         {
             "fallback": $message,

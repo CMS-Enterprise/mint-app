@@ -6,13 +6,13 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/cmsgov/mint-app/cmd/easi/test"
+	"github.com/cmsgov/mint-app/cmd/mint/test"
 )
 
 var testCmd = &cobra.Command{
 	Use:   "test",
-	Short: "Test the EASi application",
-	Long:  `Test the EASi application`,
+	Short: "Test the MINT application",
+	Long:  `Test the MINT application`,
 	Run: func(cmd *cobra.Command, args []string) {
 		err := os.Setenv("APP_ENV", "test")
 		if err != nil {

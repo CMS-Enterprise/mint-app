@@ -2,7 +2,7 @@
 
 exports[`The Not Found Page matches the snapshot 1`] = `
 <main
-  className="easi-main-content easi-not-found grid-container"
+  className="mint-main-content mint-not-found grid-container"
   id="main-content"
   role="main"
   tabIndex={-1}
@@ -12,7 +12,7 @@ exports[`The Not Found Page matches the snapshot 1`] = `
   >
     <h1
       aria-live="polite"
-      className="easi-h1"
+      className="mint-h1"
       tabIndex={-1}
     >
       This page cannot be found.
@@ -21,7 +21,7 @@ exports[`The Not Found Page matches the snapshot 1`] = `
       Here is a list of things you could try to check and fix:
     </p>
     <ul
-      className="easi-not-found__error_suggestions"
+      className="mint-not-found__error_suggestions"
     >
       <li>
         Please check if the address you typed in is correct.

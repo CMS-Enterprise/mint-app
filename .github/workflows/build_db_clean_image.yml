@@ -31,7 +31,7 @@ jobs:
       - name: Build, tag, and push image to Amazon ECR
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: easi-db-clean
+          ECR_REPOSITORY: mint-db-clean
         run: |
           docker build --quiet --no-cache --tag "$ECR_REGISTRY/$ECR_REPOSITORY:latest" --file "Dockerfile.db_clean" .
           docker push "$ECR_REGISTRY/$ECR_REPOSITORY:latest"

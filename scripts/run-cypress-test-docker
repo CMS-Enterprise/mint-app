@@ -4,11 +4,11 @@ set -eu -o pipefail
 
 PROJECT_NAME=mint-app
 CYPRESS_CONTAINER="${PROJECT_NAME}"_cypress_1
-EASI_CONTAINER="${PROJECT_NAME}"_easi_1
+MINT_CONTAINER="${PROJECT_NAME}"_mint_1
 
 # Running in CI
 if [[ -n "${CI+x}" ]]; then
-  docker-compose --project-name "${PROJECT_NAME}" -f docker-compose.yml -f docker-compose.cypress_ci.yml pull db_migrate easi
+  docker-compose --project-name "${PROJECT_NAME}" -f docker-compose.yml -f docker-compose.cypress_ci.yml pull db_migrate mint
 
   docker-compose --project-name "${PROJECT_NAME}" -f docker-compose.yml -f docker-compose.cypress_ci.yml build --parallel
 
@@ -17,7 +17,7 @@ if [[ -n "${CI+x}" ]]; then
   docker-compose --project-name "${PROJECT_NAME}" -f docker-compose.yml -f docker-compose.cypress_ci.yml up --exit-code-from db_seed db_seed
   docker-compose --project-name "${PROJECT_NAME}" -f docker-compose.yml -f docker-compose.cypress_ci.yml up -d minio
   docker-compose --project-name "${PROJECT_NAME}" -f docker-compose.yml -f docker-compose.cypress_ci.yml up --exit-code-from minio_mc minio_mc
-  docker-compose --project-name "${PROJECT_NAME}" -f docker-compose.yml -f docker-compose.cypress_ci.yml up -d easi easi_client
+  docker-compose --project-name "${PROJECT_NAME}" -f docker-compose.yml -f docker-compose.cypress_ci.yml up -d mint mint_client
 
   docker-compose --project-name "${PROJECT_NAME}" -f docker-compose.yml -f docker-compose.cypress_ci.yml up cypress
 
@@ -38,13 +38,13 @@ else
   docker-compose --project-name "${PROJECT_NAME}" -f docker-compose.yml -f docker-compose.cypress_local.yml up --exit-code-from db_seed db_seed
   docker-compose --project-name "${PROJECT_NAME}" -f docker-compose.yml -f docker-compose.cypress_local.yml up -d minio
   docker-compose --project-name "${PROJECT_NAME}" -f docker-compose.yml -f docker-compose.cypress_local.yml up --exit-code-from minio_mc minio_mc
-  docker-compose --project-name "${PROJECT_NAME}" -f docker-compose.yml -f docker-compose.cypress_local.yml up -d easi easi_client
+  docker-compose --project-name "${PROJECT_NAME}" -f docker-compose.yml -f docker-compose.cypress_local.yml up -d mint mint_client
 
-  EASI_EXIT_CODE=$(docker container inspect --format='{{.State.ExitCode}}' "${EASI_CONTAINER}")
+  MINT_EXIT_CODE=$(docker container inspect --format='{{.State.ExitCode}}' "${MINT_CONTAINER}")
 
-  if [[ "${EASI_EXIT_CODE}" -ne 0 ]]; then
-    echo "Docker container ${EASI_CONTAINER} exited unexpectedly. No tests will be run."
-    docker-compose --project-name "${PROJECT_NAME}" -f docker-compose.yml -f docker-compose.cypress_local.yml logs --tail="all" easi
+  if [[ "${MINT_EXIT_CODE}" -ne 0 ]]; then
+    echo "Docker container ${MINT_CONTAINER} exited unexpectedly. No tests will be run."
+    docker-compose --project-name "${PROJECT_NAME}" -f docker-compose.yml -f docker-compose.cypress_local.yml logs --tail="all" mint
     exit 1
   fi
 

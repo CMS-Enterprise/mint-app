@@ -3,7 +3,7 @@
 }
 
 .usa-nav__primary-item {
-    .easi-nav {
+    .mint-nav {
         display: flex;
 
         &__item {
@@ -21,7 +21,7 @@
 
         &__current {
             height: .25em;
-            background-color: $easi-blue;
+            background-color: $mint-blue;
             margin-top: .5em;
             pointer-events: none;
         }
@@ -37,9 +37,9 @@
         }
 
         .usa-current {
-            color: $easi-blue;
+            color: $mint-blue;
             .usa-logo__text {
-                color: $easi-blue;
+                color: $mint-blue;
             }
         }
 
