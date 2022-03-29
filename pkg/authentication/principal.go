@@ -79,7 +79,7 @@ func (*anonymous) Allow508Tester() bool {
 // gleaned from the Okta JWT
 type EUAPrincipal struct {
 	EUAID            string
-	JobCodeMINT      bool
+	JobCodeEASi      bool
 	JobCodeGRT       bool
 	JobCode508User   bool
 	JobCode508Tester bool
@@ -99,7 +99,7 @@ func (p *EUAPrincipal) ID() string {
 // AllowMINT says whether this principal
 // is authorized to operate within MINT
 func (p *EUAPrincipal) AllowMINT() bool {
-	return p.JobCodeMINT
+	return p.JobCodeEASi
 }
 
 // AllowGRT says whether this principal
