@@ -12,3 +12,10 @@ create table plan_collaborator (
     modified_dts timestamp with time zone
 
 );
+
+ALTER TABLE plan_collaborator
+
+        ADD CONSTRAINT fk_collaborator_plan FOREIGN KEY (model_plan_id)
+        REFERENCES public.model_plan (id) MATCH SIMPLE
+        ON UPDATE NO ACTION
+        ON DELETE NO ACTION;
