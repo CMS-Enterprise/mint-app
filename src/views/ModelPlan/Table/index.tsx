@@ -9,18 +9,15 @@ import {
 } from 'react-table';
 // import { useQuery } from '@apollo/client';
 import { Table as UswdsTable } from '@trussworks/react-uswds';
-import { DateTime } from 'luxon';
 
+// import { DateTime } from 'luxon';
 import UswdsReactLink from 'components/LinkWrapper';
 import Alert from 'components/shared/Alert';
 import Spinner from 'components/Spinner';
 import GlobalClientFilter from 'components/TableFilter';
 import TablePagination from 'components/TablePagination';
 import TableResults from 'components/TableResults';
-// import GetRequestsQuery from 'queries/GetRequestsQuery';
-// import { GetRequests, GetRequestsVariables } from 'queries/types/GetRequests';
-// import { RequestType } from 'types/graphql-global-types';
-import { formatDate } from 'utils/date';
+// import { formatDate } from 'utils/date';
 import globalTableFilter from 'utils/globalTableFilter';
 import {
   currentTableSortDescription,
@@ -153,6 +150,14 @@ const Table = ({ hiddenColumns }: myRequestsTableProps) => {
         className="margin-bottom-4"
       />
 
+      <TableResults
+        globalFilter={state.globalFilter}
+        pageIndex={state.pageIndex}
+        pageSize={state.pageSize}
+        filteredRowLength={page.length}
+        rowLength={data.length}
+        className="margin-bottom-4"
+      />
       <UswdsTable bordered={false} {...getTableProps()} fullWidth scrollable>
         <caption className="usa-sr-only">{t('requestsTable.caption')}</caption>
         <thead>
