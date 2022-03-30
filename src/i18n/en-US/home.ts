@@ -18,6 +18,15 @@ const home = {
       heading: 'You don’t have any draft model plans yet',
       body:
         'Start a new plan by clicking the button above. Once you start one, it will appear in this section.'
+    },
+    caption:
+      'Below is a list of governance requests that are in draft or submitted.',
+    headers: {
+      name: 'Model name',
+      category: 'Category',
+      modelPoc: 'Model POCs',
+      clearanceDate: 'Clearance Date',
+      recentActivity: 'Recent activity'
     }
   }
 };
