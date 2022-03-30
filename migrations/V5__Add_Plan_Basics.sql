@@ -2,16 +2,24 @@ create table plan_basics (
     id uuid PRIMARY KEY not null,
     model_plan_id uuid not null, --foreign key to model plan
     eua_user_id eua_id, -- duplicated by created by?
-    model_name text,
-    model_category text, --select from list
-    cms_center text, --should select from list
-    cmmi_group text,
-    model_type text,
+    model_name TEXT,
+    model_category TEXT, --select from list
+    cms_center TEXT, --should select from list
+    cmmi_group TEXT,
+    model_type TEXT,
+
+    problem TEXT,
+    goal TEXT,
+    test_inventions TEXT,
+    note TEXT,
+
+
 
     created_by eua_id,
     created_dts timestamp with time zone,
     modified_by eua_id,
-    modified_dts timestamp with time zone
+    modified_dts timestamp with time zone,
+    status TEXT -- can become and ENUM/TYPE
 );
 
 ALTER TABLE plan_basics
