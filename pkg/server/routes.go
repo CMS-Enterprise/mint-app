@@ -65,9 +65,6 @@ func (s *Server) routes(
 
 	requirePrincipalMiddleware := authorization.NewRequirePrincipalMiddleware(s.logger)
 
-	// set up handler base
-	base := handlers.NewHandlerBase(s.logger)
-
 	// endpoints that dont require authorization go directly on the main router
 	s.router.HandleFunc("/api/graph/playground", playground.Handler("GraphQL playground", "/api/graph/query"))
 
@@ -132,8 +129,6 @@ func (s *Server) routes(
 		s.logger.Fatal("Failed to create store", zap.Error(storeErr))
 	}
 
-	serviceConfig := services.NewConfig(s.logger, ldClient)
-
 	// set up GraphQL routes
 	gql := s.router.PathPrefix("/api/graph").Subrouter()
 
@@ -169,12 +164,6 @@ func (s *Server) routes(
 	// API base path is versioned
 	api := s.router.PathPrefix("/api/v1").Subrouter()
 	api.Use(requirePrincipalMiddleware)
-
-	metricsHandler := handlers.NewSystemIntakeMetricsHandler(
-		base,
-		services.NewFetchMetrics(serviceConfig),
-	)
-	api.Handle("/metrics", metricsHandler.Handle())
 
 	if ok, _ := strconv.ParseBool(os.Getenv("DEBUG_ROUTES")); ok {
 		// useful for debugging route issues
