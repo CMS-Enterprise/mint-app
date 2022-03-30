@@ -194,10 +194,6 @@ func (s *Server) routes(
 	)
 	api.Handle("/metrics", metricsHandler.Handle())
 
-	s.router.PathPrefix("/").Handler(handlers.NewCatchAllHandler(
-		base,
-	).Handle())
-
 	api.Handle("/pdf/generate", handlers.NewPDFHandler(services.NewInvokeGeneratePDF(serviceConfig, lambdaClient, princeLambdaName)).Handle())
 
 	if ok, _ := strconv.ParseBool(os.Getenv("DEBUG_ROUTES")); ok {
