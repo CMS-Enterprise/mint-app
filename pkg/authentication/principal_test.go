@@ -32,7 +32,7 @@ func TestPrincipal(t *testing.T) {
 		"regular eua user": {
 			p: &EUAPrincipal{
 				EUAID:       id,
-				JobCodeMINT: okMINT,
+				JobCodeEASi: okMINT,
 				JobCodeGRT:  okGRT,
 			},
 			expectID:   id,
@@ -49,7 +49,7 @@ func TestPrincipal(t *testing.T) {
 			assert.NotEmpty(t, tc.p.String(), "fmt.Stringer")
 			assert.NotEmpty(t, tc.p.ID(), "ID()")
 			assert.Equal(t, tc.expectID, tc.p.ID(), "ID()")
-			assert.Equal(t, tc.expectMINT, tc.p.AllowMINT(), "AllowMINT()")
+			assert.Equal(t, tc.expectMINT, tc.p.AllowEASi(), "AllowEASi()")
 			assert.Equal(t, tc.expectGRT, tc.p.AllowGRT(), "AllowGRT()")
 		})
 	}

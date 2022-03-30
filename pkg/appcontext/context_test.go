@@ -97,7 +97,7 @@ func TestContextPrincipal(t *testing.T) {
 		"regular user": {
 			ctx: WithPrincipal(context.Background(), &authentication.EUAPrincipal{
 				EUAID:       submitterID,
-				JobCodeMINT: true,
+				JobCodeEASi: true,
 				JobCodeGRT:  false,
 			}),
 			expectID:   submitterID,
@@ -107,7 +107,7 @@ func TestContextPrincipal(t *testing.T) {
 		"GRT reviewer": {
 			ctx: WithPrincipal(context.Background(), &authentication.EUAPrincipal{
 				EUAID:       reviewerID,
-				JobCodeMINT: true,
+				JobCodeEASi: true,
 				JobCodeGRT:  true,
 			}),
 			expectID:   reviewerID,
@@ -123,7 +123,7 @@ func TestContextPrincipal(t *testing.T) {
 
 			// Assert (of AAA)
 			assert.Equal(t, tc.expectID, p.ID(), "ID")
-			assert.Equal(t, tc.expectMINT, p.AllowMINT(), "MINT")
+			assert.Equal(t, tc.expectMINT, p.AllowEASi(), "MINT")
 			assert.Equal(t, tc.expectGRT, p.AllowGRT(), "GRT")
 		})
 	}

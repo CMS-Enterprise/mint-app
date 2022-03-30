@@ -17,9 +17,9 @@ type Principal interface {
 	// for the given Principal
 	ID() string
 
-	// AllowMINT says whether this principal
+	// AllowEASi says whether this principal
 	// is authorized to operate within MINT
-	AllowMINT() bool
+	AllowEASi() bool
 
 	// AllowGRT says whether this principal
 	// is authorized to operate as part of
@@ -50,10 +50,10 @@ func (*anonymous) ID() string {
 	return anonID
 }
 
-// AllowMINT says Anonymous users are
+// AllowEASi says Anonymous users are
 // not explicitly allowed to submit
 // info to MINT
-func (*anonymous) AllowMINT() bool {
+func (*anonymous) AllowEASi() bool {
 	return false
 }
 
@@ -96,9 +96,9 @@ func (p *EUAPrincipal) ID() string {
 	return p.EUAID
 }
 
-// AllowMINT says whether this principal
+// AllowEASi says whether this principal
 // is authorized to operate within MINT
-func (p *EUAPrincipal) AllowMINT() bool {
+func (p *EUAPrincipal) AllowEASi() bool {
 	return p.JobCodeEASi
 }
 
