@@ -1,5 +1,5 @@
 const home = {
-  title: 'Welcome to CMMI',
+  title: 'Welcome to MINT',
   signIn: 'Sign in to start'
 };
 

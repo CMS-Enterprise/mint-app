@@ -19,6 +19,17 @@ import Cookies from 'views/Cookies';
 import FlagsWrapper from 'views/FlagsWrapper';
 import Home from 'views/Home';
 import Login from 'views/Login';
+import ModelPlan from 'views/ModelPlan';
+import NewPlan from 'views/ModelPlan/NewPlan';
+import TaskList from 'views/ModelPlan/TaskList';
+import Basics from 'views/ModelPlan/TaskList/Basics';
+import Characteristics from 'views/ModelPlan/TaskList/Characteristics';
+import CostEstimate from 'views/ModelPlan/TaskList/CostEstimate';
+import Operations from 'views/ModelPlan/TaskList/Operations';
+import Participants from 'views/ModelPlan/TaskList/Participants';
+import Payment from 'views/ModelPlan/TaskList/Payment';
+import Population from 'views/ModelPlan/TaskList/Population';
+import SubmitRequest from 'views/ModelPlan/TaskList/SubmitRequest';
 import NotFound from 'views/NotFound';
 import PrivacyPolicy from 'views/PrivacyPolicy';
 import Sandbox from 'views/Sandbox';
@@ -51,6 +62,47 @@ const AppRoutes = () => {
       <Redirect exact from="/login" to="/signin" />
       <Route path="/signin" exact component={Login} />
       <SecureRoute path="/user-diagnostics" component={UserInfo} />
+
+      {/* Model Routes */}
+      <SecureRoute path="/models" exact component={ModelPlan} />
+      <SecureRoute path="/models/new-plan" exact component={NewPlan} />
+      <SecureRoute
+        path="/models/:modelId/task-list"
+        exact
+        component={TaskList}
+      />
+      <SecureRoute
+        path="/models/:modelId/task-list/basics"
+        component={Basics}
+      />
+      <SecureRoute
+        path="/models/:modelId/task-list/characteristics"
+        component={Characteristics}
+      />
+      <SecureRoute
+        path="/models/:modelId/task-list/cost-estimate"
+        component={CostEstimate}
+      />
+      <SecureRoute
+        path="/models/:modelId/task-list/operations"
+        component={Operations}
+      />
+      <SecureRoute
+        path="/models/:modelId/task-list/participants"
+        component={Participants}
+      />
+      <SecureRoute
+        path="/models/:modelId/task-list/payment"
+        component={Payment}
+      />
+      <SecureRoute
+        path="/models/:modelId/task-list/population"
+        component={Population}
+      />
+      <SecureRoute
+        path="/models/:modelId/task-list/submit-request"
+        component={SubmitRequest}
+      />
 
       {/* Static Page Routes  */}
       <Route path="/privacy-policy" exact component={PrivacyPolicy} />
