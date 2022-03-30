@@ -1,20 +1,22 @@
 package models
 
 import (
-	// "errors"
 	"time"
 
 	"github.com/google/uuid"
 	"github.com/guregu/null"
 )
 
-type PlanCollaborator struct {
+type PlanBasics struct {
 	ID          uuid.UUID   `json:"id" db:"id"`
 	ModelPlanID uuid.UUID   `json:"modelPlanID" db:"model_plan_id"`
 	EUAUserID   null.String `json:"euaUserId" db:"eua_user_id"`
-	FullName    null.String `json:"fullName" db:"full_name"`
-	Component   null.String `json:"component" db:"component"`
-	TeamRole    null.String `json:"teamRole" db:"team_role"`
+
+	ModelName     null.String `json:"modelName" db:"model_name"`
+	ModelCategory null.String `json:"modelCategory" db:"model_category"`
+	CMSCenter     null.String `json:"cmsCenter" db:"cms_center"`
+	CMMIGroup     null.String `json:"cmmiGroup" db:"cmmi_group"`
+	ModelType     null.String `json:"modelType" db:"model_type"`
 
 	CreatedBy   null.String `json:"createdBy" db:"created_by"`
 	CreatedDts  *time.Time  `json:"createdDts" db:"created_dts"`
