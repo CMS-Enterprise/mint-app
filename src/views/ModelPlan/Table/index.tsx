@@ -35,7 +35,6 @@ import data from './mockData';
 import './index.scss';
 
 type myRequestsTableProps = {
-  // type?: RequestType;
   hiddenColumns?: string[];
 };
 
@@ -76,10 +75,10 @@ const Table = ({ hiddenColumns }: myRequestsTableProps) => {
   // Modifying data for table sorting and prepping for Cell configuration
   // const data = useMemo(() => {
   //   if (tableData) {
-  //     return tableMap(tableData, t, type);
+  //     return tableMap(tableData, t);
   //   }
   //   return [];
-  // }, [tableData, t, type]);
+  // }, [tableData, t]);
 
   const {
     getTableProps,
