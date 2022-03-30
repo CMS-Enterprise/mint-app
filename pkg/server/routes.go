@@ -13,9 +13,6 @@ import (
 	"github.com/99designs/gqlgen/graphql/handler"
 	"github.com/99designs/gqlgen/graphql/handler/extension"
 	"github.com/99designs/gqlgen/graphql/playground"
-	"github.com/aws/aws-sdk-go/aws"
-	"github.com/aws/aws-sdk-go/aws/session"
-	"github.com/aws/aws-sdk-go/service/lambda"
 	"github.com/gorilla/mux"
 	_ "github.com/lib/pq" // pq is required to get the postgres driver into sqlx
 	"go.uber.org/zap"
@@ -127,20 +124,6 @@ func (s *Server) routes(
 
 	s3Client := upload.NewS3Client(s3Config)
 
-	var lambdaClient *lambda.Lambda
-	var princeLambdaName string
-	lambdaSession := session.Must(session.NewSession())
-
-	princeConfig := s.NewPrinceLambdaConfig()
-	princeLambdaName = princeConfig.FunctionName
-
-	if s.environment.Local() || s.environment.Test() {
-		endpoint := princeConfig.Endpoint
-		lambdaClient = lambda.New(lambdaSession, &aws.Config{Endpoint: &endpoint, Region: aws.String("us-west-2")})
-	} else {
-		lambdaClient = lambda.New(lambdaSession, &aws.Config{})
-	}
-
 	store, storeErr := storage.NewStore(
 		s.logger,
 		s.NewDBConfig(),
@@ -193,8 +176,6 @@ func (s *Server) routes(
 		services.NewFetchMetrics(serviceConfig),
 	)
 	api.Handle("/metrics", metricsHandler.Handle())
-
-	api.Handle("/pdf/generate", handlers.NewPDFHandler(services.NewInvokeGeneratePDF(serviceConfig, lambdaClient, princeLambdaName)).Handle())
 
 	if ok, _ := strconv.ParseBool(os.Getenv("DEBUG_ROUTES")); ok {
 		// useful for debugging route issues
