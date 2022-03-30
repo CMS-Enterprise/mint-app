@@ -184,29 +184,14 @@ A user role associated with a job code
 """
 enum Role {
   """
-  A 508 Tester
+  A basic MINT user
   """
-  EASI_508_TESTER
+  MINT_BASE_USER
 
   """
-  A 508 request program team member
+  A MINT admin user
   """
-  EASI_508_USER
-
-  """
-  A 508 request program team member or tester
-  """
-  EASI_508_TESTER_OR_USER
-
-  """
-  A member of the GRT
-  """
-  EASI_GOVTEAM
-
-  """
-  A generic EASi user
-  """
-  EASI_USER
+  MINT_ADMIN_USER
 }
 `, BuiltIn: false},
 }
@@ -222,7 +207,7 @@ func (ec *executionContext) dir_hasRole_args(ctx context.Context, rawArgs map[st
 	var arg0 model.Role
 	if tmp, ok := rawArgs["role"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("role"))
-		arg0, err = ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋeasiᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, tmp)
+		arg0, err = ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -331,7 +316,7 @@ func (ec *executionContext) _CurrentUser_launchDarkly(ctx context.Context, field
 	}
 	res := resTmp.(*model.LaunchDarklySettings)
 	fc.Result = res
-	return ec.marshalNLaunchDarklySettings2ᚖgithubᚗcomᚋcmsgovᚋeasiᚑappᚋpkgᚋgraphᚋmodelᚐLaunchDarklySettings(ctx, field.Selections, res)
+	return ec.marshalNLaunchDarklySettings2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐLaunchDarklySettings(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _LaunchDarklySettings_userKey(ctx context.Context, field graphql.CollectedField, obj *model.LaunchDarklySettings) (ret graphql.Marshaler) {
@@ -433,7 +418,7 @@ func (ec *executionContext) _Query_currentUser(ctx context.Context, field graphq
 	}
 	res := resTmp.(*model.CurrentUser)
 	fc.Result = res
-	return ec.marshalOCurrentUser2ᚖgithubᚗcomᚋcmsgovᚋeasiᚑappᚋpkgᚋgraphᚋmodelᚐCurrentUser(ctx, field.Selections, res)
+	return ec.marshalOCurrentUser2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCurrentUser(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Query___type(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
@@ -2204,7 +2189,7 @@ func (ec *executionContext) marshalNBoolean2bool(ctx context.Context, sel ast.Se
 	return res
 }
 
-func (ec *executionContext) marshalNLaunchDarklySettings2ᚖgithubᚗcomᚋcmsgovᚋeasiᚑappᚋpkgᚋgraphᚋmodelᚐLaunchDarklySettings(ctx context.Context, sel ast.SelectionSet, v *model.LaunchDarklySettings) graphql.Marshaler {
+func (ec *executionContext) marshalNLaunchDarklySettings2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐLaunchDarklySettings(ctx context.Context, sel ast.SelectionSet, v *model.LaunchDarklySettings) graphql.Marshaler {
 	if v == nil {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
 			ec.Errorf(ctx, "must not be null")
@@ -2214,13 +2199,13 @@ func (ec *executionContext) marshalNLaunchDarklySettings2ᚖgithubᚗcomᚋcmsgo
 	return ec._LaunchDarklySettings(ctx, sel, v)
 }
 
-func (ec *executionContext) unmarshalNRole2githubᚗcomᚋcmsgovᚋeasiᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx context.Context, v interface{}) (model.Role, error) {
+func (ec *executionContext) unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx context.Context, v interface{}) (model.Role, error) {
 	var res model.Role
 	err := res.UnmarshalGQL(v)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) marshalNRole2githubᚗcomᚋcmsgovᚋeasiᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx context.Context, sel ast.SelectionSet, v model.Role) graphql.Marshaler {
+func (ec *executionContext) marshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx context.Context, sel ast.SelectionSet, v model.Role) graphql.Marshaler {
 	return v
 }
 
@@ -2518,7 +2503,7 @@ func (ec *executionContext) marshalOBoolean2ᚖbool(ctx context.Context, sel ast
 	return res
 }
 
-func (ec *executionContext) marshalOCurrentUser2ᚖgithubᚗcomᚋcmsgovᚋeasiᚑappᚋpkgᚋgraphᚋmodelᚐCurrentUser(ctx context.Context, sel ast.SelectionSet, v *model.CurrentUser) graphql.Marshaler {
+func (ec *executionContext) marshalOCurrentUser2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCurrentUser(ctx context.Context, sel ast.SelectionSet, v *model.CurrentUser) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
