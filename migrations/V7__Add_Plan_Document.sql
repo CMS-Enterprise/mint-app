@@ -17,7 +17,7 @@ CREATE TABLE plan_document (
     created_by eua_id,
     created_dts timestamp with time zone,
     modified_by eua_id,
-    modified_dts timestamp with time zone,
+    modified_dts timestamp with time zone
 );
 
 
