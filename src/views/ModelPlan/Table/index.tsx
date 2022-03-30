@@ -109,7 +109,7 @@ const Table = ({ hiddenColumns }: myRequestsTableProps) => {
           );
         }
       },
-      // globalFilter: useMemo(() => globalTableFilter, []),
+      globalFilter: useMemo(() => globalTableFilter, []),
       autoResetSortBy: false,
       autoResetPage: false,
       initialState: {
@@ -117,8 +117,8 @@ const Table = ({ hiddenColumns }: myRequestsTableProps) => {
         pageIndex: 0
       }
     },
-    // useFilters,
-    // useGlobalFilter,
+    useFilters,
+    useGlobalFilter,
     useSortBy,
     usePagination
   );
