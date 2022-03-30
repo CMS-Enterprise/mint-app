@@ -18,3 +18,19 @@ GRANT USAGE, UPDATE ON ALL SEQUENCES IN SCHEMA public TO crud;
 -- 2. when this runs in Docker, it will apply to the `postgres` role.
 ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO crud;
 ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT USAGE, UPDATE ON SEQUENCES TO crud;
+
+
+DO
+$do$
+BEGIN
+  CREATE USER app_user;
+  EXCEPTION WHEN DUPLICATE_OBJECT THEN
+  RAISE NOTICE 'not creating user app_user -- it already exists';
+END
+$do$;
+
+ALTER USER app_user WITH PASSWORD '${app_user_password}';
+
+-- Assign the crud role (create, read, update, delete) to the
+-- app_user
+GRANT crud TO app_user;
