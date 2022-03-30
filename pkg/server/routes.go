@@ -69,7 +69,6 @@ func (s *Server) routes(
 	base := handlers.NewHandlerBase(s.logger)
 
 	// endpoints that dont require authorization go directly on the main router
-	s.router.HandleFunc("/api/v1/healthcheck", handlers.NewHealthCheckHandler(base, s.Config).Handle())
 	s.router.HandleFunc("/api/graph/playground", playground.Handler("GraphQL playground", "/api/graph/query"))
 
 	// set up Feature Flagging utilities
