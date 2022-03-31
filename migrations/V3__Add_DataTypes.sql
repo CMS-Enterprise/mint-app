@@ -4,7 +4,8 @@ CREATE TYPE model_category AS ENUM (
 	'Episode-based Payment Initiatives',
 	'Initiatives Focused on the Medicaid and CHIP Population',
 	'Initiatives Focused on the Medicare and Medicaid Enrollees',
-	'Initiatives to Accelerate the Development and Testing of New Payment and Service Delivery Models', --Too big
+	--'Initiatives to Accelerate the Development and Testing of New Payment and Service Delivery Models', --Too big
+	'Initiatives to Accelerate the Development and Testing',
 	'Initiatives to Speed the Adoption of Best Practices',
 	'Primary Care Transformation',
 	'TBD'
