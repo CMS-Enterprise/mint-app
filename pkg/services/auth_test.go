@@ -33,7 +33,7 @@ func (s ServicesTestSuite) TestHasRole() {
 
 	for name, tc := range testCases {
 		s.Run(name, func() {
-			ok, err := fnAuth(tc.ctx, model.RoleMintAdmin)
+			ok, err := fnAuth(tc.ctx, model.RoleMintAdminUser)
 			s.NoError(err)
 			s.Equal(tc.allowed, ok)
 		})

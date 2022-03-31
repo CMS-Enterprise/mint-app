@@ -18,12 +18,12 @@ type Principal interface {
 	ID() string
 
 	// AllowMINT says whether this principal
-	// is authorized to operate within EASi
+	// is authorized to operate within MINT
 	AllowMINT() bool
 
 	// AllowADMIN says whether this principal
 	// is authorized to operate as part of
-	// the Review Team within EASi
+	// the Review Team within MINT
 	AllowADMIN() bool
 }
 
