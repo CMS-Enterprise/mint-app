@@ -57,7 +57,7 @@ const Home = () => {
                   {t('newModelSummaryBox.cta')}
                 </UswdsReactLink>
               </SummaryBox>
-              <hr className="home__hr margin-top-4" aria-hidden />
+              <hr className="home__hr margin-top-6" aria-hidden />
               <h2 className="margin-top-4">
                 {t('requestsTable.admin.heading')}
               </h2>
