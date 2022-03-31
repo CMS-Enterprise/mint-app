@@ -27,7 +27,7 @@ const Home = () => {
 
   const renderView = () => {
     if (isUserSet) {
-      if (user.isGrtReviewer(userGroups, flags)) {
+      if (user.isAdmin(userGroups, flags)) {
         return (
           <div className="grid-container">
             {message && (
