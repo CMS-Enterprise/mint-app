@@ -6,6 +6,8 @@ import (
 	"fmt"
 	"github.com/cmsgov/mint-app/pkg/shared/appses"
 	"github.com/cmsgov/mint-app/pkg/shared/authorization"
+	"github.com/cmsgov/mint-app/pkg/shared/cedar/cedarldap"
+	"github.com/cmsgov/mint-app/pkg/shared/cedar/core"
 	"github.com/cmsgov/mint-app/pkg/shared/okta"
 	"github.com/cmsgov/mint-app/pkg/shared/storage"
 	"github.com/cmsgov/mint-app/pkg/shared/upload"
@@ -27,9 +29,6 @@ import (
 
 	"github.com/cmsgov/mint-app/pkg/appconfig"
 	"github.com/cmsgov/mint-app/pkg/appcontext"
-	"github.com/cmsgov/mint-app/pkg/cedar/cedarldap"
-
-	cedarcore "github.com/cmsgov/mint-app/pkg/cedar/core"
 	"github.com/cmsgov/mint-app/pkg/email"
 	"github.com/cmsgov/mint-app/pkg/flags"
 	"github.com/cmsgov/mint-app/pkg/graph"
