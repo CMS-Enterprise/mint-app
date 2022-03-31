@@ -3,6 +3,8 @@ package okta
 import (
 	"errors"
 	"fmt"
+	"github.com/cmsgov/mint-app/pkg/shared/apperrors"
+	"github.com/cmsgov/mint-app/pkg/shared/authentication"
 	"net/http"
 	"strings"
 
@@ -10,8 +12,6 @@ import (
 	"go.uber.org/zap"
 
 	"github.com/cmsgov/mint-app/pkg/appcontext"
-	"github.com/cmsgov/mint-app/pkg/apperrors"
-	"github.com/cmsgov/mint-app/pkg/authentication"
 	"github.com/cmsgov/mint-app/pkg/handlers"
 )
 

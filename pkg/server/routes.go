@@ -4,6 +4,11 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"github.com/cmsgov/mint-app/pkg/shared/appses"
+	"github.com/cmsgov/mint-app/pkg/shared/authorization"
+	"github.com/cmsgov/mint-app/pkg/shared/okta"
+	"github.com/cmsgov/mint-app/pkg/shared/storage"
+	"github.com/cmsgov/mint-app/pkg/shared/upload"
 	"net/http"
 	"os"
 	"strconv"
@@ -22,8 +27,6 @@ import (
 
 	"github.com/cmsgov/mint-app/pkg/appconfig"
 	"github.com/cmsgov/mint-app/pkg/appcontext"
-	"github.com/cmsgov/mint-app/pkg/appses"
-	"github.com/cmsgov/mint-app/pkg/authorization"
 	"github.com/cmsgov/mint-app/pkg/cedar/cedarldap"
 
 	cedarcore "github.com/cmsgov/mint-app/pkg/cedar/core"
@@ -34,10 +37,7 @@ import (
 	"github.com/cmsgov/mint-app/pkg/graph/model"
 	"github.com/cmsgov/mint-app/pkg/handlers"
 	"github.com/cmsgov/mint-app/pkg/local"
-	"github.com/cmsgov/mint-app/pkg/okta"
 	"github.com/cmsgov/mint-app/pkg/services"
-	"github.com/cmsgov/mint-app/pkg/storage"
-	"github.com/cmsgov/mint-app/pkg/upload"
 )
 
 func (s *Server) routes(

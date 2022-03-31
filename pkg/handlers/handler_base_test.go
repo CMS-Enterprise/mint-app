@@ -5,11 +5,11 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/cmsgov/mint-app/pkg/shared/apperrors"
 	"net/http"
 	"net/http/httptest"
 
 	"github.com/cmsgov/mint-app/pkg/appcontext"
-	"github.com/cmsgov/mint-app/pkg/apperrors"
 )
 
 type failWriter struct {

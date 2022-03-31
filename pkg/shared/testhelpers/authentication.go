@@ -2,11 +2,11 @@ package testhelpers
 
 import (
 	"context"
+	"github.com/cmsgov/mint-app/pkg/shared/authentication"
 
 	"github.com/99designs/gqlgen/client"
 
 	"github.com/cmsgov/mint-app/pkg/appcontext"
-	"github.com/cmsgov/mint-app/pkg/authentication"
 )
 
 // NewRequesterPrincipal returns what represents an EASi user

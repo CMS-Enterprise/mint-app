@@ -3,6 +3,7 @@ package appses
 import (
 	"context"
 	"fmt"
+	"github.com/cmsgov/mint-app/pkg/shared/testhelpers"
 	"testing"
 
 	"github.com/aws/aws-sdk-go/aws/session"
@@ -12,7 +13,6 @@ import (
 
 	"github.com/cmsgov/mint-app/pkg/appconfig"
 	"github.com/cmsgov/mint-app/pkg/models"
-	"github.com/cmsgov/mint-app/pkg/testhelpers"
 )
 
 type SESTestSuite struct {

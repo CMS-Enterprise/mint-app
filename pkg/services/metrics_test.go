@@ -2,11 +2,11 @@ package services
 
 import (
 	"context"
+	"github.com/cmsgov/mint-app/pkg/shared/apperrors"
 
 	"github.com/facebookgo/clock"
 	"go.uber.org/zap"
 
-	"github.com/cmsgov/mint-app/pkg/apperrors"
 	"github.com/cmsgov/mint-app/pkg/models"
 )
 

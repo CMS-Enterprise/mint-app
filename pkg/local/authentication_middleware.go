@@ -2,6 +2,7 @@ package local
 
 import (
 	"encoding/json"
+	"github.com/cmsgov/mint-app/pkg/shared/authentication"
 	"net/http"
 	"strings"
 
@@ -9,7 +10,6 @@ import (
 	"go.uber.org/zap"
 
 	"github.com/cmsgov/mint-app/pkg/appcontext"
-	"github.com/cmsgov/mint-app/pkg/authentication"
 )
 
 // DevUserConfig is the set of values that can be passed in a request header

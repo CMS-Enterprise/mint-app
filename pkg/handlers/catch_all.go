@@ -1,9 +1,8 @@
 package handlers
 
 import (
+	"github.com/cmsgov/mint-app/pkg/shared/apperrors"
 	"net/http"
-
-	"github.com/cmsgov/mint-app/pkg/apperrors"
 )
 
 // NewCatchAllHandler is a constructor for CatchAllHanlder

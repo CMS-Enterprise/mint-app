@@ -2,6 +2,7 @@ package authorization
 
 import (
 	"encoding/json"
+	"github.com/cmsgov/mint-app/pkg/shared/authentication"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -10,7 +11,6 @@ import (
 	"go.uber.org/zap"
 
 	"github.com/cmsgov/mint-app/pkg/appcontext"
-	"github.com/cmsgov/mint-app/pkg/authentication"
 )
 
 type AuthorizationTestSuite struct {

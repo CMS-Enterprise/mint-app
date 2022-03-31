@@ -3,6 +3,9 @@ package graph
 import (
 	"context"
 	"fmt"
+	"github.com/cmsgov/mint-app/pkg/shared/storage"
+	"github.com/cmsgov/mint-app/pkg/shared/testhelpers"
+	"github.com/cmsgov/mint-app/pkg/shared/upload"
 	"net/url"
 	"testing"
 
@@ -27,9 +30,6 @@ import (
 	"github.com/cmsgov/mint-app/pkg/graph/generated"
 	"github.com/cmsgov/mint-app/pkg/graph/model"
 	"github.com/cmsgov/mint-app/pkg/local"
-	"github.com/cmsgov/mint-app/pkg/storage"
-	"github.com/cmsgov/mint-app/pkg/testhelpers"
-	"github.com/cmsgov/mint-app/pkg/upload"
 )
 
 type GraphQLTestSuite struct {

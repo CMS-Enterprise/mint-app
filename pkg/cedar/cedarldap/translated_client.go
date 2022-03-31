@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"github.com/cmsgov/mint-app/pkg/shared/apperrors"
 
 	"github.com/cmsgov/mint-app/pkg/appcontext"
 
@@ -11,7 +12,6 @@ import (
 	httptransport "github.com/go-openapi/runtime/client"
 	"github.com/go-openapi/strfmt"
 
-	"github.com/cmsgov/mint-app/pkg/apperrors"
 	apiclient "github.com/cmsgov/mint-app/pkg/cedar/cedarldap/gen/client"
 	"github.com/cmsgov/mint-app/pkg/cedar/cedarldap/gen/client/operations"
 	"github.com/cmsgov/mint-app/pkg/cedar/cedarldap/gen/models"

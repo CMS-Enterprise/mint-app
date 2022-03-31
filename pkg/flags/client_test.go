@@ -3,12 +3,12 @@ package flags
 import (
 	"context"
 	"crypto/sha256"
+	"github.com/cmsgov/mint-app/pkg/shared/authentication"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
 
 	"github.com/cmsgov/mint-app/pkg/appcontext"
-	"github.com/cmsgov/mint-app/pkg/authentication"
 )
 
 func TestPrincipal(t *testing.T) {

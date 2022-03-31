@@ -9,6 +9,8 @@ package main
 
 import (
 	"fmt"
+	"github.com/cmsgov/mint-app/pkg/shared/storage"
+	"github.com/cmsgov/mint-app/pkg/shared/testhelpers"
 	"os"
 
 	_ "github.com/lib/pq" // required for postgres driver in sql
@@ -17,8 +19,6 @@ import (
 	ld "gopkg.in/launchdarkly/go-server-sdk.v5"
 
 	"github.com/cmsgov/mint-app/pkg/appconfig"
-	"github.com/cmsgov/mint-app/pkg/storage"
-	"github.com/cmsgov/mint-app/pkg/testhelpers"
 )
 
 var rootCmd = &cobra.Command{

@@ -3,12 +3,11 @@ package appcontext
 import (
 	"context"
 	"fmt"
+	"github.com/cmsgov/mint-app/pkg/shared/authentication"
 	"os"
 
 	"github.com/google/uuid"
 	"go.uber.org/zap"
-
-	"github.com/cmsgov/mint-app/pkg/authentication"
 )
 
 type contextKey int

@@ -3,6 +3,7 @@ package handlers
 import (
 	"context"
 	"encoding/json"
+	"github.com/cmsgov/mint-app/pkg/shared/apperrors"
 	"net/http"
 
 	"github.com/facebookgo/clock"
@@ -10,7 +11,6 @@ import (
 	"go.uber.org/zap"
 
 	"github.com/cmsgov/mint-app/pkg/appcontext"
-	"github.com/cmsgov/mint-app/pkg/apperrors"
 )
 
 // NewHandlerBase is a constructor for HandlerBase

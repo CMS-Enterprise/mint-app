@@ -2,6 +2,8 @@ package services
 
 import (
 	"fmt"
+	"github.com/cmsgov/mint-app/pkg/shared/storage"
+	"github.com/cmsgov/mint-app/pkg/shared/testhelpers"
 	"testing"
 
 	_ "github.com/lib/pq"
@@ -11,8 +13,6 @@ import (
 	ld "gopkg.in/launchdarkly/go-server-sdk.v5"
 
 	"github.com/cmsgov/mint-app/pkg/appconfig"
-	"github.com/cmsgov/mint-app/pkg/storage"
-	"github.com/cmsgov/mint-app/pkg/testhelpers"
 )
 
 type ServicesTestSuite struct {

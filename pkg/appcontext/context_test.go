@@ -2,14 +2,13 @@ package appcontext
 
 import (
 	"context"
+	"github.com/cmsgov/mint-app/pkg/shared/authentication"
 	"testing"
 
 	"github.com/google/uuid"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/suite"
 	"go.uber.org/zap"
-
-	"github.com/cmsgov/mint-app/pkg/authentication"
 )
 
 type ContextTestSuite struct {

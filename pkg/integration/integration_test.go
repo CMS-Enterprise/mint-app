@@ -6,6 +6,8 @@ package integration
 
 import (
 	"fmt"
+	"github.com/cmsgov/mint-app/pkg/shared/storage"
+	testhelpers2 "github.com/cmsgov/mint-app/pkg/shared/testhelpers"
 	"net/http/httptest"
 	"testing"
 
@@ -18,8 +20,6 @@ import (
 	"github.com/cmsgov/mint-app/pkg/appconfig"
 	"github.com/cmsgov/mint-app/pkg/handlers"
 	"github.com/cmsgov/mint-app/pkg/server"
-	"github.com/cmsgov/mint-app/pkg/storage"
-	"github.com/cmsgov/mint-app/pkg/testhelpers"
 )
 
 // test user for authorization
@@ -43,12 +43,12 @@ func TestIntegrationTestSuite(t *testing.T) {
 	if testing.Short() {
 		t.Skip("skipping integration tests in `-short` mode")
 	}
-	config := testhelpers.NewConfig()
+	config := testhelpers2.NewConfig()
 	easiServer := server.NewServer(config)
 	testServer := httptest.NewServer(easiServer)
 	defer testServer.Close()
 
-	accessToken, err := testhelpers.OktaAccessToken(config)
+	accessToken, err := testhelpers2.OktaAccessToken(config)
 	if err != nil {
 		fmt.Printf("Failed to get access token for integration testing with error: %s", err)
 		t.FailNow()

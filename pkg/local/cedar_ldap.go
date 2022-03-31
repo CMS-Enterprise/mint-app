@@ -4,11 +4,11 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"github.com/cmsgov/mint-app/pkg/shared/apperrors"
 	"strings"
 
 	"go.uber.org/zap"
 
-	"github.com/cmsgov/mint-app/pkg/apperrors"
 	"github.com/cmsgov/mint-app/pkg/models"
 )
 

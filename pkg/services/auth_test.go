@@ -2,9 +2,9 @@ package services
 
 import (
 	"context"
+	"github.com/cmsgov/mint-app/pkg/shared/authentication"
 
 	"github.com/cmsgov/mint-app/pkg/appcontext"
-	"github.com/cmsgov/mint-app/pkg/authentication"
 	"github.com/cmsgov/mint-app/pkg/graph/model"
 )
 
