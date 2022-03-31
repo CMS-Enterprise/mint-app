@@ -9,7 +9,7 @@ const (
 	MCEBPaymentInitiatives      ModelCategory = "Episode-based Payment Initiatives"
 	MCMedicaidAndChip           ModelCategory = "Initiatives Focused on the Medicaid and CHIP Population"
 	MCMedicareAndMedicaid       ModelCategory = "Initiatives Focused on the Medicare and Medicaid Enrollees"
-	MCAccelerateDevAndTest      ModelCategory = "Initiatives to Accelerate the Development and Testing of New Payment and Service Delivery Models"
+	MCAccelerateDevAndTest      ModelCategory = "Initiatives to Accelerate the Development and Testing of New Payment and Service Delivery Models" //too long here.
 	MCSpeedBestPracticeAdopt    ModelCategory = "Initiatives to Speed the Adoption of Best Practices"
 	MCPrimaryCareTransformation ModelCategory = "Primary Care Transformation"
 	MCTBD                       ModelCategory = "TBD"
