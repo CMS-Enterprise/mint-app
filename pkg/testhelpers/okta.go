@@ -47,7 +47,7 @@ type FactorLinkVerify struct {
 	HREF string `json:"href"`
 }
 
-// fetchOktaAccessToken gets an access token from Okta to authorize requests to the EASi APIs in test
+// fetchOktaAccessToken gets an access token from Okta to authorize requests to the MINT APIs in test
 // Borrowing heavily from okta jwt package but adding MFA
 // https://github.com/okta/okta-jwt-verifier-golang/blob/bf6f0d73000e3873d519714a3619b3c5d62ba615/jwtverifier_test.go#L354
 func fetchOktaAccessToken(

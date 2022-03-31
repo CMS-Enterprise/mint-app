@@ -83,36 +83,36 @@ func TestContextPrincipal(t *testing.T) {
 	reviewerID := "reviewer"
 
 	testCases := map[string]struct {
-		ctx        context.Context
-		expectID   string
-		expectEASi bool
-		expectGRT  bool
+		ctx         context.Context
+		expectID    string
+		expectMINT  bool
+		expectADMIN bool
 	}{
 		"unassigned returns anonymous": {
-			ctx:        context.Background(),
-			expectID:   "ANON",
-			expectEASi: false,
-			expectGRT:  false,
+			ctx:         context.Background(),
+			expectID:    "ANON",
+			expectMINT:  false,
+			expectADMIN: false,
 		},
 		"regular user": {
 			ctx: WithPrincipal(context.Background(), &authentication.EUAPrincipal{
-				EUAID:       submitterID,
-				JobCodeEASi: true,
-				JobCodeGRT:  false,
+				EUAID:        submitterID,
+				JobCodeMINT:  true,
+				JobCodeADMIN: false,
 			}),
-			expectID:   submitterID,
-			expectEASi: true,
-			expectGRT:  false,
+			expectID:    submitterID,
+			expectMINT:  true,
+			expectADMIN: false,
 		},
-		"GRT reviewer": {
+		"admin User": {
 			ctx: WithPrincipal(context.Background(), &authentication.EUAPrincipal{
-				EUAID:       reviewerID,
-				JobCodeEASi: true,
-				JobCodeGRT:  true,
+				EUAID:        reviewerID,
+				JobCodeMINT:  true,
+				JobCodeADMIN: true,
 			}),
-			expectID:   reviewerID,
-			expectEASi: true,
-			expectGRT:  true,
+			expectID:    reviewerID,
+			expectMINT:  true,
+			expectADMIN: true,
 		},
 	}
 
@@ -123,8 +123,8 @@ func TestContextPrincipal(t *testing.T) {
 
 			// Assert (of AAA)
 			assert.Equal(t, tc.expectID, p.ID(), "ID")
-			assert.Equal(t, tc.expectEASi, p.AllowEASi(), "EASi")
-			assert.Equal(t, tc.expectGRT, p.AllowGRT(), "GRT")
+			assert.Equal(t, tc.expectMINT, p.AllowMINT(), "MINT")
+			assert.Equal(t, tc.expectADMIN, p.AllowADMIN(), "ADMIN")
 		})
 	}
 }

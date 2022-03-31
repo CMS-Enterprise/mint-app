@@ -37,14 +37,14 @@ type sender interface {
 	Send(ctx context.Context, toAddress models.EmailAddress, ccAddress *models.EmailAddress, subject string, body string) error
 }
 
-// Client is an EASi SES client wrapper
+// Client is an MINT SES client wrapper
 type Client struct {
 	config    Config
 	templates templates
 	sender    sender
 }
 
-// NewClient returns a new email client for EASi
+// NewClient returns a new email client for MINT
 func NewClient(config Config, sender sender) (Client, error) {
 	// rawTemplates, err := template.ParseGlob(path.Join(config.TemplateDirectory, "*.gohtml"))
 	// if err != nil {
