@@ -85,13 +85,13 @@ func TestContextPrincipal(t *testing.T) {
 	testCases := map[string]struct {
 		ctx        context.Context
 		expectID   string
-		expectEASi bool
+		expectMINT bool
 		expectGRT  bool
 	}{
 		"unassigned returns anonymous": {
 			ctx:        context.Background(),
 			expectID:   "ANON",
-			expectEASi: false,
+			expectMINT: false,
 			expectGRT:  false,
 		},
 		"regular user": {
@@ -101,7 +101,7 @@ func TestContextPrincipal(t *testing.T) {
 				JobCodeGRT:  false,
 			}),
 			expectID:   submitterID,
-			expectEASi: true,
+			expectMINT: true,
 			expectGRT:  false,
 		},
 		"GRT reviewer": {
@@ -111,7 +111,7 @@ func TestContextPrincipal(t *testing.T) {
 				JobCodeGRT:  true,
 			}),
 			expectID:   reviewerID,
-			expectEASi: true,
+			expectMINT: true,
 			expectGRT:  true,
 		},
 	}
@@ -123,7 +123,7 @@ func TestContextPrincipal(t *testing.T) {
 
 			// Assert (of AAA)
 			assert.Equal(t, tc.expectID, p.ID(), "ID")
-			assert.Equal(t, tc.expectEASi, p.AllowEASi(), "EASi")
+			assert.Equal(t, tc.expectMINT, p.AllowEASi(), "MINT")
 			assert.Equal(t, tc.expectGRT, p.AllowGRT(), "GRT")
 		})
 	}

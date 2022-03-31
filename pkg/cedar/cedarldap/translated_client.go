@@ -18,7 +18,7 @@ import (
 	models2 "github.com/cmsgov/mint-app/pkg/models"
 )
 
-// TranslatedClient is an API client for CEDAR LDAP using EASi language
+// TranslatedClient is an API client for CEDAR LDAP using MINT language
 type TranslatedClient struct {
 	client        *apiclient.LDAP
 	apiAuthHeader runtime.ClientAuthInfoWriter
@@ -29,7 +29,7 @@ type Client interface {
 	FetchUserInfo(context.Context, string) (*models2.UserInfo, error)
 }
 
-// NewTranslatedClient returns an API client for CEDAR LDAP using EASi language
+// NewTranslatedClient returns an API client for CEDAR LDAP using MINT language
 func NewTranslatedClient(cedarHost string, cedarAPIKey string) TranslatedClient {
 	// create the transport
 	transport := httptransport.New(cedarHost, apiclient.DefaultBasePath, []string{"https"})

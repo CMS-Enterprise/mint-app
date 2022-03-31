@@ -18,22 +18,22 @@ type Principal interface {
 	ID() string
 
 	// AllowEASi says whether this principal
-	// is authorized to operate within EASi
+	// is authorized to operate within MINT
 	AllowEASi() bool
 
 	// AllowGRT says whether this principal
 	// is authorized to operate as part of
-	// the Review Team within EASi
+	// the Review Team within MINT
 	AllowGRT() bool
 
 	// Allow508User says whether this principal
 	// is authorized to operate as a user of the
-	// 508 process within EASi
+	// 508 process within MINT
 	Allow508User() bool
 
 	// Allow508Tester says whether this principal
 	// is authorized to operate as part of the
-	// 508 testing team within EASi
+	// 508 testing team within MINT
 	Allow508Tester() bool
 }
 
@@ -52,7 +52,7 @@ func (*anonymous) ID() string {
 
 // AllowEASi says Anonymous users are
 // not explicitly allowed to submit
-// info to EASi
+// info to MINT
 func (*anonymous) AllowEASi() bool {
 	return false
 }
@@ -97,28 +97,28 @@ func (p *EUAPrincipal) ID() string {
 }
 
 // AllowEASi says whether this principal
-// is authorized to operate within EASi
+// is authorized to operate within MINT
 func (p *EUAPrincipal) AllowEASi() bool {
 	return p.JobCodeEASi
 }
 
 // AllowGRT says whether this principal
 // is authorized to operate as part of
-// the Review Team within EASi
+// the Review Team within MINT
 func (p *EUAPrincipal) AllowGRT() bool {
 	return p.JobCodeGRT
 }
 
 // Allow508User says whether this principal
 // is authorized to operate as a user of the
-// 508 process within EASi
+// 508 process within MINT
 func (p *EUAPrincipal) Allow508User() bool {
 	return p.JobCode508User
 }
 
 // Allow508Tester says whether this principal
 // is authorized to operate as part of the
-// 508 testing team within EASi
+// 508 testing team within MINT
 func (p *EUAPrincipal) Allow508Tester() bool {
 	return p.JobCode508Tester
 }

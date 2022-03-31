@@ -21,7 +21,7 @@ type Config struct {
 	IsLocal bool
 }
 
-// S3Client is an EASi s3 client wrapper
+// S3Client is an MINT s3 client wrapper
 type S3Client struct {
 	client s3iface.S3API
 	config Config
