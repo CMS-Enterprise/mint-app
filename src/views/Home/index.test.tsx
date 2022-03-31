@@ -2,35 +2,15 @@ import React from 'react';
 import { act } from 'react-dom/test-utils';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
-import { MockedProvider } from '@apollo/client/testing';
 import { mount, ReactWrapper, shallow } from 'enzyme';
 import { mockFlags, resetLDMocks } from 'jest-launchdarkly-mock';
 import configureMockStore from 'redux-mock-store';
 
-import { initialSystemIntakeForm } from 'data/systemIntake';
 import { MessageProvider } from 'hooks/useMessage';
-import GetRequestsQuery from 'queries/GetRequestsQuery';
 import { Flags } from 'types/flags';
-import Table from 'views/MyRequests/Table';
+import Table from 'views/ModelPlan/Table';
 
 import Home from './index';
-
-jest.mock('@okta/okta-react', () => ({
-  useOktaAuth: () => {
-    return {
-      authState: {
-        isAuthenticated: true
-      },
-      oktaAuth: {
-        getAccessToken: () => Promise.resolve('test-access-token'),
-        getUser: () =>
-          Promise.resolve({
-            name: 'John Doe'
-          })
-      }
-    };
-  }
-}));
 
 const defaultFlags: Flags = {
   downgrade508Tester: false,
@@ -69,41 +49,16 @@ describe('The home page', () => {
       it('displays process options', async () => {
         mockFlags({ ...defaultFlags });
         const mockStore = configureMockStore();
-        const store = mockStore({
-          auth: mockAuthReducer,
-          systemIntakes: {
-            systemIntakes: []
-          },
-          businessCases: {
-            businessCases: []
-          }
-        });
+        const store = mockStore({ auth: mockAuthReducer });
         let component: any;
-        const mocks = [
-          {
-            request: {
-              query: GetRequestsQuery,
-              variables: { first: 20 }
-            },
-            result: {
-              data: {
-                requests: {
-                  edges: []
-                }
-              }
-            }
-          }
-        ];
         await act(async () => {
           component = mount(
             <MemoryRouter initialEntries={['/']} initialIndex={0}>
-              <MockedProvider mocks={mocks}>
-                <Provider store={store}>
-                  <MessageProvider>
-                    <Home />
-                  </MessageProvider>
-                </Provider>
-              </MockedProvider>
+              <Provider store={store}>
+                <MessageProvider>
+                  <Home />
+                </MessageProvider>
+              </Provider>
             </MemoryRouter>
           );
           component.update();
@@ -129,28 +84,6 @@ describe('The home page', () => {
       groups: ['EASI_D_GOVTEAM']
     };
 
-    const mockOpenIntakes = [
-      {
-        ...initialSystemIntakeForm,
-        id: '2',
-        status: 'INTAKE_SUBMITTED'
-      },
-      {
-        ...initialSystemIntakeForm,
-        id: '4',
-        status: 'INTAKE_SUBMITTED',
-        businessCaseId: '1'
-      }
-    ];
-
-    const mockClosedIntakes = [
-      {
-        ...initialSystemIntakeForm,
-        id: '4',
-        status: 'WITHDRAWN'
-      }
-    ];
-
     const mountComponent = (mockedStore: any): ReactWrapper => {
       const mockStore = configureMockStore();
       const store = mockStore(mockedStore);
@@ -167,10 +100,7 @@ describe('The home page', () => {
 
     it('renders without crashing', () => {
       const mockStore = configureMockStore();
-      const store = mockStore({
-        auth: mockAuthReducer,
-        systemIntakes: mockOpenIntakes
-      });
+      const store = mockStore({ auth: mockAuthReducer });
       const shallowComponent = () =>
         shallow(
           <MemoryRouter initialEntries={['/']} initialIndex={0}>
@@ -187,13 +117,7 @@ describe('The home page', () => {
     it('renders the open requests table', async () => {
       mockFlags(defaultFlags);
       const homePage = mountComponent({
-        auth: mockAuthReducer,
-        systemIntakes: {
-          systemIntakes: mockOpenIntakes
-        },
-        businessCases: {
-          businessCases: []
-        }
+        auth: mockAuthReducer
       });
 
       await act(async () => {
@@ -205,13 +129,7 @@ describe('The home page', () => {
     it('renders the closed requests table', async () => {
       mockFlags(defaultFlags);
       const homePage = mountComponent({
-        auth: mockAuthReducer,
-        systemIntakes: {
-          systemIntakes: mockClosedIntakes
-        },
-        businessCases: {
-          businessCases: []
-        }
+        auth: mockAuthReducer
       });
 
       homePage
