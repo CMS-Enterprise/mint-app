@@ -23,7 +23,7 @@ describe('The home page', () => {
   beforeEach(() => {
     resetLDMocks();
   });
-  describe('not a grt review user', () => {
+  describe('is a basic user', () => {
     const mockAuthReducer = {
       isUserSet: true,
       groups: []
@@ -78,10 +78,10 @@ describe('The home page', () => {
     });
   });
 
-  describe('is a grt reviewer', () => {
+  describe('is an admin user', () => {
     const mockAuthReducer = {
       isUserSet: true,
-      groups: ['EASI_D_GOVTEAM']
+      groups: ['ADMIN_DEV']
     };
 
     const mountComponent = (mockedStore: any): ReactWrapper => {
