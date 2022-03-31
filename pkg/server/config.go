@@ -2,14 +2,15 @@ package server
 
 import (
 	"fmt"
+	"time"
+
 	"github.com/cmsgov/mint-app/pkg/shared/appses"
 	"github.com/cmsgov/mint-app/pkg/shared/storage"
 	"github.com/cmsgov/mint-app/pkg/shared/upload"
-	"time"
 
 	"github.com/cmsgov/mint-app/pkg/appconfig"
-	"github.com/cmsgov/mint-app/pkg/email"
 	"github.com/cmsgov/mint-app/pkg/flags"
+	"github.com/cmsgov/mint-app/pkg/shared/email"
 )
 
 const configMissingMessage = "Must set config: %v"

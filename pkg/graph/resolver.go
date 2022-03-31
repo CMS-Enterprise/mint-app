@@ -2,15 +2,16 @@ package graph
 
 import (
 	"context"
-	"github.com/cmsgov/mint-app/pkg/shared/cedar/core"
+	"time"
+
+	cedarcore "github.com/cmsgov/mint-app/pkg/shared/cedar/core"
 	"github.com/cmsgov/mint-app/pkg/shared/storage"
 	"github.com/cmsgov/mint-app/pkg/shared/upload"
-	"time"
 
 	ldclient "gopkg.in/launchdarkly/go-server-sdk.v5"
 
-	"github.com/cmsgov/mint-app/pkg/email"
 	"github.com/cmsgov/mint-app/pkg/models"
+	"github.com/cmsgov/mint-app/pkg/shared/email"
 	"github.com/google/uuid"
 )
 

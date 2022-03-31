@@ -3,12 +3,13 @@ package graph
 import (
 	"context"
 	"fmt"
-	"github.com/cmsgov/mint-app/pkg/shared/cedar/core"
+	"net/url"
+	"testing"
+
+	cedarcore "github.com/cmsgov/mint-app/pkg/shared/cedar/core"
 	"github.com/cmsgov/mint-app/pkg/shared/storage"
 	"github.com/cmsgov/mint-app/pkg/shared/testhelpers"
 	"github.com/cmsgov/mint-app/pkg/shared/upload"
-	"net/url"
-	"testing"
 
 	"github.com/99designs/gqlgen/client"
 	"github.com/99designs/gqlgen/graphql"
@@ -26,10 +27,10 @@ import (
 
 	"github.com/cmsgov/mint-app/pkg/appconfig"
 	"github.com/cmsgov/mint-app/pkg/appcontext"
-	"github.com/cmsgov/mint-app/pkg/email"
 	"github.com/cmsgov/mint-app/pkg/graph/generated"
 	"github.com/cmsgov/mint-app/pkg/graph/model"
 	"github.com/cmsgov/mint-app/pkg/local"
+	"github.com/cmsgov/mint-app/pkg/shared/email"
 )
 
 type GraphQLTestSuite struct {
