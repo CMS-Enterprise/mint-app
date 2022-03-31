@@ -29,27 +29,12 @@ A user role associated with a job code
 """
 enum Role {
   """
-  A 508 Tester
+  A basic MINT user
   """
-  EASI_508_TESTER
+  MINT_BASE_USER
 
   """
-  A 508 request program team member
+  A MINT admin user
   """
-  EASI_508_USER
-
-  """
-  A 508 request program team member or tester
-  """
-  EASI_508_TESTER_OR_USER
-
-  """
-  A member of the GRT
-  """
-  EASI_GOVTEAM
-
-  """
-  A generic EASi user
-  """
-  EASI_USER
+  MINT_ADMIN_USER
 }

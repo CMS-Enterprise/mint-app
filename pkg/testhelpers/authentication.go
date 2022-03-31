@@ -9,16 +9,16 @@ import (
 	"github.com/cmsgov/mint-app/pkg/authentication"
 )
 
-// NewRequesterPrincipal returns what represents an EASi user
+// NewRequesterPrincipal returns what represents an MINT user
 // that is NOT empowered as a Reviewer
 func NewRequesterPrincipal() authentication.Principal {
-	return &authentication.EUAPrincipal{EUAID: "REQ", JobCodeEASi: true, JobCodeGRT: false}
+	return &authentication.EUAPrincipal{EUAID: "REQ", JobCodeMINT: true, JobCodeADMIN: false}
 }
 
-// NewReviewerPrincipal returns what represents an EASi user
-// that is empowered as a member of the GRT.
+// NewReviewerPrincipal returns what represents an MINT user
+// that is empowered as a member of the ADMIN.
 func NewReviewerPrincipal() authentication.Principal {
-	return &authentication.EUAPrincipal{EUAID: "REV", JobCodeEASi: true, JobCodeGRT: true}
+	return &authentication.EUAPrincipal{EUAID: "REV", JobCodeMINT: true, JobCodeADMIN: true}
 }
 
 // AddAuthPrincipalToGraphQLClientTest returns a function to add an auth principal to a graphql client test
@@ -32,10 +32,8 @@ func AddAuthPrincipalToGraphQLClientTest(principal authentication.EUAPrincipal) 
 // AddAuthWithAllJobCodesToGraphQLClientTest adds authentication for all job codes
 func AddAuthWithAllJobCodesToGraphQLClientTest(euaID string) func(*client.Request) {
 	return AddAuthPrincipalToGraphQLClientTest(authentication.EUAPrincipal{
-		EUAID:            euaID,
-		JobCodeEASi:      true,
-		JobCodeGRT:       true,
-		JobCode508User:   true,
-		JobCode508Tester: true,
+		EUAID:        euaID,
+		JobCodeMINT:  true,
+		JobCodeADMIN: true,
 	})
 }
