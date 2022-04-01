@@ -8,6 +8,11 @@ import (
 	"strconv"
 )
 
+// CreateModelPlan represent the data point for plans about a model. It is the central data type in the appliation
+type CreateModelPlanInput struct {
+	Requester string `json:"requester"`
+}
+
 // The current user of the application
 type CurrentUser struct {
 	LaunchDarkly *LaunchDarklySettings `json:"launchDarkly"`

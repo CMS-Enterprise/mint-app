@@ -85,14 +85,14 @@ func (s *Store) ModelPlanGetByID(ctx context.Context, id uuid.UUID) (*models.Mod
 	if err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
 			appcontext.ZLogger(ctx).Info(
-				"No system intake found",
+				"No model plan found",
 				zap.Error(err),
 				zap.String("id", id.String()),
 			)
 			return nil, &apperrors.ResourceNotFoundError{Err: err, Resource: models.ModelPlan{}}
 		}
 		appcontext.ZLogger(ctx).Error(
-			"Failed to fetch system intake",
+			"Failed to fetch model plan",
 			zap.Error(err),
 			zap.String("id", id.String()),
 		)
