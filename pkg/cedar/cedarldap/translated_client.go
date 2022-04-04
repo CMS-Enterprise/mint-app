@@ -4,9 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
-
-	"github.com/cmsgov/mint-app/pkg/appcontext"
-
+	"github.com/cmsgov/mint-app/pkg/shared/logging"
 	"github.com/go-openapi/runtime"
 	httptransport "github.com/go-openapi/runtime/client"
 	"github.com/go-openapi/strfmt"
@@ -49,7 +47,7 @@ func (c TranslatedClient) FetchUserInfo(ctx context.Context, euaID string) (*mod
 	params.ID = euaID
 	resp, err := c.client.Operations.PersonID(params, c.apiAuthHeader)
 	if err != nil {
-		appcontext.ZLogger(ctx).Error(fmt.Sprintf("Failed to fetch person from CEDAR LDAP with error: %v", err))
+		logging.ProvideLogger(ctx).Error(fmt.Sprintf("Failed to fetch person from CEDAR LDAP with error: %v", err))
 		return nil, &apperrors.ExternalAPIError{
 			Err:       err,
 			Model:     models.Person{},

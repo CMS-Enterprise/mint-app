@@ -3,13 +3,14 @@ package okta
 import (
 	"errors"
 	"fmt"
+	"github.com/cmsgov/mint-app/pkg/shared/appcontext"
+	"github.com/cmsgov/mint-app/pkg/shared/logging"
 	"net/http"
 	"strings"
 
 	jwtverifier "github.com/okta/okta-jwt-verifier-golang"
 	"go.uber.org/zap"
 
-	"github.com/cmsgov/mint-app/pkg/appcontext"
 	"github.com/cmsgov/mint-app/pkg/apperrors"
 	"github.com/cmsgov/mint-app/pkg/authentication"
 	"github.com/cmsgov/mint-app/pkg/handlers"
@@ -79,7 +80,7 @@ func (f oktaMiddlewareFactory) newPrincipal(jwt *jwtverifier.Jwt) (*authenticati
 
 func (f oktaMiddlewareFactory) newAuthenticationMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		logger := appcontext.ZLogger(r.Context())
+		logger := logging.ProvideLogger(r.Context())
 		authHeader := r.Header.Get("Authorization")
 		if !strings.HasPrefix(authHeader, "Bearer") {
 			next.ServeHTTP(w, r)
@@ -101,15 +102,15 @@ func (f oktaMiddlewareFactory) newAuthenticationMiddleware(next http.Handler) ht
 			f.WriteErrorResponse(
 				r.Context(),
 				w,
-				&apperrors.UnauthorizedError{Err: fmt.Errorf("unable to get Principal from jwt: %w", err)},
+				&apperrors.UnauthorizedError{Err: fmt.Errorf("unable to get GetContextPrincipal from jwt: %w", err)},
 			)
 			return
 		}
 		logger = logger.With(zap.String("user", principal.ID())).With(zap.Bool("admin", principal.AllowADMIN()))
 
 		ctx := r.Context()
-		ctx = appcontext.WithPrincipal(ctx, principal)
-		ctx = appcontext.WithLogger(ctx, logger)
+		ctx = appcontext.ProvideWithSecurityPrincipal(ctx, principal)
+		ctx = appcontext.ProvideWithLogger(ctx, logger)
 		next.ServeHTTP(w, r.WithContext(ctx))
 	})
 }

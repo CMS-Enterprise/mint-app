@@ -2,6 +2,7 @@ package authorization
 
 import (
 	"encoding/json"
+	"github.com/cmsgov/mint-app/pkg/shared/appcontext"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -9,7 +10,6 @@ import (
 	"github.com/stretchr/testify/suite"
 	"go.uber.org/zap"
 
-	"github.com/cmsgov/mint-app/pkg/appcontext"
 	"github.com/cmsgov/mint-app/pkg/authentication"
 )
 
@@ -32,7 +32,7 @@ func TestAuthorizationTestSuite(t *testing.T) {
 func (s AuthorizationTestSuite) TestAllowsAuthenticatedRequests() {
 	principal := authentication.EUAPrincipal{EUAID: "QQQQ"}
 	req := httptest.NewRequest("GET", "/", nil)
-	req = req.WithContext(appcontext.WithPrincipal(req.Context(), &principal))
+	req = req.WithContext(appcontext.ProvideWithSecurityPrincipal(req.Context(), &principal))
 
 	rr := httptest.NewRecorder()
 	handlerRun := false

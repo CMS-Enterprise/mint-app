@@ -2,9 +2,7 @@ package local
 
 import (
 	"context"
-
-	"github.com/cmsgov/mint-app/pkg/appcontext"
-
+	"github.com/cmsgov/mint-app/pkg/shared/logging"
 	"go.uber.org/zap"
 )
 
@@ -24,7 +22,7 @@ func (c *CedarMINTClient) CheckConnection(context.Context) error {
 // ValidateAndSubmitSystemIntake submits a system intake to CEDAR
 func (c *CedarMINTClient) ValidateAndSubmitSystemIntake(ctx context.Context) (string, error) {
 	fakeAlfabetID := "000-000-0"
-	appcontext.ZLogger(ctx).Info("Mock Submit System Intake to CEDAR",
+	logging.ProvideLogger(ctx).Info("Mock Submit System Intake to CEDAR",
 		zap.String("AlfabetID", fakeAlfabetID))
 	return fakeAlfabetID, nil
 }

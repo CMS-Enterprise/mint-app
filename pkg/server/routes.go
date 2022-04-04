@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"github.com/cmsgov/mint-app/pkg/shared/appcontext"
 	"net/http"
 	"os"
 	"strconv"
@@ -21,7 +22,6 @@ import (
 	"go.uber.org/zap"
 
 	"github.com/cmsgov/mint-app/pkg/appconfig"
-	"github.com/cmsgov/mint-app/pkg/appcontext"
 	"github.com/cmsgov/mint-app/pkg/appses"
 	"github.com/cmsgov/mint-app/pkg/authorization"
 	"github.com/cmsgov/mint-app/pkg/cedar/cedarldap"
@@ -92,7 +92,7 @@ func (s *Server) routes(
 
 	// set up CEDAR core API client
 	coreClient := cedarcore.NewClient(
-		appcontext.WithLogger(context.Background(), s.logger),
+		appcontext.ProvideWithLogger(context.Background(), s.logger),
 		s.Config.GetString(appconfig.CEDARAPIURL),
 		s.Config.GetString(appconfig.CEDARAPIKey),
 		ldClient,

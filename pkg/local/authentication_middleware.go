@@ -2,13 +2,13 @@ package local
 
 import (
 	"encoding/json"
+	"github.com/cmsgov/mint-app/pkg/shared/appcontext"
 	"net/http"
 	"strings"
 
 	"github.com/go-openapi/swag"
 	"go.uber.org/zap"
 
-	"github.com/cmsgov/mint-app/pkg/appcontext"
 	"github.com/cmsgov/mint-app/pkg/authentication"
 )
 
@@ -57,7 +57,7 @@ func authenticateMiddleware(logger *zap.Logger, next http.Handler) http.Handler 
 		}
 
 		logger.Info("Using local authorization middleware and populating EUA ID and job codes")
-		ctx := appcontext.WithPrincipal(r.Context(), &authentication.EUAPrincipal{
+		ctx := appcontext.ProvideWithSecurityPrincipal(r.Context(), &authentication.EUAPrincipal{
 			EUAID:        config.EUA,
 			JobCodeMINT:  true,
 			JobCodeADMIN: swag.ContainsStrings(config.JobCodes, "MINT_D_ADMIN_USER"),

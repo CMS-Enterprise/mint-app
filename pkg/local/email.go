@@ -2,10 +2,9 @@ package local
 
 import (
 	"context"
-
+	"github.com/cmsgov/mint-app/pkg/shared/logging"
 	"go.uber.org/zap"
 
-	"github.com/cmsgov/mint-app/pkg/appcontext"
 	"github.com/cmsgov/mint-app/pkg/models"
 )
 
@@ -25,7 +24,7 @@ func (s Sender) Send(ctx context.Context, toAddress models.EmailAddress, ccAddre
 		ccAddresses = ccAddress.String()
 	}
 
-	appcontext.ZLogger(ctx).Info("Mock sending email",
+	logging.ProvideLogger(ctx).Info("Mock sending email",
 		zap.String("To", toAddress.String()),
 		zap.String("CC", ccAddresses),
 		zap.String("Subject", subject),

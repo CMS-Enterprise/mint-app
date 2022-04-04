@@ -5,10 +5,10 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/cmsgov/mint-app/pkg/shared/appcontext"
 	"net/http"
 	"net/http/httptest"
 
-	"github.com/cmsgov/mint-app/pkg/appcontext"
 	"github.com/cmsgov/mint-app/pkg/apperrors"
 )
 
@@ -33,7 +33,7 @@ func (w *failWriter) Header() http.Header {
 }
 
 func (s HandlerTestSuite) TestWriteErrorResponse() {
-	ctx, traceID := appcontext.WithTrace(context.Background())
+	ctx, traceID := appcontext.ProvideWithRequestTrace(context.Background())
 
 	var responseTests = []struct {
 		appErr      error

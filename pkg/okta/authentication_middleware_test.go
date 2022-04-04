@@ -3,6 +3,7 @@ package okta
 import (
 	"encoding/json"
 	"errors"
+	"github.com/cmsgov/mint-app/pkg/shared/appcontext"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -13,7 +14,6 @@ import (
 	"github.com/stretchr/testify/suite"
 	"go.uber.org/zap"
 
-	"github.com/cmsgov/mint-app/pkg/appcontext"
 	"github.com/cmsgov/mint-app/pkg/authentication"
 	"github.com/cmsgov/mint-app/pkg/handlers"
 	"github.com/cmsgov/mint-app/pkg/testhelpers"
@@ -84,7 +84,7 @@ func (s AuthenticationMiddlewareTestSuite) TestAuthorizeMiddleware() {
 		testHandler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			handlerRun = true
 
-			principal := appcontext.Principal(r.Context())
+			principal := appcontext.GetContextPrincipal(r.Context())
 			s.NotEqual(authentication.ANON, principal)
 			s.Equal("EASI", principal.ID())
 		})

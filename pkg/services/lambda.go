@@ -4,12 +4,11 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"github.com/cmsgov/mint-app/pkg/shared/logging"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/service/lambda"
 	"go.uber.org/zap"
-
-	"github.com/cmsgov/mint-app/pkg/appcontext"
 )
 
 type generateRequest struct {
@@ -23,7 +22,7 @@ type generateResponse struct {
 // NewInvokeGeneratePDF returns a function that saves the metadata of an uploaded file
 func NewInvokeGeneratePDF(config Config, client *lambda.Lambda, functionName string) func(cxt context.Context, html string) ([]byte, error) {
 	return func(ctx context.Context, html string) ([]byte, error) {
-		appcontext.ZLogger(ctx).Info("making request to lambda")
+		logging.ProvideLogger(ctx).Info("making request to lambda")
 
 		request := generateRequest{
 			HTML: html,
@@ -38,7 +37,7 @@ func NewInvokeGeneratePDF(config Config, client *lambda.Lambda, functionName str
 			return nil, fmt.Errorf("error invoking lambda: %w", invokeErr)
 		}
 
-		appcontext.ZLogger(ctx).Info("response from lambda", zap.Int64p("statusCode", result.StatusCode), zap.String("version", *result.ExecutedVersion), zap.Int("payloadLength", len(result.Payload)))
+		logging.ProvideLogger(ctx).Info("response from lambda", zap.Int64p("statusCode", result.StatusCode), zap.String("version", *result.ExecutedVersion), zap.Int("payloadLength", len(result.Payload)))
 
 		if *result.StatusCode != 200 {
 			return nil, fmt.Errorf("error invoking lambda: %v", result.Payload)

@@ -2,13 +2,13 @@ package appses
 
 import (
 	"context"
+	"github.com/cmsgov/mint-app/pkg/shared/logging"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/ses"
 	"go.uber.org/zap"
 
-	"github.com/cmsgov/mint-app/pkg/appcontext"
 	"github.com/cmsgov/mint-app/pkg/models"
 )
 
@@ -72,7 +72,7 @@ func (s Sender) Send(
 	}
 	_, err := s.client.SendEmail(input)
 	if err == nil {
-		appcontext.ZLogger(ctx).Info("Sending email with SES",
+		logging.ProvideLogger(ctx).Info("Sending email with SES",
 			zap.String("To", toAddress.String()),
 			zap.String("Subject", subject),
 		)

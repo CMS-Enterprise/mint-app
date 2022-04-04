@@ -3,11 +3,11 @@ package flags
 import (
 	"context"
 	"crypto/sha256"
+	appcontext2 "github.com/cmsgov/mint-app/pkg/shared/appcontext"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
 
-	"github.com/cmsgov/mint-app/pkg/appcontext"
 	"github.com/cmsgov/mint-app/pkg/authentication"
 )
 
@@ -21,21 +21,21 @@ func TestPrincipal(t *testing.T) {
 			true,
 		},
 		"disempowered": {
-			appcontext.WithPrincipal(
+			appcontext2.ProvideWithSecurityPrincipal(
 				context.Background(),
 				&authentication.EUAPrincipal{EUAID: "WEAK"},
 			),
 			true,
 		},
 		"submitter": {
-			appcontext.WithPrincipal(
+			appcontext2.ProvideWithSecurityPrincipal(
 				context.Background(),
 				&authentication.EUAPrincipal{EUAID: "MINT", JobCodeMINT: true},
 			),
 			false,
 		},
 		"reviewer": {
-			appcontext.WithPrincipal(
+			appcontext2.ProvideWithSecurityPrincipal(
 				context.Background(),
 				&authentication.EUAPrincipal{EUAID: "BOSS", JobCodeADMIN: true},
 			),
@@ -45,7 +45,7 @@ func TestPrincipal(t *testing.T) {
 
 	for name, tc := range testCases {
 		t.Run(name, func(t *testing.T) {
-			base := appcontext.Principal(tc.ctx)
+			base := appcontext2.GetContextPrincipal(tc.ctx)
 
 			lduser := Principal(tc.ctx)
 

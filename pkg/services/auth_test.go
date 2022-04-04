@@ -2,8 +2,8 @@ package services
 
 import (
 	"context"
+	"github.com/cmsgov/mint-app/pkg/shared/appcontext"
 
-	"github.com/cmsgov/mint-app/pkg/appcontext"
 	"github.com/cmsgov/mint-app/pkg/authentication"
 	"github.com/cmsgov/mint-app/pkg/graph/model"
 )
@@ -22,11 +22,11 @@ func (s ServicesTestSuite) TestHasRole() {
 			allowed: false,
 		},
 		"non admin": {
-			ctx:     appcontext.WithPrincipal(context.Background(), &nonAdmin),
+			ctx:     appcontext.ProvideWithSecurityPrincipal(context.Background(), &nonAdmin),
 			allowed: false,
 		},
 		"has admin": {
-			ctx:     appcontext.WithPrincipal(context.Background(), &yesADMIN),
+			ctx:     appcontext.ProvideWithSecurityPrincipal(context.Background(), &yesADMIN),
 			allowed: true,
 		},
 	}

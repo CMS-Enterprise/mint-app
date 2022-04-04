@@ -4,17 +4,17 @@ import (
 	"context"
 	"time"
 
+	"github.com/cmsgov/mint-app/pkg/shared/logging"
+
 	"github.com/99designs/gqlgen/graphql"
 	"github.com/99designs/gqlgen/graphql/handler/extension"
 	"go.uber.org/zap"
-
-	"github.com/cmsgov/mint-app/pkg/appcontext"
 )
 
 // NewGQLResponseMiddleware returns a handler with a request based logger
 func NewGQLResponseMiddleware() graphql.ResponseMiddleware {
 	return func(ctx context.Context, next graphql.ResponseHandler) *graphql.Response {
-		logger := appcontext.ZLogger(ctx)
+		logger := logging.ProvideLogger(ctx)
 		result := next(ctx)
 
 		requestContext := graphql.GetOperationContext(ctx)

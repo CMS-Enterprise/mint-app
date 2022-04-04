@@ -1,19 +1,18 @@
 package server
 
 import (
+	"github.com/cmsgov/mint-app/pkg/shared/appcontext"
 	"net/http"
 	"net/http/httptest"
 
 	"github.com/google/uuid"
-
-	"github.com/cmsgov/mint-app/pkg/appcontext"
 )
 
 func (s ServerTestSuite) TestTraceMiddleware() {
 	traceValue := ""
 	// this is the actual test, since the context is cancelled post request
 	testHandler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		traceID, ok := appcontext.Trace(r.Context())
+		traceID, ok := appcontext.GetContextTrace(r.Context())
 
 		traceValue = traceID.String()
 		s.True(ok)

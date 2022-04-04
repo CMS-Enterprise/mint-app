@@ -4,6 +4,8 @@ import (
 	"context"
 	"testing"
 
+	"github.com/cmsgov/mint-app/pkg/shared/appcontext/constants"
+
 	"github.com/google/uuid"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/suite"
@@ -25,53 +27,31 @@ func TestContextTestSuite(t *testing.T) {
 	suite.Run(t, contextTestSuite)
 }
 
-func (s ContextTestSuite) TestWithLogger() {
+func (s ContextTestSuite) TestProvideWithLogger() {
 	ctx := context.Background()
 	expectedLogger := zap.NewNop()
 
-	ctx = WithLogger(ctx, expectedLogger)
-	logger := ctx.Value(loggerKey).(*zap.Logger)
+	ctx = ProvideWithLogger(ctx, expectedLogger)
+	logger := ctx.Value(constants.LoggerKey).(*zap.Logger)
 
 	s.Equal(expectedLogger, logger)
 }
 
-func (s ContextTestSuite) TestLogger() {
-	ctx := context.Background()
-	expectedLogger := zap.NewNop()
-	ctx = context.WithValue(ctx, loggerKey, expectedLogger)
-
-	logger, ok := Logger(ctx)
-
-	s.True(ok)
-	s.Equal(expectedLogger, logger)
-}
-
-func TestZLogger(t *testing.T) {
-	// functional logger returned even when not set
-	fallback := ZLogger(context.Background())
-	fallback.Info("silently succeeds") // not nil
-
-	// Also ensure it retrieves a set logger
-	expectedLogger := zap.NewExample()
-	ctx := WithLogger(context.Background(), expectedLogger)
-	logger := ZLogger(ctx)
-	assert.Equal(t, expectedLogger, logger)
-}
-
-func (s ContextTestSuite) TestWithTrace() {
-	ctx, tID := WithTrace(context.Background())
-	traceID := ctx.Value(traceKey).(uuid.UUID)
+func (s ContextTestSuite) TestProvideWithTrace() {
+	ctx, tID := ProvideWithRequestTrace(context.Background())
+	traceID := ctx.Value(constants.TraceKey).(uuid.UUID)
 
 	s.NotEqual(uuid.UUID{}, traceID)
 	s.Equal(tID, traceID)
 }
 
+// TODO: Isolate Trace logic
 func (s ContextTestSuite) TestTrace() {
 	ctx := context.Background()
 	expectedID := uuid.New()
-	ctx = context.WithValue(ctx, traceKey, expectedID)
+	ctx = context.WithValue(ctx, constants.TraceKey, expectedID)
 
-	traceID, ok := Trace(ctx)
+	traceID, ok := GetContextTrace(ctx)
 
 	s.True(ok)
 	s.Equal(expectedID, traceID)
@@ -95,7 +75,7 @@ func TestContextPrincipal(t *testing.T) {
 			expectADMIN: false,
 		},
 		"regular user": {
-			ctx: WithPrincipal(context.Background(), &authentication.EUAPrincipal{
+			ctx: ProvideWithSecurityPrincipal(context.Background(), &authentication.EUAPrincipal{
 				EUAID:        submitterID,
 				JobCodeMINT:  true,
 				JobCodeADMIN: false,
@@ -105,7 +85,7 @@ func TestContextPrincipal(t *testing.T) {
 			expectADMIN: false,
 		},
 		"admin User": {
-			ctx: WithPrincipal(context.Background(), &authentication.EUAPrincipal{
+			ctx: ProvideWithSecurityPrincipal(context.Background(), &authentication.EUAPrincipal{
 				EUAID:        reviewerID,
 				JobCodeMINT:  true,
 				JobCodeADMIN: true,
@@ -119,7 +99,7 @@ func TestContextPrincipal(t *testing.T) {
 	for name, tc := range testCases {
 		t.Run(name, func(t *testing.T) {
 			// Act (of AAA)
-			p := Principal(tc.ctx)
+			p := GetContextPrincipal(tc.ctx)
 
 			// Assert (of AAA)
 			assert.Equal(t, tc.expectID, p.ID(), "ID")

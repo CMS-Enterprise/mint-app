@@ -2,11 +2,11 @@ package graph
 
 import (
 	"context"
+	"github.com/cmsgov/mint-app/pkg/shared/appcontext"
 
 	"github.com/99designs/gqlgen/client"
 	_ "github.com/lib/pq" // required for postgres driver in sql
 
-	"github.com/cmsgov/mint-app/pkg/appcontext"
 	"github.com/cmsgov/mint-app/pkg/authentication"
 )
 
@@ -31,7 +31,7 @@ func (s GraphQLTestSuite) TestCurrentUserQuery() {
 		}`, &resp,
 		func(request *client.Request) {
 			principal := authentication.EUAPrincipal{EUAID: "ABCD"}
-			ctx := appcontext.WithPrincipal(context.Background(), &principal)
+			ctx := appcontext.ProvideWithSecurityPrincipal(context.Background(), &principal)
 			request.HTTP = request.HTTP.WithContext(ctx)
 		},
 	)

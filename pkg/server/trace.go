@@ -1,18 +1,19 @@
 package server
 
 import (
+	"github.com/cmsgov/mint-app/pkg/shared/appcontext"
 	"net/http"
 
 	"go.uber.org/zap"
-
-	"github.com/cmsgov/mint-app/pkg/appcontext"
 )
 
 const traceHeader = "X-TRACE-ID"
 
 func traceMiddleware(logger *zap.Logger, next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		ctx, traceID := appcontext.WithTrace(r.Context())
+		ctx := appcontext.ProvideWithRequestTrace(r.Context())
+		traceID, _ := appcontext.GetContextTrace(ctx)
+
 		w.Header().Add(traceHeader, traceID.String())
 		next.ServeHTTP(w, r.WithContext(ctx))
 	})

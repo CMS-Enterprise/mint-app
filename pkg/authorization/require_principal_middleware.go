@@ -1,18 +1,18 @@
 package authorization
 
 import (
+	"github.com/cmsgov/mint-app/pkg/shared/appcontext"
 	"net/http"
 
 	"go.uber.org/zap"
 
-	"github.com/cmsgov/mint-app/pkg/appcontext"
 	"github.com/cmsgov/mint-app/pkg/authentication"
 )
 
 func requirePrincipalMiddleware(logger *zap.Logger, next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 
-		principal := appcontext.Principal(r.Context())
+		principal := appcontext.GetContextPrincipal(r.Context())
 
 		if principal == authentication.ANON {
 			logger.Info("Authorization failure: principal not found in context")

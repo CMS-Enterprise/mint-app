@@ -4,9 +4,8 @@ import (
 	"context"
 	"crypto/sha256"
 	"fmt"
+	"github.com/cmsgov/mint-app/pkg/shared/appcontext"
 	"time"
-
-	"github.com/cmsgov/mint-app/pkg/appcontext"
 
 	"gopkg.in/launchdarkly/go-sdk-common.v2/lduser"
 	ld "gopkg.in/launchdarkly/go-server-sdk.v5"
@@ -34,12 +33,12 @@ func NewLaunchDarklyClient(config Config) (*ld.LDClient, error) {
 // Principal builds the LaunchDarkly user object for the
 // currently authenticated principal.
 func Principal(ctx context.Context) lduser.User {
-	p := appcontext.Principal(ctx)
+	p := appcontext.GetContextPrincipal(ctx)
 	key := UserKeyForID(p.ID())
 
 	// this is a bit of a loose inference, assuming a user w/o Job Codes
 	// is an Anonymous user. Over time, may want to consider adding
-	// a `func Anonymous() bool` accessor to the authorizaion.Principal interface
+	// a `func Anonymous() bool` accessor to the authorizaion.GetContextPrincipal interface
 	// definition instead of doing this inference
 	authed := (p.AllowMINT() || p.AllowADMIN())
 

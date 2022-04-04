@@ -3,13 +3,14 @@ package handlers
 import (
 	"context"
 	"encoding/json"
+	appcontext2 "github.com/cmsgov/mint-app/pkg/shared/appcontext"
+	"github.com/cmsgov/mint-app/pkg/shared/logging"
 	"net/http"
 
 	"github.com/facebookgo/clock"
 	"github.com/google/uuid"
 	"go.uber.org/zap"
 
-	"github.com/cmsgov/mint-app/pkg/appcontext"
 	"github.com/cmsgov/mint-app/pkg/apperrors"
 )
 
@@ -60,12 +61,12 @@ func (r *errorResponse) withMap(errMap map[string]string) {
 
 // WriteErrorResponse writes a response for a given application error
 func (b HandlerBase) WriteErrorResponse(ctx context.Context, w http.ResponseWriter, appErr error) {
-	logger, ok := appcontext.Logger(ctx)
+	logger, ok := logging.ProvideDeprecatedLogger(ctx)
 	if !ok {
 		logger = b.Logger
 	}
 
-	traceID, ok := appcontext.Trace(ctx)
+	traceID, ok := appcontext2.GetContextTrace(ctx)
 	if !ok {
 		traceID = uuid.New()
 		logger.With(zap.String("traceID", traceID.String()))

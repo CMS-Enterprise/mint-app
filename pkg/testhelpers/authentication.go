@@ -2,10 +2,10 @@ package testhelpers
 
 import (
 	"context"
+	"github.com/cmsgov/mint-app/pkg/shared/appcontext"
 
 	"github.com/99designs/gqlgen/client"
 
-	"github.com/cmsgov/mint-app/pkg/appcontext"
 	"github.com/cmsgov/mint-app/pkg/authentication"
 )
 
@@ -24,7 +24,7 @@ func NewReviewerPrincipal() authentication.Principal {
 // AddAuthPrincipalToGraphQLClientTest returns a function to add an auth principal to a graphql client test
 func AddAuthPrincipalToGraphQLClientTest(principal authentication.EUAPrincipal) func(*client.Request) {
 	return func(request *client.Request) {
-		ctx := appcontext.WithPrincipal(context.Background(), &principal)
+		ctx := appcontext.ProvideWithSecurityPrincipal(context.Background(), &principal)
 		request.HTTP = request.HTTP.WithContext(ctx)
 	}
 }

@@ -2,6 +2,7 @@ package cedarcore
 
 import (
 	"context"
+	"github.com/cmsgov/mint-app/pkg/shared/logging"
 	"net/http"
 	"time"
 
@@ -13,7 +14,6 @@ import (
 	cache "github.com/patrickmn/go-cache"
 	"go.uber.org/zap"
 
-	"github.com/cmsgov/mint-app/pkg/appcontext"
 	apiclient "github.com/cmsgov/mint-app/pkg/cedar/core/gen/client"
 	"github.com/cmsgov/mint-app/pkg/flags"
 )
@@ -29,7 +29,7 @@ func NewClient(ctx context.Context, cedarHost string, cedarAPIKey string, ldClie
 		lduser := flags.Principal(ctx)
 		result, err := ldClient.BoolVariation(cedarCoreEnabledKey, lduser, cedarCoreEnabledDefault)
 		if err != nil {
-			appcontext.ZLogger(ctx).Info(
+			logging.ProvideLogger(ctx).Info(
 				"problem evaluating feature flag",
 				zap.Error(err),
 				zap.String("flagName", cedarCoreEnabledKey),
@@ -87,7 +87,7 @@ func (c *Client) startCacheRefresh(ctx context.Context, cacheRefreshTime time.Du
 		for {
 			err := populateCache(ctx)
 			if err != nil {
-				appcontext.ZLogger(ctx).Error("Failed to refresh cache", zap.Error(err))
+				logging.ProvideLogger(ctx).Error("Failed to refresh cache", zap.Error(err))
 			}
 			// Wait for the ticker. This will block the current goroutine until the ticker sends a message over the channel
 			<-ticker.C
