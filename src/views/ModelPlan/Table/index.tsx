@@ -133,16 +133,14 @@ const Table = ({ hiddenColumns }: myRequestsTableProps) => {
 
   if (data.length === 0) {
     return (
-      <div className="model-plan-table">
-        <Alert type="info" heading={t('requestsTable.empty.heading')}>
-          {t('requestsTable.empty.body')}
-        </Alert>
-      </div>
+      <Alert type="info" heading={t('requestsTable.empty.heading')}>
+        {t('requestsTable.empty.body')}
+      </Alert>
     );
   }
 
   return (
-    <div className="accessibility-requests-table">
+    <div className="model-plan-table">
       <GlobalClientFilter
         setGlobalFilter={setGlobalFilter}
         tableID={t('requestsTable.id')}
