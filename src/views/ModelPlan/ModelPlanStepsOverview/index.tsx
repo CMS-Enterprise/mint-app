@@ -43,12 +43,25 @@ const ModelPlanStepsOverview = () => {
               <li>{t('stepsOverview.summaryBox.listItem.add')}</li>
               <li>{t('stepsOverview.summaryBox.listItem.upload')}</li>
             </ul>
-            <p>{t('stepsOverview.summaryBox.email')}</p>
+            {/* <p>{t('stepsOverview.summaryBox.email')}</p> */}
+            <p>
+              <Trans i18nKey="modelPlan:stepsOverview.summaryBox.email">
+                indexZero
+                <UswdsLink href="mailto:CMS_Section508@cms.hhs.gov">
+                  email
+                </UswdsLink>
+                indexTwo
+              </Trans>
+            </p>
           </SummaryBox>
+          <PageHeading className="margin-top-7 margin-bottom-1">
+            {t('stepsOverview.steps.heading')}
+          </PageHeading>
+          <p className="font-body-lg margin-y-0">
+            {t('stepsOverview.steps.description')}
+          </p>
         </div>
-        <div className="tablet:grid-col-6 margin-top-6">
-          <PageHeading>{t('stepsOverview.steps.heading')}</PageHeading>
-          <p>{t('stepsOverview.steps.description')}</p>
+        <div className="tablet:grid-col-6 margin-top-105">
           <ProcessList>
             <ProcessListItem>
               <ProcessListHeading type="h3">

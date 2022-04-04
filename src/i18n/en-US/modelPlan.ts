@@ -11,7 +11,7 @@ const modelPlan = {
           'upload and access documents related to your model request, like concept documents or policy papers'
       },
       email:
-        'If you have any questions, you can reach the [CMMI POC Team] at: [email]@cms.hhs.gov.'
+        'If you have any questions, you can reach the [CMMI POC Team] at: <1>[email]@cms.hhs.gov</1>.'
     },
     steps: {
       heading: 'Steps involved in the process',
