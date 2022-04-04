@@ -35,14 +35,32 @@ func (s *Store) ModelPlanCreate(ctx context.Context, plan *models.ModelPlan) (*m
 	if plan.CreatedDts == nil {
 		plan.CreatedDts = &time
 	}
+	stmt, err2 := s.db.PrepareNamed(model_plan_createSQL)
 
-	if plan.ModifiedDts == nil {
-		plan.ModifiedDts = &time
+	if err2 != nil {
+		appcontext.ZLogger(ctx).Error(
+			fmt.Sprintf("Failed to create model plan with error %s", err2),
+			zap.String("user", plan.ModifiedBy.ValueOrZero()),
+		)
+		return nil, err2
+
 	}
-	_, err := s.db.NamedExec(
-		model_plan_createSQL,
-		plan,
-	)
+
+	err := stmt.Get(plan, plan)
+
+	// _, err := s.db.Name(
+	// 	model_plan_updateSQL,
+	// 	plan,
+	// )
+
+	/*
+		if plan.ModifiedDts == nil {
+			plan.ModifiedDts = &time
+		}*/
+	// res, err := s.db.NamedExec(
+	// 	model_plan_createSQL,
+	// 	plan,
+	// )
 	if err != nil {
 		appcontext.ZLogger(ctx).Error(
 			fmt.Sprintf("Failed to create model plan with error %s", err),
@@ -51,6 +69,8 @@ func (s *Store) ModelPlanCreate(ctx context.Context, plan *models.ModelPlan) (*m
 		return nil, err
 
 	}
+	// fmt.Print((res))
+	fmt.Print((plan))
 
 	return plan, nil //TODO update this, have a return in the SQL, or fetch the object, or just have that script return it
 }

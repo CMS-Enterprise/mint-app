@@ -5,8 +5,7 @@ create table model_plan (
     main_point_of_contact text,
     point_of_contact_component text,
     created_by eua_id,
-    created_dts timestamp with time zone,
+    created_dts timestamp with time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
     modified_by eua_id,
-    modified_dts timestamp with time zone
-
+    modified_dts timestamp with time zone NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
