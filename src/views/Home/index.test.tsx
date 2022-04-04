@@ -2,7 +2,7 @@ import React from 'react';
 import { act } from 'react-dom/test-utils';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
-import { mount, ReactWrapper, shallow } from 'enzyme';
+import { mount, shallow } from 'enzyme';
 import { mockFlags, resetLDMocks } from 'jest-launchdarkly-mock';
 import configureMockStore from 'redux-mock-store';
 
@@ -30,21 +30,37 @@ describe('The home page', () => {
       groups: []
     };
 
-    it('renders without crashing', () => {
-      const mockStore = configureMockStore();
-      const store = mockStore({ auth: mockAuthReducer });
-      const renderComponent = () =>
-        shallow(
-          <MemoryRouter initialEntries={['/']} initialIndex={0}>
-            <Provider store={store}>
-              <MessageProvider>
-                <Home />
-              </MessageProvider>
-            </Provider>
-          </MemoryRouter>
-        );
-      expect(renderComponent).not.toThrow();
+    describe('User is logged in', () => {
+      it('renders the correct components', async () => {
+        mockFlags({ ...defaultFlags });
+        const mockStore = configureMockStore();
+        const store = mockStore({ auth: mockAuthReducer });
+        let component: any;
+        await act(async () => {
+          component = mount(
+            <MemoryRouter initialEntries={['/']} initialIndex={0}>
+              <Provider store={store}>
+                <MessageProvider>
+                  <Home />
+                </MessageProvider>
+              </Provider>
+            </MemoryRouter>
+          );
+          component.update();
+          expect(component.find(UswdsReactLink).exists()).toEqual(true);
+          expect(component.find('hr').exists()).toBeTruthy();
+          expect(component.find(Table).exists()).toBeTruthy();
+          expect(component.text()).toContain('My draft model plans');
+        });
+      });
     });
+  });
+
+  describe('is a admin user', () => {
+    const mockAuthReducer = {
+      isUserSet: true,
+      groups: ['MINT_D_ADMIN']
+    };
 
     describe('User is logged in', () => {
       it('renders the correct components', async () => {
@@ -66,6 +82,7 @@ describe('The home page', () => {
           expect(component.find(UswdsReactLink).exists()).toEqual(true);
           expect(component.find('hr').exists()).toBeTruthy();
           expect(component.find(Table).exists()).toBeTruthy();
+          expect(component.text()).toContain('Draft model plans');
         });
       });
     });
