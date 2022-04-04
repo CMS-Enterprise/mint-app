@@ -2,11 +2,12 @@ import React from 'react';
 import { act } from 'react-dom/test-utils';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
-import { mount, shallow } from 'enzyme';
+import { mount } from 'enzyme';
 import { mockFlags, resetLDMocks } from 'jest-launchdarkly-mock';
 import configureMockStore from 'redux-mock-store';
 
 import UswdsReactLink from 'components/LinkWrapper';
+import { ADMIN_PROD } from 'constants/jobCodes';
 import { MessageProvider } from 'hooks/useMessage';
 import { Flags } from 'types/flags';
 import Table from 'views/ModelPlan/Table';
@@ -59,7 +60,7 @@ describe('The home page', () => {
   describe('is a admin user', () => {
     const mockAuthReducer = {
       isUserSet: true,
-      groups: ['MINT_D_ADMIN']
+      groups: [ADMIN_PROD]
     };
 
     describe('User is logged in', () => {
