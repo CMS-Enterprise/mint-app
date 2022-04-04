@@ -8,4 +8,4 @@ SELECT id,
     modified_by,
     modified_dts
 FROM model_plan
-WHERE id = $1 --TODO rework to named statement
+WHERE id = :id 

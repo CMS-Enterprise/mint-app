@@ -30,37 +30,16 @@ func (s *Store) ModelPlanCreate(ctx context.Context, plan *models.ModelPlan) (*m
 	if plan.ID == uuid.Nil {
 		plan.ID = uuid.New()
 	}
-
-	time := s.clock.Now()
-	if plan.CreatedDts == nil {
-		plan.CreatedDts = &time
-	}
-	stmt, err2 := s.db.PrepareNamed(model_plan_createSQL)
-
-	if err2 != nil {
+	stmt, err := s.db.PrepareNamed(model_plan_createSQL)
+	if err != nil {
 		appcontext.ZLogger(ctx).Error(
-			fmt.Sprintf("Failed to create model plan with error %s", err2),
+			fmt.Sprintf("Failed to create model plan with error %s", err),
 			zap.String("user", plan.ModifiedBy.ValueOrZero()),
 		)
-		return nil, err2
-
+		return nil, err
 	}
 
-	err := stmt.Get(plan, plan)
-
-	// _, err := s.db.Name(
-	// 	model_plan_updateSQL,
-	// 	plan,
-	// )
-
-	/*
-		if plan.ModifiedDts == nil {
-			plan.ModifiedDts = &time
-		}*/
-	// res, err := s.db.NamedExec(
-	// 	model_plan_createSQL,
-	// 	plan,
-	// )
+	err = stmt.Get(plan, plan)
 	if err != nil {
 		appcontext.ZLogger(ctx).Error(
 			fmt.Sprintf("Failed to create model plan with error %s", err),
@@ -69,18 +48,23 @@ func (s *Store) ModelPlanCreate(ctx context.Context, plan *models.ModelPlan) (*m
 		return nil, err
 
 	}
-	// fmt.Print((res))
-	fmt.Print((plan))
 
-	return plan, nil //TODO update this, have a return in the SQL, or fetch the object, or just have that script return it
+	return plan, nil
 }
 
 func (s *Store) ModelPlanUpdate(ctx context.Context, plan *models.ModelPlan) (*models.ModelPlan, error) {
 
-	_, err := s.db.NamedExec(
-		model_plan_updateSQL,
-		plan,
-	)
+	stmt, err := s.db.PrepareNamed(model_plan_updateSQL)
+	if err != nil {
+		appcontext.ZLogger(ctx).Error(
+			fmt.Sprintf("Failed to update system intake %s", err),
+			zap.String("id", plan.ID.String()),
+			zap.String("user", plan.ModifiedBy.ValueOrZero()),
+		)
+		return nil, err
+	}
+
+	err = stmt.Get(plan, plan)
 	if err != nil {
 		appcontext.ZLogger(ctx).Error(
 			fmt.Sprintf("Failed to update system intake %s", err),
@@ -94,13 +78,19 @@ func (s *Store) ModelPlanUpdate(ctx context.Context, plan *models.ModelPlan) (*m
 		}
 	}
 
-	return plan, nil //TODO update this, have a return in the SQL, or fetch the object, or just have that script return it
+	return plan, nil
 
 }
 
 func (s *Store) ModelPlanGetByID(ctx context.Context, id uuid.UUID) (*models.ModelPlan, error) {
 	plan := models.ModelPlan{}
-	err := s.db.GetContext(ctx, &plan, model_plan_get_by_idSQL, id) //TODO replace with named exec,
+	stmt, err := s.db.PrepareNamed(model_plan_get_by_idSQL)
+	if err != nil {
+		return nil, err
+	}
+	arg := map[string]interface{}{"id": id}
+
+	err = stmt.Get(&plan, arg)
 
 	if err != nil {
 		if errors.Is(err, sql.ErrNoRows) {

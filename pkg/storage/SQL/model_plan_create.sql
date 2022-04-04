@@ -5,8 +5,7 @@ INSERT INTO model_plan (
         main_point_of_contact,
         point_of_contact_component,
         created_by,
-        created_dts,
-        modified_by        
+        modified_by
     )
 VALUES (
         :id,
@@ -15,7 +14,6 @@ VALUES (
         :main_point_of_contact,
         :point_of_contact_component,
         :created_by,
-        :created_dts,
         :modified_by
     )
     RETURNING 
