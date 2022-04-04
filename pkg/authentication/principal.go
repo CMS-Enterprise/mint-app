@@ -17,24 +17,14 @@ type Principal interface {
 	// for the given Principal
 	ID() string
 
-	// AllowEASi says whether this principal
+	// AllowMINT says whether this principal
 	// is authorized to operate within MINT
-	AllowEASi() bool
+	AllowMINT() bool
 
-	// AllowGRT says whether this principal
+	// AllowADMIN says whether this principal
 	// is authorized to operate as part of
 	// the Review Team within MINT
-	AllowGRT() bool
-
-	// Allow508User says whether this principal
-	// is authorized to operate as a user of the
-	// 508 process within MINT
-	Allow508User() bool
-
-	// Allow508Tester says whether this principal
-	// is authorized to operate as part of the
-	// 508 testing team within MINT
-	Allow508Tester() bool
+	AllowADMIN() bool
 }
 
 type anonymous struct{}
@@ -50,39 +40,25 @@ func (*anonymous) ID() string {
 	return anonID
 }
 
-// AllowEASi says Anonymous users are
+// AllowMINT says Anonymous users are
 // not explicitly allowed to submit
-// info to MINT
-func (*anonymous) AllowEASi() bool {
+// info to EASi
+func (*anonymous) AllowMINT() bool {
 	return false
 }
 
-// AllowGRT says Anonymous users are
-// not explicitly ruled in as GRT
-func (*anonymous) AllowGRT() bool {
-	return false
-}
-
-// Allow508User says Anonymous users are
-// not explicitly ruled in as 508 users
-func (*anonymous) Allow508User() bool {
-	return false
-}
-
-// Allow508User says Anonymous users are
-// not explicitly ruled in as 508 testing team members
-func (*anonymous) Allow508Tester() bool {
+// AllowADMIN says Anonymous users are
+// not explicitly ruled in as ADMIN
+func (*anonymous) AllowADMIN() bool {
 	return false
 }
 
 // EUAPrincipal represents information
 // gleaned from the Okta JWT
 type EUAPrincipal struct {
-	EUAID            string
-	JobCodeEASi      bool
-	JobCodeGRT       bool
-	JobCode508User   bool
-	JobCode508Tester bool
+	EUAID        string
+	JobCodeMINT  bool
+	JobCodeADMIN bool
 }
 
 // String satisfies the fmt.Stringer interface
@@ -96,29 +72,15 @@ func (p *EUAPrincipal) ID() string {
 	return p.EUAID
 }
 
-// AllowEASi says whether this principal
+// AllowMINT says whether this principal
 // is authorized to operate within MINT
-func (p *EUAPrincipal) AllowEASi() bool {
-	return p.JobCodeEASi
+func (p *EUAPrincipal) AllowMINT() bool {
+	return p.JobCodeMINT
 }
 
-// AllowGRT says whether this principal
+// AllowADMIN says whether this principal
 // is authorized to operate as part of
-// the Review Team within MINT
-func (p *EUAPrincipal) AllowGRT() bool {
-	return p.JobCodeGRT
-}
-
-// Allow508User says whether this principal
-// is authorized to operate as a user of the
-// 508 process within MINT
-func (p *EUAPrincipal) Allow508User() bool {
-	return p.JobCode508User
-}
-
-// Allow508Tester says whether this principal
-// is authorized to operate as part of the
-// 508 testing team within MINT
-func (p *EUAPrincipal) Allow508Tester() bool {
-	return p.JobCode508Tester
+// the Admin Team within MINT
+func (p *EUAPrincipal) AllowADMIN() bool {
+	return p.JobCodeADMIN
 }

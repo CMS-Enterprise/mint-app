@@ -23,29 +23,20 @@ type LaunchDarklySettings struct {
 type Role string
 
 const (
-	// A 508 Tester
-	RoleEasi508Tester Role = "EASI_508_TESTER"
-	// A 508 request program team member
-	RoleEasi508User Role = "EASI_508_USER"
-	// A 508 request program team member or tester
-	RoleEasi508TesterOrUser Role = "EASI_508_TESTER_OR_USER"
-	// A member of the GRT
-	RoleEasiGovteam Role = "EASI_GOVTEAM"
-	// A generic EASi user
-	RoleEasiUser Role = "EASI_USER"
+	// A basic MINT user
+	RoleMintBaseUser Role = "MINT_BASE_USER"
+	// A MINT admin user
+	RoleMintAdminUser Role = "MINT_ADMIN_USER"
 )
 
 var AllRole = []Role{
-	RoleEasi508Tester,
-	RoleEasi508User,
-	RoleEasi508TesterOrUser,
-	RoleEasiGovteam,
-	RoleEasiUser,
+	RoleMintBaseUser,
+	RoleMintAdminUser,
 }
 
 func (e Role) IsValid() bool {
 	switch e {
-	case RoleEasi508Tester, RoleEasi508User, RoleEasi508TesterOrUser, RoleEasiGovteam, RoleEasiUser:
+	case RoleMintBaseUser, RoleMintAdminUser:
 		return true
 	}
 	return false
