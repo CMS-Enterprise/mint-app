@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { Alert, SummaryBox } from '@trussworks/react-uswds';
+import classnames from 'classnames';
 import { useFlags } from 'launchdarkly-react-client-sdk';
 
 import UswdsReactLink from 'components/LinkWrapper';
@@ -27,89 +28,49 @@ const Home = () => {
 
   const renderView = () => {
     if (isUserSet) {
-      if (user.isAdmin(userGroups, flags)) {
-        return (
-          <div className="grid-container">
-            {message && (
-              <div className="grid-container margin-top-6">
-                <Alert type="success" slim role="alert">
-                  {message}
-                </Alert>
-              </div>
-            )}
-            <div className="tablet:grid-col-12">
-              <PageHeading>{t('title')}</PageHeading>
-              <p className="line-height-body-5 font-body-lg text-light margin-bottom-6">
-                {t('subheading')}
+      return (
+        <div className="grid-container">
+          {message && (
+            <div className="grid-container margin-top-6">
+              <Alert type="success" slim role="alert">
+                {message}
+              </Alert>
+            </div>
+          )}
+          <div className="tablet:grid-col-12">
+            <PageHeading>{t('title')}</PageHeading>
+            <p className="line-height-body-5 font-body-lg text-light margin-bottom-6">
+              {t('subheading')}
+            </p>
+            <SummaryBox
+              heading=""
+              className="bg-base-lightest border-0 radius-0 padding-2"
+            >
+              <p className="margin-0 margin-bottom-1">
+                {t('newModelSummaryBox.copy')}
               </p>
-              <SummaryBox
-                heading=""
-                className="bg-base-lightest border-0 radius-0 padding-2"
+              <UswdsReactLink
+                className={classnames('usa-button', {
+                  'usa-button--outline': user.isAdmin(userGroups, flags)
+                })}
+                variant="unstyled"
+                to="/models"
               >
-                <p className="margin-0 margin-bottom-1">
-                  {t('newModelSummaryBox.copy')}
-                </p>
-                <UswdsReactLink
-                  className="usa-button usa-button--outline"
-                  variant="unstyled"
-                  to="/models"
-                >
-                  {t('newModelSummaryBox.cta')}
-                </UswdsReactLink>
-              </SummaryBox>
-              <hr className="home__hr margin-top-6" aria-hidden />
-              <h2 className="margin-top-4">
-                {t('requestsTable.admin.heading')}
-              </h2>
-            </div>
-            <div className="tablet:grid-col-12">
-              <Table />
-            </div>
+                {t('newModelSummaryBox.cta')}
+              </UswdsReactLink>
+            </SummaryBox>
+            <hr className="home__hr margin-top-4" aria-hidden />
+            <h2 className="margin-top-4">
+              {user.isAdmin(userGroups, flags)
+                ? t('requestsTable.admin.heading')
+                : t('requestsTable.basic.heading')}
+            </h2>
           </div>
-        );
-      }
-
-      if (user.isBasicUser(userGroups, flags)) {
-        return (
-          <div className="grid-container">
-            {message && (
-              <div className="grid-container margin-top-6">
-                <Alert type="success" slim role="alert">
-                  {message}
-                </Alert>
-              </div>
-            )}
-            <div className="tablet:grid-col-12">
-              <PageHeading>{t('title')}</PageHeading>
-              <p className="line-height-body-5 font-body-lg text-light margin-bottom-6">
-                {t('subheading')}
-              </p>
-              <SummaryBox
-                heading=""
-                className="bg-base-lightest border-0 radius-0 padding-2"
-              >
-                <p className="margin-0 margin-bottom-1">
-                  {t('newModelSummaryBox.copy')}
-                </p>
-                <UswdsReactLink
-                  className="usa-button"
-                  variant="unstyled"
-                  to="/models"
-                >
-                  {t('newModelSummaryBox.cta')}
-                </UswdsReactLink>
-              </SummaryBox>
-              <hr className="home__hr margin-top-4" aria-hidden />
-              <h2 className="margin-top-4">
-                {t('requestsTable.basic.heading')}
-              </h2>
-            </div>
-            <div className="tablet:grid-col-12">
-              <Table />
-            </div>
+          <div className="tablet:grid-col-12">
+            <Table />
           </div>
-        );
-      }
+        </div>
+      );
     }
     return (
       <div className="grid-container">
