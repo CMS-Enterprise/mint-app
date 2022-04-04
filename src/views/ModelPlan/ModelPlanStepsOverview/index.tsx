@@ -16,7 +16,7 @@ import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 
-// import './index.scss';
+import './index.scss';
 
 const ModelPlanStepsOverview = () => {
   const { t } = useTranslation('modelPlan');
@@ -62,24 +62,19 @@ const ModelPlanStepsOverview = () => {
               </ProcessListHeading>
               <p>{t('stepsOverview.steps.second.description')}</p>
             </ProcessListItem>
-            <ProcessListItem>
+            <ProcessListItem className="padding-bottom-3">
               <ProcessListHeading type="h3">
                 {t('stepsOverview.steps.third.heading')}
               </ProcessListHeading>
               <p>{t('stepsOverview.steps.third.description')}</p>
             </ProcessListItem>
           </ProcessList>
-          <hr className="margin-y-3" />
+          <hr className="margin-top-0 margin-bottom-05" />
+          {/* @ts-ignore */}
           <ProcessList
+            className="model-plan-step-list--counter-reset"
             start={4}
-            className="easi-governance-overview__governance-steps"
           >
-            <ProcessListItem>
-              <ProcessListHeading type="h3">
-                {t('stepsOverview.steps.fourth.heading')}
-              </ProcessListHeading>
-              <p>{t('stepsOverview.steps.fourth.description')}</p>
-            </ProcessListItem>
             <ProcessListItem>
               <ProcessListHeading type="h3">
                 {t('stepsOverview.steps.fourth.heading')}
@@ -88,12 +83,12 @@ const ModelPlanStepsOverview = () => {
             </ProcessListItem>
           </ProcessList>
           <UswdsReactLink
-            className="usa-button margin-top-8"
+            className="usa-button margin-bottom-10"
             variant="unstyled"
             to="/508/requests/new"
             data-testid="continue-link"
           >
-            {t('stepsOverview.testingStepsOverview.start')}
+            {t('stepsOverview.getStartedButton')}
           </UswdsReactLink>
         </div>
       </div>

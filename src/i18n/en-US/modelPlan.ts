@@ -1,6 +1,7 @@
 const modelPlan = {
   stepsOverview: {
     heading: 'Start a new model plan',
+    getStartedButton: 'Get started',
     summaryBox: {
       copy: 'Use this service to:',
       listItem: {
