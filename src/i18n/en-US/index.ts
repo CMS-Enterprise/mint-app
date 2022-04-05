@@ -6,6 +6,7 @@ import footer from './footer';
 import general from './general';
 import header from './header';
 import home from './home';
+import modelPlan from './modelPlan';
 import privacyPolicy from './privacyPolicy';
 import tableAndPagination from './tableAndPagination';
 import termsAndConditions from './termsAndConditions';
@@ -19,6 +20,7 @@ const enUS = {
   general,
   header,
   home,
+  modelPlan,
   privacyPolicy,
   tableAndPagination,
   termsAndConditions
