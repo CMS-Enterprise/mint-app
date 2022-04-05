@@ -1,2 +1,0 @@
-ALTER TYPE system_intake_status ADD VALUE 'SHUTDOWN_IN_PROGRESS';
-ALTER TYPE system_intake_status ADD VALUE 'SHUTDOWN_COMPLETE';

@@ -1,1 +1,0 @@
-ALTER TYPE action_type ADD VALUE 'NOT_IT_REQUEST';

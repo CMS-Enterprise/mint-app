@@ -1,1 +1,0 @@
-ALTER TYPE system_intake_status RENAME VALUE 'ARCHIVED' to 'WITHDRAWN';

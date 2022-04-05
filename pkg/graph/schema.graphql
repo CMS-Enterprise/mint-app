@@ -12,15 +12,52 @@ The current user of the application
 type CurrentUser {
   launchDarkly: LaunchDarklySettings!
 }
+"""
+UUIDs are represented using 36 ASCII characters, for example B0511859-ADE6-4A67-8969-16EC280C0E1A
+"""
+scalar UUID
+"""
+Time values are represented as strings using RFC3339 format, for example 2019-10-12T07:20:50.52Z
+"""
+scalar Time
 
+"""
+ModelPlan represent the data point for plans about a model. It is the central data type in the appliation
+"""
+type ModelPlan {
+id: UUID
+requester: String
+requesterComponent: String
+mainPointOfContact: String
+pointOfContactComponent: String
+createdBy: String
+createdDts: Time
+modifiedBy: String
+modifiedDts: Time
+}
+
+"""
+CreateModelPlan represent the data point for plans about a model. It is the central data type in the appliation
+"""
+input CreateModelPlanInput { #TODO polish this, what do we need to do for it?
+  requester: String!
+}
 
 """
 Query definition for the schema
 """
 type Query {
   currentUser: CurrentUser
+  modelPlan(id: UUID!) : ModelPlan
 }
+"""
+Mutations definition for the schema
+"""
+type Mutation {
+createModelPlan(input: CreateModelPlanInput!):ModelPlan
+@hasRole(role: MINT_BASE_USER)
 
+}
 
 directive @hasRole(role: Role!) on FIELD_DEFINITION
 
