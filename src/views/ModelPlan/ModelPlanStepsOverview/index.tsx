@@ -43,7 +43,6 @@ const ModelPlanStepsOverview = () => {
               <li>{t('stepsOverview.summaryBox.listItem.add')}</li>
               <li>{t('stepsOverview.summaryBox.listItem.upload')}</li>
             </ul>
-            {/* <p>{t('stepsOverview.summaryBox.email')}</p> */}
             <p>
               <Trans i18nKey="modelPlan:stepsOverview.summaryBox.email">
                 indexZero
