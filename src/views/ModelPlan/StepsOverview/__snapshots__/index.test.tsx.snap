@@ -170,7 +170,7 @@ exports[`The Model Plan Steps Overview static page matches the snapshot 1`] = `
       <a
         className="usa-button margin-bottom-10"
         data-testid="continue-link"
-        href="/508/requests/new"
+        href="/models/123/task-list"
         onClick={[Function]}
       >
         Get started
