@@ -20,8 +20,7 @@ import FlagsWrapper from 'views/FlagsWrapper';
 import Home from 'views/Home';
 import Login from 'views/Login';
 import ModelPlan from 'views/ModelPlan';
-import ModelPlanStepsOverview from 'views/ModelPlan/ModelPlanStepsOverview';
-import NewPlan from 'views/ModelPlan/NewPlan';
+import StepsOverview from 'views/ModelPlan/StepsOverview';
 import TaskList from 'views/ModelPlan/TaskList';
 import Basics from 'views/ModelPlan/TaskList/Basics';
 import Characteristics from 'views/ModelPlan/TaskList/Characteristics';
@@ -66,11 +65,7 @@ const AppRoutes = () => {
 
       {/* Model Routes */}
       <SecureRoute path="/models" exact component={ModelPlan} />
-      <SecureRoute
-        path="/models/new-plan"
-        exact
-        component={ModelPlanStepsOverview}
-      />
+      <SecureRoute path="/models/new-plan" exact component={StepsOverview} />
       <SecureRoute
         path="/models/:modelId/task-list"
         exact
