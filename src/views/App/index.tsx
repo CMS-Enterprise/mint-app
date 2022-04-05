@@ -64,8 +64,12 @@ const AppRoutes = () => {
       <SecureRoute path="/user-diagnostics" component={UserInfo} />
 
       {/* Model Routes */}
-      <SecureRoute path="/models" exact component={ModelPlanStepsOverview} />
-      <SecureRoute path="/models/new-plan" exact component={NewPlan} />
+      <Redirect exact from="/models" to="/models/new-plan" />
+      <SecureRoute
+        path="/models/new-plan"
+        exact
+        component={ModelPlanStepsOverview}
+      />
       <SecureRoute
         path="/models/:modelId/task-list"
         exact
