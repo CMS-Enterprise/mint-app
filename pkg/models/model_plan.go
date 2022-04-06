@@ -18,3 +18,5 @@ type ModelPlan struct {
 	ModifiedBy              null.String `json:"modifiedBy" db:"modified_by"`
 	ModifiedDts             *time.Time  `json:"modifiedDts" db:"modified_dts"`
 }
+
+// type ModelPlanInput ModelPlan

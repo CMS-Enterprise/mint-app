@@ -5,6 +5,7 @@ package graph
 
 import (
 	"context"
+	"time"
 
 	"github.com/google/uuid"
 	"github.com/guregu/null"
@@ -50,6 +51,25 @@ func (r *mutationResolver) CreateModelPlan(ctx context.Context, input model.Crea
 	return createdPlan, err
 }
 
+func (r *mutationResolver) UpdateModelPlan(ctx context.Context, input model.ModelPlanInput) (*models.ModelPlan, error) {
+
+	now := time.Now()
+	plan := models.ModelPlan{
+		ID:                      *input.ID,
+		Requester:               null.StringFromPtr(input.Requester),
+		RequesterComponent:      null.StringFromPtr(input.RequesterComponent),
+		MainPointOfContact:      null.StringFromPtr(input.MainPointOfContact),
+		PointOfContactComponent: null.StringFromPtr(input.PointOfContactComponent),
+		CreatedBy:               null.StringFromPtr(input.CreatedBy),
+		CreatedDts:              input.CreatedDts,
+		ModifiedBy:              null.StringFrom(appcontext.Principal(ctx).ID()), //User who submitted request
+		ModifiedDts:             &now,
+	}
+
+	retPlan, err := r.store.ModelPlanUpdate(ctx, &plan)
+	return retPlan, err
+}
+
 func (r *queryResolver) CurrentUser(ctx context.Context) (*model.CurrentUser, error) {
 	ldUser := flags.Principal(ctx)
 	userKey := ldUser.GetKey()
@@ -72,6 +92,14 @@ func (r *queryResolver) ModelPlan(ctx context.Context, id uuid.UUID) (*models.Mo
 	//TODO add job code authorization Checks?
 
 	return plan, nil
+}
+
+func (r *queryResolver) ModelPlanCollection(ctx context.Context) ([]*models.ModelPlan, error) {
+	plans, err := r.store.ModelPlanCollectionByUser(ctx, appcontext.Principal(ctx).ID())
+	if err != nil {
+		return nil, err
+	}
+	return plans, nil
 }
 
 // ModelPlan returns generated.ModelPlanResolver implementation.
