@@ -129,7 +129,7 @@ func (s *Store) ModelPlanCollectionByUser(ctx context.Context, EUAID string) ([]
 	}
 	arg := map[string]interface{}{"euaID": EUAID}
 
-	err = stmt.Get(&modelPlans, arg)
+	err = stmt.Select(&modelPlans, arg) //this returns more than one
 
 	if err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
