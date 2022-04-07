@@ -54,7 +54,7 @@ const Home = () => {
                   'usa-button--outline': user.isAdmin(userGroups, flags)
                 })}
                 variant="unstyled"
-                to="/models"
+                to="/models/new-plan"
               >
                 {t('newModelSummaryBox.cta')}
               </UswdsReactLink>
