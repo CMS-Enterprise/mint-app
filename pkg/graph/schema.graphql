@@ -52,12 +52,7 @@ modifiedBy: String
 modifiedDts: Time
 }
 
-"""
-CreateModelPlan represent the data point for plans about a model. It is the central data type in the appliation
-"""
-input CreateModelPlanInput { #TODO polish this, what do we need to do for it?
-  requester: String!
-}
+
 
 """
 Query definition for the schema
@@ -71,7 +66,7 @@ type Query {
 Mutations definition for the schema
 """
 type Mutation {
-createModelPlan(input: CreateModelPlanInput!):ModelPlan
+createModelPlan(input: ModelPlanInput!):ModelPlan
 @hasRole(role: MINT_BASE_USER)
 updateModelPlan(input: ModelPlanInput!):ModelPlan
 @hasRole(role: MINT_BASE_USER)

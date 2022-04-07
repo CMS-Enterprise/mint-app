@@ -41,8 +41,9 @@ func (s *Store) ModelPlanCreate(ctx context.Context, plan *models.ModelPlan) (*m
 		)
 		return nil, err
 	}
+	retPlan := models.ModelPlan{}
 
-	err = stmt.Get(plan, plan)
+	err = stmt.Get(&retPlan, plan)
 	if err != nil {
 		appcontext.ZLogger(ctx).Error(
 			fmt.Sprintf("Failed to create model plan with error %s", err),
@@ -52,7 +53,7 @@ func (s *Store) ModelPlanCreate(ctx context.Context, plan *models.ModelPlan) (*m
 
 	}
 
-	return plan, nil
+	return &retPlan, nil
 }
 
 func (s *Store) ModelPlanUpdate(ctx context.Context, plan *models.ModelPlan) (*models.ModelPlan, error) {

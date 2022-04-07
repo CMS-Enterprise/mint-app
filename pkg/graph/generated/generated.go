@@ -70,7 +70,7 @@ type ComplexityRoot struct {
 	}
 
 	Mutation struct {
-		CreateModelPlan func(childComplexity int, input model.CreateModelPlanInput) int
+		CreateModelPlan func(childComplexity int, input model.ModelPlanInput) int
 		UpdateModelPlan func(childComplexity int, input model.ModelPlanInput) int
 	}
 
@@ -91,7 +91,7 @@ type ModelPlanResolver interface {
 	ModifiedBy(ctx context.Context, obj *models.ModelPlan) (*string, error)
 }
 type MutationResolver interface {
-	CreateModelPlan(ctx context.Context, input model.CreateModelPlanInput) (*models.ModelPlan, error)
+	CreateModelPlan(ctx context.Context, input model.ModelPlanInput) (*models.ModelPlan, error)
 	UpdateModelPlan(ctx context.Context, input model.ModelPlanInput) (*models.ModelPlan, error)
 }
 type QueryResolver interface {
@@ -209,7 +209,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			return 0, false
 		}
 
-		return e.complexity.Mutation.CreateModelPlan(childComplexity, args["input"].(model.CreateModelPlanInput)), true
+		return e.complexity.Mutation.CreateModelPlan(childComplexity, args["input"].(model.ModelPlanInput)), true
 
 	case "Mutation.updateModelPlan":
 		if e.complexity.Mutation.UpdateModelPlan == nil {
@@ -367,12 +367,7 @@ modifiedBy: String
 modifiedDts: Time
 }
 
-"""
-CreateModelPlan represent the data point for plans about a model. It is the central data type in the appliation
-"""
-input CreateModelPlanInput { #TODO polish this, what do we need to do for it?
-  requester: String!
-}
+
 
 """
 Query definition for the schema
@@ -386,7 +381,7 @@ type Query {
 Mutations definition for the schema
 """
 type Mutation {
-createModelPlan(input: CreateModelPlanInput!):ModelPlan
+createModelPlan(input: ModelPlanInput!):ModelPlan
 @hasRole(role: MINT_BASE_USER)
 updateModelPlan(input: ModelPlanInput!):ModelPlan
 @hasRole(role: MINT_BASE_USER)
@@ -435,10 +430,10 @@ func (ec *executionContext) dir_hasRole_args(ctx context.Context, rawArgs map[st
 func (ec *executionContext) field_Mutation_createModelPlan_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
-	var arg0 model.CreateModelPlanInput
+	var arg0 model.ModelPlanInput
 	if tmp, ok := rawArgs["input"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
-		arg0, err = ec.unmarshalNCreateModelPlanInput2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCreateModelPlanInput(ctx, tmp)
+		arg0, err = ec.unmarshalNModelPlanInput2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐModelPlanInput(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -964,7 +959,7 @@ func (ec *executionContext) _Mutation_createModelPlan(ctx context.Context, field
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		directive0 := func(rctx context.Context) (interface{}, error) {
 			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Mutation().CreateModelPlan(rctx, args["input"].(model.CreateModelPlanInput))
+			return ec.resolvers.Mutation().CreateModelPlan(rctx, args["input"].(model.ModelPlanInput))
 		}
 		directive1 := func(ctx context.Context) (interface{}, error) {
 			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_BASE_USER")
@@ -2367,29 +2362,6 @@ func (ec *executionContext) ___Type_ofType(ctx context.Context, field graphql.Co
 
 // region    **************************** input.gotpl *****************************
 
-func (ec *executionContext) unmarshalInputCreateModelPlanInput(ctx context.Context, obj interface{}) (model.CreateModelPlanInput, error) {
-	var it model.CreateModelPlanInput
-	asMap := map[string]interface{}{}
-	for k, v := range obj.(map[string]interface{}) {
-		asMap[k] = v
-	}
-
-	for k, v := range asMap {
-		switch k {
-		case "requester":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("requester"))
-			it.Requester, err = ec.unmarshalNString2string(ctx, v)
-			if err != nil {
-				return it, err
-			}
-		}
-	}
-
-	return it, nil
-}
-
 func (ec *executionContext) unmarshalInputModelPlanInput(ctx context.Context, obj interface{}) (model.ModelPlanInput, error) {
 	var it model.ModelPlanInput
 	asMap := map[string]interface{}{}
@@ -3271,11 +3243,6 @@ func (ec *executionContext) marshalNBoolean2bool(ctx context.Context, sel ast.Se
 		}
 	}
 	return res
-}
-
-func (ec *executionContext) unmarshalNCreateModelPlanInput2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCreateModelPlanInput(ctx context.Context, v interface{}) (model.CreateModelPlanInput, error) {
-	res, err := ec.unmarshalInputCreateModelPlanInput(ctx, v)
-	return res, graphql.ErrorOnPath(ctx, err)
 }
 
 func (ec *executionContext) marshalNLaunchDarklySettings2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐLaunchDarklySettings(ctx context.Context, sel ast.SelectionSet, v *model.LaunchDarklySettings) graphql.Marshaler {
