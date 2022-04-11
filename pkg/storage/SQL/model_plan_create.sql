@@ -9,10 +9,10 @@ INSERT INTO model_plan (
     )
 VALUES (
         :id,
-        :requester, 
-        :requester_component,
-        :main_point_of_contact,
-        :point_of_contact_component,
+        NULLIF(:requester,''),
+        NULLIF(:requester_component,''),
+        NULLIF(:main_point_of_contact,''),
+        NULLIF(:point_of_contact_component,''),
         :created_by,
         :modified_by
     )

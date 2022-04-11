@@ -6,12 +6,10 @@ import (
 	"fmt"
 	"io"
 	"strconv"
-)
+	"time"
 
-// CreateModelPlan represent the data point for plans about a model. It is the central data type in the appliation
-type CreateModelPlanInput struct {
-	Requester string `json:"requester"`
-}
+	"github.com/google/uuid"
+)
 
 // The current user of the application
 type CurrentUser struct {
@@ -22,6 +20,19 @@ type CurrentUser struct {
 type LaunchDarklySettings struct {
 	UserKey    string `json:"userKey"`
 	SignedHash string `json:"signedHash"`
+}
+
+// ModelPlanInput represent the data point for plans about a model. It is the central data type in the appliation
+type ModelPlanInput struct {
+	ID                      *uuid.UUID `json:"id"`
+	Requester               *string    `json:"requester"`
+	RequesterComponent      *string    `json:"requesterComponent"`
+	MainPointOfContact      *string    `json:"mainPointOfContact"`
+	PointOfContactComponent *string    `json:"pointOfContactComponent"`
+	CreatedBy               *string    `json:"createdBy"`
+	CreatedDts              *time.Time `json:"createdDts"`
+	ModifiedBy              *string    `json:"modifiedBy"`
+	ModifiedDts             *time.Time `json:"modifiedDts"`
 }
 
 // A user role associated with a job code

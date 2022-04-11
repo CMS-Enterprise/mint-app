@@ -6,14 +6,13 @@ package graph
 import (
 	"context"
 
-	"github.com/google/uuid"
-	"github.com/guregu/null"
-
 	"github.com/cmsgov/mint-app/pkg/appcontext"
 	"github.com/cmsgov/mint-app/pkg/flags"
 	"github.com/cmsgov/mint-app/pkg/graph/generated"
 	"github.com/cmsgov/mint-app/pkg/graph/model"
 	"github.com/cmsgov/mint-app/pkg/models"
+	"github.com/google/uuid"
+	"github.com/guregu/null"
 )
 
 func (r *modelPlanResolver) Requester(ctx context.Context, obj *models.ModelPlan) (*string, error) {
@@ -40,14 +39,60 @@ func (r *modelPlanResolver) ModifiedBy(ctx context.Context, obj *models.ModelPla
 	return &obj.ModifiedBy.String, nil
 }
 
-func (r *mutationResolver) CreateModelPlan(ctx context.Context, input model.CreateModelPlanInput) (*models.ModelPlan, error) {
-	plan := models.ModelPlan{
-		CreatedBy: null.StringFrom(appcontext.Principal(ctx).ID()),
-		Requester: null.StringFrom(input.Requester), //This can never be null.. do we want this?
-	}
+func (r *mutationResolver) CreateModelPlan(ctx context.Context, input model.ModelPlanInput) (*models.ModelPlan, error) {
+
+	plan := ConvertToModelPlan(&input)
+
+	plan.CreatedBy = null.StringFrom(appcontext.Principal(ctx).ID())
 	plan.ModifiedBy = plan.CreatedBy
-	createdPlan, err := r.store.ModelPlanCreate(ctx, &plan)
+	createdPlan, err := r.store.ModelPlanCreate(ctx, plan)
+	// plan.Requester =
+
+	// plan := models.ModelPlan{
+	// 	CreatedBy: null.StringFrom(appcontext.Principal(ctx).ID()),
+	// 	Requester: null.StringFromPtr(input.Requester), //This can never be null.. do we want this?
+	// }
+	// plan.ModifiedBy = plan.CreatedBy
+	// createdPlan, err := r.store.ModelPlanCreate(ctx, &plan)
 	return createdPlan, err
+}
+func ConvertToModelPlan(mpi *model.ModelPlanInput) *models.ModelPlan {
+	plan := models.ModelPlan{
+		// ID:                      *mpi.ID,
+		Requester:               null.StringFromPtr(mpi.Requester),
+		RequesterComponent:      null.StringFromPtr(mpi.RequesterComponent),
+		MainPointOfContact:      null.StringFromPtr(mpi.MainPointOfContact),
+		PointOfContactComponent: null.StringFromPtr(mpi.PointOfContactComponent),
+		CreatedBy:               null.StringFromPtr(mpi.CreatedBy),
+		CreatedDts:              mpi.CreatedDts,
+		ModifiedBy:              null.StringFromPtr(mpi.ModifiedBy),
+		ModifiedDts:             mpi.ModifiedDts,
+	}
+	if mpi.ID != nil {
+		plan.ID = *mpi.ID
+	}
+	return &plan
+
+}
+
+func (r *mutationResolver) UpdateModelPlan(ctx context.Context, input model.ModelPlanInput) (*models.ModelPlan, error) {
+
+	plan := ConvertToModelPlan(&input)
+	plan.ModifiedBy = null.StringFrom(appcontext.Principal(ctx).ID())
+	// models.ModelPlan{
+	// 	ID:                      *input.ID,
+	// 	Requester:               null.StringFromPtr(input.Requester),
+	// 	RequesterComponent:      null.StringFromPtr(input.RequesterComponent),
+	// 	MainPointOfContact:      null.StringFromPtr(input.MainPointOfContact),
+	// 	PointOfContactComponent: null.StringFromPtr(input.PointOfContactComponent),
+	// 	CreatedBy:               null.StringFromPtr(input.CreatedBy),
+	// 	CreatedDts:              input.CreatedDts,
+	// 	ModifiedBy:              null.StringFrom(appcontext.Principal(ctx).ID()), //User who submitted request
+	// 	ModifiedDts:             &now,
+	// }
+
+	retPlan, err := r.store.ModelPlanUpdate(ctx, plan)
+	return retPlan, err
 }
 
 func (r *queryResolver) CurrentUser(ctx context.Context) (*model.CurrentUser, error) {
@@ -72,6 +117,14 @@ func (r *queryResolver) ModelPlan(ctx context.Context, id uuid.UUID) (*models.Mo
 	//TODO add job code authorization Checks?
 
 	return plan, nil
+}
+
+func (r *queryResolver) ModelPlanCollection(ctx context.Context) ([]*models.ModelPlan, error) {
+	plans, err := r.store.ModelPlanCollectionByUser(ctx, appcontext.Principal(ctx).ID())
+	if err != nil {
+		return nil, err
+	}
+	return plans, nil
 }
 
 // ModelPlan returns generated.ModelPlanResolver implementation.

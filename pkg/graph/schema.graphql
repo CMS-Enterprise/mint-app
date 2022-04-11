@@ -37,11 +37,22 @@ modifiedDts: Time
 }
 
 """
-CreateModelPlan represent the data point for plans about a model. It is the central data type in the appliation
+ModelPlanInput represent the data point for plans about a model. It is the central data type in the appliation
 """
-input CreateModelPlanInput { #TODO polish this, what do we need to do for it?
-  requester: String!
+# input ModelPlanInput ModelPlan {
+input ModelPlanInput{
+id: UUID
+requester: String
+requesterComponent: String
+mainPointOfContact: String
+pointOfContactComponent: String
+createdBy: String
+createdDts: Time
+modifiedBy: String
+modifiedDts: Time
 }
+
+
 
 """
 Query definition for the schema
@@ -49,12 +60,15 @@ Query definition for the schema
 type Query {
   currentUser: CurrentUser
   modelPlan(id: UUID!) : ModelPlan
+  modelPlanCollection: [ModelPlan]
 }
 """
 Mutations definition for the schema
 """
 type Mutation {
-createModelPlan(input: CreateModelPlanInput!):ModelPlan
+createModelPlan(input: ModelPlanInput!):ModelPlan
+@hasRole(role: MINT_BASE_USER)
+updateModelPlan(input: ModelPlanInput!):ModelPlan
 @hasRole(role: MINT_BASE_USER)
 
 }
