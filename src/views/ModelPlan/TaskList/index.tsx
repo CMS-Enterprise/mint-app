@@ -81,7 +81,7 @@ const TaskList = () => {
                   key={key}
                   testId="task-list-intake-form"
                   heading={taskListItem[key].heading}
-                  status=""
+                  status="CANNOT_START"
                 >
                   <TaskListDescription>
                     <p className="margin-top-0">{taskListItem[key].copy}</p>
