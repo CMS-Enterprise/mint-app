@@ -1,27 +1,27 @@
 INSERT INTO model_plan (
         id,
-        requester,
-        requester_component,
-        main_point_of_contact,
-        point_of_contact_component,
+        model_name,
+        model_category,
+        cms_center,
+        cmmi_group,
         created_by,
         modified_by
     )
 VALUES (
         :id,
-        NULLIF(:requester,''),
-        NULLIF(:requester_component,''),
-        NULLIF(:main_point_of_contact,''),
-        NULLIF(:point_of_contact_component,''),
+        :model_name,
+        NULLIF(:model_category, ''),
+        NULLIF(:cms_center, ''),
+        NULLIF(:cmmi_group, ''),
         :created_by,
         :modified_by
     )
     RETURNING 
         id,
-        requester,
-        requester_component,
-        main_point_of_contact,
-        point_of_contact_component,
+        model_name,
+        model_category,
+        cms_center,
+        cmmi_group,
         created_by,
         created_dts,
         modified_by,

@@ -5,7 +5,6 @@ import (
 	"time"
 
 	"github.com/google/uuid"
-	"github.com/guregu/null"
 	_ "github.com/lib/pq" // required for postgres driver in sql
 	"go.uber.org/zap"
 	ld "gopkg.in/launchdarkly/go-server-sdk.v5"
@@ -46,10 +45,11 @@ func main() {
 	makeModelPlan("Mr. Mint", logger, store)
 	makeModelPlan("Mrs. Mint", logger, store, func(p *models.ModelPlan) {
 		p.ID = uuid.MustParse("6e224030-09d5-46f7-ad04-4bb851b36eab")
-		p.MainPointOfContact = null.StringFrom("PM Butler")
-		p.PointOfContactComponent = null.StringFrom("Center for Awesomeness")
-		p.CreatedBy = null.StringFrom("MINT")
-		p.ModifiedBy = null.StringFrom("MINT")
+
+		p.MainPointOfContact = models.StringPointer("PM Butler")
+		p.PointOfContactComponent = models.StringPointer("Center for Awesomeness")
+		p.CreatedBy = models.StringPointer("MINT")
+		p.ModifiedBy = models.StringPointer("MINT")
 	})
 
 }
@@ -59,12 +59,12 @@ func makeModelPlan(requester string, logger *zap.Logger, store *storage.Store, c
 
 	//now := time.Now()
 	plan := models.ModelPlan{
-		Requester:               null.StringFrom(requester),
-		RequesterComponent:      null.StringFrom("Center for Medicaid and CHIP Services"),
-		MainPointOfContact:      null.StringFrom("Mr. POC"),
-		PointOfContactComponent: null.StringFrom("Center for Medicaid and CHIP Services"),
-		CreatedBy:               null.StringFrom("ABCD"),
-		ModifiedBy:              null.StringFrom("ABCD"),
+		Requester:               models.StringPointer(requester),
+		RequesterComponent:      models.StringPointer("Center for Medicaid and CHIP Services"),
+		MainPointOfContact:      models.StringPointer("Mr. POC"),
+		PointOfContactComponent: models.StringPointer("Center for Medicaid and CHIP Services"),
+		CreatedBy:               models.StringPointer("ABCD"),
+		ModifiedBy:              models.StringPointer("ABCD"),
 	}
 
 	for _, cb := range callbacks {

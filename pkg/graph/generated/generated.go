@@ -38,7 +38,6 @@ type Config struct {
 }
 
 type ResolverRoot interface {
-	ModelPlan() ModelPlanResolver
 	Mutation() MutationResolver
 	PlanBasics() PlanBasicsResolver
 	Query() QueryResolver
@@ -112,15 +111,6 @@ type ComplexityRoot struct {
 	}
 }
 
-type ModelPlanResolver interface {
-	Requester(ctx context.Context, obj *models.ModelPlan) (*string, error)
-	RequesterComponent(ctx context.Context, obj *models.ModelPlan) (*string, error)
-	MainPointOfContact(ctx context.Context, obj *models.ModelPlan) (*string, error)
-	PointOfContactComponent(ctx context.Context, obj *models.ModelPlan) (*string, error)
-	CreatedBy(ctx context.Context, obj *models.ModelPlan) (*string, error)
-
-	ModifiedBy(ctx context.Context, obj *models.ModelPlan) (*string, error)
-}
 type MutationResolver interface {
 	CreateModelPlan(ctx context.Context, input model.ModelPlanInput) (*models.ModelPlan, error)
 	CreatePlanBasics(ctx context.Context, input model.CreatePlanBasicsRequestInput) (*model.CreatePlanBasicsPayload, error)
@@ -1039,14 +1029,14 @@ func (ec *executionContext) _ModelPlan_requester(ctx context.Context, field grap
 		Object:     "ModelPlan",
 		Field:      field,
 		Args:       nil,
-		IsMethod:   true,
-		IsResolver: true,
+		IsMethod:   false,
+		IsResolver: false,
 	}
 
 	ctx = graphql.WithFieldContext(ctx, fc)
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.ModelPlan().Requester(rctx, obj)
+		return obj.Requester, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -1071,14 +1061,14 @@ func (ec *executionContext) _ModelPlan_requesterComponent(ctx context.Context, f
 		Object:     "ModelPlan",
 		Field:      field,
 		Args:       nil,
-		IsMethod:   true,
-		IsResolver: true,
+		IsMethod:   false,
+		IsResolver: false,
 	}
 
 	ctx = graphql.WithFieldContext(ctx, fc)
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.ModelPlan().RequesterComponent(rctx, obj)
+		return obj.RequesterComponent, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -1103,14 +1093,14 @@ func (ec *executionContext) _ModelPlan_mainPointOfContact(ctx context.Context, f
 		Object:     "ModelPlan",
 		Field:      field,
 		Args:       nil,
-		IsMethod:   true,
-		IsResolver: true,
+		IsMethod:   false,
+		IsResolver: false,
 	}
 
 	ctx = graphql.WithFieldContext(ctx, fc)
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.ModelPlan().MainPointOfContact(rctx, obj)
+		return obj.MainPointOfContact, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -1135,14 +1125,14 @@ func (ec *executionContext) _ModelPlan_pointOfContactComponent(ctx context.Conte
 		Object:     "ModelPlan",
 		Field:      field,
 		Args:       nil,
-		IsMethod:   true,
-		IsResolver: true,
+		IsMethod:   false,
+		IsResolver: false,
 	}
 
 	ctx = graphql.WithFieldContext(ctx, fc)
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.ModelPlan().PointOfContactComponent(rctx, obj)
+		return obj.PointOfContactComponent, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -1167,14 +1157,14 @@ func (ec *executionContext) _ModelPlan_createdBy(ctx context.Context, field grap
 		Object:     "ModelPlan",
 		Field:      field,
 		Args:       nil,
-		IsMethod:   true,
-		IsResolver: true,
+		IsMethod:   false,
+		IsResolver: false,
 	}
 
 	ctx = graphql.WithFieldContext(ctx, fc)
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.ModelPlan().CreatedBy(rctx, obj)
+		return obj.CreatedBy, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -1231,14 +1221,14 @@ func (ec *executionContext) _ModelPlan_modifiedBy(ctx context.Context, field gra
 		Object:     "ModelPlan",
 		Field:      field,
 		Args:       nil,
-		IsMethod:   true,
-		IsResolver: true,
+		IsMethod:   false,
+		IsResolver: false,
 	}
 
 	ctx = graphql.WithFieldContext(ctx, fc)
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.ModelPlan().ModifiedBy(rctx, obj)
+		return obj.ModifiedBy, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -3611,90 +3601,40 @@ func (ec *executionContext) _ModelPlan(ctx context.Context, sel ast.SelectionSet
 			out.Values[i] = innerFunc(ctx)
 
 		case "requester":
-			field := field
-
 			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._ModelPlan_requester(ctx, field, obj)
-				return res
+				return ec._ModelPlan_requester(ctx, field, obj)
 			}
 
-			out.Concurrently(i, func() graphql.Marshaler {
-				return innerFunc(ctx)
+			out.Values[i] = innerFunc(ctx)
 
-			})
 		case "requesterComponent":
-			field := field
-
 			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._ModelPlan_requesterComponent(ctx, field, obj)
-				return res
+				return ec._ModelPlan_requesterComponent(ctx, field, obj)
 			}
 
-			out.Concurrently(i, func() graphql.Marshaler {
-				return innerFunc(ctx)
+			out.Values[i] = innerFunc(ctx)
 
-			})
 		case "mainPointOfContact":
-			field := field
-
 			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._ModelPlan_mainPointOfContact(ctx, field, obj)
-				return res
+				return ec._ModelPlan_mainPointOfContact(ctx, field, obj)
 			}
 
-			out.Concurrently(i, func() graphql.Marshaler {
-				return innerFunc(ctx)
+			out.Values[i] = innerFunc(ctx)
 
-			})
 		case "pointOfContactComponent":
-			field := field
-
 			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._ModelPlan_pointOfContactComponent(ctx, field, obj)
-				return res
+				return ec._ModelPlan_pointOfContactComponent(ctx, field, obj)
 			}
 
-			out.Concurrently(i, func() graphql.Marshaler {
-				return innerFunc(ctx)
+			out.Values[i] = innerFunc(ctx)
 
-			})
 		case "createdBy":
-			field := field
-
 			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._ModelPlan_createdBy(ctx, field, obj)
-				return res
+				return ec._ModelPlan_createdBy(ctx, field, obj)
 			}
 
-			out.Concurrently(i, func() graphql.Marshaler {
-				return innerFunc(ctx)
+			out.Values[i] = innerFunc(ctx)
 
-			})
 		case "createdDts":
 			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._ModelPlan_createdDts(ctx, field, obj)
@@ -3703,22 +3643,12 @@ func (ec *executionContext) _ModelPlan(ctx context.Context, sel ast.SelectionSet
 			out.Values[i] = innerFunc(ctx)
 
 		case "modifiedBy":
-			field := field
-
 			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._ModelPlan_modifiedBy(ctx, field, obj)
-				return res
+				return ec._ModelPlan_modifiedBy(ctx, field, obj)
 			}
 
-			out.Concurrently(i, func() graphql.Marshaler {
-				return innerFunc(ctx)
+			out.Values[i] = innerFunc(ctx)
 
-			})
 		case "modifiedDts":
 			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._ModelPlan_modifiedDts(ctx, field, obj)

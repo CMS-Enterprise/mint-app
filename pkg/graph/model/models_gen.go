@@ -33,11 +33,7 @@ type LaunchDarklySettings struct {
 	SignedHash string `json:"signedHash"`
 }
 
-// <<<<<<< HEAD
-// CreateModelPlan represent the data point for plans about a model. It is the central data type in the application
-// =======
 // ModelPlanInput represent the data point for plans about a model. It is the central data type in the appliation
-// >>>>>>> main
 type ModelPlanInput struct {
 	ID                      *uuid.UUID `json:"id"`
 	Requester               *string    `json:"requester"`
