@@ -8,9 +8,7 @@ INSERT INTO plan_basics (
         test_inventions,
         note,
         created_by,
-        created_dts,
         modified_by,
-        modified_dts,
         status
     )
 VALUES (
@@ -23,9 +21,9 @@ VALUES (
         :test_inventions,
         :note,
         :created_by,
-        :created_dts,
+
         :modified_by,
-        :modified_dts,
+
         :status
     )
     RETURNING

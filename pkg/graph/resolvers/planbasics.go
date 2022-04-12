@@ -5,24 +5,23 @@ import (
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/storage"
 	"github.com/google/uuid"
-	"github.com/guregu/null"
 	"go.uber.org/zap"
 )
 
-func CreatePlanBasicsResolver(logger *zap.Logger, input model.CreatePlanBasicsRequestInput, principal string, store *storage.Store) (*model.CreatePlanBasicsPayload, error) {
+func CreatePlanBasicsResolver(logger *zap.Logger, input model.PlanBasicsInput, principal *string, store *storage.Store) (*models.PlanBasics, error) {
 	plan := models.PlanBasics{
-		CreatedBy: null.StringFrom(principal),
-		ID:        input.ModelPlanID,
+		CreatedBy:   principal,
+		ModelPlanID: *input.ModelPlanID,
 	}
 
 	plan.ModifiedBy = plan.CreatedBy
 	createdPlan, err := store.PlanBasicsCreate(logger, &plan)
 
-	payload := model.CreatePlanBasicsPayload{
-		ID:         createdPlan.ID,
-		UserErrors: nil,
-	}
-	return &payload, err
+	// payload := model.CreatePlanBasicsPayload{
+	// 	ID:         createdPlan.ID,
+	// 	UserErrors: nil,
+	// }
+	return createdPlan, err
 }
 
 func FetchPlanBasicsByID(logger *zap.Logger, id uuid.UUID, store *storage.Store) (*models.PlanBasics, error) {

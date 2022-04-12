@@ -50,8 +50,6 @@ func main() {
 		p.CMSCenter = models.StringPointer("Center for Awesomeness")
 		p.CMMIGroup = models.StringPointer("Great Group")
 
-		// p.MainPointOfContact = models.StringPointer("PM Butler")
-		// p.PointOfContactComponent = models.StringPointer("Center for Awesomeness")
 		p.CreatedBy = models.StringPointer("MINT")
 		p.ModifiedBy = models.StringPointer("MINT")
 	})
@@ -61,18 +59,13 @@ func main() {
 func makeModelPlan(modelName string, logger *zap.Logger, store *storage.Store, callbacks ...func(*models.ModelPlan)) *models.ModelPlan {
 	ctx := appcontext.WithLogger(context.Background(), logger)
 
-	//now := time.Now()
 	plan := models.ModelPlan{
 		ModelName:     &modelName,
 		ModelCategory: models.StringPointer("Normal ideas"),
 		CMSCenter:     models.StringPointer("Center for Medicaid and CHIP Services"),
 		CMMIGroup:     models.StringPointer("Innovation Group"),
-		// Requester:               models.StringPointer(requester),
-		// RequesterComponent:      models.StringPointer("Center for Medicaid and CHIP Services"),
-		// MainPointOfContact:      models.StringPointer("Mr. POC"),
-		// PointOfContactComponent: models.StringPointer("Center for Medicaid and CHIP Services"),
-		CreatedBy:  models.StringPointer("ABCD"),
-		ModifiedBy: models.StringPointer("ABCD"),
+		CreatedBy:     models.StringPointer("ABCD"),
+		ModifiedBy:    models.StringPointer("ABCD"),
 	}
 
 	for _, cb := range callbacks {

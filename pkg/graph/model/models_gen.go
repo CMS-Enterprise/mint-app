@@ -11,17 +11,6 @@ import (
 	"github.com/google/uuid"
 )
 
-// The payload returned on requesting plan basics creation
-type CreatePlanBasicsPayload struct {
-	ID         uuid.UUID    `json:"id"`
-	UserErrors []*UserError `json:"userErrors"`
-}
-
-// Requests the creation of plan basics
-type CreatePlanBasicsRequestInput struct {
-	ModelPlanID uuid.UUID `json:"modelPlanID"`
-}
-
 // The current user of the application
 type CurrentUser struct {
 	LaunchDarkly *LaunchDarklySettings `json:"launchDarkly"`
@@ -46,11 +35,20 @@ type ModelPlanInput struct {
 	ModifiedDts   *time.Time `json:"modifiedDts"`
 }
 
-// UserError represents application-level errors that are the result of
-// either user or application developer error.
-type UserError struct {
-	Message string   `json:"message"`
-	Path    []string `json:"path"`
+// Represents plan basics
+type PlanBasicsInput struct {
+	ID             *uuid.UUID `json:"id"`
+	ModelPlanID    *uuid.UUID `json:"modelPlanID"`
+	ModelType      *string    `json:"modelType"`
+	Problem        *string    `json:"problem"`
+	Goal           *string    `json:"goal"`
+	TestInventions *string    `json:"testInventions"`
+	Note           *string    `json:"note"`
+	CreatedBy      *string    `json:"createdBy"`
+	CreatedDts     *time.Time `json:"createdDts"`
+	ModifiedBy     *string    `json:"modifiedBy"`
+	ModifiedDts    *time.Time `json:"modifiedDts"`
+	Status         *string    `json:"status"`
 }
 
 // A user role associated with a job code

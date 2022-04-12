@@ -1,11 +1,4 @@
-"""
-UserError represents application-level errors that are the result of
-either user or application developer error.
-"""
-type UserError {
-  message: String!
-  path: [String!]!
-}
+
 
 """
 The current user's Launch Darkly key
@@ -69,10 +62,7 @@ Represents plan basics
 type PlanBasics {
   id: UUID
   modelPlanID: UUID
-  modelName: String
-  modelCategory: String
-  cmsCenter: String
-  cmmiGroup: String
+
   modelType: String
   problem: String
   goal: String
@@ -82,22 +72,29 @@ type PlanBasics {
   createdDts: Time
   modifiedBy: String
   modifiedDts: Time
+  status: String
 }
 
-"""
-Requests the creation of plan basics
-"""
-input CreatePlanBasicsRequestInput {
-  modelPlanID: UUID!
-}
 
 """
-The payload returned on requesting plan basics creation
+Represents plan basics
 """
-type CreatePlanBasicsPayload {
-  id: UUID!
-  userErrors: [UserError!]
+input PlanBasicsInput {
+  id: UUID
+  modelPlanID: UUID
+
+  modelType: String
+  problem: String
+  goal: String
+  testInventions: String
+  note: String
+  createdBy: String
+  createdDts: Time
+  modifiedBy: String
+  modifiedDts: Time
+  status: String
 }
+
 
 """
 Query definition for the schema
@@ -115,7 +112,8 @@ Mutations definition for the schema
 type Mutation {
 createModelPlan(input: ModelPlanInput!):ModelPlan
 @hasRole(role: MINT_BASE_USER)
-createPlanBasics(input: CreatePlanBasicsRequestInput!):CreatePlanBasicsPayload
+# createPlanBasics(input: CreatePlanBasicsRequestInput!):CreatePlanBasicsPayload
+createPlanBasics(input: PlanBasicsInput!):PlanBasics
 @hasRole(role: MINT_BASE_USER)
 
 updateModelPlan(input: ModelPlanInput!):ModelPlan
