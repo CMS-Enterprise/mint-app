@@ -25,6 +25,9 @@ var model_plan_updateSQL string
 //go:embed SQL/model_plan_get_by_id.sql
 var model_plan_get_by_idSQL string
 
+//go:embed SQL/model_plan_collection_by_user.sql
+var model_plan_collection_by_userSQL string
+
 func (s *Store) ModelPlanCreate(ctx context.Context, plan *models.ModelPlan) (*models.ModelPlan, error) {
 
 	if plan.ID == uuid.Nil {
@@ -38,8 +41,9 @@ func (s *Store) ModelPlanCreate(ctx context.Context, plan *models.ModelPlan) (*m
 		)
 		return nil, err
 	}
+	retPlan := models.ModelPlan{}
 
-	err = stmt.Get(plan, plan)
+	err = stmt.Get(&retPlan, plan)
 	if err != nil {
 		appcontext.ZLogger(ctx).Error(
 			fmt.Sprintf("Failed to create model plan with error %s", err),
@@ -49,7 +53,7 @@ func (s *Store) ModelPlanCreate(ctx context.Context, plan *models.ModelPlan) (*m
 
 	}
 
-	return plan, nil
+	return &retPlan, nil
 }
 
 func (s *Store) ModelPlanUpdate(ctx context.Context, plan *models.ModelPlan) (*models.ModelPlan, error) {
@@ -115,4 +119,39 @@ func (s *Store) ModelPlanGetByID(ctx context.Context, id uuid.UUID) (*models.Mod
 
 	return &plan, nil
 
+}
+
+func (s *Store) ModelPlanCollectionByUser(ctx context.Context, EUAID string) ([]*models.ModelPlan, error) {
+	modelPlans := []*models.ModelPlan{}
+
+	stmt, err := s.db.PrepareNamed(model_plan_collection_by_userSQL)
+	if err != nil {
+		return nil, err
+	}
+	arg := map[string]interface{}{"euaID": EUAID}
+
+	err = stmt.Select(&modelPlans, arg) //this returns more than one
+
+	if err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			appcontext.ZLogger(ctx).Info(
+				"No model plans for user found",
+				zap.Error(err),
+				zap.String("euaID", EUAID),
+			)
+			return nil, &apperrors.ResourceNotFoundError{Err: err, Resource: models.ModelPlan{}}
+		}
+		appcontext.ZLogger(ctx).Error(
+			"Failed to fetch model plans",
+			zap.Error(err),
+			zap.String("euaID", EUAID),
+		)
+		return nil, &apperrors.QueryError{
+			Err:       err,
+			Model:     EUAID,
+			Operation: apperrors.QueryFetch,
+		}
+	}
+
+	return modelPlans, nil
 }

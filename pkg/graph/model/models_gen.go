@@ -6,14 +6,10 @@ import (
 	"fmt"
 	"io"
 	"strconv"
+	"time"
 
 	"github.com/google/uuid"
 )
-
-// CreateModelPlan represent the data point for plans about a model. It is the central data type in the application
-type CreateModelPlanInput struct {
-	Requester string `json:"requester"`
-}
 
 // The payload returned on requesting plan basics creation
 type CreatePlanBasicsPayload struct {
@@ -35,6 +31,23 @@ type CurrentUser struct {
 type LaunchDarklySettings struct {
 	UserKey    string `json:"userKey"`
 	SignedHash string `json:"signedHash"`
+}
+
+// <<<<<<< HEAD
+// CreateModelPlan represent the data point for plans about a model. It is the central data type in the application
+// =======
+// ModelPlanInput represent the data point for plans about a model. It is the central data type in the appliation
+// >>>>>>> main
+type ModelPlanInput struct {
+	ID                      *uuid.UUID `json:"id"`
+	Requester               *string    `json:"requester"`
+	RequesterComponent      *string    `json:"requesterComponent"`
+	MainPointOfContact      *string    `json:"mainPointOfContact"`
+	PointOfContactComponent *string    `json:"pointOfContactComponent"`
+	CreatedBy               *string    `json:"createdBy"`
+	CreatedDts              *time.Time `json:"createdDts"`
+	ModifiedBy              *string    `json:"modifiedBy"`
+	ModifiedDts             *time.Time `json:"modifiedDts"`
 }
 
 // UserError represents application-level errors that are the result of

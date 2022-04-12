@@ -46,11 +46,22 @@ type ModelPlan {
 }
 
 """
-CreateModelPlan represent the data point for plans about a model. It is the central data type in the application
+ModelPlanInput represent the data point for plans about a model. It is the central data type in the appliation
 """
-input CreateModelPlanInput { #TODO polish this, what do we need to do for it?
-  requester: String!
+# input ModelPlanInput ModelPlan {
+input ModelPlanInput{
+id: UUID
+requester: String
+requesterComponent: String
+mainPointOfContact: String
+pointOfContactComponent: String
+createdBy: String
+createdDts: Time
+modifiedBy: String
+modifiedDts: Time
 }
+
+
 
 """
 Represents plan basics
@@ -95,15 +106,21 @@ type Query {
   currentUser: CurrentUser
   modelPlan(id: UUID!) : ModelPlan
   planBasics(id: UUID!) : PlanBasics
+  modelPlanCollection: [ModelPlan]
 }
 
 """
 Mutations definition for the schema
 """
 type Mutation {
-  createModelPlan(input: CreateModelPlanInput!):ModelPlan
-  createPlanBasics(input: CreatePlanBasicsRequestInput!):CreatePlanBasicsPayload
-  @hasRole(role: MINT_BASE_USER)
+createModelPlan(input: ModelPlanInput!):ModelPlan
+@hasRole(role: MINT_BASE_USER)
+createPlanBasics(input: CreatePlanBasicsRequestInput!):CreatePlanBasicsPayload
+@hasRole(role: MINT_BASE_USER)
+
+updateModelPlan(input: ModelPlanInput!):ModelPlan
+@hasRole(role: MINT_BASE_USER)
+
 }
 
 directive @hasRole(role: Role!) on FIELD_DEFINITION
