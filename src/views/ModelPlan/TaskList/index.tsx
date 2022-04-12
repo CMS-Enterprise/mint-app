@@ -17,8 +17,18 @@ import TaskListSideNav from './components/TaskListSideNav';
 
 import './index.scss';
 
+type TaskListItemProps = {
+  heading: string;
+  copy: string;
+};
+
 const TaskList = () => {
   const { t } = useTranslation('modelPlanTaskList');
+
+  const taskListItem: TaskListItemProps[] = t('numberedList', {
+    returnObjects: true
+  });
+
   return (
     <MainContent
       className="model-plan-task-list grid-container margin-bottom-7"
@@ -65,20 +75,21 @@ const TaskList = () => {
             data-testid="task-list"
             className="model-plan-task-list__task-list model-plan-task-list__task-list--primary"
           >
-            <TaskListItem
-              testId="task-list-intake-form"
-              heading="Model basics"
-              status=""
-            >
-              <TaskListDescription>
-                <p className="margin-top-0">
-                  Tell the Governance Admin Team about your idea. This step lets
-                  CMS build context about your request and start preparing for
-                  discussions with your team.
-                </p>
-              </TaskListDescription>
-              {/* <IntakeDraftCta intake={systemIntake} /> */}
-            </TaskListItem>
+            {Object.keys(taskListItem).map((key: any) => {
+              return (
+                <TaskListItem
+                  key={key}
+                  testId="task-list-intake-form"
+                  heading={taskListItem[key].heading}
+                  status=""
+                >
+                  <TaskListDescription>
+                    <p className="margin-top-0">{taskListItem[key].copy}</p>
+                  </TaskListDescription>
+                  {/* <IntakeDraftCta intake={systemIntake} /> */}
+                </TaskListItem>
+              );
+            })}
           </ol>
         </div>
         <div className="tablet:grid-col-3">
