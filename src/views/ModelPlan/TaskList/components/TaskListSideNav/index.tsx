@@ -14,7 +14,7 @@ import PageHeading from 'components/PageHeading';
 
 // const SideNavActions = ({ intake, archiveIntake }: SideNavActionsProps) => {
 const TaskListSideNav = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation('modelPlanTaskList');
   const [isModalOpen, setModalOpen] = useState(false);
 
   return (

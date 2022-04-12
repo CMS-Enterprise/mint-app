@@ -1,5 +1,5 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import {
   Breadcrumb,
@@ -16,7 +16,7 @@ import TaskListItem, { TaskListDescription } from './components/TaskListItem';
 import TaskListSideNav from './components/TaskListSideNav';
 
 const TaskList = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation('modelPlanTaskList');
   return (
     <MainContent
       className="model-plan-task-list grid-container margin-bottom-7"
@@ -26,35 +26,37 @@ const TaskList = () => {
         <BreadcrumbBar variant="wrap">
           <Breadcrumb>
             <BreadcrumbLink asCustom={Link} to="/">
-              <span>{t('taskList:navigation.home')}</span>
+              <span>{t('navigation.home')}</span>
             </BreadcrumbLink>
           </Breadcrumb>
-          <Breadcrumb current>
-            {t('taskList:navigation.governanceTaskList')}
-          </Breadcrumb>
+          <Breadcrumb current>{t('navigation.modelPlanTaskList')}</Breadcrumb>
         </BreadcrumbBar>
       </div>
       <div className="grid-row grid-gap-lg">
         <div className="tablet:grid-col-9">
           <PageHeading className="margin-bottom-0">
-            Model plan task list
+            {t('navigation.modelPlanTaskList')}
           </PageHeading>
           <p className="margin-top-0 margin-bottom-2 font-body-lg">
-            for Model ABC123
+            <Trans i18nKey="modelPlanTaskList:subheading">
+              indexZero indexTwo
+            </Trans>
           </p>
           <SummaryBox
             heading=""
             className="bg-base-lightest border-0 radius-0 padding-2"
           >
             <p className="margin-0 margin-bottom-1">
-              There are no documents uploaded for Model ABC123.
+              <Trans i18nKey="modelPlanTaskList:summaryBox.copy">
+                indexZero indexTwo
+              </Trans>
             </p>
             <UswdsReactLink
               className="usa-button usa-button--outline"
               variant="unstyled"
               to="/"
             >
-              Upload a document
+              {t('summaryBox.cta')}
             </UswdsReactLink>
           </SummaryBox>
           <ol
