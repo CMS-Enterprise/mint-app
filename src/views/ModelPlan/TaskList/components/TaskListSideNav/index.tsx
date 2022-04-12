@@ -13,7 +13,7 @@ import PageHeading from 'components/PageHeading';
 // };
 
 // const SideNavActions = ({ intake, archiveIntake }: SideNavActionsProps) => {
-const SideNavActions = () => {
+const TaskListSideNav = () => {
   const { t } = useTranslation();
   const [isModalOpen, setModalOpen] = useState(false);
 
@@ -72,4 +72,4 @@ const SideNavActions = () => {
   );
 };
 
-export default SideNavActions;
+export default TaskListSideNav;
