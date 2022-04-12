@@ -7,20 +7,20 @@ import {
   BreadcrumbLink,
   SummaryBox
 } from '@trussworks/react-uswds';
-import classNames from 'classnames';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 
-import SideNavActions from './SideNavActions';
+import TaskListItem, { TaskListDescription } from './components/TaskListItem';
+import TaskListSideNav from './components/TaskListSideNav';
 
 const TaskList = () => {
   const { t } = useTranslation();
   return (
     <MainContent
-      className="model-task-list grid-container margin-bottom-7"
-      data-testid="model-task-list"
+      className="model-plan-task-list grid-container margin-bottom-7"
+      data-testid="model-plan-task-list"
     >
       <div className="grid-row">
         <BreadcrumbBar variant="wrap">
@@ -57,10 +57,29 @@ const TaskList = () => {
               Upload a document
             </UswdsReactLink>
           </SummaryBox>
+          <ol
+            data-testid="task-list"
+            className="governance-task-list__task-list governance-task-list__task-list--primary"
+          >
+            <TaskListItem
+              testId="task-list-intake-form"
+              heading="Model basics"
+              status=""
+            >
+              <TaskListDescription>
+                <p className="margin-top-0">
+                  Tell the Governance Admin Team about your idea. This step lets
+                  CMS build context about your request and start preparing for
+                  discussions with your team.
+                </p>
+              </TaskListDescription>
+              {/* <IntakeDraftCta intake={systemIntake} /> */}
+            </TaskListItem>
+          </ol>
         </div>
         <div className="tablet:grid-col-3">
           {/* <SideNavActions intake={systemIntake} archiveIntake={archiveIntake} /> */}
-          <SideNavActions />
+          <TaskListSideNav />
         </div>
       </div>
     </MainContent>
