@@ -63,15 +63,15 @@ type ComplexityRoot struct {
 	}
 
 	ModelPlan struct {
-		CreatedBy               func(childComplexity int) int
-		CreatedDts              func(childComplexity int) int
-		ID                      func(childComplexity int) int
-		MainPointOfContact      func(childComplexity int) int
-		ModifiedBy              func(childComplexity int) int
-		ModifiedDts             func(childComplexity int) int
-		PointOfContactComponent func(childComplexity int) int
-		Requester               func(childComplexity int) int
-		RequesterComponent      func(childComplexity int) int
+		CMMIGroup     func(childComplexity int) int
+		CMSCenter     func(childComplexity int) int
+		CreatedBy     func(childComplexity int) int
+		CreatedDts    func(childComplexity int) int
+		ID            func(childComplexity int) int
+		ModelCategory func(childComplexity int) int
+		ModelName     func(childComplexity int) int
+		ModifiedBy    func(childComplexity int) int
+		ModifiedDts   func(childComplexity int) int
 	}
 
 	Mutation struct {
@@ -187,6 +187,20 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.LaunchDarklySettings.UserKey(childComplexity), true
 
+	case "ModelPlan.cmmiGroup":
+		if e.complexity.ModelPlan.CMMIGroup == nil {
+			break
+		}
+
+		return e.complexity.ModelPlan.CMMIGroup(childComplexity), true
+
+	case "ModelPlan.cmsCenter":
+		if e.complexity.ModelPlan.CMSCenter == nil {
+			break
+		}
+
+		return e.complexity.ModelPlan.CMSCenter(childComplexity), true
+
 	case "ModelPlan.createdBy":
 		if e.complexity.ModelPlan.CreatedBy == nil {
 			break
@@ -208,12 +222,19 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.ModelPlan.ID(childComplexity), true
 
-	case "ModelPlan.mainPointOfContact":
-		if e.complexity.ModelPlan.MainPointOfContact == nil {
+	case "ModelPlan.modelCategory":
+		if e.complexity.ModelPlan.ModelCategory == nil {
 			break
 		}
 
-		return e.complexity.ModelPlan.MainPointOfContact(childComplexity), true
+		return e.complexity.ModelPlan.ModelCategory(childComplexity), true
+
+	case "ModelPlan.modelName":
+		if e.complexity.ModelPlan.ModelName == nil {
+			break
+		}
+
+		return e.complexity.ModelPlan.ModelName(childComplexity), true
 
 	case "ModelPlan.modifiedBy":
 		if e.complexity.ModelPlan.ModifiedBy == nil {
@@ -228,27 +249,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.ModelPlan.ModifiedDts(childComplexity), true
-
-	case "ModelPlan.pointOfContactComponent":
-		if e.complexity.ModelPlan.PointOfContactComponent == nil {
-			break
-		}
-
-		return e.complexity.ModelPlan.PointOfContactComponent(childComplexity), true
-
-	case "ModelPlan.requester":
-		if e.complexity.ModelPlan.Requester == nil {
-			break
-		}
-
-		return e.complexity.ModelPlan.Requester(childComplexity), true
-
-	case "ModelPlan.requesterComponent":
-		if e.complexity.ModelPlan.RequesterComponent == nil {
-			break
-		}
-
-		return e.complexity.ModelPlan.RequesterComponent(childComplexity), true
 
 	case "Mutation.createModelPlan":
 		if e.complexity.Mutation.CreateModelPlan == nil {
@@ -544,10 +544,10 @@ ModelPlan represent the data point for plans about a model. It is the central da
 """
 type ModelPlan {
   id: UUID
-  requester: String
-  requesterComponent: String
-  mainPointOfContact: String
-  pointOfContactComponent: String
+  modelName: String
+  modelCategory: String
+  cmsCenter: String
+  cmmiGroup: String
   createdBy: String
   createdDts: Time
   modifiedBy: String
@@ -560,10 +560,10 @@ ModelPlanInput represent the data point for plans about a model. It is the centr
 # input ModelPlanInput ModelPlan {
 input ModelPlanInput{
 id: UUID
-requester: String
-requesterComponent: String
-mainPointOfContact: String
-pointOfContactComponent: String
+modelName: String
+modelCategory: String
+cmsCenter: String
+cmmiGroup: String
 createdBy: String
 createdDts: Time
 modifiedBy: String
@@ -1018,7 +1018,7 @@ func (ec *executionContext) _ModelPlan_id(ctx context.Context, field graphql.Col
 	return ec.marshalOUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) _ModelPlan_requester(ctx context.Context, field graphql.CollectedField, obj *models.ModelPlan) (ret graphql.Marshaler) {
+func (ec *executionContext) _ModelPlan_modelName(ctx context.Context, field graphql.CollectedField, obj *models.ModelPlan) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
 			ec.Error(ctx, ec.Recover(ctx, r))
@@ -1036,7 +1036,7 @@ func (ec *executionContext) _ModelPlan_requester(ctx context.Context, field grap
 	ctx = graphql.WithFieldContext(ctx, fc)
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.Requester, nil
+		return obj.ModelName, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -1050,7 +1050,7 @@ func (ec *executionContext) _ModelPlan_requester(ctx context.Context, field grap
 	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) _ModelPlan_requesterComponent(ctx context.Context, field graphql.CollectedField, obj *models.ModelPlan) (ret graphql.Marshaler) {
+func (ec *executionContext) _ModelPlan_modelCategory(ctx context.Context, field graphql.CollectedField, obj *models.ModelPlan) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
 			ec.Error(ctx, ec.Recover(ctx, r))
@@ -1068,7 +1068,7 @@ func (ec *executionContext) _ModelPlan_requesterComponent(ctx context.Context, f
 	ctx = graphql.WithFieldContext(ctx, fc)
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.RequesterComponent, nil
+		return obj.ModelCategory, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -1082,7 +1082,7 @@ func (ec *executionContext) _ModelPlan_requesterComponent(ctx context.Context, f
 	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) _ModelPlan_mainPointOfContact(ctx context.Context, field graphql.CollectedField, obj *models.ModelPlan) (ret graphql.Marshaler) {
+func (ec *executionContext) _ModelPlan_cmsCenter(ctx context.Context, field graphql.CollectedField, obj *models.ModelPlan) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
 			ec.Error(ctx, ec.Recover(ctx, r))
@@ -1100,7 +1100,7 @@ func (ec *executionContext) _ModelPlan_mainPointOfContact(ctx context.Context, f
 	ctx = graphql.WithFieldContext(ctx, fc)
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.MainPointOfContact, nil
+		return obj.CMSCenter, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -1114,7 +1114,7 @@ func (ec *executionContext) _ModelPlan_mainPointOfContact(ctx context.Context, f
 	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) _ModelPlan_pointOfContactComponent(ctx context.Context, field graphql.CollectedField, obj *models.ModelPlan) (ret graphql.Marshaler) {
+func (ec *executionContext) _ModelPlan_cmmiGroup(ctx context.Context, field graphql.CollectedField, obj *models.ModelPlan) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
 			ec.Error(ctx, ec.Recover(ctx, r))
@@ -1132,7 +1132,7 @@ func (ec *executionContext) _ModelPlan_pointOfContactComponent(ctx context.Conte
 	ctx = graphql.WithFieldContext(ctx, fc)
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.PointOfContactComponent, nil
+		return obj.CMMIGroup, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -3395,35 +3395,35 @@ func (ec *executionContext) unmarshalInputModelPlanInput(ctx context.Context, ob
 			if err != nil {
 				return it, err
 			}
-		case "requester":
+		case "modelName":
 			var err error
 
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("requester"))
-			it.Requester, err = ec.unmarshalOString2ᚖstring(ctx, v)
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("modelName"))
+			it.ModelName, err = ec.unmarshalOString2ᚖstring(ctx, v)
 			if err != nil {
 				return it, err
 			}
-		case "requesterComponent":
+		case "modelCategory":
 			var err error
 
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("requesterComponent"))
-			it.RequesterComponent, err = ec.unmarshalOString2ᚖstring(ctx, v)
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("modelCategory"))
+			it.ModelCategory, err = ec.unmarshalOString2ᚖstring(ctx, v)
 			if err != nil {
 				return it, err
 			}
-		case "mainPointOfContact":
+		case "cmsCenter":
 			var err error
 
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("mainPointOfContact"))
-			it.MainPointOfContact, err = ec.unmarshalOString2ᚖstring(ctx, v)
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("cmsCenter"))
+			it.CmsCenter, err = ec.unmarshalOString2ᚖstring(ctx, v)
 			if err != nil {
 				return it, err
 			}
-		case "pointOfContactComponent":
+		case "cmmiGroup":
 			var err error
 
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("pointOfContactComponent"))
-			it.PointOfContactComponent, err = ec.unmarshalOString2ᚖstring(ctx, v)
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("cmmiGroup"))
+			it.CmmiGroup, err = ec.unmarshalOString2ᚖstring(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -3600,30 +3600,30 @@ func (ec *executionContext) _ModelPlan(ctx context.Context, sel ast.SelectionSet
 
 			out.Values[i] = innerFunc(ctx)
 
-		case "requester":
+		case "modelName":
 			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._ModelPlan_requester(ctx, field, obj)
+				return ec._ModelPlan_modelName(ctx, field, obj)
 			}
 
 			out.Values[i] = innerFunc(ctx)
 
-		case "requesterComponent":
+		case "modelCategory":
 			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._ModelPlan_requesterComponent(ctx, field, obj)
+				return ec._ModelPlan_modelCategory(ctx, field, obj)
 			}
 
 			out.Values[i] = innerFunc(ctx)
 
-		case "mainPointOfContact":
+		case "cmsCenter":
 			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._ModelPlan_mainPointOfContact(ctx, field, obj)
+				return ec._ModelPlan_cmsCenter(ctx, field, obj)
 			}
 
 			out.Values[i] = innerFunc(ctx)
 
-		case "pointOfContactComponent":
+		case "cmmiGroup":
 			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._ModelPlan_pointOfContactComponent(ctx, field, obj)
+				return ec._ModelPlan_cmmiGroup(ctx, field, obj)
 			}
 
 			out.Values[i] = innerFunc(ctx)

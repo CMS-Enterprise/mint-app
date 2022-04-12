@@ -35,10 +35,10 @@ ModelPlan represent the data point for plans about a model. It is the central da
 """
 type ModelPlan {
   id: UUID
-  requester: String
-  requesterComponent: String
-  mainPointOfContact: String
-  pointOfContactComponent: String
+  modelName: String
+  modelCategory: String
+  cmsCenter: String
+  cmmiGroup: String
   createdBy: String
   createdDts: Time
   modifiedBy: String
@@ -51,10 +51,10 @@ ModelPlanInput represent the data point for plans about a model. It is the centr
 # input ModelPlanInput ModelPlan {
 input ModelPlanInput{
 id: UUID
-requester: String
-requesterComponent: String
-mainPointOfContact: String
-pointOfContactComponent: String
+modelName: String
+modelCategory: String
+cmsCenter: String
+cmmiGroup: String
 createdBy: String
 createdDts: Time
 modifiedBy: String

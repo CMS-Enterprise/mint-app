@@ -1,10 +1,7 @@
 INSERT INTO plan_basics (
         id,
         model_plan_id,
-        model_name,
-        model_category,
-        cms_center,
-        cmmi_group,
+
         model_type,
         problem,
         goal,
@@ -19,10 +16,7 @@ INSERT INTO plan_basics (
 VALUES (
         :id,
         :model_plan_id,
-        :model_name,
-        :model_category,
-        :cms_center,
-        :cmmi_group,
+
         :model_type,
         :problem,
         :goal,
@@ -37,10 +31,7 @@ VALUES (
     RETURNING
         id,
         model_plan_id,
-        model_name,
-        model_category,
-        cms_center,
-        cmmi_group,
+
         model_type,
         problem,
         goal,

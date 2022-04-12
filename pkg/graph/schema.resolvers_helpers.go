@@ -8,14 +8,14 @@ import (
 func ConvertToModelPlan(mpi *model.ModelPlanInput) *models.ModelPlan {
 	plan := models.ModelPlan{
 		// ID:                      *mpi.ID,
-		Requester:               mpi.Requester,
-		RequesterComponent:      mpi.RequesterComponent,
-		MainPointOfContact:      mpi.MainPointOfContact,
-		PointOfContactComponent: mpi.PointOfContactComponent,
-		CreatedBy:               mpi.CreatedBy,
-		CreatedDts:              mpi.CreatedDts,
-		ModifiedBy:              mpi.ModifiedBy,
-		ModifiedDts:             mpi.ModifiedDts,
+		ModelName:     mpi.ModelName,
+		ModelCategory: mpi.ModelCategory,
+		CMSCenter:     mpi.CmsCenter,
+		CMMIGroup:     mpi.CmmiGroup,
+		CreatedBy:     mpi.CreatedBy,
+		CreatedDts:    mpi.CreatedDts,
+		ModifiedBy:    mpi.ModifiedBy,
+		ModifiedDts:   mpi.ModifiedDts,
 
 		/*
 			Requester:               null.StringFromPtr(mpi.Requester),
