@@ -15,6 +15,8 @@ import PageHeading from 'components/PageHeading';
 import TaskListItem, { TaskListDescription } from './components/TaskListItem';
 import TaskListSideNav from './components/TaskListSideNav';
 
+import './index.scss';
+
 const TaskList = () => {
   const { t } = useTranslation('modelPlanTaskList');
   return (
@@ -61,7 +63,7 @@ const TaskList = () => {
           </SummaryBox>
           <ol
             data-testid="task-list"
-            className="governance-task-list__task-list governance-task-list__task-list--primary"
+            className="model-plan-task-list__task-list model-plan-task-list__task-list--primary"
           >
             <TaskListItem
               testId="task-list-intake-form"
