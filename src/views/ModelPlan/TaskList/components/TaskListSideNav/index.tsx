@@ -23,20 +23,21 @@ const TaskListSideNav = () => {
     return (
       <Modal isOpen={isModalOpen} closeModal={() => setModalOpen(false)}>
         <PageHeading headingLevel="h2" className="margin-top-0">
-          request name
+          {t('withdraw_modal.header', {
+            // requestName: intake.requestName
+            requestName: 'Gary'
+          })}
         </PageHeading>
-        <p>{t('taskList:withdraw_modal:warning')}</p>
+        <p>{t('withdraw_modal.warning')}</p>
         <Button
           type="button"
           className="margin-right-4"
           onClick={() => console.log('arhcived')}
         >
-          {/* {t('taskList:withdraw_modal:confirm')} */}
-          confirm
+          {t('withdraw_modal.confirm')}
         </Button>
         <Button type="button" unstyled onClick={() => setModalOpen(false)}>
-          {/* {t('taskList:withdraw_modal:cancel')} */}
-          cancel
+          {t('withdraw_modal.cancel')}
         </Button>
       </Modal>
     );
