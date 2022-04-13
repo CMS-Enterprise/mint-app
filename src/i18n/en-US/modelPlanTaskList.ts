@@ -17,6 +17,14 @@ const modelPlanTaskList = {
     modelTeam: 'Model team',
     editTeam: 'Edit team'
   },
+  withdraw_modal: {
+    header: 'Confirm you want to remove {{-requestName}}.',
+    warning: 'You will lose any information you have filled in.',
+    confirm: 'Remove request',
+    cancel: 'Cancel',
+    confirmationText_name: 'The request for {{-requestName}} has been removed',
+    confirmationText_noName: 'The request has been removed'
+  },
   numberedList: {
     modelBasic: {
       heading: 'Model basics',
@@ -47,16 +55,6 @@ const modelPlanTaskList = {
       heading: 'Payment',
       copy:
         'Start filling out as much of the payment information as you know and reach out to the Model Assessment Team if you need help.'
-    },
-    review: {
-      heading: 'Review draft Model Plan',
-      copy:
-        'Finalize your draft model plan to the best of your ability so that the Budget Team can begin drafting cost estimates.'
-    },
-    costEstimates: {
-      heading: 'Draft cost estimates',
-      copy:
-        'The Budget Team will review your Model Plan and draft cost estimates for your model. If they need your assistance, they will reach out to you.'
     },
     finalizeModelPlan: {
       heading: 'Finalize Model Plan',
