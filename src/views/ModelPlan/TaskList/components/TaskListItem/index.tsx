@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import classnames from 'classnames';
 
 type TaskListDescriptionProps = {
@@ -26,6 +27,8 @@ const TaskListItem = ({
   children,
   testId
 }: TaskListItemProps) => {
+  const { t } = useTranslation('modelPlanTaskList');
+
   const taskListItemClasses = classnames(
     'model-plan-task-list__item',
     'padding-bottom-4',
@@ -42,12 +45,20 @@ const TaskListItem = ({
           <h3 className="model-plan-task-list__task-heading margin-top-0">
             {heading}
           </h3>
-          {status === 'CANNOT_START' && (
+          {status === 'READY' && (
             <span
-              className="model-plan-task-list__task-tag model-plan-task-list__task-tag--na"
+              className="model-plan-task-list__task-tag model-plan-task-list__task-tag--ready"
               data-testid="task-list-task-tag"
             >
-              Cannot start yet
+              {t('taskListItem.ready')}
+            </span>
+          )}
+          {status === 'IN_PROGRESS' && (
+            <span
+              className="model-plan-task-list__task-tag model-plan-task-list__task-tag--in-progress"
+              data-testid="task-list-task-tag"
+            >
+              {t('taskListItem.inProgress')}
             </span>
           )}
           {status === 'COMPLETED' && (
@@ -55,7 +66,15 @@ const TaskListItem = ({
               className="model-plan-task-list__task-tag model-plan-task-list__task-tag--completed"
               data-testid="task-list-task-tag"
             >
-              Completed
+              {t('taskListItem.completed')}
+            </span>
+          )}
+          {status === 'CANNOT_START' && (
+            <span
+              className="model-plan-task-list__task-tag model-plan-task-list__task-tag--na"
+              data-testid="task-list-task-tag"
+            >
+              {t('taskListItem.cannotStart')}
             </span>
           )}
           {status === 'NOT_NEEDED' && (
@@ -63,7 +82,7 @@ const TaskListItem = ({
               className="model-plan-task-list__task-tag model-plan-task-list__task-tag--na"
               data-testid="task-list-task-tag"
             >
-              Not needed
+              {t('taskListItem.notNeeded')}
             </span>
           )}
         </div>
