@@ -38,6 +38,7 @@ type Config struct {
 }
 
 type ResolverRoot interface {
+	ModelPlan() ModelPlanResolver
 	Mutation() MutationResolver
 	Query() QueryResolver
 }
@@ -57,8 +58,8 @@ type ComplexityRoot struct {
 	}
 
 	ModelPlan struct {
-		CMMIGroup     func(childComplexity int) int
-		CMSCenter     func(childComplexity int) int
+		CmmiGroup     func(childComplexity int) int
+		CmsCenter     func(childComplexity int) int
 		CreatedBy     func(childComplexity int) int
 		CreatedDts    func(childComplexity int) int
 		ID            func(childComplexity int) int
@@ -97,6 +98,11 @@ type ComplexityRoot struct {
 	}
 }
 
+type ModelPlanResolver interface {
+	ModelCategory(ctx context.Context, obj *models.ModelPlan) (*models.ModelCategory, error)
+	CmsCenter(ctx context.Context, obj *models.ModelPlan) (*models.CMSCenter, error)
+	CmmiGroup(ctx context.Context, obj *models.ModelPlan) (*models.CMMIGroup, error)
+}
 type MutationResolver interface {
 	CreateModelPlan(ctx context.Context, input model.ModelPlanInput) (*models.ModelPlan, error)
 	CreatePlanBasics(ctx context.Context, input model.PlanBasicsInput) (*models.PlanBasics, error)
@@ -146,18 +152,18 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		return e.complexity.LaunchDarklySettings.UserKey(childComplexity), true
 
 	case "ModelPlan.cmmiGroup":
-		if e.complexity.ModelPlan.CMMIGroup == nil {
+		if e.complexity.ModelPlan.CmmiGroup == nil {
 			break
 		}
 
-		return e.complexity.ModelPlan.CMMIGroup(childComplexity), true
+		return e.complexity.ModelPlan.CmmiGroup(childComplexity), true
 
 	case "ModelPlan.cmsCenter":
-		if e.complexity.ModelPlan.CMSCenter == nil {
+		if e.complexity.ModelPlan.CmsCenter == nil {
 			break
 		}
 
-		return e.complexity.ModelPlan.CMSCenter(childComplexity), true
+		return e.complexity.ModelPlan.CmsCenter(childComplexity), true
 
 	case "ModelPlan.createdBy":
 		if e.complexity.ModelPlan.CreatedBy == nil {
@@ -461,9 +467,9 @@ ModelPlan represent the data point for plans about a model. It is the central da
 type ModelPlan {
   id: UUID
   modelName: String
-  modelCategory: String
-  cmsCenter: String
-  cmmiGroup: String
+  modelCategory: ModelCategory
+  cmsCenter: CMSCenter
+  cmmiGroup: CMMIGroup
   createdBy: String
   createdDts: Time
   modifiedBy: String
@@ -477,9 +483,9 @@ ModelPlanInput represent the data point for plans about a model. It is the centr
 input ModelPlanInput{
 id: UUID
 modelName: String
-modelCategory: String
-cmsCenter: String
-cmmiGroup: String
+modelCategory: ModelCategory
+cmsCenter: CMSCenter
+cmmiGroup: CMMIGroup
 createdBy: String
 createdDts: Time
 modifiedBy: String
@@ -550,6 +556,36 @@ createPlanBasics(input: PlanBasicsInput!):PlanBasics
 
 updateModelPlan(input: ModelPlanInput!):ModelPlan
 @hasRole(role: MINT_BASE_USER)
+
+}
+
+enum ModelCategory{
+	ACCOUNTABLE_CARE
+	DEMONSTRATION
+	EPISODE_BASED_PAYMENT_INITIATIVES
+	INIT_MEDICAID_CHIP_POP
+	INIT__MEDICARE_MEDICAID_ENROLLEES
+	INIT_ACCEL_DEV_AND_TEST
+	INIT_SPEED_ADOPT_BEST_PRACTICE
+	PRIMARY_CARE_TRANSFORMATION
+	UNKNOWN
+}
+enum CMSCenter {
+  CMMI
+  CENTER_FOR_MEDICARE
+  FEDERAL_COORDINATED_HEALTH_CARE_OFFICE
+  CENTER_FOR_CLINICAL_STANDARDS_AND_QUALITY
+  CENTER_FOR_PROGRAM_INTEGRITY
+  OTHER
+}
+
+enum CMMIGroup{
+  PATIENT_CARE_MODELS_GROUP
+  POLICY_AND_PROGRAMS_GROUP
+  PREVENTIVE_AND_POPULATION_HEALTH_CARE_MODELS_GROUP
+  SEAMLESS_CARE_MODELS_GROUP
+  STATE_INNOVATIONS_GROUP
+  TBD
 
 }
 
@@ -915,14 +951,14 @@ func (ec *executionContext) _ModelPlan_modelCategory(ctx context.Context, field 
 		Object:     "ModelPlan",
 		Field:      field,
 		Args:       nil,
-		IsMethod:   false,
-		IsResolver: false,
+		IsMethod:   true,
+		IsResolver: true,
 	}
 
 	ctx = graphql.WithFieldContext(ctx, fc)
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.ModelCategory, nil
+		return ec.resolvers.ModelPlan().ModelCategory(rctx, obj)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -931,9 +967,9 @@ func (ec *executionContext) _ModelPlan_modelCategory(ctx context.Context, field 
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(*string)
+	res := resTmp.(*models.ModelCategory)
 	fc.Result = res
-	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalOModelCategory2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelCategory(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _ModelPlan_cmsCenter(ctx context.Context, field graphql.CollectedField, obj *models.ModelPlan) (ret graphql.Marshaler) {
@@ -947,14 +983,14 @@ func (ec *executionContext) _ModelPlan_cmsCenter(ctx context.Context, field grap
 		Object:     "ModelPlan",
 		Field:      field,
 		Args:       nil,
-		IsMethod:   false,
-		IsResolver: false,
+		IsMethod:   true,
+		IsResolver: true,
 	}
 
 	ctx = graphql.WithFieldContext(ctx, fc)
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.CMSCenter, nil
+		return ec.resolvers.ModelPlan().CmsCenter(rctx, obj)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -963,9 +999,9 @@ func (ec *executionContext) _ModelPlan_cmsCenter(ctx context.Context, field grap
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(*string)
+	res := resTmp.(*models.CMSCenter)
 	fc.Result = res
-	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalOCMSCenter2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐCMSCenter(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _ModelPlan_cmmiGroup(ctx context.Context, field graphql.CollectedField, obj *models.ModelPlan) (ret graphql.Marshaler) {
@@ -979,14 +1015,14 @@ func (ec *executionContext) _ModelPlan_cmmiGroup(ctx context.Context, field grap
 		Object:     "ModelPlan",
 		Field:      field,
 		Args:       nil,
-		IsMethod:   false,
-		IsResolver: false,
+		IsMethod:   true,
+		IsResolver: true,
 	}
 
 	ctx = graphql.WithFieldContext(ctx, fc)
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.CMMIGroup, nil
+		return ec.resolvers.ModelPlan().CmmiGroup(rctx, obj)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -995,9 +1031,9 @@ func (ec *executionContext) _ModelPlan_cmmiGroup(ctx context.Context, field grap
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(*string)
+	res := resTmp.(*models.CMMIGroup)
 	fc.Result = res
-	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalOCMMIGroup2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐCMMIGroup(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _ModelPlan_createdBy(ctx context.Context, field graphql.CollectedField, obj *models.ModelPlan) (ret graphql.Marshaler) {
@@ -3072,7 +3108,7 @@ func (ec *executionContext) unmarshalInputModelPlanInput(ctx context.Context, ob
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("modelCategory"))
-			it.ModelCategory, err = ec.unmarshalOString2ᚖstring(ctx, v)
+			it.ModelCategory, err = ec.unmarshalOModelCategory2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelCategory(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -3080,7 +3116,7 @@ func (ec *executionContext) unmarshalInputModelPlanInput(ctx context.Context, ob
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("cmsCenter"))
-			it.CmsCenter, err = ec.unmarshalOString2ᚖstring(ctx, v)
+			it.CmsCenter, err = ec.unmarshalOCMSCenter2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐCMSCenter(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -3088,7 +3124,7 @@ func (ec *executionContext) unmarshalInputModelPlanInput(ctx context.Context, ob
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("cmmiGroup"))
-			it.CmmiGroup, err = ec.unmarshalOString2ᚖstring(ctx, v)
+			it.CmmiGroup, err = ec.unmarshalOCMMIGroup2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐCMMIGroup(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -3346,26 +3382,56 @@ func (ec *executionContext) _ModelPlan(ctx context.Context, sel ast.SelectionSet
 			out.Values[i] = innerFunc(ctx)
 
 		case "modelCategory":
+			field := field
+
 			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._ModelPlan_modelCategory(ctx, field, obj)
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._ModelPlan_modelCategory(ctx, field, obj)
+				return res
 			}
 
-			out.Values[i] = innerFunc(ctx)
+			out.Concurrently(i, func() graphql.Marshaler {
+				return innerFunc(ctx)
 
+			})
 		case "cmsCenter":
+			field := field
+
 			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._ModelPlan_cmsCenter(ctx, field, obj)
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._ModelPlan_cmsCenter(ctx, field, obj)
+				return res
 			}
 
-			out.Values[i] = innerFunc(ctx)
+			out.Concurrently(i, func() graphql.Marshaler {
+				return innerFunc(ctx)
 
+			})
 		case "cmmiGroup":
+			field := field
+
 			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._ModelPlan_cmmiGroup(ctx, field, obj)
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._ModelPlan_cmmiGroup(ctx, field, obj)
+				return res
 			}
 
-			out.Values[i] = innerFunc(ctx)
+			out.Concurrently(i, func() graphql.Marshaler {
+				return innerFunc(ctx)
 
+			})
 		case "createdBy":
 			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._ModelPlan_createdBy(ctx, field, obj)
@@ -4448,11 +4514,62 @@ func (ec *executionContext) marshalOBoolean2ᚖbool(ctx context.Context, sel ast
 	return res
 }
 
+func (ec *executionContext) unmarshalOCMMIGroup2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐCMMIGroup(ctx context.Context, v interface{}) (*models.CMMIGroup, error) {
+	if v == nil {
+		return nil, nil
+	}
+	tmp, err := graphql.UnmarshalString(v)
+	res := models.CMMIGroup(tmp)
+	return &res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalOCMMIGroup2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐCMMIGroup(ctx context.Context, sel ast.SelectionSet, v *models.CMMIGroup) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	res := graphql.MarshalString(string(*v))
+	return res
+}
+
+func (ec *executionContext) unmarshalOCMSCenter2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐCMSCenter(ctx context.Context, v interface{}) (*models.CMSCenter, error) {
+	if v == nil {
+		return nil, nil
+	}
+	tmp, err := graphql.UnmarshalString(v)
+	res := models.CMSCenter(tmp)
+	return &res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalOCMSCenter2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐCMSCenter(ctx context.Context, sel ast.SelectionSet, v *models.CMSCenter) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	res := graphql.MarshalString(string(*v))
+	return res
+}
+
 func (ec *executionContext) marshalOCurrentUser2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCurrentUser(ctx context.Context, sel ast.SelectionSet, v *model.CurrentUser) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
 	return ec._CurrentUser(ctx, sel, v)
+}
+
+func (ec *executionContext) unmarshalOModelCategory2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelCategory(ctx context.Context, v interface{}) (*models.ModelCategory, error) {
+	if v == nil {
+		return nil, nil
+	}
+	tmp, err := graphql.UnmarshalString(v)
+	res := models.ModelCategory(tmp)
+	return &res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalOModelCategory2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelCategory(ctx context.Context, sel ast.SelectionSet, v *models.ModelCategory) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	res := graphql.MarshalString(string(*v))
+	return res
 }
 
 func (ec *executionContext) marshalOModelPlan2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelPlan(ctx context.Context, sel ast.SelectionSet, v []*models.ModelPlan) graphql.Marshaler {

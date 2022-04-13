@@ -10,9 +10,9 @@ INSERT INTO model_plan (
 VALUES (
         :id,
         :model_name,
-        NULLIF(:model_category, ''),
-        NULLIF(:cms_center, ''),
-        NULLIF(:cmmi_group, ''),
+        :model_category,
+        :cms_center,
+        :cmmi_group,
         :created_by,
         :modified_by
     )

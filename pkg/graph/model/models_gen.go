@@ -8,6 +8,7 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/google/uuid"
 )
 
@@ -24,15 +25,15 @@ type LaunchDarklySettings struct {
 
 // ModelPlanInput represent the data point for plans about a model. It is the central data type in the appliation
 type ModelPlanInput struct {
-	ID            *uuid.UUID `json:"id"`
-	ModelName     *string    `json:"modelName"`
-	ModelCategory *string    `json:"modelCategory"`
-	CmsCenter     *string    `json:"cmsCenter"`
-	CmmiGroup     *string    `json:"cmmiGroup"`
-	CreatedBy     *string    `json:"createdBy"`
-	CreatedDts    *time.Time `json:"createdDts"`
-	ModifiedBy    *string    `json:"modifiedBy"`
-	ModifiedDts   *time.Time `json:"modifiedDts"`
+	ID            *uuid.UUID            `json:"id"`
+	ModelName     *string               `json:"modelName"`
+	ModelCategory *models.ModelCategory `json:"modelCategory"`
+	CmsCenter     *models.CMSCenter     `json:"cmsCenter"`
+	CmmiGroup     *models.CMMIGroup     `json:"cmmiGroup"`
+	CreatedBy     *string               `json:"createdBy"`
+	CreatedDts    *time.Time            `json:"createdDts"`
+	ModifiedBy    *string               `json:"modifiedBy"`
+	ModifiedDts   *time.Time            `json:"modifiedDts"`
 }
 
 // Represents plan basics

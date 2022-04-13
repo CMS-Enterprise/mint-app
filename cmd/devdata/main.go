@@ -46,9 +46,11 @@ func main() {
 	makeModelPlan("Mrs. Mint", logger, store, func(p *models.ModelPlan) {
 		p.ID = uuid.MustParse("6e224030-09d5-46f7-ad04-4bb851b36eab")
 		p.ModelName = models.StringPointer("PM Butler's great plan")
-		p.ModelCategory = models.StringPointer("Good ideas")
-		p.CMSCenter = models.StringPointer("Center for Awesomeness")
-		p.CMMIGroup = models.StringPointer("Great Group")
+
+		//TOOD update test data to use ENUM
+		// p.ModelCategory = models.StringPointer("Good ideas")
+		// p.CMSCenter = models.StringPointer("Center for Awesomeness")
+		// p.CMMIGroup = models.StringPointer("Great Group")
 
 		p.CreatedBy = models.StringPointer("MINT")
 		p.ModifiedBy = models.StringPointer("MINT")
@@ -60,12 +62,13 @@ func makeModelPlan(modelName string, logger *zap.Logger, store *storage.Store, c
 	ctx := appcontext.WithLogger(context.Background(), logger)
 
 	plan := models.ModelPlan{
-		ModelName:     &modelName,
-		ModelCategory: models.StringPointer("Normal ideas"),
-		CMSCenter:     models.StringPointer("Center for Medicaid and CHIP Services"),
-		CMMIGroup:     models.StringPointer("Innovation Group"),
-		CreatedBy:     models.StringPointer("ABCD"),
-		ModifiedBy:    models.StringPointer("ABCD"),
+		ModelName: &modelName,
+		//TODO update!
+		// ModelCategory: models.StringPointer("Normal ideas"),
+		// CMSCenter:     models.StringPointer("Center for Medicaid and CHIP Services"),
+		// CMMIGroup:     models.StringPointer("Innovation Group"),
+		CreatedBy:  models.StringPointer("ABCD"),
+		ModifiedBy: models.StringPointer("ABCD"),
 	}
 
 	for _, cb := range callbacks {
