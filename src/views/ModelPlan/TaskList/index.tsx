@@ -78,7 +78,7 @@ const TaskList = () => {
             className="model-plan-task-list__task-list model-plan-task-list__task-list--primary margin-y-6"
           >
             {Object.keys(taskListItem).map((key: any) => {
-              const lastItem = Object.keys(taskListItem).slice(-1)[0];
+              const lastTaskItem = Object.keys(taskListItem).slice(-1)[0];
               return (
                 <>
                   <TaskListItem
@@ -93,7 +93,9 @@ const TaskList = () => {
                     {/* <TaskListCta intake={systemIntake} /> */}
                     <TaskListCta status="READY" />
                   </TaskListItem>
-                  {key !== lastItem && <Divider className="margin-bottom-4" />}
+                  {key !== lastTaskItem && (
+                    <Divider className="margin-bottom-4" />
+                  )}
                 </>
               );
             })}
