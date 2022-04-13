@@ -54,6 +54,13 @@ const modelPlanTaskList = {
       copy:
         'Review all sections of the Model Plan and confirm with the Model Assessment Team that your model is ready for internal clearance processes.'
     }
+  },
+  taskListItem: {
+    ready: 'Ready to start',
+    inProgress: 'In progress',
+    completed: 'Completed',
+    cannotStart: 'Cannot start yet',
+    notNeeded: 'Not needed'
   }
 };
 
