@@ -3,7 +3,7 @@ create table model_plan (
     model_name TEXT,
     model_category model_category, --select from list
     cms_center cms_center, --should select from list
-    cmmi_group cmmi_group,
+    cmmi_group cmmi_group[],
     created_by eua_id,
     created_dts timestamp with time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
     modified_by eua_id,

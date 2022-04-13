@@ -1,5 +1,11 @@
 package models
 
+import (
+	"database/sql/driver"
+	"encoding/json"
+	"errors"
+)
+
 // ModelCategory represents the category of a model
 type ModelCategory string
 
@@ -68,3 +74,38 @@ const (
 	TriNo  TriStateAnswer = "NO"
 	TriTBD TriStateAnswer = "TBD" //Can also handle unsure
 )
+
+type EnumArray []string
+
+// type EnumArray []interface{}
+
+//inherit the type from enum array
+type CMMIGroupSelection EnumArray
+
+func (e EnumArray) Value() (driver.Value, error) {
+	j, err := json.Marshal(e)
+	return j, err
+
+}
+
+//Scan is used by sql.scan to read the values from the DB
+func (e *EnumArray) Scan(src interface{}) error {
+	source, ok := src.([]byte)
+	if !ok {
+		return errors.New("type assertion .([]byte) failed")
+	}
+
+	var i interface{}
+	err := json.Unmarshal(source, &i)
+	if err != nil {
+		return err
+	}
+
+	*e, ok = i.([]string)
+	// *e, ok = i.([]interface{})
+	if !ok {
+		return errors.New("type assertion .([]string) failed")
+	}
+
+	return nil
+}
