@@ -1,4 +1,13 @@
 """
+UserError represents application-level errors that are the result of
+either user or application developer error.
+"""
+type UserError {
+  message: String!
+  path: [String!]!
+}
+
+"""
 The current user's Launch Darkly key
 """
 type LaunchDarklySettings {
@@ -22,18 +31,18 @@ Time values are represented as strings using RFC3339 format, for example 2019-10
 scalar Time
 
 """
-ModelPlan represent the data point for plans about a model. It is the central data type in the appliation
+ModelPlan represent the data point for plans about a model. It is the central data type in the application
 """
 type ModelPlan {
-id: UUID
-requester: String
-requesterComponent: String
-mainPointOfContact: String
-pointOfContactComponent: String
-createdBy: String
-createdDts: Time
-modifiedBy: String
-modifiedDts: Time
+  id: UUID
+  requester: String
+  requesterComponent: String
+  mainPointOfContact: String
+  pointOfContactComponent: String
+  createdBy: String
+  createdDts: Time
+  modifiedBy: String
+  modifiedDts: Time
 }
 
 """
@@ -55,19 +64,60 @@ modifiedDts: Time
 
 
 """
+Represents plan basics
+"""
+type PlanBasics {
+  id: UUID
+  modelPlanID: UUID
+  modelName: String
+  modelCategory: String
+  cmsCenter: String
+  cmmiGroup: String
+  modelType: String
+  problem: String
+  goal: String
+  testInventions: String
+  note: String
+  createdBy: String
+  createdDts: Time
+  modifiedBy: String
+  modifiedDts: Time
+}
+
+"""
+Requests the creation of plan basics
+"""
+input CreatePlanBasicsRequestInput {
+  modelPlanID: UUID!
+}
+
+"""
+The payload returned on requesting plan basics creation
+"""
+type CreatePlanBasicsPayload {
+  id: UUID!
+  userErrors: [UserError!]
+}
+
+"""
 Query definition for the schema
 """
 type Query {
   currentUser: CurrentUser
   modelPlan(id: UUID!) : ModelPlan
+  planBasics(id: UUID!) : PlanBasics
   modelPlanCollection: [ModelPlan]
 }
+
 """
 Mutations definition for the schema
 """
 type Mutation {
 createModelPlan(input: ModelPlanInput!):ModelPlan
 @hasRole(role: MINT_BASE_USER)
+createPlanBasics(input: CreatePlanBasicsRequestInput!):CreatePlanBasicsPayload
+@hasRole(role: MINT_BASE_USER)
+
 updateModelPlan(input: ModelPlanInput!):ModelPlan
 @hasRole(role: MINT_BASE_USER)
 

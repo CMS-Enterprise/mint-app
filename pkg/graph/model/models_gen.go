@@ -11,6 +11,17 @@ import (
 	"github.com/google/uuid"
 )
 
+// The payload returned on requesting plan basics creation
+type CreatePlanBasicsPayload struct {
+	ID         uuid.UUID    `json:"id"`
+	UserErrors []*UserError `json:"userErrors"`
+}
+
+// Requests the creation of plan basics
+type CreatePlanBasicsRequestInput struct {
+	ModelPlanID uuid.UUID `json:"modelPlanID"`
+}
+
 // The current user of the application
 type CurrentUser struct {
 	LaunchDarkly *LaunchDarklySettings `json:"launchDarkly"`
@@ -22,7 +33,11 @@ type LaunchDarklySettings struct {
 	SignedHash string `json:"signedHash"`
 }
 
+// <<<<<<< HEAD
+// CreateModelPlan represent the data point for plans about a model. It is the central data type in the application
+// =======
 // ModelPlanInput represent the data point for plans about a model. It is the central data type in the appliation
+// >>>>>>> main
 type ModelPlanInput struct {
 	ID                      *uuid.UUID `json:"id"`
 	Requester               *string    `json:"requester"`
@@ -33,6 +48,13 @@ type ModelPlanInput struct {
 	CreatedDts              *time.Time `json:"createdDts"`
 	ModifiedBy              *string    `json:"modifiedBy"`
 	ModifiedDts             *time.Time `json:"modifiedDts"`
+}
+
+// UserError represents application-level errors that are the result of
+// either user or application developer error.
+type UserError struct {
+	Message string   `json:"message"`
+	Path    []string `json:"path"`
 }
 
 // A user role associated with a job code
