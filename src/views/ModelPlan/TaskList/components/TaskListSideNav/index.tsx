@@ -19,7 +19,7 @@ const TaskListSideNav = () => {
 
   return (
     <div
-      className="sidenav-actions grid-row flex-column border-top-05 border-primary-lighter"
+      className="sidenav-actions grid-row flex-column margin-left-4 border-top-05 border-primary-lighter"
       data-testid="sidenav-actions"
     >
       <div className="grid-col margin-top-105">
