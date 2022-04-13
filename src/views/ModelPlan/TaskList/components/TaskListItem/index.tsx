@@ -56,7 +56,7 @@ const TaskListItem = ({
     <li className={taskListItemClasses} data-testid={testId}>
       <div className="model-plan-task-list__task-content">
         <div className="model-plan-task-list__task-heading-row">
-          <h3 className="model-plan-task-list__task-heading margin-top-0">
+          <h3 className="model-plan-task-list__task-heading margin-top-0 margin-bottom-1">
             {heading}
           </h3>
           <span
