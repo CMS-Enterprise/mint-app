@@ -17,22 +17,8 @@ const TaskListSideNav = () => {
   const { t } = useTranslation('modelPlanTaskList');
   const [isModalOpen, setModalOpen] = useState(false);
 
-  return (
-    <div
-      className="sidenav-actions margin-left-4 border-top-05 border-primary-lighter padding-top-2"
-      data-testid="sidenav-actions"
-    >
-      <div className="margin-bottom-1">
-        <UswdsReactLink to="/">{t('sideNav.saveAndExit')}</UswdsReactLink>
-      </div>
-      <Button
-        className="line-height-body-5 test-withdraw-request"
-        type="button"
-        unstyled
-        onClick={() => setModalOpen(true)}
-      >
-        {t('sideNav.remove')}
-      </Button>
+  const renderModal = () => {
+    return (
       <Modal isOpen={isModalOpen} closeModal={() => setModalOpen(false)}>
         <PageHeading headingLevel="h2" className="margin-top-0">
           request name
@@ -51,6 +37,25 @@ const TaskListSideNav = () => {
           cancel
         </Button>
       </Modal>
+    );
+  };
+
+  return (
+    <div
+      className="sidenav-actions margin-left-4 border-top-05 border-primary-lighter padding-top-2"
+      data-testid="sidenav-actions"
+    >
+      <div className="margin-bottom-1">
+        <UswdsReactLink to="/">{t('sideNav.saveAndExit')}</UswdsReactLink>
+      </div>
+      <Button
+        className="line-height-body-5 test-withdraw-request"
+        type="button"
+        unstyled
+        onClick={() => setModalOpen(true)}
+      >
+        {t('sideNav.remove')}
+      </Button>
       <div className="margin-top-4">
         <h4 className="margin-bottom-1">{t('sideNav.relatedContent')}</h4>
         <UswdsReactLink
@@ -66,6 +71,7 @@ const TaskListSideNav = () => {
           </Trans>
         </UswdsReactLink>
       </div>
+      {renderModal()}
     </div>
   );
 };
