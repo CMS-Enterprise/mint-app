@@ -11,6 +11,7 @@ import {
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
+import Divider from 'components/shared/Divider';
 
 import TaskListItem, { TaskListDescription } from './components/TaskListItem';
 import TaskListSideNav from './components/TaskListSideNav';
@@ -73,21 +74,24 @@ const TaskList = () => {
           </SummaryBox>
           <ol
             data-testid="task-list"
-            className="model-plan-task-list__task-list model-plan-task-list__task-list--primary"
+            className="model-plan-task-list__task-list model-plan-task-list__task-list--primary margin-y-6"
           >
             {Object.keys(taskListItem).map((key: any) => {
               return (
-                <TaskListItem
-                  key={key}
-                  testId="task-list-intake-form"
-                  heading={taskListItem[key].heading}
-                  status="CANNOT_START"
-                >
-                  <TaskListDescription>
-                    <p className="margin-top-0">{taskListItem[key].copy}</p>
-                  </TaskListDescription>
-                  {/* <IntakeDraftCta intake={systemIntake} /> */}
-                </TaskListItem>
+                <>
+                  <TaskListItem
+                    key={key}
+                    testId="task-list-intake-form"
+                    heading={taskListItem[key].heading}
+                    status="READY"
+                  >
+                    <TaskListDescription>
+                      <p className="margin-top-0">{taskListItem[key].copy}</p>
+                    </TaskListDescription>
+                    {/* <IntakeDraftCta intake={systemIntake} /> */}
+                  </TaskListItem>
+                  <Divider className="margin-bottom-4" />
+                </>
               );
             })}
           </ol>
