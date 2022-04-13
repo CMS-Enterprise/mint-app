@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { Button } from '@trussworks/react-uswds';
 
 import UswdsReactLink from 'components/LinkWrapper';
@@ -22,7 +22,9 @@ const TaskListSideNav = () => {
       className="sidenav-actions margin-left-4 border-top-05 border-primary-lighter padding-top-2"
       data-testid="sidenav-actions"
     >
-      <UswdsReactLink to="/">{t('sideNav.saveAndExit')}</UswdsReactLink>
+      <div className="margin-bottom-1">
+        <UswdsReactLink to="/">{t('sideNav.saveAndExit')}</UswdsReactLink>
+      </div>
       <Button
         className="line-height-body-5 test-withdraw-request"
         type="button"
@@ -49,17 +51,19 @@ const TaskListSideNav = () => {
           cancel
         </Button>
       </Modal>
-      <div className="margin-top-5">
-        <h4>Related Content</h4>
+      <div className="margin-top-4">
+        <h4 className="margin-bottom-1">{t('sideNav.relatedContent')}</h4>
         <UswdsReactLink
-          aria-label="Open overview for adding a system in a new tab"
+          aria-label={t('sideNav.ariaLabelForOverview')}
           className="line-height-body-5"
           to="/governance-overview"
           variant="external"
           target="_blank"
         >
-          Overview for adding a system
-          <span aria-hidden>&nbsp;(opens in a new tab)</span>
+          <Trans i18nKey="modelPlanTaskList:sideNav.overview">
+            indexZero
+            <span aria-hidden /> indexTwo
+          </Trans>
         </UswdsReactLink>
       </div>
     </div>
