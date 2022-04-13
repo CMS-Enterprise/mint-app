@@ -38,6 +38,14 @@ const TaskListItem = ({
       )
     }
   );
+
+  const tagCopy =
+    (status === 'READY' && t('taskListItem.ready')) ||
+    (status === 'IN_PROGRESS' && t('taskListItem.inProgress')) ||
+    (status === 'COMPLETED' && t('taskListItem.completed')) ||
+    (status === 'CANNOT_START' && t('taskListItem.cannotStart')) ||
+    (status === 'NOT_NEEDED' && t('taskListItem.notNeeded'));
+
   return (
     <li className={taskListItemClasses} data-testid={testId}>
       <div className="model-plan-task-list__task-content">
@@ -45,46 +53,20 @@ const TaskListItem = ({
           <h3 className="model-plan-task-list__task-heading margin-top-0">
             {heading}
           </h3>
-          {status === 'READY' && (
-            <span
-              className="model-plan-task-list__task-tag model-plan-task-list__task-tag--ready"
-              data-testid="task-list-task-tag"
-            >
-              {t('taskListItem.ready')}
-            </span>
-          )}
-          {status === 'IN_PROGRESS' && (
-            <span
-              className="model-plan-task-list__task-tag model-plan-task-list__task-tag--in-progress"
-              data-testid="task-list-task-tag"
-            >
-              {t('taskListItem.inProgress')}
-            </span>
-          )}
-          {status === 'COMPLETED' && (
-            <span
-              className="model-plan-task-list__task-tag model-plan-task-list__task-tag--completed"
-              data-testid="task-list-task-tag"
-            >
-              {t('taskListItem.completed')}
-            </span>
-          )}
-          {status === 'CANNOT_START' && (
-            <span
-              className="model-plan-task-list__task-tag model-plan-task-list__task-tag--na"
-              data-testid="task-list-task-tag"
-            >
-              {t('taskListItem.cannotStart')}
-            </span>
-          )}
-          {status === 'NOT_NEEDED' && (
-            <span
-              className="model-plan-task-list__task-tag model-plan-task-list__task-tag--na"
-              data-testid="task-list-task-tag"
-            >
-              {t('taskListItem.notNeeded')}
-            </span>
-          )}
+          <span
+            className={classnames('model-plan-task-list__task-tag', {
+              'model-plan-task-list__task-tag--ready': status === 'READY',
+              'model-plan-task-list__task-tag--in-progress':
+                status === 'IN_PROGRESS',
+              'model-plan-task-list__task-tag--completed':
+                status === 'COMPLETED',
+              'model-plan-task-list__task-tag--na':
+                status === 'CANNOT_START' || status === 'NOT_NEEDED'
+            })}
+            data-testid="task-list-task-tag"
+          >
+            {tagCopy}
+          </span>
         </div>
         {children}
       </div>
