@@ -51,21 +51,21 @@
     font-weight: bold;
 
     &--in-progress {
-      background-color: #ffbe2e;
+      background-color: $gold;
     }
 
     &--ready {
-      background-color: #00bde3;
+      background-color: color('accent-cool');
     }
 
     &--na {
-      border: 2px solid #626a6e;
-      color: #626a6e;
+      border: 2px solid $gray;
+      color: $gray;
     }
 
     &--completed {
-      background-color: #1d8461;
-      color: #fff;
+      background-color: $completed;
+      color: color('white');
     }
   }
 
@@ -76,7 +76,7 @@
 
   &__meeting-date {
     padding-left: 0.5rem;
-    border-left: 3px solid #000;
+    border-left: 3px solid color('black');
     font-weight: bold;
   }
 }
