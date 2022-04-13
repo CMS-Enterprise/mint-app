@@ -54,6 +54,12 @@
     font-size: 1em;
     line-height: 1.625em;
     font-weight: bold;
+    &--in-progress {
+      background-color: #ffbe2e;
+    }
+    &--ready {
+      background-color: #00bde3;
+    }
     &--na {
       border: 2px solid #626a6e;
       color: #626a6e;
