@@ -8,6 +8,10 @@ const modelPlanTaskList = {
     copy: 'There are no documents uploaded for <1>{{modelName}}</1>.',
     cta: 'Upload a document'
   },
+  sideNav: {
+    saveAndExit: 'Save & Exit',
+    remove: 'Remove your Model Plan'
+  },
   numberedList: {
     modelBasic: {
       heading: 'Model basics',
