@@ -46,6 +46,12 @@ const TaskListItem = ({
     (status === 'CANNOT_START' && t('taskListItem.cannotStart')) ||
     (status === 'NOT_NEEDED' && t('taskListItem.notNeeded'));
 
+  const tagStyle =
+    (status === 'READY' && 'ready') ||
+    (status === 'IN_PROGRESS' && 'in-progress') ||
+    (status === 'COMPLETED' && 'completed') ||
+    ((status === 'CANNOT_START' || status === 'NOT_NEEDED') && 'na');
+
   return (
     <li className={taskListItemClasses} data-testid={testId}>
       <div className="model-plan-task-list__task-content">
@@ -54,15 +60,7 @@ const TaskListItem = ({
             {heading}
           </h3>
           <span
-            className={classnames('model-plan-task-list__task-tag', {
-              'model-plan-task-list__task-tag--ready': status === 'READY',
-              'model-plan-task-list__task-tag--in-progress':
-                status === 'IN_PROGRESS',
-              'model-plan-task-list__task-tag--completed':
-                status === 'COMPLETED',
-              'model-plan-task-list__task-tag--na':
-                status === 'CANNOT_START' || status === 'NOT_NEEDED'
-            })}
+            className={`model-plan-task-list__task-tag model-plan-task-list__task-tag--${tagStyle}`}
             data-testid="task-list-task-tag"
           >
             {tagCopy}
