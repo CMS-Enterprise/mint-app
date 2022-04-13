@@ -79,6 +79,7 @@ const TaskList = () => {
           >
             {Object.keys(taskListItem).map((key: any) => {
               const lastTaskItem = Object.keys(taskListItem).slice(-1)[0];
+
               return (
                 <>
                   <TaskListItem
