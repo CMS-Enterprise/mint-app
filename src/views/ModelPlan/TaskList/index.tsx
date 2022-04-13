@@ -13,6 +13,7 @@ import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import Divider from 'components/shared/Divider';
 
+import TaskListCta from './components/TaskListCta';
 import TaskListItem, { TaskListDescription } from './components/TaskListItem';
 import TaskListSideNav from './components/TaskListSideNav';
 
@@ -88,7 +89,8 @@ const TaskList = () => {
                     <TaskListDescription>
                       <p className="margin-top-0">{taskListItem[key].copy}</p>
                     </TaskListDescription>
-                    {/* <IntakeDraftCta intake={systemIntake} /> */}
+                    {/* <TaskListCta intake={systemIntake} /> */}
+                    <TaskListCta status="READY" />
                   </TaskListItem>
                   <Divider className="margin-bottom-4" />
                 </>
