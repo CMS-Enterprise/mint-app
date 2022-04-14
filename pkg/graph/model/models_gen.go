@@ -38,18 +38,18 @@ type ModelPlanInput struct {
 
 // Represents plan basics
 type PlanBasicsInput struct {
-	ID             *uuid.UUID `json:"id"`
-	ModelPlanID    *uuid.UUID `json:"modelPlanID"`
-	ModelType      *string    `json:"modelType"`
-	Problem        *string    `json:"problem"`
-	Goal           *string    `json:"goal"`
-	TestInventions *string    `json:"testInventions"`
-	Note           *string    `json:"note"`
-	CreatedBy      *string    `json:"createdBy"`
-	CreatedDts     *time.Time `json:"createdDts"`
-	ModifiedBy     *string    `json:"modifiedBy"`
-	ModifiedDts    *time.Time `json:"modifiedDts"`
-	Status         *string    `json:"status"`
+	ID             *uuid.UUID         `json:"id"`
+	ModelPlanID    *uuid.UUID         `json:"modelPlanID"`
+	ModelType      *models.ModelType  `json:"modelType"`
+	Problem        *string            `json:"problem"`
+	Goal           *string            `json:"goal"`
+	TestInventions *string            `json:"testInventions"`
+	Note           *string            `json:"note"`
+	CreatedBy      *string            `json:"createdBy"`
+	CreatedDts     *time.Time         `json:"createdDts"`
+	ModifiedBy     *string            `json:"modifiedBy"`
+	ModifiedDts    *time.Time         `json:"modifiedDts"`
+	Status         *models.TaskStatus `json:"status"`
 }
 
 // A user role associated with a job code

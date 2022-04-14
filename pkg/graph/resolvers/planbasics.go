@@ -24,6 +24,13 @@ func CreatePlanBasicsResolver(logger *zap.Logger, input model.PlanBasicsInput, p
 	return createdPlan, err
 }
 
+func UpdatePlanBasicsResolver(logger *zap.Logger, input *models.PlanBasics, principal *string, store *storage.Store) (*models.PlanBasics, error) {
+
+	retBasics, err := store.PlanBasicsUpdate(logger, input)
+	return retBasics, err
+
+}
+
 func FetchPlanBasicsByID(logger *zap.Logger, id uuid.UUID, store *storage.Store) (*models.PlanBasics, error) {
 	plan, err := store.PlanBasicsGetByID(logger, id)
 	if err != nil {

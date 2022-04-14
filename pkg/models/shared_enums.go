@@ -75,6 +75,14 @@ const (
 	TriTBD TriStateAnswer = "TBD" //Can also handle unsure
 )
 
+type TaskStatus string
+
+const (
+	TaskReady      TaskStatus = "READY"
+	TaskInProgress TaskStatus = "IN_PROGRESS"
+	TaskComplete   TaskStatus = "COMPLETE"
+)
+
 type EnumString string
 type EnumArray []EnumString
 

@@ -27,3 +27,6 @@ CREATE TYPE cmmi_group as ENUM (
 );
 CREATE TYPE model_type as ENUM ('VOLUNTARY', 'MANDATORY', 'TBD');
 CREATE TYPE tri_state_answer as ENUM ('YES', 'NO', 'TBD');
+
+
+CREATE TYPE task_status as ENUM ('READY','IN_PROGRESS', 'COMPLETE')

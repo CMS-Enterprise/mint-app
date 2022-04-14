@@ -10,7 +10,7 @@ type PlanBasics struct {
 	ID          uuid.UUID `json:"id" db:"id"`
 	ModelPlanID uuid.UUID `json:"modelPlanID" db:"model_plan_id"`
 
-	ModelType *string `json:"modelType" db:"model_type"`
+	ModelType *ModelType `json:"modelType" db:"model_type"`
 
 	Problem        *string `json:"problem" db:"problem"`
 	Goal           *string `json:"goal" db:"goal"`
@@ -21,5 +21,5 @@ type PlanBasics struct {
 	CreatedDts  *time.Time `json:"createdDts" db:"created_dts"`
 	ModifiedBy  *string    `json:"modifiedBy" db:"modified_by"`
 	ModifiedDts *time.Time `json:"modifiedDts" db:"modified_dts"`
-	Status      *string    `json:"status" db:"status"`
+	Status      TaskStatus `json:"status" db:"status"`
 }

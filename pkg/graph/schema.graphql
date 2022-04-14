@@ -65,7 +65,7 @@ type PlanBasics {
   id: UUID
   modelPlanID: UUID
 
-  modelType: String
+  modelType: ModelType
   problem: String
   goal: String
   testInventions: String
@@ -74,7 +74,7 @@ type PlanBasics {
   createdDts: Time
   modifiedBy: String
   modifiedDts: Time
-  status: String
+  status: TaskStatus
 }
 
 
@@ -85,7 +85,7 @@ input PlanBasicsInput {
   id: UUID
   modelPlanID: UUID
 
-  modelType: String
+  modelType: ModelType
   problem: String
   goal: String
   testInventions: String
@@ -94,7 +94,7 @@ input PlanBasicsInput {
   createdDts: Time
   modifiedBy: String
   modifiedDts: Time
-  status: String
+  status: TaskStatus
 }
 
 
@@ -121,6 +121,23 @@ createPlanBasics(input: PlanBasicsInput!):PlanBasics
 updateModelPlan(input: ModelPlanInput!):ModelPlan
 @hasRole(role: MINT_BASE_USER)
 
+updatePlanBasics(input: PlanBasicsInput!): PlanBasics
+@hasRole(role: MINT_BASE_USER)
+
+}
+
+enum TaskStatus {
+  READY
+  IN_PROGRESS
+  COMPLETE
+
+}
+
+enum ModelType
+{
+  VOLUNTARY
+  MANDATORY
+  TBD
 }
 
 enum ModelCategory{

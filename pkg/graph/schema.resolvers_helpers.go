@@ -23,3 +23,26 @@ func ConvertToModelPlan(mpi *model.ModelPlanInput) *models.ModelPlan {
 	return &plan
 
 }
+
+func ConvertToPlanBasics(mpi *model.PlanBasicsInput) *models.PlanBasics {
+	basics := models.PlanBasics{
+
+		ModelPlanID:    *mpi.ModelPlanID,
+		ModelType:      mpi.ModelType,
+		Problem:        mpi.Problem,
+		Goal:           mpi.Goal,
+		TestInventions: mpi.TestInventions,
+		Note:           mpi.Note,
+
+		CreatedBy:   mpi.CreatedBy,
+		CreatedDts:  mpi.CreatedDts,
+		ModifiedBy:  mpi.ModifiedBy,
+		ModifiedDts: mpi.ModifiedDts,
+	}
+
+	if mpi.ID != nil {
+		basics.ID = *mpi.ID
+	}
+	return &basics
+
+}

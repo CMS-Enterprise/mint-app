@@ -47,6 +47,14 @@ func (r *mutationResolver) UpdateModelPlan(ctx context.Context, input model.Mode
 	return retPlan, err
 }
 
+func (r *mutationResolver) UpdatePlanBasics(ctx context.Context, input model.PlanBasicsInput) (*models.PlanBasics, error) {
+	basics := ConvertToPlanBasics(&input)
+	principal := appcontext.Principal(ctx).ID()
+	logger := appcontext.ZLogger(ctx)
+
+	return resolvers.UpdatePlanBasicsResolver(logger, basics, &principal, r.store)
+}
+
 func (r *queryResolver) CurrentUser(ctx context.Context) (*model.CurrentUser, error) {
 	ldUser := flags.Principal(ctx)
 	userKey := ldUser.GetKey()
