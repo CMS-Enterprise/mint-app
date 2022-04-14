@@ -1,6 +1,6 @@
 create table plan_basics (
     id uuid PRIMARY KEY not null,
-    model_plan_id uuid not null, --foreign key to model plan
+    model_plan_id uuid not null UNIQUE, --foreign key to model plan
 
     model_type model_type,
 

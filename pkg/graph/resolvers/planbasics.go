@@ -22,6 +22,7 @@ func CreatePlanBasicsResolver(logger *zap.Logger, input *models.PlanBasics, prin
 }
 
 func UpdatePlanBasicsResolver(logger *zap.Logger, input *models.PlanBasics, principal *string, store *storage.Store) (*models.PlanBasics, error) {
+	input.ModifiedBy = principal
 
 	retBasics, err := store.PlanBasicsUpdate(logger, input)
 	return retBasics, err

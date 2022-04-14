@@ -56,7 +56,9 @@ func HandleModelFetchNoRowsError(logger *zap.Logger, id uuid.UUID, err error) (*
 		zap.Error(err),
 		zap.String("id", id.String()),
 	)
-	return nil, &apperrors.ResourceNotFoundError{Err: err, Resource: models.ModelPlan{}}
+	// return nil, &apperrors.ResourceNotFoundError{Err: err, Resource: models.ModelPlan{}}
+	//TODO decision is to not present an error if no model row found for this
+	return nil, nil
 }
 
 func HandleModelFetchGenericError(logger *zap.Logger, id uuid.UUID, err error) (*models.PlanBasics, error) {
