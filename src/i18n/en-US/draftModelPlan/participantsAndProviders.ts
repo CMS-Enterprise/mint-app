@@ -14,8 +14,9 @@ const participantsAndProviders = {
   selectedParticipants: 'Selected participants',
   participantQuestions: 'Participant specific questions',
   typeMedicateProvider: 'Which type of medicare providers?',
-  describeStates: 'Please describe states',
-  describeOther: 'Please describe other',
+  describeStates: 'Please describe how states will engage with your model.',
+  describeOther:
+    'Please describe the other participants engaging with this model',
   howManyParticipants: 'How many participants do you expect?',
   howManyInfo:
     'Note: Sometimes RRCEG provides a minimum for the power calculation. Other times stakeholder research may inform the team about who are good candidates or might be interested in participating.',
@@ -49,8 +50,56 @@ const participantsAndProviders = {
       'Another CMS oricess or component supports participant selection',
     notApplicable: 'Not applicable, it is a mandatory model'
   },
-  participantAgreementNeeded:
-    'Will more than one standard participant agreement be needed depending on awardee selections or characteristics, such as risk/type/size?'
+  providerConditions: 'What are the provider model enrollment conditions?',
+  providerConditionsInfo:
+    '(decision points, timing, and liabilities of doing so)',
+  providerTermination: 'What are the provider model termination conditions?',
+  providerTerminationInfo:
+    '(decision points, timing, and liabilities of doing so)',
+  participantCommunication: 'How will you communicate with participants?',
+  participantCommunicationOptions: {
+    sendEmails: 'Send mass emails to new participants',
+    itTool: 'Manage ongoing communications with participants using an IT tool',
+    noCommunication: 'We are not planning to communicate'
+  },
+  manageParticipants: 'How will you manage participants?',
+  manageParticipantsOptions: {
+    prospectively:
+      'Enroll prospectively (based on previous year’s interactions)',
+    retrospectively:
+      'Enroll retrospectively (once an interaction happens this year)',
+    voluntarily: 'Enroll voluntarily',
+    manditorily: 'Enroll manditorily',
+    onlineTools:
+      'Use online tools to view what types of participant files and data have been uploaded and downloaded'
+  },
+  assumeRisk: 'Will the participants assume risk?',
+  riskType: 'What type of risk will the participant assume?',
+  riskTypeOptions: {
+    twoSided: 'Two-sided',
+    oneSided: 'One-sided',
+    capitalization: 'Capitalization'
+  },
+  changeRisk: 'Will the risk arrangement change as the model progresses?',
+  workCoordination:
+    'Will the participants coodrdinate the work of others )e.g. conveners)?',
+  gainsharing: 'Will there be gainsharing payments?',
+  collectIDs: 'Will you collect participant IDs?',
+  overlap: 'Will the providers overlap with other models?',
+  overlapOptions: {
+    yes: 'Yes, we epect to develop policies to manage the overlaps',
+    yesNoIssue: 'Yes, and the overlaps would not be an issue'
+  },
+  trackPayments: 'Will you track gainsharing payments?',
+  collectTINs: 'Will you collect TINs, NPIs, CCNs? Selct all that apply.',
+  collectTINsInfo:
+    'Note: If this will be a MIPS or Advanced APM, you need to collect provider TIN-NPIs for participants to benefit from QQP. In addition, CPI vetting needs to be preformed.',
+  collectTINsOptions: {
+    tins: 'TINs',
+    npis: 'NPIs',
+    ccns: 'CCNs',
+    no: 'No, we will not collect provider identifiers'
+  }
 };
 
 export default participantsAndProviders;
