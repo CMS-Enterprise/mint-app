@@ -37,6 +37,7 @@ type ModelPlan {
   createdDts: Time
   modifiedBy: String
   modifiedDts: Time
+  basics: PlanBasics
 }
 
 """

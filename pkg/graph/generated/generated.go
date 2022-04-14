@@ -58,6 +58,7 @@ type ComplexityRoot struct {
 	}
 
 	ModelPlan struct {
+		Basics        func(childComplexity int) int
 		CMSCenter     func(childComplexity int) int
 		CmmiGroup     func(childComplexity int) int
 		CreatedBy     func(childComplexity int) int
@@ -101,6 +102,8 @@ type ComplexityRoot struct {
 
 type ModelPlanResolver interface {
 	CmmiGroup(ctx context.Context, obj *models.ModelPlan) ([]string, error)
+
+	Basics(ctx context.Context, obj *models.ModelPlan) (*models.PlanBasics, error)
 }
 type MutationResolver interface {
 	CreateModelPlan(ctx context.Context, input model.ModelPlanInput) (*models.ModelPlan, error)
@@ -150,6 +153,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.LaunchDarklySettings.UserKey(childComplexity), true
+
+	case "ModelPlan.basics":
+		if e.complexity.ModelPlan.Basics == nil {
+			break
+		}
+
+		return e.complexity.ModelPlan.Basics(childComplexity), true
 
 	case "ModelPlan.cmsCenter":
 		if e.complexity.ModelPlan.CMSCenter == nil {
@@ -487,6 +497,7 @@ type ModelPlan {
   createdDts: Time
   modifiedBy: String
   modifiedDts: Time
+  basics: PlanBasics
 }
 
 """
@@ -1208,6 +1219,38 @@ func (ec *executionContext) _ModelPlan_modifiedDts(ctx context.Context, field gr
 	res := resTmp.(*time.Time)
 	fc.Result = res
 	return ec.marshalOTime2ᚖtimeᚐTime(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _ModelPlan_basics(ctx context.Context, field graphql.CollectedField, obj *models.ModelPlan) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "ModelPlan",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   true,
+		IsResolver: true,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.ModelPlan().Basics(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*models.PlanBasics)
+	fc.Result = res
+	return ec.marshalOPlanBasics2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanBasics(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Mutation_createModelPlan(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
@@ -3549,6 +3592,23 @@ func (ec *executionContext) _ModelPlan(ctx context.Context, sel ast.SelectionSet
 
 			out.Values[i] = innerFunc(ctx)
 
+		case "basics":
+			field := field
+
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._ModelPlan_basics(ctx, field, obj)
+				return res
+			}
+
+			out.Concurrently(i, func() graphql.Marshaler {
+				return innerFunc(ctx)
+
+			})
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}

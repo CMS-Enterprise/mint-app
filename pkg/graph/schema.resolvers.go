@@ -20,6 +20,12 @@ func (r *modelPlanResolver) CmmiGroup(ctx context.Context, obj *models.ModelPlan
 	return obj.CMMIGroup, nil
 }
 
+func (r *modelPlanResolver) Basics(ctx context.Context, obj *models.ModelPlan) (*models.PlanBasics, error) {
+	logger := appcontext.ZLogger(ctx)
+
+	return resolvers.FetchPlanBasicsByModelPlanID(logger, obj.ID, r.store)
+}
+
 func (r *mutationResolver) CreateModelPlan(ctx context.Context, input model.ModelPlanInput) (*models.ModelPlan, error) {
 	plan := ConvertToModelPlan(&input)
 
