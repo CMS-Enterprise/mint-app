@@ -17,7 +17,9 @@ const TeamMembersList = ({ team }: { team: string[] }) => {
             key={name}
           >
             <div
-              className={`display-flex flex-align-center flex-justify-center circle-4 margin-right-1 ${arrayOfColors[index]}`}
+              className={`display-flex flex-align-center flex-justify-center circle-4 margin-right-1 ${
+                arrayOfColors[index % arrayOfColors.length]
+              }`}
             >
               {
                 // @ts-ignore
