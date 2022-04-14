@@ -48,16 +48,16 @@ const (
 )
 
 //  CMMIGroup representes the group at CMMI
-type CMMIGroup string
+// type CMMIGroup EnumString
 
-const (
-	CMMIPatientCareModels                       CMMIGroup = "PATIENT_CARE_MODELS_GROUP"
-	CMMIPolicyAndPrograms                       CMMIGroup = "POLICY_AND_PROGRAMS_GROUP"
-	CMMIPreventiveAndPopulationHealthCareModels CMMIGroup = "PREVENTIVE_AND_POPULATION_HEALTH_CARE_MODELS_GROUP"
-	CMMISeamlessCareModels                      CMMIGroup = "SEAMLESS_CARE_MODELS_GROUP"
-	CMMIStateInnovations                        CMMIGroup = "STATE_INNOVATIONS_GROUP"
-	CMMITBD                                     CMMIGroup = "TBD"
-)
+// const (
+// 	CMMIPatientCareModels                       CMMIGroup = "PATIENT_CARE_MODELS_GROUP"
+// 	CMMIPolicyAndPrograms                       CMMIGroup = "POLICY_AND_PROGRAMS_GROUP"
+// 	CMMIPreventiveAndPopulationHealthCareModels CMMIGroup = "PREVENTIVE_AND_POPULATION_HEALTH_CARE_MODELS_GROUP"
+// 	CMMISeamlessCareModels                      CMMIGroup = "SEAMLESS_CARE_MODELS_GROUP"
+// 	CMMIStateInnovations                        CMMIGroup = "STATE_INNOVATIONS_GROUP"
+// 	CMMITBD                                     CMMIGroup = "TBD"
+// )
 
 type ModelType string
 
@@ -75,7 +75,8 @@ const (
 	TriTBD TriStateAnswer = "TBD" //Can also handle unsure
 )
 
-type EnumArray []string
+type EnumString string
+type EnumArray []EnumString
 
 // type EnumArray []interface{}
 
@@ -101,7 +102,7 @@ func (e *EnumArray) Scan(src interface{}) error {
 		return err
 	}
 
-	*e, ok = i.([]string)
+	*e, ok = i.([]EnumString)
 	// *e, ok = i.([]interface{})
 	if !ok {
 		return errors.New("type assertion .([]string) failed")

@@ -16,6 +16,7 @@ func ConvertToModelPlan(mpi *model.ModelPlanInput) *models.ModelPlan {
 		ModifiedBy:    mpi.ModifiedBy,
 		ModifiedDts:   mpi.ModifiedDts,
 	}
+
 	if mpi.ID != nil {
 		plan.ID = *mpi.ID
 	}

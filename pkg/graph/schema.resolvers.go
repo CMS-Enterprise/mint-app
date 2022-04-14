@@ -16,6 +16,10 @@ import (
 	"github.com/cmsgov/mint-app/pkg/models"
 )
 
+func (r *modelPlanResolver) CmmiGroup(ctx context.Context, obj *models.ModelPlan) ([]string, error) {
+	return obj.CMMIGroup, nil
+}
+
 func (r *mutationResolver) CreateModelPlan(ctx context.Context, input model.ModelPlanInput) (*models.ModelPlan, error) {
 	plan := ConvertToModelPlan(&input)
 
@@ -81,11 +85,15 @@ func (r *queryResolver) ModelPlanCollection(ctx context.Context) ([]*models.Mode
 	return plans, nil
 }
 
+// ModelPlan returns generated.ModelPlanResolver implementation.
+func (r *Resolver) ModelPlan() generated.ModelPlanResolver { return &modelPlanResolver{r} }
+
 // Mutation returns generated.MutationResolver implementation.
 func (r *Resolver) Mutation() generated.MutationResolver { return &mutationResolver{r} }
 
 // Query returns generated.QueryResolver implementation.
 func (r *Resolver) Query() generated.QueryResolver { return &queryResolver{r} }
 
+type modelPlanResolver struct{ *Resolver }
 type mutationResolver struct{ *Resolver }
 type queryResolver struct{ *Resolver }

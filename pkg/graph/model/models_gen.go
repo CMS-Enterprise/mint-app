@@ -29,7 +29,7 @@ type ModelPlanInput struct {
 	ModelName     *string               `json:"modelName"`
 	ModelCategory *models.ModelCategory `json:"modelCategory"`
 	CmsCenter     *models.CMSCenter     `json:"cmsCenter"`
-	CmmiGroup     []*models.CMMIGroup   `json:"cmmiGroup"`
+	CmmiGroup     []string              `json:"cmmiGroup"`
 	CreatedBy     *string               `json:"createdBy"`
 	CreatedDts    *time.Time            `json:"createdDts"`
 	ModifiedBy    *string               `json:"modifiedBy"`
