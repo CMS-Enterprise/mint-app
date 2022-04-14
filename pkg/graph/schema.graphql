@@ -31,8 +31,7 @@ type ModelPlan {
   modelName: String
   modelCategory: ModelCategory
   cmsCenter: CMSCenter
-  cmmiGroup: [String!]
-  # cmmiGroup: [CMMIGroup!]
+  cmmiGroups: [CMMIGroup!]
   createdBy: String
   createdDts: Time
   modifiedBy: String
@@ -49,8 +48,7 @@ id: UUID
 modelName: String
 modelCategory: ModelCategory
 cmsCenter: CMSCenter
-cmmiGroup: [String!]
-# cmmiGroup: [CMMIGroup!]
+cmmiGroups: [CMMIGroup!]
 createdBy: String
 createdDts: Time
 modifiedBy: String
@@ -161,15 +159,13 @@ enum CMSCenter {
   OTHER
 }
 
-# enum CMMIGroup{
-#   PATIENT_CARE_MODELS_GROUP
-#   POLICY_AND_PROGRAMS_GROUP
-#   PREVENTIVE_AND_POPULATION_HEALTH_CARE_MODELS_GROUP
-#   SEAMLESS_CARE_MODELS_GROUP
-#   STATE_INNOVATIONS_GROUP
-#   TBD
-
-# }
+enum CMMIGroup {
+  PATIENT_CARE_MODELS_GROUP
+  POLICY_AND_PROGRAMS_GROUP
+  PREVENTIVE_AND_POPULATION_HEALTH_CARE_MODELS_GROUP
+  SEAMLESS_CARE_MODELS_GROUP
+  STATE_INNOVATIONS_GROUP
+}
 
 directive @hasRole(role: Role!) on FIELD_DEFINITION
 

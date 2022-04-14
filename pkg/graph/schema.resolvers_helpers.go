@@ -6,11 +6,17 @@ import (
 )
 
 func ConvertToModelPlan(mpi *model.ModelPlanInput) *models.ModelPlan {
+	// TODO: We should probably have a better way to handle enum arrays
+	var cmmiGroup []string
+	for _, item := range mpi.CmmiGroups {
+		cmmiGroup = append(cmmiGroup, string(item))
+	}
+
 	plan := models.ModelPlan{
 		ModelName:     mpi.ModelName,
 		ModelCategory: mpi.ModelCategory,
 		CMSCenter:     mpi.CmsCenter,
-		CMMIGroup:     mpi.CmmiGroup,
+		CMMIGroup:     cmmiGroup,
 		CreatedBy:     mpi.CreatedBy,
 		CreatedDts:    mpi.CreatedDts,
 		ModifiedBy:    mpi.ModifiedBy,

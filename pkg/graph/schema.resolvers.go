@@ -16,14 +16,22 @@ import (
 	"github.com/cmsgov/mint-app/pkg/models"
 )
 
-func (r *modelPlanResolver) CmmiGroup(ctx context.Context, obj *models.ModelPlan) ([]string, error) {
-	return obj.CMMIGroup, nil
+func (r *modelPlanResolver) CmmiGroups(ctx context.Context, obj *models.ModelPlan) ([]model.CMMIGroup, error) {
+	// TODO: We should probably have a better way to handle enum arrays
+	var cmmiGroups []model.CMMIGroup
+
+	for _, item := range obj.CMMIGroup {
+		cmmiGroups = append(cmmiGroups, model.CMMIGroup(item))
+	}
+
+	return cmmiGroups, nil
 }
 
 func (r *modelPlanResolver) Basics(ctx context.Context, obj *models.ModelPlan) (*models.PlanBasics, error) {
 	logger := appcontext.ZLogger(ctx)
+	principal := appcontext.Principal(ctx).ID()
 
-	return resolvers.FetchPlanBasicsByModelPlanID(logger, obj.ID, r.store)
+	return resolvers.FetchPlanBasicsByModelPlanID(logger, &principal, obj.ID, r.store)
 }
 
 func (r *mutationResolver) CreateModelPlan(ctx context.Context, input model.ModelPlanInput) (*models.ModelPlan, error) {

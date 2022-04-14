@@ -60,7 +60,7 @@ type ComplexityRoot struct {
 	ModelPlan struct {
 		Basics        func(childComplexity int) int
 		CMSCenter     func(childComplexity int) int
-		CmmiGroup     func(childComplexity int) int
+		CmmiGroups    func(childComplexity int) int
 		CreatedBy     func(childComplexity int) int
 		CreatedDts    func(childComplexity int) int
 		ID            func(childComplexity int) int
@@ -101,7 +101,7 @@ type ComplexityRoot struct {
 }
 
 type ModelPlanResolver interface {
-	CmmiGroup(ctx context.Context, obj *models.ModelPlan) ([]string, error)
+	CmmiGroups(ctx context.Context, obj *models.ModelPlan) ([]model.CMMIGroup, error)
 
 	Basics(ctx context.Context, obj *models.ModelPlan) (*models.PlanBasics, error)
 }
@@ -168,12 +168,12 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.ModelPlan.CMSCenter(childComplexity), true
 
-	case "ModelPlan.cmmiGroup":
-		if e.complexity.ModelPlan.CmmiGroup == nil {
+	case "ModelPlan.cmmiGroups":
+		if e.complexity.ModelPlan.CmmiGroups == nil {
 			break
 		}
 
-		return e.complexity.ModelPlan.CmmiGroup(childComplexity), true
+		return e.complexity.ModelPlan.CmmiGroups(childComplexity), true
 
 	case "ModelPlan.createdBy":
 		if e.complexity.ModelPlan.CreatedBy == nil {
@@ -491,8 +491,7 @@ type ModelPlan {
   modelName: String
   modelCategory: ModelCategory
   cmsCenter: CMSCenter
-  cmmiGroup: [String!]
-  # cmmiGroup: [CMMIGroup!]
+  cmmiGroups: [CMMIGroup!]
   createdBy: String
   createdDts: Time
   modifiedBy: String
@@ -509,8 +508,7 @@ id: UUID
 modelName: String
 modelCategory: ModelCategory
 cmsCenter: CMSCenter
-cmmiGroup: [String!]
-# cmmiGroup: [CMMIGroup!]
+cmmiGroups: [CMMIGroup!]
 createdBy: String
 createdDts: Time
 modifiedBy: String
@@ -621,15 +619,13 @@ enum CMSCenter {
   OTHER
 }
 
-# enum CMMIGroup{
-#   PATIENT_CARE_MODELS_GROUP
-#   POLICY_AND_PROGRAMS_GROUP
-#   PREVENTIVE_AND_POPULATION_HEALTH_CARE_MODELS_GROUP
-#   SEAMLESS_CARE_MODELS_GROUP
-#   STATE_INNOVATIONS_GROUP
-#   TBD
-
-# }
+enum CMMIGroup {
+  PATIENT_CARE_MODELS_GROUP
+  POLICY_AND_PROGRAMS_GROUP
+  PREVENTIVE_AND_POPULATION_HEALTH_CARE_MODELS_GROUP
+  SEAMLESS_CARE_MODELS_GROUP
+  STATE_INNOVATIONS_GROUP
+}
 
 directive @hasRole(role: Role!) on FIELD_DEFINITION
 
@@ -1061,7 +1057,7 @@ func (ec *executionContext) _ModelPlan_cmsCenter(ctx context.Context, field grap
 	return ec.marshalOCMSCenter2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐCMSCenter(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) _ModelPlan_cmmiGroup(ctx context.Context, field graphql.CollectedField, obj *models.ModelPlan) (ret graphql.Marshaler) {
+func (ec *executionContext) _ModelPlan_cmmiGroups(ctx context.Context, field graphql.CollectedField, obj *models.ModelPlan) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
 			ec.Error(ctx, ec.Recover(ctx, r))
@@ -1079,7 +1075,7 @@ func (ec *executionContext) _ModelPlan_cmmiGroup(ctx context.Context, field grap
 	ctx = graphql.WithFieldContext(ctx, fc)
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.ModelPlan().CmmiGroup(rctx, obj)
+		return ec.resolvers.ModelPlan().CmmiGroups(rctx, obj)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -1088,9 +1084,9 @@ func (ec *executionContext) _ModelPlan_cmmiGroup(ctx context.Context, field grap
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.([]string)
+	res := resTmp.([]model.CMMIGroup)
 	fc.Result = res
-	return ec.marshalOString2ᚕstringᚄ(ctx, field.Selections, res)
+	return ec.marshalOCMMIGroup2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCMMIGroupᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _ModelPlan_createdBy(ctx context.Context, field graphql.CollectedField, obj *models.ModelPlan) (ret graphql.Marshaler) {
@@ -3272,11 +3268,11 @@ func (ec *executionContext) unmarshalInputModelPlanInput(ctx context.Context, ob
 			if err != nil {
 				return it, err
 			}
-		case "cmmiGroup":
+		case "cmmiGroups":
 			var err error
 
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("cmmiGroup"))
-			it.CmmiGroup, err = ec.unmarshalOString2ᚕstringᚄ(ctx, v)
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("cmmiGroups"))
+			it.CmmiGroups, err = ec.unmarshalOCMMIGroup2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCMMIGroupᚄ(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -3547,7 +3543,7 @@ func (ec *executionContext) _ModelPlan(ctx context.Context, sel ast.SelectionSet
 
 			out.Values[i] = innerFunc(ctx)
 
-		case "cmmiGroup":
+		case "cmmiGroups":
 			field := field
 
 			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
@@ -3556,7 +3552,7 @@ func (ec *executionContext) _ModelPlan(ctx context.Context, sel ast.SelectionSet
 						ec.Error(ctx, ec.Recover(ctx, r))
 					}
 				}()
-				res = ec._ModelPlan_cmmiGroup(ctx, field, obj)
+				res = ec._ModelPlan_cmmiGroups(ctx, field, obj)
 				return res
 			}
 
@@ -4331,6 +4327,16 @@ func (ec *executionContext) marshalNBoolean2bool(ctx context.Context, sel ast.Se
 	return res
 }
 
+func (ec *executionContext) unmarshalNCMMIGroup2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCMMIGroup(ctx context.Context, v interface{}) (model.CMMIGroup, error) {
+	var res model.CMMIGroup
+	err := res.UnmarshalGQL(v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalNCMMIGroup2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCMMIGroup(ctx context.Context, sel ast.SelectionSet, v model.CMMIGroup) graphql.Marshaler {
+	return v
+}
+
 func (ec *executionContext) marshalNLaunchDarklySettings2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐLaunchDarklySettings(ctx context.Context, sel ast.SelectionSet, v *model.LaunchDarklySettings) graphql.Marshaler {
 	if v == nil {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
@@ -4670,6 +4676,73 @@ func (ec *executionContext) marshalOBoolean2ᚖbool(ctx context.Context, sel ast
 	return res
 }
 
+func (ec *executionContext) unmarshalOCMMIGroup2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCMMIGroupᚄ(ctx context.Context, v interface{}) ([]model.CMMIGroup, error) {
+	if v == nil {
+		return nil, nil
+	}
+	var vSlice []interface{}
+	if v != nil {
+		vSlice = graphql.CoerceList(v)
+	}
+	var err error
+	res := make([]model.CMMIGroup, len(vSlice))
+	for i := range vSlice {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
+		res[i], err = ec.unmarshalNCMMIGroup2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCMMIGroup(ctx, vSlice[i])
+		if err != nil {
+			return nil, err
+		}
+	}
+	return res, nil
+}
+
+func (ec *executionContext) marshalOCMMIGroup2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCMMIGroupᚄ(ctx context.Context, sel ast.SelectionSet, v []model.CMMIGroup) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalNCMMIGroup2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCMMIGroup(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
+}
+
 func (ec *executionContext) unmarshalOCMSCenter2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐCMSCenter(ctx context.Context, v interface{}) (*models.CMSCenter, error) {
 	if v == nil {
 		return nil, nil
@@ -4791,44 +4864,6 @@ func (ec *executionContext) unmarshalOString2string(ctx context.Context, v inter
 func (ec *executionContext) marshalOString2string(ctx context.Context, sel ast.SelectionSet, v string) graphql.Marshaler {
 	res := graphql.MarshalString(v)
 	return res
-}
-
-func (ec *executionContext) unmarshalOString2ᚕstringᚄ(ctx context.Context, v interface{}) ([]string, error) {
-	if v == nil {
-		return nil, nil
-	}
-	var vSlice []interface{}
-	if v != nil {
-		vSlice = graphql.CoerceList(v)
-	}
-	var err error
-	res := make([]string, len(vSlice))
-	for i := range vSlice {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
-		res[i], err = ec.unmarshalNString2string(ctx, vSlice[i])
-		if err != nil {
-			return nil, err
-		}
-	}
-	return res, nil
-}
-
-func (ec *executionContext) marshalOString2ᚕstringᚄ(ctx context.Context, sel ast.SelectionSet, v []string) graphql.Marshaler {
-	if v == nil {
-		return graphql.Null
-	}
-	ret := make(graphql.Array, len(v))
-	for i := range v {
-		ret[i] = ec.marshalNString2string(ctx, sel, v[i])
-	}
-
-	for _, e := range ret {
-		if e == graphql.Null {
-			return graphql.Null
-		}
-	}
-
-	return ret
 }
 
 func (ec *executionContext) unmarshalOString2ᚖstring(ctx context.Context, v interface{}) (*string, error) {
