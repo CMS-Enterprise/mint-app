@@ -1,27 +1,24 @@
 package resolvers
 
 import (
-	"github.com/cmsgov/mint-app/pkg/graph/model"
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/storage"
 	"github.com/google/uuid"
 	"go.uber.org/zap"
 )
 
-func CreatePlanBasicsResolver(logger *zap.Logger, input model.PlanBasicsInput, principal *string, store *storage.Store) (*models.PlanBasics, error) {
-	plan := models.PlanBasics{
-		CreatedBy:   principal,
-		ModelPlanID: *input.ModelPlanID,
-	}
+func CreatePlanBasicsResolver(logger *zap.Logger, input *models.PlanBasics, principal *string, store *storage.Store) (*models.PlanBasics, error) {
 
-	plan.ModifiedBy = plan.CreatedBy
-	createdPlan, err := store.PlanBasicsCreate(logger, &plan)
+	input.CreatedBy = principal
+
+	input.ModifiedBy = input.CreatedBy
+	retBasics, err := store.PlanBasicsCreate(logger, input)
 
 	// payload := model.CreatePlanBasicsPayload{
 	// 	ID:         createdPlan.ID,
 	// 	UserErrors: nil,
 	// }
-	return createdPlan, err
+	return retBasics, err
 }
 
 func UpdatePlanBasicsResolver(logger *zap.Logger, input *models.PlanBasics, principal *string, store *storage.Store) (*models.PlanBasics, error) {

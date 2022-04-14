@@ -4,7 +4,9 @@ import (
 	"testing"
 
 	"github.com/cmsgov/mint-app/pkg/appconfig"
-	"github.com/cmsgov/mint-app/pkg/graph/model"
+	"github.com/cmsgov/mint-app/pkg/models"
+
+	// "github.com/cmsgov/mint-app/pkg/graph/model"
 	"github.com/cmsgov/mint-app/pkg/storage"
 	"github.com/cmsgov/mint-app/pkg/testhelpers"
 	"github.com/google/uuid"
@@ -31,13 +33,14 @@ func TestCreatePlanBasicsResolver(t *testing.T) {
 	config := NewDBConfig()
 	ldClient, _ := ld.MakeCustomClient("fake", ld.Config{Offline: true}, 0)
 	logger := zap.NewNop()
-	input := model.PlanBasicsInput{}
+	// input := model.PlanBasicsInput{}
+	basics := models.PlanBasics{}
 	principal := "NOT_ASSIGNED" //Violates EUAD domain
 
 	store, err := storage.NewStore(logger, config, ldClient)
 	assert.NoError(t, err)
 
-	result, err := CreatePlanBasicsResolver(logger, input, &principal, store)
+	result, err := CreatePlanBasicsResolver(logger, &basics, &principal, store)
 	assert.NoError(t, err)
 	assert.NotNil(t, result.ID)
 }

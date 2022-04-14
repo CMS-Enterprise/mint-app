@@ -17,9 +17,9 @@ type PlanBasics struct {
 	TestInventions *string `json:"testInventions" db:"test_inventions"`
 	Note           *string `json:"note" db:"note"`
 
-	CreatedBy   *string    `json:"createdBy" db:"created_by"`
-	CreatedDts  *time.Time `json:"createdDts" db:"created_dts"`
-	ModifiedBy  *string    `json:"modifiedBy" db:"modified_by"`
-	ModifiedDts *time.Time `json:"modifiedDts" db:"modified_dts"`
-	Status      TaskStatus `json:"status" db:"status"`
+	CreatedBy   *string     `json:"createdBy" db:"created_by"`
+	CreatedDts  *time.Time  `json:"createdDts" db:"created_dts"`
+	ModifiedBy  *string     `json:"modifiedBy" db:"modified_by"`
+	ModifiedDts *time.Time  `json:"modifiedDts" db:"modified_dts"`
+	Status      *TaskStatus `json:"status" db:"status"`
 }

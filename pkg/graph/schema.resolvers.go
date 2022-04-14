@@ -45,10 +45,11 @@ func (r *mutationResolver) CreateModelPlan(ctx context.Context, input model.Mode
 }
 
 func (r *mutationResolver) CreatePlanBasics(ctx context.Context, input model.PlanBasicsInput) (*models.PlanBasics, error) {
+	basics := ConvertToPlanBasics(&input)
 	principal := appcontext.Principal(ctx).ID()
 	logger := appcontext.ZLogger(ctx)
 
-	return resolvers.CreatePlanBasicsResolver(logger, input, &principal, r.store)
+	return resolvers.CreatePlanBasicsResolver(logger, basics, &principal, r.store)
 }
 
 func (r *mutationResolver) UpdateModelPlan(ctx context.Context, input model.ModelPlanInput) (*models.ModelPlan, error) {
