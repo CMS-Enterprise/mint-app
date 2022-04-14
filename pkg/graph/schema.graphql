@@ -73,7 +73,7 @@ type PlanBasics {
   createdDts: Time
   modifiedBy: String
   modifiedDts: Time
-  status: TaskStatus
+  status: TaskStatus!
 }
 
 
@@ -93,7 +93,7 @@ input PlanBasicsInput {
   createdDts: Time
   modifiedBy: String
   modifiedDts: Time
-  status: TaskStatus
+  status: TaskStatus!
 }
 
 

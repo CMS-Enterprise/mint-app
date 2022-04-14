@@ -43,7 +43,7 @@ func main() {
 		panic(storeErr)
 	}
 	makeModelPlan("Mr. Mint", logger, store)
-	makeModelPlan("Mrs. Mint", logger, store, func(p *models.ModelPlan) {
+	plan := makeModelPlan("Mrs. Mint", logger, store, func(p *models.ModelPlan) {
 		p.ID = uuid.MustParse("6e224030-09d5-46f7-ad04-4bb851b36eab")
 		p.ModelName = models.StringPointer("PM Butler's great plan")
 
@@ -54,6 +54,40 @@ func main() {
 
 		p.CreatedBy = models.StringPointer("MINT")
 		p.ModifiedBy = models.StringPointer("MINT")
+	})
+	inProgress := models.TaskInProgress
+
+	makePlanBasics(plan.ID, logger, store, func(b *models.PlanBasics) {
+		// b.ID = uuid.MustParse("6e224030-09d5-46f7-ad04-4bb851b36epb")
+		b.Problem = models.StringPointer("There is not enough candy")
+		b.TestInventions = models.StringPointer("The great candy machine")
+		b.Note = models.StringPointer("The machine doesn't work yet")
+		b.Status = &inProgress
+
+	})
+
+	ac := models.MCAccountableCare
+	cms := models.CMSCenterForClinicalStandardsAndQuality
+
+	plan2 := makeModelPlan("Excellent Model", logger, store, func(p *models.ModelPlan) {
+		p.ID = uuid.MustParse("18624c5b-4c00-49a7-960f-ac6d8b2c58df")
+		p.ModelName = models.StringPointer("Platonian ideala")
+
+		p.ModelCategory = &ac
+		p.CMSCenter = &cms
+		// p.CMMIGroup = models.StringPointer("Great Group")
+
+		p.CreatedBy = models.StringPointer("MINT")
+		p.ModifiedBy = models.StringPointer("MINT")
+	})
+
+	makePlanBasics(plan2.ID, logger, store, func(b *models.PlanBasics) {
+		// b.ID = uuid.MustParse("7e224030-09d5-46f7-ad04-4bb851b36epb")
+		b.Problem = models.StringPointer("There is not enough candy")
+		b.TestInventions = models.StringPointer("The great candy machine")
+		b.Note = models.StringPointer("The machine doesn't work yet")
+		b.Status = &inProgress
+
 	})
 
 }
@@ -77,6 +111,25 @@ func makeModelPlan(modelName string, logger *zap.Logger, store *storage.Store, c
 
 	store.ModelPlanCreate(ctx, &plan)
 	return &plan
+}
+func makePlanBasics(uuid uuid.UUID, logger *zap.Logger, store *storage.Store, callbacks ...func(*models.PlanBasics)) *models.PlanBasics {
+	// ctx := appcontext.WithLogger(context.Background(), logger)
+	status := models.TaskReady
+
+	basics := models.PlanBasics{
+
+		CreatedBy:  models.StringPointer("ABCD"),
+		ModifiedBy: models.StringPointer("ABCD"),
+		Status:     &status,
+	}
+
+	for _, cb := range callbacks {
+		cb(&basics)
+	}
+	// principal := appcontext.Principal(ctx).ID()
+
+	store.PlanBasicsCreate(logger, &basics)
+	return &basics
 }
 
 func must(_ interface{}, err error) {

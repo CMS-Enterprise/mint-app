@@ -22,22 +22,23 @@ var planBasicsGetByIdSQL string
 //go:embed SQL/plan_basics_get_by_model_plan_id.sql
 var planBasicsGetByModelPlan_IdSQL string
 
-func (s *Store) PlanBasicsCreate(logger *zap.Logger, plan *models.PlanBasics) (*models.PlanBasics, error) {
-	plan.ID = utilityUuid.ValueOrNewUUID(plan.ID)
+func (s *Store) PlanBasicsCreate(logger *zap.Logger, basics *models.PlanBasics) (*models.PlanBasics, error) {
+
+	basics.ID = utilityUuid.ValueOrNewUUID(basics.ID)
 	status := models.TaskReady
-	plan.Status = &status
+	basics.Status = &status
 
 	statement, err := s.db.PrepareNamed(planBasicsCreateSQL)
 	if err != nil {
-		return planbasics.HandleModelCreationError(logger, plan, err)
+		return planbasics.HandleModelCreationError(logger, basics, err)
 	}
 
-	err = statement.Get(plan, plan)
+	err = statement.Get(basics, basics)
 	if err != nil {
-		return planbasics.HandleModelCreationError(logger, plan, err)
+		return planbasics.HandleModelCreationError(logger, basics, err)
 	}
 
-	return plan, nil
+	return basics, nil
 }
 
 func (s *Store) PlanBasicsUpdate(logger *zap.Logger, plan *models.PlanBasics) (*models.PlanBasics, error) {
