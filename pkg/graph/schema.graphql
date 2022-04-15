@@ -1,11 +1,4 @@
-"""
-UserError represents application-level errors that are the result of
-either user or application developer error.
-"""
-type UserError {
-  message: String!
-  path: [String!]!
-}
+
 
 """
 The current user's Launch Darkly key
@@ -35,14 +28,15 @@ ModelPlan represent the data point for plans about a model. It is the central da
 """
 type ModelPlan {
   id: UUID
-  requester: String
-  requesterComponent: String
-  mainPointOfContact: String
-  pointOfContactComponent: String
+  modelName: String
+  modelCategory: ModelCategory
+  cmsCenter: CMSCenter
+  cmmiGroups: [CMMIGroup!]
   createdBy: String
   createdDts: Time
   modifiedBy: String
   modifiedDts: Time
+  basics: PlanBasics
 }
 
 """
@@ -51,10 +45,10 @@ ModelPlanInput represent the data point for plans about a model. It is the centr
 # input ModelPlanInput ModelPlan {
 input ModelPlanInput{
 id: UUID
-requester: String
-requesterComponent: String
-mainPointOfContact: String
-pointOfContactComponent: String
+modelName: String
+modelCategory: ModelCategory
+cmsCenter: CMSCenter
+cmmiGroups: [CMMIGroup!]
 createdBy: String
 createdDts: Time
 modifiedBy: String
@@ -69,11 +63,8 @@ Represents plan basics
 type PlanBasics {
   id: UUID
   modelPlanID: UUID
-  modelName: String
-  modelCategory: String
-  cmsCenter: String
-  cmmiGroup: String
-  modelType: String
+
+  modelType: ModelType
   problem: String
   goal: String
   testInventions: String
@@ -82,22 +73,29 @@ type PlanBasics {
   createdDts: Time
   modifiedBy: String
   modifiedDts: Time
+  status: TaskStatus!
 }
 
-"""
-Requests the creation of plan basics
-"""
-input CreatePlanBasicsRequestInput {
-  modelPlanID: UUID!
-}
 
 """
-The payload returned on requesting plan basics creation
+Represents plan basics
 """
-type CreatePlanBasicsPayload {
-  id: UUID!
-  userErrors: [UserError!]
+input PlanBasicsInput {
+  id: UUID
+  modelPlanID: UUID
+
+  modelType: ModelType
+  problem: String
+  goal: String
+  testInventions: String
+  note: String
+  createdBy: String
+  createdDts: Time
+  modifiedBy: String
+  modifiedDts: Time
+  status: TaskStatus!
 }
+
 
 """
 Query definition for the schema
@@ -115,12 +113,58 @@ Mutations definition for the schema
 type Mutation {
 createModelPlan(input: ModelPlanInput!):ModelPlan
 @hasRole(role: MINT_BASE_USER)
-createPlanBasics(input: CreatePlanBasicsRequestInput!):CreatePlanBasicsPayload
+# createPlanBasics(input: CreatePlanBasicsRequestInput!):CreatePlanBasicsPayload
+createPlanBasics(input: PlanBasicsInput!):PlanBasics
 @hasRole(role: MINT_BASE_USER)
 
 updateModelPlan(input: ModelPlanInput!):ModelPlan
 @hasRole(role: MINT_BASE_USER)
 
+updatePlanBasics(input: PlanBasicsInput!): PlanBasics
+@hasRole(role: MINT_BASE_USER)
+
+}
+
+enum TaskStatus {
+  READY
+  IN_PROGRESS
+  COMPLETE
+
+}
+
+enum ModelType
+{
+  VOLUNTARY
+  MANDATORY
+  TBD
+}
+
+enum ModelCategory{
+	ACCOUNTABLE_CARE
+	DEMONSTRATION
+	EPISODE_BASED_PAYMENT_INITIATIVES
+	INIT_MEDICAID_CHIP_POP
+	INIT__MEDICARE_MEDICAID_ENROLLEES
+	INIT_ACCEL_DEV_AND_TEST
+	INIT_SPEED_ADOPT_BEST_PRACTICE
+	PRIMARY_CARE_TRANSFORMATION
+	UNKNOWN
+}
+enum CMSCenter {
+  CMMI
+  CENTER_FOR_MEDICARE
+  FEDERAL_COORDINATED_HEALTH_CARE_OFFICE
+  CENTER_FOR_CLINICAL_STANDARDS_AND_QUALITY
+  CENTER_FOR_PROGRAM_INTEGRITY
+  OTHER
+}
+
+enum CMMIGroup {
+  PATIENT_CARE_MODELS_GROUP
+  POLICY_AND_PROGRAMS_GROUP
+  PREVENTIVE_AND_POPULATION_HEALTH_CARE_MODELS_GROUP
+  SEAMLESS_CARE_MODELS_GROUP
+  STATE_INNOVATIONS_GROUP
 }
 
 directive @hasRole(role: Role!) on FIELD_DEFINITION

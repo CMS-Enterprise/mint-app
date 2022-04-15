@@ -37,7 +37,7 @@ func (s *Store) ModelPlanCreate(ctx context.Context, plan *models.ModelPlan) (*m
 	if err != nil {
 		appcontext.ZLogger(ctx).Error(
 			fmt.Sprintf("Failed to create model plan with error %s", err),
-			zap.String("user", plan.ModifiedBy.ValueOrZero()),
+			zap.String("user", models.ValueOrEmpty(plan.ModifiedBy)),
 		)
 		return nil, err
 	}
@@ -47,7 +47,7 @@ func (s *Store) ModelPlanCreate(ctx context.Context, plan *models.ModelPlan) (*m
 	if err != nil {
 		appcontext.ZLogger(ctx).Error(
 			fmt.Sprintf("Failed to create model plan with error %s", err),
-			zap.String("user", plan.ModifiedBy.ValueOrZero()),
+			zap.String("user", models.ValueOrEmpty(plan.ModifiedBy)),
 		)
 		return nil, err
 
@@ -63,7 +63,7 @@ func (s *Store) ModelPlanUpdate(ctx context.Context, plan *models.ModelPlan) (*m
 		appcontext.ZLogger(ctx).Error(
 			fmt.Sprintf("Failed to update system intake %s", err),
 			zap.String("id", plan.ID.String()),
-			zap.String("user", plan.ModifiedBy.ValueOrZero()),
+			zap.String("user", models.ValueOrEmpty(plan.ModifiedBy)),
 		)
 		return nil, err
 	}
@@ -73,7 +73,7 @@ func (s *Store) ModelPlanUpdate(ctx context.Context, plan *models.ModelPlan) (*m
 		appcontext.ZLogger(ctx).Error(
 			fmt.Sprintf("Failed to update system intake %s", err),
 			zap.String("id", plan.ID.String()),
-			zap.String("user", plan.ModifiedBy.ValueOrZero()),
+			zap.String("user", models.ValueOrEmpty(plan.ModifiedBy)),
 		)
 		return nil, &apperrors.QueryError{
 			Err:       err,

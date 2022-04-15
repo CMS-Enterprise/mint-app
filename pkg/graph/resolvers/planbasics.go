@@ -1,28 +1,41 @@
 package resolvers
 
 import (
-	"github.com/cmsgov/mint-app/pkg/graph/model"
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/storage"
 	"github.com/google/uuid"
-	"github.com/guregu/null"
 	"go.uber.org/zap"
 )
 
-func CreatePlanBasicsResolver(logger *zap.Logger, input model.CreatePlanBasicsRequestInput, principal string, store *storage.Store) (*model.CreatePlanBasicsPayload, error) {
-	plan := models.PlanBasics{
-		CreatedBy: null.StringFrom(principal),
-		ID:        input.ModelPlanID,
+func CreatePlanBasicsResolver(logger *zap.Logger, input *models.PlanBasics, principal *string, store *storage.Store) (*models.PlanBasics, error) {
+
+	input.CreatedBy = principal
+
+	input.ModifiedBy = input.CreatedBy
+	retBasics, err := store.PlanBasicsCreate(logger, input)
+
+	// payload := model.CreatePlanBasicsPayload{
+	// 	ID:         createdPlan.ID,
+	// 	UserErrors: nil,
+	// }
+	return retBasics, err
+}
+
+func UpdatePlanBasicsResolver(logger *zap.Logger, input *models.PlanBasics, principal *string, store *storage.Store) (*models.PlanBasics, error) {
+	input.ModifiedBy = principal
+
+	retBasics, err := store.PlanBasicsUpdate(logger, input)
+	return retBasics, err
+
+}
+func FetchPlanBasicsByModelPlanID(logger *zap.Logger, principal *string, modelPlanID uuid.UUID, store *storage.Store) (*models.PlanBasics, error) {
+	plan, err := store.PlanBasicsGetByModelPlanID(logger, principal, modelPlanID)
+	if err != nil {
+		return nil, err
 	}
 
-	plan.ModifiedBy = plan.CreatedBy
-	createdPlan, err := store.PlanBasicsCreate(logger, &plan)
+	return plan, nil
 
-	payload := model.CreatePlanBasicsPayload{
-		ID:         createdPlan.ID,
-		UserErrors: nil,
-	}
-	return &payload, err
 }
 
 func FetchPlanBasicsByID(logger *zap.Logger, id uuid.UUID, store *storage.Store) (*models.PlanBasics, error) {

@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"errors"
 	"fmt"
+
 	"github.com/cmsgov/mint-app/pkg/apperrors"
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/google/uuid"
@@ -17,7 +18,7 @@ const (
 func HandleModelCreationError(logger *zap.Logger, plan *models.PlanBasics, err error) (*models.PlanBasics, error) {
 	logger.Error(
 		fmt.Sprintf("Failed to create model [#{modelTypeName}] with error: #{err}"),
-		zap.String("user", plan.ModifiedBy.ValueOrZero()),
+		zap.String("user", models.ValueOrEmpty(plan.ModifiedBy)),
 	)
 
 	return nil, err
@@ -27,7 +28,7 @@ func HandleModelUpdateError(logger *zap.Logger, plan *models.PlanBasics, err err
 	logger.Error(
 		fmt.Sprintf("Failed to update #{modelTypeName} due to error: #{err}"),
 		zap.String("id", plan.ID.String()),
-		zap.String("user", plan.ModifiedBy.ValueOrZero()),
+		zap.String("user", models.ValueOrEmpty(plan.ModifiedBy)),
 	)
 
 	if !isQueryError {
@@ -55,7 +56,9 @@ func HandleModelFetchNoRowsError(logger *zap.Logger, id uuid.UUID, err error) (*
 		zap.Error(err),
 		zap.String("id", id.String()),
 	)
-	return nil, &apperrors.ResourceNotFoundError{Err: err, Resource: models.ModelPlan{}}
+	// return nil, &apperrors.ResourceNotFoundError{Err: err, Resource: models.ModelPlan{}}
+	//TODO decision is to not present an error if no model row found for this
+	return nil, nil
 }
 
 func HandleModelFetchGenericError(logger *zap.Logger, id uuid.UUID, err error) (*models.PlanBasics, error) {
