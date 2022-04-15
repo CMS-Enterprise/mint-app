@@ -51,6 +51,7 @@ const TaskList = () => {
   });
 
   const taskListItemStatus = (key: string) => {
+    // TODO: Convert to a switch case or some other better idea
     if (key === 'basics') {
       return basics === null ? 'READY' : 'IN_PROGRESS';
     }
