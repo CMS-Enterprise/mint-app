@@ -1,6 +1,7 @@
 import React from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
+import { useQuery } from '@apollo/client';
 import {
   Breadcrumb,
   BreadcrumbBar,
@@ -12,6 +13,11 @@ import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import Divider from 'components/shared/Divider';
+import GetModelPlan from 'queries/GetModelPlan';
+import {
+  GetModelPlanQuery,
+  GetModelPlanQueryVariables
+} from 'queries/types/GetModelPlanQuery';
 
 import TaskListCta from './components/TaskListCta';
 import TaskListItem, { TaskListDescription } from './components/TaskListItem';
@@ -26,6 +32,19 @@ type TaskListItemProps = {
 
 const TaskList = () => {
   const { t } = useTranslation('modelPlanTaskList');
+  const { modelId } = useParams<{ modelId: string }>();
+
+  const { data } = useQuery<GetModelPlanQuery, GetModelPlanQueryVariables>(
+    GetModelPlan,
+    {
+      variables: {
+        id: modelId
+      }
+    }
+  );
+
+  const { modelPlan } = data || {};
+  const { id, modelName } = modelPlan || {};
 
   const taskListItem: TaskListItemProps[] = t('numberedList', {
     returnObjects: true
@@ -53,7 +72,7 @@ const TaskList = () => {
           </PageHeading>
           <p className="margin-top-0 margin-bottom-2 font-body-lg">
             <Trans i18nKey="modelPlanTaskList:subheading">
-              indexZero indexTwo
+              indexZero {modelName} indexTwo
             </Trans>
           </p>
           <SummaryBox
@@ -62,7 +81,7 @@ const TaskList = () => {
           >
             <p className="margin-0 margin-bottom-1">
               <Trans i18nKey="modelPlanTaskList:summaryBox.copy">
-                indexZero indexTwo
+                indexZero {modelName} indexTwo
               </Trans>
             </p>
             <UswdsReactLink
