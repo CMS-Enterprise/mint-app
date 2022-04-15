@@ -12,6 +12,7 @@ import {
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
+import PageLoading from 'components/PageLoading';
 import Divider from 'components/shared/Divider';
 import GetModelPlanQuery from 'queries/GetModelPlanQuery';
 import {
@@ -34,7 +35,7 @@ const TaskList = () => {
   const { t } = useTranslation('modelPlanTaskList');
   const { modelId } = useParams<{ modelId: string }>();
 
-  const { data } = useQuery<GetModelPlan, GetModelPlanVariables>(
+  const { loading, data } = useQuery<GetModelPlan, GetModelPlanVariables>(
     GetModelPlanQuery,
     {
       variables: {
@@ -64,67 +65,70 @@ const TaskList = () => {
           <Breadcrumb current>{t('navigation.modelPlanTaskList')}</Breadcrumb>
         </BreadcrumbBar>
       </div>
-      <div className="grid-row grid-gap-lg">
-        <div className="tablet:grid-col-9">
-          <PageHeading className="margin-bottom-0">
-            {t('navigation.modelPlanTaskList')}
-          </PageHeading>
-          <p className="margin-top-0 margin-bottom-2 font-body-lg">
-            <Trans i18nKey="modelPlanTaskList:subheading">
-              indexZero {modelName} indexTwo
-            </Trans>
-          </p>
-          <SummaryBox
-            heading=""
-            className="bg-base-lightest border-0 radius-0 padding-2"
-          >
-            <p className="margin-0 margin-bottom-1">
-              <Trans i18nKey="modelPlanTaskList:summaryBox.copy">
+      {loading && <PageLoading />}
+      {data && (
+        <div className="grid-row grid-gap-lg">
+          <div className="tablet:grid-col-9">
+            <PageHeading className="margin-bottom-0">
+              {t('navigation.modelPlanTaskList')}
+            </PageHeading>
+            <p className="margin-top-0 margin-bottom-2 font-body-lg">
+              <Trans i18nKey="modelPlanTaskList:subheading">
                 indexZero {modelName} indexTwo
               </Trans>
             </p>
-            <UswdsReactLink
-              className="usa-button usa-button--outline"
-              variant="unstyled"
-              to="/"
+            <SummaryBox
+              heading=""
+              className="bg-base-lightest border-0 radius-0 padding-2"
             >
-              {t('summaryBox.cta')}
-            </UswdsReactLink>
-          </SummaryBox>
-          <ol
-            data-testid="task-list"
-            className="model-plan-task-list__task-list model-plan-task-list__task-list--primary margin-y-6"
-          >
-            {Object.keys(taskListItem).map((key: any) => {
-              const lastTaskItem = Object.keys(taskListItem).slice(-1)[0];
+              <p className="margin-0 margin-bottom-1">
+                <Trans i18nKey="modelPlanTaskList:summaryBox.copy">
+                  indexZero {modelName} indexTwo
+                </Trans>
+              </p>
+              <UswdsReactLink
+                className="usa-button usa-button--outline"
+                variant="unstyled"
+                to="/"
+              >
+                {t('summaryBox.cta')}
+              </UswdsReactLink>
+            </SummaryBox>
+            <ol
+              data-testid="task-list"
+              className="model-plan-task-list__task-list model-plan-task-list__task-list--primary margin-y-6"
+            >
+              {Object.keys(taskListItem).map((key: any) => {
+                const lastTaskItem = Object.keys(taskListItem).slice(-1)[0];
 
-              return (
-                <>
-                  <TaskListItem
-                    key={key}
-                    testId="task-list-intake-form"
-                    heading={taskListItem[key].heading}
-                    status="READY"
-                  >
-                    <TaskListDescription>
-                      <p className="margin-top-0">{taskListItem[key].copy}</p>
-                    </TaskListDescription>
-                    {/* <TaskListCta intake={systemIntake} /> */}
-                    <TaskListCta status="READY" />
-                  </TaskListItem>
-                  {key !== lastTaskItem && (
-                    <Divider className="margin-bottom-4" />
-                  )}
-                </>
-              );
-            })}
-          </ol>
+                return (
+                  <>
+                    <TaskListItem
+                      key={key}
+                      testId="task-list-intake-form"
+                      heading={taskListItem[key].heading}
+                      status="IN_PROGRESS"
+                    >
+                      <TaskListDescription>
+                        <p className="margin-top-0">{taskListItem[key].copy}</p>
+                      </TaskListDescription>
+                      {/* <TaskListCta intake={systemIntake} /> */}
+                      <TaskListCta status="IN_PROGRESS" />
+                    </TaskListItem>
+                    {key !== lastTaskItem && (
+                      <Divider className="margin-bottom-4" />
+                    )}
+                  </>
+                );
+              })}
+            </ol>
+          </div>
+          <div className="tablet:grid-col-3">
+            {/* <SideNavActions intake={systemIntake} archiveIntake={archiveIntake} /> */}
+            <TaskListSideNav />
+          </div>
         </div>
-        <div className="tablet:grid-col-3">
-          {/* <SideNavActions intake={systemIntake} archiveIntake={archiveIntake} /> */}
-          <TaskListSideNav />
-        </div>
-      </div>
+      )}
     </MainContent>
   );
 };
