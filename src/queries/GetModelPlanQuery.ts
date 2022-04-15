@@ -5,6 +5,9 @@ export default gql`
     modelPlan(id: $id) {
       id
       modelName
+      basics {
+        id
+      }
     }
   }
 `;

@@ -43,7 +43,7 @@ const TaskList = () => {
     }
   );
 
-  const { modelName } = data?.modelPlan || {};
+  const { modelName, basics } = data?.modelPlan || {};
 
   const taskListItem: TaskListItemProps[] = t('numberedList', {
     returnObjects: true
