@@ -1,7 +1,7 @@
 const participantsAndProviders = {
   heading: 'Participants and Providers',
   participantInfo:
-    'Participants are organizations/individuals that have contracts with CMMI to participate in a model or demonstration. Participants may or may nor ve Medicare-enrolled providers.',
+    'Participants are organizations/individuals that have contracts with CMMI to participate in a model or demonstration. Participants may or may not be Medicare-enrolled providers.',
   providerInfo:
     'Providers are organizations/indviduals that work with the Participants and deliver care or services to the beneficiaries impacted by our model.',
   whoAreParticipants: 'Who are the particpants? Select all that apply.',

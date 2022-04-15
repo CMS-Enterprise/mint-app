@@ -48,9 +48,9 @@ const generalCharacteristics = {
   geoBeneficiaries: 'Beneficiaries',
   rulemakingRequired: 'Is rulemaking required?',
   authorityAllowed: 'What authority allows CMMI to test the model?',
-  ACA3021: '3021 {ACA)',
+  ACA3021: '3021 (ACA)',
   mandatedDemonstration: 'Congressionally Mandated Demonstration',
-  section1833: 'Section 1833(e) (PArt B services) of the Social Security Act',
+  section1833: 'Section 1833(e) (Part B services) of the Social Security Act',
   waiversRequired: 'Are waivers required?',
   ruleMakingInfo:
     'Which rule do you anticipate using and what is the target date of display for that regulation?',

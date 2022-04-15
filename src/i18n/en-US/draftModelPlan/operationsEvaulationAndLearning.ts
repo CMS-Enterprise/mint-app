@@ -51,7 +51,7 @@ const operationsEvaluationAndLearning = {
   acoOperationsOptions: {
     os: 'ACO-OS',
     ui: 'ACO-IO',
-    innovation: '4innovation )4i)'
+    innovation: '4innovation (4i)'
   },
   technicalContacts: 'Are technical contacts identified?',
   entityInformation: 'Will you capture entity information?',
