@@ -26,7 +26,7 @@ const modelPlanTaskList = {
     confirmationText_noName: 'The request has been removed'
   },
   numberedList: {
-    modelBasic: {
+    basics: {
       heading: 'Model basics',
       copy:
         'Start filling out as much of the basic model information as you know and reach out to the Model Assessment Team if you need help.'
