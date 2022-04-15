@@ -31,17 +31,21 @@ func (r *modelPlanResolver) Basics(ctx context.Context, obj *models.ModelPlan) (
 	logger := appcontext.ZLogger(ctx)
 	principal := appcontext.Principal(ctx).ID()
 
-	return resolvers.FetchPlanBasicsByModelPlanID(logger, &principal, obj.ID, r.store)
+	return resolvers.PlanBasicsGetByModelPlanID(logger, &principal, obj.ID, r.store)
 }
 
 func (r *mutationResolver) CreateModelPlan(ctx context.Context, input model.ModelPlanInput) (*models.ModelPlan, error) {
+	logger := appcontext.ZLogger(ctx)
+	principal := appcontext.Principal(ctx).ID()
+
 	plan := ConvertToModelPlan(&input)
 
-	plan.CreatedBy = models.StringPointer(appcontext.Principal(ctx).ID())
-	plan.ModifiedBy = plan.CreatedBy
-	createdPlan, err := r.store.ModelPlanCreate(ctx, plan)
+	plan.CreatedBy = &principal // models.StringPointer(appcontext.Principal(ctx).ID())
+	plan.ModifiedBy = &principal
+	return resolvers.ModelPlanCreate(logger, plan, r.store)
+	// createdPlan, err := r.store.ModelPlanCreate(ctx, plan)
 
-	return createdPlan, err
+	// return createdPlan, err
 }
 
 func (r *mutationResolver) CreatePlanBasics(ctx context.Context, input model.PlanBasicsInput) (*models.PlanBasics, error) {
@@ -55,11 +59,10 @@ func (r *mutationResolver) CreatePlanBasics(ctx context.Context, input model.Pla
 func (r *mutationResolver) UpdateModelPlan(ctx context.Context, input model.ModelPlanInput) (*models.ModelPlan, error) {
 	plan := ConvertToModelPlan(&input)
 	principal := appcontext.Principal(ctx).ID()
+	logger := appcontext.ZLogger(ctx)
 	//TODO clean this up
 	plan.ModifiedBy = &principal
-
-	retPlan, err := r.store.ModelPlanUpdate(ctx, plan)
-	return retPlan, err
+	return resolvers.ModelPlanUpdate(logger, plan, r.store)
 }
 
 func (r *mutationResolver) UpdatePlanBasics(ctx context.Context, input model.PlanBasicsInput) (*models.PlanBasics, error) {
@@ -85,13 +88,11 @@ func (r *queryResolver) CurrentUser(ctx context.Context) (*model.CurrentUser, er
 }
 
 func (r *queryResolver) ModelPlan(ctx context.Context, id uuid.UUID) (*models.ModelPlan, error) {
-	plan, err := r.store.ModelPlanGetByID(ctx, id)
-	if err != nil {
-		return nil, err
-	}
-	//TODO add job code authorization Checks?
+	logger := appcontext.ZLogger(ctx)
+	principal := appcontext.Principal(ctx).ID()
 
-	return plan, nil
+	return resolvers.ModelPlanGetByID(logger, principal, id, r.store)
+
 }
 
 func (r *queryResolver) PlanBasics(ctx context.Context, id uuid.UUID) (*models.PlanBasics, error) {
@@ -101,11 +102,10 @@ func (r *queryResolver) PlanBasics(ctx context.Context, id uuid.UUID) (*models.P
 }
 
 func (r *queryResolver) ModelPlanCollection(ctx context.Context) ([]*models.ModelPlan, error) {
-	plans, err := r.store.ModelPlanCollectionByUser(ctx, appcontext.Principal(ctx).ID())
-	if err != nil {
-		return nil, err
-	}
-	return plans, nil
+	principal := appcontext.Principal(ctx).ID()
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.ModelPlanCollectionByUser(logger, principal, r.store)
+
 }
 
 // ModelPlan returns generated.ModelPlanResolver implementation.

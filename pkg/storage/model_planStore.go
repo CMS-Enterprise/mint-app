@@ -1,7 +1,6 @@
 package storage
 
 import (
-	"context"
 	"database/sql"
 	"errors"
 	"fmt"
@@ -9,7 +8,6 @@ import (
 	"github.com/google/uuid"
 	"go.uber.org/zap"
 
-	"github.com/cmsgov/mint-app/pkg/appcontext"
 	"github.com/cmsgov/mint-app/pkg/apperrors"
 	"github.com/cmsgov/mint-app/pkg/models"
 
@@ -28,14 +26,15 @@ var model_plan_get_by_idSQL string
 //go:embed SQL/model_plan_collection_by_user.sql
 var model_plan_collection_by_userSQL string
 
-func (s *Store) ModelPlanCreate(ctx context.Context, plan *models.ModelPlan) (*models.ModelPlan, error) {
+func (s *Store) ModelPlanCreate(logger *zap.Logger, plan *models.ModelPlan) (*models.ModelPlan, error) {
+	// func (s *Store) ModelPlanCreate(ctx context.Context, plan *models.ModelPlan) (*models.ModelPlan, error) {
 
 	if plan.ID == uuid.Nil {
 		plan.ID = uuid.New()
 	}
 	stmt, err := s.db.PrepareNamed(model_plan_createSQL)
 	if err != nil {
-		appcontext.ZLogger(ctx).Error(
+		logger.Error(
 			fmt.Sprintf("Failed to create model plan with error %s", err),
 			zap.String("user", models.ValueOrEmpty(plan.ModifiedBy)),
 		)
@@ -45,7 +44,7 @@ func (s *Store) ModelPlanCreate(ctx context.Context, plan *models.ModelPlan) (*m
 
 	err = stmt.Get(&retPlan, plan)
 	if err != nil {
-		appcontext.ZLogger(ctx).Error(
+		logger.Error(
 			fmt.Sprintf("Failed to create model plan with error %s", err),
 			zap.String("user", models.ValueOrEmpty(plan.ModifiedBy)),
 		)
@@ -56,11 +55,11 @@ func (s *Store) ModelPlanCreate(ctx context.Context, plan *models.ModelPlan) (*m
 	return &retPlan, nil
 }
 
-func (s *Store) ModelPlanUpdate(ctx context.Context, plan *models.ModelPlan) (*models.ModelPlan, error) {
+func (s *Store) ModelPlanUpdate(logger *zap.Logger, plan *models.ModelPlan) (*models.ModelPlan, error) {
 
 	stmt, err := s.db.PrepareNamed(model_plan_updateSQL)
 	if err != nil {
-		appcontext.ZLogger(ctx).Error(
+		logger.Error(
 			fmt.Sprintf("Failed to update system intake %s", err),
 			zap.String("id", plan.ID.String()),
 			zap.String("user", models.ValueOrEmpty(plan.ModifiedBy)),
@@ -70,7 +69,7 @@ func (s *Store) ModelPlanUpdate(ctx context.Context, plan *models.ModelPlan) (*m
 
 	err = stmt.Get(plan, plan)
 	if err != nil {
-		appcontext.ZLogger(ctx).Error(
+		logger.Error(
 			fmt.Sprintf("Failed to update system intake %s", err),
 			zap.String("id", plan.ID.String()),
 			zap.String("user", models.ValueOrEmpty(plan.ModifiedBy)),
@@ -86,7 +85,7 @@ func (s *Store) ModelPlanUpdate(ctx context.Context, plan *models.ModelPlan) (*m
 
 }
 
-func (s *Store) ModelPlanGetByID(ctx context.Context, id uuid.UUID) (*models.ModelPlan, error) {
+func (s *Store) ModelPlanGetByID(logger *zap.Logger, id uuid.UUID) (*models.ModelPlan, error) {
 	plan := models.ModelPlan{}
 	stmt, err := s.db.PrepareNamed(model_plan_get_by_idSQL)
 	if err != nil {
@@ -98,14 +97,14 @@ func (s *Store) ModelPlanGetByID(ctx context.Context, id uuid.UUID) (*models.Mod
 
 	if err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
-			appcontext.ZLogger(ctx).Info(
+			logger.Info(
 				"No model plan found",
 				zap.Error(err),
 				zap.String("id", id.String()),
 			)
 			return nil, &apperrors.ResourceNotFoundError{Err: err, Resource: models.ModelPlan{}}
 		}
-		appcontext.ZLogger(ctx).Error(
+		logger.Error(
 			"Failed to fetch model plan",
 			zap.Error(err),
 			zap.String("id", id.String()),
@@ -121,7 +120,7 @@ func (s *Store) ModelPlanGetByID(ctx context.Context, id uuid.UUID) (*models.Mod
 
 }
 
-func (s *Store) ModelPlanCollectionByUser(ctx context.Context, EUAID string) ([]*models.ModelPlan, error) {
+func (s *Store) ModelPlanCollectionByUser(logger *zap.Logger, EUAID string) ([]*models.ModelPlan, error) {
 	modelPlans := []*models.ModelPlan{}
 
 	stmt, err := s.db.PrepareNamed(model_plan_collection_by_userSQL)
@@ -134,14 +133,14 @@ func (s *Store) ModelPlanCollectionByUser(ctx context.Context, EUAID string) ([]
 
 	if err != nil {
 		if errors.Is(err, sql.ErrNoRows) {
-			appcontext.ZLogger(ctx).Info(
+			logger.Info(
 				"No model plans for user found",
 				zap.Error(err),
 				zap.String("euaID", EUAID),
 			)
 			return nil, &apperrors.ResourceNotFoundError{Err: err, Resource: models.ModelPlan{}}
 		}
-		appcontext.ZLogger(ctx).Error(
+		logger.Error(
 			"Failed to fetch model plans",
 			zap.Error(err),
 			zap.String("euaID", EUAID),

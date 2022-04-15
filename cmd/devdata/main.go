@@ -1,7 +1,6 @@
 package main
 
 import (
-	"context"
 	"time"
 
 	"github.com/google/uuid"
@@ -12,7 +11,6 @@ import (
 	ld "gopkg.in/launchdarkly/go-server-sdk.v5"
 
 	"github.com/cmsgov/mint-app/pkg/appconfig"
-	"github.com/cmsgov/mint-app/pkg/appcontext"
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/storage"
 	"github.com/cmsgov/mint-app/pkg/testhelpers"
@@ -111,7 +109,6 @@ func main() {
 }
 
 func makeModelPlan(modelName string, logger *zap.Logger, store *storage.Store, callbacks ...func(*models.ModelPlan)) *models.ModelPlan {
-	ctx := appcontext.WithLogger(context.Background(), logger)
 
 	plan := models.ModelPlan{
 		ModelName: &modelName,
@@ -127,7 +124,7 @@ func makeModelPlan(modelName string, logger *zap.Logger, store *storage.Store, c
 		cb(&plan)
 	}
 
-	store.ModelPlanCreate(ctx, &plan)
+	store.ModelPlanCreate(logger, &plan)
 	return &plan
 }
 func makePlanBasics(uuid uuid.UUID, logger *zap.Logger, store *storage.Store, callbacks ...func(*models.PlanBasics)) *models.PlanBasics {

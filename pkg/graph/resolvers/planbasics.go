@@ -28,7 +28,7 @@ func UpdatePlanBasicsResolver(logger *zap.Logger, input *models.PlanBasics, prin
 	return retBasics, err
 
 }
-func FetchPlanBasicsByModelPlanID(logger *zap.Logger, principal *string, modelPlanID uuid.UUID, store *storage.Store) (*models.PlanBasics, error) {
+func PlanBasicsGetByModelPlanID(logger *zap.Logger, principal *string, modelPlanID uuid.UUID, store *storage.Store) (*models.PlanBasics, error) {
 	plan, err := store.PlanBasicsGetByModelPlanID(logger, principal, modelPlanID)
 	if err != nil {
 		return nil, err

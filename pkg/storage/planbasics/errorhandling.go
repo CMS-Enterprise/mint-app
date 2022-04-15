@@ -17,7 +17,7 @@ const (
 
 func HandlePlanBasicsCreationError(logger *zap.Logger, plan *models.PlanBasics, err error) (*models.PlanBasics, error) {
 	logger.Error(
-		fmt.Sprintf("Failed to create model [#{modelTypeName}] with error: #{err}", modelTypeName, err),
+		fmt.Sprint("Failed to create model [#{modelTypeName}] with error: #{err}", modelTypeName, err),
 		zap.String("user", models.ValueOrEmpty(plan.ModifiedBy)),
 	)
 
@@ -26,7 +26,7 @@ func HandlePlanBasicsCreationError(logger *zap.Logger, plan *models.PlanBasics, 
 
 func HandlePlanBasicsUpdateError(logger *zap.Logger, plan *models.PlanBasics, err error, isQueryError bool) (*models.PlanBasics, error) {
 	logger.Error(
-		fmt.Sprintf("Failed to update #{modelTypeName} due to error: #{err}", modelTypeName, err),
+		fmt.Sprint("Failed to update #{modelTypeName} due to error: #{err}", modelTypeName, err),
 		zap.String("id", plan.ID.String()),
 		zap.String("user", models.ValueOrEmpty(plan.ModifiedBy)),
 	)
