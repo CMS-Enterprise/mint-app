@@ -13,11 +13,11 @@ import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import Divider from 'components/shared/Divider';
-import GetModelPlan from 'queries/GetModelPlan';
+import GetModelPlanQuery from 'queries/GetModelPlanQuery';
 import {
-  GetModelPlanQuery,
-  GetModelPlanQueryVariables
-} from 'queries/types/GetModelPlanQuery';
+  GetModelPlan,
+  GetModelPlanVariables
+} from 'queries/types/GetModelPlan';
 
 import TaskListCta from './components/TaskListCta';
 import TaskListItem, { TaskListDescription } from './components/TaskListItem';
@@ -34,8 +34,8 @@ const TaskList = () => {
   const { t } = useTranslation('modelPlanTaskList');
   const { modelId } = useParams<{ modelId: string }>();
 
-  const { data } = useQuery<GetModelPlanQuery, GetModelPlanQueryVariables>(
-    GetModelPlan,
+  const { data } = useQuery<GetModelPlan, GetModelPlanVariables>(
+    GetModelPlanQuery,
     {
       variables: {
         id: modelId
@@ -43,8 +43,7 @@ const TaskList = () => {
     }
   );
 
-  const { modelPlan } = data || {};
-  const { id, modelName } = modelPlan || {};
+  const { modelName } = data?.modelPlan || {};
 
   const taskListItem: TaskListItemProps[] = t('numberedList', {
     returnObjects: true
