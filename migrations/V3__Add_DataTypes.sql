@@ -1,30 +1,32 @@
 CREATE TYPE model_category AS ENUM (
-	'Accountable Care',
-	'Demonstration',
-	'Episode-based Payment Initiatives',
-	'Initiatives Focused on the Medicaid and CHIP Population',
-	'Initiatives Focused on the Medicare and Medicaid Enrollees',
-	--'Initiatives to Accelerate the Development and Testing of New Payment and Service Delivery Models', --Too big
-	'Initiatives to Accelerate the Development and Testing',
-	'Initiatives to Speed the Adoption of Best Practices',
-	'Primary Care Transformation',
-	'TBD'
+	'ACCOUNTABLE_CARE',
+	'DEMONSTRATION',
+	'EPISODE_BASED_PAYMENT_INITIATIVES',
+	'INIT_MEDICAID_CHIP_POP',
+	'INIT__MEDICARE_MEDICAID_ENROLLEES',
+	'INIT_ACCEL_DEV_AND_TEST',
+	'INIT_SPEED_ADOPT_BEST_PRACTICE',
+	'PRIMARY_CARE_TRANSFORMATION',
+	'UNKNOWN'
 );
 CREATE TYPE cms_center AS ENUM (
 	'CMMI',
-	'Center for Medicare (CM)',
-	'Federal Coordinated Health Care Office',
-	'Center for Clinical Standards and Quality',
-	'Center for Program Integrity',
-	'Other (please specify)'
+	'CENTER_FOR_MEDICARE',
+	'FEDERAL_COORDINATED_HEALTH_CARE_OFFICE',
+	'CENTER_FOR_CLINICAL_STANDARDS_AND_QUALITY',
+	'CENTER_FOR_PROGRAM_INTEGRITY',
+	'OTHER'
 );
 CREATE TYPE cmmi_group as ENUM (
-	'Patient Care Models Group (PCMG)',
-	'Policy and Programs Group (PPG)',
-	'Preventive and Population Health Care Models Group (PPHCMG)',
-	'Seamless Care Models Group (SCMG)',
-	'State Innovations Group (SIG)',
-	'Unknown/Unassigned or TBD?'
+	'PATIENT_CARE_MODELS_GROUP',
+	'POLICY_AND_PROGRAMS_GROUP',
+	'PREVENTIVE_AND_POPULATION_HEALTH_CARE_MODELS_GROUP',
+	'SEAMLESS_CARE_MODELS_GROUP',
+	'STATE_INNOVATIONS_GROUP',
+	'TBD'
 );
-CREATE TYPE model_type as ENUM ('Voluntary', 'Mandatory', 'TBD');
-CREATE TYPE tri_state_answer as ENUM ('Yes', 'No', 'TBD');
+CREATE TYPE model_type as ENUM ('VOLUNTARY', 'MANDATORY', 'TBD');
+CREATE TYPE tri_state_answer as ENUM ('YES', 'NO', 'TBD');
+
+
+CREATE TYPE task_status as ENUM ('READY','IN_PROGRESS', 'COMPLETE')

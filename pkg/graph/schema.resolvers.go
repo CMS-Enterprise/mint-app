@@ -7,7 +7,6 @@ import (
 	"context"
 
 	"github.com/google/uuid"
-	"github.com/guregu/null"
 
 	"github.com/cmsgov/mint-app/pkg/appcontext"
 	"github.com/cmsgov/mint-app/pkg/flags"
@@ -17,115 +16,58 @@ import (
 	"github.com/cmsgov/mint-app/pkg/models"
 )
 
-func (r *modelPlanResolver) Requester(ctx context.Context, obj *models.ModelPlan) (*string, error) {
-	return &obj.Requester.String, nil
+func (r *modelPlanResolver) CmmiGroups(ctx context.Context, obj *models.ModelPlan) ([]model.CMMIGroup, error) {
+	// TODO: We should probably have a better way to handle enum arrays
+	var cmmiGroups []model.CMMIGroup
+
+	for _, item := range obj.CMMIGroup {
+		cmmiGroups = append(cmmiGroups, model.CMMIGroup(item))
+	}
+
+	return cmmiGroups, nil
 }
 
-func (r *modelPlanResolver) RequesterComponent(ctx context.Context, obj *models.ModelPlan) (*string, error) {
-	return &obj.RequesterComponent.String, nil
-}
+func (r *modelPlanResolver) Basics(ctx context.Context, obj *models.ModelPlan) (*models.PlanBasics, error) {
+	logger := appcontext.ZLogger(ctx)
+	principal := appcontext.Principal(ctx).ID()
 
-func (r *modelPlanResolver) MainPointOfContact(ctx context.Context, obj *models.ModelPlan) (*string, error) {
-	return &obj.MainPointOfContact.String, nil
-}
-
-func (r *modelPlanResolver) PointOfContactComponent(ctx context.Context, obj *models.ModelPlan) (*string, error) {
-	return &obj.PointOfContactComponent.String, nil
-}
-
-func (r *modelPlanResolver) CreatedBy(ctx context.Context, obj *models.ModelPlan) (*string, error) {
-	return &obj.CreatedBy.String, nil
-}
-
-func (r *modelPlanResolver) ModifiedBy(ctx context.Context, obj *models.ModelPlan) (*string, error) {
-	return &obj.ModifiedBy.String, nil
+	return resolvers.FetchPlanBasicsByModelPlanID(logger, &principal, obj.ID, r.store)
 }
 
 func (r *mutationResolver) CreateModelPlan(ctx context.Context, input model.ModelPlanInput) (*models.ModelPlan, error) {
 	plan := ConvertToModelPlan(&input)
 
-	plan.CreatedBy = null.StringFrom(appcontext.Principal(ctx).ID())
+	plan.CreatedBy = models.StringPointer(appcontext.Principal(ctx).ID())
 	plan.ModifiedBy = plan.CreatedBy
 	createdPlan, err := r.store.ModelPlanCreate(ctx, plan)
-	// plan.Requester =
 
-	// plan := models.ModelPlan{
-	// 	CreatedBy: null.StringFrom(appcontext.Principal(ctx).ID()),
-	// 	Requester: null.StringFromPtr(input.Requester), //This can never be null.. do we want this?
-	// }
-	// plan.ModifiedBy = plan.CreatedBy
-	// createdPlan, err := r.store.ModelPlanCreate(ctx, &plan)
 	return createdPlan, err
 }
 
-func (r *mutationResolver) CreatePlanBasics(ctx context.Context, input model.CreatePlanBasicsRequestInput) (*model.CreatePlanBasicsPayload, error) {
+func (r *mutationResolver) CreatePlanBasics(ctx context.Context, input model.PlanBasicsInput) (*models.PlanBasics, error) {
+	basics := ConvertToPlanBasics(&input)
 	principal := appcontext.Principal(ctx).ID()
 	logger := appcontext.ZLogger(ctx)
 
-	return resolvers.CreatePlanBasicsResolver(logger, input, principal, r.store)
+	return resolvers.CreatePlanBasicsResolver(logger, basics, &principal, r.store)
 }
 
 func (r *mutationResolver) UpdateModelPlan(ctx context.Context, input model.ModelPlanInput) (*models.ModelPlan, error) {
 	plan := ConvertToModelPlan(&input)
-	plan.ModifiedBy = null.StringFrom(appcontext.Principal(ctx).ID())
-	// models.ModelPlan{
-	// 	ID:                      *input.ID,
-	// 	Requester:               null.StringFromPtr(input.Requester),
-	// 	RequesterComponent:      null.StringFromPtr(input.RequesterComponent),
-	// 	MainPointOfContact:      null.StringFromPtr(input.MainPointOfContact),
-	// 	PointOfContactComponent: null.StringFromPtr(input.PointOfContactComponent),
-	// 	CreatedBy:               null.StringFromPtr(input.CreatedBy),
-	// 	CreatedDts:              input.CreatedDts,
-	// 	ModifiedBy:              null.StringFrom(appcontext.Principal(ctx).ID()), //User who submitted request
-	// 	ModifiedDts:             &now,
-	// }
+	principal := appcontext.Principal(ctx).ID()
+	//TODO clean this up
+	plan.ModifiedBy = &principal
 
 	retPlan, err := r.store.ModelPlanUpdate(ctx, plan)
 	return retPlan, err
 }
 
-func (r *planBasicsResolver) ModelName(ctx context.Context, obj *models.PlanBasics) (*string, error) {
-	return &obj.ModelName.String, nil
-}
+func (r *mutationResolver) UpdatePlanBasics(ctx context.Context, input model.PlanBasicsInput) (*models.PlanBasics, error) {
+	basics := ConvertToPlanBasics(&input)
+	principal := appcontext.Principal(ctx).ID()
+	logger := appcontext.ZLogger(ctx)
 
-func (r *planBasicsResolver) ModelCategory(ctx context.Context, obj *models.PlanBasics) (*string, error) {
-	return &obj.ModelCategory.String, nil
-}
-
-func (r *planBasicsResolver) CmsCenter(ctx context.Context, obj *models.PlanBasics) (*string, error) {
-	return &obj.CMSCenter.String, nil
-}
-
-func (r *planBasicsResolver) CmmiGroup(ctx context.Context, obj *models.PlanBasics) (*string, error) {
-	return &obj.CMMIGroup.String, nil
-}
-
-func (r *planBasicsResolver) ModelType(ctx context.Context, obj *models.PlanBasics) (*string, error) {
-	return &obj.ModelType.String, nil
-}
-
-func (r *planBasicsResolver) Problem(ctx context.Context, obj *models.PlanBasics) (*string, error) {
-	return &obj.Problem.String, nil
-}
-
-func (r *planBasicsResolver) Goal(ctx context.Context, obj *models.PlanBasics) (*string, error) {
-	return &obj.Goal.String, nil
-}
-
-func (r *planBasicsResolver) TestInventions(ctx context.Context, obj *models.PlanBasics) (*string, error) {
-	return &obj.TestInventions.String, nil
-}
-
-func (r *planBasicsResolver) Note(ctx context.Context, obj *models.PlanBasics) (*string, error) {
-	return &obj.Note.String, nil
-}
-
-func (r *planBasicsResolver) CreatedBy(ctx context.Context, obj *models.PlanBasics) (*string, error) {
-	return &obj.CreatedBy.String, nil
-}
-
-func (r *planBasicsResolver) ModifiedBy(ctx context.Context, obj *models.PlanBasics) (*string, error) {
-	return &obj.ModifiedBy.String, nil
+	return resolvers.UpdatePlanBasicsResolver(logger, basics, &principal, r.store)
 }
 
 func (r *queryResolver) CurrentUser(ctx context.Context) (*model.CurrentUser, error) {
@@ -172,38 +114,9 @@ func (r *Resolver) ModelPlan() generated.ModelPlanResolver { return &modelPlanRe
 // Mutation returns generated.MutationResolver implementation.
 func (r *Resolver) Mutation() generated.MutationResolver { return &mutationResolver{r} }
 
-// PlanBasics returns generated.PlanBasicsResolver implementation.
-func (r *Resolver) PlanBasics() generated.PlanBasicsResolver { return &planBasicsResolver{r} }
-
 // Query returns generated.QueryResolver implementation.
 func (r *Resolver) Query() generated.QueryResolver { return &queryResolver{r} }
 
 type modelPlanResolver struct{ *Resolver }
 type mutationResolver struct{ *Resolver }
-type planBasicsResolver struct{ *Resolver }
 type queryResolver struct{ *Resolver }
-
-// !!! WARNING !!!
-// The code below was going to be deleted when updating resolvers. It has been copied here so you have
-// one last chance to move it out of harms way if you want. There are two reasons this happens:
-//  - When renaming or deleting a resolver the old code will be put in here. You can safely delete
-//    it when you're done.
-//  - You have helper methods in this file. Move them out to keep these resolver files clean.
-func ConvertToModelPlan(mpi *model.ModelPlanInput) *models.ModelPlan {
-	plan := models.ModelPlan{
-		// ID:                      *mpi.ID,
-		Requester:               null.StringFromPtr(mpi.Requester),
-		RequesterComponent:      null.StringFromPtr(mpi.RequesterComponent),
-		MainPointOfContact:      null.StringFromPtr(mpi.MainPointOfContact),
-		PointOfContactComponent: null.StringFromPtr(mpi.PointOfContactComponent),
-		CreatedBy:               null.StringFromPtr(mpi.CreatedBy),
-		CreatedDts:              mpi.CreatedDts,
-		ModifiedBy:              null.StringFromPtr(mpi.ModifiedBy),
-		ModifiedDts:             mpi.ModifiedDts,
-	}
-	if mpi.ID != nil {
-		plan.ID = *mpi.ID
-	}
-	return &plan
-
-}
