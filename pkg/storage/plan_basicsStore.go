@@ -30,12 +30,12 @@ func (s *Store) PlanBasicsCreate(logger *zap.Logger, basics *models.PlanBasics) 
 
 	statement, err := s.db.PrepareNamed(planBasicsCreateSQL)
 	if err != nil {
-		return planbasics.HandleModelCreationError(logger, basics, err)
+		return planbasics.HandlePlanBasicsCreationError(logger, basics, err)
 	}
 
 	err = statement.Get(basics, basics)
 	if err != nil {
-		return planbasics.HandleModelCreationError(logger, basics, err)
+		return planbasics.HandlePlanBasicsCreationError(logger, basics, err)
 	}
 
 	return basics, nil
@@ -44,12 +44,12 @@ func (s *Store) PlanBasicsCreate(logger *zap.Logger, basics *models.PlanBasics) 
 func (s *Store) PlanBasicsUpdate(logger *zap.Logger, plan *models.PlanBasics) (*models.PlanBasics, error) {
 	statement, err := s.db.PrepareNamed(planBasicsUpdateSQL)
 	if err != nil {
-		return planbasics.HandleModelUpdateError(logger, plan, err, false)
+		return planbasics.HandlePlanBasicsUpdateError(logger, plan, err, false)
 	}
 
 	err = statement.Get(plan, plan)
 	if err != nil {
-		return planbasics.HandleModelUpdateError(logger, plan, err, true)
+		return planbasics.HandlePlanBasicsUpdateError(logger, plan, err, true)
 	}
 
 	return plan, nil
