@@ -50,6 +50,13 @@ const TaskList = () => {
     returnObjects: true
   });
 
+  const taskListItemStatus = (key: string) => {
+    if (key === 'basics') {
+      return basics === null ? 'READY' : 'IN_PROGRESS';
+    }
+    return 'CANNOT_START';
+  };
+
   return (
     <MainContent
       className="model-plan-task-list grid-container margin-bottom-7"
@@ -107,13 +114,13 @@ const TaskList = () => {
                       key={key}
                       testId="task-list-intake-form"
                       heading={taskListItem[key].heading}
-                      status="IN_PROGRESS"
+                      status={taskListItemStatus(key)}
                     >
                       <TaskListDescription>
                         <p className="margin-top-0">{taskListItem[key].copy}</p>
                       </TaskListDescription>
                       {/* <TaskListCta intake={systemIntake} /> */}
-                      <TaskListCta status="IN_PROGRESS" />
+                      <TaskListCta status={taskListItemStatus(key)} />
                     </TaskListItem>
                     {key !== lastTaskItem && (
                       <Divider className="margin-bottom-4" />
