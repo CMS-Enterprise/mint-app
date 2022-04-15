@@ -75,7 +75,7 @@ const payments = {
     b:
       'b. In past CMMI has picked the assumption and we comment on the reasonableness of it or display a range of outcomes when it is varied.'
   },
-  meetingExpectation: 'Expectation of meeing the standard for AAPM',
+  meetingExpectation: 'Expectation of meeting the standard for AAPM',
   expectedOverlap:
     'Expected overlap with other initiatives and reconciliation procedures when this occurs.',
   medicareFFS: 'Are Medicare FFS systems changes needed?',
@@ -130,7 +130,7 @@ const payments = {
     monthly: 'Monthly'
   },
   desiredHierarchy:
-    'If model participants may be included in additional models that may interact, please note the disired hierarchy of how any payment changes or edits should be applied.',
+    'If model participants may be included in additional models that may interact, please note the desired hierarchy of how any payment changes or edits should be applied.',
   reoverPayments: 'Will you recover the payments?',
   reconilingPayments: 'Do you anticipate reconciling payments retrospectively?',
   paymentsStart: 'When will payments start? (Enter approximate)',

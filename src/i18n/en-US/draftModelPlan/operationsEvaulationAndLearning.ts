@@ -104,7 +104,7 @@ const operationsEvaluationAndLearning = {
   },
   participantAppeal: 'Will participants be able to appeal?',
   evaluationApproach:
-    'What type of evaluation appreoach are tou considering? Select all that apply.',
+    'What type of evaluation approach are tou considering? Select all that apply.',
   approachOptions: {
     establish: 'Establish control and intervention groups',
     identify: 'Identify a comparison/match group',
@@ -122,7 +122,7 @@ const operationsEvaluationAndLearning = {
     'Note: If you are not sure what current data is collected via provider billing, please ask Provider Billing Group (PBG)',
   dataToSend: 'What data will you send to participants? Select all that apply.',
   claimLineFeed:
-    'Does the model require that identifiable Clain and Claim Line Feed (CCLFs) data need to be shared with participants?',
+    'Does the model require that identifiable Claim and Claim Line Feed (CCLFs) data need to be shared with participants?',
   reportingTiming: 'Data and reporting timing',
   dataSharing: 'Data sharing starts',
   dataSharingInfo:

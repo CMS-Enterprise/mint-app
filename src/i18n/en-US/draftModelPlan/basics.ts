@@ -18,8 +18,7 @@ const basics = {
     'Policy and Programs Group (PPG)',
     'Preventative and Population Health Care Models Group (PPHCMG)',
     'Seamless Care Models Group (SCMG)',
-    'State Innovations Group (SIG)',
-    'To be determined'
+    'State Innovations Group (SIG)'
   ],
   modelType: 'Model Type',
   voluntary: 'Voluntary',
