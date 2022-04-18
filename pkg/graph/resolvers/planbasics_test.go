@@ -5,11 +5,8 @@ import (
 
 	"github.com/cmsgov/mint-app/pkg/models"
 
-	"github.com/cmsgov/mint-app/pkg/storage"
 	"github.com/google/uuid"
 	"github.com/stretchr/testify/assert"
-	"go.uber.org/zap"
-	ld "gopkg.in/launchdarkly/go-server-sdk.v5"
 )
 
 func TestCreatePlanBasicsResolver(t *testing.T) {
@@ -18,19 +15,20 @@ func TestCreatePlanBasicsResolver(t *testing.T) {
 
 	basics := models.PlanBasics{}
 
+	basics.ID = uuid.MustParse("0576c351-c480-4f85-97a4-b7c1d691a3cb")
+	basics.ModelPlanID = uuid.MustParse("85b3ff03-1be2-4870-b02f-55c764500e48")
+
 	result, err := CreatePlanBasicsResolver(tc.Logger, &basics, tc.Principal, tc.Store)
 	assert.NoError(t, err)
 	assert.NotNil(t, result.ID)
 }
 
 func TestFetchPlanBasicsByID(t *testing.T) {
-	config := NewDBConfig()
-	ldClient, _ := ld.MakeCustomClient("fake", ld.Config{Offline: true}, 0)
-	logger := zap.NewNop()
-	id := uuid.Nil
-	store, _ := storage.NewStore(logger, config, ldClient)
+	tc := GetDefaultTestConfigs()
 
-	plan, err := FetchPlanBasicsByID(logger, id, store)
+	id := uuid.MustParse("0576c351-c480-4f85-97a4-b7c1d691a3cb")
+
+	plan, err := FetchPlanBasicsByID(tc.Logger, id, tc.Store)
 	assert.Nil(t, err)
 	assert.NotNil(t, plan)
 }
