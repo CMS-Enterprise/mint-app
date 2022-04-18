@@ -1,28 +1,19 @@
 UPDATE plan_basics
 SET
   model_plan_id = :model_plan_id,
-  model_name = :model_name,
-  model_category = :model_category,
-  cms_center = :cms_center,
-  cmmi_group = :cmmi_group,
   model_type = :model_type,
   problem = :problem,
   goal = :goal,
   test_inventions = :test_inventions,
   note = :note,
-  -- created_by = :created_by,
-  -- created_dts = :created_dts,
   modified_by = :modified_by,
-  modified_dts = :modified_dts,
+  modified_dts = CURRENT_TIMESTAMP,
   status = :status
 WHERE plan_basics.id = :id
     RETURNING
         id,
         model_plan_id,
-        model_name,
-        model_category,
-        cms_center,
-        cmmi_group,
+
         model_type,
         problem,
         goal,
