@@ -8,30 +8,9 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/google/uuid"
 )
-
-// The payload returned on requesting plan basics creation
-type CreatePlanBasicsPayload struct {
-	ID         uuid.UUID    `json:"id"`
-	UserErrors []*UserError `json:"userErrors"`
-}
-
-// Requests the creation of plan basics
-type CreatePlanBasicsRequestInput struct {
-	ModelPlanID uuid.UUID `json:"modelPlanID"`
-}
-
-// The payload returned on requesting plan milestones creation
-type CreatePlanMilestonesPayload struct {
-	ID         uuid.UUID    `json:"id"`
-	UserErrors []*UserError `json:"userErrors"`
-}
-
-// Requests the creation of plan milestones
-type CreatePlanMilestonesRequest struct {
-	ModelPlanID uuid.UUID `json:"modelPlanID"`
-}
 
 // The current user of the application
 type CurrentUser struct {
@@ -46,22 +25,78 @@ type LaunchDarklySettings struct {
 
 // ModelPlanInput represent the data point for plans about a model. It is the central data type in the appliation
 type ModelPlanInput struct {
-	ID                      *uuid.UUID `json:"id"`
-	Requester               *string    `json:"requester"`
-	RequesterComponent      *string    `json:"requesterComponent"`
-	MainPointOfContact      *string    `json:"mainPointOfContact"`
-	PointOfContactComponent *string    `json:"pointOfContactComponent"`
-	CreatedBy               *string    `json:"createdBy"`
-	CreatedDts              *time.Time `json:"createdDts"`
-	ModifiedBy              *string    `json:"modifiedBy"`
-	ModifiedDts             *time.Time `json:"modifiedDts"`
+	ID            *uuid.UUID            `json:"id"`
+	ModelName     *string               `json:"modelName"`
+	ModelCategory *models.ModelCategory `json:"modelCategory"`
+	CmsCenter     *models.CMSCenter     `json:"cmsCenter"`
+	CmmiGroups    []CMMIGroup           `json:"cmmiGroups"`
+	CreatedBy     *string               `json:"createdBy"`
+	CreatedDts    *time.Time            `json:"createdDts"`
+	ModifiedBy    *string               `json:"modifiedBy"`
+	ModifiedDts   *time.Time            `json:"modifiedDts"`
 }
 
-// UserError represents application-level errors that are the result of
-// either user or application developer error.
-type UserError struct {
-	Message string   `json:"message"`
-	Path    []string `json:"path"`
+// Represents plan basics
+type PlanBasicsInput struct {
+	ID             *uuid.UUID         `json:"id"`
+	ModelPlanID    *uuid.UUID         `json:"modelPlanID"`
+	ModelType      *models.ModelType  `json:"modelType"`
+	Problem        *string            `json:"problem"`
+	Goal           *string            `json:"goal"`
+	TestInventions *string            `json:"testInventions"`
+	Note           *string            `json:"note"`
+	CreatedBy      *string            `json:"createdBy"`
+	CreatedDts     *time.Time         `json:"createdDts"`
+	ModifiedBy     *string            `json:"modifiedBy"`
+	ModifiedDts    *time.Time         `json:"modifiedDts"`
+	Status         *models.TaskStatus `json:"status"`
+}
+
+type CMMIGroup string
+
+const (
+	CMMIGroupPatientCareModelsGroup                       CMMIGroup = "PATIENT_CARE_MODELS_GROUP"
+	CMMIGroupPolicyAndProgramsGroup                       CMMIGroup = "POLICY_AND_PROGRAMS_GROUP"
+	CMMIGroupPreventiveAndPopulationHealthCareModelsGroup CMMIGroup = "PREVENTIVE_AND_POPULATION_HEALTH_CARE_MODELS_GROUP"
+	CMMIGroupSeamlessCareModelsGroup                      CMMIGroup = "SEAMLESS_CARE_MODELS_GROUP"
+	CMMIGroupStateInnovationsGroup                        CMMIGroup = "STATE_INNOVATIONS_GROUP"
+)
+
+var AllCMMIGroup = []CMMIGroup{
+	CMMIGroupPatientCareModelsGroup,
+	CMMIGroupPolicyAndProgramsGroup,
+	CMMIGroupPreventiveAndPopulationHealthCareModelsGroup,
+	CMMIGroupSeamlessCareModelsGroup,
+	CMMIGroupStateInnovationsGroup,
+}
+
+func (e CMMIGroup) IsValid() bool {
+	switch e {
+	case CMMIGroupPatientCareModelsGroup, CMMIGroupPolicyAndProgramsGroup, CMMIGroupPreventiveAndPopulationHealthCareModelsGroup, CMMIGroupSeamlessCareModelsGroup, CMMIGroupStateInnovationsGroup:
+		return true
+	}
+	return false
+}
+
+func (e CMMIGroup) String() string {
+	return string(e)
+}
+
+func (e *CMMIGroup) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = CMMIGroup(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid CMMIGroup", str)
+	}
+	return nil
+}
+
+func (e CMMIGroup) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
 // A user role associated with a job code

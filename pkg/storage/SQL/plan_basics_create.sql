@@ -1,44 +1,34 @@
 INSERT INTO plan_basics (
         id,
         model_plan_id,
-        model_name,
-        model_category,
-        cms_center,
-        cmmi_group,
+
         model_type,
         problem,
         goal,
         test_inventions,
         note,
         created_by,
-        created_dts,
         modified_by,
-        modified_dts,
         status
     )
 VALUES (
         :id,
         :model_plan_id,
-        NULLIF(:model_name, ''),
-        NULLIF(:model_category, ''),
-        NULLIF(:cms_center, ''),
-        NULLIF(:cmmi_group, ''),
-        NULLIF(:model_type, ''),
-        NULLIF(:problem, ''),
-        NULLIF(:goal, ''),
-        NULLIF(:test_inventions, ''),
-        NULLIF(:note, ''),
+
+        :model_type,
+        NULLIF(:problem,''),
+        NULLIF(:goal,''),
+        NULLIF(:test_inventions,''),
+        NULLIF(:note,''),
         :created_by,
         :modified_by,
-        NULLIF(:status, '')
+        :status
+
     )
     RETURNING
         id,
         model_plan_id,
-        model_name,
-        model_category,
-        cms_center,
-        cmmi_group,
+
         model_type,
         problem,
         goal,
