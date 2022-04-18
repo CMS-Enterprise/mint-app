@@ -2,10 +2,11 @@ package storage
 
 import (
 	_ "embed"
+	"github.com/cmsgov/mint-app/pkg/shared/utility_sql"
+	"github.com/cmsgov/mint-app/pkg/storage/genericmodel"
 
 	"github.com/cmsgov/mint-app/pkg/models"
-	utilityUuid "github.com/cmsgov/mint-app/pkg/shared/uuid"
-	"github.com/cmsgov/mint-app/pkg/storage/planbasics"
+	"github.com/cmsgov/mint-app/pkg/shared/utility_uuid"
 	"github.com/google/uuid"
 	"go.uber.org/zap"
 )
@@ -24,18 +25,18 @@ var planBasicsGetByModelPlan_IdSQL string
 
 func (s *Store) PlanBasicsCreate(logger *zap.Logger, basics *models.PlanBasics) (*models.PlanBasics, error) {
 
-	basics.ID = utilityUuid.ValueOrNewUUID(basics.ID)
+	basics.ID = utility_uuid.ValueOrNewUUID(basics.ID)
 	status := models.TaskReady
 	basics.Status = &status
 
 	statement, err := s.db.PrepareNamed(planBasicsCreateSQL)
 	if err != nil {
-		return planbasics.HandleModelCreationError(logger, basics, err)
+		return nil, genericmodel.HandleModelCreationError(logger, err, basics)
 	}
 
 	err = statement.Get(basics, basics)
 	if err != nil {
-		return planbasics.HandleModelCreationError(logger, basics, err)
+		return nil, genericmodel.HandleModelCreationError(logger, err, basics)
 	}
 
 	return basics, nil
@@ -44,38 +45,34 @@ func (s *Store) PlanBasicsCreate(logger *zap.Logger, basics *models.PlanBasics) 
 func (s *Store) PlanBasicsUpdate(logger *zap.Logger, plan *models.PlanBasics) (*models.PlanBasics, error) {
 	statement, err := s.db.PrepareNamed(planBasicsUpdateSQL)
 	if err != nil {
-		return planbasics.HandleModelUpdateError(logger, plan, err, false)
+		return nil, genericmodel.HandleModelUpdateError(logger, err, plan)
 	}
 
 	err = statement.Get(plan, plan)
 	if err != nil {
-		return planbasics.HandleModelUpdateError(logger, plan, err, true)
+		return nil, genericmodel.HandleModelQueryError(logger, err, plan)
 	}
 
 	return plan, nil
 }
 
 func (s *Store) PlanBasicsGetByID(logger *zap.Logger, id uuid.UUID) (*models.PlanBasics, error) {
-	plan := models.PlanBasics{}
-
 	statement, err := s.db.PrepareNamed(planBasicsGetByIdSQL)
 	if err != nil {
 		return nil, err
 	}
 
-	arg := map[string]interface{}{"id": id}
-	err = statement.Get(&plan, arg)
+	var plan models.PlanBasics
+	err = statement.Get(&plan, utility_sql.CreateIDQueryMap(id))
 
 	if err != nil {
-		return planbasics.HandleModelFetchError(logger, id, err)
+		return nil, genericmodel.HandleModelFetchByIDError(logger, err, id)
 	}
 
 	return &plan, nil
 }
 
-func (s *Store) PlanBasicsGetByModelPlanID(logger *zap.Logger, principal *string, model_plan_id uuid.UUID) (*models.PlanBasics, error) {
-	plan := models.PlanBasics{}
-
+func (s *Store) PlanBasicsGetByModelPlanID(logger *zap.Logger, principal *string, modelPlanId uuid.UUID) (*models.PlanBasics, error) {
 	statement, err := s.db.PrepareNamed(planBasicsGetByModelPlan_IdSQL)
 	if err != nil {
 		return nil, err
@@ -84,12 +81,13 @@ func (s *Store) PlanBasicsGetByModelPlanID(logger *zap.Logger, principal *string
 	arg := map[string]interface{}{
 		"modified_by":   principal,
 		"created_by":    principal,
-		"model_plan_id": model_plan_id,
+		"model_plan_id": modelPlanId,
 	}
-	err = statement.Get(&plan, arg)
 
+	var plan models.PlanBasics
+	err = statement.Get(&plan, arg)
 	if err != nil {
-		return planbasics.HandleModelFetchError(logger, model_plan_id, err)
+		return nil, genericmodel.HandleModelFetchByIDError(logger, err, modelPlanId)
 	}
 
 	return &plan, nil

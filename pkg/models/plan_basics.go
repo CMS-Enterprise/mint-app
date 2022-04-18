@@ -36,6 +36,6 @@ func (p PlanBasics) GetPlanID() uuid.UUID {
 	return p.ModelPlanID
 }
 
-func (p PlanBasics) GetModifiedBy() null.String {
+func (p PlanBasics) GetModifiedBy() *string {
 	return p.ModifiedBy
 }

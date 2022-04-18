@@ -37,6 +37,7 @@ type ModelPlan {
   modifiedBy: String
   modifiedDts: Time
   basics: PlanBasics
+  milestones: PlanMilestones
 }
 
 """
@@ -54,8 +55,6 @@ createdDts: Time
 modifiedBy: String
 modifiedDts: Time
 }
-
-
 
 """
 Represents plan basics
@@ -96,6 +95,49 @@ input PlanBasicsInput {
   status: TaskStatus!
 }
 
+"""
+Represents plan milestones
+"""
+type PlanMilestones {
+  id: UUID
+  modelPlanID: UUID
+
+  enterCMSClearance: Time
+  enterHMSOMBClearance: Time
+  cleared: Time
+  announced: Time
+  applicationsDue: Time
+  participantsAnnounced: Time
+  performancePeriodStarts: Time
+  performancePeriodEnds: Time
+
+  createdBy: String
+  createdDts: Time
+  modifiedBy: String
+  modifiedDts: Time
+}
+
+"""
+Represents plan milestones input
+"""
+input PlanMilestonesInput {
+  id: UUID
+  modelPlanID: UUID
+
+  enterCMSClearance: Time
+  enterHMSOMBClearance: Time
+  cleared: Time
+  announced: Time
+  applicationsDue: Time
+  participantsAnnounced: Time
+  performancePeriodStarts: Time
+  performancePeriodEnds: Time
+
+  createdBy: String
+  createdDts: Time
+  modifiedBy: String
+  modifiedDts: Time
+}
 
 """
 Query definition for the schema
@@ -104,6 +146,7 @@ type Query {
   currentUser: CurrentUser
   modelPlan(id: UUID!) : ModelPlan
   planBasics(id: UUID!) : PlanBasics
+  planMilestones(id: UUID!) : PlanMilestones
   modelPlanCollection: [ModelPlan]
 }
 
@@ -123,13 +166,17 @@ updateModelPlan(input: ModelPlanInput!):ModelPlan
 updatePlanBasics(input: PlanBasicsInput!): PlanBasics
 @hasRole(role: MINT_BASE_USER)
 
+createPlanMilestones(input: PlanMilestonesInput!):PlanMilestones
+@hasRole(role: MINT_BASE_USER)
+
+updatePlanMilestones(input: PlanMilestonesInput!):PlanMilestones
+@hasRole(role: MINT_BASE_USER)
 }
 
 enum TaskStatus {
   READY
   IN_PROGRESS
   COMPLETE
-
 }
 
 enum ModelType
@@ -150,6 +197,7 @@ enum ModelCategory{
 	PRIMARY_CARE_TRANSFORMATION
 	UNKNOWN
 }
+
 enum CMSCenter {
   CMMI
   CENTER_FOR_MEDICARE

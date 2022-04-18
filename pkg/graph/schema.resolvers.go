@@ -5,8 +5,7 @@ package graph
 
 import (
 	"context"
-
-	"github.com/google/uuid"
+	"fmt"
 
 	"github.com/cmsgov/mint-app/pkg/appcontext"
 	"github.com/cmsgov/mint-app/pkg/flags"
@@ -14,6 +13,7 @@ import (
 	"github.com/cmsgov/mint-app/pkg/graph/model"
 	"github.com/cmsgov/mint-app/pkg/graph/resolvers"
 	"github.com/cmsgov/mint-app/pkg/models"
+	"github.com/google/uuid"
 )
 
 func (r *modelPlanResolver) CmmiGroups(ctx context.Context, obj *models.ModelPlan) ([]model.CMMIGroup, error) {
@@ -32,6 +32,13 @@ func (r *modelPlanResolver) Basics(ctx context.Context, obj *models.ModelPlan) (
 	principal := appcontext.Principal(ctx).ID()
 
 	return resolvers.FetchPlanBasicsByModelPlanID(logger, &principal, obj.ID, r.store)
+}
+
+func (r *modelPlanResolver) Milestones(ctx context.Context, obj *models.ModelPlan) (*models.PlanMilestones, error) {
+	logger := appcontext.ZLogger(ctx)
+	principal := appcontext.Principal(ctx).ID()
+
+	return resolvers.FetchPlanMilestonesByModelPlanID(logger, &principal, obj.ID, r.store)
 }
 
 func (r *mutationResolver) CreateModelPlan(ctx context.Context, input model.ModelPlanInput) (*models.ModelPlan, error) {
@@ -70,6 +77,14 @@ func (r *mutationResolver) UpdatePlanBasics(ctx context.Context, input model.Pla
 	return resolvers.UpdatePlanBasicsResolver(logger, basics, &principal, r.store)
 }
 
+func (r *mutationResolver) CreatePlanMilestones(ctx context.Context, input model.PlanMilestonesInput) (*models.PlanMilestones, error) {
+	panic(fmt.Errorf("not implemented"))
+}
+
+func (r *mutationResolver) UpdatePlanMilestones(ctx context.Context, input model.PlanMilestonesInput) (*models.PlanMilestones, error) {
+	panic(fmt.Errorf("not implemented"))
+}
+
 func (r *queryResolver) CurrentUser(ctx context.Context) (*model.CurrentUser, error) {
 	ldUser := flags.Principal(ctx)
 	userKey := ldUser.GetKey()
@@ -98,6 +113,12 @@ func (r *queryResolver) PlanBasics(ctx context.Context, id uuid.UUID) (*models.P
 	logger := appcontext.ZLogger(ctx)
 
 	return resolvers.FetchPlanBasicsByID(logger, id, r.store)
+}
+
+func (r *queryResolver) PlanMilestones(ctx context.Context, id uuid.UUID) (*models.PlanMilestones, error) {
+	logger := appcontext.ZLogger(ctx)
+
+	return resolvers.FetchPlanMilestonesByID(logger, id, r.store)
 }
 
 func (r *queryResolver) ModelPlanCollection(ctx context.Context) ([]*models.ModelPlan, error) {

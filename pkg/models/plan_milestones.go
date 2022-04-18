@@ -2,7 +2,6 @@ package models
 
 import (
 	"github.com/google/uuid"
-	"github.com/guregu/null"
 	"time"
 )
 
@@ -22,10 +21,10 @@ type PlanMilestones struct {
 	PerformancePeriodStarts *time.Time `json:"performancePeriodStarts" db:"performance_period_starts"`
 	PerformancePeriodEnds   *time.Time `json:"performancePeriodEnds" db:"performance_period_ends"`
 
-	CreatedBy   null.String `json:"createdBy" db:"created_by"`
-	CreatedDts  *time.Time  `json:"createdDts" db:"created_dts"`
-	ModifiedBy  null.String `json:"modifiedBy" db:"modified_by"`
-	ModifiedDts *time.Time  `json:"modifiedDts" db:"modified_dts"`
+	CreatedBy   *string    `json:"createdBy" db:"created_by"`
+	CreatedDts  *time.Time `json:"createdDts" db:"created_dts"`
+	ModifiedBy  *string    `json:"modifiedBy" db:"modified_by"`
+	ModifiedDts *time.Time `json:"modifiedDts" db:"modified_dts"`
 }
 
 func (p PlanMilestones) GetModelTypeName() string {
@@ -40,6 +39,6 @@ func (p PlanMilestones) GetPlanID() uuid.UUID {
 	return p.ModelPlanID
 }
 
-func (p PlanMilestones) GetModifiedBy() null.String {
+func (p PlanMilestones) GetModifiedBy() *string {
 	return p.ModifiedBy
 }
