@@ -1,20 +1,14 @@
 import React from 'react';
-import { Provider } from 'react-redux';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import {
   render,
   screen,
-  waitForElementToBeRemoved,
-  within
+  waitForElementToBeRemoved
 } from '@testing-library/react';
-import configureMockStore from 'redux-mock-store';
 
-// import { initialSystemIntakeForm } from 'data/systemIntake';
 import GetModelPlanQuery from 'queries/GetModelPlanQuery';
 
-// import GetGRTFeedbackQuery from 'queries/GetGRTFeedbackQuery';
-// import GetSystemIntakeQuery from 'queries/GetSystemIntakeQuery';
 import TaskList from './index';
 
 jest.mock('@okta/okta-react', () => ({
@@ -33,12 +27,6 @@ jest.mock('@okta/okta-react', () => ({
     };
   }
 }));
-
-const intialModelPlan = {
-  id: '',
-  modelName: '',
-  basics: null
-};
 
 const waitForPageLoad = async () => {
   await waitForElementToBeRemoved(() => screen.getByTestId('page-loading'));
@@ -59,7 +47,8 @@ describe('The Model Plan Task List', () => {
           modelPlan: {
             id: MODEL_ID,
             modelName: '',
-            basics: null
+            basics: null,
+            ...intakeData
           }
         }
       }
@@ -93,22 +82,17 @@ describe('The Model Plan Task List', () => {
   });
 
   it('displays the model plan name', async () => {
-    const mockStore = configureMockStore();
-    const store = mockStore({
-      ...intialModelPlan,
-      modelName: "PM Butler's great plan"
-    });
-
     render(
       <MemoryRouter initialEntries={[`/models/${MODEL_ID}/task-list`]}>
         <MockedProvider
-          mocks={[intakeQuery({ modelName: "PM Butler's great plan" })]}
+          mocks={[
+            intakeQuery({
+              modelName: "PM Butler's great plan"
+            })
+          ]}
           addTypename={false}
         >
-          {/* console.log(store) */}
-          <Provider store={store}>
-            <Route path="/models/:modelId/task-list" component={TaskList} />
-          </Provider>
+          <Route path="/models/:modelId/task-list" component={TaskList} />
         </MockedProvider>
       </MemoryRouter>
     );
