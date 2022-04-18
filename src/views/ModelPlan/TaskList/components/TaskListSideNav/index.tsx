@@ -73,7 +73,7 @@ const TaskListSideNav = () => {
           <UswdsReactLink
             aria-label={t('sideNav.ariaLabelForOverview')}
             className="line-height-body-5"
-            to="/governance-overview"
+            to="/"
             variant="external"
             target="_blank"
           >
