@@ -92,7 +92,6 @@ func (r *queryResolver) ModelPlan(ctx context.Context, id uuid.UUID) (*models.Mo
 	principal := appcontext.Principal(ctx).ID()
 
 	return resolvers.ModelPlanGetByID(logger, principal, id, r.store)
-
 }
 
 func (r *queryResolver) PlanBasics(ctx context.Context, id uuid.UUID) (*models.PlanBasics, error) {
@@ -105,7 +104,6 @@ func (r *queryResolver) ModelPlanCollection(ctx context.Context) ([]*models.Mode
 	principal := appcontext.Principal(ctx).ID()
 	logger := appcontext.ZLogger(ctx)
 	return resolvers.ModelPlanCollectionByUser(logger, principal, r.store)
-
 }
 
 // ModelPlan returns generated.ModelPlanResolver implementation.

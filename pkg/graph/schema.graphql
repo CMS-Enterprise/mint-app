@@ -93,7 +93,7 @@ input PlanBasicsInput {
   createdDts: Time
   modifiedBy: String
   modifiedDts: Time
-  status: TaskStatus!
+  status: TaskStatus
 }
 
 
