@@ -34,6 +34,15 @@ func (r *modelPlanResolver) Basics(ctx context.Context, obj *models.ModelPlan) (
 	return resolvers.FetchPlanBasicsByModelPlanID(logger, &principal, obj.ID, r.store)
 }
 
+func (r *modelPlanResolver) Collaborators(ctx context.Context, obj *models.ModelPlan) ([]*models.PlanCollaborator, error) {
+	principal := appcontext.Principal(ctx).ID()
+	logger := appcontext.ZLogger(ctx)
+
+	collaborators, err := resolvers.FetchCollaboratorsByModelPlanID(logger, &principal, obj.ID, r.store)
+
+	return collaborators, err
+}
+
 func (r *mutationResolver) CreateModelPlan(ctx context.Context, input model.ModelPlanInput) (*models.ModelPlan, error) {
 	plan := ConvertToModelPlan(&input)
 
@@ -42,6 +51,30 @@ func (r *mutationResolver) CreateModelPlan(ctx context.Context, input model.Mode
 	createdPlan, err := r.store.ModelPlanCreate(ctx, plan)
 
 	return createdPlan, err
+}
+
+func (r *mutationResolver) CreatePlanCollaborator(ctx context.Context, input model.PlanCollaboratorInput) (*models.PlanCollaborator, error) {
+	collaborator := ConvertToPlanCollaborator(&input)
+	principal := appcontext.Principal(ctx).ID()
+	logger := appcontext.ZLogger(ctx)
+
+	return resolvers.CreatePlanCollaboratorResolver(logger, collaborator, &principal, r.store)
+}
+
+func (r *mutationResolver) UpdatePlanCollaborator(ctx context.Context, input model.PlanCollaboratorInput) (*models.PlanCollaborator, error) {
+	collaborator := ConvertToPlanCollaborator(&input)
+	principal := appcontext.Principal(ctx).ID()
+	logger := appcontext.ZLogger(ctx)
+
+	return resolvers.UpdatePlanCollaboratorResolver(logger, collaborator, &principal, r.store)
+}
+
+func (r *mutationResolver) DeletePlanCollaborator(ctx context.Context, input model.PlanCollaboratorInput) (*models.PlanCollaborator, error) {
+	collaborator := ConvertToPlanCollaborator(&input)
+	principal := appcontext.Principal(ctx).ID()
+	logger := appcontext.ZLogger(ctx)
+
+	return resolvers.DeletePlanCollaboratorResolver(logger, collaborator, &principal, r.store)
 }
 
 func (r *mutationResolver) CreatePlanBasics(ctx context.Context, input model.PlanBasicsInput) (*models.PlanBasics, error) {
@@ -108,6 +141,19 @@ func (r *queryResolver) ModelPlanCollection(ctx context.Context) ([]*models.Mode
 	return plans, nil
 }
 
+func (r *queryResolver) CedarPersonsByCommonName(ctx context.Context, commonName string) ([]*models.UserInfo, error) {
+	response, err := r.service.SearchCommonNameContains(ctx, commonName)
+	if err != nil {
+		return nil, err
+	}
+
+	return response, nil
+}
+
+func (r *userInfoResolver) Email(ctx context.Context, obj *models.UserInfo) (string, error) {
+	return string(obj.Email), nil
+}
+
 // ModelPlan returns generated.ModelPlanResolver implementation.
 func (r *Resolver) ModelPlan() generated.ModelPlanResolver { return &modelPlanResolver{r} }
 
@@ -117,6 +163,10 @@ func (r *Resolver) Mutation() generated.MutationResolver { return &mutationResol
 // Query returns generated.QueryResolver implementation.
 func (r *Resolver) Query() generated.QueryResolver { return &queryResolver{r} }
 
+// UserInfo returns generated.UserInfoResolver implementation.
+func (r *Resolver) UserInfo() generated.UserInfoResolver { return &userInfoResolver{r} }
+
 type modelPlanResolver struct{ *Resolver }
 type mutationResolver struct{ *Resolver }
 type queryResolver struct{ *Resolver }
+type userInfoResolver struct{ *Resolver }
