@@ -17,3 +17,6 @@ ALTER TABLE plan_collaborator
         REFERENCES public.model_plan (id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION;
+
+ALTER TABLE plan_collaborator
+    ADD CONSTRAINT unique_collaborator_per_plan ADD UNIQUE (model_plan_id, eua_user_id)
