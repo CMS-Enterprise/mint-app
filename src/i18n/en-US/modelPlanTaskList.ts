@@ -67,7 +67,8 @@ const modelPlanTaskList = {
     inProgress: 'In progress',
     completed: 'Completed',
     cannotStart: 'Cannot start yet',
-    notNeeded: 'Not needed'
+    notNeeded: 'Not needed',
+    lastUpdated: 'Last updated:'
   }
 };
 
