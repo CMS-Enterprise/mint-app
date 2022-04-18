@@ -51,8 +51,9 @@ func ConvertToPlanBasics(mpi *model.PlanBasicsInput) *models.PlanBasics {
 		basics.ID = *mpi.ID
 	}
 	if mpi.Status != nil {
-		basics.Status = *&mpi.Status
+		basics.Status = *mpi.Status
 	}
+
 	return &basics
 
 }

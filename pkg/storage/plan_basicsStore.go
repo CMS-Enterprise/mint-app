@@ -25,8 +25,6 @@ var planBasicsGetByModelPlan_IdSQL string
 func (s *Store) PlanBasicsCreate(logger *zap.Logger, basics *models.PlanBasics) (*models.PlanBasics, error) {
 
 	basics.ID = utilityUuid.ValueOrNewUUID(basics.ID)
-	status := models.TaskReady
-	basics.Status = &status
 
 	statement, err := s.db.PrepareNamed(planBasicsCreateSQL)
 	if err != nil {

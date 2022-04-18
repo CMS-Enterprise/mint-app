@@ -80,7 +80,7 @@ func main() {
 		b.Problem = models.StringPointer("There is not enough candy")
 		b.TestInventions = models.StringPointer("The great candy machine")
 		b.Note = models.StringPointer("The machine doesn't work yet")
-		b.Status = &inProgress
+		b.Status = inProgress
 
 	})
 
@@ -102,7 +102,7 @@ func main() {
 		b.Problem = models.StringPointer("There is not enough candy")
 		b.TestInventions = models.StringPointer("The great candy machine")
 		b.Note = models.StringPointer("The machine doesn't work yet")
-		b.Status = &inProgress
+		b.Status = inProgress
 
 	})
 
@@ -135,7 +135,7 @@ func makePlanBasics(uuid uuid.UUID, logger *zap.Logger, store *storage.Store, ca
 
 		CreatedBy:  models.StringPointer("ABCD"),
 		ModifiedBy: models.StringPointer("ABCD"),
-		Status:     &status,
+		Status:     status,
 	}
 
 	for _, cb := range callbacks {
