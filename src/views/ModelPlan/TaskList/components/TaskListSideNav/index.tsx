@@ -25,7 +25,7 @@ const TaskListSideNav = () => {
         <PageHeading headingLevel="h2" className="margin-top-0">
           {t('withdraw_modal.header', {
             // requestName: intake.requestName
-            requestName: 'Gary'
+            requestName: 'Requestor Name'
           })}
         </PageHeading>
         <p>{t('withdraw_modal.warning')}</p>
