@@ -80,7 +80,10 @@ const TaskList = () => {
             <PageHeading className="margin-bottom-0">
               {t('navigation.modelPlanTaskList')}
             </PageHeading>
-            <p className="margin-top-0 margin-bottom-2 font-body-lg">
+            <p
+              className="margin-top-0 margin-bottom-2 font-body-lg"
+              data-testid="model-plan-name"
+            >
               <Trans i18nKey="modelPlanTaskList:subheading">
                 indexZero {modelName} indexTwo
               </Trans>
@@ -120,7 +123,6 @@ const TaskList = () => {
                       <TaskListDescription>
                         <p className="margin-top-0">{taskListItem[key].copy}</p>
                       </TaskListDescription>
-                      {/* <TaskListCta intake={systemIntake} /> */}
                       <TaskListCta status={taskListItemStatus(key)} />
                     </TaskListItem>
                     {key !== lastTaskItem && (
