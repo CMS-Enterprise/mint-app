@@ -122,6 +122,7 @@ const TaskList = () => {
                       testId="task-list-intake-form"
                       heading={taskListItem[key].heading}
                       status={taskListItemStatus(key)}
+                      keyName={key}
                     >
                       <div className="model-plan-task-list__task-description-row">
                         <TaskListDescription>

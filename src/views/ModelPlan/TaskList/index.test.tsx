@@ -103,4 +103,29 @@ describe('The Model Plan Task List', () => {
       "for PM Butler's great plan"
     );
   });
+
+  describe('Statuses', () => {
+    it('renders proper buttons for Model Basics', async () => {
+      render(
+        <MemoryRouter initialEntries={[`/models/${MODEL_ID}/task-list`]}>
+          <MockedProvider
+            mocks={[
+              intakeQuery({
+                basics: null
+              })
+            ]}
+            addTypename={false}
+          >
+            <Route path="/models/:modelId/task-list" component={TaskList} />
+          </MockedProvider>
+        </MemoryRouter>
+      );
+
+      await waitForPageLoad();
+
+      expect(screen.getByTestId('task-list-task-tag--basics')).toHaveClass(
+        'model-plan-task-list__task-tag--ready'
+      );
+    });
+  });
 });
