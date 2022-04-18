@@ -7,15 +7,44 @@
 // START Enums and Input Objects
 //==============================================================
 
+export enum CMMIGroup {
+  PATIENT_CARE_MODELS_GROUP = "PATIENT_CARE_MODELS_GROUP",
+  POLICY_AND_PROGRAMS_GROUP = "POLICY_AND_PROGRAMS_GROUP",
+  PREVENTIVE_AND_POPULATION_HEALTH_CARE_MODELS_GROUP = "PREVENTIVE_AND_POPULATION_HEALTH_CARE_MODELS_GROUP",
+  SEAMLESS_CARE_MODELS_GROUP = "SEAMLESS_CARE_MODELS_GROUP",
+  STATE_INNOVATIONS_GROUP = "STATE_INNOVATIONS_GROUP",
+}
+
+export enum CMSCenter {
+  CENTER_FOR_CLINICAL_STANDARDS_AND_QUALITY = "CENTER_FOR_CLINICAL_STANDARDS_AND_QUALITY",
+  CENTER_FOR_MEDICARE = "CENTER_FOR_MEDICARE",
+  CENTER_FOR_PROGRAM_INTEGRITY = "CENTER_FOR_PROGRAM_INTEGRITY",
+  CMMI = "CMMI",
+  FEDERAL_COORDINATED_HEALTH_CARE_OFFICE = "FEDERAL_COORDINATED_HEALTH_CARE_OFFICE",
+  OTHER = "OTHER",
+}
+
+export enum ModelCategory {
+  ACCOUNTABLE_CARE = "ACCOUNTABLE_CARE",
+  DEMONSTRATION = "DEMONSTRATION",
+  EPISODE_BASED_PAYMENT_INITIATIVES = "EPISODE_BASED_PAYMENT_INITIATIVES",
+  INIT_ACCEL_DEV_AND_TEST = "INIT_ACCEL_DEV_AND_TEST",
+  INIT_MEDICAID_CHIP_POP = "INIT_MEDICAID_CHIP_POP",
+  INIT_SPEED_ADOPT_BEST_PRACTICE = "INIT_SPEED_ADOPT_BEST_PRACTICE",
+  INIT__MEDICARE_MEDICAID_ENROLLEES = "INIT__MEDICARE_MEDICAID_ENROLLEES",
+  PRIMARY_CARE_TRANSFORMATION = "PRIMARY_CARE_TRANSFORMATION",
+  UNKNOWN = "UNKNOWN",
+}
+
 /**
  * ModelPlanInput represent the data point for plans about a model. It is the central data type in the appliation
  */
 export interface ModelPlanInput {
   id?: UUID | null;
-  requester?: string | null;
-  requesterComponent?: string | null;
-  mainPointOfContact?: string | null;
-  pointOfContactComponent?: string | null;
+  modelName?: string | null;
+  modelCategory?: ModelCategory | null;
+  cmsCenter?: CMSCenter | null;
+  cmmiGroups?: CMMIGroup[] | null;
   createdBy?: string | null;
   createdDts?: Time | null;
   modifiedBy?: string | null;

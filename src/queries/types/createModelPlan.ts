@@ -12,6 +12,7 @@ import { ModelPlanInput } from "./../../types/graphql-global-types";
 export interface createModelPlan_createModelPlan {
   __typename: "ModelPlan";
   id: UUID | null;
+  createdBy: string | null;
 }
 
 export interface createModelPlan {

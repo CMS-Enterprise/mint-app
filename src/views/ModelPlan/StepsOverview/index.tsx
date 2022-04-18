@@ -12,6 +12,7 @@ import {
   SummaryBox
 } from '@trussworks/react-uswds';
 
+import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 
@@ -93,6 +94,14 @@ const StepsOverview = () => {
               <p>{t('stepsOverview.steps.fourth.description')}</p>
             </ProcessListItem>
           </ProcessList>
+          <UswdsReactLink
+            className="usa-button margin-bottom-10"
+            variant="unstyled"
+            to="/models/new-plan"
+            data-testid="continue-link"
+          >
+            {t('stepsOverview.getStartedButton')}
+          </UswdsReactLink>
         </div>
       </div>
     </MainContent>

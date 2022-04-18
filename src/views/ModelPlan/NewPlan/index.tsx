@@ -1,44 +1,47 @@
 import React from 'react';
-import { Trans, useTranslation } from 'react-i18next';
-import { Link, useHistory } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import { Link, Route, Switch, useHistory } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
-import { useOktaAuth } from '@okta/okta-react';
 import {
   Breadcrumb,
   BreadcrumbBar,
   BreadcrumbLink,
   Button,
-  Link as UswdsLink,
-  ProcessList,
-  ProcessListHeading,
-  ProcessListItem,
-  SummaryBox
+  Label,
+  TextInput
 } from '@trussworks/react-uswds';
+import { Field, Form, Formik, FormikProps } from 'formik';
 
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
+import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
+import FieldErrorMsg from 'components/shared/FieldErrorMsg';
+import FieldGroup from 'components/shared/FieldGroup';
 import CreateDraftModelPlan from 'queries/CreateDraftModelPlan';
+import flattenErrors from 'utils/flattenErrors';
+import NewModelPlanValidationSchema from 'validations/newModelPlan';
+import NotFound from 'views/NotFound';
 
-import './index.scss';
+import Collaborators from '../Collaborators';
 
-const StepsOverview = () => {
+const NewPlanContent = () => {
   const { t } = useTranslation('modelPlan');
-  const { oktaAuth } = useOktaAuth();
   const history = useHistory();
   const [mutate] = useMutation(CreateDraftModelPlan);
 
-  const handleCreateDraftModelPlan = () => {
-    oktaAuth.getUser().then((user: any) => {
-      const input = {
-        requester: user.name
-      };
-      mutate({ variables: { input } }).then(response => {
-        console.log(response);
-        if (!response.errors) {
-          const { id } = response.data.CreateDraftModelPlan;
-          history.push(`${id}/task-list/`);
+  const handleCreateDraftModelPlan = (formikValues: { modelName: string }) => {
+    const { modelName } = formikValues;
+    mutate({
+      variables: {
+        input: {
+          modelName
         }
-      });
+      }
+    }).then(response => {
+      if (!response?.errors) {
+        const { id } = response?.data?.createModelPlan;
+        history.push(`/models/new-plan/${id}/collaborators`);
+      }
     });
   };
 
@@ -55,77 +58,99 @@ const StepsOverview = () => {
             <Breadcrumb current>{t('stepsOverview.heading')}</Breadcrumb>
           </BreadcrumbBar>
           <PageHeading>{t('stepsOverview.heading')}</PageHeading>
-          <SummaryBox
-            heading=""
-            className="bg-base-lightest border-0 radius-0 padding-2"
+          <Formik
+            initialValues={{ modelName: '' }}
+            onSubmit={handleCreateDraftModelPlan}
+            validationSchema={NewModelPlanValidationSchema}
+            validateOnBlur={false}
+            validateOnChange={false}
+            validateOnMount={false}
           >
-            <p>{t('stepsOverview.summaryBox.copy')}</p>
-            <ul>
-              <li>{t('stepsOverview.summaryBox.listItem.add')}</li>
-              <li>{t('stepsOverview.summaryBox.listItem.upload')}</li>
-            </ul>
-            <p>
-              <Trans i18nKey="modelPlan:stepsOverview.summaryBox.email">
-                indexZero
-                <UswdsLink href="mailto:CMS_Section508@cms.hhs.gov">
-                  email
-                </UswdsLink>
-                indexTwo
-              </Trans>
-            </p>
-          </SummaryBox>
-          <PageHeading className="margin-top-7 margin-bottom-1">
-            {t('stepsOverview.steps.heading')}
-          </PageHeading>
-          <p className="font-body-lg margin-y-0">
-            {t('stepsOverview.steps.description')}
-          </p>
-        </div>
-        <div className="tablet:grid-col-6 margin-top-105">
-          <ProcessList>
-            <ProcessListItem>
-              <ProcessListHeading type="h3">
-                {t('stepsOverview.steps.first.heading')}
-              </ProcessListHeading>
-              <p>{t('stepsOverview.steps.first.description')}</p>
-            </ProcessListItem>
-            <ProcessListItem>
-              <ProcessListHeading type="h3">
-                {t('stepsOverview.steps.second.heading')}
-              </ProcessListHeading>
-              <p>{t('stepsOverview.steps.second.description')}</p>
-            </ProcessListItem>
-            <ProcessListItem className="padding-bottom-3">
-              <ProcessListHeading type="h3">
-                {t('stepsOverview.steps.third.heading')}
-              </ProcessListHeading>
-              <p>{t('stepsOverview.steps.third.description')}</p>
-            </ProcessListItem>
-          </ProcessList>
-          <hr className="margin-top-0 margin-bottom-05" />
-          {/* @ts-ignore */}
-          <ProcessList
-            className="model-plan-step-list--counter-reset"
-            start={4}
-          >
-            <ProcessListItem>
-              <ProcessListHeading type="h3">
-                {t('stepsOverview.steps.fourth.heading')}
-              </ProcessListHeading>
-              <p>{t('stepsOverview.steps.fourth.description')}</p>
-            </ProcessListItem>
-          </ProcessList>
-          <Button
-            className="margin-top-5 display-block"
-            type="submit"
-            onClick={() => handleCreateDraftModelPlan()}
-          >
-            Continue
-          </Button>
+            {(formikProps: FormikProps<{ modelName: string }>) => {
+              const { values, errors, setErrors, handleSubmit } = formikProps;
+              const flatErrors = flattenErrors(errors);
+              return (
+                <>
+                  {Object.keys(errors).length > 0 && (
+                    <ErrorAlert
+                      testId="formik-validation-errors"
+                      classNames="margin-top-3"
+                      heading="Please check and fix the following"
+                    >
+                      {Object.keys(flatErrors).map(key => {
+                        return (
+                          <ErrorAlertMessage
+                            key={`Error.${key}`}
+                            errorKey={key}
+                            message={flatErrors[key]}
+                          />
+                        );
+                      })}
+                    </ErrorAlert>
+                  )}
+                  <Form
+                    onSubmit={e => {
+                      handleSubmit(e);
+                      window.scrollTo(0, 0);
+                    }}
+                  >
+                    <FieldGroup
+                      scrollElement="modelName"
+                      error={!!flatErrors.modelName}
+                    >
+                      <Label htmlFor="new-plan-model-name">Model Name</Label>
+                      <FieldErrorMsg>{flatErrors.modelName}</FieldErrorMsg>
+                      <Field
+                        as={TextInput}
+                        error={!!flatErrors.modelName}
+                        id="new-plan-model-name"
+                        maxLength={50}
+                        name="modelName"
+                      />
+                    </FieldGroup>
+                    <Button
+                      className="margin-top-5 display-block"
+                      type="submit"
+                      onClick={() => setErrors({})}
+                    >
+                      Continue
+                    </Button>
+                    {/* <AutoSave
+                      values={values}
+                      onSave={dispatchSave}
+                      debounceDelay={1000 * 3}
+                    /> */}
+                  </Form>
+                </>
+              );
+            }}
+          </Formik>
         </div>
       </div>
     </MainContent>
   );
 };
 
-export default StepsOverview;
+const NewPlan = () => {
+  return (
+    <MainContent className="grid-container">
+      <Switch>
+        {/* New Plan Pages */}
+        <Route
+          path="/models/new-plan"
+          exact
+          render={() => <NewPlanContent />}
+        />
+        <Route
+          path="/models/new-plan/:modelID/collaborators"
+          render={() => <Collaborators />}
+        />
+
+        {/* 404 */}
+        <Route path="*" render={() => <NotFound />} />
+      </Switch>
+    </MainContent>
+  );
+};
+
+export default NewPlan;
