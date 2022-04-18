@@ -112,10 +112,7 @@ func makeModelPlan(modelName string, logger *zap.Logger, store *storage.Store, c
 
 	plan := models.ModelPlan{
 		ModelName: &modelName,
-		//TODO update!
-		// ModelCategory: models.StringPointer("Normal ideas"),
-		// CMSCenter:     models.StringPointer("Center for Medicaid and CHIP Services"),
-		// CMMIGroup:     models.StringPointer("Innovation Group"),
+
 		CreatedBy:  models.StringPointer("ABCD"),
 		ModifiedBy: models.StringPointer("ABCD"),
 	}
@@ -141,7 +138,6 @@ func makePlanBasics(uuid uuid.UUID, logger *zap.Logger, store *storage.Store, ca
 	for _, cb := range callbacks {
 		cb(&basics)
 	}
-	// principal := appcontext.Principal(ctx).ID()
 
 	store.PlanBasicsCreate(logger, &basics)
 	return &basics

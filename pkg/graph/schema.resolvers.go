@@ -40,12 +40,9 @@ func (r *mutationResolver) CreateModelPlan(ctx context.Context, input model.Mode
 
 	plan := ConvertToModelPlan(&input)
 
-	plan.CreatedBy = &principal // models.StringPointer(appcontext.Principal(ctx).ID())
+	plan.CreatedBy = &principal
 	plan.ModifiedBy = &principal
 	return resolvers.ModelPlanCreate(logger, plan, r.store)
-	// createdPlan, err := r.store.ModelPlanCreate(ctx, plan)
-
-	// return createdPlan, err
 }
 
 func (r *mutationResolver) CreatePlanBasics(ctx context.Context, input model.PlanBasicsInput) (*models.PlanBasics, error) {
