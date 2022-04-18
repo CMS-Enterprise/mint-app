@@ -1,10 +1,12 @@
 package resolvers
 
 import (
-	"github.com/google/uuid"
 	"testing"
 
-	"github.com/cmsgov/mint-app/pkg/graph/model"
+	"github.com/cmsgov/mint-app/pkg/models"
+
+	"github.com/google/uuid"
+
 	"github.com/cmsgov/mint-app/pkg/storage"
 	_ "github.com/lib/pq" // required for postgres driver in sql
 	"github.com/stretchr/testify/assert"
@@ -16,16 +18,16 @@ func TestCreatePlanMilestonesResolver(t *testing.T) {
 	config := NewDBConfig()
 	ldClient, _ := ld.MakeCustomClient("fake", ld.Config{Offline: true}, 0)
 	logger := zap.NewNop()
-	modelPlanID, err := uuid.Parse("1234")
-	input := model.CreatePlanMilestonesRequest{
+	modelPlanID, err := uuid.Parse("FAKE")
+	input := models.PlanMilestones{
 		ModelPlanID: modelPlanID,
 	}
-	principal := "NOT_ASSIGNED"
+	principal := "FAKE"
 
 	store, err := storage.NewStore(logger, config, ldClient)
 	assert.NoError(t, err)
 
-	payload, err := CreatePlanMilestonesResolver(logger, input, principal, store)
+	payload, err := CreatePlanMilestonesResolver(logger, &input, &principal, store)
 	assert.NoError(t, err)
 
 	assert.Equal(t, modelPlanID.String(), payload.ID.String())
@@ -35,10 +37,17 @@ func TestFetchPlanMilestonesByID(t *testing.T) {
 	config := NewDBConfig()
 	ldClient, _ := ld.MakeCustomClient("fake", ld.Config{Offline: true}, 0)
 	logger := zap.NewNop()
-	id := uuid.Nil
 	store, _ := storage.NewStore(logger, config, ldClient)
+	principal := "FAKE"
+	modelPlanID, _ := uuid.Parse("FAKE")
+	input := models.PlanMilestones{
+		ModelPlanID: modelPlanID,
+	}
 
-	plan, err := FetchPlanMilestonesByID(logger, id, store)
+	payload, err := CreatePlanMilestonesResolver(logger, &input, &principal, store)
+	assert.NoError(t, err)
+
+	plan, err := FetchPlanMilestonesByID(logger, payload.ID, store)
 	assert.NoError(t, err)
 	assert.NotNil(t, plan)
 }
