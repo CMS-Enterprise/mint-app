@@ -34,7 +34,8 @@
     width: 100%;
   }
 
-  &__task-heading-row {
+  &__task-heading-row,
+  &__task-description-row {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
@@ -72,6 +73,16 @@
   &__task-description {
     max-width: 600px;
     margin-right: auto;
+  }
+
+  &__last-updated-status {
+    text-align: right;
+    padding-top: 8px;
+
+    p {
+      margin: 0;
+      color: color('base');
+    }
   }
 
   &__meeting-date {

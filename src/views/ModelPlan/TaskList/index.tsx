@@ -21,7 +21,10 @@ import {
 } from 'queries/types/GetModelPlan';
 
 import TaskListCta from './components/TaskListCta';
-import TaskListItem, { TaskListDescription } from './components/TaskListItem';
+import TaskListItem, {
+  TaskListDescription,
+  TaskListLastUpdated
+} from './components/TaskListItem';
 import TaskListSideNav from './components/TaskListSideNav';
 
 import './index.scss';
@@ -120,9 +123,19 @@ const TaskList = () => {
                       heading={taskListItem[key].heading}
                       status={taskListItemStatus(key)}
                     >
-                      <TaskListDescription>
-                        <p className="margin-top-0">{taskListItem[key].copy}</p>
-                      </TaskListDescription>
+                      <div className="model-plan-task-list__task-description-row">
+                        <TaskListDescription>
+                          <p className="margin-top-0">
+                            {taskListItem[key].copy}
+                          </p>
+                        </TaskListDescription>
+                        {taskListItemStatus(key) === 'IN_PROGRESS' && (
+                          <TaskListLastUpdated>
+                            <p>{t('taskListItem.lastUpdated')}</p>
+                            <p>4/1/2022</p>
+                          </TaskListLastUpdated>
+                        )}
+                      </div>
                       <TaskListCta status={taskListItemStatus(key)} />
                     </TaskListItem>
                     {key !== lastTaskItem && (
