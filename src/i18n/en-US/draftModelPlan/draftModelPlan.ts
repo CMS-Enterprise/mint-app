@@ -1,7 +1,9 @@
 const draftModelPlan = {
   mandatoryFields: 'All fields are mandatory',
   saveAndReturn: 'Save and return to task list',
+  home: 'Home',
   next: 'Next',
+  cancel: 'Cancel',
   additionalNote: 'Add an additional note',
   datePlaceholder: 'mm/dd/yyy',
   yes: 'Yes',

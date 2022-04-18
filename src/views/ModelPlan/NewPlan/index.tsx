@@ -12,8 +12,10 @@ import {
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
 
+import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
+import Alert from 'components/shared/Alert';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
@@ -25,7 +27,8 @@ import NotFound from 'views/NotFound';
 import Collaborators from '../Collaborators';
 
 const NewPlanContent = () => {
-  const { t } = useTranslation('modelPlan');
+  const { t: h } = useTranslation('draftModelPlan');
+  const { t } = useTranslation('newModel');
   const history = useHistory();
   const [mutate] = useMutation(CreateDraftModelPlan);
 
@@ -52,12 +55,22 @@ const NewPlanContent = () => {
           <BreadcrumbBar variant="wrap">
             <Breadcrumb>
               <BreadcrumbLink asCustom={Link} to="/">
-                <span>Home</span>
+                <span>{h('home')}</span>
               </BreadcrumbLink>
             </Breadcrumb>
-            <Breadcrumb current>{t('stepsOverview.heading')}</Breadcrumb>
+            <Breadcrumb current>{t('breadcrumb')}</Breadcrumb>
           </BreadcrumbBar>
-          <PageHeading>{t('stepsOverview.heading')}</PageHeading>
+          <PageHeading className="margin-top-4">{t('heading')}</PageHeading>
+          <Alert
+            type="info"
+            slim
+            data-testid="mandatory-fields-alert"
+            className="margin-bottom-4"
+          >
+            <span className="mandatory-fields-alert__text">
+              {t('modelNameInfo')}
+            </span>
+          </Alert>
           <Formik
             initialValues={{ modelName: '' }}
             onSubmit={handleCreateDraftModelPlan}
@@ -67,7 +80,13 @@ const NewPlanContent = () => {
             validateOnMount={false}
           >
             {(formikProps: FormikProps<{ modelName: string }>) => {
-              const { values, errors, setErrors, handleSubmit } = formikProps;
+              const {
+                errors,
+                setErrors,
+                handleSubmit,
+                isValid,
+                dirty
+              } = formikProps;
               const flatErrors = flattenErrors(errors);
               return (
                 <>
@@ -98,7 +117,9 @@ const NewPlanContent = () => {
                       scrollElement="modelName"
                       error={!!flatErrors.modelName}
                     >
-                      <Label htmlFor="new-plan-model-name">Model Name</Label>
+                      <Label htmlFor="new-plan-model-name">
+                        {t('modeName')}
+                      </Label>
                       <FieldErrorMsg>{flatErrors.modelName}</FieldErrorMsg>
                       <Field
                         as={TextInput}
@@ -108,18 +129,22 @@ const NewPlanContent = () => {
                         name="modelName"
                       />
                     </FieldGroup>
-                    <Button
-                      className="margin-top-5 display-block"
-                      type="submit"
-                      onClick={() => setErrors({})}
-                    >
-                      Continue
-                    </Button>
-                    {/* <AutoSave
-                      values={values}
-                      onSave={dispatchSave}
-                      debounceDelay={1000 * 3}
-                    /> */}
+                    <div className="margin-top-5 display-block">
+                      <UswdsReactLink
+                        className="usa-button usa-button--outline"
+                        variant="unstyled"
+                        to="/models/steps-overview"
+                      >
+                        {h('cancel')}
+                      </UswdsReactLink>
+                      <Button
+                        type="submit"
+                        disabled={!(dirty && isValid)}
+                        onClick={() => setErrors({})}
+                      >
+                        {h('next')}
+                      </Button>
+                    </div>
                   </Form>
                 </>
               );
@@ -133,7 +158,7 @@ const NewPlanContent = () => {
 
 const NewPlan = () => {
   return (
-    <MainContent className="grid-container">
+    <>
       <Switch>
         {/* New Plan Pages */}
         <Route
@@ -149,7 +174,7 @@ const NewPlan = () => {
         {/* 404 */}
         <Route path="*" render={() => <NotFound />} />
       </Switch>
-    </MainContent>
+    </>
   );
 };
 

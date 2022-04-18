@@ -1,4 +1,5 @@
 const modelPlan = {
+  home: 'Home',
   stepsOverview: {
     heading: 'Start a new model plan',
     getStartedButton: 'Get started',

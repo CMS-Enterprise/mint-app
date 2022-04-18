@@ -1,13 +1,14 @@
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
+  Column,
   useFilters,
   useGlobalFilter,
   usePagination,
   useSortBy,
   useTable
 } from 'react-table';
-// import { useQuery } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import { Table as UswdsTable } from '@trussworks/react-uswds';
 
 // import { DateTime } from 'luxon';
@@ -17,7 +18,12 @@ import Spinner from 'components/Spinner';
 import GlobalClientFilter from 'components/TableFilter';
 import TablePagination from 'components/TablePagination';
 import TableResults from 'components/TableResults';
+import GetDraftModelPlans from 'queries/GetDraftModelPlans';
 // import { formatDate } from 'utils/date';
+import {
+  GetDraftModelPlans as GetDraftModelPlansType,
+  GetDraftModelPlans_modelPlanCollection as DraftModelPlanType
+} from 'queries/types/GetDraftModelPlans';
 import globalTableFilter from 'utils/globalTableFilter';
 import {
   currentTableSortDescription,
@@ -25,9 +31,6 @@ import {
   getHeaderSortIcon,
   sortColumnValues
 } from 'utils/tableSort';
-
-// import tableMap from './tableMap';
-import data from './mockData';
 
 import './index.scss';
 
@@ -37,21 +40,25 @@ type myRequestsTableProps = {
 
 const Table = ({ hiddenColumns }: myRequestsTableProps) => {
   const { t } = useTranslation('home');
-  const loading = false;
-  const error = false;
 
-  const columns: any = useMemo(() => {
+  const { loading, error, data: modelPlans } = useQuery<GetDraftModelPlansType>(
+    GetDraftModelPlans
+  );
+
+  const data = (modelPlans?.modelPlanCollection ?? []) as DraftModelPlanType[];
+
+  const columns = useMemo(() => {
     return [
       {
         Header: t('requestsTable.headers.name'),
-        accessor: 'name',
+        accessor: 'modelName',
         Cell: ({ row, value }: any) => {
           return <UswdsReactLink to={row.original.id}>{value}</UswdsReactLink>;
         }
       },
       {
         Header: t('requestsTable.headers.category'),
-        accessor: 'category'
+        accessor: 'modelCategory'
       },
       {
         Header: t('requestsTable.headers.modelPoc'),
@@ -66,16 +73,7 @@ const Table = ({ hiddenColumns }: myRequestsTableProps) => {
         accessor: 'recentActivity'
       }
     ];
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  // Modifying data for table sorting and prepping for Cell configuration
-  // const data = useMemo(() => {
-  //   if (tableData) {
-  //     return tableMap(tableData, t);
-  //   }
-  //   return [];
-  // }, [tableData, t]);
+  }, [t]);
 
   const {
     getTableProps,
