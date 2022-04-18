@@ -1,10 +1,13 @@
 import React from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
+import { useMutation } from '@apollo/client';
+import { useOktaAuth } from '@okta/okta-react';
 import {
   Breadcrumb,
   BreadcrumbBar,
   BreadcrumbLink,
+  Button,
   Link as UswdsLink,
   ProcessList,
   ProcessListHeading,
@@ -14,11 +17,30 @@ import {
 
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
+import CreateDraftModelPlan from 'queries/CreateDraftModelPlan';
 
 import './index.scss';
 
 const StepsOverview = () => {
   const { t } = useTranslation('modelPlan');
+  const { oktaAuth } = useOktaAuth();
+  const history = useHistory();
+  const [mutate] = useMutation(CreateDraftModelPlan);
+
+  const handleCreateDraftModelPlan = () => {
+    oktaAuth.getUser().then((user: any) => {
+      const input = {
+        requester: user.name
+      };
+      mutate({ variables: { input } }).then(response => {
+        console.log(response);
+        if (!response.errors) {
+          const { id } = response.data.CreateDraftModelPlan;
+          history.push(`${id}/task-list/`);
+        }
+      });
+    });
+  };
 
   return (
     <MainContent className="margin-bottom-5">
@@ -93,6 +115,13 @@ const StepsOverview = () => {
               <p>{t('stepsOverview.steps.fourth.description')}</p>
             </ProcessListItem>
           </ProcessList>
+          <Button
+            className="margin-top-5 display-block"
+            type="submit"
+            onClick={() => handleCreateDraftModelPlan()}
+          >
+            Continue
+          </Button>
         </div>
       </div>
     </MainContent>
