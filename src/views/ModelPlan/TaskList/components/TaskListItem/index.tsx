@@ -2,6 +2,18 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import classnames from 'classnames';
 
+type TaskListLastUpdatedProps = {
+  children?: React.ReactNode | React.ReactNodeArray;
+};
+
+export const TaskListLastUpdated = ({ children }: TaskListLastUpdatedProps) => {
+  return (
+    <div className="model-plan-task-list__last-updated-status line-height-body-4">
+      {children}
+    </div>
+  );
+};
+
 type TaskListDescriptionProps = {
   children?: React.ReactNode | React.ReactNodeArray;
 };
