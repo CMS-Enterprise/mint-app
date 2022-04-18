@@ -11,7 +11,6 @@ import {
 import configureMockStore from 'redux-mock-store';
 
 // import { initialSystemIntakeForm } from 'data/systemIntake';
-import { MessageProvider } from 'hooks/useMessage';
 import GetModelPlanQuery from 'queries/GetModelPlanQuery';
 
 // import GetGRTFeedbackQuery from 'queries/GetGRTFeedbackQuery';
@@ -35,9 +34,15 @@ jest.mock('@okta/okta-react', () => ({
   }
 }));
 
-// const waitForPageLoad = async () => {
-//   await waitForElementToBeRemoved(() => screen.getByTestId('page-loading'));
-// };
+const intialModelPlan = {
+  id: '',
+  modelName: '',
+  basics: null
+};
+
+const waitForPageLoad = async () => {
+  await waitForElementToBeRemoved(() => screen.getByTestId('page-loading'));
+};
 
 describe('The Model Plan Task List', () => {
   const MODEL_ID = '6e224030-09d5-46f7-ad04-4bb851b36eab';
@@ -65,9 +70,7 @@ describe('The Model Plan Task List', () => {
     render(
       <MemoryRouter initialEntries={[`/models/${MODEL_ID}/task-list`]}>
         <MockedProvider mocks={[intakeQuery({})]} addTypename={false}>
-          <MessageProvider>
-            <Route path="/models/:modelId/task-list" component={TaskList} />
-          </MessageProvider>
+          <Route path="/models/:modelId/task-list" component={TaskList} />
         </MockedProvider>
       </MemoryRouter>
     );
@@ -81,13 +84,39 @@ describe('The Model Plan Task List', () => {
     render(
       <MemoryRouter initialEntries={[`/models/${MODEL_ID}/task-list`]}>
         <MockedProvider mocks={[intakeQuery({})]} addTypename={false}>
-          <MessageProvider>
-            <Route path="/models/:modelId/task-list" component={TaskList} />
-          </MessageProvider>
+          <Route path="/models/:modelId/task-list" component={TaskList} />
         </MockedProvider>
       </MemoryRouter>
     );
 
     expect(await screen.findByTestId('task-list')).toBeInTheDocument();
+  });
+
+  it('displays the model plan name', async () => {
+    const mockStore = configureMockStore();
+    const store = mockStore({
+      ...intialModelPlan,
+      modelName: "PM Butler's great plan"
+    });
+
+    render(
+      <MemoryRouter initialEntries={[`/models/${MODEL_ID}/task-list`]}>
+        <MockedProvider
+          mocks={[intakeQuery({ modelName: "PM Butler's great plan" })]}
+          addTypename={false}
+        >
+          {/* console.log(store) */}
+          <Provider store={store}>
+            <Route path="/models/:modelId/task-list" component={TaskList} />
+          </Provider>
+        </MockedProvider>
+      </MemoryRouter>
+    );
+
+    await waitForPageLoad();
+
+    expect(screen.getByTestId('model-plan-name').textContent).toContain(
+      "for PM Butler's great plan"
+    );
   });
 });
