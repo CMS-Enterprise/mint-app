@@ -3,6 +3,7 @@ const draftModelPlan = {
   saveAndReturn: 'Save and return to task list',
   home: 'Home',
   next: 'Next',
+  back: 'Back',
   cancel: 'Cancel',
   additionalNote: 'Add an additional note',
   datePlaceholder: 'mm/dd/yyy',

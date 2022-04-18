@@ -72,7 +72,7 @@ const AppRoutes = () => {
         exact
         component={StepsOverview}
       />
-      <SecureRoute path="/models/new-plan" exact component={NewPlan} />
+      <SecureRoute path="/models/new-plan" component={NewPlan} />
       <SecureRoute
         path="/models/:modelId/task-list"
         exact

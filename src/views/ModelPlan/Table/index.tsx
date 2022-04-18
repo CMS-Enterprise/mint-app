@@ -1,7 +1,6 @@
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
-  Column,
   useFilters,
   useGlobalFilter,
   usePagination,
@@ -53,7 +52,11 @@ const Table = ({ hiddenColumns }: myRequestsTableProps) => {
         Header: t('requestsTable.headers.name'),
         accessor: 'modelName',
         Cell: ({ row, value }: any) => {
-          return <UswdsReactLink to={row.original.id}>{value}</UswdsReactLink>;
+          return (
+            <UswdsReactLink to={`/models/${row.original.id}/task-list`}>
+              {value}
+            </UswdsReactLink>
+          );
         }
       },
       {
@@ -107,7 +110,7 @@ const Table = ({ hiddenColumns }: myRequestsTableProps) => {
       autoResetSortBy: false,
       autoResetPage: false,
       initialState: {
-        sortBy: useMemo(() => [{ id: 'name', desc: true }], []),
+        sortBy: useMemo(() => [{ id: 'modelName', desc: true }], []),
         pageIndex: 0
       }
     },

@@ -25,6 +25,7 @@ import NewModelPlanValidationSchema from 'validations/newModelPlan';
 import NotFound from 'views/NotFound';
 
 import Collaborators from '../Collaborators';
+import AddCollaborator from '../Collaborators/AddCollaborator';
 
 const NewPlanContent = () => {
   const { t: h } = useTranslation('draftModelPlan');
@@ -167,8 +168,12 @@ const NewPlan = () => {
           render={() => <NewPlanContent />}
         />
         <Route
-          path="/models/new-plan/:modelID/collaborators"
+          path="/models/new-plan/:modelId/collaborators"
           render={() => <Collaborators />}
+        />
+        <Route
+          path="/models/new-plan/:modelId/add-collaborator"
+          render={() => <AddCollaborator />}
         />
 
         {/* 404 */}

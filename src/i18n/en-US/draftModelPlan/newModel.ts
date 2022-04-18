@@ -11,7 +11,8 @@ const newModel = {
   addTeamMembersInfo:
     'Add any team members who will be collaborating on your Model Plan.  You can edit this list at any time.',
   teamMembers: 'Team members',
-  addTeamMemberButton: 'Add a team member',
+  addATeamMember: 'Add a team member',
+  addTeamMemberButton: 'Add team member',
   table: {
     name: 'Name',
     role: 'Role',
