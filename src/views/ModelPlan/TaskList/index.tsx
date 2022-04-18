@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link, useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
@@ -113,7 +113,7 @@ const TaskList = () => {
                 const lastTaskItem = Object.keys(taskListItem).slice(-1)[0];
 
                 return (
-                  <>
+                  <Fragment key={key}>
                     <TaskListItem
                       key={key}
                       testId="task-list-intake-form"
@@ -128,7 +128,7 @@ const TaskList = () => {
                     {key !== lastTaskItem && (
                       <Divider className="margin-bottom-4" />
                     )}
-                  </>
+                  </Fragment>
                 );
               })}
             </ol>
