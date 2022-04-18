@@ -6,19 +6,19 @@
 import { ModelPlanInput } from "./../../types/graphql-global-types";
 
 // ====================================================
-// GraphQL mutation operation: CreateModelPlan
+// GraphQL mutation operation: UpdateModelPlan
 // ====================================================
 
-export interface CreateModelPlan_createModelPlan {
+export interface UpdateModelPlan_updateModelPlan {
   __typename: "ModelPlan";
   id: UUID | null;
   createdBy: string | null;
 }
 
-export interface CreateModelPlan {
-  createModelPlan: CreateModelPlan_createModelPlan | null;
+export interface UpdateModelPlan {
+  updateModelPlan: UpdateModelPlan_updateModelPlan | null;
 }
 
-export interface CreateModelPlanVariables {
+export interface UpdateModelPlanVariables {
   input: ModelPlanInput;
 }

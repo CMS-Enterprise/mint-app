@@ -110,7 +110,7 @@ const Table = ({ hiddenColumns }: myRequestsTableProps) => {
       autoResetSortBy: false,
       autoResetPage: false,
       initialState: {
-        sortBy: useMemo(() => [{ id: 'modelName', desc: true }], []),
+        sortBy: useMemo(() => [{ id: 'modelName', asc: true }], []),
         pageIndex: 0
       }
     },
