@@ -58,7 +58,7 @@ func TestPlanBasicsGetByModelPlanID(t *testing.T) {
 	assert.NoError(t, err)
 	assert.NotNil(t, result.ID)
 
-	assert.EqualValues(t, basics.ModelPlanID, result.ModelPlanID)
+	assert.EqualValues(t, modelPlanID, result.ModelPlanID)
 }
 
 func TestFetchPlanBasicsByID(t *testing.T) {
