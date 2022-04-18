@@ -3,8 +3,8 @@ package storage
 import (
 	_ "embed"
 	"github.com/cmsgov/mint-app/pkg/models"
-	utilityUuid "github.com/cmsgov/mint-app/pkg/shared/uuid"
-	"github.com/cmsgov/mint-app/pkg/storage/planbasics"
+	"github.com/cmsgov/mint-app/pkg/shared/utility_sql"
+	"github.com/cmsgov/mint-app/pkg/storage/genericmodel"
 	"github.com/google/uuid"
 	"go.uber.org/zap"
 )
@@ -19,16 +19,16 @@ var planBasicsUpdateSQL string
 var planBasicsGetByIdSQL string
 
 func (s *Store) PlanBasicsCreate(logger *zap.Logger, plan *models.PlanBasics) (*models.PlanBasics, error) {
-	plan.ID = utilityUuid.ValueOrNewUUID(plan.ID)
-
 	statement, err := s.db.PrepareNamed(planBasicsCreateSQL)
 	if err != nil {
-		return planbasics.HandleModelCreationError(logger, plan, err)
+		result, err := genericmodel.HandleModelCreationError(logger, err, plan)
+		return result.(*models.PlanBasics), err
 	}
 
-	err = statement.Get(plan, plan)
+	err = statement.Get(plan, utility_sql.CreateIDQueryMap(plan.ID))
 	if err != nil {
-		return planbasics.HandleModelCreationError(logger, plan, err)
+		result, err := genericmodel.HandleModelCreationError(logger, err, plan)
+		return result.(*models.PlanBasics), err
 	}
 
 	return plan, nil
@@ -37,12 +37,14 @@ func (s *Store) PlanBasicsCreate(logger *zap.Logger, plan *models.PlanBasics) (*
 func (s *Store) PlanBasicsUpdate(logger *zap.Logger, plan *models.PlanBasics) (*models.PlanBasics, error) {
 	statement, err := s.db.PrepareNamed(planBasicsUpdateSQL)
 	if err != nil {
-		return planbasics.HandleModelUpdateError(logger, plan, err, false)
+		result, err := genericmodel.HandleModelUpdateError(logger, err, plan)
+		return result.(*models.PlanBasics), err
 	}
 
 	err = statement.Get(plan, plan)
 	if err != nil {
-		return planbasics.HandleModelUpdateError(logger, plan, err, true)
+		result, err := genericmodel.HandleModelQueryError(logger, err, plan)
+		return result.(*models.PlanBasics), err
 	}
 
 	return plan, nil
@@ -56,11 +58,11 @@ func (s *Store) PlanBasicsGetByID(logger *zap.Logger, id uuid.UUID) (*models.Pla
 		return nil, err
 	}
 
-	arg := map[string]interface{}{"id": id}
-	err = statement.Get(&plan, arg)
+	err = statement.Get(&plan, utility_sql.CreateIDQueryMap(id))
 
 	if err != nil {
-		return planbasics.HandleModelFetchError(logger, id, err)
+		result, err := genericmodel.HandleModelFetchError(logger, err, plan)
+		return result.(*models.PlanBasics), err
 	}
 
 	return &plan, nil

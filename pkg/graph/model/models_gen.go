@@ -22,6 +22,17 @@ type CreatePlanBasicsRequestInput struct {
 	ModelPlanID uuid.UUID `json:"modelPlanID"`
 }
 
+// The payload returned on requesting plan milestones creation
+type CreatePlanMilestonesPayload struct {
+	ID         uuid.UUID    `json:"id"`
+	UserErrors []*UserError `json:"userErrors"`
+}
+
+// Requests the creation of plan milestones
+type CreatePlanMilestonesRequest struct {
+	ModelPlanID uuid.UUID `json:"modelPlanID"`
+}
+
 // The current user of the application
 type CurrentUser struct {
 	LaunchDarkly *LaunchDarklySettings `json:"launchDarkly"`
@@ -33,11 +44,7 @@ type LaunchDarklySettings struct {
 	SignedHash string `json:"signedHash"`
 }
 
-// <<<<<<< HEAD
-// CreateModelPlan represent the data point for plans about a model. It is the central data type in the application
-// =======
 // ModelPlanInput represent the data point for plans about a model. It is the central data type in the appliation
-// >>>>>>> main
 type ModelPlanInput struct {
 	ID                      *uuid.UUID `json:"id"`
 	Requester               *string    `json:"requester"`

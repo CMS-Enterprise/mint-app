@@ -41,6 +41,7 @@ type ResolverRoot interface {
 	ModelPlan() ModelPlanResolver
 	Mutation() MutationResolver
 	PlanBasics() PlanBasicsResolver
+	PlanMilestones() PlanMilestonesResolver
 	Query() QueryResolver
 }
 
@@ -50,6 +51,11 @@ type DirectiveRoot struct {
 
 type ComplexityRoot struct {
 	CreatePlanBasicsPayload struct {
+		ID         func(childComplexity int) int
+		UserErrors func(childComplexity int) int
+	}
+
+	CreatePlanMilestonesPayload struct {
 		ID         func(childComplexity int) int
 		UserErrors func(childComplexity int) int
 	}
@@ -76,9 +82,10 @@ type ComplexityRoot struct {
 	}
 
 	Mutation struct {
-		CreateModelPlan  func(childComplexity int, input model.ModelPlanInput) int
-		CreatePlanBasics func(childComplexity int, input model.CreatePlanBasicsRequestInput) int
-		UpdateModelPlan  func(childComplexity int, input model.ModelPlanInput) int
+		CreateModelPlan      func(childComplexity int, input model.ModelPlanInput) int
+		CreatePlanBasics     func(childComplexity int, input model.CreatePlanBasicsRequestInput) int
+		CreatePlanMilestones func(childComplexity int, input model.CreatePlanMilestonesRequest) int
+		UpdateModelPlan      func(childComplexity int, input model.ModelPlanInput) int
 	}
 
 	PlanBasics struct {
@@ -99,11 +106,29 @@ type ComplexityRoot struct {
 		TestInventions func(childComplexity int) int
 	}
 
+	PlanMilestones struct {
+		Announced               func(childComplexity int) int
+		ApplicationsDue         func(childComplexity int) int
+		Cleared                 func(childComplexity int) int
+		CreatedBy               func(childComplexity int) int
+		CreatedDts              func(childComplexity int) int
+		EnterCMSClearance       func(childComplexity int) int
+		EnterHMSOMBClearance    func(childComplexity int) int
+		ID                      func(childComplexity int) int
+		ModelPlanID             func(childComplexity int) int
+		ModifiedBy              func(childComplexity int) int
+		ModifiedDts             func(childComplexity int) int
+		ParticipantsAnnounced   func(childComplexity int) int
+		PerformancePeriodEnds   func(childComplexity int) int
+		PerformancePeriodStarts func(childComplexity int) int
+	}
+
 	Query struct {
 		CurrentUser         func(childComplexity int) int
 		ModelPlan           func(childComplexity int, id uuid.UUID) int
 		ModelPlanCollection func(childComplexity int) int
 		PlanBasics          func(childComplexity int, id uuid.UUID) int
+		PlanMilestones      func(childComplexity int, id uuid.UUID) int
 	}
 
 	UserError struct {
@@ -125,6 +150,7 @@ type MutationResolver interface {
 	CreateModelPlan(ctx context.Context, input model.ModelPlanInput) (*models.ModelPlan, error)
 	CreatePlanBasics(ctx context.Context, input model.CreatePlanBasicsRequestInput) (*model.CreatePlanBasicsPayload, error)
 	UpdateModelPlan(ctx context.Context, input model.ModelPlanInput) (*models.ModelPlan, error)
+	CreatePlanMilestones(ctx context.Context, input model.CreatePlanMilestonesRequest) (*model.CreatePlanMilestonesPayload, error)
 }
 type PlanBasicsResolver interface {
 	ModelName(ctx context.Context, obj *models.PlanBasics) (*string, error)
@@ -140,10 +166,16 @@ type PlanBasicsResolver interface {
 
 	ModifiedBy(ctx context.Context, obj *models.PlanBasics) (*string, error)
 }
+type PlanMilestonesResolver interface {
+	CreatedBy(ctx context.Context, obj *models.PlanMilestones) (*string, error)
+
+	ModifiedBy(ctx context.Context, obj *models.PlanMilestones) (*string, error)
+}
 type QueryResolver interface {
 	CurrentUser(ctx context.Context) (*model.CurrentUser, error)
 	ModelPlan(ctx context.Context, id uuid.UUID) (*models.ModelPlan, error)
 	PlanBasics(ctx context.Context, id uuid.UUID) (*models.PlanBasics, error)
+	PlanMilestones(ctx context.Context, id uuid.UUID) (*models.PlanMilestones, error)
 	ModelPlanCollection(ctx context.Context) ([]*models.ModelPlan, error)
 }
 
@@ -175,6 +207,20 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.CreatePlanBasicsPayload.UserErrors(childComplexity), true
+
+	case "CreatePlanMilestonesPayload.id":
+		if e.complexity.CreatePlanMilestonesPayload.ID == nil {
+			break
+		}
+
+		return e.complexity.CreatePlanMilestonesPayload.ID(childComplexity), true
+
+	case "CreatePlanMilestonesPayload.userErrors":
+		if e.complexity.CreatePlanMilestonesPayload.UserErrors == nil {
+			break
+		}
+
+		return e.complexity.CreatePlanMilestonesPayload.UserErrors(childComplexity), true
 
 	case "CurrentUser.launchDarkly":
 		if e.complexity.CurrentUser.LaunchDarkly == nil {
@@ -283,6 +329,18 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Mutation.CreatePlanBasics(childComplexity, args["input"].(model.CreatePlanBasicsRequestInput)), true
+
+	case "Mutation.createPlanMilestones":
+		if e.complexity.Mutation.CreatePlanMilestones == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_createPlanMilestones_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Mutation.CreatePlanMilestones(childComplexity, args["input"].(model.CreatePlanMilestonesRequest)), true
 
 	case "Mutation.updateModelPlan":
 		if e.complexity.Mutation.UpdateModelPlan == nil {
@@ -401,6 +459,104 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.PlanBasics.TestInventions(childComplexity), true
 
+	case "PlanMilestones.announced":
+		if e.complexity.PlanMilestones.Announced == nil {
+			break
+		}
+
+		return e.complexity.PlanMilestones.Announced(childComplexity), true
+
+	case "PlanMilestones.applicationsDue":
+		if e.complexity.PlanMilestones.ApplicationsDue == nil {
+			break
+		}
+
+		return e.complexity.PlanMilestones.ApplicationsDue(childComplexity), true
+
+	case "PlanMilestones.cleared":
+		if e.complexity.PlanMilestones.Cleared == nil {
+			break
+		}
+
+		return e.complexity.PlanMilestones.Cleared(childComplexity), true
+
+	case "PlanMilestones.createdBy":
+		if e.complexity.PlanMilestones.CreatedBy == nil {
+			break
+		}
+
+		return e.complexity.PlanMilestones.CreatedBy(childComplexity), true
+
+	case "PlanMilestones.createdDts":
+		if e.complexity.PlanMilestones.CreatedDts == nil {
+			break
+		}
+
+		return e.complexity.PlanMilestones.CreatedDts(childComplexity), true
+
+	case "PlanMilestones.enterCMSClearance":
+		if e.complexity.PlanMilestones.EnterCMSClearance == nil {
+			break
+		}
+
+		return e.complexity.PlanMilestones.EnterCMSClearance(childComplexity), true
+
+	case "PlanMilestones.enterHMSOMBClearance":
+		if e.complexity.PlanMilestones.EnterHMSOMBClearance == nil {
+			break
+		}
+
+		return e.complexity.PlanMilestones.EnterHMSOMBClearance(childComplexity), true
+
+	case "PlanMilestones.id":
+		if e.complexity.PlanMilestones.ID == nil {
+			break
+		}
+
+		return e.complexity.PlanMilestones.ID(childComplexity), true
+
+	case "PlanMilestones.modelPlanID":
+		if e.complexity.PlanMilestones.ModelPlanID == nil {
+			break
+		}
+
+		return e.complexity.PlanMilestones.ModelPlanID(childComplexity), true
+
+	case "PlanMilestones.modifiedBy":
+		if e.complexity.PlanMilestones.ModifiedBy == nil {
+			break
+		}
+
+		return e.complexity.PlanMilestones.ModifiedBy(childComplexity), true
+
+	case "PlanMilestones.modifiedDts":
+		if e.complexity.PlanMilestones.ModifiedDts == nil {
+			break
+		}
+
+		return e.complexity.PlanMilestones.ModifiedDts(childComplexity), true
+
+	case "PlanMilestones.participantsAnnounced":
+		if e.complexity.PlanMilestones.ParticipantsAnnounced == nil {
+			break
+		}
+
+		return e.complexity.PlanMilestones.ParticipantsAnnounced(childComplexity), true
+
+	case "PlanMilestones.performancePeriodEnds":
+		if e.complexity.PlanMilestones.PerformancePeriodEnds == nil {
+			break
+		}
+
+		return e.complexity.PlanMilestones.PerformancePeriodEnds(childComplexity), true
+
+	case "PlanMilestones.performancePeriodStarts":
+		if e.complexity.PlanMilestones.PerformancePeriodStarts == nil {
+			break
+		}
+
+		return e.complexity.PlanMilestones.PerformancePeriodStarts(childComplexity), true
+
 	case "Query.currentUser":
 		if e.complexity.Query.CurrentUser == nil {
 			break
@@ -438,6 +594,18 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Query.PlanBasics(childComplexity, args["id"].(uuid.UUID)), true
+
+	case "Query.planMilestones":
+		if e.complexity.Query.PlanMilestones == nil {
+			break
+		}
+
+		args, err := ec.field_Query_planMilestones_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Query.PlanMilestones(childComplexity, args["id"].(uuid.UUID)), true
 
 	case "UserError.message":
 		if e.complexity.UserError.Message == nil {
@@ -580,8 +748,6 @@ modifiedBy: String
 modifiedDts: Time
 }
 
-
-
 """
 Represents plan basics
 """
@@ -619,12 +785,53 @@ type CreatePlanBasicsPayload {
 }
 
 """
+Represents plan milestones
+"""
+type PlanMilestones {
+  id: UUID
+  modelPlanID: UUID
+
+  enterCMSClearance: Time
+  enterHMSOMBClearance: Time
+
+  cleared: Time
+  announced: Time
+
+  applicationsDue: Time
+  participantsAnnounced: Time
+
+  performancePeriodStarts: Time
+  performancePeriodEnds: Time
+
+  createdBy: String
+  createdDts: Time
+  modifiedBy: String
+  modifiedDts: Time
+}
+
+"""
+Requests the creation of plan milestones
+"""
+input CreatePlanMilestonesRequest {
+  modelPlanID: UUID!
+}
+
+"""
+The payload returned on requesting plan milestones creation
+"""
+type CreatePlanMilestonesPayload {
+  id: UUID!
+  userErrors: [UserError!]
+}
+
+"""
 Query definition for the schema
 """
 type Query {
   currentUser: CurrentUser
   modelPlan(id: UUID!) : ModelPlan
   planBasics(id: UUID!) : PlanBasics
+  planMilestones(id: UUID!) : PlanMilestones
   modelPlanCollection: [ModelPlan]
 }
 
@@ -632,14 +839,16 @@ type Query {
 Mutations definition for the schema
 """
 type Mutation {
-createModelPlan(input: ModelPlanInput!):ModelPlan
-@hasRole(role: MINT_BASE_USER)
-createPlanBasics(input: CreatePlanBasicsRequestInput!):CreatePlanBasicsPayload
-@hasRole(role: MINT_BASE_USER)
+  createModelPlan(input: ModelPlanInput!):ModelPlan
+  @hasRole(role: MINT_BASE_USER)
+  createPlanBasics(input: CreatePlanBasicsRequestInput!):CreatePlanBasicsPayload
+  @hasRole(role: MINT_BASE_USER)
 
-updateModelPlan(input: ModelPlanInput!):ModelPlan
-@hasRole(role: MINT_BASE_USER)
+  updateModelPlan(input: ModelPlanInput!):ModelPlan
+  @hasRole(role: MINT_BASE_USER)
 
+  createPlanMilestones(input: CreatePlanMilestonesRequest!):CreatePlanMilestonesPayload
+  @hasRole(role: MINT_BASE_USER)
 }
 
 directive @hasRole(role: Role!) on FIELD_DEFINITION
@@ -711,6 +920,21 @@ func (ec *executionContext) field_Mutation_createPlanBasics_args(ctx context.Con
 	return args, nil
 }
 
+func (ec *executionContext) field_Mutation_createPlanMilestones_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 model.CreatePlanMilestonesRequest
+	if tmp, ok := rawArgs["input"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
+		arg0, err = ec.unmarshalNCreatePlanMilestonesRequest2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCreatePlanMilestonesRequest(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["input"] = arg0
+	return args, nil
+}
+
 func (ec *executionContext) field_Mutation_updateModelPlan_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
@@ -757,6 +981,21 @@ func (ec *executionContext) field_Query_modelPlan_args(ctx context.Context, rawA
 }
 
 func (ec *executionContext) field_Query_planBasics_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 uuid.UUID
+	if tmp, ok := rawArgs["id"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("id"))
+		arg0, err = ec.unmarshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["id"] = arg0
+	return args, nil
+}
+
+func (ec *executionContext) field_Query_planMilestones_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
 	var arg0 uuid.UUID
@@ -868,6 +1107,73 @@ func (ec *executionContext) _CreatePlanBasicsPayload_userErrors(ctx context.Cont
 	}()
 	fc := &graphql.FieldContext{
 		Object:     "CreatePlanBasicsPayload",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.UserErrors, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.([]*model.UserError)
+	fc.Result = res
+	return ec.marshalOUserError2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐUserErrorᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _CreatePlanMilestonesPayload_id(ctx context.Context, field graphql.CollectedField, obj *model.CreatePlanMilestonesPayload) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "CreatePlanMilestonesPayload",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ID, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(uuid.UUID)
+	fc.Result = res
+	return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _CreatePlanMilestonesPayload_userErrors(ctx context.Context, field graphql.CollectedField, obj *model.CreatePlanMilestonesPayload) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "CreatePlanMilestonesPayload",
 		Field:      field,
 		Args:       nil,
 		IsMethod:   false,
@@ -1473,6 +1779,69 @@ func (ec *executionContext) _Mutation_updateModelPlan(ctx context.Context, field
 	return ec.marshalOModelPlan2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelPlan(ctx, field.Selections, res)
 }
 
+func (ec *executionContext) _Mutation_createPlanMilestones(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   true,
+		IsResolver: true,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	rawArgs := field.ArgumentMap(ec.Variables)
+	args, err := ec.field_Mutation_createPlanMilestones_args(ctx, rawArgs)
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	fc.Args = args
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		directive0 := func(rctx context.Context) (interface{}, error) {
+			ctx = rctx // use context from middleware stack in children
+			return ec.resolvers.Mutation().CreatePlanMilestones(rctx, args["input"].(model.CreatePlanMilestonesRequest))
+		}
+		directive1 := func(ctx context.Context) (interface{}, error) {
+			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_BASE_USER")
+			if err != nil {
+				return nil, err
+			}
+			if ec.directives.HasRole == nil {
+				return nil, errors.New("directive hasRole is not implemented")
+			}
+			return ec.directives.HasRole(ctx, nil, directive0, role)
+		}
+
+		tmp, err := directive1(rctx)
+		if err != nil {
+			return nil, graphql.ErrorOnPath(ctx, err)
+		}
+		if tmp == nil {
+			return nil, nil
+		}
+		if data, ok := tmp.(*model.CreatePlanMilestonesPayload); ok {
+			return data, nil
+		}
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/graph/model.CreatePlanMilestonesPayload`, tmp)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*model.CreatePlanMilestonesPayload)
+	fc.Result = res
+	return ec.marshalOCreatePlanMilestonesPayload2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCreatePlanMilestonesPayload(ctx, field.Selections, res)
+}
+
 func (ec *executionContext) _PlanBasics_id(ctx context.Context, field graphql.CollectedField, obj *models.PlanBasics) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
@@ -1953,6 +2322,454 @@ func (ec *executionContext) _PlanBasics_modifiedDts(ctx context.Context, field g
 	return ec.marshalOTime2ᚖtimeᚐTime(ctx, field.Selections, res)
 }
 
+func (ec *executionContext) _PlanMilestones_id(ctx context.Context, field graphql.CollectedField, obj *models.PlanMilestones) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "PlanMilestones",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ID, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(uuid.UUID)
+	fc.Result = res
+	return ec.marshalOUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _PlanMilestones_modelPlanID(ctx context.Context, field graphql.CollectedField, obj *models.PlanMilestones) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "PlanMilestones",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ModelPlanID, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(uuid.UUID)
+	fc.Result = res
+	return ec.marshalOUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _PlanMilestones_enterCMSClearance(ctx context.Context, field graphql.CollectedField, obj *models.PlanMilestones) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "PlanMilestones",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.EnterCMSClearance, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*time.Time)
+	fc.Result = res
+	return ec.marshalOTime2ᚖtimeᚐTime(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _PlanMilestones_enterHMSOMBClearance(ctx context.Context, field graphql.CollectedField, obj *models.PlanMilestones) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "PlanMilestones",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.EnterHMSOMBClearance, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*time.Time)
+	fc.Result = res
+	return ec.marshalOTime2ᚖtimeᚐTime(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _PlanMilestones_cleared(ctx context.Context, field graphql.CollectedField, obj *models.PlanMilestones) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "PlanMilestones",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Cleared, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*time.Time)
+	fc.Result = res
+	return ec.marshalOTime2ᚖtimeᚐTime(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _PlanMilestones_announced(ctx context.Context, field graphql.CollectedField, obj *models.PlanMilestones) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "PlanMilestones",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Announced, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*time.Time)
+	fc.Result = res
+	return ec.marshalOTime2ᚖtimeᚐTime(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _PlanMilestones_applicationsDue(ctx context.Context, field graphql.CollectedField, obj *models.PlanMilestones) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "PlanMilestones",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ApplicationsDue, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*time.Time)
+	fc.Result = res
+	return ec.marshalOTime2ᚖtimeᚐTime(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _PlanMilestones_participantsAnnounced(ctx context.Context, field graphql.CollectedField, obj *models.PlanMilestones) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "PlanMilestones",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ParticipantsAnnounced, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*time.Time)
+	fc.Result = res
+	return ec.marshalOTime2ᚖtimeᚐTime(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _PlanMilestones_performancePeriodStarts(ctx context.Context, field graphql.CollectedField, obj *models.PlanMilestones) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "PlanMilestones",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.PerformancePeriodStarts, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*time.Time)
+	fc.Result = res
+	return ec.marshalOTime2ᚖtimeᚐTime(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _PlanMilestones_performancePeriodEnds(ctx context.Context, field graphql.CollectedField, obj *models.PlanMilestones) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "PlanMilestones",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.PerformancePeriodEnds, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*time.Time)
+	fc.Result = res
+	return ec.marshalOTime2ᚖtimeᚐTime(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _PlanMilestones_createdBy(ctx context.Context, field graphql.CollectedField, obj *models.PlanMilestones) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "PlanMilestones",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   true,
+		IsResolver: true,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.PlanMilestones().CreatedBy(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _PlanMilestones_createdDts(ctx context.Context, field graphql.CollectedField, obj *models.PlanMilestones) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "PlanMilestones",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.CreatedDts, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*time.Time)
+	fc.Result = res
+	return ec.marshalOTime2ᚖtimeᚐTime(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _PlanMilestones_modifiedBy(ctx context.Context, field graphql.CollectedField, obj *models.PlanMilestones) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "PlanMilestones",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   true,
+		IsResolver: true,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.PlanMilestones().ModifiedBy(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _PlanMilestones_modifiedDts(ctx context.Context, field graphql.CollectedField, obj *models.PlanMilestones) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "PlanMilestones",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ModifiedDts, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*time.Time)
+	fc.Result = res
+	return ec.marshalOTime2ᚖtimeᚐTime(ctx, field.Selections, res)
+}
+
 func (ec *executionContext) _Query_currentUser(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
@@ -2061,6 +2878,45 @@ func (ec *executionContext) _Query_planBasics(ctx context.Context, field graphql
 	res := resTmp.(*models.PlanBasics)
 	fc.Result = res
 	return ec.marshalOPlanBasics2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanBasics(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _Query_planMilestones(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   true,
+		IsResolver: true,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	rawArgs := field.ArgumentMap(ec.Variables)
+	args, err := ec.field_Query_planMilestones_args(ctx, rawArgs)
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	fc.Args = args
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Query().PlanMilestones(rctx, args["id"].(uuid.UUID))
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*models.PlanMilestones)
+	fc.Result = res
+	return ec.marshalOPlanMilestones2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanMilestones(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Query_modelPlanCollection(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
@@ -3388,6 +4244,29 @@ func (ec *executionContext) unmarshalInputCreatePlanBasicsRequestInput(ctx conte
 	return it, nil
 }
 
+func (ec *executionContext) unmarshalInputCreatePlanMilestonesRequest(ctx context.Context, obj interface{}) (model.CreatePlanMilestonesRequest, error) {
+	var it model.CreatePlanMilestonesRequest
+	asMap := map[string]interface{}{}
+	for k, v := range obj.(map[string]interface{}) {
+		asMap[k] = v
+	}
+
+	for k, v := range asMap {
+		switch k {
+		case "modelPlanID":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("modelPlanID"))
+			it.ModelPlanID, err = ec.unmarshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		}
+	}
+
+	return it, nil
+}
+
 func (ec *executionContext) unmarshalInputModelPlanInput(ctx context.Context, obj interface{}) (model.ModelPlanInput, error) {
 	var it model.ModelPlanInput
 	asMap := map[string]interface{}{}
@@ -3506,6 +4385,44 @@ func (ec *executionContext) _CreatePlanBasicsPayload(ctx context.Context, sel as
 		case "userErrors":
 			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._CreatePlanBasicsPayload_userErrors(ctx, field, obj)
+			}
+
+			out.Values[i] = innerFunc(ctx)
+
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch()
+	if invalids > 0 {
+		return graphql.Null
+	}
+	return out
+}
+
+var createPlanMilestonesPayloadImplementors = []string{"CreatePlanMilestonesPayload"}
+
+func (ec *executionContext) _CreatePlanMilestonesPayload(ctx context.Context, sel ast.SelectionSet, obj *model.CreatePlanMilestonesPayload) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, createPlanMilestonesPayloadImplementors)
+	out := graphql.NewFieldSet(fields)
+	var invalids uint32
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("CreatePlanMilestonesPayload")
+		case "id":
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._CreatePlanMilestonesPayload_id(ctx, field, obj)
+			}
+
+			out.Values[i] = innerFunc(ctx)
+
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		case "userErrors":
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._CreatePlanMilestonesPayload_userErrors(ctx, field, obj)
 			}
 
 			out.Values[i] = innerFunc(ctx)
@@ -3777,6 +4694,13 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, innerFunc)
 
+		case "createPlanMilestones":
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_createPlanMilestones(ctx, field)
+			}
+
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, innerFunc)
+
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}
@@ -4024,6 +4948,145 @@ func (ec *executionContext) _PlanBasics(ctx context.Context, sel ast.SelectionSe
 	return out
 }
 
+var planMilestonesImplementors = []string{"PlanMilestones"}
+
+func (ec *executionContext) _PlanMilestones(ctx context.Context, sel ast.SelectionSet, obj *models.PlanMilestones) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, planMilestonesImplementors)
+	out := graphql.NewFieldSet(fields)
+	var invalids uint32
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("PlanMilestones")
+		case "id":
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._PlanMilestones_id(ctx, field, obj)
+			}
+
+			out.Values[i] = innerFunc(ctx)
+
+		case "modelPlanID":
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._PlanMilestones_modelPlanID(ctx, field, obj)
+			}
+
+			out.Values[i] = innerFunc(ctx)
+
+		case "enterCMSClearance":
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._PlanMilestones_enterCMSClearance(ctx, field, obj)
+			}
+
+			out.Values[i] = innerFunc(ctx)
+
+		case "enterHMSOMBClearance":
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._PlanMilestones_enterHMSOMBClearance(ctx, field, obj)
+			}
+
+			out.Values[i] = innerFunc(ctx)
+
+		case "cleared":
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._PlanMilestones_cleared(ctx, field, obj)
+			}
+
+			out.Values[i] = innerFunc(ctx)
+
+		case "announced":
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._PlanMilestones_announced(ctx, field, obj)
+			}
+
+			out.Values[i] = innerFunc(ctx)
+
+		case "applicationsDue":
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._PlanMilestones_applicationsDue(ctx, field, obj)
+			}
+
+			out.Values[i] = innerFunc(ctx)
+
+		case "participantsAnnounced":
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._PlanMilestones_participantsAnnounced(ctx, field, obj)
+			}
+
+			out.Values[i] = innerFunc(ctx)
+
+		case "performancePeriodStarts":
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._PlanMilestones_performancePeriodStarts(ctx, field, obj)
+			}
+
+			out.Values[i] = innerFunc(ctx)
+
+		case "performancePeriodEnds":
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._PlanMilestones_performancePeriodEnds(ctx, field, obj)
+			}
+
+			out.Values[i] = innerFunc(ctx)
+
+		case "createdBy":
+			field := field
+
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._PlanMilestones_createdBy(ctx, field, obj)
+				return res
+			}
+
+			out.Concurrently(i, func() graphql.Marshaler {
+				return innerFunc(ctx)
+
+			})
+		case "createdDts":
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._PlanMilestones_createdDts(ctx, field, obj)
+			}
+
+			out.Values[i] = innerFunc(ctx)
+
+		case "modifiedBy":
+			field := field
+
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._PlanMilestones_modifiedBy(ctx, field, obj)
+				return res
+			}
+
+			out.Concurrently(i, func() graphql.Marshaler {
+				return innerFunc(ctx)
+
+			})
+		case "modifiedDts":
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._PlanMilestones_modifiedDts(ctx, field, obj)
+			}
+
+			out.Values[i] = innerFunc(ctx)
+
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch()
+	if invalids > 0 {
+		return graphql.Null
+	}
+	return out
+}
+
 var queryImplementors = []string{"Query"}
 
 func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) graphql.Marshaler {
@@ -4093,6 +5156,26 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 					}
 				}()
 				res = ec._Query_planBasics(ctx, field)
+				return res
+			}
+
+			rrm := func(ctx context.Context) graphql.Marshaler {
+				return ec.OperationContext.RootResolverMiddleware(ctx, innerFunc)
+			}
+
+			out.Concurrently(i, func() graphql.Marshaler {
+				return rrm(innerCtx)
+			})
+		case "planMilestones":
+			field := field
+
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Query_planMilestones(ctx, field)
 				return res
 			}
 
@@ -4618,6 +5701,11 @@ func (ec *executionContext) unmarshalNCreatePlanBasicsRequestInput2githubᚗcom�
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
+func (ec *executionContext) unmarshalNCreatePlanMilestonesRequest2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCreatePlanMilestonesRequest(ctx context.Context, v interface{}) (model.CreatePlanMilestonesRequest, error) {
+	res, err := ec.unmarshalInputCreatePlanMilestonesRequest(ctx, v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
 func (ec *executionContext) marshalNLaunchDarklySettings2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐLaunchDarklySettings(ctx context.Context, sel ast.SelectionSet, v *model.LaunchDarklySettings) graphql.Marshaler {
 	if v == nil {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
@@ -5001,6 +6089,13 @@ func (ec *executionContext) marshalOCreatePlanBasicsPayload2ᚖgithubᚗcomᚋcm
 	return ec._CreatePlanBasicsPayload(ctx, sel, v)
 }
 
+func (ec *executionContext) marshalOCreatePlanMilestonesPayload2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCreatePlanMilestonesPayload(ctx context.Context, sel ast.SelectionSet, v *model.CreatePlanMilestonesPayload) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	return ec._CreatePlanMilestonesPayload(ctx, sel, v)
+}
+
 func (ec *executionContext) marshalOCurrentUser2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCurrentUser(ctx context.Context, sel ast.SelectionSet, v *model.CurrentUser) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
@@ -5061,6 +6156,13 @@ func (ec *executionContext) marshalOPlanBasics2ᚖgithubᚗcomᚋcmsgovᚋmint�
 		return graphql.Null
 	}
 	return ec._PlanBasics(ctx, sel, v)
+}
+
+func (ec *executionContext) marshalOPlanMilestones2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanMilestones(ctx context.Context, sel ast.SelectionSet, v *models.PlanMilestones) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	return ec._PlanMilestones(ctx, sel, v)
 }
 
 func (ec *executionContext) unmarshalOString2string(ctx context.Context, v interface{}) (string, error) {

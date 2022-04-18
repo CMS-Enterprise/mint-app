@@ -29,7 +29,6 @@ var model_plan_get_by_idSQL string
 var model_plan_collection_by_userSQL string
 
 func (s *Store) ModelPlanCreate(ctx context.Context, plan *models.ModelPlan) (*models.ModelPlan, error) {
-
 	if plan.ID == uuid.Nil {
 		plan.ID = uuid.New()
 	}

@@ -61,8 +61,6 @@ modifiedBy: String
 modifiedDts: Time
 }
 
-
-
 """
 Represents plan basics
 """
@@ -100,12 +98,53 @@ type CreatePlanBasicsPayload {
 }
 
 """
+Represents plan milestones
+"""
+type PlanMilestones {
+  id: UUID
+  modelPlanID: UUID
+
+  enterCMSClearance: Time
+  enterHMSOMBClearance: Time
+
+  cleared: Time
+  announced: Time
+
+  applicationsDue: Time
+  participantsAnnounced: Time
+
+  performancePeriodStarts: Time
+  performancePeriodEnds: Time
+
+  createdBy: String
+  createdDts: Time
+  modifiedBy: String
+  modifiedDts: Time
+}
+
+"""
+Requests the creation of plan milestones
+"""
+input CreatePlanMilestonesRequest {
+  modelPlanID: UUID!
+}
+
+"""
+The payload returned on requesting plan milestones creation
+"""
+type CreatePlanMilestonesPayload {
+  id: UUID!
+  userErrors: [UserError!]
+}
+
+"""
 Query definition for the schema
 """
 type Query {
   currentUser: CurrentUser
   modelPlan(id: UUID!) : ModelPlan
   planBasics(id: UUID!) : PlanBasics
+  planMilestones(id: UUID!) : PlanMilestones
   modelPlanCollection: [ModelPlan]
 }
 
@@ -113,14 +152,16 @@ type Query {
 Mutations definition for the schema
 """
 type Mutation {
-createModelPlan(input: ModelPlanInput!):ModelPlan
-@hasRole(role: MINT_BASE_USER)
-createPlanBasics(input: CreatePlanBasicsRequestInput!):CreatePlanBasicsPayload
-@hasRole(role: MINT_BASE_USER)
+  createModelPlan(input: ModelPlanInput!):ModelPlan
+  @hasRole(role: MINT_BASE_USER)
+  createPlanBasics(input: CreatePlanBasicsRequestInput!):CreatePlanBasicsPayload
+  @hasRole(role: MINT_BASE_USER)
 
-updateModelPlan(input: ModelPlanInput!):ModelPlan
-@hasRole(role: MINT_BASE_USER)
+  updateModelPlan(input: ModelPlanInput!):ModelPlan
+  @hasRole(role: MINT_BASE_USER)
 
+  createPlanMilestones(input: CreatePlanMilestonesRequest!):CreatePlanMilestonesPayload
+  @hasRole(role: MINT_BASE_USER)
 }
 
 directive @hasRole(role: Role!) on FIELD_DEFINITION

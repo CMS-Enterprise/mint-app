@@ -5,6 +5,7 @@ package graph
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/google/uuid"
 	"github.com/guregu/null"
@@ -84,6 +85,13 @@ func (r *mutationResolver) UpdateModelPlan(ctx context.Context, input model.Mode
 	return retPlan, err
 }
 
+func (r *mutationResolver) CreatePlanMilestones(ctx context.Context, input model.CreatePlanMilestonesRequest) (*model.CreatePlanMilestonesPayload, error) {
+	principal := appcontext.Principal(ctx).ID()
+	logger := appcontext.ZLogger(ctx)
+
+	return resolvers.CreatePlanMilestonesResolver(logger, input, principal, r.store)
+}
+
 func (r *planBasicsResolver) ModelName(ctx context.Context, obj *models.PlanBasics) (*string, error) {
 	return &obj.ModelName.String, nil
 }
@@ -128,6 +136,14 @@ func (r *planBasicsResolver) ModifiedBy(ctx context.Context, obj *models.PlanBas
 	return &obj.ModifiedBy.String, nil
 }
 
+func (r *planMilestonesResolver) CreatedBy(ctx context.Context, obj *models.PlanMilestones) (*string, error) {
+	panic(fmt.Errorf("not implemented"))
+}
+
+func (r *planMilestonesResolver) ModifiedBy(ctx context.Context, obj *models.PlanMilestones) (*string, error) {
+	panic(fmt.Errorf("not implemented"))
+}
+
 func (r *queryResolver) CurrentUser(ctx context.Context) (*model.CurrentUser, error) {
 	ldUser := flags.Principal(ctx)
 	userKey := ldUser.GetKey()
@@ -158,6 +174,12 @@ func (r *queryResolver) PlanBasics(ctx context.Context, id uuid.UUID) (*models.P
 	return resolvers.FetchPlanBasicsByID(logger, id, r.store)
 }
 
+func (r *queryResolver) PlanMilestones(ctx context.Context, id uuid.UUID) (*models.PlanMilestones, error) {
+	logger := appcontext.ZLogger(ctx)
+
+	return resolvers.FetchPlanMilestonesByID(logger, id, r.store)
+}
+
 func (r *queryResolver) ModelPlanCollection(ctx context.Context) ([]*models.ModelPlan, error) {
 	plans, err := r.store.ModelPlanCollectionByUser(ctx, appcontext.Principal(ctx).ID())
 	if err != nil {
@@ -175,12 +197,18 @@ func (r *Resolver) Mutation() generated.MutationResolver { return &mutationResol
 // PlanBasics returns generated.PlanBasicsResolver implementation.
 func (r *Resolver) PlanBasics() generated.PlanBasicsResolver { return &planBasicsResolver{r} }
 
+// PlanMilestones returns generated.PlanMilestonesResolver implementation.
+func (r *Resolver) PlanMilestones() generated.PlanMilestonesResolver {
+	return &planMilestonesResolver{r}
+}
+
 // Query returns generated.QueryResolver implementation.
 func (r *Resolver) Query() generated.QueryResolver { return &queryResolver{r} }
 
 type modelPlanResolver struct{ *Resolver }
 type mutationResolver struct{ *Resolver }
 type planBasicsResolver struct{ *Resolver }
+type planMilestonesResolver struct{ *Resolver }
 type queryResolver struct{ *Resolver }
 
 // !!! WARNING !!!

@@ -6,6 +6,7 @@ import (
 
 	"github.com/facebookgo/clock"
 	"github.com/jmoiron/sqlx"
+	_ "github.com/lib/pq" // required for postgres driver in sql
 	"go.uber.org/zap"
 	ld "gopkg.in/launchdarkly/go-server-sdk.v5"
 )

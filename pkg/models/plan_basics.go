@@ -27,3 +27,19 @@ type PlanBasics struct {
 	ModifiedBy  null.String `json:"modifiedBy" db:"modified_by"`
 	ModifiedDts *time.Time  `json:"modifiedDts" db:"modified_dts"`
 }
+
+func (p PlanBasics) GetModelTypeName() string {
+	return "Plan_Basics"
+}
+
+func (p PlanBasics) GetID() uuid.UUID {
+	return p.ModelPlanID
+}
+
+func (p PlanBasics) GetPlanID() uuid.UUID {
+	return p.ModelPlanID
+}
+
+func (p PlanBasics) GetModifiedBy() null.String {
+	return p.ModifiedBy
+}
