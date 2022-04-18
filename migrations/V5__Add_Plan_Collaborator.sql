@@ -19,4 +19,4 @@ ALTER TABLE plan_collaborator
         ON DELETE NO ACTION;
 
 ALTER TABLE plan_collaborator
-    ADD CONSTRAINT unique_collaborator_per_plan ADD UNIQUE (model_plan_id, eua_user_id)
+    ADD CONSTRAINT unique_collaborator_per_plan UNIQUE (model_plan_id, eua_user_id);
