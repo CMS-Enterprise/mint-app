@@ -5,7 +5,7 @@ import UswdsReactLink from 'components/LinkWrapper';
 
 type TaskListButtonProps = {
   path: string;
-  status: string;
+  status: 'READY' | 'IN_PROGRESS' | 'CANNOT_START';
 };
 
 const TaskListButton = ({ path, status }: TaskListButtonProps) => {
