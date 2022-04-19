@@ -2,6 +2,8 @@
   // Order numbers
   &__item:before {
     font-size: 1.38rem;
+    font-weight: bold;
+    white-space: pre;
   }
 
   &__task-list {
@@ -13,11 +15,6 @@
         content: counter(primaryList) '. ';
       }
     }
-  }
-
-  &__item:before {
-    font-weight: bold;
-    white-space: pre;
   }
 
   &__task-row {
@@ -32,12 +29,10 @@
 
   &__task-description {
     max-width: 600px;
-    margin-right: auto;
   }
 
   &__last-updated-status {
     text-align: right;
-    padding-top: 8px;
 
     p {
       margin: 0;

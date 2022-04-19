@@ -8,7 +8,7 @@ type TaskListLastUpdatedProps = {
 
 export const TaskListLastUpdated = ({ children }: TaskListLastUpdatedProps) => {
   return (
-    <div className="model-plan-task-list__last-updated-status line-height-body-4">
+    <div className="model-plan-task-list__last-updated-status line-height-body-4 padding-top-1 ">
       {children}
     </div>
   );
@@ -20,7 +20,7 @@ type TaskListDescriptionProps = {
 
 export const TaskListDescription = ({ children }: TaskListDescriptionProps) => {
   return (
-    <div className="model-plan-task-list__task-description line-height-body-4">
+    <div className="model-plan-task-list__task-description margin-right-auto line-height-body-4">
       {children}
     </div>
   );
