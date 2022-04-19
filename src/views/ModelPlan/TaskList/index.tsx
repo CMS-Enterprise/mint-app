@@ -20,7 +20,7 @@ import {
   GetModelPlanVariables
 } from 'queries/types/GetModelPlan';
 
-import TaskListCta from './_components/TaskListCta';
+import TaskListButton from './_components/TaskListButton';
 import TaskListItem, {
   TaskListDescription,
   TaskListLastUpdated
@@ -138,6 +138,8 @@ const TaskList = () => {
             >
               {Object.keys(taskListItem).map((key: any) => {
                 const lastTaskItem = Object.keys(taskListItem).slice(-1)[0];
+                const path =
+                  key === 'finalizeModelPlan' ? 'submit-request' : key;
 
                 return (
                   <Fragment key={key}>
@@ -162,7 +164,10 @@ const TaskList = () => {
                           </TaskListLastUpdated>
                         )}
                       </div>
-                      <TaskListCta status={taskListItemStatus(key)} />
+                      <TaskListButton
+                        path={path}
+                        status={taskListItemStatus(key)}
+                      />
                     </TaskListItem>
                     {key !== lastTaskItem && (
                       <Divider className="margin-bottom-4" />
