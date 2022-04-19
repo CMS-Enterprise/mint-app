@@ -32,11 +32,11 @@ func (r *modelPlanResolver) Basics(ctx context.Context, obj *models.ModelPlan) (
 	return resolvers.FetchPlanBasicsByModelPlanID(logger, &principal, obj.ID, r.store)
 }
 
-func (r *modelPlanResolver) Milestones(ctx context.Context, obj *models.ModelPlan) (*models.PlanMilestones, error) {
+func (r *modelPlanResolver) Milestones(ctx context.Context, plan *models.ModelPlan) (*models.PlanMilestones, error) {
 	logger := appcontext.ZLogger(ctx)
 	principal := appcontext.Principal(ctx).ID()
 
-	return resolvers.FetchPlanMilestonesByModelPlanID(logger, &principal, obj.ID, r.store)
+	return resolvers.FetchPlanMilestonesByModelPlanID(logger, &principal, plan.ID, r.store)
 }
 
 func (r *mutationResolver) CreateModelPlan(ctx context.Context, input model.ModelPlanInput) (*models.ModelPlan, error) {
