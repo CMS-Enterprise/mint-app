@@ -52,7 +52,7 @@
     font-weight: bold;
 
     &--in-progress {
-      background-color: $gold;
+      background-color: color('warning');
     }
 
     &--ready {
