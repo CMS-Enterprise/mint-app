@@ -20,12 +20,12 @@ import {
   GetModelPlanVariables
 } from 'queries/types/GetModelPlan';
 
-import TaskListCta from './components/TaskListCta';
+import TaskListCta from './_components/TaskListCta';
 import TaskListItem, {
   TaskListDescription,
   TaskListLastUpdated
-} from './components/TaskListItem';
-import TaskListSideNav from './components/TaskListSideNav';
+} from './_components/TaskListItem';
+import TaskListSideNav from './_components/TaskListSideNav';
 
 import './index.scss';
 
