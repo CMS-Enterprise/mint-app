@@ -4,6 +4,7 @@ import { useHistory, useParams } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { Button, ComboBox, Dropdown, Label } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
+import { isValid } from 'js-base64';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
@@ -120,8 +121,7 @@ const Collaborators = () => {
                 values,
                 setErrors,
                 setFieldValue,
-                handleSubmit,
-                dirty
+                handleSubmit
               } = formikProps;
               const flatErrors = flattenErrors(errors);
               return (
@@ -225,7 +225,7 @@ const Collaborators = () => {
                     <div className="margin-y-4 display-block">
                       <Button
                         type="submit"
-                        disabled={!dirty}
+                        disabled={!values.fullName || !values.teamRole}
                         onClick={() => setErrors({})}
                       >
                         {t('addTeamMemberButton')}
