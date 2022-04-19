@@ -3,17 +3,11 @@ import { Button } from '@trussworks/react-uswds';
 import { shallow } from 'enzyme';
 
 import Modal from 'components/Modal';
-import { initialSystemIntakeForm } from 'data/systemIntake';
-import { GetSystemIntake_systemIntake as SystemIntake } from 'queries/types/GetSystemIntake';
-import { SystemIntakeForm } from 'types/systemIntake';
 
-import SideNavActions from './index';
+import TaskListSideNav from './index';
 
 const renderComponent = () => {
-  const intake: SystemIntake = {
-    ...initialSystemIntakeForm
-  } as SystemIntake & SystemIntakeForm;
-  return shallow(<SideNavActions intake={intake} archiveIntake={() => {}} />);
+  return shallow(<TaskListSideNav />);
 };
 
 describe('The TaskListSideNavActions', () => {
@@ -35,11 +29,11 @@ describe('The TaskListSideNavActions', () => {
     });
   });
 
-  describe('remove your request to add a new system', () => {
+  describe('remove your Model Plan', () => {
     it('displays text', () => {
       const component = renderComponent();
       expect(component.find('.test-withdraw-request').dive().text()).toEqual(
-        'Remove your request to add a new system'
+        'Remove your Model Plan'
       );
     });
     it('has a closed modal by default', () => {
@@ -67,16 +61,21 @@ describe('The TaskListSideNavActions', () => {
     describe('overview for adding a system', () => {
       it('displays text', () => {
         const component = renderComponent();
+        // TODO Fix this errors
+
+        console.log(
+          component.find('UswdsReactLink').at(1).dive().prop('children').props()
+        );
+
         expect(
           component.find('UswdsReactLink').at(1).dive().props().children
-        ).toContain('Overview for adding a system');
+        ).toContain('modelPlanTaskList:sideNav.overview');
       });
 
-      it('goes to governence overview', () => {
+      // modelPlanTaskList:sideNav.overview
+      it('goes to home for now', () => {
         const component = renderComponent();
-        expect(component.find('UswdsReactLink').at(1).prop('to')).toEqual(
-          '/governance-overview'
-        );
+        expect(component.find('UswdsReactLink').at(1).prop('to')).toEqual('/');
       });
 
       it('opens in a new tab', () => {
