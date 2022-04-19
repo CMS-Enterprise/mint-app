@@ -5,8 +5,6 @@ package graph
 
 import (
 	"context"
-	"fmt"
-
 	"github.com/cmsgov/mint-app/pkg/appcontext"
 	"github.com/cmsgov/mint-app/pkg/flags"
 	"github.com/cmsgov/mint-app/pkg/graph/generated"
@@ -78,11 +76,19 @@ func (r *mutationResolver) UpdatePlanBasics(ctx context.Context, input model.Pla
 }
 
 func (r *mutationResolver) CreatePlanMilestones(ctx context.Context, input model.PlanMilestonesInput) (*models.PlanMilestones, error) {
-	panic(fmt.Errorf("not implemented"))
+	basics := ConvertToPlanMilestonesModel(&input)
+	principal := appcontext.Principal(ctx).ID()
+	logger := appcontext.ZLogger(ctx)
+
+	return resolvers.CreatePlanMilestonesResolver(logger, basics, &principal, r.store)
 }
 
 func (r *mutationResolver) UpdatePlanMilestones(ctx context.Context, input model.PlanMilestonesInput) (*models.PlanMilestones, error) {
-	panic(fmt.Errorf("not implemented"))
+	basics := ConvertToPlanMilestonesModel(&input)
+	principal := appcontext.Principal(ctx).ID()
+	logger := appcontext.ZLogger(ctx)
+
+	return resolvers.UpdatePlanMilestonesResolver(logger, basics, &principal, r.store)
 }
 
 func (r *queryResolver) CurrentUser(ctx context.Context) (*model.CurrentUser, error) {

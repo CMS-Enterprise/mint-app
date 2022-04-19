@@ -18,9 +18,9 @@ CREATE TABLE plan_milestones (
 
 );
 
-ALTER TABLE plan_milestones
-
-        ADD CONSTRAINT fk_milestones_plan FOREIGN KEY (model_plan_id)
-        REFERENCES public.model_plan (id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION;
+--ALTER TABLE plan_milestones
+--
+--        ADD CONSTRAINT fk_milestones_plan FOREIGN KEY (model_plan_id)
+--        REFERENCES public.model_plan (id) MATCH SIMPLE
+--        ON UPDATE NO ACTION
+--        ON DELETE NO ACTION;

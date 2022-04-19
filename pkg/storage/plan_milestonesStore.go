@@ -1,6 +1,7 @@
 package storage
 
 import (
+	"database/sql"
 	_ "embed"
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/shared/utility_sql"
@@ -20,7 +21,10 @@ var planMilestonesUpdateSQL string
 var planMilestonesGetByIdSQL string
 
 //go:embed SQL/plan_milestones_get_by_model_plan_id.sql
-var planMilestonesGetByModelPlan_IdSQL string
+var planMilestonesGetByModelPlanIDSQL string
+
+//go:embed SQL/plan_milestones_delete_by_id.sql
+var planMilestonesDeleteByIDSQL string
 
 func (s *Store) PlanMilestonesCreate(logger *zap.Logger, milestones *models.PlanMilestones) (*models.PlanMilestones, error) {
 	milestones.ID = utility_uuid.ValueOrNewUUID(milestones.ID)
@@ -52,23 +56,8 @@ func (s *Store) PlanMilestonesUpdate(logger *zap.Logger, plan *models.PlanMilest
 	return plan, nil
 }
 
-func (s *Store) PlanMilestonesGetByID(logger *zap.Logger, id uuid.UUID) (*models.PlanMilestones, error) {
-	statement, err := s.db.PrepareNamed(planMilestonesGetByIdSQL)
-	if err != nil {
-		return nil, err
-	}
-
-	var plan models.PlanMilestones
-	err = statement.Get(&plan, utility_sql.CreateIDQueryMap(id))
-	if err != nil {
-		return nil, genericmodel.HandleModelFetchByIDError(logger, err, id)
-	}
-
-	return &plan, nil
-}
-
-func (s *Store) PlanMilestonesGetByModelPlanID(logger *zap.Logger, principal *string, modelPlanId uuid.UUID) (*models.PlanMilestones, error) {
-	statement, err := s.db.PrepareNamed(planMilestonesGetByModelPlan_IdSQL)
+func (s *Store) FetchPlanMilestonesByModelPlanID(logger *zap.Logger, principal *string, modelPlanId uuid.UUID) (*models.PlanMilestones, error) {
+	statement, err := s.db.PrepareNamed(planMilestonesGetByModelPlanIDSQL)
 
 	args := map[string]interface{}{
 		"modified_by":   principal,
@@ -83,4 +72,33 @@ func (s *Store) PlanMilestonesGetByModelPlanID(logger *zap.Logger, principal *st
 	}
 
 	return &plan, nil
+}
+
+func (s *Store) FetchPlanMilestonesByID(logger *zap.Logger, id uuid.UUID) (*models.PlanMilestones, error) {
+	statement, err := s.db.PrepareNamed(planMilestonesGetByIdSQL)
+	if err != nil {
+		return nil, err
+	}
+
+	var plan models.PlanMilestones
+	err = statement.Get(&plan, utility_sql.CreateIDQueryMap(id))
+	if err != nil {
+		return nil, genericmodel.HandleModelFetchByIDError(logger, err, id)
+	}
+
+	return &plan, nil
+}
+
+func (s *Store) DeletePlanMilestonesByID(logger *zap.Logger, id uuid.UUID) (sql.Result, error) {
+	statement, err := s.db.PrepareNamed(planMilestonesDeleteByIDSQL)
+	if err != nil {
+		return nil, err
+	}
+
+	sqlResult, err := statement.Exec(utility_sql.CreateIDQueryMap(id))
+	if err != nil {
+		return nil, genericmodel.HandleModelDeleteByIDError(logger, err, id)
+	}
+
+	return sqlResult, nil
 }

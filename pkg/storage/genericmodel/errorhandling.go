@@ -76,3 +76,17 @@ func HandleModelFetchGenericError(logger *zap.Logger, err error, id uuid.UUID) e
 		Operation: apperrors.QueryFetch,
 	}
 }
+
+func HandleModelDeleteByIDError(logger *zap.Logger, err error, id uuid.UUID) error {
+	logger.Error(
+		"Failed to delete model by ID",
+		zap.Error(err),
+		zap.String("id", id.String()),
+	)
+
+	return &apperrors.QueryError{
+		Err:       err,
+		Model:     id,
+		Operation: apperrors.QueryDelete,
+	}
+}

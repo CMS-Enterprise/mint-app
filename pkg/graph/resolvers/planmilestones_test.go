@@ -47,7 +47,14 @@ func TestFetchPlanMilestonesByID(t *testing.T) {
 	payload, err := CreatePlanMilestonesResolver(logger, &input, &principal, store)
 	assert.NoError(t, err)
 
-	plan, err := FetchPlanMilestonesByID(logger, payload.ID, store)
+	milestones, err := FetchPlanMilestonesByID(logger, payload.ID, store)
 	assert.NoError(t, err)
-	assert.NotNil(t, plan)
+	assert.NotNil(t, milestones)
+
+	sqlResult, err := store.DeletePlanMilestonesByID(logger, milestones.ID)
+	assert.NoError(t, err)
+
+	rowsAffected, err := sqlResult.RowsAffected()
+	assert.NoError(t, err)
+	assert.Equal(t, 1, rowsAffected)
 }

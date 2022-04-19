@@ -15,8 +15,15 @@ func CreatePlanMilestonesResolver(logger *zap.Logger, input *models.PlanMileston
 	return result, err
 }
 
+func UpdatePlanMilestonesResolver(logger *zap.Logger, input *models.PlanMilestones, principal *string, store *storage.Store) (*models.PlanMilestones, error) {
+	input.ModifiedBy = principal
+
+	result, err := store.PlanMilestonesUpdate(logger, input)
+	return result, err
+}
+
 func FetchPlanMilestonesByModelPlanID(logger *zap.Logger, principal *string, id uuid.UUID, store *storage.Store) (*models.PlanMilestones, error) {
-	plan, err := store.PlanMilestonesGetByModelPlanID(logger, principal, id)
+	plan, err := store.FetchPlanMilestonesByModelPlanID(logger, principal, id)
 	if err != nil {
 		return nil, err
 	}
@@ -25,7 +32,7 @@ func FetchPlanMilestonesByModelPlanID(logger *zap.Logger, principal *string, id 
 }
 
 func FetchPlanMilestonesByID(logger *zap.Logger, id uuid.UUID, store *storage.Store) (*models.PlanMilestones, error) {
-	plan, err := store.PlanMilestonesGetByID(logger, id)
+	plan, err := store.FetchPlanMilestonesByID(logger, id)
 	if err != nil {
 		return nil, err
 	}
