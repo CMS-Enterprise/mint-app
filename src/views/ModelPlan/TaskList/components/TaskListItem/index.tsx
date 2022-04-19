@@ -57,30 +57,28 @@ const TaskListItem = ({
   switch (status) {
     case 'READY':
       tagCopy = t('taskListItem.ready');
-      tagStyle = 'ready';
+      tagStyle = 'bg-accent-cool';
       break;
     case 'IN_PROGRESS':
       tagCopy = t('taskListItem.inProgress');
-      tagStyle = 'in-progress';
+      tagStyle = 'bg-warning';
       break;
     case 'NOT_NEEDED':
       tagCopy = t('taskListItem.notNeeded');
-      tagStyle = 'na';
+      tagStyle = 'text-base border-2px border-base';
       break;
     default:
       tagCopy = t('taskListItem.cannotStart');
-      tagStyle = 'na';
+      tagStyle = 'text-base border-2px border-base';
   }
 
   return (
     <li className={taskListItemClasses} data-testid={testId}>
       <div className="width-full">
         <div className="model-plan-task-list__task-row display-flex flex-justify flex-align-start">
-          <h3 className="model-plan-task-list__task-heading margin-top-0 margin-bottom-1">
-            {heading}
-          </h3>
+          <h3 className="margin-top-0 margin-bottom-1">{heading}</h3>
           <span
-            className={`model-plan-task-list__task-tag line-height-5 text-bold model-plan-task-list__task-tag--${tagStyle}`}
+            className={`model-plan-task-list__task-tag line-height-5 text-bold ${tagStyle}`}
             data-testid={`task-list-task-tag--${keyName}`}
           >
             {tagCopy}
