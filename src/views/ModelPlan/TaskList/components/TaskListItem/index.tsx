@@ -2,6 +2,8 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import classnames from 'classnames';
 
+import Tag from 'components/shared/Tag';
+
 type TaskListLastUpdatedProps = {
   children?: React.ReactNode | React.ReactNodeArray;
 };
@@ -77,12 +79,11 @@ const TaskListItem = ({
       <div className="width-full">
         <div className="model-plan-task-list__task-row display-flex flex-justify flex-align-start">
           <h3 className="margin-top-0 margin-bottom-1">{heading}</h3>
-          <span
+          <Tag
             className={`model-plan-task-list__task-tag line-height-5 text-bold ${tagStyle}`}
-            data-testid={`task-list-task-tag--${keyName}`}
           >
             {tagCopy}
-          </span>
+          </Tag>
         </div>
         {children}
       </div>
