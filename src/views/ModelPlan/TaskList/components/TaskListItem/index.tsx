@@ -52,25 +52,25 @@ const TaskListItem = ({
     }
   );
 
+  let tagStyle;
   let tagCopy;
   switch (status) {
     case 'READY':
       tagCopy = t('taskListItem.ready');
+      tagStyle = 'ready';
       break;
     case 'IN_PROGRESS':
       tagCopy = t('taskListItem.inProgress');
+      tagStyle = 'in-progress';
       break;
     case 'NOT_NEEDED':
       tagCopy = t('taskListItem.notNeeded');
+      tagStyle = 'na';
       break;
     default:
       tagCopy = t('taskListItem.cannotStart');
+      tagStyle = 'na';
   }
-
-  const tagStyle =
-    (status === 'READY' && 'ready') ||
-    (status === 'IN_PROGRESS' && 'in-progress') ||
-    ((status === 'CANNOT_START' || status === 'NOT_NEEDED') && 'na');
 
   return (
     <li className={taskListItemClasses} data-testid={testId}>
@@ -80,7 +80,7 @@ const TaskListItem = ({
             {heading}
           </h3>
           <span
-            className={`model-plan-task-list__task-tag model-plan-task-list__task-tag--${tagStyle} line-height-5 text-bold`}
+            className={`model-plan-task-list__task-tag line-height-5 text-bold model-plan-task-list__task-tag--${tagStyle}`}
             data-testid={`task-list-task-tag--${keyName}`}
           >
             {tagCopy}
