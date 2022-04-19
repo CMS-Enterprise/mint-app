@@ -1,11 +1,6 @@
 import React from 'react';
 
 import UswdsReactLink from 'components/LinkWrapper';
-// import { isIntakeStarted } from 'data/systemIntake';
-// import { attendGrbMeetingTag } from 'data/taskList';
-// import { GetSystemIntake_systemIntake as SystemIntake } from 'queries/types/GetSystemIntake';
-
-// CTA for Task List Intake Draft
 // const ModelPlanTaskListCta = ({ intake }: { intake: SystemIntake }) => {
 const TaskListCta = ({ status }: { status: string }) => {
   // const { id, status } = intake || {};
@@ -28,7 +23,7 @@ const TaskListCta = ({ status }: { status: string }) => {
           data-testid="intake-start-btn"
           className="usa-button"
           variant="unstyled"
-          // to={`/system/${id || 'new'}/contact-details`}
+          // /models/:modelId/task-list/basics
           to={`/system/'new'/contact-details`}
         >
           Start
