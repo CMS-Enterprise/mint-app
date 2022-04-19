@@ -47,7 +47,8 @@ const modelPlanTaskList = {
     beneficiaries: {
       heading: 'Beneficiaries',
       copy:
-        'Start filling out as much of the beneficiary information as you know and reach out to the Model Assessment Team if you need help.'
+        'Start filling out as much of the beneficiary information as you know and reach out to the Model Assessment Team if you need help.',
+      path: '/models/:modelId/task-list/beneficiaries'
     },
     operations: {
       heading: 'Operations, evaluation, and learning',
