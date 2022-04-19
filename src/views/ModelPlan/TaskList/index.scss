@@ -6,7 +6,6 @@
   }
 
   &__task-list {
-    padding-left: 0;
     counter-reset: primaryList secondaryList 3;
 
     &--primary {
@@ -18,8 +17,8 @@
   }
 
   &__item:before {
-      font-weight: bold;
-      white-space: pre;
+    font-weight: bold;
+    white-space: pre;
   }
 
   &__task-row {

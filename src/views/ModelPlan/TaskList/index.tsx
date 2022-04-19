@@ -110,7 +110,7 @@ const TaskList = () => {
             </SummaryBox>
             <ol
               data-testid="task-list"
-              className="model-plan-task-list__task-list model-plan-task-list__task-list--primary margin-y-6"
+              className="model-plan-task-list__task-list model-plan-task-list__task-list--primary margin-y-6 padding-left-0"
             >
               {Object.keys(taskListItem).map((key: any) => {
                 const lastTaskItem = Object.keys(taskListItem).slice(-1)[0];
