@@ -1,8 +1,7 @@
 .model-plan-task-list {
-  // Keep heading and order numbers the same
-  &__task-heading,
+  // Order numbers
   &__item:before {
-    font-size: 1.375em;
+    font-size: 1.38rem;
   }
 
   &__task-list {
@@ -29,19 +28,6 @@
 
   &__task-tag {
     padding: 7px 11px;
-
-    &--in-progress {
-      background-color: color('warning');
-    }
-
-    &--ready {
-      background-color: color('accent-cool');
-    }
-
-    &--na {
-      border: 2px solid color('base');
-      color: color('base');
-    }
   }
 
   &__task-description {
