@@ -21,15 +21,14 @@ const TeamMembersList = ({ team }: { team: string[] }) => {
                 arrayOfColors[index % arrayOfColors.length]
               }`}
             >
-              {
-                // @ts-ignore
-                name
-                  .match(/(\b\S)?/g)
-                  .join('')
-                  .match(/(^\S|\S$)?/g)
-                  .join('')
-                  .toUpperCase()
-              }
+              {/* Takes first letter of first and last name */}
+              {/* i.e. Steve Rogers == SR */}
+              {name
+                ?.match(/(\b\S)?/g)
+                ?.join('')
+                ?.match(/(^\S|\S$)?/g)
+                ?.join('')
+                ?.toUpperCase()}
             </div>
             <p className="margin-y-0">{name}</p>
           </li>
