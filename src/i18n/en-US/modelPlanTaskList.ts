@@ -29,17 +29,20 @@ const modelPlanTaskList = {
     basics: {
       heading: 'Model basics',
       copy:
-        'Start filling out as much of the basic model information as you know and reach out to the Model Assessment Team if you need help.'
+        'Start filling out as much of the basic model information as you know and reach out to the Model Assessment Team if you need help.',
+      path: '/models/:modelId/task-list/basics'
     },
     characteristics: {
       heading: 'General characteristics',
       copy:
-        'Start filling out as much of the general model characteristics as you know and reach out to the Model Assessment Team if you need help.'
+        'Start filling out as much of the general model characteristics as you know and reach out to the Model Assessment Team if you need help.',
+      path: '/models/:modelId/task-list/characteristics'
     },
     participants: {
       heading: 'Participants and providers',
       copy:
-        'Start filling out as much of the model participant information as you know and reach out to the Model Assessment Team if you need help.'
+        'Start filling out as much of the model participant information as you know and reach out to the Model Assessment Team if you need help.',
+      path: '/models/:modelId/task-list/participants'
     },
     beneficiaries: {
       heading: 'Beneficiaries',
@@ -49,17 +52,20 @@ const modelPlanTaskList = {
     operations: {
       heading: 'Operations, evaluation, and learning',
       copy:
-        'Start filling out as much of the model operation information as you know and reach out to the Model Assessment Team if you need help.'
+        'Start filling out as much of the model operation information as you know and reach out to the Model Assessment Team if you need help.',
+      path: '/models/:modelId/task-list/operations'
     },
     payment: {
       heading: 'Payment',
       copy:
-        'Start filling out as much of the payment information as you know and reach out to the Model Assessment Team if you need help.'
+        'Start filling out as much of the payment information as you know and reach out to the Model Assessment Team if you need help.',
+      path: '/models/:modelId/task-list/payment'
     },
     finalizeModelPlan: {
       heading: 'Finalize Model Plan',
       copy:
-        'Review all sections of the Model Plan and confirm with the Model Assessment Team that your model is ready for internal clearance processes.'
+        'Review all sections of the Model Plan and confirm with the Model Assessment Team that your model is ready for internal clearance processes.',
+      path: '/models/:modelId/task-list/submit-request'
     }
   },
   taskListItem: {
