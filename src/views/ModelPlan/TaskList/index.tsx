@@ -124,7 +124,7 @@ const TaskList = () => {
                       status={taskListItemStatus(key)}
                       keyName={key}
                     >
-                      <div className="model-plan-task-list__task-description-row">
+                      <div className="model-plan-task-list__task-row display-flex flex-justify flex-align-start">
                         <TaskListDescription>
                           <p className="margin-top-0">
                             {taskListItem[key].copy}
