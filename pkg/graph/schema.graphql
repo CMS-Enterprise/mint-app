@@ -64,7 +64,7 @@ type PlanCollaborator {
   modelPlanID: UUID!
   euaUserID: String!
   fullName: String!
-  component: CMSCenter!
+  cmsCenter: CMSCenter!
   teamRole: TeamRole!
   createdBy: String
   createdDts: Time
@@ -80,7 +80,7 @@ input PlanCollaboratorInput {
   modelPlanID: UUID!
   euaUserID: String!
   fullName: String!
-  component: CMSCenter!
+  cmsCenter: CMSCenter!
   teamRole: TeamRole!
   createdBy: String
   createdDts: Time

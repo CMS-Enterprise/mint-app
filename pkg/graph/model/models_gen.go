@@ -58,7 +58,7 @@ type PlanCollaboratorInput struct {
 	ModelPlanID uuid.UUID        `json:"modelPlanID"`
 	EuaUserID   string           `json:"euaUserID"`
 	FullName    string           `json:"fullName"`
-	Component   models.CMSCenter `json:"component"`
+	CmsCenter   models.CMSCenter `json:"cmsCenter"`
 	TeamRole    models.TeamRole  `json:"teamRole"`
 	CreatedBy   *string          `json:"createdBy"`
 	CreatedDts  *time.Time       `json:"createdDts"`

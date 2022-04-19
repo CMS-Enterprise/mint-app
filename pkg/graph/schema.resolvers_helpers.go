@@ -57,7 +57,7 @@ func ConvertToPlanCollaborator(pci *model.PlanCollaboratorInput) *models.PlanCol
 		ModelPlanID: pci.ModelPlanID,
 		EUAUserID:   pci.EuaUserID,
 		FullName:    pci.FullName,
-		Component:   pci.Component,
+		CMSCenter:   pci.CmsCenter,
 		TeamRole:    pci.TeamRole,
 		CreatedBy:   pci.CreatedBy,
 		CreatedDts:  pci.CreatedDts,

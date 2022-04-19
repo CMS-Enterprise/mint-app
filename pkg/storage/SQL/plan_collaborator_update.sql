@@ -3,7 +3,7 @@ SET
     model_plan_id = :model_plan_id,
     eua_user_id = :eua_user_id,
     full_name = :full_name,
-    component = :component,
+    cms_center = :cms_center,
     team_role = :team_role,
     modified_by = :modified_by,
     modified_dts = CURRENT_TIMESTAMP
@@ -13,7 +13,7 @@ WHERE plan_collaborator.id = :id
         model_plan_id,
         eua_user_id,
         full_name,
-        component,
+        cms_center,
         team_role,
         created_by,
         created_dts,

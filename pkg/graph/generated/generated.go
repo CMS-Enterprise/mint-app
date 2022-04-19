@@ -99,7 +99,7 @@ type ComplexityRoot struct {
 	}
 
 	PlanCollaborator struct {
-		Component   func(childComplexity int) int
+		CMSCenter   func(childComplexity int) int
 		CreatedBy   func(childComplexity int) int
 		CreatedDts  func(childComplexity int) int
 		EUAUserID   func(childComplexity int) int
@@ -433,12 +433,12 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.PlanBasics.TestInventions(childComplexity), true
 
-	case "PlanCollaborator.component":
-		if e.complexity.PlanCollaborator.Component == nil {
+	case "PlanCollaborator.cmsCenter":
+		if e.complexity.PlanCollaborator.CMSCenter == nil {
 			break
 		}
 
-		return e.complexity.PlanCollaborator.Component(childComplexity), true
+		return e.complexity.PlanCollaborator.CMSCenter(childComplexity), true
 
 	case "PlanCollaborator.createdBy":
 		if e.complexity.PlanCollaborator.CreatedBy == nil {
@@ -704,7 +704,7 @@ type PlanCollaborator {
   modelPlanID: UUID!
   euaUserID: String!
   fullName: String!
-  component: CMSCenter!
+  cmsCenter: CMSCenter!
   teamRole: TeamRole!
   createdBy: String
   createdDts: Time
@@ -720,7 +720,7 @@ input PlanCollaboratorInput {
   modelPlanID: UUID!
   euaUserID: String!
   fullName: String!
-  component: CMSCenter!
+  cmsCenter: CMSCenter!
   teamRole: TeamRole!
   createdBy: String
   createdDts: Time
@@ -2547,7 +2547,7 @@ func (ec *executionContext) _PlanCollaborator_fullName(ctx context.Context, fiel
 	return ec.marshalNString2string(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) _PlanCollaborator_component(ctx context.Context, field graphql.CollectedField, obj *models.PlanCollaborator) (ret graphql.Marshaler) {
+func (ec *executionContext) _PlanCollaborator_cmsCenter(ctx context.Context, field graphql.CollectedField, obj *models.PlanCollaborator) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
 			ec.Error(ctx, ec.Recover(ctx, r))
@@ -2565,7 +2565,7 @@ func (ec *executionContext) _PlanCollaborator_component(ctx context.Context, fie
 	ctx = graphql.WithFieldContext(ctx, fc)
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.Component, nil
+		return obj.CMSCenter, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -4473,11 +4473,11 @@ func (ec *executionContext) unmarshalInputPlanCollaboratorInput(ctx context.Cont
 			if err != nil {
 				return it, err
 			}
-		case "component":
+		case "cmsCenter":
 			var err error
 
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("component"))
-			it.Component, err = ec.unmarshalNCMSCenter2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐCMSCenter(ctx, v)
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("cmsCenter"))
+			it.CmsCenter, err = ec.unmarshalNCMSCenter2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐCMSCenter(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -4975,9 +4975,9 @@ func (ec *executionContext) _PlanCollaborator(ctx context.Context, sel ast.Selec
 			if out.Values[i] == graphql.Null {
 				invalids++
 			}
-		case "component":
+		case "cmsCenter":
 			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._PlanCollaborator_component(ctx, field, obj)
+				return ec._PlanCollaborator_cmsCenter(ctx, field, obj)
 			}
 
 			out.Values[i] = innerFunc(ctx)

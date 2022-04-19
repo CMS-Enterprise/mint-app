@@ -3,7 +3,7 @@ create table plan_collaborator (
     model_plan_id uuid  not null, --foreign key to model plan
     eua_user_id eua_id not null,
     full_name text not null,
-    component text not null,
+    cms_center cms_center not null,
     team_role team_role not null,
 
     created_by eua_id not null,
