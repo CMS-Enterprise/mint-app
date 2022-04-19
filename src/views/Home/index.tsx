@@ -12,7 +12,7 @@ import PageHeading from 'components/PageHeading';
 import useMessage from 'hooks/useMessage';
 import { AppState } from 'reducers/rootReducer';
 import user from 'utils/user';
-import Table from 'views/ModelPlan/Table';
+import DraftModelsTable from 'views/ModelPlan/Table';
 
 import WelcomeText from './WelcomeText';
 
@@ -67,7 +67,7 @@ const Home = () => {
             </h2>
           </div>
           <div className="tablet:grid-col-12">
-            <Table />
+            <DraftModelsTable />
           </div>
         </div>
       );

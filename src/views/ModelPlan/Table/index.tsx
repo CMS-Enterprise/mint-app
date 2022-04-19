@@ -10,7 +10,6 @@ import {
 import { useQuery } from '@apollo/client';
 import { Table as UswdsTable } from '@trussworks/react-uswds';
 
-// import { DateTime } from 'luxon';
 import UswdsReactLink from 'components/LinkWrapper';
 import Alert from 'components/shared/Alert';
 import Spinner from 'components/Spinner';
@@ -18,7 +17,6 @@ import GlobalClientFilter from 'components/TableFilter';
 import TablePagination from 'components/TablePagination';
 import TableResults from 'components/TableResults';
 import GetDraftModelPlans from 'queries/GetDraftModelPlans';
-// import { formatDate } from 'utils/date';
 import {
   GetDraftModelPlans as GetDraftModelPlansType,
   GetDraftModelPlans_modelPlanCollection as DraftModelPlanType
@@ -33,18 +31,13 @@ import {
 
 import './index.scss';
 
-type myRequestsTableProps = {
+type TableProps = {
+  data: DraftModelPlanType[];
   hiddenColumns?: string[];
 };
 
-const Table = ({ hiddenColumns }: myRequestsTableProps) => {
+const Table = ({ data, hiddenColumns }: TableProps) => {
   const { t } = useTranslation('home');
-
-  const { loading, error, data: modelPlans } = useQuery<GetDraftModelPlansType>(
-    GetDraftModelPlans
-  );
-
-  const data = (modelPlans?.modelPlanCollection ?? []) as DraftModelPlanType[];
 
   const columns = useMemo(() => {
     return [
@@ -119,18 +112,6 @@ const Table = ({ hiddenColumns }: myRequestsTableProps) => {
     useSortBy,
     usePagination
   );
-
-  if (loading) {
-    return (
-      <div className="text-center" data-testid="table-loading">
-        <Spinner size="xl" />
-      </div>
-    );
-  }
-
-  if (error) {
-    return <div>{JSON.stringify(error)}</div>;
-  }
 
   if (data.length === 0) {
     return (
@@ -259,4 +240,30 @@ const Table = ({ hiddenColumns }: myRequestsTableProps) => {
   );
 };
 
-export default Table;
+type DraftModelTableProps = {
+  hiddenColumns?: string[];
+};
+
+const DraftModelsTable = ({ hiddenColumns }: DraftModelTableProps) => {
+  const { loading, error, data: modelPlans } = useQuery<GetDraftModelPlansType>(
+    GetDraftModelPlans
+  );
+
+  const data = (modelPlans?.modelPlanCollection ?? []) as DraftModelPlanType[];
+
+  if (loading) {
+    return (
+      <div className="text-center" data-testid="table-loading">
+        <Spinner size="xl" />
+      </div>
+    );
+  }
+
+  if (error) {
+    return <div>{JSON.stringify(error)}</div>;
+  }
+
+  return <Table data={data} hiddenColumns={hiddenColumns} />;
+};
+
+export default DraftModelsTable;

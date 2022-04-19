@@ -27,7 +27,7 @@ const newModel = {
     'This field searches CMS’ EUA database.  You may search by name, email, or EUA ID.',
   teamMemberRole: 'Team member role',
   searchMemberInfo:
-    'The new team member will be able to view and edit anything without a Model Plan. Please make sure this individual should be able to do this before you proceed.',
+    'This new team member will be able to view and edit anything about a model plan. Please make sure this individual should be able to do this before you proceed.',
   dontAddTeamMember: 'Don’t add a team member and return to the previous page',
   addAnotherMember: 'Add another team member'
 };

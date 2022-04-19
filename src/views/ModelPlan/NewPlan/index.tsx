@@ -81,13 +81,7 @@ const NewPlanContent = () => {
             validateOnMount={false}
           >
             {(formikProps: FormikProps<{ modelName: string }>) => {
-              const {
-                errors,
-                setErrors,
-                handleSubmit,
-                isValid,
-                dirty
-              } = formikProps;
+              const { errors, setErrors, handleSubmit, dirty } = formikProps;
               const flatErrors = flattenErrors(errors);
               return (
                 <>
@@ -140,7 +134,7 @@ const NewPlanContent = () => {
                       </UswdsReactLink>
                       <Button
                         type="submit"
-                        disabled={!(dirty && isValid)}
+                        disabled={!dirty}
                         onClick={() => setErrors({})}
                       >
                         {h('next')}

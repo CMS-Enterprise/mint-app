@@ -5,8 +5,10 @@ import { useMutation } from '@apollo/client';
 import { Button, ComboBox, Dropdown, Label } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
 
+import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
+import Alert from 'components/shared/Alert';
 import AutoSave from 'components/shared/AutoSave';
 import { DescriptionDefinition } from 'components/shared/DescriptionGroup';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
@@ -16,6 +18,7 @@ import teamRoles from 'constants/enums/teamRoles';
 import UpdateDraftModelPlan from 'queries/UpdateDraftModelPlan';
 import { CollaboratorForm } from 'types/collaborator';
 import flattenErrors from 'utils/flattenErrors';
+import CollaboratorsValidationSchema from 'validations/modelPlanCollaborators';
 
 const Collaborators = () => {
   const { modelId } = useParams<{ modelId: string }>();
@@ -27,6 +30,7 @@ const Collaborators = () => {
   const [mutate] = useMutation(UpdateDraftModelPlan);
 
   const handleUpdateDraftModelPlan = (formikValues?: CollaboratorForm) => {
+    console.log('hey');
     // const { modelName } = formikValues;
     // mutate({
     //   variables: {
@@ -99,7 +103,7 @@ const Collaborators = () => {
           <Formik
             initialValues={initialValues}
             onSubmit={handleUpdateDraftModelPlan}
-            // validationSchema={NewModelPlanValidationSchema}
+            validationSchema={CollaboratorsValidationSchema}
             validateOnBlur={false}
             validateOnChange={false}
             validateOnMount={false}
@@ -117,7 +121,6 @@ const Collaborators = () => {
                 setErrors,
                 setFieldValue,
                 handleSubmit,
-                isValid,
                 dirty
               } = formikProps;
               const flatErrors = flattenErrors(errors);
@@ -169,10 +172,7 @@ const Collaborators = () => {
                         }}
                         options={projectComboBoxOptions}
                         onChange={(user: any) => {
-                          const selectedUser = users[user];
-                          if (selectedUser) {
-                            setFieldValue('fullName', selectedUser.fullName);
-                          }
+                          setFieldValue('fullName', users[user]?.fullName);
                         }}
                       />
                     </FieldGroup>
@@ -189,11 +189,12 @@ const Collaborators = () => {
                         as={Dropdown}
                         id="collaborator-role"
                         name="role"
+                        defaultValue=""
                         onChange={(e: any) => {
                           setFieldValue('teamRole', e.target.value);
                         }}
                       >
-                        <option value="" key="default-select" selected disabled>
+                        <option value="" key="default-select" disabled>
                           {`-${h('select')}-`}
                         </option>
                         {teamRoles.map(roles => {
@@ -210,10 +211,21 @@ const Collaborators = () => {
                       </Field>
                     </FieldGroup>
 
-                    <div className="margin-top-5 display-block">
+                    <Alert
+                      type="info"
+                      slim
+                      data-testid="mandatory-fields-alert"
+                      className="margin-y-4"
+                    >
+                      <span className="mandatory-fields-alert__text">
+                        {t('searchMemberInfo')}
+                      </span>
+                    </Alert>
+
+                    <div className="margin-y-4 display-block">
                       <Button
                         type="submit"
-                        disabled={!(dirty && isValid)}
+                        disabled={!dirty}
                         onClick={() => setErrors({})}
                       >
                         {t('addTeamMemberButton')}
@@ -231,6 +243,9 @@ const Collaborators = () => {
               );
             }}
           </Formik>
+          <UswdsReactLink to={`/models/new-plan/${modelId}/collaborators`}>
+            <span>&larr; </span> {t('dontAddTeamMember')}
+          </UswdsReactLink>
         </div>
       </div>
     </MainContent>
