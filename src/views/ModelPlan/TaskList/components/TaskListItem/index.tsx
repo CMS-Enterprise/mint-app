@@ -52,11 +52,20 @@ const TaskListItem = ({
     }
   );
 
-  const tagCopy =
-    (status === 'READY' && t('taskListItem.ready')) ||
-    (status === 'IN_PROGRESS' && t('taskListItem.inProgress')) ||
-    (status === 'CANNOT_START' && t('taskListItem.cannotStart')) ||
-    (status === 'NOT_NEEDED' && t('taskListItem.notNeeded'));
+  let tagCopy;
+  switch (status) {
+    case 'READY':
+      tagCopy = t('taskListItem.ready');
+      break;
+    case 'IN_PROGRESS':
+      tagCopy = t('taskListItem.inProgress');
+      break;
+    case 'NOT_NEEDED':
+      tagCopy = t('taskListItem.notNeeded');
+      break;
+    default:
+      tagCopy = t('taskListItem.cannotStart');
+  }
 
   const tagStyle =
     (status === 'READY' && 'ready') ||
