@@ -36,9 +36,9 @@ type TaskListItemProps = {
 };
 
 const TaskListItem = ({
+  children,
   heading,
   status,
-  children,
   testId
 }: TaskListItemProps) => {
   const { t } = useTranslation('modelPlanTaskList');
