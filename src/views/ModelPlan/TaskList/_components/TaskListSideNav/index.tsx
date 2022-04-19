@@ -8,7 +8,6 @@ import PageHeading from 'components/PageHeading';
 
 import TeamMembersList from './TeamMembersList';
 
-// const SideNavActions = ({ intake, archiveIntake }: SideNavActionsProps) => {
 const TaskListSideNav = () => {
   const { t } = useTranslation('modelPlanTaskList');
   const [isModalOpen, setModalOpen] = useState(false);
@@ -37,7 +36,7 @@ const TaskListSideNav = () => {
     );
   };
 
-  // TODO: TODO: Integrate with BE via gql, but it is not ready yet.
+  // TODO:Integrate with BE via gql, but it is not ready yet.
   // Until then, using this sample team member array.
   const sampleTeamMembers = [
     'Jane McModelteam',
