@@ -56,14 +56,12 @@ const TaskListItem = ({
   const tagCopy =
     (status === 'READY' && t('taskListItem.ready')) ||
     (status === 'IN_PROGRESS' && t('taskListItem.inProgress')) ||
-    (status === 'COMPLETED' && t('taskListItem.completed')) ||
     (status === 'CANNOT_START' && t('taskListItem.cannotStart')) ||
     (status === 'NOT_NEEDED' && t('taskListItem.notNeeded'));
 
   const tagStyle =
     (status === 'READY' && 'ready') ||
     (status === 'IN_PROGRESS' && 'in-progress') ||
-    (status === 'COMPLETED' && 'completed') ||
     ((status === 'CANNOT_START' || status === 'NOT_NEEDED') && 'na');
 
   return (
