@@ -27,7 +27,7 @@ func TestCreatePlanMilestonesResolver(t *testing.T) {
 	store, err := storage.NewStore(logger, config, ldClient)
 	assert.NoError(t, err)
 
-	payload, err := CreatePlanMilestonesResolver(logger, &input, &principal, store)
+	payload, err := CreatePlanMilestones(logger, &input, &principal, store)
 	assert.NoError(t, err)
 
 	assert.Equal(t, modelPlanID.String(), payload.ID.String())
@@ -44,7 +44,7 @@ func TestFetchPlanMilestonesByID(t *testing.T) {
 		ModelPlanID: modelPlanID,
 	}
 
-	payload, err := CreatePlanMilestonesResolver(logger, &input, &principal, store)
+	payload, err := CreatePlanMilestones(logger, &input, &principal, store)
 	assert.NoError(t, err)
 
 	milestones, err := FetchPlanMilestonesByID(logger, payload.ID, store)

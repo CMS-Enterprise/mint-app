@@ -7,7 +7,7 @@ import (
 	"go.uber.org/zap"
 )
 
-func CreatePlanMilestonesResolver(logger *zap.Logger, input *models.PlanMilestones, principal *string, store *storage.Store) (*models.PlanMilestones, error) {
+func CreatePlanMilestones(logger *zap.Logger, input *models.PlanMilestones, principal *string, store *storage.Store) (*models.PlanMilestones, error) {
 	input.CreatedBy = principal
 	input.ModifiedBy = input.CreatedBy
 
@@ -15,7 +15,7 @@ func CreatePlanMilestonesResolver(logger *zap.Logger, input *models.PlanMileston
 	return result, err
 }
 
-func UpdatePlanMilestonesResolver(logger *zap.Logger, input *models.PlanMilestones, principal *string, store *storage.Store) (*models.PlanMilestones, error) {
+func UpdatePlanMilestones(logger *zap.Logger, input *models.PlanMilestones, principal *string, store *storage.Store) (*models.PlanMilestones, error) {
 	input.ModifiedBy = principal
 
 	result, err := store.PlanMilestonesUpdate(logger, input)

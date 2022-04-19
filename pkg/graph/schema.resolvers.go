@@ -80,7 +80,7 @@ func (r *mutationResolver) CreatePlanMilestones(ctx context.Context, input model
 	principal := appcontext.Principal(ctx).ID()
 	logger := appcontext.ZLogger(ctx)
 
-	return resolvers.CreatePlanMilestonesResolver(logger, basics, &principal, r.store)
+	return resolvers.CreatePlanMilestones(logger, basics, &principal, r.store)
 }
 
 func (r *mutationResolver) UpdatePlanMilestones(ctx context.Context, input model.PlanMilestonesInput) (*models.PlanMilestones, error) {
@@ -88,7 +88,7 @@ func (r *mutationResolver) UpdatePlanMilestones(ctx context.Context, input model
 	principal := appcontext.Principal(ctx).ID()
 	logger := appcontext.ZLogger(ctx)
 
-	return resolvers.UpdatePlanMilestonesResolver(logger, basics, &principal, r.store)
+	return resolvers.UpdatePlanMilestones(logger, basics, &principal, r.store)
 }
 
 func (r *queryResolver) CurrentUser(ctx context.Context) (*model.CurrentUser, error) {
