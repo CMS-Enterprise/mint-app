@@ -17,15 +17,9 @@
     }
   }
 
-  &__item {
-    &--na {
-      color: color('base-dark');
-    }
-
-    &:before {
+  &__item:before {
       font-weight: bold;
       white-space: pre;
-    }
   }
 
   &__task-row {

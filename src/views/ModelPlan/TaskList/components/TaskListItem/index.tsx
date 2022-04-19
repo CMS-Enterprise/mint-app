@@ -48,9 +48,7 @@ const TaskListItem = ({
     'display-flex',
     'padding-bottom-4',
     {
-      'model-plan-task-list__item--na': ['NOT_NEEDED', 'CANNOT_START'].includes(
-        status
-      )
+      'text-base-dark': ['NOT_NEEDED', 'CANNOT_START'].includes(status)
     }
   );
 
@@ -67,7 +65,7 @@ const TaskListItem = ({
 
   return (
     <li className={taskListItemClasses} data-testid={testId}>
-      <div className="model-plan-task-list__task-content width-full">
+      <div className="width-full">
         <div className="model-plan-task-list__task-row display-flex flex-justify flex-align-start">
           <h3 className="model-plan-task-list__task-heading margin-top-0 margin-bottom-1">
             {heading}
