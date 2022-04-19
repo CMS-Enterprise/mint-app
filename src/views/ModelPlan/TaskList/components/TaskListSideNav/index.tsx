@@ -8,12 +8,6 @@ import PageHeading from 'components/PageHeading';
 
 import TeamMembersList from './TeamMembersList';
 
-// import { isIntakeOpen } from 'utils/systemIntake';
-// type SideNavActionsProps = {
-//   intake: SystemIntake;
-//   archiveIntake: () => void;
-// };
-
 // const SideNavActions = ({ intake, archiveIntake }: SideNavActionsProps) => {
 const TaskListSideNav = () => {
   const { t } = useTranslation('modelPlanTaskList');
