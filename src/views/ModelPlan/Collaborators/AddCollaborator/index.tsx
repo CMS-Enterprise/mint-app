@@ -1,32 +1,32 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
-import { Button, ComboBox, Label } from '@trussworks/react-uswds';
+import { Button, ComboBox, Dropdown, Label } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
 
-import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
-import {
-  DescriptionDefinition,
-  DescriptionTerm
-} from 'components/shared/DescriptionGroup';
+import AutoSave from 'components/shared/AutoSave';
+import { DescriptionDefinition } from 'components/shared/DescriptionGroup';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
+import teamRoles from 'constants/enums/teamRoles';
 import UpdateDraftModelPlan from 'queries/UpdateDraftModelPlan';
+import { CollaboratorForm } from 'types/collaborator';
 import flattenErrors from 'utils/flattenErrors';
 
 const Collaborators = () => {
   const { modelId } = useParams<{ modelId: string }>();
   const { t: h } = useTranslation('draftModelPlan');
   const { t } = useTranslation('newModel');
+  const formikRef = useRef<FormikProps<CollaboratorForm>>(null);
 
   const history = useHistory();
   const [mutate] = useMutation(UpdateDraftModelPlan);
 
-  const handleUpdateDraftModelPlan = (formikValues: { modelName: string }) => {
+  const handleUpdateDraftModelPlan = (formikValues?: CollaboratorForm) => {
     // const { modelName } = formikValues;
     // mutate({
     //   variables: {
@@ -47,12 +47,25 @@ const Collaborators = () => {
     return [
       {
         id: '123',
-        name: 'John Doe',
-        eua: 'ABCD'
+        fullName: 'John Doe',
+        euaUserID: 'ABCD',
+        teamRole: 'MODEL_LEAD'
+      },
+      {
+        id: '456',
+        fullName: 'Jane Oddball',
+        euaUserID: 'WASD',
+        teamRole: 'MODEL_LEAD'
       }
     ];
   }, []);
 
+  const initialValues: CollaboratorForm = {
+    fullName: '',
+    teamRole: ''
+  };
+
+  // Convert user to obj for keying selected user in combobox
   const users = useMemo(() => {
     const userObj: any = {}; // TODO: Replace with CEDAR user type
 
@@ -64,12 +77,10 @@ const Collaborators = () => {
   }, [userMocks]);
 
   const projectComboBoxOptions = useMemo(() => {
-    const queriedUsers = userMocks || [];
-    return queriedUsers.map(user => {
-      const { id, eua, name } = user;
+    return (userMocks || []).map(user => {
       return {
-        label: `${name} - ${eua}`,
-        value: id
+        label: `${user.fullName} - ${user.euaUserID}`,
+        value: user.id
       };
     });
   }, [userMocks]);
@@ -86,16 +97,23 @@ const Collaborators = () => {
           </div>
 
           <Formik
-            initialValues={{ modelName: '' }}
+            initialValues={initialValues}
             onSubmit={handleUpdateDraftModelPlan}
             // validationSchema={NewModelPlanValidationSchema}
             validateOnBlur={false}
             validateOnChange={false}
             validateOnMount={false}
+            innerRef={formikRef}
           >
-            {(formikProps: FormikProps<{ modelName: string }>) => {
+            {(
+              formikProps: FormikProps<{
+                fullName: string;
+                teamRole: string;
+              }>
+            ) => {
               const {
                 errors,
+                values,
                 setErrors,
                 setFieldValue,
                 handleSubmit,
@@ -129,8 +147,8 @@ const Collaborators = () => {
                     }}
                   >
                     <FieldGroup
-                      scrollElement="modelName"
-                      error={!!flatErrors.modelName}
+                      scrollElement="fullName"
+                      error={!!flatErrors.fullName}
                     >
                       <Label htmlFor="new-plan-model-name">
                         {t('teamMemberName')}
@@ -139,7 +157,7 @@ const Collaborators = () => {
                         className="line-height-body-3 text-base-dark"
                         definition={t('teamNameInfo')}
                       />
-                      <FieldErrorMsg>{flatErrors.modelName}</FieldErrorMsg>
+                      <FieldErrorMsg>{flatErrors.fullName}</FieldErrorMsg>
                       <ComboBox
                         id="collaborator-user"
                         name="collaboratorComboBox"
@@ -153,40 +171,66 @@ const Collaborators = () => {
                         onChange={(user: any) => {
                           const selectedUser = users[user];
                           if (selectedUser) {
-                            setFieldValue('requestName', selectedUser.name);
+                            setFieldValue('fullName', selectedUser.fullName);
                           }
                         }}
                       />
                     </FieldGroup>
-                    {/* <div className="margin-top-5 display-block">
-                      <UswdsReactLink
-                        className="usa-button usa-button--outline"
-                        variant="unstyled"
-                        to="/models/steps-overview"
+
+                    <FieldGroup
+                      scrollElement="teamRole"
+                      error={!!flatErrors.teamRole}
+                    >
+                      <Label htmlFor="IntakeForm-RequesterComponent">
+                        {t('teamMemberRole')}
+                      </Label>
+                      <FieldErrorMsg>{flatErrors.teamRole}</FieldErrorMsg>
+                      <Field
+                        as={Dropdown}
+                        id="collaborator-role"
+                        name="role"
+                        onChange={(e: any) => {
+                          setFieldValue('teamRole', e.target.value);
+                        }}
                       >
-                        {h('cancel')}
-                      </UswdsReactLink>
+                        <option value="" key="default-select" selected disabled>
+                          {`-${h('select')}-`}
+                        </option>
+                        {teamRoles.map(roles => {
+                          const { id, name } = roles;
+                          return (
+                            <option
+                              key={`Collaborator-Role-${name}`}
+                              value={id}
+                            >
+                              {name}
+                            </option>
+                          );
+                        })}
+                      </Field>
+                    </FieldGroup>
+
+                    <div className="margin-top-5 display-block">
                       <Button
                         type="submit"
                         disabled={!(dirty && isValid)}
                         onClick={() => setErrors({})}
                       >
-                        {h('next')}
+                        {t('addTeamMemberButton')}
                       </Button>
-                    </div> */}
+                    </div>
                   </Form>
+                  <AutoSave
+                    values={values}
+                    onSave={() => {
+                      handleUpdateDraftModelPlan(formikRef?.current?.values);
+                    }}
+                    debounceDelay={3000}
+                  />
                 </>
               );
             }}
           </Formik>
-
-          <UswdsReactLink
-            className="usa-button margin-top-2"
-            variant="unstyled"
-            to="/models/steps-overview"
-          >
-            {t('addTeamMemberButton')}
-          </UswdsReactLink>
         </div>
       </div>
     </MainContent>

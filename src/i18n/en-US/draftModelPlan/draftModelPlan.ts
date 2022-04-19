@@ -5,6 +5,7 @@ const draftModelPlan = {
   next: 'Next',
   back: 'Back',
   cancel: 'Cancel',
+  select: 'Select',
   additionalNote: 'Add an additional note',
   datePlaceholder: 'mm/dd/yyy',
   yes: 'Yes',
