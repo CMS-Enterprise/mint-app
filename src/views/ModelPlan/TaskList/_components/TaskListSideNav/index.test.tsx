@@ -59,20 +59,13 @@ describe('The TaskListSideNavActions', () => {
     });
 
     describe('overview for adding a system', () => {
-      it('displays text', () => {
+      it('displays translation prop key', () => {
         const component = renderComponent();
-        // TODO Fix this errors
-
-        console.log(
-          component.find('UswdsReactLink').at(1).dive().prop('children').props()
+        expect(component.find('Trans').prop('i18nKey')).toContain(
+          'modelPlanTaskList:sideNav.overview'
         );
-
-        expect(
-          component.find('UswdsReactLink').at(1).dive().props().children
-        ).toContain('modelPlanTaskList:sideNav.overview');
       });
 
-      // modelPlanTaskList:sideNav.overview
       it('goes to home for now', () => {
         const component = renderComponent();
         expect(component.find('UswdsReactLink').at(1).prop('to')).toEqual('/');
