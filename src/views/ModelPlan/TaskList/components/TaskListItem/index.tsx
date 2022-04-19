@@ -29,7 +29,6 @@ export const TaskListDescription = ({ children }: TaskListDescriptionProps) => {
 };
 
 type TaskListItemProps = {
-  keyName: string;
   heading: string;
   status: string;
   children?: React.ReactNode | React.ReactNodeArray;
@@ -37,7 +36,6 @@ type TaskListItemProps = {
 };
 
 const TaskListItem = ({
-  keyName,
   heading,
   status,
   children,
