@@ -71,7 +71,7 @@ const TaskListItem = ({
             {heading}
           </h3>
           <span
-            className={`model-plan-task-list__task-tag model-plan-task-list__task-tag--${tagStyle}`}
+            className={`model-plan-task-list__task-tag model-plan-task-list__task-tag--${tagStyle} line-height-5 text-bold`}
             data-testid={`task-list-task-tag--${keyName}`}
           >
             {tagCopy}
