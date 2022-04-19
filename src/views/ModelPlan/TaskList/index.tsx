@@ -178,7 +178,7 @@ const TaskList = () => {
             </ol>
           </div>
           <div className="tablet:grid-col-3">
-            {/* <SideNavActions intake={systemIntake} archiveIntake={archiveIntake} /> */}
+            {/* //TODO to pass down archive functional prop */}
             <TaskListSideNav />
           </div>
         </div>

@@ -17,6 +17,7 @@ const TaskListSideNav = () => {
       <Modal isOpen={isModalOpen} closeModal={() => setModalOpen(false)}>
         <PageHeading headingLevel="h2" className="margin-top-0">
           {t('withdraw_modal.header', {
+            // TODO: requestName?
             // requestName: intake.requestName
             requestName: 'Requestor Name'
           })}
@@ -25,7 +26,8 @@ const TaskListSideNav = () => {
         <Button
           type="button"
           className="margin-right-4"
-          onClick={() => console.log('arhcived')}
+          // TODO to pass down archive functional prop
+          onClick={() => console.log('archive!')}
         >
           {t('withdraw_modal.confirm')}
         </Button>
