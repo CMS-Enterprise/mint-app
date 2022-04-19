@@ -8,7 +8,7 @@ type TaskListLastUpdatedProps = {
 
 export const TaskListLastUpdated = ({ children }: TaskListLastUpdatedProps) => {
   return (
-    <div className="model-plan-task-list__last-updated-status line-height-body-4 padding-top-1 ">
+    <div className="model-plan-task-list__last-updated-status line-height-body-4 padding-top-1 text-base">
       {children}
     </div>
   );

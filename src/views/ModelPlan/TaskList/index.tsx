@@ -132,8 +132,10 @@ const TaskList = () => {
                         </TaskListDescription>
                         {taskListItemStatus(key) === 'IN_PROGRESS' && (
                           <TaskListLastUpdated>
-                            <p>{t('taskListItem.lastUpdated')}</p>
-                            <p>4/1/2022</p>
+                            <p className="margin-y-0">
+                              {t('taskListItem.lastUpdated')}
+                            </p>
+                            <p className="margin-y-0">4/1/2022</p>
                           </TaskListLastUpdated>
                         )}
                       </div>
