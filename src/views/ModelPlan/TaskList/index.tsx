@@ -47,18 +47,42 @@ const TaskList = () => {
     }
   );
 
-  const { modelName, basics } = data?.modelPlan || {};
+  const {
+    modelName,
+    basics
+    // TODO: Add these model plans when BE integrates it
+    // characteristics,
+    // participants,
+    // beneficiaries,
+    // operations,
+    // payment,
+    // finalizeModelPlan
+  } = data?.modelPlan || {};
 
   const taskListItem: TaskListItemProps[] = t('numberedList', {
     returnObjects: true
   });
 
   const taskListItemStatus = (key: string) => {
-    // TODO: Convert to a switch case or some other better idea
-    if (key === 'basics') {
-      return basics === null ? 'READY' : 'IN_PROGRESS';
+    switch (key) {
+      case 'basics':
+        return basics === null ? 'READY' : 'IN_PROGRESS';
+      // TODO: Add these model plans when BE integrates it
+      // case 'characteristics':
+      //   return characteristics === null ? 'READY' : 'IN_PROGRESS';
+      // case 'participants':
+      //   return participants === null ? 'READY' : 'IN_PROGRESS';
+      // case 'beneficiaries':
+      //   return beneficiaries === null ? 'READY' : 'IN_PROGRESS';
+      // case 'operations':
+      //   return operations === null ? 'READY' : 'IN_PROGRESS';
+      // case 'payment':
+      //   return payment === null ? 'READY' : 'IN_PROGRESS';
+      // case 'finalizeModelPlan':
+      //   return finalizeModelPlan === null ? 'READY' : 'IN_PROGRESS';
+      default:
+        return 'CANNOT_START';
     }
-    return 'CANNOT_START';
   };
 
   return (
