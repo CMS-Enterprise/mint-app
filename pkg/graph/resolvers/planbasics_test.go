@@ -3,56 +3,70 @@ package resolvers
 import (
 	"testing"
 
-	"github.com/cmsgov/mint-app/pkg/appconfig"
 	"github.com/cmsgov/mint-app/pkg/models"
 
-	// "github.com/cmsgov/mint-app/pkg/graph/model"
-	"github.com/cmsgov/mint-app/pkg/storage"
-	"github.com/cmsgov/mint-app/pkg/testhelpers"
 	"github.com/google/uuid"
 	"github.com/stretchr/testify/assert"
-	"go.uber.org/zap"
-	ld "gopkg.in/launchdarkly/go-server-sdk.v5"
 )
 
-func NewDBConfig() storage.DBConfig {
-	config := testhelpers.NewConfig()
-
-	return storage.DBConfig{
-		Host:           config.GetString(appconfig.DBHostConfigKey),
-		Port:           config.GetString(appconfig.DBPortConfigKey),
-		Database:       config.GetString(appconfig.DBNameConfigKey),
-		Username:       config.GetString(appconfig.DBUsernameConfigKey),
-		Password:       config.GetString(appconfig.DBPasswordConfigKey),
-		SSLMode:        config.GetString(appconfig.DBSSLModeConfigKey),
-		MaxConnections: config.GetInt(appconfig.DBMaxConnections),
-	}
-}
-
 func TestCreatePlanBasicsResolver(t *testing.T) {
-	config := NewDBConfig()
-	ldClient, _ := ld.MakeCustomClient("fake", ld.Config{Offline: true}, 0)
-	logger := zap.NewNop()
-	// input := model.PlanBasicsInput{}
+
+	tc := GetDefaultTestConfigs()
+
 	basics := models.PlanBasics{}
-	principal := "NOT_ASSIGNED" //Violates EUAD domain
 
-	store, err := storage.NewStore(logger, config, ldClient)
-	assert.NoError(t, err)
+	basics.ID = uuid.MustParse("0576c351-c480-4f85-97a4-b7c1d691a3cb")
+	basics.ModelPlanID = uuid.MustParse("85b3ff03-1be2-4870-b02f-55c764500e48")
 
-	result, err := CreatePlanBasicsResolver(logger, &basics, &principal, store)
+	result, err := CreatePlanBasicsResolver(tc.Logger, &basics, tc.Principal, tc.Store)
 	assert.NoError(t, err)
 	assert.NotNil(t, result.ID)
 }
 
-func TestFetchPlanBasicsByID(t *testing.T) {
-	config := NewDBConfig()
-	ldClient, _ := ld.MakeCustomClient("fake", ld.Config{Offline: true}, 0)
-	logger := zap.NewNop()
-	id := uuid.Nil
-	store, _ := storage.NewStore(logger, config, ldClient)
+func TestUpdatePlanBasicsResolver(t *testing.T) {
 
-	plan, err := FetchPlanBasicsByID(logger, id, store)
+	tc := GetDefaultTestConfigs()
+
+	basics := models.PlanBasics{}
+	basics.Problem = models.StringPointer("This is a problem")
+	basics.ModifiedBy = tc.Principal
+	basics.CreatedBy = tc.Principal
+
+	basics.ID = uuid.MustParse("0576c351-c480-4f85-97a4-b7c1d691a3cb")
+	basics.ModelPlanID = uuid.MustParse("85b3ff03-1be2-4870-b02f-55c764500e48")
+
+	result, err := UpdatePlanBasicsResolver(tc.Logger, &basics, tc.Principal, tc.Store)
+	assert.NoError(t, err)
+	assert.NotNil(t, result.ID)
+
+	assert.EqualValues(t, basics.Problem, result.Problem)
+}
+
+func TestPlanBasicsGetByModelPlanID(t *testing.T) {
+
+	tc := GetDefaultTestConfigs()
+
+	basics := models.PlanBasics{}
+	basics.Problem = models.StringPointer("This is a problem")
+	basics.ModifiedBy = tc.Principal
+	basics.CreatedBy = tc.Principal
+
+	basics.ID = uuid.MustParse("0576c351-c480-4f85-97a4-b7c1d691a3cb")
+	modelPlanID := uuid.MustParse("85b3ff03-1be2-4870-b02f-55c764500e48")
+
+	result, err := PlanBasicsGetByModelPlanID(tc.Logger, tc.Principal, modelPlanID, tc.Store)
+	assert.NoError(t, err)
+	assert.NotNil(t, result.ID)
+
+	assert.EqualValues(t, modelPlanID, result.ModelPlanID)
+}
+
+func TestFetchPlanBasicsByID(t *testing.T) {
+	tc := GetDefaultTestConfigs()
+
+	id := uuid.MustParse("0576c351-c480-4f85-97a4-b7c1d691a3cb")
+
+	plan, err := FetchPlanBasicsByID(tc.Logger, id, tc.Store)
 	assert.Nil(t, err)
 	assert.NotNil(t, plan)
 }

@@ -6,7 +6,6 @@ import (
 	"github.com/facebookgo/clock"
 	"go.uber.org/zap"
 
-	"github.com/cmsgov/mint-app/pkg/apperrors"
 	"github.com/cmsgov/mint-app/pkg/models"
 )
 
@@ -26,14 +25,4 @@ func (s ServicesTestSuite) TestNewFetchMetrics() {
 		s.Equal(models.MetricsDigest{}, metricsDigest)
 	})
 
-	s.Run("returns error if accessibility request service fails", func() {
-		fetchMetrics := NewFetchMetrics(serviceConfig)
-		startTime := serviceClock.Now()
-		endTime := serviceClock.Now()
-
-		_, err := fetchMetrics(context.Background(), startTime, endTime)
-
-		s.Error(err)
-		s.IsType(&apperrors.QueryError{}, err)
-	})
 }
