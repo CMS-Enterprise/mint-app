@@ -5,7 +5,7 @@ SET
   cleared = :cleared,
   announced = :announced,
   applications_due = :applications_due,
-  participants_announced = :participants_allowed,
+  participants_announced = :participants_announced,
   performance_period_starts = :performance_period_starts,
   performance_period_ends = :performance_period_ends,
   modified_by = :modified_by,
