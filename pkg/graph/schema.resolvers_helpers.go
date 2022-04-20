@@ -44,12 +44,15 @@ func ConvertToPlanBasics(mpi *model.PlanBasicsInput) *models.PlanBasics {
 		CreatedDts:  mpi.CreatedDts,
 		ModifiedBy:  mpi.ModifiedBy,
 		ModifiedDts: mpi.ModifiedDts,
-		Status:      mpi.Status,
 	}
 
 	if mpi.ID != nil {
 		basics.ID = *mpi.ID
 	}
+	if mpi.Status != nil {
+		basics.Status = *mpi.Status
+	}
+
 	return &basics
 
 }
