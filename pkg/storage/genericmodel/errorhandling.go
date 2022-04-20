@@ -12,7 +12,7 @@ import (
 
 func HandleModelCreationError(logger *zap.Logger, err error, model models.BaseModel) error {
 	logger.Error(
-		fmt.Sprintf("Failed to create model [#{model.GetModelTypeName()}] with error: #{err}"),
+		fmt.Sprintf("Failed to create model [%v] with error: %v", model.GetModelTypeName(), err),
 		zap.String("user", models.ValueOrEmpty(model.GetModifiedBy())),
 	)
 
