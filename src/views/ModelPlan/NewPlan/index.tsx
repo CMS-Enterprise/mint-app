@@ -126,7 +126,7 @@ const NewPlanContent = () => {
                     </FieldGroup>
                     <div className="margin-top-5 display-block">
                       <UswdsReactLink
-                        className="usa-button usa-button--outline"
+                        className="usa-button usa-button--outline margin-bottom-1"
                         variant="unstyled"
                         to="/models/steps-overview"
                       >

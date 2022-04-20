@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { useSortBy, useTable } from 'react-table';
-import { Table as UswdsTable } from '@trussworks/react-uswds';
+import { Button, Table as UswdsTable } from '@trussworks/react-uswds';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import Alert from 'components/shared/Alert';
@@ -26,10 +26,15 @@ type Collaborator = {
 // TEMP: collaborator types
 type TableProps = {
   collaborators: Collaborator[];
-  setModalOpen: () => void;
+  setModalOpen: (isModalOpen: boolean) => void;
+  setRemoveUser: (removeUser: boolean) => void;
 };
 
-const CollaboratorsTable = ({ collaborators, setModalOpen }: TableProps) => {
+const CollaboratorsTable = ({
+  collaborators,
+  setModalOpen,
+  setRemoveUser
+}: TableProps) => {
   const { modelId } = useParams<{ modelId: string }>();
   const { t } = useTranslation('newModel');
 
@@ -52,16 +57,30 @@ const CollaboratorsTable = ({ collaborators, setModalOpen }: TableProps) => {
         Header: t('table.actions'),
         Cell: ({ row }: any) => {
           return (
-            <UswdsReactLink
-              to={`/models/new-plan/${modelId}/add-collaborator/${row.original.id}`}
-            >
-              {t('table.edit')}
-            </UswdsReactLink>
+            <>
+              <UswdsReactLink
+                className="margin-right-2"
+                to={`/models/new-plan/${modelId}/add-collaborator/${row.original.id}`}
+              >
+                {t('table.edit')}
+              </UswdsReactLink>
+              <Button
+                className="line-height-body-5 text-red"
+                type="button"
+                unstyled
+                onClick={() => {
+                  setRemoveUser(row.original);
+                  setModalOpen(true);
+                }}
+              >
+                {t('modal.remove')}
+              </Button>
+            </>
           );
         }
       }
     ];
-  }, [t, modelId]);
+  }, [t, modelId, setModalOpen, setRemoveUser]);
 
   const {
     getTableProps,
@@ -113,7 +132,8 @@ const CollaboratorsTable = ({ collaborators, setModalOpen }: TableProps) => {
                   className="table-header"
                   scope="col"
                   style={{
-                    paddingLeft: '0'
+                    paddingLeft: '0',
+                    paddingBottom: '.5rem'
                   }}
                 >
                   <button
@@ -130,7 +150,7 @@ const CollaboratorsTable = ({ collaborators, setModalOpen }: TableProps) => {
           ))}
         </thead>
         <tbody {...getTableBodyProps()}>
-          {rows.map(row => {
+          {rows.map((row, index) => {
             prepareRow(row);
             return (
               <tr {...row.getRowProps()}>
@@ -140,7 +160,11 @@ const CollaboratorsTable = ({ collaborators, setModalOpen }: TableProps) => {
                       <th
                         {...cell.getCellProps()}
                         scope="row"
-                        style={{ paddingLeft: '0', verticalAlign: 'top' }}
+                        style={{
+                          paddingLeft: '0',
+                          borderBottom:
+                            index === rows.length - 1 ? 'none' : 'auto'
+                        }}
                       >
                         {cell.render('Cell')}
                       </th>
@@ -151,7 +175,8 @@ const CollaboratorsTable = ({ collaborators, setModalOpen }: TableProps) => {
                       {...cell.getCellProps()}
                       style={{
                         paddingLeft: '0',
-                        verticalAlign: 'top'
+                        borderBottom:
+                          index === rows.length - 1 ? 'none' : 'auto'
                       }}
                     >
                       {cell.render('Cell')}

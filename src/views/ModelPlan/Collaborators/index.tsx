@@ -22,39 +22,12 @@ import {
 
 import CollaboratorsTable from './table';
 
-const RemoveCollaborator = () => {
-  const { t } = useTranslation('newModel');
-  const [isModalOpen, setModalOpen] = useState(false);
-
-  return (
-    <Modal isOpen={isModalOpen} closeModal={() => setModalOpen(false)}>
-      <PageHeading headingLevel="h2" className="margin-top-0">
-        {t('withdraw_modal.header', {
-          // TODO: requestName?
-          // requestName: intake.requestName
-          requestName: 'Requestor Name'
-        })}
-      </PageHeading>
-      <p>{t('withdraw_modal.warning')}</p>
-      <Button
-        type="button"
-        className="margin-right-4"
-        // TODO to pass down archive functional prop
-        onClick={() => console.log('archive!')}
-      >
-        {t('withdraw_modal.confirm')}
-      </Button>
-      <Button type="button" unstyled onClick={() => setModalOpen(false)}>
-        {t('withdraw_modal.cancel')}
-      </Button>
-    </Modal>
-  );
-};
-
 const Collaborators = () => {
   const { modelId } = useParams<{ modelId: string }>();
   const { t: h } = useTranslation('draftModelPlan');
   const { t } = useTranslation('newModel');
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [removeUser, setRemoveUser] = useState<CollaboratorsType>({});
 
   //   const { loading, error, data } = useQuery<GetCollaboratorsType>(
   //     GetCollaborators
@@ -71,13 +44,51 @@ const Collaborators = () => {
   //     );
   //   }
 
+  const RemoveCollaborator = () => {
+    return (
+      <Modal isOpen={isModalOpen} closeModal={() => setModalOpen(false)}>
+        <PageHeading headingLevel="h2" className="margin-top-0">
+          {t('modal.heading')} {removeUser.fullName}?
+        </PageHeading>
+        <p>{t('modal.subheading')}</p>
+        <Button
+          type="button"
+          className="margin-right-4"
+          // TODO GQL query to remove collaborator
+          onClick={() => console.log('TODO remove user!')}
+        >
+          {t('modal.confirm')}
+        </Button>
+        <Button type="button" unstyled onClick={() => setModalOpen(false)}>
+          {t('modal.no')}
+        </Button>
+      </Modal>
+    );
+  };
+
   // Mocked data
   const collaborators = [
     {
-      id: '123',
+      id: 'qwe',
       modelPlanID: '456',
       euaUserID: 'ABCD',
       fullName: 'John Doe',
+      cmsCenter: 'CMMI',
+      teamRole: 'MODEL_LEAD'
+    },
+    {
+      id: 'asd',
+      modelPlanID: '789',
+      euaUserID: 'QWER',
+      fullName: 'Jane Oddball',
+      cmsCenter: 'CMMI',
+      teamRole: 'LEADERSHIP'
+    },
+    {
+      id: 'zxc',
+      modelPlanID: '009',
+      euaUserID: 'ZXCV',
+      fullName: 'Patrick John',
       cmsCenter: 'CMMI',
       teamRole: 'MODEL_LEAD'
     }
@@ -89,6 +100,7 @@ const Collaborators = () => {
 
   return (
     <MainContent className="margin-bottom-5">
+      {RemoveCollaborator()}
       <div className="grid-container">
         <div className="tablet:grid-col-12">
           <BreadcrumbBar variant="wrap">
@@ -107,7 +119,7 @@ const Collaborators = () => {
           </div>
           <h4 className="margin-bottom-1">{t('teamMembers')}</h4>
           <UswdsReactLink
-            className="usa-button"
+            className="usa-button margin-bottom-2"
             variant="unstyled"
             to={`/models/new-plan/${modelId}/add-collaborator`}
           >
@@ -117,6 +129,7 @@ const Collaborators = () => {
           <CollaboratorsTable
             collaborators={collaborators}
             setModalOpen={setModalOpen}
+            setRemoveUser={setRemoveUser}
           />
 
           <div className="margin-top-5 display-block">
