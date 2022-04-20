@@ -37,6 +37,7 @@ type ModelPlan {
   modifiedBy: String
   modifiedDts: Time
   basics: PlanBasics
+  collaborators: [PlanCollaborator!]!
 }
 
 """
@@ -55,7 +56,37 @@ modifiedBy: String
 modifiedDts: Time
 }
 
+"""
+PlanCollaborator represents a collaborator on a plan
+"""
+type PlanCollaborator {
+  id: UUID!
+  modelPlanID: UUID!
+  euaUserID: String!
+  fullName: String!
+  cmsCenter: CMSCenter!
+  teamRole: TeamRole!
+  createdBy: String
+  createdDts: Time
+  modifiedBy: String
+  modifiedDts: Time
+}
 
+"""
+PlanCollaboratorInput represents the data required to create, modify, or delete a collaborator on a plan
+"""
+input PlanCollaboratorInput {
+  id: UUID
+  modelPlanID: UUID!
+  euaUserID: String!
+  fullName: String!
+  cmsCenter: CMSCenter!
+  teamRole: TeamRole!
+  createdBy: String
+  createdDts: Time
+  modifiedBy: String
+  modifiedDts: Time
+}
 
 """
 Represents plan basics
@@ -96,6 +127,14 @@ input PlanBasicsInput {
   status: TaskStatus
 }
 
+"""
+Represents a person response from CEDAR LDAP
+"""
+type UserInfo {
+  commonName: String!
+  email: String!
+  euaUserId: String!
+}
 
 """
 Query definition for the schema
@@ -105,6 +144,7 @@ type Query {
   modelPlan(id: UUID!) : ModelPlan
   planBasics(id: UUID!) : PlanBasics
   modelPlanCollection: [ModelPlan]
+  cedarPersonsByCommonName(commonName: String!): [UserInfo!]!
 }
 
 """
@@ -113,7 +153,16 @@ Mutations definition for the schema
 type Mutation {
 createModelPlan(input: ModelPlanInput!):ModelPlan
 @hasRole(role: MINT_BASE_USER)
-# createPlanBasics(input: CreatePlanBasicsRequestInput!):CreatePlanBasicsPayload
+
+createPlanCollaborator(input: PlanCollaboratorInput!): PlanCollaborator
+@hasRole(role: MINT_BASE_USER)
+
+updatePlanCollaborator(input: PlanCollaboratorInput!): PlanCollaborator
+@hasRole(role: MINT_BASE_USER)
+
+deletePlanCollaborator(input: PlanCollaboratorInput!): PlanCollaborator
+@hasRole(role: MINT_BASE_USER)
+
 createPlanBasics(input: PlanBasicsInput!):PlanBasics
 @hasRole(role: MINT_BASE_USER)
 
@@ -122,14 +171,20 @@ updateModelPlan(input: ModelPlanInput!):ModelPlan
 
 updatePlanBasics(input: PlanBasicsInput!): PlanBasics
 @hasRole(role: MINT_BASE_USER)
-
 }
 
 enum TaskStatus {
   READY
   IN_PROGRESS
   COMPLETE
+}
 
+enum TeamRole {
+  MODEL_LEAD
+  MODEL_TEAM
+  LEADERSHIP
+  LEARNING
+  EVALUATION
 }
 
 enum ModelType
