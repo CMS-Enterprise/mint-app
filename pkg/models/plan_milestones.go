@@ -1,8 +1,9 @@
 package models
 
 import (
-	"github.com/google/uuid"
 	"time"
+
+	"github.com/google/uuid"
 )
 
 type PlanMilestones struct {
@@ -28,7 +29,7 @@ type PlanMilestones struct {
 }
 
 func (p PlanMilestones) GetModelTypeName() string {
-	return p.GetModelTypeName()
+	return "Plan_Milestones"
 }
 
 func (p PlanMilestones) GetID() uuid.UUID {
