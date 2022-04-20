@@ -9,6 +9,7 @@ import general from './general';
 import header from './header';
 import home from './home';
 import modelPlan from './modelPlan';
+import modelPlanTaskList from './modelPlanTaskList';
 import privacyPolicy from './privacyPolicy';
 import tableAndPagination from './tableAndPagination';
 import termsAndConditions from './termsAndConditions';
@@ -24,7 +25,7 @@ const enUS = {
   header,
   home,
   modelPlan,
-  newModel,
+  modelPlanTaskList,
   privacyPolicy,
   tableAndPagination,
   termsAndConditions
