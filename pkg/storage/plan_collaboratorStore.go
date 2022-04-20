@@ -6,7 +6,7 @@ import (
 	"errors"
 
 	"github.com/cmsgov/mint-app/pkg/models"
-	utilityUuid "github.com/cmsgov/mint-app/pkg/shared/uuid"
+	utilityUuid "github.com/cmsgov/mint-app/pkg/shared/utility_uuid"
 	"github.com/google/uuid"
 	"go.uber.org/zap"
 )

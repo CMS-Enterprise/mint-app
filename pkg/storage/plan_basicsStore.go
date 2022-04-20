@@ -2,10 +2,11 @@ package storage
 
 import (
 	_ "embed"
+	"github.com/cmsgov/mint-app/pkg/shared/utility_sql"
 
 	"github.com/cmsgov/mint-app/pkg/models"
-	utilityUuid "github.com/cmsgov/mint-app/pkg/shared/uuid"
-	"github.com/cmsgov/mint-app/pkg/storage/planbasics"
+	"github.com/cmsgov/mint-app/pkg/shared/utility_uuid"
+	"github.com/cmsgov/mint-app/pkg/storage/genericmodel"
 	"github.com/google/uuid"
 	"go.uber.org/zap"
 )
@@ -20,13 +21,10 @@ var planBasicsUpdateSQL string
 var planBasicsGetByIdSQL string
 
 //go:embed SQL/plan_basics_get_by_model_plan_id.sql
-var planBasicsGetByModelPlan_IdSQL string
+var planBasicsGetByModelPlanIdSQL string
 
 func (s *Store) PlanBasicsCreate(logger *zap.Logger, basics *models.PlanBasics) (*models.PlanBasics, error) {
-
 	basics.ID = utility_uuid.ValueOrNewUUID(basics.ID)
-	status := models.TaskReady
-	basics.Status = &status
 
 	statement, err := s.db.PrepareNamed(planBasicsCreateSQL)
 	if err != nil {
@@ -72,7 +70,7 @@ func (s *Store) PlanBasicsGetByID(logger *zap.Logger, id uuid.UUID) (*models.Pla
 }
 
 func (s *Store) PlanBasicsGetByModelPlanID(logger *zap.Logger, principal *string, modelPlanId uuid.UUID) (*models.PlanBasics, error) {
-	statement, err := s.db.PrepareNamed(planBasicsGetByModelPlan_IdSQL)
+	statement, err := s.db.PrepareNamed(planBasicsGetByModelPlanIdSQL)
 	if err != nil {
 		return nil, err
 	}

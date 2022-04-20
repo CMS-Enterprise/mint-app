@@ -5,13 +5,15 @@ package graph
 
 import (
 	"context"
+
+	"github.com/google/uuid"
+
 	"github.com/cmsgov/mint-app/pkg/appcontext"
 	"github.com/cmsgov/mint-app/pkg/flags"
 	"github.com/cmsgov/mint-app/pkg/graph/generated"
 	"github.com/cmsgov/mint-app/pkg/graph/model"
 	"github.com/cmsgov/mint-app/pkg/graph/resolvers"
 	"github.com/cmsgov/mint-app/pkg/models"
-	"github.com/google/uuid"
 )
 
 func (r *modelPlanResolver) CmmiGroups(ctx context.Context, obj *models.ModelPlan) ([]model.CMMIGroup, error) {
@@ -32,6 +34,13 @@ func (r *modelPlanResolver) Basics(ctx context.Context, obj *models.ModelPlan) (
 	return resolvers.PlanBasicsGetByModelPlanID(logger, &principal, obj.ID, r.store)
 }
 
+func (r *modelPlanResolver) Milestones(ctx context.Context, obj *models.ModelPlan) (*models.PlanMilestones, error) {
+	logger := appcontext.ZLogger(ctx)
+	principal := appcontext.Principal(ctx).ID()
+
+	return resolvers.FetchPlanMilestonesByModelPlanID(logger, &principal, obj.ID, r.store)
+}
+
 func (r *modelPlanResolver) Collaborators(ctx context.Context, obj *models.ModelPlan) ([]*models.PlanCollaborator, error) {
 	principal := appcontext.Principal(ctx).ID()
 	logger := appcontext.ZLogger(ctx)
@@ -39,13 +48,6 @@ func (r *modelPlanResolver) Collaborators(ctx context.Context, obj *models.Model
 	collaborators, err := resolvers.FetchCollaboratorsByModelPlanID(logger, &principal, obj.ID, r.store)
 
 	return collaborators, err
-}
-
-func (r *modelPlanResolver) Milestones(ctx context.Context, plan *models.ModelPlan) (*models.PlanMilestones, error) {
-	logger := appcontext.ZLogger(ctx)
-	principal := appcontext.Principal(ctx).ID()
-
-	return resolvers.FetchPlanMilestonesByModelPlanID(logger, &principal, plan.ID, r.store)
 }
 
 func (r *mutationResolver) CreateModelPlan(ctx context.Context, input model.ModelPlanInput) (*models.ModelPlan, error) {
