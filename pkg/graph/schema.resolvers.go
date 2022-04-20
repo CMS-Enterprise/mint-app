@@ -58,7 +58,7 @@ func (r *mutationResolver) CreatePlanCollaborator(ctx context.Context, input mod
 	principal := appcontext.Principal(ctx).ID()
 	logger := appcontext.ZLogger(ctx)
 
-	return resolvers.CreatePlanCollaboratorResolver(logger, collaborator, &principal, r.store)
+	return resolvers.CreatePlanCollaborator(logger, collaborator, &principal, r.store)
 }
 
 func (r *mutationResolver) UpdatePlanCollaborator(ctx context.Context, input model.PlanCollaboratorInput) (*models.PlanCollaborator, error) {
@@ -66,7 +66,7 @@ func (r *mutationResolver) UpdatePlanCollaborator(ctx context.Context, input mod
 	principal := appcontext.Principal(ctx).ID()
 	logger := appcontext.ZLogger(ctx)
 
-	return resolvers.UpdatePlanCollaboratorResolver(logger, collaborator, &principal, r.store)
+	return resolvers.UpdatePlanCollaborator(logger, collaborator, &principal, r.store)
 }
 
 func (r *mutationResolver) DeletePlanCollaborator(ctx context.Context, input model.PlanCollaboratorInput) (*models.PlanCollaborator, error) {
@@ -74,7 +74,7 @@ func (r *mutationResolver) DeletePlanCollaborator(ctx context.Context, input mod
 	principal := appcontext.Principal(ctx).ID()
 	logger := appcontext.ZLogger(ctx)
 
-	return resolvers.DeletePlanCollaboratorResolver(logger, collaborator, &principal, r.store)
+	return resolvers.DeletePlanCollaborator(logger, collaborator, &principal, r.store)
 }
 
 func (r *mutationResolver) CreatePlanBasics(ctx context.Context, input model.PlanBasicsInput) (*models.PlanBasics, error) {
