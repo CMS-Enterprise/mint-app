@@ -87,6 +87,7 @@ const TaskListSideNav = () => {
           </div>
           <div className="sidenav-actions__teamList">
             <ul className="usa-list usa-list--unstyled">
+              {/* //TODO: Integrate the BE gql to populate team member array */}
               <TeamMembersList team={sampleTeamMembers} />
             </ul>
           </div>
