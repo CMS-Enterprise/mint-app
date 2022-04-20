@@ -24,6 +24,7 @@ import teamRoles from 'constants/enums/teamRoles';
 import UpdateDraftModelPlan from 'queries/UpdateDraftModelPlan';
 import { CollaboratorForm } from 'types/collaborator';
 import flattenErrors from 'utils/flattenErrors';
+import translateTeamRole from 'utils/modelPlan';
 import CollaboratorsValidationSchema from 'validations/modelPlanCollaborators';
 
 const Collaborators = () => {
@@ -242,14 +243,15 @@ const Collaborators = () => {
                         <option value="" key="default-select" disabled>
                           {`-${h('select')}-`}
                         </option>
-                        {teamRoles.map(roles => {
-                          const { id, name } = roles;
+                        {Object.keys(teamRoles).map(role => {
                           return (
                             <option
-                              key={`Collaborator-Role-${name}`}
-                              value={id}
+                              key={`Collaborator-Role-${translateTeamRole(
+                                teamRoles[role]
+                              )}`}
+                              value={role}
                             >
-                              {name}
+                              {translateTeamRole(teamRoles[role])}
                             </option>
                           );
                         })}

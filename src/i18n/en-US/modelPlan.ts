@@ -1,5 +1,8 @@
 const modelPlan = {
   home: 'Home',
+  teamRoles: {
+    modelLead: 'Model Lead'
+  },
   stepsOverview: {
     heading: 'Start a new model plan',
     getStartedButton: 'Get started',

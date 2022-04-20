@@ -1,8 +1,5 @@
-const teamRoles = [
-  {
-    id: 'MODEL_LEAD',
-    name: 'Model Lead'
-  }
-];
+const teamRoles = {
+  MODEL_LEAD: 'MODEL_LEAD'
+};
 
 export default teamRoles;
