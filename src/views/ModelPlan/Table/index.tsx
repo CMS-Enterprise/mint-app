@@ -244,7 +244,7 @@ type DraftModelTableProps = {
   hiddenColumns?: string[];
 };
 
-const DraftModelsTable = ({ hiddenColumns }: DraftModelTableProps) => {
+const DraftModelPlansTable = ({ hiddenColumns }: DraftModelTableProps) => {
   const { loading, error, data: modelPlans } = useQuery<GetDraftModelPlansType>(
     GetDraftModelPlans
   );
@@ -266,4 +266,4 @@ const DraftModelsTable = ({ hiddenColumns }: DraftModelTableProps) => {
   return <Table data={data} hiddenColumns={hiddenColumns} />;
 };
 
-export default DraftModelsTable;
+export default DraftModelPlansTable;

@@ -1,10 +1,9 @@
 import React, { useMemo, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
-import { useMutation } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import { Button, ComboBox, Dropdown, Label } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
-import { isValid } from 'js-base64';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
@@ -15,7 +14,13 @@ import { DescriptionDefinition } from 'components/shared/DescriptionGroup';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
+import Spinner from 'components/Spinner';
 import teamRoles from 'constants/enums/teamRoles';
+// import GetCollaborators from 'queries/GetCollaborators';
+// import {
+//   CollaboratorsType,
+//   GetGetCollaborators as GetCollaboratorsType
+// } from 'queries/types/GetDraftModelPlans';
 import UpdateDraftModelPlan from 'queries/UpdateDraftModelPlan';
 import { CollaboratorForm } from 'types/collaborator';
 import flattenErrors from 'utils/flattenErrors';
@@ -23,6 +28,7 @@ import CollaboratorsValidationSchema from 'validations/modelPlanCollaborators';
 
 const Collaborators = () => {
   const { modelId } = useParams<{ modelId: string }>();
+  const { collaboratorId } = useParams<{ collaboratorId: string }>();
   const { t: h } = useTranslation('draftModelPlan');
   const { t } = useTranslation('newModel');
   const formikRef = useRef<FormikProps<CollaboratorForm>>(null);
@@ -30,21 +36,48 @@ const Collaborators = () => {
   const history = useHistory();
   const [mutate] = useMutation(UpdateDraftModelPlan);
 
+  //   const { loading, error, data } = useQuery<GetCollaboratorsType>(
+  //     GetCollaborators,
+  //     {
+  //       variables: { collaboratorId },
+  //       skip: !collaboratorId
+  //     }
+  //   );
+
+  //   const collaborator = (data?.collaborator ?? {}) as CollaboratorsType;
+
   const handleUpdateDraftModelPlan = (formikValues?: CollaboratorForm) => {
-    console.log('hey');
-    // const { modelName } = formikValues;
-    // mutate({
-    //   variables: {
-    //     input: {
-    //       modelName
+    console.log('saved');
+
+    // const { modelName, teamRole } = formikValues;
+
+    // if (collaboratorId) {
+    //   mutate({
+    //     variables: {
+    //       input: {
+    //         modelName,
+    //         teamRole
+    //       }
     //     }
-    //   }
-    // }).then(response => {
-    //   if (!response?.errors) {
-    //     const { id } = response?.data?.createModelPlan;
-    //     history.push(`/models/new-plan/${id}/collaborators`);
-    //   }
-    // });
+    //   }).then(response => {
+    //     if (!response?.errors) {
+    //       history.push(`/models/new-plan/${modelId}/collaborators`);
+    //     }
+    //   });
+    // } else {
+    //   mutate({
+    //     variables: {
+    //       input: {
+    //         modelName,
+    //         teamRole
+    //       }
+    //     }
+    //   }).then(response => {
+    //     if (!response?.errors) {
+    //       history.push(`/models/new-plan/${modelId}/collaborators`);
+    //     }
+    //   });
+    // }
   };
 
   // TODO: Replace mocked data with call to CEDAR for users
@@ -89,6 +122,18 @@ const Collaborators = () => {
       };
     });
   }, [userMocks]);
+
+  //   if (loading) {
+  //     return (
+  //       <div className="text-center" data-testid="table-loading">
+  //         <Spinner size="xl" />
+  //       </div>
+  //     );
+  //   }
+
+  //   if (error) {
+  //     return <div>{JSON.stringify(error)}</div>;
+  //   }
 
   return (
     <MainContent className="margin-bottom-5">

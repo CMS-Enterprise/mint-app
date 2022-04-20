@@ -17,7 +17,9 @@ const newModel = {
     name: 'Name',
     role: 'Role',
     dateAdded: 'Date added',
-    actions: 'Actions'
+    actions: 'Actions',
+    edit: 'Edit',
+    remove: 'Remove'
   },
   continueWithoutAdding: 'Continue without adding team members',
   searchTeamInfo:

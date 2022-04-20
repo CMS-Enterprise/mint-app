@@ -166,7 +166,7 @@ const NewPlan = () => {
           render={() => <Collaborators />}
         />
         <Route
-          path="/models/new-plan/:modelId/add-collaborator"
+          path="/models/new-plan/:modelId/add-collaborator/:collaboratorId?"
           render={() => <AddCollaborator />}
         />
 
