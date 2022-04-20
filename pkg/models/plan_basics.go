@@ -63,7 +63,7 @@ func (p PlanBasics) GetModelTypeName() string {
 }
 
 func (p PlanBasics) GetID() uuid.UUID {
-	return p.ModelPlanID
+	return p.ID
 }
 
 func (p PlanBasics) GetPlanID() uuid.UUID {
