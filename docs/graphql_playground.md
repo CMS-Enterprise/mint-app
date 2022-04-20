@@ -2,7 +2,7 @@
 
 ## Running Locally
 
-You can visit `http://localhost:8080/api/graph/playground` to access a GraphQL playground while the Go backend is running. You will need to enter `/api/graph/query` as the query path in the UI for this to work.
+You can visit `http://localhost:8085/api/graph/playground` to access a GraphQL playground while the Go backend is running. You will need to enter `/api/graph/query` as the query path in the UI for this to work.
 
 ### Authorization
 
@@ -42,8 +42,7 @@ This will return a long base64-encoded string:
 
 ![Browser dev tools console, showing the result of the above command](./images/graphql_playground/browser_console.png)
 
-
-Copy the string (_without_ the surrounding quotes). In the GraphQL playground, in HTTP Headers, enter 
+Copy the string (_without_ the surrounding quotes). In the GraphQL playground, in HTTP Headers, enter
 ```
 {"Authorization":"Bearer <insert token here>"}
 ```
