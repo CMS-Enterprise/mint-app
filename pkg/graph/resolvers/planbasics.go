@@ -11,6 +11,7 @@ func CreatePlanBasicsResolver(logger *zap.Logger, input *models.PlanBasics, prin
 	input.CreatedBy = principal
 
 	input.ModifiedBy = input.CreatedBy
+	input.CalcStatus()
 	retBasics, err := store.PlanBasicsCreate(logger, input)
 
 	// payload := model.CreatePlanBasicsPayload{
@@ -22,12 +23,13 @@ func CreatePlanBasicsResolver(logger *zap.Logger, input *models.PlanBasics, prin
 
 func UpdatePlanBasicsResolver(logger *zap.Logger, input *models.PlanBasics, principal *string, store *storage.Store) (*models.PlanBasics, error) {
 	input.ModifiedBy = principal
+	input.CalcStatus()
 
 	retBasics, err := store.PlanBasicsUpdate(logger, input)
 	return retBasics, err
 
 }
-func FetchPlanBasicsByModelPlanID(logger *zap.Logger, principal *string, modelPlanID uuid.UUID, store *storage.Store) (*models.PlanBasics, error) {
+func PlanBasicsGetByModelPlanID(logger *zap.Logger, principal *string, modelPlanID uuid.UUID, store *storage.Store) (*models.PlanBasics, error) {
 	plan, err := store.PlanBasicsGetByModelPlanID(logger, principal, modelPlanID)
 	if err != nil {
 		return nil, err

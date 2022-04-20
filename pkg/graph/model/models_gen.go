@@ -70,6 +70,20 @@ type PlanMilestonesInput struct {
 	ModifiedDts             *time.Time `json:"modifiedDts"`
 }
 
+// PlanCollaboratorInput represents the data required to create, modify, or delete a collaborator on a plan
+type PlanCollaboratorInput struct {
+	ID          *uuid.UUID       `json:"id"`
+	ModelPlanID uuid.UUID        `json:"modelPlanID"`
+	EuaUserID   string           `json:"euaUserID"`
+	FullName    string           `json:"fullName"`
+	CmsCenter   models.CMSCenter `json:"cmsCenter"`
+	TeamRole    models.TeamRole  `json:"teamRole"`
+	CreatedBy   *string          `json:"createdBy"`
+	CreatedDts  *time.Time       `json:"createdDts"`
+	ModifiedBy  *string          `json:"modifiedBy"`
+	ModifiedDts *time.Time       `json:"modifiedDts"`
+}
+
 type CMMIGroup string
 
 const (

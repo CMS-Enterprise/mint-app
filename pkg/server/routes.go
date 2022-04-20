@@ -160,7 +160,8 @@ func (s *Server) routes(
 	resolver := graph.NewResolver(
 		store,
 		graph.ResolverService{
-			FetchUserInfo: cedarLDAPClient.FetchUserInfo,
+			FetchUserInfo:            cedarLDAPClient.FetchUserInfo,
+			SearchCommonNameContains: cedarLDAPClient.SearchCommonNameContains,
 		},
 		&s3Client,
 		&emailClient,

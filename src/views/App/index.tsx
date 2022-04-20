@@ -23,6 +23,7 @@ import ModelPlan from 'views/ModelPlan';
 import StepsOverview from 'views/ModelPlan/StepsOverview';
 import TaskList from 'views/ModelPlan/TaskList';
 import Basics from 'views/ModelPlan/TaskList/Basics';
+import Beneficiaries from 'views/ModelPlan/TaskList/Beneficiaries';
 import Characteristics from 'views/ModelPlan/TaskList/Characteristics';
 import CostEstimate from 'views/ModelPlan/TaskList/CostEstimate';
 import Operations from 'views/ModelPlan/TaskList/Operations';
@@ -74,6 +75,10 @@ const AppRoutes = () => {
       <SecureRoute
         path="/models/:modelId/task-list/basics"
         component={Basics}
+      />
+      <SecureRoute
+        path="/models/:modelId/task-list/beneficiaries"
+        component={Beneficiaries}
       />
       <SecureRoute
         path="/models/:modelId/task-list/characteristics"

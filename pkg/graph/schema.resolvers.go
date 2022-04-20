@@ -29,7 +29,16 @@ func (r *modelPlanResolver) Basics(ctx context.Context, obj *models.ModelPlan) (
 	logger := appcontext.ZLogger(ctx)
 	principal := appcontext.Principal(ctx).ID()
 
-	return resolvers.FetchPlanBasicsByModelPlanID(logger, &principal, obj.ID, r.store)
+	return resolvers.PlanBasicsGetByModelPlanID(logger, &principal, obj.ID, r.store)
+}
+
+func (r *modelPlanResolver) Collaborators(ctx context.Context, obj *models.ModelPlan) ([]*models.PlanCollaborator, error) {
+	principal := appcontext.Principal(ctx).ID()
+	logger := appcontext.ZLogger(ctx)
+
+	collaborators, err := resolvers.FetchCollaboratorsByModelPlanID(logger, &principal, obj.ID, r.store)
+
+	return collaborators, err
 }
 
 func (r *modelPlanResolver) Milestones(ctx context.Context, plan *models.ModelPlan) (*models.PlanMilestones, error) {
@@ -40,13 +49,38 @@ func (r *modelPlanResolver) Milestones(ctx context.Context, plan *models.ModelPl
 }
 
 func (r *mutationResolver) CreateModelPlan(ctx context.Context, input model.ModelPlanInput) (*models.ModelPlan, error) {
+	logger := appcontext.ZLogger(ctx)
+	principal := appcontext.Principal(ctx).ID()
+
 	plan := ConvertToModelPlan(&input)
 
-	plan.CreatedBy = models.StringPointer(appcontext.Principal(ctx).ID())
-	plan.ModifiedBy = plan.CreatedBy
-	createdPlan, err := r.store.ModelPlanCreate(ctx, plan)
+	plan.CreatedBy = &principal
+	plan.ModifiedBy = &principal
+	return resolvers.ModelPlanCreate(logger, plan, r.store)
+}
 
-	return createdPlan, err
+func (r *mutationResolver) CreatePlanCollaborator(ctx context.Context, input model.PlanCollaboratorInput) (*models.PlanCollaborator, error) {
+	collaborator := ConvertToPlanCollaborator(&input)
+	principal := appcontext.Principal(ctx).ID()
+	logger := appcontext.ZLogger(ctx)
+
+	return resolvers.CreatePlanCollaborator(logger, collaborator, &principal, r.store)
+}
+
+func (r *mutationResolver) UpdatePlanCollaborator(ctx context.Context, input model.PlanCollaboratorInput) (*models.PlanCollaborator, error) {
+	collaborator := ConvertToPlanCollaborator(&input)
+	principal := appcontext.Principal(ctx).ID()
+	logger := appcontext.ZLogger(ctx)
+
+	return resolvers.UpdatePlanCollaborator(logger, collaborator, &principal, r.store)
+}
+
+func (r *mutationResolver) DeletePlanCollaborator(ctx context.Context, input model.PlanCollaboratorInput) (*models.PlanCollaborator, error) {
+	collaborator := ConvertToPlanCollaborator(&input)
+	principal := appcontext.Principal(ctx).ID()
+	logger := appcontext.ZLogger(ctx)
+
+	return resolvers.DeletePlanCollaborator(logger, collaborator, &principal, r.store)
 }
 
 func (r *mutationResolver) CreatePlanBasics(ctx context.Context, input model.PlanBasicsInput) (*models.PlanBasics, error) {
@@ -60,11 +94,10 @@ func (r *mutationResolver) CreatePlanBasics(ctx context.Context, input model.Pla
 func (r *mutationResolver) UpdateModelPlan(ctx context.Context, input model.ModelPlanInput) (*models.ModelPlan, error) {
 	plan := ConvertToModelPlan(&input)
 	principal := appcontext.Principal(ctx).ID()
+	logger := appcontext.ZLogger(ctx)
 	//TODO clean this up
 	plan.ModifiedBy = &principal
-
-	retPlan, err := r.store.ModelPlanUpdate(ctx, plan)
-	return retPlan, err
+	return resolvers.ModelPlanUpdate(logger, plan, r.store)
 }
 
 func (r *mutationResolver) UpdatePlanBasics(ctx context.Context, input model.PlanBasicsInput) (*models.PlanBasics, error) {
@@ -106,13 +139,10 @@ func (r *queryResolver) CurrentUser(ctx context.Context) (*model.CurrentUser, er
 }
 
 func (r *queryResolver) ModelPlan(ctx context.Context, id uuid.UUID) (*models.ModelPlan, error) {
-	plan, err := r.store.ModelPlanGetByID(ctx, id)
-	if err != nil {
-		return nil, err
-	}
-	//TODO add job code authorization Checks?
+	logger := appcontext.ZLogger(ctx)
+	principal := appcontext.Principal(ctx).ID()
 
-	return plan, nil
+	return resolvers.ModelPlanGetByID(logger, principal, id, r.store)
 }
 
 func (r *queryResolver) PlanBasics(ctx context.Context, id uuid.UUID) (*models.PlanBasics, error) {
@@ -128,11 +158,22 @@ func (r *queryResolver) PlanMilestones(ctx context.Context, id uuid.UUID) (*mode
 }
 
 func (r *queryResolver) ModelPlanCollection(ctx context.Context) ([]*models.ModelPlan, error) {
-	plans, err := r.store.ModelPlanCollectionByUser(ctx, appcontext.Principal(ctx).ID())
+	principal := appcontext.Principal(ctx).ID()
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.ModelPlanCollectionByUser(logger, principal, r.store)
+}
+
+func (r *queryResolver) CedarPersonsByCommonName(ctx context.Context, commonName string) ([]*models.UserInfo, error) {
+	response, err := r.service.SearchCommonNameContains(ctx, commonName)
 	if err != nil {
 		return nil, err
 	}
-	return plans, nil
+
+	return response, nil
+}
+
+func (r *userInfoResolver) Email(ctx context.Context, obj *models.UserInfo) (string, error) {
+	return string(obj.Email), nil
 }
 
 // ModelPlan returns generated.ModelPlanResolver implementation.
@@ -144,6 +185,10 @@ func (r *Resolver) Mutation() generated.MutationResolver { return &mutationResol
 // Query returns generated.QueryResolver implementation.
 func (r *Resolver) Query() generated.QueryResolver { return &queryResolver{r} }
 
+// UserInfo returns generated.UserInfoResolver implementation.
+func (r *Resolver) UserInfo() generated.UserInfoResolver { return &userInfoResolver{r} }
+
 type modelPlanResolver struct{ *Resolver }
 type mutationResolver struct{ *Resolver }
 type queryResolver struct{ *Resolver }
+type userInfoResolver struct{ *Resolver }

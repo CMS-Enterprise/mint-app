@@ -25,6 +25,13 @@ CREATE TYPE cmmi_group as ENUM (
 	'STATE_INNOVATIONS_GROUP',
 	'TBD'
 );
+CREATE TYPE team_role as ENUM (
+	'MODEL_LEAD',
+	'MODEL_TEAM',
+	'LEADERSHIP',
+	'LEARNING',
+	'EVALUATION'
+);
 CREATE TYPE model_type as ENUM ('VOLUNTARY', 'MANDATORY', 'TBD');
 CREATE TYPE tri_state_answer as ENUM ('YES', 'NO', 'TBD');
 

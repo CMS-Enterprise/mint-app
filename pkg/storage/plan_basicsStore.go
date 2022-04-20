@@ -2,11 +2,10 @@ package storage
 
 import (
 	_ "embed"
-	"github.com/cmsgov/mint-app/pkg/shared/utility_sql"
-	"github.com/cmsgov/mint-app/pkg/storage/genericmodel"
 
 	"github.com/cmsgov/mint-app/pkg/models"
-	"github.com/cmsgov/mint-app/pkg/shared/utility_uuid"
+	utilityUuid "github.com/cmsgov/mint-app/pkg/shared/uuid"
+	"github.com/cmsgov/mint-app/pkg/storage/planbasics"
 	"github.com/google/uuid"
 	"go.uber.org/zap"
 )
@@ -86,6 +85,7 @@ func (s *Store) PlanBasicsGetByModelPlanID(logger *zap.Logger, principal *string
 
 	var plan models.PlanBasics
 	err = statement.Get(&plan, arg)
+
 	if err != nil {
 		return nil, genericmodel.HandleModelFetchByIDError(logger, err, modelPlanId)
 	}

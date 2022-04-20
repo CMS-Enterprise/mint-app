@@ -21,6 +21,16 @@ const (
 	MCTBD                       ModelCategory = "UNKNOWN"
 )
 
+type TeamRole string
+
+const (
+	TeamRoleModelLead  TeamRole = "MODEL_LEAD"
+	TeamRoleModelTeam  TeamRole = "MODEL_TEAM"
+	TeamRoleLeadership TeamRole = "LEADERSHIP"
+	TeamRoleLearning   TeamRole = "LEARNING"
+	TeamRoleEvaluation TeamRole = "EVALUATION"
+)
+
 /*
 
 	ACCOUNTABLE_CARE,

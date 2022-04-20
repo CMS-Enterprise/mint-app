@@ -38,6 +38,7 @@ type ModelPlan {
   modifiedDts: Time
   basics: PlanBasics
   milestones: PlanMilestones
+  collaborators: [PlanCollaborator!]!
 }
 
 """
@@ -54,6 +55,38 @@ createdBy: String
 createdDts: Time
 modifiedBy: String
 modifiedDts: Time
+}
+
+"""
+PlanCollaborator represents a collaborator on a plan
+"""
+type PlanCollaborator {
+  id: UUID!
+  modelPlanID: UUID!
+  euaUserID: String!
+  fullName: String!
+  cmsCenter: CMSCenter!
+  teamRole: TeamRole!
+  createdBy: String
+  createdDts: Time
+  modifiedBy: String
+  modifiedDts: Time
+}
+
+"""
+PlanCollaboratorInput represents the data required to create, modify, or delete a collaborator on a plan
+"""
+input PlanCollaboratorInput {
+  id: UUID
+  modelPlanID: UUID!
+  euaUserID: String!
+  fullName: String!
+  cmsCenter: CMSCenter!
+  teamRole: TeamRole!
+  createdBy: String
+  createdDts: Time
+  modifiedBy: String
+  modifiedDts: Time
 }
 
 """
@@ -95,6 +128,14 @@ input PlanBasicsInput {
   status: TaskStatus!
 }
 
+"""
+Represents a person response from CEDAR LDAP
+"""
+type UserInfo {
+  commonName: String!
+  email: String!
+  euaUserId: String!
+}
 """
 Represents plan milestones
 """
@@ -148,6 +189,7 @@ type Query {
   planBasics(id: UUID!) : PlanBasics
   planMilestones(id: UUID!) : PlanMilestones
   modelPlanCollection: [ModelPlan]
+  cedarPersonsByCommonName(commonName: String!): [UserInfo!]!
 }
 
 """
@@ -156,7 +198,16 @@ Mutations definition for the schema
 type Mutation {
 createModelPlan(input: ModelPlanInput!):ModelPlan
 @hasRole(role: MINT_BASE_USER)
-# createPlanBasics(input: CreatePlanBasicsRequestInput!):CreatePlanBasicsPayload
+
+createPlanCollaborator(input: PlanCollaboratorInput!): PlanCollaborator
+@hasRole(role: MINT_BASE_USER)
+
+updatePlanCollaborator(input: PlanCollaboratorInput!): PlanCollaborator
+@hasRole(role: MINT_BASE_USER)
+
+deletePlanCollaborator(input: PlanCollaboratorInput!): PlanCollaborator
+@hasRole(role: MINT_BASE_USER)
+
 createPlanBasics(input: PlanBasicsInput!):PlanBasics
 @hasRole(role: MINT_BASE_USER)
 
@@ -177,6 +228,14 @@ enum TaskStatus {
   READY
   IN_PROGRESS
   COMPLETE
+}
+
+enum TeamRole {
+  MODEL_LEAD
+  MODEL_TEAM
+  LEADERSHIP
+  LEARNING
+  EVALUATION
 }
 
 enum ModelType
