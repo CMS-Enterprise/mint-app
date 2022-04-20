@@ -17,17 +17,17 @@ The GraphQL endpoints require a valid `Authorization` header to use, which can b
 Job codes can be included in an array for querying endpoints such as `systemIntake` that require them:
 
 ```json
-{ "Authorization":"Local {\"favorLocalAuth\":true, \"jobCodes\":[\"MINT_P_BASE_USER\"]}"}
+{ "Authorization":"Local {\"favorLocalAuth\":true, \"jobCodes\":[\"MINT_P_USER\"]}"}
 ```
 
-Additional job codes beyond/instead of `MINT_P_BASE_USER` can be included in the `jobCodes` array, just make sure to escape the `"`'s around the job code names.
+Additional job codes beyond/instead of `MINT_P_USER` can be included in the `jobCodes` array, just make sure to escape the `"`'s around the job code names.
 
 #### EUA ID
 
 An EUA ID is needed for some endpoints such as creating system intakes; this can be added with the `EUAID` field:
 
 ```json
-{ "Authorization":"Local {\"EUAID\":\"ABCD\",\"favorLocalAuth\":true, \"jobCodes\":[\"MINT_P_BASE_USER\", \"MINT_D_ADMIN_USER\"]}"}
+{ "Authorization":"Local {\"EUAID\":\"ABCD\",\"favorLocalAuth\":true, \"jobCodes\":[\"MINT_P_USER\"]}"}
 ```
 
 
