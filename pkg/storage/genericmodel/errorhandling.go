@@ -19,21 +19,21 @@ func HandleModelCreationError(logger *zap.Logger, err error, model models.BaseMo
 	return err
 }
 
-func logModelUpdateError(logger *zap.Logger, model models.BaseModel) {
+func logModelUpdateError(logger *zap.Logger, err error, model models.BaseModel) {
 	logger.Error(
-		fmt.Sprintf("Failed to update #{modelTypeName} due to error: #{err}"),
+		fmt.Sprintf("Failed to update %v due to error: %v", model.GetModelTypeName(), err),
 		zap.String("id", model.GetPlanID().String()),
 		zap.String("user", models.ValueOrEmpty(model.GetModifiedBy())),
 	)
 }
 
 func HandleModelUpdateError(logger *zap.Logger, err error, model models.BaseModel) error {
-	logModelUpdateError(logger, model)
+	logModelUpdateError(logger, err, model)
 	return err
 }
 
 func HandleModelQueryError(logger *zap.Logger, err error, model models.BaseModel) error {
-	logModelUpdateError(logger, model)
+	logModelUpdateError(logger, err, model)
 	return createQueryError(err, model)
 }
 
@@ -55,7 +55,7 @@ func HandleModelFetchByIDError(logger *zap.Logger, err error, id uuid.UUID) erro
 
 func HandleModelFetchByIDNoRowsError(logger *zap.Logger, err error, id uuid.UUID) error {
 	logger.Info(
-		"No model plan found",
+		fmt.Sprintf("No model found with ID[%v]", id.String()),
 		zap.Error(err),
 		zap.String("id", id.String()),
 	)

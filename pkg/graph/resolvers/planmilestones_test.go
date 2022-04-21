@@ -5,8 +5,6 @@ import (
 
 	"github.com/cmsgov/mint-app/pkg/models"
 
-	"github.com/google/uuid"
-
 	"github.com/cmsgov/mint-app/pkg/storage"
 	_ "github.com/lib/pq" // required for postgres driver in sql
 	"github.com/stretchr/testify/assert"
@@ -18,19 +16,36 @@ func TestCreatePlanMilestonesResolver(t *testing.T) {
 	config := NewDBConfig()
 	ldClient, _ := ld.MakeCustomClient("fake", ld.Config{Offline: true}, 0)
 	logger := zap.NewNop()
-	modelPlanID, err := uuid.Parse("FAKE")
-	input := models.PlanMilestones{
-		ModelPlanID: modelPlanID,
-	}
 	principal := "FAKE"
 
 	store, err := storage.NewStore(logger, config, ldClient)
 	assert.NoError(t, err)
 
-	payload, err := CreatePlanMilestones(logger, &input, &principal, store)
+	modelName := "FAKE"
+	planTemplate := models.ModelPlan{ModelName: &modelName}
+	plan, err := ModelPlanCreate(logger, &planTemplate, store)
 	assert.NoError(t, err)
 
-	assert.Equal(t, modelPlanID.String(), payload.ID.String())
+	input := models.PlanMilestones{
+		ModelPlanID: plan.ID,
+	}
+	milestones, err := CreatePlanMilestones(logger, &input, &principal, store)
+	assert.NoError(t, err)
+	assert.Equal(t, plan.ID.String(), milestones.GetPlanID().String())
+
+	sqlResult, err := store.DeletePlanMilestonesByID(logger, milestones.ID)
+	assert.NoError(t, err)
+
+	rowsAffected, err := sqlResult.RowsAffected()
+	assert.NoError(t, err)
+	assert.Equal(t, 1, int(rowsAffected))
+
+	sqlResult, err = store.ModelPlanDeleteByID(logger, plan.ID)
+	assert.NoError(t, err)
+
+	rowsAffected, err = sqlResult.RowsAffected()
+	assert.NoError(t, err)
+	assert.Equal(t, 1, int(rowsAffected))
 }
 
 func TestFetchPlanMilestonesByID(t *testing.T) {
@@ -39,11 +54,15 @@ func TestFetchPlanMilestonesByID(t *testing.T) {
 	logger := zap.NewNop()
 	store, _ := storage.NewStore(logger, config, ldClient)
 	principal := "FAKE"
-	modelPlanID, _ := uuid.Parse("FAKE")
-	input := models.PlanMilestones{
-		ModelPlanID: modelPlanID,
-	}
 
+	modelName := "FAKE"
+	planTemplate := models.ModelPlan{ModelName: &modelName}
+	plan, err := ModelPlanCreate(logger, &planTemplate, store)
+	assert.NoError(t, err)
+
+	input := models.PlanMilestones{
+		ModelPlanID: plan.ID,
+	}
 	payload, err := CreatePlanMilestones(logger, &input, &principal, store)
 	assert.NoError(t, err)
 
@@ -56,5 +75,12 @@ func TestFetchPlanMilestonesByID(t *testing.T) {
 
 	rowsAffected, err := sqlResult.RowsAffected()
 	assert.NoError(t, err)
-	assert.Equal(t, 1, rowsAffected)
+	assert.Equal(t, 1, int(rowsAffected))
+
+	sqlResult, err = store.ModelPlanDeleteByID(logger, plan.ID)
+	assert.NoError(t, err)
+
+	rowsAffected, err = sqlResult.RowsAffected()
+	assert.NoError(t, err)
+	assert.Equal(t, 1, int(rowsAffected))
 }

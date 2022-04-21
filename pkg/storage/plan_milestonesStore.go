@@ -60,8 +60,6 @@ func (s *Store) FetchPlanMilestonesByModelPlanID(logger *zap.Logger, principal *
 	statement, err := s.db.PrepareNamed(planMilestonesGetByModelPlanIDSQL)
 
 	args := map[string]interface{}{
-		"modified_by":   principal,
-		"created_by":    principal,
 		"model_plan_id": modelPlanId,
 	}
 

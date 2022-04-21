@@ -19,14 +19,14 @@ type ModelPlan struct {
 	ModifiedDts   *time.Time     `json:"modifiedDts" db:"modified_dts"`
 }
 
-func (m *ModelPlan) GetModelTypeName() string {
+func (m ModelPlan) GetModelTypeName() string {
 	return "Model_Plan"
 }
 
-func (m *ModelPlan) GetPlanID() uuid.UUID {
-	return uuid.Nil
+func (m ModelPlan) GetPlanID() uuid.UUID {
+	return m.ID
 }
 
-func (m *ModelPlan) GetModifiedBy() *string {
+func (m ModelPlan) GetModifiedBy() *string {
 	return m.ModifiedBy
 }
