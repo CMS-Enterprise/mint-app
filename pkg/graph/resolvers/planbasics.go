@@ -8,7 +8,6 @@ import (
 )
 
 func CreatePlanBasicsResolver(logger *zap.Logger, input *models.PlanBasics, principal *string, store *storage.Store) (*models.PlanBasics, error) {
-
 	input.CreatedBy = principal
 
 	input.ModifiedBy = input.CreatedBy

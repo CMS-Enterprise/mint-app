@@ -32,6 +32,8 @@ const (
 	QueryFetch QueryOperation = "Fetch"
 	// QueryUpdate is for failures when updating a resource
 	QueryUpdate QueryOperation = "Update"
+	// QueryDelete is for failures when deleting a resource
+	QueryDelete QueryOperation = "Delete"
 )
 
 // QueryError is a typed error for query issues

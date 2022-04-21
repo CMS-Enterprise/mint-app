@@ -66,6 +66,24 @@ type PlanCollaboratorInput struct {
 	ModifiedDts *time.Time       `json:"modifiedDts"`
 }
 
+// Represents plan milestones input
+type PlanMilestonesInput struct {
+	ID                      *uuid.UUID `json:"id"`
+	ModelPlanID             *uuid.UUID `json:"modelPlanID"`
+	EnterCMSClearance       *time.Time `json:"enterCMSClearance"`
+	EnterHMSOMBClearance    *time.Time `json:"enterHMSOMBClearance"`
+	Cleared                 *time.Time `json:"cleared"`
+	Announced               *time.Time `json:"announced"`
+	ApplicationsDue         *time.Time `json:"applicationsDue"`
+	ParticipantsAnnounced   *time.Time `json:"participantsAnnounced"`
+	PerformancePeriodStarts *time.Time `json:"performancePeriodStarts"`
+	PerformancePeriodEnds   *time.Time `json:"performancePeriodEnds"`
+	CreatedBy               *string    `json:"createdBy"`
+	CreatedDts              *time.Time `json:"createdDts"`
+	ModifiedBy              *string    `json:"modifiedBy"`
+	ModifiedDts             *time.Time `json:"modifiedDts"`
+}
+
 type CMMIGroup string
 
 const (

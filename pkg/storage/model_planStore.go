@@ -4,6 +4,8 @@ import (
 	"database/sql"
 	"errors"
 	"fmt"
+	"github.com/cmsgov/mint-app/pkg/shared/utility_sql"
+	"github.com/cmsgov/mint-app/pkg/storage/genericmodel"
 
 	"github.com/google/uuid"
 	"go.uber.org/zap"
@@ -25,6 +27,9 @@ var model_plan_get_by_idSQL string
 
 //go:embed SQL/model_plan_collection_by_user.sql
 var model_plan_collection_by_userSQL string
+
+//go:embed SQL/model_plan_delete_by_id.sql
+var model_plan_delete_by_id string
 
 func (s *Store) ModelPlanCreate(logger *zap.Logger, plan *models.ModelPlan) (*models.ModelPlan, error) {
 	// func (s *Store) ModelPlanCreate(ctx context.Context, plan *models.ModelPlan) (*models.ModelPlan, error) {
@@ -153,4 +158,18 @@ func (s *Store) ModelPlanCollectionByUser(logger *zap.Logger, EUAID string) ([]*
 	}
 
 	return modelPlans, nil
+}
+
+func (s *Store) ModelPlanDeleteByID(logger *zap.Logger, id uuid.UUID) (sql.Result, error) {
+	statement, err := s.db.PrepareNamed(model_plan_delete_by_id)
+	if err != nil {
+		return nil, err
+	}
+
+	sqlResult, err := statement.Exec(utility_sql.CreateIDQueryMap(id))
+	if err != nil {
+		return nil, genericmodel.HandleModelDeleteByIDError(logger, err, id)
+	}
+
+	return sqlResult, nil
 }

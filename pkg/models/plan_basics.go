@@ -57,3 +57,19 @@ func (p *PlanBasics) CalcStatus() (e error) {
 	p.Status = decidedStat
 	return nil
 }
+
+func (p PlanBasics) GetModelTypeName() string {
+	return "Plan_Basics"
+}
+
+func (p PlanBasics) GetID() uuid.UUID {
+	return p.ID
+}
+
+func (p PlanBasics) GetPlanID() uuid.UUID {
+	return p.ModelPlanID
+}
+
+func (p PlanBasics) GetModifiedBy() *string {
+	return p.ModifiedBy
+}
