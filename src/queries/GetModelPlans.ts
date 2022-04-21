@@ -14,6 +14,7 @@ export default gql`
       collaborators {
         id
         fullName
+        teamRole
       }
     }
   }

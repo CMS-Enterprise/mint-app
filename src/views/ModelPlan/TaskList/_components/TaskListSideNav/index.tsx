@@ -1,16 +1,33 @@
 import React, { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
+import { useParams } from 'react-router-dom';
+import { useQuery } from '@apollo/client';
 import { Button } from '@trussworks/react-uswds';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
+import GetModelPlanCollaborators from 'queries/GetModelCollaborators';
+import {
+  GetModelCollaborators,
+  GetModelCollaborators_modelPlan_collaborators as GetCollaboratorsType
+} from 'queries/types/GetModelCollaborators';
 
 import TeamMembersList from './TeamMembersList';
 
 const TaskListSideNav = () => {
+  const { modelId } = useParams<{ modelId: string }>();
   const { t } = useTranslation('modelPlanTaskList');
   const [isModalOpen, setModalOpen] = useState(false);
+
+  const { data } = useQuery<GetModelCollaborators>(GetModelPlanCollaborators, {
+    variables: {
+      id: modelId
+    }
+  });
+
+  const collaborators = (data?.modelPlan?.collaborators ??
+    []) as GetCollaboratorsType[];
 
   const renderModal = () => {
     return (
@@ -37,15 +54,6 @@ const TaskListSideNav = () => {
       </Modal>
     );
   };
-
-  // TODO:Integrate with BE via gql, but it is not ready yet.
-  // Until then, using this sample team member array.
-  const sampleTeamMembers = [
-    'Jane McModelteam',
-    'Laura Rodriguez',
-    'Allison Li',
-    'Bryce Greenfield-Jones'
-  ];
 
   return (
     <>
@@ -83,12 +91,15 @@ const TaskListSideNav = () => {
         <div>
           <h3 className="margin-bottom-05">{t('sideNav.modelTeam')}</h3>
           <div className="margin-bottom-2">
-            <UswdsReactLink to="/">{t('sideNav.editTeam')}</UswdsReactLink>
+            <UswdsReactLink to={`/models/${modelId}/collaborators`}>
+              {t('sideNav.editTeam')}
+            </UswdsReactLink>
           </div>
           <div className="sidenav-actions__teamList">
             <ul className="usa-list usa-list--unstyled">
-              {/* //TODO: Integrate the BE gql to populate team member array */}
-              <TeamMembersList team={sampleTeamMembers} />
+              <TeamMembersList
+                team={collaborators.map(collaborator => collaborator.fullName)}
+              />
             </ul>
           </div>
         </div>

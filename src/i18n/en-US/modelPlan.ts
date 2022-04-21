@@ -2,7 +2,10 @@ const modelPlan = {
   home: 'Home',
   teamRoles: {
     modelLead: 'Model Lead',
-    leadership: 'Leadership'
+    leadership: 'Leadership',
+    evaluation: 'Evaulation',
+    learning: 'Learning',
+    modelTeam: 'Model Team'
   },
   stepsOverview: {
     heading: 'Start a new model plan',

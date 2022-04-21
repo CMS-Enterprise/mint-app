@@ -20,6 +20,7 @@ import FlagsWrapper from 'views/FlagsWrapper';
 import Home from 'views/Home';
 import Login from 'views/Login';
 import ModelPlan from 'views/ModelPlan';
+import Collaborators from 'views/ModelPlan/Collaborators';
 import NewPlan from 'views/ModelPlan/NewPlan';
 import StepsOverview from 'views/ModelPlan/StepsOverview';
 import TaskList from 'views/ModelPlan/TaskList';
@@ -74,6 +75,11 @@ const AppRoutes = () => {
         component={StepsOverview}
       />
       <SecureRoute path="/models/new-plan" component={NewPlan} />
+      <SecureRoute
+        path="/models/:modelId/collaborators"
+        exact
+        component={Collaborators}
+      />
       <SecureRoute
         path="/models/:modelId/task-list"
         exact

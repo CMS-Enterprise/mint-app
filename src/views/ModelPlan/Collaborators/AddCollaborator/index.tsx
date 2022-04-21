@@ -89,11 +89,15 @@ const Collaborators = () => {
           modelPlanID: modelId
         }
       }
-    }).then(response => {
-      if (!response?.errors) {
-        history.push(`/models/new-plan/${modelId}/collaborators`);
-      }
-    });
+    })
+      .then(response => {
+        if (!response?.errors) {
+          history.push(`/models/new-plan/${modelId}/collaborators`);
+        }
+      })
+      .catch(error => {
+        formikRef?.current?.setErrors(error);
+      });
     // }
   };
 

@@ -71,8 +71,13 @@ const Table = ({ data, hiddenColumns }: TableProps) => {
           if (value) {
             return (
               <>
-                {value.map((item: CollaboratorsType) => {
-                  return item.fullName;
+                {value.map((item: CollaboratorsType, index: number) => {
+                  if (item.teamRole.toLowerCase().includes('lead')) {
+                    return `${item.fullName}${
+                      index === value.length - 1 ? '' : ', '
+                    }`;
+                  }
+                  return '';
                 })}
               </>
             );
