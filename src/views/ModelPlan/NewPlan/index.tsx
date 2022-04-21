@@ -2,6 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, Route, Switch, useHistory } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
+import { useOktaAuth } from '@okta/okta-react';
 import {
   Breadcrumb,
   BreadcrumbBar,
@@ -20,6 +21,8 @@ import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import CreateDraftModelPlan from 'queries/CreateModelPlan';
+import CreateModelPlanCollaborator from 'queries/CreateModelPlanCollaborator';
+import { CreateModelPlanCollaborator as CreateCollaboratorsType } from 'queries/types/CreateModelPlanCollaborator';
 import flattenErrors from 'utils/flattenErrors';
 import NewModelPlanValidationSchema from 'validations/newModelPlan';
 import NotFound from 'views/NotFound';
@@ -30,22 +33,42 @@ import AddCollaborator from '../Collaborators/AddCollaborator';
 const NewPlanContent = () => {
   const { t: h } = useTranslation('draftModelPlan');
   const { t } = useTranslation('newModel');
+  const { oktaAuth } = useOktaAuth();
   const history = useHistory();
   const [mutate] = useMutation(CreateDraftModelPlan);
+  const [create] = useMutation<CreateCollaboratorsType>(
+    CreateModelPlanCollaborator
+  );
 
   const handleCreateDraftModelPlan = (formikValues: { modelName: string }) => {
-    const { modelName } = formikValues;
-    mutate({
-      variables: {
-        input: {
-          modelName
+    oktaAuth.getUser().then((user: any) => {
+      const { modelName } = formikValues;
+      mutate({
+        variables: {
+          input: {
+            modelName
+          }
         }
-      }
-    }).then(response => {
-      if (!response?.errors) {
-        const { id } = response?.data?.createModelPlan;
-        history.push(`/models/new-plan/${id}/collaborators`);
-      }
+      }).then(response => {
+        if (!response?.errors) {
+          const { id } = response?.data?.createModelPlan;
+          create({
+            variables: {
+              input: {
+                fullName: user.name,
+                teamRole: 'MODEL_LEAD',
+                euaUserID: user.euaId,
+                cmsCenter: 'CMMI', // TODO: Not sure what this should be for the creator
+                modelPlanID: id
+              }
+            }
+          }).then(response2 => {
+            if (!response2?.errors) {
+              history.push(`/models/new-plan/${id}/collaborators`);
+            }
+          });
+        }
+      });
     });
   };
 

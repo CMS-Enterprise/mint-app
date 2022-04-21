@@ -69,15 +69,15 @@ const Table = ({ data, hiddenColumns }: TableProps) => {
         accessor: 'collaborators',
         Cell: ({ row, value }: any) => {
           if (value) {
+            const leads = value.filter((item: CollaboratorsType) => {
+              return item.teamRole.toLowerCase().includes('lead');
+            });
             return (
               <>
-                {value.map((item: CollaboratorsType, index: number) => {
-                  if (item.teamRole.toLowerCase().includes('lead')) {
-                    return `${item.fullName}${
-                      index === value.length - 1 ? '' : ', '
-                    }`;
-                  }
-                  return '';
+                {leads.map((item: CollaboratorsType, index: number) => {
+                  return `${item.fullName}${
+                    index === leads.length - 1 ? '' : ', '
+                  }`;
                 })}
               </>
             );

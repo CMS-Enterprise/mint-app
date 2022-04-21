@@ -105,9 +105,7 @@ const Collaborators = () => {
           </UswdsReactLink>
 
           {collaborators.length === 0 ? (
-            <Alert type="info" heading={t('table.noCollaborators')}>
-              {t('table.noCollaboratorsInfo')}
-            </Alert>
+            <Alert type="info" heading={t('table.noCollaborators')} />
           ) : (
             <CollaboratorsTable
               collaborators={collaborators}

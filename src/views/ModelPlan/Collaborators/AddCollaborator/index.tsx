@@ -1,7 +1,7 @@
 import React, { useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
-import { useMutation, useQuery } from '@apollo/client';
+import { useLazyQuery, useMutation, useQuery } from '@apollo/client';
 import { Button, ComboBox, Dropdown, Label } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
 
@@ -14,7 +14,6 @@ import { DescriptionDefinition } from 'components/shared/DescriptionGroup';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
-import Spinner from 'components/Spinner';
 import teamRoles from 'constants/enums/teamRoles';
 import CreateModelPlanCollaborator from 'queries/CreateModelPlanCollaborator';
 import GetCedarUser from 'queries/GetCedarUser';
@@ -23,7 +22,7 @@ import {
   CreateModelPlanCollaborator as CreateCollaboratorsType,
   CreateModelPlanCollaborator_createPlanCollaborator as CollaboratorsType
 } from 'queries/types/CreateModelPlanCollaborator';
-import { GetCedarUser as GetCedarUserType } from 'queries/types/GetCedarUser';
+import { GetCedarUser_cedarPersonsByCommonName as GetCedarUserType } from 'queries/types/GetCedarUser';
 // import {
 //   GetModelCollaborators,
 //   GetModelCollaborators_modelPlan_collaborators as GetCollaboratorsType
@@ -42,9 +41,14 @@ const Collaborators = () => {
   const formikRef = useRef<FormikProps<CollaboratorForm>>(null);
 
   //   const [commonName, setCommonName] = useState('');
-  //   const { data, loading, error } = useQuery(GetCedarUser, {
+  //   const { data, loading } = useQuery(GetCedarUser, {
   //     variables: { commonName }
   //   });
+  //   console.log(data);
+
+  //   const euaUsers = useMemo(() => {
+  //     return (data?.cedarPersonsByCommonName ?? []) as GetCedarUserType[];
+  //   }, [data?.cedarPersonsByCommonName]);
 
   const history = useHistory();
   const [create] = useMutation<CreateCollaboratorsType>(
@@ -95,73 +99,65 @@ const Collaborators = () => {
           history.push(`/models/new-plan/${modelId}/collaborators`);
         }
       })
-      .catch(error => {
-        formikRef?.current?.setErrors(error);
+      .catch(errors => {
+        formikRef?.current?.setErrors(errors);
       });
     // }
   };
 
+  //   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //     setCommonName(e?.target?.value);
+  //   };
+
   // TODO: Replace mocked data with call to CEDAR for users
-  const userMocks = useMemo(() => {
+  const euaUsers = useMemo(() => {
     return [
       {
         id: '123',
-        fullName: 'John Doe',
-        euaUserID: 'ABCD',
+        commonName: 'John Doe',
+        euaUserId: 'ABCD',
         teamRole: 'MODEL_LEAD'
       },
       {
         id: '456',
-        fullName: 'Jane Oddball',
-        euaUserID: 'WASD',
+        commonName: 'Jane Oddball',
+        euaUserId: 'WASD',
         teamRole: 'MODEL_LEAD'
       },
       {
         id: '789',
-        fullName: 'Shelly CMS',
-        euaUserID: 'TYUU',
+        commonName: 'Shelly CMS',
+        euaUserId: 'TYUU',
         teamRole: 'LEADERSHIP'
       }
     ];
   }, []);
+
+  // Convert user to obj for keying selected user in combobox
+  const users = useMemo(() => {
+    const userObj: any = {}; // TODO: Replace with CEDAR user type
+
+    euaUsers.forEach(user => {
+      userObj[user.euaUserId] = user;
+    });
+
+    return userObj;
+  }, [euaUsers]);
+
+  const projectComboBoxOptions = useMemo(() => {
+    return (euaUsers || []).map(user => {
+      return {
+        label: `${user.commonName} - ${user.euaUserId}`,
+        value: user.euaUserId
+      };
+    });
+  }, [euaUsers]);
 
   const initialValues: CollaboratorForm = {
     euaUserID: '',
     fullName: '',
     teamRole: ''
   };
-
-  // Convert user to obj for keying selected user in combobox
-  const users = useMemo(() => {
-    const userObj: any = {}; // TODO: Replace with CEDAR user type
-
-    userMocks.forEach(user => {
-      userObj[user.id] = user;
-    });
-
-    return userObj;
-  }, [userMocks]);
-
-  const projectComboBoxOptions = useMemo(() => {
-    return (userMocks || []).map(user => {
-      return {
-        label: `${user.fullName} - ${user.euaUserID}`,
-        value: user.id
-      };
-    });
-  }, [userMocks]);
-
-  //   if (loading) {
-  //     return (
-  //       <div className="text-center" data-testid="table-loading">
-  //         <Spinner size="xl" />
-  //       </div>
-  //     );
-  //   }
-
-  //   if (error) {
-  //     return <div>{JSON.stringify(error)}</div>;
-  //   }
 
   return (
     <MainContent className="margin-bottom-5">
@@ -185,7 +181,7 @@ const Collaborators = () => {
           >
             {(
               formikProps: FormikProps<{
-                euaUserID: string;
+                euaUserId: string;
                 fullName: string;
                 teamRole: string;
               }>
@@ -243,13 +239,12 @@ const Collaborators = () => {
                           name: 'collaborator',
                           'aria-label': 'application',
                           'aria-describedby': 'Draft-Model-Plan-Collaborator'
+                          //   onChange: handleChange
                         }}
                         options={projectComboBoxOptions}
                         onChange={(user: any) => {
-                          //   console.log(user);
-                          //   setCommonName(user);
-                          setFieldValue('euaUserID', users[user]?.euaUserID);
-                          setFieldValue('fullName', users[user]?.fullName);
+                          setFieldValue('euaUserID', users[user]?.euaUserId);
+                          setFieldValue('fullName', users[user]?.commonName);
                         }}
                       />
                     </FieldGroup>

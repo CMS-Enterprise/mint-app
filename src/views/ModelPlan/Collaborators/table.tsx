@@ -62,23 +62,25 @@ const CollaboratorsTable = ({
               >
                 {t('table.edit')}
               </UswdsReactLink>
-              <Button
-                className="line-height-body-5 text-red"
-                type="button"
-                unstyled
-                onClick={() => {
-                  setRemoveUser(row.original);
-                  setModalOpen(true);
-                }}
-              >
-                {t('modal.remove')}
-              </Button>
+              {collaborators.length > 1 && (
+                <Button
+                  className="line-height-body-5 text-red"
+                  type="button"
+                  unstyled
+                  onClick={() => {
+                    setRemoveUser(row.original);
+                    setModalOpen(true);
+                  }}
+                >
+                  {t('modal.remove')}
+                </Button>
+              )}
             </>
           );
         }
       }
     ];
-  }, [t, modelId, setModalOpen, setRemoveUser]);
+  }, [t, modelId, setModalOpen, setRemoveUser, collaborators.length]);
 
   const {
     getTableProps,
