@@ -36,6 +36,14 @@ export enum ModelCategory {
   UNKNOWN = "UNKNOWN",
 }
 
+export enum TeamRole {
+  EVALUATION = "EVALUATION",
+  LEADERSHIP = "LEADERSHIP",
+  LEARNING = "LEARNING",
+  MODEL_LEAD = "MODEL_LEAD",
+  MODEL_TEAM = "MODEL_TEAM",
+}
+
 /**
  * ModelPlanInput represent the data point for plans about a model. It is the central data type in the appliation
  */
@@ -45,6 +53,22 @@ export interface ModelPlanInput {
   modelCategory?: ModelCategory | null;
   cmsCenter?: CMSCenter | null;
   cmmiGroups?: CMMIGroup[] | null;
+  createdBy?: string | null;
+  createdDts?: Time | null;
+  modifiedBy?: string | null;
+  modifiedDts?: Time | null;
+}
+
+/**
+ * PlanCollaboratorInput represents the data required to create, modify, or delete a collaborator on a plan
+ */
+export interface PlanCollaboratorInput {
+  id?: UUID | null;
+  modelPlanID: UUID;
+  euaUserID: string;
+  fullName: string;
+  cmsCenter: CMSCenter;
+  teamRole: TeamRole;
   createdBy?: string | null;
   createdDts?: Time | null;
   modifiedBy?: string | null;

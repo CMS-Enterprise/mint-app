@@ -6,6 +6,8 @@ const translateTeamRole = (teamRole: string) => {
   switch (teamRole) {
     case 'MODEL_LEAD':
       return i18next.t('modelPlan:teamRoles.modelLead');
+    case 'LEADERSHIP':
+      return i18next.t('modelPlan:teamRoles.leadership');
     default:
       return '';
   }

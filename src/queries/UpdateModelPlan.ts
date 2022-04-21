@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client';
 
 export default gql`
-  mutation UpdateDraftModelPlan($input: ModelPlanInput!) {
+  mutation UpdateModelPlan($input: ModelPlanInput!) {
     updateModelPlan(input: $input) {
       id
       createdBy

@@ -19,7 +19,7 @@ import Alert from 'components/shared/Alert';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
-import CreateDraftModelPlan from 'queries/CreateDraftModelPlan';
+import CreateDraftModelPlan from 'queries/CreateModelPlan';
 import flattenErrors from 'utils/flattenErrors';
 import NewModelPlanValidationSchema from 'validations/newModelPlan';
 import NotFound from 'views/NotFound';

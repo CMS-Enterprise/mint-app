@@ -19,7 +19,9 @@ const newModel = {
     dateAdded: 'Date added',
     actions: 'Actions',
     edit: 'Edit',
-    remove: 'Remove'
+    remove: 'Remove',
+    noCollaborators: 'No associated team members',
+    noCollaboratorsInfo: 'Please add any team members'
   },
   continueWithoutAdding: 'Continue without adding team members',
   searchTeamInfo:

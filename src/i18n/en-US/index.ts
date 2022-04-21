@@ -25,6 +25,7 @@ const enUS = {
   header,
   home,
   modelPlan,
+  newModel,
   modelPlanTaskList,
   privacyPolicy,
   tableAndPagination,

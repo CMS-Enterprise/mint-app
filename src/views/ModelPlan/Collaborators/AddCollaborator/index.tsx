@@ -1,4 +1,4 @@
-import React, { useMemo, useRef } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
@@ -9,19 +9,26 @@ import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import Alert from 'components/shared/Alert';
-import AutoSave from 'components/shared/AutoSave';
+// import AutoSave from 'components/shared/AutoSave';
 import { DescriptionDefinition } from 'components/shared/DescriptionGroup';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import Spinner from 'components/Spinner';
 import teamRoles from 'constants/enums/teamRoles';
-// import GetCollaborators from 'queries/GetCollaborators';
+import CreateModelPlanCollaborator from 'queries/CreateModelPlanCollaborator';
+import GetCedarUser from 'queries/GetCedarUser';
+// import GetModelPlanCollaborators from 'queries/GetModelCollaborators';
+import {
+  CreateModelPlanCollaborator as CreateCollaboratorsType,
+  CreateModelPlanCollaborator_createPlanCollaborator as CollaboratorsType
+} from 'queries/types/CreateModelPlanCollaborator';
+import { GetCedarUser as GetCedarUserType } from 'queries/types/GetCedarUser';
 // import {
-//   CollaboratorsType,
-//   GetGetCollaborators as GetCollaboratorsType
-// } from 'queries/types/GetDraftModelPlans';
-import UpdateDraftModelPlan from 'queries/UpdateDraftModelPlan';
+//   GetModelCollaborators,
+//   GetModelCollaborators_modelPlan_collaborators as GetCollaboratorsType
+// } from 'queries/types/GetModelPlanCollaborator';
+// import UpdateDraftModelPlan from 'queries/UpdateModelPlan';
 import { CollaboratorForm } from 'types/collaborator';
 import flattenErrors from 'utils/flattenErrors';
 import translateTeamRole from 'utils/modelPlan';
@@ -29,16 +36,24 @@ import CollaboratorsValidationSchema from 'validations/modelPlanCollaborators';
 
 const Collaborators = () => {
   const { modelId } = useParams<{ modelId: string }>();
-  const { collaboratorId } = useParams<{ collaboratorId: string }>();
+  //   const { collaboratorId } = useParams<{ collaboratorId: string }>();
   const { t: h } = useTranslation('draftModelPlan');
   const { t } = useTranslation('newModel');
   const formikRef = useRef<FormikProps<CollaboratorForm>>(null);
 
-  const history = useHistory();
-  const [mutate] = useMutation(UpdateDraftModelPlan);
+  //   const [commonName, setCommonName] = useState('');
+  //   const { data, loading, error } = useQuery(GetCedarUser, {
+  //     variables: { commonName }
+  //   });
 
-  //   const { loading, error, data } = useQuery<GetCollaboratorsType>(
-  //     GetCollaborators,
+  const history = useHistory();
+  const [create] = useMutation<CreateCollaboratorsType>(
+    CreateModelPlanCollaborator
+  );
+  //   const [update] = useMutation(UpdateDraftModelPlan);
+
+  //   const { loading, error, data } = useQuery<GetModelCollaborators>(
+  //     GetModelPlanCollaborators,
   //     {
   //       variables: { collaboratorId },
   //       skip: !collaboratorId
@@ -48,12 +63,10 @@ const Collaborators = () => {
   //   const collaborator = (data?.collaborator ?? {}) as CollaboratorsType;
 
   const handleUpdateDraftModelPlan = (formikValues?: CollaboratorForm) => {
-    console.log('saved');
-
-    // const { modelName, teamRole } = formikValues;
+    const { fullName, teamRole, euaUserID } = formikValues || {};
 
     // if (collaboratorId) {
-    //   mutate({
+    //   update({
     //     variables: {
     //       input: {
     //         modelName,
@@ -66,18 +79,21 @@ const Collaborators = () => {
     //     }
     //   });
     // } else {
-    //   mutate({
-    //     variables: {
-    //       input: {
-    //         modelName,
-    //         teamRole
-    //       }
-    //     }
-    //   }).then(response => {
-    //     if (!response?.errors) {
-    //       history.push(`/models/new-plan/${modelId}/collaborators`);
-    //     }
-    //   });
+    create({
+      variables: {
+        input: {
+          fullName,
+          teamRole,
+          euaUserID,
+          cmsCenter: 'CMMI',
+          modelPlanID: modelId
+        }
+      }
+    }).then(response => {
+      if (!response?.errors) {
+        history.push(`/models/new-plan/${modelId}/collaborators`);
+      }
+    });
     // }
   };
 
@@ -95,11 +111,18 @@ const Collaborators = () => {
         fullName: 'Jane Oddball',
         euaUserID: 'WASD',
         teamRole: 'MODEL_LEAD'
+      },
+      {
+        id: '789',
+        fullName: 'Shelly CMS',
+        euaUserID: 'TYUU',
+        teamRole: 'LEADERSHIP'
       }
     ];
   }, []);
 
   const initialValues: CollaboratorForm = {
+    euaUserID: '',
     fullName: '',
     teamRole: ''
   };
@@ -158,6 +181,7 @@ const Collaborators = () => {
           >
             {(
               formikProps: FormikProps<{
+                euaUserID: string;
                 fullName: string;
                 teamRole: string;
               }>
@@ -218,6 +242,9 @@ const Collaborators = () => {
                         }}
                         options={projectComboBoxOptions}
                         onChange={(user: any) => {
+                          //   console.log(user);
+                          //   setCommonName(user);
+                          setFieldValue('euaUserID', users[user]?.euaUserID);
                           setFieldValue('fullName', users[user]?.fullName);
                         }}
                       />
@@ -279,13 +306,13 @@ const Collaborators = () => {
                       </Button>
                     </div>
                   </Form>
-                  <AutoSave
+                  {/* <AutoSave
                     values={values}
                     onSave={() => {
                       handleUpdateDraftModelPlan(formikRef?.current?.values);
                     }}
                     debounceDelay={3000}
-                  />
+                  /> */}
                 </>
               );
             }}

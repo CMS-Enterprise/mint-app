@@ -13,12 +13,13 @@ import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
+import Alert from 'components/shared/Alert';
 import Spinner from 'components/Spinner';
-import GetCollaborators from 'queries/GetCollaborators';
+import GetModelPlanCollaborators from 'queries/GetModelCollaborators';
 import {
-  CollaboratorsType,
-  GetGetCollaborators as GetCollaboratorsType
-} from 'queries/types/GetDraftModelPlans';
+  GetModelCollaborators,
+  GetModelCollaborators_modelPlan_collaborators as GetCollaboratorsType
+} from 'queries/types/GetModelCollaborators';
 
 import CollaboratorsTable from './table';
 
@@ -27,22 +28,27 @@ const Collaborators = () => {
   const { t: h } = useTranslation('draftModelPlan');
   const { t } = useTranslation('newModel');
   const [isModalOpen, setModalOpen] = useState(false);
-  const [removeUser, setRemoveUser] = useState<CollaboratorsType>({});
+  const [removeUser, setRemoveUser] = useState<GetCollaboratorsType>({});
 
-  //   const { loading, error, data } = useQuery<GetCollaboratorsType>(
-  //     GetCollaborators
-  //   );
+  const { loading, error, data } = useQuery<GetModelCollaborators>(
+    GetModelPlanCollaborators,
+    {
+      variables: {
+        id: modelId
+      }
+    }
+  );
 
-  //   const collaborators = (data?.modelPlanCollection ??
-  //     []) as CollaboratorsType[];
+  const collaborators = (data?.modelPlan?.collaborators ??
+    []) as GetCollaboratorsType[];
 
-  //   if (loading) {
-  //     return (
-  //       <div className="text-center" data-testid="table-loading">
-  //         <Spinner size="xl" />
-  //       </div>
-  //     );
-  //   }
+  if (loading) {
+    return (
+      <div className="text-center" data-testid="table-loading">
+        <Spinner size="xl" />
+      </div>
+    );
+  }
 
   const RemoveCollaborator = () => {
     return (
@@ -66,37 +72,9 @@ const Collaborators = () => {
     );
   };
 
-  // Mocked data
-  const collaborators = [
-    {
-      id: 'qwe',
-      modelPlanID: '456',
-      euaUserID: 'ABCD',
-      fullName: 'John Doe',
-      cmsCenter: 'CMMI',
-      teamRole: 'MODEL_LEAD'
-    },
-    {
-      id: 'asd',
-      modelPlanID: '789',
-      euaUserID: 'QWER',
-      fullName: 'Jane Oddball',
-      cmsCenter: 'CMMI',
-      teamRole: 'LEADERSHIP'
-    },
-    {
-      id: 'zxc',
-      modelPlanID: '009',
-      euaUserID: 'ZXCV',
-      fullName: 'Patrick John',
-      cmsCenter: 'CMMI',
-      teamRole: 'MODEL_LEAD'
-    }
-  ];
-
-  //   if (error) {
-  //     return <div>{JSON.stringify(error)}</div>;
-  //   }
+  if (error) {
+    return <div>{JSON.stringify(error)}</div>;
+  }
 
   return (
     <MainContent className="margin-bottom-5">
@@ -126,11 +104,17 @@ const Collaborators = () => {
             {t('addTeamMemberButton')}
           </UswdsReactLink>
 
-          <CollaboratorsTable
-            collaborators={collaborators}
-            setModalOpen={setModalOpen}
-            setRemoveUser={setRemoveUser}
-          />
+          {collaborators.length === 0 ? (
+            <Alert type="info" heading={t('table.noCollaborators')}>
+              {t('table.noCollaboratorsInfo')}
+            </Alert>
+          ) : (
+            <CollaboratorsTable
+              collaborators={collaborators}
+              setModalOpen={setModalOpen}
+              setRemoveUser={setRemoveUser}
+            />
+          )}
 
           <div className="margin-top-5 display-block">
             <UswdsReactLink
@@ -138,7 +122,9 @@ const Collaborators = () => {
               variant="unstyled"
               to={`/models/${modelId}/task-list`}
             >
-              {t('continueWithoutAdding')}
+              {collaborators.length > 0
+                ? h('continueToTaskList')
+                : t('continueWithoutAdding')}
             </UswdsReactLink>
           </div>
         </div>

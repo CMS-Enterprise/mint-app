@@ -9,6 +9,7 @@ import {
 } from 'react-table';
 import { useQuery } from '@apollo/client';
 import { Table as UswdsTable } from '@trussworks/react-uswds';
+import { DateTime } from 'luxon';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import Alert from 'components/shared/Alert';
@@ -16,11 +17,12 @@ import Spinner from 'components/Spinner';
 import GlobalClientFilter from 'components/TableFilter';
 import TablePagination from 'components/TablePagination';
 import TableResults from 'components/TableResults';
-import GetDraftModelPlans from 'queries/GetDraftModelPlans';
+import GetDraftModelPlans from 'queries/GetModelPlans';
+import { GetModelCollaborators_modelPlan_collaborators as CollaboratorsType } from 'queries/types/GetModelCollaborators';
 import {
-  GetDraftModelPlans as GetDraftModelPlansType,
-  GetDraftModelPlans_modelPlanCollection as DraftModelPlanType
-} from 'queries/types/GetDraftModelPlans';
+  GetModelPlans as GetDraftModelPlansType,
+  GetModelPlans_modelPlanCollection as DraftModelPlanType
+} from 'queries/types/GetModelPlans';
 import globalTableFilter from 'utils/globalTableFilter';
 import {
   currentTableSortDescription,
@@ -54,19 +56,46 @@ const Table = ({ data, hiddenColumns }: TableProps) => {
       },
       {
         Header: t('requestsTable.headers.category'),
-        accessor: 'modelCategory'
+        accessor: 'modelCategory',
+        Cell: ({ row, value }: any) => {
+          if (!value) {
+            return t('requestsTable.noneSelectedYet');
+          }
+          return value;
+        }
       },
       {
         Header: t('requestsTable.headers.modelPoc'),
-        accessor: 'modelPoc'
+        accessor: 'collaborators',
+        Cell: ({ row, value }: any) => {
+          if (value) {
+            return (
+              <>
+                {value.map((item: CollaboratorsType) => {
+                  return item.fullName;
+                })}
+              </>
+            );
+          }
+          return '';
+        }
       },
       {
         Header: t('requestsTable.headers.clearanceDate'),
-        accessor: 'clearanceDate'
+        accessor: 'clearanceDate',
+        Cell: ({ row, value }: any) => {
+          if (!value) {
+            return t('requestsTable.tbd');
+          }
+          return value;
+        }
       },
       {
         Header: t('requestsTable.headers.recentActivity'),
-        accessor: 'recentActivity'
+        accessor: 'modifiedDts',
+        Cell: ({ value }: any) => {
+          return DateTime.fromISO(value).toLocaleString(DateTime.DATETIME_MED);
+        }
       }
     ];
   }, [t]);
@@ -176,7 +205,7 @@ const Table = ({ data, hiddenColumns }: TableProps) => {
           ))}
         </thead>
         <tbody {...getTableBodyProps()}>
-          {page.map(row => {
+          {page.map((row, index) => {
             prepareRow(row);
             return (
               <tr {...row.getRowProps()}>
@@ -191,7 +220,11 @@ const Table = ({ data, hiddenColumns }: TableProps) => {
                         <th
                           {...cell.getCellProps()}
                           scope="row"
-                          style={{ paddingLeft: '0', verticalAlign: 'top' }}
+                          style={{
+                            paddingLeft: '0',
+                            borderBottom:
+                              index === page.length - 1 ? 'none' : 'auto'
+                          }}
                         >
                           {cell.render('Cell')}
                         </th>
@@ -201,9 +234,9 @@ const Table = ({ data, hiddenColumns }: TableProps) => {
                       <td
                         {...cell.getCellProps()}
                         style={{
-                          width: cell.column.width,
                           paddingLeft: '0',
-                          verticalAlign: 'top'
+                          borderBottom:
+                            index === page.length - 1 ? 'none' : 'auto'
                         }}
                       >
                         {cell.render('Cell')}

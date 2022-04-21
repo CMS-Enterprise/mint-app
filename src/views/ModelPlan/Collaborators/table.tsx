@@ -3,9 +3,11 @@ import { useTranslation } from 'react-i18next';
 import { useParams } from 'react-router-dom';
 import { useSortBy, useTable } from 'react-table';
 import { Button, Table as UswdsTable } from '@trussworks/react-uswds';
+import { DateTime } from 'luxon';
 
 import UswdsReactLink from 'components/LinkWrapper';
-import Alert from 'components/shared/Alert';
+import { GetModelCollaborators_modelPlan_collaborators as CollaboratorType } from 'queries/types/GetModelCollaborators';
+import translateTeamRole from 'utils/modelPlan';
 import {
   currentTableSortDescription,
   getColumnSortStatus,
@@ -14,20 +16,10 @@ import {
 } from 'utils/tableSort';
 
 // TEMP: collaborator types
-type Collaborator = {
-  id: string;
-  modelPlanID: string;
-  euaUserID: string;
-  fullName: string;
-  cmsCenter: string;
-  teamRole: string;
-};
-
-// TEMP: collaborator types
 type TableProps = {
-  collaborators: Collaborator[];
+  collaborators: CollaboratorType[];
   setModalOpen: (isModalOpen: boolean) => void;
-  setRemoveUser: (removeUser: boolean) => void;
+  setRemoveUser: (removeUser: CollaboratorType) => void;
 };
 
 const CollaboratorsTable = ({
@@ -47,11 +39,17 @@ const CollaboratorsTable = ({
       },
       {
         Header: t('table.role'),
-        accessor: 'teamRole'
+        accessor: 'teamRole',
+        Cell: ({ row, value }: any) => {
+          return <>{translateTeamRole(value)}</>;
+        }
       },
       {
         Header: t('table.dateAdded'),
-        accessor: 'createdAt'
+        accessor: 'createdDts',
+        Cell: ({ value }: any) => {
+          return DateTime.fromISO(value).toLocaleString(DateTime.DATE_FULL);
+        }
       },
       {
         Header: t('table.actions'),
@@ -109,14 +107,6 @@ const CollaboratorsTable = ({
     },
     useSortBy
   );
-
-  if (collaborators.length === 0) {
-    return (
-      <Alert type="info" heading={t('requestsTable.empty.heading')}>
-        {t('requestsTable.empty.body')}
-      </Alert>
-    );
-  }
 
   return (
     <div className="model-plan-table">
