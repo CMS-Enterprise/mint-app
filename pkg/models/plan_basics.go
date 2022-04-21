@@ -58,3 +58,23 @@ func (p *PlanBasics) CalcStatus() {
 	}
 	p.Status = decidedStat
 }
+
+// GetModelTypeName returns a string name that represents the PlanBasics struct
+func (p PlanBasics) GetModelTypeName() string {
+	return "Plan_Basics"
+}
+
+// GetID returns the ID property for a PlanBasics struct
+func (p PlanBasics) GetID() uuid.UUID {
+	return p.ID
+}
+
+// GetPlanID returns the ModelPlanID property for a PlanBasics struct
+func (p PlanBasics) GetPlanID() uuid.UUID {
+	return p.ModelPlanID
+}
+
+// GetModifiedBy returns the ModifiedBy property for a PlanBasics struct
+func (p PlanBasics) GetModifiedBy() *string {
+	return p.ModifiedBy
+}

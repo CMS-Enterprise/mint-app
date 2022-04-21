@@ -9,7 +9,7 @@ import (
 	"go.uber.org/zap"
 
 	"github.com/cmsgov/mint-app/pkg/models"
-	utilityUuid "github.com/cmsgov/mint-app/pkg/shared/uuid"
+	"github.com/cmsgov/mint-app/pkg/shared/utilityUUID"
 )
 
 //go:embed SQL/plan_collaborator_create.sql
@@ -27,7 +27,7 @@ var planCollaboratorFetchByModelPlanIDSQL string
 // PlanCollaboratorCreate creates a new plan collaborator
 func (s *Store) PlanCollaboratorCreate(logger *zap.Logger, collaborator *models.PlanCollaborator) (*models.PlanCollaborator, error) {
 
-	collaborator.ID = utilityUuid.ValueOrNewUUID(collaborator.ID)
+	collaborator.ID = utilityUUID.ValueOrNewUUID(collaborator.ID)
 
 	statement, err := s.db.PrepareNamed(planCollaboratorCreateSQL)
 	if err != nil {
