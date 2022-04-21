@@ -36,14 +36,14 @@ const StepsOverview = () => {
           <PageHeading>{t('stepsOverview.heading')}</PageHeading>
           <SummaryBox
             heading=""
-            className="bg-base-lightest border-0 radius-0 padding-2"
+            className="bg-base-lightest border-0 radius-0 padding-y-1 padding-x-2"
           >
-            <p>{t('stepsOverview.summaryBox.copy')}</p>
-            <ul>
+            <p className="margin-top-0">{t('stepsOverview.summaryBox.copy')}</p>
+            <ul className="padding-left-3">
               <li>{t('stepsOverview.summaryBox.listItem.add')}</li>
               <li>{t('stepsOverview.summaryBox.listItem.upload')}</li>
             </ul>
-            <p>
+            <p className="margin-bottom-1">
               <Trans i18nKey="modelPlan:stepsOverview.summaryBox.email">
                 indexZero
                 <UswdsLink href="mailto:CMS_Section508@cms.hhs.gov">

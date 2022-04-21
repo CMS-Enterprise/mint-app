@@ -27,8 +27,6 @@ const newModel = {
   searchTeamInfo:
     'Search for a team member to add to your model team. Team members are all eligible to view and edit all sections of a Model Plan, including uploading and removing documents as well as adding or removing team members.',
   teamMemberName: 'Team member name',
-  teamNameInfo:
-    'This field searches CMS’ EUA database.  You may search by name, email, or EUA ID.',
   teamMemberRole: 'Team member role',
   searchMemberInfo:
     'This new team member will be able to view and edit anything about a model plan. Please make sure this individual should be able to do this before you proceed.',

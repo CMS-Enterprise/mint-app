@@ -10,7 +10,6 @@ import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import Alert from 'components/shared/Alert';
 // import AutoSave from 'components/shared/AutoSave';
-import { DescriptionDefinition } from 'components/shared/DescriptionGroup';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
@@ -226,10 +225,6 @@ const Collaborators = () => {
                       <Label htmlFor="new-plan-model-name">
                         {t('teamMemberName')}
                       </Label>
-                      <DescriptionDefinition
-                        className="line-height-body-3 text-base-dark"
-                        definition={t('teamNameInfo')}
-                      />
                       <FieldErrorMsg>{flatErrors.fullName}</FieldErrorMsg>
                       <ComboBox
                         id="collaborator-user"
