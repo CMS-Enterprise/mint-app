@@ -7,6 +7,7 @@ import (
 	"github.com/lib/pq"
 )
 
+// ModelPlan is the top-level object for an entire draft model plan
 type ModelPlan struct {
 	ID            uuid.UUID      `json:"id" db:"id"`
 	ModelName     *string        `json:"modelName" db:"model_name"`

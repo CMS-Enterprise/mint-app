@@ -186,3 +186,6 @@ envrc.local
 GitLens
 IronMQ
 customizable
+FedRAMP
+DynamoDB
+NoSQL

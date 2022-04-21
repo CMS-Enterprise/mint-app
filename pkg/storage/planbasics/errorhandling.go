@@ -5,16 +5,18 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/cmsgov/mint-app/pkg/apperrors"
-	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/google/uuid"
 	"go.uber.org/zap"
+
+	"github.com/cmsgov/mint-app/pkg/apperrors"
+	"github.com/cmsgov/mint-app/pkg/models"
 )
 
 const (
 	modelTypeName = "Plan Basics"
 )
 
+// HandlePlanBasicsCreationError logs an error when a plan basics creation fails
 func HandlePlanBasicsCreationError(logger *zap.Logger, plan *models.PlanBasics, err error) (*models.PlanBasics, error) {
 	logger.Error(
 		fmt.Sprint("Failed to create model [#{modelTypeName}] with error: #{err}", modelTypeName, err),
@@ -24,6 +26,7 @@ func HandlePlanBasicsCreationError(logger *zap.Logger, plan *models.PlanBasics, 
 	return nil, err
 }
 
+// HandlePlanBasicsUpdateError logs an error when a plan basics update fails
 func HandlePlanBasicsUpdateError(logger *zap.Logger, plan *models.PlanBasics, err error, isQueryError bool) (*models.PlanBasics, error) {
 	logger.Error(
 		fmt.Sprint("Failed to update #{modelTypeName} due to error: #{err}", modelTypeName, err),
@@ -33,15 +36,16 @@ func HandlePlanBasicsUpdateError(logger *zap.Logger, plan *models.PlanBasics, er
 
 	if !isQueryError {
 		return nil, err
-	} else {
-		return nil, &apperrors.QueryError{
-			Err:       err,
-			Model:     plan,
-			Operation: apperrors.QueryUpdate,
-		}
+	}
+
+	return nil, &apperrors.QueryError{
+		Err:       err,
+		Model:     plan,
+		Operation: apperrors.QueryUpdate,
 	}
 }
 
+// HandleModelFetchError logs an error when a model plan fetch fails
 func HandleModelFetchError(logger *zap.Logger, id uuid.UUID, err error) (*models.PlanBasics, error) {
 	if errors.Is(err, sql.ErrNoRows) {
 		return HandleModelFetchNoRowsError(logger, id, err)
@@ -50,6 +54,7 @@ func HandleModelFetchError(logger *zap.Logger, id uuid.UUID, err error) (*models
 	return HandleModelFetchGenericError(logger, id, err)
 }
 
+// HandleModelFetchNoRowsError logs an error when a model plan fetch returns no rows
 func HandleModelFetchNoRowsError(logger *zap.Logger, id uuid.UUID, err error) (*models.PlanBasics, error) {
 	logger.Info(
 		"No model plan found",
@@ -61,6 +66,7 @@ func HandleModelFetchNoRowsError(logger *zap.Logger, id uuid.UUID, err error) (*
 	return nil, nil
 }
 
+// HandleModelFetchGenericError logs an error when a model plan fetch fails for a generic reason
 func HandleModelFetchGenericError(logger *zap.Logger, id uuid.UUID, err error) (*models.PlanBasics, error) {
 	logger.Error(
 		"Failed to fetch model plan",

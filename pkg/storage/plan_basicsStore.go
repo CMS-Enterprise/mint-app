@@ -3,11 +3,12 @@ package storage
 import (
 	_ "embed"
 
+	"github.com/google/uuid"
+	"go.uber.org/zap"
+
 	"github.com/cmsgov/mint-app/pkg/models"
 	utilityUuid "github.com/cmsgov/mint-app/pkg/shared/uuid"
 	"github.com/cmsgov/mint-app/pkg/storage/planbasics"
-	"github.com/google/uuid"
-	"go.uber.org/zap"
 )
 
 //go:embed SQL/plan_basics_create.sql
@@ -17,11 +18,12 @@ var planBasicsCreateSQL string
 var planBasicsUpdateSQL string
 
 //go:embed SQL/plan_basics_get_by_id.sql
-var planBasicsGetByIdSQL string
+var planBasicsGetByIDSQL string
 
 //go:embed SQL/plan_basics_get_by_model_plan_id.sql
-var planBasicsGetByModelPlan_IdSQL string
+var planBasicsGetByModelPlanIDSQL string
 
+// PlanBasicsCreate creates a new plan basics
 func (s *Store) PlanBasicsCreate(logger *zap.Logger, basics *models.PlanBasics) (*models.PlanBasics, error) {
 
 	basics.ID = utilityUuid.ValueOrNewUUID(basics.ID)
@@ -39,6 +41,7 @@ func (s *Store) PlanBasicsCreate(logger *zap.Logger, basics *models.PlanBasics) 
 	return basics, nil
 }
 
+// PlanBasicsUpdate updates the plan basics for a given id
 func (s *Store) PlanBasicsUpdate(logger *zap.Logger, plan *models.PlanBasics) (*models.PlanBasics, error) {
 	statement, err := s.db.PrepareNamed(planBasicsUpdateSQL)
 	if err != nil {
@@ -53,10 +56,11 @@ func (s *Store) PlanBasicsUpdate(logger *zap.Logger, plan *models.PlanBasics) (*
 	return plan, nil
 }
 
+// PlanBasicsGetByID returns the plan basics for a given id
 func (s *Store) PlanBasicsGetByID(logger *zap.Logger, id uuid.UUID) (*models.PlanBasics, error) {
 	plan := models.PlanBasics{}
 
-	statement, err := s.db.PrepareNamed(planBasicsGetByIdSQL)
+	statement, err := s.db.PrepareNamed(planBasicsGetByIDSQL)
 	if err != nil {
 		return nil, err
 	}
@@ -71,10 +75,11 @@ func (s *Store) PlanBasicsGetByID(logger *zap.Logger, id uuid.UUID) (*models.Pla
 	return &plan, nil
 }
 
-func (s *Store) PlanBasicsGetByModelPlanID(logger *zap.Logger, principal *string, model_plan_id uuid.UUID) (*models.PlanBasics, error) {
+// PlanBasicsGetByModelPlanID returns the plan basics for a given model plan id
+func (s *Store) PlanBasicsGetByModelPlanID(logger *zap.Logger, principal *string, modelPlanID uuid.UUID) (*models.PlanBasics, error) {
 	plan := models.PlanBasics{}
 
-	statement, err := s.db.PrepareNamed(planBasicsGetByModelPlan_IdSQL)
+	statement, err := s.db.PrepareNamed(planBasicsGetByModelPlanIDSQL)
 	if err != nil {
 		return nil, err
 	}
@@ -82,12 +87,12 @@ func (s *Store) PlanBasicsGetByModelPlanID(logger *zap.Logger, principal *string
 	arg := map[string]interface{}{
 		"modified_by":   principal,
 		"created_by":    principal,
-		"model_plan_id": model_plan_id,
+		"model_plan_id": modelPlanID,
 	}
 	err = statement.Get(&plan, arg)
 
 	if err != nil {
-		return planbasics.HandleModelFetchError(logger, model_plan_id, err)
+		return planbasics.HandleModelFetchError(logger, modelPlanID, err)
 	}
 
 	return &plan, nil

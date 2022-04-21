@@ -1,4 +1,4 @@
-# Persistance Layer Planning
+# Persistence Layer Planning
 
 [EASI - 1700](https://jiraent.cms.gov/browse/EASI-1700)
 
@@ -6,14 +6,12 @@ As we begin to develop MINT as a new application based on EASi, we need to evalu
 
 ## Questions this Spike Should Answer
 1. What kind of persistence layer makes sense for the CMMI work?
-    * a.   Relational Database?
+    * a. Relational Database?
     * b. Document Store / NoSQL?
 2.  What kinds of data are we going to be storing? 
 3. Is there value in stored procedures over inline SQL for a relational database?
 4. Do we need anything else on top of a relational data store?
 5. Are there any areas that caching solutions might be helpful?
-
-
 
 ## 1.  Relational vs Non-Relational
 
@@ -22,21 +20,21 @@ As we begin to develop MINT as a new application based on EASi, we need to evalu
 * `+` Highly Structured
 * `+` Existing EASI groundwork
   * `+` Flyway
-  * `+` Exisitng Data Structures
+  * `+` Existing Data Structures
 
 * `-` Can require some more upfront work
 
  #### Non-Relational (Mongo-DB)
 *  `+` Flexible
 *  `+` Document Store seems to fit the form paradigm, and allows for future changes
-* `-` Does not take adbantage of existing EASi framework
+* `-` Does not take advantage of existing EASi framework
 * `-` Requires implementing new frameworks
 * `-` Mongo-DB is not FedRAMP approved
   * if  desired we could use DynamoDB, which is FedRAMP approved
 
 ### Decision Outcome
 * Chosen Alternative: Relational Database
-   * This will levarage the archetecture that is already in use in EASi
+   * This will leverage the architecture that is already in use in EASi
    * It will be simpler for developers to work on both projects
 
 
@@ -68,13 +66,13 @@ The existing EASi paradigm uses [sqlx](https://github.com/CMSgov/easi-app/blob/m
 * `-` Does not take advantage of VSCode SQL editing features
 
  #### Separate SQL files in code base
- * `+` Reusability
- * `+` Performace improvements by preparing the statements
+ * `+` Reusable
+ * `+` Performance improvements by preparing the statements
  * `+` Use existing db driver SQLX
 
 ### Decision Outcome
 * Chosen Alternative: Separate SQL files in code base
-   * This will levarage the archetecture that is already in use in 
+   * This will leverage the architecture that is already in use in 
    * It will create reusable code
 
 

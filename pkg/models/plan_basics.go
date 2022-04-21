@@ -6,6 +6,7 @@ import (
 	"github.com/google/uuid"
 )
 
+// PlanBasics represents the "plan basics" section of a plan
 type PlanBasics struct {
 	ID          uuid.UUID `json:"id" db:"id"`
 	ModelPlanID uuid.UUID `json:"modelPlanID" db:"model_plan_id"`
@@ -24,7 +25,8 @@ type PlanBasics struct {
 	Status      TaskStatus `json:"status" db:"status"`
 }
 
-func (p *PlanBasics) CalcStatus() (e error) {
+// CalcStatus returns a TaskStatus based on how many fields have been entered in the PlanBasics struct
+func (p *PlanBasics) CalcStatus() {
 
 	//TODO look into making a generic function that takes in any parent class object and calcs status
 	fieldCount := 5
@@ -55,5 +57,4 @@ func (p *PlanBasics) CalcStatus() (e error) {
 		decidedStat = TaskInProgress
 	}
 	p.Status = decidedStat
-	return nil
 }
