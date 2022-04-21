@@ -65,7 +65,7 @@ func HandleModelFetchByIDNoRowsError(logger *zap.Logger, err error, id uuid.UUID
 
 func HandleModelFetchGenericError(logger *zap.Logger, err error, id uuid.UUID) error {
 	logger.Error(
-		"Failed to fetch model plan",
+		"Failed to fetch model",
 		zap.Error(err),
 		zap.String("id", id.String()),
 	)
