@@ -1,6 +1,6 @@
 CREATE TABLE plan_milestones (
     id uuid PRIMARY KEY,
-    model_plan_id uuid not null,
+    model_plan_id uuid not null UNIQUE, --foreign key to model plan
 
     enter_cms_clearance  timestamp with time zone NULL,
     enter_hhs_omb_clearance  timestamp with time zone NULL,
