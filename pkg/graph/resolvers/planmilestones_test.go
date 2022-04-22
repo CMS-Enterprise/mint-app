@@ -5,11 +5,12 @@ import (
 
 	"github.com/cmsgov/mint-app/pkg/models"
 
-	"github.com/cmsgov/mint-app/pkg/storage"
 	_ "github.com/lib/pq" // required for postgres driver in sql
 	"github.com/stretchr/testify/assert"
 	"go.uber.org/zap"
 	ld "gopkg.in/launchdarkly/go-server-sdk.v5"
+
+	"github.com/cmsgov/mint-app/pkg/storage"
 )
 
 func TestCreatePlanMilestonesResolver(t *testing.T) {

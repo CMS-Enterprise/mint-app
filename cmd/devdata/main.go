@@ -1,8 +1,6 @@
 package main
 
 import (
-	"time"
-
 	"github.com/google/uuid"
 
 	"github.com/lib/pq"
@@ -121,9 +119,10 @@ func makeModelPlan(modelName string, logger *zap.Logger, store *storage.Store, c
 		cb(&plan)
 	}
 
-	store.ModelPlanCreate(logger, &plan)
-	return &plan
+	dbPlan, _ := store.ModelPlanCreate(logger, &plan)
+	return dbPlan
 }
+
 func makePlanBasics(uuid uuid.UUID, logger *zap.Logger, store *storage.Store, callbacks ...func(*models.PlanBasics)) *models.PlanBasics {
 	// ctx := appcontext.WithLogger(context.Background(), logger)
 	status := models.TaskReady
@@ -139,17 +138,6 @@ func makePlanBasics(uuid uuid.UUID, logger *zap.Logger, store *storage.Store, ca
 		cb(&basics)
 	}
 
-	store.PlanBasicsCreate(logger, &basics)
-	return &basics
-}
-
-func must(_ interface{}, err error) {
-	if err != nil {
-		panic(err)
-	}
-}
-
-func date(year, month, day int) *time.Time {
-	date := time.Date(year, time.Month(month), day, 0, 0, 0, 0, time.UTC)
-	return &date
+	dbBasics, _ := store.PlanBasicsCreate(logger, &basics)
+	return dbBasics
 }

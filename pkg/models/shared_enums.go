@@ -9,6 +9,7 @@ import (
 // ModelCategory represents the category of a model
 type ModelCategory string
 
+// These constants represent the different values of ModelCategory
 const (
 	MCAccountableCare           ModelCategory = "ACCOUNTABLE_CARE"
 	MCDemonstration             ModelCategory = "DEMONSTRATION"
@@ -21,8 +22,10 @@ const (
 	MCTBD                       ModelCategory = "UNKNOWN"
 )
 
+// TeamRole represents the role of a team member
 type TeamRole string
 
+// These constants represent the different values of TeamRole
 const (
 	TeamRoleModelLead  TeamRole = "MODEL_LEAD"
 	TeamRoleModelTeam  TeamRole = "MODEL_TEAM"
@@ -48,6 +51,7 @@ const (
 // CMSCenter represents a CMS center
 type CMSCenter string
 
+// These constants represent the different values of CMSCenter
 const (
 	CMSCMMI                                 CMSCenter = "CMMI"
 	CMSCenterForMedicare                    CMSCenter = "CENTER_FOR_MEDICARE"
@@ -69,45 +73,55 @@ const (
 // 	CMMITBD                                     CMMIGroup = "TBD"
 // )
 
+// ModelType is an enum that represents the basic type of a model
 type ModelType string
 
+// These constants represent the different values of ModelType
 const (
 	MTVoluntary ModelType = "VOLUNTARY"
 	MTMandatory ModelType = "MANDATORY"
 	MTTBD       ModelType = "TBD"
 )
 
+// TriStateAnswer is an enum that represents a yes/no/tbd answer
 type TriStateAnswer string
 
+// These constants represent the different values of TriStateAnswer
 const (
 	TriYes TriStateAnswer = "YES"
 	TriNo  TriStateAnswer = "NO"
-	TriTBD TriStateAnswer = "TBD" //Can also handle unsure
+	TriTBD TriStateAnswer = "TBD"
 )
 
+// TaskStatus is an enum that represents the status of a task
 type TaskStatus string
 
+// These constants represent the different values of TaskStatus
 const (
 	TaskReady      TaskStatus = "READY"
 	TaskInProgress TaskStatus = "IN_PROGRESS"
 	TaskComplete   TaskStatus = "COMPLETE"
 )
 
+// EnumString is a string that can be converted to an Enum
 type EnumString string
+
+// EnumArray is an array of EnumString
 type EnumArray []EnumString
 
 // type EnumArray []interface{}
 
-//inherit the type from enum array
+// CMMIGroupSelection inherits its type from EnumArray
 type CMMIGroupSelection EnumArray
 
+// Value is used by sql.driver.Valuer to convert the EnumArray to a value for the DB
 func (e EnumArray) Value() (driver.Value, error) {
 	j, err := json.Marshal(e)
 	return j, err
 
 }
 
-//Scan is used by sql.scan to read the values from the DB
+// Scan is used by sql.scan to read the values from the DB
 func (e *EnumArray) Scan(src interface{}) error {
 	source, ok := src.([]byte)
 	if !ok {

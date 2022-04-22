@@ -5,10 +5,11 @@ import (
 	_ "embed"
 	"errors"
 
-	"github.com/cmsgov/mint-app/pkg/models"
-	utilityUuid "github.com/cmsgov/mint-app/pkg/shared/utility_uuid"
 	"github.com/google/uuid"
 	"go.uber.org/zap"
+
+	"github.com/cmsgov/mint-app/pkg/models"
+	"github.com/cmsgov/mint-app/pkg/shared/utilityUUID"
 )
 
 //go:embed SQL/plan_collaborator_create.sql
@@ -23,9 +24,10 @@ var planCollaboratorDeleteSQL string
 //go:embed SQL/plan_collaborator_fetch_by_model_plan_id.sql
 var planCollaboratorFetchByModelPlanIDSQL string
 
+// PlanCollaboratorCreate creates a new plan collaborator
 func (s *Store) PlanCollaboratorCreate(logger *zap.Logger, collaborator *models.PlanCollaborator) (*models.PlanCollaborator, error) {
 
-	collaborator.ID = utilityUuid.ValueOrNewUUID(collaborator.ID)
+	collaborator.ID = utilityUUID.ValueOrNewUUID(collaborator.ID)
 
 	statement, err := s.db.PrepareNamed(planCollaboratorCreateSQL)
 	if err != nil {
@@ -40,6 +42,7 @@ func (s *Store) PlanCollaboratorCreate(logger *zap.Logger, collaborator *models.
 	return collaborator, nil
 }
 
+// PlanCollaboratorUpdate updates the plan collaborator for a given id
 func (s *Store) PlanCollaboratorUpdate(logger *zap.Logger, collaborator *models.PlanCollaborator) (*models.PlanCollaborator, error) {
 	statement, err := s.db.PrepareNamed(planCollaboratorUpdateSQL)
 	if err != nil {
@@ -54,6 +57,7 @@ func (s *Store) PlanCollaboratorUpdate(logger *zap.Logger, collaborator *models.
 	return collaborator, nil
 }
 
+// PlanCollaboratorDelete deletes the plan collaborator for a given id
 func (s *Store) PlanCollaboratorDelete(logger *zap.Logger, collaborator *models.PlanCollaborator) (*models.PlanCollaborator, error) {
 	statement, err := s.db.PrepareNamed(planCollaboratorDeleteSQL)
 	if err != nil {
@@ -68,6 +72,7 @@ func (s *Store) PlanCollaboratorDelete(logger *zap.Logger, collaborator *models.
 	return collaborator, nil
 }
 
+// PlanCollaboratorsByModelPlanID returns the plan collaborators for a given model plan id
 func (s *Store) PlanCollaboratorsByModelPlanID(logger *zap.Logger, modelPlanID uuid.UUID) ([]*models.PlanCollaborator, error) {
 	collaborators := []*models.PlanCollaborator{}
 
