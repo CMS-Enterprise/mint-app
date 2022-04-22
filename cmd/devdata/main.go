@@ -60,6 +60,20 @@ func main() {
 		p.CreatedBy = models.StringPointer("ABCD")
 		p.ModifiedBy = models.StringPointer("ABCD")
 	})
+	makePlanCollaborator(uuid.MustParse("f11eb129-2c80-4080-9440-439cbe1a286f"), "MINT", logger, store, func(c *models.PlanCollaborator) {
+		c.FullName = "Mr. Mint"
+		c.TeamRole = models.TeamRoleModelLead
+	})
+
+	makePlanCollaborator(uuid.MustParse("f11eb129-2c80-4080-9440-439cbe1a286f"), "WJZZ", logger, store, func(c *models.PlanCollaborator) {
+		c.FullName = "Steven Wade"
+		c.TeamRole = models.TeamRoleModelTeam
+	})
+
+	makePlanCollaborator(uuid.MustParse("f11eb129-2c80-4080-9440-439cbe1a286f"), "ABCD", logger, store, func(c *models.PlanCollaborator) {
+		c.FullName = "Betty Alpha"
+		c.TeamRole = models.TeamRoleLeadership
+	})
 
 	makeModelPlan("Mr. Mint", logger, store)
 	plan := makeModelPlan("Mrs. Mint", logger, store, func(p *models.ModelPlan) {
@@ -70,6 +84,10 @@ func main() {
 
 		p.CreatedBy = models.StringPointer("MINT")
 		p.ModifiedBy = models.StringPointer("MINT")
+	})
+	makePlanCollaborator(uuid.MustParse("6e224030-09d5-46f7-ad04-4bb851b36eab"), "MINT", logger, store, func(c *models.PlanCollaborator) {
+		c.FullName = "Mr. Mint"
+		c.TeamRole = models.TeamRoleModelLead
 	})
 
 	makePlanBasics(plan.ID, logger, store, func(b *models.PlanBasics) {
@@ -121,6 +139,24 @@ func makeModelPlan(modelName string, logger *zap.Logger, store *storage.Store, c
 
 	dbPlan, _ := store.ModelPlanCreate(logger, &plan)
 	return dbPlan
+}
+func makePlanCollaborator(mpID uuid.UUID, euaID string, logger *zap.Logger, store *storage.Store, callbacks ...func(*models.PlanCollaborator)) *models.PlanCollaborator {
+
+	collab := models.PlanCollaborator{
+		EUAUserID:   euaID,
+		TeamRole:    models.TeamRoleModelTeam,
+		FullName:    euaID,
+		ModelPlanID: mpID,
+
+		CreatedBy:  models.StringPointer("ABCD"),
+		ModifiedBy: models.StringPointer("ABCD"),
+		CMSCenter:  models.CMSCMMI,
+	}
+	for _, cb := range callbacks {
+		cb(&collab)
+	}
+	dbCollab, _ := store.PlanCollaboratorCreate(logger, &collab)
+	return dbCollab
 }
 
 func makePlanBasics(uuid uuid.UUID, logger *zap.Logger, store *storage.Store, callbacks ...func(*models.PlanBasics)) *models.PlanBasics {
