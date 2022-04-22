@@ -18,15 +18,4 @@ VALUES (
         :created_by,
         :modified_by
     )
-    RETURNING
-        id,
-        model_plan_id,
-        eua_user_id,
-        full_name,
-        cms_center,
-        team_role,
-        created_by,
-        created_dts,
-        modified_by,
-        modified_dts
-        ;
+    RETURNING *;

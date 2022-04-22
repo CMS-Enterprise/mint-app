@@ -95,3 +95,9 @@ repos:
       - id: end-of-file-fixer
         name: Add newlines to end of files
         files: \.(sql|scss|md|js|ts|tsx|go|yml|yaml)$
+
+  - repo: https://github.com/tchoedak/pre-commit-sql-format
+    rev: latest
+    hooks:
+      - id: format-sql
+        files: \.(sql)$
