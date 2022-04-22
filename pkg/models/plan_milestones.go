@@ -6,6 +6,7 @@ import (
 	"github.com/google/uuid"
 )
 
+// PlanMilestones represents the "plan milestones" section of a plan
 type PlanMilestones struct {
 	ID          uuid.UUID `json:"id" db:"id"`
 	ModelPlanID uuid.UUID `json:"modelPlanID" db:"model_plan_id"`
@@ -28,18 +29,22 @@ type PlanMilestones struct {
 	ModifiedDts *time.Time `json:"modifiedDts" db:"modified_dts"`
 }
 
+// GetModelTypeName returns a string name that represents the PlanMilestones struct
 func (p PlanMilestones) GetModelTypeName() string {
 	return "Plan_Milestones"
 }
 
+// GetID returns the GetID property for a PlanMilestones struct
 func (p PlanMilestones) GetID() uuid.UUID {
 	return p.ID
 }
 
+// GetPlanID returns the ModelPlanID property for a PlanMilestones struct
 func (p PlanMilestones) GetPlanID() uuid.UUID {
 	return p.ModelPlanID
 }
 
+// GetModifiedBy returns the ModifiedBy property for a PlanMilestones struct
 func (p PlanMilestones) GetModifiedBy() *string {
 	return p.ModifiedBy
 }

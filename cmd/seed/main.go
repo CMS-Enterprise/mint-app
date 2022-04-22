@@ -27,26 +27,16 @@ var rootCmd = &cobra.Command{
 	Long:  "Generates models for use in Cypress tests",
 }
 
-/*var accessibilityRequestCmd = &cobra.Command{
-	Use:   "accessibilityRequest",
+var testCmd = &cobra.Command{
+	Use:   "test",
 	Short: "Generate an Accessibility Request",
 	Run: func(cmd *cobra.Command, args []string) {
 		connect()
 		modelData := os.Getenv("SEED_INPUT")
-		var accessibilityRequest models.AccessibilityRequest
-		if deserializeErr := json.Unmarshal([]byte(modelData), &accessibilityRequest); deserializeErr != nil {
-			template, _ := json.MarshalIndent(accessibilityRequest, "", "  ")
-			fmt.Printf("Please provide input in the following format:\n %s\n", template)
-			log.Fatal(deserializeErr)
-		}
-		makeAccessibilityRequest(&accessibilityRequest, store)
-		serialized, serializeErr := json.MarshalIndent(accessibilityRequest, "", "  ")
-		if serializeErr != nil {
-			log.Fatal(serializeErr)
-		}
-		fmt.Printf("%s", serialized)
+		fmt.Println("SEED INPUT:", modelData)
+		fmt.Printf("store: %v\n", store)
 	},
-}*/
+}
 
 func execute() {
 	if err := rootCmd.Execute(); err != nil {
@@ -56,7 +46,7 @@ func execute() {
 }
 
 func init() {
-	//rootCmd.AddCommand(accessibilityRequestCmd)
+	rootCmd.AddCommand(testCmd)
 }
 
 var store *storage.Store
@@ -92,10 +82,4 @@ func connect() {
 
 func main() {
 	execute()
-}
-
-func must(_ interface{}, err error) {
-	if err != nil {
-		panic(err)
-	}
 }

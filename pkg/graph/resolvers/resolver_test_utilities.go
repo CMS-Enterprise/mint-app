@@ -3,12 +3,14 @@ package resolvers
 import (
 	"github.com/cmsgov/mint-app/pkg/appconfig"
 
-	"github.com/cmsgov/mint-app/pkg/storage"
-	"github.com/cmsgov/mint-app/pkg/testhelpers"
 	"go.uber.org/zap"
 	ld "gopkg.in/launchdarkly/go-server-sdk.v5"
+
+	"github.com/cmsgov/mint-app/pkg/storage"
+	"github.com/cmsgov/mint-app/pkg/testhelpers"
 )
 
+// TestConfigs is a struct that contains all of the dependencies needed to run a test
 type TestConfigs struct {
 	DBConfig  storage.DBConfig
 	LDClient  *ld.LDClient
@@ -17,12 +19,14 @@ type TestConfigs struct {
 	Store     *storage.Store
 }
 
+// GetDefaultTestConfigs returns a TestConfigs struct with all of the dependencies needed to run a test
 func GetDefaultTestConfigs() *TestConfigs {
 	tc := TestConfigs{}
 	tc.GetDefaults()
 	return &tc
 }
 
+// GetDefaults sets the dependencies for the TestConfigs struct
 func (tc *TestConfigs) GetDefaults() {
 	config, ldClient, logger, principal := getTestDependencies()
 	store, _ := storage.NewStore(logger, config, ldClient)
@@ -33,6 +37,7 @@ func (tc *TestConfigs) GetDefaults() {
 	tc.Store = store
 }
 
+// NewDBConfig returns a DBConfig struct with values from appconfig
 func NewDBConfig() storage.DBConfig {
 	config := testhelpers.NewConfig()
 
@@ -46,6 +51,7 @@ func NewDBConfig() storage.DBConfig {
 		MaxConnections: config.GetInt(appconfig.DBMaxConnections),
 	}
 }
+
 func getTestDependencies() (storage.DBConfig, *ld.LDClient, *zap.Logger, *string) {
 
 	config := NewDBConfig()

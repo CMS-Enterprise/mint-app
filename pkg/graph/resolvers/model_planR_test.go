@@ -4,9 +4,10 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/google/uuid"
 	"github.com/stretchr/testify/assert"
+
+	"github.com/cmsgov/mint-app/pkg/models"
 )
 
 func TestModelPlanCreate(t *testing.T) {

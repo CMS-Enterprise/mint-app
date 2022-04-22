@@ -21,12 +21,10 @@ import (
 	"go.uber.org/zap"
 
 	"github.com/cmsgov/mint-app/pkg/appconfig"
-	"github.com/cmsgov/mint-app/pkg/appcontext"
 	"github.com/cmsgov/mint-app/pkg/appses"
 	"github.com/cmsgov/mint-app/pkg/authorization"
 	"github.com/cmsgov/mint-app/pkg/cedar/cedarldap"
 
-	cedarcore "github.com/cmsgov/mint-app/pkg/cedar/core"
 	"github.com/cmsgov/mint-app/pkg/email"
 	"github.com/cmsgov/mint-app/pkg/flags"
 	"github.com/cmsgov/mint-app/pkg/graph"
@@ -89,14 +87,6 @@ func (s *Server) routes(
 	if s.environment.Local() || s.environment.Test() {
 		cedarLDAPClient = local.NewCedarLdapClient(s.logger)
 	}
-
-	// set up CEDAR core API client
-	coreClient := cedarcore.NewClient(
-		appcontext.WithLogger(context.Background(), s.logger),
-		s.Config.GetString(appconfig.CEDARAPIURL),
-		s.Config.GetString(appconfig.CEDARAPIKey),
-		ldClient,
-	)
 
 	// set up Email Client
 	sesConfig := s.NewSESConfig()
@@ -166,7 +156,6 @@ func (s *Server) routes(
 		&s3Client,
 		&emailClient,
 		ldClient,
-		coreClient,
 	)
 	gqlDirectives := generated.DirectiveRoot{HasRole: func(ctx context.Context, obj interface{}, next graphql.Resolver, role model.Role) (res interface{}, err error) {
 		hasRole, err := services.HasRole(ctx, role)
