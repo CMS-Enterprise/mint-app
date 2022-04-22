@@ -8,8 +8,8 @@ import (
 	"github.com/cmsgov/mint-app/pkg/storage"
 )
 
-// CreatePlanBasicsResolver implements resolver logic to create a plan basics object
-func CreatePlanBasicsResolver(logger *zap.Logger, input *models.PlanBasics, principal *string, store *storage.Store) (*models.PlanBasics, error) {
+// CreatePlanBasics implements resolver logic to create a plan basics object
+func CreatePlanBasics(logger *zap.Logger, input *models.PlanBasics, principal *string, store *storage.Store) (*models.PlanBasics, error) {
 	input.CreatedBy = principal
 
 	input.ModifiedBy = input.CreatedBy
@@ -23,8 +23,8 @@ func CreatePlanBasicsResolver(logger *zap.Logger, input *models.PlanBasics, prin
 	return retBasics, err
 }
 
-// UpdatePlanBasicsResolver implements resolver logic to update a plan basics object
-func UpdatePlanBasicsResolver(logger *zap.Logger, input *models.PlanBasics, principal *string, store *storage.Store) (*models.PlanBasics, error) {
+// UpdatePlanBasics implements resolver logic to update a plan basics object
+func UpdatePlanBasics(logger *zap.Logger, input *models.PlanBasics, principal *string, store *storage.Store) (*models.PlanBasics, error) {
 	input.ModifiedBy = principal
 	input.CalcStatus()
 
