@@ -20,6 +20,7 @@ func TestCreatePlanMilestonesResolver(t *testing.T) {
 	principal := "FAKE"
 	principalInfo := models.UserInfo{
 		CommonName: "Fake Tester name",
+		EuaUserID:  principal,
 	}
 
 	store, err := storage.NewStore(logger, config, ldClient)
