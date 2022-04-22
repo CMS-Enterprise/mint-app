@@ -20,7 +20,11 @@ func TestModelPlanCreate(t *testing.T) {
 	config := NewDBConfig()
 	fmt.Print(config)
 
-	result, err := ModelPlanCreate(tc.Logger, &plan, tc.Store)
+	principalInfo := models.UserInfo{
+		CommonName: "Fake Tester name",
+	}
+
+	result, err := ModelPlanCreate(tc.Logger, &plan, tc.Store, &principalInfo)
 	assert.NoError(t, err)
 	assert.NotNil(t, result.ID)
 }

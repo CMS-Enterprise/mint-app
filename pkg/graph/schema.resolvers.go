@@ -53,12 +53,20 @@ func (r *modelPlanResolver) Collaborators(ctx context.Context, obj *models.Model
 func (r *mutationResolver) CreateModelPlan(ctx context.Context, input model.ModelPlanInput) (*models.ModelPlan, error) {
 	logger := appcontext.ZLogger(ctx)
 	principal := appcontext.Principal(ctx).ID()
+	principalInfo, err := r.service.FetchUserInfo(ctx, principal)
+	if err != nil { //if can't get user info, use EUAID as commonName
+		tempPrincipalInfo := models.UserInfo{
+			EuaUserID:  principal,
+			CommonName: principal,
+		}
+		principalInfo = &tempPrincipalInfo
+	}
 
 	plan := ConvertToModelPlan(&input)
 
 	plan.CreatedBy = &principal
 	plan.ModifiedBy = &principal
-	return resolvers.ModelPlanCreate(logger, plan, r.store)
+	return resolvers.ModelPlanCreate(logger, plan, r.store, principalInfo)
 }
 
 func (r *mutationResolver) CreatePlanCollaborator(ctx context.Context, input model.PlanCollaboratorInput) (*models.PlanCollaborator, error) {

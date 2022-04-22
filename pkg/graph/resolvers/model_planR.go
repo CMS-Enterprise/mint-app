@@ -9,7 +9,7 @@ import (
 )
 
 // ModelPlanCreate implements resolver logic to create a model plan
-func ModelPlanCreate(logger *zap.Logger, plan *models.ModelPlan, store *storage.Store) (*models.ModelPlan, error) {
+func ModelPlanCreate(logger *zap.Logger, plan *models.ModelPlan, store *storage.Store, principalInfo *models.UserInfo) (*models.ModelPlan, error) {
 
 	createdPlan, err := store.ModelPlanCreate(logger, plan)
 	if err != nil {
@@ -21,7 +21,7 @@ func ModelPlanCreate(logger *zap.Logger, plan *models.ModelPlan, store *storage.
 		ModelPlanID: createdPlan.ID,
 		TeamRole:    models.TeamRoleModelLead,
 		CMSCenter:   models.CMSCMMI,
-		FullName:    *createdPlan.CreatedBy, //TOOD get this information from CEDAR
+		FullName:    principalInfo.CommonName, //TOOD get this information from CEDAR
 	}
 	_, _ = CreatePlanCollaborator(logger, &colab, createdPlan.CreatedBy, store)
 
