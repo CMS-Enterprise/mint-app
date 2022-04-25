@@ -7,7 +7,10 @@ BEGIN
  THEN
     RAISE EXCEPTION 'There must be at least one MODEL_LEAD assigned to each model plan';
      END IF;
-    RETURN OLD;
+     IF (TG_OP = 'DELETE') THEN RETURN OLD;
+     ELSE
+    RETURN NEW;
+    END IF;
 END
 $role_check$ LANGUAGE plpgsql;
 
