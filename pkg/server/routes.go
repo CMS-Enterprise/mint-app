@@ -86,9 +86,9 @@ func (s *Server) routes(
 		s.Config.GetString(appconfig.CEDARAPIURL),
 		s.Config.GetString(appconfig.CEDARAPIKey),
 	)
-	if s.environment.Local() || s.environment.Test() {
-		cedarLDAPClient = local.NewCedarLdapClient(s.logger)
-	}
+	// if s.environment.Local() || s.environment.Test() {
+	// 	cedarLDAPClient = local.NewCedarLdapClient(s.logger)
+	// }
 
 	// set up CEDAR core API client
 	coreClient := cedarcore.NewClient(

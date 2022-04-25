@@ -70,7 +70,7 @@ const Table = ({ data, hiddenColumns }: TableProps) => {
         Cell: ({ row, value }: any) => {
           if (value) {
             const leads = value.filter((item: CollaboratorsType) => {
-              return item.teamRole.toLowerCase().includes('lead');
+              return item.teamRole.toLowerCase().includes('model_lead');
             });
             return (
               <>

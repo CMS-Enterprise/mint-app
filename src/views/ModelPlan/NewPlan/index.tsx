@@ -42,6 +42,7 @@ const NewPlanContent = () => {
 
   const handleCreateDraftModelPlan = (formikValues: { modelName: string }) => {
     oktaAuth.getUser().then((user: any) => {
+      // TODO: Remove the FE adding of initial user - Will happen on BE when plan is created
       const { modelName } = formikValues;
       mutate({
         variables: {
