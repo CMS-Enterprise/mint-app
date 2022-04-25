@@ -26,8 +26,9 @@ const newModel = {
     noCollaboratorsInfo: 'Please add any team members'
   },
   continueWithoutAdding: 'Continue without adding team members',
-  searchTeamInfo:
-    'Search for a team member to add to your model team. Team members are all eligible to view and edit all sections of a Model Plan, including uploading and removing documents as well as adding or removing team members.',
+  teamInfo:
+    'Team members are all eligible to view and edit all sections of a Model Plan, including uploading and removing documents as well as adding or removing team members.',
+  searchTeamInfo: 'Search for a team member to add to your model team.',
   teamMemberName: 'Team member name',
   teamMemberRole: 'Team member role',
   searchMemberInfo:

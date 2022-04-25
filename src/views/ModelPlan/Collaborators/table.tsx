@@ -19,13 +19,13 @@ import {
 type TableProps = {
   collaborators: CollaboratorType[];
   setModalOpen: (isModalOpen: boolean) => void;
-  setRemoveUser: (removeUser: CollaboratorType) => void;
+  setRemoveCollaborator: (removeUser: CollaboratorType) => void;
 };
 
 const CollaboratorsTable = ({
   collaborators,
   setModalOpen,
-  setRemoveUser
+  setRemoveCollaborator
 }: TableProps) => {
   const { modelId } = useParams<{ modelId: string }>();
   const { t } = useTranslation('newModel');
@@ -68,7 +68,7 @@ const CollaboratorsTable = ({
                   type="button"
                   unstyled
                   onClick={() => {
-                    setRemoveUser(row.original);
+                    setRemoveCollaborator(row.original);
                     setModalOpen(true);
                   }}
                 >
@@ -80,7 +80,7 @@ const CollaboratorsTable = ({
         }
       }
     ];
-  }, [t, modelId, setModalOpen, setRemoveUser, collaborators.length]);
+  }, [t, modelId, setModalOpen, setRemoveCollaborator, collaborators.length]);
 
   const {
     getTableProps,

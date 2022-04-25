@@ -124,10 +124,10 @@ const Collaborators = () => {
       <div className="grid-container">
         <div className="desktop:grid-col-6">
           <PageHeading className="margin-top-6 margin-bottom-2">
-            {!collaboratorId ? t('addATeamMember') : t('updateATeamMember')}
+            {collaboratorId ? t('updateATeamMember') : t('addATeamMember')}
           </PageHeading>
           <div className="margin-bottom-6 line-height-body-6">
-            {t('searchTeamInfo')}
+            {!collaboratorId && t('searchTeamInfo')} {t('teamInfo')}
           </div>
 
           <Formik
@@ -275,16 +275,18 @@ const Collaborators = () => {
                       </Field>
                     </FieldGroup>
 
-                    <Alert
-                      type="info"
-                      slim
-                      data-testid="mandatory-fields-alert"
-                      className="margin-y-4"
-                    >
-                      <span className="mandatory-fields-alert__text">
-                        {t('searchMemberInfo')}
-                      </span>
-                    </Alert>
+                    {!collaboratorId && (
+                      <Alert
+                        type="info"
+                        slim
+                        data-testid="mandatory-fields-alert"
+                        className="margin-y-4"
+                      >
+                        <span className="mandatory-fields-alert__text">
+                          {t('searchMemberInfo')}
+                        </span>
+                      </Alert>
+                    )}
 
                     <div className="margin-y-4 display-block">
                       <Button

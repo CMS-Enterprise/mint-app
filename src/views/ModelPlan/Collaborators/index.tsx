@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useParams } from 'react-router-dom';
-import { useQuery } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import {
   Breadcrumb,
   BreadcrumbBar,
@@ -15,7 +15,12 @@ import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
 import Alert from 'components/shared/Alert';
 import Spinner from 'components/Spinner';
+import DeleteModelPlanCollaborator from 'queries/DeleteModelPlanCollaborator';
 import GetModelPlanCollaborators from 'queries/GetModelCollaborators';
+import {
+  DeleteModelPlanCollaborator as DeleteModelPlanCollaboratorType,
+  DeleteModelPlanCollaborator_deletePlanCollaborator as ModelPlanCollaboratorType
+} from 'queries/types/DeleteModelPlanCollaborator';
 import {
   GetModelCollaborators,
   GetModelCollaborators_modelPlan_collaborators as GetCollaboratorsType
@@ -28,9 +33,16 @@ const Collaborators = () => {
   const { t: h } = useTranslation('draftModelPlan');
   const { t } = useTranslation('newModel');
   const [isModalOpen, setModalOpen] = useState(false);
-  const [removeUser, setRemoveUser] = useState<GetCollaboratorsType>({});
+  const [
+    removeCollaborator,
+    setRemoveCollaborator
+  ] = useState<GetCollaboratorsType>({});
 
-  const { loading, error, data } = useQuery<GetModelCollaborators>(
+  const [mutate] = useMutation<DeleteModelPlanCollaboratorType>(
+    DeleteModelPlanCollaborator
+  );
+
+  const { loading, error, data, refetch } = useQuery<GetModelCollaborators>(
     GetModelPlanCollaborators,
     {
       variables: {
@@ -50,18 +62,39 @@ const Collaborators = () => {
     );
   }
 
+  const handleRemoveCollaborator = (
+    collaborator: ModelPlanCollaboratorType
+  ) => {
+    mutate({
+      variables: {
+        input: collaborator
+      }
+    })
+      .then(response => {
+        if (!response?.errors) {
+          console.log(response);
+          setModalOpen(false);
+          refetch();
+        }
+      })
+      .catch(errors => {
+        console.log(errors);
+        setModalOpen(false);
+        refetch();
+      });
+  };
+
   const RemoveCollaborator = () => {
     return (
       <Modal isOpen={isModalOpen} closeModal={() => setModalOpen(false)}>
         <PageHeading headingLevel="h2" className="margin-top-0">
-          {t('modal.heading')} {removeUser.fullName}?
+          {t('modal.heading')} {removeCollaborator.fullName}?
         </PageHeading>
         <p>{t('modal.subheading')}</p>
         <Button
           type="button"
           className="margin-right-4"
-          // TODO GQL query to remove collaborator
-          onClick={() => console.log('TODO remove user!')}
+          onClick={() => handleRemoveCollaborator(removeCollaborator)}
         >
           {t('modal.confirm')}
         </Button>
@@ -110,7 +143,7 @@ const Collaborators = () => {
             <CollaboratorsTable
               collaborators={collaborators}
               setModalOpen={setModalOpen}
-              setRemoveUser={setRemoveUser}
+              setRemoveCollaborator={setRemoveCollaborator}
             />
           )}
 

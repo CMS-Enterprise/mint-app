@@ -8,6 +8,8 @@ export default gql`
         fullName
         euaUserID
         teamRole
+        cmsCenter
+        modelPlanID
         createdDts
       }
     }
