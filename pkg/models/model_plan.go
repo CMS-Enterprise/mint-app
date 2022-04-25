@@ -7,6 +7,7 @@ import (
 	"github.com/lib/pq"
 )
 
+// ModelPlan is the top-level object for an entire draft model plan
 type ModelPlan struct {
 	ID            uuid.UUID      `json:"id" db:"id"`
 	ModelName     *string        `json:"modelName" db:"model_name"`
@@ -19,4 +20,17 @@ type ModelPlan struct {
 	ModifiedDts   *time.Time     `json:"modifiedDts" db:"modified_dts"`
 }
 
-// type ModelPlanInput ModelPlan
+// GetModelTypeName returns a string name that represents the ModelPlan struct
+func (m ModelPlan) GetModelTypeName() string {
+	return "Model_Plan"
+}
+
+// GetPlanID returns the ModifiedBy property for a ModelPlan struct
+func (m ModelPlan) GetPlanID() uuid.UUID {
+	return m.ID
+}
+
+// GetModifiedBy returns the ModifiedBy property for a ModelPlan struct
+func (m ModelPlan) GetModifiedBy() *string {
+	return m.ModifiedBy
+}

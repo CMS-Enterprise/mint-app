@@ -21,8 +21,6 @@ import (
 	ld "gopkg.in/launchdarkly/go-server-sdk.v5"
 
 	"github.com/cmsgov/mint-app/pkg/appconfig"
-	"github.com/cmsgov/mint-app/pkg/appcontext"
-	cedarcore "github.com/cmsgov/mint-app/pkg/cedar/core"
 	"github.com/cmsgov/mint-app/pkg/email"
 	"github.com/cmsgov/mint-app/pkg/graph/generated"
 	"github.com/cmsgov/mint-app/pkg/graph/model"
@@ -143,8 +141,6 @@ func TestGraphQLTestSuite(t *testing.T) {
 
 	cedarLdapClient := local.NewCedarLdapClient(logger)
 
-	cedarCoreClient := cedarcore.NewClient(appcontext.WithLogger(context.Background(), logger), "fake", "fake", ldClient)
-
 	directives := generated.DirectiveRoot{HasRole: func(ctx context.Context, obj interface{}, next graphql.Resolver, role model.Role) (res interface{}, err error) {
 		return next(ctx)
 	}}
@@ -152,7 +148,7 @@ func TestGraphQLTestSuite(t *testing.T) {
 	var resolverService ResolverService
 	resolverService.FetchUserInfo = cedarLdapClient.FetchUserInfo
 
-	resolver := NewResolver(store, resolverService, &s3Client, &emailClient, ldClient, cedarCoreClient)
+	resolver := NewResolver(store, resolverService, &s3Client, &emailClient, ldClient)
 	schema := generated.NewExecutableSchema(generated.Config{Resolvers: resolver, Directives: directives})
 	graphQLClient := client.New(handler.NewDefaultServer(schema))
 

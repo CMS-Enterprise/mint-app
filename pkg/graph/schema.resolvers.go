@@ -34,6 +34,13 @@ func (r *modelPlanResolver) Basics(ctx context.Context, obj *models.ModelPlan) (
 	return resolvers.PlanBasicsGetByModelPlanID(logger, &principal, obj.ID, r.store)
 }
 
+func (r *modelPlanResolver) Milestones(ctx context.Context, obj *models.ModelPlan) (*models.PlanMilestones, error) {
+	logger := appcontext.ZLogger(ctx)
+	principal := appcontext.Principal(ctx).ID()
+
+	return resolvers.FetchPlanMilestonesByModelPlanID(logger, &principal, obj.ID, r.store)
+}
+
 func (r *modelPlanResolver) Collaborators(ctx context.Context, obj *models.ModelPlan) ([]*models.PlanCollaborator, error) {
 	principal := appcontext.Principal(ctx).ID()
 	logger := appcontext.ZLogger(ctx)
@@ -103,6 +110,22 @@ func (r *mutationResolver) UpdatePlanBasics(ctx context.Context, input model.Pla
 	return resolvers.UpdatePlanBasicsResolver(logger, basics, &principal, r.store)
 }
 
+func (r *mutationResolver) CreatePlanMilestones(ctx context.Context, input model.PlanMilestonesInput) (*models.PlanMilestones, error) {
+	basics := ConvertToPlanMilestonesModel(&input)
+	principal := appcontext.Principal(ctx).ID()
+	logger := appcontext.ZLogger(ctx)
+
+	return resolvers.CreatePlanMilestones(logger, basics, &principal, r.store)
+}
+
+func (r *mutationResolver) UpdatePlanMilestones(ctx context.Context, input model.PlanMilestonesInput) (*models.PlanMilestones, error) {
+	basics := ConvertToPlanMilestonesModel(&input)
+	principal := appcontext.Principal(ctx).ID()
+	logger := appcontext.ZLogger(ctx)
+
+	return resolvers.UpdatePlanMilestones(logger, basics, &principal, r.store)
+}
+
 func (r *queryResolver) CurrentUser(ctx context.Context) (*model.CurrentUser, error) {
 	ldUser := flags.Principal(ctx)
 	userKey := ldUser.GetKey()
@@ -128,6 +151,12 @@ func (r *queryResolver) PlanBasics(ctx context.Context, id uuid.UUID) (*models.P
 	logger := appcontext.ZLogger(ctx)
 
 	return resolvers.FetchPlanBasicsByID(logger, id, r.store)
+}
+
+func (r *queryResolver) PlanMilestones(ctx context.Context, id uuid.UUID) (*models.PlanMilestones, error) {
+	logger := appcontext.ZLogger(ctx)
+
+	return resolvers.FetchPlanMilestonesByID(logger, id, r.store)
 }
 
 func (r *queryResolver) ModelPlanCollection(ctx context.Context) ([]*models.ModelPlan, error) {

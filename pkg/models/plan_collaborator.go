@@ -1,12 +1,12 @@
 package models
 
 import (
-	// "errors"
 	"time"
 
 	"github.com/google/uuid"
 )
 
+// PlanCollaborator represents a plan collaborator
 type PlanCollaborator struct {
 	ID          uuid.UUID  `json:"id" db:"id"`
 	ModelPlanID uuid.UUID  `json:"modelPlanID" db:"model_plan_id"`

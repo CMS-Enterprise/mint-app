@@ -26,4 +26,3 @@ ALTER TABLE plan_document
         REFERENCES public.model_plan (id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
-
