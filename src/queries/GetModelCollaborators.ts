@@ -6,6 +6,7 @@ export default gql`
       collaborators {
         id
         fullName
+        euaUserID
         teamRole
         createdDts
       }

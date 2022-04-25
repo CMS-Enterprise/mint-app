@@ -1,50 +1,51 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
-import { StylesConfig } from 'react-select';
-import AsyncSelect from 'react-select/async';
-import { useApolloClient, useMutation, useQuery } from '@apollo/client';
-import { Button, Dropdown, Label } from '@trussworks/react-uswds';
+import { useMutation, useQuery } from '@apollo/client';
+import {
+  Combobox,
+  ComboboxInput,
+  ComboboxList,
+  ComboboxOption,
+  ComboboxPopover
+} from '@reach/combobox';
+import { Button, Dropdown, Label, TextInput } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import Alert from 'components/shared/Alert';
-// import AutoSave from 'components/shared/AutoSave';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import teamRoles from 'constants/enums/teamRoles';
+import useUserSearch from 'hooks/getCedarUsers';
 import CreateModelPlanCollaborator from 'queries/CreateModelPlanCollaborator';
-import GetCedarUser from 'queries/GetCedarUser';
 import GetModelPlanCollaborators from 'queries/GetModelCollaborators';
+import { CreateModelPlanCollaborator as CreateCollaboratorsType } from 'queries/types/CreateModelPlanCollaborator';
 import {
   GetModelCollaborators,
   GetModelCollaborators_modelPlan_collaborators as GetCollaboratorsType
 } from 'queries/types/GetModelCollaborators';
-import {
-  CreateModelPlanCollaborator as CreateCollaboratorsType,
-  CreateModelPlanCollaborator_createPlanCollaborator as CollaboratorsType
-} from 'queries/types/CreateModelPlanCollaborator';
-import { GetCedarUser_cedarPersonsByCommonName as GetCedarUserType } from 'queries/types/GetCedarUser';
-import {
-  UpdateModelPlanCollaborator as UpdateModelPlanCollaboratorType,
-  UpdateModelPlanCollaborator_updatePlanCollaborator as UpdateCollaboratorsType
-} from 'queries/types/UpdateModelPlanCollaborator';
+import { UpdateModelPlanCollaborator as UpdateModelPlanCollaboratorType } from 'queries/types/UpdateModelPlanCollaborator';
 import UpdateModelPlanCollaborator from 'queries/UpdateModelPlanCollaborator';
 import { CollaboratorForm } from 'types/collaborator';
 import flattenErrors from 'utils/flattenErrors';
 import translateTeamRole from 'utils/modelPlan';
 import CollaboratorsValidationSchema from 'validations/modelPlanCollaborators';
 
+import '@reach/combobox/styles.css';
+
 const Collaborators = () => {
-  const client = useApolloClient();
   const { modelId } = useParams<{ modelId: string }>();
-    const { collaboratorId } = useParams<{ collaboratorId: string }>();
+  const { collaboratorId } = useParams<{ collaboratorId: string }>();
   const { t: h } = useTranslation('draftModelPlan');
   const { t } = useTranslation('newModel');
   const formikRef = useRef<FormikProps<CollaboratorForm>>(null);
+
+  const [searchTerm, setSearchTerm] = useState('');
+  const foundUsers = useUserSearch(searchTerm);
 
   const history = useHistory();
   const [create] = useMutation<CreateCollaboratorsType>(
@@ -54,20 +55,24 @@ const Collaborators = () => {
     UpdateModelPlanCollaborator
   );
 
-  const { data } = useQuery<GetModelCollaborators>(
-    GetModelPlanCollaborators,
-    {
-      variables: {
-        id: modelId
-      }
-    }
-  );
+  const { data } = useQuery<GetModelCollaborators>(GetModelPlanCollaborators, {
+    variables: {
+      id: modelId
+    },
+    skip: !collaboratorId
+  });
 
-  const collaborators = (data?.modelPlan?.collaborators ??
-    []) as GetCollaboratorsType[];
+  // TODO: Replace with query for single user once BE complete
+  const collaborator = (data?.modelPlan?.collaborators.filter(
+    user => user.id === collaboratorId
+  )[0] ?? {
+    euaUserID: '',
+    fullName: '',
+    teamRole: ''
+  }) as GetCollaboratorsType;
 
   const handleUpdateDraftModelPlan = (formikValues?: CollaboratorForm) => {
-    const { fullName, teamRole, euaUserID } = formikValues || {};
+    const { fullName = '', teamRole = '', euaUserID = '' } = formikValues || {};
 
     if (collaboratorId) {
       update({
@@ -80,100 +85,46 @@ const Collaborators = () => {
             modelPlanID: modelId
           }
         }
-      }).then(response => {
-        if (!response?.errors) {
-          history.push(`/models/new-plan/${modelId}/collaborators`);
-        }
-      });
+      })
+        .then(response => {
+          if (!response?.errors) {
+            history.push(`/models/new-plan/${modelId}/collaborators`);
+          }
+        })
+        .catch(errors => {
+          formikRef?.current?.setErrors(errors);
+        });
     } else {
-    create({
-      variables: {
-        input: {
-          fullName,
-          teamRole,
-          euaUserID,
-          cmsCenter: 'CMMI',
-          modelPlanID: modelId
-        }
-      }
-    })
-      .then(response => {
-        if (!response?.errors) {
-          history.push(`/models/new-plan/${modelId}/collaborators`);
+      create({
+        variables: {
+          input: {
+            fullName,
+            teamRole,
+            euaUserID,
+            cmsCenter: 'CMMI',
+            modelPlanID: modelId
+          }
         }
       })
-      .catch(errors => {
-        formikRef?.current?.setErrors(errors);
-      });
-    // }
+        .then(response => {
+          if (!response?.errors) {
+            history.push(`/models/new-plan/${modelId}/collaborators`);
+          }
+        })
+        .catch(errors => {
+          formikRef?.current?.setErrors(errors);
+        });
+    }
   };
 
-  // load options using GQL CEDAR call
-  const loadOptions = (inputValue: string) => {
-    return client
-      .query({
-        query: GetCedarUser,
-        variables: { commonName: inputValue }
-      })
-      .then(res => {
-        return res.data.cedarPersonsByCommonName;
-      });
-  };
-
-  const initialValues: CollaboratorForm = {
-    euaUserID: '',
-    fullName: '',
-    teamRole: ''
-  };
-
-  const customStyles: StylesConfig = {
-    option: (provided: any, state) => ({
-      ...provided,
-      color: 'white',
-      padding: 10,
-      backgroundColor: state.isSelected ? '#4c8bf5' : '#565c65',
-      '&:hover': {
-        borderColor: '#4c8bf5'
-      }
-    }),
-    noOptionsMessage: provided => ({
-      ...provided,
-      color: 'white',
-      padding: 10,
-      backgroundColor: '565c65'
-    }),
-    control: base => ({
-      ...base,
-      border: '1px solid black',
-      borderRadius: '0px',
-      maxWidth: '30rem',
-      width: '100%'
-    }),
-    menu: provided => ({
-      ...provided,
-      maxWidth: '30rem',
-      width: '100%'
-    }),
-    menuList: provided => ({
-      ...provided,
-      borderRadius: '5px',
-      border: '1px solid black',
-      backgroundColor: '#565c65'
-    }),
-    indicatorsContainer: provided => ({
-      ...provided,
-      svg: {
-        fill: 'black'
-      }
-    })
-  };
+  const initialValues: CollaboratorForm = collaborator;
 
   return (
     <MainContent className="margin-bottom-5">
       <div className="grid-container">
         <div className="desktop:grid-col-6">
           <PageHeading className="margin-top-6 margin-bottom-2">
-            {t('addATeamMember')}
+            {!collaboratorId ? t('addATeamMember') : t('updateATeamMember')}
           </PageHeading>
           <div className="margin-bottom-6 line-height-body-6">
             {t('searchTeamInfo')}
@@ -181,6 +132,7 @@ const Collaborators = () => {
 
           <Formik
             initialValues={initialValues}
+            enableReinitialize
             onSubmit={handleUpdateDraftModelPlan}
             validationSchema={CollaboratorsValidationSchema}
             validateOnBlur={false}
@@ -240,22 +192,52 @@ const Collaborators = () => {
                       </Label>
                       <FieldErrorMsg>{flatErrors.fullName}</FieldErrorMsg>
 
-                      <AsyncSelect
-                        styles={customStyles}
-                        cacheOptions
-                        getOptionLabel={(selectedUser: GetCedarUserType) =>
-                          selectedUser.commonName
-                        }
-                        getOptionValue={(selectedUser: GetCedarUserType) =>
-                          selectedUser.euaUserId
-                        }
-                        onChange={(selectedUser: GetCedarUserType) => {
-                          setFieldValue('euaUserID', selectedUser?.euaUserId);
-                          setFieldValue('fullName', selectedUser?.commonName);
-                        }}
-                        loadOptions={loadOptions}
-                        defaultOptions
-                      />
+                      {collaboratorId ? (
+                        <Field
+                          as={TextInput}
+                          disabled
+                          error={!!flatErrors.fullName}
+                          id="collaboration-full-name"
+                          name="fullName"
+                        />
+                      ) : (
+                        <Combobox
+                          aria-label="Cedar-Users"
+                          onSelect={item => {
+                            const foundUser = foundUsers?.userObj[item];
+                            setFieldValue('fullName', foundUser?.commonName);
+                            setFieldValue('euaUserID', foundUser?.euaUserId);
+                          }}
+                        >
+                          <ComboboxInput
+                            className="usa-select"
+                            selectOnClick
+                            onChange={(
+                              e: React.ChangeEvent<HTMLInputElement>
+                            ) => {
+                              setSearchTerm(e?.target?.value);
+                            }}
+                          />
+                          {foundUsers?.formattedUsers && (
+                            <ComboboxPopover>
+                              {foundUsers.formattedUsers.length > 0 ? (
+                                <ComboboxList>
+                                  {foundUsers.formattedUsers.map(user => {
+                                    const str = `${user.label}, ${user.value}`;
+                                    return (
+                                      <ComboboxOption key={str} value={str} />
+                                    );
+                                  })}
+                                </ComboboxList>
+                              ) : (
+                                <span className="display-block margin-1">
+                                  {h('noResults')}
+                                </span>
+                              )}
+                            </ComboboxPopover>
+                          )}
+                        </Combobox>
+                      )}
                     </FieldGroup>
 
                     <FieldGroup
@@ -270,7 +252,7 @@ const Collaborators = () => {
                         as={Dropdown}
                         id="collaborator-role"
                         name="role"
-                        defaultValue=""
+                        value={values.teamRole}
                         onChange={(e: any) => {
                           setFieldValue('teamRole', e.target.value);
                         }}
@@ -310,23 +292,21 @@ const Collaborators = () => {
                         disabled={!values.fullName || !values.teamRole}
                         onClick={() => setErrors({})}
                       >
-                        {t('addTeamMemberButton')}
+                        {!collaboratorId
+                          ? t('addTeamMemberButton')
+                          : t('updateTeamMember')}
                       </Button>
                     </div>
                   </Form>
-                  {/* <AutoSave
-                    values={values}
-                    onSave={() => {
-                      handleUpdateDraftModelPlan(formikRef?.current?.values);
-                    }}
-                    debounceDelay={3000}
-                  /> */}
                 </>
               );
             }}
           </Formik>
           <UswdsReactLink to={`/models/new-plan/${modelId}/collaborators`}>
-            <span>&larr; </span> {t('dontAddTeamMember')}
+            <span>&larr; </span>{' '}
+            {!collaboratorId
+              ? t('dontAddTeamMember')
+              : t('dontUpdateTeamMember')}
           </UswdsReactLink>
         </div>
       </div>

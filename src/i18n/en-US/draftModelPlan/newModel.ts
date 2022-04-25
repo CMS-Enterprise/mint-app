@@ -12,7 +12,9 @@ const newModel = {
     'Add any team members who will be collaborating on your Model Plan.  You can edit this list at any time.',
   teamMembers: 'Team members',
   addATeamMember: 'Add a team member',
+  updateATeamMember: 'Update a team member',
   addTeamMemberButton: 'Add team member',
+  updateTeamMember: 'Update team member',
   table: {
     name: 'Name',
     role: 'Role',
@@ -31,6 +33,8 @@ const newModel = {
   searchMemberInfo:
     'This new team member will be able to view and edit anything about a model plan. Please make sure this individual should be able to do this before you proceed.',
   dontAddTeamMember: 'Don’t add a team member and return to the previous page',
+  dontUpdateTeamMember:
+    'Don’t update a team member and return to the previous page',
   addAnotherMember: 'Add another team member',
   modal: {
     heading: 'Are you sure you want to remove ',

@@ -13,6 +13,7 @@ export interface GetModelCollaborators_modelPlan_collaborators {
   __typename: "PlanCollaborator";
   id: UUID;
   fullName: string;
+  euaUserID: string;
   teamRole: TeamRole;
   createdDts: Time | null;
 }
