@@ -19,6 +19,7 @@ func ConvertToModelPlan(mpi *model.ModelPlanInput) *models.ModelPlan {
 		CMSCenter:     mpi.CmsCenter,
 		CMMIGroup:     cmmiGroup,
 		Archived:      mpi.Archived,
+		Status:        mpi.Status,
 		CreatedBy:     mpi.CreatedBy,
 		CreatedDts:    mpi.CreatedDts,
 		ModifiedBy:    mpi.ModifiedBy,

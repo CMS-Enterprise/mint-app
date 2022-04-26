@@ -5,6 +5,7 @@ SELECT
         cms_center,
         cmmi_group,
         archived,
+        status,
         created_by,
         created_dts,
         modified_by,

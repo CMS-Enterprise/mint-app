@@ -3,6 +3,7 @@ SELECT
         model_name,
         model_category,
         cms_center,
+        status,
         cmmi_group,
         archived,
         created_by,

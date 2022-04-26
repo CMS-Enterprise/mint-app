@@ -40,6 +40,7 @@ type ModelPlan {
   basics: PlanBasics
   milestones: PlanMilestones
   collaborators: [PlanCollaborator!]!
+  status: ModelStatus!
 }
 
 """
@@ -56,6 +57,7 @@ createdBy: String
 createdDts: Time
 modifiedBy: String
 modifiedDts: Time
+status: ModelStatus!
 }
 
 """
@@ -244,7 +246,7 @@ enum ModelType
   TBD
 }
 
-enum ModelCategory{
+enum ModelCategory {
 	ACCOUNTABLE_CARE
 	DEMONSTRATION
 	EPISODE_BASED_PAYMENT_INITIATIVES
@@ -254,6 +256,18 @@ enum ModelCategory{
 	INIT_SPEED_ADOPT_BEST_PRACTICE
 	PRIMARY_CARE_TRANSFORMATION
 	UNKNOWN
+}
+
+enum ModelStatus {
+	PLAN_DRAFT
+	PLAN_COMPLETE
+	ICIP_COMPLETE
+	INTERNAL_CMMI_CLEARANCE
+	CMS_CLEARANCE
+	HHS_CLEARANCE
+	OMB_ASRF_CLEARANCE
+	CLEARED
+	ANNOUNCED
 }
 
 enum CMSCenter {
