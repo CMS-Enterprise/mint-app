@@ -23,7 +23,7 @@ type LaunchDarklySettings struct {
 	SignedHash string `json:"signedHash"`
 }
 
-// ModelPlanInput represent the data point for plans about a model. It is the central data type in the appliation
+// ModelPlanInput represent the data point for plans about a model. It is the central data type in the application
 type ModelPlanInput struct {
 	ID            *uuid.UUID            `json:"id"`
 	ModelName     *string               `json:"modelName"`
@@ -64,6 +64,16 @@ type PlanCollaboratorInput struct {
 	CreatedDts  *time.Time       `json:"createdDts"`
 	ModifiedBy  *string          `json:"modifiedBy"`
 	ModifiedDts *time.Time       `json:"modifiedDts"`
+}
+
+// PlanDocumentInput represents the data required to create, modify, or delete a document on a plan
+type PlanDocumentInput struct {
+	ID          *uuid.UUID `json:"id"`
+	ModelPlanID uuid.UUID  `json:"modelPlanID"`
+	CreatedBy   *string    `json:"createdBy"`
+	CreatedDts  *time.Time `json:"createdDts"`
+	ModifiedBy  *string    `json:"modifiedBy"`
+	ModifiedDts *time.Time `json:"modifiedDts"`
 }
 
 // Represents plan milestones input

@@ -81,6 +81,33 @@ func ConvertToPlanMilestonesModel(input *model.PlanMilestonesInput) *models.Plan
 	return &model
 }
 
+// ConvertToPlanDocumentModel takes an auto-generated model plan input and converts it to a handwritten one
+func ConvertToPlanDocumentModel(input *model.PlanDocumentInput) *models.PlanDocument {
+	model := models.PlanDocument{
+		ModelPlanID:  input.ModelPlanID,
+		FileType:     nil,
+		Bucket:       nil,
+		FileKey:      nil,
+		VirusScanned: false,
+		VirusClean:   false,
+		FileName:     nil,
+		FileSize:     0,
+		DocumentType: nil,
+		OtherType:    nil,
+		DeletedAt:    nil,
+		CreatedBy:    input.CreatedBy,
+		CreatedDts:   input.CreatedDts,
+		ModifiedBy:   input.ModifiedBy,
+		ModifiedDts:  input.ModifiedDts,
+	}
+
+	if input.ID != nil {
+		model.ID = *input.ID
+	}
+
+	return &model
+}
+
 // ConvertToPlanCollaborator takes an auto-generated plan collaborator input and converts it to a hand-written one
 func ConvertToPlanCollaborator(pci *model.PlanCollaboratorInput) *models.PlanCollaborator {
 	collaborator := models.PlanCollaborator{

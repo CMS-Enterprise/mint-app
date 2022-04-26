@@ -5,6 +5,7 @@ package graph
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/google/uuid"
 
@@ -48,6 +49,10 @@ func (r *modelPlanResolver) Collaborators(ctx context.Context, obj *models.Model
 	collaborators, err := resolvers.FetchCollaboratorsByModelPlanID(logger, &principal, obj.ID, r.store)
 
 	return collaborators, err
+}
+
+func (r *modelPlanResolver) Documents(ctx context.Context, obj *models.ModelPlan) ([]*models.PlanDocument, error) {
+	panic(fmt.Errorf("not implemented"))
 }
 
 func (r *mutationResolver) CreateModelPlan(ctx context.Context, input model.ModelPlanInput) (*models.ModelPlan, error) {
@@ -126,6 +131,30 @@ func (r *mutationResolver) UpdatePlanMilestones(ctx context.Context, input model
 	return resolvers.UpdatePlanMilestones(logger, basics, &principal, r.store)
 }
 
+func (r *mutationResolver) CreatePlanDocument(ctx context.Context, input model.PlanDocumentInput) (*models.PlanDocument, error) {
+	document := ConvertToPlanDocumentModel(&input)
+	principal := appcontext.Principal(ctx).ID()
+	logger := appcontext.ZLogger(ctx)
+
+	return resolvers.PlanDocumentCreate(logger, document, &principal, r.store)
+}
+
+func (r *mutationResolver) UpdatePlanDocument(ctx context.Context, input model.PlanDocumentInput) (*models.PlanDocument, error) {
+	document := ConvertToPlanDocumentModel(&input)
+	principal := appcontext.Principal(ctx).ID()
+	logger := appcontext.ZLogger(ctx)
+
+	return resolvers.PlanDocumentUpdate(logger, document, &principal, r.store)
+}
+
+func (r *mutationResolver) DeletePlanDocument(ctx context.Context, input model.PlanDocumentInput) (int, error) {
+	document := ConvertToPlanDocumentModel(&input)
+	principal := appcontext.Principal(ctx).ID()
+	logger := appcontext.ZLogger(ctx)
+
+	return resolvers.PlanDocumentDelete(logger, document, &principal, r.store)
+}
+
 func (r *queryResolver) CurrentUser(ctx context.Context) (*model.CurrentUser, error) {
 	ldUser := flags.Principal(ctx)
 	userKey := ldUser.GetKey()
@@ -157,6 +186,10 @@ func (r *queryResolver) PlanMilestones(ctx context.Context, id uuid.UUID) (*mode
 	logger := appcontext.ZLogger(ctx)
 
 	return resolvers.FetchPlanMilestonesByID(logger, id, r.store)
+}
+
+func (r *queryResolver) PlanDocument(ctx context.Context, id uuid.UUID) (*models.PlanDocument, error) {
+	panic(fmt.Errorf("not implemented"))
 }
 
 func (r *queryResolver) ModelPlanCollection(ctx context.Context) ([]*models.ModelPlan, error) {

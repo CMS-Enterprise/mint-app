@@ -39,10 +39,11 @@ type ModelPlan {
   basics: PlanBasics
   milestones: PlanMilestones
   collaborators: [PlanCollaborator!]!
+  documents: [PlanDocument!]!
 }
 
 """
-ModelPlanInput represent the data point for plans about a model. It is the central data type in the appliation
+ModelPlanInput represent the data point for plans about a model. It is the central data type in the application
 """
 # input ModelPlanInput ModelPlan {
 input ModelPlanInput{
@@ -83,6 +84,41 @@ input PlanCollaboratorInput {
   fullName: String!
   cmsCenter: CMSCenter!
   teamRole: TeamRole!
+  createdBy: String
+  createdDts: Time
+  modifiedBy: String
+  modifiedDts: Time
+}
+
+"""
+PlanDocument represents a document on a plan
+"""
+type PlanDocument {
+  id: UUID!
+  modelPlanID: UUID!
+  fileType: String
+  bucket: String
+  fileKey: String
+  virusScanned: Boolean
+  virusClean: Boolean
+  fileName: String
+  fileSize: Int
+  documentType: String
+  otherType: String
+  deletedAt: Time
+  createdBy: String
+  createdDts: Time
+  modifiedBy: String
+  modifiedDts: Time
+  status: TaskStatus
+}
+
+"""
+PlanDocumentInput represents the data required to create, modify, or delete a document on a plan
+"""
+input PlanDocumentInput {
+  id: UUID
+  modelPlanID: UUID!
   createdBy: String
   createdDts: Time
   modifiedBy: String
@@ -188,6 +224,7 @@ type Query {
   modelPlan(id: UUID!) : ModelPlan
   planBasics(id: UUID!) : PlanBasics
   planMilestones(id: UUID!) : PlanMilestones
+  planDocument(id: UUID!) : PlanDocument
   modelPlanCollection: [ModelPlan]
   cedarPersonsByCommonName(commonName: String!): [UserInfo!]!
 }
@@ -221,6 +258,15 @@ createPlanMilestones(input: PlanMilestonesInput!):PlanMilestones
 @hasRole(role: MINT_BASE_USER)
 
 updatePlanMilestones(input: PlanMilestonesInput!):PlanMilestones
+@hasRole(role: MINT_BASE_USER)
+
+createPlanDocument(input: PlanDocumentInput!):PlanDocument
+@hasRole(role: MINT_BASE_USER)
+
+updatePlanDocument(input: PlanDocumentInput!):PlanDocument
+@hasRole(role: MINT_BASE_USER)
+
+deletePlanDocument(input: PlanDocumentInput!):Int!
 @hasRole(role: MINT_BASE_USER)
 }
 

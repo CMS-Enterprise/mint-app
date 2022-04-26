@@ -15,7 +15,7 @@ import (
 
 func TestCreatePlanMilestonesResolver(t *testing.T) {
 	config := NewDBConfig()
-	ldClient, _ := ld.MakeCustomClient("fake", ld.Config{Offline: true}, 0)
+	ldClient, _ := ld.MakeCustomClient("FAKE", ld.Config{Offline: true}, 0)
 	logger := zap.NewNop()
 	principal := "FAKE"
 
