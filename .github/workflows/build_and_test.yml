@@ -12,7 +12,6 @@ concurrency:
 
 jobs:
   Build_Application_Images:
-    if: ${{ false }} # Disabled until we have a way to push our builds to ECR
     uses: ./.github/workflows/build_application_images.yml
     secrets:
       DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
