@@ -123,8 +123,9 @@ describe('The Model Plan Task List', () => {
 
       await waitForPageLoad();
 
-      expect(screen.getByTestId('task-list-task-tag--basics')).toHaveClass(
-        'model-plan-task-list__task-tag--ready'
+      expect(screen.getAllByTestId('tag')[0]).toHaveClass('bg-accent-cool');
+      expect(screen.getAllByTestId('tag')[0]).toHaveTextContent(
+        'Ready to start'
       );
     });
   });
