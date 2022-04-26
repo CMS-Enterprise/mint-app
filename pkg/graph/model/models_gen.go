@@ -30,6 +30,7 @@ type ModelPlanInput struct {
 	ModelCategory *models.ModelCategory `json:"modelCategory"`
 	CmsCenter     *models.CMSCenter     `json:"cmsCenter"`
 	CmmiGroups    []CMMIGroup           `json:"cmmiGroups"`
+	Archived      bool                  `json:"archived"`
 	CreatedBy     *string               `json:"createdBy"`
 	CreatedDts    *time.Time            `json:"createdDts"`
 	ModifiedBy    *string               `json:"modifiedBy"`

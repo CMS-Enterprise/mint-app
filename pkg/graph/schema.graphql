@@ -32,6 +32,7 @@ type ModelPlan {
   modelCategory: ModelCategory
   cmsCenter: CMSCenter
   cmmiGroups: [CMMIGroup!]
+  archived: Boolean!
   createdBy: String
   createdDts: Time
   modifiedBy: String
@@ -44,13 +45,13 @@ type ModelPlan {
 """
 ModelPlanInput represent the data point for plans about a model. It is the central data type in the appliation
 """
-# input ModelPlanInput ModelPlan {
 input ModelPlanInput{
 id: UUID
 modelName: String
 modelCategory: ModelCategory
 cmsCenter: CMSCenter
 cmmiGroups: [CMMIGroup!]
+archived: Boolean! = false
 createdBy: String
 createdDts: Time
 modifiedBy: String
