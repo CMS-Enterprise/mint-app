@@ -4,6 +4,7 @@ SELECT
         model_category,
         cms_center,
         cmmi_group,
+        status,
         created_by,
         created_dts,
         modified_by,

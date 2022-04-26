@@ -34,6 +34,7 @@ type ModelPlanInput struct {
 	CreatedDts    *time.Time            `json:"createdDts"`
 	ModifiedBy    *string               `json:"modifiedBy"`
 	ModifiedDts   *time.Time            `json:"modifiedDts"`
+	Status        models.ModelStatus    `json:"status"`
 }
 
 // Represents plan basics
