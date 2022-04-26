@@ -9,7 +9,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestCreatePlanBasicsResolver(t *testing.T) {
+func TestCreatePlanBasics(t *testing.T) {
 
 	tc := GetDefaultTestConfigs()
 
@@ -18,12 +18,12 @@ func TestCreatePlanBasicsResolver(t *testing.T) {
 	basics.ID = uuid.MustParse("0576c351-c480-4f85-97a4-b7c1d691a3cb")
 	basics.ModelPlanID = uuid.MustParse("85b3ff03-1be2-4870-b02f-55c764500e48")
 
-	result, err := CreatePlanBasicsResolver(tc.Logger, &basics, tc.Principal, tc.Store)
+	result, err := CreatePlanBasics(tc.Logger, &basics, tc.Principal, tc.Store)
 	assert.NoError(t, err)
 	assert.NotNil(t, result.ID)
 }
 
-func TestUpdatePlanBasicsResolver(t *testing.T) {
+func TestUpdatePlanBasics(t *testing.T) {
 
 	tc := GetDefaultTestConfigs()
 
@@ -35,7 +35,7 @@ func TestUpdatePlanBasicsResolver(t *testing.T) {
 	basics.ID = uuid.MustParse("0576c351-c480-4f85-97a4-b7c1d691a3cb")
 	basics.ModelPlanID = uuid.MustParse("85b3ff03-1be2-4870-b02f-55c764500e48")
 
-	result, err := UpdatePlanBasicsResolver(tc.Logger, &basics, tc.Principal, tc.Store)
+	result, err := UpdatePlanBasics(tc.Logger, &basics, tc.Principal, tc.Store)
 	assert.NoError(t, err)
 	assert.NotNil(t, result.ID)
 

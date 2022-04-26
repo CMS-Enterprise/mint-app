@@ -13,7 +13,7 @@ import (
 	"github.com/cmsgov/mint-app/pkg/storage"
 )
 
-func TestCreatePlanMilestonesResolver(t *testing.T) {
+func TestCreatePlanMilestones(t *testing.T) {
 	config := NewDBConfig()
 	ldClient, _ := ld.MakeCustomClient("fake", ld.Config{Offline: true}, 0)
 	logger := zap.NewNop()
