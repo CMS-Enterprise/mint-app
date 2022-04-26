@@ -7,13 +7,12 @@ import { Button } from '@trussworks/react-uswds';
 import UswdsReactLink from 'components/LinkWrapper';
 import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
+import IconInitial from 'components/shared/IconInitial';
 import GetModelPlanCollaborators from 'queries/GetModelCollaborators';
 import {
   GetModelCollaborators,
   GetModelCollaborators_modelPlan_collaborators as GetCollaboratorsType
 } from 'queries/types/GetModelCollaborators';
-
-import TeamMembersList from './TeamMembersList';
 
 const TaskListSideNav = () => {
   const { modelId } = useParams<{ modelId: string }>();
@@ -97,9 +96,11 @@ const TaskListSideNav = () => {
           </div>
           <div className="sidenav-actions__teamList">
             <ul className="usa-list usa-list--unstyled">
-              <TeamMembersList
-                team={collaborators.map(collaborator => collaborator.fullName)}
-              />
+              {collaborators.map((collaborator, index) => {
+                return (
+                  <IconInitial user={collaborator.fullName} index={index} />
+                );
+              })}
             </ul>
           </div>
         </div>

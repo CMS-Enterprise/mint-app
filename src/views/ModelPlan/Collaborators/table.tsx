@@ -6,6 +6,7 @@ import { Button, Table as UswdsTable } from '@trussworks/react-uswds';
 import { DateTime } from 'luxon';
 
 import UswdsReactLink from 'components/LinkWrapper';
+import IconInitial from 'components/shared/IconInitial';
 import { GetModelCollaborators_modelPlan_collaborators as CollaboratorType } from 'queries/types/GetModelCollaborators';
 import translateTeamRole from 'utils/modelPlan';
 import {
@@ -37,7 +38,10 @@ const CollaboratorsTable = ({
     return [
       {
         Header: t('table.name'),
-        accessor: 'fullName'
+        accessor: 'fullName',
+        Cell: ({ row, value }: any) => {
+          return <IconInitial user={value} index={row.index} />;
+        }
       },
       {
         Header: t('table.role'),
