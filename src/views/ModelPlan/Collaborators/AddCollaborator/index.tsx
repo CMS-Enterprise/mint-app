@@ -84,7 +84,6 @@ const Collaborators = () => {
             fullName,
             teamRole,
             euaUserID,
-            cmsCenter: 'CMMI',
             modelPlanID: modelId
           }
         }
@@ -104,7 +103,6 @@ const Collaborators = () => {
             fullName,
             teamRole,
             euaUserID,
-            cmsCenter: 'CMMI',
             modelPlanID: modelId
           }
         }

@@ -59,7 +59,6 @@ const NewPlanContent = () => {
                 fullName: user.name,
                 teamRole: 'MODEL_LEAD',
                 euaUserID: user.euaId,
-                cmsCenter: 'CMMI', // TODO: Not sure what this should be for the creator
                 modelPlanID: id
               }
             }

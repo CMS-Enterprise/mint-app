@@ -6,7 +6,6 @@ export default gql`
       fullName
       teamRole
       euaUserID
-      cmsCenter
       modelPlanID
     }
   }
