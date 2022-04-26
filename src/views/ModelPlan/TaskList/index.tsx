@@ -12,7 +12,6 @@ import {
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
-import PageLoading from 'components/PageLoading';
 import Divider from 'components/shared/Divider';
 import GetModelPlanQuery from 'queries/GetModelPlanQuery';
 import {
@@ -38,7 +37,7 @@ const TaskList = () => {
   const { t } = useTranslation('modelPlanTaskList');
   const { modelId } = useParams<{ modelId: string }>();
 
-  const { loading, data } = useQuery<GetModelPlan, GetModelPlanVariables>(
+  const { data } = useQuery<GetModelPlan, GetModelPlanVariables>(
     GetModelPlanQuery,
     {
       variables: {
@@ -100,7 +99,6 @@ const TaskList = () => {
           <Breadcrumb current>{t('navigation.modelPlanTaskList')}</Breadcrumb>
         </BreadcrumbBar>
       </div>
-      {loading && <PageLoading />}
       {data && (
         <div className="grid-row grid-gap-lg">
           <div className="tablet:grid-col-9">

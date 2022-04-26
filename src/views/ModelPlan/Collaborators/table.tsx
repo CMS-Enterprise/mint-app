@@ -20,12 +20,14 @@ type TableProps = {
   collaborators: CollaboratorType[];
   setModalOpen: (isModalOpen: boolean) => void;
   setRemoveCollaborator: (removeUser: CollaboratorType) => void;
+  isLastLead: boolean;
 };
 
 const CollaboratorsTable = ({
   collaborators,
   setModalOpen,
-  setRemoveCollaborator
+  setRemoveCollaborator,
+  isLastLead
 }: TableProps) => {
   const { modelId } = useParams<{ modelId: string }>();
   const { t } = useTranslation('newModel');
@@ -54,6 +56,9 @@ const CollaboratorsTable = ({
       {
         Header: t('table.actions'),
         Cell: ({ row }: any) => {
+          if (row.original.teamRole === 'MODEL_LEAD' && isLastLead) {
+            return <></>;
+          }
           return (
             <>
               <UswdsReactLink
@@ -62,6 +67,7 @@ const CollaboratorsTable = ({
               >
                 {t('table.edit')}
               </UswdsReactLink>
+
               {collaborators.length > 1 && (
                 <Button
                   className="line-height-body-5 text-red"
@@ -80,7 +86,14 @@ const CollaboratorsTable = ({
         }
       }
     ];
-  }, [t, modelId, setModalOpen, setRemoveCollaborator, collaborators.length]);
+  }, [
+    t,
+    modelId,
+    setModalOpen,
+    setRemoveCollaborator,
+    collaborators.length,
+    isLastLead
+  ]);
 
   const {
     getTableProps,

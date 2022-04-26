@@ -283,19 +283,11 @@ type DraftModelTableProps = {
 };
 
 const DraftModelPlansTable = ({ hiddenColumns }: DraftModelTableProps) => {
-  const { loading, error, data: modelPlans } = useQuery<GetDraftModelPlansType>(
+  const { error, data: modelPlans } = useQuery<GetDraftModelPlansType>(
     GetDraftModelPlans
   );
 
   const data = (modelPlans?.modelPlanCollection ?? []) as DraftModelPlanType[];
-
-  if (loading) {
-    return (
-      <div className="text-center" data-testid="table-loading">
-        <Spinner size="xl" />
-      </div>
-    );
-  }
 
   if (error) {
     return <div>{JSON.stringify(error)}</div>;

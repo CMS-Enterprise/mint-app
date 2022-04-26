@@ -45,6 +45,8 @@ const Collaborators = () => {
   const formikRef = useRef<FormikProps<CollaboratorForm>>(null);
 
   const [searchTerm, setSearchTerm] = useState('');
+
+  // Custom hook for live searching users from CEDAR
   const foundUsers = useUserSearch(searchTerm);
 
   const history = useHistory();
@@ -78,6 +80,7 @@ const Collaborators = () => {
       update({
         variables: {
           input: {
+            id: collaboratorId,
             fullName,
             teamRole,
             euaUserID,

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
@@ -14,7 +14,6 @@ import MainContent from 'components/MainContent';
 import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
 import Alert from 'components/shared/Alert';
-import Spinner from 'components/Spinner';
 import DeleteModelPlanCollaborator from 'queries/DeleteModelPlanCollaborator';
 import GetModelPlanCollaborators from 'queries/GetModelCollaborators';
 import {
@@ -28,21 +27,30 @@ import {
 
 import CollaboratorsTable from './table';
 
+// Checking if there is only one collaborator with role of MODEL_LEAD - can't edit or remove if so
+const isLastModelLead = (collaborators: GetCollaboratorsType[]) => {
+  const modelLeads = collaborators.filter(
+    collaborator => collaborator.teamRole === 'MODEL_LEAD'
+  );
+  return !(modelLeads.length > 1);
+};
+
 const Collaborators = () => {
   const { modelId } = useParams<{ modelId: string }>();
   const { t: h } = useTranslation('draftModelPlan');
   const { t } = useTranslation('newModel');
   const [isModalOpen, setModalOpen] = useState(false);
+  const [isLastLead, setIsLastLead] = useState(false);
   const [
     removeCollaborator,
     setRemoveCollaborator
-  ] = useState<GetCollaboratorsType>({});
+  ] = useState<ModelPlanCollaboratorType>();
 
   const [mutate] = useMutation<DeleteModelPlanCollaboratorType>(
     DeleteModelPlanCollaborator
   );
 
-  const { loading, error, data, refetch } = useQuery<GetModelCollaborators>(
+  const { error, data, refetch } = useQuery<GetModelCollaborators>(
     GetModelPlanCollaborators,
     {
       variables: {
@@ -51,16 +59,14 @@ const Collaborators = () => {
     }
   );
 
-  const collaborators = (data?.modelPlan?.collaborators ??
-    []) as GetCollaboratorsType[];
+  const collaborators = useMemo(() => {
+    return (data?.modelPlan?.collaborators ?? []) as GetCollaboratorsType[];
+  }, [data?.modelPlan?.collaborators]);
 
-  if (loading) {
-    return (
-      <div className="text-center" data-testid="table-loading">
-        <Spinner size="xl" />
-      </div>
-    );
-  }
+  // Setting state of isLastLead to toggle edit/remove links
+  useEffect(() => {
+    setIsLastLead(isLastModelLead(collaborators));
+  }, [collaborators]);
 
   const handleRemoveCollaborator = (
     collaborator: ModelPlanCollaboratorType
@@ -72,29 +78,30 @@ const Collaborators = () => {
     })
       .then(response => {
         if (!response?.errors) {
-          console.log(response);
           setModalOpen(false);
           refetch();
         }
       })
       .catch(errors => {
-        console.log(errors);
         setModalOpen(false);
         refetch();
       });
   };
 
+  // Modal control for removing a collaborator
   const RemoveCollaborator = () => {
     return (
       <Modal isOpen={isModalOpen} closeModal={() => setModalOpen(false)}>
         <PageHeading headingLevel="h2" className="margin-top-0">
-          {t('modal.heading')} {removeCollaborator.fullName}?
+          {t('modal.heading')} {removeCollaborator?.fullName}?
         </PageHeading>
         <p>{t('modal.subheading')}</p>
         <Button
           type="button"
           className="margin-right-4"
-          onClick={() => handleRemoveCollaborator(removeCollaborator)}
+          onClick={() =>
+            removeCollaborator && handleRemoveCollaborator(removeCollaborator)
+          }
         >
           {t('modal.confirm')}
         </Button>
@@ -144,6 +151,7 @@ const Collaborators = () => {
               collaborators={collaborators}
               setModalOpen={setModalOpen}
               setRemoveCollaborator={setRemoveCollaborator}
+              isLastLead={isLastLead}
             />
           )}
 

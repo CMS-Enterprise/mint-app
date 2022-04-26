@@ -5,6 +5,7 @@ import { useApolloClient } from '@apollo/client';
 import GetCedarUser from 'queries/GetCedarUser';
 import { GetCedarUser_cedarPersonsByCommonName as GetCedarUserType } from 'queries/types/GetCedarUser';
 
+// Custom hook for live fetching users based on text input
 function useUserSearch(query: string) {
   const client = useApolloClient();
   const [cedarUsers, setCedarUsers] = useState<GetCedarUserType[]>([]);
@@ -24,7 +25,7 @@ function useUserSearch(query: string) {
   };
 }
 
-//
+// GQL CEDAR API fetch of users based on first/last name text search
 const fetchCedarUsers = (client: any, value: string) => {
   return client
     .query({
@@ -39,6 +40,7 @@ const fetchCedarUsers = (client: any, value: string) => {
     });
 };
 
+// Formatting of user obj to reference when selecting user from dropdown
 const formatCedarUsers = (users: GetCedarUserType[]) => {
   const userObj: { [id: string]: GetCedarUserType } = {};
 
