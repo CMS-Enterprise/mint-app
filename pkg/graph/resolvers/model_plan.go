@@ -15,13 +15,12 @@ func ModelPlanCreate(logger *zap.Logger, plan *models.ModelPlan, store *storage.
 	if err != nil {
 		return nil, err
 	}
-	///TODO get user full name, need to acces CEDAR for this
+
 	colab := models.PlanCollaborator{
 		EUAUserID:   *createdPlan.CreatedBy,
 		ModelPlanID: createdPlan.ID,
 		TeamRole:    models.TeamRoleModelLead,
-		CMSCenter:   models.CMSCMMI,
-		FullName:    principalInfo.CommonName, //TOOD get this information from CEDAR
+		FullName:    principalInfo.CommonName,
 	}
 	_, _ = CreatePlanCollaborator(logger, &colab, createdPlan.CreatedBy, store)
 

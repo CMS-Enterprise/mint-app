@@ -150,7 +150,6 @@ func makePlanCollaborator(mpID uuid.UUID, euaID string, logger *zap.Logger, stor
 
 		CreatedBy:  models.StringPointer("ABCD"),
 		ModifiedBy: models.StringPointer("ABCD"),
-		CMSCenter:  models.CMSCMMI,
 	}
 	for _, cb := range callbacks {
 		cb(&collab)
