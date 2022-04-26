@@ -3,7 +3,6 @@ INSERT INTO plan_collaborator (
         model_plan_id,
         eua_user_id,
         full_name,
-        cms_center,
         team_role,
         created_by,
         modified_by
@@ -13,7 +12,6 @@ VALUES (
         :model_plan_id,
         :eua_user_id,
         :full_name,
-        :cms_center,
         :team_role,
         :created_by,
         :modified_by
@@ -23,7 +21,6 @@ VALUES (
         model_plan_id,
         eua_user_id,
         full_name,
-        cms_center,
         team_role,
         created_by,
         created_dts,
