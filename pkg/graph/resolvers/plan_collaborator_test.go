@@ -33,7 +33,7 @@ func TestCreatePlanCollaborator(t *testing.T) {
 func TestUpdatePlanCollaborator(t *testing.T) {
 	tc := GetDefaultTestConfigs()
 	colab := makeTestCollaborator()
-	colab.TeamRole = models.TeamRoleLeadership
+	colab.TeamRole = models.TeamRoleModelTeam
 
 	result, err := UpdatePlanCollaborator(tc.Logger, &colab, colab.CreatedBy, tc.Store)
 
@@ -55,7 +55,25 @@ func TestFetchCollaboratorsByModelPlanID(t *testing.T) {
 }
 
 //TODO add test to make sure you can't delete the last model lead when logic is added
-// func TestDeletePlanCollaborator(t *testing.T) {
-// 	tc := GetDefaultTestConfigs()
+func TestDeletePlanCollaborator(t *testing.T) {
+	tc := GetDefaultTestConfigs()
+	collabDel := makeTestCollaborator()
 
-// }
+	dRes, err := DeletePlanCollaborator(tc.Logger, &collabDel, tc.Principal, tc.Store)
+	assert.NoError(t, err)
+
+	assert.NotNil(t, dRes)
+
+	modelPlanID := uuid.MustParse("85b3ff03-1be2-4870-b02f-55c764500e48")
+
+	result, err := FetchCollaboratorsByModelPlanID(tc.Logger, tc.Principal, modelPlanID, tc.Store)
+	assert.NoError(t, err)
+
+	assert.NotNil(t, result)
+
+	modelLead := result[0]
+
+	_, err2 := DeletePlanCollaborator(tc.Logger, modelLead, tc.Principal, tc.Store)
+	assert.Error(t, err2)
+
+}

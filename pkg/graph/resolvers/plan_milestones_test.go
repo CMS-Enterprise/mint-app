@@ -45,13 +45,6 @@ func TestCreatePlanMilestones(t *testing.T) {
 	assert.NoError(t, err)
 	assert.Equal(t, 1, int(rowsAffected))
 
-	//TODO buisness logic not implemented to delete model plan when collaborator etc are on the object.
-	// sqlResult, err = store.ModelPlanDeleteByID(logger, plan.ID)
-	// assert.NoError(t, err)
-
-	// rowsAffected, err = sqlResult.RowsAffected()
-	// assert.NoError(t, err)
-	// assert.Equal(t, 1, int(rowsAffected))
 }
 
 func TestFetchPlanMilestonesByID(t *testing.T) {
@@ -86,11 +79,4 @@ func TestFetchPlanMilestonesByID(t *testing.T) {
 	assert.NoError(t, err)
 	assert.Equal(t, 1, int(rowsAffected))
 
-	//TODO buisness logic not implemented to delete model plan when collaborator etc are on the object.
-	// sqlResult, err = store.ModelPlanDeleteByID(logger, plan.ID)
-	// assert.NoError(t, err)
-
-	// rowsAffected, err = sqlResult.RowsAffected()
-	// assert.NoError(t, err)
-	// assert.Equal(t, 1, int(rowsAffected))
 }
