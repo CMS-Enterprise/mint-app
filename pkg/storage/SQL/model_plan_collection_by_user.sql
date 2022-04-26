@@ -3,6 +3,7 @@ SELECT
         model_name,
         model_category,
         cms_center,
+        status,
         cmmi_group,
         created_by,
         created_dts,
