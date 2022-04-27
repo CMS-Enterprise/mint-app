@@ -15,6 +15,11 @@ func ModelPlanCreate(logger *zap.Logger, plan *models.ModelPlan, store *storage.
 	if err != nil {
 		return nil, err
 	}
+	/*TODO Revist this
+	- we might want to add a plan collaborator in the scope of a single SQLX transaction and roll back the transaction if a collaborator was not successfully created
+	  - this could be in a combined store for collaborator / plan
+	- we could also address this directly in SQL, create the plan and collaborator at the same time.
+	*/
 
 	colab := models.PlanCollaborator{
 		EUAUserID:   *createdPlan.CreatedBy,
