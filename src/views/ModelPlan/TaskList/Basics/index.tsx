@@ -6,6 +6,7 @@ import {
   BreadcrumbBar,
   BreadcrumbLink,
   Button,
+  Dropdown,
   Label,
   TextInput
 } from '@trussworks/react-uswds';
@@ -18,7 +19,9 @@ import Alert from 'components/shared/Alert';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
+import modelCategory from 'constants/enums/modelCategory';
 import flattenErrors from 'utils/flattenErrors';
+import { translateModelCategory } from 'utils/modelPlan';
 import NewModelPlanValidationSchema from 'validations/newModelPlan';
 import NotFound, { NotFoundPartial } from 'views/NotFound';
 
@@ -52,15 +55,27 @@ const BasicsContent = () => {
           </Alert>
           <Formik
             // TODO: change intial value of model name of plan via gql
-            initialValues={{ modelName: '' }}
+            initialValues={{ modelName: '', modelCategory: '' }}
             onSubmit={() => console.log('asdf')}
             validationSchema={NewModelPlanValidationSchema}
             validateOnBlur={false}
             validateOnChange={false}
             validateOnMount={false}
           >
-            {(formikProps: FormikProps<{ modelName: string }>) => {
-              const { errors, setErrors, handleSubmit, dirty } = formikProps;
+            {(
+              formikProps: FormikProps<{
+                modelName: string;
+                modelCategory: string;
+              }>
+            ) => {
+              const {
+                dirty,
+                errors,
+                handleSubmit,
+                setErrors,
+                setFieldValue,
+                values
+              } = formikProps;
               const flatErrors = flattenErrors(errors);
               return (
                 <>
@@ -91,18 +106,54 @@ const BasicsContent = () => {
                       scrollElement="modelName"
                       error={!!flatErrors.modelName}
                     >
-                      <Label htmlFor="new-plan-model-name">
+                      <Label htmlFor="plan-basics-model-name">
                         {t('modelName')}
                       </Label>
                       <FieldErrorMsg>{flatErrors.modelName}</FieldErrorMsg>
                       <Field
                         as={TextInput}
                         error={!!flatErrors.modelName}
-                        id="new-plan-model-name"
+                        id="plan-basics-model-name"
                         maxLength={50}
                         name="modelName"
                       />
                     </FieldGroup>
+
+                    <FieldGroup
+                      scrollElement="modelCategory"
+                      error={!!flatErrors.modelCategory}
+                    >
+                      <Label htmlFor="plan-basics-model-category">
+                        {t('teamMemberRole')}
+                      </Label>
+                      <FieldErrorMsg>{flatErrors.modelCategory}</FieldErrorMsg>
+                      <Field
+                        as={Dropdown}
+                        id="plan-basics-model-category"
+                        name="role"
+                        value={values.modelCategory}
+                        onChange={(e: any) => {
+                          setFieldValue('modelCategory', e.target.value);
+                        }}
+                      >
+                        <option value="" key="default-select" disabled>
+                          {`-${h('select')}-`}
+                        </option>
+                        {Object.keys(modelCategory).map(role => {
+                          return (
+                            <option
+                              key={`Model-Category-${translateModelCategory(
+                                modelCategory[role]
+                              )}`}
+                              value={role}
+                            >
+                              {translateModelCategory(modelCategory[role])}
+                            </option>
+                          );
+                        })}
+                      </Field>
+                    </FieldGroup>
+
                     <div className="margin-top-5 display-block">
                       <UswdsReactLink
                         className="usa-button usa-button--outline margin-bottom-1"
