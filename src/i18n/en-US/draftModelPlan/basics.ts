@@ -1,7 +1,7 @@
 const basics = {
   heading: 'Model basics',
   breadcrumb: 'Model basics',
-  modelName: 'Model Name',
+  modelName: 'Model name',
   modelCategory: 'Model Category',
   cmsComponent: 'CMS Component',
   cmsComponents: [
