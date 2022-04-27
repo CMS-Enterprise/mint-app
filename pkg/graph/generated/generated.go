@@ -60,6 +60,7 @@ type ComplexityRoot struct {
 	}
 
 	ModelPlan struct {
+		Archived      func(childComplexity int) int
 		Basics        func(childComplexity int) int
 		CMSCenter     func(childComplexity int) int
 		CmmiGroups    func(childComplexity int) int
@@ -212,6 +213,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.LaunchDarklySettings.UserKey(childComplexity), true
+
+	case "ModelPlan.archived":
+		if e.complexity.ModelPlan.Archived == nil {
+			break
+		}
+
+		return e.complexity.ModelPlan.Archived(childComplexity), true
 
 	case "ModelPlan.basics":
 		if e.complexity.ModelPlan.Basics == nil {
@@ -838,6 +846,7 @@ type ModelPlan {
   modelCategory: ModelCategory
   cmsCenter: CMSCenter
   cmmiGroups: [CMMIGroup!]
+  archived: Boolean!
   createdBy: String
   createdDts: Time
   modifiedBy: String
@@ -857,6 +866,7 @@ modelName: String
 modelCategory: ModelCategory
 cmsCenter: CMSCenter
 cmmiGroups: [CMMIGroup!]
+archived: Boolean! = false
 createdBy: String
 createdDts: Time
 modifiedBy: String
@@ -1656,6 +1666,41 @@ func (ec *executionContext) _ModelPlan_cmmiGroups(ctx context.Context, field gra
 	res := resTmp.([]model.CMMIGroup)
 	fc.Result = res
 	return ec.marshalOCMMIGroup2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCMMIGroupᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _ModelPlan_archived(ctx context.Context, field graphql.CollectedField, obj *models.ModelPlan) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "ModelPlan",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Archived, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(bool)
+	fc.Result = res
+	return ec.marshalNBoolean2bool(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _ModelPlan_createdBy(ctx context.Context, field graphql.CollectedField, obj *models.ModelPlan) (ret graphql.Marshaler) {
@@ -5160,6 +5205,10 @@ func (ec *executionContext) unmarshalInputModelPlanInput(ctx context.Context, ob
 		asMap[k] = v
 	}
 
+	if _, present := asMap["archived"]; !present {
+		asMap["archived"] = false
+	}
+
 	for k, v := range asMap {
 		switch k {
 		case "id":
@@ -5199,6 +5248,14 @@ func (ec *executionContext) unmarshalInputModelPlanInput(ctx context.Context, ob
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("cmmiGroups"))
 			it.CmmiGroups, err = ec.unmarshalOCMMIGroup2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCMMIGroupᚄ(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		case "archived":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("archived"))
+			it.Archived, err = ec.unmarshalNBoolean2bool(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -5708,6 +5765,16 @@ func (ec *executionContext) _ModelPlan(ctx context.Context, sel ast.SelectionSet
 				return innerFunc(ctx)
 
 			})
+		case "archived":
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._ModelPlan_archived(ctx, field, obj)
+			}
+
+			out.Values[i] = innerFunc(ctx)
+
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&invalids, 1)
+			}
 		case "createdBy":
 			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._ModelPlan_createdBy(ctx, field, obj)

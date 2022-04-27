@@ -41,7 +41,7 @@ func ModelPlanGetByID(logger *zap.Logger, principal string, id uuid.UUID, store 
 
 // ModelPlanCollectionByUser implements resolver logic to get a list of model plans by who's a collaborator on them (TODO)
 func ModelPlanCollectionByUser(logger *zap.Logger, principal string, store *storage.Store) ([]*models.ModelPlan, error) {
-	plans, err := store.ModelPlanCollectionByUser(logger, principal)
+	plans, err := store.ModelPlanCollectionByUser(logger, principal, false)
 	if err != nil {
 		return nil, err
 	}

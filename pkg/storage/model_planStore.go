@@ -130,14 +130,16 @@ func (s *Store) ModelPlanGetByID(logger *zap.Logger, id uuid.UUID) (*models.Mode
 }
 
 // ModelPlanCollectionByUser returns a list of model plans for a given EUA ID (TODO: Make this go by collaborators, not by createdBy)
-func (s *Store) ModelPlanCollectionByUser(logger *zap.Logger, EUAID string) ([]*models.ModelPlan, error) {
+func (s *Store) ModelPlanCollectionByUser(logger *zap.Logger, EUAID string, archived bool) ([]*models.ModelPlan, error) {
 	modelPlans := []*models.ModelPlan{}
 
 	stmt, err := s.db.PrepareNamed(modelPlanCollectionByUserSQL)
 	if err != nil {
 		return nil, err
 	}
-	arg := map[string]interface{}{"euaID": EUAID}
+	arg := map[string]interface{}{"euaID": EUAID,
+		"archived": archived,
+	}
 
 	err = stmt.Select(&modelPlans, arg) //this returns more than one
 
