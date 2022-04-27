@@ -4,12 +4,22 @@ import { Link, Route, Switch, useParams } from 'react-router-dom';
 import {
   Breadcrumb,
   BreadcrumbBar,
-  BreadcrumbLink
+  BreadcrumbLink,
+  Button,
+  Label,
+  TextInput
 } from '@trussworks/react-uswds';
+import { Field, Form, Formik, FormikProps } from 'formik';
 
+import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import Alert from 'components/shared/Alert';
+import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
+import FieldErrorMsg from 'components/shared/FieldErrorMsg';
+import FieldGroup from 'components/shared/FieldGroup';
+import flattenErrors from 'utils/flattenErrors';
+import NewModelPlanValidationSchema from 'validations/newModelPlan';
 import NotFound, { NotFoundPartial } from 'views/NotFound';
 
 const BasicsContent = () => {
@@ -40,6 +50,80 @@ const BasicsContent = () => {
               {h('mandatoryFields')}
             </span>
           </Alert>
+          <Formik
+            // TODO: change intial value of model name of plan via gql
+            initialValues={{ modelName: '' }}
+            onSubmit={() => console.log('asdf')}
+            validationSchema={NewModelPlanValidationSchema}
+            validateOnBlur={false}
+            validateOnChange={false}
+            validateOnMount={false}
+          >
+            {(formikProps: FormikProps<{ modelName: string }>) => {
+              const { errors, setErrors, handleSubmit, dirty } = formikProps;
+              const flatErrors = flattenErrors(errors);
+              return (
+                <>
+                  {Object.keys(errors).length > 0 && (
+                    <ErrorAlert
+                      testId="formik-validation-errors"
+                      classNames="margin-top-3"
+                      heading="Please check and fix the following"
+                    >
+                      {Object.keys(flatErrors).map(key => {
+                        return (
+                          <ErrorAlertMessage
+                            key={`Error.${key}`}
+                            errorKey={key}
+                            message={flatErrors[key]}
+                          />
+                        );
+                      })}
+                    </ErrorAlert>
+                  )}
+                  <Form
+                    onSubmit={e => {
+                      handleSubmit(e);
+                      window.scrollTo(0, 0);
+                    }}
+                  >
+                    <FieldGroup
+                      scrollElement="modelName"
+                      error={!!flatErrors.modelName}
+                    >
+                      <Label htmlFor="new-plan-model-name">
+                        {t('modelName')}
+                      </Label>
+                      <FieldErrorMsg>{flatErrors.modelName}</FieldErrorMsg>
+                      <Field
+                        as={TextInput}
+                        error={!!flatErrors.modelName}
+                        id="new-plan-model-name"
+                        maxLength={50}
+                        name="modelName"
+                      />
+                    </FieldGroup>
+                    <div className="margin-top-5 display-block">
+                      <UswdsReactLink
+                        className="usa-button usa-button--outline margin-bottom-1"
+                        variant="unstyled"
+                        to="/models/steps-overview"
+                      >
+                        {h('cancel')}
+                      </UswdsReactLink>
+                      <Button
+                        type="submit"
+                        disabled={!dirty}
+                        onClick={() => setErrors({})}
+                      >
+                        {h('next')}
+                      </Button>
+                    </div>
+                  </Form>
+                </>
+              );
+            }}
+          </Formik>
         </div>
       </div>
     </MainContent>
