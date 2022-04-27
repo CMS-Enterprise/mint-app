@@ -1,13 +1,13 @@
-create table plan_basics (
-    id uuid PRIMARY KEY not null,
-    model_plan_id uuid not null UNIQUE, --foreign key to model plan
+CREATE TABLE plan_basics (
+    id uuid PRIMARY KEY NOT NULL,
+    model_plan_id uuid NOT NULL UNIQUE, --foreign key to model plan
 
     model_type model_type,
 
-    problem TEXT,
-    goal TEXT,
-    test_inventions TEXT,
-    note TEXT,
+    problem text,
+    goal text,
+    test_inventions text,
+    note text,
 
 
 
@@ -19,7 +19,7 @@ create table plan_basics (
 );
 
 ALTER TABLE plan_basics
-    ADD CONSTRAINT fk_basics_plan FOREIGN KEY (model_plan_id)
-        REFERENCES public.model_plan (id) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
+ADD CONSTRAINT fk_basics_plan FOREIGN KEY (model_plan_id)
+REFERENCES public.model_plan (id) MATCH SIMPLE
+ON UPDATE NO ACTION
+ON DELETE NO ACTION

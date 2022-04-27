@@ -1,6 +1,6 @@
-create table model_plan (
-    id uuid PRIMARY KEY not null,
-    model_name TEXT,
+CREATE TABLE model_plan (
+    id uuid PRIMARY KEY NOT NULL,
+    model_name text,
     model_category model_category, --select from list
     cms_center cms_center, --should select from list
     cmmi_group cmmi_group[],

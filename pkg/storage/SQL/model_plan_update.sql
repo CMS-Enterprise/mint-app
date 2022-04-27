@@ -1,5 +1,5 @@
 UPDATE model_plan
-SET 
+SET
     model_name = :model_name,
     model_category = :model_category,
     cms_center = :cms_center,
@@ -8,16 +8,15 @@ SET
     modified_by = :modified_by,
     modified_dts = CURRENT_TIMESTAMP
 WHERE model_plan.id = :id
-
-    RETURNING 
-        id,
-        model_name,
-        model_category,
-        cms_center,
-        cmmi_group,
-        status,
-        created_by,
-        created_dts,
-        modified_by,
-        modified_dts
-        ;
+RETURNING (
+    id,
+    model_name,
+    model_category,
+    cms_center,
+    cmmi_group,
+    status,
+    created_by,
+    created_dts,
+    modified_by,
+    modified_dts
+);

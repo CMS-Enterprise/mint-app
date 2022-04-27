@@ -1,0 +1,6 @@
+[sqlfluff]
+dialect = postgres
+ignore = parsing
+
+[sqlfluff:rules:L010]
+capitalisation_policy = upper

@@ -1,5 +1,4 @@
-create domain eua_id as text
-   constraint check_valid_eua_id check (
-		/*value is not null and*/
-		value ~ '^[A-Z0-9]{4}$'
-	);
+CREATE domain eua_id AS text
+constraint check_valid_eua_id check (
+    value ~ '^[A-Z0-9]{4}$'
+);
