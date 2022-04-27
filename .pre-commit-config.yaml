@@ -99,3 +99,4 @@ repos:
     rev: 0.13.0
     hooks:
       - id: sqlfluff-fix
+      - id: sqlfluff-lint
