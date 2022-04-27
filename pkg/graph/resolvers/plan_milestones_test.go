@@ -27,7 +27,8 @@ func TestCreatePlanMilestones(t *testing.T) {
 	assert.NoError(t, err)
 
 	modelName := "FAKE"
-	planTemplate := models.ModelPlan{ModelName: &modelName, CreatedBy: &principal}
+	planTemplate := models.ModelPlan{ModelName: &modelName, CreatedBy: &principal,
+		Status: models.ModelStatusPlanDraft}
 	plan, err := ModelPlanCreate(logger, &planTemplate, store, &principalInfo)
 	assert.NoError(t, err)
 
@@ -58,7 +59,9 @@ func TestFetchPlanMilestonesByID(t *testing.T) {
 	}
 
 	modelName := "FAKE"
-	planTemplate := models.ModelPlan{ModelName: &modelName, CreatedBy: &principal}
+
+	planTemplate := models.ModelPlan{ModelName: &modelName, CreatedBy: &principal,
+		Status: models.ModelStatusPlanDraft}
 	plan, err := ModelPlanCreate(logger, &planTemplate, store, &principalInfo)
 	assert.NoError(t, err)
 

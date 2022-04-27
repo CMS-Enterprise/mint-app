@@ -16,6 +16,7 @@ func TestModelPlanCreate(t *testing.T) {
 	plan.ID = uuid.MustParse("85b3ff03-1be2-4870-b02f-55c764500e48")
 	plan.CreatedBy = tc.Principal
 	plan.ModifiedBy = tc.Principal
+	plan.Status = models.ModelStatusPlanDraft
 
 	config := NewDBConfig()
 	fmt.Print(config)
@@ -37,6 +38,7 @@ func TestModelPlanUpdate(t *testing.T) {
 	plan.ModifiedBy = tc.Principal
 	plan.CreatedBy = tc.Principal
 	plan.ModelName = modelName
+	plan.Status = models.ModelStatusPlanDraft
 
 	result, err := ModelPlanUpdate(tc.Logger, &plan, tc.Store)
 

@@ -3,6 +3,7 @@ INSERT INTO model_plan (
         model_name,
         model_category,
         cms_center,
+        status,
         cmmi_group,
         created_by,
         modified_by
@@ -12,6 +13,7 @@ VALUES (
         :model_name,
         :model_category,
         :cms_center,
+        :status,
         :cmmi_group,
         :created_by,
         :modified_by
@@ -21,7 +23,9 @@ VALUES (
         model_name,
         model_category,
         cms_center,
+        status,
         cmmi_group,
+        archived,
         created_by,
         created_dts,
         modified_by,

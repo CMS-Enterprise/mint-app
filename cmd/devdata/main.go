@@ -131,6 +131,7 @@ func makeModelPlan(modelName string, logger *zap.Logger, store *storage.Store, c
 
 		CreatedBy:  models.StringPointer("ABCD"),
 		ModifiedBy: models.StringPointer("ABCD"),
+		Status:     models.ModelStatusPlanDraft,
 	}
 
 	for _, cb := range callbacks {

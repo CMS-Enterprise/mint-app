@@ -60,6 +60,7 @@ type ComplexityRoot struct {
 	}
 
 	ModelPlan struct {
+		Archived      func(childComplexity int) int
 		Basics        func(childComplexity int) int
 		CMSCenter     func(childComplexity int) int
 		CmmiGroups    func(childComplexity int) int
@@ -72,6 +73,7 @@ type ComplexityRoot struct {
 		ModelName     func(childComplexity int) int
 		ModifiedBy    func(childComplexity int) int
 		ModifiedDts   func(childComplexity int) int
+		Status        func(childComplexity int) int
 	}
 
 	Mutation struct {
@@ -212,6 +214,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.LaunchDarklySettings.UserKey(childComplexity), true
 
+	case "ModelPlan.archived":
+		if e.complexity.ModelPlan.Archived == nil {
+			break
+		}
+
+		return e.complexity.ModelPlan.Archived(childComplexity), true
+
 	case "ModelPlan.basics":
 		if e.complexity.ModelPlan.Basics == nil {
 			break
@@ -295,6 +304,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.ModelPlan.ModifiedDts(childComplexity), true
+
+	case "ModelPlan.status":
+		if e.complexity.ModelPlan.Status == nil {
+			break
+		}
+
+		return e.complexity.ModelPlan.Status(childComplexity), true
 
 	case "Mutation.createModelPlan":
 		if e.complexity.Mutation.CreateModelPlan == nil {
@@ -830,6 +846,7 @@ type ModelPlan {
   modelCategory: ModelCategory
   cmsCenter: CMSCenter
   cmmiGroups: [CMMIGroup!]
+  archived: Boolean!
   createdBy: String
   createdDts: Time
   modifiedBy: String
@@ -837,22 +854,24 @@ type ModelPlan {
   basics: PlanBasics
   milestones: PlanMilestones
   collaborators: [PlanCollaborator!]!
+  status: ModelStatus!
 }
 
 """
 ModelPlanInput represent the data point for plans about a model. It is the central data type in the appliation
 """
-# input ModelPlanInput ModelPlan {
 input ModelPlanInput{
 id: UUID
 modelName: String
 modelCategory: ModelCategory
 cmsCenter: CMSCenter
 cmmiGroups: [CMMIGroup!]
+archived: Boolean! = false
 createdBy: String
 createdDts: Time
 modifiedBy: String
 modifiedDts: Time
+status: ModelStatus!
 }
 
 """
@@ -1041,7 +1060,7 @@ enum ModelType
   TBD
 }
 
-enum ModelCategory{
+enum ModelCategory {
 	ACCOUNTABLE_CARE
 	DEMONSTRATION
 	EPISODE_BASED_PAYMENT_INITIATIVES
@@ -1051,6 +1070,18 @@ enum ModelCategory{
 	INIT_SPEED_ADOPT_BEST_PRACTICE
 	PRIMARY_CARE_TRANSFORMATION
 	UNKNOWN
+}
+
+enum ModelStatus {
+	PLAN_DRAFT
+	PLAN_COMPLETE
+	ICIP_COMPLETE
+	INTERNAL_CMMI_CLEARANCE
+	CMS_CLEARANCE
+	HHS_CLEARANCE
+	OMB_ASRF_CLEARANCE
+	CLEARED
+	ANNOUNCED
 }
 
 enum CMSCenter {
@@ -1637,6 +1668,41 @@ func (ec *executionContext) _ModelPlan_cmmiGroups(ctx context.Context, field gra
 	return ec.marshalOCMMIGroup2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCMMIGroupᚄ(ctx, field.Selections, res)
 }
 
+func (ec *executionContext) _ModelPlan_archived(ctx context.Context, field graphql.CollectedField, obj *models.ModelPlan) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "ModelPlan",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Archived, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(bool)
+	fc.Result = res
+	return ec.marshalNBoolean2bool(ctx, field.Selections, res)
+}
+
 func (ec *executionContext) _ModelPlan_createdBy(ctx context.Context, field graphql.CollectedField, obj *models.ModelPlan) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
@@ -1862,6 +1928,41 @@ func (ec *executionContext) _ModelPlan_collaborators(ctx context.Context, field 
 	res := resTmp.([]*models.PlanCollaborator)
 	fc.Result = res
 	return ec.marshalNPlanCollaborator2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanCollaboratorᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _ModelPlan_status(ctx context.Context, field graphql.CollectedField, obj *models.ModelPlan) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "ModelPlan",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Status, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(models.ModelStatus)
+	fc.Result = res
+	return ec.marshalNModelStatus2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelStatus(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Mutation_createModelPlan(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
@@ -5104,6 +5205,10 @@ func (ec *executionContext) unmarshalInputModelPlanInput(ctx context.Context, ob
 		asMap[k] = v
 	}
 
+	if _, present := asMap["archived"]; !present {
+		asMap["archived"] = false
+	}
+
 	for k, v := range asMap {
 		switch k {
 		case "id":
@@ -5146,6 +5251,14 @@ func (ec *executionContext) unmarshalInputModelPlanInput(ctx context.Context, ob
 			if err != nil {
 				return it, err
 			}
+		case "archived":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("archived"))
+			it.Archived, err = ec.unmarshalNBoolean2bool(ctx, v)
+			if err != nil {
+				return it, err
+			}
 		case "createdBy":
 			var err error
 
@@ -5175,6 +5288,14 @@ func (ec *executionContext) unmarshalInputModelPlanInput(ctx context.Context, ob
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("modifiedDts"))
 			it.ModifiedDts, err = ec.unmarshalOTime2ᚖtimeᚐTime(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		case "status":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("status"))
+			it.Status, err = ec.unmarshalNModelStatus2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelStatus(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -5644,6 +5765,16 @@ func (ec *executionContext) _ModelPlan(ctx context.Context, sel ast.SelectionSet
 				return innerFunc(ctx)
 
 			})
+		case "archived":
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._ModelPlan_archived(ctx, field, obj)
+			}
+
+			out.Values[i] = innerFunc(ctx)
+
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&invalids, 1)
+			}
 		case "createdBy":
 			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._ModelPlan_createdBy(ctx, field, obj)
@@ -5726,6 +5857,16 @@ func (ec *executionContext) _ModelPlan(ctx context.Context, sel ast.SelectionSet
 				return innerFunc(ctx)
 
 			})
+		case "status":
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._ModelPlan_status(ctx, field, obj)
+			}
+
+			out.Values[i] = innerFunc(ctx)
+
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&invalids, 1)
+			}
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}
@@ -6831,6 +6972,22 @@ func (ec *executionContext) marshalNLaunchDarklySettings2ᚖgithubᚗcomᚋcmsgo
 func (ec *executionContext) unmarshalNModelPlanInput2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐModelPlanInput(ctx context.Context, v interface{}) (model.ModelPlanInput, error) {
 	res, err := ec.unmarshalInputModelPlanInput(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) unmarshalNModelStatus2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelStatus(ctx context.Context, v interface{}) (models.ModelStatus, error) {
+	tmp, err := graphql.UnmarshalString(v)
+	res := models.ModelStatus(tmp)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalNModelStatus2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelStatus(ctx context.Context, sel ast.SelectionSet, v models.ModelStatus) graphql.Marshaler {
+	res := graphql.MarshalString(string(v))
+	if res == graphql.Null {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "must not be null")
+		}
+	}
+	return res
 }
 
 func (ec *executionContext) unmarshalNPlanBasicsInput2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐPlanBasicsInput(ctx context.Context, v interface{}) (model.PlanBasicsInput, error) {

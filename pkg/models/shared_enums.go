@@ -61,6 +61,22 @@ const (
 	CMSOther                                CMSCenter = "OTHER"
 )
 
+// ModelStatus represents the possible statuses of a Model Plan
+type ModelStatus string
+
+// These constants represent the different values of ModelStatus
+const (
+	ModelStatusPlanDraft             ModelStatus = "PLAN_DRAFT"
+	ModelStatusPlanComplete          ModelStatus = "PLAN_COMPLETE"
+	ModelStatusIcipComplete          ModelStatus = "ICIP_COMPLETE"
+	ModelStatusInternalCmmiClearance ModelStatus = "INTERNAL_CMMI_CLEARANCE"
+	ModelStatusCmsClearance          ModelStatus = "CMS_CLEARANCE"
+	ModelStatusHhsClearance          ModelStatus = "HHS_CLEARANCE"
+	ModelStatusOmbAsrfClearance      ModelStatus = "OMB_ASRF_CLEARANCE"
+	ModelStatusCleared               ModelStatus = "CLEARED"
+	ModelStatusAnnounced             ModelStatus = "ANNOUNCED"
+)
+
 //  CMMIGroup representes the group at CMMI
 // type CMMIGroup EnumString
 
