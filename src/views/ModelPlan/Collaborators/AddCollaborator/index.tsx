@@ -32,7 +32,7 @@ import { UpdateModelPlanCollaborator as UpdateModelPlanCollaboratorType } from '
 import UpdateModelPlanCollaborator from 'queries/UpdateModelPlanCollaborator';
 import { CollaboratorForm } from 'types/collaborator';
 import flattenErrors from 'utils/flattenErrors';
-import translateTeamRole from 'utils/modelPlan';
+import { translateTeamRole } from 'utils/modelPlan';
 import CollaboratorsValidationSchema from 'validations/modelPlanCollaborators';
 
 import '@reach/combobox/styles.css';
