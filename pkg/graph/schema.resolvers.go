@@ -132,7 +132,12 @@ func (r *mutationResolver) UpdatePlanMilestones(ctx context.Context, input model
 }
 
 func (r *mutationResolver) CreatePlanDiscussion(ctx context.Context, input model.PlanDiscussionInput) (*models.PlanDiscussion, error) {
-	panic(fmt.Errorf("not implemented"))
+	discussion := ConvertToPlanDiscussion(&input)
+
+	principal := appcontext.Principal(ctx).ID()
+	logger := appcontext.ZLogger(ctx)
+
+	return resolvers.CreatePlanDiscussion(logger, discussion, &principal, r.store)
 }
 
 func (r *mutationResolver) CreateDiscussionReply(ctx context.Context, input model.DiscussionReplyInput) (*models.DiscussionReply, error) {

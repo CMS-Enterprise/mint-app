@@ -1191,8 +1191,8 @@ PlanDiscussionInput represents input for plan discussion
 """
 input PlanDiscussionInput  {
 	id:          UUID
-	modelPlanID: UUID
-	content: String
+	modelPlanID: UUID!
+	content: String!
 	status: DiscussionStatus
 
   createdBy: String
@@ -6535,7 +6535,7 @@ func (ec *executionContext) unmarshalInputPlanDiscussionInput(ctx context.Contex
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("modelPlanID"))
-			it.ModelPlanID, err = ec.unmarshalOUUID2ᚖgithubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, v)
+			it.ModelPlanID, err = ec.unmarshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -6543,7 +6543,7 @@ func (ec *executionContext) unmarshalInputPlanDiscussionInput(ctx context.Contex
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("content"))
-			it.Content, err = ec.unmarshalOString2ᚖstring(ctx, v)
+			it.Content, err = ec.unmarshalNString2string(ctx, v)
 			if err != nil {
 				return it, err
 			}

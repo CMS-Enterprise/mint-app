@@ -202,8 +202,8 @@ PlanDiscussionInput represents input for plan discussion
 """
 input PlanDiscussionInput  {
 	id:          UUID
-	modelPlanID: UUID
-	content: String
+	modelPlanID: UUID!
+	content: String!
 	status: DiscussionStatus
 
   createdBy: String

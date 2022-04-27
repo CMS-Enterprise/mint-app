@@ -81,8 +81,8 @@ type PlanCollaboratorInput struct {
 // PlanDiscussionInput represents input for plan discussion
 type PlanDiscussionInput struct {
 	ID          *uuid.UUID               `json:"id"`
-	ModelPlanID *uuid.UUID               `json:"modelPlanID"`
-	Content     *string                  `json:"content"`
+	ModelPlanID uuid.UUID                `json:"modelPlanID"`
+	Content     string                   `json:"content"`
 	Status      *models.DiscussionStatus `json:"status"`
 	CreatedBy   *string                  `json:"createdBy"`
 	CreatedDts  *time.Time               `json:"createdDts"`

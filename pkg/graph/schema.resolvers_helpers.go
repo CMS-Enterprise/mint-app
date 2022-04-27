@@ -101,3 +101,33 @@ func ConvertToPlanCollaborator(pci *model.PlanCollaboratorInput) *models.PlanCol
 	return &collaborator
 
 }
+
+//ConvertToPlanDiscussion takes and auto-generated plan discussion input and converts it to a hand-written one
+func ConvertToPlanDiscussion(pdi *model.PlanDiscussionInput) *models.PlanDiscussion {
+	discussion := models.PlanDiscussion{
+
+		ModelPlanID: pdi.ModelPlanID,
+		Content:     pdi.Content,
+	}
+	if pdi.ID != nil {
+		discussion.ID = *pdi.ID
+	}
+	if pdi.Status != nil {
+		discussion.Status = *pdi.Status
+	}
+	if pdi.CreatedBy != nil {
+		discussion.CreatedBy = *pdi.CreatedBy
+	}
+	if pdi.CreatedDts != nil {
+		discussion.CreatedDts = *pdi.CreatedDts
+	}
+	if pdi.ModifiedBy != nil {
+		discussion.ModifiedBy = *pdi.ModifiedBy
+
+	}
+	if pdi.ModifiedDts != nil {
+		discussion.ModifiedDts = *pdi.ModifiedDts
+	}
+
+	return &discussion
+}
