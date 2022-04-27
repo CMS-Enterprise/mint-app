@@ -1,3 +1,4 @@
+import basics from './draftModelPlan/basics';
 import draftModelPlan from './draftModelPlan/draftModelPlan';
 import newModel from './draftModelPlan/newModel';
 import accessibilityStatement from './accessibilityStatement';
@@ -17,6 +18,7 @@ import termsAndConditions from './termsAndConditions';
 const enUS = {
   accessibilityStatement,
   auth,
+  basics,
   cookies,
   draftModelPlan,
   error,
