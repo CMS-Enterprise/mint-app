@@ -119,7 +119,7 @@ const CollaboratorsTable = ({
       autoResetSortBy: false,
       autoResetPage: false,
       initialState: {
-        sortBy: useMemo(() => [{ id: 'modelName', asc: true }], []),
+        sortBy: useMemo(() => [{ id: 'fullName', asc: true }], []),
         pageIndex: 0
       }
     },
@@ -127,7 +127,7 @@ const CollaboratorsTable = ({
   );
 
   return (
-    <div className="model-plan-table">
+    <div className="collaborator-table">
       <UswdsTable bordered={false} {...getTableProps()} fullWidth scrollable>
         <caption className="usa-sr-only">{t('requestsTable.caption')}</caption>
         <thead>

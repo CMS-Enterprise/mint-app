@@ -47,7 +47,8 @@ const NewPlanContent = () => {
       mutate({
         variables: {
           input: {
-            modelName
+            modelName,
+            status: 'PLAN_DRAFT'
           }
         }
       }).then(response => {
