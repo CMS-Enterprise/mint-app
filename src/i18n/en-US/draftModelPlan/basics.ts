@@ -3,6 +3,19 @@ const basics = {
   breadcrumb: 'Model basics',
   modelName: 'Model name',
   modelCategory: 'Model category',
+  modelCategories: {
+    accountableCare: 'Accountable Care',
+    demonstration: 'Demonstration',
+    paymentInitiatives: 'Episode-based Payment Initiatives',
+    chipPop: 'Initiatives Focused on the Medicaid and CHIP Population',
+    devAndTest:
+      'Initiatives to Accelerate the Development and Testing of New Payment and Service Delivery Models',
+    speedBestPractice: 'Initiatives to Speed the Adoption of Best Practices',
+    medicareMedicaidEnrollees:
+      'Initiatives Focused on the Medicare and Medicaid Enrollees',
+    primaryCare: 'Primary Care Transformation',
+    unknown: 'Unknown'
+  },
   cmsComponent: 'CMS component',
   cmsComponents: [
     'CMMI',
