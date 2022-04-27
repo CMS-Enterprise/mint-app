@@ -32,6 +32,7 @@ type ModelPlan {
   modelCategory: ModelCategory
   cmsCenter: CMSCenter
   cmmiGroups: [CMMIGroup!]
+  archived: Boolean!
   createdBy: String
   createdDts: Time
   modifiedBy: String
@@ -51,6 +52,7 @@ modelName: String
 modelCategory: ModelCategory
 cmsCenter: CMSCenter
 cmmiGroups: [CMMIGroup!]
+archived: Boolean! = false
 createdBy: String
 createdDts: Time
 modifiedBy: String
