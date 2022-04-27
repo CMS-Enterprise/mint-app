@@ -1,28 +1,27 @@
-CREATE TABLE plan_question (
+CREATE TABLE plan_discussion (
     id uuid PRIMARY KEY,
     model_plan_id uuid NOT NULL,
-    section task_section NOT NULL,
-    page SMALLINT NOT NULL,
-    question text NOT NULL,
-    status question_status NOT NULL DEFAULT 'NEW',
+
+    content text NOT NULL,
+    status discussion_status NOT NULL DEFAULT 'NEW',
 
     created_by eua_id NOT NULL,
     created_dts timestamp with time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
     modified_by eua_id NOT NULL,
     modified_dts timestamp with time zone NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
-ALTER TABLE plan_question
-    ADD CONSTRAINT fk_question_plan FOREIGN KEY (model_plan_id)
+ALTER TABLE plan_discussion
+    ADD CONSTRAINT fk_discussion_plan FOREIGN KEY (model_plan_id)
         REFERENCES public.model_plan (id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
 ;
 
 
-CREATE TABLE question_comment (
+CREATE TABLE discussion_reply (
     id uuid PRIMARY KEY,
-    thread_id uuid,
-    comment text,
+    discussion_id uuid,
+    content text,
     resolution boolean,
 
     created_by eua_id NOT NULL,
@@ -31,9 +30,9 @@ CREATE TABLE question_comment (
     modified_dts timestamp with time zone NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
-ALTER TABLE question_comment
-    ADD CONSTRAINT fk_comment_thread FOREIGN KEY (thread_id)
-        REFERENCES public.plan_question (id) MATCH SIMPLE
+ALTER TABLE discussion_reply
+    ADD CONSTRAINT fk_reply_discussion FOREIGN KEY (discussion_id)
+        REFERENCES public.plan_discussion (id) MATCH SIMPLE
         ON UPDATE NO ACTION
         ON DELETE NO ACTION
 ;
