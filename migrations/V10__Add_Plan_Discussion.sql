@@ -3,7 +3,7 @@ CREATE TABLE plan_discussion (
     model_plan_id uuid NOT NULL,
 
     content text NOT NULL,
-    status discussion_status NOT NULL DEFAULT 'NEW',
+    status discussion_status NOT NULL DEFAULT 'UNANSWERED',
 
     created_by eua_id NOT NULL,
     created_dts timestamp with time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,

@@ -33,3 +33,44 @@ type DiscussionReply struct {
 	ModifiedBy  string    `json:"modifiedBy" db:"modified_by"`
 	ModifiedDts time.Time `json:"modifiedDts" db:"modified_dts"`
 }
+
+// GetModelTypeName returns a string name that represents the PlanDiscussion struct
+func (p PlanDiscussion) GetModelTypeName() string {
+	return "Plan_Discussion"
+}
+
+// GetID returns the ID property for a PlanDiscussion struct
+func (p PlanDiscussion) GetID() uuid.UUID {
+	return p.ID
+}
+
+// GetPlanID returns the ModelPlanID property for a PlanDiscussion struct
+func (p PlanDiscussion) GetPlanID() uuid.UUID {
+	return p.ModelPlanID
+}
+
+// GetModifiedBy returns the ModifiedBy property for a PlanDiscussion struct
+func (p PlanDiscussion) GetModifiedBy() *string {
+	return StringPointer(p.ModifiedBy)
+}
+
+// GetModelTypeName returns a string name that represents the DiscussionReply struct
+func (r DiscussionReply) GetModelTypeName() string {
+	return "Discussion_Reply"
+}
+
+// GetID returns the ID property for a DiscussionReply struct
+func (r DiscussionReply) GetID() uuid.UUID {
+	return r.ID
+}
+
+// GetPlanID returns the ModelPlanID property for a DiscussionReply struct
+func (r DiscussionReply) GetPlanID() uuid.UUID {
+	//TODO, this object doesn't implement modelPlanID, maybe we shouldn't implment this interface..
+	return uuid.UUID{}
+}
+
+// GetModifiedBy returns the ModifiedBy property for a DiscussionReply struct
+func (r DiscussionReply) GetModifiedBy() *string {
+	return StringPointer(r.ModifiedBy)
+}
