@@ -9,6 +9,7 @@ import {
 
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
+import Alert from 'components/shared/Alert';
 import NotFound, { NotFoundPartial } from 'views/NotFound';
 
 const BasicsContent = () => {
@@ -28,9 +29,17 @@ const BasicsContent = () => {
             </Breadcrumb>
             <Breadcrumb current>{t('breadcrumb')}</Breadcrumb>
           </BreadcrumbBar>
-          <PageHeading className="margin-top-4 margin-bottom-2">
-            {t('heading')}
-          </PageHeading>
+          <PageHeading className="margin-top-4">{t('heading')}</PageHeading>
+          <Alert
+            type="info"
+            slim
+            data-testid="mandatory-fields-alert"
+            className="margin-bottom-4"
+          >
+            <span className="mandatory-fields-alert__text">
+              {h('mandatoryFields')}
+            </span>
+          </Alert>
         </div>
       </div>
     </MainContent>
