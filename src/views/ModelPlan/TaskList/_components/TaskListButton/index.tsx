@@ -38,15 +38,6 @@ const TaskListButton = ({ path, status }: TaskListButtonProps) => {
   }
 
   return (
-    // <UswdsReactLink
-    //   className="usa-button"
-    //   variant="unstyled"
-    //   to={`task-list/${path}`}
-    // >
-    // {status === 'READY'
-    //   ? t('taskListButton.start')
-    //   : t('taskListButton.continue')}
-    // </UswdsReactLink>
     <Button type="button" onClick={handleCreatePlanBasics}>
       {status === 'READY'
         ? t('taskListButton.start')
