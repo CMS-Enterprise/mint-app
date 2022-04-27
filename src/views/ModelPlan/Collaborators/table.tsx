@@ -16,7 +16,6 @@ import {
   sortColumnValues
 } from 'utils/tableSort';
 
-// TEMP: collaborator types
 type TableProps = {
   collaborators: CollaboratorType[];
   setModalOpen: (isModalOpen: boolean) => void;

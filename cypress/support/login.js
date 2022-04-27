@@ -27,7 +27,7 @@ Cypress.Commands.add('login', () => {
       });
     }
   });
-  cy.url().should('eq', 'http://localhost:3000/');
+  cy.url().should('eq', 'http://localhost:3005/');
 });
 
 Cypress.Commands.add('localLogin', ({ name, role }) => {
@@ -42,10 +42,10 @@ Cypress.Commands.add('localLogin', ({ name, role }) => {
   }
   cy.get('[data-testid="LocalAuth-Submit"]').click();
 
-  cy.url().should('eq', 'http://localhost:3000/');
+  cy.url().should('eq', 'http://localhost:3005/');
 });
 
 Cypress.Commands.add('logout', () => {
   cy.get('[data-testid="signout-link"]').click();
-  cy.url().should('eq', 'http://localhost:3000/');
+  cy.url().should('eq', 'http://localhost:3005/');
 });
