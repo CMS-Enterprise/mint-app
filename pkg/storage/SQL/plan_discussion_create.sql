@@ -4,7 +4,7 @@ INSERT INTO plan_discussion(
         content,
         status,
         created_by,
-        modified_by,
+        modified_by
     )
 VALUES (
         :id,
@@ -12,7 +12,7 @@ VALUES (
         :content,
         :status,
         :created_by,
-        :modified_by,
+        :modified_by
     )
 RETURNING id,
     model_plan_id,
@@ -22,4 +22,3 @@ RETURNING id,
     created_dts,
     modified_by,
     modified_dts;
-    

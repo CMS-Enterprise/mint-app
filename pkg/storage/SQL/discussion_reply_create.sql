@@ -4,7 +4,7 @@ INSERT INTO discussion_reply(
         content,
         resolution,
         created_by,
-        modified_by,
+        modified_by
     )
 VALUES (
         :id,
@@ -12,7 +12,7 @@ VALUES (
         :content,
         :resolution,
         :created_by,
-        :modified_by,
+        :modified_by
     )
 RETURNING id,
     discussion_id,
