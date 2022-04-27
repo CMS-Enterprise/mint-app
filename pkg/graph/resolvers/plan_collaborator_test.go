@@ -54,7 +54,6 @@ func TestFetchCollaboratorsByModelPlanID(t *testing.T) {
 
 }
 
-//TODO add test to make sure you can't delete the last model lead when logic is added
 func TestDeletePlanCollaborator(t *testing.T) {
 	tc := GetDefaultTestConfigs()
 	collabDel := makeTestCollaborator()
@@ -73,7 +72,7 @@ func TestDeletePlanCollaborator(t *testing.T) {
 
 	modelLead := result[0]
 
-	_, err2 := DeletePlanCollaborator(tc.Logger, modelLead, tc.Principal, tc.Store)
+	_, err2 := DeletePlanCollaborator(tc.Logger, modelLead, tc.Principal, tc.Store) //this is the last model lead, deleting will cause error
 	assert.Error(t, err2)
 
 }
