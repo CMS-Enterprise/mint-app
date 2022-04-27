@@ -25,6 +25,7 @@ VALUES (
         cms_center,
         status,
         cmmi_group,
+        archived,
         created_by,
         created_dts,
         modified_by,
