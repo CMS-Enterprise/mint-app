@@ -2,8 +2,8 @@ const basics = {
   heading: 'Model basics',
   breadcrumb: 'Model basics',
   modelName: 'Model name',
-  modelCategory: 'Model Category',
-  cmsComponent: 'CMS Component',
+  modelCategory: 'Model category',
+  cmsComponent: 'CMS component',
   cmsComponents: [
     'CMMI',
     'Center for Medicare (CM)',
