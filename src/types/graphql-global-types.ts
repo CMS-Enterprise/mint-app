@@ -36,6 +36,18 @@ export enum ModelCategory {
   UNKNOWN = "UNKNOWN",
 }
 
+export enum ModelStatus {
+  ANNOUNCED = "ANNOUNCED",
+  CLEARED = "CLEARED",
+  CMS_CLEARANCE = "CMS_CLEARANCE",
+  HHS_CLEARANCE = "HHS_CLEARANCE",
+  ICIP_COMPLETE = "ICIP_COMPLETE",
+  INTERNAL_CMMI_CLEARANCE = "INTERNAL_CMMI_CLEARANCE",
+  OMB_ASRF_CLEARANCE = "OMB_ASRF_CLEARANCE",
+  PLAN_COMPLETE = "PLAN_COMPLETE",
+  PLAN_DRAFT = "PLAN_DRAFT",
+}
+
 export enum TeamRole {
   EVALUATION = "EVALUATION",
   LEADERSHIP = "LEADERSHIP",
@@ -53,10 +65,12 @@ export interface ModelPlanInput {
   modelCategory?: ModelCategory | null;
   cmsCenter?: CMSCenter | null;
   cmmiGroups?: CMMIGroup[] | null;
+  archived: boolean;
   createdBy?: string | null;
   createdDts?: Time | null;
   modifiedBy?: string | null;
   modifiedDts?: Time | null;
+  status: ModelStatus;
 }
 
 /**
@@ -67,7 +81,6 @@ export interface PlanCollaboratorInput {
   modelPlanID: UUID;
   euaUserID: string;
   fullName: string;
-  cmsCenter: CMSCenter;
   teamRole: TeamRole;
   createdBy?: string | null;
   createdDts?: Time | null;
