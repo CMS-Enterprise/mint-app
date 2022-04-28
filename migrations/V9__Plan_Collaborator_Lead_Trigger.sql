@@ -3,7 +3,7 @@ BEGIN
  IF (SELECT count(*)
  FROM plan_collaborator
  WHERE  team_role = 'MODEL_LEAD' and model_plan_id = OLD.model_plan_id 
- )<2
+ )<2 -- This is used in a before trigger, so we say <2 to check the existing count before allowing the change, vs making the change and rolling back
  THEN
     RAISE EXCEPTION 'There must be at least one MODEL_LEAD assigned to each model plan';
      END IF;
