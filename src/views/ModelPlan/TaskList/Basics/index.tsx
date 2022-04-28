@@ -6,18 +6,17 @@ import {
   BreadcrumbBar,
   BreadcrumbLink,
   Button,
-  Checkbox,
   Dropdown,
-  Fieldset,
   Label,
   TextInput
 } from '@trussworks/react-uswds';
-import { Field, Form, Formik, FormikProps } from 'formik';
+import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import Alert from 'components/shared/Alert';
+import CheckboxField from 'components/shared/CheckboxField';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
@@ -31,6 +30,12 @@ const BasicsContent = () => {
   const { modelId } = useParams<{ modelId: string }>();
   const { t: h } = useTranslation('draftModelPlan');
   const { t } = useTranslation('basics');
+
+  const initialValues = {
+    modelName: '',
+    modelCategory: '',
+    cmsComponent: []
+  };
 
   return (
     <MainContent className="margin-bottom-5">
@@ -57,8 +62,10 @@ const BasicsContent = () => {
           </Alert>
           <Formik
             // TODO: change intial value of model name of plan via gql
-            initialValues={{ modelName: '', modelCategory: '' }}
-            onSubmit={() => console.log('asdf')}
+            initialValues={initialValues}
+            onSubmit={values => {
+              console.log(values);
+            }}
             validationSchema={NewModelPlanValidationSchema}
             validateOnBlur={false}
             validateOnChange={false}
@@ -68,6 +75,7 @@ const BasicsContent = () => {
               formikProps: FormikProps<{
                 modelName: string;
                 modelCategory: string;
+                cmsComponent: string[];
               }>
             ) => {
               const {
@@ -160,33 +168,44 @@ const BasicsContent = () => {
                       scrollElement="cmsComponent"
                       error={!!flatErrors.cmsComponent}
                     >
-                      <legend className="usa-label">{t('cmsComponent')}</legend>
-                      {(t('cmsComponents', {
-                        returnObjects: true
-                      }) as string[]).map(item => {
-                        return (
-                          <Fragment key={item}>
-                            <Field
-                              as={Checkbox}
-                              // error={!!flatErrors.cmsComponent}
-                              // checked={values.development.isPresent}
-                              id={`new-plan-cmsComponent--${item}`}
-                              name="new-plan-cmsComponent"
-                              label={item}
-                              value={item}
-                              onChange={(
-                                e: React.ChangeEvent<HTMLInputElement>
-                              ) => {
-                                console.log(e.target.value);
-                                // setFieldValue(
-                                //   `${formikKey}.year${year}.development.isPresent`,
-                                //   e.target.checked
-                                // );
-                              }}
-                            />
-                          </Fragment>
-                        );
-                      })}
+                      <FieldArray
+                        name="cmsComponent"
+                        render={arrayHelpers => (
+                          <>
+                            <legend className="usa-label">
+                              {t('cmsComponent')}
+                            </legend>
+
+                            {(t('cmsComponents', {
+                              returnObjects: true
+                            }) as string[]).map((item, key) => {
+                              return (
+                                <Fragment key={item}>
+                                  <Field
+                                    as={CheckboxField}
+                                    id={`new-plan-cmsComponent--${key}`}
+                                    name="cmsComponent"
+                                    label={item}
+                                    value={item}
+                                    onChange={(
+                                      e: React.ChangeEvent<HTMLInputElement>
+                                    ) => {
+                                      if (e.target.checked) {
+                                        arrayHelpers.push(e.target.value);
+                                      } else {
+                                        const idx = values.cmsComponent.indexOf(
+                                          e.target.value
+                                        );
+                                        arrayHelpers.remove(idx);
+                                      }
+                                    }}
+                                  />
+                                </Fragment>
+                              );
+                            })}
+                          </>
+                        )}
+                      />
                     </FieldGroup>
 
                     <div className="margin-top-5 display-block">
