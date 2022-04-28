@@ -7,6 +7,7 @@ import {
   BreadcrumbLink,
   Button,
   Dropdown,
+  IconArrowBack,
   Label,
   TextInput
 } from '@trussworks/react-uswds';
@@ -208,21 +209,22 @@ const BasicsContent = () => {
                       />
                     </FieldGroup>
 
-                    <div className="margin-top-5 display-block">
-                      <UswdsReactLink
-                        className="usa-button usa-button--outline margin-bottom-1"
-                        variant="unstyled"
-                        to="/models/steps-overview"
-                      >
-                        {h('cancel')}
-                      </UswdsReactLink>
+                    <div className="margin-top-6 display-block">
                       <Button
                         type="submit"
                         disabled={!dirty}
+                        className="margin-bottom-3"
                         onClick={() => setErrors({})}
                       >
                         {h('next')}
                       </Button>
+                      <Link
+                        to={`/models/${modelId}/task-list/`}
+                        className="display-flex flex-align-center"
+                      >
+                        <IconArrowBack className="margin-right-1" aria-hidden />
+                        {h('saveAndReturn')}
+                      </Link>
                     </div>
                   </Form>
                 </>
