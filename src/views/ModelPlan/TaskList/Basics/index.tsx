@@ -13,9 +13,9 @@ import {
 } from '@trussworks/react-uswds';
 import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
 
-import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
+import PageNumber from 'components/PageNumber';
 import Alert from 'components/shared/Alert';
 import CheckboxField from 'components/shared/CheckboxField';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
@@ -35,7 +35,8 @@ const BasicsContent = () => {
   const initialValues = {
     modelName: '',
     modelCategory: '',
-    cmsComponent: []
+    cmsComponent: [],
+    cmmiGroup: []
   };
 
   return (
@@ -77,6 +78,7 @@ const BasicsContent = () => {
                 modelName: string;
                 modelCategory: string;
                 cmsComponent: string[];
+                cmmiGroup: string[];
               }>
             ) => {
               const {
@@ -116,6 +118,7 @@ const BasicsContent = () => {
                     <FieldGroup
                       scrollElement="modelName"
                       error={!!flatErrors.modelName}
+                      className="margin-top-4"
                     >
                       <Label htmlFor="plan-basics-model-name">
                         {t('modelName')}
@@ -133,6 +136,7 @@ const BasicsContent = () => {
                     <FieldGroup
                       scrollElement="modelCategory"
                       error={!!flatErrors.modelCategory}
+                      className="margin-top-4"
                     >
                       <Label htmlFor="plan-basics-model-category">
                         {t('modelCategory')}
@@ -168,6 +172,7 @@ const BasicsContent = () => {
                     <FieldGroup
                       scrollElement="cmsComponent"
                       error={!!flatErrors.cmsComponent}
+                      className="margin-top-4"
                     >
                       <FieldArray
                         name="cmsComponent"
@@ -204,27 +209,84 @@ const BasicsContent = () => {
                                 </Fragment>
                               );
                             })}
+
+                            {values.cmsComponent.includes('Other') && (
+                              <FieldGroup className="margin-top-4">
+                                <Label htmlFor="plan-basics-cmsCategory--Other">
+                                  {h('pleaseSpecify')}
+                                </Label>
+                                {/* TODO: once BE adds in this field, we can then implement this */}
+                                <Field
+                                  as={TextInput}
+                                  id="plan-basics-cmsCategory--Other"
+                                  maxLength={50}
+                                  name="cmsComponentOther"
+                                  onChange={(
+                                    e: React.ChangeEvent<HTMLInputElement>
+                                  ) => {
+                                    console.log(
+                                      `Other CMS Group: ${e.target.value}`
+                                    );
+                                  }}
+                                />
+                              </FieldGroup>
+                            )}
                           </>
                         )}
                       />
                     </FieldGroup>
+                    {values.cmsComponent.includes('CMMI') && (
+                      <FieldGroup className="margin-top-4">
+                        <FieldArray
+                          name="cmmiGroup"
+                          render={arrayHelpers => (
+                            <>
+                              <legend className="usa-label text-normal">
+                                {t('cmmiGroup')}
+                              </legend>
 
-                    <div className="margin-top-6 display-block">
+                              {(t('cmmiGroups', {
+                                returnObjects: true
+                              }) as string[]).map((item, key) => {
+                                return (
+                                  <Fragment key={item}>
+                                    <Field
+                                      as={CheckboxField}
+                                      id={`new-plan-cmmiGroup--${key}`}
+                                      name="cmmiGroup"
+                                      label={item}
+                                      value={item}
+                                      onChange={(
+                                        e: React.ChangeEvent<HTMLInputElement>
+                                      ) => {
+                                        if (e.target.checked) {
+                                          arrayHelpers.push(e.target.value);
+                                        } else {
+                                          const idx = values.cmmiGroup.indexOf(
+                                            e.target.value
+                                          );
+                                          arrayHelpers.remove(idx);
+                                        }
+                                      }}
+                                    />
+                                  </Fragment>
+                                );
+                              })}
+                            </>
+                          )}
+                        />
+                      </FieldGroup>
+                    )}
+
+                    <div className="margin-top-6 margin-bottom-3">
                       <Button
                         type="submit"
                         disabled={!dirty}
-                        className="margin-bottom-3"
+                        className=""
                         onClick={() => setErrors({})}
                       >
                         {h('next')}
                       </Button>
-                      <Link
-                        to={`/models/${modelId}/task-list/`}
-                        className="display-flex flex-align-center"
-                      >
-                        <IconArrowBack className="margin-right-1" aria-hidden />
-                        {h('saveAndReturn')}
-                      </Link>
                     </div>
                   </Form>
                 </>
@@ -232,6 +294,19 @@ const BasicsContent = () => {
             }}
           </Formik>
         </div>
+        {/* //TODO: To implement a save function */}
+        <Link
+          to={`/models/${modelId}/task-list/`}
+          className="display-flex flex-align-center margin-bottom-6"
+        >
+          <IconArrowBack className="margin-right-1" aria-hidden />
+          {h('saveAndReturn')}
+        </Link>
+        <PageNumber
+          currentPage={1}
+          totalPages={3}
+          className="margin-bottom-10"
+        />
       </div>
     </MainContent>
   );
