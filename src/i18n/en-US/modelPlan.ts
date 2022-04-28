@@ -3,7 +3,7 @@ const modelPlan = {
   teamRoles: {
     modelLead: 'Model Lead',
     leadership: 'Leadership',
-    evaluation: 'Evaulation',
+    evaluation: 'Evaluation',
     learning: 'Learning',
     modelTeam: 'Model Team'
   },

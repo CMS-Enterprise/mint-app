@@ -1,0 +1,112 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`The making a request page matches snapshot 1`] = `
+<DocumentFragment>
+  <main
+    class="mint-main-content margin-bottom-5"
+    data-testid="new-plan"
+    id="main-content"
+    role="main"
+    tabindex="-1"
+  >
+    <div
+      class="grid-container"
+    >
+      <div
+        class="tablet:grid-col-12"
+      >
+        <nav
+          aria-label="Breadcrumbs"
+          class="usa-breadcrumb usa-breadcrumb--wrap"
+        >
+          <ol
+            class="usa-breadcrumb__list"
+          >
+            <li
+              class="usa-breadcrumb__list-item"
+            >
+              <a
+                class="usa-breadcrumb__link"
+                href="/"
+              >
+                <span>
+                  Home
+                </span>
+              </a>
+            </li>
+            <li
+              aria-current="page"
+              class="usa-breadcrumb__list-item usa-current"
+            >
+              Start a new Model Plan
+            </li>
+          </ol>
+        </nav>
+        <h1
+          aria-live="polite"
+          class="mint-h1 margin-top-4"
+          tabindex="-1"
+        >
+          Model name
+        </h1>
+        <div
+          class="usa-alert usa-alert--info usa-alert--slim margin-bottom-4"
+          data-testid="mandatory-fields-alert"
+        >
+          <div
+            class="usa-alert__body"
+          >
+            <span
+              class="mandatory-fields-alert__text"
+            >
+              This is not a permanent name. If needed, you may update it later.
+            </span>
+          </div>
+        </div>
+        <form
+          action="#"
+        >
+          <div
+            class="usa-form-group"
+            data-scroll="modelName"
+          >
+            <label
+              class="usa-label"
+              data-testid="label"
+              for="new-plan-model-name"
+            >
+              What is the name of your model?
+            </label>
+            <input
+              class="usa-input"
+              data-testid="textInput"
+              id="new-plan-model-name"
+              maxlength="50"
+              name="modelName"
+              value=""
+            />
+          </div>
+          <div
+            class="margin-top-5 display-block"
+          >
+            <a
+              class="usa-button usa-button--outline margin-bottom-1"
+              href="/models/steps-overview"
+            >
+              Cancel
+            </a>
+            <button
+              class="usa-button"
+              data-testid="button"
+              disabled=""
+              type="submit"
+            >
+              Next
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </main>
+</DocumentFragment>
+`;

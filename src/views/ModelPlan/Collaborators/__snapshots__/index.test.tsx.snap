@@ -1,0 +1,96 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Collaborator/Team Member page w/table matches snapshot 1`] = `
+<DocumentFragment>
+  <main
+    class="mint-main-content margin-bottom-5"
+    id="main-content"
+    role="main"
+    tabindex="-1"
+  >
+    <div
+      class="grid-container"
+    >
+      <div
+        class="tablet:grid-col-12"
+      >
+        <nav
+          aria-label="Breadcrumbs"
+          class="usa-breadcrumb usa-breadcrumb--wrap"
+        >
+          <ol
+            class="usa-breadcrumb__list"
+          >
+            <li
+              class="usa-breadcrumb__list-item"
+            >
+              <a
+                class="usa-breadcrumb__link"
+                href="/"
+              >
+                <span>
+                  Home
+                </span>
+              </a>
+            </li>
+            <li
+              aria-current="page"
+              class="usa-breadcrumb__list-item usa-current"
+            >
+              Start a new Model Plan
+            </li>
+          </ol>
+        </nav>
+        <h1
+          aria-live="polite"
+          class="mint-h1 margin-top-4 margin-bottom-2"
+          tabindex="-1"
+        >
+          Add model team members
+        </h1>
+        <div
+          class="font-body-lg margin-bottom-6"
+        >
+          Add any team members who will be collaborating on your Model Plan. You can edit this list at any time.
+        </div>
+        <h4
+          class="margin-bottom-1"
+        >
+          Team members
+        </h4>
+        <a
+          class="usa-button margin-bottom-2"
+          href="/models/new-plan/f11eb129-2c80-4080-9440-439cbe1a286f/add-collaborator"
+        >
+          Add team member
+        </a>
+        <div
+          class="usa-alert usa-alert--info"
+          data-testid="alert"
+        >
+          <div
+            class="usa-alert__body"
+          >
+            <h3
+              class="usa-alert__heading"
+            >
+              No associated team members
+            </h3>
+          </div>
+        </div>
+        <div
+          class="margin-top-5 display-block"
+        >
+          <a
+            class="usa-button usa-button--outline"
+            data-testid="continue-to-tasklist"
+            href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/task-list"
+          >
+            Continue without adding team members
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
+</DocumentFragment>
+`;

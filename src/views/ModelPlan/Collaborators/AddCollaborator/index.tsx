@@ -276,6 +276,7 @@ const Collaborators = () => {
                       </Field>
                     </FieldGroup>
 
+                    {/* Show infobox only if adding a collaborator */}
                     {!collaboratorId && (
                       <Alert
                         type="info"

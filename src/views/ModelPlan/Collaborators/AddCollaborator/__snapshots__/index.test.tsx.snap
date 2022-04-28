@@ -1,0 +1,151 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Adding a collaborator page matches snapshot 1`] = `
+<DocumentFragment>
+  <main
+    class="mint-main-content margin-bottom-5"
+    id="main-content"
+    role="main"
+    tabindex="-1"
+  >
+    <div
+      class="grid-container"
+    >
+      <div
+        class="desktop:grid-col-6"
+      >
+        <h1
+          aria-live="polite"
+          class="mint-h1 margin-top-6 margin-bottom-2"
+          tabindex="-1"
+        >
+          Add a team member
+        </h1>
+        <div
+          class="margin-bottom-6 line-height-body-6"
+        >
+          Search for a team member to add to your model team. Team members are all eligible to view and edit all sections of a Model Plan, including uploading and removing documents as well as adding or removing team members.
+        </div>
+        <form
+          action="#"
+        >
+          <div
+            class="usa-form-group"
+            data-scroll="fullName"
+          >
+            <label
+              class="usa-label margin-bottom-1"
+              data-testid="label"
+              for="new-plan-model-name"
+            >
+              Team member name
+            </label>
+            <div
+              data-reach-combobox=""
+              data-state="idle"
+            >
+              <input
+                aria-autocomplete="both"
+                aria-controls="listbox--1"
+                aria-expanded="false"
+                aria-haspopup="listbox"
+                aria-label="Cedar-Users"
+                class="usa-select"
+                data-reach-combobox-input=""
+                data-state="idle"
+                role="combobox"
+                value=""
+              />
+            </div>
+          </div>
+          <div
+            class="usa-form-group"
+            data-scroll="teamRole"
+          >
+            <label
+              class="usa-label"
+              data-testid="label"
+              for="IntakeForm-RequesterComponent"
+            >
+              Team member role
+            </label>
+            <select
+              class="usa-select"
+              data-testid="dropdown"
+              id="collaborator-role"
+              name="role"
+            >
+              <option
+                disabled=""
+                value=""
+              >
+                -Select-
+              </option>
+              <option
+                value="EVALUATION"
+              >
+                Evaluation
+              </option>
+              <option
+                value="LEADERSHIP"
+              >
+                Leadership
+              </option>
+              <option
+                value="LEARNING"
+              >
+                Learning
+              </option>
+              <option
+                value="MODEL_LEAD"
+              >
+                Model Lead
+              </option>
+              <option
+                value="MODEL_TEAM"
+              >
+                Model Team
+              </option>
+            </select>
+          </div>
+          <div
+            class="usa-alert usa-alert--info usa-alert--slim margin-y-4"
+            data-testid="mandatory-fields-alert"
+          >
+            <div
+              class="usa-alert__body"
+            >
+              <span
+                class="mandatory-fields-alert__text"
+              >
+                This new team member will be able to view and edit anything about a model plan. Please make sure this individual should be able to do this before you proceed.
+              </span>
+            </div>
+          </div>
+          <div
+            class="margin-y-4 display-block"
+          >
+            <button
+              class="usa-button"
+              data-testid="button"
+              disabled=""
+              type="submit"
+            >
+              Add team member
+            </button>
+          </div>
+        </form>
+        <a
+          class="usa-link"
+          href="/models/new-plan/f11eb129-2c80-4080-9440-439cbe1a286f/collaborators"
+        >
+          <span>
+            ← 
+          </span>
+           Don’t add a team member and return to the previous page
+        </a>
+      </div>
+    </div>
+  </main>
+</DocumentFragment>
+`;

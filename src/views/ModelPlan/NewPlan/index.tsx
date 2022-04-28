@@ -74,7 +74,7 @@ const NewPlanContent = () => {
   };
 
   return (
-    <MainContent className="margin-bottom-5">
+    <MainContent className="margin-bottom-5" data-testid="new-plan">
       <div className="grid-container">
         <div className="tablet:grid-col-12">
           <BreadcrumbBar variant="wrap">
