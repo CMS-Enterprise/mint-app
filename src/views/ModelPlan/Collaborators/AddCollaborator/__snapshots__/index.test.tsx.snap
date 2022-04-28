@@ -118,7 +118,7 @@ exports[`Adding a collaborator page matches snapshot 1`] = `
               <span
                 class="mandatory-fields-alert__text"
               >
-                This new team member will be able to view and edit anything about a model plan. Please make sure this individual should be able to do this before you proceed.
+                This team member will be able to view and edit anything about a model plan. Please make sure this individual should be able to do this before you proceed.
               </span>
             </div>
           </div>

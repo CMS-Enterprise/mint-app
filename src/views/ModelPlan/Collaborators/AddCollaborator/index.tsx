@@ -276,19 +276,16 @@ const Collaborators = () => {
                       </Field>
                     </FieldGroup>
 
-                    {/* Show infobox only if adding a collaborator */}
-                    {!collaboratorId && (
-                      <Alert
-                        type="info"
-                        slim
-                        data-testid="mandatory-fields-alert"
-                        className="margin-y-4"
-                      >
-                        <span className="mandatory-fields-alert__text">
-                          {t('searchMemberInfo')}
-                        </span>
-                      </Alert>
-                    )}
+                    <Alert
+                      type="info"
+                      slim
+                      data-testid="mandatory-fields-alert"
+                      className="margin-y-4"
+                    >
+                      <span className="mandatory-fields-alert__text">
+                        {t('searchMemberInfo')}
+                      </span>
+                    </Alert>
 
                     <div className="margin-y-4 display-block">
                       <Button
