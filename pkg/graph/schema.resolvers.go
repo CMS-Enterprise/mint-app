@@ -5,7 +5,6 @@ package graph
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/google/uuid"
 
@@ -52,7 +51,9 @@ func (r *modelPlanResolver) Collaborators(ctx context.Context, obj *models.Model
 }
 
 func (r *modelPlanResolver) Discussions(ctx context.Context, obj *models.ModelPlan) ([]*models.PlanDiscussion, error) {
-	panic(fmt.Errorf("not implemented"))
+	logger := appcontext.ZLogger(ctx)
+
+	return resolvers.PlanDiscussionCollectionByModelPlanID(logger, obj.ID, r.store)
 }
 
 func (r *mutationResolver) CreateModelPlan(ctx context.Context, input model.ModelPlanInput) (*models.ModelPlan, error) {
@@ -150,7 +151,9 @@ func (r *mutationResolver) CreateDiscussionReply(ctx context.Context, input mode
 }
 
 func (r *planDiscussionResolver) Replies(ctx context.Context, obj *models.PlanDiscussion) ([]*models.DiscussionReply, error) {
-	panic(fmt.Errorf("not implemented"))
+	//TODO see if you can check if the PlanDiscussion already has replies, and if not go to DB, otherwise return the replies
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.DiscussionReplyCollectionByDiscusionID(logger, obj.ID, r.store)
 }
 
 func (r *queryResolver) CurrentUser(ctx context.Context) (*model.CurrentUser, error) {
