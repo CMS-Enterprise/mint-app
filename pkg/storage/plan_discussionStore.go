@@ -26,6 +26,12 @@ var discussionReplyCreateSQL string
 //go:embed SQL/discussion_reply_collection_by_discussion_id.sql
 var discussionReplyCollectionByDiscussionIDSQL string
 
+//go:embed SQL/plan_discussion_update.sql
+var planDiscussionUpdateSQL string
+
+//go:embed SQL/discussion_reply_update.sql
+var discussionReplyUpdateSQL string
+
 // PlanDiscussionCreate creates a plan discussion
 func (s *Store) PlanDiscussionCreate(logger *zap.Logger, discussion *models.PlanDiscussion) (*models.PlanDiscussion, error) {
 	discussion.ID = utilityUUID.ValueOrNewUUID(discussion.ID)
@@ -117,4 +123,34 @@ func (s *Store) PlanDiscussionCollectionByModelPlanID(logger *zap.Logger, modelP
 	}
 	return discusions, nil
 
+}
+
+// PlanDiscussionUpdate updates a plan discussion object
+func (s *Store) PlanDiscussionUpdate(logger *zap.Logger, discussion *models.PlanDiscussion) (*models.PlanDiscussion, error) {
+	statement, err := s.db.PrepareNamed(planDiscussionUpdateSQL)
+	if err != nil {
+		return nil, genericmodel.HandleModelUpdateError(logger, err, discussion)
+	}
+
+	err = statement.Get(discussion, discussion)
+	if err != nil {
+		return nil, genericmodel.HandleModelQueryError(logger, err, discussion)
+	}
+
+	return discussion, nil
+}
+
+// DiscussionReplyUpdate updates a discussion reply object
+func (s *Store) DiscussionReplyUpdate(logger *zap.Logger, reply *models.DiscussionReply) (*models.DiscussionReply, error) {
+	statement, err := s.db.PrepareNamed(discussionReplyUpdateSQL)
+	if err != nil {
+		return nil, genericmodel.HandleModelUpdateError(logger, err, reply)
+	}
+
+	err = statement.Get(reply, reply)
+	if err != nil {
+		return nil, genericmodel.HandleModelQueryError(logger, err, reply)
+	}
+
+	return reply, nil
 }

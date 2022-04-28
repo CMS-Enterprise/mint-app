@@ -19,11 +19,29 @@ func CreatePlanDiscussion(logger *zap.Logger, input *models.PlanDiscussion, prin
 	return result, err
 }
 
+// UpdatePlanDiscussion implements resolver logic to update a plan Discussion object
+func UpdatePlanDiscussion(logger *zap.Logger, input *models.PlanDiscussion, principal *string, store *storage.Store) (*models.PlanDiscussion, error) {
+	input.ModifiedBy = models.ValueOrEmpty(principal)
+
+	//TODO do we need to do anything with status here?
+
+	result, err := store.PlanDiscussionUpdate(logger, input)
+	return result, err
+}
+
 // CreateDiscussionReply implements resolver logic to create a Discussion reply object
 func CreateDiscussionReply(logger *zap.Logger, input *models.DiscussionReply, principal *string, store *storage.Store) (*models.DiscussionReply, error) {
 	input.CreatedBy = models.ValueOrEmpty(principal)
 	input.ModifiedBy = input.CreatedBy
 	result, err := store.DiscussionReplyCreate(logger, input)
+	return result, err
+}
+
+// UpdateDiscussionReply implements resolver logic to update a Discussion reply object
+func UpdateDiscussionReply(logger *zap.Logger, input *models.DiscussionReply, principal *string, store *storage.Store) (*models.DiscussionReply, error) {
+
+	input.ModifiedBy = models.ValueOrEmpty(principal)
+	result, err := store.DiscussionReplyUpdate(logger, input)
 	return result, err
 }
 

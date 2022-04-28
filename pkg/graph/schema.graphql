@@ -287,9 +287,14 @@ updatePlanMilestones(input: PlanMilestonesInput!):PlanMilestones
 createPlanDiscussion(input: PlanDiscussionInput!): PlanDiscussion
 @hasRole(role: MINT_BASE_USER)
 
+updatePlanDiscussion(input: PlanDiscussionInput!): PlanDiscussion
+@hasRole(role: MINT_BASE_USER)
+
 createDiscussionReply(input: DiscussionReplyInput!): DiscussionReply
 @hasRole(role: MINT_BASE_USER)
 
+updateDiscussionReply(input: DiscussionReplyInput!): DiscussionReply
+@hasRole(role: MINT_BASE_USER)
 
 }
 

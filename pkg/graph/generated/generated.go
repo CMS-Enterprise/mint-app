@@ -97,9 +97,11 @@ type ComplexityRoot struct {
 		CreatePlanDiscussion   func(childComplexity int, input model.PlanDiscussionInput) int
 		CreatePlanMilestones   func(childComplexity int, input model.PlanMilestonesInput) int
 		DeletePlanCollaborator func(childComplexity int, input model.PlanCollaboratorInput) int
+		UpdateDiscussionReply  func(childComplexity int, input model.DiscussionReplyInput) int
 		UpdateModelPlan        func(childComplexity int, input model.ModelPlanInput) int
 		UpdatePlanBasics       func(childComplexity int, input model.PlanBasicsInput) int
 		UpdatePlanCollaborator func(childComplexity int, input model.PlanCollaboratorInput) int
+		UpdatePlanDiscussion   func(childComplexity int, input model.PlanDiscussionInput) int
 		UpdatePlanMilestones   func(childComplexity int, input model.PlanMilestonesInput) int
 	}
 
@@ -194,7 +196,9 @@ type MutationResolver interface {
 	CreatePlanMilestones(ctx context.Context, input model.PlanMilestonesInput) (*models.PlanMilestones, error)
 	UpdatePlanMilestones(ctx context.Context, input model.PlanMilestonesInput) (*models.PlanMilestones, error)
 	CreatePlanDiscussion(ctx context.Context, input model.PlanDiscussionInput) (*models.PlanDiscussion, error)
+	UpdatePlanDiscussion(ctx context.Context, input model.PlanDiscussionInput) (*models.PlanDiscussion, error)
 	CreateDiscussionReply(ctx context.Context, input model.DiscussionReplyInput) (*models.DiscussionReply, error)
+	UpdateDiscussionReply(ctx context.Context, input model.DiscussionReplyInput) (*models.DiscussionReply, error)
 }
 type PlanDiscussionResolver interface {
 	Replies(ctx context.Context, obj *models.PlanDiscussion) ([]*models.DiscussionReply, error)
@@ -401,6 +405,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.ModelPlan.ModifiedDts(childComplexity), true
 
+	case "ModelPlan.status":
+		if e.complexity.ModelPlan.Status == nil {
+			break
+		}
+
+		return e.complexity.ModelPlan.Status(childComplexity), true
+
 	case "Mutation.createDiscussionReply":
 		if e.complexity.Mutation.CreateDiscussionReply == nil {
 			break
@@ -412,12 +423,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Mutation.CreateDiscussionReply(childComplexity, args["input"].(model.DiscussionReplyInput)), true
-	case "ModelPlan.status":
-		if e.complexity.ModelPlan.Status == nil {
-			break
-		}
-
-		return e.complexity.ModelPlan.Status(childComplexity), true
 
 	case "Mutation.createModelPlan":
 		if e.complexity.Mutation.CreateModelPlan == nil {
@@ -491,6 +496,18 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Mutation.DeletePlanCollaborator(childComplexity, args["input"].(model.PlanCollaboratorInput)), true
 
+	case "Mutation.updateDiscussionReply":
+		if e.complexity.Mutation.UpdateDiscussionReply == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_updateDiscussionReply_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Mutation.UpdateDiscussionReply(childComplexity, args["input"].(model.DiscussionReplyInput)), true
+
 	case "Mutation.updateModelPlan":
 		if e.complexity.Mutation.UpdateModelPlan == nil {
 			break
@@ -526,6 +543,18 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Mutation.UpdatePlanCollaborator(childComplexity, args["input"].(model.PlanCollaboratorInput)), true
+
+	case "Mutation.updatePlanDiscussion":
+		if e.complexity.Mutation.UpdatePlanDiscussion == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_updatePlanDiscussion_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Mutation.UpdatePlanDiscussion(childComplexity, args["input"].(model.PlanDiscussionInput)), true
 
 	case "Mutation.updatePlanMilestones":
 		if e.complexity.Mutation.UpdatePlanMilestones == nil {
@@ -1283,9 +1312,14 @@ updatePlanMilestones(input: PlanMilestonesInput!):PlanMilestones
 createPlanDiscussion(input: PlanDiscussionInput!): PlanDiscussion
 @hasRole(role: MINT_BASE_USER)
 
+updatePlanDiscussion(input: PlanDiscussionInput!): PlanDiscussion
+@hasRole(role: MINT_BASE_USER)
+
 createDiscussionReply(input: DiscussionReplyInput!): DiscussionReply
 @hasRole(role: MINT_BASE_USER)
 
+updateDiscussionReply(input: DiscussionReplyInput!): DiscussionReply
+@hasRole(role: MINT_BASE_USER)
 
 }
 
@@ -1500,6 +1534,21 @@ func (ec *executionContext) field_Mutation_deletePlanCollaborator_args(ctx conte
 	return args, nil
 }
 
+func (ec *executionContext) field_Mutation_updateDiscussionReply_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 model.DiscussionReplyInput
+	if tmp, ok := rawArgs["input"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
+		arg0, err = ec.unmarshalNDiscussionReplyInput2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐDiscussionReplyInput(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["input"] = arg0
+	return args, nil
+}
+
 func (ec *executionContext) field_Mutation_updateModelPlan_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
@@ -1537,6 +1586,21 @@ func (ec *executionContext) field_Mutation_updatePlanCollaborator_args(ctx conte
 	if tmp, ok := rawArgs["input"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
 		arg0, err = ec.unmarshalNPlanCollaboratorInput2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐPlanCollaboratorInput(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["input"] = arg0
+	return args, nil
+}
+
+func (ec *executionContext) field_Mutation_updatePlanDiscussion_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 model.PlanDiscussionInput
+	if tmp, ok := rawArgs["input"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
+		arg0, err = ec.unmarshalNPlanDiscussionInput2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐPlanDiscussionInput(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -1951,42 +2015,6 @@ func (ec *executionContext) _DiscussionReply_modifiedBy(ctx context.Context, fie
 }
 
 func (ec *executionContext) _DiscussionReply_modifiedDts(ctx context.Context, field graphql.CollectedField, obj *models.DiscussionReply) (ret graphql.Marshaler) {
-func (ec *executionContext) _ModelPlan_archived(ctx context.Context, field graphql.CollectedField, obj *models.ModelPlan) (ret graphql.Marshaler) {
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	fc := &graphql.FieldContext{
-		Object:     "ModelPlan",
-		Field:      field,
-		Args:       nil,
-		IsMethod:   false,
-		IsResolver: false,
-	}
-
-	ctx = graphql.WithFieldContext(ctx, fc)
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.Archived, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(bool)
-	fc.Result = res
-	return ec.marshalNBoolean2bool(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) _ModelPlan_createdBy(ctx context.Context, field graphql.CollectedField, obj *models.ModelPlan) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
 			ec.Error(ctx, ec.Recover(ctx, r))
@@ -2246,6 +2274,41 @@ func (ec *executionContext) _ModelPlan_cmmiGroups(ctx context.Context, field gra
 	res := resTmp.([]model.CMMIGroup)
 	fc.Result = res
 	return ec.marshalOCMMIGroup2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCMMIGroupᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _ModelPlan_archived(ctx context.Context, field graphql.CollectedField, obj *models.ModelPlan) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "ModelPlan",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Archived, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(bool)
+	fc.Result = res
+	return ec.marshalNBoolean2bool(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _ModelPlan_createdBy(ctx context.Context, field graphql.CollectedField, obj *models.ModelPlan) (ret graphql.Marshaler) {
@@ -2510,6 +2573,41 @@ func (ec *executionContext) _ModelPlan_discussions(ctx context.Context, field gr
 	return ec.marshalNPlanDiscussion2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanDiscussionᚄ(ctx, field.Selections, res)
 }
 
+func (ec *executionContext) _ModelPlan_status(ctx context.Context, field graphql.CollectedField, obj *models.ModelPlan) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "ModelPlan",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Status, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(models.ModelStatus)
+	fc.Result = res
+	return ec.marshalNModelStatus2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelStatus(ctx, field.Selections, res)
+}
+
 func (ec *executionContext) _Mutation_createModelPlan(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
@@ -2637,42 +2735,6 @@ func (ec *executionContext) _Mutation_createPlanCollaborator(ctx context.Context
 }
 
 func (ec *executionContext) _Mutation_updatePlanCollaborator(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-func (ec *executionContext) _ModelPlan_status(ctx context.Context, field graphql.CollectedField, obj *models.ModelPlan) (ret graphql.Marshaler) {
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	fc := &graphql.FieldContext{
-		Object:     "ModelPlan",
-		Field:      field,
-		Args:       nil,
-		IsMethod:   false,
-		IsResolver: false,
-	}
-
-	ctx = graphql.WithFieldContext(ctx, fc)
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.Status, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(models.ModelStatus)
-	fc.Result = res
-	return ec.marshalNModelStatus2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelStatus(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) _Mutation_createModelPlan(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
 			ec.Error(ctx, ec.Recover(ctx, r))
@@ -3176,6 +3238,69 @@ func (ec *executionContext) _Mutation_createPlanDiscussion(ctx context.Context, 
 	return ec.marshalOPlanDiscussion2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanDiscussion(ctx, field.Selections, res)
 }
 
+func (ec *executionContext) _Mutation_updatePlanDiscussion(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   true,
+		IsResolver: true,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	rawArgs := field.ArgumentMap(ec.Variables)
+	args, err := ec.field_Mutation_updatePlanDiscussion_args(ctx, rawArgs)
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	fc.Args = args
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		directive0 := func(rctx context.Context) (interface{}, error) {
+			ctx = rctx // use context from middleware stack in children
+			return ec.resolvers.Mutation().UpdatePlanDiscussion(rctx, args["input"].(model.PlanDiscussionInput))
+		}
+		directive1 := func(ctx context.Context) (interface{}, error) {
+			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_BASE_USER")
+			if err != nil {
+				return nil, err
+			}
+			if ec.directives.HasRole == nil {
+				return nil, errors.New("directive hasRole is not implemented")
+			}
+			return ec.directives.HasRole(ctx, nil, directive0, role)
+		}
+
+		tmp, err := directive1(rctx)
+		if err != nil {
+			return nil, graphql.ErrorOnPath(ctx, err)
+		}
+		if tmp == nil {
+			return nil, nil
+		}
+		if data, ok := tmp.(*models.PlanDiscussion); ok {
+			return data, nil
+		}
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.PlanDiscussion`, tmp)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*models.PlanDiscussion)
+	fc.Result = res
+	return ec.marshalOPlanDiscussion2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanDiscussion(ctx, field.Selections, res)
+}
+
 func (ec *executionContext) _Mutation_createDiscussionReply(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
@@ -3203,6 +3328,69 @@ func (ec *executionContext) _Mutation_createDiscussionReply(ctx context.Context,
 		directive0 := func(rctx context.Context) (interface{}, error) {
 			ctx = rctx // use context from middleware stack in children
 			return ec.resolvers.Mutation().CreateDiscussionReply(rctx, args["input"].(model.DiscussionReplyInput))
+		}
+		directive1 := func(ctx context.Context) (interface{}, error) {
+			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_BASE_USER")
+			if err != nil {
+				return nil, err
+			}
+			if ec.directives.HasRole == nil {
+				return nil, errors.New("directive hasRole is not implemented")
+			}
+			return ec.directives.HasRole(ctx, nil, directive0, role)
+		}
+
+		tmp, err := directive1(rctx)
+		if err != nil {
+			return nil, graphql.ErrorOnPath(ctx, err)
+		}
+		if tmp == nil {
+			return nil, nil
+		}
+		if data, ok := tmp.(*models.DiscussionReply); ok {
+			return data, nil
+		}
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.DiscussionReply`, tmp)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*models.DiscussionReply)
+	fc.Result = res
+	return ec.marshalODiscussionReply2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDiscussionReply(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _Mutation_updateDiscussionReply(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   true,
+		IsResolver: true,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	rawArgs := field.ArgumentMap(ec.Variables)
+	args, err := ec.field_Mutation_updateDiscussionReply_args(ctx, rawArgs)
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	fc.Args = args
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		directive0 := func(rctx context.Context) (interface{}, error) {
+			ctx = rctx // use context from middleware stack in children
+			return ec.resolvers.Mutation().UpdateDiscussionReply(rctx, args["input"].(model.DiscussionReplyInput))
 		}
 		directive1 := func(ctx context.Context) (interface{}, error) {
 			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_BASE_USER")
@@ -3766,41 +3954,6 @@ func (ec *executionContext) _PlanCollaborator_fullName(ctx context.Context, fiel
 	return ec.marshalNString2string(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) _PlanCollaborator_cmsCenter(ctx context.Context, field graphql.CollectedField, obj *models.PlanCollaborator) (ret graphql.Marshaler) {
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	fc := &graphql.FieldContext{
-		Object:     "PlanCollaborator",
-		Field:      field,
-		Args:       nil,
-		IsMethod:   false,
-		IsResolver: false,
-	}
-
-	ctx = graphql.WithFieldContext(ctx, fc)
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.CMSCenter, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(models.CMSCenter)
-	fc.Result = res
-	return ec.marshalNCMSCenter2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐCMSCenter(ctx, field.Selections, res)
-}
-
 func (ec *executionContext) _PlanCollaborator_teamRole(ctx context.Context, field graphql.CollectedField, obj *models.PlanCollaborator) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
@@ -4096,7 +4249,6 @@ func (ec *executionContext) _PlanDiscussion_status(ctx context.Context, field gr
 }
 
 func (ec *executionContext) _PlanDiscussion_replies(ctx context.Context, field graphql.CollectedField, obj *models.PlanDiscussion) (ret graphql.Marshaler) {
-func (ec *executionContext) _PlanCollaborator_teamRole(ctx context.Context, field graphql.CollectedField, obj *models.PlanCollaborator) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
 			ec.Error(ctx, ec.Recover(ctx, r))
@@ -7266,9 +7418,23 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, innerFunc)
 
+		case "updatePlanDiscussion":
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_updatePlanDiscussion(ctx, field)
+			}
+
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, innerFunc)
+
 		case "createDiscussionReply":
 			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._Mutation_createDiscussionReply(ctx, field)
+			}
+
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, innerFunc)
+
+		case "updateDiscussionReply":
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_updateDiscussionReply(ctx, field)
 			}
 
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, innerFunc)
@@ -8370,22 +8536,6 @@ func (ec *executionContext) unmarshalNCMMIGroup2githubᚗcomᚋcmsgovᚋmintᚑa
 
 func (ec *executionContext) marshalNCMMIGroup2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCMMIGroup(ctx context.Context, sel ast.SelectionSet, v model.CMMIGroup) graphql.Marshaler {
 	return v
-}
-
-func (ec *executionContext) unmarshalNCMSCenter2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐCMSCenter(ctx context.Context, v interface{}) (models.CMSCenter, error) {
-	tmp, err := graphql.UnmarshalString(v)
-	res := models.CMSCenter(tmp)
-	return res, graphql.ErrorOnPath(ctx, err)
-}
-
-func (ec *executionContext) marshalNCMSCenter2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐCMSCenter(ctx context.Context, sel ast.SelectionSet, v models.CMSCenter) graphql.Marshaler {
-	res := graphql.MarshalString(string(v))
-	if res == graphql.Null {
-		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
-			ec.Errorf(ctx, "must not be null")
-		}
-	}
-	return res
 }
 
 func (ec *executionContext) marshalNDiscussionReply2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDiscussionReplyᚄ(ctx context.Context, sel ast.SelectionSet, v []*models.DiscussionReply) graphql.Marshaler {
