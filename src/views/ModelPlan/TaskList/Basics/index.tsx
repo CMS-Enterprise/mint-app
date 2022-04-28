@@ -124,7 +124,7 @@ const BasicsContent = () => {
                       error={!!flatErrors.modelCategory}
                     >
                       <Label htmlFor="plan-basics-model-category">
-                        {t('teamMemberRole')}
+                        {t('modelCategory')}
                       </Label>
                       <FieldErrorMsg>{flatErrors.modelCategory}</FieldErrorMsg>
                       <Field
