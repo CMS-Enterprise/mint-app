@@ -23,7 +23,8 @@ describe('Collaborator/Team Member page w/table', () => {
                 modelPlanID: 'f11eb129-2c80-4080-9440-439cbe1a286f',
                 euaUserID: 'ABCD',
                 fullName: 'John Doe',
-                teamRole: 'MODEL_LEAD'
+                teamRole: 'MODEL_LEAD',
+                createdDts: '2022-10-22T00:00:00Z'
               }
             ]
           }
@@ -45,6 +46,8 @@ describe('Collaborator/Team Member page w/table', () => {
         </MockedProvider>
       </MemoryRouter>
     );
+
+    expect(await screen.findByRole('table')).toBeInTheDocument();
 
     await waitFor(() => {
       expect(screen.getByText('Model Lead')).toBeInTheDocument();
