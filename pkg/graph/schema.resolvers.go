@@ -59,12 +59,20 @@ func (r *modelPlanResolver) Discussions(ctx context.Context, obj *models.ModelPl
 func (r *mutationResolver) CreateModelPlan(ctx context.Context, input model.ModelPlanInput) (*models.ModelPlan, error) {
 	logger := appcontext.ZLogger(ctx)
 	principal := appcontext.Principal(ctx).ID()
+	principalInfo, err := r.service.FetchUserInfo(ctx, principal)
+	if err != nil { //if can't get user info, use EUAID as commonName
+		tempPrincipalInfo := models.UserInfo{
+			EuaUserID:  principal,
+			CommonName: principal,
+		}
+		principalInfo = &tempPrincipalInfo
+	}
 
 	plan := ConvertToModelPlan(&input)
 
 	plan.CreatedBy = &principal
 	plan.ModifiedBy = &principal
-	return resolvers.ModelPlanCreate(logger, plan, r.store)
+	return resolvers.ModelPlanCreate(logger, plan, r.store, principalInfo)
 }
 
 func (r *mutationResolver) CreatePlanCollaborator(ctx context.Context, input model.PlanCollaboratorInput) (*models.PlanCollaborator, error) {
@@ -96,7 +104,7 @@ func (r *mutationResolver) CreatePlanBasics(ctx context.Context, input model.Pla
 	principal := appcontext.Principal(ctx).ID()
 	logger := appcontext.ZLogger(ctx)
 
-	return resolvers.CreatePlanBasicsResolver(logger, basics, &principal, r.store)
+	return resolvers.CreatePlanBasics(logger, basics, &principal, r.store)
 }
 
 func (r *mutationResolver) UpdateModelPlan(ctx context.Context, input model.ModelPlanInput) (*models.ModelPlan, error) {
@@ -113,7 +121,7 @@ func (r *mutationResolver) UpdatePlanBasics(ctx context.Context, input model.Pla
 	principal := appcontext.Principal(ctx).ID()
 	logger := appcontext.ZLogger(ctx)
 
-	return resolvers.UpdatePlanBasicsResolver(logger, basics, &principal, r.store)
+	return resolvers.UpdatePlanBasics(logger, basics, &principal, r.store)
 }
 
 func (r *mutationResolver) CreatePlanMilestones(ctx context.Context, input model.PlanMilestonesInput) (*models.PlanMilestones, error) {

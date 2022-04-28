@@ -14,6 +14,8 @@ type ModelPlan struct {
 	ModelCategory *ModelCategory `json:"modelCategory" db:"model_category"`
 	CMSCenter     *CMSCenter     `json:"cmsCenter" db:"cms_center"`
 	CMMIGroup     pq.StringArray `json:"cmmiGroup" db:"cmmi_group"`
+	Archived      bool           `json:"archived" db:"archived"`
+	Status        ModelStatus    `json:"status" db:"status"`
 	CreatedBy     *string        `json:"createdBy" db:"created_by"`
 	CreatedDts    *time.Time     `json:"createdDts" db:"created_dts"`
 	ModifiedBy    *string        `json:"modifiedBy" db:"modified_by"`

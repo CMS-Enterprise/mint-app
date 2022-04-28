@@ -32,6 +32,7 @@ type ModelPlan {
   modelCategory: ModelCategory
   cmsCenter: CMSCenter
   cmmiGroups: [CMMIGroup!]
+  archived: Boolean!
   createdBy: String
   createdDts: Time
   modifiedBy: String
@@ -40,22 +41,24 @@ type ModelPlan {
   milestones: PlanMilestones
   collaborators: [PlanCollaborator!]!
   discussions: [PlanDiscussion!]!
+  status: ModelStatus!
 }
 
 """
 ModelPlanInput represent the data point for plans about a model. It is the central data type in the appliation
 """
-# input ModelPlanInput ModelPlan {
 input ModelPlanInput{
 id: UUID
 modelName: String
 modelCategory: ModelCategory
 cmsCenter: CMSCenter
 cmmiGroups: [CMMIGroup!]
+archived: Boolean! = false
 createdBy: String
 createdDts: Time
 modifiedBy: String
 modifiedDts: Time
+status: ModelStatus!
 }
 
 """
@@ -66,7 +69,6 @@ type PlanCollaborator {
   modelPlanID: UUID!
   euaUserID: String!
   fullName: String!
-  cmsCenter: CMSCenter!
   teamRole: TeamRole!
   createdBy: String
   createdDts: Time
@@ -82,7 +84,6 @@ input PlanCollaboratorInput {
   modelPlanID: UUID!
   euaUserID: String!
   fullName: String!
-  cmsCenter: CMSCenter!
   teamRole: TeamRole!
   createdBy: String
   createdDts: Time
@@ -313,7 +314,7 @@ enum ModelType
   TBD
 }
 
-enum ModelCategory{
+enum ModelCategory {
 	ACCOUNTABLE_CARE
 	DEMONSTRATION
 	EPISODE_BASED_PAYMENT_INITIATIVES
@@ -323,6 +324,18 @@ enum ModelCategory{
 	INIT_SPEED_ADOPT_BEST_PRACTICE
 	PRIMARY_CARE_TRANSFORMATION
 	UNKNOWN
+}
+
+enum ModelStatus {
+	PLAN_DRAFT
+	PLAN_COMPLETE
+	ICIP_COMPLETE
+	INTERNAL_CMMI_CLEARANCE
+	CMS_CLEARANCE
+	HHS_CLEARANCE
+	OMB_ASRF_CLEARANCE
+	CLEARED
+	ANNOUNCED
 }
 
 enum CMSCenter {

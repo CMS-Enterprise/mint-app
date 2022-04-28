@@ -42,10 +42,12 @@ type ModelPlanInput struct {
 	ModelCategory *models.ModelCategory `json:"modelCategory"`
 	CmsCenter     *models.CMSCenter     `json:"cmsCenter"`
 	CmmiGroups    []CMMIGroup           `json:"cmmiGroups"`
+	Archived      bool                  `json:"archived"`
 	CreatedBy     *string               `json:"createdBy"`
 	CreatedDts    *time.Time            `json:"createdDts"`
 	ModifiedBy    *string               `json:"modifiedBy"`
 	ModifiedDts   *time.Time            `json:"modifiedDts"`
+	Status        models.ModelStatus    `json:"status"`
 }
 
 // Represents plan basics
@@ -66,16 +68,15 @@ type PlanBasicsInput struct {
 
 // PlanCollaboratorInput represents the data required to create, modify, or delete a collaborator on a plan
 type PlanCollaboratorInput struct {
-	ID          *uuid.UUID       `json:"id"`
-	ModelPlanID uuid.UUID        `json:"modelPlanID"`
-	EuaUserID   string           `json:"euaUserID"`
-	FullName    string           `json:"fullName"`
-	CmsCenter   models.CMSCenter `json:"cmsCenter"`
-	TeamRole    models.TeamRole  `json:"teamRole"`
-	CreatedBy   *string          `json:"createdBy"`
-	CreatedDts  *time.Time       `json:"createdDts"`
-	ModifiedBy  *string          `json:"modifiedBy"`
-	ModifiedDts *time.Time       `json:"modifiedDts"`
+	ID          *uuid.UUID      `json:"id"`
+	ModelPlanID uuid.UUID       `json:"modelPlanID"`
+	EuaUserID   string          `json:"euaUserID"`
+	FullName    string          `json:"fullName"`
+	TeamRole    models.TeamRole `json:"teamRole"`
+	CreatedBy   *string         `json:"createdBy"`
+	CreatedDts  *time.Time      `json:"createdDts"`
+	ModifiedBy  *string         `json:"modifiedBy"`
+	ModifiedDts *time.Time      `json:"modifiedDts"`
 }
 
 // PlanDiscussionInput represents input for plan discussion

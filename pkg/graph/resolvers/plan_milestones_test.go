@@ -13,18 +13,23 @@ import (
 	"github.com/cmsgov/mint-app/pkg/storage"
 )
 
-func TestCreatePlanMilestonesResolver(t *testing.T) {
+func TestCreatePlanMilestones(t *testing.T) {
 	config := NewDBConfig()
 	ldClient, _ := ld.MakeCustomClient("fake", ld.Config{Offline: true}, 0)
 	logger := zap.NewNop()
 	principal := "FAKE"
+	principalInfo := models.UserInfo{
+		CommonName: "Fake Tester name",
+		EuaUserID:  principal,
+	}
 
 	store, err := storage.NewStore(logger, config, ldClient)
 	assert.NoError(t, err)
 
 	modelName := "FAKE"
-	planTemplate := models.ModelPlan{ModelName: &modelName}
-	plan, err := ModelPlanCreate(logger, &planTemplate, store)
+	planTemplate := models.ModelPlan{ModelName: &modelName, CreatedBy: &principal,
+		Status: models.ModelStatusPlanDraft}
+	plan, err := ModelPlanCreate(logger, &planTemplate, store, &principalInfo)
 	assert.NoError(t, err)
 
 	input := models.PlanMilestones{
@@ -41,12 +46,6 @@ func TestCreatePlanMilestonesResolver(t *testing.T) {
 	assert.NoError(t, err)
 	assert.Equal(t, 1, int(rowsAffected))
 
-	sqlResult, err = store.ModelPlanDeleteByID(logger, plan.ID)
-	assert.NoError(t, err)
-
-	rowsAffected, err = sqlResult.RowsAffected()
-	assert.NoError(t, err)
-	assert.Equal(t, 1, int(rowsAffected))
 }
 
 func TestFetchPlanMilestonesByID(t *testing.T) {
@@ -55,10 +54,15 @@ func TestFetchPlanMilestonesByID(t *testing.T) {
 	logger := zap.NewNop()
 	store, _ := storage.NewStore(logger, config, ldClient)
 	principal := "FAKE"
+	principalInfo := models.UserInfo{
+		CommonName: "Fake Tester name",
+	}
 
 	modelName := "FAKE"
-	planTemplate := models.ModelPlan{ModelName: &modelName}
-	plan, err := ModelPlanCreate(logger, &planTemplate, store)
+
+	planTemplate := models.ModelPlan{ModelName: &modelName, CreatedBy: &principal,
+		Status: models.ModelStatusPlanDraft}
+	plan, err := ModelPlanCreate(logger, &planTemplate, store, &principalInfo)
 	assert.NoError(t, err)
 
 	input := models.PlanMilestones{
@@ -78,10 +82,4 @@ func TestFetchPlanMilestonesByID(t *testing.T) {
 	assert.NoError(t, err)
 	assert.Equal(t, 1, int(rowsAffected))
 
-	sqlResult, err = store.ModelPlanDeleteByID(logger, plan.ID)
-	assert.NoError(t, err)
-
-	rowsAffected, err = sqlResult.RowsAffected()
-	assert.NoError(t, err)
-	assert.Equal(t, 1, int(rowsAffected))
 }
