@@ -24,7 +24,7 @@ import FieldGroup from 'components/shared/FieldGroup';
 import modelCategory from 'constants/enums/modelCategory';
 import flattenErrors from 'utils/flattenErrors';
 import { translateModelCategory } from 'utils/modelPlan';
-import NewModelPlanValidationSchema from 'validations/newModelPlan';
+import planBasicsPageOneSchema from 'validations/planBasics';
 import NotFound, { NotFoundPartial } from 'views/NotFound';
 
 const BasicsContent = () => {
@@ -68,7 +68,7 @@ const BasicsContent = () => {
             onSubmit={values => {
               console.log(values);
             }}
-            validationSchema={NewModelPlanValidationSchema}
+            validationSchema={planBasicsPageOneSchema}
             validateOnBlur={false}
             validateOnChange={false}
             validateOnMount={false}
@@ -181,6 +181,9 @@ const BasicsContent = () => {
                             <legend className="usa-label">
                               {t('cmsComponent')}
                             </legend>
+                            <FieldErrorMsg>
+                              {flatErrors.cmsComponent}
+                            </FieldErrorMsg>
 
                             {(t('cmsComponents', {
                               returnObjects: true
