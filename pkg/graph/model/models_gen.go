@@ -22,7 +22,7 @@ type DiscussionReplyInput struct {
 	ID           *uuid.UUID `json:"id"`
 	DiscussionID uuid.UUID  `json:"discussionID"`
 	Content      string     `json:"content"`
-	Resolution   *bool      `json:"resolution"`
+	Resolution   bool       `json:"resolution"`
 	CreatedBy    *string    `json:"createdBy"`
 	CreatedDts   *time.Time `json:"createdDts"`
 	ModifiedBy   *string    `json:"modifiedBy"`

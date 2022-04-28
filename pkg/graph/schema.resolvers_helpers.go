@@ -131,3 +131,28 @@ func ConvertToPlanDiscussion(pdi *model.PlanDiscussionInput) *models.PlanDiscuss
 
 	return &discussion
 }
+
+//ConvertToDiscussionReply takes and auto-generated discussion reply input and converts it to a hand-written one
+func ConvertToDiscussionReply(dri *model.DiscussionReplyInput) *models.DiscussionReply {
+	reply := models.DiscussionReply{
+		DiscussionID: dri.DiscussionID,
+		Content:      dri.Content,
+		Resolution:   dri.Resolution,
+	}
+
+	if dri.CreatedBy != nil {
+		reply.CreatedBy = *dri.CreatedBy
+	}
+	if dri.CreatedDts != nil {
+		reply.CreatedDts = *dri.CreatedDts
+	}
+	if dri.ModifiedBy != nil {
+		reply.ModifiedBy = *dri.ModifiedBy
+
+	}
+	if dri.ModifiedDts != nil {
+		reply.ModifiedDts = *dri.ModifiedDts
+	}
+
+	return &reply
+}

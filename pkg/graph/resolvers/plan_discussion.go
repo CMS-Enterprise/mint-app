@@ -16,3 +16,11 @@ func CreatePlanDiscussion(logger *zap.Logger, input *models.PlanDiscussion, prin
 	result, err := store.PlanDiscussionCreate(logger, input)
 	return result, err
 }
+
+// CreateDiscussionReply implements resolver logic to create a Discussion reply object
+func CreateDiscussionReply(logger *zap.Logger, input *models.DiscussionReply, principal *string, store *storage.Store) (*models.DiscussionReply, error) {
+	input.CreatedBy = models.ValueOrEmpty(principal)
+	input.ModifiedBy = input.CreatedBy
+	result, err := store.DiscussionReplyCreate(logger, input)
+	return result, err
+}

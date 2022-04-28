@@ -233,7 +233,7 @@ input DiscussionReplyInput  {
 	id: UUID
 	discussionID: UUID!
 	content: String!
-	resolution: Boolean
+	resolution: Boolean! = false
 
 	createdBy: String
 	createdDts: Time

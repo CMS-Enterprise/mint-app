@@ -1222,7 +1222,7 @@ input DiscussionReplyInput  {
 	id: UUID
 	discussionID: UUID!
 	content: String!
-	resolution: Boolean
+	resolution: Boolean! = false
 
 	createdBy: String
 	createdDts: Time
@@ -6149,6 +6149,10 @@ func (ec *executionContext) unmarshalInputDiscussionReplyInput(ctx context.Conte
 		asMap[k] = v
 	}
 
+	if _, present := asMap["resolution"]; !present {
+		asMap["resolution"] = false
+	}
+
 	for k, v := range asMap {
 		switch k {
 		case "id":
@@ -6179,7 +6183,7 @@ func (ec *executionContext) unmarshalInputDiscussionReplyInput(ctx context.Conte
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("resolution"))
-			it.Resolution, err = ec.unmarshalOBoolean2ᚖbool(ctx, v)
+			it.Resolution, err = ec.unmarshalNBoolean2bool(ctx, v)
 			if err != nil {
 				return it, err
 			}

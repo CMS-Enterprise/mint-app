@@ -141,7 +141,12 @@ func (r *mutationResolver) CreatePlanDiscussion(ctx context.Context, input model
 }
 
 func (r *mutationResolver) CreateDiscussionReply(ctx context.Context, input model.DiscussionReplyInput) (*models.DiscussionReply, error) {
-	panic(fmt.Errorf("not implemented"))
+	reply := ConvertToDiscussionReply(&input)
+
+	principal := appcontext.Principal(ctx).ID()
+	logger := appcontext.ZLogger(ctx)
+
+	return resolvers.CreateDiscussionReply(logger, reply, &principal, r.store)
 }
 
 func (r *planDiscussionResolver) Replies(ctx context.Context, obj *models.PlanDiscussion) ([]*models.DiscussionReply, error) {
