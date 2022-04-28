@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, Route, Switch, useParams } from 'react-router-dom';
 import {
@@ -6,7 +6,9 @@ import {
   BreadcrumbBar,
   BreadcrumbLink,
   Button,
+  Checkbox,
   Dropdown,
+  Fieldset,
   Label,
   TextInput
 } from '@trussworks/react-uswds';
@@ -152,6 +154,39 @@ const BasicsContent = () => {
                           );
                         })}
                       </Field>
+                    </FieldGroup>
+
+                    <FieldGroup
+                      scrollElement="cmsComponent"
+                      error={!!flatErrors.cmsComponent}
+                    >
+                      <legend className="usa-label">{t('cmsComponent')}</legend>
+                      {(t('cmsComponents', {
+                        returnObjects: true
+                      }) as string[]).map(item => {
+                        return (
+                          <Fragment key={item}>
+                            <Field
+                              as={Checkbox}
+                              // error={!!flatErrors.cmsComponent}
+                              // checked={values.development.isPresent}
+                              id={`new-plan-cmsComponent--${item}`}
+                              name="new-plan-cmsComponent"
+                              label={item}
+                              value={item}
+                              onChange={(
+                                e: React.ChangeEvent<HTMLInputElement>
+                              ) => {
+                                console.log(e.target.value);
+                                // setFieldValue(
+                                //   `${formikKey}.year${year}.development.isPresent`,
+                                //   e.target.checked
+                                // );
+                              }}
+                            />
+                          </Fragment>
+                        );
+                      })}
                     </FieldGroup>
 
                     <div className="margin-top-5 display-block">
