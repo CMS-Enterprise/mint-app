@@ -352,17 +352,16 @@ namespace :db do
 
   desc "Deletes all rows from all tables"
   task :clean do
-    tables = %w{
-      plan_basics
-      plan_collaborator
-      plan_document
-      plan_milestones
+    tableList = "     
+    plan_basics,
+    plan_collaborator,
+    plan_document,
+    plan_milestones,
 
-      model_plan
-    }
-    sql = tables.map { |table| "DELETE FROM #{table};" }.join
+    model_plan"
+
     puts "Cleaning database..."
-    `echo "#{sql}" | psql`
+    `echo "TRUNCATE #{tableList}" | psql`
   end
 end
 
