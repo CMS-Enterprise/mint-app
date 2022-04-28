@@ -2,6 +2,7 @@ import React from 'react';
 import { Button } from '@trussworks/react-uswds';
 import { shallow } from 'enzyme';
 
+// TODO:  Replace all Enzyme test suites with RTL
 import Modal from 'components/Modal';
 
 import TaskListSideNav from './index';

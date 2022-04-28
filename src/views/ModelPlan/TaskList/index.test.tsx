@@ -1,11 +1,7 @@
 import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
-import {
-  render,
-  screen,
-  waitForElementToBeRemoved
-} from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 
 import GetModelPlanQuery from 'queries/GetModelPlanQuery';
 
@@ -27,10 +23,6 @@ jest.mock('@okta/okta-react', () => ({
     };
   }
 }));
-
-const waitForPageLoad = async () => {
-  await waitForElementToBeRemoved(() => screen.getByTestId('page-loading'));
-};
 
 describe('The Model Plan Task List', () => {
   const MODEL_ID = '6e224030-09d5-46f7-ad04-4bb851b36eab';
@@ -97,11 +89,11 @@ describe('The Model Plan Task List', () => {
       </MemoryRouter>
     );
 
-    await waitForPageLoad();
-
-    expect(screen.getByTestId('model-plan-name').textContent).toContain(
-      "for PM Butler's great plan"
-    );
+    await waitFor(() => {
+      expect(screen.getByTestId('model-plan-name').textContent).toContain(
+        "for PM Butler's great plan"
+      );
+    });
   });
 
   describe('Statuses', () => {
@@ -121,12 +113,12 @@ describe('The Model Plan Task List', () => {
         </MemoryRouter>
       );
 
-      await waitForPageLoad();
-
-      expect(screen.getAllByTestId('tag')[0]).toHaveClass('bg-accent-cool');
-      expect(screen.getAllByTestId('tag')[0]).toHaveTextContent(
-        'Ready to start'
-      );
+      await waitFor(() => {
+        expect(screen.getAllByTestId('tag')[0]).toHaveClass('bg-accent-cool');
+        expect(screen.getAllByTestId('tag')[0]).toHaveTextContent(
+          'Ready to start'
+        );
+      });
     });
   });
 });
