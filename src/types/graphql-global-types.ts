@@ -36,6 +36,30 @@ export enum ModelCategory {
   UNKNOWN = "UNKNOWN",
 }
 
+export enum ModelStatus {
+  ANNOUNCED = "ANNOUNCED",
+  CLEARED = "CLEARED",
+  CMS_CLEARANCE = "CMS_CLEARANCE",
+  HHS_CLEARANCE = "HHS_CLEARANCE",
+  ICIP_COMPLETE = "ICIP_COMPLETE",
+  INTERNAL_CMMI_CLEARANCE = "INTERNAL_CMMI_CLEARANCE",
+  OMB_ASRF_CLEARANCE = "OMB_ASRF_CLEARANCE",
+  PLAN_COMPLETE = "PLAN_COMPLETE",
+  PLAN_DRAFT = "PLAN_DRAFT",
+}
+
+export enum ModelType {
+  MANDATORY = "MANDATORY",
+  TBD = "TBD",
+  VOLUNTARY = "VOLUNTARY",
+}
+
+export enum TaskStatus {
+  COMPLETE = "COMPLETE",
+  IN_PROGRESS = "IN_PROGRESS",
+  READY = "READY",
+}
+
 export enum TeamRole {
   EVALUATION = "EVALUATION",
   LEADERSHIP = "LEADERSHIP",
@@ -57,6 +81,25 @@ export interface ModelPlanInput {
   createdDts?: Time | null;
   modifiedBy?: string | null;
   modifiedDts?: Time | null;
+  status: ModelStatus;
+}
+
+/**
+ * Represents plan basics
+ */
+export interface PlanBasicsInput {
+  id?: UUID | null;
+  modelPlanID?: UUID | null;
+  modelType?: ModelType | null;
+  problem?: string | null;
+  goal?: string | null;
+  testInventions?: string | null;
+  note?: string | null;
+  createdBy?: string | null;
+  createdDts?: Time | null;
+  modifiedBy?: string | null;
+  modifiedDts?: Time | null;
+  status?: TaskStatus | null;
 }
 
 /**
@@ -67,7 +110,6 @@ export interface PlanCollaboratorInput {
   modelPlanID: UUID;
   euaUserID: string;
   fullName: string;
-  cmsCenter: CMSCenter;
   teamRole: TeamRole;
   createdBy?: string | null;
   createdDts?: Time | null;
