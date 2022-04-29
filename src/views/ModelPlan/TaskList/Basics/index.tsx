@@ -108,7 +108,6 @@ const BasicsContent = () => {
                 dirty,
                 errors,
                 handleSubmit,
-                isValid,
                 setErrors,
                 setFieldValue,
                 values
