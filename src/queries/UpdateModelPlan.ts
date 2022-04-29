@@ -4,7 +4,13 @@ export default gql`
   mutation UpdateModelPlan($input: ModelPlanInput!) {
     updateModelPlan(input: $input) {
       id
-      createdBy
+      modelName
+      modelCategory
+      cmsCenter
+      cmmiGroups
+      modifiedBy
+      modifiedDts
+      status
     }
   }
 `;

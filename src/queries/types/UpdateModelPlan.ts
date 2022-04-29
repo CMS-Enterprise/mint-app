@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { ModelPlanInput } from "./../../types/graphql-global-types";
+import { ModelPlanInput, ModelCategory, CMSCenter, CMMIGroup, ModelStatus } from "./../../types/graphql-global-types";
 
 // ====================================================
 // GraphQL mutation operation: UpdateModelPlan
@@ -12,7 +12,13 @@ import { ModelPlanInput } from "./../../types/graphql-global-types";
 export interface UpdateModelPlan_updateModelPlan {
   __typename: "ModelPlan";
   id: UUID | null;
-  createdBy: string | null;
+  modelName: string | null;
+  modelCategory: ModelCategory | null;
+  cmsCenter: CMSCenter | null;
+  cmmiGroups: CMMIGroup[] | null;
+  modifiedBy: string | null;
+  modifiedDts: Time | null;
+  status: ModelStatus;
 }
 
 export interface UpdateModelPlan {

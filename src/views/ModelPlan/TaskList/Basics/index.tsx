@@ -1,7 +1,7 @@
 import React, { Fragment, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, Route, Switch, useParams } from 'react-router-dom';
-import { useQuery } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import {
   Breadcrumb,
   BreadcrumbBar,
@@ -28,6 +28,8 @@ import {
   GetModelPlan,
   GetModelPlanVariables
 } from 'queries/types/GetModelPlan';
+import { UpdateModelPlan as UpdateModelPlanType } from 'queries/types/UpdateModelPlan';
+import UpdateModelPlan from 'queries/UpdateModelPlan';
 import flattenErrors from 'utils/flattenErrors';
 import { translateModelCategory } from 'utils/modelPlan';
 import planBasicsSchema from 'validations/planBasics';
@@ -50,12 +52,39 @@ const BasicsContent = () => {
 
   const { modelName } = data?.modelPlan || {};
 
+  const [update] = useMutation<UpdateModelPlanType>(UpdateModelPlan);
+
   const initialValues = {
     modelName: modelName as string,
     modelCategory: '',
-    cmsComponent: [],
+    cmsComponent: "",
+    // TODO: Update this when BE is ready
+    // cmsComponent: [],
     cmmiGroup: []
   };
+
+  const handleSubmit = () => {
+    update({
+        variables: {
+          input: {
+            id: modelId,
+            modelName,
+            modelCategory,
+            cmsCenter: cmsComponent,
+            cmmiGroups: cmmiGroup
+          }
+        }
+      })
+        .then(response => {
+          if (!response?.errors) {
+            history.push(`/models/new-plan/${modelId}/collaborators`);
+          }
+        })
+        .catch(errors => {
+          formikRef?.current?.setErrors(errors);
+        });
+    }
+  }
 
   return (
     <MainContent className="margin-bottom-5">
