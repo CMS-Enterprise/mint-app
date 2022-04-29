@@ -51,7 +51,7 @@ const BasicsContent = () => {
   const { modelName } = data?.modelPlan || {};
 
   const initialValues = {
-    modelName,
+    modelName: modelName as string,
     modelCategory: '',
     cmsComponent: [],
     cmmiGroup: []
