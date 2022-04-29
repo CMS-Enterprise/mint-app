@@ -13,7 +13,6 @@ CREATE TABLE plan_document (
     other_type text,
     deleted_at timestamp with time zone, --previously without timeZone...
     --CONSTRAINT other_type_is_null_unless_type_is_other CHECK (document_type = 'OTHER'::accessibility_request_document_type) = (other_type IS NOT NULL AND other_type <> ''::text)
-    status text,
 
     created_by eua_id,
     created_dts timestamp with time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,

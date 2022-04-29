@@ -16,14 +16,14 @@ package resolvers
 
 func createDummyPlanDocumentInput(plan *models.ModelPlan) model.PlanDocumentInput {
 	fakeString := "FAKE"
-	url := "http://localhost:9000/easi-test-bucket/e9eb4a4f-9100-416f-be5b-f141bb436cfa.pdf?X-Amz-Algorithm=AWS4-HMAC-SHA256&"
+	url := "http://localhost:9050/mint-test-bucket/e9eb4a4f-9100-416f-be5b-f141bb436cfa.pdf?X-Amz-Algorithm=AWS4-HMAC-SHA256&"
 	input := model.PlanDocumentInput{
 		ID:          nil,
 		ModelPlanID: plan.ID,
 		DocumentParameters: &model.PlanDocumentParameters{
 			FileType:     nil,
 			DocumentType: &fakeString,
-			OtherType:    nil,
+			OtherTypeDescription:    nil,
 		},
 		URL: &url,
 	}

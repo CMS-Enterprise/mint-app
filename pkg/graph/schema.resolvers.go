@@ -136,7 +136,9 @@ func (r *mutationResolver) CreatePlanDocument(ctx context.Context, input model.P
 	principal := appcontext.Principal(ctx).ID()
 	logger := appcontext.ZLogger(ctx)
 
-	return resolvers.PlanDocumentCreate(logger, &input, &principal, r.store, r.s3Client)
+	payload, err := resolvers.PlanDocumentCreate(logger, &input, &principal, r.store, r.s3Client)
+
+	return payload, err
 }
 
 func (r *mutationResolver) UpdatePlanDocument(ctx context.Context, input model.PlanDocumentInput) (*model.PlanDocumentPayload, error) {
@@ -153,6 +155,10 @@ func (r *mutationResolver) DeletePlanDocument(ctx context.Context, input model.P
 	logger := appcontext.ZLogger(ctx)
 
 	return resolvers.PlanDocumentDelete(logger, document, &principal, r.store)
+}
+
+func (r *planDocumentResolver) OtherType(ctx context.Context, obj *models.PlanDocument) (*string, error) {
+	return obj.OtherTypeDescription, nil
 }
 
 func (r *queryResolver) CurrentUser(ctx context.Context) (*model.CurrentUser, error) {
@@ -209,7 +215,7 @@ func (r *queryResolver) CedarPersonsByCommonName(ctx context.Context, commonName
 	return response, nil
 }
 
-func (r *userInfoResolver) Email(_ context.Context, obj *models.UserInfo) (string, error) {
+func (r *userInfoResolver) Email(ctx context.Context, obj *models.UserInfo) (string, error) {
 	return string(obj.Email), nil
 }
 
@@ -219,6 +225,9 @@ func (r *Resolver) ModelPlan() generated.ModelPlanResolver { return &modelPlanRe
 // Mutation returns generated.MutationResolver implementation.
 func (r *Resolver) Mutation() generated.MutationResolver { return &mutationResolver{r} }
 
+// PlanDocument returns generated.PlanDocumentResolver implementation.
+func (r *Resolver) PlanDocument() generated.PlanDocumentResolver { return &planDocumentResolver{r} }
+
 // Query returns generated.QueryResolver implementation.
 func (r *Resolver) Query() generated.QueryResolver { return &queryResolver{r} }
 
@@ -227,5 +236,6 @@ func (r *Resolver) UserInfo() generated.UserInfoResolver { return &userInfoResol
 
 type modelPlanResolver struct{ *Resolver }
 type mutationResolver struct{ *Resolver }
+type planDocumentResolver struct{ *Resolver }
 type queryResolver struct{ *Resolver }
 type userInfoResolver struct{ *Resolver }

@@ -126,9 +126,11 @@ input PlanDocumentInput {
 PlanDocumentCreateParameters represents the specific data required to create or modify a document on a plan
 """
 input PlanDocumentParameters {
+  fileName: String
+  fileSize: Int!
   fileType: String
   documentType: String
-  otherType: String
+  otherTypeDescription: String
 }
 
 """

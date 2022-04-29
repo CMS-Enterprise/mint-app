@@ -84,21 +84,21 @@ func ConvertToPlanMilestonesModel(input *model.PlanMilestonesInput) *models.Plan
 // ConvertToPlanDocumentModel takes an auto-generated model plan input and converts it to a handwritten one
 func ConvertToPlanDocumentModel(input *model.PlanDocumentInput) *models.PlanDocument {
 	documentModel := models.PlanDocument{
-		ModelPlanID:  input.ModelPlanID,
-		FileType:     nil,
-		Bucket:       nil,
-		FileKey:      nil,
-		VirusScanned: false,
-		VirusClean:   false,
-		FileName:     nil,
-		FileSize:     0,
-		DocumentType: nil,
-		OtherType:    nil,
-		DeletedAt:    nil,
-		CreatedBy:    nil,
-		CreatedDts:   nil,
-		ModifiedBy:   nil,
-		ModifiedDts:  nil,
+		ModelPlanID:          input.ModelPlanID,
+		FileType:             nil,
+		Bucket:               nil,
+		FileKey:              nil,
+		VirusScanned:         false,
+		VirusClean:           false,
+		FileName:             nil,
+		FileSize:             0,
+		DocumentType:         nil,
+		OtherTypeDescription: nil,
+		DeletedAt:            nil,
+		CreatedBy:            nil,
+		CreatedDts:           nil,
+		ModifiedBy:           nil,
+		ModifiedDts:          nil,
 	}
 
 	if input.ID != nil {
@@ -106,9 +106,11 @@ func ConvertToPlanDocumentModel(input *model.PlanDocumentInput) *models.PlanDocu
 	}
 
 	if input.DocumentParameters != nil {
-		documentModel.DocumentType = input.DocumentParameters.DocumentType
+		documentModel.FileName = input.DocumentParameters.FileName
+		documentModel.FileSize = input.DocumentParameters.FileSize
 		documentModel.FileType = input.DocumentParameters.FileType
-		documentModel.OtherType = input.DocumentParameters.OtherType
+		documentModel.DocumentType = input.DocumentParameters.DocumentType
+		documentModel.OtherTypeDescription = input.DocumentParameters.OtherTypeDescription
 	}
 
 	return &documentModel

@@ -4,12 +4,13 @@ import (
 	"database/sql"
 	_ "embed"
 	"errors"
+	"net/url"
+
 	"github.com/cmsgov/mint-app/pkg/graph/model"
 	"github.com/cmsgov/mint-app/pkg/shared/utilityUUID"
 	"github.com/cmsgov/mint-app/pkg/upload"
 	"github.com/jmoiron/sqlx"
 	"golang.org/x/sync/errgroup"
-	"net/url"
 
 	"github.com/google/uuid"
 	"go.uber.org/zap"
@@ -57,23 +58,28 @@ func (s *Store) PlanDocumentCreate(
 		return nil, keyErr
 	}
 
+	id := uuid.Nil
+	if input.ID != nil {
+		id = *input.ID
+	}
+
 	document := models.PlanDocument{
-		ID:           utilityUUID.ValueOrNewUUID(*input.ID),
-		ModelPlanID:  input.ModelPlanID,
-		FileType:     input.DocumentParameters.FileType,
-		Bucket:       s3Client.GetBucket(),
-		FileKey:      &key,
-		VirusScanned: false,
-		VirusClean:   false,
-		FileName:     nil,
-		FileSize:     0,
-		DocumentType: input.DocumentParameters.DocumentType,
-		OtherType:    input.DocumentParameters.OtherType,
-		DeletedAt:    nil,
-		CreatedBy:    principal,
-		CreatedDts:   nil,
-		ModifiedBy:   principal,
-		ModifiedDts:  nil,
+		ID:                   utilityUUID.ValueOrNewUUID(id),
+		ModelPlanID:          input.ModelPlanID,
+		FileType:             input.DocumentParameters.FileType,
+		Bucket:               s3Client.GetBucket(),
+		FileKey:              &key,
+		VirusScanned:         false,
+		VirusClean:           false,
+		FileName:             input.DocumentParameters.FileName,
+		FileSize:             input.DocumentParameters.FileSize,
+		DocumentType:         input.DocumentParameters.DocumentType,
+		OtherTypeDescription: input.DocumentParameters.OtherTypeDescription,
+		DeletedAt:            nil,
+		CreatedBy:            principal,
+		CreatedDts:           nil,
+		ModifiedBy:           principal,
+		ModifiedDts:          nil,
 	}
 
 	statement, err := s.db.PrepareNamed(planDocumentCreateSQL)
@@ -81,7 +87,7 @@ func (s *Store) PlanDocumentCreate(
 		return nil, genericmodel.HandleModelCreationError(logger, err, document)
 	}
 
-	err = statement.Get(input, input)
+	err = statement.Get(&document, &document)
 	if err != nil {
 		return nil, genericmodel.HandleModelCreationError(logger, err, document)
 	}

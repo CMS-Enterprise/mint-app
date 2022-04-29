@@ -41,6 +41,7 @@ type Config struct {
 type ResolverRoot interface {
 	ModelPlan() ModelPlanResolver
 	Mutation() MutationResolver
+	PlanDocument() PlanDocumentResolver
 	Query() QueryResolver
 	UserInfo() UserInfoResolver
 }
@@ -197,6 +198,9 @@ type MutationResolver interface {
 	CreatePlanDocument(ctx context.Context, input model.PlanDocumentInput) (*model.PlanDocumentPayload, error)
 	UpdatePlanDocument(ctx context.Context, input model.PlanDocumentInput) (*model.PlanDocumentPayload, error)
 	DeletePlanDocument(ctx context.Context, input model.PlanDocumentInput) (int, error)
+}
+type PlanDocumentResolver interface {
+	OtherType(ctx context.Context, obj *models.PlanDocument) (*string, error)
 }
 type QueryResolver interface {
 	CurrentUser(ctx context.Context) (*model.CurrentUser, error)
@@ -1147,9 +1151,11 @@ input PlanDocumentInput {
 PlanDocumentCreateParameters represents the specific data required to create or modify a document on a plan
 """
 input PlanDocumentParameters {
+  fileName: String
+  fileSize: Int!
   fileType: String
   documentType: String
-  otherType: String
+  otherTypeDescription: String
 }
 
 """
@@ -4065,14 +4071,14 @@ func (ec *executionContext) _PlanDocument_otherType(ctx context.Context, field g
 		Object:     "PlanDocument",
 		Field:      field,
 		Args:       nil,
-		IsMethod:   false,
-		IsResolver: false,
+		IsMethod:   true,
+		IsResolver: true,
 	}
 
 	ctx = graphql.WithFieldContext(ctx, fc)
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.OtherType, nil
+		return ec.resolvers.PlanDocument().OtherType(rctx, obj)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -6674,6 +6680,22 @@ func (ec *executionContext) unmarshalInputPlanDocumentParameters(ctx context.Con
 
 	for k, v := range asMap {
 		switch k {
+		case "fileName":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("fileName"))
+			it.FileName, err = ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		case "fileSize":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("fileSize"))
+			it.FileSize, err = ec.unmarshalNInt2int(ctx, v)
+			if err != nil {
+				return it, err
+			}
 		case "fileType":
 			var err error
 
@@ -6690,11 +6712,11 @@ func (ec *executionContext) unmarshalInputPlanDocumentParameters(ctx context.Con
 			if err != nil {
 				return it, err
 			}
-		case "otherType":
+		case "otherTypeDescription":
 			var err error
 
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("otherType"))
-			it.OtherType, err = ec.unmarshalOString2ᚖstring(ctx, v)
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("otherTypeDescription"))
+			it.OtherTypeDescription, err = ec.unmarshalOString2ᚖstring(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -7431,7 +7453,7 @@ func (ec *executionContext) _PlanDocument(ctx context.Context, sel ast.Selection
 			out.Values[i] = innerFunc(ctx)
 
 			if out.Values[i] == graphql.Null {
-				invalids++
+				atomic.AddUint32(&invalids, 1)
 			}
 		case "modelPlanID":
 			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
@@ -7441,7 +7463,7 @@ func (ec *executionContext) _PlanDocument(ctx context.Context, sel ast.Selection
 			out.Values[i] = innerFunc(ctx)
 
 			if out.Values[i] == graphql.Null {
-				invalids++
+				atomic.AddUint32(&invalids, 1)
 			}
 		case "fileType":
 			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
@@ -7500,12 +7522,22 @@ func (ec *executionContext) _PlanDocument(ctx context.Context, sel ast.Selection
 			out.Values[i] = innerFunc(ctx)
 
 		case "otherType":
+			field := field
+
 			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._PlanDocument_otherType(ctx, field, obj)
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._PlanDocument_otherType(ctx, field, obj)
+				return res
 			}
 
-			out.Values[i] = innerFunc(ctx)
+			out.Concurrently(i, func() graphql.Marshaler {
+				return innerFunc(ctx)
 
+			})
 		case "deletedAt":
 			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._PlanDocument_deletedAt(ctx, field, obj)
