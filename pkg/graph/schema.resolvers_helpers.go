@@ -140,6 +140,9 @@ func ConvertToDiscussionReply(dri *model.DiscussionReplyInput) *models.Discussio
 		Content:      dri.Content,
 		Resolution:   dri.Resolution,
 	}
+	if dri.ID != nil {
+		reply.ID = *dri.ID
+	}
 
 	if dri.CreatedBy != nil {
 		reply.CreatedBy = *dri.CreatedBy

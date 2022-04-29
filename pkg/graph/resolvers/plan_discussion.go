@@ -29,6 +29,14 @@ func UpdatePlanDiscussion(logger *zap.Logger, input *models.PlanDiscussion, prin
 	return result, err
 }
 
+// DeletePlanDiscussion implements resolver logic to Delete a plan Discussion object
+func DeletePlanDiscussion(logger *zap.Logger, input *models.PlanDiscussion, principal *string, store *storage.Store) (*models.PlanDiscussion, error) {
+	input.ModifiedBy = models.ValueOrEmpty(principal)
+
+	result, err := store.PlanDiscussionDelete(logger, input)
+	return result, err
+}
+
 // CreateDiscussionReply implements resolver logic to create a Discussion reply object
 func CreateDiscussionReply(logger *zap.Logger, input *models.DiscussionReply, principal *string, store *storage.Store) (*models.DiscussionReply, error) {
 	input.CreatedBy = models.ValueOrEmpty(principal)
@@ -42,6 +50,14 @@ func UpdateDiscussionReply(logger *zap.Logger, input *models.DiscussionReply, pr
 
 	input.ModifiedBy = models.ValueOrEmpty(principal)
 	result, err := store.DiscussionReplyUpdate(logger, input)
+	return result, err
+}
+
+// DeleteDiscussionReply implements resolver logic to Delete a Discussion reply object
+func DeleteDiscussionReply(logger *zap.Logger, input *models.DiscussionReply, principal *string, store *storage.Store) (*models.DiscussionReply, error) {
+
+	input.ModifiedBy = models.ValueOrEmpty(principal)
+	result, err := store.DiscussionReplyDelete(logger, input)
 	return result, err
 }
 

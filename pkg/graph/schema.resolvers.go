@@ -158,6 +158,15 @@ func (r *mutationResolver) UpdatePlanDiscussion(ctx context.Context, input model
 	return resolvers.UpdatePlanDiscussion(logger, discussion, &principal, r.store)
 }
 
+func (r *mutationResolver) DeletePlanDiscussion(ctx context.Context, input model.PlanDiscussionInput) (*models.PlanDiscussion, error) {
+	discussion := ConvertToPlanDiscussion(&input)
+
+	principal := appcontext.Principal(ctx).ID()
+	logger := appcontext.ZLogger(ctx)
+
+	return resolvers.DeletePlanDiscussion(logger, discussion, &principal, r.store)
+}
+
 func (r *mutationResolver) CreateDiscussionReply(ctx context.Context, input model.DiscussionReplyInput) (*models.DiscussionReply, error) {
 	reply := ConvertToDiscussionReply(&input)
 
@@ -174,6 +183,15 @@ func (r *mutationResolver) UpdateDiscussionReply(ctx context.Context, input mode
 	logger := appcontext.ZLogger(ctx)
 
 	return resolvers.UpdateDiscussionReply(logger, reply, &principal, r.store)
+}
+
+func (r *mutationResolver) DeleteDiscussionReply(ctx context.Context, input model.DiscussionReplyInput) (*models.DiscussionReply, error) {
+	reply := ConvertToDiscussionReply(&input)
+
+	principal := appcontext.Principal(ctx).ID()
+	logger := appcontext.ZLogger(ctx)
+
+	return resolvers.DeleteDiscussionReply(logger, reply, &principal, r.store)
 }
 
 func (r *planDiscussionResolver) Replies(ctx context.Context, obj *models.PlanDiscussion) ([]*models.DiscussionReply, error) {

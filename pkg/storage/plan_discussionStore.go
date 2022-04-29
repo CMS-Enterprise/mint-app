@@ -20,17 +20,23 @@ var planDiscussionCreateSQL string
 //go:embed SQL/plan_discussion_collection_by_model_plan_id.sql
 var planDiscussionCollectionByModelPlanIDSQL string
 
+//go:embed SQL/plan_discussion_update.sql
+var planDiscussionUpdateSQL string
+
+//go:embed SQL/plan_discussion_delete.sql
+var planDiscussionDeleteSQL string
+
 //go:embed SQL/discussion_reply_create.sql
 var discussionReplyCreateSQL string
 
 //go:embed SQL/discussion_reply_collection_by_discussion_id.sql
 var discussionReplyCollectionByDiscussionIDSQL string
 
-//go:embed SQL/plan_discussion_update.sql
-var planDiscussionUpdateSQL string
-
 //go:embed SQL/discussion_reply_update.sql
 var discussionReplyUpdateSQL string
+
+//go:embed SQL/discussion_reply_delete.sql
+var discussionReplyDeleteSQL string
 
 // PlanDiscussionCreate creates a plan discussion
 func (s *Store) PlanDiscussionCreate(logger *zap.Logger, discussion *models.PlanDiscussion) (*models.PlanDiscussion, error) {
@@ -150,6 +156,38 @@ func (s *Store) DiscussionReplyUpdate(logger *zap.Logger, reply *models.Discussi
 	err = statement.Get(reply, reply)
 	if err != nil {
 		return nil, genericmodel.HandleModelQueryError(logger, err, reply)
+	}
+
+	return reply, nil
+}
+
+// PlanDiscussionDelete deletes the plan discussion for a given id
+func (s *Store) PlanDiscussionDelete(logger *zap.Logger, discussion *models.PlanDiscussion) (*models.PlanDiscussion, error) {
+	statement, err := s.db.PrepareNamed(planDiscussionDeleteSQL)
+	if err != nil {
+		return nil, err
+	}
+	//TODO should we use generic error handling?
+
+	err = statement.Get(discussion, discussion)
+	if err != nil {
+		return nil, err
+	}
+
+	return discussion, nil
+}
+
+// DiscussionReplyDelete deletes the discussion reply for a given id
+func (s *Store) DiscussionReplyDelete(logger *zap.Logger, reply *models.DiscussionReply) (*models.DiscussionReply, error) {
+	statement, err := s.db.PrepareNamed(discussionReplyDeleteSQL)
+	if err != nil {
+		return nil, err
+	}
+	//TODO should we use generic error handling?
+
+	err = statement.Get(reply, reply)
+	if err != nil {
+		return nil, err
 	}
 
 	return reply, nil

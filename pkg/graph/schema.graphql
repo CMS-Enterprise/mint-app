@@ -290,11 +290,18 @@ createPlanDiscussion(input: PlanDiscussionInput!): PlanDiscussion
 updatePlanDiscussion(input: PlanDiscussionInput!): PlanDiscussion
 @hasRole(role: MINT_BASE_USER)
 
+deletePlanDiscussion(input: PlanDiscussionInput!): PlanDiscussion
+@hasRole(role: MINT_BASE_USER)
+
 createDiscussionReply(input: DiscussionReplyInput!): DiscussionReply
 @hasRole(role: MINT_BASE_USER)
 
 updateDiscussionReply(input: DiscussionReplyInput!): DiscussionReply
 @hasRole(role: MINT_BASE_USER)
+
+deleteDiscussionReply(input: DiscussionReplyInput!): DiscussionReply
+@hasRole(role: MINT_BASE_USER)
+
 
 }
 
