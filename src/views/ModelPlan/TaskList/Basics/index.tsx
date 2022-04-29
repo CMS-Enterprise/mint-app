@@ -82,7 +82,6 @@ const BasicsContent = () => {
             {(
               formikProps: FormikProps<{
                 modelName: string;
-                asdf: boolean;
                 modelCategory: string;
                 cmsComponent: string[];
                 cmmiGroup: string[];
@@ -92,6 +91,7 @@ const BasicsContent = () => {
                 dirty,
                 errors,
                 handleSubmit,
+                isValid,
                 setErrors,
                 setFieldValue,
                 values
@@ -137,24 +137,6 @@ const BasicsContent = () => {
                         id="plan-basics-model-name"
                         maxLength={50}
                         name="modelName"
-                      />
-                    </FieldGroup>
-
-                    <FieldGroup
-                      scrollElement="asdf"
-                      error={!!flatErrors.asdf}
-                      className="margin-top-4"
-                    >
-                      <FieldErrorMsg>{flatErrors.asdf}</FieldErrorMsg>
-                      <Field
-                        as={CheckboxField}
-                        id="new-plan-cmsComponent--asdf"
-                        name="cmsComponent"
-                        label="Check please"
-                        value="Check please"
-                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                          setFieldValue('asdf', e.target.checked);
-                        }}
                       />
                     </FieldGroup>
 
@@ -234,7 +216,6 @@ const BasicsContent = () => {
                                       }
                                       if (e.target.value === 'CMMI') {
                                         setIsCmmiGroupShown(true);
-                                        console.log(isCmmiGroupShown);
                                       }
                                     }}
                                   />
@@ -319,7 +300,7 @@ const BasicsContent = () => {
                     <div className="margin-top-6 margin-bottom-3">
                       <Button
                         type="submit"
-                        // disabled={!dirty}
+                        disabled={!(isValid && dirty)}
                         className=""
                         onClick={() => setErrors({})}
                       >
