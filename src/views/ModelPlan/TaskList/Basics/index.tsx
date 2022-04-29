@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, Route, Switch, useParams } from 'react-router-dom';
 import {
@@ -31,9 +31,11 @@ const BasicsContent = () => {
   const { modelId } = useParams<{ modelId: string }>();
   const { t: h } = useTranslation('draftModelPlan');
   const { t } = useTranslation('basics');
+  const [isCmmiGroupShown, setIsCmmiGroupShown] = useState(false);
 
   const initialValues = {
     modelName: '',
+    asdf: false,
     modelCategory: '',
     cmsComponent: [],
     cmmiGroup: []
@@ -76,6 +78,7 @@ const BasicsContent = () => {
             {(
               formikProps: FormikProps<{
                 modelName: string;
+                asdf: boolean;
                 modelCategory: string;
                 cmsComponent: string[];
                 cmmiGroup: string[];
@@ -130,6 +133,24 @@ const BasicsContent = () => {
                         id="plan-basics-model-name"
                         maxLength={50}
                         name="modelName"
+                      />
+                    </FieldGroup>
+
+                    <FieldGroup
+                      scrollElement="asdf"
+                      error={!!flatErrors.asdf}
+                      className="margin-top-4"
+                    >
+                      <FieldErrorMsg>{flatErrors.asdf}</FieldErrorMsg>
+                      <Field
+                        as={CheckboxField}
+                        id="new-plan-cmsComponent--asdf"
+                        name="cmsComponent"
+                        label="Check please"
+                        value="Check please"
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                          setFieldValue('asdf', e.target.checked);
+                        }}
                       />
                     </FieldGroup>
 
@@ -207,6 +228,10 @@ const BasicsContent = () => {
                                         );
                                         arrayHelpers.remove(idx);
                                       }
+                                      if (e.target.value === 'CMMI') {
+                                        setIsCmmiGroupShown(true);
+                                        console.log(isCmmiGroupShown);
+                                      }
                                     }}
                                   />
                                 </Fragment>
@@ -239,7 +264,10 @@ const BasicsContent = () => {
                       />
                     </FieldGroup>
                     {values.cmsComponent.includes('CMMI') && (
-                      <FieldGroup className="margin-top-4">
+                      <FieldGroup
+                        error={!!flatErrors.cmmiGroup}
+                        className="margin-top-4"
+                      >
                         <FieldArray
                           name="cmmiGroup"
                           render={arrayHelpers => (
@@ -247,6 +275,9 @@ const BasicsContent = () => {
                               <legend className="usa-label text-normal">
                                 {t('cmmiGroup')}
                               </legend>
+                              <FieldErrorMsg>
+                                {flatErrors.cmmiGroup}
+                              </FieldErrorMsg>
 
                               {(t('cmmiGroups', {
                                 returnObjects: true
@@ -284,7 +315,7 @@ const BasicsContent = () => {
                     <div className="margin-top-6 margin-bottom-3">
                       <Button
                         type="submit"
-                        disabled={!dirty}
+                        // disabled={!dirty}
                         className=""
                         onClick={() => setErrors({})}
                       >
