@@ -1,6 +1,7 @@
 import React, { Fragment, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, Route, Switch, useParams } from 'react-router-dom';
+import { useQuery } from '@apollo/client';
 import {
   Breadcrumb,
   BreadcrumbBar,
@@ -22,20 +23,35 @@ import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import modelCategory from 'constants/enums/modelCategory';
+import GetModelPlanQuery from 'queries/GetModelPlanQuery';
+import {
+  GetModelPlan,
+  GetModelPlanVariables
+} from 'queries/types/GetModelPlan';
 import flattenErrors from 'utils/flattenErrors';
 import { translateModelCategory } from 'utils/modelPlan';
 import planBasicsSchema from 'validations/planBasics';
 import NotFound, { NotFoundPartial } from 'views/NotFound';
 
 const BasicsContent = () => {
-  const { modelId } = useParams<{ modelId: string }>();
-  const { t: h } = useTranslation('draftModelPlan');
   const { t } = useTranslation('basics');
+  const { t: h } = useTranslation('draftModelPlan');
+  const { modelId } = useParams<{ modelId: string }>();
   const [isCmmiGroupShown, setIsCmmiGroupShown] = useState(false);
 
+  const { data } = useQuery<GetModelPlan, GetModelPlanVariables>(
+    GetModelPlanQuery,
+    {
+      variables: {
+        id: modelId
+      }
+    }
+  );
+
+  const { modelName } = data?.modelPlan || {};
+
   const initialValues = {
-    modelName: '',
-    asdf: false,
+    modelName,
     modelCategory: '',
     cmsComponent: [],
     cmmiGroup: []
@@ -70,6 +86,7 @@ const BasicsContent = () => {
             onSubmit={values => {
               console.log(values);
             }}
+            enableReinitialize
             validationSchema={
               isCmmiGroupShown
                 ? planBasicsSchema.pageOneSchemaWithCmmiGroup
@@ -137,6 +154,7 @@ const BasicsContent = () => {
                         id="plan-basics-model-name"
                         maxLength={50}
                         name="modelName"
+                        defaultValue={modelName}
                       />
                     </FieldGroup>
 
