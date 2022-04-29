@@ -68,12 +68,23 @@ type PlanCollaboratorInput struct {
 
 // PlanDocumentInput represents the data required to create, modify, or delete a document on a plan
 type PlanDocumentInput struct {
-	ID          *uuid.UUID `json:"id"`
-	ModelPlanID uuid.UUID  `json:"modelPlanID"`
-	CreatedBy   *string    `json:"createdBy"`
-	CreatedDts  *time.Time `json:"createdDts"`
-	ModifiedBy  *string    `json:"modifiedBy"`
-	ModifiedDts *time.Time `json:"modifiedDts"`
+	ID                 *uuid.UUID              `json:"id"`
+	ModelPlanID        uuid.UUID               `json:"modelPlanID"`
+	DocumentParameters *PlanDocumentParameters `json:"documentParameters"`
+	URL                *string                 `json:"url"`
+}
+
+// PlanDocumentCreateParameters represents the specific data required to create or modify a document on a plan
+type PlanDocumentParameters struct {
+	FileType     *string `json:"fileType"`
+	DocumentType *string `json:"documentType"`
+	OtherType    *string `json:"otherType"`
+}
+
+// PlanDocumentPayload represents the response to a document request
+type PlanDocumentPayload struct {
+	Document     *models.PlanDocument `json:"document"`
+	PresignedURL *string              `json:"presignedURL"`
 }
 
 // Represents plan milestones input

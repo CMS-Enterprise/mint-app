@@ -3,7 +3,13 @@ package storage
 import (
 	"database/sql"
 	_ "embed"
+	"errors"
+	"github.com/cmsgov/mint-app/pkg/graph/model"
 	"github.com/cmsgov/mint-app/pkg/shared/utilityUUID"
+	"github.com/cmsgov/mint-app/pkg/upload"
+	"github.com/jmoiron/sqlx"
+	"golang.org/x/sync/errgroup"
+	"net/url"
 
 	"github.com/google/uuid"
 	"go.uber.org/zap"
@@ -29,20 +35,58 @@ var planDocumentGetByModelPlanIDSQL string
 var planDocumentDeleteByIDSQL string
 
 // PlanDocumentCreate creates a plan document
-func (s *Store) PlanDocumentCreate(logger *zap.Logger, document *models.PlanDocument) (*models.PlanDocument, error) {
-	document.ID = utilityUUID.ValueOrNewUUID(document.ID)
+func (s *Store) PlanDocumentCreate(
+	logger *zap.Logger,
+	principal *string,
+	input *model.PlanDocumentInput,
+	s3Client *upload.S3Client) (*models.PlanDocument, error) {
+
+	// TODO: Role Authorization Check
+
+	if input.DocumentParameters == nil {
+		return nil, errors.New("DocumentParameters are required when creating a new document")
+	}
+
+	parsedURL, urlErr := url.Parse(*input.URL)
+	if urlErr != nil {
+		return nil, urlErr
+	}
+
+	key, keyErr := s3Client.KeyFromURL(parsedURL)
+	if keyErr != nil {
+		return nil, keyErr
+	}
+
+	document := models.PlanDocument{
+		ID:           utilityUUID.ValueOrNewUUID(*input.ID),
+		ModelPlanID:  input.ModelPlanID,
+		FileType:     input.DocumentParameters.FileType,
+		Bucket:       s3Client.GetBucket(),
+		FileKey:      &key,
+		VirusScanned: false,
+		VirusClean:   false,
+		FileName:     nil,
+		FileSize:     0,
+		DocumentType: input.DocumentParameters.DocumentType,
+		OtherType:    input.DocumentParameters.OtherType,
+		DeletedAt:    nil,
+		CreatedBy:    principal,
+		CreatedDts:   nil,
+		ModifiedBy:   principal,
+		ModifiedDts:  nil,
+	}
 
 	statement, err := s.db.PrepareNamed(planDocumentCreateSQL)
 	if err != nil {
 		return nil, genericmodel.HandleModelCreationError(logger, err, document)
 	}
 
-	err = statement.Get(document, document)
+	err = statement.Get(input, input)
 	if err != nil {
 		return nil, genericmodel.HandleModelCreationError(logger, err, document)
 	}
 
-	return document, nil
+	return &document, nil
 }
 
 // PlanDocumentRead reads a plan document object by id
@@ -61,20 +105,91 @@ func (s *Store) PlanDocumentRead(logger *zap.Logger, id uuid.UUID) (*models.Plan
 	return &document, nil
 }
 
-// PlanDocumentReadByModelPlanID reads a plan document object by model plan id
-func (s *Store) PlanDocumentReadByModelPlanID(logger *zap.Logger, modelPlanID uuid.UUID) (*models.PlanDocument, error) {
+// PlanDocumentsReadByModelPlanID reads a plan document object by model plan id
+func (s *Store) PlanDocumentsReadByModelPlanID(
+	logger *zap.Logger,
+	modelPlanID uuid.UUID,
+	s3Client *upload.S3Client) ([]*models.PlanDocument, error) {
+
 	statement, err := s.db.PrepareNamed(planDocumentGetByModelPlanIDSQL)
 	if err != nil {
 		return nil, genericmodel.HandleModelFetchByIDError(logger, err, modelPlanID)
 	}
 
-	var document models.PlanDocument
-	err = statement.Get(&document, utilitySQL.CreateModelPlanIDQueryMap(modelPlanID))
+	queryResults, err := statement.Queryx(utilitySQL.CreateModelPlanIDQueryMap(modelPlanID))
 	if err != nil {
-		return nil, genericmodel.HandleModelFetchByIDError(logger, err, modelPlanID)
+		return nil, genericmodel.HandleModelFetchGenericError(logger, err, modelPlanID)
 	}
 
-	return &document, nil
+	documents, err := planDocumentsUnpackQueryResults(logger, modelPlanID, queryResults)
+	if err != nil {
+		return nil, err
+	}
+
+	err = planDocumentsUpdateVirusScanStatuses(s3Client, documents)
+	if err != nil {
+		return nil, genericmodel.HandleModelFetchGenericError(logger, err, modelPlanID)
+	}
+
+	err = logIfNoRowsFetched(logger, modelPlanID, documents)
+	return documents, err
+}
+
+func planDocumentsUpdateVirusScanStatuses(s3Client *upload.S3Client, documents []*models.PlanDocument) error {
+	var errorGroup errgroup.Group
+	for _, document := range documents {
+		errorGroup.Go(func() error {
+			return planDocumentUpdateVirusScanStatus(s3Client, document)
+		})
+	}
+
+	return errorGroup.Wait()
+}
+
+func planDocumentUpdateVirusScanStatus(s3Client *upload.S3Client, document *models.PlanDocument) error {
+	value, valueErr := s3Client.TagValueForKey(*document.FileKey, "av-status")
+	if valueErr != nil {
+		return valueErr
+	}
+
+	if value == "CLEAN" {
+		document.VirusScanned = true
+		document.VirusClean = true
+	} else if value == "INFECTED" {
+		document.VirusScanned = true
+		document.VirusClean = false
+	} else {
+		document.VirusScanned = false
+		document.VirusClean = false
+	}
+	return nil
+}
+
+func planDocumentsUnpackQueryResults(logger *zap.Logger, modelPlanID uuid.UUID, queryResults *sqlx.Rows) ([]*models.PlanDocument, error) {
+	var documents []*models.PlanDocument
+	for queryResults.Next() {
+		var document models.PlanDocument
+		err := queryResults.StructScan(&document)
+		if err != nil {
+			return nil, genericmodel.HandleModelFetchGenericError(logger, queryResults.Err(), modelPlanID)
+		}
+
+		documents = append(documents, &document)
+	}
+
+	if queryResults.Err() != nil {
+		return nil, genericmodel.HandleModelFetchGenericError(logger, queryResults.Err(), modelPlanID)
+	}
+
+	return documents, nil
+}
+
+func logIfNoRowsFetched(logger *zap.Logger, modelPlanID uuid.UUID, documents []*models.PlanDocument) error {
+	if len(documents) == 0 {
+		return genericmodel.HandleModelFetchByIDNoRowsError(logger, nil, modelPlanID)
+	}
+
+	return nil
 }
 
 // PlanDocumentUpdate updates a plan document object by id with provided values

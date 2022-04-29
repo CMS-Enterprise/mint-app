@@ -1,11 +1,12 @@
 package resolvers
 
-import (
+/*import (
+	"github.csom/cmsgov/mint-app/pkg/graph/model"
+	"github.com/cmsgov/mint-app/pkg/upload"
 	"testing"
 
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/storage"
-	"github.com/google/uuid"
 	"github.com/stretchr/testify/assert"
 	"go.uber.org/zap"
 	ld "gopkg.in/launchdarkly/go-server-sdk.v5"
@@ -13,31 +14,24 @@ import (
 	_ "github.com/lib/pq" // required for postgres driver in sql
 )
 
-func createDummyPlanDocument(plan *models.ModelPlan) models.PlanDocument {
+func createDummyPlanDocumentInput(plan *models.ModelPlan) model.PlanDocumentInput {
 	fakeString := "FAKE"
-	input := models.PlanDocument{
-		ID:           uuid.Nil,
-		ModelPlanID:  plan.ID,
-		FileType:     &fakeString,
-		Bucket:       &fakeString,
-		FileKey:      &fakeString,
-		VirusScanned: false,
-		VirusClean:   false,
-		FileName:     &fakeString,
-		FileSize:     0,
-		DocumentType: &fakeString,
-		OtherType:    &fakeString,
-		DeletedAt:    nil,
-		CreatedBy:    &fakeString,
-		CreatedDts:   nil,
-		ModifiedBy:   &fakeString,
-		ModifiedDts:  nil,
-		Status:       "",
+	url := "http://localhost:9000/easi-test-bucket/e9eb4a4f-9100-416f-be5b-f141bb436cfa.pdf?X-Amz-Algorithm=AWS4-HMAC-SHA256&"
+	input := model.PlanDocumentInput{
+		ID:          nil,
+		ModelPlanID: plan.ID,
+		DocumentParameters: &model.PlanDocumentParameters{
+			FileType:     nil,
+			DocumentType: &fakeString,
+			OtherType:    nil,
+		},
+		URL: &url,
 	}
+
 	return input
 }
 
-func createFakeDependencies(t *testing.T) (*zap.Logger, string, *storage.Store, error) {
+func createFakeDependencies(t *testing.T) (*zap.Logger, string, *storage.Store, *upload.S3Client, error) {
 	config := NewDBConfig()
 	ldClient, _ := ld.MakeCustomClient("fake", ld.Config{Offline: true}, 0)
 	logger := zap.NewNop()
@@ -45,10 +39,23 @@ func createFakeDependencies(t *testing.T) (*zap.Logger, string, *storage.Store, 
 
 	store, err := storage.NewStore(logger, config, ldClient)
 	assert.NoError(t, err)
-	return logger, principal, store, err
+
+	s3Client := createS3Client()
+
+	return logger, principal, store, &s3Client, err
 }
 
-func TestPlanDocumentCreate(t *testing.T) {
+func createS3Client(store *storage.Store) upload.S3Client {
+	s3Config := s.NewS3Config()
+	if s.environment.Local() || s.environment.Test() {
+		s3Config.IsLocal = true
+	}
+
+	s3Client := upload.NewS3Client(s3Config)
+	return s3Client
+}
+
+/*func TestPlanDocumentCreate(t *testing.T) {
 	logger, principal, store, err := createFakeDependencies(t)
 	assert.NoError(t, err)
 
@@ -57,13 +64,13 @@ func TestPlanDocumentCreate(t *testing.T) {
 	plan, err := ModelPlanCreate(logger, &planTemplate, store)
 	assert.NoError(t, err)
 
-	input := createDummyPlanDocument(plan)
-	document, err := PlanDocumentCreate(logger, &input, &principal, store)
+	input := createDummyPlanDocumentInput(plan)
+	documentPayload, err := PlanDocumentCreate(logger, &input, &principal, store, nil)
 	assert.NoError(t, err)
-	assert.NotNil(t, document)
-	assert.Equal(t, plan.ID, document.ModelPlanID)
+	assert.NotNil(t, documentPayload)
+	assert.Equal(t, plan.ID, documentPayload.Document.ModelPlanID)
 
-	store.PlanDocumentDelete(logger, document.ID)
+	store.PlanDocumentDelete(logger, documentPayload.Document.ID)
 	store.ModelPlanDeleteByID(logger, plan.ID)
 }
 
@@ -76,47 +83,58 @@ func TestPlanDocumentRead(t *testing.T) {
 	plan, err := ModelPlanCreate(logger, &planTemplate, store)
 	assert.NoError(t, err)
 
-	input := createDummyPlanDocument(plan)
+	input := createDummyPlanDocumentInput(plan)
 
-	document, err := PlanDocumentCreate(logger, &input, &principal, store)
+	documentPayload, err := PlanDocumentCreate(logger, &input, &principal, store, nil)
 	assert.NoError(t, err)
-	assert.NotNil(t, document)
-	assert.Equal(t, plan.ID, document.ModelPlanID)
+	assert.NotNil(t, documentPayload)
+	assert.NotNil(t, documentPayload.Document)
+	assert.Equal(t, plan.ID, documentPayload.Document.ModelPlanID)
 
-	fetchedPlanDocument, err := PlanDocumentRead(logger, document.ID, store)
+	fetchedPlanDocument, err := PlanDocumentRead(logger, documentPayload.Document.ID, store)
 	assert.NoError(t, err)
 	assert.NotNil(t, fetchedPlanDocument)
-	assert.Equal(t, document.ID, fetchedPlanDocument.ID)
-	assert.Equal(t, document.ModelPlanID, fetchedPlanDocument.ModelPlanID)
+	assert.Equal(t, documentPayload.Document.ID, fetchedPlanDocument.ID)
+	assert.Equal(t, documentPayload.Document.ModelPlanID, fetchedPlanDocument.ModelPlanID)
 
 	store.PlanDocumentDelete(logger, fetchedPlanDocument.ID)
 	store.ModelPlanDeleteByID(logger, plan.ID)
 }
 
-func TestPlanDocumentReadByModelPlanID(t *testing.T) {
+func TestPlanDocumentsReadByModelPlanID(t *testing.T) {
 	logger, principal, store, err := createFakeDependencies(t)
 	assert.NoError(t, err)
+
+	// set up S3 client
+	s3Client := createS3Client()
 
 	modelName := "FAKE"
 	planTemplate := models.ModelPlan{ModelName: &modelName}
 	plan, err := ModelPlanCreate(logger, &planTemplate, store)
 	assert.NoError(t, err)
 
-	input := createDummyPlanDocument(plan)
+	input := createDummyPlanDocumentInput(plan)
+	documentA := validatedCreatePlanDocumentPayload(t, logger, input, principal, store, plan.ID)
+	documentB := validatedCreatePlanDocumentPayload(t, logger, input, principal, store, plan.ID)
 
-	document, err := PlanDocumentCreate(logger, &input, &principal, store)
+	fetchedPlanDocuments, err := PlanDocumentsReadByModelPlanID(logger, plan.ID, store, &s3Client)
 	assert.NoError(t, err)
-	assert.NotNil(t, document)
-	assert.Equal(t, plan.ID, document.ModelPlanID)
+	assert.NotNil(t, fetchedPlanDocuments)
+	assert.Contains(t, fetchedPlanDocuments, documentA)
+	assert.Contains(t, fetchedPlanDocuments, documentB)
 
-	fetchedPlanDocument, err := PlanDocumentReadByModelPlanID(logger, document.ModelPlanID, store)
-	assert.NoError(t, err)
-	assert.NotNil(t, fetchedPlanDocument)
-	assert.Equal(t, document.ID, fetchedPlanDocument.ID)
-	assert.Equal(t, document.ModelPlanID, fetchedPlanDocument.ModelPlanID)
-
-	store.PlanDocumentDelete(logger, fetchedPlanDocument.ID)
+	store.PlanDocumentDelete(logger, documentB.Document.ID)
+	store.PlanDocumentDelete(logger, documentA.Document.ID)
 	store.ModelPlanDeleteByID(logger, plan.ID)
+}
+
+func validatedCreatePlanDocumentPayload(t *testing.T, logger *zap.Logger, input model.PlanDocumentInput, principal string, store *storage.Store, planID uuid.UUID) *model.PlanDocumentPayload {
+	documentPayload, err := PlanDocumentCreate(logger, &input, &principal, store, nil)
+	assert.NoError(t, err)
+	assert.NotNil(t, documentPayload)
+	assert.NotNil(t, documentPayload.Document)
+	assert.Equal(t, planID, documentPayload.Document.ModelPlanID)
+	return documentPayload
 }
 
 // TODO: How do we want to handle updating?
@@ -133,9 +151,9 @@ func TestPlanDocumentDelete(t *testing.T) {
 	plan, err := ModelPlanCreate(logger, &planTemplate, store)
 	assert.NoError(t, err)
 
-	input := createDummyPlanDocument(plan)
+	input := createDummyPlanDocumentInput(plan)
 
-	document, err := PlanDocumentCreate(logger, &input, &principal, store)
+	document, err := PlanDocumentCreate(logger, &input, &principal, store, nil)
 	assert.NoError(t, err)
 	assert.NotNil(t, document)
 	assert.Equal(t, plan.ID, document.ModelPlanID)
@@ -145,4 +163,4 @@ func TestPlanDocumentDelete(t *testing.T) {
 	assert.Equal(t, 1, rowsDeleted)
 
 	store.ModelPlanDeleteByID(logger, plan.ID)
-}
+}*/

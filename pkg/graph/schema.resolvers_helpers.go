@@ -5,7 +5,7 @@ import (
 	"github.com/cmsgov/mint-app/pkg/models"
 )
 
-// ConvertToModelPlan takes an auto-generated model plan input and converts it to a hand-written one
+// ConvertToModelPlan takes an auto-generated model plan input and converts it to a handwritten one
 func ConvertToModelPlan(mpi *model.ModelPlanInput) *models.ModelPlan {
 	// TODO: We should probably have a better way to handle enum arrays
 	var cmmiGroup []string
@@ -31,7 +31,7 @@ func ConvertToModelPlan(mpi *model.ModelPlanInput) *models.ModelPlan {
 
 }
 
-// ConvertToPlanBasics takes an auto-generated plan basics input and converts it to a hand-written one
+// ConvertToPlanBasics takes an auto-generated plan basics input and converts it to a handwritten one
 func ConvertToPlanBasics(mpi *model.PlanBasicsInput) *models.PlanBasics {
 	basics := models.PlanBasics{
 		ModelPlanID:    *mpi.ModelPlanID,
@@ -56,9 +56,9 @@ func ConvertToPlanBasics(mpi *model.PlanBasicsInput) *models.PlanBasics {
 	return &basics
 }
 
-// ConvertToPlanMilestonesModel takes an auto-generated model plan input and converts it to a hand-written one
+// ConvertToPlanMilestonesModel takes an auto-generated model plan input and converts it to a handwritten one
 func ConvertToPlanMilestonesModel(input *model.PlanMilestonesInput) *models.PlanMilestones {
-	model := models.PlanMilestones{
+	milestoneModel := models.PlanMilestones{
 		ModelPlanID:             *input.ModelPlanID,
 		EnterCMSClearance:       input.EnterCMSClearance,
 		EnterHMSOMBClearance:    input.EnterHMSOMBClearance,
@@ -75,15 +75,15 @@ func ConvertToPlanMilestonesModel(input *model.PlanMilestonesInput) *models.Plan
 	}
 
 	if input.ID != nil {
-		model.ID = *input.ID
+		milestoneModel.ID = *input.ID
 	}
 
-	return &model
+	return &milestoneModel
 }
 
 // ConvertToPlanDocumentModel takes an auto-generated model plan input and converts it to a handwritten one
 func ConvertToPlanDocumentModel(input *model.PlanDocumentInput) *models.PlanDocument {
-	model := models.PlanDocument{
+	documentModel := models.PlanDocument{
 		ModelPlanID:  input.ModelPlanID,
 		FileType:     nil,
 		Bucket:       nil,
@@ -95,20 +95,26 @@ func ConvertToPlanDocumentModel(input *model.PlanDocumentInput) *models.PlanDocu
 		DocumentType: nil,
 		OtherType:    nil,
 		DeletedAt:    nil,
-		CreatedBy:    input.CreatedBy,
-		CreatedDts:   input.CreatedDts,
-		ModifiedBy:   input.ModifiedBy,
-		ModifiedDts:  input.ModifiedDts,
+		CreatedBy:    nil,
+		CreatedDts:   nil,
+		ModifiedBy:   nil,
+		ModifiedDts:  nil,
 	}
 
 	if input.ID != nil {
-		model.ID = *input.ID
+		documentModel.ID = *input.ID
 	}
 
-	return &model
+	if input.DocumentParameters != nil {
+		documentModel.DocumentType = input.DocumentParameters.DocumentType
+		documentModel.FileType = input.DocumentParameters.FileType
+		documentModel.OtherType = input.DocumentParameters.OtherType
+	}
+
+	return &documentModel
 }
 
-// ConvertToPlanCollaborator takes an auto-generated plan collaborator input and converts it to a hand-written one
+// ConvertToPlanCollaborator takes an auto-generated plan collaborator input and converts it to a handwritten one
 func ConvertToPlanCollaborator(pci *model.PlanCollaboratorInput) *models.PlanCollaborator {
 	collaborator := models.PlanCollaborator{
 		ModelPlanID: pci.ModelPlanID,

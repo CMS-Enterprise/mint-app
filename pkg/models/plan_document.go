@@ -26,7 +26,6 @@ type PlanDocument struct {
 	CreatedDts  *time.Time `json:"createdDts" db:"created_dts"`
 	ModifiedBy  *string    `json:"modifiedBy" db:"modified_by"`
 	ModifiedDts *time.Time `json:"modifiedDts" db:"modified_dts"`
-	Status      TaskStatus `json:"status" db:"status"`
 }
 
 // GetModelTypeName returns a string name that represents the PlanMilestones struct

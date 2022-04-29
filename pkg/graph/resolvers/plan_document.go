@@ -1,19 +1,37 @@
 package resolvers
 
 import (
+	"github.com/cmsgov/mint-app/pkg/graph/model"
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/storage"
+	"github.com/cmsgov/mint-app/pkg/storage/genericmodel"
+	"github.com/cmsgov/mint-app/pkg/upload"
 	"github.com/google/uuid"
 	"go.uber.org/zap"
 )
 
-// PlanDocumentCreate implements resolver logic to create a plan document object
-func PlanDocumentCreate(logger *zap.Logger, input *models.PlanDocument, principal *string, store *storage.Store) (*models.PlanDocument, error) {
-	input.CreatedBy = principal
-	input.ModifiedBy = input.CreatedBy
+func createDocumentPayload(s3Client *upload.S3Client, document *models.PlanDocument) (*model.PlanDocumentPayload, error) {
+	presignedURL, urlErr := s3Client.NewGetPresignedURL(*document.FileKey)
+	if urlErr != nil {
+		return nil, urlErr
+	}
 
-	document, err := store.PlanDocumentCreate(logger, input)
-	return document, err
+	payload := model.PlanDocumentPayload{
+		Document:     document,
+		PresignedURL: presignedURL,
+	}
+
+	return &payload, nil
+}
+
+// PlanDocumentCreate implements resolver logic to create a plan document object
+func PlanDocumentCreate(logger *zap.Logger, input *model.PlanDocumentInput, principal *string, store *storage.Store, s3Client *upload.S3Client) (*model.PlanDocumentPayload, error) {
+	document, err := store.PlanDocumentCreate(logger, principal, input, s3Client)
+	if err != nil {
+		return nil, genericmodel.HandleModelUpdateError(logger, err, models.PlanDocument{ID: *input.ID})
+	}
+
+	return createDocumentPayload(s3Client, document)
 }
 
 // PlanDocumentRead implements resolver logic to fetch a plan document object by ID
@@ -26,22 +44,26 @@ func PlanDocumentRead(logger *zap.Logger, id uuid.UUID, store *storage.Store) (*
 	return document, nil
 }
 
-// PlanDocumentReadByModelPlanID implements resolver logic to fetch a plan document object by model plan ID
-func PlanDocumentReadByModelPlanID(logger *zap.Logger, id uuid.UUID, store *storage.Store) (*models.PlanDocument, error) {
-	document, err := store.PlanDocumentReadByModelPlanID(logger, id)
+// PlanDocumentsReadByModelPlanID implements resolver logic to fetch a plan document object by model plan ID
+func PlanDocumentsReadByModelPlanID(logger *zap.Logger, id uuid.UUID, store *storage.Store, s3Client *upload.S3Client) ([]*models.PlanDocument, error) {
+	documents, err := store.PlanDocumentsReadByModelPlanID(logger, id, s3Client)
 	if err != nil {
 		return nil, err
 	}
 
-	return document, nil
+	return documents, nil
 }
 
 // PlanDocumentUpdate implements resolver logic to update a plan milestones object
-func PlanDocumentUpdate(logger *zap.Logger, input *models.PlanDocument, principal *string, store *storage.Store) (*models.PlanDocument, error) {
+func PlanDocumentUpdate(logger *zap.Logger, s3Client *upload.S3Client, input *models.PlanDocument, principal *string, store *storage.Store) (*model.PlanDocumentPayload, error) {
 	input.ModifiedBy = principal
 
-	result, err := store.PlanDocumentUpdate(logger, input)
-	return result, err
+	document, err := store.PlanDocumentUpdate(logger, input)
+	if err != nil {
+		return nil, genericmodel.HandleModelUpdateError(logger, err, input)
+	}
+
+	return createDocumentPayload(s3Client, document)
 }
 
 // PlanDocumentDelete implements resolver logic to update a plan document object

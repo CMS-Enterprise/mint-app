@@ -5,7 +5,6 @@ package graph
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/google/uuid"
 
@@ -52,7 +51,10 @@ func (r *modelPlanResolver) Collaborators(ctx context.Context, obj *models.Model
 }
 
 func (r *modelPlanResolver) Documents(ctx context.Context, obj *models.ModelPlan) ([]*models.PlanDocument, error) {
-	panic(fmt.Errorf("not implemented"))
+	logger := appcontext.ZLogger(ctx)
+
+	documents, err := resolvers.PlanDocumentsReadByModelPlanID(logger, obj.ID, r.store, r.s3Client)
+	return documents, err
 }
 
 func (r *mutationResolver) CreateModelPlan(ctx context.Context, input model.ModelPlanInput) (*models.ModelPlan, error) {
@@ -60,7 +62,6 @@ func (r *mutationResolver) CreateModelPlan(ctx context.Context, input model.Mode
 	principal := appcontext.Principal(ctx).ID()
 
 	plan := ConvertToModelPlan(&input)
-
 	plan.CreatedBy = &principal
 	plan.ModifiedBy = &principal
 	return resolvers.ModelPlanCreate(logger, plan, r.store)
@@ -131,20 +132,19 @@ func (r *mutationResolver) UpdatePlanMilestones(ctx context.Context, input model
 	return resolvers.UpdatePlanMilestones(logger, basics, &principal, r.store)
 }
 
-func (r *mutationResolver) CreatePlanDocument(ctx context.Context, input model.PlanDocumentInput) (*models.PlanDocument, error) {
-	document := ConvertToPlanDocumentModel(&input)
+func (r *mutationResolver) CreatePlanDocument(ctx context.Context, input model.PlanDocumentInput) (*model.PlanDocumentPayload, error) {
 	principal := appcontext.Principal(ctx).ID()
 	logger := appcontext.ZLogger(ctx)
 
-	return resolvers.PlanDocumentCreate(logger, document, &principal, r.store)
+	return resolvers.PlanDocumentCreate(logger, &input, &principal, r.store, r.s3Client)
 }
 
-func (r *mutationResolver) UpdatePlanDocument(ctx context.Context, input model.PlanDocumentInput) (*models.PlanDocument, error) {
+func (r *mutationResolver) UpdatePlanDocument(ctx context.Context, input model.PlanDocumentInput) (*model.PlanDocumentPayload, error) {
 	document := ConvertToPlanDocumentModel(&input)
 	principal := appcontext.Principal(ctx).ID()
 	logger := appcontext.ZLogger(ctx)
 
-	return resolvers.PlanDocumentUpdate(logger, document, &principal, r.store)
+	return resolvers.PlanDocumentUpdate(logger, r.s3Client, document, &principal, r.store)
 }
 
 func (r *mutationResolver) DeletePlanDocument(ctx context.Context, input model.PlanDocumentInput) (int, error) {
@@ -189,7 +189,9 @@ func (r *queryResolver) PlanMilestones(ctx context.Context, id uuid.UUID) (*mode
 }
 
 func (r *queryResolver) PlanDocument(ctx context.Context, id uuid.UUID) (*models.PlanDocument, error) {
-	panic(fmt.Errorf("not implemented"))
+	logger := appcontext.ZLogger(ctx)
+
+	return resolvers.PlanDocumentRead(logger, id, r.store)
 }
 
 func (r *queryResolver) ModelPlanCollection(ctx context.Context) ([]*models.ModelPlan, error) {
@@ -207,7 +209,7 @@ func (r *queryResolver) CedarPersonsByCommonName(ctx context.Context, commonName
 	return response, nil
 }
 
-func (r *userInfoResolver) Email(ctx context.Context, obj *models.UserInfo) (string, error) {
+func (r *userInfoResolver) Email(_ context.Context, obj *models.UserInfo) (string, error) {
 	return string(obj.Email), nil
 }
 

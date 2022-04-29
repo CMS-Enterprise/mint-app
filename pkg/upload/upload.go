@@ -1,17 +1,22 @@
 package upload
 
 import (
-	"net/url"
-	"os"
-	"strings"
-
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/credentials"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/s3"
 	"github.com/aws/aws-sdk-go/service/s3/s3iface"
+	"net/url"
+	"os"
+	"strings"
+	"time"
 
 	"github.com/cmsgov/mint-app/pkg/appconfig"
+)
+
+const (
+	// PresignedKeyDuration TODO: Roll this into the Config struct
+	PresignedKeyDuration = 15 * time.Minute
 )
 
 // Config holds the configuration to interact with s3
@@ -57,6 +62,23 @@ func NewS3ClientUsingClient(s3Client s3iface.S3API, config Config) S3Client {
 	}
 }
 
+// NewGetPresignedURL returns a pre-signed URL used for GET-ing objects
+func (c S3Client) NewGetPresignedURL(key string) (*string, error) {
+	objectInput := &s3.GetObjectInput{
+		Bucket: aws.String(c.config.Bucket),
+		Key:    aws.String(key),
+	}
+	req, _ := c.client.GetObjectRequest(objectInput)
+
+	url, err := req.Presign(PresignedKeyDuration)
+	if err != nil {
+		return nil, err
+	}
+
+	return &url, nil
+
+}
+
 // KeyFromURL extracts an S3 key from a URL.
 func (c S3Client) KeyFromURL(url *url.URL) (string, error) {
 	return strings.Replace(url.Path, "/"+c.config.Bucket+"/", "", 1), nil
@@ -80,4 +102,8 @@ func (c S3Client) TagValueForKey(key string, tagName string) (string, error) {
 		}
 	}
 	return "", nil
+}
+
+func (c S3Client) GetBucket() *string {
+	return aws.String(c.config.Bucket)
 }

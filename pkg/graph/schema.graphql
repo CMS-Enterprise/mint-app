@@ -110,7 +110,6 @@ type PlanDocument {
   createdDts: Time
   modifiedBy: String
   modifiedDts: Time
-  status: TaskStatus
 }
 
 """
@@ -119,10 +118,25 @@ PlanDocumentInput represents the data required to create, modify, or delete a do
 input PlanDocumentInput {
   id: UUID
   modelPlanID: UUID!
-  createdBy: String
-  createdDts: Time
-  modifiedBy: String
-  modifiedDts: Time
+  documentParameters: PlanDocumentParameters!
+  url: String
+}
+
+"""
+PlanDocumentCreateParameters represents the specific data required to create or modify a document on a plan
+"""
+input PlanDocumentParameters {
+  fileType: String
+  documentType: String
+  otherType: String
+}
+
+"""
+PlanDocumentPayload represents the response to a document request
+"""
+type PlanDocumentPayload {
+  document: PlanDocument
+  presignedURL: String
 }
 
 """
@@ -254,19 +268,19 @@ updateModelPlan(input: ModelPlanInput!):ModelPlan
 updatePlanBasics(input: PlanBasicsInput!): PlanBasics
 @hasRole(role: MINT_BASE_USER)
 
-createPlanMilestones(input: PlanMilestonesInput!):PlanMilestones
+createPlanMilestones(input: PlanMilestonesInput!): PlanMilestones
 @hasRole(role: MINT_BASE_USER)
 
-updatePlanMilestones(input: PlanMilestonesInput!):PlanMilestones
+updatePlanMilestones(input: PlanMilestonesInput!): PlanMilestones
 @hasRole(role: MINT_BASE_USER)
 
-createPlanDocument(input: PlanDocumentInput!):PlanDocument
+createPlanDocument(input: PlanDocumentInput!): PlanDocumentPayload
 @hasRole(role: MINT_BASE_USER)
 
-updatePlanDocument(input: PlanDocumentInput!):PlanDocument
+updatePlanDocument(input: PlanDocumentInput!): PlanDocumentPayload
 @hasRole(role: MINT_BASE_USER)
 
-deletePlanDocument(input: PlanDocumentInput!):Int!
+deletePlanDocument(input: PlanDocumentInput!): Int!
 @hasRole(role: MINT_BASE_USER)
 }
 
