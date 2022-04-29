@@ -24,7 +24,7 @@ import FieldGroup from 'components/shared/FieldGroup';
 import modelCategory from 'constants/enums/modelCategory';
 import flattenErrors from 'utils/flattenErrors';
 import { translateModelCategory } from 'utils/modelPlan';
-import planBasicsPageOneSchema from 'validations/planBasics';
+import planBasicsSchema from 'validations/planBasics';
 import NotFound, { NotFoundPartial } from 'views/NotFound';
 
 const BasicsContent = () => {
@@ -70,7 +70,11 @@ const BasicsContent = () => {
             onSubmit={values => {
               console.log(values);
             }}
-            validationSchema={planBasicsPageOneSchema}
+            validationSchema={
+              isCmmiGroupShown
+                ? planBasicsSchema.pageOneSchemaWithCmmiGroup
+                : planBasicsSchema.pageOneSchema
+            }
             validateOnBlur={false}
             validateOnChange={false}
             validateOnMount={false}
