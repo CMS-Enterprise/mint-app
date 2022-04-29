@@ -318,7 +318,7 @@ const BasicsContent = () => {
                     <div className="margin-top-6 margin-bottom-3">
                       <Button
                         type="submit"
-                        disabled={!(isValid && dirty)}
+                        disabled={!dirty}
                         className=""
                         onClick={() => setErrors({})}
                       >
