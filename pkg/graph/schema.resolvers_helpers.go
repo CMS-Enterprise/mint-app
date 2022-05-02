@@ -69,15 +69,21 @@ func ConvertToPlanMilestonesModel(input *model.PlanMilestonesInput) *models.Plan
 		ApplicationsEnd:         input.ApplicationsEnd,
 		PerformancePeriodStarts: input.PerformancePeriodStarts,
 		PerformancePeriodEnds:   input.PerformancePeriodEnds,
+		WrapUpEnds:              input.WrapUpEnds,
+		HighLevelNote:           input.HighLevelNote,
+		PhasedIn:                input.PhasedIn,
+		PhasedInNote:            input.PhasedInNote,
 		CreatedBy:               input.CreatedBy,
 		CreatedDts:              input.CreatedDts,
 		ModifiedBy:              input.ModifiedBy,
 		ModifiedDts:             input.ModifiedDts,
 	}
-	//TODO add new fields, and update status as needed
 
 	if input.ID != nil {
 		model.ID = *input.ID
+	}
+	if input.Status != nil {
+		model.Status = *input.Status
 	}
 
 	return &model
