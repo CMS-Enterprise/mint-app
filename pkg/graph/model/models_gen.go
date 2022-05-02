@@ -28,7 +28,8 @@ type ModelPlanInput struct {
 	ID            *uuid.UUID            `json:"id"`
 	ModelName     *string               `json:"modelName"`
 	ModelCategory *models.ModelCategory `json:"modelCategory"`
-	CmsCenter     *models.CMSCenter     `json:"cmsCenter"`
+	CmsCenters    []models.CMSCenter    `json:"cmsCenters"`
+	CmsOther      *string               `json:"cmsOther"`
 	CmmiGroups    []CMMIGroup           `json:"cmmiGroups"`
 	Archived      bool                  `json:"archived"`
 	CreatedBy     *string               `json:"createdBy"`

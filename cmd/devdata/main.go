@@ -54,8 +54,9 @@ func main() {
 		p.ModelName = models.StringPointer("My excellent plan that I just initiated")
 
 		p.ModelCategory = &cat
-		p.CMSCenter = &cms
-		p.CMMIGroup = pq.StringArray{"STATE_INNOVATIONS_GROUP", "POLICY_AND_PROGRAMS_GROUP"}
+		p.CMSCenters = pq.StringArray{string(models.CMSCenterForMedicare), string(models.CMSOther)}
+		p.CMSOther = models.StringPointer("The Center for Awesomeness ")
+		p.CMMIGroups = pq.StringArray{"STATE_INNOVATIONS_GROUP", "POLICY_AND_PROGRAMS_GROUP"}
 
 		p.CreatedBy = models.StringPointer("ABCD")
 		p.ModifiedBy = models.StringPointer("ABCD")
@@ -80,7 +81,7 @@ func main() {
 		p.ID = uuid.MustParse("6e224030-09d5-46f7-ad04-4bb851b36eab")
 		p.ModelName = models.StringPointer("PM Butler's great plan")
 
-		p.CMMIGroup = pq.StringArray{"POLICY_AND_PROGRAMS_GROUP", "SEAMLESS_CARE_MODELS_GROUP"}
+		p.CMMIGroups = pq.StringArray{"POLICY_AND_PROGRAMS_GROUP", "SEAMLESS_CARE_MODELS_GROUP"}
 
 		p.CreatedBy = models.StringPointer("MINT")
 		p.ModifiedBy = models.StringPointer("MINT")
@@ -105,8 +106,8 @@ func main() {
 		p.ModelName = models.StringPointer("Platonian ideal")
 
 		p.ModelCategory = &ac
-		p.CMSCenter = &cms
-		p.CMMIGroup = pq.StringArray{"STATE_INNOVATIONS_GROUP", "POLICY_AND_PROGRAMS_GROUP", "SEAMLESS_CARE_MODELS_GROUP"}
+		p.CMSCenters = pq.StringArray{string(cms)}
+		p.CMMIGroups = pq.StringArray{"STATE_INNOVATIONS_GROUP", "POLICY_AND_PROGRAMS_GROUP", "SEAMLESS_CARE_MODELS_GROUP"}
 
 		p.CreatedBy = models.StringPointer("MINT")
 		p.ModifiedBy = models.StringPointer("MINT")

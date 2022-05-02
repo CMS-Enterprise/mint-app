@@ -30,7 +30,8 @@ type ModelPlan {
   id: UUID
   modelName: String
   modelCategory: ModelCategory
-  cmsCenter: CMSCenter
+  cmsCenters: [CMSCenter!]
+  cmsOther: String
   cmmiGroups: [CMMIGroup!]
   archived: Boolean!
   createdBy: String
@@ -50,7 +51,8 @@ input ModelPlanInput{
 id: UUID
 modelName: String
 modelCategory: ModelCategory
-cmsCenter: CMSCenter
+cmsCenters: [CMSCenter!]
+cmsOther: String
 cmmiGroups: [CMMIGroup!]
 archived: Boolean! = false
 createdBy: String
