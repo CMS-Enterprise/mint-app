@@ -1,21 +1,21 @@
 CREATE TABLE plan_basics (
-    id uuid PRIMARY KEY NOT NULL,
-    model_plan_id uuid NOT NULL UNIQUE, --foreign key to model plan
+    id UUID PRIMARY KEY NOT NULL,
+    model_plan_id UUID NOT NULL UNIQUE, --foreign key to model plan
 
-    model_type model_type,
+    model_type MODEL_TYPE,
 
-    problem text,
-    goal text,
-    test_inventions text,
-    note text,
+    problem TEXT,
+    goal TEXT,
+    test_inventions TEXT,
+    note TEXT,
 
 
 
-    created_by eua_id,
-    created_dts timestamp with time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    modified_by eua_id,
-    modified_dts timestamp with time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    status task_status NOT NULL DEFAULT 'READY' -- can become and ENUM/TYPE
+    created_by EUA_ID,
+    created_dts TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    modified_by EUA_ID,
+    modified_dts TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    status TASK_STATUS NOT NULL DEFAULT 'READY' -- can become and ENUM/TYPE
 );
 
 ALTER TABLE plan_basics

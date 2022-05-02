@@ -1,13 +1,13 @@
 CREATE TABLE plan_collaborator (
-    id uuid PRIMARY KEY NOT NULL,
-    model_plan_id uuid NOT NULL, --foreign key to model plan
-    eua_user_id eua_id NOT NULL,
-    full_name text NOT NULL,
-    team_role team_role NOT NULL,
-    created_by eua_id NOT NULL,
-    created_dts timestamp with time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    modified_by eua_id NOT NULL,
-    modified_dts timestamp with time zone NOT NULL DEFAULT CURRENT_TIMESTAMP
+    id UUID PRIMARY KEY NOT NULL,
+    model_plan_id UUID NOT NULL, --foreign key to model plan
+    eua_user_id EUA_ID NOT NULL,
+    full_name TEXT NOT NULL,
+    team_role TEAM_ROLE NOT NULL,
+    created_by EUA_ID NOT NULL,
+    created_dts TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    modified_by EUA_ID NOT NULL,
+    modified_dts TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
 ALTER TABLE plan_collaborator

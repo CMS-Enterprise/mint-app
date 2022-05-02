@@ -1,20 +1,20 @@
 CREATE TABLE plan_document (
-    id uuid PRIMARY KEY,
-    model_plan_id uuid NOT NULL,
-    file_type text NOT NULL,
-    bucket text NOT NULL,
-    file_key text NOT NULL,
-    virus_scanned boolean,
-    virus_clean boolean,
-    file_name text NOT NULL,
-    file_size integer NOT NULL,
-    document_type text NOT NULL, --  make enum for this
-    other_type text,
-    deleted_at timestamp with time zone, --previously without timeZone...
-    created_by eua_id,
-    created_dts timestamp with time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    modified_by eua_id,
-    modified_dts timestamp with time zone NOT NULL DEFAULT CURRENT_TIMESTAMP
+    id UUID PRIMARY KEY,
+    model_plan_id UUID NOT NULL,
+    file_type TEXT NOT NULL,
+    bucket TEXT NOT NULL,
+    file_key TEXT NOT NULL,
+    virus_scanned BOOLEAN,
+    virus_clean BOOLEAN,
+    file_name TEXT NOT NULL,
+    file_size INTEGER NOT NULL,
+    document_type TEXT NOT NULL, --  make enum for this
+    other_type TEXT,
+    deleted_at TIMESTAMP WITH TIME ZONE, --previously without timeZone...
+    created_by EUA_ID,
+    created_dts TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    modified_by EUA_ID,
+    modified_dts TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
 ALTER TABLE plan_document

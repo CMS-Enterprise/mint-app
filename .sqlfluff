@@ -1,6 +1,20 @@
+# https://docs.sqlfluff.com/en/stable/rules.html
+
 [sqlfluff]
 dialect = postgres
 ignore = parsing
 
 [sqlfluff:rules:L010]
+#Inconsistent capitalisation of keywords.
+# https://docs.sqlfluff.com/en/stable/rules.html#sqlfluff.core.rules.Rule_L010
 capitalisation_policy = upper
+
+[sqlfluff:rules:L040]
+# Inconsistent capitalisation of boolean/null literal.
+# https://docs.sqlfluff.com/en/stable/rules.html#sqlfluff.core.rules.Rule_L040
+capitalisation_policy = upper
+
+[sqlfluff:rules:L063]
+# Inconsistent capitalisation of datatypes.
+# https://docs.sqlfluff.com/en/stable/rules.html#sqlfluff.core.rules.Rule_L063
+extended_capitalisation_policy = upper

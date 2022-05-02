@@ -1,13 +1,13 @@
 CREATE TABLE model_plan (
-    id uuid PRIMARY KEY NOT NULL,
-    model_name text,
-    model_category model_category, --select from list
-    cms_center cms_center, --should select from list
-    cmmi_group cmmi_group[],
-    archived bool NOT NULL DEFAULT false,
-    status model_plan_status NOT NULL,
-    created_by eua_id,
-    created_dts timestamp with time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    modified_by eua_id,
-    modified_dts timestamp with time zone NOT NULL DEFAULT CURRENT_TIMESTAMP
+    id UUID PRIMARY KEY NOT NULL,
+    model_name TEXT,
+    model_category MODEL_CATEGORY, --select from list
+    cms_center CMS_CENTER, --should select from list
+    cmmi_group CMMI_GROUP[],
+    archived BOOL NOT NULL DEFAULT FALSE,
+    status MODEL_PLAN_STATUS NOT NULL,
+    created_by EUA_ID,
+    created_dts TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    modified_by EUA_ID,
+    modified_dts TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
