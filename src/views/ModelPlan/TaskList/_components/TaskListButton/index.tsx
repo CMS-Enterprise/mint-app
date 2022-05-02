@@ -19,18 +19,21 @@ const TaskListButton = ({ path, status }: TaskListButtonProps) => {
   const [create] = useMutation<CreatePlanBasicsType>(CreatePlanBasics);
 
   const handleCreatePlanBasics = () => {
-    // TODO: figure out how to handle if plan basics already exists
-    create({
-      variables: {
-        input: {
-          modelPlanID: modelId
+    if (status === 'READY') {
+      create({
+        variables: {
+          input: {
+            modelPlanID: modelId
+          }
         }
-      }
-    }).then(response => {
-      if (!response.errors) {
-        history.push(`task-list/${path}`);
-      }
-    });
+      }).then(response => {
+        if (!response.errors) {
+          history.push(`task-list/${path}`);
+        }
+      });
+    } else {
+      history.push(`/models/${modelId}/task-list/${path}`);
+    }
   };
 
   if (status === 'CANNOT_START') {
