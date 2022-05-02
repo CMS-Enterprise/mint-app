@@ -1,5 +1,5 @@
 UPDATE plan_discussion
-SET 
+SET
     model_plan_id = :model_plan_id,
     content = :content,
     status = :status,

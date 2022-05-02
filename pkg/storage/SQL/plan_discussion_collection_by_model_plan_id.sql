@@ -1,4 +1,5 @@
-SELECT id,
+SELECT
+    id,
     model_plan_id,
     content,
     status,

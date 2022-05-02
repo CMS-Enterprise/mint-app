@@ -1,6 +1,5 @@
 UPDATE discussion_reply
-SET 
-    discussion_id = :discussion_id,
+SET discussion_id = :discussion_id,
     content = :content,
     resolution = :resolution,
     modified_by = :modified_by,
@@ -14,4 +13,3 @@ RETURNING id,
     created_dts,
     modified_by,
     modified_dts;
-    

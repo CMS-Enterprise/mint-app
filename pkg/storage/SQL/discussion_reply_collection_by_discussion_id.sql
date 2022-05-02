@@ -1,4 +1,5 @@
-SELECT id,
+SELECT
+    id,
     discussion_id,
     content,
     resolution,

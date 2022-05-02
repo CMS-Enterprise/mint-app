@@ -1,16 +1,16 @@
-SELECT 
-        mp.id,
-        mp.model_name,
-        mp.model_category,
-        mp.cms_center,
-        mp.status,
-        mp.cmmi_group,
-        mp.archived,
-        mp.created_by,
-        mp.created_dts,
-        mp.modified_by,
-        mp.modified_dts
-FROM model_plan mp
-JOIN plan_collaborator pc on pc.model_plan_id =mp.id
+SELECT
+    model_plan.id,
+    model_plan.model_name,
+    model_plan.model_category,
+    model_plan.cms_center,
+    model_plan.status,
+    model_plan.cmmi_group,
+    model_plan.archived,
+    model_plan.created_by,
+    model_plan.created_dts,
+    model_plan.modified_by,
+    model_plan.modified_dts
+FROM model_plan
+INNER JOIN plan_collaborator ON plan_collaborator.model_plan_id = model_plan.id
 
-WHERE pc.eua_user_id = :euaID and mp.archived = :archived
+WHERE plan_collaborator.eua_user_id = :euaID AND model_plan.archived = :archived

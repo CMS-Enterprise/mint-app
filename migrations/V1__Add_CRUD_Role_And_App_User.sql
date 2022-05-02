@@ -16,8 +16,12 @@ GRANT USAGE, UPDATE ON ALL SEQUENCES IN SCHEMA public TO crud;
 -- Do not include `FOR ROLE` in the following statements so that:
 -- 1. when this runs in RDS, it will apply to the role running migrations.
 -- 2. when this runs in Docker, it will apply to the `postgres` role.
-ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO crud;
-ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT USAGE, UPDATE ON SEQUENCES TO crud;
+ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT SELECT,
+INSERT,
+UPDATE,
+DELETE ON TABLES TO crud;
+ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT USAGE,
+UPDATE ON SEQUENCES TO crud;
 
 DO
 $do$
