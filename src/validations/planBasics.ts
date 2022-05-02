@@ -1,6 +1,12 @@
 import * as Yup from 'yup';
 
 const planBasicsSchema = {
+  garyTest: Yup.object().shape({
+    modelName: Yup.string().trim().required('Enter the Model Name'),
+    modelCategory: Yup.string().required('Enter the Model Category'),
+    cmsComponent: Yup.string().required('Gary gary gary')
+  }),
+
   pageOneSchema: Yup.object().shape({
     modelName: Yup.string().trim().required('Enter the Model Name'),
     modelCategory: Yup.string().required('Enter the Model Category'),
