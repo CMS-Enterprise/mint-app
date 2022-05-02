@@ -3,6 +3,7 @@
 [sqlfluff]
 dialect = postgres
 ignore = parsing
+exclude_rules = L016
 
 [sqlfluff:rules:L010]
 #Inconsistent capitalisation of keywords.
