@@ -10,7 +10,6 @@ SET
     modified_dts = CURRENT_TIMESTAMP
 WHERE model_plan.id = :id
 RETURNING
-(
     id,
     model_name,
     model_category,
@@ -21,5 +20,4 @@ RETURNING
     created_by,
     created_dts,
     modified_by,
-    modified_dts
-);
+    modified_dts;

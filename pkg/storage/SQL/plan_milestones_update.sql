@@ -12,7 +12,7 @@ SET
     modified_dts = CURRENT_TIMESTAMP
 
 WHERE plan_milestones.id = :id
-RETURNING (
+RETURNING
     id,
     enter_cms_clearance,
     enter_hhs_omb_clearance,
@@ -25,5 +25,4 @@ RETURNING (
     created_by,
     created_dts,
     modified_by,
-    modified_dts
-);
+    modified_dts;

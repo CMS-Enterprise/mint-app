@@ -10,7 +10,7 @@ SET
     modified_dts = CURRENT_TIMESTAMP,
     status = :status
 WHERE plan_basics.id = :id
-RETURNING (
+RETURNING
     id,
     model_plan_id,
     model_type,
@@ -22,5 +22,4 @@ RETURNING (
     created_dts,
     modified_by,
     modified_dts,
-    status
-);
+    status;

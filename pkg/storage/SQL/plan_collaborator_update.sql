@@ -7,7 +7,7 @@ SET
     modified_by = :modified_by,
     modified_dts = CURRENT_TIMESTAMP
 WHERE plan_collaborator.id = :id
-RETURNING (
+RETURNING
     id,
     model_plan_id,
     eua_user_id,
@@ -16,5 +16,4 @@ RETURNING (
     created_by,
     created_dts,
     modified_by,
-    modified_dts
-);
+    modified_dts;
