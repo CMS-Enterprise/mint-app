@@ -62,12 +62,11 @@ func ConvertToPlanBasics(mpi *model.PlanBasicsInput) *models.PlanBasics {
 func ConvertToPlanMilestonesModel(input *model.PlanMilestonesInput) *models.PlanMilestones {
 	model := models.PlanMilestones{
 		ModelPlanID:             *input.ModelPlanID,
-		EnterCMSClearance:       input.EnterCMSClearance,
-		EnterHMSOMBClearance:    input.EnterHMSOMBClearance,
-		Cleared:                 input.Cleared,
+		ClearanceStarts:         input.ClearanceStarts,
+		ClearanceEnds:           input.ClearanceEnds,
 		Announced:               input.Announced,
-		ApplicationsDue:         input.ApplicationsDue,
-		ParticipantsAnnounced:   input.ParticipantsAnnounced,
+		ApplicationsStart:       input.ApplicationsStart,
+		ApplicationsEnd:         input.ApplicationsEnd,
 		PerformancePeriodStarts: input.PerformancePeriodStarts,
 		PerformancePeriodEnds:   input.PerformancePeriodEnds,
 		CreatedBy:               input.CreatedBy,
@@ -75,6 +74,7 @@ func ConvertToPlanMilestonesModel(input *model.PlanMilestonesInput) *models.Plan
 		ModifiedBy:              input.ModifiedBy,
 		ModifiedDts:             input.ModifiedDts,
 	}
+	//TODO add new fields, and update status as needed
 
 	if input.ID != nil {
 		model.ID = *input.ID

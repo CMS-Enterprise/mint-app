@@ -5,8 +5,7 @@ CREATE TABLE plan_milestones (
     complete_icip TIMESTAMP WITH TIME ZONE NULL,
     clearance_starts TIMESTAMP WITH TIME ZONE NULL,
     clearance_ends TIMESTAMP WITH TIME ZONE NULL,
-    enter_hhs_omb_clearance TIMESTAMP WITH TIME ZONE NULL,
-    cleared TIMESTAMP WITH TIME ZONE NULL,
+
     announced TIMESTAMP WITH TIME ZONE NULL,
 
 
@@ -22,7 +21,7 @@ CREATE TABLE plan_milestones (
     high_level_note TEXT,
 
     phased_in BOOLEAN,
-    phased_in_note BOOLEAN,
+    phased_in_note TEXT,
 
 
     created_by EUA_ID,

@@ -69,20 +69,24 @@ type PlanCollaboratorInput struct {
 
 // Represents plan milestones input
 type PlanMilestonesInput struct {
-	ID                      *uuid.UUID `json:"id"`
-	ModelPlanID             *uuid.UUID `json:"modelPlanID"`
-	EnterCMSClearance       *time.Time `json:"enterCMSClearance"`
-	EnterHMSOMBClearance    *time.Time `json:"enterHMSOMBClearance"`
-	Cleared                 *time.Time `json:"cleared"`
-	Announced               *time.Time `json:"announced"`
-	ApplicationsDue         *time.Time `json:"applicationsDue"`
-	ParticipantsAnnounced   *time.Time `json:"participantsAnnounced"`
-	PerformancePeriodStarts *time.Time `json:"performancePeriodStarts"`
-	PerformancePeriodEnds   *time.Time `json:"performancePeriodEnds"`
-	CreatedBy               *string    `json:"createdBy"`
-	CreatedDts              *time.Time `json:"createdDts"`
-	ModifiedBy              *string    `json:"modifiedBy"`
-	ModifiedDts             *time.Time `json:"modifiedDts"`
+	ID                      *uuid.UUID         `json:"id"`
+	ModelPlanID             *uuid.UUID         `json:"modelPlanID"`
+	ClearanceStarts         *time.Time         `json:"clearanceStarts"`
+	ClearanceEnds           *time.Time         `json:"clearanceEnds"`
+	Announced               *time.Time         `json:"announced"`
+	ApplicationsStart       *time.Time         `json:"applicationsStart"`
+	ApplicationsEnd         *time.Time         `json:"applicationsEnd"`
+	PerformancePeriodStarts *time.Time         `json:"performancePeriodStarts"`
+	PerformancePeriodEnds   *time.Time         `json:"performancePeriodEnds"`
+	WrapUpEnds              *time.Time         `json:"wrapUpEnds"`
+	HighLevelNote           *string            `json:"highLevelNote"`
+	PhasedIn                *bool              `json:"phasedIn"`
+	PhasedInNote            *string            `json:"phasedInNote"`
+	CreatedBy               *string            `json:"createdBy"`
+	CreatedDts              *time.Time         `json:"createdDts"`
+	ModifiedBy              *string            `json:"modifiedBy"`
+	ModifiedDts             *time.Time         `json:"modifiedDts"`
+	Status                  *models.TaskStatus `json:"status"`
 }
 
 type CMMIGroup string
