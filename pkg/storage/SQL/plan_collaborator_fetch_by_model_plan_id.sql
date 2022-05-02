@@ -1,4 +1,4 @@
-SELECT (
+SELECT
     id,
     model_plan_id,
     eua_user_id,
@@ -8,6 +8,5 @@ SELECT (
     created_dts,
     modified_by,
     modified_dts
-)
 FROM plan_collaborator
 WHERE model_plan_id = :model_plan_id;
