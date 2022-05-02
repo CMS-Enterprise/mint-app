@@ -4,13 +4,13 @@ const planBasicsSchema = {
   garyTest: Yup.object().shape({
     modelName: Yup.string().trim().required('Enter the Model Name'),
     modelCategory: Yup.string().required('Enter the Model Category'),
-    cmsComponent: Yup.string().required('Gary gary gary')
+    cmsCenter: Yup.string().required('Gary gary gary')
   }),
 
   pageOneSchema: Yup.object().shape({
     modelName: Yup.string().trim().required('Enter the Model Name'),
     modelCategory: Yup.string().required('Enter the Model Category'),
-    cmsComponent: Yup.array()
+    cmsCenter: Yup.array()
       .min(1, 'Select a CMS Component')
       .required('Select a CMS Component')
   }),
@@ -18,7 +18,7 @@ const planBasicsSchema = {
   pageOneSchemaWithCmmiGroup: Yup.object().shape({
     modelName: Yup.string().trim().required('Enter the Model Name'),
     modelCategory: Yup.string().required('Enter the Model Category'),
-    cmsComponent: Yup.array()
+    cmsCenter: Yup.array()
       .min(1, 'Select a CMS Component')
       .required('Select a CMS Component'),
     cmmiGroup: Yup.array()
