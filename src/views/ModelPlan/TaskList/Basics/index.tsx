@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link, Route, Switch, useParams } from 'react-router-dom';
+import { Link, Route, Switch, useHistory, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
 import {
   Breadcrumb,
@@ -35,11 +35,23 @@ import { translateModelCategory } from 'utils/modelPlan';
 import planBasicsSchema from 'validations/planBasics';
 import NotFound, { NotFoundPartial } from 'views/NotFound';
 
+import Overview from './Overview';
+
+type PlanBasicModelPlanFormType = {
+  modelName: string;
+  modelCategory: string;
+  cmsComponent: string;
+  // TODO: Update this when BE is ready
+  // cmsComponent: string[];
+  cmmiGroup: string[];
+};
+
 const BasicsContent = () => {
   const { t } = useTranslation('basics');
   const { t: h } = useTranslation('draftModelPlan');
   const { modelId } = useParams<{ modelId: string }>();
   const [isCmmiGroupShown, setIsCmmiGroupShown] = useState(false);
+  const history = useHistory();
 
   const { data } = useQuery<GetModelPlan, GetModelPlanVariables>(
     GetModelPlanQuery,
@@ -54,37 +66,48 @@ const BasicsContent = () => {
 
   const [update] = useMutation<UpdateModelPlanType>(UpdateModelPlan);
 
+  const handleUpdateModelPlan = (formikValues: PlanBasicModelPlanFormType) => {
+    console.log(formikValues);
+    update({
+      variables: {
+        input: {
+          id: modelId,
+          modelName: formikValues.modelName,
+          modelCategory: formikValues.modelCategory,
+          // cmsCenter: formikValues.cmsComponent,
+          // cmmiGroups: formikValues.cmmiGroup,
+          status: 'PLAN_DRAFT'
+        }
+      }
+    })
+      .then(response => {
+        console.log(`this fired`);
+        if (!response?.errors) {
+          history.push(`/models/${modelId}/task-list`);
+        }
+      })
+      .catch(errors => {
+        // formikRef?.current?.setErrors(errors);
+        console.log('Error');
+        console.table([
+          modelId,
+          formikValues.modelName,
+          formikValues.modelCategory,
+          formikValues.cmsComponent,
+          formikValues.cmmiGroup
+        ]);
+        console.log(errors);
+      });
+  };
+
   const initialValues = {
     modelName: modelName as string,
     modelCategory: '',
-    cmsComponent: "",
+    cmsComponent: '',
     // TODO: Update this when BE is ready
     // cmsComponent: [],
     cmmiGroup: []
   };
-
-  const handleSubmit = () => {
-    update({
-        variables: {
-          input: {
-            id: modelId,
-            modelName,
-            modelCategory,
-            cmsCenter: cmsComponent,
-            cmmiGroups: cmmiGroup
-          }
-        }
-      })
-        .then(response => {
-          if (!response?.errors) {
-            history.push(`/models/new-plan/${modelId}/collaborators`);
-          }
-        })
-        .catch(errors => {
-          formikRef?.current?.setErrors(errors);
-        });
-    }
-  }
 
   return (
     <MainContent className="margin-bottom-5">
@@ -112,14 +135,16 @@ const BasicsContent = () => {
           <Formik
             // TODO: change intial value of model name of plan via gql
             initialValues={initialValues}
-            onSubmit={values => {
-              console.log(values);
-            }}
+            // onSubmit={values => {
+            //   console.log(values);
+            // }}
+            onSubmit={handleUpdateModelPlan}
             enableReinitialize
             validationSchema={
-              isCmmiGroupShown
-                ? planBasicsSchema.pageOneSchemaWithCmmiGroup
-                : planBasicsSchema.pageOneSchema
+              // isCmmiGroupShown
+              //   ? planBasicsSchema.pageOneSchemaWithCmmiGroup
+              //   : planBasicsSchema.pageOneSchema
+              planBasicsSchema.garyTest
             }
             validateOnBlur={false}
             validateOnChange={false}
@@ -129,7 +154,9 @@ const BasicsContent = () => {
               formikProps: FormikProps<{
                 modelName: string;
                 modelCategory: string;
-                cmsComponent: string[];
+                cmsComponent: string;
+                // TODO: Update this when BE is ready
+                // cmsComponent: string[];
                 cmmiGroup: string[];
               }>
             ) => {
@@ -249,20 +276,26 @@ const BasicsContent = () => {
                                     name="cmsComponent"
                                     label={item}
                                     value={item}
-                                    onChange={(
-                                      e: React.ChangeEvent<HTMLInputElement>
-                                    ) => {
-                                      if (e.target.checked) {
-                                        arrayHelpers.push(e.target.value);
-                                      } else {
-                                        const idx = values.cmsComponent.indexOf(
-                                          e.target.value
-                                        );
-                                        arrayHelpers.remove(idx);
-                                      }
-                                      if (e.target.value === 'CMMI') {
-                                        setIsCmmiGroupShown(true);
-                                      }
+                                    // onChange={(
+                                    //   e: React.ChangeEvent<HTMLInputElement>
+                                    // ) => {
+                                    //   if (e.target.checked) {
+                                    //     arrayHelpers.push(e.target.value);
+                                    //   } else {
+                                    //     const idx = values.cmsComponent.indexOf(
+                                    //       e.target.value
+                                    //     );
+                                    //     arrayHelpers.remove(idx);
+                                    //   }
+                                    //   if (e.target.value === 'CMMI') {
+                                    //     setIsCmmiGroupShown(true);
+                                    //   }
+                                    // }}
+                                    onChange={(e: any) => {
+                                      setFieldValue(
+                                        'cmsComponent',
+                                        e.target.value
+                                      );
                                     }}
                                   />
                                 </Fragment>
@@ -385,8 +418,9 @@ export const Basics = () => {
         render={() => <BasicsContent />}
       />
       <Route
-        path="/models/:modelId/task-list/basics/overview"
-        render={() => <NotFound />}
+        path="/models/:modelId/task-list"
+        exact
+        render={() => <Overview />}
       />
       <Route
         path="/models/:modelId/task-list/basics/milestones"
