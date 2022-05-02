@@ -5,7 +5,6 @@ package graph
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/google/uuid"
 
@@ -54,12 +53,20 @@ func (r *modelPlanResolver) Collaborators(ctx context.Context, obj *models.Model
 func (r *mutationResolver) CreateModelPlan(ctx context.Context, input model.ModelPlanInput) (*models.ModelPlan, error) {
 	logger := appcontext.ZLogger(ctx)
 	principal := appcontext.Principal(ctx).ID()
+	principalInfo, err := r.service.FetchUserInfo(ctx, principal)
+	if err != nil { //if can't get user info, use EUAID as commonName
+		tempPrincipalInfo := models.UserInfo{
+			EuaUserID:  principal,
+			CommonName: principal,
+		}
+		principalInfo = &tempPrincipalInfo
+	}
 
 	plan := ConvertToModelPlan(&input)
 
 	plan.CreatedBy = &principal
 	plan.ModifiedBy = &principal
-	return resolvers.ModelPlanCreate(logger, plan, r.store)
+	return resolvers.ModelPlanCreate(logger, plan, r.store, principalInfo)
 }
 
 func (r *mutationResolver) CreatePlanCollaborator(ctx context.Context, input model.PlanCollaboratorInput) (*models.PlanCollaborator, error) {
@@ -195,13 +202,3 @@ type modelPlanResolver struct{ *Resolver }
 type mutationResolver struct{ *Resolver }
 type queryResolver struct{ *Resolver }
 type userInfoResolver struct{ *Resolver }
-
-// !!! WARNING !!!
-// The code below was going to be deleted when updating resolvers. It has been copied here so you have
-// one last chance to move it out of harms way if you want. There are two reasons this happens:
-//  - When renaming or deleting a resolver the old code will be put in here. You can safely delete
-//    it when you're done.
-//  - You have helper methods in this file. Move them out to keep these resolver files clean.
-func (r *modelPlanResolver) Archived(ctx context.Context, obj *models.ModelPlan) (*string, error) {
-	panic(fmt.Errorf("not implemented"))
-}

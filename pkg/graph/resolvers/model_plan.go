@@ -9,12 +9,26 @@ import (
 )
 
 // ModelPlanCreate implements resolver logic to create a model plan
-func ModelPlanCreate(logger *zap.Logger, plan *models.ModelPlan, store *storage.Store) (*models.ModelPlan, error) {
+func ModelPlanCreate(logger *zap.Logger, plan *models.ModelPlan, store *storage.Store, principalInfo *models.UserInfo) (*models.ModelPlan, error) {
 
 	createdPlan, err := store.ModelPlanCreate(logger, plan)
 	if err != nil {
 		return nil, err
 	}
+	/*TODO Revist this
+	- we might want to add a plan collaborator in the scope of a single SQLX transaction and roll back the transaction if a collaborator was not successfully created
+	  - this could be in a combined store for collaborator / plan
+	- we could also address this directly in SQL, create the plan and collaborator at the same time.
+	*/
+
+	colab := models.PlanCollaborator{
+		EUAUserID:   *createdPlan.CreatedBy,
+		ModelPlanID: createdPlan.ID,
+		TeamRole:    models.TeamRoleModelLead,
+		FullName:    principalInfo.CommonName,
+	}
+	_, _ = CreatePlanCollaborator(logger, &colab, createdPlan.CreatedBy, store)
+
 	return createdPlan, err
 }
 
