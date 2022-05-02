@@ -31,7 +31,11 @@ import {
 import { UpdateModelPlan as UpdateModelPlanType } from 'queries/types/UpdateModelPlan';
 import UpdateModelPlan from 'queries/UpdateModelPlan';
 import flattenErrors from 'utils/flattenErrors';
-import { translateModelCategory } from 'utils/modelPlan';
+import {
+  translateCmmiGroup,
+  translateCmsCenter,
+  translateModelCategory
+} from 'utils/modelPlan';
 import planBasicsSchema from 'validations/planBasics';
 import NotFound, { NotFoundPartial } from 'views/NotFound';
 
@@ -40,9 +44,9 @@ import Overview from './Overview';
 type PlanBasicModelPlanFormType = {
   modelName: string;
   modelCategory: string;
-  cmsComponent: string;
+  cmsCenter: string;
   // TODO: Update this when BE is ready
-  // cmsComponent: string[];
+  // cmsCenter: string[];
   cmmiGroup: string[];
 };
 
@@ -74,28 +78,19 @@ const BasicsContent = () => {
           id: modelId,
           modelName: formikValues.modelName,
           modelCategory: formikValues.modelCategory,
-          // cmsCenter: formikValues.cmsComponent,
-          // cmmiGroups: formikValues.cmmiGroup,
+          cmsCenter: formikValues.cmsCenter,
+          cmmiGroups: formikValues.cmmiGroup,
           status: 'PLAN_DRAFT'
         }
       }
     })
       .then(response => {
-        console.log(`this fired`);
         if (!response?.errors) {
-          history.push(`/models/${modelId}/task-list`);
+          history.push(`/models/${modelId}/task-list/basics/overview`);
         }
       })
       .catch(errors => {
         // formikRef?.current?.setErrors(errors);
-        console.log('Error');
-        console.table([
-          modelId,
-          formikValues.modelName,
-          formikValues.modelCategory,
-          formikValues.cmsComponent,
-          formikValues.cmmiGroup
-        ]);
         console.log(errors);
       });
   };
@@ -103,9 +98,9 @@ const BasicsContent = () => {
   const initialValues = {
     modelName: modelName as string,
     modelCategory: '',
-    cmsComponent: '',
+    cmsCenter: '',
     // TODO: Update this when BE is ready
-    // cmsComponent: [],
+    // cmsCenter: [],
     cmmiGroup: []
   };
 
@@ -135,9 +130,6 @@ const BasicsContent = () => {
           <Formik
             // TODO: change intial value of model name of plan via gql
             initialValues={initialValues}
-            // onSubmit={values => {
-            //   console.log(values);
-            // }}
             onSubmit={handleUpdateModelPlan}
             enableReinitialize
             validationSchema={
@@ -154,9 +146,9 @@ const BasicsContent = () => {
               formikProps: FormikProps<{
                 modelName: string;
                 modelCategory: string;
-                cmsComponent: string;
+                cmsCenter: string;
                 // TODO: Update this when BE is ready
-                // cmsComponent: string[];
+                // cmsCenter: string[];
                 cmmiGroup: string[];
               }>
             ) => {
@@ -250,19 +242,19 @@ const BasicsContent = () => {
                     </FieldGroup>
 
                     <FieldGroup
-                      scrollElement="cmsComponent"
-                      error={!!flatErrors.cmsComponent}
+                      scrollElement="cmsCenter"
+                      error={!!flatErrors.cmsCenter}
                       className="margin-top-4"
                     >
                       <FieldArray
-                        name="cmsComponent"
+                        name="cmsCenter"
                         render={arrayHelpers => (
                           <>
                             <legend className="usa-label">
                               {t('cmsComponent')}
                             </legend>
                             <FieldErrorMsg>
-                              {flatErrors.cmsComponent}
+                              {flatErrors.cmsCenter}
                             </FieldErrorMsg>
 
                             {(t('cmsComponents', {
@@ -272,17 +264,17 @@ const BasicsContent = () => {
                                 <Fragment key={item}>
                                   <Field
                                     as={CheckboxField}
-                                    id={`new-plan-cmsComponent--${key}`}
+                                    id={`new-plan-cmsCenter--${key}`}
                                     name="cmsComponent"
                                     label={item}
-                                    value={item}
+                                    value={translateCmsCenter(item)}
                                     // onChange={(
                                     //   e: React.ChangeEvent<HTMLInputElement>
                                     // ) => {
                                     //   if (e.target.checked) {
                                     //     arrayHelpers.push(e.target.value);
                                     //   } else {
-                                    //     const idx = values.cmsComponent.indexOf(
+                                    //     const idx = values.cmsCenter.indexOf(
                                     //       e.target.value
                                     //     );
                                     //     arrayHelpers.remove(idx);
@@ -293,7 +285,7 @@ const BasicsContent = () => {
                                     // }}
                                     onChange={(e: any) => {
                                       setFieldValue(
-                                        'cmsComponent',
+                                        'cmsCenter',
                                         e.target.value
                                       );
                                     }}
@@ -302,7 +294,7 @@ const BasicsContent = () => {
                               );
                             })}
 
-                            {values.cmsComponent.includes('Other') && (
+                            {values.cmsCenter.includes('OTHER') && (
                               <FieldGroup className="margin-top-4">
                                 <Label htmlFor="plan-basics-cmsCategory--Other">
                                   {h('pleaseSpecify')}
@@ -327,7 +319,7 @@ const BasicsContent = () => {
                         )}
                       />
                     </FieldGroup>
-                    {values.cmsComponent.includes('CMMI') && (
+                    {values.cmsCenter.includes('CMMI') && (
                       <FieldGroup
                         error={!!flatErrors.cmmiGroup}
                         className="margin-top-4"
@@ -353,7 +345,7 @@ const BasicsContent = () => {
                                       id={`new-plan-cmmiGroup--${key}`}
                                       name="cmmiGroup"
                                       label={item}
-                                      value={item}
+                                      value={translateCmmiGroup(item)}
                                       onChange={(
                                         e: React.ChangeEvent<HTMLInputElement>
                                       ) => {
@@ -415,10 +407,11 @@ export const Basics = () => {
     <Switch>
       <Route
         path="/models/:modelId/task-list/basics"
+        exact
         render={() => <BasicsContent />}
       />
       <Route
-        path="/models/:modelId/task-list"
+        path="/models/:modelId/task-list/basics/overview"
         exact
         render={() => <Overview />}
       />
