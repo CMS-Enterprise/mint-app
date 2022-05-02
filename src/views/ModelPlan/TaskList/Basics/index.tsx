@@ -268,6 +268,7 @@ const BasicsContent = () => {
                                     name="cmsComponent"
                                     label={item}
                                     value={translateCmsCenter(item)}
+                                    // TODO: uncomment this when BE changes this
                                     // onChange={(
                                     //   e: React.ChangeEvent<HTMLInputElement>
                                     // ) => {
