@@ -144,6 +144,7 @@ type PlanMilestones {
   id: UUID
   modelPlanID: UUID
 
+  completeICIP: Time
   clearanceStarts: Time
   clearanceEnds: Time
 
@@ -175,6 +176,7 @@ input PlanMilestonesInput {
   id: UUID
   modelPlanID: UUID
 
+  completeICIP: Time
   clearanceStarts: Time
   clearanceEnds: Time
 

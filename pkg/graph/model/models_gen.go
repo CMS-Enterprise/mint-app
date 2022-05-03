@@ -71,6 +71,7 @@ type PlanCollaboratorInput struct {
 type PlanMilestonesInput struct {
 	ID                      *uuid.UUID         `json:"id"`
 	ModelPlanID             *uuid.UUID         `json:"modelPlanID"`
+	CompleteIcip            *time.Time         `json:"completeICIP"`
 	ClearanceStarts         *time.Time         `json:"clearanceStarts"`
 	ClearanceEnds           *time.Time         `json:"clearanceEnds"`
 	Announced               *time.Time         `json:"announced"`

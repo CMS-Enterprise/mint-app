@@ -121,6 +121,7 @@ type ComplexityRoot struct {
 		ApplicationsStart       func(childComplexity int) int
 		ClearanceEnds           func(childComplexity int) int
 		ClearanceStarts         func(childComplexity int) int
+		CompleteICIP            func(childComplexity int) int
 		CreatedBy               func(childComplexity int) int
 		CreatedDts              func(childComplexity int) int
 		HighLevelNote           func(childComplexity int) int
@@ -606,6 +607,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.PlanMilestones.ClearanceStarts(childComplexity), true
 
+	case "PlanMilestones.completeICIP":
+		if e.complexity.PlanMilestones.CompleteICIP == nil {
+			break
+		}
+
+		return e.complexity.PlanMilestones.CompleteICIP(childComplexity), true
+
 	case "PlanMilestones.createdBy":
 		if e.complexity.PlanMilestones.CreatedBy == nil {
 			break
@@ -990,6 +998,7 @@ type PlanMilestones {
   id: UUID
   modelPlanID: UUID
 
+  completeICIP: Time
   clearanceStarts: Time
   clearanceEnds: Time
 
@@ -1021,6 +1030,7 @@ input PlanMilestonesInput {
   id: UUID
   modelPlanID: UUID
 
+  completeICIP: Time
   clearanceStarts: Time
   clearanceEnds: Time
 
@@ -3334,6 +3344,38 @@ func (ec *executionContext) _PlanMilestones_modelPlanID(ctx context.Context, fie
 	res := resTmp.(uuid.UUID)
 	fc.Result = res
 	return ec.marshalOUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _PlanMilestones_completeICIP(ctx context.Context, field graphql.CollectedField, obj *models.PlanMilestones) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "PlanMilestones",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.CompleteICIP, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*time.Time)
+	fc.Result = res
+	return ec.marshalOTime2ᚖtimeᚐTime(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _PlanMilestones_clearanceStarts(ctx context.Context, field graphql.CollectedField, obj *models.PlanMilestones) (ret graphql.Marshaler) {
@@ -5706,6 +5748,14 @@ func (ec *executionContext) unmarshalInputPlanMilestonesInput(ctx context.Contex
 			if err != nil {
 				return it, err
 			}
+		case "completeICIP":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("completeICIP"))
+			it.CompleteIcip, err = ec.unmarshalOTime2ᚖtimeᚐTime(ctx, v)
+			if err != nil {
+				return it, err
+			}
 		case "clearanceStarts":
 			var err error
 
@@ -6408,6 +6458,13 @@ func (ec *executionContext) _PlanMilestones(ctx context.Context, sel ast.Selecti
 		case "modelPlanID":
 			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._PlanMilestones_modelPlanID(ctx, field, obj)
+			}
+
+			out.Values[i] = innerFunc(ctx)
+
+		case "completeICIP":
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._PlanMilestones_completeICIP(ctx, field, obj)
 			}
 
 			out.Values[i] = innerFunc(ctx)

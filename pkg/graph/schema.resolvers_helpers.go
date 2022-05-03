@@ -62,6 +62,7 @@ func ConvertToPlanBasics(mpi *model.PlanBasicsInput) *models.PlanBasics {
 func ConvertToPlanMilestonesModel(input *model.PlanMilestonesInput) *models.PlanMilestones {
 	model := models.PlanMilestones{
 		ModelPlanID:             *input.ModelPlanID,
+		CompleteICIP:            input.CompleteIcip,
 		ClearanceStarts:         input.ClearanceStarts,
 		ClearanceEnds:           input.ClearanceEnds,
 		Announced:               input.Announced,

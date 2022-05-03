@@ -11,6 +11,7 @@ type PlanMilestones struct {
 	ID          uuid.UUID `json:"id" db:"id"`
 	ModelPlanID uuid.UUID `json:"modelPlanID" db:"model_plan_id"`
 
+	CompleteICIP    *time.Time `json:"completeICIP" db:"complete_icip"` //TODO do this
 	ClearanceStarts *time.Time `json:"clearanceStarts" db:"clearance_starts"`
 	ClearanceEnds   *time.Time `json:"clearanceEnds" db:"clearance_ends"`
 
