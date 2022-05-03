@@ -7,7 +7,9 @@ import {
   BreadcrumbBar,
   BreadcrumbLink,
   Button,
+  Fieldset,
   Label,
+  Radio,
   TextInput
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
@@ -71,17 +73,6 @@ const Overview = () => {
             {t('helpText')}
           </p>
 
-          <Alert
-            type="info"
-            slim
-            data-testid="mandatory-fields-alert"
-            className="margin-bottom-4"
-          >
-            <span className="mandatory-fields-alert__text">
-              {h('mandatoryFields')}
-            </span>
-          </Alert>
-
           <Formik
             // TODO: change intial value of model name of plan via gql
             initialValues={initialValues}
@@ -134,22 +125,28 @@ const Overview = () => {
                     }}
                   >
                     <FieldGroup
-                      scrollElement="modelName"
-                      error={!!flatErrors.modelName}
+                      scrollElement="modelType"
+                      error={!!flatErrors.modelType}
                       className="margin-top-4"
                     >
-                      <Label htmlFor="plan-basics-model-name">
-                        {t('modelName')}
-                      </Label>
-                      <FieldErrorMsg>{flatErrors.modelName}</FieldErrorMsg>
-                      <Field
-                        as={TextInput}
-                        error={!!flatErrors.modelName}
-                        id="plan-basics-model-name"
-                        maxLength={50}
-                        name="modelName"
-                        defaultValue={modelName}
-                      />
+                      <Label htmlFor="modelType">{t('modelType')}</Label>
+                      <FieldErrorMsg>{flatErrors.modelType}</FieldErrorMsg>
+                      <Fieldset>
+                        <Field
+                          as={Radio}
+                          id="ModelType-Voluntary"
+                          name="modelType"
+                          label={t('voluntary')}
+                          value="VOLUNTARY"
+                        />
+                        <Field
+                          as={Radio}
+                          id="ModelType-Mandatory"
+                          name="modelType"
+                          label={t('Mandatory')}
+                          value="MANDATORY"
+                        />
+                      </Fieldset>
                     </FieldGroup>
 
                     <div className="margin-top-6 margin-bottom-3">
