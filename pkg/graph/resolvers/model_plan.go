@@ -36,7 +36,6 @@ func ModelPlanCreate(logger *zap.Logger, plan *models.ModelPlan, store *storage.
 
 // ModelPlanUpdate implements resolver logic to update a model plan
 func ModelPlanUpdate(logger *zap.Logger, plan *models.ModelPlan, principal *string, store *storage.Store) (*models.ModelPlan, error) {
-	//TODO clean this up
 	plan.ModifiedBy = principal
 
 	retPlan, err := store.ModelPlanUpdate(logger, plan)
