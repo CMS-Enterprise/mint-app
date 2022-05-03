@@ -121,6 +121,7 @@ const Overview = () => {
                     </ErrorAlert>
                   )}
                   <Form
+                    className="tablet:grid-col-6"
                     onSubmit={e => {
                       handleSubmit(e);
                       window.scrollTo(0, 0);
@@ -159,6 +160,7 @@ const Overview = () => {
                       <FieldErrorMsg>{flatErrors.problem}</FieldErrorMsg>
                       <Field
                         as={TextAreaField}
+                        className="height-15"
                         error={!!flatErrors.problem}
                         id="ModelType-Problem"
                         name="problem"
@@ -174,6 +176,7 @@ const Overview = () => {
                       <FieldErrorMsg>{flatErrors.goal}</FieldErrorMsg>
                       <Field
                         as={TextAreaField}
+                        className="height-15"
                         error={!!flatErrors.goal}
                         id="ModelType-Goal"
                         name="goal"
@@ -192,10 +195,27 @@ const Overview = () => {
                       </FieldErrorMsg>
                       <Field
                         as={TextAreaField}
+                        className="height-15"
                         error={!!flatErrors.testInterventions}
                         id="ModelType-testInterventions"
                         name="testInterventions"
                         label={t('testInterventions')}
+                      />
+                    </FieldGroup>
+
+                    <FieldGroup
+                      scrollElement="notes"
+                      error={!!flatErrors.notes}
+                      className="margin-top-4"
+                    >
+                      <FieldErrorMsg>{flatErrors.notes}</FieldErrorMsg>
+                      <Field
+                        as={TextAreaField}
+                        className="height-15"
+                        error={!!flatErrors.notes}
+                        id="ModelType-notes"
+                        name="notes"
+                        label={t('Notes')}
                       />
                     </FieldGroup>
 
