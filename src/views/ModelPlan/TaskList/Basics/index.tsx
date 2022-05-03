@@ -39,6 +39,7 @@ import {
 import planBasicsSchema from 'validations/planBasics';
 import NotFound, { NotFoundPartial } from 'views/NotFound';
 
+import Milestones from './Milestones';
 import Overview from './Overview';
 
 type PlanBasicModelPlanFormType = {
@@ -422,7 +423,8 @@ export const Basics = () => {
       />
       <Route
         path="/models/:modelId/task-list/basics/milestones"
-        render={() => <NotFound />}
+        exact
+        render={() => <Milestones />}
       />
       <Route path="*" render={() => <NotFoundPartial />} />
     </Switch>
