@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
@@ -8,6 +8,7 @@ import {
   BreadcrumbLink,
   Button,
   Fieldset,
+  IconAdd,
   IconArrowBack,
   Label,
   Radio
@@ -33,6 +34,7 @@ const Overview = () => {
   const { t } = useTranslation('basics');
   const { t: h } = useTranslation('draftModelPlan');
   const { modelId } = useParams<{ modelId: string }>();
+  const [hasAdditionalNote, setHasAdditionalNote] = useState(false);
   const history = useHistory();
 
   const { data } = useQuery<GetModelPlan, GetModelPlanVariables>(
@@ -82,7 +84,7 @@ const Overview = () => {
               console.log(values);
             }}
             enableReinitialize
-            validationSchema={planBasicsSchema.garyTest}
+            validationSchema={planBasicsSchema.pageTwoSchema}
             validateOnBlur={false}
             validateOnChange={false}
             validateOnMount={false}
@@ -96,9 +98,9 @@ const Overview = () => {
                 dirty,
                 errors,
                 handleSubmit,
-                setErrors,
-                setFieldValue,
-                values
+                setErrors
+                // setFieldValue,
+                // values
               } = formikProps;
               const flatErrors = flattenErrors(errors);
               return (
@@ -157,11 +159,10 @@ const Overview = () => {
                       error={!!flatErrors.problem}
                       className="margin-top-4"
                     >
-                      <FieldErrorMsg>{flatErrors.problem}</FieldErrorMsg>
                       <Field
                         as={TextAreaField}
                         className="height-15"
-                        error={!!flatErrors.problem}
+                        error={flatErrors.problem}
                         id="ModelType-Problem"
                         name="problem"
                         label={t('problem')}
@@ -173,11 +174,10 @@ const Overview = () => {
                       error={!!flatErrors.goal}
                       className="margin-top-4"
                     >
-                      <FieldErrorMsg>{flatErrors.goal}</FieldErrorMsg>
                       <Field
                         as={TextAreaField}
                         className="height-15"
-                        error={!!flatErrors.goal}
+                        error={flatErrors.goal}
                         id="ModelType-Goal"
                         name="goal"
                         hint={t('goalHelp')}
@@ -190,34 +190,36 @@ const Overview = () => {
                       error={!!flatErrors.testInterventions}
                       className="margin-top-4"
                     >
-                      <FieldErrorMsg>
-                        {flatErrors.testInterventions}
-                      </FieldErrorMsg>
                       <Field
                         as={TextAreaField}
                         className="height-15"
-                        error={!!flatErrors.testInterventions}
+                        error={flatErrors.testInterventions}
                         id="ModelType-testInterventions"
                         name="testInterventions"
                         label={t('testInterventions')}
                       />
                     </FieldGroup>
 
-                    <FieldGroup
-                      scrollElement="notes"
-                      error={!!flatErrors.notes}
-                      className="margin-top-4"
+                    <Button
+                      type="button"
+                      className="usa-button usa-button--unstyled margin-top-4"
+                      onClick={() => setHasAdditionalNote(true)}
                     >
-                      <FieldErrorMsg>{flatErrors.notes}</FieldErrorMsg>
-                      <Field
-                        as={TextAreaField}
-                        className="height-15"
-                        error={!!flatErrors.notes}
-                        id="ModelType-notes"
-                        name="notes"
-                        label={t('Notes')}
-                      />
-                    </FieldGroup>
+                      <IconAdd className="margin-right-1" aria-hidden />
+                      {h('additionalNote')}
+                    </Button>
+
+                    {hasAdditionalNote && (
+                      <FieldGroup className="margin-top-4">
+                        <Field
+                          as={TextAreaField}
+                          className="height-15"
+                          id="ModelType-notes"
+                          name="notes"
+                          label={t('Notes')}
+                        />
+                      </FieldGroup>
+                    )}
 
                     <div className="margin-top-6 margin-bottom-3">
                       <Button
