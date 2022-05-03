@@ -11,9 +11,9 @@ CREATE TABLE plan_milestones (
     performance_period_starts TIMESTAMP WITH TIME ZONE NULL,
     performance_period_ends TIMESTAMP WITH TIME ZONE NULL,
 
-    created_by EUA_ID,
+    created_by EUA_ID NOT NULL,
     created_dts TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    modified_by EUA_ID,
+    modified_by EUA_ID NOT NULL,
     modified_dts TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP
 
 );
