@@ -1,15 +1,11 @@
 SELECT
     id,
     model_plan_id,
-    model_type,
-    problem,
-    goal,
-    test_inventions,
-    note,
+    content,
+    status,
     created_by,
     created_dts,
     modified_by,
-    modified_dts,
-    status
-FROM plan_basics
+    modified_dts
+FROM plan_discussion
 WHERE model_plan_id = :model_plan_id
