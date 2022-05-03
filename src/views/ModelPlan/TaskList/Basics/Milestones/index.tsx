@@ -7,10 +7,14 @@ import {
   BreadcrumbBar,
   BreadcrumbLink,
   Button,
+  DatePicker,
   Fieldset,
   IconAdd,
   IconArrowBack,
   Label,
+  ProcessList,
+  ProcessListHeading,
+  ProcessListItem,
   Radio,
   TextInput
 } from '@trussworks/react-uswds';
@@ -88,6 +92,44 @@ const Milestones = () => {
             {t('helpText')}
           </p>
 
+          {/* <ProcessList>
+            <ProcessListItem className="padding-bottom-4">
+              <div className="grid-col-6">
+                <Label htmlFor="Milestone-completeICIP">
+                  {t('completeICIP')}
+                </Label>
+                <div className="usa-hint" id="appointment-date-hint">
+                  {h('datePlaceholder')}
+                </div>
+                <DatePicker id="asdf" name="asdfasdf" />
+              </div>
+            </ProcessListItem>
+            <ProcessListItem className="padding-bottom-4">
+              <ProcessListHeading
+                type="h4"
+                className="font-sans-xl line-height-sans-1"
+              >
+                Proceed to the second step.
+              </ProcessListHeading>
+              <p className="font-sans-lg margin-top-1 text-light">
+                Suspendisse id velit vitae ligula volutpat condimentum. Aliquam
+                erat volutpat.
+              </p>
+            </ProcessListItem>
+            <ProcessListItem>
+              <ProcessListHeading
+                type="h4"
+                className="font-sans-xl line-height-sans-1"
+              >
+                Complete the step-by-step process.
+              </ProcessListHeading>
+              <p className="font-sans-lg margin-top-1 text-light">
+                Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Morbi
+                commodo, ipsum sed pharetra gravida, orci magna rhoncus neque.
+              </p>
+            </ProcessListItem>
+          </ProcessList> */}
+
           <Formik
             initialValues={initialValues}
             onSubmit={handleFormSubmit}
@@ -133,21 +175,23 @@ const Milestones = () => {
                     }}
                   >
                     <FieldGroup
-                      scrollElement="modelName"
-                      error={!!flatErrors.modelName}
-                      className="margin-top-4"
+                      scrollElement="completeICIP"
+                      error={!!flatErrors.completeICIP}
+                      className="margin-top-4 grid-col-6"
                     >
-                      <Label htmlFor="plan-basics-model-name">
-                        {t('modelName')}
+                      <Label htmlFor="Milestone-completeICIP">
+                        {t('completeICIP')}
                       </Label>
-                      <FieldErrorMsg>{flatErrors.modelName}</FieldErrorMsg>
+                      <div className="usa-hint" id="appointment-date-hint">
+                        {h('datePlaceholder')}
+                      </div>
+                      <FieldErrorMsg>{flatErrors.completeICIP}</FieldErrorMsg>
                       <Field
-                        as={TextInput}
-                        error={!!flatErrors.modelName}
-                        id="plan-basics-model-name"
+                        as={DatePicker}
+                        error={!!flatErrors.completeICIP}
+                        id="Milestone-completeICIP"
                         maxLength={50}
-                        name="modelName"
-                        defaultValue={modelName}
+                        name="completeICIP"
                       />
                     </FieldGroup>
 
