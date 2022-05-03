@@ -1,6 +1,8 @@
 import React from 'react';
 import classnames from 'classnames';
 
+import FieldErrorMsg from 'components/shared/FieldErrorMsg';
+
 type TextAreaFieldProps = {
   className?: string;
   error?: boolean;
@@ -41,9 +43,13 @@ const TextAreaField = ({
           {label}
         </label>
       )}
+
       {hint && (
         <span className="usa-hint display-block text-normal">{hint}</span>
       )}
+
+      {error && <FieldErrorMsg>{error}</FieldErrorMsg>}
+
       <textarea
         className={textAreaClasses}
         id={id}
