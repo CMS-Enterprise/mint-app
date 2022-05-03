@@ -37,7 +37,7 @@ import {
   translateModelCategory
 } from 'utils/modelPlan';
 import planBasicsSchema from 'validations/planBasics';
-import NotFound, { NotFoundPartial } from 'views/NotFound';
+import { NotFoundPartial } from 'views/NotFound';
 
 import Milestones from './Milestones';
 import Overview from './Overview';
@@ -72,7 +72,6 @@ const BasicsContent = () => {
   const [update] = useMutation<UpdateModelPlanType>(UpdateModelPlan);
 
   const handleUpdateModelPlan = (formikValues: PlanBasicModelPlanFormType) => {
-    console.log(formikValues);
     update({
       variables: {
         input: {
@@ -144,16 +143,7 @@ const BasicsContent = () => {
             validateOnChange={false}
             validateOnMount={false}
           >
-            {(
-              formikProps: FormikProps<{
-                modelName: string;
-                modelCategory: string;
-                cmsCenter: string;
-                // TODO: Update this when BE is ready
-                // cmsCenter: string[];
-                cmmiGroup: string[];
-              }>
-            ) => {
+            {(formikProps: FormikProps<PlanBasicModelPlanFormType>) => {
               const {
                 dirty,
                 errors,
