@@ -61,6 +61,12 @@ func (r *modelPlanResolver) Collaborators(ctx context.Context, obj *models.Model
 	return collaborators, err
 }
 
+func (r *modelPlanResolver) Discussions(ctx context.Context, obj *models.ModelPlan) ([]*models.PlanDiscussion, error) {
+	logger := appcontext.ZLogger(ctx)
+
+	return resolvers.PlanDiscussionCollectionByModelPlanID(logger, obj.ID, r.store)
+}
+
 func (r *mutationResolver) CreateModelPlan(ctx context.Context, input model.ModelPlanInput) (*models.ModelPlan, error) {
 	logger := appcontext.ZLogger(ctx)
 	principal := appcontext.Principal(ctx).ID()
@@ -145,6 +151,66 @@ func (r *mutationResolver) UpdatePlanMilestones(ctx context.Context, input model
 	return resolvers.UpdatePlanMilestones(logger, basics, &principal, r.store)
 }
 
+func (r *mutationResolver) CreatePlanDiscussion(ctx context.Context, input model.PlanDiscussionInput) (*models.PlanDiscussion, error) {
+	discussion := ConvertToPlanDiscussion(&input)
+
+	principal := appcontext.Principal(ctx).ID()
+	logger := appcontext.ZLogger(ctx)
+
+	return resolvers.CreatePlanDiscussion(logger, discussion, &principal, r.store)
+}
+
+func (r *mutationResolver) UpdatePlanDiscussion(ctx context.Context, input model.PlanDiscussionInput) (*models.PlanDiscussion, error) {
+	discussion := ConvertToPlanDiscussion(&input)
+
+	principal := appcontext.Principal(ctx).ID()
+	logger := appcontext.ZLogger(ctx)
+
+	return resolvers.UpdatePlanDiscussion(logger, discussion, &principal, r.store)
+}
+
+func (r *mutationResolver) DeletePlanDiscussion(ctx context.Context, input model.PlanDiscussionInput) (*models.PlanDiscussion, error) {
+	discussion := ConvertToPlanDiscussion(&input)
+
+	principal := appcontext.Principal(ctx).ID()
+	logger := appcontext.ZLogger(ctx)
+
+	return resolvers.DeletePlanDiscussion(logger, discussion, &principal, r.store)
+}
+
+func (r *mutationResolver) CreateDiscussionReply(ctx context.Context, input model.DiscussionReplyInput) (*models.DiscussionReply, error) {
+	reply := ConvertToDiscussionReply(&input)
+
+	principal := appcontext.Principal(ctx).ID()
+	logger := appcontext.ZLogger(ctx)
+
+	return resolvers.CreateDiscussionReply(logger, reply, &principal, r.store)
+}
+
+func (r *mutationResolver) UpdateDiscussionReply(ctx context.Context, input model.DiscussionReplyInput) (*models.DiscussionReply, error) {
+	reply := ConvertToDiscussionReply(&input)
+
+	principal := appcontext.Principal(ctx).ID()
+	logger := appcontext.ZLogger(ctx)
+
+	return resolvers.UpdateDiscussionReply(logger, reply, &principal, r.store)
+}
+
+func (r *mutationResolver) DeleteDiscussionReply(ctx context.Context, input model.DiscussionReplyInput) (*models.DiscussionReply, error) {
+	reply := ConvertToDiscussionReply(&input)
+
+	principal := appcontext.Principal(ctx).ID()
+	logger := appcontext.ZLogger(ctx)
+
+	return resolvers.DeleteDiscussionReply(logger, reply, &principal, r.store)
+}
+
+func (r *planDiscussionResolver) Replies(ctx context.Context, obj *models.PlanDiscussion) ([]*models.DiscussionReply, error) {
+	//TODO see if you can check if the PlanDiscussion already has replies, and if not go to DB, otherwise return the replies
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.DiscussionReplyCollectionByDiscusionID(logger, obj.ID, r.store)
+}
+
 func (r *queryResolver) CurrentUser(ctx context.Context) (*model.CurrentUser, error) {
 	ldUser := flags.Principal(ctx)
 	userKey := ldUser.GetKey()
@@ -203,6 +269,11 @@ func (r *Resolver) ModelPlan() generated.ModelPlanResolver { return &modelPlanRe
 // Mutation returns generated.MutationResolver implementation.
 func (r *Resolver) Mutation() generated.MutationResolver { return &mutationResolver{r} }
 
+// PlanDiscussion returns generated.PlanDiscussionResolver implementation.
+func (r *Resolver) PlanDiscussion() generated.PlanDiscussionResolver {
+	return &planDiscussionResolver{r}
+}
+
 // Query returns generated.QueryResolver implementation.
 func (r *Resolver) Query() generated.QueryResolver { return &queryResolver{r} }
 
@@ -211,5 +282,6 @@ func (r *Resolver) UserInfo() generated.UserInfoResolver { return &userInfoResol
 
 type modelPlanResolver struct{ *Resolver }
 type mutationResolver struct{ *Resolver }
+type planDiscussionResolver struct{ *Resolver }
 type queryResolver struct{ *Resolver }
 type userInfoResolver struct{ *Resolver }

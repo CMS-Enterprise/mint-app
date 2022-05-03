@@ -119,6 +119,30 @@ const (
 	TaskComplete   TaskStatus = "COMPLETE"
 )
 
+//DiscussionStatus is an enum that represents the status of a Discussion
+type DiscussionStatus string
+
+//These constants represent the possible values of a DiscussionStatus
+const (
+	DiscussionAnswered   DiscussionStatus = "ANSWERED"
+	DiscussionWaiting    DiscussionStatus = "WAITING_FOR_RESPONSE"
+	DiscussionUnAnswered DiscussionStatus = "UNANSWERED"
+)
+
+//TaskSection Represents the possible task sections in the model plan worklist
+type TaskSection string
+
+//These constants represent the possible values of a TaskSection enum
+const (
+	TsBasics          TaskSection = "BASICS"
+	TsCharacteristics TaskSection = "CHARACTERISTICS"
+	TsParticipants    TaskSection = "PARTICIPANTS"
+	TsBeneficiaries   TaskSection = "BENEFICIARIES"
+	TsOperations      TaskSection = "OPERATIONS"
+	TsPayment         TaskSection = "PAYMENT"
+	TsFinal           TaskSection = "FINAL"
+)
+
 // EnumString is a string that can be converted to an Enum
 type EnumString string
 

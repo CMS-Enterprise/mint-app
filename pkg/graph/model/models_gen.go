@@ -17,6 +17,18 @@ type CurrentUser struct {
 	LaunchDarkly *LaunchDarklySettings `json:"launchDarkly"`
 }
 
+// DiscussionReplyInput represents input for a discussion reply
+type DiscussionReplyInput struct {
+	ID           *uuid.UUID `json:"id"`
+	DiscussionID uuid.UUID  `json:"discussionID"`
+	Content      string     `json:"content"`
+	Resolution   bool       `json:"resolution"`
+	CreatedBy    *string    `json:"createdBy"`
+	CreatedDts   *time.Time `json:"createdDts"`
+	ModifiedBy   *string    `json:"modifiedBy"`
+	ModifiedDts  *time.Time `json:"modifiedDts"`
+}
+
 // The current user's Launch Darkly key
 type LaunchDarklySettings struct {
 	UserKey    string `json:"userKey"`
@@ -66,6 +78,18 @@ type PlanCollaboratorInput struct {
 	CreatedDts  *time.Time      `json:"createdDts"`
 	ModifiedBy  *string         `json:"modifiedBy"`
 	ModifiedDts *time.Time      `json:"modifiedDts"`
+}
+
+// PlanDiscussionInput represents input for plan discussion
+type PlanDiscussionInput struct {
+	ID          *uuid.UUID               `json:"id"`
+	ModelPlanID uuid.UUID                `json:"modelPlanID"`
+	Content     string                   `json:"content"`
+	Status      *models.DiscussionStatus `json:"status"`
+	CreatedBy   *string                  `json:"createdBy"`
+	CreatedDts  *time.Time               `json:"createdDts"`
+	ModifiedBy  *string                  `json:"modifiedBy"`
+	ModifiedDts *time.Time               `json:"modifiedDts"`
 }
 
 // Represents plan milestones input
