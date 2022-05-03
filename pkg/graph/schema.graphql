@@ -30,7 +30,8 @@ type ModelPlan {
   id: UUID
   modelName: String
   modelCategory: ModelCategory
-  cmsCenter: CMSCenter
+  cmsCenters: [CMSCenter!]
+  cmsOther: String
   cmmiGroups: [CMMIGroup!]
   archived: Boolean!
   createdBy: String
@@ -40,6 +41,7 @@ type ModelPlan {
   basics: PlanBasics
   milestones: PlanMilestones
   collaborators: [PlanCollaborator!]!
+  discussions: [PlanDiscussion!]!
   status: ModelStatus!
 }
 
@@ -50,7 +52,8 @@ input ModelPlanInput{
 id: UUID
 modelName: String
 modelCategory: ModelCategory
-cmsCenter: CMSCenter
+cmsCenters: [CMSCenter!]
+cmsOther: String
 cmmiGroups: [CMMIGroup!]
 archived: Boolean! = false
 createdBy: String
@@ -202,6 +205,65 @@ input PlanMilestonesInput {
 }
 
 """
+PlanDiscussion represents plan discussion
+"""
+type PlanDiscussion  {
+	id:          UUID
+	modelPlanID: UUID
+	content: String
+	status: DiscussionStatus!
+  replies: [DiscussionReply!]!
+
+  createdBy: String
+  createdDts: Time
+  modifiedBy: String
+  modifiedDts: Time
+}
+
+"""
+PlanDiscussionInput represents input for plan discussion
+"""
+input PlanDiscussionInput  {
+	id:          UUID
+	modelPlanID: UUID!
+	content: String!
+	status: DiscussionStatus
+
+  createdBy: String
+  createdDts: Time
+  modifiedBy: String
+  modifiedDts: Time
+}
+"""
+DiscussionReply represents a discussion reply
+"""
+type DiscussionReply  {
+	id: UUID
+	discussionID: UUID!
+	content: String
+	resolution: Boolean
+
+	createdBy: String
+	createdDts: Time
+	modifiedBy: String
+	modifiedDts: Time
+}
+
+"""
+DiscussionReplyInput represents input for a discussion reply
+"""
+input DiscussionReplyInput  {
+	id: UUID
+	discussionID: UUID!
+	content: String!
+	resolution: Boolean! = false
+
+	createdBy: String
+	createdDts: Time
+	modifiedBy: String
+	modifiedDts: Time
+}
+"""
 Query definition for the schema
 """
 type Query {
@@ -243,6 +305,26 @@ createPlanMilestones(input: PlanMilestonesInput!):PlanMilestones
 
 updatePlanMilestones(input: PlanMilestonesInput!):PlanMilestones
 @hasRole(role: MINT_BASE_USER)
+
+createPlanDiscussion(input: PlanDiscussionInput!): PlanDiscussion
+@hasRole(role: MINT_BASE_USER)
+
+updatePlanDiscussion(input: PlanDiscussionInput!): PlanDiscussion
+@hasRole(role: MINT_BASE_USER)
+
+deletePlanDiscussion(input: PlanDiscussionInput!): PlanDiscussion
+@hasRole(role: MINT_BASE_USER)
+
+createDiscussionReply(input: DiscussionReplyInput!): DiscussionReply
+@hasRole(role: MINT_BASE_USER)
+
+updateDiscussionReply(input: DiscussionReplyInput!): DiscussionReply
+@hasRole(role: MINT_BASE_USER)
+
+deleteDiscussionReply(input: DiscussionReplyInput!): DiscussionReply
+@hasRole(role: MINT_BASE_USER)
+
+
 }
 
 enum TaskStatus {
@@ -305,6 +387,11 @@ enum CMMIGroup {
   PREVENTIVE_AND_POPULATION_HEALTH_CARE_MODELS_GROUP
   SEAMLESS_CARE_MODELS_GROUP
   STATE_INNOVATIONS_GROUP
+}
+enum DiscussionStatus {
+  ANSWERED
+  WAITING_FOR_RESPONSE
+  UNANSWERED
 }
 
 directive @hasRole(role: Role!) on FIELD_DEFINITION
