@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
@@ -7,8 +7,11 @@ import {
   BreadcrumbBar,
   BreadcrumbLink,
   Button,
+  Fieldset,
+  IconAdd,
   IconArrowBack,
   Label,
+  Radio,
   TextInput
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
@@ -19,6 +22,7 @@ import PageNumber from 'components/PageNumber';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
+import TextAreaField from 'components/shared/TextAreaField';
 import GetModelPlanQuery from 'queries/GetModelPlanQuery';
 import {
   GetModelPlan,
@@ -29,12 +33,14 @@ import planBasicsSchema from 'validations/planBasics';
 
 type PlanBasicsOverviewTypes = {
   modelName: string;
+  tightTimeline: string;
 };
 
 const Milestones = () => {
   const { t } = useTranslation('basics');
   const { t: h } = useTranslation('draftModelPlan');
   const { modelId } = useParams<{ modelId: string }>();
+  const [hasAdditionalNote, setHasAdditionalNote] = useState(false);
   const history = useHistory();
 
   const { data } = useQuery<GetModelPlan, GetModelPlanVariables>(
@@ -49,7 +55,8 @@ const Milestones = () => {
   const { modelName } = data?.modelPlan || {};
 
   const initialValues = {
-    modelName: modelName as string
+    modelName: modelName as string,
+    tightTimeline: ''
   };
 
   const handleFormSubmit = (formikValues: PlanBasicsOverviewTypes) => {
@@ -143,6 +150,59 @@ const Milestones = () => {
                         defaultValue={modelName}
                       />
                     </FieldGroup>
+
+                    <FieldGroup
+                      scrollElement="tightTimeline"
+                      error={!!flatErrors.tightTimeline}
+                      className="margin-top-4"
+                    >
+                      <Label htmlFor="tightTimeline">
+                        {t('tightTimeline')}
+                      </Label>
+                      <span className="usa-hint display-block text-normal margin-top-1">
+                        {t('tightTimelineInfo')}
+                      </span>
+                      <FieldErrorMsg>{flatErrors.tightTimeline}</FieldErrorMsg>
+                      <Fieldset>
+                        <Field
+                          as={Radio}
+                          id="tightTimeline-Yes"
+                          name="tightTimeline"
+                          label={h('yes')}
+                          value="YES"
+                          checked={values.tightTimeline === 'YES'}
+                        />
+                        <Field
+                          as={Radio}
+                          id="tightTimeline-No"
+                          name="tightTimeline"
+                          label={h('no')}
+                          value="NO"
+                          checked={values.tightTimeline === 'NO'}
+                        />
+                      </Fieldset>
+                    </FieldGroup>
+
+                    <Button
+                      type="button"
+                      className="usa-button usa-button--unstyled margin-top-4"
+                      onClick={() => setHasAdditionalNote(true)}
+                    >
+                      <IconAdd className="margin-right-1" aria-hidden />
+                      {h('additionalNote')}
+                    </Button>
+
+                    {hasAdditionalNote && (
+                      <FieldGroup className="margin-top-4">
+                        <Field
+                          as={TextAreaField}
+                          className="height-15"
+                          id="ModelType-note"
+                          name="note"
+                          label={t('Notes')}
+                        />
+                      </FieldGroup>
+                    )}
 
                     <div className="margin-top-6 margin-bottom-3">
                       <Button
