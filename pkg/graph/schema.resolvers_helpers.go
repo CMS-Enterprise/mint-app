@@ -12,12 +12,17 @@ func ConvertToModelPlan(mpi *model.ModelPlanInput) *models.ModelPlan {
 	for _, item := range mpi.CmmiGroups {
 		cmmiGroup = append(cmmiGroup, string(item))
 	}
+	var cmsCenters []string
+	for _, item := range mpi.CmsCenters {
+		cmsCenters = append(cmsCenters, string(item))
+	}
 
 	plan := models.ModelPlan{
 		ModelName:     mpi.ModelName,
 		ModelCategory: mpi.ModelCategory,
-		CMSCenter:     mpi.CmsCenter,
-		CMMIGroup:     cmmiGroup,
+		CMSCenters:    cmsCenters,
+		CMSOther:      mpi.CmsOther,
+		CMMIGroups:    cmmiGroup,
 		Archived:      mpi.Archived,
 		Status:        mpi.Status,
 		CreatedBy:     mpi.CreatedBy,

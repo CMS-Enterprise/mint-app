@@ -16,11 +16,22 @@ import (
 	"github.com/cmsgov/mint-app/pkg/models"
 )
 
+func (r *modelPlanResolver) CmsCenters(ctx context.Context, obj *models.ModelPlan) ([]models.CMSCenter, error) {
+	// TODO: We should probably have a better way to handle enum arrays
+	var cmsGroups []models.CMSCenter
+
+	for _, item := range obj.CMMIGroups {
+		cmsGroups = append(cmsGroups, models.CMSCenter(item))
+	}
+
+	return cmsGroups, nil
+}
+
 func (r *modelPlanResolver) CmmiGroups(ctx context.Context, obj *models.ModelPlan) ([]model.CMMIGroup, error) {
 	// TODO: We should probably have a better way to handle enum arrays
 	var cmmiGroups []model.CMMIGroup
 
-	for _, item := range obj.CMMIGroup {
+	for _, item := range obj.CMMIGroups {
 		cmmiGroups = append(cmmiGroups, model.CMMIGroup(item))
 	}
 
