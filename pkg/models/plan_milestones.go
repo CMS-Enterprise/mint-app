@@ -39,28 +39,48 @@ type PlanMilestones struct {
 // CalcStatus returns a TaskStatus based on how many fields have been entered in the PlanBasics struct
 func (p *PlanMilestones) CalcStatus() {
 
-	//TODO look into making a generic function that takes in any parent class object and calcs status
-	//TODO update this for specific fields for now
-	fieldCount := 5
+	//TODO look into making a generic function that takes in any parent class object and calcs status. Use reflection and tags to note which properties are needed for a complete status
+
+	fieldCount := 12
 	filledField := 0
 	decidedStat := TaskReady
 
-	// if p.ModelType != nil {
-	// 	filledField++
-	// }
-
-	// if p.Problem != nil {
-	// 	filledField++
-	// }
-	// if p.Goal != nil {
-	// 	filledField++
-	// }
-	// if p.TestInventions != nil {
-	// 	filledField++
-	// }
-	// if p.Note != nil {
-	// 	filledField++
-	// }
+	if p.CompleteICIP != nil {
+		filledField++
+	}
+	if p.ClearanceStarts != nil {
+		filledField++
+	}
+	if p.ClearanceEnds != nil {
+		filledField++
+	}
+	if p.Announced != nil {
+		filledField++
+	}
+	if p.ApplicationsStart != nil {
+		filledField++
+	}
+	if p.ApplicationsEnd != nil {
+		filledField++
+	}
+	if p.PerformancePeriodStarts != nil {
+		filledField++
+	}
+	if p.PerformancePeriodEnds != nil {
+		filledField++
+	}
+	if p.WrapUpEnds != nil {
+		filledField++
+	}
+	if p.HighLevelNote != nil {
+		filledField++
+	}
+	if p.PhasedIn != nil {
+		filledField++
+	}
+	if p.PhasedInNote != nil {
+		filledField++
+	}
 
 	if filledField == fieldCount {
 		decidedStat = TaskComplete
