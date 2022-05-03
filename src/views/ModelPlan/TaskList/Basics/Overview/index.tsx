@@ -1,6 +1,6 @@
 import React from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useHistory, useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import {
   Breadcrumb,
@@ -8,6 +8,7 @@ import {
   BreadcrumbLink,
   Button,
   Fieldset,
+  IconArrowBack,
   Label,
   Radio
 } from '@trussworks/react-uswds';
@@ -15,6 +16,7 @@ import { Field, Form, Formik, FormikProps } from 'formik';
 
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
+import PageNumber from 'components/PageNumber';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
@@ -31,6 +33,7 @@ const Overview = () => {
   const { t } = useTranslation('basics');
   const { t: h } = useTranslation('draftModelPlan');
   const { modelId } = useParams<{ modelId: string }>();
+  const history = useHistory();
 
   const { data } = useQuery<GetModelPlan, GetModelPlanVariables>(
     GetModelPlanQuery,
@@ -179,7 +182,31 @@ const Overview = () => {
                       />
                     </FieldGroup>
 
+                    <FieldGroup
+                      scrollElement="testInterventions"
+                      error={!!flatErrors.testInterventions}
+                      className="margin-top-4"
+                    >
+                      <FieldErrorMsg>
+                        {flatErrors.testInterventions}
+                      </FieldErrorMsg>
+                      <Field
+                        as={TextAreaField}
+                        error={!!flatErrors.testInterventions}
+                        id="ModelType-testInterventions"
+                        name="testInterventions"
+                        label={t('testInterventions')}
+                      />
+                    </FieldGroup>
+
                     <div className="margin-top-6 margin-bottom-3">
+                      <Button
+                        type="button"
+                        className="usa-button usa-button--outline margin-bottom-1"
+                        onClick={() => history.goBack()}
+                      >
+                        {h('back')}
+                      </Button>
                       <Button
                         type="submit"
                         disabled={!dirty}
@@ -195,6 +222,19 @@ const Overview = () => {
             }}
           </Formik>
         </div>
+        {/* //TODO: To implement a save function */}
+        <Link
+          to={`/models/${modelId}/task-list/`}
+          className="display-flex flex-align-center margin-bottom-6"
+        >
+          <IconArrowBack className="margin-right-1" aria-hidden />
+          {h('saveAndReturn')}
+        </Link>
+        <PageNumber
+          currentPage={2}
+          totalPages={3}
+          className="margin-bottom-10"
+        />
       </div>
     </MainContent>
   );
