@@ -133,10 +133,11 @@ const BasicsContent = () => {
             onSubmit={handleUpdateModelPlan}
             enableReinitialize
             validationSchema={
-              // isCmmiGroupShown
-              //   ? planBasicsSchema.pageOneSchemaWithCmmiGroup
-              //   : planBasicsSchema.pageOneSchema
-              planBasicsSchema.garyTest
+              isCmmiGroupShown
+                ? // ? planBasicsSchema.pageOneSchemaWithCmmiGroup
+                  // : planBasicsSchema.pageOneSchema
+                  planBasicsSchema.garyTestWithExtras
+                : planBasicsSchema.garyTest
             }
             validateOnBlur={false}
             validateOnChange={false}
@@ -289,6 +290,9 @@ const BasicsContent = () => {
                                         'cmsCenter',
                                         e.target.value
                                       );
+                                      if (e.target.value === 'CMMI') {
+                                        setIsCmmiGroupShown(true);
+                                      }
                                     }}
                                   />
                                 </Fragment>
