@@ -9,17 +9,16 @@ import {
   Button,
   Fieldset,
   Label,
-  Radio,
-  TextInput
+  Radio
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
 
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
-import Alert from 'components/shared/Alert';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
+import TextAreaField from 'components/shared/TextAreaField';
 import GetModelPlanQuery from 'queries/GetModelPlanQuery';
 import {
   GetModelPlan,
@@ -147,6 +146,37 @@ const Overview = () => {
                           value="MANDATORY"
                         />
                       </Fieldset>
+                    </FieldGroup>
+
+                    <FieldGroup
+                      scrollElement="problem"
+                      error={!!flatErrors.problem}
+                      className="margin-top-4"
+                    >
+                      <FieldErrorMsg>{flatErrors.problem}</FieldErrorMsg>
+                      <Field
+                        as={TextAreaField}
+                        error={!!flatErrors.problem}
+                        id="ModelType-Problem"
+                        name="problem"
+                        label={t('problem')}
+                      />
+                    </FieldGroup>
+
+                    <FieldGroup
+                      scrollElement="goal"
+                      error={!!flatErrors.goal}
+                      className="margin-top-4"
+                    >
+                      <FieldErrorMsg>{flatErrors.goal}</FieldErrorMsg>
+                      <Field
+                        as={TextAreaField}
+                        error={!!flatErrors.goal}
+                        id="ModelType-Goal"
+                        name="goal"
+                        hint={t('goalHelp')}
+                        label={t('goal')}
+                      />
                     </FieldGroup>
 
                     <div className="margin-top-6 margin-bottom-3">
