@@ -30,6 +30,15 @@ import {
 import flattenErrors from 'utils/flattenErrors';
 import planBasicsSchema from 'validations/planBasics';
 
+type PlanBasicsOverviewTypes = {
+  // TODO: change this prop 👇 to take in the enums
+  modelType: string;
+  problem: string;
+  goal: string;
+  testInterventions: string;
+  note: string;
+};
+
 const Overview = () => {
   const { t } = useTranslation('basics');
   const { t: h } = useTranslation('draftModelPlan');
@@ -54,6 +63,31 @@ const Overview = () => {
     goal: '',
     testInterventions: '',
     note: ''
+  };
+
+  const handleFormSubmit = (formikValues: PlanBasicsOverviewTypes) => {
+    console.log(formikValues);
+    // update({
+    //   variables: {
+    //     input: {
+    //       id: modelId,
+    //       modelName: formikValues.modelName,
+    //       modelCategory: formikValues.modelCategory,
+    //       cmsCenter: formikValues.cmsCenter,
+    //       cmmiGroups: formikValues.cmmiGroup,
+    //       status: 'PLAN_DRAFT'
+    //     }
+    //   }
+    // })
+    //   .then(response => {
+    //     if (!response?.errors) {
+    history.push(`/models/${modelId}/task-list/basics/milestones`);
+    //     }
+    //   })
+    //   .catch(errors => {
+    //     // formikRef?.current?.setErrors(errors);
+    //     console.log(errors);
+    //   });
   };
 
   return (
@@ -83,25 +117,14 @@ const Overview = () => {
 
           <Formik
             initialValues={initialValues}
-            onSubmit={values => {
-              console.log(values);
-            }}
+            onSubmit={handleFormSubmit}
             enableReinitialize
             validationSchema={planBasicsSchema.pageTwoSchema}
             validateOnBlur={false}
             validateOnChange={false}
             validateOnMount={false}
           >
-            {(
-              formikProps: FormikProps<{
-                // TODO: change this prop 👇 to take in the enums
-                modelType: string;
-                problem: string;
-                goal: string;
-                testInterventions: string;
-                note: string;
-              }>
-            ) => {
+            {(formikProps: FormikProps<PlanBasicsOverviewTypes>) => {
               const {
                 dirty,
                 errors,
