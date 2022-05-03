@@ -195,6 +195,57 @@ const Milestones = () => {
                       />
                     </FieldGroup>
 
+                    <FieldGroup className="grid-row flex-align-end">
+                      <Fieldset className="grid-col-6">
+                        <legend className="usa-label">{t('clearance')}</legend>
+                        <label
+                          htmlFor="Milestone-clearanceStartDate"
+                          className="margin-top-0 usa-legend"
+                        >
+                          {t('clearanceStartDate')}
+                        </label>
+                        <div className="usa-hint" id="appointment-date-hint">
+                          {h('datePlaceholder')}
+                        </div>
+                        <FieldErrorMsg>
+                          {flatErrors.clearanceStartDate}
+                        </FieldErrorMsg>
+                        <Field
+                          as={DatePicker}
+                          error={!!flatErrors.clearanceStartDate}
+                          id="Milestone-clearanceStartDate"
+                          maxLength={50}
+                          name="clearanceStartDate"
+                        />
+                      </Fieldset>
+
+                      <Fieldset
+                        legend={t('clearance')}
+                        className="grid-col-6"
+                        legendStyle="srOnly"
+                      >
+                        <label
+                          htmlFor="Milestone-clearanceStartDate"
+                          className="margin-top-0 usa-legend"
+                        >
+                          {t('clearanceEndDate')}
+                        </label>
+                        <div className="usa-hint" id="appointment-date-hint">
+                          {h('datePlaceholder')}
+                        </div>
+                        <FieldErrorMsg>
+                          {flatErrors.clearanceEndDate}
+                        </FieldErrorMsg>
+                        <Field
+                          as={DatePicker}
+                          error={!!flatErrors.clearanceEndDate}
+                          id="Milestone-clearanceEndDate"
+                          maxLength={50}
+                          name="clearanceEndDate"
+                        />
+                      </Fieldset>
+                    </FieldGroup>
+
                     <FieldGroup
                       scrollElement="tightTimeline"
                       error={!!flatErrors.tightTimeline}
