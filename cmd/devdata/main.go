@@ -54,8 +54,9 @@ func main() {
 		p.ModelName = models.StringPointer("My excellent plan that I just initiated")
 
 		p.ModelCategory = &cat
-		p.CMSCenter = &cms
-		p.CMMIGroup = pq.StringArray{"STATE_INNOVATIONS_GROUP", "POLICY_AND_PROGRAMS_GROUP"}
+		p.CMSCenters = pq.StringArray{string(models.CMSCenterForMedicare), string(models.CMSOther)}
+		p.CMSOther = models.StringPointer("The Center for Awesomeness ")
+		p.CMMIGroups = pq.StringArray{"STATE_INNOVATIONS_GROUP", "POLICY_AND_PROGRAMS_GROUP"}
 
 		p.CreatedBy = models.StringPointer("ABCD")
 		p.ModifiedBy = models.StringPointer("ABCD")
@@ -76,27 +77,41 @@ func main() {
 	})
 
 	makeModelPlan("Mr. Mint", logger, store)
-	plan := makeModelPlan("Mrs. Mint", logger, store, func(p *models.ModelPlan) {
+	pmGreatPlan := makeModelPlan("Mrs. Mint", logger, store, func(p *models.ModelPlan) {
 		p.ID = uuid.MustParse("6e224030-09d5-46f7-ad04-4bb851b36eab")
 		p.ModelName = models.StringPointer("PM Butler's great plan")
 
-		p.CMMIGroup = pq.StringArray{"POLICY_AND_PROGRAMS_GROUP", "SEAMLESS_CARE_MODELS_GROUP"}
+		p.CMMIGroups = pq.StringArray{"POLICY_AND_PROGRAMS_GROUP", "SEAMLESS_CARE_MODELS_GROUP"}
 
 		p.CreatedBy = models.StringPointer("MINT")
 		p.ModifiedBy = models.StringPointer("MINT")
 	})
-	makePlanCollaborator(uuid.MustParse("6e224030-09d5-46f7-ad04-4bb851b36eab"), "MINT", logger, store, func(c *models.PlanCollaborator) {
+	makePlanCollaborator(pmGreatPlan.ID, "MINT", logger, store, func(c *models.PlanCollaborator) {
 		c.FullName = "Mr. Mint"
 		c.TeamRole = models.TeamRoleModelLead
 	})
 
-	makePlanBasics(plan.ID, logger, store, func(b *models.PlanBasics) {
+	makePlanBasics(pmGreatPlan.ID, logger, store, func(b *models.PlanBasics) {
 		b.ModelType = &mandatory
-		b.ModelPlanID = uuid.MustParse("6e224030-09d5-46f7-ad04-4bb851b36eab")
+		b.ModelPlanID = pmGreatPlan.ID
 		b.Problem = models.StringPointer("There is not enough candy")
 		b.TestInventions = models.StringPointer("The great candy machine")
 		b.Note = models.StringPointer("The machine doesn't work yet")
 		b.Status = inProgress
+
+	})
+	pmGreatDiscuss := makePlanDiscussion(pmGreatPlan.ID, logger, store, func(pd *models.PlanDiscussion) {
+		pd.Content = "What is the purpose of this plan?"
+		pd.Status = models.DiscussionAnswered
+		pd.CreatedBy = "JAKE"
+		pd.ModifiedBy = "JAKE"
+
+	})
+	makeDiscussionReply(pmGreatDiscuss.ID, logger, store, func(d *models.DiscussionReply) {
+		d.Content = "To make more candy"
+		d.Resolution = true
+		d.CreatedBy = "FINN"
+		d.ModifiedBy = "FINN"
 
 	})
 
@@ -105,8 +120,8 @@ func main() {
 		p.ModelName = models.StringPointer("Platonian ideal")
 
 		p.ModelCategory = &ac
-		p.CMSCenter = &cms
-		p.CMMIGroup = pq.StringArray{"STATE_INNOVATIONS_GROUP", "POLICY_AND_PROGRAMS_GROUP", "SEAMLESS_CARE_MODELS_GROUP"}
+		p.CMSCenters = pq.StringArray{string(cms)}
+		p.CMMIGroups = pq.StringArray{"STATE_INNOVATIONS_GROUP", "POLICY_AND_PROGRAMS_GROUP", "SEAMLESS_CARE_MODELS_GROUP"}
 
 		p.CreatedBy = models.StringPointer("MINT")
 		p.ModifiedBy = models.StringPointer("MINT")
@@ -176,4 +191,41 @@ func makePlanBasics(uuid uuid.UUID, logger *zap.Logger, store *storage.Store, ca
 
 	dbBasics, _ := store.PlanBasicsCreate(logger, &basics)
 	return dbBasics
+}
+
+func makePlanDiscussion(uuid uuid.UUID, logger *zap.Logger, store *storage.Store, callbacks ...func(*models.PlanDiscussion)) *models.PlanDiscussion {
+	discussion := models.PlanDiscussion{
+		ModelPlanID: uuid,
+		Content:     "This is a test comment",
+		Status:      models.DiscussionUnAnswered,
+		CreatedBy:   "ABCD",
+		ModifiedBy:  "ABCD",
+	}
+
+	for _, cb := range callbacks {
+		cb(&discussion)
+	}
+
+	dbDiscuss, _ := store.PlanDiscussionCreate(logger, &discussion)
+	return dbDiscuss
+
+}
+
+func makeDiscussionReply(uuid uuid.UUID, logger *zap.Logger, store *storage.Store, callbacks ...func(*models.DiscussionReply)) *models.DiscussionReply {
+
+	reply := models.DiscussionReply{
+		DiscussionID: uuid,
+		Content:      "This is a test reply",
+		Resolution:   false,
+		CreatedBy:    "ABCD",
+		ModifiedBy:   "ABCD",
+	}
+
+	for _, cb := range callbacks {
+		cb(&reply)
+	}
+
+	dbReply, _ := store.DiscussionReplyCreate(logger, &reply)
+	return dbReply
+
 }

@@ -12,12 +12,17 @@ func ConvertToModelPlan(mpi *model.ModelPlanInput) *models.ModelPlan {
 	for _, item := range mpi.CmmiGroups {
 		cmmiGroup = append(cmmiGroup, string(item))
 	}
+	var cmsCenters []string
+	for _, item := range mpi.CmsCenters {
+		cmsCenters = append(cmsCenters, string(item))
+	}
 
 	plan := models.ModelPlan{
 		ModelName:     mpi.ModelName,
 		ModelCategory: mpi.ModelCategory,
-		CMSCenter:     mpi.CmsCenter,
-		CMMIGroup:     cmmiGroup,
+		CMSCenters:    cmsCenters,
+		CMSOther:      mpi.CmsOther,
+		CMMIGroups:    cmmiGroup,
 		Archived:      mpi.Archived,
 		Status:        mpi.Status,
 		CreatedBy:     mpi.CreatedBy,
@@ -101,4 +106,62 @@ func ConvertToPlanCollaborator(pci *model.PlanCollaboratorInput) *models.PlanCol
 	}
 	return &collaborator
 
+}
+
+//ConvertToPlanDiscussion takes and auto-generated plan discussion input and converts it to a hand-written one
+func ConvertToPlanDiscussion(pdi *model.PlanDiscussionInput) *models.PlanDiscussion {
+	discussion := models.PlanDiscussion{
+
+		ModelPlanID: pdi.ModelPlanID,
+		Content:     pdi.Content,
+	}
+	if pdi.ID != nil {
+		discussion.ID = *pdi.ID
+	}
+	if pdi.Status != nil {
+		discussion.Status = *pdi.Status
+	}
+	if pdi.CreatedBy != nil {
+		discussion.CreatedBy = *pdi.CreatedBy
+	}
+	if pdi.CreatedDts != nil {
+		discussion.CreatedDts = *pdi.CreatedDts
+	}
+	if pdi.ModifiedBy != nil {
+		discussion.ModifiedBy = *pdi.ModifiedBy
+
+	}
+	if pdi.ModifiedDts != nil {
+		discussion.ModifiedDts = *pdi.ModifiedDts
+	}
+
+	return &discussion
+}
+
+//ConvertToDiscussionReply takes and auto-generated discussion reply input and converts it to a hand-written one
+func ConvertToDiscussionReply(dri *model.DiscussionReplyInput) *models.DiscussionReply {
+	reply := models.DiscussionReply{
+		DiscussionID: dri.DiscussionID,
+		Content:      dri.Content,
+		Resolution:   dri.Resolution,
+	}
+	if dri.ID != nil {
+		reply.ID = *dri.ID
+	}
+
+	if dri.CreatedBy != nil {
+		reply.CreatedBy = *dri.CreatedBy
+	}
+	if dri.CreatedDts != nil {
+		reply.CreatedDts = *dri.CreatedDts
+	}
+	if dri.ModifiedBy != nil {
+		reply.ModifiedBy = *dri.ModifiedBy
+
+	}
+	if dri.ModifiedDts != nil {
+		reply.ModifiedDts = *dri.ModifiedDts
+	}
+
+	return &reply
 }

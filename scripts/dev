@@ -352,9 +352,11 @@ namespace :db do
 
   desc "Deletes all rows from all tables"
   task :clean do
-    tableList = "     
+    tableList = "
+    discussion_reply,     
     plan_basics,
     plan_collaborator,
+    plan_discussion,
     plan_document,
     plan_milestones,
 
