@@ -49,7 +49,11 @@ const Overview = () => {
   const { modelName } = data?.modelPlan || {};
 
   const initialValues = {
-    modelName: modelName as string
+    modelType: '',
+    problem: '',
+    goal: '',
+    testInterventions: '',
+    note: ''
   };
 
   return (
@@ -78,7 +82,6 @@ const Overview = () => {
           </p>
 
           <Formik
-            // TODO: change intial value of model name of plan via gql
             initialValues={initialValues}
             onSubmit={values => {
               console.log(values);
@@ -91,16 +94,20 @@ const Overview = () => {
           >
             {(
               formikProps: FormikProps<{
-                modelName: string;
+                // TODO: change this prop 👇 to take in the enums
+                modelType: string;
+                problem: string;
+                goal: string;
+                testInterventions: string;
+                note: string;
               }>
             ) => {
               const {
                 dirty,
                 errors,
                 handleSubmit,
-                setErrors
-                // setFieldValue,
-                // values
+                setErrors,
+                values
               } = formikProps;
               const flatErrors = flattenErrors(errors);
               return (
@@ -143,6 +150,7 @@ const Overview = () => {
                           name="modelType"
                           label={t('voluntary')}
                           value="VOLUNTARY"
+                          checked={values.modelType === 'VOLUNTARY'}
                         />
                         <Field
                           as={Radio}
@@ -150,6 +158,7 @@ const Overview = () => {
                           name="modelType"
                           label={t('Mandatory')}
                           value="MANDATORY"
+                          checked={values.modelType === 'MANDATORY'}
                         />
                       </Fieldset>
                     </FieldGroup>
@@ -214,8 +223,8 @@ const Overview = () => {
                         <Field
                           as={TextAreaField}
                           className="height-15"
-                          id="ModelType-notes"
-                          name="notes"
+                          id="ModelType-note"
+                          name="note"
                           label={t('Notes')}
                         />
                       </FieldGroup>
