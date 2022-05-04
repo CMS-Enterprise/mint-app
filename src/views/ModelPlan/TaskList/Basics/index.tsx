@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, Route, Switch, useHistory, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
@@ -54,8 +54,10 @@ const BasicsContent = () => {
   const { t } = useTranslation('basics');
   const { t: h } = useTranslation('draftModelPlan');
   const { modelId } = useParams<{ modelId: string }>();
-  const [isCmmiGroupShown, setIsCmmiGroupShown] = useState(false);
+
+  const formikRef = useRef<FormikProps<PlanBasicModelPlanFormType>>(null);
   const history = useHistory();
+  const [isCmmiGroupShown, setIsCmmiGroupShown] = useState(false);
 
   const { data } = useQuery<GetModelPlan, GetModelPlanVariables>(
     GetModelPlanQuery,
@@ -90,16 +92,16 @@ const BasicsContent = () => {
         }
       })
       .catch(errors => {
-        // formikRef?.current?.setErrors(errors);
-        console.log(JSON.stringify(errors));
+        formikRef?.current?.setErrors(errors);
       });
   };
 
-  const initialValues = {
+  const initialValues: PlanBasicModelPlanFormType = {
     modelName: modelName as string,
     modelCategory: '',
     cmsCenters: [],
-    cmmiGroup: []
+    cmmiGroup: [],
+    cmsOther: ''
   };
 
   return (
@@ -138,6 +140,7 @@ const BasicsContent = () => {
             validateOnBlur={false}
             validateOnChange={false}
             validateOnMount={false}
+            innerRef={formikRef}
           >
             {(formikProps: FormikProps<PlanBasicModelPlanFormType>) => {
               const {
