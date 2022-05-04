@@ -19,8 +19,7 @@ const formatRecentActivity = (
   // Filtering for answered/unanswered question on model plan
   if (discussions.length > 0) {
     const unansweredQuestions = discussions.filter(
-      (discussion: DiscussionType) =>
-        !discussion.replies || discussion.replies.length === 0
+      (discussion: DiscussionType) => !discussion.replies?.length
     ).length;
 
     // Checking/formatting for unanswered questions

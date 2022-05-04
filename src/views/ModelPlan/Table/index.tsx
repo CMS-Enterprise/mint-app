@@ -97,7 +97,7 @@ const Table = ({ data, hiddenColumns }: TableProps) => {
         Header: t('requestsTable.headers.recentActivity'),
         accessor: 'modifiedDts',
         Cell: ({ row, value }: any) => {
-          const discussions = row.original.discussions || [];
+          const { discussions } = row.original;
           return formatRecentActivity(value, discussions);
         }
       }
@@ -289,23 +289,28 @@ const DraftModelPlansTable = ({ hiddenColumns }: DraftModelTableProps) => {
 
   const data = (modelPlans?.modelPlanCollection ?? []) as DraftModelPlanType[];
 
+  // TODO: Remove mocked discussion data once discussion story complete
   const discussions = [
     {
-      content: 'Hey',
+      content: 'Content 1',
       replies: [
         {
-          content: 'Hey'
+          content: 'Reply 1'
         }
       ]
     },
     {
-      content: 'Hey',
+      content: 'Content 2',
+      replies: []
+    },
+    {
+      content: 'Content 2',
       replies: []
     }
   ];
 
-  // TODO: Remove Temp Mocked Data
-  const newData = data.map((item, index) => {
+  // Mocking discussion data for only first row
+  const mockedData = data.map((item, index) => {
     if (index === 0) {
       return { ...item, discussions };
     }
@@ -316,7 +321,7 @@ const DraftModelPlansTable = ({ hiddenColumns }: DraftModelTableProps) => {
     return <div>{JSON.stringify(error)}</div>;
   }
 
-  return <Table data={newData} hiddenColumns={hiddenColumns} />;
+  return <Table data={mockedData} hiddenColumns={hiddenColumns} />;
 };
 
 export default DraftModelPlansTable;
