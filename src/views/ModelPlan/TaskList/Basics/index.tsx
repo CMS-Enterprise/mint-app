@@ -128,7 +128,6 @@ const BasicsContent = () => {
             </span>
           </Alert>
           <Formik
-            // TODO: change intial value of model name of plan via gql
             initialValues={initialValues}
             onSubmit={handleUpdateModelPlan}
             enableReinitialize
@@ -259,7 +258,6 @@ const BasicsContent = () => {
                                     name="cmsCenters"
                                     label={item}
                                     value={translateCmsCenter(item)}
-                                    // TODO: uncomment this when BE changes this
                                     onChange={(
                                       e: React.ChangeEvent<HTMLInputElement>
                                     ) => {
