@@ -176,7 +176,7 @@ const Milestones = () => {
                     </ErrorAlert>
                   )}
                   <Form
-                    className="tablet:grid-col-6 grid-row grid-gap"
+                    className="tablet:grid-col-6"
                     onSubmit={e => {
                       handleSubmit(e);
                       window.scrollTo(0, 0);
@@ -185,7 +185,7 @@ const Milestones = () => {
                     <FieldGroup
                       scrollElement="completeICIP"
                       error={!!flatErrors.completeICIP}
-                      className="margin-top-0 grid-col-6"
+                      className="margin-top-0"
                     >
                       <Label htmlFor="Milestone-completeICIP">
                         {t('completeICIP')}
@@ -209,71 +209,76 @@ const Milestones = () => {
                       />
                     </FieldGroup>
 
-                    <FieldGroup className="grid-row grid-gap flex-align-end">
-                      <div className="grid-col-6">
-                        <legend className="usa-label margin-bottom-1">
-                          {t('clearance')}
-                        </legend>
-                        <label
-                          htmlFor="Milestone-clearanceStarts"
-                          className="usa-legend margin-top-0"
-                        >
-                          {t('clearanceStartDate')}
-                        </label>
-                        <div className="usa-hint" id="appointment-date-hint">
-                          {h('datePlaceholder')}
-                        </div>
-                        <FieldErrorMsg>
-                          {flatErrors.clearanceStarts}
-                        </FieldErrorMsg>
-                        <Field
-                          as={DatePicker}
-                          error={!!flatErrors.clearanceStarts}
-                          id="Milestone-clearanceStarts"
-                          maxLength={50}
-                          name="clearanceStarts"
-                          onChange={(e: any) => {
-                            setFieldValue(
-                              'clearanceStarts',
-                              new Date(e).toISOString()
-                            );
-                          }}
-                        />
-                      </div>
+                    <legend className="usa-label margin-bottom-1">
+                      {t('clearance')}
+                    </legend>
 
-                      <div className="grid-col-6">
-                        <label
-                          htmlFor="Milestone-clearanceEnds"
-                          className="usa-legend margin-top-0"
-                        >
-                          {t('clearanceEndDate')}
-                        </label>
-                        <div className="usa-hint" id="appointment-date-hint">
-                          {h('datePlaceholder')}
-                        </div>
-                        <FieldErrorMsg>
-                          {flatErrors.clearanceEnds}
-                        </FieldErrorMsg>
-                        <Field
-                          as={DatePicker}
-                          error={!!flatErrors.clearanceEnds}
-                          id="Milestone-clearanceEnds"
-                          maxLength={50}
-                          name="clearanceEnds"
-                          onChange={(e: any) => {
-                            setFieldValue(
-                              'clearanceEnds',
-                              new Date(e).toISOString()
-                            );
-                          }}
-                        />
+                    <FieldGroup
+                      scrollElement="clearanceStarts"
+                      error={!!flatErrors.clearanceStarts}
+                      className="margin-top-4"
+                    >
+                      <label
+                        htmlFor="Milestone-clearanceStarts"
+                        className="usa-legend margin-top-0"
+                      >
+                        {t('clearanceStartDate')}
+                      </label>
+                      <div className="usa-hint" id="appointment-date-hint">
+                        {h('datePlaceholder')}
                       </div>
+                      <FieldErrorMsg>
+                        {flatErrors.clearanceStarts}
+                      </FieldErrorMsg>
+                      <Field
+                        as={DatePicker}
+                        error={!!flatErrors.clearanceStarts}
+                        id="Milestone-clearanceStarts"
+                        maxLength={50}
+                        name="clearanceStarts"
+                        onChange={(e: any) => {
+                          setFieldValue(
+                            'clearanceStarts',
+                            new Date(e).toISOString()
+                          );
+                        }}
+                      />
+                    </FieldGroup>
+
+                    <FieldGroup
+                      scrollElement="clearanceEnds"
+                      error={!!flatErrors.clearanceEnds}
+                      className="margin-top-4"
+                    >
+                      <label
+                        htmlFor="Milestone-clearanceEnds"
+                        className="usa-legend margin-top-0"
+                      >
+                        {t('clearanceEndDate')}
+                      </label>
+                      <div className="usa-hint" id="appointment-date-hint">
+                        {h('datePlaceholder')}
+                      </div>
+                      <FieldErrorMsg>{flatErrors.clearanceEnds}</FieldErrorMsg>
+                      <Field
+                        as={DatePicker}
+                        error={!!flatErrors.clearanceEnds}
+                        id="Milestone-clearanceEnds"
+                        maxLength={50}
+                        name="clearanceEnds"
+                        onChange={(e: any) => {
+                          setFieldValue(
+                            'clearanceEnds',
+                            new Date(e).toISOString()
+                          );
+                        }}
+                      />
                     </FieldGroup>
 
                     <FieldGroup
                       scrollElement="announced"
                       error={!!flatErrors.announced}
-                      className="margin-top-4 grid-col-6"
+                      className="margin-top-4"
                     >
                       <Label htmlFor="Milestone-announced">
                         {t('annouceModel')}
@@ -294,131 +299,143 @@ const Milestones = () => {
                       />
                     </FieldGroup>
 
-                    <FieldGroup className="grid-row grid-gap flex-align-end">
-                      <div className="grid-col-6">
-                        <legend className="usa-label margin-bottom-1">
-                          {t('applicationPeriod')}
-                        </legend>
-                        <label
-                          htmlFor="Milestone-applicationsStart"
-                          className="usa-legend margin-top-0"
-                        >
-                          {t('applicationStartDate')}
-                        </label>
-                        <div className="usa-hint" id="appointment-date-hint">
-                          {h('datePlaceholder')}
-                        </div>
-                        <FieldErrorMsg>
-                          {flatErrors.applicationsStart}
-                        </FieldErrorMsg>
-                        <Field
-                          as={DatePicker}
-                          error={!!flatErrors.applicationsStart}
-                          id="Milestone-applicationsStart"
-                          maxLength={50}
-                          name="applicationsStart"
-                          onChange={(e: any) => {
-                            setFieldValue(
-                              'applicationsStart',
-                              new Date(e).toISOString()
-                            );
-                          }}
-                        />
+                    <legend className="usa-label margin-bottom-1">
+                      {t('applicationPeriod')}
+                    </legend>
+                    <FieldGroup
+                      scrollElement="applicationsStart"
+                      error={!!flatErrors.applicationsStart}
+                      className="margin-top-4"
+                    >
+                      <label
+                        htmlFor="Milestone-applicationsStart"
+                        className="usa-legend margin-top-0"
+                      >
+                        {t('applicationStartDate')}
+                      </label>
+                      <div className="usa-hint" id="appointment-date-hint">
+                        {h('datePlaceholder')}
                       </div>
-                      <div className="grid-col-6">
-                        <label
-                          htmlFor="Milestone-applicationsEnd"
-                          className="usa-legend margin-top-0"
-                        >
-                          {t('applicationEndDate')}
-                        </label>
-                        <div className="usa-hint" id="appointment-date-hint">
-                          {h('datePlaceholder')}
-                        </div>
-                        <FieldErrorMsg>
-                          {flatErrors.applicationsEnd}
-                        </FieldErrorMsg>
-                        <Field
-                          as={DatePicker}
-                          error={!!flatErrors.applicationsEnd}
-                          id="Milestone-applicationsEnd"
-                          maxLength={50}
-                          name="applicationsEnd"
-                          onChange={(e: any) => {
-                            setFieldValue(
-                              'applicationsEnd',
-                              new Date(e).toISOString()
-                            );
-                          }}
-                        />
-                      </div>
+                      <FieldErrorMsg>
+                        {flatErrors.applicationsStart}
+                      </FieldErrorMsg>
+                      <Field
+                        as={DatePicker}
+                        error={!!flatErrors.applicationsStart}
+                        id="Milestone-applicationsStart"
+                        maxLength={50}
+                        name="applicationsStart"
+                        onChange={(e: any) => {
+                          setFieldValue(
+                            'applicationsStart',
+                            new Date(e).toISOString()
+                          );
+                        }}
+                      />
                     </FieldGroup>
 
-                    <FieldGroup className="grid-row grid-gap flex-align-end">
-                      <legend className="usa-label margin-bottom-1">
-                        {t('demonstrationPerformance')}
-                      </legend>
-                      <div className="grid-col-6">
-                        <label
-                          htmlFor="Milestone-performancePeriodStarts"
-                          className="usa-legend margin-top-0"
-                        >
-                          {t('performanceStartDate')}
-                        </label>
-                        <div className="usa-hint" id="appointment-date-hint">
-                          {h('datePlaceholder')}
-                        </div>
-                        <FieldErrorMsg>
-                          {flatErrors.performancePeriodStarts}
-                        </FieldErrorMsg>
-                        <Field
-                          as={DatePicker}
-                          error={!!flatErrors.performancePeriodStarts}
-                          id="Milestone-performancePeriodStarts"
-                          maxLength={50}
-                          name="performancePeriodStarts"
-                          onChange={(e: any) => {
-                            setFieldValue(
-                              'performancePeriodStarts',
-                              new Date(e).toISOString()
-                            );
-                          }}
-                        />
+                    <FieldGroup
+                      scrollElement="applicationsEnd"
+                      error={!!flatErrors.applicationsEnd}
+                      className="margin-top-4"
+                    >
+                      <label
+                        htmlFor="Milestone-applicationsEnd"
+                        className="usa-legend margin-top-0"
+                      >
+                        {t('applicationEndDate')}
+                      </label>
+                      <div className="usa-hint" id="appointment-date-hint">
+                        {h('datePlaceholder')}
                       </div>
+                      <FieldErrorMsg>
+                        {flatErrors.applicationsEnd}
+                      </FieldErrorMsg>
+                      <Field
+                        as={DatePicker}
+                        error={!!flatErrors.applicationsEnd}
+                        id="Milestone-applicationsEnd"
+                        maxLength={50}
+                        name="applicationsEnd"
+                        onChange={(e: any) => {
+                          setFieldValue(
+                            'applicationsEnd',
+                            new Date(e).toISOString()
+                          );
+                        }}
+                      />
+                    </FieldGroup>
 
-                      <div className="grid-col-6">
-                        <label
-                          htmlFor="Milestone-performancePeriodEnds"
-                          className="usa-legend margin-top-0"
-                        >
-                          {t('performanceEndDate')}
-                        </label>
-                        <div className="usa-hint" id="appointment-date-hint">
-                          {h('datePlaceholder')}
-                        </div>
-                        <FieldErrorMsg>
-                          {flatErrors.performancePeriodEnds}
-                        </FieldErrorMsg>
-                        <Field
-                          as={DatePicker}
-                          error={!!flatErrors.performancePeriodEnds}
-                          id="Milestone-performancePeriodEnds"
-                          maxLength={50}
-                          name="performancePeriodEnds"
-                          onChange={(e: any) => {
-                            setFieldValue(
-                              'performancePeriodEnds',
-                              new Date(e).toISOString()
-                            );
-                          }}
-                        />
+                    <legend className="usa-label margin-bottom-1">
+                      {t('demonstrationPerformance')}
+                    </legend>
+                    <FieldGroup
+                      scrollElement="performancePeriodStarts"
+                      error={!!flatErrors.performancePeriodStarts}
+                      className="margin-top-4"
+                    >
+                      <label
+                        htmlFor="Milestone-performancePeriodStarts"
+                        className="usa-legend margin-top-0"
+                      >
+                        {t('performanceStartDate')}
+                      </label>
+                      <div className="usa-hint" id="appointment-date-hint">
+                        {h('datePlaceholder')}
                       </div>
+                      <FieldErrorMsg>
+                        {flatErrors.performancePeriodStarts}
+                      </FieldErrorMsg>
+                      <Field
+                        as={DatePicker}
+                        error={!!flatErrors.performancePeriodStarts}
+                        id="Milestone-performancePeriodStarts"
+                        maxLength={50}
+                        name="performancePeriodStarts"
+                        onChange={(e: any) => {
+                          setFieldValue(
+                            'performancePeriodStarts',
+                            new Date(e).toISOString()
+                          );
+                        }}
+                      />
+                    </FieldGroup>
+                    <FieldGroup
+                      scrollElement="performancePeriodEnds"
+                      error={!!flatErrors.performancePeriodEnds}
+                      className="margin-top-4"
+                    >
+                      <label
+                        htmlFor="Milestone-performancePeriodEnds"
+                        className="usa-legend margin-top-0"
+                      >
+                        {t('performanceEndDate')}
+                      </label>
+                      <div className="usa-hint" id="appointment-date-hint">
+                        {h('datePlaceholder')}
+                      </div>
+                      <FieldErrorMsg>
+                        {flatErrors.performancePeriodEnds}
+                      </FieldErrorMsg>
+                      <Field
+                        as={DatePicker}
+                        error={!!flatErrors.performancePeriodEnds}
+                        id="Milestone-performancePeriodEnds"
+                        maxLength={50}
+                        name="performancePeriodEnds"
+                        onChange={(e: any) => {
+                          setFieldValue(
+                            'performancePeriodEnds',
+                            new Date(e).toISOString()
+                          );
+                        }}
+                      />
                     </FieldGroup>
 
                     <FieldGroup
                       scrollElement="wrapUpEnds"
                       error={!!flatErrors.wrapUpEnds}
-                      className="margin-top-4 grid-col-6"
+                      className="margin-top-4"
                     >
                       <Label htmlFor="Milestone-wrapUpEnds">
                         {t('modelWrapUp')}
