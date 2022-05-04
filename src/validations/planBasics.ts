@@ -1,5 +1,9 @@
 import * as Yup from 'yup';
 
+const datePickerSchema = Yup.date()
+  .min(new Date(), 'Date cannot be in the past')
+  .required('Please enter a date');
+
 const planBasicsSchema = {
   pageOneSchema: Yup.object().shape({
     modelName: Yup.string().trim().required('Enter the Model Name'),
@@ -30,15 +34,15 @@ const planBasicsSchema = {
   }),
 
   pageThreeSchema: Yup.object().shape({
-    completeICIP: Yup.date().required('Please enter a date'),
-    clearanceStarts: Yup.date().required('Please enter a date'),
-    clearanceEnds: Yup.date().required('Please enter a date'),
-    announced: Yup.date().required('Please enter a date'),
-    applicationsStart: Yup.date().required('Please enter a date'),
-    applicationsEnd: Yup.date().required('Please enter a date'),
-    performancePeriodStarts: Yup.date().required('Please enter a date'),
-    performancePeriodEnds: Yup.date().required('Please enter a date'),
-    wrapUpEnds: Yup.date().required('Please enter a date'),
+    completeICIP: datePickerSchema,
+    clearanceStarts: datePickerSchema,
+    clearanceEnds: datePickerSchema,
+    announced: datePickerSchema,
+    applicationsStart: datePickerSchema,
+    applicationsEnd: datePickerSchema,
+    performancePeriodStarts: datePickerSchema,
+    performancePeriodEnds: datePickerSchema,
+    wrapUpEnds: datePickerSchema,
     phasedIn: Yup.string().required('Please answer question')
   })
 };
