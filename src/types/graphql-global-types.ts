@@ -119,6 +119,31 @@ export interface PlanCollaboratorInput {
   modifiedDts?: Time | null;
 }
 
+/**
+ * Represents plan milestones input
+ */
+export interface PlanMilestonesInput {
+  id?: UUID | null;
+  modelPlanID?: UUID | null;
+  completeICIP?: Time | null;
+  clearanceStarts?: Time | null;
+  clearanceEnds?: Time | null;
+  announced?: Time | null;
+  applicationsStart?: Time | null;
+  applicationsEnd?: Time | null;
+  performancePeriodStarts?: Time | null;
+  performancePeriodEnds?: Time | null;
+  wrapUpEnds?: Time | null;
+  highLevelNote?: string | null;
+  phasedIn?: boolean | null;
+  phasedInNote?: string | null;
+  createdBy?: string | null;
+  createdDts?: Time | null;
+  modifiedBy?: string | null;
+  modifiedDts?: Time | null;
+  status?: TaskStatus | null;
+}
+
 //==============================================================
 // END Enums and Input Objects
 //==============================================================
