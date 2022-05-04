@@ -1,8 +1,9 @@
 import * as Yup from 'yup';
 
-const datePickerSchema = Yup.date()
-  .min(new Date(), 'Date cannot be in the past')
-  .required('Please enter a date');
+const datePickerSchema = Yup.date().min(
+  new Date(),
+  'Date cannot be in the past'
+);
 
 const planBasicsSchema = {
   pageOneSchema: Yup.object().shape({
