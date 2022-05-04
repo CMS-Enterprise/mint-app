@@ -45,6 +45,15 @@ const planBasicsSchema = {
   }),
 
   pageThreeSchema: Yup.object().shape({
+    completeICIP: Yup.date().required('Please enter a date'),
+    clearanceStarts: Yup.date().required('Please enter a date'),
+    clearanceEnds: Yup.date().required('Please enter a date'),
+    announced: Yup.date().required('Please enter a date'),
+    applicationsStart: Yup.date().required('Please enter a date'),
+    applicationsEnd: Yup.date().required('Please enter a date'),
+    performancePeriodStarts: Yup.date().required('Please enter a date'),
+    performancePeriodEnds: Yup.date().required('Please enter a date'),
+    wrapUpEnds: Yup.date().required('Please enter a date'),
     phasedIn: Yup.string().required('Please answer question')
   })
 };
