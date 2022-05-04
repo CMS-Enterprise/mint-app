@@ -45,9 +45,7 @@ import Overview from './Overview';
 type PlanBasicModelPlanFormType = {
   modelName: string;
   modelCategory: string;
-  cmsCenter: string;
-  // TODO: Update this when BE is ready
-  // cmsCenter: string[];
+  cmsCenters: string[];
   cmmiGroup: string[];
 };
 
@@ -78,7 +76,7 @@ const BasicsContent = () => {
           id: modelId,
           modelName: formikValues.modelName,
           modelCategory: formikValues.modelCategory,
-          cmsCenter: formikValues.cmsCenter,
+          cmsCenters: formikValues.cmsCenters,
           cmmiGroups: formikValues.cmmiGroup,
           status: 'PLAN_DRAFT'
         }
@@ -91,16 +89,14 @@ const BasicsContent = () => {
       })
       .catch(errors => {
         // formikRef?.current?.setErrors(errors);
-        console.log(errors);
+        console.log(JSON.stringify(errors));
       });
   };
 
   const initialValues = {
     modelName: modelName as string,
     modelCategory: '',
-    cmsCenter: '',
-    // TODO: Update this when BE is ready
-    // cmsCenter: [],
+    cmsCenters: [],
     cmmiGroup: []
   };
 
@@ -134,10 +130,8 @@ const BasicsContent = () => {
             enableReinitialize
             validationSchema={
               isCmmiGroupShown
-                ? // ? planBasicsSchema.pageOneSchemaWithCmmiGroup
-                  // : planBasicsSchema.pageOneSchema
-                  planBasicsSchema.garyTestWithExtras
-                : planBasicsSchema.garyTest
+                ? planBasicsSchema.pageOneSchemaWithCmmiGroup
+                : planBasicsSchema.pageOneSchema
             }
             validateOnBlur={false}
             validateOnChange={false}
@@ -234,19 +228,19 @@ const BasicsContent = () => {
                     </FieldGroup>
 
                     <FieldGroup
-                      scrollElement="cmsCenter"
-                      error={!!flatErrors.cmsCenter}
+                      scrollElement="cmsCenters"
+                      error={!!flatErrors.cmsCenters}
                       className="margin-top-4"
                     >
                       <FieldArray
-                        name="cmsCenter"
+                        name="cmsCenters"
                         render={arrayHelpers => (
                           <>
                             <legend className="usa-label">
                               {t('cmsComponent')}
                             </legend>
                             <FieldErrorMsg>
-                              {flatErrors.cmsCenter}
+                              {flatErrors.cmsCenters}
                             </FieldErrorMsg>
 
                             {(t('cmsComponents', {
@@ -256,31 +250,22 @@ const BasicsContent = () => {
                                 <Fragment key={item}>
                                   <Field
                                     as={CheckboxField}
-                                    id={`new-plan-cmsCenter--${key}`}
-                                    name="cmsComponent"
+                                    id={`new-plan-cmsCenters--${key}`}
+                                    name="cmsCenters"
                                     label={item}
                                     value={translateCmsCenter(item)}
                                     // TODO: uncomment this when BE changes this
-                                    // onChange={(
-                                    //   e: React.ChangeEvent<HTMLInputElement>
-                                    // ) => {
-                                    //   if (e.target.checked) {
-                                    //     arrayHelpers.push(e.target.value);
-                                    //   } else {
-                                    //     const idx = values.cmsCenter.indexOf(
-                                    //       e.target.value
-                                    //     );
-                                    //     arrayHelpers.remove(idx);
-                                    //   }
-                                    //   if (e.target.value === 'CMMI') {
-                                    //     setIsCmmiGroupShown(true);
-                                    //   }
-                                    // }}
-                                    onChange={(e: any) => {
-                                      setFieldValue(
-                                        'cmsCenter',
-                                        e.target.value
-                                      );
+                                    onChange={(
+                                      e: React.ChangeEvent<HTMLInputElement>
+                                    ) => {
+                                      if (e.target.checked) {
+                                        arrayHelpers.push(e.target.value);
+                                      } else {
+                                        const idx = values.cmsCenters.indexOf(
+                                          e.target.value
+                                        );
+                                        arrayHelpers.remove(idx);
+                                      }
                                       if (e.target.value === 'CMMI') {
                                         setIsCmmiGroupShown(true);
                                       }
@@ -290,7 +275,7 @@ const BasicsContent = () => {
                               );
                             })}
 
-                            {values.cmsCenter.includes('OTHER') && (
+                            {values.cmsCenters.includes('OTHER') && (
                               <FieldGroup className="margin-top-4">
                                 <Label htmlFor="plan-basics-cmsCategory--Other">
                                   {h('pleaseSpecify')}
@@ -315,7 +300,7 @@ const BasicsContent = () => {
                         )}
                       />
                     </FieldGroup>
-                    {values.cmsCenter.includes('CMMI') && (
+                    {values.cmsCenters.includes('CMMI') && (
                       <FieldGroup
                         error={!!flatErrors.cmmiGroup}
                         className="margin-top-4"
