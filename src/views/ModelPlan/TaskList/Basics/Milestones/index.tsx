@@ -215,7 +215,7 @@ const Milestones = () => {
                       {t('clearance')}
                     </legend>
 
-                    <div className="gary">
+                    <div className="fieldGroup__wrapper">
                       <FieldGroup
                         scrollElement="clearanceStarts"
                         error={!!flatErrors.clearanceStarts}
@@ -309,7 +309,7 @@ const Milestones = () => {
                       {t('applicationPeriod')}
                     </legend>
 
-                    <div className="gary">
+                    <div className="fieldGroup__wrapper">
                       <FieldGroup
                         scrollElement="applicationsStart"
                         error={!!flatErrors.applicationsStart}
@@ -379,7 +379,7 @@ const Milestones = () => {
                       {t('demonstrationPerformance')}
                     </legend>
 
-                    <div className="gary">
+                    <div className="fieldGroup__wrapper">
                       <FieldGroup
                         scrollElement="performancePeriodStarts"
                         error={!!flatErrors.performancePeriodStarts}
