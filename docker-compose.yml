@@ -13,7 +13,7 @@ services:
       - FLYWAY_PASSWORD=mysecretpassword
       - FLYWAY_URL=jdbc:postgresql://db/postgres
       - FLYWAY_PLACEHOLDERS_APP_USER_PASSWORD=supersecretapp
-      
+
     depends_on:
       - db
   mint:
@@ -58,7 +58,7 @@ services:
       - LAMBDA_ENDPOINT=http://prince:9001
       - MINIO_ACCESS_KEY=minioadmin
       - MINIO_SECRET_KEY=minioadmin
-      - MINIO_ADDRESS=http://minio:9000
+      - MINIO_ADDRESS=http://minio:9005
       - SERVER_CERT
       - SERVER_KEY
       - USE_TLS
@@ -69,15 +69,16 @@ services:
   minio:
     restart: always
     image: minio/minio:latest
-    entrypoint: minio server /data
+    entrypoint: minio server /data --console-address ":9966"
   minio_mc:
     image: minio/mc:latest
+    volumes:
+      - ./minio_config.json:/root/.mc/config.json
     depends_on:
       - minio
-    entrypoint: > 
+    entrypoint: >
       /bin/sh -c "
-      /usr/bin/mc alias set local http://minio:9000 minioadmin minioadmin;
-      /usr/bin/mc rb --force local/mint-app-file-uploads/;
-      /usr/bin/mc mb --quiet local/mint-app-file-uploads/;
-      /usr/bin/mc policy set public local/mint-app-file-uploads;
+      /usr/bin/mc rb --force s3local/mint-app-file-uploads/;
+      /usr/bin/mc mb --quiet s3local/mint-app-file-uploads/;
+      /usr/bin/mc policy set public s3local/mint-app-file-uploads;
       "

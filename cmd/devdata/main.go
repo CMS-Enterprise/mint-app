@@ -1,8 +1,10 @@
 package main
 
 import (
+	"fmt"
+	"github.com/cmsgov/mint-app/pkg/graph/model"
+	"github.com/cmsgov/mint-app/pkg/upload"
 	"github.com/google/uuid"
-
 	"github.com/lib/pq"
 	// _ "github.com/lib/pq" // required for postgres driver in sql
 	"go.uber.org/zap"
@@ -40,6 +42,10 @@ func main() {
 	if storeErr != nil {
 		panic(storeErr)
 	}
+
+	s3Config := upload.Config{Bucket: "mint-test-bucket", Region: "us-west", IsLocal: true}
+	s3Client := upload.NewS3Client(s3Config)
+
 	ac := models.MCAccountableCare
 	cms := models.CMSCenterForClinicalStandardsAndQuality
 
@@ -101,9 +107,22 @@ func main() {
 		b.TestInventions = models.StringPointer("The great candy machine")
 		b.Note = models.StringPointer("The machine doesn't work yet")
 		b.Status = inProgress
-
 	})
 
+	planDocumentInput := model.PlanDocumentInput{
+		ModelPlanID: uuid.MustParse("18624c5b-4c00-49a7-960f-ac6d8b2c58df"),
+		DocumentParameters: &model.PlanDocumentParameters{
+			FileName:             models.StringPointer("FAKE.pdf"),
+			FileSize:             512512,
+			FileType:             models.StringPointer("application/pdf"),
+			DocumentType:         models.StringPointer("OTHER"),
+			OtherTypeDescription: models.StringPointer("A fake document"),
+		},
+		URL: models.StringPointer("http://localhost:9005/mint-app-file-uploads/8bitshades.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=L31LSFLREORA0BKZ704N%2F20220504%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20220504T045241Z&X-Amz-Expires=604800&X-Amz-Security-Token=eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhY2Nlc3NLZXkiOiJMMzFMU0ZMUkVPUkEwQktaNzA0TiIsImV4cCI6MTY1MTY0Mjg2NiwicGFyZW50IjoibWluaW9hZG1pbiJ9.IM5OhdYOz5yqby2aTg4O9aABjlA0hjIIWiZNduDp5eRwqxCnEpf3kf77uLDUFKvebMI01KArTFmHQii8qMjAxQ&X-Amz-SignedHeaders=host&versionId=null&X-Amz-Signature=050aef69d3dab5e4e297ec942d33506a2e890989fc3cc537bae95c99b3297d1a"),
+	}
+
+	makePlanDocument(logger, store, &s3Client, models.StringPointer("FAKE"), &planDocumentInput, func(d *models.PlanDocument) {
+	})
 }
 
 func makeModelPlan(modelName string, logger *zap.Logger, store *storage.Store, callbacks ...func(*models.ModelPlan)) *models.ModelPlan {
@@ -140,4 +159,34 @@ func makePlanBasics(uuid uuid.UUID, logger *zap.Logger, store *storage.Store, ca
 
 	dbBasics, _ := store.PlanBasicsCreate(logger, &basics)
 	return dbBasics
+}
+
+func makePlanDocument(
+	logger *zap.Logger,
+	store *storage.Store,
+	s3Client *upload.S3Client,
+	principal *string,
+	input *model.PlanDocumentInput,
+	callbacks ...func(basics *models.PlanDocument)) *model.PlanDocumentPayload {
+
+	document, err := store.PlanDocumentCreate(logger, principal, input, s3Client)
+	if err != nil {
+		panic(fmt.Sprintf("Error - Could not create plan document: %v", err))
+	}
+
+	for _, callback := range callbacks {
+		callback(document)
+	}
+
+	presignedURL, urlErr := s3Client.NewGetPresignedURL(*document.FileKey)
+	if urlErr != nil {
+		panic(fmt.Sprintf("Error - Could not create plan document presigned url: %v", urlErr))
+	}
+
+	payload := model.PlanDocumentPayload{
+		Document:     document,
+		PresignedURL: presignedURL,
+	}
+
+	return &payload
 }
