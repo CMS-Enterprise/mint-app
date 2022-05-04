@@ -12,11 +12,7 @@ import {
   IconAdd,
   IconArrowBack,
   Label,
-  ProcessList,
-  ProcessListHeading,
-  ProcessListItem,
-  Radio,
-  TextInput
+  Radio
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
 
@@ -91,44 +87,6 @@ const Milestones = () => {
           <p className="margin-bottom-2 font-body-md line-height-sans-4">
             {t('helpText')}
           </p>
-
-          {/* <ProcessList>
-            <ProcessListItem className="padding-bottom-4">
-              <div className="grid-col-6">
-                <Label htmlFor="Milestone-completeICIP">
-                  {t('completeICIP')}
-                </Label>
-                <div className="usa-hint" id="appointment-date-hint">
-                  {h('datePlaceholder')}
-                </div>
-                <DatePicker id="asdf" name="asdfasdf" />
-              </div>
-            </ProcessListItem>
-            <ProcessListItem className="padding-bottom-4">
-              <ProcessListHeading
-                type="h4"
-                className="font-sans-xl line-height-sans-1"
-              >
-                Proceed to the second step.
-              </ProcessListHeading>
-              <p className="font-sans-lg margin-top-1 text-light">
-                Suspendisse id velit vitae ligula volutpat condimentum. Aliquam
-                erat volutpat.
-              </p>
-            </ProcessListItem>
-            <ProcessListItem>
-              <ProcessListHeading
-                type="h4"
-                className="font-sans-xl line-height-sans-1"
-              >
-                Complete the step-by-step process.
-              </ProcessListHeading>
-              <p className="font-sans-lg margin-top-1 text-light">
-                Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Morbi
-                commodo, ipsum sed pharetra gravida, orci magna rhoncus neque.
-              </p>
-            </ProcessListItem>
-          </ProcessList> */}
 
           <Formik
             initialValues={initialValues}
