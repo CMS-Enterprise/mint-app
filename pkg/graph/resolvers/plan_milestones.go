@@ -12,6 +12,7 @@ import (
 func CreatePlanMilestones(logger *zap.Logger, input *models.PlanMilestones, principal *string, store *storage.Store) (*models.PlanMilestones, error) {
 	input.CreatedBy = principal
 	input.ModifiedBy = input.CreatedBy
+	input.CalcStatus()
 
 	result, err := store.PlanMilestonesCreate(logger, input)
 	return result, err
@@ -20,6 +21,7 @@ func CreatePlanMilestones(logger *zap.Logger, input *models.PlanMilestones, prin
 // UpdatePlanMilestones implements resolver logic to update a plan milestones object
 func UpdatePlanMilestones(logger *zap.Logger, input *models.PlanMilestones, principal *string, store *storage.Store) (*models.PlanMilestones, error) {
 	input.ModifiedBy = principal
+	input.CalcStatus()
 
 	result, err := store.PlanMilestonesUpdate(logger, input)
 	return result, err
