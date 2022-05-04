@@ -7,7 +7,7 @@ const draftModelPlan = {
   cancel: 'Cancel',
   select: 'Select',
   additionalNote: 'Add an additional note',
-  datePlaceholder: 'mm/dd/yyy',
+  datePlaceholder: 'mm/dd/yyyy',
   yes: 'Yes',
   no: 'No',
   howSo: 'How so?',

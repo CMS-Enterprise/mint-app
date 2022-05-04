@@ -42,6 +42,10 @@ const planBasicsSchema = {
     testInterventions: Yup.string()
       .trim()
       .required('Tell us about the test interventions')
+  }),
+
+  pageThreeSchema: Yup.object().shape({
+    phasedIn: Yup.string().required('Please answer question')
   })
 };
 

@@ -32,8 +32,18 @@ import flattenErrors from 'utils/flattenErrors';
 import planBasicsSchema from 'validations/planBasics';
 
 type PlanBasicsOverviewTypes = {
-  modelName: string;
-  tightTimeline: string;
+  completeICIP: string;
+  clearanceStarts: string;
+  clearanceEnds: string;
+  announced: string;
+  applicationsStart: string;
+  applicationsEnd: string;
+  performancePeriodStarts: string;
+  performancePeriodEnds: string;
+  wrapUpEnds: string;
+  highLevelNote: string;
+  phasedIn: string;
+  phasedInNote: string;
 };
 
 const Milestones = () => {
@@ -56,8 +66,18 @@ const Milestones = () => {
   const { modelName } = data?.modelPlan || {};
 
   const initialValues = {
-    modelName: modelName as string,
-    tightTimeline: ''
+    completeICIP: '',
+    clearanceStarts: '',
+    clearanceEnds: '',
+    announced: '',
+    applicationsStart: '',
+    applicationsEnd: '',
+    performancePeriodStarts: '',
+    performancePeriodEnds: '',
+    wrapUpEnds: '',
+    highLevelNote: '',
+    phasedIn: '',
+    phasedInNote: ''
   };
 
   const handleFormSubmit = (formikValues: PlanBasicsOverviewTypes) => {
@@ -97,7 +117,7 @@ const Milestones = () => {
             initialValues={initialValues}
             onSubmit={handleFormSubmit}
             enableReinitialize
-            validationSchema={planBasicsSchema.pageTwoSchema}
+            validationSchema={planBasicsSchema.pageThreeSchema}
             validateOnBlur={false}
             validateOnChange={false}
             validateOnMount={false}
@@ -108,6 +128,7 @@ const Milestones = () => {
                 errors,
                 handleSubmit,
                 setErrors,
+                setFieldValue,
                 values
               } = formikProps;
               const flatErrors = flattenErrors(errors);
@@ -155,6 +176,9 @@ const Milestones = () => {
                         id="Milestone-completeICIP"
                         maxLength={50}
                         name="completeICIP"
+                        onChange={(e: any) => {
+                          setFieldValue('completeICIP', e);
+                        }}
                       />
                     </FieldGroup>
 
@@ -181,6 +205,9 @@ const Milestones = () => {
                           id="Milestone-clearanceStarts"
                           maxLength={50}
                           name="clearanceStarts"
+                          onChange={(e: any) => {
+                            setFieldValue('clearanceStarts', e);
+                          }}
                         />
                       </div>
 
@@ -203,6 +230,9 @@ const Milestones = () => {
                           id="Milestone-clearanceEnds"
                           maxLength={50}
                           name="clearanceEnds"
+                          onChange={(e: any) => {
+                            setFieldValue('clearanceEnds', e);
+                          }}
                         />
                       </div>
                     </FieldGroup>
@@ -225,6 +255,9 @@ const Milestones = () => {
                         id="Milestone-announced"
                         maxLength={50}
                         name="announced"
+                        onChange={(e: any) => {
+                          setFieldValue('announced', e);
+                        }}
                       />
                     </FieldGroup>
 
@@ -251,6 +284,9 @@ const Milestones = () => {
                           id="Milestone-applicationsStart"
                           maxLength={50}
                           name="applicationsStart"
+                          onChange={(e: any) => {
+                            setFieldValue('applicationsStart', e);
+                          }}
                         />
                       </div>
                       <div className="grid-col-6">
@@ -272,6 +308,9 @@ const Milestones = () => {
                           id="Milestone-applicationsEnd"
                           maxLength={50}
                           name="applicationsEnd"
+                          onChange={(e: any) => {
+                            setFieldValue('applicationsEnd', e);
+                          }}
                         />
                       </div>
                     </FieldGroup>
@@ -299,6 +338,9 @@ const Milestones = () => {
                           id="Milestone-performancePeriodStarts"
                           maxLength={50}
                           name="performancePeriodStarts"
+                          onChange={(e: any) => {
+                            setFieldValue('performancePeriodStarts', e);
+                          }}
                         />
                       </div>
 
@@ -321,6 +363,9 @@ const Milestones = () => {
                           id="Milestone-performancePeriodEnds"
                           maxLength={50}
                           name="performancePeriodEnds"
+                          onChange={(e: any) => {
+                            setFieldValue('performancePeriodEnds', e);
+                          }}
                         />
                       </div>
                     </FieldGroup>
@@ -343,6 +388,9 @@ const Milestones = () => {
                         id="Milestone-wrapUpEnds"
                         maxLength={50}
                         name="wrapUpEnds"
+                        onChange={(e: any) => {
+                          setFieldValue('wrapUpEnds', e);
+                        }}
                       />
                     </FieldGroup>
 
@@ -370,17 +418,15 @@ const Milestones = () => {
                     )}
 
                     <FieldGroup
-                      scrollElement="tightTimeline"
-                      error={!!flatErrors.tightTimeline}
+                      scrollElement="phasedIn"
+                      error={!!flatErrors.phasedIn}
                       className="margin-top-4"
                     >
-                      <Label htmlFor="tightTimeline">
-                        {t('tightTimeline')}
-                      </Label>
+                      <Label htmlFor="phasedIn">{t('tightTimeline')}</Label>
                       <span className="usa-hint display-block text-normal margin-top-1">
                         {t('tightTimelineInfo')}
                       </span>
-                      <FieldErrorMsg>{flatErrors.tightTimeline}</FieldErrorMsg>
+                      <FieldErrorMsg>{flatErrors.phasedIn}</FieldErrorMsg>
                       <Fieldset>
                         <Field
                           as={Radio}
