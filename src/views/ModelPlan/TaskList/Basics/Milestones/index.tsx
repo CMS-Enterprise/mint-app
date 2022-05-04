@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
@@ -50,9 +50,11 @@ const Milestones = () => {
   const { t } = useTranslation('basics');
   const { t: h } = useTranslation('draftModelPlan');
   const { modelId } = useParams<{ modelId: string }>();
+
+  const history = useHistory();
+  const formikRef = useRef<FormikProps<PlanBasicsOverviewTypes>>(null);
   const [hasHighLevelNote, setHasHighLevelNote] = useState(false);
   const [hasAdditionalNote, setHasAdditionalNote] = useState(false);
-  const history = useHistory();
 
   const { data } = useQuery<GetModelPlan, GetModelPlanVariables>(
     GetModelPlanQuery,
@@ -82,6 +84,27 @@ const Milestones = () => {
 
   const handleFormSubmit = (formikValues: PlanBasicsOverviewTypes) => {
     console.log(formikValues);
+    // update({
+    //   variables: {
+    //     input: {
+    //       id: modelId,
+    //       modelName: formikValues.modelName,
+    //       modelCategory: formikValues.modelCategory,
+    //       cmsCenters: formikValues.cmsCenters,
+    //       cmmiGroups: formikValues.cmmiGroup,
+    //       cmsOther: formikValues.cmsOther,
+    //       status: 'PLAN_DRAFT'
+    //     }
+    //   }
+    // })
+    //   .then(response => {
+    //     if (!response?.errors) {
+    //       history.push(`/models/${modelId}/task-list/basics/overview`);
+    //     }
+    //   })
+    //   .catch(errors => {
+    //     formikRef?.current?.setErrors(errors);
+    //   });
   };
 
   return (
@@ -121,6 +144,7 @@ const Milestones = () => {
             validateOnBlur={false}
             validateOnChange={false}
             validateOnMount={false}
+            innerRef={formikRef}
           >
             {(formikProps: FormikProps<PlanBasicsOverviewTypes>) => {
               const {
