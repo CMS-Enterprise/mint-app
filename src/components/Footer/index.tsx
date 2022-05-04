@@ -30,6 +30,7 @@ const Footer = () => {
   ];
   return (
     <UswdsFooter
+      className="margin-top-7"
       size="slim"
       primary={
         <div className="usa-footer__primary-container grid-row">

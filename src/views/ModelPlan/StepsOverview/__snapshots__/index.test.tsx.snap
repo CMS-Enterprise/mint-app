@@ -2,7 +2,7 @@
 
 exports[`The Model Plan Steps Overview static page matches the snapshot 1`] = `
 <main
-  className="mint-main-content margin-bottom-5"
+  className="mint-main-content"
   id="main-content"
   role="main"
   tabIndex={-1}

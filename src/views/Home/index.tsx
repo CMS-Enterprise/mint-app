@@ -79,7 +79,7 @@ const Home = () => {
     );
   };
 
-  return <MainContent className="margin-bottom-5">{renderView()}</MainContent>;
+  return <MainContent>{renderView()}</MainContent>;
 };
 
 export default withRouter(Home);

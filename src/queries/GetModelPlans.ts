@@ -7,6 +7,7 @@ export default gql`
       modelName
       modelCategory
       cmmiGroups
+      status
       createdBy
       createdDts
       modifiedDts
@@ -14,6 +15,19 @@ export default gql`
         id
         fullName
         teamRole
+      }
+      discussions {
+        id
+        content
+        status
+        createdBy
+        createdDts
+        replies {
+          id
+          discussionID
+          content
+          resolution
+        }
       }
     }
   }

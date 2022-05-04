@@ -2,7 +2,7 @@ import i18next from 'i18next';
 /**
  * Translate the API enum to a human readable string
  */
-const translateTeamRole = (teamRole: string) => {
+export const translateTeamRole = (teamRole: string) => {
   switch (teamRole) {
     case 'EVALUATION':
       return i18next.t('modelPlan:teamRoles.evaluation');
@@ -19,4 +19,27 @@ const translateTeamRole = (teamRole: string) => {
   }
 };
 
-export default translateTeamRole;
+export const translateModelPlanStatus = (status: string) => {
+  switch (status) {
+    case 'PLAN_DRAFT':
+      return i18next.t('modelPlan:planStatuses.planDraft');
+    case 'PLAN_COMPLETE':
+      return i18next.t('modelPlan:planStatuses.planComplete');
+    case 'ICIP_COMPLETE':
+      return i18next.t('modelPlan:planStatuses.icipComplete');
+    case 'INTERNAL_CMMI_CLEARANCE':
+      return i18next.t('modelPlan:planStatuses.cmmiClearance');
+    case 'CMS_CLEARANCE':
+      return i18next.t('modelPlan:planStatuses.cmsClearance');
+    case 'HHS_CLEARANCE':
+      return i18next.t('modelPlan:planStatuses.hhsClearance');
+    case 'OMB_ASRF_CLEARANCE':
+      return i18next.t('modelPlan:planStatuses.ombASRFClearance');
+    case 'CLEARED':
+      return i18next.t('modelPlan:planStatuses.cleared');
+    case 'ANNOUNCED':
+      return i18next.t('modelPlan:planStatuses.announced');
+    default:
+      return '';
+  }
+};

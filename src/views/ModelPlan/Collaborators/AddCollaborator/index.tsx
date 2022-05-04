@@ -32,7 +32,7 @@ import { UpdateModelPlanCollaborator as UpdateModelPlanCollaboratorType } from '
 import UpdateModelPlanCollaborator from 'queries/UpdateModelPlanCollaborator';
 import { CollaboratorForm } from 'types/collaborator';
 import flattenErrors from 'utils/flattenErrors';
-import translateTeamRole from 'utils/modelPlan';
+import { translateTeamRole } from 'utils/modelPlan';
 import CollaboratorsValidationSchema from 'validations/modelPlanCollaborators';
 
 import '@reach/combobox/styles.css';
@@ -121,7 +121,7 @@ const Collaborators = () => {
   const initialValues: CollaboratorForm = collaborator;
 
   return (
-    <MainContent className="margin-bottom-5">
+    <MainContent>
       <div className="grid-container">
         <div className="desktop:grid-col-6">
           <PageHeading className="margin-top-6 margin-bottom-2">

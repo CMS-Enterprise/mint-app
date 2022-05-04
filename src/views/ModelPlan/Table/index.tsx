@@ -9,7 +9,6 @@ import {
 } from 'react-table';
 import { useQuery } from '@apollo/client';
 import { Table as UswdsTable } from '@trussworks/react-uswds';
-import { DateTime } from 'luxon';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import Alert from 'components/shared/Alert';
@@ -23,12 +22,15 @@ import {
   GetModelPlans_modelPlanCollection as DraftModelPlanType
 } from 'queries/types/GetModelPlans';
 import globalTableFilter from 'utils/globalTableFilter';
+import { translateModelPlanStatus } from 'utils/modelPlan';
 import {
   currentTableSortDescription,
   getColumnSortStatus,
   getHeaderSortIcon,
   sortColumnValues
 } from 'utils/tableSort';
+
+import formatRecentActivity from './formatActivity';
 
 import './index.scss';
 
@@ -54,19 +56,9 @@ const Table = ({ data, hiddenColumns }: TableProps) => {
         }
       },
       {
-        Header: t('requestsTable.headers.category'),
-        accessor: 'modelCategory',
-        Cell: ({ row, value }: any) => {
-          if (!value) {
-            return t('requestsTable.noneSelectedYet');
-          }
-          return value;
-        }
-      },
-      {
         Header: t('requestsTable.headers.modelPoc'),
         accessor: 'collaborators',
-        Cell: ({ row, value }: any) => {
+        Cell: ({ value }: any) => {
           if (value) {
             const leads = value.filter((item: CollaboratorsType) => {
               return item.teamRole.toLowerCase().includes('model_lead');
@@ -87,18 +79,26 @@ const Table = ({ data, hiddenColumns }: TableProps) => {
       {
         Header: t('requestsTable.headers.clearanceDate'),
         accessor: 'clearanceDate',
-        Cell: ({ row, value }: any) => {
+        Cell: ({ value }: any) => {
           if (!value) {
-            return t('requestsTable.tbd');
+            return <div>{t('requestsTable.tbd')}</div>;
           }
           return value;
         }
       },
       {
+        Header: t('requestsTable.headers.status'),
+        accessor: 'status',
+        Cell: ({ value }: any) => {
+          return translateModelPlanStatus(value);
+        }
+      },
+      {
         Header: t('requestsTable.headers.recentActivity'),
         accessor: 'modifiedDts',
-        Cell: ({ value }: any) => {
-          return DateTime.fromISO(value).toLocaleString(DateTime.DATETIME_MED);
+        Cell: ({ row, value }: any) => {
+          const discussions = row.original.discussions || [];
+          return formatRecentActivity(value, discussions);
         }
       }
     ];
@@ -189,9 +189,10 @@ const Table = ({ data, hiddenColumns }: TableProps) => {
                       minWidth: '138px',
                       width:
                         ((index === 0 || index === 1) && '286px') ||
-                        (index !== 3 && '200px') ||
+                        (index === 2 && '175px') ||
                         '',
                       paddingLeft: '0',
+                      paddingBottom: '.5rem',
                       position: 'relative'
                     }}
                   >
@@ -288,11 +289,34 @@ const DraftModelPlansTable = ({ hiddenColumns }: DraftModelTableProps) => {
 
   const data = (modelPlans?.modelPlanCollection ?? []) as DraftModelPlanType[];
 
+  const discussions = [
+    {
+      content: 'Hey',
+      replies: [
+        {
+          content: 'Hey'
+        }
+      ]
+    },
+    {
+      content: 'Hey',
+      replies: []
+    }
+  ];
+
+  // TODO: Remove Temp Mocked Data
+  const newData = data.map((item, index) => {
+    if (index === 0) {
+      return { ...item, discussions };
+    }
+    return { ...item };
+  });
+
   if (error) {
     return <div>{JSON.stringify(error)}</div>;
   }
 
-  return <Table data={data} hiddenColumns={hiddenColumns} />;
+  return <Table data={newData} hiddenColumns={hiddenColumns} />;
 };
 
 export default DraftModelPlansTable;
