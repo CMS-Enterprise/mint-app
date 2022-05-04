@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
-import { useQuery } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import {
   Breadcrumb,
   BreadcrumbBar,
@@ -27,17 +27,19 @@ import {
   GetModelPlan,
   GetModelPlanVariables
 } from 'queries/types/GetModelPlan';
+import { UpdatePlanBasics as UpdatePlanBasicsType } from 'queries/types/UpdatePlanBasics';
+import UpdatePlanBasics from 'queries/UpdatePlanBasics';
 import flattenErrors from 'utils/flattenErrors';
 import planBasicsSchema from 'validations/planBasics';
 
-type PlanBasicsOverviewTypes = {
+interface PlanBasicsOverviewTypes {
   // TODO: change this prop 👇 to take in the enums
   modelType: string;
   problem: string;
   goal: string;
   testInterventions: string;
   note: string;
-};
+}
 
 const Overview = () => {
   const { t } = useTranslation('basics');
@@ -56,6 +58,9 @@ const Overview = () => {
   );
 
   const { modelName } = data?.modelPlan || {};
+  const { id } = data?.modelPlan?.basics || {};
+
+  const [update] = useMutation<UpdatePlanBasicsType>(UpdatePlanBasics);
 
   const initialValues = {
     modelType: '',
@@ -65,29 +70,35 @@ const Overview = () => {
     note: ''
   };
 
-  const handleFormSubmit = (formikValues: PlanBasicsOverviewTypes) => {
-    console.log(formikValues);
-    // update({
-    //   variables: {
-    //     input: {
-    //       id: modelId,
-    //       modelName: formikValues.modelName,
-    //       modelCategory: formikValues.modelCategory,
-    //       cmsCenter: formikValues.cmsCenter,
-    //       cmmiGroups: formikValues.cmmiGroup,
-    //       status: 'PLAN_DRAFT'
-    //     }
-    //   }
-    // })
-    //   .then(response => {
-    //     if (!response?.errors) {
-    history.push(`/models/${modelId}/task-list/basics/milestones`);
-    //     }
-    //   })
-    //   .catch(errors => {
-    //     // formikRef?.current?.setErrors(errors);
-    //     console.log(errors);
-    //   });
+  const handleFormSubmit = ({
+    modelType,
+    problem,
+    goal,
+    testInterventions,
+    note
+  }: PlanBasicsOverviewTypes) => {
+    update({
+      variables: {
+        input: {
+          id,
+          modelPlanID: modelId,
+          modelType,
+          problem,
+          goal,
+          testInventions: testInterventions,
+          note
+        }
+      }
+    })
+      .then(response => {
+        if (!response?.errors) {
+          history.push(`/models/${modelId}/task-list/basics/milestones`);
+        }
+      })
+      .catch(errors => {
+        // formikRef?.current?.setErrors(errors);
+        console.log(errors);
+      });
   };
 
   return (
