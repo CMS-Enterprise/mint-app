@@ -23,6 +23,7 @@ func TestModelPlanCreate(t *testing.T) {
 
 	principalInfo := models.UserInfo{
 		CommonName: "Fake Tester name",
+		EuaUserID:  "TEST",
 	}
 
 	result, err := ModelPlanCreate(tc.Logger, &plan, tc.Store, &principalInfo)
@@ -40,7 +41,7 @@ func TestModelPlanUpdate(t *testing.T) {
 	plan.ModelName = modelName
 	plan.Status = models.ModelStatusPlanDraft
 
-	result, err := ModelPlanUpdate(tc.Logger, &plan, tc.Store)
+	result, err := ModelPlanUpdate(tc.Logger, &plan, tc.Principal, tc.Store)
 
 	assert.NoError(t, err)
 	assert.NotNil(t, result.ID)

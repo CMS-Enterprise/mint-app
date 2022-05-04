@@ -11,9 +11,9 @@ CREATE TABLE plan_basics (
 
 
 
-    created_by EUA_ID,
+    created_by EUA_ID NOT NULL,
     created_dts TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    modified_by EUA_ID,
+    modified_by EUA_ID NOT NULL,
     modified_dts TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
     status TASK_STATUS NOT NULL DEFAULT 'READY' -- can become and ENUM/TYPE
 );

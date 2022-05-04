@@ -81,8 +81,6 @@ func (r *mutationResolver) CreateModelPlan(ctx context.Context, input model.Mode
 
 	plan := ConvertToModelPlan(&input)
 
-	plan.CreatedBy = &principal
-	plan.ModifiedBy = &principal
 	return resolvers.ModelPlanCreate(logger, plan, r.store, principalInfo)
 }
 
@@ -122,9 +120,8 @@ func (r *mutationResolver) UpdateModelPlan(ctx context.Context, input model.Mode
 	plan := ConvertToModelPlan(&input)
 	principal := appcontext.Principal(ctx).ID()
 	logger := appcontext.ZLogger(ctx)
-	//TODO clean this up
-	plan.ModifiedBy = &principal
-	return resolvers.ModelPlanUpdate(logger, plan, r.store)
+
+	return resolvers.ModelPlanUpdate(logger, plan, &principal, r.store)
 }
 
 func (r *mutationResolver) UpdatePlanBasics(ctx context.Context, input model.PlanBasicsInput) (*models.PlanBasics, error) {
