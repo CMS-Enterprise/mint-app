@@ -96,7 +96,7 @@ func (s *Store) PlanDocumentCreate(
 }
 
 // PlanDocumentRead reads a plan document object by id
-func (s *Store) PlanDocumentRead(logger *zap.Logger, id uuid.UUID) (*models.PlanDocument, error) {
+func (s *Store) PlanDocumentRead(logger *zap.Logger, s3Client *upload.S3Client, id uuid.UUID) (*models.PlanDocument, error) {
 	statement, err := s.db.PrepareNamed(planDocumentGetByIDSQL)
 	if err != nil {
 		return nil, err
@@ -104,6 +104,11 @@ func (s *Store) PlanDocumentRead(logger *zap.Logger, id uuid.UUID) (*models.Plan
 
 	var document models.PlanDocument
 	err = statement.Get(&document, utilitySQL.CreateIDQueryMap(id))
+	if err != nil {
+		return nil, genericmodel.HandleModelFetchByIDError(logger, err, id)
+	}
+
+	err = planDocumentUpdateVirusScanStatus(s3Client, &document)
 	if err != nil {
 		return nil, genericmodel.HandleModelFetchByIDError(logger, err, id)
 	}

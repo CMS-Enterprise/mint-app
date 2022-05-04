@@ -198,7 +198,7 @@ func (r *queryResolver) PlanMilestones(ctx context.Context, id uuid.UUID) (*mode
 func (r *queryResolver) PlanDocument(ctx context.Context, id uuid.UUID) (*models.PlanDocument, error) {
 	logger := appcontext.ZLogger(ctx)
 
-	return resolvers.PlanDocumentRead(logger, id, r.store)
+	return resolvers.PlanDocumentRead(logger, r.store, r.s3Client, id)
 }
 
 func (r *queryResolver) ReadPlanDocumentByModelID(ctx context.Context, id uuid.UUID) ([]*models.PlanDocument, error) {

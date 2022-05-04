@@ -35,8 +35,8 @@ func PlanDocumentCreate(logger *zap.Logger, input *model.PlanDocumentInput, prin
 }
 
 // PlanDocumentRead implements resolver logic to fetch a plan document object by ID
-func PlanDocumentRead(logger *zap.Logger, id uuid.UUID, store *storage.Store) (*models.PlanDocument, error) {
-	document, err := store.PlanDocumentRead(logger, id)
+func PlanDocumentRead(logger *zap.Logger, store *storage.Store, s3Client *upload.S3Client, id uuid.UUID) (*models.PlanDocument, error) {
+	document, err := store.PlanDocumentRead(logger, s3Client, id)
 	if err != nil {
 		return nil, err
 	}
