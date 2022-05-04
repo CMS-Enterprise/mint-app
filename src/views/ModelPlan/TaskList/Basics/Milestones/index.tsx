@@ -40,6 +40,7 @@ const Milestones = () => {
   const { t } = useTranslation('basics');
   const { t: h } = useTranslation('draftModelPlan');
   const { modelId } = useParams<{ modelId: string }>();
+  const [hasHighLevelNote, setHasHighLevelNote] = useState(false);
   const [hasAdditionalNote, setHasAdditionalNote] = useState(false);
   const history = useHistory();
 
@@ -163,7 +164,7 @@ const Milestones = () => {
                           {t('clearance')}
                         </legend>
                         <label
-                          htmlFor="Milestone-clearanceStartDate"
+                          htmlFor="Milestone-clearanceStarts"
                           className="usa-legend margin-top-0"
                         >
                           {t('clearanceStartDate')}
@@ -172,20 +173,20 @@ const Milestones = () => {
                           {h('datePlaceholder')}
                         </div>
                         <FieldErrorMsg>
-                          {flatErrors.clearanceStartDate}
+                          {flatErrors.clearanceStarts}
                         </FieldErrorMsg>
                         <Field
                           as={DatePicker}
-                          error={!!flatErrors.clearanceStartDate}
-                          id="Milestone-clearanceStartDate"
+                          error={!!flatErrors.clearanceStarts}
+                          id="Milestone-clearanceStarts"
                           maxLength={50}
-                          name="clearanceStartDate"
+                          name="clearanceStarts"
                         />
                       </div>
 
                       <div className="grid-col-6">
                         <label
-                          htmlFor="Milestone-clearanceEndDate"
+                          htmlFor="Milestone-clearanceEnds"
                           className="usa-legend margin-top-0"
                         >
                           {t('clearanceEndDate')}
@@ -194,36 +195,36 @@ const Milestones = () => {
                           {h('datePlaceholder')}
                         </div>
                         <FieldErrorMsg>
-                          {flatErrors.clearanceEndDate}
+                          {flatErrors.clearanceEnds}
                         </FieldErrorMsg>
                         <Field
                           as={DatePicker}
-                          error={!!flatErrors.clearanceEndDate}
-                          id="Milestone-clearanceEndDate"
+                          error={!!flatErrors.clearanceEnds}
+                          id="Milestone-clearanceEnds"
                           maxLength={50}
-                          name="clearanceEndDate"
+                          name="clearanceEnds"
                         />
                       </div>
                     </FieldGroup>
 
                     <FieldGroup
-                      scrollElement="annouceModel"
-                      error={!!flatErrors.annouceModel}
+                      scrollElement="announced"
+                      error={!!flatErrors.announced}
                       className="margin-top-4 grid-col-6"
                     >
-                      <Label htmlFor="Milestone-annouceModel">
+                      <Label htmlFor="Milestone-announced">
                         {t('annouceModel')}
                       </Label>
                       <div className="usa-hint" id="appointment-date-hint">
                         {h('datePlaceholder')}
                       </div>
-                      <FieldErrorMsg>{flatErrors.annouceModel}</FieldErrorMsg>
+                      <FieldErrorMsg>{flatErrors.announced}</FieldErrorMsg>
                       <Field
                         as={DatePicker}
-                        error={!!flatErrors.annouceModel}
-                        id="Milestone-annouceModel"
+                        error={!!flatErrors.announced}
+                        id="Milestone-announced"
                         maxLength={50}
-                        name="annouceModel"
+                        name="announced"
                       />
                     </FieldGroup>
 
@@ -233,7 +234,7 @@ const Milestones = () => {
                           {t('applicationPeriod')}
                         </legend>
                         <label
-                          htmlFor="Milestone-applicationStartDate"
+                          htmlFor="Milestone-applicationsStart"
                           className="usa-legend margin-top-0"
                         >
                           {t('applicationStartDate')}
@@ -242,19 +243,19 @@ const Milestones = () => {
                           {h('datePlaceholder')}
                         </div>
                         <FieldErrorMsg>
-                          {flatErrors.applicationStartDate}
+                          {flatErrors.applicationsStart}
                         </FieldErrorMsg>
                         <Field
                           as={DatePicker}
-                          error={!!flatErrors.applicationStartDate}
-                          id="Milestone-applicationStartDate"
+                          error={!!flatErrors.applicationsStart}
+                          id="Milestone-applicationsStart"
                           maxLength={50}
-                          name="applicationStartDate"
+                          name="applicationsStart"
                         />
                       </div>
                       <div className="grid-col-6">
                         <label
-                          htmlFor="Milestone-applicationEndDate"
+                          htmlFor="Milestone-applicationsEnd"
                           className="usa-legend margin-top-0"
                         >
                           {t('applicationEndDate')}
@@ -263,14 +264,14 @@ const Milestones = () => {
                           {h('datePlaceholder')}
                         </div>
                         <FieldErrorMsg>
-                          {flatErrors.applicationEndDate}
+                          {flatErrors.applicationsEnd}
                         </FieldErrorMsg>
                         <Field
                           as={DatePicker}
-                          error={!!flatErrors.applicationEndDate}
-                          id="Milestone-applicationEndDate"
+                          error={!!flatErrors.applicationsEnd}
+                          id="Milestone-applicationsEnd"
                           maxLength={50}
-                          name="applicationEndDate"
+                          name="applicationsEnd"
                         />
                       </div>
                     </FieldGroup>
@@ -281,7 +282,7 @@ const Milestones = () => {
                       </legend>
                       <div className="grid-col-6">
                         <label
-                          htmlFor="Milestone-performanceStartDate"
+                          htmlFor="Milestone-performancePeriodStarts"
                           className="usa-legend margin-top-0"
                         >
                           {t('performanceStartDate')}
@@ -290,20 +291,20 @@ const Milestones = () => {
                           {h('datePlaceholder')}
                         </div>
                         <FieldErrorMsg>
-                          {flatErrors.performanceStartDate}
+                          {flatErrors.performancePeriodStarts}
                         </FieldErrorMsg>
                         <Field
                           as={DatePicker}
-                          error={!!flatErrors.performanceStartDate}
-                          id="Milestone-performanceStartDate"
+                          error={!!flatErrors.performancePeriodStarts}
+                          id="Milestone-performancePeriodStarts"
                           maxLength={50}
-                          name="performanceStartDate"
+                          name="performancePeriodStarts"
                         />
                       </div>
 
                       <div className="grid-col-6">
                         <label
-                          htmlFor="Milestone-performanceEndDate"
+                          htmlFor="Milestone-performancePeriodEnds"
                           className="usa-legend margin-top-0"
                         >
                           {t('performanceEndDate')}
@@ -312,38 +313,61 @@ const Milestones = () => {
                           {h('datePlaceholder')}
                         </div>
                         <FieldErrorMsg>
-                          {flatErrors.performanceEndDate}
+                          {flatErrors.performancePeriodEnds}
                         </FieldErrorMsg>
                         <Field
                           as={DatePicker}
-                          error={!!flatErrors.performanceEndDate}
-                          id="Milestone-performanceEndDate"
+                          error={!!flatErrors.performancePeriodEnds}
+                          id="Milestone-performancePeriodEnds"
                           maxLength={50}
-                          name="performanceEndDate"
+                          name="performancePeriodEnds"
                         />
                       </div>
                     </FieldGroup>
 
                     <FieldGroup
-                      scrollElement="modelWrapUp"
-                      error={!!flatErrors.modelWrapUp}
+                      scrollElement="wrapUpEnds"
+                      error={!!flatErrors.wrapUpEnds}
                       className="margin-top-4 grid-col-6"
                     >
-                      <Label htmlFor="Milestone-modelWrapUp">
+                      <Label htmlFor="Milestone-wrapUpEnds">
                         {t('modelWrapUp')}
                       </Label>
                       <div className="usa-hint" id="appointment-date-hint">
                         {h('datePlaceholder')}
                       </div>
-                      <FieldErrorMsg>{flatErrors.modelWrapUp}</FieldErrorMsg>
+                      <FieldErrorMsg>{flatErrors.wrapUpEnds}</FieldErrorMsg>
                       <Field
                         as={DatePicker}
-                        error={!!flatErrors.modelWrapUp}
-                        id="Milestone-modelWrapUp"
+                        error={!!flatErrors.wrapUpEnds}
+                        id="Milestone-wrapUpEnds"
                         maxLength={50}
-                        name="modelWrapUp"
+                        name="wrapUpEnds"
                       />
                     </FieldGroup>
+
+                    <div className="grid-col-12">
+                      <Button
+                        type="button"
+                        className="usa-button usa-button--unstyled margin-top-4"
+                        onClick={() => setHasHighLevelNote(!hasHighLevelNote)}
+                      >
+                        <IconAdd className="margin-right-1" aria-hidden />
+                        {h('additionalNote')}
+                      </Button>
+                    </div>
+
+                    {hasHighLevelNote && (
+                      <FieldGroup className="margin-top-4 grid-col-12">
+                        <Field
+                          as={TextAreaField}
+                          className="height-15"
+                          id="ModelType-HighLevelNote"
+                          name="highLevelNote"
+                          label={t('Notes')}
+                        />
+                      </FieldGroup>
+                    )}
 
                     <FieldGroup
                       scrollElement="tightTimeline"
@@ -360,19 +384,19 @@ const Milestones = () => {
                       <Fieldset>
                         <Field
                           as={Radio}
-                          id="tightTimeline-Yes"
-                          name="tightTimeline"
+                          id="phasedIn-Yes"
+                          name="phasedIn"
                           label={h('yes')}
                           value="YES"
-                          checked={values.tightTimeline === 'YES'}
+                          checked={values.phasedIn === 'YES'}
                         />
                         <Field
                           as={Radio}
-                          id="tightTimeline-No"
-                          name="tightTimeline"
+                          id="phasedIn-No"
+                          name="phasedIn"
                           label={h('no')}
                           value="NO"
-                          checked={values.tightTimeline === 'NO'}
+                          checked={values.phasedIn === 'NO'}
                         />
                       </Fieldset>
                     </FieldGroup>
@@ -393,8 +417,8 @@ const Milestones = () => {
                         <Field
                           as={TextAreaField}
                           className="height-15"
-                          id="ModelType-note"
-                          name="note"
+                          id="ModelType-phasedInNote"
+                          name="phasedInNote"
                           label={t('Notes')}
                         />
                       </FieldGroup>
