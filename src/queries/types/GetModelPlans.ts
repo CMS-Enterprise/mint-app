@@ -21,7 +21,7 @@ export interface GetModelPlans_modelPlanCollection {
   id: UUID | null;
   modelName: string | null;
   modelCategory: ModelCategory | null;
-  cmsCenter: CMSCenter | null;
+  cmsCenters: CMSCenter[] | null;
   cmmiGroups: CMMIGroup[] | null;
   createdBy: string | null;
   createdDts: Time | null;

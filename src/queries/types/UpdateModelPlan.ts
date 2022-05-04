@@ -14,7 +14,7 @@ export interface UpdateModelPlan_updateModelPlan {
   id: UUID | null;
   modelName: string | null;
   modelCategory: ModelCategory | null;
-  cmsCenter: CMSCenter | null;
+  cmsCenters: CMSCenter[] | null;
   cmmiGroups: CMMIGroup[] | null;
   modifiedBy: string | null;
   modifiedDts: Time | null;
