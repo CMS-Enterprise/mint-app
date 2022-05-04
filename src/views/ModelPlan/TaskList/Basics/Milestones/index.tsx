@@ -177,7 +177,10 @@ const Milestones = () => {
                         maxLength={50}
                         name="completeICIP"
                         onChange={(e: any) => {
-                          setFieldValue('completeICIP', e);
+                          setFieldValue(
+                            'completeICIP',
+                            new Date(e).toISOString()
+                          );
                         }}
                       />
                     </FieldGroup>
@@ -206,7 +209,10 @@ const Milestones = () => {
                           maxLength={50}
                           name="clearanceStarts"
                           onChange={(e: any) => {
-                            setFieldValue('clearanceStarts', e);
+                            setFieldValue(
+                              'clearanceStarts',
+                              new Date(e).toISOString()
+                            );
                           }}
                         />
                       </div>
@@ -231,7 +237,10 @@ const Milestones = () => {
                           maxLength={50}
                           name="clearanceEnds"
                           onChange={(e: any) => {
-                            setFieldValue('clearanceEnds', e);
+                            setFieldValue(
+                              'clearanceEnds',
+                              new Date(e).toISOString()
+                            );
                           }}
                         />
                       </div>
@@ -256,7 +265,7 @@ const Milestones = () => {
                         maxLength={50}
                         name="announced"
                         onChange={(e: any) => {
-                          setFieldValue('announced', e);
+                          setFieldValue('announced', new Date(e).toISOString());
                         }}
                       />
                     </FieldGroup>
@@ -285,7 +294,10 @@ const Milestones = () => {
                           maxLength={50}
                           name="applicationsStart"
                           onChange={(e: any) => {
-                            setFieldValue('applicationsStart', e);
+                            setFieldValue(
+                              'applicationsStart',
+                              new Date(e).toISOString()
+                            );
                           }}
                         />
                       </div>
@@ -309,7 +321,10 @@ const Milestones = () => {
                           maxLength={50}
                           name="applicationsEnd"
                           onChange={(e: any) => {
-                            setFieldValue('applicationsEnd', e);
+                            setFieldValue(
+                              'applicationsEnd',
+                              new Date(e).toISOString()
+                            );
                           }}
                         />
                       </div>
@@ -339,7 +354,10 @@ const Milestones = () => {
                           maxLength={50}
                           name="performancePeriodStarts"
                           onChange={(e: any) => {
-                            setFieldValue('performancePeriodStarts', e);
+                            setFieldValue(
+                              'performancePeriodStarts',
+                              new Date(e).toISOString()
+                            );
                           }}
                         />
                       </div>
@@ -364,7 +382,10 @@ const Milestones = () => {
                           maxLength={50}
                           name="performancePeriodEnds"
                           onChange={(e: any) => {
-                            setFieldValue('performancePeriodEnds', e);
+                            setFieldValue(
+                              'performancePeriodEnds',
+                              new Date(e).toISOString()
+                            );
                           }}
                         />
                       </div>
@@ -389,7 +410,10 @@ const Milestones = () => {
                         maxLength={50}
                         name="wrapUpEnds"
                         onChange={(e: any) => {
-                          setFieldValue('wrapUpEnds', e);
+                          setFieldValue(
+                            'wrapUpEnds',
+                            new Date(e).toISOString()
+                          );
                         }}
                       />
                     </FieldGroup>
