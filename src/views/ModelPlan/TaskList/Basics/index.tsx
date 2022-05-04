@@ -47,6 +47,7 @@ type PlanBasicModelPlanFormType = {
   modelCategory: string;
   cmsCenters: string[];
   cmmiGroup: string[];
+  cmsOther: string;
 };
 
 const BasicsContent = () => {
@@ -78,6 +79,7 @@ const BasicsContent = () => {
           modelCategory: formikValues.modelCategory,
           cmsCenters: formikValues.cmsCenters,
           cmmiGroups: formikValues.cmmiGroup,
+          cmsOther: formikValues.cmsOther,
           status: 'PLAN_DRAFT'
         }
       }
@@ -280,19 +282,11 @@ const BasicsContent = () => {
                                 <Label htmlFor="plan-basics-cmsCategory--Other">
                                   {h('pleaseSpecify')}
                                 </Label>
-                                {/* TODO: once BE adds in this field, we can then implement this */}
                                 <Field
                                   as={TextInput}
                                   id="plan-basics-cmsCategory--Other"
                                   maxLength={50}
-                                  name="cmsComponentOther"
-                                  onChange={(
-                                    e: React.ChangeEvent<HTMLInputElement>
-                                  ) => {
-                                    console.log(
-                                      `Other CMS Group: ${e.target.value}`
-                                    );
-                                  }}
+                                  name="cmsOther"
                                 />
                               </FieldGroup>
                             )}
