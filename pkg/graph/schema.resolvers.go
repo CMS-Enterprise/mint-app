@@ -18,13 +18,13 @@ import (
 
 func (r *modelPlanResolver) CmsCenters(ctx context.Context, obj *models.ModelPlan) ([]models.CMSCenter, error) {
 	// TODO: We should probably have a better way to handle enum arrays
-	var cmsGroups []models.CMSCenter
+	var cmsCenters []models.CMSCenter
 
-	for _, item := range obj.CMMIGroups {
-		cmsGroups = append(cmsGroups, models.CMSCenter(item))
+	for _, item := range obj.CMSCenters {
+		cmsCenters = append(cmsCenters, models.CMSCenter(item))
 	}
 
-	return cmsGroups, nil
+	return cmsCenters, nil
 }
 
 func (r *modelPlanResolver) CmmiGroups(ctx context.Context, obj *models.ModelPlan) ([]model.CMMIGroup, error) {
@@ -81,8 +81,6 @@ func (r *mutationResolver) CreateModelPlan(ctx context.Context, input model.Mode
 
 	plan := ConvertToModelPlan(&input)
 
-	plan.CreatedBy = &principal
-	plan.ModifiedBy = &principal
 	return resolvers.ModelPlanCreate(logger, plan, r.store, principalInfo)
 }
 
@@ -122,9 +120,8 @@ func (r *mutationResolver) UpdateModelPlan(ctx context.Context, input model.Mode
 	plan := ConvertToModelPlan(&input)
 	principal := appcontext.Principal(ctx).ID()
 	logger := appcontext.ZLogger(ctx)
-	//TODO clean this up
-	plan.ModifiedBy = &principal
-	return resolvers.ModelPlanUpdate(logger, plan, r.store)
+
+	return resolvers.ModelPlanUpdate(logger, plan, &principal, r.store)
 }
 
 func (r *mutationResolver) UpdatePlanBasics(ctx context.Context, input model.PlanBasicsInput) (*models.PlanBasics, error) {

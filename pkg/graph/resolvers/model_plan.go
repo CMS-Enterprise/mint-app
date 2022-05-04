@@ -10,6 +10,8 @@ import (
 
 // ModelPlanCreate implements resolver logic to create a model plan
 func ModelPlanCreate(logger *zap.Logger, plan *models.ModelPlan, store *storage.Store, principalInfo *models.UserInfo) (*models.ModelPlan, error) {
+	plan.CreatedBy = &principalInfo.EuaUserID
+	plan.ModifiedBy = plan.CreatedBy
 
 	createdPlan, err := store.ModelPlanCreate(logger, plan)
 	if err != nil {
@@ -33,7 +35,9 @@ func ModelPlanCreate(logger *zap.Logger, plan *models.ModelPlan, store *storage.
 }
 
 // ModelPlanUpdate implements resolver logic to update a model plan
-func ModelPlanUpdate(logger *zap.Logger, plan *models.ModelPlan, store *storage.Store) (*models.ModelPlan, error) {
+func ModelPlanUpdate(logger *zap.Logger, plan *models.ModelPlan, principal *string, store *storage.Store) (*models.ModelPlan, error) {
+	plan.ModifiedBy = principal
+
 	retPlan, err := store.ModelPlanUpdate(logger, plan)
 	if err != nil {
 		return nil, err

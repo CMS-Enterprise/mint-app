@@ -56,6 +56,7 @@ func TestFetchPlanMilestonesByID(t *testing.T) {
 	principal := "FAKE"
 	principalInfo := models.UserInfo{
 		CommonName: "Fake Tester name",
+		EuaUserID:  principal,
 	}
 
 	modelName := "FAKE"

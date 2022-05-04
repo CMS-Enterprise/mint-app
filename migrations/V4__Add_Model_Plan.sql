@@ -7,8 +7,8 @@ CREATE TABLE model_plan (
     cmmi_groups CMMI_GROUP[],
     archived BOOL NOT NULL DEFAULT FALSE,
     status MODEL_PLAN_STATUS NOT NULL,
-    created_by EUA_ID,
+    created_by EUA_ID NOT NULL,
     created_dts TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    modified_by EUA_ID,
+    modified_by EUA_ID NOT NULL,
     modified_dts TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
