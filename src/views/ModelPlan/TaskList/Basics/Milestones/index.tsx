@@ -134,10 +134,6 @@ const Milestones = () => {
             {t('helpText')}
           </p>
 
-          <PageHeading headingLevel="h3" className="margin-bottom-4">
-            {t('highLevelTimeline')}
-          </PageHeading>
-
           <Formik
             initialValues={initialValues}
             onSubmit={handleFormSubmit}
@@ -184,6 +180,9 @@ const Milestones = () => {
                       window.scrollTo(0, 0);
                     }}
                   >
+                    <PageHeading headingLevel="h3" className="margin-bottom-4">
+                      {t('highLevelTimeline')}
+                    </PageHeading>
                     <FieldGroup
                       scrollElement="completeICIP"
                       error={!!flatErrors.completeICIP}
