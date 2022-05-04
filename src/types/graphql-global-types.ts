@@ -63,7 +63,8 @@ export interface ModelPlanInput {
   id?: UUID | null;
   modelName?: string | null;
   modelCategory?: ModelCategory | null;
-  cmsCenter?: CMSCenter | null;
+  cmsCenters?: CMSCenter[] | null;
+  cmsOther?: string | null;
   cmmiGroups?: CMMIGroup[] | null;
   archived: boolean;
   createdBy?: string | null;

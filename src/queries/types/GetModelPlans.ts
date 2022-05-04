@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { ModelCategory, CMSCenter, CMMIGroup, TeamRole } from "./../../types/graphql-global-types";
+import { ModelCategory, CMMIGroup, TeamRole } from "./../../types/graphql-global-types";
 
 // ====================================================
 // GraphQL query operation: GetModelPlans
@@ -21,7 +21,6 @@ export interface GetModelPlans_modelPlanCollection {
   id: UUID | null;
   modelName: string | null;
   modelCategory: ModelCategory | null;
-  cmsCenter: CMSCenter | null;
   cmmiGroups: CMMIGroup[] | null;
   createdBy: string | null;
   createdDts: Time | null;

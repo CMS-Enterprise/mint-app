@@ -6,7 +6,6 @@ export default gql`
       id
       modelName
       modelCategory
-      cmsCenter
       cmmiGroups
       createdBy
       createdDts
