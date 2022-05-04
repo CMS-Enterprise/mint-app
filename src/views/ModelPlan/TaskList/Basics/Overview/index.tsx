@@ -33,7 +33,6 @@ import flattenErrors from 'utils/flattenErrors';
 import planBasicsSchema from 'validations/planBasics';
 
 interface PlanBasicsOverviewTypes {
-  // TODO: change this prop 👇 to take in the enums
   modelType: string;
   problem: string;
   goal: string;
