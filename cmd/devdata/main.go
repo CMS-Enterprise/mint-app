@@ -3,6 +3,8 @@ package main
 import (
 	"github.com/google/uuid"
 
+	"time"
+
 	"github.com/lib/pq"
 	// _ "github.com/lib/pq" // required for postgres driver in sql
 	"go.uber.org/zap"
@@ -93,13 +95,32 @@ func main() {
 
 	makePlanBasics(pmGreatPlan.ID, logger, store, func(b *models.PlanBasics) {
 		b.ModelType = &mandatory
-		b.ModelPlanID = pmGreatPlan.ID
+
 		b.Problem = models.StringPointer("There is not enough candy")
 		b.TestInventions = models.StringPointer("The great candy machine")
 		b.Note = models.StringPointer("The machine doesn't work yet")
 		b.Status = inProgress
 
 	})
+
+	makePlanMilestones(pmGreatPlan.ID, logger, store, func(m *models.PlanMilestones) {
+		now := time.Now()
+		phased := false
+		m.CompleteICIP = &now
+		m.ClearanceStarts = &now
+		m.ClearanceEnds = &now
+		m.Announced = &now
+		m.ApplicationsStart = &now
+		m.ApplicationsEnd = &now
+		m.PerformancePeriodStarts = &now
+		m.PerformancePeriodEnds = &now
+		m.WrapUpEnds = &now
+		m.HighLevelNote = models.StringPointer("Theses are my  best guess notes")
+		m.PhasedIn = &phased
+		m.PhasedInNote = models.StringPointer("This can't be phased in")
+
+	})
+
 	pmGreatDiscuss := makePlanDiscussion(pmGreatPlan.ID, logger, store, func(pd *models.PlanDiscussion) {
 		pd.Content = "What is the purpose of this plan?"
 		pd.Status = models.DiscussionAnswered
@@ -129,11 +150,27 @@ func main() {
 
 	makePlanBasics(plan2.ID, logger, store, func(b *models.PlanBasics) {
 		b.ModelType = &voluntary
-		b.ModelPlanID = uuid.MustParse("18624c5b-4c00-49a7-960f-ac6d8b2c58df")
 		b.Problem = models.StringPointer("There is not enough candy")
 		b.TestInventions = models.StringPointer("The great candy machine")
 		b.Note = models.StringPointer("The machine doesn't work yet")
 		b.Status = inProgress
+
+	})
+	makePlanMilestones(plan2.ID, logger, store, func(m *models.PlanMilestones) {
+		now := time.Now()
+		phased := true
+		m.CompleteICIP = &now
+		m.ClearanceStarts = &now
+		m.ClearanceEnds = &now
+		m.Announced = &now
+		m.ApplicationsStart = &now
+		m.ApplicationsEnd = &now
+		m.PerformancePeriodStarts = &now
+		m.PerformancePeriodEnds = &now
+		m.WrapUpEnds = &now
+		m.HighLevelNote = models.StringPointer("Theses are my  best guess notes")
+		m.PhasedIn = &phased
+		m.PhasedInNote = models.StringPointer("This will be phased in")
 
 	})
 
@@ -179,10 +216,10 @@ func makePlanBasics(uuid uuid.UUID, logger *zap.Logger, store *storage.Store, ca
 	status := models.TaskReady
 
 	basics := models.PlanBasics{
-
-		CreatedBy:  models.StringPointer("ABCD"),
-		ModifiedBy: models.StringPointer("ABCD"),
-		Status:     status,
+		ModelPlanID: uuid,
+		CreatedBy:   models.StringPointer("ABCD"),
+		ModifiedBy:  models.StringPointer("ABCD"),
+		Status:      status,
 	}
 
 	for _, cb := range callbacks {
@@ -227,5 +264,36 @@ func makeDiscussionReply(uuid uuid.UUID, logger *zap.Logger, store *storage.Stor
 
 	dbReply, _ := store.DiscussionReplyCreate(logger, &reply)
 	return dbReply
+
+}
+
+func makePlanMilestones(uuid uuid.UUID, logger *zap.Logger, store *storage.Store, callbacks ...func(*models.PlanMilestones)) *models.PlanMilestones {
+
+	milestones := models.PlanMilestones{
+		ModelPlanID: uuid,
+		// CompleteICIP: ,
+
+		// ClearanceStarts: ,
+		// ClearanceEnds: ,
+		// Announced: ,
+		// ApplicationsStart: ,
+		// ApplicationsEnd: ,
+		// PerformancePeriodStarts: ,
+		// PerformancePeriodEnds: ,
+		// WrapUpEnds: ,
+		// HighLevelNote: ,
+		// PhasedIn: ,
+		// PhasedInNote: ,
+		CreatedBy:  models.StringPointer("ABCD"),
+		ModifiedBy: models.StringPointer("ABCD"),
+		Status:     models.TaskReady,
+	}
+
+	for _, cb := range callbacks {
+		cb(&milestones)
+	}
+
+	dbmilestones, _ := store.PlanMilestonesCreate(logger, &milestones)
+	return dbmilestones
 
 }

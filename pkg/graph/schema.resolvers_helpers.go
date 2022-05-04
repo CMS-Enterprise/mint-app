@@ -67,14 +67,18 @@ func ConvertToPlanBasics(mpi *model.PlanBasicsInput) *models.PlanBasics {
 func ConvertToPlanMilestonesModel(input *model.PlanMilestonesInput) *models.PlanMilestones {
 	model := models.PlanMilestones{
 		ModelPlanID:             *input.ModelPlanID,
-		EnterCMSClearance:       input.EnterCMSClearance,
-		EnterHMSOMBClearance:    input.EnterHMSOMBClearance,
-		Cleared:                 input.Cleared,
+		CompleteICIP:            input.CompleteIcip,
+		ClearanceStarts:         input.ClearanceStarts,
+		ClearanceEnds:           input.ClearanceEnds,
 		Announced:               input.Announced,
-		ApplicationsDue:         input.ApplicationsDue,
-		ParticipantsAnnounced:   input.ParticipantsAnnounced,
+		ApplicationsStart:       input.ApplicationsStart,
+		ApplicationsEnd:         input.ApplicationsEnd,
 		PerformancePeriodStarts: input.PerformancePeriodStarts,
 		PerformancePeriodEnds:   input.PerformancePeriodEnds,
+		WrapUpEnds:              input.WrapUpEnds,
+		HighLevelNote:           input.HighLevelNote,
+		PhasedIn:                input.PhasedIn,
+		PhasedInNote:            input.PhasedInNote,
 		CreatedBy:               input.CreatedBy,
 		CreatedDts:              input.CreatedDts,
 		ModifiedBy:              input.ModifiedBy,
@@ -83,6 +87,9 @@ func ConvertToPlanMilestonesModel(input *model.PlanMilestonesInput) *models.Plan
 
 	if input.ID != nil {
 		model.ID = *input.ID
+	}
+	if input.Status != nil {
+		model.Status = *input.Status
 	}
 
 	return &model

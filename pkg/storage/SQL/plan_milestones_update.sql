@@ -1,28 +1,39 @@
 UPDATE plan_milestones
 SET
-    enter_cms_clearance = :enter_cms_clearance,
-    enter_hhs_omb_clearance = :enter_hhs_omb_clearance,
-    cleared = :cleared,
+    complete_icip = :complete_icip,
+    clearance_starts = :clearance_starts,
+    clearance_ends = :clearance_ends,
     announced = :announced,
-    applications_due = :applications_due,
-    participants_announced = :participants_announced,
+    applications_starts = :applications_starts,
+    applications_ends = :applications_ends,
     performance_period_starts = :performance_period_starts,
     performance_period_ends = :performance_period_ends,
+    wrap_up_ends = :wrap_up_ends,
+    high_level_note = NULLIF(:high_level_note, ''),
+    phased_in = :phased_in,
+    phased_in_note = NULLIF(:phased_in_note, ''),
     modified_by = :modified_by,
-    modified_dts = CURRENT_TIMESTAMP
+    modified_dts = CURRENT_TIMESTAMP,
+    status = :status
 
 WHERE plan_milestones.id = :id
 RETURNING
     id,
-    enter_cms_clearance,
-    enter_hhs_omb_clearance,
-    cleared,
+    model_plan_id,
+    complete_icip,
+    clearance_starts,
+    clearance_ends,
     announced,
-    applications_due,
-    participants_announced,
+    applications_starts,
+    applications_ends,
     performance_period_starts,
     performance_period_ends,
+    wrap_up_ends,
+    high_level_note,
+    phased_in,
+    phased_in_note,
     created_by,
     created_dts,
     modified_by,
-    modified_dts;
+    modified_dts,
+    status;
