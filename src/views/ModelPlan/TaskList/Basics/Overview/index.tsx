@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
@@ -45,8 +45,10 @@ const Overview = () => {
   const { t } = useTranslation('basics');
   const { t: h } = useTranslation('draftModelPlan');
   const { modelId } = useParams<{ modelId: string }>();
-  const [hasAdditionalNote, setHasAdditionalNote] = useState(false);
+
+  const formikRef = useRef<FormikProps<PlanBasicsOverviewTypes>>(null);
   const history = useHistory();
+  const [hasAdditionalNote, setHasAdditionalNote] = useState(false);
 
   const { data } = useQuery<GetModelPlan, GetModelPlanVariables>(
     GetModelPlanQuery,
@@ -96,8 +98,7 @@ const Overview = () => {
         }
       })
       .catch(errors => {
-        // formikRef?.current?.setErrors(errors);
-        console.log(errors);
+        formikRef?.current?.setErrors(errors);
       });
   };
 
@@ -134,6 +135,7 @@ const Overview = () => {
             validateOnBlur={false}
             validateOnChange={false}
             validateOnMount={false}
+            innerRef={formikRef}
           >
             {(formikProps: FormikProps<PlanBasicsOverviewTypes>) => {
               const {
