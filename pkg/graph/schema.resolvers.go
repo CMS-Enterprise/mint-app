@@ -18,13 +18,13 @@ import (
 
 func (r *modelPlanResolver) CmsCenters(ctx context.Context, obj *models.ModelPlan) ([]models.CMSCenter, error) {
 	// TODO: We should probably have a better way to handle enum arrays
-	var cmsGroups []models.CMSCenter
+	var cmsCenters []models.CMSCenter
 
-	for _, item := range obj.CMMIGroups {
-		cmsGroups = append(cmsGroups, models.CMSCenter(item))
+	for _, item := range obj.CMSCenters {
+		cmsCenters = append(cmsCenters, models.CMSCenter(item))
 	}
 
-	return cmsGroups, nil
+	return cmsCenters, nil
 }
 
 func (r *modelPlanResolver) CmmiGroups(ctx context.Context, obj *models.ModelPlan) ([]model.CMMIGroup, error) {
