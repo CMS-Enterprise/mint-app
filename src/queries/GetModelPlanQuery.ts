@@ -8,6 +8,9 @@ export default gql`
       basics {
         id
       }
+      milestones {
+        id
+      }
     }
   }
 `;

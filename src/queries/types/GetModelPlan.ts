@@ -12,11 +12,17 @@ export interface GetModelPlan_modelPlan_basics {
   id: UUID | null;
 }
 
+export interface GetModelPlan_modelPlan_milestones {
+  __typename: "PlanMilestones";
+  id: UUID | null;
+}
+
 export interface GetModelPlan_modelPlan {
   __typename: "ModelPlan";
   id: UUID | null;
   modelName: string | null;
   basics: GetModelPlan_modelPlan_basics | null;
+  milestones: GetModelPlan_modelPlan_milestones | null;
 }
 
 export interface GetModelPlan {
