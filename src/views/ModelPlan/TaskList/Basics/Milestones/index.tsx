@@ -135,7 +135,7 @@ const Milestones = () => {
                     <FieldGroup
                       scrollElement="completeICIP"
                       error={!!flatErrors.completeICIP}
-                      className="margin-top-4 grid-col-6"
+                      className="margin-top-4"
                     >
                       <Label htmlFor="Milestone-completeICIP">
                         {t('completeICIP')}
@@ -153,55 +153,185 @@ const Milestones = () => {
                       />
                     </FieldGroup>
 
-                    <FieldGroup className="grid-row flex-align-end">
-                      <Fieldset className="grid-col-6">
-                        <legend className="usa-label">{t('clearance')}</legend>
-                        <label
-                          htmlFor="Milestone-clearanceStartDate"
-                          className="margin-top-0 usa-legend"
-                        >
-                          {t('clearanceStartDate')}
-                        </label>
-                        <div className="usa-hint" id="appointment-date-hint">
-                          {h('datePlaceholder')}
-                        </div>
-                        <FieldErrorMsg>
-                          {flatErrors.clearanceStartDate}
-                        </FieldErrorMsg>
-                        <Field
-                          as={DatePicker}
-                          error={!!flatErrors.clearanceStartDate}
-                          id="Milestone-clearanceStartDate"
-                          maxLength={50}
-                          name="clearanceStartDate"
-                        />
-                      </Fieldset>
-
-                      <Fieldset
-                        legend={t('clearance')}
-                        className="grid-col-6"
-                        legendStyle="srOnly"
+                    <FieldGroup>
+                      <legend className="usa-label">{t('clearance')}</legend>
+                      <label
+                        htmlFor="Milestone-clearanceStartDate"
+                        className="margin-top-0 usa-legend"
                       >
-                        <label
-                          htmlFor="Milestone-clearanceStartDate"
-                          className="margin-top-0 usa-legend"
-                        >
-                          {t('clearanceEndDate')}
-                        </label>
-                        <div className="usa-hint" id="appointment-date-hint">
-                          {h('datePlaceholder')}
-                        </div>
-                        <FieldErrorMsg>
-                          {flatErrors.clearanceEndDate}
-                        </FieldErrorMsg>
-                        <Field
-                          as={DatePicker}
-                          error={!!flatErrors.clearanceEndDate}
-                          id="Milestone-clearanceEndDate"
-                          maxLength={50}
-                          name="clearanceEndDate"
-                        />
-                      </Fieldset>
+                        {t('clearanceStartDate')}
+                      </label>
+                      <div className="usa-hint" id="appointment-date-hint">
+                        {h('datePlaceholder')}
+                      </div>
+                      <FieldErrorMsg>
+                        {flatErrors.clearanceStartDate}
+                      </FieldErrorMsg>
+                      <Field
+                        as={DatePicker}
+                        error={!!flatErrors.clearanceStartDate}
+                        id="Milestone-clearanceStartDate"
+                        maxLength={50}
+                        name="clearanceStartDate"
+                      />
+                    </FieldGroup>
+
+                    <FieldGroup>
+                      <label
+                        htmlFor="Milestone-clearanceEndDate"
+                        className="margin-top-0 usa-legend"
+                      >
+                        {t('clearanceEndDate')}
+                      </label>
+                      <div className="usa-hint" id="appointment-date-hint">
+                        {h('datePlaceholder')}
+                      </div>
+                      <FieldErrorMsg>
+                        {flatErrors.clearanceEndDate}
+                      </FieldErrorMsg>
+                      <Field
+                        as={DatePicker}
+                        error={!!flatErrors.clearanceEndDate}
+                        id="Milestone-clearanceEndDate"
+                        maxLength={50}
+                        name="clearanceEndDate"
+                      />
+                    </FieldGroup>
+
+                    <FieldGroup
+                      scrollElement="annouceModel"
+                      error={!!flatErrors.annouceModel}
+                      className="margin-top-4"
+                    >
+                      <Label htmlFor="Milestone-annouceModel">
+                        {t('annouceModel')}
+                      </Label>
+                      <div className="usa-hint" id="appointment-date-hint">
+                        {h('datePlaceholder')}
+                      </div>
+                      <FieldErrorMsg>{flatErrors.annouceModel}</FieldErrorMsg>
+                      <Field
+                        as={DatePicker}
+                        error={!!flatErrors.annouceModel}
+                        id="Milestone-annouceModel"
+                        maxLength={50}
+                        name="annouceModel"
+                      />
+                    </FieldGroup>
+
+                    <FieldGroup>
+                      <legend className="usa-label">
+                        {t('applicationPeriod')}
+                      </legend>
+                      <label
+                        htmlFor="Milestone-applicationStartDate"
+                        className="margin-top-0 usa-legend"
+                      >
+                        {t('applicationStartDate')}
+                      </label>
+                      <div className="usa-hint" id="appointment-date-hint">
+                        {h('datePlaceholder')}
+                      </div>
+                      <FieldErrorMsg>
+                        {flatErrors.applicationStartDate}
+                      </FieldErrorMsg>
+                      <Field
+                        as={DatePicker}
+                        error={!!flatErrors.applicationStartDate}
+                        id="Milestone-applicationStartDate"
+                        maxLength={50}
+                        name="applicationStartDate"
+                      />
+                    </FieldGroup>
+
+                    <FieldGroup>
+                      <label
+                        htmlFor="Milestone-applicationEndDate"
+                        className="margin-top-0 usa-legend"
+                      >
+                        {t('applicationEndDate')}
+                      </label>
+                      <div className="usa-hint" id="appointment-date-hint">
+                        {h('datePlaceholder')}
+                      </div>
+                      <FieldErrorMsg>
+                        {flatErrors.applicationEndDate}
+                      </FieldErrorMsg>
+                      <Field
+                        as={DatePicker}
+                        error={!!flatErrors.applicationEndDate}
+                        id="Milestone-applicationEndDate"
+                        maxLength={50}
+                        name="applicationEndDate"
+                      />
+                    </FieldGroup>
+
+                    <FieldGroup>
+                      <legend className="usa-label">
+                        {t('demonstrationPerformance')}
+                      </legend>
+                      <label
+                        htmlFor="Milestone-performanceStartDate"
+                        className="margin-top-0 usa-legend"
+                      >
+                        {t('performanceStartDate')}
+                      </label>
+                      <div className="usa-hint" id="appointment-date-hint">
+                        {h('datePlaceholder')}
+                      </div>
+                      <FieldErrorMsg>
+                        {flatErrors.performanceStartDate}
+                      </FieldErrorMsg>
+                      <Field
+                        as={DatePicker}
+                        error={!!flatErrors.performanceStartDate}
+                        id="Milestone-performanceStartDate"
+                        maxLength={50}
+                        name="performanceStartDate"
+                      />
+                    </FieldGroup>
+
+                    <FieldGroup>
+                      <label
+                        htmlFor="Milestone-performanceEndDate"
+                        className="margin-top-0 usa-legend"
+                      >
+                        {t('performanceEndDate')}
+                      </label>
+                      <div className="usa-hint" id="appointment-date-hint">
+                        {h('datePlaceholder')}
+                      </div>
+                      <FieldErrorMsg>
+                        {flatErrors.performanceEndDate}
+                      </FieldErrorMsg>
+                      <Field
+                        as={DatePicker}
+                        error={!!flatErrors.performanceEndDate}
+                        id="Milestone-performanceEndDate"
+                        maxLength={50}
+                        name="performanceEndDate"
+                      />
+                    </FieldGroup>
+
+                    <FieldGroup
+                      scrollElement="modelWrapUp"
+                      error={!!flatErrors.modelWrapUp}
+                      className="margin-top-4"
+                    >
+                      <Label htmlFor="Milestone-modelWrapUp">
+                        {t('modelWrapUp')}
+                      </Label>
+                      <div className="usa-hint" id="appointment-date-hint">
+                        {h('datePlaceholder')}
+                      </div>
+                      <FieldErrorMsg>{flatErrors.modelWrapUp}</FieldErrorMsg>
+                      <Field
+                        as={DatePicker}
+                        error={!!flatErrors.modelWrapUp}
+                        id="Milestone-modelWrapUp"
+                        maxLength={50}
+                        name="modelWrapUp"
+                      />
                     </FieldGroup>
 
                     <FieldGroup
