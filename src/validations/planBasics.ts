@@ -25,12 +25,7 @@ const planBasicsSchema = {
   }),
 
   pageTwoSchema: Yup.object().shape({
-    modelType: Yup.string().required('A model type is required'),
-    problem: Yup.string().trim().required('Tell us about the problem'),
-    goal: Yup.string().trim().required('Tell us about the goal'),
-    testInterventions: Yup.string()
-      .trim()
-      .required('Tell us about the test interventions')
+    modelType: Yup.string().required('A model type is required')
   }),
 
   pageThreeSchema: Yup.object().shape({
