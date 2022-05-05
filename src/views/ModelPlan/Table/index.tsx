@@ -9,9 +9,9 @@ import {
 } from 'react-table';
 import { useQuery } from '@apollo/client';
 import { Table as UswdsTable } from '@trussworks/react-uswds';
-import { DateTime } from 'luxon';
 
 import UswdsReactLink from 'components/LinkWrapper';
+import PageLoading from 'components/PageLoading';
 import Alert from 'components/shared/Alert';
 import GlobalClientFilter from 'components/TableFilter';
 import TablePagination from 'components/TablePagination';
@@ -284,7 +284,7 @@ type DraftModelTableProps = {
 };
 
 const DraftModelPlansTable = ({ hiddenColumns }: DraftModelTableProps) => {
-  const { error, data: modelPlans } = useQuery<GetDraftModelPlansType>(
+  const { error, loading, data: modelPlans } = useQuery<GetDraftModelPlansType>(
     GetDraftModelPlans
   );
 
@@ -317,6 +317,10 @@ const DraftModelPlansTable = ({ hiddenColumns }: DraftModelTableProps) => {
     }
     return { ...item };
   });
+
+  if (loading) {
+    return <PageLoading />;
+  }
 
   if (error) {
     return <div>{JSON.stringify(error)}</div>;

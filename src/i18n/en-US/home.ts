@@ -13,12 +13,13 @@ const home = {
     copy: 'Have a new model or demonstration?',
     cta: 'Start a draft model plan'
   },
+  downloadCSV: 'Download all plans as CSV',
   requestsTable: {
     basic: {
-      heading: 'My draft model plans'
+      heading: 'My model plans'
     },
     admin: {
-      heading: 'Draft model plans'
+      heading: 'Model plans'
     },
     empty: {
       heading: 'You don’t have any draft model plans yet',
