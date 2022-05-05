@@ -36,6 +36,15 @@
   z-index: 300;
 }
 
+.usa-table th {
+  padding: 1rem;
+}
+
+.usa-breadcrumb__list-item:not(:last-child)::after {
+  margin-left: .25rem;
+  margin-right: .25rem;
+}
+
 .usa-alert.mint-inline-alert {
   background-color: white;
   background-size: 1.6rem;

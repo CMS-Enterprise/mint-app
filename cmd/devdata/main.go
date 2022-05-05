@@ -54,6 +54,7 @@ func main() {
 	makeModelPlan("Mrs. Mint", logger, store, func(p *models.ModelPlan) {
 		p.ID = uuid.MustParse("f11eb129-2c80-4080-9440-439cbe1a286f")
 		p.ModelName = models.StringPointer("My excellent plan that I just initiated")
+		p.Status = models.ModelStatusPlanDraft
 
 		p.ModelCategory = &cat
 		p.CMSCenters = pq.StringArray{string(models.CMSCenterForMedicare), string(models.CMSOther)}
@@ -82,6 +83,7 @@ func main() {
 	pmGreatPlan := makeModelPlan("Mrs. Mint", logger, store, func(p *models.ModelPlan) {
 		p.ID = uuid.MustParse("6e224030-09d5-46f7-ad04-4bb851b36eab")
 		p.ModelName = models.StringPointer("PM Butler's great plan")
+		p.Status = models.ModelStatusPlanDraft
 
 		p.CMMIGroups = pq.StringArray{"POLICY_AND_PROGRAMS_GROUP", "SEAMLESS_CARE_MODELS_GROUP"}
 
@@ -139,6 +141,7 @@ func main() {
 	plan2 := makeModelPlan("Excellent Model", logger, store, func(p *models.ModelPlan) {
 		p.ID = uuid.MustParse("18624c5b-4c00-49a7-960f-ac6d8b2c58df")
 		p.ModelName = models.StringPointer("Platonian ideal")
+		p.Status = models.ModelStatusPlanDraft
 
 		p.ModelCategory = &ac
 		p.CMSCenters = pq.StringArray{string(cms)}
@@ -177,13 +180,14 @@ func main() {
 }
 
 func makeModelPlan(modelName string, logger *zap.Logger, store *storage.Store, callbacks ...func(*models.ModelPlan)) *models.ModelPlan {
+	status := models.ModelStatusPlanDraft
 
 	plan := models.ModelPlan{
-		ModelName: &modelName,
-
+		ModelName:  &modelName,
+		Archived:   false,
 		CreatedBy:  models.StringPointer("ABCD"),
 		ModifiedBy: models.StringPointer("ABCD"),
-		Status:     models.ModelStatusPlanDraft,
+		Status:     status,
 	}
 
 	for _, cb := range callbacks {

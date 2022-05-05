@@ -50,9 +50,9 @@ services:
         - REACT_APP_LOCAL_AUTH_ENABLED=true
     environment:
       - CI=true #https://github.com/facebook/create-react-app/issues/8688
-    entrypoint: ['serve', '-s', '-l', '3000']
+    entrypoint: ['serve', '-s', '-l', '3005']
     ports:
-      - 3000:3000
+      - 3005:3005
   cypress:
     build:
       context: .

@@ -10,7 +10,7 @@ In the project directory, you can run:
 
 Runs the CMS EASi frontend application in the development mode.
 
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Open [http://localhost:3005](http://localhost:3005) to view it in the browser.
 
 If you run `scripts\dev up`, it will run here [http://localhost:3005](http://localhost:3005)
 

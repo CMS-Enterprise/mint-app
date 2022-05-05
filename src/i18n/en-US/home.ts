@@ -30,10 +30,12 @@ const home = {
     headers: {
       name: 'Model name',
       category: 'Category',
-      modelPoc: 'Model POCs',
+      modelPoc: 'Model Team Leads',
       clearanceDate: 'Clearance Date',
       recentActivity: 'Recent activity'
-    }
+    },
+    noneSelectedYet: 'None selected yet',
+    tbd: 'TBD'
   }
 };
 
