@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
-import { useQuery } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import {
   Breadcrumb,
   BreadcrumbBar,
@@ -23,11 +23,15 @@ import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import TextAreaField from 'components/shared/TextAreaField';
+import CreatePlanMilestones from 'queries/CreatePlanMilestones';
 import GetModelPlanQuery from 'queries/GetModelPlanQuery';
+import { CreatePlanMilestones as CreatePlanMilestonesType } from 'queries/types/CreatePlanMilestones';
 import {
   GetModelPlan,
   GetModelPlanVariables
 } from 'queries/types/GetModelPlan';
+import { UpdatePlanMilestones as UpdatePlanMilestonesType } from 'queries/types/UpdatePlanMilestones';
+import UpdatePlanMilestones from 'queries/UpdatePlanMilestones';
 import flattenErrors from 'utils/flattenErrors';
 import planBasicsSchema from 'validations/planBasics';
 
@@ -67,7 +71,10 @@ const Milestones = () => {
     }
   );
 
-  const { modelName } = data?.modelPlan || {};
+  const { modelName, milestones } = data?.modelPlan || {};
+
+  const [create] = useMutation<CreatePlanMilestonesType>(CreatePlanMilestones);
+  const [update] = useMutation<UpdatePlanMilestonesType>(UpdatePlanMilestones);
 
   const initialValues = {
     completeICIP: '',
@@ -84,29 +91,75 @@ const Milestones = () => {
     phasedInNote: ''
   };
 
-  const handleFormSubmit = (formikValues: PlanBasicsOverviewTypes) => {
-    console.log(formikValues);
-    // update({
-    //   variables: {
-    //     input: {
-    //       id: modelId,
-    //       modelName: formikValues.modelName,
-    //       modelCategory: formikValues.modelCategory,
-    //       cmsCenters: formikValues.cmsCenters,
-    //       cmmiGroups: formikValues.cmmiGroup,
-    //       cmsOther: formikValues.cmsOther,
-    //       status: 'PLAN_DRAFT'
-    //     }
-    //   }
-    // })
-    //   .then(response => {
-    //     if (!response?.errors) {
-    //       history.push(`/models/${modelId}/task-list/basics/overview`);
-    //     }
-    //   })
-    //   .catch(errors => {
-    //     formikRef?.current?.setErrors(errors);
-    //   });
+  const handleFormSubmit = ({
+    completeICIP,
+    clearanceStarts,
+    clearanceEnds,
+    announced,
+    applicationsStart,
+    applicationsEnd,
+    performancePeriodStarts,
+    performancePeriodEnds,
+    wrapUpEnds,
+    highLevelNote,
+    phasedIn,
+    phasedInNote
+  }: PlanBasicsOverviewTypes) => {
+    if (milestones) {
+      update({
+        variables: {
+          input: {
+            completeICIP,
+            clearanceStarts,
+            clearanceEnds,
+            announced,
+            applicationsStart,
+            applicationsEnd,
+            performancePeriodStarts,
+            performancePeriodEnds,
+            wrapUpEnds,
+            highLevelNote,
+            phasedIn,
+            phasedInNote
+          }
+        }
+      })
+        .then(response => {
+          if (!response?.errors) {
+            history.push(`/models/${modelId}/task-list`);
+          }
+        })
+        .catch(errors => {
+          formikRef?.current?.setErrors(errors);
+        });
+    } else {
+      create({
+        variables: {
+          input: {
+            completeICIP,
+            clearanceStarts,
+            clearanceEnds,
+            announced,
+            applicationsStart,
+            applicationsEnd,
+            performancePeriodStarts,
+            performancePeriodEnds,
+            wrapUpEnds,
+            highLevelNote,
+            phasedIn,
+            phasedInNote
+          }
+        }
+      })
+        .then(response => {
+          if (!response?.errors) {
+            history.push(`/models/${modelId}/task-list`);
+          }
+        })
+        .catch(errors => {
+          formikRef?.current?.setErrors(errors);
+        });
+    }
   };
 
   return (
@@ -560,7 +613,7 @@ const Milestones = () => {
                         className=""
                         onClick={() => setErrors({})}
                       >
-                        {h('next')}
+                        {h('saveAndStartNext')}
                       </Button>
                     </div>
                   </Form>
