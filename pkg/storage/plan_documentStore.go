@@ -42,8 +42,6 @@ func (s *Store) PlanDocumentCreate(
 	input *model.PlanDocumentInput,
 	s3Client *upload.S3Client) (*models.PlanDocument, error) {
 
-	// TODO: Role Authorization Check
-
 	if input.DocumentParameters == nil {
 		return nil, errors.New("DocumentParameters are required when creating a new document")
 	}
@@ -158,15 +156,15 @@ func planDocumentsUpdateVirusScanStatuses(s3Client *upload.S3Client, documents [
 }
 
 func planDocumentUpdateVirusScanStatus(s3Client *upload.S3Client, document *models.PlanDocument) error {
-	value, valueErr := s3Client.TagValueForKey(*document.FileKey, "av-status")
-	if valueErr != nil {
-		return valueErr
+	status, err := fetchDocumentTag(s3Client, document, "av-status")
+	if err != nil {
+		return err
 	}
 
-	if value == "CLEAN" {
+	if status == "CLEAN" {
 		document.VirusScanned = true
 		document.VirusClean = true
-	} else if value == "INFECTED" {
+	} else if status == "INFECTED" {
 		document.VirusScanned = true
 		document.VirusClean = false
 	} else {
@@ -174,6 +172,14 @@ func planDocumentUpdateVirusScanStatus(s3Client *upload.S3Client, document *mode
 		document.VirusClean = false
 	}
 	return nil
+}
+
+func fetchDocumentTag(s3Client *upload.S3Client, document *models.PlanDocument, tagName string) (string, error) {
+	value, valueErr := s3Client.TagValueForKey(*document.FileKey, tagName)
+	if valueErr != nil {
+		return "", valueErr
+	}
+	return value, nil
 }
 
 func planDocumentsUnpackQueryResults(logger *zap.Logger, modelPlanID uuid.UUID, queryResults *sqlx.Rows) ([]*models.PlanDocument, error) {

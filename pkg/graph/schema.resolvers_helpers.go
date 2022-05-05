@@ -5,7 +5,7 @@ import (
 	"github.com/cmsgov/mint-app/pkg/models"
 )
 
-// ConvertToModelPlan takes an auto-generated model plan input and converts it to a handwritten one
+// ConvertToModelPlan takes an auto-generated model plan input and converts it to a hand-written one
 func ConvertToModelPlan(mpi *model.ModelPlanInput) *models.ModelPlan {
 	// TODO: We should probably have a better way to handle enum arrays
 	var cmmiGroup []string
@@ -31,7 +31,7 @@ func ConvertToModelPlan(mpi *model.ModelPlanInput) *models.ModelPlan {
 
 }
 
-// ConvertToPlanBasics takes an auto-generated plan basics input and converts it to a handwritten one
+// ConvertToPlanBasics takes an auto-generated plan basics input and converts it to a hand-written one
 func ConvertToPlanBasics(mpi *model.PlanBasicsInput) *models.PlanBasics {
 	basics := models.PlanBasics{
 		ModelPlanID:    *mpi.ModelPlanID,
@@ -56,7 +56,7 @@ func ConvertToPlanBasics(mpi *model.PlanBasicsInput) *models.PlanBasics {
 	return &basics
 }
 
-// ConvertToPlanMilestonesModel takes an auto-generated model plan input and converts it to a handwritten one
+// ConvertToPlanMilestonesModel takes an auto-generated model plan input and converts it to a hand-written one
 func ConvertToPlanMilestonesModel(input *model.PlanMilestonesInput) *models.PlanMilestones {
 	milestoneModel := models.PlanMilestones{
 		ModelPlanID:             *input.ModelPlanID,
@@ -81,7 +81,7 @@ func ConvertToPlanMilestonesModel(input *model.PlanMilestonesInput) *models.Plan
 	return &milestoneModel
 }
 
-// ConvertToPlanDocumentModel takes an auto-generated model plan input and converts it to a handwritten one
+// ConvertToPlanDocumentModel takes an auto-generated model plan input and converts it to a hand-written one
 func ConvertToPlanDocumentModel(input *model.PlanDocumentInput) *models.PlanDocument {
 	documentModel := models.PlanDocument{
 		ModelPlanID:          input.ModelPlanID,
@@ -116,7 +116,7 @@ func ConvertToPlanDocumentModel(input *model.PlanDocumentInput) *models.PlanDocu
 	return &documentModel
 }
 
-// ConvertToPlanCollaborator takes an auto-generated plan collaborator input and converts it to a handwritten one
+// ConvertToPlanCollaborator takes an auto-generated plan collaborator input and converts it to a hand-written one
 func ConvertToPlanCollaborator(pci *model.PlanCollaboratorInput) *models.PlanCollaborator {
 	collaborator := models.PlanCollaborator{
 		ModelPlanID: pci.ModelPlanID,
