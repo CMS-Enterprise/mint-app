@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
+import { useHistory } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
 import { Button } from '@trussworks/react-uswds';
 
@@ -12,12 +13,13 @@ import {
   GetModelCollaborators,
   GetModelCollaborators_modelPlan_collaborators as GetCollaboratorsType
 } from 'queries/types/GetModelCollaborators';
-import { GetModelPlan_modelPlan as GetModelPlanTypes } from 'queries/types/GetModelPlan';
+import { GetModelPlan_modelPlan as GetModelPlanType } from 'queries/types/GetModelPlan';
 import { UpdateModelPlan as UpdateModelPlanType } from 'queries/types/UpdateModelPlan';
 import UpdateModelPlan from 'queries/UpdateModelPlan';
 
-const TaskListSideNav = ({ modelPlan }: GetModelPlanTypes) => {
+const TaskListSideNav = ({ modelPlan }: { modelPlan: GetModelPlanType }) => {
   const { id: modelId } = modelPlan;
+  const history = useHistory();
   const { t } = useTranslation('modelPlanTaskList');
   const [isModalOpen, setModalOpen] = useState(false);
 
@@ -33,11 +35,6 @@ const TaskListSideNav = ({ modelPlan }: GetModelPlanTypes) => {
   const [update] = useMutation<UpdateModelPlanType>(UpdateModelPlan);
 
   const archiveModelPlan = () => {
-    console.log({
-      id: modelId,
-      status: modelPlan.status,
-      archived: true
-    });
     update({
       variables: {
         input: {
@@ -49,11 +46,11 @@ const TaskListSideNav = ({ modelPlan }: GetModelPlanTypes) => {
     })
       .then(response => {
         if (!response?.errors) {
-          console.log(response);
+          history.push(`/`);
         }
       })
       .catch(errors => {
-        console.log(errors);
+        setModalOpen(false);
       });
   };
 
@@ -62,8 +59,6 @@ const TaskListSideNav = ({ modelPlan }: GetModelPlanTypes) => {
       <Modal isOpen={isModalOpen} closeModal={() => setModalOpen(false)}>
         <PageHeading headingLevel="h2" className="margin-top-0">
           {t('withdraw_modal.header', {
-            // TODO: requestName?
-            // requestName: intake.requestName
             requestName: modelPlan.modelName
           })}
         </PageHeading>
