@@ -48,7 +48,7 @@ type PlanBasicsOverviewTypes = {
   performancePeriodEnds: string;
   wrapUpEnds: string;
   highLevelNote: string;
-  phasedIn: string;
+  phasedIn: boolean | null;
   phasedInNote: string;
 };
 
@@ -59,6 +59,7 @@ const Milestones = () => {
 
   const history = useHistory();
   const formikRef = useRef<FormikProps<PlanBasicsOverviewTypes>>(null);
+  const [phasedInState, setPhasedInState] = useState<boolean | null>(null);
   const [hasHighLevelNote, setHasHighLevelNote] = useState(false);
   const [hasAdditionalNote, setHasAdditionalNote] = useState(false);
 
@@ -76,7 +77,7 @@ const Milestones = () => {
   const [create] = useMutation<CreatePlanMilestonesType>(CreatePlanMilestones);
   const [update] = useMutation<UpdatePlanMilestonesType>(UpdatePlanMilestones);
 
-  const initialValues = {
+  const initialValues: PlanBasicsOverviewTypes = {
     completeICIP: '',
     clearanceStarts: '',
     clearanceEnds: '',
@@ -87,40 +88,27 @@ const Milestones = () => {
     performancePeriodEnds: '',
     wrapUpEnds: '',
     highLevelNote: '',
-    phasedIn: '',
+    phasedIn: null,
     phasedInNote: ''
   };
 
-  const handleFormSubmit = ({
-    completeICIP,
-    clearanceStarts,
-    clearanceEnds,
-    announced,
-    applicationsStart,
-    applicationsEnd,
-    performancePeriodStarts,
-    performancePeriodEnds,
-    wrapUpEnds,
-    highLevelNote,
-    phasedIn,
-    phasedInNote
-  }: PlanBasicsOverviewTypes) => {
+  const handleFormSubmit = (formikValues: PlanBasicsOverviewTypes) => {
     if (milestones) {
       update({
         variables: {
           input: {
-            completeICIP,
-            clearanceStarts,
-            clearanceEnds,
-            announced,
-            applicationsStart,
-            applicationsEnd,
-            performancePeriodStarts,
-            performancePeriodEnds,
-            wrapUpEnds,
-            highLevelNote,
-            phasedIn,
-            phasedInNote
+            completeICIP: formikValues.completeICIP,
+            clearanceStarts: formikValues.clearanceStarts,
+            clearanceEnds: formikValues.clearanceEnds,
+            announced: formikValues.announced,
+            applicationsStart: formikValues.applicationsStart,
+            applicationsEnd: formikValues.applicationsEnd,
+            performancePeriodStarts: formikValues.performancePeriodStarts,
+            performancePeriodEnds: formikValues.performancePeriodEnds,
+            wrapUpEnds: formikValues.wrapUpEnds,
+            highLevelNote: formikValues.highLevelNote,
+            phasedIn: formikValues.phasedIn,
+            phasedInNote: formikValues.phasedInNote
           }
         }
       })
@@ -136,18 +124,18 @@ const Milestones = () => {
       create({
         variables: {
           input: {
-            completeICIP,
-            clearanceStarts,
-            clearanceEnds,
-            announced,
-            applicationsStart,
-            applicationsEnd,
-            performancePeriodStarts,
-            performancePeriodEnds,
-            wrapUpEnds,
-            highLevelNote,
-            phasedIn,
-            phasedInNote
+            completeICIP: formikValues.completeICIP,
+            clearanceStarts: formikValues.clearanceStarts,
+            clearanceEnds: formikValues.clearanceEnds,
+            announced: formikValues.announced,
+            applicationsStart: formikValues.applicationsStart,
+            applicationsEnd: formikValues.applicationsEnd,
+            performancePeriodStarts: formikValues.performancePeriodStarts,
+            performancePeriodEnds: formikValues.performancePeriodEnds,
+            wrapUpEnds: formikValues.wrapUpEnds,
+            highLevelNote: formikValues.highLevelNote,
+            phasedIn: formikValues.phasedIn,
+            phasedInNote: formikValues.phasedInNote
           }
         }
       })
@@ -203,8 +191,7 @@ const Milestones = () => {
                 errors,
                 handleSubmit,
                 setErrors,
-                setFieldValue,
-                values
+                setFieldValue
               } = formikProps;
               const flatErrors = flattenErrors(errors);
               return (
@@ -563,7 +550,11 @@ const Milestones = () => {
                           name="phasedIn"
                           label={h('yes')}
                           value="YES"
-                          checked={values.phasedIn === 'YES'}
+                          checked={phasedInState === true}
+                          onChange={() => {
+                            setPhasedInState(true);
+                            setFieldValue('phasedIn', true);
+                          }}
                         />
                         <Field
                           as={Radio}
@@ -571,7 +562,11 @@ const Milestones = () => {
                           name="phasedIn"
                           label={h('no')}
                           value="NO"
-                          checked={values.phasedIn === 'NO'}
+                          checked={phasedInState === false}
+                          onChange={() => {
+                            setPhasedInState(false);
+                            setFieldValue('phasedIn', false);
+                          }}
                         />
                       </Fieldset>
                     </FieldGroup>
