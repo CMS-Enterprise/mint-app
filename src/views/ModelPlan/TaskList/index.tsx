@@ -159,8 +159,9 @@ const TaskList = () => {
                             <p className="margin-y-0">
                               {t('taskListItem.lastUpdated')}
                             </p>
-                            {/* TODO: DATE TO REFLECT BE'S MODIFIED BY DATE */}
-                            <p className="margin-y-0">4/1/2022</p>
+                            <p className="margin-y-0">
+                              {new Date(`${modifiedDts}`).toLocaleDateString()}
+                            </p>
                           </TaskListLastUpdated>
                         )}
                       </div>
