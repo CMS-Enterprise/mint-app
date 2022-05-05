@@ -18,19 +18,12 @@ export interface GetModelPlans_modelPlanCollection_collaborators {
 
 export interface GetModelPlans_modelPlanCollection_discussions_replies {
   __typename: "DiscussionReply";
-  id: UUID | null;
-  discussionID: UUID;
-  content: string | null;
   resolution: boolean | null;
 }
 
 export interface GetModelPlans_modelPlanCollection_discussions {
   __typename: "PlanDiscussion";
-  id: UUID | null;
-  content: string | null;
   status: DiscussionStatus;
-  createdBy: string | null;
-  createdDts: Time | null;
   replies: GetModelPlans_modelPlanCollection_discussions_replies[];
 }
 

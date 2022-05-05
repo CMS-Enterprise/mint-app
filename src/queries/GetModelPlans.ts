@@ -17,15 +17,8 @@ export default gql`
         teamRole
       }
       discussions {
-        id
-        content
         status
-        createdBy
-        createdDts
         replies {
-          id
-          discussionID
-          content
           resolution
         }
       }
