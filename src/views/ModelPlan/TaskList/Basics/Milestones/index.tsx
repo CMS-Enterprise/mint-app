@@ -48,7 +48,7 @@ type PlanBasicsOverviewTypes = {
   performancePeriodEnds: string | null;
   wrapUpEnds: string | null;
   highLevelNote: string;
-  phasedIn: boolean | null;
+  phasedIn: boolean | undefined;
   phasedInNote: string;
 };
 
@@ -88,7 +88,7 @@ const Milestones = () => {
     performancePeriodEnds: null,
     wrapUpEnds: null,
     highLevelNote: '',
-    phasedIn: null,
+    phasedIn: undefined,
     phasedInNote: ''
   };
 
