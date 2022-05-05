@@ -21,6 +21,7 @@ export interface GetModelPlan_modelPlan {
   __typename: "ModelPlan";
   id: UUID | null;
   modelName: string | null;
+  modifiedDts: Time | null;
   basics: GetModelPlan_modelPlan_basics | null;
   milestones: GetModelPlan_modelPlan_milestones | null;
 }

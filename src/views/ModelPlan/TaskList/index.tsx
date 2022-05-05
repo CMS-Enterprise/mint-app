@@ -48,6 +48,7 @@ const TaskList = () => {
 
   const {
     modelName,
+    modifiedDts,
     basics
     // TODO: Add these model plans when BE integrates it
     // characteristics,
