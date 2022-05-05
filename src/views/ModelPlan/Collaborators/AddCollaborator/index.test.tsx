@@ -3,19 +3,19 @@ import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, waitFor } from '@testing-library/react';
 
-import TaskListSideNav from './index';
+import AddCollaborator from './index';
 
-describe('The TaskListSideNavActions', () => {
+describe('Adding a collaborator page', () => {
   it('matches snapshot', async () => {
     const { asFragment } = render(
       <MemoryRouter
         initialEntries={[
-          'models/new-plan/f11eb129-2c80-4080-9440-439cbe1a286f/task-list'
+          'models/new-plan/f11eb129-2c80-4080-9440-439cbe1a286f/add-collaborator'
         ]}
       >
         <MockedProvider>
-          <Route path="models/new-plan/:modelId/task-list">
-            <TaskListSideNav />
+          <Route path="models/new-plan/:modelId/add-collaborator">
+            <AddCollaborator />
           </Route>
         </MockedProvider>
       </MemoryRouter>

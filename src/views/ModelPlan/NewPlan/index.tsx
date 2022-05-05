@@ -2,7 +2,6 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, Route, Switch, useHistory } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
-import { useOktaAuth } from '@okta/okta-react';
 import {
   Breadcrumb,
   BreadcrumbBar,
@@ -21,8 +20,6 @@ import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import CreateDraftModelPlan from 'queries/CreateModelPlan';
-import CreateModelPlanCollaborator from 'queries/CreateModelPlanCollaborator';
-import { CreateModelPlanCollaborator as CreateCollaboratorsType } from 'queries/types/CreateModelPlanCollaborator';
 import flattenErrors from 'utils/flattenErrors';
 import NewModelPlanValidationSchema from 'validations/newModelPlan';
 import NotFound from 'views/NotFound';
@@ -33,48 +30,28 @@ import AddCollaborator from '../Collaborators/AddCollaborator';
 const NewPlanContent = () => {
   const { t: h } = useTranslation('draftModelPlan');
   const { t } = useTranslation('newModel');
-  const { oktaAuth } = useOktaAuth();
   const history = useHistory();
   const [mutate] = useMutation(CreateDraftModelPlan);
-  const [create] = useMutation<CreateCollaboratorsType>(
-    CreateModelPlanCollaborator
-  );
 
   const handleCreateDraftModelPlan = (formikValues: { modelName: string }) => {
-    oktaAuth.getUser().then((user: any) => {
-      // TODO: Remove the FE adding of initial user - Will happen on BE when plan is created
-      const { modelName } = formikValues;
-      mutate({
-        variables: {
-          input: {
-            modelName,
-            status: 'PLAN_DRAFT'
-          }
+    const { modelName } = formikValues;
+    mutate({
+      variables: {
+        input: {
+          modelName,
+          status: 'PLAN_DRAFT'
         }
-      }).then(response => {
-        if (!response?.errors) {
-          const { id } = response?.data?.createModelPlan;
-          create({
-            variables: {
-              input: {
-                fullName: user.name,
-                teamRole: 'MODEL_LEAD',
-                euaUserID: user.euaId,
-                modelPlanID: id
-              }
-            }
-          }).then(response2 => {
-            if (!response2?.errors) {
-              history.push(`/models/new-plan/${id}/collaborators`);
-            }
-          });
-        }
-      });
+      }
+    }).then(response => {
+      if (!response?.errors) {
+        const { id } = response?.data?.createModelPlan;
+        history.push(`/models/new-plan/${id}/collaborators`);
+      }
     });
   };
 
   return (
-    <MainContent className="margin-bottom-5">
+    <MainContent className="margin-bottom-5" data-testid="new-plan">
       <div className="grid-container">
         <div className="tablet:grid-col-12">
           <BreadcrumbBar variant="wrap">

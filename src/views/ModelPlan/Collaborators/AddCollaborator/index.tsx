@@ -217,6 +217,10 @@ const Collaborators = () => {
                               e: React.ChangeEvent<HTMLInputElement>
                             ) => {
                               setSearchTerm(e?.target?.value);
+                              if (values.fullName || values.euaUserId) {
+                                setFieldValue('fullName', '');
+                                setFieldValue('euaUserID', '');
+                              }
                             }}
                           />
                           {foundUsers?.formattedUsers && (
@@ -276,18 +280,16 @@ const Collaborators = () => {
                       </Field>
                     </FieldGroup>
 
-                    {!collaboratorId && (
-                      <Alert
-                        type="info"
-                        slim
-                        data-testid="mandatory-fields-alert"
-                        className="margin-y-4"
-                      >
-                        <span className="mandatory-fields-alert__text">
-                          {t('searchMemberInfo')}
-                        </span>
-                      </Alert>
-                    )}
+                    <Alert
+                      type="info"
+                      slim
+                      data-testid="mandatory-fields-alert"
+                      className="margin-y-4"
+                    >
+                      <span className="mandatory-fields-alert__text">
+                        {t('searchMemberInfo')}
+                      </span>
+                    </Alert>
 
                     <div className="margin-y-4 display-block">
                       <Button

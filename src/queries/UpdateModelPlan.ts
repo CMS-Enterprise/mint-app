@@ -11,6 +11,7 @@ export default gql`
       modifiedBy
       modifiedDts
       status
+      createdBy
     }
   }
 `;
