@@ -4,6 +4,6 @@ type modelCategoryType = {
   [MODEL_LEAD: string]: string;
 };
 
-const modelCategory: modelCategoryType = ModelCategory;
+const modelCategoryNum: modelCategoryType = ModelCategory;
 
-export default modelCategory;
+export default modelCategoryNum;

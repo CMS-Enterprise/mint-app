@@ -22,7 +22,7 @@ import CheckboxField from 'components/shared/CheckboxField';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
-import modelCategory from 'constants/enums/modelCategory';
+import modelCategoryEnum from 'constants/enums/modelCategory';
 import GetModelPlanQuery from 'queries/GetModelPlanQuery';
 import {
   GetModelPlan,
@@ -68,7 +68,8 @@ const BasicsContent = () => {
     }
   );
 
-  const { modelName } = data?.modelPlan || {};
+  const { modelName, modelCategory, cmsCenters, cmmiGroups, cmsOther } =
+    data?.modelPlan || {};
 
   const [update] = useMutation<UpdateModelPlanType>(UpdateModelPlan);
 
@@ -98,10 +99,10 @@ const BasicsContent = () => {
 
   const initialValues: PlanBasicModelPlanFormType = {
     modelName: modelName as string,
-    modelCategory: '',
-    cmsCenters: [],
-    cmmiGroup: [],
-    cmsOther: ''
+    modelCategory: modelCategory ?? '',
+    cmsCenters: cmsCenters ?? [],
+    cmmiGroup: cmmiGroups ?? [],
+    cmsOther: cmsOther ?? ''
   };
 
   return (
@@ -216,15 +217,15 @@ const BasicsContent = () => {
                         <option value="" key="default-select" disabled>
                           {`-${h('select')}-`}
                         </option>
-                        {Object.keys(modelCategory).map(role => {
+                        {Object.keys(modelCategoryEnum).map(role => {
                           return (
                             <option
                               key={`Model-Category-${translateModelCategory(
-                                modelCategory[role]
+                                modelCategoryEnum[role]
                               )}`}
                               value={role}
                             >
-                              {translateModelCategory(modelCategory[role])}
+                              {translateModelCategory(modelCategoryEnum[role])}
                             </option>
                           );
                         })}
@@ -258,6 +259,9 @@ const BasicsContent = () => {
                                     name="cmsCenters"
                                     label={item}
                                     value={translateCmsCenter(item)}
+                                    checked={values.cmsCenters.includes(
+                                      translateCmsCenter(item)
+                                    )}
                                     onChange={(
                                       e: React.ChangeEvent<HTMLInputElement>
                                     ) => {
@@ -322,6 +326,9 @@ const BasicsContent = () => {
                                       name="cmmiGroup"
                                       label={item}
                                       value={translateCmmiGroup(item)}
+                                      checked={values.cmmiGroup.includes(
+                                        translateCmmiGroup(item)
+                                      )}
                                       onChange={(
                                         e: React.ChangeEvent<HTMLInputElement>
                                       ) => {
