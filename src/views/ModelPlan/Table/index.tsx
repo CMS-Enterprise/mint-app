@@ -290,34 +290,6 @@ const DraftModelPlansTable = ({ hiddenColumns }: DraftModelTableProps) => {
 
   const data = (modelPlans?.modelPlanCollection ?? []) as DraftModelPlanType[];
 
-  // TODO: Remove mocked discussion data once discussion story complete
-  const discussions = [
-    {
-      content: 'Content 1',
-      replies: [
-        {
-          content: 'Reply 1'
-        }
-      ]
-    },
-    {
-      content: 'Content 2',
-      replies: []
-    },
-    {
-      content: 'Content 2',
-      replies: []
-    }
-  ];
-
-  // Mocking discussion data for only first row
-  const mockedData = data.map((item, index) => {
-    if (index === 0) {
-      return { ...item, discussions };
-    }
-    return { ...item };
-  });
-
   if (loading) {
     return <PageLoading />;
   }
@@ -326,7 +298,7 @@ const DraftModelPlansTable = ({ hiddenColumns }: DraftModelTableProps) => {
     return <div>{JSON.stringify(error)}</div>;
   }
 
-  return <Table data={mockedData} hiddenColumns={hiddenColumns} />;
+  return <Table data={data} hiddenColumns={hiddenColumns} />;
 };
 
 export default DraftModelPlansTable;
