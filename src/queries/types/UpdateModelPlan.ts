@@ -19,6 +19,7 @@ export interface UpdateModelPlan_updateModelPlan {
   modifiedBy: string | null;
   modifiedDts: Time | null;
   status: ModelStatus;
+  createdBy: string | null;
 }
 
 export interface UpdateModelPlan {
