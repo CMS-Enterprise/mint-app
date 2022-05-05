@@ -5,15 +5,16 @@ import { render, screen, waitFor } from '@testing-library/react';
 
 import GetModelPlanQuery from 'queries/GetModelPlanQuery';
 import { GetModelPlan_modelPlan as GetModelPlanTypes } from 'queries/types/GetModelPlan';
+import { ModelStatus } from 'types/graphql-global-types';
 
 import TaskList from './index';
 
 describe('The Model Plan Task List', () => {
-  const modelPlan: GetModelPlanTypes = {
+  const modelPlan = {
     id: '6e224030-09d5-46f7-ad04-4bb851b36eab',
-    status: 'READY',
+    status: ModelStatus.PLAN_DRAFT,
     basics: null
-  };
+  } as GetModelPlanTypes;
 
   const modelPlanQuery = (modelPlanDraft: GetModelPlanTypes) => {
     return {
