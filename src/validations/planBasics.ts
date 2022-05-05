@@ -44,7 +44,7 @@ const planBasicsSchema = {
     performancePeriodStarts: datePickerSchema,
     performancePeriodEnds: datePickerSchema,
     wrapUpEnds: datePickerSchema,
-    phasedIn: Yup.string().required('Please answer question')
+    phasedIn: Yup.boolean().required('Please answer question')
   })
 };
 
