@@ -12,12 +12,19 @@ func ConvertToModelPlan(mpi *model.ModelPlanInput) *models.ModelPlan {
 	for _, item := range mpi.CmmiGroups {
 		cmmiGroup = append(cmmiGroup, string(item))
 	}
+	var cmsCenters []string
+	for _, item := range mpi.CmsCenters {
+		cmsCenters = append(cmsCenters, string(item))
+	}
 
 	plan := models.ModelPlan{
 		ModelName:     mpi.ModelName,
 		ModelCategory: mpi.ModelCategory,
-		CMSCenter:     mpi.CmsCenter,
-		CMMIGroup:     cmmiGroup,
+		CMSCenters:    cmsCenters,
+		CMSOther:      mpi.CmsOther,
+		CMMIGroups:    cmmiGroup,
+		Archived:      mpi.Archived,
+		Status:        mpi.Status,
 		CreatedBy:     mpi.CreatedBy,
 		CreatedDts:    mpi.CreatedDts,
 		ModifiedBy:    mpi.ModifiedBy,
@@ -60,14 +67,18 @@ func ConvertToPlanBasics(mpi *model.PlanBasicsInput) *models.PlanBasics {
 func ConvertToPlanMilestonesModel(input *model.PlanMilestonesInput) *models.PlanMilestones {
 	milestoneModel := models.PlanMilestones{
 		ModelPlanID:             *input.ModelPlanID,
-		EnterCMSClearance:       input.EnterCMSClearance,
-		EnterHMSOMBClearance:    input.EnterHMSOMBClearance,
-		Cleared:                 input.Cleared,
+		CompleteICIP:            input.CompleteIcip,
+		ClearanceStarts:         input.ClearanceStarts,
+		ClearanceEnds:           input.ClearanceEnds,
 		Announced:               input.Announced,
-		ApplicationsDue:         input.ApplicationsDue,
-		ParticipantsAnnounced:   input.ParticipantsAnnounced,
+		ApplicationsStart:       input.ApplicationsStart,
+		ApplicationsEnd:         input.ApplicationsEnd,
 		PerformancePeriodStarts: input.PerformancePeriodStarts,
 		PerformancePeriodEnds:   input.PerformancePeriodEnds,
+		WrapUpEnds:              input.WrapUpEnds,
+		HighLevelNote:           input.HighLevelNote,
+		PhasedIn:                input.PhasedIn,
+		PhasedInNote:            input.PhasedInNote,
 		CreatedBy:               input.CreatedBy,
 		CreatedDts:              input.CreatedDts,
 		ModifiedBy:              input.ModifiedBy,
@@ -76,6 +87,9 @@ func ConvertToPlanMilestonesModel(input *model.PlanMilestonesInput) *models.Plan
 
 	if input.ID != nil {
 		milestoneModel.ID = *input.ID
+	}
+	if input.Status != nil {
+		milestoneModel.Status = *input.Status
 	}
 
 	return &milestoneModel
@@ -122,7 +136,6 @@ func ConvertToPlanCollaborator(pci *model.PlanCollaboratorInput) *models.PlanCol
 		ModelPlanID: pci.ModelPlanID,
 		EUAUserID:   pci.EuaUserID,
 		FullName:    pci.FullName,
-		CMSCenter:   pci.CmsCenter,
 		TeamRole:    pci.TeamRole,
 		CreatedBy:   pci.CreatedBy,
 		CreatedDts:  pci.CreatedDts,
@@ -135,4 +148,62 @@ func ConvertToPlanCollaborator(pci *model.PlanCollaboratorInput) *models.PlanCol
 	}
 	return &collaborator
 
+}
+
+//ConvertToPlanDiscussion takes and auto-generated plan discussion input and converts it to a hand-written one
+func ConvertToPlanDiscussion(pdi *model.PlanDiscussionInput) *models.PlanDiscussion {
+	discussion := models.PlanDiscussion{
+
+		ModelPlanID: pdi.ModelPlanID,
+		Content:     pdi.Content,
+	}
+	if pdi.ID != nil {
+		discussion.ID = *pdi.ID
+	}
+	if pdi.Status != nil {
+		discussion.Status = *pdi.Status
+	}
+	if pdi.CreatedBy != nil {
+		discussion.CreatedBy = *pdi.CreatedBy
+	}
+	if pdi.CreatedDts != nil {
+		discussion.CreatedDts = *pdi.CreatedDts
+	}
+	if pdi.ModifiedBy != nil {
+		discussion.ModifiedBy = *pdi.ModifiedBy
+
+	}
+	if pdi.ModifiedDts != nil {
+		discussion.ModifiedDts = *pdi.ModifiedDts
+	}
+
+	return &discussion
+}
+
+//ConvertToDiscussionReply takes and auto-generated discussion reply input and converts it to a hand-written one
+func ConvertToDiscussionReply(dri *model.DiscussionReplyInput) *models.DiscussionReply {
+	reply := models.DiscussionReply{
+		DiscussionID: dri.DiscussionID,
+		Content:      dri.Content,
+		Resolution:   dri.Resolution,
+	}
+	if dri.ID != nil {
+		reply.ID = *dri.ID
+	}
+
+	if dri.CreatedBy != nil {
+		reply.CreatedBy = *dri.CreatedBy
+	}
+	if dri.CreatedDts != nil {
+		reply.CreatedDts = *dri.CreatedDts
+	}
+	if dri.ModifiedBy != nil {
+		reply.ModifiedBy = *dri.ModifiedBy
+
+	}
+	if dri.ModifiedDts != nil {
+		reply.ModifiedDts = *dri.ModifiedDts
+	}
+
+	return &reply
 }

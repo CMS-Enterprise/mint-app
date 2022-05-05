@@ -17,6 +17,18 @@ type CurrentUser struct {
 	LaunchDarkly *LaunchDarklySettings `json:"launchDarkly"`
 }
 
+// DiscussionReplyInput represents input for a discussion reply
+type DiscussionReplyInput struct {
+	ID           *uuid.UUID `json:"id"`
+	DiscussionID uuid.UUID  `json:"discussionID"`
+	Content      string     `json:"content"`
+	Resolution   bool       `json:"resolution"`
+	CreatedBy    *string    `json:"createdBy"`
+	CreatedDts   *time.Time `json:"createdDts"`
+	ModifiedBy   *string    `json:"modifiedBy"`
+	ModifiedDts  *time.Time `json:"modifiedDts"`
+}
+
 // The current user's Launch Darkly key
 type LaunchDarklySettings struct {
 	UserKey    string `json:"userKey"`
@@ -28,12 +40,15 @@ type ModelPlanInput struct {
 	ID            *uuid.UUID            `json:"id"`
 	ModelName     *string               `json:"modelName"`
 	ModelCategory *models.ModelCategory `json:"modelCategory"`
-	CmsCenter     *models.CMSCenter     `json:"cmsCenter"`
+	CmsCenters    []models.CMSCenter    `json:"cmsCenters"`
+	CmsOther      *string               `json:"cmsOther"`
 	CmmiGroups    []CMMIGroup           `json:"cmmiGroups"`
+	Archived      bool                  `json:"archived"`
 	CreatedBy     *string               `json:"createdBy"`
 	CreatedDts    *time.Time            `json:"createdDts"`
 	ModifiedBy    *string               `json:"modifiedBy"`
 	ModifiedDts   *time.Time            `json:"modifiedDts"`
+	Status        models.ModelStatus    `json:"status"`
 }
 
 // Represents plan basics
@@ -54,16 +69,27 @@ type PlanBasicsInput struct {
 
 // PlanCollaboratorInput represents the data required to create, modify, or delete a collaborator on a plan
 type PlanCollaboratorInput struct {
-	ID          *uuid.UUID       `json:"id"`
-	ModelPlanID uuid.UUID        `json:"modelPlanID"`
-	EuaUserID   string           `json:"euaUserID"`
-	FullName    string           `json:"fullName"`
-	CmsCenter   models.CMSCenter `json:"cmsCenter"`
-	TeamRole    models.TeamRole  `json:"teamRole"`
-	CreatedBy   *string          `json:"createdBy"`
-	CreatedDts  *time.Time       `json:"createdDts"`
-	ModifiedBy  *string          `json:"modifiedBy"`
-	ModifiedDts *time.Time       `json:"modifiedDts"`
+	ID          *uuid.UUID      `json:"id"`
+	ModelPlanID uuid.UUID       `json:"modelPlanID"`
+	EuaUserID   string          `json:"euaUserID"`
+	FullName    string          `json:"fullName"`
+	TeamRole    models.TeamRole `json:"teamRole"`
+	CreatedBy   *string         `json:"createdBy"`
+	CreatedDts  *time.Time      `json:"createdDts"`
+	ModifiedBy  *string         `json:"modifiedBy"`
+	ModifiedDts *time.Time      `json:"modifiedDts"`
+}
+
+// PlanDiscussionInput represents input for plan discussion
+type PlanDiscussionInput struct {
+	ID          *uuid.UUID               `json:"id"`
+	ModelPlanID uuid.UUID                `json:"modelPlanID"`
+	Content     string                   `json:"content"`
+	Status      *models.DiscussionStatus `json:"status"`
+	CreatedBy   *string                  `json:"createdBy"`
+	CreatedDts  *time.Time               `json:"createdDts"`
+	ModifiedBy  *string                  `json:"modifiedBy"`
+	ModifiedDts *time.Time               `json:"modifiedDts"`
 }
 
 // PlanDocumentInput represents the data required to create, modify, or delete a document on a plan
@@ -91,20 +117,25 @@ type PlanDocumentPayload struct {
 
 // Represents plan milestones input
 type PlanMilestonesInput struct {
-	ID                      *uuid.UUID `json:"id"`
-	ModelPlanID             *uuid.UUID `json:"modelPlanID"`
-	EnterCMSClearance       *time.Time `json:"enterCMSClearance"`
-	EnterHMSOMBClearance    *time.Time `json:"enterHMSOMBClearance"`
-	Cleared                 *time.Time `json:"cleared"`
-	Announced               *time.Time `json:"announced"`
-	ApplicationsDue         *time.Time `json:"applicationsDue"`
-	ParticipantsAnnounced   *time.Time `json:"participantsAnnounced"`
-	PerformancePeriodStarts *time.Time `json:"performancePeriodStarts"`
-	PerformancePeriodEnds   *time.Time `json:"performancePeriodEnds"`
-	CreatedBy               *string    `json:"createdBy"`
-	CreatedDts              *time.Time `json:"createdDts"`
-	ModifiedBy              *string    `json:"modifiedBy"`
-	ModifiedDts             *time.Time `json:"modifiedDts"`
+	ID                      *uuid.UUID         `json:"id"`
+	ModelPlanID             *uuid.UUID         `json:"modelPlanID"`
+	CompleteIcip            *time.Time         `json:"completeICIP"`
+	ClearanceStarts         *time.Time         `json:"clearanceStarts"`
+	ClearanceEnds           *time.Time         `json:"clearanceEnds"`
+	Announced               *time.Time         `json:"announced"`
+	ApplicationsStart       *time.Time         `json:"applicationsStart"`
+	ApplicationsEnd         *time.Time         `json:"applicationsEnd"`
+	PerformancePeriodStarts *time.Time         `json:"performancePeriodStarts"`
+	PerformancePeriodEnds   *time.Time         `json:"performancePeriodEnds"`
+	WrapUpEnds              *time.Time         `json:"wrapUpEnds"`
+	HighLevelNote           *string            `json:"highLevelNote"`
+	PhasedIn                *bool              `json:"phasedIn"`
+	PhasedInNote            *string            `json:"phasedInNote"`
+	CreatedBy               *string            `json:"createdBy"`
+	CreatedDts              *time.Time         `json:"createdDts"`
+	ModifiedBy              *string            `json:"modifiedBy"`
+	ModifiedDts             *time.Time         `json:"modifiedDts"`
+	Status                  *models.TaskStatus `json:"status"`
 }
 
 type CMMIGroup string

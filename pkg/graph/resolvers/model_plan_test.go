@@ -16,11 +16,17 @@ func TestModelPlanCreate(t *testing.T) {
 	plan.ID = uuid.MustParse("85b3ff03-1be2-4870-b02f-55c764500e48")
 	plan.CreatedBy = tc.Principal
 	plan.ModifiedBy = tc.Principal
+	plan.Status = models.ModelStatusPlanDraft
 
 	config := NewDBConfig()
 	fmt.Print(config)
 
-	result, err := ModelPlanCreate(tc.Logger, &plan, tc.Store)
+	principalInfo := models.UserInfo{
+		CommonName: "Fake Tester name",
+		EuaUserID:  "TEST",
+	}
+
+	result, err := ModelPlanCreate(tc.Logger, &plan, tc.Store, &principalInfo)
 	assert.NoError(t, err)
 	assert.NotNil(t, result.ID)
 }
@@ -33,8 +39,9 @@ func TestModelPlanUpdate(t *testing.T) {
 	plan.ModifiedBy = tc.Principal
 	plan.CreatedBy = tc.Principal
 	plan.ModelName = modelName
+	plan.Status = models.ModelStatusPlanDraft
 
-	result, err := ModelPlanUpdate(tc.Logger, &plan, tc.Store)
+	result, err := ModelPlanUpdate(tc.Logger, &plan, tc.Principal, tc.Store)
 
 	assert.NoError(t, err)
 	assert.NotNil(t, result.ID)

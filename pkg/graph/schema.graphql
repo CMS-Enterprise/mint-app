@@ -30,8 +30,10 @@ type ModelPlan {
   id: UUID
   modelName: String
   modelCategory: ModelCategory
-  cmsCenter: CMSCenter
+  cmsCenters: [CMSCenter!]
+  cmsOther: String
   cmmiGroups: [CMMIGroup!]
+  archived: Boolean!
   createdBy: String
   createdDts: Time
   modifiedBy: String
@@ -40,22 +42,26 @@ type ModelPlan {
   milestones: PlanMilestones
   collaborators: [PlanCollaborator!]!
   documents: [PlanDocument!]!
+  discussions: [PlanDiscussion!]!
+  status: ModelStatus!
 }
 
 """
 ModelPlanInput represent the data point for plans about a model. It is the central data type in the application
 """
-# input ModelPlanInput ModelPlan {
 input ModelPlanInput{
 id: UUID
 modelName: String
 modelCategory: ModelCategory
-cmsCenter: CMSCenter
+cmsCenters: [CMSCenter!]
+cmsOther: String
 cmmiGroups: [CMMIGroup!]
+archived: Boolean! = false
 createdBy: String
 createdDts: Time
 modifiedBy: String
 modifiedDts: Time
+status: ModelStatus!
 }
 
 """
@@ -66,7 +72,6 @@ type PlanCollaborator {
   modelPlanID: UUID!
   euaUserID: String!
   fullName: String!
-  cmsCenter: CMSCenter!
   teamRole: TeamRole!
   createdBy: String
   createdDts: Time
@@ -82,7 +87,6 @@ input PlanCollaboratorInput {
   modelPlanID: UUID!
   euaUserID: String!
   fullName: String!
-  cmsCenter: CMSCenter!
   teamRole: TeamRole!
   createdBy: String
   createdDts: Time
@@ -195,19 +199,29 @@ type PlanMilestones {
   id: UUID
   modelPlanID: UUID
 
-  enterCMSClearance: Time
-  enterHMSOMBClearance: Time
-  cleared: Time
+  completeICIP: Time
+  clearanceStarts: Time
+  clearanceEnds: Time
+
   announced: Time
-  applicationsDue: Time
-  participantsAnnounced: Time
+
+  applicationsStart: Time
+  applicationsEnd: Time
+
   performancePeriodStarts: Time
   performancePeriodEnds: Time
+  wrapUpEnds: Time
+  highLevelNote: String
+
+  phasedIn: Boolean
+  phasedInNote: String
+
 
   createdBy: String
   createdDts: Time
   modifiedBy: String
   modifiedDts: Time
+  status: TaskStatus
 }
 
 """
@@ -217,14 +231,40 @@ input PlanMilestonesInput {
   id: UUID
   modelPlanID: UUID
 
-  enterCMSClearance: Time
-  enterHMSOMBClearance: Time
-  cleared: Time
+  completeICIP: Time
+  clearanceStarts: Time
+  clearanceEnds: Time
+
   announced: Time
-  applicationsDue: Time
-  participantsAnnounced: Time
+
+  applicationsStart: Time
+  applicationsEnd: Time
+
   performancePeriodStarts: Time
   performancePeriodEnds: Time
+  wrapUpEnds: Time
+  highLevelNote: String
+
+  phasedIn: Boolean
+  phasedInNote: String
+
+
+  createdBy: String
+  createdDts: Time
+  modifiedBy: String
+  modifiedDts: Time
+  status: TaskStatus
+}
+
+"""
+PlanDiscussion represents plan discussion
+"""
+type PlanDiscussion  {
+	id:          UUID
+	modelPlanID: UUID
+	content: String
+	status: DiscussionStatus!
+  replies: [DiscussionReply!]!
 
   createdBy: String
   createdDts: Time
@@ -232,6 +272,49 @@ input PlanMilestonesInput {
   modifiedDts: Time
 }
 
+"""
+PlanDiscussionInput represents input for plan discussion
+"""
+input PlanDiscussionInput  {
+	id:          UUID
+	modelPlanID: UUID!
+	content: String!
+	status: DiscussionStatus
+
+  createdBy: String
+  createdDts: Time
+  modifiedBy: String
+  modifiedDts: Time
+}
+"""
+DiscussionReply represents a discussion reply
+"""
+type DiscussionReply  {
+	id: UUID
+	discussionID: UUID!
+	content: String
+	resolution: Boolean
+
+	createdBy: String
+	createdDts: Time
+	modifiedBy: String
+	modifiedDts: Time
+}
+
+"""
+DiscussionReplyInput represents input for a discussion reply
+"""
+input DiscussionReplyInput  {
+	id: UUID
+	discussionID: UUID!
+	content: String!
+	resolution: Boolean! = false
+
+	createdBy: String
+	createdDts: Time
+	modifiedBy: String
+	modifiedDts: Time
+}
 """
 Query definition for the schema
 """
@@ -285,6 +368,26 @@ updatePlanDocument(input: PlanDocumentInput!): PlanDocumentPayload
 
 deletePlanDocument(input: PlanDocumentInput!): Int!
 @hasRole(role: MINT_BASE_USER)
+
+createPlanDiscussion(input: PlanDiscussionInput!): PlanDiscussion
+@hasRole(role: MINT_BASE_USER)
+
+updatePlanDiscussion(input: PlanDiscussionInput!): PlanDiscussion
+@hasRole(role: MINT_BASE_USER)
+
+deletePlanDiscussion(input: PlanDiscussionInput!): PlanDiscussion
+@hasRole(role: MINT_BASE_USER)
+
+createDiscussionReply(input: DiscussionReplyInput!): DiscussionReply
+@hasRole(role: MINT_BASE_USER)
+
+updateDiscussionReply(input: DiscussionReplyInput!): DiscussionReply
+@hasRole(role: MINT_BASE_USER)
+
+deleteDiscussionReply(input: DiscussionReplyInput!): DiscussionReply
+@hasRole(role: MINT_BASE_USER)
+
+
 }
 
 enum TaskStatus {
@@ -308,7 +411,7 @@ enum ModelType
   TBD
 }
 
-enum ModelCategory{
+enum ModelCategory {
 	ACCOUNTABLE_CARE
 	DEMONSTRATION
 	EPISODE_BASED_PAYMENT_INITIATIVES
@@ -318,6 +421,18 @@ enum ModelCategory{
 	INIT_SPEED_ADOPT_BEST_PRACTICE
 	PRIMARY_CARE_TRANSFORMATION
 	UNKNOWN
+}
+
+enum ModelStatus {
+	PLAN_DRAFT
+	PLAN_COMPLETE
+	ICIP_COMPLETE
+	INTERNAL_CMMI_CLEARANCE
+	CMS_CLEARANCE
+	HHS_CLEARANCE
+	OMB_ASRF_CLEARANCE
+	CLEARED
+	ANNOUNCED
 }
 
 enum CMSCenter {
@@ -335,6 +450,12 @@ enum CMMIGroup {
   PREVENTIVE_AND_POPULATION_HEALTH_CARE_MODELS_GROUP
   SEAMLESS_CARE_MODELS_GROUP
   STATE_INNOVATIONS_GROUP
+}
+
+enum DiscussionStatus {
+  ANSWERED
+  WAITING_FOR_RESPONSE
+  UNANSWERED
 }
 
 directive @hasRole(role: Role!) on FIELD_DEFINITION

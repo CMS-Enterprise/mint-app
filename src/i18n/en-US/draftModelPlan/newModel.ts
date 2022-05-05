@@ -11,24 +11,40 @@ const newModel = {
   addTeamMembersInfo:
     'Add any team members who will be collaborating on your Model Plan.  You can edit this list at any time.',
   teamMembers: 'Team members',
-  addTeamMemberButton: 'Add a team member',
+  addATeamMember: 'Add a team member',
+  updateATeamMember: 'Edit a team member',
+  addTeamMemberButton: 'Add team member',
+  updateTeamMember: 'Update team member',
   table: {
     name: 'Name',
     role: 'Role',
     dateAdded: 'Date added',
-    actions: 'Actions'
+    actions: 'Actions',
+    edit: 'Edit',
+    remove: 'Remove',
+    noCollaborators: 'No associated team members',
+    noCollaboratorsInfo: 'Please add any team members'
   },
   continueWithoutAdding: 'Continue without adding team members',
-  searchTeamInfo:
-    'Search for a team member to add to your model team. Team members are all eligible to view and edit all sections of a Model Plan, including uploading and removing documents as well as adding or removing team members.',
+  teamInfo:
+    'Team members are all eligible to view and edit all sections of a Model Plan, including uploading and removing documents as well as adding or removing team members.',
+  searchTeamInfo: 'Search for a team member to add to your model team.',
   teamMemberName: 'Team member name',
-  teamNameInfo:
-    'This field searches CMS’ EUA database.  You may search by name, email, or EUA ID.',
   teamMemberRole: 'Team member role',
   searchMemberInfo:
-    'The new team member will be able to view and edit anything without a Model Plan. Please make sure this individual should be able to do this before you proceed.',
+    'This team member will be able to view and edit anything about a model plan. Please make sure this individual should be able to do this before you proceed.',
   dontAddTeamMember: 'Don’t add a team member and return to the previous page',
-  addAnotherMember: 'Add another team member'
+  dontUpdateTeamMember:
+    'Don’t edit a team member and return to the previous page',
+  addAnotherMember: 'Add another team member',
+  modal: {
+    heading: 'Are you sure you want to remove ',
+    subheading:
+      'This team member will not be able to accesss this model plan after they have been removed.',
+    confirm: 'Yes, remove team member',
+    no: 'No, keep team member',
+    remove: 'Remove'
+  }
 };
 
 export default newModel;

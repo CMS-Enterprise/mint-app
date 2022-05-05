@@ -46,7 +46,8 @@
       {
         "singleQuote": true,
         "trailingComma": "none",
-        "arrowParens": "avoid"
+        "arrowParens": "avoid",
+        "endOfLine": "auto"
       }
     ],
     "import/extensions": ["error", "never"],

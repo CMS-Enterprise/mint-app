@@ -1,3 +1,5 @@
+import draftModelPlan from './draftModelPlan/draftModelPlan';
+import newModel from './draftModelPlan/newModel';
 import accessibilityStatement from './accessibilityStatement';
 import auth from './auth';
 import cookies from './cookies';
@@ -16,12 +18,14 @@ const enUS = {
   accessibilityStatement,
   auth,
   cookies,
+  draftModelPlan,
   error,
   footer,
   general,
   header,
   home,
   modelPlan,
+  newModel,
   modelPlanTaskList,
   privacyPolicy,
   tableAndPagination,

@@ -7,17 +7,21 @@ import {
   useSortBy,
   useTable
 } from 'react-table';
-// import { useQuery } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import { Table as UswdsTable } from '@trussworks/react-uswds';
+import { DateTime } from 'luxon';
 
-// import { DateTime } from 'luxon';
 import UswdsReactLink from 'components/LinkWrapper';
 import Alert from 'components/shared/Alert';
-import Spinner from 'components/Spinner';
 import GlobalClientFilter from 'components/TableFilter';
 import TablePagination from 'components/TablePagination';
 import TableResults from 'components/TableResults';
-// import { formatDate } from 'utils/date';
+import GetDraftModelPlans from 'queries/GetModelPlans';
+import { GetModelCollaborators_modelPlan_collaborators as CollaboratorsType } from 'queries/types/GetModelCollaborators';
+import {
+  GetModelPlans as GetDraftModelPlansType,
+  GetModelPlans_modelPlanCollection as DraftModelPlanType
+} from 'queries/types/GetModelPlans';
 import globalTableFilter from 'utils/globalTableFilter';
 import {
   currentTableSortDescription,
@@ -26,56 +30,79 @@ import {
   sortColumnValues
 } from 'utils/tableSort';
 
-// import tableMap from './tableMap';
-import data from './mockData';
-
 import './index.scss';
 
-type myRequestsTableProps = {
+type TableProps = {
+  data: DraftModelPlanType[];
   hiddenColumns?: string[];
 };
 
-const Table = ({ hiddenColumns }: myRequestsTableProps) => {
+const Table = ({ data, hiddenColumns }: TableProps) => {
   const { t } = useTranslation('home');
-  const loading = false;
-  const error = false;
 
-  const columns: any = useMemo(() => {
+  const columns = useMemo(() => {
     return [
       {
         Header: t('requestsTable.headers.name'),
-        accessor: 'name',
+        accessor: 'modelName',
         Cell: ({ row, value }: any) => {
-          return <UswdsReactLink to={row.original.id}>{value}</UswdsReactLink>;
+          return (
+            <UswdsReactLink to={`/models/${row.original.id}/task-list`}>
+              {value}
+            </UswdsReactLink>
+          );
         }
       },
       {
         Header: t('requestsTable.headers.category'),
-        accessor: 'category'
+        accessor: 'modelCategory',
+        Cell: ({ row, value }: any) => {
+          if (!value) {
+            return t('requestsTable.noneSelectedYet');
+          }
+          return value;
+        }
       },
       {
         Header: t('requestsTable.headers.modelPoc'),
-        accessor: 'modelPoc'
+        accessor: 'collaborators',
+        Cell: ({ row, value }: any) => {
+          if (value) {
+            const leads = value.filter((item: CollaboratorsType) => {
+              return item.teamRole.toLowerCase().includes('model_lead');
+            });
+            return (
+              <>
+                {leads.map((item: CollaboratorsType, index: number) => {
+                  return `${item.fullName}${
+                    index === leads.length - 1 ? '' : ', '
+                  }`;
+                })}
+              </>
+            );
+          }
+          return '';
+        }
       },
       {
         Header: t('requestsTable.headers.clearanceDate'),
-        accessor: 'clearanceDate'
+        accessor: 'clearanceDate',
+        Cell: ({ row, value }: any) => {
+          if (!value) {
+            return t('requestsTable.tbd');
+          }
+          return value;
+        }
       },
       {
         Header: t('requestsTable.headers.recentActivity'),
-        accessor: 'recentActivity'
+        accessor: 'modifiedDts',
+        Cell: ({ value }: any) => {
+          return DateTime.fromISO(value).toLocaleString(DateTime.DATETIME_MED);
+        }
       }
     ];
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  // Modifying data for table sorting and prepping for Cell configuration
-  // const data = useMemo(() => {
-  //   if (tableData) {
-  //     return tableMap(tableData, t);
-  //   }
-  //   return [];
-  // }, [tableData, t]);
+  }, [t]);
 
   const {
     getTableProps,
@@ -109,7 +136,7 @@ const Table = ({ hiddenColumns }: myRequestsTableProps) => {
       autoResetSortBy: false,
       autoResetPage: false,
       initialState: {
-        sortBy: useMemo(() => [{ id: 'name', desc: true }], []),
+        sortBy: useMemo(() => [{ id: 'modelName', asc: true }], []),
         pageIndex: 0
       }
     },
@@ -118,18 +145,6 @@ const Table = ({ hiddenColumns }: myRequestsTableProps) => {
     useSortBy,
     usePagination
   );
-
-  if (loading) {
-    return (
-      <div className="text-center" data-testid="table-loading">
-        <Spinner size="xl" />
-      </div>
-    );
-  }
-
-  if (error) {
-    return <div>{JSON.stringify(error)}</div>;
-  }
 
   if (data.length === 0) {
     return (
@@ -194,7 +209,7 @@ const Table = ({ hiddenColumns }: myRequestsTableProps) => {
           ))}
         </thead>
         <tbody {...getTableBodyProps()}>
-          {page.map(row => {
+          {page.map((row, index) => {
             prepareRow(row);
             return (
               <tr {...row.getRowProps()}>
@@ -209,7 +224,11 @@ const Table = ({ hiddenColumns }: myRequestsTableProps) => {
                         <th
                           {...cell.getCellProps()}
                           scope="row"
-                          style={{ paddingLeft: '0', verticalAlign: 'top' }}
+                          style={{
+                            paddingLeft: '0',
+                            borderBottom:
+                              index === page.length - 1 ? 'none' : 'auto'
+                          }}
                         >
                           {cell.render('Cell')}
                         </th>
@@ -219,9 +238,9 @@ const Table = ({ hiddenColumns }: myRequestsTableProps) => {
                       <td
                         {...cell.getCellProps()}
                         style={{
-                          width: cell.column.width,
                           paddingLeft: '0',
-                          verticalAlign: 'top'
+                          borderBottom:
+                            index === page.length - 1 ? 'none' : 'auto'
                         }}
                       >
                         {cell.render('Cell')}
@@ -258,4 +277,22 @@ const Table = ({ hiddenColumns }: myRequestsTableProps) => {
   );
 };
 
-export default Table;
+type DraftModelTableProps = {
+  hiddenColumns?: string[];
+};
+
+const DraftModelPlansTable = ({ hiddenColumns }: DraftModelTableProps) => {
+  const { error, data: modelPlans } = useQuery<GetDraftModelPlansType>(
+    GetDraftModelPlans
+  );
+
+  const data = (modelPlans?.modelPlanCollection ?? []) as DraftModelPlanType[];
+
+  if (error) {
+    return <div>{JSON.stringify(error)}</div>;
+  }
+
+  return <Table data={data} hiddenColumns={hiddenColumns} />;
+};
+
+export default DraftModelPlansTable;

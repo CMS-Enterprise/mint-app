@@ -2,6 +2,7 @@ import React from 'react';
 import { act } from 'react-dom/test-utils';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
+import { MockedProvider } from '@apollo/client/testing';
 import { mount } from 'enzyme';
 import { mockFlags, resetLDMocks } from 'jest-launchdarkly-mock';
 import configureMockStore from 'redux-mock-store';
@@ -40,11 +41,13 @@ describe('The home page', () => {
         await act(async () => {
           component = mount(
             <MemoryRouter initialEntries={['/']} initialIndex={0}>
-              <Provider store={store}>
-                <MessageProvider>
-                  <Home />
-                </MessageProvider>
-              </Provider>
+              <MockedProvider>
+                <Provider store={store}>
+                  <MessageProvider>
+                    <Home />
+                  </MessageProvider>
+                </Provider>
+              </MockedProvider>
             </MemoryRouter>
           );
           component.update();
@@ -72,11 +75,13 @@ describe('The home page', () => {
         await act(async () => {
           component = mount(
             <MemoryRouter initialEntries={['/']} initialIndex={0}>
-              <Provider store={store}>
-                <MessageProvider>
-                  <Home />
-                </MessageProvider>
-              </Provider>
+              <MockedProvider>
+                <Provider store={store}>
+                  <MessageProvider>
+                    <Home />
+                  </MessageProvider>
+                </Provider>
+              </MockedProvider>
             </MemoryRouter>
           );
           component.update();

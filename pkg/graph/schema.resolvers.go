@@ -5,7 +5,6 @@ package graph
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/google/uuid"
 
@@ -17,11 +16,22 @@ import (
 	"github.com/cmsgov/mint-app/pkg/models"
 )
 
+func (r *modelPlanResolver) CmsCenters(ctx context.Context, obj *models.ModelPlan) ([]models.CMSCenter, error) {
+	// TODO: We should probably have a better way to handle enum arrays
+	var cmsCenters []models.CMSCenter
+
+	for _, item := range obj.CMSCenters {
+		cmsCenters = append(cmsCenters, models.CMSCenter(item))
+	}
+
+	return cmsCenters, nil
+}
+
 func (r *modelPlanResolver) CmmiGroups(ctx context.Context, obj *models.ModelPlan) ([]model.CMMIGroup, error) {
 	// TODO: We should probably have a better way to handle enum arrays
 	var cmmiGroups []model.CMMIGroup
 
-	for _, item := range obj.CMMIGroup {
+	for _, item := range obj.CMMIGroups {
 		cmmiGroups = append(cmmiGroups, model.CMMIGroup(item))
 	}
 
@@ -58,14 +68,27 @@ func (r *modelPlanResolver) Documents(ctx context.Context, obj *models.ModelPlan
 	return documents, err
 }
 
+func (r *modelPlanResolver) Discussions(ctx context.Context, obj *models.ModelPlan) ([]*models.PlanDiscussion, error) {
+	logger := appcontext.ZLogger(ctx)
+
+	return resolvers.PlanDiscussionCollectionByModelPlanID(logger, obj.ID, r.store)
+}
+
 func (r *mutationResolver) CreateModelPlan(ctx context.Context, input model.ModelPlanInput) (*models.ModelPlan, error) {
 	logger := appcontext.ZLogger(ctx)
 	principal := appcontext.Principal(ctx).ID()
+	principalInfo, err := r.service.FetchUserInfo(ctx, principal)
+	if err != nil { //if can't get user info, use EUAID as commonName
+		tempPrincipalInfo := models.UserInfo{
+			EuaUserID:  principal,
+			CommonName: principal,
+		}
+		principalInfo = &tempPrincipalInfo
+	}
 
 	plan := ConvertToModelPlan(&input)
-	plan.CreatedBy = &principal
-	plan.ModifiedBy = &principal
-	return resolvers.ModelPlanCreate(logger, plan, r.store)
+
+	return resolvers.ModelPlanCreate(logger, plan, r.store, principalInfo)
 }
 
 func (r *mutationResolver) CreatePlanCollaborator(ctx context.Context, input model.PlanCollaboratorInput) (*models.PlanCollaborator, error) {
@@ -97,16 +120,15 @@ func (r *mutationResolver) CreatePlanBasics(ctx context.Context, input model.Pla
 	principal := appcontext.Principal(ctx).ID()
 	logger := appcontext.ZLogger(ctx)
 
-	return resolvers.CreatePlanBasicsResolver(logger, basics, &principal, r.store)
+	return resolvers.CreatePlanBasics(logger, basics, &principal, r.store)
 }
 
 func (r *mutationResolver) UpdateModelPlan(ctx context.Context, input model.ModelPlanInput) (*models.ModelPlan, error) {
 	plan := ConvertToModelPlan(&input)
 	principal := appcontext.Principal(ctx).ID()
 	logger := appcontext.ZLogger(ctx)
-	//TODO clean this up
-	plan.ModifiedBy = &principal
-	return resolvers.ModelPlanUpdate(logger, plan, r.store)
+
+	return resolvers.ModelPlanUpdate(logger, plan, &principal, r.store)
 }
 
 func (r *mutationResolver) UpdatePlanBasics(ctx context.Context, input model.PlanBasicsInput) (*models.PlanBasics, error) {
@@ -114,7 +136,7 @@ func (r *mutationResolver) UpdatePlanBasics(ctx context.Context, input model.Pla
 	principal := appcontext.Principal(ctx).ID()
 	logger := appcontext.ZLogger(ctx)
 
-	return resolvers.UpdatePlanBasicsResolver(logger, basics, &principal, r.store)
+	return resolvers.UpdatePlanBasics(logger, basics, &principal, r.store)
 }
 
 func (r *mutationResolver) CreatePlanMilestones(ctx context.Context, input model.PlanMilestonesInput) (*models.PlanMilestones, error) {
@@ -156,6 +178,66 @@ func (r *mutationResolver) DeletePlanDocument(ctx context.Context, input model.P
 	logger := appcontext.ZLogger(ctx)
 
 	return resolvers.PlanDocumentDelete(logger, document, &principal, r.store)
+}
+
+func (r *mutationResolver) CreatePlanDiscussion(ctx context.Context, input model.PlanDiscussionInput) (*models.PlanDiscussion, error) {
+	discussion := ConvertToPlanDiscussion(&input)
+
+	principal := appcontext.Principal(ctx).ID()
+	logger := appcontext.ZLogger(ctx)
+
+	return resolvers.CreatePlanDiscussion(logger, discussion, &principal, r.store)
+}
+
+func (r *mutationResolver) UpdatePlanDiscussion(ctx context.Context, input model.PlanDiscussionInput) (*models.PlanDiscussion, error) {
+	discussion := ConvertToPlanDiscussion(&input)
+
+	principal := appcontext.Principal(ctx).ID()
+	logger := appcontext.ZLogger(ctx)
+
+	return resolvers.UpdatePlanDiscussion(logger, discussion, &principal, r.store)
+}
+
+func (r *mutationResolver) DeletePlanDiscussion(ctx context.Context, input model.PlanDiscussionInput) (*models.PlanDiscussion, error) {
+	discussion := ConvertToPlanDiscussion(&input)
+
+	principal := appcontext.Principal(ctx).ID()
+	logger := appcontext.ZLogger(ctx)
+
+	return resolvers.DeletePlanDiscussion(logger, discussion, &principal, r.store)
+}
+
+func (r *mutationResolver) CreateDiscussionReply(ctx context.Context, input model.DiscussionReplyInput) (*models.DiscussionReply, error) {
+	reply := ConvertToDiscussionReply(&input)
+
+	principal := appcontext.Principal(ctx).ID()
+	logger := appcontext.ZLogger(ctx)
+
+	return resolvers.CreateDiscussionReply(logger, reply, &principal, r.store)
+}
+
+func (r *mutationResolver) UpdateDiscussionReply(ctx context.Context, input model.DiscussionReplyInput) (*models.DiscussionReply, error) {
+	reply := ConvertToDiscussionReply(&input)
+
+	principal := appcontext.Principal(ctx).ID()
+	logger := appcontext.ZLogger(ctx)
+
+	return resolvers.UpdateDiscussionReply(logger, reply, &principal, r.store)
+}
+
+func (r *mutationResolver) DeleteDiscussionReply(ctx context.Context, input model.DiscussionReplyInput) (*models.DiscussionReply, error) {
+	reply := ConvertToDiscussionReply(&input)
+
+	principal := appcontext.Principal(ctx).ID()
+	logger := appcontext.ZLogger(ctx)
+
+	return resolvers.DeleteDiscussionReply(logger, reply, &principal, r.store)
+}
+
+func (r *planDiscussionResolver) Replies(ctx context.Context, obj *models.PlanDiscussion) ([]*models.DiscussionReply, error) {
+	//TODO see if you can check if the PlanDiscussion already has replies, and if not go to DB, otherwise return the replies
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.DiscussionReplyCollectionByDiscusionID(logger, obj.ID, r.store)
 }
 
 func (r *planDocumentResolver) OtherType(ctx context.Context, obj *models.PlanDocument) (*string, error) {
@@ -232,6 +314,11 @@ func (r *Resolver) ModelPlan() generated.ModelPlanResolver { return &modelPlanRe
 // Mutation returns generated.MutationResolver implementation.
 func (r *Resolver) Mutation() generated.MutationResolver { return &mutationResolver{r} }
 
+// PlanDiscussion returns generated.PlanDiscussionResolver implementation.
+func (r *Resolver) PlanDiscussion() generated.PlanDiscussionResolver {
+	return &planDiscussionResolver{r}
+}
+
 // PlanDocument returns generated.PlanDocumentResolver implementation.
 func (r *Resolver) PlanDocument() generated.PlanDocumentResolver { return &planDocumentResolver{r} }
 
@@ -243,16 +330,7 @@ func (r *Resolver) UserInfo() generated.UserInfoResolver { return &userInfoResol
 
 type modelPlanResolver struct{ *Resolver }
 type mutationResolver struct{ *Resolver }
+type planDiscussionResolver struct{ *Resolver }
 type planDocumentResolver struct{ *Resolver }
 type queryResolver struct{ *Resolver }
 type userInfoResolver struct{ *Resolver }
-
-// !!! WARNING !!!
-// The code below was going to be deleted when updating resolvers. It has been copied here so you have
-// one last chance to move it out of harms way if you want. There are two reasons this happens:
-//  - When renaming or deleting a resolver the old code will be put in here. You can safely delete
-//    it when you're done.
-//  - You have helper methods in this file. Move them out to keep these resolver files clean.
-func (r *queryResolver) ReadPlanDocumentByModselID(ctx context.Context, id uuid.UUID) ([]*models.PlanDocument, error) {
-	panic(fmt.Errorf("not implemented"))
-}
