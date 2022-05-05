@@ -38,15 +38,15 @@ import planBasicsSchema from 'validations/planBasics';
 import './index.scss';
 
 type PlanBasicsOverviewTypes = {
-  completeICIP: string;
-  clearanceStarts: string;
-  clearanceEnds: string;
-  announced: string;
-  applicationsStart: string;
-  applicationsEnd: string;
-  performancePeriodStarts: string;
-  performancePeriodEnds: string;
-  wrapUpEnds: string;
+  completeICIP: string | null;
+  clearanceStarts: string | null;
+  clearanceEnds: string | null;
+  announced: string | null;
+  applicationsStart: string | null;
+  applicationsEnd: string | null;
+  performancePeriodStarts: string | null;
+  performancePeriodEnds: string | null;
+  wrapUpEnds: string | null;
   highLevelNote: string;
   phasedIn: boolean | null;
   phasedInNote: string;
@@ -78,15 +78,15 @@ const Milestones = () => {
   const [update] = useMutation<UpdatePlanMilestonesType>(UpdatePlanMilestones);
 
   const initialValues: PlanBasicsOverviewTypes = {
-    completeICIP: '',
-    clearanceStarts: '',
-    clearanceEnds: '',
-    announced: '',
-    applicationsStart: '',
-    applicationsEnd: '',
-    performancePeriodStarts: '',
-    performancePeriodEnds: '',
-    wrapUpEnds: '',
+    completeICIP: null,
+    clearanceStarts: null,
+    clearanceEnds: null,
+    announced: null,
+    applicationsStart: null,
+    applicationsEnd: null,
+    performancePeriodStarts: null,
+    performancePeriodEnds: null,
+    wrapUpEnds: null,
     highLevelNote: '',
     phasedIn: null,
     phasedInNote: ''
@@ -97,6 +97,8 @@ const Milestones = () => {
       update({
         variables: {
           input: {
+            id: milestones.id,
+            modelPlanID: modelId,
             completeICIP: formikValues.completeICIP,
             clearanceStarts: formikValues.clearanceStarts,
             clearanceEnds: formikValues.clearanceEnds,
@@ -124,6 +126,7 @@ const Milestones = () => {
       create({
         variables: {
           input: {
+            modelPlanID: modelId,
             completeICIP: formikValues.completeICIP,
             clearanceStarts: formikValues.clearanceStarts,
             clearanceEnds: formikValues.clearanceEnds,
