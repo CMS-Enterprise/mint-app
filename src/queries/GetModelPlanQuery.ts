@@ -8,9 +8,11 @@ export default gql`
       modifiedDts
       basics {
         id
+        status
       }
       milestones {
         id
+        status
       }
     }
   }
