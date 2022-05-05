@@ -3,6 +3,8 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
+import { ModelStatus } from "./../../types/graphql-global-types";
+
 // ====================================================
 // GraphQL query operation: GetModelPlan
 // ====================================================
@@ -16,6 +18,7 @@ export interface GetModelPlan_modelPlan {
   __typename: "ModelPlan";
   id: UUID | null;
   modelName: string | null;
+  status: ModelStatus;
   basics: GetModelPlan_modelPlan_basics | null;
 }
 

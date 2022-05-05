@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { useParams } from 'react-router-dom';
-import { useQuery } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import { Button } from '@trussworks/react-uswds';
 
 import UswdsReactLink from 'components/LinkWrapper';
@@ -13,9 +12,12 @@ import {
   GetModelCollaborators,
   GetModelCollaborators_modelPlan_collaborators as GetCollaboratorsType
 } from 'queries/types/GetModelCollaborators';
+import { GetModelPlan_modelPlan as GetModelPlanTypes } from 'queries/types/GetModelPlan';
+import { UpdateModelPlan as UpdateModelPlanType } from 'queries/types/UpdateModelPlan';
+import UpdateModelPlan from 'queries/UpdateModelPlan';
 
-const TaskListSideNav = () => {
-  const { modelId } = useParams<{ modelId: string }>();
+const TaskListSideNav = ({ modelPlan }: GetModelPlanTypes) => {
+  const { id: modelId } = modelPlan;
   const { t } = useTranslation('modelPlanTaskList');
   const [isModalOpen, setModalOpen] = useState(false);
 
@@ -28,6 +30,33 @@ const TaskListSideNav = () => {
   const collaborators = (data?.modelPlan?.collaborators ??
     []) as GetCollaboratorsType[];
 
+  const [update] = useMutation<UpdateModelPlanType>(UpdateModelPlan);
+
+  const archiveModelPlan = () => {
+    console.log({
+      id: modelId,
+      status: modelPlan.status,
+      archived: true
+    });
+    update({
+      variables: {
+        input: {
+          id: modelId,
+          status: modelPlan.status,
+          archived: true
+        }
+      }
+    })
+      .then(response => {
+        if (!response?.errors) {
+          console.log(response);
+        }
+      })
+      .catch(errors => {
+        console.log(errors);
+      });
+  };
+
   const renderModal = () => {
     return (
       <Modal isOpen={isModalOpen} closeModal={() => setModalOpen(false)}>
@@ -35,7 +64,7 @@ const TaskListSideNav = () => {
           {t('withdraw_modal.header', {
             // TODO: requestName?
             // requestName: intake.requestName
-            requestName: 'Requestor Name'
+            requestName: modelPlan.modelName
           })}
         </PageHeading>
         <p>{t('withdraw_modal.warning')}</p>
@@ -43,7 +72,7 @@ const TaskListSideNav = () => {
           type="button"
           className="margin-right-4"
           // TODO to pass down archive functional prop
-          onClick={() => console.log('archive!')}
+          onClick={() => archiveModelPlan()}
         >
           {t('withdraw_modal.confirm')}
         </Button>
