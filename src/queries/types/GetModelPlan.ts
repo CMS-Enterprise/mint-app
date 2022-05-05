@@ -3,6 +3,8 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
+import { TaskStatus } from "./../../types/graphql-global-types";
+
 // ====================================================
 // GraphQL query operation: GetModelPlan
 // ====================================================
@@ -10,11 +12,13 @@
 export interface GetModelPlan_modelPlan_basics {
   __typename: "PlanBasics";
   id: UUID | null;
+  status: TaskStatus;
 }
 
 export interface GetModelPlan_modelPlan_milestones {
   __typename: "PlanMilestones";
   id: UUID | null;
+  status: TaskStatus | null;
 }
 
 export interface GetModelPlan_modelPlan {
