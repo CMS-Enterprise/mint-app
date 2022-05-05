@@ -12,6 +12,12 @@ export default gql`
       modifiedDts
       basics {
         id
+        modelPlanID
+        modelType
+        problem
+        goal
+        testInventions
+        note
         status
       }
       milestones {
