@@ -147,19 +147,29 @@ type PlanMilestones {
   id: UUID
   modelPlanID: UUID
 
-  enterCMSClearance: Time
-  enterHMSOMBClearance: Time
-  cleared: Time
+  completeICIP: Time
+  clearanceStarts: Time
+  clearanceEnds: Time
+
   announced: Time
-  applicationsDue: Time
-  participantsAnnounced: Time
+
+  applicationsStart: Time
+  applicationsEnd: Time
+
   performancePeriodStarts: Time
   performancePeriodEnds: Time
+  wrapUpEnds: Time
+  highLevelNote: String
+
+  phasedIn: Boolean
+  phasedInNote: String
+
 
   createdBy: String
   createdDts: Time
   modifiedBy: String
   modifiedDts: Time
+  status: TaskStatus
 }
 
 """
@@ -169,19 +179,29 @@ input PlanMilestonesInput {
   id: UUID
   modelPlanID: UUID
 
-  enterCMSClearance: Time
-  enterHMSOMBClearance: Time
-  cleared: Time
+  completeICIP: Time
+  clearanceStarts: Time
+  clearanceEnds: Time
+
   announced: Time
-  applicationsDue: Time
-  participantsAnnounced: Time
+
+  applicationsStart: Time
+  applicationsEnd: Time
+
   performancePeriodStarts: Time
   performancePeriodEnds: Time
+  wrapUpEnds: Time
+  highLevelNote: String
+
+  phasedIn: Boolean
+  phasedInNote: String
+
 
   createdBy: String
   createdDts: Time
   modifiedBy: String
   modifiedDts: Time
+  status: TaskStatus
 }
 
 """

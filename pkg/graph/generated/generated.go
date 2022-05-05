@@ -149,19 +149,24 @@ type ComplexityRoot struct {
 
 	PlanMilestones struct {
 		Announced               func(childComplexity int) int
-		ApplicationsDue         func(childComplexity int) int
-		Cleared                 func(childComplexity int) int
+		ApplicationsEnd         func(childComplexity int) int
+		ApplicationsStart       func(childComplexity int) int
+		ClearanceEnds           func(childComplexity int) int
+		ClearanceStarts         func(childComplexity int) int
+		CompleteICIP            func(childComplexity int) int
 		CreatedBy               func(childComplexity int) int
 		CreatedDts              func(childComplexity int) int
-		EnterCMSClearance       func(childComplexity int) int
-		EnterHMSOMBClearance    func(childComplexity int) int
+		HighLevelNote           func(childComplexity int) int
 		ID                      func(childComplexity int) int
 		ModelPlanID             func(childComplexity int) int
 		ModifiedBy              func(childComplexity int) int
 		ModifiedDts             func(childComplexity int) int
-		ParticipantsAnnounced   func(childComplexity int) int
 		PerformancePeriodEnds   func(childComplexity int) int
 		PerformancePeriodStarts func(childComplexity int) int
+		PhasedIn                func(childComplexity int) int
+		PhasedInNote            func(childComplexity int) int
+		Status                  func(childComplexity int) int
+		WrapUpEnds              func(childComplexity int) int
 	}
 
 	Query struct {
@@ -823,19 +828,40 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.PlanMilestones.Announced(childComplexity), true
 
-	case "PlanMilestones.applicationsDue":
-		if e.complexity.PlanMilestones.ApplicationsDue == nil {
+	case "PlanMilestones.applicationsEnd":
+		if e.complexity.PlanMilestones.ApplicationsEnd == nil {
 			break
 		}
 
-		return e.complexity.PlanMilestones.ApplicationsDue(childComplexity), true
+		return e.complexity.PlanMilestones.ApplicationsEnd(childComplexity), true
 
-	case "PlanMilestones.cleared":
-		if e.complexity.PlanMilestones.Cleared == nil {
+	case "PlanMilestones.applicationsStart":
+		if e.complexity.PlanMilestones.ApplicationsStart == nil {
 			break
 		}
 
-		return e.complexity.PlanMilestones.Cleared(childComplexity), true
+		return e.complexity.PlanMilestones.ApplicationsStart(childComplexity), true
+
+	case "PlanMilestones.clearanceEnds":
+		if e.complexity.PlanMilestones.ClearanceEnds == nil {
+			break
+		}
+
+		return e.complexity.PlanMilestones.ClearanceEnds(childComplexity), true
+
+	case "PlanMilestones.clearanceStarts":
+		if e.complexity.PlanMilestones.ClearanceStarts == nil {
+			break
+		}
+
+		return e.complexity.PlanMilestones.ClearanceStarts(childComplexity), true
+
+	case "PlanMilestones.completeICIP":
+		if e.complexity.PlanMilestones.CompleteICIP == nil {
+			break
+		}
+
+		return e.complexity.PlanMilestones.CompleteICIP(childComplexity), true
 
 	case "PlanMilestones.createdBy":
 		if e.complexity.PlanMilestones.CreatedBy == nil {
@@ -851,19 +877,12 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.PlanMilestones.CreatedDts(childComplexity), true
 
-	case "PlanMilestones.enterCMSClearance":
-		if e.complexity.PlanMilestones.EnterCMSClearance == nil {
+	case "PlanMilestones.highLevelNote":
+		if e.complexity.PlanMilestones.HighLevelNote == nil {
 			break
 		}
 
-		return e.complexity.PlanMilestones.EnterCMSClearance(childComplexity), true
-
-	case "PlanMilestones.enterHMSOMBClearance":
-		if e.complexity.PlanMilestones.EnterHMSOMBClearance == nil {
-			break
-		}
-
-		return e.complexity.PlanMilestones.EnterHMSOMBClearance(childComplexity), true
+		return e.complexity.PlanMilestones.HighLevelNote(childComplexity), true
 
 	case "PlanMilestones.id":
 		if e.complexity.PlanMilestones.ID == nil {
@@ -893,13 +912,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.PlanMilestones.ModifiedDts(childComplexity), true
 
-	case "PlanMilestones.participantsAnnounced":
-		if e.complexity.PlanMilestones.ParticipantsAnnounced == nil {
-			break
-		}
-
-		return e.complexity.PlanMilestones.ParticipantsAnnounced(childComplexity), true
-
 	case "PlanMilestones.performancePeriodEnds":
 		if e.complexity.PlanMilestones.PerformancePeriodEnds == nil {
 			break
@@ -913,6 +925,34 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.PlanMilestones.PerformancePeriodStarts(childComplexity), true
+
+	case "PlanMilestones.phasedIn":
+		if e.complexity.PlanMilestones.PhasedIn == nil {
+			break
+		}
+
+		return e.complexity.PlanMilestones.PhasedIn(childComplexity), true
+
+	case "PlanMilestones.phasedInNote":
+		if e.complexity.PlanMilestones.PhasedInNote == nil {
+			break
+		}
+
+		return e.complexity.PlanMilestones.PhasedInNote(childComplexity), true
+
+	case "PlanMilestones.status":
+		if e.complexity.PlanMilestones.Status == nil {
+			break
+		}
+
+		return e.complexity.PlanMilestones.Status(childComplexity), true
+
+	case "PlanMilestones.wrapUpEnds":
+		if e.complexity.PlanMilestones.WrapUpEnds == nil {
+			break
+		}
+
+		return e.complexity.PlanMilestones.WrapUpEnds(childComplexity), true
 
 	case "Query.cedarPersonsByCommonName":
 		if e.complexity.Query.CedarPersonsByCommonName == nil {
@@ -1210,19 +1250,29 @@ type PlanMilestones {
   id: UUID
   modelPlanID: UUID
 
-  enterCMSClearance: Time
-  enterHMSOMBClearance: Time
-  cleared: Time
+  completeICIP: Time
+  clearanceStarts: Time
+  clearanceEnds: Time
+
   announced: Time
-  applicationsDue: Time
-  participantsAnnounced: Time
+
+  applicationsStart: Time
+  applicationsEnd: Time
+
   performancePeriodStarts: Time
   performancePeriodEnds: Time
+  wrapUpEnds: Time
+  highLevelNote: String
+
+  phasedIn: Boolean
+  phasedInNote: String
+
 
   createdBy: String
   createdDts: Time
   modifiedBy: String
   modifiedDts: Time
+  status: TaskStatus
 }
 
 """
@@ -1232,19 +1282,29 @@ input PlanMilestonesInput {
   id: UUID
   modelPlanID: UUID
 
-  enterCMSClearance: Time
-  enterHMSOMBClearance: Time
-  cleared: Time
+  completeICIP: Time
+  clearanceStarts: Time
+  clearanceEnds: Time
+
   announced: Time
-  applicationsDue: Time
-  participantsAnnounced: Time
+
+  applicationsStart: Time
+  applicationsEnd: Time
+
   performancePeriodStarts: Time
   performancePeriodEnds: Time
+  wrapUpEnds: Time
+  highLevelNote: String
+
+  phasedIn: Boolean
+  phasedInNote: String
+
 
   createdBy: String
   createdDts: Time
   modifiedBy: String
   modifiedDts: Time
+  status: TaskStatus
 }
 
 """
@@ -4710,7 +4770,7 @@ func (ec *executionContext) _PlanMilestones_modelPlanID(ctx context.Context, fie
 	return ec.marshalOUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) _PlanMilestones_enterCMSClearance(ctx context.Context, field graphql.CollectedField, obj *models.PlanMilestones) (ret graphql.Marshaler) {
+func (ec *executionContext) _PlanMilestones_completeICIP(ctx context.Context, field graphql.CollectedField, obj *models.PlanMilestones) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
 			ec.Error(ctx, ec.Recover(ctx, r))
@@ -4728,7 +4788,7 @@ func (ec *executionContext) _PlanMilestones_enterCMSClearance(ctx context.Contex
 	ctx = graphql.WithFieldContext(ctx, fc)
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.EnterCMSClearance, nil
+		return obj.CompleteICIP, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -4742,7 +4802,7 @@ func (ec *executionContext) _PlanMilestones_enterCMSClearance(ctx context.Contex
 	return ec.marshalOTime2ᚖtimeᚐTime(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) _PlanMilestones_enterHMSOMBClearance(ctx context.Context, field graphql.CollectedField, obj *models.PlanMilestones) (ret graphql.Marshaler) {
+func (ec *executionContext) _PlanMilestones_clearanceStarts(ctx context.Context, field graphql.CollectedField, obj *models.PlanMilestones) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
 			ec.Error(ctx, ec.Recover(ctx, r))
@@ -4760,7 +4820,7 @@ func (ec *executionContext) _PlanMilestones_enterHMSOMBClearance(ctx context.Con
 	ctx = graphql.WithFieldContext(ctx, fc)
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.EnterHMSOMBClearance, nil
+		return obj.ClearanceStarts, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -4774,7 +4834,7 @@ func (ec *executionContext) _PlanMilestones_enterHMSOMBClearance(ctx context.Con
 	return ec.marshalOTime2ᚖtimeᚐTime(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) _PlanMilestones_cleared(ctx context.Context, field graphql.CollectedField, obj *models.PlanMilestones) (ret graphql.Marshaler) {
+func (ec *executionContext) _PlanMilestones_clearanceEnds(ctx context.Context, field graphql.CollectedField, obj *models.PlanMilestones) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
 			ec.Error(ctx, ec.Recover(ctx, r))
@@ -4792,7 +4852,7 @@ func (ec *executionContext) _PlanMilestones_cleared(ctx context.Context, field g
 	ctx = graphql.WithFieldContext(ctx, fc)
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.Cleared, nil
+		return obj.ClearanceEnds, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -4838,7 +4898,7 @@ func (ec *executionContext) _PlanMilestones_announced(ctx context.Context, field
 	return ec.marshalOTime2ᚖtimeᚐTime(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) _PlanMilestones_applicationsDue(ctx context.Context, field graphql.CollectedField, obj *models.PlanMilestones) (ret graphql.Marshaler) {
+func (ec *executionContext) _PlanMilestones_applicationsStart(ctx context.Context, field graphql.CollectedField, obj *models.PlanMilestones) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
 			ec.Error(ctx, ec.Recover(ctx, r))
@@ -4856,7 +4916,7 @@ func (ec *executionContext) _PlanMilestones_applicationsDue(ctx context.Context,
 	ctx = graphql.WithFieldContext(ctx, fc)
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.ApplicationsDue, nil
+		return obj.ApplicationsStart, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -4870,7 +4930,7 @@ func (ec *executionContext) _PlanMilestones_applicationsDue(ctx context.Context,
 	return ec.marshalOTime2ᚖtimeᚐTime(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) _PlanMilestones_participantsAnnounced(ctx context.Context, field graphql.CollectedField, obj *models.PlanMilestones) (ret graphql.Marshaler) {
+func (ec *executionContext) _PlanMilestones_applicationsEnd(ctx context.Context, field graphql.CollectedField, obj *models.PlanMilestones) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
 			ec.Error(ctx, ec.Recover(ctx, r))
@@ -4888,7 +4948,7 @@ func (ec *executionContext) _PlanMilestones_participantsAnnounced(ctx context.Co
 	ctx = graphql.WithFieldContext(ctx, fc)
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.ParticipantsAnnounced, nil
+		return obj.ApplicationsEnd, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -4964,6 +5024,134 @@ func (ec *executionContext) _PlanMilestones_performancePeriodEnds(ctx context.Co
 	res := resTmp.(*time.Time)
 	fc.Result = res
 	return ec.marshalOTime2ᚖtimeᚐTime(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _PlanMilestones_wrapUpEnds(ctx context.Context, field graphql.CollectedField, obj *models.PlanMilestones) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "PlanMilestones",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.WrapUpEnds, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*time.Time)
+	fc.Result = res
+	return ec.marshalOTime2ᚖtimeᚐTime(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _PlanMilestones_highLevelNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanMilestones) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "PlanMilestones",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.HighLevelNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _PlanMilestones_phasedIn(ctx context.Context, field graphql.CollectedField, obj *models.PlanMilestones) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "PlanMilestones",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.PhasedIn, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*bool)
+	fc.Result = res
+	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _PlanMilestones_phasedInNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanMilestones) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "PlanMilestones",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.PhasedInNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _PlanMilestones_createdBy(ctx context.Context, field graphql.CollectedField, obj *models.PlanMilestones) (ret graphql.Marshaler) {
@@ -5092,6 +5280,38 @@ func (ec *executionContext) _PlanMilestones_modifiedDts(ctx context.Context, fie
 	res := resTmp.(*time.Time)
 	fc.Result = res
 	return ec.marshalOTime2ᚖtimeᚐTime(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _PlanMilestones_status(ctx context.Context, field graphql.CollectedField, obj *models.PlanMilestones) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "PlanMilestones",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Status, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(models.TaskStatus)
+	fc.Result = res
+	return ec.marshalOTaskStatus2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTaskStatus(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Query_currentUser(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
@@ -7122,27 +7342,27 @@ func (ec *executionContext) unmarshalInputPlanMilestonesInput(ctx context.Contex
 			if err != nil {
 				return it, err
 			}
-		case "enterCMSClearance":
+		case "completeICIP":
 			var err error
 
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("enterCMSClearance"))
-			it.EnterCMSClearance, err = ec.unmarshalOTime2ᚖtimeᚐTime(ctx, v)
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("completeICIP"))
+			it.CompleteIcip, err = ec.unmarshalOTime2ᚖtimeᚐTime(ctx, v)
 			if err != nil {
 				return it, err
 			}
-		case "enterHMSOMBClearance":
+		case "clearanceStarts":
 			var err error
 
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("enterHMSOMBClearance"))
-			it.EnterHMSOMBClearance, err = ec.unmarshalOTime2ᚖtimeᚐTime(ctx, v)
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("clearanceStarts"))
+			it.ClearanceStarts, err = ec.unmarshalOTime2ᚖtimeᚐTime(ctx, v)
 			if err != nil {
 				return it, err
 			}
-		case "cleared":
+		case "clearanceEnds":
 			var err error
 
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("cleared"))
-			it.Cleared, err = ec.unmarshalOTime2ᚖtimeᚐTime(ctx, v)
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("clearanceEnds"))
+			it.ClearanceEnds, err = ec.unmarshalOTime2ᚖtimeᚐTime(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -7154,19 +7374,19 @@ func (ec *executionContext) unmarshalInputPlanMilestonesInput(ctx context.Contex
 			if err != nil {
 				return it, err
 			}
-		case "applicationsDue":
+		case "applicationsStart":
 			var err error
 
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("applicationsDue"))
-			it.ApplicationsDue, err = ec.unmarshalOTime2ᚖtimeᚐTime(ctx, v)
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("applicationsStart"))
+			it.ApplicationsStart, err = ec.unmarshalOTime2ᚖtimeᚐTime(ctx, v)
 			if err != nil {
 				return it, err
 			}
-		case "participantsAnnounced":
+		case "applicationsEnd":
 			var err error
 
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("participantsAnnounced"))
-			it.ParticipantsAnnounced, err = ec.unmarshalOTime2ᚖtimeᚐTime(ctx, v)
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("applicationsEnd"))
+			it.ApplicationsEnd, err = ec.unmarshalOTime2ᚖtimeᚐTime(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -7183,6 +7403,38 @@ func (ec *executionContext) unmarshalInputPlanMilestonesInput(ctx context.Contex
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("performancePeriodEnds"))
 			it.PerformancePeriodEnds, err = ec.unmarshalOTime2ᚖtimeᚐTime(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		case "wrapUpEnds":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("wrapUpEnds"))
+			it.WrapUpEnds, err = ec.unmarshalOTime2ᚖtimeᚐTime(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		case "highLevelNote":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("highLevelNote"))
+			it.HighLevelNote, err = ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		case "phasedIn":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("phasedIn"))
+			it.PhasedIn, err = ec.unmarshalOBoolean2ᚖbool(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		case "phasedInNote":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("phasedInNote"))
+			it.PhasedInNote, err = ec.unmarshalOString2ᚖstring(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -7215,6 +7467,14 @@ func (ec *executionContext) unmarshalInputPlanMilestonesInput(ctx context.Contex
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("modifiedDts"))
 			it.ModifiedDts, err = ec.unmarshalOTime2ᚖtimeᚐTime(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		case "status":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("status"))
+			it.Status, err = ec.unmarshalOTaskStatus2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTaskStatus(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -8055,23 +8315,23 @@ func (ec *executionContext) _PlanMilestones(ctx context.Context, sel ast.Selecti
 
 			out.Values[i] = innerFunc(ctx)
 
-		case "enterCMSClearance":
+		case "completeICIP":
 			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._PlanMilestones_enterCMSClearance(ctx, field, obj)
+				return ec._PlanMilestones_completeICIP(ctx, field, obj)
 			}
 
 			out.Values[i] = innerFunc(ctx)
 
-		case "enterHMSOMBClearance":
+		case "clearanceStarts":
 			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._PlanMilestones_enterHMSOMBClearance(ctx, field, obj)
+				return ec._PlanMilestones_clearanceStarts(ctx, field, obj)
 			}
 
 			out.Values[i] = innerFunc(ctx)
 
-		case "cleared":
+		case "clearanceEnds":
 			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._PlanMilestones_cleared(ctx, field, obj)
+				return ec._PlanMilestones_clearanceEnds(ctx, field, obj)
 			}
 
 			out.Values[i] = innerFunc(ctx)
@@ -8083,16 +8343,16 @@ func (ec *executionContext) _PlanMilestones(ctx context.Context, sel ast.Selecti
 
 			out.Values[i] = innerFunc(ctx)
 
-		case "applicationsDue":
+		case "applicationsStart":
 			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._PlanMilestones_applicationsDue(ctx, field, obj)
+				return ec._PlanMilestones_applicationsStart(ctx, field, obj)
 			}
 
 			out.Values[i] = innerFunc(ctx)
 
-		case "participantsAnnounced":
+		case "applicationsEnd":
 			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._PlanMilestones_participantsAnnounced(ctx, field, obj)
+				return ec._PlanMilestones_applicationsEnd(ctx, field, obj)
 			}
 
 			out.Values[i] = innerFunc(ctx)
@@ -8107,6 +8367,34 @@ func (ec *executionContext) _PlanMilestones(ctx context.Context, sel ast.Selecti
 		case "performancePeriodEnds":
 			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._PlanMilestones_performancePeriodEnds(ctx, field, obj)
+			}
+
+			out.Values[i] = innerFunc(ctx)
+
+		case "wrapUpEnds":
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._PlanMilestones_wrapUpEnds(ctx, field, obj)
+			}
+
+			out.Values[i] = innerFunc(ctx)
+
+		case "highLevelNote":
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._PlanMilestones_highLevelNote(ctx, field, obj)
+			}
+
+			out.Values[i] = innerFunc(ctx)
+
+		case "phasedIn":
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._PlanMilestones_phasedIn(ctx, field, obj)
+			}
+
+			out.Values[i] = innerFunc(ctx)
+
+		case "phasedInNote":
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._PlanMilestones_phasedInNote(ctx, field, obj)
 			}
 
 			out.Values[i] = innerFunc(ctx)
@@ -8135,6 +8423,13 @@ func (ec *executionContext) _PlanMilestones(ctx context.Context, sel ast.Selecti
 		case "modifiedDts":
 			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._PlanMilestones_modifiedDts(ctx, field, obj)
+			}
+
+			out.Values[i] = innerFunc(ctx)
+
+		case "status":
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._PlanMilestones_status(ctx, field, obj)
 			}
 
 			out.Values[i] = innerFunc(ctx)
@@ -9765,6 +10060,17 @@ func (ec *executionContext) marshalOString2ᚖstring(ctx context.Context, sel as
 		return graphql.Null
 	}
 	res := graphql.MarshalString(*v)
+	return res
+}
+
+func (ec *executionContext) unmarshalOTaskStatus2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTaskStatus(ctx context.Context, v interface{}) (models.TaskStatus, error) {
+	tmp, err := graphql.UnmarshalString(v)
+	res := models.TaskStatus(tmp)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalOTaskStatus2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTaskStatus(ctx context.Context, sel ast.SelectionSet, v models.TaskStatus) graphql.Marshaler {
+	res := graphql.MarshalString(string(v))
 	return res
 }
 
