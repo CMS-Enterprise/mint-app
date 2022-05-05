@@ -9,7 +9,7 @@ import { GetModelPlan_modelPlan as GetModelPlanTypes } from 'queries/types/GetMo
 import TaskList from './index';
 
 describe('The Model Plan Task List', () => {
-  const modelPlan: any = {
+  const modelPlan: GetModelPlanTypes = {
     id: '6e224030-09d5-46f7-ad04-4bb851b36eab',
     status: 'READY',
     basics: null
