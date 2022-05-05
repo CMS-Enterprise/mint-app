@@ -31,7 +31,7 @@ export const TaskListDescription = ({ children }: TaskListDescriptionProps) => {
 type TaskListItemProps = {
   children?: React.ReactNode | React.ReactNodeArray;
   heading: string;
-  status: 'READY' | 'IN_PROGRESS' | 'CANNOT_START';
+  status: 'READY' | 'IN_PROGRESS' | 'CANNOT_START' | 'COMPLETE';
   testId: string;
 };
 
@@ -62,6 +62,10 @@ const TaskListItem = ({
     case 'IN_PROGRESS':
       tagCopy = t('taskListItem.inProgress');
       tagStyle = 'bg-warning';
+      break;
+    case 'COMPLETE':
+      tagCopy = t('taskListItem.completed');
+      tagStyle = 'bg-success-dark text-white';
       break;
     default:
       tagCopy = t('taskListItem.cannotStart');

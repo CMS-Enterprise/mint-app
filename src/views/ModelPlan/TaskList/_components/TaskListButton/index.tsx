@@ -9,7 +9,7 @@ import { CreatePlanBasics as CreatePlanBasicsType } from 'queries/types/CreatePl
 
 type TaskListButtonProps = {
   path: string;
-  status: 'READY' | 'IN_PROGRESS' | 'CANNOT_START';
+  status: 'READY' | 'IN_PROGRESS' | 'CANNOT_START' | 'COMPLETE';
 };
 
 const TaskListButton = ({ path, status }: TaskListButtonProps) => {
@@ -36,7 +36,7 @@ const TaskListButton = ({ path, status }: TaskListButtonProps) => {
     }
   };
 
-  if (status === 'CANNOT_START') {
+  if (status === 'CANNOT_START' || status === 'COMPLETE') {
     return <></>;
   }
 

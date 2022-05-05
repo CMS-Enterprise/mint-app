@@ -49,7 +49,8 @@ const TaskList = () => {
   const {
     modelName,
     modifiedDts,
-    basics
+    basics,
+    milestones
     // TODO: Add these model plans when BE integrates it
     // characteristics,
     // participants,
@@ -66,7 +67,18 @@ const TaskList = () => {
   const taskListItemStatus = (key: string) => {
     switch (key) {
       case 'basics':
-        return basics === null ? 'READY' : 'IN_PROGRESS';
+        if (basics === null) {
+          return 'READY';
+        }
+        if (
+          basics?.status === 'COMPLETE' &&
+          milestones?.status === 'COMPLETE'
+        ) {
+          return 'COMPLETE';
+        }
+        return 'IN_PROGRESS';
+
+      // (basics === null) ? return 'READY' : 'IN_PROGRESS';
       // TODO: Add these model plans when BE integrates it
       // case 'characteristics':
       //   return characteristics === null ? 'READY' : 'IN_PROGRESS';
