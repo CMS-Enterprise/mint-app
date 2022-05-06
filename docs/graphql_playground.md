@@ -2,7 +2,7 @@
 
 ## Running Locally
 
-You can visit `http://localhost:8080/api/graph/playground` to access a GraphQL playground while the Go backend is running. You will need to enter `/api/graph/query` as the query path in the UI for this to work.
+You can visit `http://localhost:8085/api/graph/playground` to access a GraphQL playground while the Go backend is running. You will need to enter `/api/graph/query` as the query path in the UI for this to work.
 
 ### Authorization
 
