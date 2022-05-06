@@ -67,6 +67,10 @@ type ComplexityRoot struct {
 		Resolution   func(childComplexity int) int
 	}
 
+	GeneratePresignedUploadURLPayload struct {
+		URL func(childComplexity int) int
+	}
+
 	LaunchDarklySettings struct {
 		SignedHash func(childComplexity int) int
 		UserKey    func(childComplexity int) int
@@ -93,24 +97,25 @@ type ComplexityRoot struct {
 	}
 
 	Mutation struct {
-		CreateDiscussionReply  func(childComplexity int, input model.DiscussionReplyInput) int
-		CreateModelPlan        func(childComplexity int, input model.ModelPlanInput) int
-		CreatePlanBasics       func(childComplexity int, input model.PlanBasicsInput) int
-		CreatePlanCollaborator func(childComplexity int, input model.PlanCollaboratorInput) int
-		CreatePlanDiscussion   func(childComplexity int, input model.PlanDiscussionInput) int
-		CreatePlanDocument     func(childComplexity int, input model.PlanDocumentInput) int
-		CreatePlanMilestones   func(childComplexity int, input model.PlanMilestonesInput) int
-		DeleteDiscussionReply  func(childComplexity int, input model.DiscussionReplyInput) int
-		DeletePlanCollaborator func(childComplexity int, input model.PlanCollaboratorInput) int
-		DeletePlanDiscussion   func(childComplexity int, input model.PlanDiscussionInput) int
-		DeletePlanDocument     func(childComplexity int, input model.PlanDocumentInput) int
-		UpdateDiscussionReply  func(childComplexity int, input model.DiscussionReplyInput) int
-		UpdateModelPlan        func(childComplexity int, input model.ModelPlanInput) int
-		UpdatePlanBasics       func(childComplexity int, input model.PlanBasicsInput) int
-		UpdatePlanCollaborator func(childComplexity int, input model.PlanCollaboratorInput) int
-		UpdatePlanDiscussion   func(childComplexity int, input model.PlanDiscussionInput) int
-		UpdatePlanDocument     func(childComplexity int, input model.PlanDocumentInput) int
-		UpdatePlanMilestones   func(childComplexity int, input model.PlanMilestonesInput) int
+		CreateDiscussionReply      func(childComplexity int, input model.DiscussionReplyInput) int
+		CreateModelPlan            func(childComplexity int, input model.ModelPlanInput) int
+		CreatePlanBasics           func(childComplexity int, input model.PlanBasicsInput) int
+		CreatePlanCollaborator     func(childComplexity int, input model.PlanCollaboratorInput) int
+		CreatePlanDiscussion       func(childComplexity int, input model.PlanDiscussionInput) int
+		CreatePlanDocument         func(childComplexity int, input model.PlanDocumentInput) int
+		CreatePlanMilestones       func(childComplexity int, input model.PlanMilestonesInput) int
+		DeleteDiscussionReply      func(childComplexity int, input model.DiscussionReplyInput) int
+		DeletePlanCollaborator     func(childComplexity int, input model.PlanCollaboratorInput) int
+		DeletePlanDiscussion       func(childComplexity int, input model.PlanDiscussionInput) int
+		DeletePlanDocument         func(childComplexity int, input model.PlanDocumentInput) int
+		GeneratePresignedUploadURL func(childComplexity int, input model.GeneratePresignedUploadURLInput) int
+		UpdateDiscussionReply      func(childComplexity int, input model.DiscussionReplyInput) int
+		UpdateModelPlan            func(childComplexity int, input model.ModelPlanInput) int
+		UpdatePlanBasics           func(childComplexity int, input model.PlanBasicsInput) int
+		UpdatePlanCollaborator     func(childComplexity int, input model.PlanCollaboratorInput) int
+		UpdatePlanDiscussion       func(childComplexity int, input model.PlanDiscussionInput) int
+		UpdatePlanDocument         func(childComplexity int, input model.PlanDocumentInput) int
+		UpdatePlanMilestones       func(childComplexity int, input model.PlanMilestonesInput) int
 	}
 
 	PlanBasics struct {
@@ -237,6 +242,7 @@ type MutationResolver interface {
 	UpdatePlanBasics(ctx context.Context, input model.PlanBasicsInput) (*models.PlanBasics, error)
 	CreatePlanMilestones(ctx context.Context, input model.PlanMilestonesInput) (*models.PlanMilestones, error)
 	UpdatePlanMilestones(ctx context.Context, input model.PlanMilestonesInput) (*models.PlanMilestones, error)
+	GeneratePresignedUploadURL(ctx context.Context, input model.GeneratePresignedUploadURLInput) (*model.GeneratePresignedUploadURLPayload, error)
 	CreatePlanDocument(ctx context.Context, input model.PlanDocumentInput) (*model.PlanDocumentPayload, error)
 	UpdatePlanDocument(ctx context.Context, input model.PlanDocumentInput) (*model.PlanDocumentPayload, error)
 	DeletePlanDocument(ctx context.Context, input model.PlanDocumentInput) (int, error)
@@ -344,6 +350,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.DiscussionReply.Resolution(childComplexity), true
+
+	case "GeneratePresignedUploadURLPayload.url":
+		if e.complexity.GeneratePresignedUploadURLPayload.URL == nil {
+			break
+		}
+
+		return e.complexity.GeneratePresignedUploadURLPayload.URL(childComplexity), true
 
 	case "LaunchDarklySettings.signedHash":
 		if e.complexity.LaunchDarklySettings.SignedHash == nil {
@@ -609,6 +622,18 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Mutation.DeletePlanDocument(childComplexity, args["input"].(model.PlanDocumentInput)), true
+
+	case "Mutation.generatePresignedUploadURL":
+		if e.complexity.Mutation.GeneratePresignedUploadURL == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_generatePresignedUploadURL_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Mutation.GeneratePresignedUploadURL(childComplexity, args["input"].(model.GeneratePresignedUploadURLInput)), true
 
 	case "Mutation.updateDiscussionReply":
 		if e.complexity.Mutation.UpdateDiscussionReply == nil {
@@ -1431,6 +1456,22 @@ input PlanCollaboratorInput {
 }
 
 """
+Input associated with a document to be uploaded to a 508/accessibility request
+"""
+input GeneratePresignedUploadURLInput {
+  fileName: String!
+  mimeType: String!
+  size: Int!
+}
+
+"""
+URL generated for a document to be uploaded to a 508/accessibility request
+"""
+type GeneratePresignedUploadURLPayload {
+  url: String
+}
+
+"""
 PlanDocument represents a document on a plan
 """
 type PlanDocument {
@@ -1694,6 +1735,9 @@ createPlanMilestones(input: PlanMilestonesInput!): PlanMilestones
 @hasRole(role: MINT_BASE_USER)
 
 updatePlanMilestones(input: PlanMilestonesInput!): PlanMilestones
+@hasRole(role: MINT_BASE_USER)
+
+generatePresignedUploadURL(input: GeneratePresignedUploadURLInput!): GeneratePresignedUploadURLPayload
 @hasRole(role: MINT_BASE_USER)
 
 createPlanDocument(input: PlanDocumentInput!): PlanDocumentPayload
@@ -1998,6 +2042,21 @@ func (ec *executionContext) field_Mutation_deletePlanDocument_args(ctx context.C
 	if tmp, ok := rawArgs["input"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
 		arg0, err = ec.unmarshalNPlanDocumentInput2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐPlanDocumentInput(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["input"] = arg0
+	return args, nil
+}
+
+func (ec *executionContext) field_Mutation_generatePresignedUploadURL_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 model.GeneratePresignedUploadURLInput
+	if tmp, ok := rawArgs["input"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
+		arg0, err = ec.unmarshalNGeneratePresignedUploadURLInput2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐGeneratePresignedUploadURLInput(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -2561,6 +2620,38 @@ func (ec *executionContext) _DiscussionReply_modifiedDts(ctx context.Context, fi
 	res := resTmp.(time.Time)
 	fc.Result = res
 	return ec.marshalOTime2timeᚐTime(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _GeneratePresignedUploadURLPayload_url(ctx context.Context, field graphql.CollectedField, obj *model.GeneratePresignedUploadURLPayload) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "GeneratePresignedUploadURLPayload",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.URL, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _LaunchDarklySettings_userKey(ctx context.Context, field graphql.CollectedField, obj *model.LaunchDarklySettings) (ret graphql.Marshaler) {
@@ -3757,6 +3848,69 @@ func (ec *executionContext) _Mutation_updatePlanMilestones(ctx context.Context, 
 	res := resTmp.(*models.PlanMilestones)
 	fc.Result = res
 	return ec.marshalOPlanMilestones2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanMilestones(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _Mutation_generatePresignedUploadURL(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   true,
+		IsResolver: true,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	rawArgs := field.ArgumentMap(ec.Variables)
+	args, err := ec.field_Mutation_generatePresignedUploadURL_args(ctx, rawArgs)
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	fc.Args = args
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		directive0 := func(rctx context.Context) (interface{}, error) {
+			ctx = rctx // use context from middleware stack in children
+			return ec.resolvers.Mutation().GeneratePresignedUploadURL(rctx, args["input"].(model.GeneratePresignedUploadURLInput))
+		}
+		directive1 := func(ctx context.Context) (interface{}, error) {
+			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_BASE_USER")
+			if err != nil {
+				return nil, err
+			}
+			if ec.directives.HasRole == nil {
+				return nil, errors.New("directive hasRole is not implemented")
+			}
+			return ec.directives.HasRole(ctx, nil, directive0, role)
+		}
+
+		tmp, err := directive1(rctx)
+		if err != nil {
+			return nil, graphql.ErrorOnPath(ctx, err)
+		}
+		if tmp == nil {
+			return nil, nil
+		}
+		if data, ok := tmp.(*model.GeneratePresignedUploadURLPayload); ok {
+			return data, nil
+		}
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/graph/model.GeneratePresignedUploadURLPayload`, tmp)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*model.GeneratePresignedUploadURLPayload)
+	fc.Result = res
+	return ec.marshalOGeneratePresignedUploadURLPayload2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐGeneratePresignedUploadURLPayload(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Mutation_createPlanDocument(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
@@ -8192,6 +8346,45 @@ func (ec *executionContext) unmarshalInputDiscussionReplyInput(ctx context.Conte
 	return it, nil
 }
 
+func (ec *executionContext) unmarshalInputGeneratePresignedUploadURLInput(ctx context.Context, obj interface{}) (model.GeneratePresignedUploadURLInput, error) {
+	var it model.GeneratePresignedUploadURLInput
+	asMap := map[string]interface{}{}
+	for k, v := range obj.(map[string]interface{}) {
+		asMap[k] = v
+	}
+
+	for k, v := range asMap {
+		switch k {
+		case "fileName":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("fileName"))
+			it.FileName, err = ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		case "mimeType":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("mimeType"))
+			it.MimeType, err = ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		case "size":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("size"))
+			it.Size, err = ec.unmarshalNInt2int(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		}
+	}
+
+	return it, nil
+}
+
 func (ec *executionContext) unmarshalInputModelPlanInput(ctx context.Context, obj interface{}) (model.ModelPlanInput, error) {
 	var it model.ModelPlanInput
 	asMap := map[string]interface{}{}
@@ -8972,6 +9165,34 @@ func (ec *executionContext) _DiscussionReply(ctx context.Context, sel ast.Select
 	return out
 }
 
+var generatePresignedUploadURLPayloadImplementors = []string{"GeneratePresignedUploadURLPayload"}
+
+func (ec *executionContext) _GeneratePresignedUploadURLPayload(ctx context.Context, sel ast.SelectionSet, obj *model.GeneratePresignedUploadURLPayload) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, generatePresignedUploadURLPayloadImplementors)
+	out := graphql.NewFieldSet(fields)
+	var invalids uint32
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("GeneratePresignedUploadURLPayload")
+		case "url":
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._GeneratePresignedUploadURLPayload_url(ctx, field, obj)
+			}
+
+			out.Values[i] = innerFunc(ctx)
+
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch()
+	if invalids > 0 {
+		return graphql.Null
+	}
+	return out
+}
+
 var launchDarklySettingsImplementors = []string{"LaunchDarklySettings"}
 
 func (ec *executionContext) _LaunchDarklySettings(ctx context.Context, sel ast.SelectionSet, obj *model.LaunchDarklySettings) graphql.Marshaler {
@@ -9316,6 +9537,13 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 		case "updatePlanMilestones":
 			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._Mutation_updatePlanMilestones(ctx, field)
+			}
+
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, innerFunc)
+
+		case "generatePresignedUploadURL":
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_generatePresignedUploadURL(ctx, field)
 			}
 
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, innerFunc)
@@ -10835,6 +11063,11 @@ func (ec *executionContext) marshalNDiscussionStatus2githubᚗcomᚋcmsgovᚋmin
 	return res
 }
 
+func (ec *executionContext) unmarshalNGeneratePresignedUploadURLInput2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐGeneratePresignedUploadURLInput(ctx context.Context, v interface{}) (model.GeneratePresignedUploadURLInput, error) {
+	res, err := ec.unmarshalInputGeneratePresignedUploadURLInput(ctx, v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
 func (ec *executionContext) unmarshalNInt2int(ctx context.Context, v interface{}) (int, error) {
 	res, err := graphql.UnmarshalInt(v)
 	return res, graphql.ErrorOnPath(ctx, err)
@@ -11658,6 +11891,13 @@ func (ec *executionContext) marshalODocumentType2ᚖgithubᚗcomᚋcmsgovᚋmint
 	}
 	res := graphql.MarshalString(string(*v))
 	return res
+}
+
+func (ec *executionContext) marshalOGeneratePresignedUploadURLPayload2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐGeneratePresignedUploadURLPayload(ctx context.Context, sel ast.SelectionSet, v *model.GeneratePresignedUploadURLPayload) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	return ec._GeneratePresignedUploadURLPayload(ctx, sel, v)
 }
 
 func (ec *executionContext) unmarshalOInt2int(ctx context.Context, v interface{}) (int, error) {

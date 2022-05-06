@@ -29,6 +29,18 @@ type DiscussionReplyInput struct {
 	ModifiedDts  *time.Time `json:"modifiedDts"`
 }
 
+// Input associated with a document to be uploaded to a 508/accessibility request
+type GeneratePresignedUploadURLInput struct {
+	FileName string `json:"fileName"`
+	MimeType string `json:"mimeType"`
+	Size     int    `json:"size"`
+}
+
+// URL generated for a document to be uploaded to a 508/accessibility request
+type GeneratePresignedUploadURLPayload struct {
+	URL *string `json:"url"`
+}
+
 // The current user's Launch Darkly key
 type LaunchDarklySettings struct {
 	UserKey    string `json:"userKey"`

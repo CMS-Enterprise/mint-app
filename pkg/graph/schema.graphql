@@ -95,6 +95,22 @@ input PlanCollaboratorInput {
 }
 
 """
+Input associated with a document to be uploaded to a 508/accessibility request
+"""
+input GeneratePresignedUploadURLInput {
+  fileName: String!
+  mimeType: String!
+  size: Int!
+}
+
+"""
+URL generated for a document to be uploaded to a 508/accessibility request
+"""
+type GeneratePresignedUploadURLPayload {
+  url: String
+}
+
+"""
 PlanDocument represents a document on a plan
 """
 type PlanDocument {
@@ -358,6 +374,9 @@ createPlanMilestones(input: PlanMilestonesInput!): PlanMilestones
 @hasRole(role: MINT_BASE_USER)
 
 updatePlanMilestones(input: PlanMilestonesInput!): PlanMilestones
+@hasRole(role: MINT_BASE_USER)
+
+generatePresignedUploadURL(input: GeneratePresignedUploadURLInput!): GeneratePresignedUploadURLPayload
 @hasRole(role: MINT_BASE_USER)
 
 createPlanDocument(input: PlanDocumentInput!): PlanDocumentPayload

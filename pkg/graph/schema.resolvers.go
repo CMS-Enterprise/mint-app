@@ -155,6 +155,16 @@ func (r *mutationResolver) UpdatePlanMilestones(ctx context.Context, input model
 	return resolvers.UpdatePlanMilestones(logger, basics, &principal, r.store)
 }
 
+func (r *mutationResolver) GeneratePresignedUploadURL(ctx context.Context, input model.GeneratePresignedUploadURLInput) (*model.GeneratePresignedUploadURLPayload, error) {
+	url, err := r.s3Client.NewPutPresignedURL(input.MimeType)
+	if err != nil {
+		return nil, err
+	}
+	return &model.GeneratePresignedUploadURLPayload{
+		URL: &url.URL,
+	}, nil
+}
+
 func (r *mutationResolver) CreatePlanDocument(ctx context.Context, input model.PlanDocumentInput) (*model.PlanDocumentPayload, error) {
 	principal := appcontext.Principal(ctx).ID()
 	logger := appcontext.ZLogger(ctx)
