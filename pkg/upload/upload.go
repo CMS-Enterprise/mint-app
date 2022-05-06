@@ -7,8 +7,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/google/uuid"
+
+	"github.com/cmsgov/mint-app/pkg/models"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/credentials"
