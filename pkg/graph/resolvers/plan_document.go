@@ -1,13 +1,14 @@
 package resolvers
 
 import (
+	"github.com/google/uuid"
+	"go.uber.org/zap"
+
 	"github.com/cmsgov/mint-app/pkg/graph/model"
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/storage"
 	"github.com/cmsgov/mint-app/pkg/storage/genericmodel"
 	"github.com/cmsgov/mint-app/pkg/upload"
-	"github.com/google/uuid"
-	"go.uber.org/zap"
 )
 
 func createDocumentPayload(s3Client *upload.S3Client, document *models.PlanDocument) (*model.PlanDocumentPayload, error) {

@@ -137,7 +137,7 @@ func (s *Store) PlanDocumentsReadByModelPlanID(
 
 func planDocumentsUpdateVirusScanStatuses(s3Client *upload.S3Client, documents []*models.PlanDocument) error {
 	var errorGroup errgroup.Group
-	for documentIndex, _ := range documents {
+	for documentIndex := range documents {
 		document := documents[documentIndex]
 		errorGroup.Go(func() error {
 			return planDocumentUpdateVirusScanStatus(s3Client, document)
