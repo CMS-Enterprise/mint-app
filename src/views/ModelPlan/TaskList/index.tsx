@@ -179,7 +179,6 @@ const TaskList = () => {
             </ol>
           </div>
           <div className="tablet:grid-col-3">
-            {/* //TODO to pass down archive functional prop */}
             <TaskListSideNav modelPlan={modelPlan} />
           </div>
         </div>

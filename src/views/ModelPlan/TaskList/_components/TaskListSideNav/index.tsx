@@ -66,7 +66,6 @@ const TaskListSideNav = ({ modelPlan }: { modelPlan: GetModelPlanType }) => {
         <Button
           type="button"
           className="margin-right-4"
-          // TODO to pass down archive functional prop
           onClick={() => archiveModelPlan()}
         >
           {t('withdraw_modal.confirm')}
