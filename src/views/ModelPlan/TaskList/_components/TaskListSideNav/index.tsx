@@ -35,13 +35,11 @@ const TaskListSideNav = ({ modelPlan }: { modelPlan: GetModelPlanType }) => {
   const [update] = useMutation<UpdateModelPlanType>(UpdateModelPlan);
 
   const archiveModelPlan = () => {
+    const { basics, ...archivedPlan } = modelPlan;
+    archivedPlan.archived = true;
     update({
       variables: {
-        input: {
-          id: modelId,
-          status: modelPlan.status,
-          archived: true
-        }
+        input: archivedPlan
       }
     })
       .then(response => {
@@ -121,7 +119,11 @@ const TaskListSideNav = ({ modelPlan }: { modelPlan: GetModelPlanType }) => {
             <ul className="usa-list usa-list--unstyled">
               {collaborators.map((collaborator, index) => {
                 return (
-                  <IconInitial user={collaborator.fullName} index={index} />
+                  <IconInitial
+                    key={collaborator.euaUserID}
+                    user={collaborator.fullName}
+                    index={index}
+                  />
                 );
               })}
             </ul>
