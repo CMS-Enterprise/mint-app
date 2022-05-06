@@ -1443,7 +1443,7 @@ type PlanDocument {
   virusClean: Boolean
   fileName: String
   fileSize: Int
-  documentType: String
+  documentType: DocumentType
   otherType: String
   deletedAt: Time
   createdBy: String
@@ -1469,7 +1469,7 @@ input PlanDocumentParameters {
   fileName: String
   fileSize: Int!
   fileType: String
-  documentType: String
+  documentType: DocumentType
   otherTypeDescription: String
 }
 
@@ -1792,6 +1792,14 @@ enum DiscussionStatus {
   ANSWERED
   WAITING_FOR_RESPONSE
   UNANSWERED
+}
+
+enum DocumentType {
+  CONCEPT_PAPER,
+  POLICY_PAPER,
+  ICIP_DRAFT,
+  MARKET_RESEARCH,
+  OTHER
 }
 
 directive @hasRole(role: Role!) on FIELD_DEFINITION
@@ -5626,9 +5634,9 @@ func (ec *executionContext) _PlanDocument_documentType(ctx context.Context, fiel
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(*string)
+	res := resTmp.(*models.DocumentType)
 	fc.Result = res
-	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalODocumentType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDocumentType(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _PlanDocument_otherType(ctx context.Context, field graphql.CollectedField, obj *models.PlanDocument) (ret graphql.Marshaler) {
@@ -8660,7 +8668,7 @@ func (ec *executionContext) unmarshalInputPlanDocumentParameters(ctx context.Con
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("documentType"))
-			it.DocumentType, err = ec.unmarshalOString2ᚖstring(ctx, v)
+			it.DocumentType, err = ec.unmarshalODocumentType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDocumentType(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -11628,6 +11636,23 @@ func (ec *executionContext) unmarshalODiscussionStatus2ᚖgithubᚗcomᚋcmsgov�
 }
 
 func (ec *executionContext) marshalODiscussionStatus2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDiscussionStatus(ctx context.Context, sel ast.SelectionSet, v *models.DiscussionStatus) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	res := graphql.MarshalString(string(*v))
+	return res
+}
+
+func (ec *executionContext) unmarshalODocumentType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDocumentType(ctx context.Context, v interface{}) (*models.DocumentType, error) {
+	if v == nil {
+		return nil, nil
+	}
+	tmp, err := graphql.UnmarshalString(v)
+	res := models.DocumentType(tmp)
+	return &res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalODocumentType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDocumentType(ctx context.Context, sel ast.SelectionSet, v *models.DocumentType) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}

@@ -102,11 +102,11 @@ type PlanDocumentInput struct {
 
 // PlanDocumentCreateParameters represents the specific data required to create or modify a document on a plan
 type PlanDocumentParameters struct {
-	FileName             *string `json:"fileName"`
-	FileSize             int     `json:"fileSize"`
-	FileType             *string `json:"fileType"`
-	DocumentType         *string `json:"documentType"`
-	OtherTypeDescription *string `json:"otherTypeDescription"`
+	FileName             *string              `json:"fileName"`
+	FileSize             int                  `json:"fileSize"`
+	FileType             *string              `json:"fileType"`
+	DocumentType         *models.DocumentType `json:"documentType"`
+	OtherTypeDescription *string              `json:"otherTypeDescription"`
 }
 
 // PlanDocumentPayload represents the response to a document request

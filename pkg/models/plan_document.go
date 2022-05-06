@@ -1,10 +1,12 @@
 package models
 
 import (
-	"github.com/google/uuid"
 	"time"
+
+	"github.com/google/uuid"
 )
 
+// PlanDocument represents a document attached to the plan
 type PlanDocument struct {
 	ID          uuid.UUID `json:"id" db:"id"`
 	ModelPlanID uuid.UUID `json:"modelPlanID" db:"model_plan_id"`
@@ -16,11 +18,11 @@ type PlanDocument struct {
 	VirusScanned bool `json:"virusScanned" db:"virus_scanned"`
 	VirusClean   bool `json:"virusClean" db:"virus_clean"`
 
-	FileName             *string    `json:"fileName" db:"file_name"`
-	FileSize             int        `json:"fileSize" db:"file_size"`
-	DocumentType         *string    `json:"documentType" db:"document_type"`
-	OtherTypeDescription *string    `json:"otherType" db:"other_type"`
-	DeletedAt            *time.Time `json:"deletedAt" db:"deleted_at"`
+	FileName             *string       `json:"fileName" db:"file_name"`
+	FileSize             int           `json:"fileSize" db:"file_size"`
+	DocumentType         *DocumentType `json:"documentType" db:"document_type"`
+	OtherTypeDescription *string       `json:"otherType" db:"other_type"`
+	DeletedAt            *time.Time    `json:"deletedAt" db:"deleted_at"`
 
 	CreatedBy   *string    `json:"createdBy" db:"created_by"`
 	CreatedDts  *time.Time `json:"createdDts" db:"created_dts"`

@@ -3,14 +3,13 @@ package storage
 import (
 	"database/sql"
 	_ "embed"
-	"errors"
 	"net/url"
 
-	"github.com/cmsgov/mint-app/pkg/graph/model"
-	"github.com/cmsgov/mint-app/pkg/shared/utilityUUID"
-	"github.com/cmsgov/mint-app/pkg/upload"
 	"github.com/jmoiron/sqlx"
 	"golang.org/x/sync/errgroup"
+
+	"github.com/cmsgov/mint-app/pkg/shared/utilityUUID"
+	"github.com/cmsgov/mint-app/pkg/upload"
 
 	"github.com/google/uuid"
 	"go.uber.org/zap"
@@ -39,14 +38,11 @@ var planDocumentDeleteByIDSQL string
 func (s *Store) PlanDocumentCreate(
 	logger *zap.Logger,
 	principal *string,
-	input *model.PlanDocumentInput,
+	inputDocument *models.PlanDocument,
+	documentURL *string,
 	s3Client *upload.S3Client) (*models.PlanDocument, error) {
 
-	if input.DocumentParameters == nil {
-		return nil, errors.New("DocumentParameters are required when creating a new document")
-	}
-
-	parsedURL, urlErr := url.Parse(*input.URL)
+	parsedURL, urlErr := url.Parse(*documentURL)
 	if urlErr != nil {
 		return nil, urlErr
 	}
@@ -56,23 +52,18 @@ func (s *Store) PlanDocumentCreate(
 		return nil, keyErr
 	}
 
-	id := uuid.Nil
-	if input.ID != nil {
-		id = *input.ID
-	}
-
 	document := models.PlanDocument{
-		ID:                   utilityUUID.ValueOrNewUUID(id),
-		ModelPlanID:          input.ModelPlanID,
-		FileType:             input.DocumentParameters.FileType,
+		ID:                   utilityUUID.ValueOrNewUUID(inputDocument.ID),
+		ModelPlanID:          inputDocument.ModelPlanID,
+		FileType:             inputDocument.FileType,
 		Bucket:               s3Client.GetBucket(),
 		FileKey:              &key,
 		VirusScanned:         false,
 		VirusClean:           false,
-		FileName:             input.DocumentParameters.FileName,
-		FileSize:             input.DocumentParameters.FileSize,
-		DocumentType:         input.DocumentParameters.DocumentType,
-		OtherTypeDescription: input.DocumentParameters.OtherTypeDescription,
+		FileName:             inputDocument.FileName,
+		FileSize:             inputDocument.FileSize,
+		DocumentType:         inputDocument.DocumentType,
+		OtherTypeDescription: inputDocument.OtherTypeDescription,
 		DeletedAt:            nil,
 		CreatedBy:            principal,
 		CreatedDts:           nil,
@@ -146,7 +137,8 @@ func (s *Store) PlanDocumentsReadByModelPlanID(
 
 func planDocumentsUpdateVirusScanStatuses(s3Client *upload.S3Client, documents []*models.PlanDocument) error {
 	var errorGroup errgroup.Group
-	for _, document := range documents {
+	for documentIndex, _ := range documents {
+		document := documents[documentIndex]
 		errorGroup.Go(func() error {
 			return planDocumentUpdateVirusScanStatus(s3Client, document)
 		})

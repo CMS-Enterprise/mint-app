@@ -107,7 +107,7 @@ type PlanDocument {
   virusClean: Boolean
   fileName: String
   fileSize: Int
-  documentType: String
+  documentType: DocumentType
   otherType: String
   deletedAt: Time
   createdBy: String
@@ -133,7 +133,7 @@ input PlanDocumentParameters {
   fileName: String
   fileSize: Int!
   fileType: String
-  documentType: String
+  documentType: DocumentType
   otherTypeDescription: String
 }
 
@@ -456,6 +456,14 @@ enum DiscussionStatus {
   ANSWERED
   WAITING_FOR_RESPONSE
   UNANSWERED
+}
+
+enum DocumentType {
+  CONCEPT_PAPER,
+  POLICY_PAPER,
+  ICIP_DRAFT,
+  MARKET_RESEARCH,
+  OTHER
 }
 
 directive @hasRole(role: Role!) on FIELD_DEFINITION

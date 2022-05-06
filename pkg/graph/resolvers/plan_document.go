@@ -25,10 +25,16 @@ func createDocumentPayload(s3Client *upload.S3Client, document *models.PlanDocum
 }
 
 // PlanDocumentCreate implements resolver logic to create a plan document object
-func PlanDocumentCreate(logger *zap.Logger, input *model.PlanDocumentInput, principal *string, store *storage.Store, s3Client *upload.S3Client) (*model.PlanDocumentPayload, error) {
-	document, err := store.PlanDocumentCreate(logger, principal, input, s3Client)
+func PlanDocumentCreate(
+	logger *zap.Logger,
+	document *models.PlanDocument,
+	documentURL *string,
+	principal *string,
+	store *storage.Store,
+	s3Client *upload.S3Client) (*model.PlanDocumentPayload, error) {
+	document, err := store.PlanDocumentCreate(logger, principal, document, documentURL, s3Client)
 	if err != nil {
-		return nil, genericmodel.HandleModelUpdateError(logger, err, models.PlanDocument{ID: *input.ID})
+		return nil, genericmodel.HandleModelUpdateError(logger, err, models.PlanDocument{ID: document.ID})
 	}
 
 	return createDocumentPayload(s3Client, document)

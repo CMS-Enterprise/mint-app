@@ -1,15 +1,16 @@
 package upload
 
 import (
+	"net/url"
+	"os"
+	"strings"
+	"time"
+
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/credentials"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/s3"
 	"github.com/aws/aws-sdk-go/service/s3/s3iface"
-	"net/url"
-	"os"
-	"strings"
-	"time"
 
 	"github.com/cmsgov/mint-app/pkg/appconfig"
 )
@@ -104,6 +105,7 @@ func (c S3Client) TagValueForKey(key string, tagName string) (string, error) {
 	return "", nil
 }
 
+// GetBucket returns a *string containing the S3 Bucket as defined by the S3Configuration
 func (c S3Client) GetBucket() *string {
 	return aws.String(c.config.Bucket)
 }
