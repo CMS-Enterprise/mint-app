@@ -72,39 +72,9 @@ const Milestones = () => {
   );
 
   const { modelName, milestones } = data?.modelPlan || {};
-  const {
-    id,
-    completeICIP,
-    clearanceStarts,
-    clearanceEnds,
-    announced,
-    applicationsStart,
-    applicationsEnd,
-    performancePeriodStarts,
-    performancePeriodEnds,
-    wrapUpEnds,
-    highLevelNote,
-    phasedIn,
-    phasedInNote
-  } = milestones;
 
   const [create] = useMutation<CreatePlanMilestonesType>(CreatePlanMilestones);
   const [update] = useMutation<UpdatePlanMilestonesType>(UpdatePlanMilestones);
-
-  const initialValues: PlanBasicsOverviewTypes = {
-    completeICIP: 'Gary',
-    clearanceStarts: milestones?.clearanceStarts ?? null,
-    clearanceEnds: milestones?.clearanceEnds ?? null,
-    announced: milestones?.announced ?? null,
-    applicationsStart: milestones?.applicationsStart ?? null,
-    applicationsEnd: milestones?.applicationsEnd ?? null,
-    performancePeriodStarts: milestones?.performancePeriodStarts ?? null,
-    performancePeriodEnds: milestones?.performancePeriodEnds ?? null,
-    wrapUpEnds: milestones?.wrapUpEnds ?? null,
-    highLevelNote: milestones?.highLevelNote ?? '',
-    phasedIn: milestones?.phasedIn ?? undefined,
-    phasedInNote: milestones?.phasedInNote ?? ''
-  };
 
   const handleFormSubmit = (formikValues: PlanBasicsOverviewTypes) => {
     if (milestones) {
@@ -167,6 +137,21 @@ const Milestones = () => {
     }
   };
 
+  const initialValues: PlanBasicsOverviewTypes = {
+    completeICIP: milestones?.completeICIP ?? null,
+    clearanceStarts: milestones?.clearanceStarts ?? null,
+    clearanceEnds: milestones?.clearanceEnds ?? null,
+    announced: milestones?.announced ?? null,
+    applicationsStart: milestones?.applicationsStart ?? null,
+    applicationsEnd: milestones?.applicationsEnd ?? null,
+    performancePeriodStarts: milestones?.performancePeriodStarts ?? null,
+    performancePeriodEnds: milestones?.performancePeriodEnds ?? null,
+    wrapUpEnds: milestones?.wrapUpEnds ?? null,
+    highLevelNote: milestones?.highLevelNote ?? '',
+    phasedIn: milestones?.phasedIn ?? undefined,
+    phasedInNote: milestones?.phasedInNote ?? ''
+  };
+
   return (
     <MainContent className="margin-bottom-5">
       <div className="grid-container">
@@ -212,7 +197,7 @@ const Milestones = () => {
                 setFieldError,
                 setFieldValue,
                 values,
-                validateForm
+                validateField
               } = formikProps;
               const flatErrors = flattenErrors(errors);
               return (
@@ -262,11 +247,12 @@ const Milestones = () => {
                         id="Milestone-completeICIP"
                         maxLength={50}
                         name="completeICIP"
+                        // defaultValue={completeICIP}
                         onChange={(e: any) => {
                           try {
                             new Date(e).toISOString();
                             // setErrors({ completeICIP: '' });
-                            validateForm('completeICIP');
+                            validateField('completeICIP');
                             setFieldValue(
                               'completeICIP',
                               new Date(e).toISOString()
