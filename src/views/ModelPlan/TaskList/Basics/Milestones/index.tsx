@@ -73,21 +73,21 @@ const Milestones = () => {
   );
 
   const { modelName, milestones } = data?.modelPlan || {};
-  cosnt {
+  const {
     id,
-      completeICIP,
-clearanceStarts,
-clearanceEnds,
-announced,
-applicationsStart,
-applicationsEnd,
-performancePeriodStarts,
-performancePeriodEnds,
-wrapUpEnds,
-highLevelNote,
-phasedIn,
-phasedInNote,
-  }
+    completeICIP,
+    clearanceStarts,
+    clearanceEnds,
+    announced,
+    applicationsStart,
+    applicationsEnd,
+    performancePeriodStarts,
+    performancePeriodEnds,
+    wrapUpEnds,
+    highLevelNote,
+    phasedIn,
+    phasedInNote
+  } = milestones;
 
   const [create] = useMutation<CreatePlanMilestonesType>(CreatePlanMilestones);
   const [update] = useMutation<UpdatePlanMilestonesType>(UpdatePlanMilestones);
@@ -103,9 +103,7 @@ phasedInNote,
     performancePeriodEnds: milestones?.performancePeriodEnds ?? null,
     wrapUpEnds: milestones?.wrapUpEnds ?? null,
     highLevelNote: milestones?.highLevelNote ?? '',
-    phasedIn: milestones?.phasedIn
-      ? setPhasedInState(milestones?.phasedIn)
-      : undefined,
+    phasedIn: milestones?.phasedIn ?? undefined,
     phasedInNote: milestones?.phasedInNote ?? ''
   };
 
