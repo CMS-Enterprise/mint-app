@@ -29,14 +29,14 @@ type DiscussionReplyInput struct {
 	ModifiedDts  *time.Time `json:"modifiedDts"`
 }
 
-// Input associated with a document to be uploaded to a 508/accessibility request
+// Input associated with a document to be uploaded
 type GeneratePresignedUploadURLInput struct {
 	FileName string `json:"fileName"`
 	MimeType string `json:"mimeType"`
 	Size     int    `json:"size"`
 }
 
-// URL generated for a document to be uploaded to a 508/accessibility request
+// URL generated for a document to be uploaded
 type GeneratePresignedUploadURLPayload struct {
 	URL *string `json:"url"`
 }

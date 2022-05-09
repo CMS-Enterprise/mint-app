@@ -210,6 +210,7 @@ type ComplexityRoot struct {
 		ModelPlanCollection       func(childComplexity int) int
 		PlanBasics                func(childComplexity int, id uuid.UUID) int
 		PlanDocument              func(childComplexity int, id uuid.UUID) int
+		PlanDocumentDownloadURL   func(childComplexity int, id uuid.UUID) int
 		PlanMilestones            func(childComplexity int, id uuid.UUID) int
 		ReadPlanDocumentByModelID func(childComplexity int, id uuid.UUID) int
 	}
@@ -265,6 +266,7 @@ type QueryResolver interface {
 	PlanBasics(ctx context.Context, id uuid.UUID) (*models.PlanBasics, error)
 	PlanMilestones(ctx context.Context, id uuid.UUID) (*models.PlanMilestones, error)
 	PlanDocument(ctx context.Context, id uuid.UUID) (*models.PlanDocument, error)
+	PlanDocumentDownloadURL(ctx context.Context, id uuid.UUID) (*model.PlanDocumentPayload, error)
 	ReadPlanDocumentByModelID(ctx context.Context, id uuid.UUID) ([]*models.PlanDocument, error)
 	ModelPlanCollection(ctx context.Context) ([]*models.ModelPlan, error)
 	CedarPersonsByCommonName(ctx context.Context, commonName string) ([]*models.UserInfo, error)
@@ -1250,6 +1252,18 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Query.PlanDocument(childComplexity, args["id"].(uuid.UUID)), true
 
+	case "Query.planDocumentDownloadURL":
+		if e.complexity.Query.PlanDocumentDownloadURL == nil {
+			break
+		}
+
+		args, err := ec.field_Query_planDocumentDownloadURL_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Query.PlanDocumentDownloadURL(childComplexity, args["id"].(uuid.UUID)), true
+
 	case "Query.planMilestones":
 		if e.complexity.Query.PlanMilestones == nil {
 			break
@@ -1380,7 +1394,7 @@ UUIDs are represented using 36 ASCII characters, for example B0511859-ADE6-4A67-
 """
 scalar UUID
 """
-Time values are represented as strings using RFC3339 format, for example 2019-10-12T07:20:50.52Z
+Time values are represented as strings using RFC3339 format, for example 2019-10-12T07:20:50G.52Z
 """
 scalar Time
 
@@ -1456,7 +1470,7 @@ input PlanCollaboratorInput {
 }
 
 """
-Input associated with a document to be uploaded to a 508/accessibility request
+Input associated with a document to be uploaded
 """
 input GeneratePresignedUploadURLInput {
   fileName: String!
@@ -1465,7 +1479,7 @@ input GeneratePresignedUploadURLInput {
 }
 
 """
-URL generated for a document to be uploaded to a 508/accessibility request
+URL generated for a document to be uploaded
 """
 type GeneratePresignedUploadURLPayload {
   url: String
@@ -1701,6 +1715,7 @@ type Query {
   planBasics(id: UUID!) : PlanBasics
   planMilestones(id: UUID!) : PlanMilestones
   planDocument(id: UUID!) : PlanDocument
+  planDocumentDownloadURL(id: UUID!) : PlanDocumentPayload
   readPlanDocumentByModelID(id: UUID!) : [PlanDocument]
   modelPlanCollection: [ModelPlan]
   cedarPersonsByCommonName(commonName: String!): [UserInfo!]!
@@ -2216,6 +2231,21 @@ func (ec *executionContext) field_Query_modelPlan_args(ctx context.Context, rawA
 }
 
 func (ec *executionContext) field_Query_planBasics_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 uuid.UUID
+	if tmp, ok := rawArgs["id"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("id"))
+		arg0, err = ec.unmarshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["id"] = arg0
+	return args, nil
+}
+
+func (ec *executionContext) field_Query_planDocumentDownloadURL_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
 	var arg0 uuid.UUID
@@ -6845,6 +6875,45 @@ func (ec *executionContext) _Query_planDocument(ctx context.Context, field graph
 	return ec.marshalOPlanDocument2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanDocument(ctx, field.Selections, res)
 }
 
+func (ec *executionContext) _Query_planDocumentDownloadURL(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   true,
+		IsResolver: true,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	rawArgs := field.ArgumentMap(ec.Variables)
+	args, err := ec.field_Query_planDocumentDownloadURL_args(ctx, rawArgs)
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	fc.Args = args
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Query().PlanDocumentDownloadURL(rctx, args["id"].(uuid.UUID))
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*model.PlanDocumentPayload)
+	fc.Result = res
+	return ec.marshalOPlanDocumentPayload2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐPlanDocumentPayload(ctx, field.Selections, res)
+}
+
 func (ec *executionContext) _Query_readPlanDocumentByModelID(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
@@ -10379,6 +10448,26 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 					}
 				}()
 				res = ec._Query_planDocument(ctx, field)
+				return res
+			}
+
+			rrm := func(ctx context.Context) graphql.Marshaler {
+				return ec.OperationContext.RootResolverMiddleware(ctx, innerFunc)
+			}
+
+			out.Concurrently(i, func() graphql.Marshaler {
+				return rrm(innerCtx)
+			})
+		case "planDocumentDownloadURL":
+			field := field
+
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Query_planDocumentDownloadURL(ctx, field)
 				return res
 			}
 

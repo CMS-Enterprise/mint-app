@@ -340,6 +340,7 @@ type Query {
   planBasics(id: UUID!) : PlanBasics
   planMilestones(id: UUID!) : PlanMilestones
   planDocument(id: UUID!) : PlanDocument
+  planDocumentDownloadURL(id: UUID!) : PlanDocumentPayload
   readPlanDocumentByModelID(id: UUID!) : [PlanDocument]
   modelPlanCollection: [ModelPlan]
   cedarPersonsByCommonName(commonName: String!): [UserInfo!]!

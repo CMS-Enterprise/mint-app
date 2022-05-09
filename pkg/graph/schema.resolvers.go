@@ -5,7 +5,6 @@ package graph
 
 import (
 	"context"
-
 	"github.com/google/uuid"
 
 	"github.com/cmsgov/mint-app/pkg/appcontext"
@@ -155,11 +154,12 @@ func (r *mutationResolver) UpdatePlanMilestones(ctx context.Context, input model
 	return resolvers.UpdatePlanMilestones(logger, basics, &principal, r.store)
 }
 
-func (r *mutationResolver) GeneratePresignedUploadURL(ctx context.Context, input model.GeneratePresignedUploadURLInput) (*model.GeneratePresignedUploadURLPayload, error) {
+func (r *mutationResolver) GeneratePresignedUploadURL(_ context.Context, input model.GeneratePresignedUploadURLInput) (*model.GeneratePresignedUploadURLPayload, error) {
 	url, err := r.s3Client.NewPutPresignedURL(input.MimeType)
 	if err != nil {
 		return nil, err
 	}
+
 	return &model.GeneratePresignedUploadURLPayload{
 		URL: &url.URL,
 	}, nil
@@ -251,7 +251,7 @@ func (r *planDiscussionResolver) Replies(ctx context.Context, obj *models.PlanDi
 	return resolvers.DiscussionReplyCollectionByDiscusionID(logger, obj.ID, r.store)
 }
 
-func (r *planDocumentResolver) OtherType(ctx context.Context, obj *models.PlanDocument) (*string, error) {
+func (r *planDocumentResolver) OtherType(_ context.Context, obj *models.PlanDocument) (*string, error) {
 	return obj.OtherTypeDescription, nil
 }
 
@@ -294,6 +294,25 @@ func (r *queryResolver) PlanDocument(ctx context.Context, id uuid.UUID) (*models
 	return resolvers.PlanDocumentRead(logger, r.store, r.s3Client, id)
 }
 
+func (r *queryResolver) PlanDocumentDownloadURL(ctx context.Context, id uuid.UUID) (*model.PlanDocumentPayload, error) {
+	logger := appcontext.ZLogger(ctx)
+
+	document, err := resolvers.PlanDocumentRead(logger, r.store, r.s3Client, id)
+	if err != nil {
+		return &model.PlanDocumentPayload{}, err
+	}
+
+	url, err := r.s3Client.NewPutPresignedURL(*document.FileType)
+	if err != nil {
+		return nil, err
+	}
+
+	return &model.PlanDocumentPayload{
+		Document:     document,
+		PresignedURL: &url.URL,
+	}, nil
+}
+
 func (r *queryResolver) ReadPlanDocumentByModelID(ctx context.Context, id uuid.UUID) ([]*models.PlanDocument, error) {
 	logger := appcontext.ZLogger(ctx)
 
@@ -315,7 +334,7 @@ func (r *queryResolver) CedarPersonsByCommonName(ctx context.Context, commonName
 	return response, nil
 }
 
-func (r *userInfoResolver) Email(ctx context.Context, obj *models.UserInfo) (string, error) {
+func (r *userInfoResolver) Email(_ context.Context, obj *models.UserInfo) (string, error) {
 	return string(obj.Email), nil
 }
 
