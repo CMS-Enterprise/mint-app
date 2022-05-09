@@ -193,6 +193,7 @@ const Milestones = () => {
                 dirty,
                 errors,
                 handleSubmit,
+                isValid,
                 setErrors,
                 setFieldValue
               } = formikProps;
@@ -607,7 +608,7 @@ const Milestones = () => {
                       </Button>
                       <Button
                         type="submit"
-                        disabled={!dirty}
+                        disabled={!(dirty || isValid)}
                         className=""
                         onClick={() => setErrors({})}
                       >

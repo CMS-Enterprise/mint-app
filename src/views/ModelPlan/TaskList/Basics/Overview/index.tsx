@@ -136,6 +136,7 @@ const Overview = () => {
                 dirty,
                 errors,
                 handleSubmit,
+                isValid,
                 setErrors,
                 values
               } = formikProps;
@@ -270,7 +271,7 @@ const Overview = () => {
                       </Button>
                       <Button
                         type="submit"
-                        disabled={!dirty}
+                        disabled={!(dirty || isValid)}
                         className=""
                         onClick={() => setErrors({})}
                       >
