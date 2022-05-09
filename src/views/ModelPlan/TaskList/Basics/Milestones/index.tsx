@@ -73,23 +73,40 @@ const Milestones = () => {
   );
 
   const { modelName, milestones } = data?.modelPlan || {};
+  cosnt {
+    id,
+      completeICIP,
+clearanceStarts,
+clearanceEnds,
+announced,
+applicationsStart,
+applicationsEnd,
+performancePeriodStarts,
+performancePeriodEnds,
+wrapUpEnds,
+highLevelNote,
+phasedIn,
+phasedInNote,
+  }
 
   const [create] = useMutation<CreatePlanMilestonesType>(CreatePlanMilestones);
   const [update] = useMutation<UpdatePlanMilestonesType>(UpdatePlanMilestones);
 
   const initialValues: PlanBasicsOverviewTypes = {
-    completeICIP: null,
-    clearanceStarts: null,
-    clearanceEnds: null,
-    announced: null,
-    applicationsStart: null,
-    applicationsEnd: null,
-    performancePeriodStarts: null,
-    performancePeriodEnds: null,
-    wrapUpEnds: null,
-    highLevelNote: '',
-    phasedIn: undefined,
-    phasedInNote: ''
+    completeICIP: 'Gary',
+    clearanceStarts: milestones?.clearanceStarts ?? null,
+    clearanceEnds: milestones?.clearanceEnds ?? null,
+    announced: milestones?.announced ?? null,
+    applicationsStart: milestones?.applicationsStart ?? null,
+    applicationsEnd: milestones?.applicationsEnd ?? null,
+    performancePeriodStarts: milestones?.performancePeriodStarts ?? null,
+    performancePeriodEnds: milestones?.performancePeriodEnds ?? null,
+    wrapUpEnds: milestones?.wrapUpEnds ?? null,
+    highLevelNote: milestones?.highLevelNote ?? '',
+    phasedIn: milestones?.phasedIn
+      ? setPhasedInState(milestones?.phasedIn)
+      : undefined,
+    phasedInNote: milestones?.phasedInNote ?? ''
   };
 
   const handleFormSubmit = (formikValues: PlanBasicsOverviewTypes) => {
@@ -196,7 +213,8 @@ const Milestones = () => {
                 isValid,
                 setErrors,
                 setFieldError,
-                setFieldValue
+                setFieldValue,
+                validateForm
               } = formikProps;
               const flatErrors = flattenErrors(errors);
               return (
@@ -249,7 +267,8 @@ const Milestones = () => {
                         onChange={(e: any) => {
                           try {
                             new Date(e).toISOString();
-                            setErrors({ completeICIP: '' });
+                            // setErrors({ completeICIP: '' });
+                            validateForm('completeICIP');
                             setFieldValue(
                               'completeICIP',
                               new Date(e).toISOString()
