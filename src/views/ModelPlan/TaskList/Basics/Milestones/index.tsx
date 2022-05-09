@@ -196,10 +196,17 @@ const Milestones = () => {
                 setErrors,
                 setFieldError,
                 setFieldValue,
-                values,
-                validateField
+                values
               } = formikProps;
               const flatErrors = flattenErrors(errors);
+              const handleOnchange = (e: any, field: string) => {
+                try {
+                  new Date(e).toISOString();
+                  setFieldValue(field, new Date(e).toISOString());
+                } catch (error) {
+                  setFieldError(field, 'Please use a valid date format');
+                }
+              };
               return (
                 <>
                   {Object.keys(errors).length > 0 && (
@@ -247,23 +254,8 @@ const Milestones = () => {
                         id="Milestone-completeICIP"
                         maxLength={50}
                         name="completeICIP"
-                        // defaultValue={completeICIP}
-                        onChange={(e: any) => {
-                          try {
-                            new Date(e).toISOString();
-                            // setErrors({ completeICIP: '' });
-                            validateField('completeICIP');
-                            setFieldValue(
-                              'completeICIP',
-                              new Date(e).toISOString()
-                            );
-                          } catch (error) {
-                            setFieldError(
-                              'completeICIP',
-                              'Please use a valid date format'
-                            );
-                          }
-                        }}
+                        defaultValue={values.completeICIP}
+                        onChange={(e: any) => handleOnchange(e, 'completeICIP')}
                       />
                     </FieldGroup>
 
@@ -295,12 +287,9 @@ const Milestones = () => {
                           id="Milestone-clearanceStarts"
                           maxLength={50}
                           name="clearanceStarts"
-                          onChange={(e: any) => {
-                            setFieldValue(
-                              'clearanceStarts',
-                              new Date(e).toISOString()
-                            );
-                          }}
+                          onChange={(e: any) =>
+                            handleOnchange(e, 'clearanceStarts')
+                          }
                         />
                       </FieldGroup>
 
@@ -327,12 +316,9 @@ const Milestones = () => {
                           id="Milestone-clearanceEnds"
                           maxLength={50}
                           name="clearanceEnds"
-                          onChange={(e: any) => {
-                            setFieldValue(
-                              'clearanceEnds',
-                              new Date(e).toISOString()
-                            );
-                          }}
+                          onChange={(e: any) =>
+                            handleOnchange(e, 'clearanceEnds')
+                          }
                         />
                       </FieldGroup>
                     </div>
@@ -355,9 +341,7 @@ const Milestones = () => {
                         id="Milestone-announced"
                         maxLength={50}
                         name="announced"
-                        onChange={(e: any) => {
-                          setFieldValue('announced', new Date(e).toISOString());
-                        }}
+                        onChange={(e: any) => handleOnchange(e, 'announced')}
                       />
                     </FieldGroup>
 
@@ -389,12 +373,9 @@ const Milestones = () => {
                           id="Milestone-applicationsStart"
                           maxLength={50}
                           name="applicationsStart"
-                          onChange={(e: any) => {
-                            setFieldValue(
-                              'applicationsStart',
-                              new Date(e).toISOString()
-                            );
-                          }}
+                          onChange={(e: any) =>
+                            handleOnchange(e, 'applicationsStart')
+                          }
                         />
                       </FieldGroup>
 
@@ -421,12 +402,9 @@ const Milestones = () => {
                           id="Milestone-applicationsEnd"
                           maxLength={50}
                           name="applicationsEnd"
-                          onChange={(e: any) => {
-                            setFieldValue(
-                              'applicationsEnd',
-                              new Date(e).toISOString()
-                            );
-                          }}
+                          onChange={(e: any) =>
+                            handleOnchange(e, 'applicationsEnd')
+                          }
                         />
                       </FieldGroup>
                     </div>
@@ -459,12 +437,9 @@ const Milestones = () => {
                           id="Milestone-performancePeriodStarts"
                           maxLength={50}
                           name="performancePeriodStarts"
-                          onChange={(e: any) => {
-                            setFieldValue(
-                              'performancePeriodStarts',
-                              new Date(e).toISOString()
-                            );
-                          }}
+                          onChange={(e: any) =>
+                            handleOnchange(e, 'performancePeriodStarts')
+                          }
                         />
                       </FieldGroup>
                       <FieldGroup
@@ -490,12 +465,9 @@ const Milestones = () => {
                           id="Milestone-performancePeriodEnds"
                           maxLength={50}
                           name="performancePeriodEnds"
-                          onChange={(e: any) => {
-                            setFieldValue(
-                              'performancePeriodEnds',
-                              new Date(e).toISOString()
-                            );
-                          }}
+                          onChange={(e: any) =>
+                            handleOnchange(e, 'performancePeriodEnds')
+                          }
                         />
                       </FieldGroup>
                     </div>
@@ -518,12 +490,7 @@ const Milestones = () => {
                         id="Milestone-wrapUpEnds"
                         maxLength={50}
                         name="wrapUpEnds"
-                        onChange={(e: any) => {
-                          setFieldValue(
-                            'wrapUpEnds',
-                            new Date(e).toISOString()
-                          );
-                        }}
+                        onChange={(e: any) => handleOnchange(e, 'wrapUpEnds')}
                       />
                     </FieldGroup>
 
