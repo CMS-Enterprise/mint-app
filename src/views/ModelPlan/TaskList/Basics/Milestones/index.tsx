@@ -287,6 +287,7 @@ const Milestones = () => {
                           id="Milestone-clearanceStarts"
                           maxLength={50}
                           name="clearanceStarts"
+                          defaultValue={values.clearanceStarts}
                           onChange={(e: any) =>
                             handleOnchange(e, 'clearanceStarts')
                           }
@@ -316,6 +317,7 @@ const Milestones = () => {
                           id="Milestone-clearanceEnds"
                           maxLength={50}
                           name="clearanceEnds"
+                          defaultValue={values.clearanceEnds}
                           onChange={(e: any) =>
                             handleOnchange(e, 'clearanceEnds')
                           }
@@ -341,6 +343,7 @@ const Milestones = () => {
                         id="Milestone-announced"
                         maxLength={50}
                         name="announced"
+                        defaultValue={values.announced}
                         onChange={(e: any) => handleOnchange(e, 'announced')}
                       />
                     </FieldGroup>
@@ -373,6 +376,7 @@ const Milestones = () => {
                           id="Milestone-applicationsStart"
                           maxLength={50}
                           name="applicationsStart"
+                          defaultValue={values.applicationsStart}
                           onChange={(e: any) =>
                             handleOnchange(e, 'applicationsStart')
                           }
@@ -402,6 +406,7 @@ const Milestones = () => {
                           id="Milestone-applicationsEnd"
                           maxLength={50}
                           name="applicationsEnd"
+                          defaultValue={values.applicationsEnd}
                           onChange={(e: any) =>
                             handleOnchange(e, 'applicationsEnd')
                           }
@@ -437,6 +442,7 @@ const Milestones = () => {
                           id="Milestone-performancePeriodStarts"
                           maxLength={50}
                           name="performancePeriodStarts"
+                          defaultValue={values.performancePeriodStarts}
                           onChange={(e: any) =>
                             handleOnchange(e, 'performancePeriodStarts')
                           }
@@ -465,6 +471,7 @@ const Milestones = () => {
                           id="Milestone-performancePeriodEnds"
                           maxLength={50}
                           name="performancePeriodEnds"
+                          defaultValue={values.performancePeriodEnds}
                           onChange={(e: any) =>
                             handleOnchange(e, 'performancePeriodEnds')
                           }
@@ -490,6 +497,7 @@ const Milestones = () => {
                         id="Milestone-wrapUpEnds"
                         maxLength={50}
                         name="wrapUpEnds"
+                        defaultValue={values.wrapUpEnds}
                         onChange={(e: any) => handleOnchange(e, 'wrapUpEnds')}
                       />
                     </FieldGroup>
