@@ -149,6 +149,7 @@ const BasicsContent = () => {
                 handleSubmit,
                 setErrors,
                 setFieldValue,
+                isValid,
                 values
               } = formikProps;
               const flatErrors = flattenErrors(errors);
@@ -354,7 +355,7 @@ const BasicsContent = () => {
                     <div className="margin-top-6 margin-bottom-3">
                       <Button
                         type="submit"
-                        disabled={!dirty}
+                        disabled={!(dirty || isValid)}
                         className=""
                         onClick={() => setErrors({})}
                       >
