@@ -59,7 +59,6 @@ const Milestones = () => {
 
   const history = useHistory();
   const formikRef = useRef<FormikProps<PlanBasicsOverviewTypes>>(null);
-  const [phasedInState, setPhasedInState] = useState<boolean | null>(null);
   const [hasHighLevelNote, setHasHighLevelNote] = useState(false);
   const [hasAdditionalNote, setHasAdditionalNote] = useState(false);
 
@@ -212,6 +211,7 @@ const Milestones = () => {
                 setErrors,
                 setFieldError,
                 setFieldValue,
+                values,
                 validateForm
               } = formikProps;
               const flatErrors = flattenErrors(errors);
@@ -581,9 +581,8 @@ const Milestones = () => {
                           name="phasedIn"
                           label={h('yes')}
                           value="YES"
-                          checked={phasedInState === true}
+                          checked={values.phasedIn === true}
                           onChange={() => {
-                            setPhasedInState(true);
                             setFieldValue('phasedIn', true);
                           }}
                         />
@@ -593,9 +592,8 @@ const Milestones = () => {
                           name="phasedIn"
                           label={h('no')}
                           value="NO"
-                          checked={phasedInState === false}
+                          checked={values.phasedIn === false}
                           onChange={() => {
-                            setPhasedInState(false);
                             setFieldValue('phasedIn', false);
                           }}
                         />
