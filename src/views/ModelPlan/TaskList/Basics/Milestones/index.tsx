@@ -195,6 +195,7 @@ const Milestones = () => {
                 handleSubmit,
                 isValid,
                 setErrors,
+                setFieldError,
                 setFieldValue
               } = formikProps;
               const flatErrors = flattenErrors(errors);
@@ -246,10 +247,19 @@ const Milestones = () => {
                         maxLength={50}
                         name="completeICIP"
                         onChange={(e: any) => {
-                          setFieldValue(
-                            'completeICIP',
-                            new Date(e).toISOString()
-                          );
+                          try {
+                            new Date(e).toISOString();
+                            setErrors({ completeICIP: '' });
+                            setFieldValue(
+                              'completeICIP',
+                              new Date(e).toISOString()
+                            );
+                          } catch (error) {
+                            setFieldError(
+                              'completeICIP',
+                              'Please use a valid date format'
+                            );
+                          }
                         }}
                       />
                     </FieldGroup>
