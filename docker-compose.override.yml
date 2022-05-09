@@ -54,7 +54,7 @@ services:
       - 3005:3005
   minio:
     ports:
-      - '9005:9000'
+      - '9005:9005'
       - '9966:9966'
     volumes:
       - ./tmp/minio:/data

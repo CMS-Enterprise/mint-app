@@ -199,7 +199,7 @@ func main() {
 			DocumentType:         &documentType,
 			OtherTypeDescription: models.StringPointer("A fake document"),
 		},
-		URL: models.StringPointer("http://minio:9000/mint-app-file-uploads/8bitshades.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=L31LSFLREORA0BKZ704N%2F20220504%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20220504T045241Z&X-Amz-Expires=604800&X-Amz-Security-Token=eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhY2Nlc3NLZXkiOiJMMzFMU0ZMUkVPUkEwQktaNzA0TiIsImV4cCI6MTY1MTY0Mjg2NiwicGFyZW50IjoibWluaW9hZG1pbiJ9.IM5OhdYOz5yqby2aTg4O9aABjlA0hjIIWiZNduDp5eRwqxCnEpf3kf77uLDUFKvebMI01KArTFmHQii8qMjAxQ&X-Amz-SignedHeaders=host&versionId=null&X-Amz-Signature=050aef69d3dab5e4e297ec942d33506a2e890989fc3cc537bae95c99b3297d1a"),
+		URL: models.StringPointer("http://minio:9005/mint-app-file-uploads/8bitshades.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=L31LSFLREORA0BKZ704N%2F20220504%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20220504T045241Z&X-Amz-Expires=604800&X-Amz-Security-Token=eyJhbGciOiJIUzUxMiIsInR5cCI6IkpXVCJ9.eyJhY2Nlc3NLZXkiOiJMMzFMU0ZMUkVPUkEwQktaNzA0TiIsImV4cCI6MTY1MTY0Mjg2NiwicGFyZW50IjoibWluaW9hZG1pbiJ9.IM5OhdYOz5yqby2aTg4O9aABjlA0hjIIWiZNduDp5eRwqxCnEpf3kf77uLDUFKvebMI01KArTFmHQii8qMjAxQ&X-Amz-SignedHeaders=host&versionId=null&X-Amz-Signature=050aef69d3dab5e4e297ec942d33506a2e890989fc3cc537bae95c99b3297d1a"),
 	}
 
 	inputDocument := graph.ConvertToPlanDocumentModel(&planDocumentInput)
