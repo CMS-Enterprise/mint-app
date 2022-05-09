@@ -24,6 +24,12 @@ export enum CMSCenter {
   OTHER = "OTHER",
 }
 
+export enum DiscussionStatus {
+  ANSWERED = "ANSWERED",
+  UNANSWERED = "UNANSWERED",
+  WAITING_FOR_RESPONSE = "WAITING_FOR_RESPONSE",
+}
+
 export enum ModelCategory {
   ACCOUNTABLE_CARE = "ACCOUNTABLE_CARE",
   DEMONSTRATION = "DEMONSTRATION",

@@ -79,3 +79,28 @@ export const translateCmmiGroup = (category: string) => {
       return '';
   }
 };
+
+export const translateModelPlanStatus = (status: string) => {
+  switch (status) {
+    case 'PLAN_DRAFT':
+      return i18next.t('modelPlan:planStatuses.planDraft');
+    case 'PLAN_COMPLETE':
+      return i18next.t('modelPlan:planStatuses.planComplete');
+    case 'ICIP_COMPLETE':
+      return i18next.t('modelPlan:planStatuses.icipComplete');
+    case 'INTERNAL_CMMI_CLEARANCE':
+      return i18next.t('modelPlan:planStatuses.cmmiClearance');
+    case 'CMS_CLEARANCE':
+      return i18next.t('modelPlan:planStatuses.cmsClearance');
+    case 'HHS_CLEARANCE':
+      return i18next.t('modelPlan:planStatuses.hhsClearance');
+    case 'OMB_ASRF_CLEARANCE':
+      return i18next.t('modelPlan:planStatuses.ombASRFClearance');
+    case 'CLEARED':
+      return i18next.t('modelPlan:planStatuses.cleared');
+    case 'ANNOUNCED':
+      return i18next.t('modelPlan:planStatuses.announced');
+    default:
+      return '';
+  }
+};

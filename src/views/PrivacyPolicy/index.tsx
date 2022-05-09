@@ -48,7 +48,7 @@ const PrivacyPolicy = () => {
   );
 
   return (
-    <MainContent className="grid-container line-height-body-5 margin-bottom-5">
+    <MainContent className="grid-container line-height-body-5">
       <PageHeading>{t('privacyPolicy:mainTitle')}</PageHeading>
 
       {/* CMS.gov Privacy Policy */}

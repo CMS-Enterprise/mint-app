@@ -99,7 +99,7 @@ const TaskList = () => {
 
   return (
     <MainContent
-      className="model-plan-task-list grid-container margin-bottom-7"
+      className="model-plan-task-list grid-container"
       data-testid="model-plan-task-list"
     >
       <div className="grid-row">

@@ -121,7 +121,7 @@ const Collaborators = () => {
   const initialValues: CollaboratorForm = collaborator;
 
   return (
-    <MainContent className="margin-bottom-5">
+    <MainContent>
       <div className="grid-container">
         <div className="desktop:grid-col-6">
           <PageHeading className="margin-top-6 margin-bottom-2">
