@@ -59,35 +59,30 @@ const Overview = () => {
   );
 
   const { modelName } = data?.modelPlan || {};
-  const { id } = data?.modelPlan?.basics || {};
+  const { id, modelType, problem, goal, testInventions, note } =
+    data?.modelPlan?.basics || {};
 
   const [update] = useMutation<UpdatePlanBasicsType>(UpdatePlanBasics);
 
   const initialValues = {
-    modelType: '',
-    problem: '',
-    goal: '',
-    testInterventions: '',
-    note: ''
+    modelType: modelType ?? '',
+    problem: problem ?? '',
+    goal: goal ?? '',
+    testInterventions: testInventions ?? '',
+    note: note ?? ''
   };
 
-  const handleFormSubmit = ({
-    modelType,
-    problem,
-    goal,
-    testInterventions,
-    note
-  }: PlanBasicsOverviewTypes) => {
+  const handleFormSubmit = (formikValues: PlanBasicsOverviewTypes) => {
     update({
       variables: {
         input: {
           id,
           modelPlanID: modelId,
-          modelType,
-          problem,
-          goal,
-          testInventions: testInterventions,
-          note
+          modelType: formikValues.modelType,
+          problem: formikValues.problem,
+          goal: formikValues.goal,
+          testInventions: formikValues.testInterventions,
+          note: formikValues.note
         }
       }
     })
