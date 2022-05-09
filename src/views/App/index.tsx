@@ -61,7 +61,9 @@ const AppRoutes = () => {
   return (
     <Switch>
       {/* General Routes */}
-      <Route path="/" exact component={Home} />
+      <Redirect exact from="/" to="/models" />
+      <Route path="/models" exact component={Home} />
+
       <Redirect exact from="/login" to="/signin" />
       <Route path="/signin" exact component={Login} />
       <SecureRoute path="/user-diagnostics" component={UserInfo} />

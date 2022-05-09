@@ -22,7 +22,7 @@ const StepsOverview = () => {
   const { t } = useTranslation('modelPlan');
 
   return (
-    <MainContent className="margin-bottom-5">
+    <MainContent>
       <div className="grid-container">
         <div className="tablet:grid-col-12">
           <BreadcrumbBar variant="wrap">

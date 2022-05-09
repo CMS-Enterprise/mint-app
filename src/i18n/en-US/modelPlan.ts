@@ -7,6 +7,17 @@ const modelPlan = {
     learning: 'Learning',
     modelTeam: 'Model Team'
   },
+  planStatuses: {
+    planDraft: 'Draft model plan',
+    planComplete: 'Model plan compelte',
+    icipComplete: 'ICIP complete',
+    cmmiClearance: 'Internal (CMMI) clearance',
+    cmsClearance: 'CMS clearance',
+    hhsClearance: 'HHS clearance',
+    ombASRFClearance: 'OMB/ASRF clearance',
+    cleared: 'Cleared',
+    announced: 'Announced'
+  },
   stepsOverview: {
     heading: 'Start a new model plan',
     getStartedButton: 'Get started',

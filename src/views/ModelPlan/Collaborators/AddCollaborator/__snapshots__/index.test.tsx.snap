@@ -3,7 +3,7 @@
 exports[`Adding a collaborator page matches snapshot 1`] = `
 <DocumentFragment>
   <main
-    class="mint-main-content margin-bottom-5"
+    class="mint-main-content"
     id="main-content"
     role="main"
     tabindex="-1"
