@@ -116,7 +116,9 @@ const Overview = () => {
             </Breadcrumb>
             <Breadcrumb current>{t('breadcrumb')}</Breadcrumb>
           </BreadcrumbBar>
-          <PageHeading className="margin-bottom-1">{t('heading')}</PageHeading>
+          <PageHeading className="margin-top-4 margin-bottom-1">
+            {t('heading')}
+          </PageHeading>
           <p
             className="margin-top-0 margin-bottom-1 font-body-lg"
             data-testid="model-plan-name"
