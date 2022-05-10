@@ -158,22 +158,23 @@ type ComplexityRoot struct {
 	}
 
 	PlanDocument struct {
-		Bucket       func(childComplexity int) int
-		CreatedBy    func(childComplexity int) int
-		CreatedDts   func(childComplexity int) int
-		DeletedAt    func(childComplexity int) int
-		DocumentType func(childComplexity int) int
-		FileKey      func(childComplexity int) int
-		FileName     func(childComplexity int) int
-		FileSize     func(childComplexity int) int
-		FileType     func(childComplexity int) int
-		ID           func(childComplexity int) int
-		ModelPlanID  func(childComplexity int) int
-		ModifiedBy   func(childComplexity int) int
-		ModifiedDts  func(childComplexity int) int
-		OtherType    func(childComplexity int) int
-		VirusClean   func(childComplexity int) int
-		VirusScanned func(childComplexity int) int
+		Bucket        func(childComplexity int) int
+		CreatedBy     func(childComplexity int) int
+		CreatedDts    func(childComplexity int) int
+		DeletedAt     func(childComplexity int) int
+		DocumentType  func(childComplexity int) int
+		FileKey       func(childComplexity int) int
+		FileName      func(childComplexity int) int
+		FileSize      func(childComplexity int) int
+		FileType      func(childComplexity int) int
+		ID            func(childComplexity int) int
+		ModelPlanID   func(childComplexity int) int
+		ModifiedBy    func(childComplexity int) int
+		ModifiedDts   func(childComplexity int) int
+		OptionalNotes func(childComplexity int) int
+		OtherType     func(childComplexity int) int
+		VirusClean    func(childComplexity int) int
+		VirusScanned  func(childComplexity int) int
 	}
 
 	PlanDocumentPayload struct {
@@ -1022,6 +1023,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.PlanDocument.ModifiedDts(childComplexity), true
 
+	case "PlanDocument.optionalNotes":
+		if e.complexity.PlanDocument.OptionalNotes == nil {
+			break
+		}
+
+		return e.complexity.PlanDocument.OptionalNotes(childComplexity), true
+
 	case "PlanDocument.otherType":
 		if e.complexity.PlanDocument.OtherType == nil {
 			break
@@ -1500,6 +1508,7 @@ type PlanDocument {
   fileSize: Int
   documentType: DocumentType
   otherType: String
+  optionalNotes: String
   deletedAt: Time
   createdBy: String
   createdDts: Time
@@ -1526,6 +1535,7 @@ input PlanDocumentParameters {
   fileType: String
   documentType: DocumentType
   otherTypeDescription: String
+  optionalNotes: String
 }
 
 """
@@ -5855,6 +5865,38 @@ func (ec *executionContext) _PlanDocument_otherType(ctx context.Context, field g
 	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
+func (ec *executionContext) _PlanDocument_optionalNotes(ctx context.Context, field graphql.CollectedField, obj *models.PlanDocument) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "PlanDocument",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   false,
+		IsResolver: false,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.OptionalNotes, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
 func (ec *executionContext) _PlanDocument_deletedAt(ctx context.Context, field graphql.CollectedField, obj *models.PlanDocument) (ret graphql.Marshaler) {
 	defer func() {
 		if r := recover(); r != nil {
@@ -8942,6 +8984,14 @@ func (ec *executionContext) unmarshalInputPlanDocumentParameters(ctx context.Con
 			if err != nil {
 				return it, err
 			}
+		case "optionalNotes":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("optionalNotes"))
+			it.OptionalNotes, err = ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
 		}
 	}
 
@@ -10104,6 +10154,13 @@ func (ec *executionContext) _PlanDocument(ctx context.Context, sel ast.Selection
 				return innerFunc(ctx)
 
 			})
+		case "optionalNotes":
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._PlanDocument_optionalNotes(ctx, field, obj)
+			}
+
+			out.Values[i] = innerFunc(ctx)
+
 		case "deletedAt":
 			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._PlanDocument_deletedAt(ctx, field, obj)
