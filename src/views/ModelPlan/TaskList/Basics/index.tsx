@@ -74,7 +74,11 @@ const BasicsContent = () => {
 
   const [update] = useMutation<UpdateModelPlanType>(UpdateModelPlan);
 
-  const handleUpdateModelPlan = (formikValues: PlanBasicModelPlanFormType) => {
+  const handleUpdateModelPlan = (
+    formikValues: PlanBasicModelPlanFormType,
+    isAutoSave: boolean = false,
+    continuesToNextStep: boolean = true
+  ) => {
     update({
       variables: {
         input: {
@@ -90,37 +94,9 @@ const BasicsContent = () => {
     })
       .then(response => {
         if (!response?.errors) {
-          history.push(`/models/${modelId}/task-list/basics/overview`);
-        }
-      })
-      .catch(errors => {
-        formikRef?.current?.setErrors(errors);
-      });
-  };
-
-  const handleSave = (
-    formikValues: PlanBasicModelPlanFormType,
-    isAutoSave: boolean = false
-  ) => {
-    update({
-      variables: {
-        input: {
-          id: modelId,
-          modelName: formikValues.modelName,
-          modelCategory:
-            formikValues.modelCategory !== ''
-              ? formikValues.modelCategory
-              : null,
-          cmsCenters: formikValues.cmsCenters,
-          cmmiGroups: formikValues.cmmiGroup,
-          cmsOther: formikValues.cmsOther,
-          status: 'PLAN_DRAFT'
-        }
-      }
-    })
-      .then(response => {
-        if (!response?.errors) {
-          if (!isAutoSave) {
+          if (continuesToNextStep) {
+            history.push(`/models/${modelId}/task-list/basics/overview`);
+          } else if (!isAutoSave) {
             history.push(`/models/${modelId}/task-list/`);
           }
         }
@@ -171,7 +147,9 @@ const BasicsContent = () => {
           </Alert>
           <Formik
             initialValues={initialValues}
-            onSubmit={handleUpdateModelPlan}
+            onSubmit={values => {
+              handleUpdateModelPlan(values);
+            }}
             enableReinitialize
             validationSchema={
               isCmmiGroupShown
@@ -405,7 +383,9 @@ const BasicsContent = () => {
                     <Button
                       type="button"
                       className="usa-button usa-button--unstyled"
-                      onClick={() => handleSave(values)}
+                      onClick={() =>
+                        handleUpdateModelPlan(values, false, false)
+                      }
                     >
                       <IconArrowBack className="margin-right-1" aria-hidden />
                       {h('saveAndReturn')}
@@ -414,7 +394,11 @@ const BasicsContent = () => {
                   <AutoSave
                     values={values}
                     onSave={() => {
-                      handleSave(formikRef.current!.values, true);
+                      handleUpdateModelPlan(
+                        formikRef.current!.values,
+                        true,
+                        false
+                      );
                     }}
                     debounceDelay={3000}
                   />
