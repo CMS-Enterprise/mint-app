@@ -19,6 +19,7 @@ import { Field, Form, Formik, FormikProps } from 'formik';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
+import AutoSave from 'components/shared/AutoSave';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
@@ -76,25 +77,44 @@ const Milestones = () => {
   const [create] = useMutation<CreatePlanMilestonesType>(CreatePlanMilestones);
   const [update] = useMutation<UpdatePlanMilestonesType>(UpdatePlanMilestones);
 
+  const initialValues: PlanBasicsOverviewTypes = {
+    completeICIP: milestones?.completeICIP ?? null,
+    clearanceStarts: milestones?.clearanceStarts ?? null,
+    clearanceEnds: milestones?.clearanceEnds ?? null,
+    announced: milestones?.announced ?? null,
+    applicationsStart: milestones?.applicationsStart ?? null,
+    applicationsEnd: milestones?.applicationsEnd ?? null,
+    performancePeriodStarts: milestones?.performancePeriodStarts ?? null,
+    performancePeriodEnds: milestones?.performancePeriodEnds ?? null,
+    wrapUpEnds: milestones?.wrapUpEnds ?? null,
+    highLevelNote: milestones?.highLevelNote ?? '',
+    phasedIn: milestones?.phasedIn ?? undefined,
+    phasedInNote: milestones?.phasedInNote ?? ''
+  };
+
   const handleFormSubmit = (formikValues: PlanBasicsOverviewTypes) => {
+    const inputVariables = {
+      modelPlanID: modelId,
+      completeICIP: formikValues.completeICIP,
+      clearanceStarts: formikValues.clearanceStarts,
+      clearanceEnds: formikValues.clearanceEnds,
+      announced: formikValues.announced,
+      applicationsStart: formikValues.applicationsStart,
+      applicationsEnd: formikValues.applicationsEnd,
+      performancePeriodStarts: formikValues.performancePeriodStarts,
+      performancePeriodEnds: formikValues.performancePeriodEnds,
+      wrapUpEnds: formikValues.wrapUpEnds,
+      highLevelNote: formikValues.highLevelNote,
+      phasedIn: formikValues.phasedIn,
+      phasedInNote: formikValues.phasedInNote
+    };
+
     if (milestones) {
       update({
         variables: {
           input: {
             id: milestones.id,
-            modelPlanID: modelId,
-            completeICIP: formikValues.completeICIP,
-            clearanceStarts: formikValues.clearanceStarts,
-            clearanceEnds: formikValues.clearanceEnds,
-            announced: formikValues.announced,
-            applicationsStart: formikValues.applicationsStart,
-            applicationsEnd: formikValues.applicationsEnd,
-            performancePeriodStarts: formikValues.performancePeriodStarts,
-            performancePeriodEnds: formikValues.performancePeriodEnds,
-            wrapUpEnds: formikValues.wrapUpEnds,
-            highLevelNote: formikValues.highLevelNote,
-            phasedIn: formikValues.phasedIn,
-            phasedInNote: formikValues.phasedInNote
+            ...inputVariables
           }
         }
       })
@@ -110,19 +130,7 @@ const Milestones = () => {
       create({
         variables: {
           input: {
-            modelPlanID: modelId,
-            completeICIP: formikValues.completeICIP,
-            clearanceStarts: formikValues.clearanceStarts,
-            clearanceEnds: formikValues.clearanceEnds,
-            announced: formikValues.announced,
-            applicationsStart: formikValues.applicationsStart,
-            applicationsEnd: formikValues.applicationsEnd,
-            performancePeriodStarts: formikValues.performancePeriodStarts,
-            performancePeriodEnds: formikValues.performancePeriodEnds,
-            wrapUpEnds: formikValues.wrapUpEnds,
-            highLevelNote: formikValues.highLevelNote,
-            phasedIn: formikValues.phasedIn,
-            phasedInNote: formikValues.phasedInNote
+            ...inputVariables
           }
         }
       })
@@ -137,19 +145,64 @@ const Milestones = () => {
     }
   };
 
-  const initialValues: PlanBasicsOverviewTypes = {
-    completeICIP: milestones?.completeICIP ?? null,
-    clearanceStarts: milestones?.clearanceStarts ?? null,
-    clearanceEnds: milestones?.clearanceEnds ?? null,
-    announced: milestones?.announced ?? null,
-    applicationsStart: milestones?.applicationsStart ?? null,
-    applicationsEnd: milestones?.applicationsEnd ?? null,
-    performancePeriodStarts: milestones?.performancePeriodStarts ?? null,
-    performancePeriodEnds: milestones?.performancePeriodEnds ?? null,
-    wrapUpEnds: milestones?.wrapUpEnds ?? null,
-    highLevelNote: milestones?.highLevelNote ?? '',
-    phasedIn: milestones?.phasedIn ?? undefined,
-    phasedInNote: milestones?.phasedInNote ?? ''
+  const handleSave = (
+    formikValues: PlanBasicsOverviewTypes,
+    isAutoSave: boolean = false
+  ) => {
+    const inputVariables = {
+      modelPlanID: modelId,
+      completeICIP: formikValues.completeICIP,
+      clearanceStarts: formikValues.clearanceStarts,
+      clearanceEnds: formikValues.clearanceEnds,
+      announced: formikValues.announced,
+      applicationsStart: formikValues.applicationsStart,
+      applicationsEnd: formikValues.applicationsEnd,
+      performancePeriodStarts: formikValues.performancePeriodStarts,
+      performancePeriodEnds: formikValues.performancePeriodEnds,
+      wrapUpEnds: formikValues.wrapUpEnds,
+      highLevelNote: formikValues.highLevelNote,
+      phasedIn: formikValues.phasedIn,
+      phasedInNote: formikValues.phasedInNote
+    };
+
+    if (milestones) {
+      update({
+        variables: {
+          input: {
+            id: milestones.id,
+            ...inputVariables
+          }
+        }
+      })
+        .then(response => {
+          if (!response?.errors) {
+            if (!isAutoSave) {
+              history.push(`/models/${modelId}/task-list`);
+            }
+          }
+        })
+        .catch(errors => {
+          formikRef?.current?.setErrors(errors);
+        });
+    } else {
+      create({
+        variables: {
+          input: {
+            ...inputVariables
+          }
+        }
+      })
+        .then(response => {
+          if (!response?.errors) {
+            if (!isAutoSave) {
+              history.push(`/models/${modelId}/task-list`);
+            }
+          }
+        })
+        .catch(errors => {
+          formikRef?.current?.setErrors(errors);
+        });
+    }
   };
 
   return (
@@ -611,20 +664,27 @@ const Milestones = () => {
                         {h('saveAndStartNext')}
                       </Button>
                     </div>
+                    <Button
+                      type="button"
+                      className="usa-button usa-button--unstyled"
+                      onClick={() => handleSave(values)}
+                    >
+                      <IconArrowBack className="margin-right-1" aria-hidden />
+                      {h('saveAndReturn')}
+                    </Button>
                   </Form>
+                  <AutoSave
+                    values={values}
+                    onSave={() => {
+                      handleSave(formikRef.current!.values, true);
+                    }}
+                    debounceDelay={3000}
+                  />
                 </>
               );
             }}
           </Formik>
         </div>
-        {/* //TODO: To implement a save function */}
-        <Link
-          to={`/models/${modelId}/task-list/`}
-          className="display-flex flex-align-center margin-bottom-6"
-        >
-          <IconArrowBack className="margin-right-1" aria-hidden />
-          {h('saveAndReturn')}
-        </Link>
         <PageNumber
           currentPage={3}
           totalPages={3}
