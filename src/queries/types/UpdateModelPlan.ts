@@ -16,10 +16,12 @@ export interface UpdateModelPlan_updateModelPlan {
   modelCategory: ModelCategory | null;
   cmsCenters: CMSCenter[] | null;
   cmmiGroups: CMMIGroup[] | null;
+  cmsOther: string | null;
+  createdBy: string | null;
   modifiedBy: string | null;
   modifiedDts: Time | null;
+  archived: boolean;
   status: ModelStatus;
-  createdBy: string | null;
 }
 
 export interface UpdateModelPlan {

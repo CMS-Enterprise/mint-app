@@ -8,10 +8,12 @@ export default gql`
       modelCategory
       cmsCenters
       cmmiGroups
+      cmsOther
+      createdBy
       modifiedBy
       modifiedDts
+      archived
       status
-      createdBy
     }
   }
 `;

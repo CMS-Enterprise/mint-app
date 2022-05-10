@@ -4,44 +4,43 @@ import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
 
 import GetModelPlanQuery from 'queries/GetModelPlanQuery';
+import { GetModelPlan_modelPlan as GetModelPlanTypes } from 'queries/types/GetModelPlan';
+import {
+  CMMIGroup,
+  CMSCenter,
+  ModelCategory,
+  ModelStatus
+} from 'types/graphql-global-types';
 
 import TaskList from './index';
 
-jest.mock('@okta/okta-react', () => ({
-  useOktaAuth: () => {
-    return {
-      authState: {
-        isAuthenticated: true
-      },
-      oktaAuth: {
-        getAccessToken: () => Promise.resolve('test-access-token'),
-        getUser: () =>
-          Promise.resolve({
-            name: 'John Doe'
-          })
-      }
-    };
-  }
-}));
-
 describe('The Model Plan Task List', () => {
-  const MODEL_ID = '6e224030-09d5-46f7-ad04-4bb851b36eab';
-  const intakeQuery = (intakeData: any) => {
+  const modelPlan = {
+    id: '6e224030-09d5-46f7-ad04-4bb851b36eab',
+    status: ModelStatus.PLAN_DRAFT,
+    modelName: 'Test',
+    modelCategory: ModelCategory.PRIMARY_CARE_TRANSFORMATION,
+    cmmiGroups: [
+      CMMIGroup.STATE_INNOVATIONS_GROUP,
+      CMMIGroup.POLICY_AND_PROGRAMS_GROUP
+    ],
+    cmsCenters: [CMSCenter.CENTER_FOR_MEDICARE, CMSCenter.OTHER],
+    cmsOther: 'The Center for Awesomeness ',
+    archived: false,
+    basics: null
+  } as GetModelPlanTypes;
+
+  const modelPlanQuery = (modelPlanDraft: GetModelPlanTypes) => {
     return {
       request: {
         query: GetModelPlanQuery,
         variables: {
-          id: MODEL_ID
+          id: modelPlan.id
         }
       },
       result: {
         data: {
-          modelPlan: {
-            id: MODEL_ID,
-            modelName: '',
-            basics: null,
-            ...intakeData
-          }
+          modelPlan: modelPlanDraft
         }
       }
     };
@@ -49,8 +48,8 @@ describe('The Model Plan Task List', () => {
 
   it('renders without crashing', async () => {
     render(
-      <MemoryRouter initialEntries={[`/models/${MODEL_ID}/task-list`]}>
-        <MockedProvider mocks={[intakeQuery({})]} addTypename={false}>
+      <MemoryRouter initialEntries={[`/models/${modelPlan.id}/task-list`]}>
+        <MockedProvider mocks={[modelPlanQuery(modelPlan)]} addTypename={false}>
           <Route path="/models/:modelId/task-list" component={TaskList} />
         </MockedProvider>
       </MemoryRouter>
@@ -62,9 +61,10 @@ describe('The Model Plan Task List', () => {
   });
 
   it('displays the model plan task list steps', async () => {
+    modelPlan.modelName = '';
     render(
-      <MemoryRouter initialEntries={[`/models/${MODEL_ID}/task-list`]}>
-        <MockedProvider mocks={[intakeQuery({})]} addTypename={false}>
+      <MemoryRouter initialEntries={[`/models/${modelPlan.id}/task-list`]}>
+        <MockedProvider mocks={[modelPlanQuery(modelPlan)]} addTypename={false}>
           <Route path="/models/:modelId/task-list" component={TaskList} />
         </MockedProvider>
       </MemoryRouter>
@@ -74,16 +74,10 @@ describe('The Model Plan Task List', () => {
   });
 
   it('displays the model plan name', async () => {
+    modelPlan.modelName = "PM Butler's great plan";
     render(
-      <MemoryRouter initialEntries={[`/models/${MODEL_ID}/task-list`]}>
-        <MockedProvider
-          mocks={[
-            intakeQuery({
-              modelName: "PM Butler's great plan"
-            })
-          ]}
-          addTypename={false}
-        >
+      <MemoryRouter initialEntries={[`/models/${modelPlan.id}/task-list`]}>
+        <MockedProvider mocks={[modelPlanQuery(modelPlan)]} addTypename={false}>
           <Route path="/models/:modelId/task-list" component={TaskList} />
         </MockedProvider>
       </MemoryRouter>
@@ -98,14 +92,11 @@ describe('The Model Plan Task List', () => {
 
   describe('Statuses', () => {
     it('renders proper buttons for Model Basics', async () => {
+      modelPlan.basics = null;
       render(
-        <MemoryRouter initialEntries={[`/models/${MODEL_ID}/task-list`]}>
+        <MemoryRouter initialEntries={[`/models/${modelPlan.id}/task-list`]}>
           <MockedProvider
-            mocks={[
-              intakeQuery({
-                basics: null
-              })
-            ]}
+            mocks={[modelPlanQuery(modelPlan)]}
             addTypename={false}
           >
             <Route path="/models/:modelId/task-list" component={TaskList} />

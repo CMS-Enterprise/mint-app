@@ -34,4 +34,30 @@ describe('The Model Plan Form', () => {
 
     cy.contains('h1', 'Model Plan task list');
   });
+
+  it('archives a model plan', () => {
+    cy.visit('/models/f11eb129-2c80-4080-9440-439cbe1a286f/task-list');
+
+    cy.wait(1000);
+
+    cy.contains('button', 'Remove your Model Plan').click();
+
+    cy.contains('button', 'Remove request').click();
+
+    cy.wait(1000);
+
+    cy.location().should(loc => {
+      expect(loc.pathname).to.eq('/');
+    });
+
+    cy.wait(1000);
+
+    cy.get('table').within(() => {
+      cy.get('tbody').within(() => {
+        cy.contains('th', 'My excellent plan that I just initiated').should(
+          'not.exist'
+        );
+      });
+    });
+  });
 });

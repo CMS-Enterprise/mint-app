@@ -16,6 +16,7 @@ import Divider from 'components/shared/Divider';
 import GetModelPlanQuery from 'queries/GetModelPlanQuery';
 import {
   GetModelPlan,
+  GetModelPlan_modelPlan as GetModelPlanTypes,
   GetModelPlanVariables
 } from 'queries/types/GetModelPlan';
 
@@ -46,6 +47,8 @@ const TaskList = () => {
     }
   );
 
+  const modelPlan = data?.modelPlan || ({} as GetModelPlanTypes);
+
   const {
     modelName,
     modifiedDts,
@@ -58,7 +61,7 @@ const TaskList = () => {
     // operations,
     // payment,
     // finalizeModelPlan
-  } = data?.modelPlan || {};
+  } = modelPlan;
 
   const taskListItem: TaskListItemProps[] = t('numberedList', {
     returnObjects: true
@@ -191,8 +194,7 @@ const TaskList = () => {
             </ol>
           </div>
           <div className="tablet:grid-col-3">
-            {/* //TODO to pass down archive functional prop */}
-            <TaskListSideNav />
+            <TaskListSideNav modelPlan={modelPlan} />
           </div>
         </div>
       )}

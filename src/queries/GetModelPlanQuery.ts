@@ -7,9 +7,11 @@ export default gql`
       modelName
       modelCategory
       cmsCenters
-      cmmiGroups
       cmsOther
+      cmmiGroups
       modifiedDts
+      archived
+      status
       basics {
         id
         modelPlanID
