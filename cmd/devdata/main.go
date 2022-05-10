@@ -45,7 +45,6 @@ func main() {
 	ac := models.MCAccountableCare
 	cms := models.CMSCenterForClinicalStandardsAndQuality
 
-	draft := models.ModelStatusPlanDraft
 	inProgress := models.TaskInProgress
 	voluntary := models.MTVoluntary
 	mandatory := models.MTMandatory
