@@ -73,7 +73,10 @@ const BasicsContent = () => {
 
   const [update] = useMutation<UpdateModelPlanType>(UpdateModelPlan);
 
-  const handleUpdateModelPlan = (formikValues: PlanBasicModelPlanFormType) => {
+  const handleUpdateModelPlan = (
+    formikValues: PlanBasicModelPlanFormType,
+    isForm = true
+  ) => {
     update({
       variables: {
         input: {
@@ -89,7 +92,11 @@ const BasicsContent = () => {
     })
       .then(response => {
         if (!response?.errors) {
-          history.push(`/models/${modelId}/task-list/basics/overview`);
+          if (isForm) {
+            history.push(`/models/${modelId}/task-list/basics/overview`);
+          } else {
+            history.push(`/models/${modelId}/task-list/`);
+          }
         }
       })
       .catch(errors => {
@@ -364,12 +371,19 @@ const BasicsContent = () => {
                       <Button
                         type="submit"
                         disabled={!(dirty || isValid)}
-                        className=""
                         onClick={() => setErrors({})}
                       >
                         {h('next')}
                       </Button>
                     </div>
+                    <Button
+                      type="button"
+                      className="usa-button usa-button--unstyled"
+                      onClick={() => handleUpdateModelPlan(values, false)}
+                    >
+                      <IconArrowBack className="margin-right-1" aria-hidden />
+                      {h('saveAndReturn')}
+                    </Button>
                   </Form>
                 </>
               );
@@ -377,13 +391,6 @@ const BasicsContent = () => {
           </Formik>
         </div>
         {/* //TODO: To implement a save function */}
-        <Link
-          to={`/models/${modelId}/task-list/`}
-          className="display-flex flex-align-center margin-bottom-6"
-        >
-          <IconArrowBack className="margin-right-1" aria-hidden />
-          {h('saveAndReturn')}
-        </Link>
         <PageNumber
           currentPage={1}
           totalPages={3}
