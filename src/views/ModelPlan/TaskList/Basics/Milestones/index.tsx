@@ -112,7 +112,6 @@ const Milestones = () => {
       phasedInNote: formikValues.phasedInNote
     };
 
-    debugger;
     if (milestones !== null) {
       update({
         variables: {
