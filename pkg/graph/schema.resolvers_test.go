@@ -123,7 +123,7 @@ func TestGraphQLTestSuite(t *testing.T) {
 		t.FailNow()
 	}
 
-	s3Config := upload.Config{Bucket: "easi-test-bucket", Region: "us-west", IsLocal: false}
+	s3Config := upload.Config{Bucket: "mint-test-bucket", Region: "us-west", IsLocal: false}
 	mockClient := mockS3Client{}
 	s3Client := upload.NewS3ClientUsingClient(&mockClient, s3Config)
 

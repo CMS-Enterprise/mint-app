@@ -1,9 +1,15 @@
 package upload
 
 import (
+	"mime"
 	"net/url"
 	"os"
 	"strings"
+	"time"
+
+	"github.com/google/uuid"
+
+	"github.com/cmsgov/mint-app/pkg/models"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/credentials"
@@ -12,6 +18,11 @@ import (
 	"github.com/aws/aws-sdk-go/service/s3/s3iface"
 
 	"github.com/cmsgov/mint-app/pkg/appconfig"
+)
+
+const (
+	// PresignedKeyDuration TODO: Roll this into the Config struct
+	PresignedKeyDuration = 15 * time.Minute
 )
 
 // Config holds the configuration to interact with s3
@@ -57,6 +68,52 @@ func NewS3ClientUsingClient(s3Client s3iface.S3API, config Config) S3Client {
 	}
 }
 
+// NewPutPresignedURL returns a pre-signed URL used for PUT-ing objects
+func (c S3Client) NewPutPresignedURL(fileType string) (*models.PreSignedURL, error) {
+	// generate a uuid for file name storage on s3
+	key := uuid.New().String()
+
+	// get the file extension from the mime type
+	extensions, err := mime.ExtensionsByType(fileType)
+	if err != nil {
+		return &models.PreSignedURL{}, err
+	}
+	if len(extensions) > 0 {
+		key = key + extensions[0]
+	}
+	req, _ := c.client.PutObjectRequest(&s3.PutObjectInput{
+		Bucket:      aws.String(c.config.Bucket),
+		Key:         aws.String(key),
+		ContentType: aws.String(fileType),
+	})
+
+	url, err := req.Presign(15 * time.Minute)
+	if err != nil {
+		return &models.PreSignedURL{}, err
+	}
+
+	result := models.PreSignedURL{URL: url, Filename: key}
+
+	return &result, nil
+}
+
+// NewGetPresignedURL returns a pre-signed URL used for GET-ing objects
+func (c S3Client) NewGetPresignedURL(key string) (*string, error) {
+	objectInput := &s3.GetObjectInput{
+		Bucket: aws.String(c.config.Bucket),
+		Key:    aws.String(key),
+	}
+	req, _ := c.client.GetObjectRequest(objectInput)
+
+	url, err := req.Presign(PresignedKeyDuration)
+	if err != nil {
+		return nil, err
+	}
+
+	return &url, nil
+
+}
+
 // KeyFromURL extracts an S3 key from a URL.
 func (c S3Client) KeyFromURL(url *url.URL) (string, error) {
 	return strings.Replace(url.Path, "/"+c.config.Bucket+"/", "", 1), nil
@@ -80,4 +137,9 @@ func (c S3Client) TagValueForKey(key string, tagName string) (string, error) {
 		}
 	}
 	return "", nil
+}
+
+// GetBucket returns a *string containing the S3 Bucket as defined by the S3Configuration
+func (c S3Client) GetBucket() *string {
+	return aws.String(c.config.Bucket)
 }
