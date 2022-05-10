@@ -61,6 +61,13 @@ func (r *modelPlanResolver) Collaborators(ctx context.Context, obj *models.Model
 	return collaborators, err
 }
 
+func (r *modelPlanResolver) Documents(ctx context.Context, obj *models.ModelPlan) ([]*models.PlanDocument, error) {
+	logger := appcontext.ZLogger(ctx)
+
+	documents, err := resolvers.PlanDocumentsReadByModelPlanID(logger, obj.ID, r.store, r.s3Client)
+	return documents, err
+}
+
 func (r *modelPlanResolver) Discussions(ctx context.Context, obj *models.ModelPlan) ([]*models.PlanDiscussion, error) {
 	logger := appcontext.ZLogger(ctx)
 
@@ -147,6 +154,43 @@ func (r *mutationResolver) UpdatePlanMilestones(ctx context.Context, input model
 	return resolvers.UpdatePlanMilestones(logger, basics, &principal, r.store)
 }
 
+func (r *mutationResolver) GeneratePresignedUploadURL(ctx context.Context, input model.GeneratePresignedUploadURLInput) (*model.GeneratePresignedUploadURLPayload, error) {
+	url, err := r.s3Client.NewPutPresignedURL(input.MimeType)
+	if err != nil {
+		return nil, err
+	}
+
+	return &model.GeneratePresignedUploadURLPayload{
+		URL: &url.URL,
+	}, nil
+}
+
+func (r *mutationResolver) CreatePlanDocument(ctx context.Context, input model.PlanDocumentInput) (*model.PlanDocumentPayload, error) {
+	principal := appcontext.Principal(ctx).ID()
+	logger := appcontext.ZLogger(ctx)
+
+	document := ConvertToPlanDocumentModel(&input)
+	payload, err := resolvers.PlanDocumentCreate(logger, document, input.URL, &principal, r.store, r.s3Client)
+
+	return payload, err
+}
+
+func (r *mutationResolver) UpdatePlanDocument(ctx context.Context, input model.PlanDocumentInput) (*model.PlanDocumentPayload, error) {
+	document := ConvertToPlanDocumentModel(&input)
+	principal := appcontext.Principal(ctx).ID()
+	logger := appcontext.ZLogger(ctx)
+
+	return resolvers.PlanDocumentUpdate(logger, r.s3Client, document, &principal, r.store)
+}
+
+func (r *mutationResolver) DeletePlanDocument(ctx context.Context, input model.PlanDocumentInput) (int, error) {
+	document := ConvertToPlanDocumentModel(&input)
+	principal := appcontext.Principal(ctx).ID()
+	logger := appcontext.ZLogger(ctx)
+
+	return resolvers.PlanDocumentDelete(logger, document, &principal, r.store)
+}
+
 func (r *mutationResolver) CreatePlanDiscussion(ctx context.Context, input model.PlanDiscussionInput) (*models.PlanDiscussion, error) {
 	discussion := ConvertToPlanDiscussion(&input)
 
@@ -207,6 +251,10 @@ func (r *planDiscussionResolver) Replies(ctx context.Context, obj *models.PlanDi
 	return resolvers.DiscussionReplyCollectionByDiscusionID(logger, obj.ID, r.store)
 }
 
+func (r *planDocumentResolver) OtherType(ctx context.Context, obj *models.PlanDocument) (*string, error) {
+	return obj.OtherTypeDescription, nil
+}
+
 func (r *queryResolver) CurrentUser(ctx context.Context) (*model.CurrentUser, error) {
 	ldUser := flags.Principal(ctx)
 	userKey := ldUser.GetKey()
@@ -240,6 +288,37 @@ func (r *queryResolver) PlanMilestones(ctx context.Context, id uuid.UUID) (*mode
 	return resolvers.FetchPlanMilestonesByID(logger, id, r.store)
 }
 
+func (r *queryResolver) PlanDocument(ctx context.Context, id uuid.UUID) (*models.PlanDocument, error) {
+	logger := appcontext.ZLogger(ctx)
+
+	return resolvers.PlanDocumentRead(logger, r.store, r.s3Client, id)
+}
+
+func (r *queryResolver) PlanDocumentDownloadURL(ctx context.Context, id uuid.UUID) (*model.PlanDocumentPayload, error) {
+	logger := appcontext.ZLogger(ctx)
+
+	document, err := resolvers.PlanDocumentRead(logger, r.store, r.s3Client, id)
+	if err != nil {
+		return &model.PlanDocumentPayload{}, err
+	}
+
+	url, err := r.s3Client.NewGetPresignedURL(*document.FileKey)
+	if err != nil {
+		return nil, err
+	}
+
+	return &model.PlanDocumentPayload{
+		Document:     document,
+		PresignedURL: url,
+	}, nil
+}
+
+func (r *queryResolver) ReadPlanDocumentByModelID(ctx context.Context, id uuid.UUID) ([]*models.PlanDocument, error) {
+	logger := appcontext.ZLogger(ctx)
+
+	return resolvers.PlanDocumentsReadByModelPlanID(logger, id, r.store, r.s3Client)
+}
+
 func (r *queryResolver) ModelPlanCollection(ctx context.Context) ([]*models.ModelPlan, error) {
 	principal := appcontext.Principal(ctx).ID()
 	logger := appcontext.ZLogger(ctx)
@@ -270,6 +349,9 @@ func (r *Resolver) PlanDiscussion() generated.PlanDiscussionResolver {
 	return &planDiscussionResolver{r}
 }
 
+// PlanDocument returns generated.PlanDocumentResolver implementation.
+func (r *Resolver) PlanDocument() generated.PlanDocumentResolver { return &planDocumentResolver{r} }
+
 // Query returns generated.QueryResolver implementation.
 func (r *Resolver) Query() generated.QueryResolver { return &queryResolver{r} }
 
@@ -279,5 +361,6 @@ func (r *Resolver) UserInfo() generated.UserInfoResolver { return &userInfoResol
 type modelPlanResolver struct{ *Resolver }
 type mutationResolver struct{ *Resolver }
 type planDiscussionResolver struct{ *Resolver }
+type planDocumentResolver struct{ *Resolver }
 type queryResolver struct{ *Resolver }
 type userInfoResolver struct{ *Resolver }

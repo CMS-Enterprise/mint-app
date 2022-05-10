@@ -19,7 +19,7 @@ UUIDs are represented using 36 ASCII characters, for example B0511859-ADE6-4A67-
 """
 scalar UUID
 """
-Time values are represented as strings using RFC3339 format, for example 2019-10-12T07:20:50.52Z
+Time values are represented as strings using RFC3339 format, for example 2019-10-12T07:20:50G.52Z
 """
 scalar Time
 
@@ -41,12 +41,13 @@ type ModelPlan {
   basics: PlanBasics
   milestones: PlanMilestones
   collaborators: [PlanCollaborator!]!
+  documents: [PlanDocument!]!
   discussions: [PlanDiscussion!]!
   status: ModelStatus!
 }
 
 """
-ModelPlanInput represent the data point for plans about a model. It is the central data type in the appliation
+ModelPlanInput represent the data point for plans about a model. It is the central data type in the application
 """
 input ModelPlanInput{
 id: UUID
@@ -102,6 +103,73 @@ input PlanCollaboratorInput {
   createdDts: Time
   modifiedBy: String
   modifiedDts: Time
+}
+
+"""
+Input associated with a document to be uploaded
+"""
+input GeneratePresignedUploadURLInput {
+  fileName: String!
+  mimeType: String!
+  size: Int!
+}
+
+"""
+URL generated for a document to be uploaded
+"""
+type GeneratePresignedUploadURLPayload {
+  url: String
+}
+
+"""
+PlanDocument represents a document on a plan
+"""
+type PlanDocument {
+  id: UUID!
+  modelPlanID: UUID!
+  fileType: String
+  bucket: String
+  fileKey: String
+  virusScanned: Boolean
+  virusClean: Boolean
+  fileName: String
+  fileSize: Int
+  documentType: DocumentType
+  otherType: String
+  deletedAt: Time
+  createdBy: String
+  createdDts: Time
+  modifiedBy: String
+  modifiedDts: Time
+}
+
+"""
+PlanDocumentInput represents the data required to create, modify, or delete a document on a plan
+"""
+input PlanDocumentInput {
+  id: UUID
+  modelPlanID: UUID!
+  documentParameters: PlanDocumentParameters!
+  url: String
+}
+
+"""
+PlanDocumentCreateParameters represents the specific data required to create or modify a document on a plan
+"""
+input PlanDocumentParameters {
+  fileName: String
+  fileSize: Int!
+  fileType: String
+  documentType: DocumentType
+  otherTypeDescription: String
+}
+
+"""
+PlanDocumentPayload represents the response to a document request
+"""
+type PlanDocumentPayload {
+  document: PlanDocument
+  presignedURL: String
 }
 
 """
@@ -282,6 +350,9 @@ type Query {
   modelPlan(id: UUID!) : ModelPlan
   planBasics(id: UUID!) : PlanBasics
   planMilestones(id: UUID!) : PlanMilestones
+  planDocument(id: UUID!) : PlanDocument
+  planDocumentDownloadURL(id: UUID!) : PlanDocumentPayload
+  readPlanDocumentByModelID(id: UUID!) : [PlanDocument]
   modelPlanCollection: [ModelPlan]
   cedarPersonsByCommonName(commonName: String!): [UserInfo!]!
 }
@@ -311,10 +382,22 @@ createPlanBasics(input: PlanBasicsInput!):PlanBasics
 updatePlanBasics(input: PlanBasicsInput!): PlanBasics
 @hasRole(role: MINT_BASE_USER)
 
-createPlanMilestones(input: PlanMilestonesInput!):PlanMilestones
+createPlanMilestones(input: PlanMilestonesInput!): PlanMilestones
 @hasRole(role: MINT_BASE_USER)
 
-updatePlanMilestones(input: PlanMilestonesInput!):PlanMilestones
+updatePlanMilestones(input: PlanMilestonesInput!): PlanMilestones
+@hasRole(role: MINT_BASE_USER)
+
+generatePresignedUploadURL(input: GeneratePresignedUploadURLInput!): GeneratePresignedUploadURLPayload
+@hasRole(role: MINT_BASE_USER)
+
+createPlanDocument(input: PlanDocumentInput!): PlanDocumentPayload
+@hasRole(role: MINT_BASE_USER)
+
+updatePlanDocument(input: PlanDocumentInput!): PlanDocumentPayload
+@hasRole(role: MINT_BASE_USER)
+
+deletePlanDocument(input: PlanDocumentInput!): Int!
 @hasRole(role: MINT_BASE_USER)
 
 createPlanDiscussion(input: PlanDiscussionInput!): PlanDiscussion
@@ -399,10 +482,19 @@ enum CMMIGroup {
   SEAMLESS_CARE_MODELS_GROUP
   STATE_INNOVATIONS_GROUP
 }
+
 enum DiscussionStatus {
   ANSWERED
   WAITING_FOR_RESPONSE
   UNANSWERED
+}
+
+enum DocumentType {
+  CONCEPT_PAPER,
+  POLICY_PAPER,
+  ICIP_DRAFT,
+  MARKET_RESEARCH,
+  OTHER
 }
 
 directive @hasRole(role: Role!) on FIELD_DEFINITION
