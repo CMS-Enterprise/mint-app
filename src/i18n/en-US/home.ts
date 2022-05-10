@@ -13,12 +13,13 @@ const home = {
     copy: 'Have a new model or demonstration?',
     cta: 'Start a draft model plan'
   },
+  downloadCSV: 'Download all plans as CSV',
   requestsTable: {
     basic: {
-      heading: 'My draft model plans'
+      heading: 'My model plans'
     },
     admin: {
-      heading: 'Draft model plans'
+      heading: 'Model plans'
     },
     empty: {
       heading: 'You don’t have any draft model plans yet',
@@ -30,12 +31,16 @@ const home = {
     headers: {
       name: 'Model name',
       category: 'Category',
-      modelPoc: 'Model Team Leads',
-      clearanceDate: 'Clearance Date',
+      modelPoc: 'Model lead(s)',
+      clearanceDate: 'Anticipated clearance date',
+      status: 'Status',
       recentActivity: 'Recent activity'
     },
     noneSelectedYet: 'None selected yet',
-    tbd: 'TBD'
+    tbd: 'TBD',
+    updated: 'Updated',
+    unansweredQuestion: 'unanswered question',
+    answeredQuestion: 'answered question'
   }
 };
 

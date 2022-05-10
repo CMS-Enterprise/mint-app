@@ -2,7 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { Alert, SummaryBox } from '@trussworks/react-uswds';
+import { Alert, IconFileDownload, SummaryBox } from '@trussworks/react-uswds';
 import classnames from 'classnames';
 import { useFlags } from 'launchdarkly-react-client-sdk';
 
@@ -44,7 +44,7 @@ const Home = () => {
             </p>
             <SummaryBox
               heading=""
-              className="bg-base-lightest border-0 radius-0 padding-2"
+              className="bg-base-lightest border-0 radius-0 padding-2 padding-bottom-3"
             >
               <p className="margin-0 margin-bottom-1">
                 {t('newModelSummaryBox.copy')}
@@ -60,11 +60,24 @@ const Home = () => {
               </UswdsReactLink>
             </SummaryBox>
             <hr className="home__hr margin-top-4" aria-hidden />
-            <h2 className="margin-top-4">
-              {user.isAdmin(userGroups, flags)
-                ? t('requestsTable.admin.heading')
-                : t('requestsTable.basic.heading')}
-            </h2>
+            <div className="mint-header__basic">
+              <h2 className="margin-top-4">
+                {user.isAdmin(userGroups, flags)
+                  ? t('requestsTable.admin.heading')
+                  : t('requestsTable.basic.heading')}
+              </h2>
+              <div className="flex-align-self-center margin-top-4">
+                <button
+                  className="usa-button usa-button--unstyled easi-no-print display-flex margin-bottom-4 text-no-underline"
+                  type="button"
+                  // onClick={fetchCSV}
+                >
+                  <IconFileDownload />
+                  &nbsp;
+                  <span className="text-underline">{t('downloadCSV')}</span>
+                </button>
+              </div>
+            </div>
           </div>
           <div className="tablet:grid-col-12">
             <DraftModelPlansTable />
@@ -79,7 +92,7 @@ const Home = () => {
     );
   };
 
-  return <MainContent className="margin-bottom-5">{renderView()}</MainContent>;
+  return <MainContent>{renderView()}</MainContent>;
 };
 
 export default withRouter(Home);

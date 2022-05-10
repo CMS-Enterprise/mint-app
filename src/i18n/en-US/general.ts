@@ -1,7 +1,5 @@
 const general = {
   appName: 'MINT',
-  intake: 'Intake Request',
-  businessCase: 'Business Case',
   date: {
     day: 'Day',
     month: 'Month',

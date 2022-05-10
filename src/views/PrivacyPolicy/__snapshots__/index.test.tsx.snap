@@ -2,7 +2,7 @@
 
 exports[`The Privacy Policy static page matches the snapshot 1`] = `
 <main
-  className="mint-main-content grid-container line-height-body-5 margin-bottom-5"
+  className="mint-main-content grid-container line-height-body-5"
   id="main-content"
   role="main"
   tabIndex={-1}
