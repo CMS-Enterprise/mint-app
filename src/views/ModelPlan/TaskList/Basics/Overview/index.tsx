@@ -18,6 +18,7 @@ import { Field, Form, Formik, FormikProps } from 'formik';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
+import AutoSave from 'components/shared/AutoSave';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
@@ -89,6 +90,36 @@ const Overview = () => {
       .then(response => {
         if (!response?.errors) {
           history.push(`/models/${modelId}/task-list/basics/milestones`);
+        }
+      })
+      .catch(errors => {
+        formikRef?.current?.setErrors(errors);
+      });
+  };
+
+  const handleSave = (
+    formikValues: PlanBasicsOverviewTypes,
+    isAutoSave: boolean = false
+  ) => {
+    update({
+      variables: {
+        input: {
+          id,
+          modelPlanID: modelId,
+          modelType:
+            formikValues.modelType !== '' ? formikValues.modelType : null,
+          problem: formikValues.problem,
+          goal: formikValues.goal,
+          testInventions: formikValues.testInterventions,
+          note: formikValues.note
+        }
+      }
+    })
+      .then(response => {
+        if (!response?.errors) {
+          if (!isAutoSave) {
+            history.push(`/models/${modelId}/task-list/`);
+          }
         }
       })
       .catch(errors => {
@@ -288,20 +319,27 @@ const Overview = () => {
                         {h('next')}
                       </Button>
                     </div>
+                    <Button
+                      type="button"
+                      className="usa-button usa-button--unstyled"
+                      onClick={() => handleSave(values)}
+                    >
+                      <IconArrowBack className="margin-right-1" aria-hidden />
+                      {h('saveAndReturn')}
+                    </Button>
                   </Form>
+                  <AutoSave
+                    values={values}
+                    onSave={() => {
+                      handleSave(formikRef.current!.values, true);
+                    }}
+                    debounceDelay={3000}
+                  />
                 </>
               );
             }}
           </Formik>
         </div>
-        {/* //TODO: To implement a save function */}
-        <Link
-          to={`/models/${modelId}/task-list/`}
-          className="display-flex flex-align-center margin-bottom-6"
-        >
-          <IconArrowBack className="margin-right-1" aria-hidden />
-          {h('saveAndReturn')}
-        </Link>
         <PageNumber
           currentPage={2}
           totalPages={3}
