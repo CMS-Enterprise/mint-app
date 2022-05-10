@@ -8,7 +8,7 @@ CREATE TABLE plan_document (
     virus_clean BOOLEAN,
     file_name TEXT NOT NULL,
     file_size INTEGER NOT NULL,
-    document_type TEXT NOT NULL, --  make enum for this
+    document_type DOCUMENT_TYPE NOT NULL, --  make enum for this
     other_type TEXT,
     deleted_at TIMESTAMP WITH TIME ZONE, --previously without timeZone...
     created_by EUA_ID NOT NULL,
