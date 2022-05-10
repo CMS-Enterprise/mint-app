@@ -18,133 +18,138 @@ import { RadioField } from 'components/shared/RadioField';
 import { NavLink, SecondaryNav } from 'components/shared/SecondaryNav';
 import TextField from 'components/shared/TextField';
 import { useMessage } from 'hooks/useMessage';
+import CreateModelPlanDocument from 'queries/CreateModelPlanDocument';
+import GetGeneratedPresignedUploadURL from 'queries/GetGeneratedPresignedUploadURL';
+import GetPlanDocumentByModelID from 'queries/GetPlanDocumentByModelID';
+import {
+  CreateModelPlanDocument as CreateModelPlanDocumentType,
+  CreateModelPlanDocumentVariables
+} from 'queries/types/CreateModelPlanDocument';
+import { GeneratePresignedUploadURL as GetGeneratedPresignedUploadURLType } from 'queries/types/GeneratePresignedUploadURL';
+import { GetModelPlanDocumentByModelID_readPlanDocumentByModelID as GetPlanDocumentByModelIDType } from 'queries/types/GetModelPlanDocumentByModelID';
+import { FileUploadForm } from 'types/files';
+import { DocumentType } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
-import { translateDocumentCommonType } from 'utils/modelPlan';
+import { translateDocumentType } from 'utils/modelPlan';
 import { DocumentUploadValidationSchema } from 'validations/documentUploadSchema';
 
 const NewUpload = () => {
+  const { modelId } = useParams<{ modelId: string }>();
   const history = useHistory();
   const { t } = useTranslation('documents');
 
   const { showMessageOnNextPage } = useMessage();
 
-  const documentTypes = t('documentTypes', {
-    returnObjects: true
-  });
+  const { loading, error, data } = useQuery<GetPlanDocumentByModelIDType>(
+    GetPlanDocumentByModelID,
+    {
+      variables: {
+        id: modelId
+      }
+    }
+  );
 
-  //   const { accessibilityRequestId } = useParams<{
-  //     accessibilityRequestId: string;
-  //   }>();
-  //   const { loading, error, data } = useQuery<GetAccessibilityRequest>(
-  //     GetAccessibilityRequestQuery,
-  //     {
-  //       variables: {
-  //         id: accessibilityRequestId
-  //       }
-  //     }
-  //   );
+  const [s3URL, setS3URL] = useState('');
+  const [
+    generateURL,
+    generateURLStatus
+  ] = useMutation<GetGeneratedPresignedUploadURLType>(
+    GetGeneratedPresignedUploadURL
+  );
+  const [createDocument, createDocumentStatus] = useMutation<
+    CreateModelPlanDocumentType,
+    CreateModelPlanDocumentVariables
+  >(CreateModelPlanDocument);
 
-  //   const [s3URL, setS3URL] = useState('');
-  //   const [
-  //     generateURL,
-  //     generateURLStatus
-  //   ] = useMutation<GeneratePresignedUploadURL>(GeneratePresignedUploadURLQuery);
-  //   const [createDocument, createDocumentStatus] = useMutation<
-  //     CreateAccessibilityRequestDocument,
-  //     CreateAccessibilityRequestDocumentVariables
-  //   >(CreateAccessibilityRequestDocumentQuery);
+  const [
+    isErrorGeneratingPresignedUrl,
+    setErrorGeneratingPresignedUrl
+  ] = useState(false);
 
-  //   const [
-  //     isErrorGeneratingPresignedUrl,
-  //     setErrorGeneratingPresignedUrl
-  //   ] = useState(false);
+  if (loading) {
+    return <PageLoading />;
+  }
 
-  //   if (loading) {
-  //     return <PageLoading />;
-  //   }
+  if (error) {
+    return <div>{error.message}</div>;
+  }
 
-  //   if (error) {
-  //     return <div>{error.message}</div>;
-  //   }
-
-  //   if (!data) {
-  //     return (
-  //       <div>{`No request found matching id: ${accessibilityRequestId}`}</div>
-  //     );
-  //   }
+  if (!data) {
+    return <div>{`No request found matching id: ${modelId}`}</div>;
+  }
 
   //   if (data.accessibilityRequest?.statusRecord.status === 'DELETED') {
   //     return <RequestDeleted />;
   //   }
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    // const file = event?.currentTarget?.files?.[0];
-    // if (!file) {
-    //   return;
-    // }
-    // generateURL({
-    //   variables: {
-    //     input: {
-    //       fileName: file?.name,
-    //       mimeType: file?.type,
-    //       size: file?.size
-    //     }
-    //   }
-    // })
-    //   .then(result => {
-    //     const url = result.data?.generatePresignedUploadURL?.url;
-    //     if (
-    //       generateURLStatus.error ||
-    //       result.data?.generatePresignedUploadURL?.userErrors ||
-    //       isUndefined(url)
-    //     ) {
-    //       // eslint-disable-next-line
-    //     console.error('Could not fetch presigned S3 URL');
-    //     } else {
-    //       setS3URL(url || '');
-    //     }
-    //   })
-    //   .catch(() => {
-    //     setErrorGeneratingPresignedUrl(true);
-    //   });
+    const file = event?.currentTarget?.files?.[0];
+    if (!file) {
+      return;
+    }
+    generateURL({
+      variables: {
+        input: {
+          fileName: file?.name,
+          mimeType: file?.type,
+          size: file?.size
+        }
+      }
+    })
+      .then(result => {
+        const url = result.data?.generatePresignedUploadURL?.url;
+        if (!generateURLStatus.error && !isUndefined(url)) {
+          setS3URL(url || '');
+        }
+      })
+      .catch(() => {
+        setErrorGeneratingPresignedUrl(true);
+      });
   };
 
   const onSubmit = (values: FileUploadForm) => {
-    // const { file } = values;
-    // if (file && file.name && file.size >= 0 && file.type) {
-    //   const options = {
-    //     headers: {
-    //       'Content-Type': file.type
-    //     }
-    //   };
-    //   axios.put(s3URL, values.file, options).then(() => {
-    //     createDocument({
-    //       variables: {
-    //         input: {
-    //           mimeType: file.type,
-    //           size: file.size,
-    //           name: file.name,
-    //           url: s3URL,
-    //           requestID: accessibilityRequestId,
-    //           commonDocumentType: values.documentType
-    //             .commonType as AccessibilityRequestDocumentCommonType,
-    //           otherDocumentTypeDescription: values.documentType.otherType
-    //         }
-    //       }
-    //     })
-    //       .then(response => {
-    //         if (!response.errors) {
-    //           showMessageOnNextPage(
-    //             `${file.name} uploaded to ${data?.accessibilityRequest?.name}`
-    //           );
-    //           history.push(`/508/requests/${accessibilityRequestId}/documents`);
-    //         }
-    //       })
-    //       .catch(() => {
-    //         setErrorGeneratingPresignedUrl(true);
-    //       });
-    //   });
-    // }
+    const { file } = values;
+    if (file && file.name && file.size >= 0 && file.type) {
+      const options = {
+        headers: {
+          'Content-Type': file.type
+        }
+      };
+
+      console.log(s3URL);
+      console.log(values);
+      console.log(options);
+
+      axios.put(s3URL, values.file, options).then(() => {
+        console.log(file);
+        createDocument({
+          variables: {
+            input: {
+              modelPlanID: modelId,
+              url: s3URL,
+              documentParameters: {
+                fileSize: file.size,
+                fileName: file.name,
+                fileType: file.type,
+                documentType: values.documentType,
+                otherTypeDescription: values.otherTypeDescription
+              }
+            }
+          }
+        })
+          .then(response => {
+            console.log(response);
+            if (!response.errors) {
+              showMessageOnNextPage(`${file.name} uploaded to ${data?.bucket}`);
+              history.push(`/models/${modelId}/documents`);
+            }
+          })
+          .catch(error => {
+            console.log(error);
+            setErrorGeneratingPresignedUrl(true);
+          });
+      });
+    }
   };
 
   return (
@@ -152,10 +157,8 @@ const NewUpload = () => {
       <Formik
         initialValues={{
           file: null,
-          documentType: {
-            commonType: null,
-            otherType: ''
-          }
+          documentType: null,
+          otherTypeDescription: ''
         }}
         onSubmit={onSubmit}
         validationSchema={DocumentUploadValidationSchema}
@@ -192,25 +195,22 @@ const NewUpload = () => {
                   })}
                 </ErrorAlert>
               )}
-              {/* {isErrorGeneratingPresignedUrl && (
-                  <Alert
-                    type="error"
-                    heading={t('uploadDocument.presignedUrlErrorHeader')}
-                  >
-                    {t('uploadDocument.presignedUrlErrorBody')}
-                  </Alert>
-                )}
-                {createDocumentStatus.error && (
-                  <ErrorAlert heading="Error uploading document">
-                    <ErrorAlertMessage
-                      message={createDocumentStatus.error.message}
-                      errorKey="accessibilityRequest"
-                    />
-                  </ErrorAlert>
-                )}
-                <PageHeading>
-                  Upload a document to {data?.accessibilityRequest?.name}
-                </PageHeading> */}
+              {isErrorGeneratingPresignedUrl && (
+                <Alert
+                  type="error"
+                  heading={t('uploadDocument.presignedUrlErrorHeader')}
+                >
+                  {t('uploadDocument.presignedUrlErrorBody')}
+                </Alert>
+              )}
+              {createDocumentStatus.error && (
+                <ErrorAlert heading="Error uploading document">
+                  <ErrorAlertMessage
+                    message={createDocumentStatus.error.message}
+                    errorKey="accessibilityRequest"
+                  />
+                </ErrorAlert>
+              )}
               <div>
                 <Form
                   onSubmit={e => {
@@ -240,63 +240,62 @@ const NewUpload = () => {
                   </FieldGroup>
                   <FieldGroup
                     id="file-type"
-                    scrollElement="documentType.commonType"
-                    error={!!flatErrors['documentType.commonType']}
+                    scrollElement="documentType"
+                    error={!!flatErrors.documentType}
                   >
                     <fieldset className="usa-fieldset margin-top-4">
                       <legend className="usa-label">{t('whatType')}</legend>
-                      <FieldErrorMsg>
-                        {flatErrors['documentType.commonType']}
-                      </FieldErrorMsg>
-                      {[
-                        'CONCEPT_PAPER',
-                        'POLICY_PAPER',
-                        'ICIP_DRAFT',
-                        'MARKET_RESEARCH',
-                        'OTHER'
-                      ].map(documentType => {
-                        return (
-                          <Field
-                            key={`FileUpload-CommonType${documentType}`}
-                            as={RadioField}
-                            checked={
-                              values.documentType.commonType === documentType
-                            }
-                            id={`FileUpload-CommonType${documentType}`}
-                            name="documentType.commonType"
-                            label={translateDocumentCommonType(documentType)}
-                            onChange={() => {
-                              setFieldValue(
-                                'documentType.commonType',
-                                documentType
-                              );
-                              setFieldValue('documentType.otherType', '');
-                            }}
-                            value={documentType}
-                          />
-                        );
-                      })}
-                      {values.documentType.commonType === 'OTHER' && (
+                      <FieldErrorMsg>{flatErrors.documentType}</FieldErrorMsg>
+                      {(Object.keys(DocumentType) as Array<
+                        keyof typeof DocumentType
+                      >)
+                        .filter(documentType => documentType !== 'OTHER')
+                        .map(documentType => {
+                          return (
+                            <Field
+                              key={`FileUpload-${documentType}`}
+                              as={RadioField}
+                              checked={values.documentType === documentType}
+                              id={`FileUpload-${documentType}`}
+                              name="documentType"
+                              label={translateDocumentType(documentType)}
+                              onChange={() => {
+                                setFieldValue('documentType', documentType);
+                                setFieldValue('otherTypeDescription', '');
+                              }}
+                              value={documentType}
+                            />
+                          );
+                        })}
+                      <Field
+                        as={RadioField}
+                        checked={values.documentType === 'OTHER'}
+                        id="FileUpload-OTHER"
+                        name="documentType"
+                        label={translateDocumentType(DocumentType.OTHER)}
+                        value="OTHER"
+                      />
+                      {values.documentType === 'OTHER' && (
                         <div className="width-card-lg margin-left-4 margin-bottom-1">
                           <FieldGroup
-                            scrollElement="documentType.otherType"
-                            error={!!flatErrors['documentType.otherType']}
+                            scrollElement="otherTypeDescription"
+                            error={!!flatErrors.otherTypeDescription}
                           >
                             <Label
                               htmlFor="FileUpload-OtherType"
                               className="margin-bottom-1"
                             >
-                              Document name
+                              {t('documentKind')}
                             </Label>
                             <FieldErrorMsg>
-                              {flatErrors['documentType.otherType']}
+                              {flatErrors.otherTypeDescription}
                             </FieldErrorMsg>
                             <Field
                               as={TextField}
-                              error={!!flatErrors['documentType.otherType']}
+                              error={!!flatErrors.otherTypeDescription}
                               className="margin-top-0"
-                              id="FileUpload-OtherType"
-                              name="documentType.otherType"
+                              id="FileUpload-OtherTypeDescription"
+                              name="otherTypeDescription"
                             />
                           </FieldGroup>
                         </div>
@@ -317,14 +316,14 @@ const NewUpload = () => {
                     <Button
                       type="submit"
                       onClick={() => setErrors({})}
-                      // disabled={
-                      //   isSubmitting ||
-                      //   generateURLStatus.loading ||
-                      //   createDocumentStatus.loading
-                      // }
+                      disabled={
+                        isSubmitting ||
+                        generateURLStatus.loading ||
+                        createDocumentStatus.loading
+                      }
                       data-testid="upload-document"
                     >
-                      Upload document
+                      {t('uploadButton')}
                     </Button>
                   </div>
                 </Form>

@@ -1,4 +1,6 @@
 import i18next from 'i18next';
+
+import { DocumentType } from 'types/graphql-global-types';
 /**
  * Translate the API enum to a human readable string
  */
@@ -49,8 +51,8 @@ export const translateModelPlanStatus = (status: string) => {
  */
 
 // TODO import gql gen document type
-export const translateDocumentCommonType = commonDocumentType => {
-  switch (commonDocumentType) {
+export const translateDocumentType = (documentType: DocumentType) => {
+  switch (documentType) {
     case 'CONCEPT_PAPER':
       return i18next.t('documents:documentTypes.concept');
     case 'POLICY_PAPER':

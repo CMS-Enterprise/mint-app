@@ -30,6 +30,14 @@ export enum DiscussionStatus {
   WAITING_FOR_RESPONSE = "WAITING_FOR_RESPONSE",
 }
 
+export enum DocumentType {
+  CONCEPT_PAPER = "CONCEPT_PAPER",
+  ICIP_DRAFT = "ICIP_DRAFT",
+  MARKET_RESEARCH = "MARKET_RESEARCH",
+  OTHER = "OTHER",
+  POLICY_PAPER = "POLICY_PAPER",
+}
+
 export enum ModelCategory {
   ACCOUNTABLE_CARE = "ACCOUNTABLE_CARE",
   DEMONSTRATION = "DEMONSTRATION",
@@ -63,6 +71,15 @@ export enum TeamRole {
 }
 
 /**
+ * Input associated with a document to be uploaded
+ */
+export interface GeneratePresignedUploadURLInput {
+  fileName: string;
+  mimeType: string;
+  size: number;
+}
+
+/**
  * ModelPlanInput represent the data point for plans about a model. It is the central data type in the application
  */
 export interface ModelPlanInput {
@@ -93,6 +110,27 @@ export interface PlanCollaboratorInput {
   createdDts?: Time | null;
   modifiedBy?: string | null;
   modifiedDts?: Time | null;
+}
+
+/**
+ * PlanDocumentInput represents the data required to create, modify, or delete a document on a plan
+ */
+export interface PlanDocumentInput {
+  id?: UUID | null;
+  modelPlanID: UUID;
+  documentParameters: PlanDocumentParameters;
+  url?: string | null;
+}
+
+/**
+ * PlanDocumentCreateParameters represents the specific data required to create or modify a document on a plan
+ */
+export interface PlanDocumentParameters {
+  fileName?: string | null;
+  fileSize: number;
+  fileType?: string | null;
+  documentType?: DocumentType | null;
+  otherTypeDescription?: string | null;
 }
 
 //==============================================================

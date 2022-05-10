@@ -38,7 +38,8 @@ const documents = {
     'To keep CMS safe, documents are scanned for ciruses after uploading. If something goes wrong, we’ll let you know',
   uploadButton: 'Upload document',
   dontUpload: 'Don’t upload and return to previous page',
-  selectFile: 'Select file'
+  selectFile: 'Select file',
+  documentKind: 'What kind of document is this?'
 };
 
 export default documents;
