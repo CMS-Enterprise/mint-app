@@ -105,7 +105,7 @@ const TaskList = () => {
       {data && (
         <div className="grid-row grid-gap-lg">
           <div className="tablet:grid-col-9">
-            <PageHeading className="margin-bottom-0">
+            <PageHeading className="margin-top-4 margin-bottom-0">
               {t('navigation.modelPlanTaskList')}
             </PageHeading>
             <p
@@ -128,7 +128,7 @@ const TaskList = () => {
               <UswdsReactLink
                 className="usa-button usa-button--outline"
                 variant="unstyled"
-                to="/"
+                to={`/models/${modelId}/documents`}
               >
                 {t('summaryBox.cta')}
               </UswdsReactLink>

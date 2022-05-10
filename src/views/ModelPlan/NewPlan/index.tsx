@@ -154,27 +154,21 @@ const NewPlanContent = () => {
 
 const NewPlan = () => {
   return (
-    <>
-      <Switch>
-        {/* New Plan Pages */}
-        <Route
-          path="/models/new-plan"
-          exact
-          render={() => <NewPlanContent />}
-        />
-        <Route
-          path="/models/new-plan/:modelId/collaborators"
-          render={() => <Collaborators />}
-        />
-        <Route
-          path="/models/new-plan/:modelId/add-collaborator/:collaboratorId?"
-          render={() => <AddCollaborator />}
-        />
+    <Switch>
+      {/* New Plan Pages */}
+      <Route path="/models/new-plan" exact render={() => <NewPlanContent />} />
+      <Route
+        path="/models/new-plan/:modelId/collaborators"
+        render={() => <Collaborators />}
+      />
+      <Route
+        path="/models/new-plan/:modelId/add-collaborator/:collaboratorId?"
+        render={() => <AddCollaborator />}
+      />
 
-        {/* 404 */}
-        <Route path="*" render={() => <NotFound />} />
-      </Switch>
-    </>
+      {/* 404 */}
+      <Route path="*" render={() => <NotFound />} />
+    </Switch>
   );
 };
 
