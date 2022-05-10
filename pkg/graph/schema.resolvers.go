@@ -5,6 +5,7 @@ package graph
 
 import (
 	"context"
+
 	"github.com/google/uuid"
 
 	"github.com/cmsgov/mint-app/pkg/appcontext"
@@ -154,7 +155,7 @@ func (r *mutationResolver) UpdatePlanMilestones(ctx context.Context, input model
 	return resolvers.UpdatePlanMilestones(logger, basics, &principal, r.store)
 }
 
-func (r *mutationResolver) GeneratePresignedUploadURL(_ context.Context, input model.GeneratePresignedUploadURLInput) (*model.GeneratePresignedUploadURLPayload, error) {
+func (r *mutationResolver) GeneratePresignedUploadURL(ctx context.Context, input model.GeneratePresignedUploadURLInput) (*model.GeneratePresignedUploadURLPayload, error) {
 	url, err := r.s3Client.NewPutPresignedURL(input.MimeType)
 	if err != nil {
 		return nil, err
@@ -251,7 +252,7 @@ func (r *planDiscussionResolver) Replies(ctx context.Context, obj *models.PlanDi
 	return resolvers.DiscussionReplyCollectionByDiscusionID(logger, obj.ID, r.store)
 }
 
-func (r *planDocumentResolver) OtherType(_ context.Context, obj *models.PlanDocument) (*string, error) {
+func (r *planDocumentResolver) OtherType(ctx context.Context, obj *models.PlanDocument) (*string, error) {
 	return obj.OtherTypeDescription, nil
 }
 
@@ -302,14 +303,14 @@ func (r *queryResolver) PlanDocumentDownloadURL(ctx context.Context, id uuid.UUI
 		return &model.PlanDocumentPayload{}, err
 	}
 
-	url, err := r.s3Client.NewPutPresignedURL(*document.FileType)
+	url, err := r.s3Client.NewGetPresignedURL(*document.FileKey)
 	if err != nil {
 		return nil, err
 	}
 
 	return &model.PlanDocumentPayload{
 		Document:     document,
-		PresignedURL: &url.URL,
+		PresignedURL: url,
 	}, nil
 }
 
@@ -334,7 +335,7 @@ func (r *queryResolver) CedarPersonsByCommonName(ctx context.Context, commonName
 	return response, nil
 }
 
-func (r *userInfoResolver) Email(_ context.Context, obj *models.UserInfo) (string, error) {
+func (r *userInfoResolver) Email(ctx context.Context, obj *models.UserInfo) (string, error) {
 	return string(obj.Email), nil
 }
 

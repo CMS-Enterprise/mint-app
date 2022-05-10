@@ -207,8 +207,8 @@ func makeModelPlan(modelName string, logger *zap.Logger, store *storage.Store, c
 	status := models.ModelStatusPlanDraft
 
 	plan := models.ModelPlan{
-		ModelName: &modelName,
-		Archived:  false,
+		ModelName:  &modelName,
+		Archived:   false,
 		CreatedBy:  models.StringPointer("ABCD"),
 		ModifiedBy: models.StringPointer("ABCD"),
 		Status:     status,
