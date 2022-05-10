@@ -35,10 +35,20 @@ func ModelPlanCreate(logger *zap.Logger, plan *models.ModelPlan, store *storage.
 }
 
 // ModelPlanUpdate implements resolver logic to update a model plan
-func ModelPlanUpdate(logger *zap.Logger, plan *models.ModelPlan, principal *string, store *storage.Store) (*models.ModelPlan, error) {
-	plan.ModifiedBy = principal
+func ModelPlanUpdate(logger *zap.Logger, id uuid.UUID, changes map[string]interface{}, principal *string, store *storage.Store) (*models.ModelPlan, error) {
+	// Get existing plan
+	existingPlan, err := store.ModelPlanGetByID(logger, id)
+	if err != nil {
+		return nil, err
+	}
 
-	retPlan, err := store.ModelPlanUpdate(logger, plan)
+	err = ApplyChanges(changes, existingPlan)
+	if err != nil {
+		return nil, err
+	}
+	existingPlan.ModifiedBy = principal
+
+	retPlan, err := store.ModelPlanUpdate(logger, existingPlan)
 	if err != nil {
 		return nil, err
 	}

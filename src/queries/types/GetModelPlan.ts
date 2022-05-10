@@ -19,9 +19,9 @@ export interface GetModelPlan_modelPlan {
   id: UUID | null;
   modelName: string | null;
   modelCategory: ModelCategory | null;
-  cmsCenters: CMSCenter[] | null;
+  cmsCenters: CMSCenter[];
   cmsOther: string | null;
-  cmmiGroups: CMMIGroup[] | null;
+  cmmiGroups: CMMIGroup[];
   archived: boolean;
   status: ModelStatus;
   basics: GetModelPlan_modelPlan_basics | null;

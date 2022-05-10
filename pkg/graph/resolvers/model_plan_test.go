@@ -32,20 +32,19 @@ func TestModelPlanCreate(t *testing.T) {
 }
 func TestModelPlanUpdate(t *testing.T) {
 	tc := GetDefaultTestConfigs()
-	modelName := models.StringPointer("My Test model")
 
-	plan := models.ModelPlan{}
-	plan.ID = uuid.MustParse("85b3ff03-1be2-4870-b02f-55c764500e48")
-	plan.ModifiedBy = tc.Principal
-	plan.CreatedBy = tc.Principal
-	plan.ModelName = modelName
-	plan.Status = models.ModelStatusPlanDraft
+	id := uuid.MustParse("85b3ff03-1be2-4870-b02f-55c764500e48")
+	changes := map[string]interface{}{
+		"modelName": "NEW_AND_IMPROVED",
+		"status":    models.ModelStatusIcipComplete,
+	}
 
-	result, err := ModelPlanUpdate(tc.Logger, &plan, tc.Principal, tc.Store)
+	result, err := ModelPlanUpdate(tc.Logger, id, changes, tc.Principal, tc.Store)
 
 	assert.NoError(t, err)
 	assert.NotNil(t, result.ID)
-	assert.EqualValues(t, result.ModelName, plan.ModelName)
+	assert.EqualValues(t, "NEW_AND_IMPROVED", *result.ModelName)
+	assert.EqualValues(t, models.ModelStatusIcipComplete, result.Status)
 }
 func TestModelPlanGetByID(t *testing.T) {
 	tc := GetDefaultTestConfigs()

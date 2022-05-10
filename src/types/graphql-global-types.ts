@@ -62,6 +62,17 @@ export enum TeamRole {
   MODEL_TEAM = "MODEL_TEAM",
 }
 
+export interface ModelPlanChanges {
+  modelName?: string | null;
+  modelCategory?: ModelCategory | null;
+  cmsCenters?: CMSCenter[] | null;
+  cmsOther?: string | null;
+  cmmiGroups?: CMMIGroup[] | null;
+  someNumbers?: number[] | null;
+  archived?: boolean | null;
+  status?: ModelStatus | null;
+}
+
 /**
  * ModelPlanInput represent the data point for plans about a model. It is the central data type in the appliation
  */

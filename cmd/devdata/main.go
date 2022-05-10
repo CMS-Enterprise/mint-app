@@ -145,7 +145,7 @@ func main() {
 
 		p.ModelCategory = &ac
 		p.CMSCenters = pq.StringArray{string(cms)}
-		p.CMMIGroups = pq.StringArray{"STATE_INNOVATIONS_GROUP", "POLICY_AND_PROGRAMS_GROUP", "SEAMLESS_CARE_MODELS_GROUP"}
+		// p.CMMIGroups = pq.StringArray{"STATE_INNOVATIONS_GROUP", "POLICY_AND_PROGRAMS_GROUP", "SEAMLESS_CARE_MODELS_GROUP"}
 
 		p.CreatedBy = models.StringPointer("MINT")
 		p.ModifiedBy = models.StringPointer("MINT")

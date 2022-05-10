@@ -30,9 +30,9 @@ type ModelPlan {
   id: UUID
   modelName: String
   modelCategory: ModelCategory
-  cmsCenters: [CMSCenter!]
+  cmsCenters: [CMSCenter!]!
   cmsOther: String
-  cmmiGroups: [CMMIGroup!]
+  cmmiGroups: [CMMIGroup!]!
   archived: Boolean!
   createdBy: String
   createdDts: Time
@@ -61,6 +61,17 @@ createdDts: Time
 modifiedBy: String
 modifiedDts: Time
 status: ModelStatus!
+}
+
+input ModelPlanChanges {
+  modelName: String
+  modelCategory: ModelCategory
+  cmsCenters: [CMSCenter!]
+  cmsOther: String
+  cmmiGroups: [CMMIGroup!]
+  someNumbers: [Int!]
+  archived: Boolean
+  status: ModelStatus
 }
 
 """
@@ -282,6 +293,9 @@ type Mutation {
 createModelPlan(input: ModelPlanInput!):ModelPlan
 @hasRole(role: MINT_BASE_USER)
 
+updateModelPlan(id: UUID!, changes: ModelPlanChanges!): ModelPlan
+@hasRole(role: MINT_BASE_USER)
+
 createPlanCollaborator(input: PlanCollaboratorInput!): PlanCollaborator
 @hasRole(role: MINT_BASE_USER)
 
@@ -292,9 +306,6 @@ deletePlanCollaborator(input: PlanCollaboratorInput!): PlanCollaborator
 @hasRole(role: MINT_BASE_USER)
 
 createPlanBasics(input: PlanBasicsInput!):PlanBasics
-@hasRole(role: MINT_BASE_USER)
-
-updateModelPlan(input: ModelPlanInput!):ModelPlan
 @hasRole(role: MINT_BASE_USER)
 
 updatePlanBasics(input: PlanBasicsInput!): PlanBasics

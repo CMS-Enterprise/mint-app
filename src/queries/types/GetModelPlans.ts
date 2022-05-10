@@ -32,7 +32,7 @@ export interface GetModelPlans_modelPlanCollection {
   id: UUID | null;
   modelName: string | null;
   modelCategory: ModelCategory | null;
-  cmmiGroups: CMMIGroup[] | null;
+  cmmiGroups: CMMIGroup[];
   status: ModelStatus;
   createdBy: string | null;
   createdDts: Time | null;

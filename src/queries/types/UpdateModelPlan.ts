@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { ModelPlanInput, ModelCategory, CMSCenter, CMMIGroup, ModelStatus } from "./../../types/graphql-global-types";
+import { ModelPlanChanges, ModelCategory, CMSCenter, CMMIGroup, ModelStatus } from "./../../types/graphql-global-types";
 
 // ====================================================
 // GraphQL mutation operation: UpdateModelPlan
@@ -14,9 +14,9 @@ export interface UpdateModelPlan_updateModelPlan {
   id: UUID | null;
   modelName: string | null;
   modelCategory: ModelCategory | null;
-  cmsCenters: CMSCenter[] | null;
+  cmsCenters: CMSCenter[];
   cmsOther: string | null;
-  cmmiGroups: CMMIGroup[] | null;
+  cmmiGroups: CMMIGroup[];
   archived: boolean;
   status: ModelStatus;
 }
@@ -26,5 +26,6 @@ export interface UpdateModelPlan {
 }
 
 export interface UpdateModelPlanVariables {
-  input: ModelPlanInput;
+  id: UUID;
+  changes: ModelPlanChanges;
 }
