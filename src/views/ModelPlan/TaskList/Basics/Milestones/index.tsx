@@ -116,7 +116,7 @@ const Milestones = () => {
       update({
         variables: {
           input: {
-            id: milestones!.id,
+            id: milestones?.id,
             ...inputVariables
           }
         }
