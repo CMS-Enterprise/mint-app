@@ -18,6 +18,7 @@ import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import Alert from 'components/shared/Alert';
+import AutoSave from 'components/shared/AutoSave';
 import CheckboxField from 'components/shared/CheckboxField';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
@@ -73,10 +74,7 @@ const BasicsContent = () => {
 
   const [update] = useMutation<UpdateModelPlanType>(UpdateModelPlan);
 
-  const handleUpdateModelPlan = (
-    formikValues: PlanBasicModelPlanFormType,
-    isForm = true
-  ) => {
+  const handleUpdateModelPlan = (formikValues: PlanBasicModelPlanFormType) => {
     update({
       variables: {
         input: {
@@ -92,9 +90,37 @@ const BasicsContent = () => {
     })
       .then(response => {
         if (!response?.errors) {
-          if (isForm) {
-            history.push(`/models/${modelId}/task-list/basics/overview`);
-          } else {
+          history.push(`/models/${modelId}/task-list/basics/overview`);
+        }
+      })
+      .catch(errors => {
+        formikRef?.current?.setErrors(errors);
+      });
+  };
+
+  const handleSave = (
+    formikValues: PlanBasicModelPlanFormType,
+    isAutoSave: boolean = false
+  ) => {
+    update({
+      variables: {
+        input: {
+          id: modelId,
+          modelName: formikValues.modelName,
+          modelCategory:
+            formikValues.modelCategory !== ''
+              ? formikValues.modelCategory
+              : null,
+          cmsCenters: formikValues.cmsCenters,
+          cmmiGroups: formikValues.cmmiGroup,
+          cmsOther: formikValues.cmsOther,
+          status: 'PLAN_DRAFT'
+        }
+      }
+    })
+      .then(response => {
+        if (!response?.errors) {
+          if (!isAutoSave) {
             history.push(`/models/${modelId}/task-list/`);
           }
         }
@@ -379,18 +405,24 @@ const BasicsContent = () => {
                     <Button
                       type="button"
                       className="usa-button usa-button--unstyled"
-                      onClick={() => handleUpdateModelPlan(values, false)}
+                      onClick={() => handleSave(values)}
                     >
                       <IconArrowBack className="margin-right-1" aria-hidden />
                       {h('saveAndReturn')}
                     </Button>
                   </Form>
+                  <AutoSave
+                    values={values}
+                    onSave={() => {
+                      handleSave(formikRef.current!.values, true);
+                    }}
+                    debounceDelay={3000}
+                  />
                 </>
               );
             }}
           </Formik>
         </div>
-        {/* //TODO: To implement a save function */}
         <PageNumber
           currentPage={1}
           totalPages={3}
