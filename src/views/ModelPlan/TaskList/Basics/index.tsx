@@ -115,6 +115,14 @@ const BasicsContent = () => {
                 <span>{h('home')}</span>
               </BreadcrumbLink>
             </Breadcrumb>
+            <Breadcrumb>
+              <BreadcrumbLink
+                asCustom={Link}
+                to={`/models/${modelId}/task-list/`}
+              >
+                <span>{h('tasklistBreadcrumb')}</span>
+              </BreadcrumbLink>
+            </Breadcrumb>
             <Breadcrumb current>{t('breadcrumb')}</Breadcrumb>
           </BreadcrumbBar>
           <PageHeading className="margin-top-4">{t('heading')}</PageHeading>
