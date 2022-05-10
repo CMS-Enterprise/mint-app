@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link, useHistory, useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
 import { Button, Label } from '@trussworks/react-uswds';
 import axios from 'axios';
@@ -8,14 +8,13 @@ import { Field, Form, Formik, FormikProps } from 'formik';
 import { isUndefined } from 'lodash';
 
 import FileUpload from 'components/FileUpload';
-import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
 import Alert from 'components/shared/Alert';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import { RadioField } from 'components/shared/RadioField';
-import { NavLink, SecondaryNav } from 'components/shared/SecondaryNav';
+import TextAreaField from 'components/shared/TextAreaField';
 import TextField from 'components/shared/TextField';
 import { useMessage } from 'hooks/useMessage';
 import CreateModelPlanDocument from 'queries/CreateModelPlanDocument';
@@ -78,10 +77,6 @@ const NewUpload = () => {
     return <div>{`No request found matching id: ${modelId}`}</div>;
   }
 
-  //   if (data.accessibilityRequest?.statusRecord.status === 'DELETED') {
-  //     return <RequestDeleted />;
-  //   }
-
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event?.currentTarget?.files?.[0];
     if (!file) {
@@ -116,12 +111,7 @@ const NewUpload = () => {
         }
       };
 
-      console.log(s3URL);
-      console.log(values);
-      console.log(options);
-
       axios.put(s3URL, values.file, options).then(() => {
-        console.log(file);
         createDocument({
           variables: {
             input: {
@@ -138,14 +128,12 @@ const NewUpload = () => {
           }
         })
           .then(response => {
-            console.log(response);
             if (!response.errors) {
               showMessageOnNextPage(`${file.name} uploaded to ${data?.bucket}`);
               history.push(`/models/${modelId}/documents`);
             }
           })
           .catch(error => {
-            console.log(error);
             setErrorGeneratingPresignedUrl(true);
           });
       });
@@ -158,7 +146,8 @@ const NewUpload = () => {
         initialValues={{
           file: null,
           documentType: null,
-          otherTypeDescription: ''
+          otherTypeDescription: '',
+          optionalNotes: ''
         }}
         onSubmit={onSubmit}
         validationSchema={DocumentUploadValidationSchema}
@@ -302,6 +291,28 @@ const NewUpload = () => {
                       )}
                     </fieldset>
                   </FieldGroup>
+
+                  <FieldGroup
+                    id="optional-notes"
+                    scrollElement="optionalNotes"
+                    error={!!flatErrors.optionalNotes}
+                  >
+                    <Label
+                      htmlFor="ModelPlanDocument-optionalNotes"
+                      className="line-height-body-2"
+                    >
+                      {t('optionalNotes')}
+                    </Label>
+                    <Field
+                      as={TextAreaField}
+                      id="ModelPlanDocument-optionalNotes"
+                      name="noteText"
+                      className="model-plan-document__optional-notes height-10"
+                      error={!!flatErrors.optionalNotes}
+                      maxLength={2000}
+                    />
+                  </FieldGroup>
+
                   <div className="padding-top-2 margin-top-2">
                     <Alert
                       type="info"
@@ -332,12 +343,6 @@ const NewUpload = () => {
           );
         }}
       </Formik>
-
-      {/* <p className="padding-top-2">
-          <Link to={`/508/requests/${accessibilityRequestId}`}>
-            Don&apos;t upload and return to request page
-          </Link>
-        </p> */}
     </div>
   );
 };

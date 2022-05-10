@@ -6,6 +6,7 @@ export type FileUploadForm = {
   uploadURL?: string;
   documentType: DocumentType | null;
   otherTypeDescription: string;
+  optionalNotes: string;
 };
 
 export type UploadedFile = {
