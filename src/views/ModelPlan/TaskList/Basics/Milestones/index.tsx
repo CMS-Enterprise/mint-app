@@ -92,60 +92,7 @@ const Milestones = () => {
     phasedInNote: milestones?.phasedInNote ?? ''
   };
 
-  const handleFormSubmit = (formikValues: PlanBasicsOverviewTypes) => {
-    const inputVariables = {
-      modelPlanID: modelId,
-      completeICIP: formikValues.completeICIP,
-      clearanceStarts: formikValues.clearanceStarts,
-      clearanceEnds: formikValues.clearanceEnds,
-      announced: formikValues.announced,
-      applicationsStart: formikValues.applicationsStart,
-      applicationsEnd: formikValues.applicationsEnd,
-      performancePeriodStarts: formikValues.performancePeriodStarts,
-      performancePeriodEnds: formikValues.performancePeriodEnds,
-      wrapUpEnds: formikValues.wrapUpEnds,
-      highLevelNote: formikValues.highLevelNote,
-      phasedIn: formikValues.phasedIn,
-      phasedInNote: formikValues.phasedInNote
-    };
-
-    if (milestones) {
-      update({
-        variables: {
-          input: {
-            id: milestones.id,
-            ...inputVariables
-          }
-        }
-      })
-        .then(response => {
-          if (!response?.errors) {
-            history.push(`/models/${modelId}/task-list`);
-          }
-        })
-        .catch(errors => {
-          formikRef?.current?.setErrors(errors);
-        });
-    } else {
-      create({
-        variables: {
-          input: {
-            ...inputVariables
-          }
-        }
-      })
-        .then(response => {
-          if (!response?.errors) {
-            history.push(`/models/${modelId}/task-list`);
-          }
-        })
-        .catch(errors => {
-          formikRef?.current?.setErrors(errors);
-        });
-    }
-  };
-
-  const handleSave = (
+  const handleFormSubmit = (
     formikValues: PlanBasicsOverviewTypes,
     isAutoSave: boolean = false
   ) => {
@@ -165,11 +112,12 @@ const Milestones = () => {
       phasedInNote: formikValues.phasedInNote
     };
 
-    if (milestones) {
+    debugger;
+    if (milestones !== null) {
       update({
         variables: {
           input: {
-            id: milestones.id,
+            id: milestones!.id,
             ...inputVariables
           }
         }
@@ -242,7 +190,9 @@ const Milestones = () => {
 
           <Formik
             initialValues={initialValues}
-            onSubmit={handleFormSubmit}
+            onSubmit={values => {
+              handleFormSubmit(values);
+            }}
             enableReinitialize
             validationSchema={planBasicsSchema.pageThreeSchema}
             validateOnBlur={false}
@@ -667,7 +617,7 @@ const Milestones = () => {
                     <Button
                       type="button"
                       className="usa-button usa-button--unstyled"
-                      onClick={() => handleSave(values)}
+                      onClick={() => handleFormSubmit(values, false)}
                     >
                       <IconArrowBack className="margin-right-1" aria-hidden />
                       {h('saveAndReturn')}
@@ -676,7 +626,7 @@ const Milestones = () => {
                   <AutoSave
                     values={values}
                     onSave={() => {
-                      handleSave(formikRef.current!.values, true);
+                      handleFormSubmit(formikRef.current!.values, true);
                     }}
                     debounceDelay={3000}
                   />

@@ -73,7 +73,11 @@ const Overview = () => {
     note: note ?? ''
   };
 
-  const handleFormSubmit = (formikValues: PlanBasicsOverviewTypes) => {
+  const handleFormSubmit = (
+    formikValues: PlanBasicsOverviewTypes,
+    isAutoSave: boolean = false,
+    continuesToNextStep: boolean = true
+  ) => {
     update({
       variables: {
         input: {
@@ -89,35 +93,9 @@ const Overview = () => {
     })
       .then(response => {
         if (!response?.errors) {
-          history.push(`/models/${modelId}/task-list/basics/milestones`);
-        }
-      })
-      .catch(errors => {
-        formikRef?.current?.setErrors(errors);
-      });
-  };
-
-  const handleSave = (
-    formikValues: PlanBasicsOverviewTypes,
-    isAutoSave: boolean = false
-  ) => {
-    update({
-      variables: {
-        input: {
-          id,
-          modelPlanID: modelId,
-          modelType:
-            formikValues.modelType !== '' ? formikValues.modelType : null,
-          problem: formikValues.problem,
-          goal: formikValues.goal,
-          testInventions: formikValues.testInterventions,
-          note: formikValues.note
-        }
-      }
-    })
-      .then(response => {
-        if (!response?.errors) {
-          if (!isAutoSave) {
+          if (continuesToNextStep) {
+            history.push(`/models/${modelId}/task-list/basics/milestones`);
+          } else if (!isAutoSave) {
             history.push(`/models/${modelId}/task-list/`);
           }
         }
@@ -164,7 +142,9 @@ const Overview = () => {
 
           <Formik
             initialValues={initialValues}
-            onSubmit={handleFormSubmit}
+            onSubmit={values => {
+              handleFormSubmit(values);
+            }}
             enableReinitialize
             validationSchema={planBasicsSchema.pageTwoSchema}
             validateOnBlur={false}
@@ -322,7 +302,7 @@ const Overview = () => {
                     <Button
                       type="button"
                       className="usa-button usa-button--unstyled"
-                      onClick={() => handleSave(values)}
+                      onClick={() => handleFormSubmit(values, false, false)}
                     >
                       <IconArrowBack className="margin-right-1" aria-hidden />
                       {h('saveAndReturn')}
@@ -331,7 +311,7 @@ const Overview = () => {
                   <AutoSave
                     values={values}
                     onSave={() => {
-                      handleSave(formikRef.current!.values, true);
+                      handleFormSubmit(formikRef.current!.values, true, false);
                     }}
                     debounceDelay={3000}
                   />

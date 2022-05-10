@@ -74,7 +74,7 @@ const BasicsContent = () => {
 
   const [update] = useMutation<UpdateModelPlanType>(UpdateModelPlan);
 
-  const handleUpdateModelPlan = (
+  const handleFormSubmit = (
     formikValues: PlanBasicModelPlanFormType,
     isAutoSave: boolean = false,
     continuesToNextStep: boolean = true
@@ -148,7 +148,7 @@ const BasicsContent = () => {
           <Formik
             initialValues={initialValues}
             onSubmit={values => {
-              handleUpdateModelPlan(values);
+              handleFormSubmit(values);
             }}
             enableReinitialize
             validationSchema={
@@ -383,9 +383,7 @@ const BasicsContent = () => {
                     <Button
                       type="button"
                       className="usa-button usa-button--unstyled"
-                      onClick={() =>
-                        handleUpdateModelPlan(values, false, false)
-                      }
+                      onClick={() => handleFormSubmit(values, false, false)}
                     >
                       <IconArrowBack className="margin-right-1" aria-hidden />
                       {h('saveAndReturn')}
@@ -394,11 +392,7 @@ const BasicsContent = () => {
                   <AutoSave
                     values={values}
                     onSave={() => {
-                      handleUpdateModelPlan(
-                        formikRef.current!.values,
-                        true,
-                        false
-                      );
+                      handleFormSubmit(formikRef.current!.values, true, false);
                     }}
                     debounceDelay={3000}
                   />
