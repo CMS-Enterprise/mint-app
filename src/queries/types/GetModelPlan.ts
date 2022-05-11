@@ -14,6 +14,12 @@ export interface GetModelPlan_modelPlan_basics {
   id: UUID | null;
 }
 
+export interface GetModelPlan_modelPlan_documents {
+  __typename: "PlanDocument";
+  id: UUID;
+  fileName: string | null;
+}
+
 export interface GetModelPlan_modelPlan {
   __typename: "ModelPlan";
   id: UUID | null;
@@ -25,6 +31,7 @@ export interface GetModelPlan_modelPlan {
   archived: boolean;
   status: ModelStatus;
   basics: GetModelPlan_modelPlan_basics | null;
+  documents: GetModelPlan_modelPlan_documents[];
 }
 
 export interface GetModelPlan {

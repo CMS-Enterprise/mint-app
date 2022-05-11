@@ -12,7 +12,10 @@ const documents = {
     notes: 'Notes',
     uploadDate: 'Upload date',
     actions: 'Actions',
-    noDocuments: 'No documents uploaded'
+    noDocuments: 'No documents uploaded',
+    scanInProgress: 'Virus scan in progress..',
+    noVirusFound: 'No viruses found',
+    virusFound: 'Virus found'
   },
   uploadDocument: 'Upload a document',
   uploadDescription:

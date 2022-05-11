@@ -7,7 +7,6 @@ import { DateTime } from 'luxon';
 
 import PageLoading from 'components/PageLoading';
 import Alert from 'components/shared/Alert';
-import TablePagination from 'components/TablePagination';
 import GetPlanDocumentByModelID from 'queries/GetPlanDocumentByModelID';
 import {
   GetModelPlanDocumentByModelID as GetModelPlanDocumentByModelIDType,
@@ -74,8 +73,11 @@ const Table = ({ data, hiddenColumns }: TableProps) => {
       {
         Header: t('documentTable.type'),
         accessor: 'documentType',
-        Cell: ({ value }: any) => {
-          return translateDocumentType(value);
+        Cell: ({ row, value }: any) => {
+          if (value !== 'OTHER') {
+            return translateDocumentType(value);
+          }
+          return row.original.otherType;
         }
       },
       {
@@ -92,9 +94,14 @@ const Table = ({ data, hiddenColumns }: TableProps) => {
       },
       {
         Header: t('documentTable.actions'),
-        accessor: 'id',
-        Cell: ({ value }: any) => {
-          return 'Virsu scan in progress...';
+        accessor: 'virusScanned',
+        Cell: ({ row, value }: any) => {
+          if (value) {
+            return row.original.virusClean
+              ? t('documentTable.noVirusFound')
+              : t('documentTable.virusFound');
+          }
+          return t('documentTable.scanInProgress');
         }
       }
     ];
@@ -104,16 +111,7 @@ const Table = ({ data, hiddenColumns }: TableProps) => {
     getTableProps,
     getTableBodyProps,
     headerGroups,
-    canPreviousPage,
-    canNextPage,
-    pageOptions,
-    pageCount,
-    gotoPage,
-    nextPage,
-    previousPage,
-    setPageSize,
     page,
-    state,
     prepareRow
   } = useTable(
     {
@@ -139,14 +137,6 @@ const Table = ({ data, hiddenColumns }: TableProps) => {
     useSortBy,
     usePagination
   );
-
-  if (data.length === 0) {
-    return (
-      <Alert type="info" heading={t('requestsTable.empty.heading')}>
-        {t('requestsTable.empty.body')}
-      </Alert>
-    );
-  }
 
   return (
     <div className="model-plan-table">
@@ -233,26 +223,14 @@ const Table = ({ data, hiddenColumns }: TableProps) => {
         </tbody>
       </UswdsTable>
 
-      <TablePagination
-        gotoPage={gotoPage}
-        previousPage={previousPage}
-        nextPage={nextPage}
-        canNextPage={canNextPage}
-        pageIndex={state.pageIndex}
-        pageOptions={pageOptions}
-        canPreviousPage={canPreviousPage}
-        pageCount={pageCount}
-        pageSize={state.pageSize}
-        setPageSize={setPageSize}
-        page={[]}
-      />
-
       <div
         className="usa-sr-only usa-table__announcement-region"
         aria-live="polite"
       >
         {currentTableSortDescription(headerGroups[0])}
       </div>
+
+      {data.length === 0 && <p>{t('documentTable.noDocuments')}</p>}
     </div>
   );
 };

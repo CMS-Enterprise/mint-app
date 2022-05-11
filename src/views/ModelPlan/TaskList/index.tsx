@@ -51,7 +51,8 @@ const TaskList = () => {
 
   const {
     modelName,
-    basics
+    basics,
+    documents
     // TODO: Add these model plans when BE integrates it
     // characteristics,
     // participants,
@@ -120,18 +121,45 @@ const TaskList = () => {
               heading=""
               className="bg-base-lightest border-0 radius-0 padding-2"
             >
-              <p className="margin-0 margin-bottom-1">
-                <Trans i18nKey="modelPlanTaskList:summaryBox.copy">
-                  indexZero {modelName} indexTwo
-                </Trans>
-              </p>
-              <UswdsReactLink
-                className="usa-button usa-button--outline"
-                variant="unstyled"
-                to={`/models/${modelID}/documents`}
-              >
-                {t('summaryBox.cta')}
-              </UswdsReactLink>
+              {documents?.length > 0 ? (
+                <>
+                  <p className="margin-0 margin-bottom-1">
+                    <strong>{documents.length} </strong>
+                    <Trans i18nKey="modelPlanTaskList:summaryBox.existingDocuments">
+                      indexZero {modelName} indexTwo
+                    </Trans>
+                  </p>
+                  <UswdsReactLink
+                    variant="unstyled"
+                    className="margin-right-4"
+                    to={`/models/${modelID}/documents`}
+                  >
+                    {t('summaryBox.viewAll')}
+                  </UswdsReactLink>
+
+                  <UswdsReactLink
+                    variant="unstyled"
+                    to={`/models/${modelID}/documents/add-document`}
+                  >
+                    {t('summaryBox.uploadAnother')}
+                  </UswdsReactLink>
+                </>
+              ) : (
+                <>
+                  <p className="margin-0 margin-bottom-1">
+                    <Trans i18nKey="modelPlanTaskList:summaryBox.copy">
+                      indexZero {modelName} indexTwo
+                    </Trans>
+                  </p>
+                  <UswdsReactLink
+                    className="usa-button usa-button--outline"
+                    variant="unstyled"
+                    to={`/models/${modelID}/documents`}
+                  >
+                    {t('summaryBox.cta')}
+                  </UswdsReactLink>
+                </>
+              )}
             </SummaryBox>
             <ol
               data-testid="task-list"

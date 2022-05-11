@@ -1,12 +1,10 @@
 import React from 'react';
-import { Trans, useTranslation } from 'react-i18next';
-import { Link, Route, Switch, useParams } from 'react-router-dom';
-import { useQuery } from '@apollo/client';
+import { useTranslation } from 'react-i18next';
+import { Link, useParams } from 'react-router-dom';
 import {
   Breadcrumb,
   BreadcrumbBar,
   BreadcrumbLink,
-  Button,
   IconArrowBack
 } from '@trussworks/react-uswds';
 

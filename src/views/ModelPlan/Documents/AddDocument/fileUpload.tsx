@@ -133,7 +133,7 @@ const NewUpload = () => {
               history.push(`/models/${modelID}/documents`);
             }
           })
-          .catch(error => {
+          .catch(() => {
             setErrorGeneratingPresignedUrl(true);
           });
       });
@@ -330,7 +330,9 @@ const NewUpload = () => {
                       disabled={
                         isSubmitting ||
                         generateURLStatus.loading ||
-                        createDocumentStatus.loading
+                        createDocumentStatus.loading ||
+                        !values.documentType ||
+                        !values.file
                       }
                       data-testid="upload-document"
                     >
