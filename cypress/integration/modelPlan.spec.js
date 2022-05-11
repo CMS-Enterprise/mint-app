@@ -35,6 +35,55 @@ describe('The Model Plan Form', () => {
     cy.contains('h1', 'Model Plan task list');
   });
 
+  it('create a minimum Model Basics plan', () => {
+    cy.visit('/models');
+    cy.contains('a', 'My New Model Plan').click();
+
+    cy.location().should(loc => {
+      expect(loc.pathname).to.match(/\/models\/.{36}\/task-list/);
+    });
+    cy.contains('h3', 'Model basics');
+    cy.contains('button', 'Start').click();
+
+    cy.location().should(loc => {
+      expect(loc.pathname).to.match(/\/models\/.{36}\/task-list\/basics/);
+    });
+
+    cy.get('#plan-basics-model-name').should('have.value', 'My New Model Plan');
+    cy.get('#plan-basics-model-category').select('Demonstration');
+    cy.get('#plan-basics-model-category').contains('Demonstration');
+    cy.get('#new-plan-cmsCenters--1')
+      .check({ force: true })
+      .should('be.checked');
+    cy.contains('button', 'Next').click();
+
+    cy.location().should(loc => {
+      expect(loc.pathname).to.match(
+        /\/models\/.{36}\/task-list\/basics\/overview/
+      );
+    });
+    cy.get('#ModelType-Voluntary')
+      .first()
+      .check({ force: true })
+      .should('be.checked');
+    cy.contains('button', 'Next').click();
+
+    cy.location().should(loc => {
+      expect(loc.pathname).to.match(
+        /\/models\/.{36}\/task-list\/basics\/milestones/
+      );
+    });
+    cy.contains('h3', 'High level timeline');
+    cy.get('#phasedIn-Yes').first().check({ force: true }).should('be.checked');
+    cy.contains('button', 'Save and start next Model Plan section').click();
+
+    cy.location().should(loc => {
+      expect(loc.pathname).to.match(/\/models\/.{36}\/task-list/);
+    });
+
+    cy.get('.model-plan-task-list__last-updated-status').should('be.visible');
+  });
+
   it('archives a model plan', () => {
     cy.visit('/models/f11eb129-2c80-4080-9440-439cbe1a286f/task-list');
 
