@@ -127,6 +127,109 @@ describe('The Model Plan Form', () => {
     cy.get('.model-plan-task-list__last-updated-status').should('be.visible');
   });
 
+  it('completes a Model Plan Basics', () => {
+    cy.visit('/');
+
+    cy.contains('a', 'Start a draft model plan').click();
+    cy.contains('h1', 'Start a new model plan');
+    cy.get('[data-testid="continue-link"]').click();
+
+    // Creates a new plan
+    cy.get('#new-plan-model-name')
+      .type('Complete Model Basics Plan')
+      .should('have.value', 'Complete Model Basics Plan');
+    cy.contains('button', 'Next').click();
+
+    cy.location().should(loc => {
+      expect(loc.pathname).to.match(/\/models\/new-plan\/.{36}\/collaborators/);
+    });
+    cy.get('[data-testid="continue-to-tasklist"]').click();
+    cy.contains('h1', 'Model Plan task list');
+
+    cy.location().should(loc => {
+      expect(loc.pathname).to.match(/\/models\/.{36}\/task-list/);
+    });
+    cy.contains('h3', 'Model basics');
+    cy.contains('button', 'Start').click();
+
+    cy.location().should(loc => {
+      expect(loc.pathname).to.match(/\/models\/.{36}\/task-list\/basics/);
+    });
+    cy.get('#plan-basics-model-name').should(
+      'have.value',
+      'Complete Model Basics Plan'
+    );
+    cy.get('#plan-basics-model-category')
+      .select('Demonstration')
+      .contains('Demonstration');
+    cy.get('#new-plan-cmsCenters--1')
+      .check({ force: true })
+      .should('be.checked');
+    cy.contains('button', 'Next').click();
+
+    cy.location().should(loc => {
+      expect(loc.pathname).to.match(
+        /\/models\/.{36}\/task-list\/basics\/overview/
+      );
+    });
+    cy.get('#ModelType-Voluntary')
+      .first()
+      .check({ force: true })
+      .should('be.checked');
+    cy.contains('button', 'Next').click();
+
+    cy.location().should(loc => {
+      expect(loc.pathname).to.match(
+        /\/models\/.{36}\/task-list\/basics\/milestones/
+      );
+    });
+    cy.contains('h3', 'High level timeline');
+    cy.get('#Milestone-completeICIP')
+      .type('05/23/2025')
+      .should('have.value', '05/23/2025');
+
+    cy.get('#Milestone-clearanceStarts')
+      .type('05/23/2025')
+      .should('have.value', '05/23/2025');
+
+    cy.get('#Milestone-clearanceEnds')
+      .type('05/23/2025')
+      .should('have.value', '05/23/2025');
+
+    cy.get('#Milestone-announced')
+      .type('05/23/2025')
+      .should('have.value', '05/23/2025');
+
+    cy.get('#Milestone-applicationsStart')
+      .type('05/23/2025')
+      .should('have.value', '05/23/2025');
+
+    cy.get('#Milestone-applicationsEnd')
+      .type('05/23/2025')
+      .should('have.value', '05/23/2025');
+
+    cy.get('#Milestone-performancePeriodStarts')
+      .type('05/23/2025')
+      .should('have.value', '05/23/2025');
+
+    cy.get('#Milestone-performancePeriodEnds')
+      .type('05/23/2025')
+      .should('have.value', '05/23/2025');
+
+    cy.get('#Milestone-wrapUpEnds')
+      .type('05/23/2025')
+      .should('have.value', '05/23/2025');
+
+    cy.get('#phasedIn-Yes').first().check({ force: true }).should('be.checked');
+    cy.contains('button', 'Save and start next Model Plan section').click();
+
+    cy.location().should(loc => {
+      expect(loc.pathname).to.match(/\/models\/.{36}\/task-list/);
+    });
+
+    cy.get('[data-testid="tag"]').first().contains('Completed');
+  });
+
   it('archives a model plan', () => {
     cy.visit('/models/f11eb129-2c80-4080-9440-439cbe1a286f/task-list');
 
