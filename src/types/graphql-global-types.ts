@@ -62,6 +62,10 @@ export enum TeamRole {
   MODEL_TEAM = "MODEL_TEAM",
 }
 
+/**
+ * ModelPlanChanges represents the possible changes you can make to a model plan when updating it.
+ * Fields explicitly set with NULL will be unset, and omitted fields will be left unchanged.
+ */
 export interface ModelPlanChanges {
   modelName?: string | null;
   modelCategory?: ModelCategory | null;

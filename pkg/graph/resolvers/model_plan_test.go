@@ -70,7 +70,7 @@ func (suite *ResolverSuite) TestModelPlanCollectionByUser() {
 	tc := GetDefaultTestConfigs()
 	principalInfo := models.UserInfo{
 		CommonName: "Fake Tester names",
-		EuaUserID:  *tc.Principal, // TODO needs to be a uniq user so that it has no other plans (fix with test interdependency)
+		EuaUserID:  *tc.Principal,
 	}
 	planName := "Test Plan"
 	createdPlan, err := ModelPlanCreate(tc.Logger, planName, tc.Store, &principalInfo)
