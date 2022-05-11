@@ -273,6 +273,7 @@ type Query {
   planMilestones(id: UUID!) : PlanMilestones
   modelPlanCollection: [ModelPlan]
   cedarPersonsByCommonName(commonName: String!): [UserInfo!]!
+  planCollaboratorByID(id: UUID!): PlanCollaborator!
 }
 
 """

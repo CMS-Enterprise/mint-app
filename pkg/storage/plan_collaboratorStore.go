@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	_ "embed"
 	"errors"
+	"github.com/cmsgov/mint-app/pkg/shared/utilitySQL"
 
 	"github.com/google/uuid"
 	"go.uber.org/zap"
@@ -23,6 +24,9 @@ var planCollaboratorDeleteSQL string
 
 //go:embed SQL/plan_collaborator_fetch_by_model_plan_id.sql
 var planCollaboratorFetchByModelPlanIDSQL string
+
+//go:embed SQL/plan_collaborator_fetch_by_id.sql
+var planCollaboratorFetchByIDSQL string
 
 // PlanCollaboratorCreate creates a new plan collaborator
 func (s *Store) PlanCollaboratorCreate(logger *zap.Logger, collaborator *models.PlanCollaborator) (*models.PlanCollaborator, error) {
@@ -95,4 +99,23 @@ func (s *Store) PlanCollaboratorsByModelPlanID(logger *zap.Logger, modelPlanID u
 	}
 
 	return collaborators, nil
+}
+
+func (s *Store) PlanCollaboratorFetchByID(id uuid.UUID) (*models.PlanCollaborator, error) {
+	statement, err := s.db.PrepareNamed(planCollaboratorFetchByIDSQL)
+	if err != nil {
+		return nil, err
+	}
+
+	var collaborator models.PlanCollaborator
+	err = statement.Get(&collaborator, utilitySQL.CreateIDQueryMap(id))
+	if err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			return nil, nil
+		}
+
+		return nil, err
+	}
+
+	return &collaborator, nil
 }
