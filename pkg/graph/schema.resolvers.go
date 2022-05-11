@@ -74,7 +74,7 @@ func (r *modelPlanResolver) Discussions(ctx context.Context, obj *models.ModelPl
 	return resolvers.PlanDiscussionCollectionByModelPlanID(logger, obj.ID, r.store)
 }
 
-func (r *mutationResolver) CreateModelPlan(ctx context.Context, input model.ModelPlanInput) (*models.ModelPlan, error) {
+func (r *mutationResolver) CreateModelPlan(ctx context.Context, modelName string) (*models.ModelPlan, error) {
 	logger := appcontext.ZLogger(ctx)
 	principal := appcontext.Principal(ctx).ID()
 	principalInfo, err := r.service.FetchUserInfo(ctx, principal)
@@ -86,9 +86,7 @@ func (r *mutationResolver) CreateModelPlan(ctx context.Context, input model.Mode
 		principalInfo = &tempPrincipalInfo
 	}
 
-	plan := ConvertToModelPlan(&input)
-
-	return resolvers.ModelPlanCreate(logger, plan, r.store, principalInfo)
+	return resolvers.ModelPlanCreate(logger, modelName, r.store, principalInfo)
 }
 
 func (r *mutationResolver) UpdateModelPlan(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.ModelPlan, error) {

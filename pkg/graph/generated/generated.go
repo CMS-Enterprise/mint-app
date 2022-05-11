@@ -98,7 +98,7 @@ type ComplexityRoot struct {
 
 	Mutation struct {
 		CreateDiscussionReply      func(childComplexity int, input model.DiscussionReplyInput) int
-		CreateModelPlan            func(childComplexity int, input model.ModelPlanInput) int
+		CreateModelPlan            func(childComplexity int, modelName string) int
 		CreatePlanBasics           func(childComplexity int, input model.PlanBasicsInput) int
 		CreatePlanCollaborator     func(childComplexity int, input model.PlanCollaboratorInput) int
 		CreatePlanDiscussion       func(childComplexity int, input model.PlanDiscussionInput) int
@@ -234,7 +234,7 @@ type ModelPlanResolver interface {
 	Discussions(ctx context.Context, obj *models.ModelPlan) ([]*models.PlanDiscussion, error)
 }
 type MutationResolver interface {
-	CreateModelPlan(ctx context.Context, input model.ModelPlanInput) (*models.ModelPlan, error)
+	CreateModelPlan(ctx context.Context, modelName string) (*models.ModelPlan, error)
 	UpdateModelPlan(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.ModelPlan, error)
 	CreatePlanCollaborator(ctx context.Context, input model.PlanCollaboratorInput) (*models.PlanCollaborator, error)
 	UpdatePlanCollaborator(ctx context.Context, input model.PlanCollaboratorInput) (*models.PlanCollaborator, error)
@@ -515,7 +515,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			return 0, false
 		}
 
-		return e.complexity.Mutation.CreateModelPlan(childComplexity, args["input"].(model.ModelPlanInput)), true
+		return e.complexity.Mutation.CreateModelPlan(childComplexity, args["modelName"].(string)), true
 
 	case "Mutation.createPlanBasics":
 		if e.complexity.Mutation.CreatePlanBasics == nil {
@@ -1403,7 +1403,7 @@ ModelPlan represent the data point for plans about a model. It is the central da
 """
 type ModelPlan {
   id: UUID
-  modelName: String
+  modelName: String!
   modelCategory: ModelCategory
   cmsCenters: [CMSCenter!]!
   cmsOther: String
@@ -1422,23 +1422,8 @@ type ModelPlan {
 }
 
 """
-ModelPlanInput represent the data point for plans about a model. It is the central data type in the application
-"""
-input ModelPlanInput{
-id: UUID
-modelName: String
-modelCategory: ModelCategory
-cmsCenters: [CMSCenter!]
-cmsOther: String
-cmmiGroups: [CMMIGroup!]
-archived: Boolean! = false
-createdBy: String
-createdDts: Time
-modifiedBy: String
-modifiedDts: Time
-status: ModelStatus!
-}
 
+"""
 input ModelPlanChanges {
   modelName: String
   modelCategory: ModelCategory
@@ -1736,7 +1721,7 @@ type Query {
 Mutations definition for the schema
 """
 type Mutation {
-createModelPlan(input: ModelPlanInput!):ModelPlan
+createModelPlan(modelName: String!):ModelPlan
 @hasRole(role: MINT_BASE_USER)
 
 updateModelPlan(id: UUID!, changes: ModelPlanChanges!): ModelPlan
@@ -1929,15 +1914,15 @@ func (ec *executionContext) field_Mutation_createDiscussionReply_args(ctx contex
 func (ec *executionContext) field_Mutation_createModelPlan_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
-	var arg0 model.ModelPlanInput
-	if tmp, ok := rawArgs["input"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
-		arg0, err = ec.unmarshalNModelPlanInput2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐModelPlanInput(ctx, tmp)
+	var arg0 string
+	if tmp, ok := rawArgs["modelName"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("modelName"))
+		arg0, err = ec.unmarshalNString2string(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
 	}
-	args["input"] = arg0
+	args["modelName"] = arg0
 	return args, nil
 }
 
@@ -2831,11 +2816,14 @@ func (ec *executionContext) _ModelPlan_modelName(ctx context.Context, field grap
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
-	res := resTmp.(*string)
+	res := resTmp.(string)
 	fc.Result = res
-	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalNString2string(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _ModelPlan_modelCategory(ctx context.Context, field graphql.CollectedField, obj *models.ModelPlan) (ret graphql.Marshaler) {
@@ -3365,7 +3353,7 @@ func (ec *executionContext) _Mutation_createModelPlan(ctx context.Context, field
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		directive0 := func(rctx context.Context) (interface{}, error) {
 			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Mutation().CreateModelPlan(rctx, args["input"].(model.ModelPlanInput))
+			return ec.resolvers.Mutation().CreateModelPlan(rctx, args["modelName"].(string))
 		}
 		directive1 := func(ctx context.Context) (interface{}, error) {
 			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_BASE_USER")
@@ -8480,121 +8468,6 @@ func (ec *executionContext) unmarshalInputGeneratePresignedUploadURLInput(ctx co
 	return it, nil
 }
 
-func (ec *executionContext) unmarshalInputModelPlanInput(ctx context.Context, obj interface{}) (model.ModelPlanInput, error) {
-	var it model.ModelPlanInput
-	asMap := map[string]interface{}{}
-	for k, v := range obj.(map[string]interface{}) {
-		asMap[k] = v
-	}
-
-	if _, present := asMap["archived"]; !present {
-		asMap["archived"] = false
-	}
-
-	for k, v := range asMap {
-		switch k {
-		case "id":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("id"))
-			it.ID, err = ec.unmarshalOUUID2ᚖgithubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, v)
-			if err != nil {
-				return it, err
-			}
-		case "modelName":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("modelName"))
-			it.ModelName, err = ec.unmarshalOString2ᚖstring(ctx, v)
-			if err != nil {
-				return it, err
-			}
-		case "modelCategory":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("modelCategory"))
-			it.ModelCategory, err = ec.unmarshalOModelCategory2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelCategory(ctx, v)
-			if err != nil {
-				return it, err
-			}
-		case "cmsCenters":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("cmsCenters"))
-			it.CmsCenters, err = ec.unmarshalOCMSCenter2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐCMSCenterᚄ(ctx, v)
-			if err != nil {
-				return it, err
-			}
-		case "cmsOther":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("cmsOther"))
-			it.CmsOther, err = ec.unmarshalOString2ᚖstring(ctx, v)
-			if err != nil {
-				return it, err
-			}
-		case "cmmiGroups":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("cmmiGroups"))
-			it.CmmiGroups, err = ec.unmarshalOCMMIGroup2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCMMIGroupᚄ(ctx, v)
-			if err != nil {
-				return it, err
-			}
-		case "archived":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("archived"))
-			it.Archived, err = ec.unmarshalNBoolean2bool(ctx, v)
-			if err != nil {
-				return it, err
-			}
-		case "createdBy":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("createdBy"))
-			it.CreatedBy, err = ec.unmarshalOString2ᚖstring(ctx, v)
-			if err != nil {
-				return it, err
-			}
-		case "createdDts":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("createdDts"))
-			it.CreatedDts, err = ec.unmarshalOTime2ᚖtimeᚐTime(ctx, v)
-			if err != nil {
-				return it, err
-			}
-		case "modifiedBy":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("modifiedBy"))
-			it.ModifiedBy, err = ec.unmarshalOString2ᚖstring(ctx, v)
-			if err != nil {
-				return it, err
-			}
-		case "modifiedDts":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("modifiedDts"))
-			it.ModifiedDts, err = ec.unmarshalOTime2ᚖtimeᚐTime(ctx, v)
-			if err != nil {
-				return it, err
-			}
-		case "status":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("status"))
-			it.Status, err = ec.unmarshalNModelStatus2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelStatus(ctx, v)
-			if err != nil {
-				return it, err
-			}
-		}
-	}
-
-	return it, nil
-}
-
 func (ec *executionContext) unmarshalInputPlanBasicsInput(ctx context.Context, obj interface{}) (model.PlanBasicsInput, error) {
 	var it model.PlanBasicsInput
 	asMap := map[string]interface{}{}
@@ -9353,6 +9226,9 @@ func (ec *executionContext) _ModelPlan(ctx context.Context, sel ast.SelectionSet
 
 			out.Values[i] = innerFunc(ctx)
 
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&invalids, 1)
+			}
 		case "modelCategory":
 			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._ModelPlan_modelCategory(ctx, field, obj)
@@ -11338,11 +11214,6 @@ func (ec *executionContext) marshalNLaunchDarklySettings2ᚖgithubᚗcomᚋcmsgo
 
 func (ec *executionContext) unmarshalNModelPlanChanges2map(ctx context.Context, v interface{}) (map[string]interface{}, error) {
 	return v.(map[string]interface{}), nil
-}
-
-func (ec *executionContext) unmarshalNModelPlanInput2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐModelPlanInput(ctx context.Context, v interface{}) (model.ModelPlanInput, error) {
-	res, err := ec.unmarshalInputModelPlanInput(ctx, v)
-	return res, graphql.ErrorOnPath(ctx, err)
 }
 
 func (ec *executionContext) unmarshalNModelStatus2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelStatus(ctx context.Context, v interface{}) (models.ModelStatus, error) {

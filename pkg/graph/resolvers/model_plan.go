@@ -9,9 +9,13 @@ import (
 )
 
 // ModelPlanCreate implements resolver logic to create a model plan
-func ModelPlanCreate(logger *zap.Logger, plan *models.ModelPlan, store *storage.Store, principalInfo *models.UserInfo) (*models.ModelPlan, error) {
-	plan.CreatedBy = &principalInfo.EuaUserID
-	plan.ModifiedBy = plan.CreatedBy
+func ModelPlanCreate(logger *zap.Logger, modelName string, store *storage.Store, principalInfo *models.UserInfo) (*models.ModelPlan, error) {
+	plan := &models.ModelPlan{
+		ModelName:  modelName,
+		Status:     models.ModelStatusPlanDraft,
+		CreatedBy:  &principalInfo.EuaUserID,
+		ModifiedBy: &principalInfo.EuaUserID,
+	}
 
 	createdPlan, err := store.ModelPlanCreate(logger, plan)
 	if err != nil {

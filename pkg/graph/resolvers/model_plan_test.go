@@ -1,10 +1,8 @@
 package resolvers
 
 import (
-	"fmt"
 	"testing"
 
-	"github.com/google/uuid"
 	"github.com/stretchr/testify/assert"
 
 	"github.com/cmsgov/mint-app/pkg/models"
@@ -12,54 +10,78 @@ import (
 
 func TestModelPlanCreate(t *testing.T) {
 	tc := GetDefaultTestConfigs()
-	plan := models.ModelPlan{}
-	plan.ID = uuid.MustParse("85b3ff03-1be2-4870-b02f-55c764500e48")
-	plan.CreatedBy = tc.Principal
-	plan.ModifiedBy = tc.Principal
-	plan.Status = models.ModelStatusPlanDraft
-
-	config := NewDBConfig()
-	fmt.Print(config)
-
 	principalInfo := models.UserInfo{
 		CommonName: "Fake Tester name",
-		EuaUserID:  "TEST",
+		EuaUserID:  *tc.Principal,
 	}
+	planName := "Test Plan"
 
-	result, err := ModelPlanCreate(tc.Logger, &plan, tc.Store, &principalInfo)
+	result, err := ModelPlanCreate(tc.Logger, planName, tc.Store, &principalInfo)
+
 	assert.NoError(t, err)
 	assert.NotNil(t, result.ID)
+	assert.EqualValues(t, planName, result.ModelName)
+	assert.EqualValues(t, principalInfo.EuaUserID, *result.CreatedBy)
+	assert.EqualValues(t, principalInfo.EuaUserID, *result.ModifiedBy)
+	assert.EqualValues(t, *result.CreatedDts, *result.ModifiedDts)
+	assert.EqualValues(t, models.ModelStatusPlanDraft, result.Status)
 }
+
 func TestModelPlanUpdate(t *testing.T) {
 	tc := GetDefaultTestConfigs()
+	updater := "UPDT"
+	principalInfo := models.UserInfo{
+		CommonName: "Fake Tester name",
+		EuaUserID:  *tc.Principal,
+	}
+	planName := "Test Plan"
+	createdPlan, err := ModelPlanCreate(tc.Logger, planName, tc.Store, &principalInfo)
+	assert.NoError(t, err)
 
-	id := uuid.MustParse("85b3ff03-1be2-4870-b02f-55c764500e48")
 	changes := map[string]interface{}{
 		"modelName": "NEW_AND_IMPROVED",
 		"status":    models.ModelStatusIcipComplete,
 	}
-
-	result, err := ModelPlanUpdate(tc.Logger, id, changes, tc.Principal, tc.Store)
+	result, err := ModelPlanUpdate(tc.Logger, createdPlan.ID, changes, &updater, tc.Store)
 
 	assert.NoError(t, err)
-	assert.NotNil(t, result.ID)
-	assert.EqualValues(t, "NEW_AND_IMPROVED", *result.ModelName)
+	assert.EqualValues(t, createdPlan.ID, result.ID)
+	assert.EqualValues(t, "NEW_AND_IMPROVED", result.ModelName)
 	assert.EqualValues(t, models.ModelStatusIcipComplete, result.Status)
+	assert.EqualValues(t, *tc.Principal, *result.CreatedBy)
+	assert.EqualValues(t, updater, *result.ModifiedBy)
 }
+
 func TestModelPlanGetByID(t *testing.T) {
 	tc := GetDefaultTestConfigs()
+	principalInfo := models.UserInfo{
+		CommonName: "Fake Tester name",
+		EuaUserID:  *tc.Principal,
+	}
+	planName := "Test Plan"
+	createdPlan, err := ModelPlanCreate(tc.Logger, planName, tc.Store, &principalInfo)
+	assert.NoError(t, err)
 
-	uuid := uuid.MustParse("85b3ff03-1be2-4870-b02f-55c764500e48")
-	result, err := ModelPlanGetByID(tc.Logger, *tc.Principal, uuid, tc.Store)
+	result, err := ModelPlanGetByID(tc.Logger, *tc.Principal, createdPlan.ID, tc.Store)
 
 	assert.NoError(t, err)
-	assert.NotNil(t, result.ID)
+	assert.EqualValues(t, createdPlan, result)
 }
+
 func TestModelPlanCollectionByUser(t *testing.T) {
 	tc := GetDefaultTestConfigs()
+	principalInfo := models.UserInfo{
+		CommonName: "Fake Tester name",
+		EuaUserID:  "UNIQ", // TODO needs to be a uniq user so that it has no other plans (fix with test interdependency)
+	}
+	planName := "Test Plan"
+	createdPlan, err := ModelPlanCreate(tc.Logger, planName, tc.Store, &principalInfo)
+	assert.NoError(t, err)
 
-	result, err := ModelPlanCollectionByUser(tc.Logger, *tc.Principal, tc.Store)
+	result, err := ModelPlanCollectionByUser(tc.Logger, principalInfo.EuaUserID, tc.Store)
 
 	assert.NoError(t, err)
 	assert.NotNil(t, result)
+	assert.Len(t, result, 1)
+	assert.EqualValues(t, createdPlan, result[0])
 }

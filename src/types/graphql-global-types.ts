@@ -74,24 +74,6 @@ export interface ModelPlanChanges {
 }
 
 /**
- * ModelPlanInput represent the data point for plans about a model. It is the central data type in the application
- */
-export interface ModelPlanInput {
-  id?: UUID | null;
-  modelName?: string | null;
-  modelCategory?: ModelCategory | null;
-  cmsCenters?: CMSCenter[] | null;
-  cmsOther?: string | null;
-  cmmiGroups?: CMMIGroup[] | null;
-  archived: boolean;
-  createdBy?: string | null;
-  createdDts?: Time | null;
-  modifiedBy?: string | null;
-  modifiedDts?: Time | null;
-  status: ModelStatus;
-}
-
-/**
  * PlanCollaboratorInput represents the data required to create, modify, or delete a collaborator on a plan
  */
 export interface PlanCollaboratorInput {

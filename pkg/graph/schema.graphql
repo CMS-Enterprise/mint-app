@@ -28,7 +28,7 @@ ModelPlan represent the data point for plans about a model. It is the central da
 """
 type ModelPlan {
   id: UUID
-  modelName: String
+  modelName: String!
   modelCategory: ModelCategory
   cmsCenters: [CMSCenter!]!
   cmsOther: String
@@ -47,23 +47,8 @@ type ModelPlan {
 }
 
 """
-ModelPlanInput represent the data point for plans about a model. It is the central data type in the application
-"""
-input ModelPlanInput{
-id: UUID
-modelName: String
-modelCategory: ModelCategory
-cmsCenters: [CMSCenter!]
-cmsOther: String
-cmmiGroups: [CMMIGroup!]
-archived: Boolean! = false
-createdBy: String
-createdDts: Time
-modifiedBy: String
-modifiedDts: Time
-status: ModelStatus!
-}
 
+"""
 input ModelPlanChanges {
   modelName: String
   modelCategory: ModelCategory
@@ -361,7 +346,7 @@ type Query {
 Mutations definition for the schema
 """
 type Mutation {
-createModelPlan(input: ModelPlanInput!):ModelPlan
+createModelPlan(modelName: String!):ModelPlan
 @hasRole(role: MINT_BASE_USER)
 
 updateModelPlan(id: UUID!, changes: ModelPlanChanges!): ModelPlan

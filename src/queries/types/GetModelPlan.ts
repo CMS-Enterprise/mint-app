@@ -17,7 +17,7 @@ export interface GetModelPlan_modelPlan_basics {
 export interface GetModelPlan_modelPlan {
   __typename: "ModelPlan";
   id: UUID | null;
-  modelName: string | null;
+  modelName: string;
   modelCategory: ModelCategory | null;
   cmsCenters: CMSCenter[];
   cmsOther: string | null;
