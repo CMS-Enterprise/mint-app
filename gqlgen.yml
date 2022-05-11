@@ -57,3 +57,5 @@ models:
   UUID:
     model:
       - github.com/cmsgov/mint-app/pkg/models.UUID
+  ModelPlanChanges:
+    model: "map[string]interface{}"

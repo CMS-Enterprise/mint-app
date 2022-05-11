@@ -63,21 +63,18 @@ export enum TeamRole {
 }
 
 /**
- * ModelPlanInput represent the data point for plans about a model. It is the central data type in the application
+ * ModelPlanChanges represents the possible changes you can make to a model plan when updating it.
+ * Fields explicitly set with NULL will be unset, and omitted fields will be left unchanged.
  */
-export interface ModelPlanInput {
-  id?: UUID | null;
+export interface ModelPlanChanges {
   modelName?: string | null;
   modelCategory?: ModelCategory | null;
   cmsCenters?: CMSCenter[] | null;
   cmsOther?: string | null;
   cmmiGroups?: CMMIGroup[] | null;
-  archived: boolean;
-  createdBy?: string | null;
-  createdDts?: Time | null;
-  modifiedBy?: string | null;
-  modifiedDts?: Time | null;
-  status: ModelStatus;
+  someNumbers?: number[] | null;
+  archived?: boolean | null;
+  status?: ModelStatus | null;
 }
 
 /**
