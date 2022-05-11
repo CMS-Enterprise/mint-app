@@ -22,6 +22,7 @@ export interface GetModelPlanDocumentByModelID_readPlanDocumentByModelID {
   fileSize: number | null;
   documentType: DocumentType | null;
   otherType: string | null;
+  optionalNotes: string | null;
   createdDts: Time | null;
 }
 

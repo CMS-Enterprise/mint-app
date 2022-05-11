@@ -122,7 +122,8 @@ const NewUpload = () => {
                 fileName: file.name,
                 fileType: file.type,
                 documentType: values.documentType,
-                otherTypeDescription: values.otherTypeDescription
+                otherTypeDescription: values.otherTypeDescription,
+                optionalNotes: values.optionalNotes
               }
             }
           }
@@ -306,7 +307,7 @@ const NewUpload = () => {
                     <Field
                       as={TextAreaField}
                       id="ModelPlanDocument-optionalNotes"
-                      name="noteText"
+                      name="optionalNotes"
                       className="model-plan-document__optional-notes height-10"
                       error={!!flatErrors.optionalNotes}
                       maxLength={2000}

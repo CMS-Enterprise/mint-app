@@ -82,8 +82,7 @@ const Table = ({ data, hiddenColumns }: TableProps) => {
       },
       {
         Header: t('documentTable.notes'),
-        // TODO replace with optional_notes once PR merged
-        accessor: 'otherType'
+        accessor: 'optionalNotes'
       },
       {
         Header: t('documentTable.uploadDate'),

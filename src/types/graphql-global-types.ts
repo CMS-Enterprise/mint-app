@@ -131,6 +131,7 @@ export interface PlanDocumentParameters {
   fileType?: string | null;
   documentType?: DocumentType | null;
   otherTypeDescription?: string | null;
+  optionalNotes?: string | null;
 }
 
 //==============================================================
