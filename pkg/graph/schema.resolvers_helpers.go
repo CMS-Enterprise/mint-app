@@ -5,39 +5,6 @@ import (
 	"github.com/cmsgov/mint-app/pkg/models"
 )
 
-// ConvertToModelPlan takes an auto-generated model plan input and converts it to a hand-written one
-func ConvertToModelPlan(mpi *model.ModelPlanInput) *models.ModelPlan {
-	// TODO: We should probably have a better way to handle enum arrays
-	var cmmiGroup []string
-	for _, item := range mpi.CmmiGroups {
-		cmmiGroup = append(cmmiGroup, string(item))
-	}
-	var cmsCenters []string
-	for _, item := range mpi.CmsCenters {
-		cmsCenters = append(cmsCenters, string(item))
-	}
-
-	plan := models.ModelPlan{
-		ModelName:     mpi.ModelName,
-		ModelCategory: mpi.ModelCategory,
-		CMSCenters:    cmsCenters,
-		CMSOther:      mpi.CmsOther,
-		CMMIGroups:    cmmiGroup,
-		Archived:      mpi.Archived,
-		Status:        mpi.Status,
-		CreatedBy:     mpi.CreatedBy,
-		CreatedDts:    mpi.CreatedDts,
-		ModifiedBy:    mpi.ModifiedBy,
-		ModifiedDts:   mpi.ModifiedDts,
-	}
-
-	if mpi.ID != nil {
-		plan.ID = *mpi.ID
-	}
-	return &plan
-
-}
-
 // ConvertToPlanBasics takes an auto-generated plan basics input and converts it to a hand-written one
 func ConvertToPlanBasics(mpi *model.PlanBasicsInput) *models.PlanBasics {
 	basics := models.PlanBasics{

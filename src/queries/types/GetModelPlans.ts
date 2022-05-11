@@ -30,10 +30,10 @@ export interface GetModelPlans_modelPlanCollection_discussions {
 export interface GetModelPlans_modelPlanCollection {
   __typename: "ModelPlan";
   id: UUID | null;
-  modelName: string | null;
+  modelName: string;
   modelCategory: ModelCategory | null;
-  cmsCenters: CMSCenter[] | null;
-  cmmiGroups: CMMIGroup[] | null;
+  cmsCenters: CMSCenter[];
+  cmmiGroups: CMMIGroup[];
   status: ModelStatus;
   createdBy: string | null;
   createdDts: Time | null;

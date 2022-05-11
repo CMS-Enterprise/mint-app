@@ -43,11 +43,11 @@ export interface GetModelPlan_modelPlan_milestones {
 export interface GetModelPlan_modelPlan {
   __typename: "ModelPlan";
   id: UUID | null;
-  modelName: string | null;
+  modelName: string;
   modelCategory: ModelCategory | null;
-  cmsCenters: CMSCenter[] | null;
+  cmsCenters: CMSCenter[];
   cmsOther: string | null;
-  cmmiGroups: CMMIGroup[] | null;
+  cmmiGroups: CMMIGroup[];
   modifiedDts: Time | null;
   archived: boolean;
   status: ModelStatus;
