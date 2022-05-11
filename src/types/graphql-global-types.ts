@@ -75,7 +75,7 @@ export enum TeamRole {
 }
 
 /**
- * ModelPlanInput represent the data point for plans about a model. It is the central data type in the appliation
+ * ModelPlanInput represent the data point for plans about a model. It is the central data type in the application
  */
 export interface ModelPlanInput {
   id?: UUID | null;
