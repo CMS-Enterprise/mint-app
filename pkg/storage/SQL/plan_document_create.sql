@@ -10,6 +10,7 @@ INSERT INTO plan_document (
     file_size,
     document_type,
     other_type,
+    optional_notes,
     deleted_at,
     created_by,
     modified_by
@@ -26,6 +27,7 @@ VALUES (
     :file_size,
     :document_type,
     :other_type,
+    :optional_notes,
     :deleted_at,
     :created_by,
     :modified_by
@@ -42,6 +44,7 @@ file_name,
 file_size,
 document_type,
 other_type,
+optional_notes,
 deleted_at,
 created_by,
 created_dts,

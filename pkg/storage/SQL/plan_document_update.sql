@@ -9,6 +9,7 @@ SET
     file_size = :file_size,
     document_type = :document_type,
     other_type = :other_type,
+    optional_notes = :optional_notes,
     deleted_at = :deleted_at,
     modified_by = :modified_by,
     modified_dts = CURRENT_TIMESTAMP
@@ -26,6 +27,7 @@ WHERE plan_document.id = :id
       file_size,
       document_type,
       other_type,
+      optional_notes,
       deleted_at,
       created_by,
       created_dts,
