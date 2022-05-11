@@ -38,7 +38,7 @@ import CollaboratorsValidationSchema from 'validations/modelPlanCollaborators';
 import '@reach/combobox/styles.css';
 
 const Collaborators = () => {
-  const { modelId } = useParams<{ modelId: string }>();
+  const { modelID } = useParams<{ modelID: string }>();
   const { collaboratorId } = useParams<{ collaboratorId: string }>();
   const { t: h } = useTranslation('draftModelPlan');
   const { t } = useTranslation('newModel');
@@ -59,7 +59,7 @@ const Collaborators = () => {
 
   const { data } = useQuery<GetModelCollaborators>(GetModelPlanCollaborators, {
     variables: {
-      id: modelId
+      id: modelID
     },
     skip: !collaboratorId
   });
@@ -84,13 +84,13 @@ const Collaborators = () => {
             fullName,
             teamRole,
             euaUserID,
-            modelPlanID: modelId
+            modelPlanID: modelID
           }
         }
       })
         .then(response => {
           if (!response?.errors) {
-            history.push(`/models/new-plan/${modelId}/collaborators`);
+            history.push(`/models/new-plan/${modelID}/collaborators`);
           }
         })
         .catch(errors => {
@@ -103,13 +103,13 @@ const Collaborators = () => {
             fullName,
             teamRole,
             euaUserID,
-            modelPlanID: modelId
+            modelPlanID: modelID
           }
         }
       })
         .then(response => {
           if (!response?.errors) {
-            history.push(`/models/new-plan/${modelId}/collaborators`);
+            history.push(`/models/new-plan/${modelID}/collaborators`);
           }
         })
         .catch(errors => {
@@ -307,7 +307,7 @@ const Collaborators = () => {
               );
             }}
           </Formik>
-          <UswdsReactLink to={`/models/new-plan/${modelId}/collaborators`}>
+          <UswdsReactLink to={`/models/new-plan/${modelID}/collaborators`}>
             <span>&larr; </span>{' '}
             {!collaboratorId
               ? t('dontAddTeamMember')

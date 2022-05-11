@@ -158,11 +158,11 @@ const NewPlan = () => {
       {/* New Plan Pages */}
       <Route path="/models/new-plan" exact render={() => <NewPlanContent />} />
       <Route
-        path="/models/new-plan/:modelId/collaborators"
+        path="/models/new-plan/:modelID/collaborators"
         render={() => <Collaborators />}
       />
       <Route
-        path="/models/new-plan/:modelId/add-collaborator/:collaboratorId?"
+        path="/models/new-plan/:modelID/add-collaborator/:collaboratorId?"
         render={() => <AddCollaborator />}
       />
 

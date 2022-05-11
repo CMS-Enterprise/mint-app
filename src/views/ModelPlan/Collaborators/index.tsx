@@ -36,7 +36,7 @@ const isLastModelLead = (collaborators: GetCollaboratorsType[]) => {
 };
 
 const Collaborators = () => {
-  const { modelId } = useParams<{ modelId: string }>();
+  const { modelID } = useParams<{ modelID: string }>();
   const { t: h } = useTranslation('draftModelPlan');
   const { t } = useTranslation('newModel');
   const [isModalOpen, setModalOpen] = useState(false);
@@ -54,7 +54,7 @@ const Collaborators = () => {
     GetModelPlanCollaborators,
     {
       variables: {
-        id: modelId
+        id: modelID
       }
     }
   );
@@ -139,7 +139,7 @@ const Collaborators = () => {
           <UswdsReactLink
             className="usa-button margin-bottom-2"
             variant="unstyled"
-            to={`/models/new-plan/${modelId}/add-collaborator`}
+            to={`/models/new-plan/${modelID}/add-collaborator`}
           >
             {t('addTeamMemberButton')}
           </UswdsReactLink>
@@ -160,7 +160,7 @@ const Collaborators = () => {
               data-testid="continue-to-tasklist"
               className="usa-button usa-button--outline"
               variant="unstyled"
-              to={`/models/${modelId}/task-list`}
+              to={`/models/${modelID}/task-list`}
             >
               {collaborators.length > 0
                 ? h('continueToTaskList')

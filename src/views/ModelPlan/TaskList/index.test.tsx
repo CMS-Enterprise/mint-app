@@ -50,7 +50,7 @@ describe('The Model Plan Task List', () => {
     render(
       <MemoryRouter initialEntries={[`/models/${modelPlan.id}/task-list`]}>
         <MockedProvider mocks={[modelPlanQuery(modelPlan)]} addTypename={false}>
-          <Route path="/models/:modelId/task-list" component={TaskList} />
+          <Route path="/models/:modelID/task-list" component={TaskList} />
         </MockedProvider>
       </MemoryRouter>
     );
@@ -65,7 +65,7 @@ describe('The Model Plan Task List', () => {
     render(
       <MemoryRouter initialEntries={[`/models/${modelPlan.id}/task-list`]}>
         <MockedProvider mocks={[modelPlanQuery(modelPlan)]} addTypename={false}>
-          <Route path="/models/:modelId/task-list" component={TaskList} />
+          <Route path="/models/:modelID/task-list" component={TaskList} />
         </MockedProvider>
       </MemoryRouter>
     );
@@ -78,7 +78,7 @@ describe('The Model Plan Task List', () => {
     render(
       <MemoryRouter initialEntries={[`/models/${modelPlan.id}/task-list`]}>
         <MockedProvider mocks={[modelPlanQuery(modelPlan)]} addTypename={false}>
-          <Route path="/models/:modelId/task-list" component={TaskList} />
+          <Route path="/models/:modelID/task-list" component={TaskList} />
         </MockedProvider>
       </MemoryRouter>
     );
@@ -99,7 +99,7 @@ describe('The Model Plan Task List', () => {
             mocks={[modelPlanQuery(modelPlan)]}
             addTypename={false}
           >
-            <Route path="/models/:modelId/task-list" component={TaskList} />
+            <Route path="/models/:modelID/task-list" component={TaskList} />
           </MockedProvider>
         </MemoryRouter>
       );

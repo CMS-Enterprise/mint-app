@@ -36,13 +36,13 @@ type TaskListItemProps = {
 
 const TaskList = () => {
   const { t } = useTranslation('modelPlanTaskList');
-  const { modelId } = useParams<{ modelId: string }>();
+  const { modelID } = useParams<{ modelID: string }>();
 
   const { data } = useQuery<GetModelPlan, GetModelPlanVariables>(
     GetModelPlanQuery,
     {
       variables: {
-        id: modelId
+        id: modelID
       }
     }
   );
@@ -128,7 +128,7 @@ const TaskList = () => {
               <UswdsReactLink
                 className="usa-button usa-button--outline"
                 variant="unstyled"
-                to={`/models/${modelId}/documents`}
+                to={`/models/${modelID}/documents`}
               >
                 {t('summaryBox.cta')}
               </UswdsReactLink>

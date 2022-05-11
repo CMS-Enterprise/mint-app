@@ -21,17 +21,18 @@ import {
 import NotFound from 'views/NotFound';
 
 import AddDocument from './AddDocument';
+import PlanDocumentsTable from './table';
 
 const DocumentsContent = () => {
   const { t: h } = useTranslation('draftModelPlan');
   const { t } = useTranslation('documents');
-  const { modelId } = useParams<{ modelId: string }>();
+  const { modelID } = useParams<{ modelID: string }>();
 
   const { data } = useQuery<GetModelPlan, GetModelPlanVariables>(
     GetModelPlanQuery,
     {
       variables: {
-        id: modelId
+        id: modelID
       }
     }
   );
@@ -51,7 +52,7 @@ const DocumentsContent = () => {
             <Breadcrumb>
               <BreadcrumbLink
                 asCustom={Link}
-                to={`/models/${modelId}/task-list`}
+                to={`/models/${modelID}/task-list`}
               >
                 <span>{t('breadcrumb')}</span>
               </BreadcrumbLink>
@@ -77,7 +78,7 @@ const DocumentsContent = () => {
           </p>
 
           <UswdsReactLink
-            to={`/models/${modelId}/task-list`}
+            to={`/models/${modelID}/task-list`}
             className="display-inline-flex flex-align-center margin-y-3"
           >
             <IconArrowBack className="margin-right-1" aria-hidden />
@@ -89,10 +90,12 @@ const DocumentsContent = () => {
           <UswdsReactLink
             className="usa-button"
             variant="unstyled"
-            to={`/models/${modelId}/documents/add-document`}
+            to={`/models/${modelID}/documents/add-document`}
           >
             {t('addADocument')}
           </UswdsReactLink>
+
+          <PlanDocumentsTable modelID={modelID} />
         </div>
       </div>
     </MainContent>
@@ -104,12 +107,12 @@ const Documents = () => {
     <Switch>
       {/* Model Plan Documents Pages */}
       <Route
-        path="/models/:modelId/documents"
+        path="/models/:modelID/documents"
         exact
         render={() => <DocumentsContent />}
       />
       <Route
-        path="/models/:modelId/documents/add-document"
+        path="/models/:modelID/documents/add-document"
         exact
         render={() => <AddDocument />}
       />

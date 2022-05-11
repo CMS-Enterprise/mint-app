@@ -19,7 +19,7 @@ import NewUpload from './fileUpload';
 const AddDocument = () => {
   const { t: h } = useTranslation('draftModelPlan');
   const { t } = useTranslation('documents');
-  const { modelId } = useParams<{ modelId: string }>();
+  const { modelID } = useParams<{ modelID: string }>();
 
   return (
     <MainContent data-testid="new-plan">
@@ -34,7 +34,7 @@ const AddDocument = () => {
             <Breadcrumb>
               <BreadcrumbLink
                 asCustom={Link}
-                to={`/models/${modelId}/task-list`}
+                to={`/models/${modelID}/task-list`}
               >
                 <span>{t('breadcrumb')}</span>
               </BreadcrumbLink>
@@ -42,7 +42,7 @@ const AddDocument = () => {
             <Breadcrumb>
               <BreadcrumbLink
                 asCustom={Link}
-                to={`/models/${modelId}/documents`}
+                to={`/models/${modelID}/documents`}
               >
                 <span>{t('heading')}</span>
               </BreadcrumbLink>
@@ -62,7 +62,7 @@ const AddDocument = () => {
 
           <div className="display-block">
             <UswdsReactLink
-              to={`/models/${modelId}/documents`}
+              to={`/models/${modelID}/documents`}
               className="display-inline-flex flex-align-center margin-y-3"
             >
               <IconArrowBack className="margin-right-1" aria-hidden />

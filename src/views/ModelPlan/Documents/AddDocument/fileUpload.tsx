@@ -33,7 +33,7 @@ import { translateDocumentType } from 'utils/modelPlan';
 import { DocumentUploadValidationSchema } from 'validations/documentUploadSchema';
 
 const NewUpload = () => {
-  const { modelId } = useParams<{ modelId: string }>();
+  const { modelID } = useParams<{ modelID: string }>();
   const history = useHistory();
   const { t } = useTranslation('documents');
 
@@ -43,7 +43,7 @@ const NewUpload = () => {
     GetPlanDocumentByModelID,
     {
       variables: {
-        id: modelId
+        id: modelID
       }
     }
   );
@@ -74,7 +74,7 @@ const NewUpload = () => {
   }
 
   if (!data) {
-    return <div>{`No request found matching id: ${modelId}`}</div>;
+    return <div>{`No request found matching id: ${modelID}`}</div>;
   }
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -115,7 +115,7 @@ const NewUpload = () => {
         createDocument({
           variables: {
             input: {
-              modelPlanID: modelId,
+              modelPlanID: modelID,
               url: s3URL,
               documentParameters: {
                 fileSize: file.size,
@@ -130,7 +130,7 @@ const NewUpload = () => {
           .then(response => {
             if (!response.errors) {
               showMessageOnNextPage(`${file.name} uploaded to ${data?.bucket}`);
-              history.push(`/models/${modelId}/documents`);
+              history.push(`/models/${modelID}/documents`);
             }
           })
           .catch(error => {
