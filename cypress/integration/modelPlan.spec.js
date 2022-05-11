@@ -44,8 +44,8 @@ describe('The Model Plan Form', () => {
 
     // Creates a new plan
     cy.get('#new-plan-model-name')
-      .type('Steve Rogers')
-      .should('have.value', 'Steve Rogers');
+      .type('Model Plan Name')
+      .should('have.value', 'Model Plan Name');
     cy.contains('button', 'Next').click();
 
     cy.location().should(loc => {
@@ -65,14 +65,17 @@ describe('The Model Plan Form', () => {
     });
     cy.get('#plan-basics-model-name')
       .clear()
-      .type('Tony Stark')
-      .should('have.value', 'Tony Stark');
+      .type('Renamed Model Plan Name')
+      .should('have.value', 'Renamed Model Plan Name');
     cy.contains('button', 'Save and return to task list').click();
 
     cy.location().should(loc => {
       expect(loc.pathname).to.match(/\/models\/.{36}\/task-list/);
     });
-    cy.get('[data-testid="model-plan-name"]').contains('p', 'Tony Stark');
+    cy.get('[data-testid="model-plan-name"]').contains(
+      'p',
+      'Renamed Model Plan Name'
+    );
   });
 
   it('create a minimum Model Basics plan', () => {
