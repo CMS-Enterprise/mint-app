@@ -108,6 +108,7 @@ func ConvertToPlanDocumentModel(input *model.PlanDocumentInput) *models.PlanDocu
 		FileSize:             0,
 		DocumentType:         nil,
 		OtherTypeDescription: nil,
+		OptionalNotes:        nil,
 		DeletedAt:            nil,
 		CreatedBy:            nil,
 		CreatedDts:           nil,
@@ -125,6 +126,7 @@ func ConvertToPlanDocumentModel(input *model.PlanDocumentInput) *models.PlanDocu
 		documentModel.FileType = input.DocumentParameters.FileType
 		documentModel.DocumentType = input.DocumentParameters.DocumentType
 		documentModel.OtherTypeDescription = input.DocumentParameters.OtherTypeDescription
+		documentModel.OptionalNotes = input.DocumentParameters.OptionalNotes
 	}
 
 	return &documentModel

@@ -125,6 +125,7 @@ type PlanDocument {
   fileSize: Int
   documentType: DocumentType
   otherType: String
+  optionalNotes: String
   deletedAt: Time
   createdBy: String
   createdDts: Time
@@ -151,6 +152,7 @@ input PlanDocumentParameters {
   fileType: String
   documentType: DocumentType
   otherTypeDescription: String
+  optionalNotes: String
 }
 
 """

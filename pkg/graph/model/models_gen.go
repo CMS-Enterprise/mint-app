@@ -119,6 +119,7 @@ type PlanDocumentParameters struct {
 	FileType             *string              `json:"fileType"`
 	DocumentType         *models.DocumentType `json:"documentType"`
 	OtherTypeDescription *string              `json:"otherTypeDescription"`
+	OptionalNotes        *string              `json:"optionalNotes"`
 }
 
 // PlanDocumentPayload represents the response to a document request

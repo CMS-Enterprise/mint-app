@@ -64,6 +64,7 @@ func (s *Store) PlanDocumentCreate(
 		FileSize:             inputDocument.FileSize,
 		DocumentType:         inputDocument.DocumentType,
 		OtherTypeDescription: inputDocument.OtherTypeDescription,
+		OptionalNotes:        inputDocument.OptionalNotes,
 		DeletedAt:            nil,
 		CreatedBy:            principal,
 		CreatedDts:           nil,
