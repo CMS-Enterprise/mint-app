@@ -84,7 +84,10 @@ const BasicsContent = () => {
         input: {
           id: modelId,
           modelName: formikValues.modelName,
-          modelCategory: formikValues.modelCategory,
+          modelCategory:
+            formikValues.modelCategory === ''
+              ? null
+              : formikValues.modelCategory,
           cmsCenters: formikValues.cmsCenters,
           cmmiGroups: formikValues.cmmiGroup,
           cmsOther: formikValues.cmsOther,
