@@ -35,7 +35,7 @@ const TaskListSideNav = ({ modelPlan }: { modelPlan: GetModelPlanType }) => {
   const [update] = useMutation<UpdateModelPlanType>(UpdateModelPlan);
 
   const archiveModelPlan = () => {
-    const { basics, ...archivedPlan } = modelPlan;
+    const { basics, documents, ...archivedPlan } = modelPlan;
     archivedPlan.archived = true;
     update({
       variables: {
@@ -79,7 +79,7 @@ const TaskListSideNav = ({ modelPlan }: { modelPlan: GetModelPlanType }) => {
     <>
       {renderModal()}
       <div
-        className="sidenav-actions margin-left-4 border-top-05 border-primary-lighter padding-top-2"
+        className="sidenav-actions border-top-05 border-primary-lighter padding-top-2 margin-top-2"
         data-testid="sidenav-actions"
       >
         <div className="margin-bottom-1">

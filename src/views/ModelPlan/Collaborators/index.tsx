@@ -6,7 +6,9 @@ import {
   Breadcrumb,
   BreadcrumbBar,
   BreadcrumbLink,
-  Button
+  Button,
+  Grid,
+  GridContainer
 } from '@trussworks/react-uswds';
 
 import UswdsReactLink from 'components/LinkWrapper';
@@ -119,56 +121,58 @@ const Collaborators = () => {
   return (
     <MainContent>
       {RemoveCollaborator()}
-      <div className="grid-container">
-        <div className="tablet:grid-col-12">
-          <BreadcrumbBar variant="wrap">
-            <Breadcrumb>
-              <BreadcrumbLink asCustom={Link} to="/">
-                <span>{h('home')}</span>
-              </BreadcrumbLink>
-            </Breadcrumb>
-            <Breadcrumb current>{t('breadcrumb')}</Breadcrumb>
-          </BreadcrumbBar>
-          <PageHeading className="margin-top-4 margin-bottom-2">
-            {t('headingTeamMembers')}
-          </PageHeading>
-          <div className="font-body-lg margin-bottom-6">
-            {t('teamMemberInfo')}
-          </div>
-          <h4 className="margin-bottom-1">{t('teamMembers')}</h4>
-          <UswdsReactLink
-            className="usa-button margin-bottom-2"
-            variant="unstyled"
-            to={`/models/new-plan/${modelID}/add-collaborator`}
-          >
-            {t('addTeamMemberButton')}
-          </UswdsReactLink>
-
-          {collaborators.length === 0 ? (
-            <Alert type="info" heading={t('table.noCollaborators')} />
-          ) : (
-            <CollaboratorsTable
-              collaborators={collaborators}
-              setModalOpen={setModalOpen}
-              setRemoveCollaborator={setRemoveCollaborator}
-              isLastLead={isLastLead}
-            />
-          )}
-
-          <div className="margin-top-5 display-block">
+      <GridContainer>
+        <Grid row gap>
+          <Grid desktop={{ col: 12 }}>
+            <BreadcrumbBar variant="wrap">
+              <Breadcrumb>
+                <BreadcrumbLink asCustom={Link} to="/">
+                  <span>{h('home')}</span>
+                </BreadcrumbLink>
+              </Breadcrumb>
+              <Breadcrumb current>{t('breadcrumb')}</Breadcrumb>
+            </BreadcrumbBar>
+            <PageHeading className="margin-top-4 margin-bottom-2">
+              {t('headingTeamMembers')}
+            </PageHeading>
+            <div className="font-body-lg margin-bottom-6">
+              {t('teamMemberInfo')}
+            </div>
+            <h4 className="margin-bottom-1">{t('teamMembers')}</h4>
             <UswdsReactLink
-              data-testid="continue-to-tasklist"
-              className="usa-button usa-button--outline"
+              className="usa-button margin-bottom-2"
               variant="unstyled"
-              to={`/models/${modelID}/task-list`}
+              to={`/models/new-plan/${modelID}/add-collaborator`}
             >
-              {collaborators.length > 0
-                ? h('continueToTaskList')
-                : t('continueWithoutAdding')}
+              {t('addTeamMemberButton')}
             </UswdsReactLink>
-          </div>
-        </div>
-      </div>
+
+            {collaborators.length === 0 ? (
+              <Alert type="info" heading={t('table.noCollaborators')} />
+            ) : (
+              <CollaboratorsTable
+                collaborators={collaborators}
+                setModalOpen={setModalOpen}
+                setRemoveCollaborator={setRemoveCollaborator}
+                isLastLead={isLastLead}
+              />
+            )}
+
+            <div className="margin-top-5 display-block">
+              <UswdsReactLink
+                data-testid="continue-to-tasklist"
+                className="usa-button usa-button--outline"
+                variant="unstyled"
+                to={`/models/${modelID}/task-list`}
+              >
+                {collaborators.length > 0
+                  ? h('continueToTaskList')
+                  : t('continueWithoutAdding')}
+              </UswdsReactLink>
+            </div>
+          </Grid>
+        </Grid>
+      </GridContainer>
     </MainContent>
   );
 };

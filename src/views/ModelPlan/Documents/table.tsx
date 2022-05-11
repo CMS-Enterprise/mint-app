@@ -155,10 +155,6 @@ const Table = ({ data, hiddenColumns }: TableProps) => {
                     scope="col"
                     style={{
                       minWidth: '138px',
-                      width:
-                        ((index === 0 || index === 1) && '286px') ||
-                        (index === 2 && '175px') ||
-                        '',
                       paddingLeft: '0',
                       paddingBottom: '.5rem',
                       position: 'relative'

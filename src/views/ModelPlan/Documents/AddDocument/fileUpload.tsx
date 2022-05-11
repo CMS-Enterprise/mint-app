@@ -248,7 +248,9 @@ const NewUpload = () => {
                               checked={values.documentType === documentType}
                               id={`FileUpload-${documentType}`}
                               name="documentType"
-                              label={translateDocumentType(documentType)}
+                              label={translateDocumentType(
+                                documentType as DocumentType
+                              )}
                               onChange={() => {
                                 setFieldValue('documentType', documentType);
                                 setFieldValue('otherTypeDescription', '');
