@@ -35,6 +35,46 @@ describe('The Model Plan Form', () => {
     cy.contains('h1', 'Model Plan task list');
   });
 
+  it('create and renames a model plan', () => {
+    cy.visit('/');
+
+    cy.contains('a', 'Start a draft model plan').click();
+    cy.contains('h1', 'Start a new model plan');
+    cy.get('[data-testid="continue-link"]').click();
+
+    // Creates a new plan
+    cy.get('#new-plan-model-name')
+      .type('Steve Rogers')
+      .should('have.value', 'Steve Rogers');
+    cy.contains('button', 'Next').click();
+
+    cy.location().should(loc => {
+      expect(loc.pathname).to.match(/\/models\/new-plan\/.{36}\/collaborators/);
+    });
+    cy.get('[data-testid="continue-to-tasklist"]').click();
+    cy.contains('h1', 'Model Plan task list');
+
+    cy.location().should(loc => {
+      expect(loc.pathname).to.match(/\/models\/.{36}\/task-list/);
+    });
+    cy.contains('h3', 'Model basics');
+    cy.contains('button', 'Start').click();
+
+    cy.location().should(loc => {
+      expect(loc.pathname).to.match(/\/models\/.{36}\/task-list\/basics/);
+    });
+    cy.get('#plan-basics-model-name')
+      .clear()
+      .type('Tony Stark')
+      .should('have.value', 'Tony Stark');
+    cy.contains('button', 'Save and return to task list').click();
+
+    cy.location().should(loc => {
+      expect(loc.pathname).to.match(/\/models\/.{36}\/task-list/);
+    });
+    cy.get('[data-testid="model-plan-name"]').contains('p', 'Tony Stark');
+  });
+
   it('create a minimum Model Basics plan', () => {
     cy.visit('/models');
     cy.contains('a', 'My New Model Plan').click();
