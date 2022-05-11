@@ -1,14 +1,12 @@
 package resolvers
 
 import (
-	"testing"
-
 	"github.com/stretchr/testify/assert"
 
 	"github.com/cmsgov/mint-app/pkg/models"
 )
 
-func TestModelPlanCreate(t *testing.T) {
+func (suite *ResolverSuite) TestModelPlanCreate() {
 	tc := GetDefaultTestConfigs()
 	principalInfo := models.UserInfo{
 		CommonName: "Fake Tester name",
@@ -18,16 +16,16 @@ func TestModelPlanCreate(t *testing.T) {
 
 	result, err := ModelPlanCreate(tc.Logger, planName, tc.Store, &principalInfo)
 
-	assert.NoError(t, err)
-	assert.NotNil(t, result.ID)
-	assert.EqualValues(t, planName, result.ModelName)
-	assert.EqualValues(t, principalInfo.EuaUserID, *result.CreatedBy)
-	assert.EqualValues(t, principalInfo.EuaUserID, *result.ModifiedBy)
-	assert.EqualValues(t, *result.CreatedDts, *result.ModifiedDts)
-	assert.EqualValues(t, models.ModelStatusPlanDraft, result.Status)
+	assert.NoError(suite.T(), err)
+	assert.NotNil(suite.T(), result.ID)
+	assert.EqualValues(suite.T(), planName, result.ModelName)
+	assert.EqualValues(suite.T(), principalInfo.EuaUserID, *result.CreatedBy)
+	assert.EqualValues(suite.T(), principalInfo.EuaUserID, *result.ModifiedBy)
+	assert.EqualValues(suite.T(), *result.CreatedDts, *result.ModifiedDts)
+	assert.EqualValues(suite.T(), models.ModelStatusPlanDraft, result.Status)
 }
 
-func TestModelPlanUpdate(t *testing.T) {
+func (suite *ResolverSuite) TestModelPlanUpdate() {
 	tc := GetDefaultTestConfigs()
 	updater := "UPDT"
 	principalInfo := models.UserInfo{
@@ -36,7 +34,7 @@ func TestModelPlanUpdate(t *testing.T) {
 	}
 	planName := "Test Plan"
 	createdPlan, err := ModelPlanCreate(tc.Logger, planName, tc.Store, &principalInfo)
-	assert.NoError(t, err)
+	assert.NoError(suite.T(), err)
 
 	changes := map[string]interface{}{
 		"modelName": "NEW_AND_IMPROVED",
@@ -44,15 +42,15 @@ func TestModelPlanUpdate(t *testing.T) {
 	}
 	result, err := ModelPlanUpdate(tc.Logger, createdPlan.ID, changes, &updater, tc.Store)
 
-	assert.NoError(t, err)
-	assert.EqualValues(t, createdPlan.ID, result.ID)
-	assert.EqualValues(t, "NEW_AND_IMPROVED", result.ModelName)
-	assert.EqualValues(t, models.ModelStatusIcipComplete, result.Status)
-	assert.EqualValues(t, *tc.Principal, *result.CreatedBy)
-	assert.EqualValues(t, updater, *result.ModifiedBy)
+	assert.NoError(suite.T(), err)
+	assert.EqualValues(suite.T(), createdPlan.ID, result.ID)
+	assert.EqualValues(suite.T(), "NEW_AND_IMPROVED", result.ModelName)
+	assert.EqualValues(suite.T(), models.ModelStatusIcipComplete, result.Status)
+	assert.EqualValues(suite.T(), *tc.Principal, *result.CreatedBy)
+	assert.EqualValues(suite.T(), updater, *result.ModifiedBy)
 }
 
-func TestModelPlanGetByID(t *testing.T) {
+func (suite *ResolverSuite) TestModelPlanGetByID() {
 	tc := GetDefaultTestConfigs()
 	principalInfo := models.UserInfo{
 		CommonName: "Fake Tester name",
@@ -60,28 +58,28 @@ func TestModelPlanGetByID(t *testing.T) {
 	}
 	planName := "Test Plan"
 	createdPlan, err := ModelPlanCreate(tc.Logger, planName, tc.Store, &principalInfo)
-	assert.NoError(t, err)
+	assert.NoError(suite.T(), err)
 
 	result, err := ModelPlanGetByID(tc.Logger, *tc.Principal, createdPlan.ID, tc.Store)
 
-	assert.NoError(t, err)
-	assert.EqualValues(t, createdPlan, result)
+	assert.NoError(suite.T(), err)
+	assert.EqualValues(suite.T(), createdPlan, result)
 }
 
-func TestModelPlanCollectionByUser(t *testing.T) {
+func (suite *ResolverSuite) TestModelPlanCollectionByUser() {
 	tc := GetDefaultTestConfigs()
 	principalInfo := models.UserInfo{
-		CommonName: "Fake Tester name",
-		EuaUserID:  "UNIQ", // TODO needs to be a uniq user so that it has no other plans (fix with test interdependency)
+		CommonName: "Fake Tester names",
+		EuaUserID:  *tc.Principal, // TODO needs to be a uniq user so that it has no other plans (fix with test interdependency)
 	}
 	planName := "Test Plan"
 	createdPlan, err := ModelPlanCreate(tc.Logger, planName, tc.Store, &principalInfo)
-	assert.NoError(t, err)
+	assert.NoError(suite.T(), err)
 
 	result, err := ModelPlanCollectionByUser(tc.Logger, principalInfo.EuaUserID, tc.Store)
 
-	assert.NoError(t, err)
-	assert.NotNil(t, result)
-	assert.Len(t, result, 1)
-	assert.EqualValues(t, createdPlan, result[0])
+	assert.NoError(suite.T(), err)
+	assert.NotNil(suite.T(), result)
+	assert.Len(suite.T(), result, 1)
+	assert.EqualValues(suite.T(), createdPlan, result[0])
 }

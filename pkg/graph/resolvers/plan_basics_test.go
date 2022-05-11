@@ -1,78 +1,69 @@
 package resolvers
 
-import (
-	"testing"
+// import (
+// 	"testing"
 
-	"github.com/cmsgov/mint-app/pkg/models"
+// 	"github.com/cmsgov/mint-app/pkg/models"
 
-	"github.com/google/uuid"
-	"github.com/stretchr/testify/assert"
-)
+// 	"github.com/google/uuid"
+// 	"github.com/stretchr/testify/assert"
+// )
 
-func TestCreatePlanBasics(t *testing.T) {
-	t.Skip() // TODO until we have no test inter-dependency
-	// TODO do this tomorrow morning
+// func TestCreatePlanBasics(t *testing.T) {
+// 	tc := GetDefaultTestConfigs()
 
-	tc := GetDefaultTestConfigs()
+// 	basics := models.PlanBasics{}
 
-	basics := models.PlanBasics{}
+// 	basics.ID = uuid.MustParse("0576c351-c480-4f85-97a4-b7c1d691a3cb")
+// 	basics.ModelPlanID = uuid.MustParse("85b3ff03-1be2-4870-b02f-55c764500e48")
 
-	basics.ID = uuid.MustParse("0576c351-c480-4f85-97a4-b7c1d691a3cb")
-	basics.ModelPlanID = uuid.MustParse("85b3ff03-1be2-4870-b02f-55c764500e48")
+// 	result, err := CreatePlanBasics(tc.Logger, &basics, tc.Principal, tc.Store)
+// 	assert.NoError(t, err)
+// 	assert.NotNil(t, result.ID)
+// }
 
-	result, err := CreatePlanBasics(tc.Logger, &basics, tc.Principal, tc.Store)
-	assert.NoError(t, err)
-	assert.NotNil(t, result.ID)
-}
+// func TestUpdatePlanBasics(t *testing.T) {
+// 	tc := GetDefaultTestConfigs()
 
-func TestUpdatePlanBasics(t *testing.T) {
-	t.Skip() // TODO until we have no test inter-dependency
+// 	basics := models.PlanBasics{}
+// 	basics.Problem = models.StringPointer("This is a problem")
+// 	basics.ModifiedBy = tc.Principal
+// 	basics.CreatedBy = tc.Principal
 
-	tc := GetDefaultTestConfigs()
+// 	basics.ID = uuid.MustParse("0576c351-c480-4f85-97a4-b7c1d691a3cb")
+// 	basics.ModelPlanID = uuid.MustParse("85b3ff03-1be2-4870-b02f-55c764500e48")
 
-	basics := models.PlanBasics{}
-	basics.Problem = models.StringPointer("This is a problem")
-	basics.ModifiedBy = tc.Principal
-	basics.CreatedBy = tc.Principal
+// 	result, err := UpdatePlanBasics(tc.Logger, &basics, tc.Principal, tc.Store)
+// 	assert.NoError(t, err)
+// 	assert.NotNil(t, result.ID)
 
-	basics.ID = uuid.MustParse("0576c351-c480-4f85-97a4-b7c1d691a3cb")
-	basics.ModelPlanID = uuid.MustParse("85b3ff03-1be2-4870-b02f-55c764500e48")
+// 	assert.EqualValues(t, basics.Problem, result.Problem)
+// }
 
-	result, err := UpdatePlanBasics(tc.Logger, &basics, tc.Principal, tc.Store)
-	assert.NoError(t, err)
-	assert.NotNil(t, result.ID)
+// func TestPlanBasicsGetByModelPlanID(t *testing.T) {
+// 	tc := GetDefaultTestConfigs()
 
-	assert.EqualValues(t, basics.Problem, result.Problem)
-}
+// 	basics := models.PlanBasics{}
+// 	basics.Problem = models.StringPointer("This is a problem")
+// 	basics.ModifiedBy = tc.Principal
+// 	basics.CreatedBy = tc.Principal
 
-func TestPlanBasicsGetByModelPlanID(t *testing.T) {
-	t.Skip() // TODO until we have no test inter-dependency
+// 	basics.ID = uuid.MustParse("0576c351-c480-4f85-97a4-b7c1d691a3cb")
+// 	modelPlanID := uuid.MustParse("85b3ff03-1be2-4870-b02f-55c764500e48")
 
-	tc := GetDefaultTestConfigs()
+// 	result, err := PlanBasicsGetByModelPlanID(tc.Logger, tc.Principal, modelPlanID, tc.Store)
+// 	assert.NoError(t, err)
+// 	assert.NotNil(t, result.ID)
 
-	basics := models.PlanBasics{}
-	basics.Problem = models.StringPointer("This is a problem")
-	basics.ModifiedBy = tc.Principal
-	basics.CreatedBy = tc.Principal
+// 	assert.EqualValues(t, modelPlanID, result.ModelPlanID)
+// }
 
-	basics.ID = uuid.MustParse("0576c351-c480-4f85-97a4-b7c1d691a3cb")
-	modelPlanID := uuid.MustParse("85b3ff03-1be2-4870-b02f-55c764500e48")
+// func TestFetchPlanBasicsByID(t *testing.T) {
+// 	tc := GetDefaultTestConfigs()
 
-	result, err := PlanBasicsGetByModelPlanID(tc.Logger, tc.Principal, modelPlanID, tc.Store)
-	assert.NoError(t, err)
-	assert.NotNil(t, result.ID)
+// 	id := uuid.MustParse("0576c351-c480-4f85-97a4-b7c1d691a3cb")
 
-	assert.EqualValues(t, modelPlanID, result.ModelPlanID)
-}
-
-func TestFetchPlanBasicsByID(t *testing.T) {
-	t.Skip() // TODO until we have no test inter-dependency
-
-	tc := GetDefaultTestConfigs()
-
-	id := uuid.MustParse("0576c351-c480-4f85-97a4-b7c1d691a3cb")
-
-	plan, err := FetchPlanBasicsByID(tc.Logger, id, tc.Store)
-	assert.Nil(t, err)
-	assert.NotNil(t, plan)
-}
+// 	plan, err := FetchPlanBasicsByID(tc.Logger, id, tc.Store)
+// 	assert.Nil(t, err)
+// 	assert.NotNil(t, plan)
+// }
