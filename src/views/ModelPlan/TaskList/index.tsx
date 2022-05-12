@@ -118,8 +118,7 @@ const TaskList = () => {
                 indexZero {modelName} indexTwo
               </Trans>
             </p>
-            <TaskListStatus />
-
+            <TaskListStatus status={status} />
             <SummaryBox
               heading=""
               className="bg-base-lightest border-0 radius-0 padding-2"

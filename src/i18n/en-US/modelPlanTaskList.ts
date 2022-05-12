@@ -4,7 +4,7 @@ const modelPlanTaskList = {
     modelPlanTaskList: 'Model Plan task list'
   },
   subheading: 'for <1>{{modelName}}</1>',
-  status: 'Status',
+  status: 'Status:',
   update: 'Update',
   summaryBox: {
     copy: 'There are no documents uploaded for <1>{{modelName}}</1>.',
