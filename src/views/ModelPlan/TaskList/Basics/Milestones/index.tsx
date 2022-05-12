@@ -94,7 +94,7 @@ const Milestones = () => {
 
   const handleFormSubmit = (
     formikValues: PlanBasicsOverviewTypes,
-    isAutoSave: boolean = false
+    redirect?: 'task-list'
   ) => {
     const inputVariables = {
       modelPlanID: modelId,
@@ -123,7 +123,7 @@ const Milestones = () => {
       })
         .then(response => {
           if (!response?.errors) {
-            if (!isAutoSave) {
+            if (redirect === 'task-list') {
               history.push(`/models/${modelId}/task-list`);
             }
           }
@@ -141,7 +141,7 @@ const Milestones = () => {
       })
         .then(response => {
           if (!response?.errors) {
-            if (!isAutoSave) {
+            if (redirect === 'task-list') {
               history.push(`/models/${modelId}/task-list`);
             }
           }
@@ -190,7 +190,7 @@ const Milestones = () => {
           <Formik
             initialValues={initialValues}
             onSubmit={values => {
-              handleFormSubmit(values);
+              handleFormSubmit(values, 'task-list');
             }}
             enableReinitialize
             validationSchema={planBasicsSchema.pageThreeSchema}
@@ -616,7 +616,7 @@ const Milestones = () => {
                     <Button
                       type="button"
                       className="usa-button usa-button--unstyled"
-                      onClick={() => handleFormSubmit(values, false)}
+                      onClick={() => handleFormSubmit(values, 'task-list')}
                     >
                       <IconArrowBack className="margin-right-1" aria-hidden />
                       {h('saveAndReturn')}
@@ -625,7 +625,7 @@ const Milestones = () => {
                   <AutoSave
                     values={values}
                     onSave={() => {
-                      handleFormSubmit(formikRef.current!.values, true);
+                      handleFormSubmit(formikRef.current!.values);
                     }}
                     debounceDelay={3000}
                   />
