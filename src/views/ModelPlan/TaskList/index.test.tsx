@@ -26,8 +26,10 @@ describe('The Model Plan Task List', () => {
     ],
     cmsCenters: [CMSCenter.CENTER_FOR_MEDICARE, CMSCenter.OTHER],
     cmsOther: 'The Center for Awesomeness ',
+    modifiedDts: '2022-05-12T15:01:39.190679Z',
     archived: false,
-    basics: null
+    basics: null,
+    milestones: null
   } as GetModelPlanTypes;
 
   const modelPlanQuery = (modelPlanDraft: GetModelPlanTypes) => {
