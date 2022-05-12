@@ -2,11 +2,10 @@ import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useFilters, usePagination, useSortBy, useTable } from 'react-table';
 import { useQuery } from '@apollo/client';
-import { Table as UswdsTable } from '@trussworks/react-uswds';
+import { Button, Table as UswdsTable } from '@trussworks/react-uswds';
 import { DateTime } from 'luxon';
 
 import PageLoading from 'components/PageLoading';
-import Alert from 'components/shared/Alert';
 import GetPlanDocumentByModelID from 'queries/GetPlanDocumentByModelID';
 import {
   GetModelPlanDocumentByModelID as GetModelPlanDocumentByModelIDType,
@@ -30,6 +29,7 @@ const PlanDocumentsTable = ({
   hiddenColumns,
   modelID
 }: PlanDocumentsTableProps) => {
+  const { t } = useTranslation('documents');
   const {
     error,
     loading,
@@ -95,12 +95,31 @@ const Table = ({ data, hiddenColumns }: TableProps) => {
         Header: t('documentTable.actions'),
         accessor: 'virusScanned',
         Cell: ({ row, value }: any) => {
-          if (value) {
-            return row.original.virusClean
-              ? t('documentTable.noVirusFound')
-              : t('documentTable.virusFound');
-          }
-          return t('documentTable.scanInProgress');
+          return (
+            <>
+              <Button type="button" unstyled className="margin-right-1">
+                {t('documentTable.view')}
+              </Button>
+              <Button type="button" unstyled className="text-red">
+                {t('documentTable.remove')}
+              </Button>
+            </>
+          );
+          // if (value) {
+          //   return row.original.virusClean ? (
+          //     <>
+          //     <Button type="button" unstyled className="margin-right-1">
+          //       {t('documentTable.view')}
+          //     </Button>
+          //     <Button type="button" unstyled className="text-red">
+          //       {t('documentTable.remove')}
+          //     </Button>
+          //   </>
+          //   ) : (
+          //     t('documentTable.virusFound')
+          //   );
+          // }
+          // return t('documentTable.scanInProgress');
         }
       }
     ];

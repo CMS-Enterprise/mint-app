@@ -15,7 +15,9 @@ const documents = {
     noDocuments: 'No documents uploaded',
     scanInProgress: 'Virus scan in progress..',
     noVirusFound: 'No viruses found',
-    virusFound: 'Virus found'
+    virusFound: 'Virus found',
+    view: 'View',
+    remove: 'Remove'
   },
   uploadDocument: 'Upload a document',
   uploadDescription:
