@@ -288,19 +288,22 @@ type PlanDiscussion  {
 }
 
 """
-PlanDiscussionInput represents input for plan discussion
+PlanDiscussionCreateInput represents the necessary fields to create a plan discussion
 """
-input PlanDiscussionInput  {
-	id:          UUID
-	modelPlanID: UUID!
-	content: String!
-	status: DiscussionStatus
-
-  createdBy: String
-  createdDts: Time
-  modifiedBy: String
-  modifiedDts: Time
+input PlanDiscussionCreateInput {
+  modelPlanID: UUID!
+  content: String!
 }
+
+"""
+PlanDiscussionChanges represents the possible changes you can make to a plan discussion when updating it.
+Fields explicitly set with NULL will be unset, and omitted fields will be left unchanged.
+"""
+input PlanDiscussionChanges {
+  content: String
+  status: DiscussionStatus
+}
+
 """
 DiscussionReply represents a discussion reply
 """
@@ -317,19 +320,23 @@ type DiscussionReply  {
 }
 
 """
-DiscussionReplyInput represents input for a discussion reply
+DiscussionReplyCreateInput represents the necessary fields to create a discussion reply
 """
-input DiscussionReplyInput  {
-	id: UUID
-	discussionID: UUID!
-	content: String!
-	resolution: Boolean! = false
-
-	createdBy: String
-	createdDts: Time
-	modifiedBy: String
-	modifiedDts: Time
+input DiscussionReplyCreateInput {
+  discussionID: UUID!
+  content: String!
+  resolution: Boolean! = false
 }
+
+"""
+DiscussionReplyChanges represents the possible changes you can make to a discussion reply when updating it.
+Fields explicitly set with NULL will be unset, and omitted fields will be left unchanged.
+"""
+input DiscussionReplyChanges {
+  content: String
+  resolution: Boolean
+}
+
 """
 Query definition for the schema
 """
@@ -388,25 +395,23 @@ updatePlanDocument(input: PlanDocumentInput!): PlanDocumentPayload
 deletePlanDocument(input: PlanDocumentInput!): Int!
 @hasRole(role: MINT_BASE_USER)
 
-createPlanDiscussion(input: PlanDiscussionInput!): PlanDiscussion
+createPlanDiscussion(input: PlanDiscussionCreateInput!): PlanDiscussion
 @hasRole(role: MINT_BASE_USER)
 
-updatePlanDiscussion(input: PlanDiscussionInput!): PlanDiscussion
+updatePlanDiscussion(id: UUID!, changes: PlanDiscussionChanges!): PlanDiscussion
 @hasRole(role: MINT_BASE_USER)
 
-deletePlanDiscussion(input: PlanDiscussionInput!): PlanDiscussion
+deletePlanDiscussion(id: UUID!): PlanDiscussion
 @hasRole(role: MINT_BASE_USER)
 
-createDiscussionReply(input: DiscussionReplyInput!): DiscussionReply
+createDiscussionReply(input: DiscussionReplyCreateInput!): DiscussionReply
 @hasRole(role: MINT_BASE_USER)
 
-updateDiscussionReply(input: DiscussionReplyInput!): DiscussionReply
+updateDiscussionReply(id: UUID!, changes: DiscussionReplyChanges!): DiscussionReply
 @hasRole(role: MINT_BASE_USER)
 
-deleteDiscussionReply(input: DiscussionReplyInput!): DiscussionReply
+deleteDiscussionReply(id: UUID!): DiscussionReply
 @hasRole(role: MINT_BASE_USER)
-
-
 }
 
 enum TaskStatus {

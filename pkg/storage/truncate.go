@@ -10,7 +10,7 @@ func (s *Store) TruncateAllTablesDANGEROUS(logger *zap.Logger) error {
     model_plan,
     plan_collaborator,
     plan_discussion,
-	discussion_reply,
+    discussion_reply,
     plan_basics,
     plan_milestones,
     plan_document

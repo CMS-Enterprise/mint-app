@@ -17,16 +17,11 @@ type CurrentUser struct {
 	LaunchDarkly *LaunchDarklySettings `json:"launchDarkly"`
 }
 
-// DiscussionReplyInput represents input for a discussion reply
-type DiscussionReplyInput struct {
-	ID           *uuid.UUID `json:"id"`
-	DiscussionID uuid.UUID  `json:"discussionID"`
-	Content      string     `json:"content"`
-	Resolution   bool       `json:"resolution"`
-	CreatedBy    *string    `json:"createdBy"`
-	CreatedDts   *time.Time `json:"createdDts"`
-	ModifiedBy   *string    `json:"modifiedBy"`
-	ModifiedDts  *time.Time `json:"modifiedDts"`
+// DiscussionReplyCreateInput represents the necessary fields to create a discussion reply
+type DiscussionReplyCreateInput struct {
+	DiscussionID uuid.UUID `json:"discussionID"`
+	Content      string    `json:"content"`
+	Resolution   bool      `json:"resolution"`
 }
 
 // Input associated with a document to be uploaded
@@ -76,16 +71,10 @@ type PlanCollaboratorInput struct {
 	ModifiedDts *time.Time      `json:"modifiedDts"`
 }
 
-// PlanDiscussionInput represents input for plan discussion
-type PlanDiscussionInput struct {
-	ID          *uuid.UUID               `json:"id"`
-	ModelPlanID uuid.UUID                `json:"modelPlanID"`
-	Content     string                   `json:"content"`
-	Status      *models.DiscussionStatus `json:"status"`
-	CreatedBy   *string                  `json:"createdBy"`
-	CreatedDts  *time.Time               `json:"createdDts"`
-	ModifiedBy  *string                  `json:"modifiedBy"`
-	ModifiedDts *time.Time               `json:"modifiedDts"`
+// PlanDiscussionCreateInput represents the necessary fields to create a plan discussion
+type PlanDiscussionCreateInput struct {
+	ModelPlanID uuid.UUID `json:"modelPlanID"`
+	Content     string    `json:"content"`
 }
 
 // PlanDocumentInput represents the data required to create, modify, or delete a document on a plan

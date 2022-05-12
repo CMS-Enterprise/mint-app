@@ -57,5 +57,11 @@ models:
   UUID:
     model:
       - github.com/cmsgov/mint-app/pkg/models.UUID
+  # The following models are manually set per the GQLGen guide below for changesets
+  # https://gqlgen.com/reference/changesets/
   ModelPlanChanges:
+    model: "map[string]interface{}"
+  PlanDiscussionChanges:
+    model: "map[string]interface{}"
+  DiscussionReplyChanges:
     model: "map[string]interface{}"
