@@ -38,8 +38,8 @@ const Status = () => {
 
   const history = useHistory();
   const formikRef = useRef<FormikProps<StatusFormProps>>(null);
-  const NewModelPlanValidationSchema = Yup.object().shape({
-    modelName: Yup.string().trim().required('Enter the model Name')
+  const validationSchema = Yup.object().shape({
+    status: Yup.string().required('Enter a role for this team member')
   });
 
   const { data } = useQuery<GetModelPlan>(GetModelPlanQuery, {
@@ -53,7 +53,6 @@ const Status = () => {
   const [update] = useMutation<UpdateModelPlanType>(UpdateModelPlan);
 
   const handleFormSubmit = (formikValues: StatusFormProps) => {
-    console.log('fire');
     update({
       variables: {
         id: modelId,
@@ -102,7 +101,7 @@ const Status = () => {
             initialValues={{ status }}
             enableReinitialize
             onSubmit={handleFormSubmit}
-            validationSchema={NewModelPlanValidationSchema}
+            validationSchema={validationSchema}
             validateOnBlur={false}
             validateOnChange={false}
             validateOnMount={false}
