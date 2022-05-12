@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useParams } from 'react-router-dom';
+import { useQuery } from '@apollo/client';
 import {
   Breadcrumb,
   BreadcrumbBar,
@@ -19,6 +20,9 @@ import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import FieldGroup from 'components/shared/FieldGroup';
 import modelStatus from 'constants/enums/modelPlanStatuses';
+import GetModelPlanQuery from 'queries/GetModelPlanQuery';
+import { GetModelPlan } from 'queries/types/GetModelPlan';
+import { ModelStatus } from 'types/graphql-global-types';
 import { translateModelPlanStatus } from 'utils/modelPlan';
 
 const Status = () => {
@@ -27,10 +31,17 @@ const Status = () => {
   const { modelId } = useParams<{ modelId: string }>();
 
   const formikRef = useRef<FormikProps>(null);
-
   const NewModelPlanValidationSchema = Yup.object().shape({
     modelName: Yup.string().trim().required('Enter the model Name')
   });
+
+  const { data } = useQuery<GetModelPlan>(GetModelPlanQuery, {
+    variables: {
+      id: modelId
+    }
+  });
+
+  const { status } = data?.modelPlan || {};
 
   return (
     <MainContent>
@@ -59,7 +70,7 @@ const Status = () => {
             {t('status.copy')}
           </p>
           <Formik
-            initialValues={{ status: '' }}
+            initialValues={{ status: status ?? undefined }}
             enableReinitialize
             onSubmit={values => console.log(values)}
             validationSchema={NewModelPlanValidationSchema}
@@ -68,7 +79,9 @@ const Status = () => {
             validateOnMount={false}
             innerRef={formikRef}
           >
-            {(formikProps: FormikProps<{ status: string }>) => {
+            {(
+              formikProps: FormikProps<{ status: ModelStatus | undefined }>
+            ) => {
               const {
                 errors,
                 values,
@@ -99,10 +112,10 @@ const Status = () => {
                         name="role"
                         value={values.status}
                         onChange={(e: any) => {
-                          setFieldValue('teamRole', e.target.value);
+                          setFieldValue('status', e.target.value);
                         }}
                       >
-                        <option value="" key="default-select" disabled>
+                        <option value={undefined} key="default-select" disabled>
                           {`-${h('select')}-`}
                         </option>
                         {Object.keys(modelStatus).map(role => {
