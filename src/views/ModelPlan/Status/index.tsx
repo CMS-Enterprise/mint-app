@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
-import { useQuery } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import {
   Breadcrumb,
   BreadcrumbBar,
@@ -22,8 +22,14 @@ import FieldGroup from 'components/shared/FieldGroup';
 import modelStatus from 'constants/enums/modelPlanStatuses';
 import GetModelPlanQuery from 'queries/GetModelPlanQuery';
 import { GetModelPlan } from 'queries/types/GetModelPlan';
+import { UpdateModelPlan as UpdateModelPlanType } from 'queries/types/UpdateModelPlan';
+import UpdateModelPlan from 'queries/UpdateModelPlan';
 import { ModelStatus } from 'types/graphql-global-types';
 import { translateModelPlanStatus } from 'utils/modelPlan';
+
+type StatusFormProps = {
+  status: ModelStatus | undefined;
+};
 
 const Status = () => {
   const { t } = useTranslation('modelPlan');
@@ -31,7 +37,7 @@ const Status = () => {
   const { modelId } = useParams<{ modelId: string }>();
 
   const history = useHistory();
-  const formikRef = useRef<FormikProps>(null);
+  const formikRef = useRef<FormikProps<StatusFormProps>>(null);
   const NewModelPlanValidationSchema = Yup.object().shape({
     modelName: Yup.string().trim().required('Enter the model Name')
   });
@@ -43,6 +49,28 @@ const Status = () => {
   });
 
   const { status } = data?.modelPlan || {};
+
+  const [update] = useMutation<UpdateModelPlanType>(UpdateModelPlan);
+
+  const handleFormSubmit = (formikValues: StatusFormProps) => {
+    console.log('fire');
+    update({
+      variables: {
+        id: modelId,
+        changes: {
+          status: formikValues.status
+        }
+      }
+    })
+      .then(response => {
+        if (!response?.errors) {
+          history.push(`/models/${modelId}/task-list/`);
+        }
+      })
+      .catch(errors => {
+        formikRef?.current?.setErrors(errors);
+      });
+  };
 
   return (
     <MainContent>
@@ -73,22 +101,19 @@ const Status = () => {
           <Formik
             initialValues={{ status }}
             enableReinitialize
-            onSubmit={values => console.log(values)}
+            onSubmit={handleFormSubmit}
             validationSchema={NewModelPlanValidationSchema}
             validateOnBlur={false}
             validateOnChange={false}
             validateOnMount={false}
             innerRef={formikRef}
           >
-            {(
-              formikProps: FormikProps<{ status: ModelStatus | undefined }>
-            ) => {
+            {(formikProps: FormikProps<StatusFormProps>) => {
               const {
                 errors,
                 values,
                 setErrors,
                 dirty,
-                isValid,
                 setFieldValue,
                 handleSubmit
               } = formikProps;
@@ -131,7 +156,7 @@ const Status = () => {
                     <div className="margin-top-6 margin-bottom-3">
                       <Button
                         type="submit"
-                        disabled={!(dirty || isValid)}
+                        disabled={!dirty}
                         className=""
                         onClick={() => setErrors({})}
                       >
@@ -153,16 +178,6 @@ const Status = () => {
               );
             }}
           </Formik>
-
-          {/*
-            formik
-            label
-            dropdown
-
-            update button submit button
-
-            return link
-           */}
         </Grid>
       </GridContainer>
     </MainContent>
