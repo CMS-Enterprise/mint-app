@@ -3,10 +3,11 @@ import { useTranslation } from 'react-i18next';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import Tag from 'components/shared/Tag';
+import { ModelStatus } from 'types/graphql-global-types';
 import { translateModelPlanStatus } from 'utils/modelPlan';
 
 type TaskListStatusProps = {
-  status: any;
+  status: ModelStatus;
 };
 
 const TaskListStatus = ({ status }: TaskListStatusProps) => {
