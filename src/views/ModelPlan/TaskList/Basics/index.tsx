@@ -45,7 +45,7 @@ import Overview from './Overview';
 
 type PlanBasicModelPlanFormType = {
   modelName: string;
-  modelCategory: string;
+  modelCategory: string | null;
   cmsCenters: string[];
   cmmiGroup: string[];
   cmsOther: string;
@@ -84,10 +84,7 @@ const BasicsContent = () => {
         id: modelId,
         changes: {
           modelName: formikValues.modelName,
-          modelCategory:
-            formikValues.modelCategory === ''
-              ? null
-              : formikValues.modelCategory,
+          modelCategory: formikValues.modelCategory,
           cmsCenters: formikValues.cmsCenters,
           cmmiGroups: formikValues.cmmiGroup,
           cmsOther: formikValues.cmsOther
@@ -110,7 +107,7 @@ const BasicsContent = () => {
 
   const initialValues: PlanBasicModelPlanFormType = {
     modelName: modelName as string,
-    modelCategory: modelCategory ?? '',
+    modelCategory: modelCategory ?? null,
     cmsCenters: cmsCenters ?? [],
     cmmiGroup: cmmiGroups ?? [],
     cmsOther: cmsOther ?? ''
@@ -230,13 +227,13 @@ const BasicsContent = () => {
                       <Field
                         as={Dropdown}
                         id="plan-basics-model-category"
-                        name="role"
+                        name="modelCategory"
                         value={values.modelCategory}
                         onChange={(e: any) => {
                           setFieldValue('modelCategory', e.target.value);
                         }}
                       >
-                        <option value="" key="default-select" disabled>
+                        <option key="default-select" disabled selected>
                           {`-${h('select')}-`}
                         </option>
                         {Object.keys(modelCategoryEnum).map(role => {

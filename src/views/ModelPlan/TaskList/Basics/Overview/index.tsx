@@ -34,7 +34,7 @@ import flattenErrors from 'utils/flattenErrors';
 import planBasicsSchema from 'validations/planBasics';
 
 interface PlanBasicsOverviewTypes {
-  modelType: string;
+  modelType: string | null;
   problem: string;
   goal: string;
   testInterventions: string;
@@ -66,7 +66,7 @@ const Overview = () => {
   const [update] = useMutation<UpdatePlanBasicsType>(UpdatePlanBasics);
 
   const initialValues = {
-    modelType: modelType ?? '',
+    modelType: modelType ?? null,
     problem: problem ?? '',
     goal: goal ?? '',
     testInterventions: testInventions ?? '',
