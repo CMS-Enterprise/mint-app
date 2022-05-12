@@ -22,7 +22,7 @@ const modelPlan = {
     heading: 'Update status',
     copy:
       'After you’ve iterated on your Model Plan, update the status so others know what stage it’s at in the design and clearance process.',
-    select: 'What is the status of your Model Plan?',
+    label: 'What is the status of your Model Plan?',
     updateButton: 'Update status',
     return: 'Don’t update status and return to task list'
   },
