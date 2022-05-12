@@ -20,7 +20,7 @@ const TaskListStatus = ({ status }: TaskListStatusProps) => {
         {translateModelPlanStatus(status)}
       </Tag>
       <div>
-        <UswdsReactLink to="/">{t('update')}</UswdsReactLink>
+        <UswdsReactLink to="status">{t('update')}</UswdsReactLink>
       </div>
     </div>
   );
