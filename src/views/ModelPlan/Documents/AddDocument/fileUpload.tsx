@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
-import { useMutation, useQuery } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import { Button, Label } from '@trussworks/react-uswds';
 import axios from 'axios';
 import { Field, Form, Formik, FormikProps } from 'formik';
 import { isUndefined } from 'lodash';
 
 import FileUpload from 'components/FileUpload';
-import PageLoading from 'components/PageLoading';
 import Alert from 'components/shared/Alert';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
@@ -16,16 +15,13 @@ import FieldGroup from 'components/shared/FieldGroup';
 import { RadioField } from 'components/shared/RadioField';
 import TextAreaField from 'components/shared/TextAreaField';
 import TextField from 'components/shared/TextField';
-import { useMessage } from 'hooks/useMessage';
 import CreateModelPlanDocument from 'queries/CreateModelPlanDocument';
 import GetGeneratedPresignedUploadURL from 'queries/GetGeneratedPresignedUploadURL';
-import GetPlanDocumentByModelID from 'queries/GetPlanDocumentByModelID';
 import {
   CreateModelPlanDocument as CreateModelPlanDocumentType,
   CreateModelPlanDocumentVariables
 } from 'queries/types/CreateModelPlanDocument';
 import { GeneratePresignedUploadURL as GetGeneratedPresignedUploadURLType } from 'queries/types/GeneratePresignedUploadURL';
-import { GetModelPlanDocumentByModelID_readPlanDocumentByModelID as GetPlanDocumentByModelIDType } from 'queries/types/GetModelPlanDocumentByModelID';
 import { FileUploadForm } from 'types/files';
 import { DocumentType } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
@@ -36,17 +32,6 @@ const NewUpload = () => {
   const { modelID } = useParams<{ modelID: string }>();
   const history = useHistory();
   const { t } = useTranslation('documents');
-
-  const { showMessageOnNextPage } = useMessage();
-
-  const { loading, error, data } = useQuery<GetPlanDocumentByModelIDType>(
-    GetPlanDocumentByModelID,
-    {
-      variables: {
-        id: modelID
-      }
-    }
-  );
 
   const [s3URL, setS3URL] = useState('');
   const [
@@ -64,18 +49,6 @@ const NewUpload = () => {
     isErrorGeneratingPresignedUrl,
     setErrorGeneratingPresignedUrl
   ] = useState(false);
-
-  if (loading) {
-    return <PageLoading />;
-  }
-
-  if (error) {
-    return <div>{error.message}</div>;
-  }
-
-  if (!data) {
-    return <div>{`No request found matching id: ${modelID}`}</div>;
-  }
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event?.currentTarget?.files?.[0];
@@ -130,7 +103,6 @@ const NewUpload = () => {
         })
           .then(response => {
             if (!response.errors) {
-              showMessageOnNextPage(`${file.name} uploaded to ${data?.bucket}`);
               history.push(`/models/${modelID}/documents`);
             }
           })
