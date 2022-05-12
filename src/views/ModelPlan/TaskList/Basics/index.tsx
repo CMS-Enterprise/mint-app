@@ -90,8 +90,7 @@ const BasicsContent = () => {
               : formikValues.modelCategory,
           cmsCenters: formikValues.cmsCenters,
           cmmiGroups: formikValues.cmmiGroup,
-          cmsOther: formikValues.cmsOther,
-          status: 'PLAN_DRAFT'
+          cmsOther: formikValues.cmsOther
         }
       }
     })
