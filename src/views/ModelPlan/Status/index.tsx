@@ -70,7 +70,7 @@ const Status = () => {
             {t('status.copy')}
           </p>
           <Formik
-            initialValues={{ status: status ?? undefined }}
+            initialValues={{ status }}
             enableReinitialize
             onSubmit={values => console.log(values)}
             validationSchema={NewModelPlanValidationSchema}
@@ -115,9 +115,6 @@ const Status = () => {
                           setFieldValue('status', e.target.value);
                         }}
                       >
-                        <option value={undefined} key="default-select" disabled>
-                          {`-${h('select')}-`}
-                        </option>
                         {Object.keys(modelStatus).map(role => {
                           return (
                             <option
