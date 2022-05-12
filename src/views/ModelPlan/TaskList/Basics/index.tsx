@@ -81,8 +81,8 @@ const BasicsContent = () => {
   ) => {
     update({
       variables: {
-        input: {
-          id: modelId,
+        id: modelId,
+        changes: {
           modelName: formikValues.modelName,
           modelCategory:
             formikValues.modelCategory === ''
