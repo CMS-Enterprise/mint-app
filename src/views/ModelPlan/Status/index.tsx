@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useHistory, useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import {
   Breadcrumb,
@@ -13,7 +13,7 @@ import {
   IconArrowBack,
   Label
 } from '@trussworks/react-uswds';
-import { Field, Form, Formik, FormikProps } from 'formik';
+import { ErrorMessage, Field, Form, Formik, FormikProps } from 'formik';
 import * as Yup from 'yup';
 
 import MainContent from 'components/MainContent';
@@ -30,6 +30,7 @@ const Status = () => {
   const { t: h } = useTranslation('draftModelPlan');
   const { modelId } = useParams<{ modelId: string }>();
 
+  const history = useHistory();
   const formikRef = useRef<FormikProps>(null);
   const NewModelPlanValidationSchema = Yup.object().shape({
     modelName: Yup.string().trim().required('Enter the model Name')
@@ -99,13 +100,11 @@ const Status = () => {
                       window.scrollTo(0, 0);
                     }}
                   >
-                    <FieldGroup
-                      scrollElement="status"
-                      // error={!!flatErrors.status}
-                    >
+                    <FieldGroup scrollElement="status" error={!!errors.status}>
                       <Label htmlFor="IntakeForm-RequesterComponent">
                         {t('status.label')}
                       </Label>
+                      <ErrorMessage name="status" />
                       <Field
                         as={Dropdown}
                         id="collaborator-role"
@@ -142,7 +141,9 @@ const Status = () => {
                     <Button
                       type="button"
                       className="usa-button usa-button--unstyled"
-                      onClick={() => console.log('send me back')}
+                      onClick={() =>
+                        history.push(`/models/${modelId}/task-list/`)
+                      }
                     >
                       <IconArrowBack className="margin-right-1" aria-hidden />
                       {t('status.return')}
