@@ -1458,8 +1458,9 @@ type ModelPlan {
 """
 ModelPlanChanges represents the possible changes you can make to a model plan when updating it.
 Fields explicitly set with NULL will be unset, and omitted fields will be left unchanged.
+https://gqlgen.com/reference/changesets/
 """
-input ModelPlanChanges {
+input ModelPlanChanges @goModel(model: "map[string]interface{}") {
   modelName: String
   modelCategory: ModelCategory
   cmsCenters: [CMSCenter!]
@@ -1707,8 +1708,9 @@ input PlanDiscussionCreateInput {
 """
 PlanDiscussionChanges represents the possible changes you can make to a plan discussion when updating it.
 Fields explicitly set with NULL will be unset, and omitted fields will be left unchanged.
+https://gqlgen.com/reference/changesets/
 """
-input PlanDiscussionChanges {
+input PlanDiscussionChanges @goModel(model: "map[string]interface{}") {
   content: String
   status: DiscussionStatus
 }
@@ -1740,8 +1742,9 @@ input DiscussionReplyCreateInput {
 """
 DiscussionReplyChanges represents the possible changes you can make to a discussion reply when updating it.
 Fields explicitly set with NULL will be unset, and omitted fields will be left unchanged.
+https://gqlgen.com/reference/changesets/
 """
-input DiscussionReplyChanges {
+input DiscussionReplyChanges @goModel(model: "map[string]interface{}") {
   content: String
   resolution: Boolean
 }
@@ -1901,6 +1904,12 @@ enum DocumentType {
 }
 
 directive @hasRole(role: Role!) on FIELD_DEFINITION
+
+# https://gqlgen.com/config/#inline-config-with-directives
+directive @goModel(
+  model: String
+  models: [String!]
+) on OBJECT | INPUT_OBJECT | SCALAR | ENUM | INTERFACE | UNION
 
 """
 A user role associated with a job code
@@ -14786,6 +14795,44 @@ func (ec *executionContext) unmarshalOString2string(ctx context.Context, v inter
 func (ec *executionContext) marshalOString2string(ctx context.Context, sel ast.SelectionSet, v string) graphql.Marshaler {
 	res := graphql.MarshalString(v)
 	return res
+}
+
+func (ec *executionContext) unmarshalOString2ᚕstringᚄ(ctx context.Context, v interface{}) ([]string, error) {
+	if v == nil {
+		return nil, nil
+	}
+	var vSlice []interface{}
+	if v != nil {
+		vSlice = graphql.CoerceList(v)
+	}
+	var err error
+	res := make([]string, len(vSlice))
+	for i := range vSlice {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
+		res[i], err = ec.unmarshalNString2string(ctx, vSlice[i])
+		if err != nil {
+			return nil, err
+		}
+	}
+	return res, nil
+}
+
+func (ec *executionContext) marshalOString2ᚕstringᚄ(ctx context.Context, sel ast.SelectionSet, v []string) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	ret := make(graphql.Array, len(v))
+	for i := range v {
+		ret[i] = ec.marshalNString2string(ctx, sel, v[i])
+	}
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
 }
 
 func (ec *executionContext) unmarshalOString2ᚖstring(ctx context.Context, v interface{}) (*string, error) {
