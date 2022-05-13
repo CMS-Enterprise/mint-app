@@ -1,6 +1,6 @@
 CREATE TABLE model_plan (
     id UUID PRIMARY KEY NOT NULL,
-    model_name TEXT,
+    model_name TEXT NOT NULL,
     model_category MODEL_CATEGORY, --select from list
     cms_centers CMS_CENTER[], --should select from list
     cms_other TEXT,

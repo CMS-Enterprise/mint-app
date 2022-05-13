@@ -29,26 +29,22 @@ type DiscussionReplyInput struct {
 	ModifiedDts  *time.Time `json:"modifiedDts"`
 }
 
+// Input associated with a document to be uploaded
+type GeneratePresignedUploadURLInput struct {
+	FileName string `json:"fileName"`
+	MimeType string `json:"mimeType"`
+	Size     int    `json:"size"`
+}
+
+// URL generated for a document to be uploaded
+type GeneratePresignedUploadURLPayload struct {
+	URL *string `json:"url"`
+}
+
 // The current user's Launch Darkly key
 type LaunchDarklySettings struct {
 	UserKey    string `json:"userKey"`
 	SignedHash string `json:"signedHash"`
-}
-
-// ModelPlanInput represent the data point for plans about a model. It is the central data type in the appliation
-type ModelPlanInput struct {
-	ID            *uuid.UUID            `json:"id"`
-	ModelName     *string               `json:"modelName"`
-	ModelCategory *models.ModelCategory `json:"modelCategory"`
-	CmsCenters    []models.CMSCenter    `json:"cmsCenters"`
-	CmsOther      *string               `json:"cmsOther"`
-	CmmiGroups    []CMMIGroup           `json:"cmmiGroups"`
-	Archived      bool                  `json:"archived"`
-	CreatedBy     *string               `json:"createdBy"`
-	CreatedDts    *time.Time            `json:"createdDts"`
-	ModifiedBy    *string               `json:"modifiedBy"`
-	ModifiedDts   *time.Time            `json:"modifiedDts"`
-	Status        models.ModelStatus    `json:"status"`
 }
 
 // Represents plan basics
@@ -90,6 +86,30 @@ type PlanDiscussionInput struct {
 	CreatedDts  *time.Time               `json:"createdDts"`
 	ModifiedBy  *string                  `json:"modifiedBy"`
 	ModifiedDts *time.Time               `json:"modifiedDts"`
+}
+
+// PlanDocumentInput represents the data required to create, modify, or delete a document on a plan
+type PlanDocumentInput struct {
+	ID                 *uuid.UUID              `json:"id"`
+	ModelPlanID        uuid.UUID               `json:"modelPlanID"`
+	DocumentParameters *PlanDocumentParameters `json:"documentParameters"`
+	URL                *string                 `json:"url"`
+}
+
+// PlanDocumentCreateParameters represents the specific data required to create or modify a document on a plan
+type PlanDocumentParameters struct {
+	FileName             *string              `json:"fileName"`
+	FileSize             int                  `json:"fileSize"`
+	FileType             *string              `json:"fileType"`
+	DocumentType         *models.DocumentType `json:"documentType"`
+	OtherTypeDescription *string              `json:"otherTypeDescription"`
+	OptionalNotes        *string              `json:"optionalNotes"`
+}
+
+// PlanDocumentPayload represents the response to a document request
+type PlanDocumentPayload struct {
+	Document     *models.PlanDocument `json:"document"`
+	PresignedURL *string              `json:"presignedURL"`
 }
 
 // Represents plan milestones input

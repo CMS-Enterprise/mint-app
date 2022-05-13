@@ -5,39 +5,6 @@ import (
 	"github.com/cmsgov/mint-app/pkg/models"
 )
 
-// ConvertToModelPlan takes an auto-generated model plan input and converts it to a hand-written one
-func ConvertToModelPlan(mpi *model.ModelPlanInput) *models.ModelPlan {
-	// TODO: We should probably have a better way to handle enum arrays
-	var cmmiGroup []string
-	for _, item := range mpi.CmmiGroups {
-		cmmiGroup = append(cmmiGroup, string(item))
-	}
-	var cmsCenters []string
-	for _, item := range mpi.CmsCenters {
-		cmsCenters = append(cmsCenters, string(item))
-	}
-
-	plan := models.ModelPlan{
-		ModelName:     mpi.ModelName,
-		ModelCategory: mpi.ModelCategory,
-		CMSCenters:    cmsCenters,
-		CMSOther:      mpi.CmsOther,
-		CMMIGroups:    cmmiGroup,
-		Archived:      mpi.Archived,
-		Status:        mpi.Status,
-		CreatedBy:     mpi.CreatedBy,
-		CreatedDts:    mpi.CreatedDts,
-		ModifiedBy:    mpi.ModifiedBy,
-		ModifiedDts:   mpi.ModifiedDts,
-	}
-
-	if mpi.ID != nil {
-		plan.ID = *mpi.ID
-	}
-	return &plan
-
-}
-
 // ConvertToPlanBasics takes an auto-generated plan basics input and converts it to a hand-written one
 func ConvertToPlanBasics(mpi *model.PlanBasicsInput) *models.PlanBasics {
 	basics := models.PlanBasics{
@@ -65,7 +32,7 @@ func ConvertToPlanBasics(mpi *model.PlanBasicsInput) *models.PlanBasics {
 
 // ConvertToPlanMilestonesModel takes an auto-generated model plan input and converts it to a hand-written one
 func ConvertToPlanMilestonesModel(input *model.PlanMilestonesInput) *models.PlanMilestones {
-	model := models.PlanMilestones{
+	milestoneModel := models.PlanMilestones{
 		ModelPlanID:             *input.ModelPlanID,
 		CompleteICIP:            input.CompleteIcip,
 		ClearanceStarts:         input.ClearanceStarts,
@@ -86,13 +53,50 @@ func ConvertToPlanMilestonesModel(input *model.PlanMilestonesInput) *models.Plan
 	}
 
 	if input.ID != nil {
-		model.ID = *input.ID
+		milestoneModel.ID = *input.ID
 	}
 	if input.Status != nil {
-		model.Status = *input.Status
+		milestoneModel.Status = *input.Status
 	}
 
-	return &model
+	return &milestoneModel
+}
+
+// ConvertToPlanDocumentModel takes an auto-generated model plan input and converts it to a hand-written one
+func ConvertToPlanDocumentModel(input *model.PlanDocumentInput) *models.PlanDocument {
+	documentModel := models.PlanDocument{
+		ModelPlanID:          input.ModelPlanID,
+		FileType:             nil,
+		Bucket:               nil,
+		FileKey:              nil,
+		VirusScanned:         false,
+		VirusClean:           false,
+		FileName:             nil,
+		FileSize:             0,
+		DocumentType:         nil,
+		OtherTypeDescription: nil,
+		OptionalNotes:        nil,
+		DeletedAt:            nil,
+		CreatedBy:            nil,
+		CreatedDts:           nil,
+		ModifiedBy:           nil,
+		ModifiedDts:          nil,
+	}
+
+	if input.ID != nil {
+		documentModel.ID = *input.ID
+	}
+
+	if input.DocumentParameters != nil {
+		documentModel.FileName = input.DocumentParameters.FileName
+		documentModel.FileSize = input.DocumentParameters.FileSize
+		documentModel.FileType = input.DocumentParameters.FileType
+		documentModel.DocumentType = input.DocumentParameters.DocumentType
+		documentModel.OtherTypeDescription = input.DocumentParameters.OtherTypeDescription
+		documentModel.OptionalNotes = input.DocumentParameters.OptionalNotes
+	}
+
+	return &documentModel
 }
 
 // ConvertToPlanCollaborator takes an auto-generated plan collaborator input and converts it to a hand-written one

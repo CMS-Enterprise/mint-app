@@ -35,11 +35,12 @@ const TaskListSideNav = ({ modelPlan }: { modelPlan: GetModelPlanType }) => {
   const [update] = useMutation<UpdateModelPlanType>(UpdateModelPlan);
 
   const archiveModelPlan = () => {
-    const { basics, ...archivedPlan } = modelPlan;
-    archivedPlan.archived = true;
     update({
       variables: {
-        input: archivedPlan
+        id: modelId,
+        changes: {
+          archived: true
+        }
       }
     })
       .then(response => {
