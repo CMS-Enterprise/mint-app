@@ -41,7 +41,11 @@ const CheckboxField = ({
         value={value}
         {...inputProps}
       />
-      <label className="usa-checkbox__label" htmlFor={id}>
+      <label
+        className="usa-checkbox__label"
+        htmlFor={id}
+        style={{ width: 'fit-content' }}
+      >
         {label}
       </label>
     </div>
