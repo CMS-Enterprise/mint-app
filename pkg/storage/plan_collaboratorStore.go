@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	_ "embed"
 	"errors"
+
 	"github.com/cmsgov/mint-app/pkg/shared/utilitySQL"
 
 	"github.com/google/uuid"
@@ -101,6 +102,7 @@ func (s *Store) PlanCollaboratorsByModelPlanID(logger *zap.Logger, modelPlanID u
 	return collaborators, nil
 }
 
+// PlanCollaboratorFetchByID returns a plan collaborator for a given database ID, or nil if none found
 func (s *Store) PlanCollaboratorFetchByID(id uuid.UUID) (*models.PlanCollaborator, error) {
 	statement, err := s.db.PrepareNamed(planCollaboratorFetchByIDSQL)
 	if err != nil {
