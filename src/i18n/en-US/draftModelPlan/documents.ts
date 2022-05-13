@@ -13,7 +13,7 @@ const documents = {
     uploadDate: 'Upload date',
     actions: 'Actions',
     noDocuments: 'No documents uploaded',
-    scanInProgress: 'Virus scan in progress..',
+    scanInProgress: 'Virus scan in progress...',
     noVirusFound: 'No viruses found',
     virusFound: 'Virus found',
     view: 'View',

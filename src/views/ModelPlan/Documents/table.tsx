@@ -120,9 +120,11 @@ const Table = ({ data, hiddenColumns, refetch }: TableProps) => {
         query: GetPlanDocumentDownloadURL,
         queryType: 'planDocumentDownloadURL',
         urlKey: 'presignedURL'
-      }).then((error: any) => {
-        if (error) setDocumentError(error);
-      });
+      })
+        .then((downloadURL: string) => {})
+        .catch((error: any) => {
+          if (error) setDocumentError(error);
+        });
     };
   }, [client]);
 
@@ -172,6 +174,7 @@ const Table = ({ data, hiddenColumns, refetch }: TableProps) => {
                   type="button"
                   unstyled
                   className="text-red"
+                  data-testid="remove-document"
                   onClick={() => handleDelete(row.original)}
                 >
                   {t('documentTable.remove')}
@@ -219,7 +222,7 @@ const Table = ({ data, hiddenColumns, refetch }: TableProps) => {
   );
 
   return (
-    <div className="model-plan-table">
+    <div className="model-plan-table" data-testid="model-plan-documents-table">
       {documentError && (
         <Alert
           type="error"
@@ -316,7 +319,9 @@ const Table = ({ data, hiddenColumns, refetch }: TableProps) => {
         {currentTableSortDescription(headerGroups[0])}
       </div>
 
-      {data.length === 0 && <p>{t('documentTable.noDocuments')}</p>}
+      {data.length === 0 && (
+        <p data-testid="no-documents">{t('documentTable.noDocuments')}</p>
+      )}
     </div>
   );
 };

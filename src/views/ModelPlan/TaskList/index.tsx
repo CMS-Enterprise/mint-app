@@ -127,7 +127,10 @@ const TaskList = () => {
                 >
                   {documents?.length > 0 ? (
                     <>
-                      <p className="margin-0 margin-bottom-1">
+                      <p
+                        className="margin-0 margin-bottom-1"
+                        data-testid="document-items"
+                      >
                         <strong>{documents.length} </strong>
                         <Trans i18nKey="modelPlanTaskList:summaryBox.existingDocuments">
                           indexZero {modelName} indexTwo

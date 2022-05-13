@@ -22,14 +22,22 @@ const downloadFile = ({
   queryType,
   urlKey
 }: DownloadDocumentType) => {
-  return fetchDownloadURL(client, fileID, query, queryType).then(
-    (downloadURL: any) => {
+  return fetchDownloadURL(client, fileID, query, queryType)
+    .then((downloadURL: any) => {
       if (downloadURL) {
-        return downloadDocumentFromURL(downloadURL[urlKey], fileName, fileType);
+        return downloadDocumentFromURL(downloadURL[urlKey], fileName, fileType)
+          .then(() => {
+            return downloadURL[urlKey];
+          })
+          .catch(error => {
+            throw error;
+          });
       }
-      return i18next.t('documents:urlFail');
-    }
-  );
+      throw i18next.t('documents:urlFail');
+    })
+    .catch((error: any) => {
+      throw error;
+    });
 };
 
 // GQL fetch of download URL by document ID
@@ -48,7 +56,7 @@ const fetchDownloadURL = (
       return result.data[queryType];
     })
     .catch(() => {
-      return null;
+      throw i18next.t('documents:urlFail');
     });
 };
 
@@ -69,13 +77,12 @@ const downloadDocumentFromURL = (
       downloadBlob(fileName, blob);
     })
     .catch(() => {
-      return i18next.t('documents:downloadFail');
+      throw i18next.t('documents:downloadFail');
     });
 };
 
 export default downloadFile;
 
-// eslint-disable-next-line import/prefer-default-export
 export function downloadBlob(filename: string, blob: Blob) {
   // This approach to downloading files works fine in the tests I've done in Chrome
   // with PDF files that are < 100kB. For larger files we might need to
