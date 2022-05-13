@@ -343,6 +343,7 @@ type Query {
   readPlanDocumentByModelID(id: UUID!) : [PlanDocument]
   modelPlanCollection: [ModelPlan]
   cedarPersonsByCommonName(commonName: String!): [UserInfo!]!
+  planCollaboratorByID(id: UUID!): PlanCollaborator!
 }
 
 """
