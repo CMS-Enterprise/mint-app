@@ -10,6 +10,7 @@ CREATE TABLE plan_document (
     file_size INTEGER NOT NULL,
     document_type DOCUMENT_TYPE NOT NULL, --  make enum for this
     other_type TEXT,
+    optional_notes TEXT,
     deleted_at TIMESTAMP WITH TIME ZONE, --previously without timeZone...
     created_by EUA_ID NOT NULL,
     created_dts TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,

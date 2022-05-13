@@ -41,3 +41,9 @@ func FetchCollaboratorsByModelPlanID(logger *zap.Logger, _ *string, modelPlanID 
 	collaborators, err := store.PlanCollaboratorsByModelPlanID(logger, modelPlanID)
 	return collaborators, err
 }
+
+// FetchCollaboratorByID implements resolver logic to fetch a plan collaborator by ID
+func FetchCollaboratorByID(logger *zap.Logger, id uuid.UUID, store *storage.Store) (*models.PlanCollaborator, error) {
+	collaborator, err := store.PlanCollaboratorFetchByID(id)
+	return collaborator, err
+}

@@ -18,6 +18,7 @@ require (
 	github.com/guregu/null v4.0.0+incompatible
 	github.com/jmoiron/sqlx v1.2.0
 	github.com/lib/pq v1.10.3
+	github.com/mitchellh/mapstructure v1.5.0
 	github.com/okta/okta-jwt-verifier-golang v1.3.0
 	github.com/pquerna/otp v1.3.0
 	github.com/spf13/cobra v1.4.0

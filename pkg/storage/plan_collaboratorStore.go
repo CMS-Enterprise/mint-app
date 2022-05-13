@@ -5,6 +5,8 @@ import (
 	_ "embed"
 	"errors"
 
+	"github.com/cmsgov/mint-app/pkg/shared/utilitySQL"
+
 	"github.com/google/uuid"
 	"go.uber.org/zap"
 
@@ -24,8 +26,11 @@ var planCollaboratorDeleteSQL string
 //go:embed SQL/plan_collaborator_fetch_by_model_plan_id.sql
 var planCollaboratorFetchByModelPlanIDSQL string
 
+//go:embed SQL/plan_collaborator_fetch_by_id.sql
+var planCollaboratorFetchByIDSQL string
+
 // PlanCollaboratorCreate creates a new plan collaborator
-func (s *Store) PlanCollaboratorCreate(logger *zap.Logger, collaborator *models.PlanCollaborator) (*models.PlanCollaborator, error) {
+func (s *Store) PlanCollaboratorCreate(_ *zap.Logger, collaborator *models.PlanCollaborator) (*models.PlanCollaborator, error) {
 
 	collaborator.ID = utilityUUID.ValueOrNewUUID(collaborator.ID)
 
@@ -43,7 +48,7 @@ func (s *Store) PlanCollaboratorCreate(logger *zap.Logger, collaborator *models.
 }
 
 // PlanCollaboratorUpdate updates the plan collaborator for a given id
-func (s *Store) PlanCollaboratorUpdate(logger *zap.Logger, collaborator *models.PlanCollaborator) (*models.PlanCollaborator, error) {
+func (s *Store) PlanCollaboratorUpdate(_ *zap.Logger, collaborator *models.PlanCollaborator) (*models.PlanCollaborator, error) {
 	statement, err := s.db.PrepareNamed(planCollaboratorUpdateSQL)
 	if err != nil {
 		return nil, err
@@ -58,7 +63,7 @@ func (s *Store) PlanCollaboratorUpdate(logger *zap.Logger, collaborator *models.
 }
 
 // PlanCollaboratorDelete deletes the plan collaborator for a given id
-func (s *Store) PlanCollaboratorDelete(logger *zap.Logger, collaborator *models.PlanCollaborator) (*models.PlanCollaborator, error) {
+func (s *Store) PlanCollaboratorDelete(_ *zap.Logger, collaborator *models.PlanCollaborator) (*models.PlanCollaborator, error) {
 	statement, err := s.db.PrepareNamed(planCollaboratorDeleteSQL)
 	if err != nil {
 		return nil, err
@@ -73,8 +78,8 @@ func (s *Store) PlanCollaboratorDelete(logger *zap.Logger, collaborator *models.
 }
 
 // PlanCollaboratorsByModelPlanID returns the plan collaborators for a given model plan id
-func (s *Store) PlanCollaboratorsByModelPlanID(logger *zap.Logger, modelPlanID uuid.UUID) ([]*models.PlanCollaborator, error) {
-	collaborators := []*models.PlanCollaborator{}
+func (s *Store) PlanCollaboratorsByModelPlanID(_ *zap.Logger, modelPlanID uuid.UUID) ([]*models.PlanCollaborator, error) {
+	var collaborators []*models.PlanCollaborator
 
 	statement, err := s.db.PrepareNamed(planCollaboratorFetchByModelPlanIDSQL)
 	if err != nil {
@@ -95,4 +100,24 @@ func (s *Store) PlanCollaboratorsByModelPlanID(logger *zap.Logger, modelPlanID u
 	}
 
 	return collaborators, nil
+}
+
+// PlanCollaboratorFetchByID returns a plan collaborator for a given database ID, or nil if none found
+func (s *Store) PlanCollaboratorFetchByID(id uuid.UUID) (*models.PlanCollaborator, error) {
+	statement, err := s.db.PrepareNamed(planCollaboratorFetchByIDSQL)
+	if err != nil {
+		return nil, err
+	}
+
+	var collaborator models.PlanCollaborator
+	err = statement.Get(&collaborator, utilitySQL.CreateIDQueryMap(id))
+	if err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			return nil, nil
+		}
+
+		return nil, err
+	}
+
+	return &collaborator, nil
 }

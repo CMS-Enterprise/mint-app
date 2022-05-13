@@ -47,22 +47,6 @@ type LaunchDarklySettings struct {
 	SignedHash string `json:"signedHash"`
 }
 
-// ModelPlanInput represent the data point for plans about a model. It is the central data type in the application
-type ModelPlanInput struct {
-	ID            *uuid.UUID            `json:"id"`
-	ModelName     *string               `json:"modelName"`
-	ModelCategory *models.ModelCategory `json:"modelCategory"`
-	CmsCenters    []models.CMSCenter    `json:"cmsCenters"`
-	CmsOther      *string               `json:"cmsOther"`
-	CmmiGroups    []CMMIGroup           `json:"cmmiGroups"`
-	Archived      bool                  `json:"archived"`
-	CreatedBy     *string               `json:"createdBy"`
-	CreatedDts    *time.Time            `json:"createdDts"`
-	ModifiedBy    *string               `json:"modifiedBy"`
-	ModifiedDts   *time.Time            `json:"modifiedDts"`
-	Status        models.ModelStatus    `json:"status"`
-}
-
 // Represents plan basics
 type PlanBasicsInput struct {
 	ID             *uuid.UUID         `json:"id"`
@@ -119,6 +103,7 @@ type PlanDocumentParameters struct {
 	FileType             *string              `json:"fileType"`
 	DocumentType         *models.DocumentType `json:"documentType"`
 	OtherTypeDescription *string              `json:"otherTypeDescription"`
+	OptionalNotes        *string              `json:"optionalNotes"`
 }
 
 // PlanDocumentPayload represents the response to a document request

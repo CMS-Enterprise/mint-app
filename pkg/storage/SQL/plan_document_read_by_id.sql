@@ -10,6 +10,7 @@ SELECT
     file_size,
     document_type,
     other_type,
+    optional_notes,
     deleted_at,
     created_by,
     created_dts,

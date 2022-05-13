@@ -28,11 +28,11 @@ ModelPlan represent the data point for plans about a model. It is the central da
 """
 type ModelPlan {
   id: UUID
-  modelName: String
+  modelName: String!
   modelCategory: ModelCategory
-  cmsCenters: [CMSCenter!]
+  cmsCenters: [CMSCenter!]!
   cmsOther: String
-  cmmiGroups: [CMMIGroup!]
+  cmmiGroups: [CMMIGroup!]!
   archived: Boolean!
   createdBy: String
   createdDts: Time
@@ -47,21 +47,18 @@ type ModelPlan {
 }
 
 """
-ModelPlanInput represent the data point for plans about a model. It is the central data type in the application
+ModelPlanChanges represents the possible changes you can make to a model plan when updating it.
+Fields explicitly set with NULL will be unset, and omitted fields will be left unchanged.
 """
-input ModelPlanInput{
-id: UUID
-modelName: String
-modelCategory: ModelCategory
-cmsCenters: [CMSCenter!]
-cmsOther: String
-cmmiGroups: [CMMIGroup!]
-archived: Boolean! = false
-createdBy: String
-createdDts: Time
-modifiedBy: String
-modifiedDts: Time
-status: ModelStatus!
+input ModelPlanChanges {
+  modelName: String
+  modelCategory: ModelCategory
+  cmsCenters: [CMSCenter!]
+  cmsOther: String
+  cmmiGroups: [CMMIGroup!]
+  someNumbers: [Int!]
+  archived: Boolean
+  status: ModelStatus
 }
 
 """
@@ -125,6 +122,7 @@ type PlanDocument {
   fileSize: Int
   documentType: DocumentType
   otherType: String
+  optionalNotes: String
   deletedAt: Time
   createdBy: String
   createdDts: Time
@@ -151,6 +149,7 @@ input PlanDocumentParameters {
   fileType: String
   documentType: DocumentType
   otherTypeDescription: String
+  optionalNotes: String
 }
 
 """
@@ -344,13 +343,17 @@ type Query {
   readPlanDocumentByModelID(id: UUID!) : [PlanDocument]
   modelPlanCollection: [ModelPlan]
   cedarPersonsByCommonName(commonName: String!): [UserInfo!]!
+  planCollaboratorByID(id: UUID!): PlanCollaborator!
 }
 
 """
 Mutations definition for the schema
 """
 type Mutation {
-createModelPlan(input: ModelPlanInput!):ModelPlan
+createModelPlan(modelName: String!):ModelPlan
+@hasRole(role: MINT_BASE_USER)
+
+updateModelPlan(id: UUID!, changes: ModelPlanChanges!): ModelPlan
 @hasRole(role: MINT_BASE_USER)
 
 createPlanCollaborator(input: PlanCollaboratorInput!): PlanCollaborator
@@ -363,9 +366,6 @@ deletePlanCollaborator(input: PlanCollaboratorInput!): PlanCollaborator
 @hasRole(role: MINT_BASE_USER)
 
 createPlanBasics(input: PlanBasicsInput!):PlanBasics
-@hasRole(role: MINT_BASE_USER)
-
-updateModelPlan(input: ModelPlanInput!):ModelPlan
 @hasRole(role: MINT_BASE_USER)
 
 updatePlanBasics(input: PlanBasicsInput!): PlanBasics
