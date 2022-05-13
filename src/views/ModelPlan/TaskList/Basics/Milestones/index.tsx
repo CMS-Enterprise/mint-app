@@ -212,6 +212,9 @@ const Milestones = () => {
               } = formikProps;
               const flatErrors = flattenErrors(errors);
               const handleOnchange = (e: any, field: string) => {
+                if (e === '') {
+                  return;
+                }
                 try {
                   new Date(e).toISOString();
                   setFieldValue(field, new Date(e).toISOString());
