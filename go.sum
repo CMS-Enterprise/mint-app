@@ -45,8 +45,8 @@ cloud.google.com/go/storage v1.6.0/go.mod h1:N7U0C8pVQ/+NIKOBQyamJIeKQKkZ+mxpohl
 cloud.google.com/go/storage v1.8.0/go.mod h1:Wv1Oy7z6Yz3DshWRJFhqM/UCfaWIRTdp0RXyy7KQOVs=
 cloud.google.com/go/storage v1.10.0/go.mod h1:FLPqc6j+Ki4BU591ie1oL6qBQGu2Bl/tZ9ullr3+Kg0=
 dmitri.shuralyov.com/gpu/mtl v0.0.0-20190408044501-666a987793e9/go.mod h1:H6x//7gZCb22OMCxBHrMx7a5I7Hp++hsVxbQ4BYO7hU=
-github.com/99designs/gqlgen v0.17.6-0.20220509083650-b8ec51d8629a h1:DB4Ltf0vHLKblQG43gMoVQ2V31q+G5cdWzSyWXOLxxk=
-github.com/99designs/gqlgen v0.17.6-0.20220509083650-b8ec51d8629a/go.mod h1:fVjY/AuDenx9VLaiK5QmIndmNcbw05H9tuqLDuxJeuE=
+github.com/99designs/gqlgen v0.17.5 h1:bTgv7FQz3+NROg6ooHtlkaJ82Uqrp6e5sAziXTBo1hc=
+github.com/99designs/gqlgen v0.17.5/go.mod h1:SNpLVzaF37rRLSAXtu8FKVp5I4zycneMmFX6NT4XGSU=
 github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03qcyfWMU=
 github.com/BurntSushi/xgb v0.0.0-20160522181843-27f122750802/go.mod h1:IVnqGOEym/WlBOVXweHU+Q+/VP0lqqI8lqeDx9IjBqo=
 github.com/DataDog/datadog-go v3.2.0+incompatible/go.mod h1:LButxg5PwREeZtORoXG3tL4fMGNddJ+vMq1mwgfaqoQ=
@@ -526,8 +526,8 @@ github.com/tidwall/pretty v1.0.0/go.mod h1:XNkn88O1ChpSDQmQeStsy+sBenx6DDtFZJxhV
 github.com/tv42/httpunix v0.0.0-20150427012821-b75d8614f926/go.mod h1:9ESjWnEqriFuLhtthL60Sar/7RFoluCcXsuvEwTV5KM=
 github.com/urfave/cli/v2 v2.4.0 h1:m2pxjjDFgDxSPtO8WSdbndj17Wu2y8vOT86wE/tjr+I=
 github.com/urfave/cli/v2 v2.4.0/go.mod h1:NX9W0zmTvedE5oDoOMs2RTC8RvdK98NTYZE5LbaEYPg=
-github.com/vektah/gqlparser/v2 v2.4.3-0.20220508162109-d3d9eb001575 h1:96uWUPr8zxRRakTqu0yMKCnTPEsZ5oViVDL1XvkP4Tc=
-github.com/vektah/gqlparser/v2 v2.4.3-0.20220508162109-d3d9eb001575/go.mod h1:flJWIR04IMQPGz+BXLrORkrARBxv/rtyIAFvd/MceW0=
+github.com/vektah/gqlparser/v2 v2.4.2 h1:29TGc6QmhEUq5fll+2FPoTmhUhR65WEKN4VK/jo0OlM=
+github.com/vektah/gqlparser/v2 v2.4.2/go.mod h1:flJWIR04IMQPGz+BXLrORkrARBxv/rtyIAFvd/MceW0=
 github.com/wsxiaoys/terminal v0.0.0-20160513160801-0940f3fc43a0 h1:3UeQBvD0TFrlVjOeLOBz+CPAI8dnbqNSVwUwRrkp7vQ=
 github.com/wsxiaoys/terminal v0.0.0-20160513160801-0940f3fc43a0/go.mod h1:IXCdmsXIht47RaVFLEdVnh1t+pgYtTAhQGj73kz+2DM=
 github.com/xdg-go/pbkdf2 v1.0.0/go.mod h1:jrpuAogTd400dnrH08LKmI/xc1MbPOebTwRqcT5RDeI=
