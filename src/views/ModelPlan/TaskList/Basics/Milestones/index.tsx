@@ -112,7 +112,7 @@ const Milestones = () => {
       phasedInNote: formikValues.phasedInNote
     };
 
-    if (milestones !== null) {
+    if (data?.modelPlan?.milestones !== null) {
       update({
         variables: {
           input: {
@@ -208,6 +208,7 @@ const Milestones = () => {
                 setErrors,
                 setFieldError,
                 setFieldValue,
+                validateField,
                 values
               } = formikProps;
               const flatErrors = flattenErrors(errors);
@@ -216,8 +217,10 @@ const Milestones = () => {
                   return;
                 }
                 try {
+                  setErrors({});
                   new Date(e).toISOString();
                   setFieldValue(field, new Date(e).toISOString());
+                  validateField(field);
                 } catch (error) {
                   setFieldError(field, 'Please use a valid date format');
                 }
