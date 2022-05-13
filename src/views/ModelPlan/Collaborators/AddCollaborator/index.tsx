@@ -20,7 +20,7 @@ import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import teamRoles from 'constants/enums/teamRoles';
-import useUserSearch from 'hooks/getCedarUsers';
+import useUserSearch from 'hooks/useCedarUsers';
 import CreateModelPlanCollaborator from 'queries/CreateModelPlanCollaborator';
 import GetModelPlanCollaborators from 'queries/GetModelCollaborators';
 import { CreateModelPlanCollaborator as CreateCollaboratorsType } from 'queries/types/CreateModelPlanCollaborator';

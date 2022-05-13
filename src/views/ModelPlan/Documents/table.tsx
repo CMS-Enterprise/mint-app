@@ -1,16 +1,21 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useFilters, usePagination, useSortBy, useTable } from 'react-table';
-import { useQuery } from '@apollo/client';
+import { useApolloClient, useMutation, useQuery } from '@apollo/client';
 import { Button, Table as UswdsTable } from '@trussworks/react-uswds';
 import { DateTime } from 'luxon';
 
 import PageLoading from 'components/PageLoading';
+import Alert from 'components/shared/Alert';
+import DeleteModelPlanDocument from 'queries/DeleteModelPlanDocument';
 import GetPlanDocumentByModelID from 'queries/GetPlanDocumentByModelID';
+import GetPlanDocumentDownloadURL from 'queries/GetPlanDocumentDownloadURL';
+import { DeleteModelPlanDocumentVariables } from 'queries/types/DeleteModelPlanDocument';
 import {
   GetModelPlanDocumentByModelID as GetModelPlanDocumentByModelIDType,
   GetModelPlanDocumentByModelID_readPlanDocumentByModelID as PlanDocumentByModelIDType
 } from 'queries/types/GetModelPlanDocumentByModelID';
+import downloadFile from 'utils/downloadFile';
 import globalTableFilter from 'utils/globalTableFilter';
 import { translateDocumentType } from 'utils/modelPlan';
 import {
@@ -29,11 +34,11 @@ const PlanDocumentsTable = ({
   hiddenColumns,
   modelID
 }: PlanDocumentsTableProps) => {
-  const { t } = useTranslation('documents');
   const {
     error,
     loading,
-    data: documents
+    data: documents,
+    refetch: refetchDocuments
   } = useQuery<GetModelPlanDocumentByModelIDType>(GetPlanDocumentByModelID, {
     variables: {
       id: modelID
@@ -51,7 +56,13 @@ const PlanDocumentsTable = ({
     return <div>{JSON.stringify(error)}</div>;
   }
 
-  return <Table data={data} hiddenColumns={hiddenColumns} />;
+  return (
+    <Table
+      data={data}
+      hiddenColumns={hiddenColumns}
+      refetch={refetchDocuments}
+    />
+  );
 };
 
 export default PlanDocumentsTable;
@@ -59,10 +70,61 @@ export default PlanDocumentsTable;
 type TableProps = {
   data: PlanDocumentByModelIDType[];
   hiddenColumns?: string[];
+  refetch: () => any | undefined;
 };
 
-const Table = ({ data, hiddenColumns }: TableProps) => {
+const Table = ({ data, hiddenColumns, refetch }: TableProps) => {
   const { t } = useTranslation('documents');
+  const [documentError, setDocumentError] = useState();
+  const client = useApolloClient();
+
+  const [mutate] = useMutation<DeleteModelPlanDocumentVariables>(
+    DeleteModelPlanDocument
+  );
+
+  const handleDelete = useMemo(() => {
+    return (file: PlanDocumentByModelIDType) => {
+      mutate({
+        variables: {
+          input: {
+            id: file.id,
+            modelPlanID: file.modelPlanID,
+            documentParameters: {
+              fileSize: file.fileSize
+            },
+            url: ''
+          }
+        }
+      })
+        .then(response => {
+          if (response?.errors) {
+            setDocumentError(t('removeDocumentFail'));
+          } else {
+            refetch();
+          }
+        })
+        .catch(() => {
+          setDocumentError(t('removeDocumentFail'));
+        });
+    };
+  }, [mutate, refetch, t]);
+
+  const handleDownload = useMemo(() => {
+    return (file: PlanDocumentByModelIDType) => {
+      if (!file.fileName || !file.fileType) return;
+      downloadFile({
+        client,
+        fileID: file.id,
+        fileType: file.fileType,
+        fileName: file.fileName,
+        query: GetPlanDocumentDownloadURL,
+        queryType: 'planDocumentDownloadURL',
+        urlKey: 'presignedURL'
+      }).then((error: any) => {
+        if (error) setDocumentError(error);
+      });
+    };
+  }, [client]);
 
   const columns = useMemo(() => {
     return [
@@ -95,35 +157,35 @@ const Table = ({ data, hiddenColumns }: TableProps) => {
         Header: t('documentTable.actions'),
         accessor: 'virusScanned',
         Cell: ({ row, value }: any) => {
-          return (
-            <>
-              <Button type="button" unstyled className="margin-right-1">
-                {t('documentTable.view')}
-              </Button>
-              <Button type="button" unstyled className="text-red">
-                {t('documentTable.remove')}
-              </Button>
-            </>
-          );
-          // if (value) {
-          //   return row.original.virusClean ? (
-          //     <>
-          //     <Button type="button" unstyled className="margin-right-1">
-          //       {t('documentTable.view')}
-          //     </Button>
-          //     <Button type="button" unstyled className="text-red">
-          //       {t('documentTable.remove')}
-          //     </Button>
-          //   </>
-          //   ) : (
-          //     t('documentTable.virusFound')
-          //   );
-          // }
-          // return t('documentTable.scanInProgress');
+          if (value) {
+            return row.original.virusClean ? (
+              <>
+                <Button
+                  type="button"
+                  unstyled
+                  className="margin-right-1"
+                  onClick={() => handleDownload(row.original)}
+                >
+                  {t('documentTable.view')}
+                </Button>
+                <Button
+                  type="button"
+                  unstyled
+                  className="text-red"
+                  onClick={() => handleDelete(row.original)}
+                >
+                  {t('documentTable.remove')}
+                </Button>
+              </>
+            ) : (
+              t('documentTable.virusFound')
+            );
+          }
+          return t('documentTable.scanInProgress');
         }
       }
     ];
-  }, [t]);
+  }, [t, handleDownload, handleDelete]);
 
   const {
     getTableProps,
@@ -158,6 +220,16 @@ const Table = ({ data, hiddenColumns }: TableProps) => {
 
   return (
     <div className="model-plan-table">
+      {documentError && (
+        <Alert
+          type="error"
+          slim
+          data-testid="mandatory-fields-alert"
+          className="margin-y-4"
+        >
+          <span className="mandatory-fields-alert__text">{documentError}</span>
+        </Alert>
+      )}
       <UswdsTable bordered={false} {...getTableProps()} fullWidth scrollable>
         <caption className="usa-sr-only">{t('requestsTable.caption')}</caption>
         <thead>

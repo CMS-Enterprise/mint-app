@@ -19,6 +19,9 @@ const documents = {
     view: 'View',
     remove: 'Remove'
   },
+  downloadFail: 'Failed to download file',
+  urlFail: 'Failed to fetch file URL',
+  removeDocumentFail: 'Failed to remove document',
   uploadDocument: 'Upload a document',
   uploadDescription:
     'Choose a document to upload, such as a recent concept document, policy paper, or any additional model background information.',
