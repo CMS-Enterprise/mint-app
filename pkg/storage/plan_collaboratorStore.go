@@ -30,7 +30,7 @@ var planCollaboratorFetchByModelPlanIDSQL string
 var planCollaboratorFetchByIDSQL string
 
 // PlanCollaboratorCreate creates a new plan collaborator
-func (s *Store) PlanCollaboratorCreate(logger *zap.Logger, collaborator *models.PlanCollaborator) (*models.PlanCollaborator, error) {
+func (s *Store) PlanCollaboratorCreate(_ *zap.Logger, collaborator *models.PlanCollaborator) (*models.PlanCollaborator, error) {
 
 	collaborator.ID = utilityUUID.ValueOrNewUUID(collaborator.ID)
 
@@ -48,7 +48,7 @@ func (s *Store) PlanCollaboratorCreate(logger *zap.Logger, collaborator *models.
 }
 
 // PlanCollaboratorUpdate updates the plan collaborator for a given id
-func (s *Store) PlanCollaboratorUpdate(logger *zap.Logger, collaborator *models.PlanCollaborator) (*models.PlanCollaborator, error) {
+func (s *Store) PlanCollaboratorUpdate(_ *zap.Logger, collaborator *models.PlanCollaborator) (*models.PlanCollaborator, error) {
 	statement, err := s.db.PrepareNamed(planCollaboratorUpdateSQL)
 	if err != nil {
 		return nil, err
@@ -63,7 +63,7 @@ func (s *Store) PlanCollaboratorUpdate(logger *zap.Logger, collaborator *models.
 }
 
 // PlanCollaboratorDelete deletes the plan collaborator for a given id
-func (s *Store) PlanCollaboratorDelete(logger *zap.Logger, collaborator *models.PlanCollaborator) (*models.PlanCollaborator, error) {
+func (s *Store) PlanCollaboratorDelete(_ *zap.Logger, collaborator *models.PlanCollaborator) (*models.PlanCollaborator, error) {
 	statement, err := s.db.PrepareNamed(planCollaboratorDeleteSQL)
 	if err != nil {
 		return nil, err
@@ -78,8 +78,8 @@ func (s *Store) PlanCollaboratorDelete(logger *zap.Logger, collaborator *models.
 }
 
 // PlanCollaboratorsByModelPlanID returns the plan collaborators for a given model plan id
-func (s *Store) PlanCollaboratorsByModelPlanID(logger *zap.Logger, modelPlanID uuid.UUID) ([]*models.PlanCollaborator, error) {
-	collaborators := []*models.PlanCollaborator{}
+func (s *Store) PlanCollaboratorsByModelPlanID(_ *zap.Logger, modelPlanID uuid.UUID) ([]*models.PlanCollaborator, error) {
+	var collaborators []*models.PlanCollaborator
 
 	statement, err := s.db.PrepareNamed(planCollaboratorFetchByModelPlanIDSQL)
 	if err != nil {
