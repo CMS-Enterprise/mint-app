@@ -312,7 +312,11 @@ const Overview = () => {
                   <AutoSave
                     values={values}
                     onSave={() => {
-                      handleFormSubmit(formikRef.current!.values);
+                      if (
+                        Object.keys(formikRef.current!.touched).length !== 0
+                      ) {
+                        handleFormSubmit(formikRef.current!.values);
+                      }
                     }}
                     debounceDelay={3000}
                   />
