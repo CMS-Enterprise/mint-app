@@ -189,58 +189,46 @@ func (r *mutationResolver) DeletePlanDocument(ctx context.Context, input model.P
 	return resolvers.PlanDocumentDelete(logger, document, &principal, r.store)
 }
 
-func (r *mutationResolver) CreatePlanDiscussion(ctx context.Context, input model.PlanDiscussionInput) (*models.PlanDiscussion, error) {
-	discussion := ConvertToPlanDiscussion(&input)
-
+func (r *mutationResolver) CreatePlanDiscussion(ctx context.Context, input model.PlanDiscussionCreateInput) (*models.PlanDiscussion, error) {
 	principal := appcontext.Principal(ctx).ID()
 	logger := appcontext.ZLogger(ctx)
 
-	return resolvers.CreatePlanDiscussion(logger, discussion, &principal, r.store)
+	return resolvers.CreatePlanDiscussion(logger, &input, principal, r.store)
 }
 
-func (r *mutationResolver) UpdatePlanDiscussion(ctx context.Context, input model.PlanDiscussionInput) (*models.PlanDiscussion, error) {
-	discussion := ConvertToPlanDiscussion(&input)
-
+func (r *mutationResolver) UpdatePlanDiscussion(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanDiscussion, error) {
 	principal := appcontext.Principal(ctx).ID()
 	logger := appcontext.ZLogger(ctx)
 
-	return resolvers.UpdatePlanDiscussion(logger, discussion, &principal, r.store)
+	return resolvers.UpdatePlanDiscussion(logger, id, changes, principal, r.store)
 }
 
-func (r *mutationResolver) DeletePlanDiscussion(ctx context.Context, input model.PlanDiscussionInput) (*models.PlanDiscussion, error) {
-	discussion := ConvertToPlanDiscussion(&input)
-
+func (r *mutationResolver) DeletePlanDiscussion(ctx context.Context, id uuid.UUID) (*models.PlanDiscussion, error) {
 	principal := appcontext.Principal(ctx).ID()
 	logger := appcontext.ZLogger(ctx)
 
-	return resolvers.DeletePlanDiscussion(logger, discussion, &principal, r.store)
+	return resolvers.DeletePlanDiscussion(logger, id, principal, r.store)
 }
 
-func (r *mutationResolver) CreateDiscussionReply(ctx context.Context, input model.DiscussionReplyInput) (*models.DiscussionReply, error) {
-	reply := ConvertToDiscussionReply(&input)
-
+func (r *mutationResolver) CreateDiscussionReply(ctx context.Context, input model.DiscussionReplyCreateInput) (*models.DiscussionReply, error) {
 	principal := appcontext.Principal(ctx).ID()
 	logger := appcontext.ZLogger(ctx)
 
-	return resolvers.CreateDiscussionReply(logger, reply, &principal, r.store)
+	return resolvers.CreateDiscussionReply(logger, &input, principal, r.store)
 }
 
-func (r *mutationResolver) UpdateDiscussionReply(ctx context.Context, input model.DiscussionReplyInput) (*models.DiscussionReply, error) {
-	reply := ConvertToDiscussionReply(&input)
-
+func (r *mutationResolver) UpdateDiscussionReply(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.DiscussionReply, error) {
 	principal := appcontext.Principal(ctx).ID()
 	logger := appcontext.ZLogger(ctx)
 
-	return resolvers.UpdateDiscussionReply(logger, reply, &principal, r.store)
+	return resolvers.UpdateDiscussionReply(logger, id, changes, principal, r.store)
 }
 
-func (r *mutationResolver) DeleteDiscussionReply(ctx context.Context, input model.DiscussionReplyInput) (*models.DiscussionReply, error) {
-	reply := ConvertToDiscussionReply(&input)
-
+func (r *mutationResolver) DeleteDiscussionReply(ctx context.Context, id uuid.UUID) (*models.DiscussionReply, error) {
 	principal := appcontext.Principal(ctx).ID()
 	logger := appcontext.ZLogger(ctx)
 
-	return resolvers.DeleteDiscussionReply(logger, reply, &principal, r.store)
+	return resolvers.DeleteDiscussionReply(logger, id, principal, r.store)
 }
 
 func (r *planDiscussionResolver) Replies(ctx context.Context, obj *models.PlanDiscussion) ([]*models.DiscussionReply, error) {

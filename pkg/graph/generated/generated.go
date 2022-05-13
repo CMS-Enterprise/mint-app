@@ -97,23 +97,23 @@ type ComplexityRoot struct {
 	}
 
 	Mutation struct {
-		CreateDiscussionReply      func(childComplexity int, input model.DiscussionReplyInput) int
+		CreateDiscussionReply      func(childComplexity int, input model.DiscussionReplyCreateInput) int
 		CreateModelPlan            func(childComplexity int, modelName string) int
 		CreatePlanBasics           func(childComplexity int, input model.PlanBasicsInput) int
 		CreatePlanCollaborator     func(childComplexity int, input model.PlanCollaboratorInput) int
-		CreatePlanDiscussion       func(childComplexity int, input model.PlanDiscussionInput) int
+		CreatePlanDiscussion       func(childComplexity int, input model.PlanDiscussionCreateInput) int
 		CreatePlanDocument         func(childComplexity int, input model.PlanDocumentInput) int
 		CreatePlanMilestones       func(childComplexity int, input model.PlanMilestonesInput) int
-		DeleteDiscussionReply      func(childComplexity int, input model.DiscussionReplyInput) int
+		DeleteDiscussionReply      func(childComplexity int, id uuid.UUID) int
 		DeletePlanCollaborator     func(childComplexity int, input model.PlanCollaboratorInput) int
-		DeletePlanDiscussion       func(childComplexity int, input model.PlanDiscussionInput) int
+		DeletePlanDiscussion       func(childComplexity int, id uuid.UUID) int
 		DeletePlanDocument         func(childComplexity int, input model.PlanDocumentInput) int
 		GeneratePresignedUploadURL func(childComplexity int, input model.GeneratePresignedUploadURLInput) int
-		UpdateDiscussionReply      func(childComplexity int, input model.DiscussionReplyInput) int
+		UpdateDiscussionReply      func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
 		UpdateModelPlan            func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
 		UpdatePlanBasics           func(childComplexity int, input model.PlanBasicsInput) int
 		UpdatePlanCollaborator     func(childComplexity int, input model.PlanCollaboratorInput) int
-		UpdatePlanDiscussion       func(childComplexity int, input model.PlanDiscussionInput) int
+		UpdatePlanDiscussion       func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
 		UpdatePlanDocument         func(childComplexity int, input model.PlanDocumentInput) int
 		UpdatePlanMilestones       func(childComplexity int, input model.PlanMilestonesInput) int
 	}
@@ -249,12 +249,12 @@ type MutationResolver interface {
 	CreatePlanDocument(ctx context.Context, input model.PlanDocumentInput) (*model.PlanDocumentPayload, error)
 	UpdatePlanDocument(ctx context.Context, input model.PlanDocumentInput) (*model.PlanDocumentPayload, error)
 	DeletePlanDocument(ctx context.Context, input model.PlanDocumentInput) (int, error)
-	CreatePlanDiscussion(ctx context.Context, input model.PlanDiscussionInput) (*models.PlanDiscussion, error)
-	UpdatePlanDiscussion(ctx context.Context, input model.PlanDiscussionInput) (*models.PlanDiscussion, error)
-	DeletePlanDiscussion(ctx context.Context, input model.PlanDiscussionInput) (*models.PlanDiscussion, error)
-	CreateDiscussionReply(ctx context.Context, input model.DiscussionReplyInput) (*models.DiscussionReply, error)
-	UpdateDiscussionReply(ctx context.Context, input model.DiscussionReplyInput) (*models.DiscussionReply, error)
-	DeleteDiscussionReply(ctx context.Context, input model.DiscussionReplyInput) (*models.DiscussionReply, error)
+	CreatePlanDiscussion(ctx context.Context, input model.PlanDiscussionCreateInput) (*models.PlanDiscussion, error)
+	UpdatePlanDiscussion(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanDiscussion, error)
+	DeletePlanDiscussion(ctx context.Context, id uuid.UUID) (*models.PlanDiscussion, error)
+	CreateDiscussionReply(ctx context.Context, input model.DiscussionReplyCreateInput) (*models.DiscussionReply, error)
+	UpdateDiscussionReply(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.DiscussionReply, error)
+	DeleteDiscussionReply(ctx context.Context, id uuid.UUID) (*models.DiscussionReply, error)
 }
 type PlanDiscussionResolver interface {
 	Replies(ctx context.Context, obj *models.PlanDiscussion) ([]*models.DiscussionReply, error)
@@ -506,7 +506,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			return 0, false
 		}
 
-		return e.complexity.Mutation.CreateDiscussionReply(childComplexity, args["input"].(model.DiscussionReplyInput)), true
+		return e.complexity.Mutation.CreateDiscussionReply(childComplexity, args["input"].(model.DiscussionReplyCreateInput)), true
 
 	case "Mutation.createModelPlan":
 		if e.complexity.Mutation.CreateModelPlan == nil {
@@ -554,7 +554,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			return 0, false
 		}
 
-		return e.complexity.Mutation.CreatePlanDiscussion(childComplexity, args["input"].(model.PlanDiscussionInput)), true
+		return e.complexity.Mutation.CreatePlanDiscussion(childComplexity, args["input"].(model.PlanDiscussionCreateInput)), true
 
 	case "Mutation.createPlanDocument":
 		if e.complexity.Mutation.CreatePlanDocument == nil {
@@ -590,7 +590,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			return 0, false
 		}
 
-		return e.complexity.Mutation.DeleteDiscussionReply(childComplexity, args["input"].(model.DiscussionReplyInput)), true
+		return e.complexity.Mutation.DeleteDiscussionReply(childComplexity, args["id"].(uuid.UUID)), true
 
 	case "Mutation.deletePlanCollaborator":
 		if e.complexity.Mutation.DeletePlanCollaborator == nil {
@@ -614,7 +614,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			return 0, false
 		}
 
-		return e.complexity.Mutation.DeletePlanDiscussion(childComplexity, args["input"].(model.PlanDiscussionInput)), true
+		return e.complexity.Mutation.DeletePlanDiscussion(childComplexity, args["id"].(uuid.UUID)), true
 
 	case "Mutation.deletePlanDocument":
 		if e.complexity.Mutation.DeletePlanDocument == nil {
@@ -650,7 +650,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			return 0, false
 		}
 
-		return e.complexity.Mutation.UpdateDiscussionReply(childComplexity, args["input"].(model.DiscussionReplyInput)), true
+		return e.complexity.Mutation.UpdateDiscussionReply(childComplexity, args["id"].(uuid.UUID), args["changes"].(map[string]interface{})), true
 
 	case "Mutation.updateModelPlan":
 		if e.complexity.Mutation.UpdateModelPlan == nil {
@@ -698,7 +698,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			return 0, false
 		}
 
-		return e.complexity.Mutation.UpdatePlanDiscussion(childComplexity, args["input"].(model.PlanDiscussionInput)), true
+		return e.complexity.Mutation.UpdatePlanDiscussion(childComplexity, args["id"].(uuid.UUID), args["changes"].(map[string]interface{})), true
 
 	case "Mutation.updatePlanDocument":
 		if e.complexity.Mutation.UpdatePlanDocument == nil {
@@ -1339,11 +1339,11 @@ func (e *executableSchema) Exec(ctx context.Context) graphql.ResponseHandler {
 	rc := graphql.GetOperationContext(ctx)
 	ec := executionContext{rc, e}
 	inputUnmarshalMap := graphql.BuildUnmarshalerMap(
-		ec.unmarshalInputDiscussionReplyInput,
+		ec.unmarshalInputDiscussionReplyCreateInput,
 		ec.unmarshalInputGeneratePresignedUploadURLInput,
 		ec.unmarshalInputPlanBasicsInput,
 		ec.unmarshalInputPlanCollaboratorInput,
-		ec.unmarshalInputPlanDiscussionInput,
+		ec.unmarshalInputPlanDiscussionCreateInput,
 		ec.unmarshalInputPlanDocumentInput,
 		ec.unmarshalInputPlanDocumentParameters,
 		ec.unmarshalInputPlanMilestonesInput,
@@ -1458,8 +1458,9 @@ type ModelPlan {
 """
 ModelPlanChanges represents the possible changes you can make to a model plan when updating it.
 Fields explicitly set with NULL will be unset, and omitted fields will be left unchanged.
+https://gqlgen.com/reference/changesets/
 """
-input ModelPlanChanges {
+input ModelPlanChanges @goModel(model: "map[string]interface{}") {
   modelName: String
   modelCategory: ModelCategory
   cmsCenters: [CMSCenter!]
@@ -1697,19 +1698,23 @@ type PlanDiscussion  {
 }
 
 """
-PlanDiscussionInput represents input for plan discussion
+PlanDiscussionCreateInput represents the necessary fields to create a plan discussion
 """
-input PlanDiscussionInput  {
-	id:          UUID
-	modelPlanID: UUID!
-	content: String!
-	status: DiscussionStatus
-
-  createdBy: String
-  createdDts: Time
-  modifiedBy: String
-  modifiedDts: Time
+input PlanDiscussionCreateInput {
+  modelPlanID: UUID!
+  content: String!
 }
+
+"""
+PlanDiscussionChanges represents the possible changes you can make to a plan discussion when updating it.
+Fields explicitly set with NULL will be unset, and omitted fields will be left unchanged.
+https://gqlgen.com/reference/changesets/
+"""
+input PlanDiscussionChanges @goModel(model: "map[string]interface{}") {
+  content: String
+  status: DiscussionStatus
+}
+
 """
 DiscussionReply represents a discussion reply
 """
@@ -1726,19 +1731,24 @@ type DiscussionReply  {
 }
 
 """
-DiscussionReplyInput represents input for a discussion reply
+DiscussionReplyCreateInput represents the necessary fields to create a discussion reply
 """
-input DiscussionReplyInput  {
-	id: UUID
-	discussionID: UUID!
-	content: String!
-	resolution: Boolean! = false
-
-	createdBy: String
-	createdDts: Time
-	modifiedBy: String
-	modifiedDts: Time
+input DiscussionReplyCreateInput {
+  discussionID: UUID!
+  content: String!
+  resolution: Boolean! = false
 }
+
+"""
+DiscussionReplyChanges represents the possible changes you can make to a discussion reply when updating it.
+Fields explicitly set with NULL will be unset, and omitted fields will be left unchanged.
+https://gqlgen.com/reference/changesets/
+"""
+input DiscussionReplyChanges @goModel(model: "map[string]interface{}") {
+  content: String
+  resolution: Boolean
+}
+
 """
 Query definition for the schema
 """
@@ -1798,25 +1808,23 @@ updatePlanDocument(input: PlanDocumentInput!): PlanDocumentPayload
 deletePlanDocument(input: PlanDocumentInput!): Int!
 @hasRole(role: MINT_BASE_USER)
 
-createPlanDiscussion(input: PlanDiscussionInput!): PlanDiscussion
+createPlanDiscussion(input: PlanDiscussionCreateInput!): PlanDiscussion
 @hasRole(role: MINT_BASE_USER)
 
-updatePlanDiscussion(input: PlanDiscussionInput!): PlanDiscussion
+updatePlanDiscussion(id: UUID!, changes: PlanDiscussionChanges!): PlanDiscussion
 @hasRole(role: MINT_BASE_USER)
 
-deletePlanDiscussion(input: PlanDiscussionInput!): PlanDiscussion
+deletePlanDiscussion(id: UUID!): PlanDiscussion
 @hasRole(role: MINT_BASE_USER)
 
-createDiscussionReply(input: DiscussionReplyInput!): DiscussionReply
+createDiscussionReply(input: DiscussionReplyCreateInput!): DiscussionReply
 @hasRole(role: MINT_BASE_USER)
 
-updateDiscussionReply(input: DiscussionReplyInput!): DiscussionReply
+updateDiscussionReply(id: UUID!, changes: DiscussionReplyChanges!): DiscussionReply
 @hasRole(role: MINT_BASE_USER)
 
-deleteDiscussionReply(input: DiscussionReplyInput!): DiscussionReply
+deleteDiscussionReply(id: UUID!): DiscussionReply
 @hasRole(role: MINT_BASE_USER)
-
-
 }
 
 enum TaskStatus {
@@ -1897,6 +1905,12 @@ enum DocumentType {
 
 directive @hasRole(role: Role!) on FIELD_DEFINITION
 
+# https://gqlgen.com/config/#inline-config-with-directives
+directive @goModel(
+  model: String
+  models: [String!]
+) on OBJECT | INPUT_OBJECT | SCALAR | ENUM | INTERFACE | UNION
+
 """
 A user role associated with a job code
 """
@@ -1937,10 +1951,10 @@ func (ec *executionContext) dir_hasRole_args(ctx context.Context, rawArgs map[st
 func (ec *executionContext) field_Mutation_createDiscussionReply_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
-	var arg0 model.DiscussionReplyInput
+	var arg0 model.DiscussionReplyCreateInput
 	if tmp, ok := rawArgs["input"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
-		arg0, err = ec.unmarshalNDiscussionReplyInput2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐDiscussionReplyInput(ctx, tmp)
+		arg0, err = ec.unmarshalNDiscussionReplyCreateInput2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐDiscussionReplyCreateInput(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -1997,10 +2011,10 @@ func (ec *executionContext) field_Mutation_createPlanCollaborator_args(ctx conte
 func (ec *executionContext) field_Mutation_createPlanDiscussion_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
-	var arg0 model.PlanDiscussionInput
+	var arg0 model.PlanDiscussionCreateInput
 	if tmp, ok := rawArgs["input"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
-		arg0, err = ec.unmarshalNPlanDiscussionInput2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐPlanDiscussionInput(ctx, tmp)
+		arg0, err = ec.unmarshalNPlanDiscussionCreateInput2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐPlanDiscussionCreateInput(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -2042,15 +2056,15 @@ func (ec *executionContext) field_Mutation_createPlanMilestones_args(ctx context
 func (ec *executionContext) field_Mutation_deleteDiscussionReply_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
-	var arg0 model.DiscussionReplyInput
-	if tmp, ok := rawArgs["input"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
-		arg0, err = ec.unmarshalNDiscussionReplyInput2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐDiscussionReplyInput(ctx, tmp)
+	var arg0 uuid.UUID
+	if tmp, ok := rawArgs["id"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("id"))
+		arg0, err = ec.unmarshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
 	}
-	args["input"] = arg0
+	args["id"] = arg0
 	return args, nil
 }
 
@@ -2072,15 +2086,15 @@ func (ec *executionContext) field_Mutation_deletePlanCollaborator_args(ctx conte
 func (ec *executionContext) field_Mutation_deletePlanDiscussion_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
-	var arg0 model.PlanDiscussionInput
-	if tmp, ok := rawArgs["input"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
-		arg0, err = ec.unmarshalNPlanDiscussionInput2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐPlanDiscussionInput(ctx, tmp)
+	var arg0 uuid.UUID
+	if tmp, ok := rawArgs["id"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("id"))
+		arg0, err = ec.unmarshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
 	}
-	args["input"] = arg0
+	args["id"] = arg0
 	return args, nil
 }
 
@@ -2117,15 +2131,24 @@ func (ec *executionContext) field_Mutation_generatePresignedUploadURL_args(ctx c
 func (ec *executionContext) field_Mutation_updateDiscussionReply_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
-	var arg0 model.DiscussionReplyInput
-	if tmp, ok := rawArgs["input"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
-		arg0, err = ec.unmarshalNDiscussionReplyInput2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐDiscussionReplyInput(ctx, tmp)
+	var arg0 uuid.UUID
+	if tmp, ok := rawArgs["id"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("id"))
+		arg0, err = ec.unmarshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
 	}
-	args["input"] = arg0
+	args["id"] = arg0
+	var arg1 map[string]interface{}
+	if tmp, ok := rawArgs["changes"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("changes"))
+		arg1, err = ec.unmarshalNDiscussionReplyChanges2map(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["changes"] = arg1
 	return args, nil
 }
 
@@ -2186,15 +2209,24 @@ func (ec *executionContext) field_Mutation_updatePlanCollaborator_args(ctx conte
 func (ec *executionContext) field_Mutation_updatePlanDiscussion_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
-	var arg0 model.PlanDiscussionInput
-	if tmp, ok := rawArgs["input"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
-		arg0, err = ec.unmarshalNPlanDiscussionInput2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐPlanDiscussionInput(ctx, tmp)
+	var arg0 uuid.UUID
+	if tmp, ok := rawArgs["id"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("id"))
+		arg0, err = ec.unmarshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
 	}
-	args["input"] = arg0
+	args["id"] = arg0
+	var arg1 map[string]interface{}
+	if tmp, ok := rawArgs["changes"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("changes"))
+		arg1, err = ec.unmarshalNPlanDiscussionChanges2map(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["changes"] = arg1
 	return args, nil
 }
 
@@ -5060,7 +5092,7 @@ func (ec *executionContext) _Mutation_createPlanDiscussion(ctx context.Context, 
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		directive0 := func(rctx context.Context) (interface{}, error) {
 			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Mutation().CreatePlanDiscussion(rctx, fc.Args["input"].(model.PlanDiscussionInput))
+			return ec.resolvers.Mutation().CreatePlanDiscussion(rctx, fc.Args["input"].(model.PlanDiscussionCreateInput))
 		}
 		directive1 := func(ctx context.Context) (interface{}, error) {
 			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_BASE_USER")
@@ -5156,7 +5188,7 @@ func (ec *executionContext) _Mutation_updatePlanDiscussion(ctx context.Context, 
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		directive0 := func(rctx context.Context) (interface{}, error) {
 			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Mutation().UpdatePlanDiscussion(rctx, fc.Args["input"].(model.PlanDiscussionInput))
+			return ec.resolvers.Mutation().UpdatePlanDiscussion(rctx, fc.Args["id"].(uuid.UUID), fc.Args["changes"].(map[string]interface{}))
 		}
 		directive1 := func(ctx context.Context) (interface{}, error) {
 			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_BASE_USER")
@@ -5252,7 +5284,7 @@ func (ec *executionContext) _Mutation_deletePlanDiscussion(ctx context.Context, 
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		directive0 := func(rctx context.Context) (interface{}, error) {
 			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Mutation().DeletePlanDiscussion(rctx, fc.Args["input"].(model.PlanDiscussionInput))
+			return ec.resolvers.Mutation().DeletePlanDiscussion(rctx, fc.Args["id"].(uuid.UUID))
 		}
 		directive1 := func(ctx context.Context) (interface{}, error) {
 			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_BASE_USER")
@@ -5348,7 +5380,7 @@ func (ec *executionContext) _Mutation_createDiscussionReply(ctx context.Context,
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		directive0 := func(rctx context.Context) (interface{}, error) {
 			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Mutation().CreateDiscussionReply(rctx, fc.Args["input"].(model.DiscussionReplyInput))
+			return ec.resolvers.Mutation().CreateDiscussionReply(rctx, fc.Args["input"].(model.DiscussionReplyCreateInput))
 		}
 		directive1 := func(ctx context.Context) (interface{}, error) {
 			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_BASE_USER")
@@ -5442,7 +5474,7 @@ func (ec *executionContext) _Mutation_updateDiscussionReply(ctx context.Context,
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		directive0 := func(rctx context.Context) (interface{}, error) {
 			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Mutation().UpdateDiscussionReply(rctx, fc.Args["input"].(model.DiscussionReplyInput))
+			return ec.resolvers.Mutation().UpdateDiscussionReply(rctx, fc.Args["id"].(uuid.UUID), fc.Args["changes"].(map[string]interface{}))
 		}
 		directive1 := func(ctx context.Context) (interface{}, error) {
 			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_BASE_USER")
@@ -5536,7 +5568,7 @@ func (ec *executionContext) _Mutation_deleteDiscussionReply(ctx context.Context,
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		directive0 := func(rctx context.Context) (interface{}, error) {
 			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Mutation().DeleteDiscussionReply(rctx, fc.Args["input"].(model.DiscussionReplyInput))
+			return ec.resolvers.Mutation().DeleteDiscussionReply(rctx, fc.Args["id"].(uuid.UUID))
 		}
 		directive1 := func(ctx context.Context) (interface{}, error) {
 			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_BASE_USER")
@@ -11273,8 +11305,8 @@ func (ec *executionContext) fieldContext___Type_specifiedByURL(ctx context.Conte
 
 // region    **************************** input.gotpl *****************************
 
-func (ec *executionContext) unmarshalInputDiscussionReplyInput(ctx context.Context, obj interface{}) (model.DiscussionReplyInput, error) {
-	var it model.DiscussionReplyInput
+func (ec *executionContext) unmarshalInputDiscussionReplyCreateInput(ctx context.Context, obj interface{}) (model.DiscussionReplyCreateInput, error) {
+	var it model.DiscussionReplyCreateInput
 	asMap := map[string]interface{}{}
 	for k, v := range obj.(map[string]interface{}) {
 		asMap[k] = v
@@ -11286,14 +11318,6 @@ func (ec *executionContext) unmarshalInputDiscussionReplyInput(ctx context.Conte
 
 	for k, v := range asMap {
 		switch k {
-		case "id":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("id"))
-			it.ID, err = ec.unmarshalOUUID2ᚖgithubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, v)
-			if err != nil {
-				return it, err
-			}
 		case "discussionID":
 			var err error
 
@@ -11315,38 +11339,6 @@ func (ec *executionContext) unmarshalInputDiscussionReplyInput(ctx context.Conte
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("resolution"))
 			it.Resolution, err = ec.unmarshalNBoolean2bool(ctx, v)
-			if err != nil {
-				return it, err
-			}
-		case "createdBy":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("createdBy"))
-			it.CreatedBy, err = ec.unmarshalOString2ᚖstring(ctx, v)
-			if err != nil {
-				return it, err
-			}
-		case "createdDts":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("createdDts"))
-			it.CreatedDts, err = ec.unmarshalOTime2ᚖtimeᚐTime(ctx, v)
-			if err != nil {
-				return it, err
-			}
-		case "modifiedBy":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("modifiedBy"))
-			it.ModifiedBy, err = ec.unmarshalOString2ᚖstring(ctx, v)
-			if err != nil {
-				return it, err
-			}
-		case "modifiedDts":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("modifiedDts"))
-			it.ModifiedDts, err = ec.unmarshalOTime2ᚖtimeᚐTime(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -11593,8 +11585,8 @@ func (ec *executionContext) unmarshalInputPlanCollaboratorInput(ctx context.Cont
 	return it, nil
 }
 
-func (ec *executionContext) unmarshalInputPlanDiscussionInput(ctx context.Context, obj interface{}) (model.PlanDiscussionInput, error) {
-	var it model.PlanDiscussionInput
+func (ec *executionContext) unmarshalInputPlanDiscussionCreateInput(ctx context.Context, obj interface{}) (model.PlanDiscussionCreateInput, error) {
+	var it model.PlanDiscussionCreateInput
 	asMap := map[string]interface{}{}
 	for k, v := range obj.(map[string]interface{}) {
 		asMap[k] = v
@@ -11602,14 +11594,6 @@ func (ec *executionContext) unmarshalInputPlanDiscussionInput(ctx context.Contex
 
 	for k, v := range asMap {
 		switch k {
-		case "id":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("id"))
-			it.ID, err = ec.unmarshalOUUID2ᚖgithubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, v)
-			if err != nil {
-				return it, err
-			}
 		case "modelPlanID":
 			var err error
 
@@ -11623,46 +11607,6 @@ func (ec *executionContext) unmarshalInputPlanDiscussionInput(ctx context.Contex
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("content"))
 			it.Content, err = ec.unmarshalNString2string(ctx, v)
-			if err != nil {
-				return it, err
-			}
-		case "status":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("status"))
-			it.Status, err = ec.unmarshalODiscussionStatus2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDiscussionStatus(ctx, v)
-			if err != nil {
-				return it, err
-			}
-		case "createdBy":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("createdBy"))
-			it.CreatedBy, err = ec.unmarshalOString2ᚖstring(ctx, v)
-			if err != nil {
-				return it, err
-			}
-		case "createdDts":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("createdDts"))
-			it.CreatedDts, err = ec.unmarshalOTime2ᚖtimeᚐTime(ctx, v)
-			if err != nil {
-				return it, err
-			}
-		case "modifiedBy":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("modifiedBy"))
-			it.ModifiedBy, err = ec.unmarshalOString2ᚖstring(ctx, v)
-			if err != nil {
-				return it, err
-			}
-		case "modifiedDts":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("modifiedDts"))
-			it.ModifiedDts, err = ec.unmarshalOTime2ᚖtimeᚐTime(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -13744,8 +13688,12 @@ func (ec *executionContext) marshalNDiscussionReply2ᚖgithubᚗcomᚋcmsgovᚋm
 	return ec._DiscussionReply(ctx, sel, v)
 }
 
-func (ec *executionContext) unmarshalNDiscussionReplyInput2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐDiscussionReplyInput(ctx context.Context, v interface{}) (model.DiscussionReplyInput, error) {
-	res, err := ec.unmarshalInputDiscussionReplyInput(ctx, v)
+func (ec *executionContext) unmarshalNDiscussionReplyChanges2map(ctx context.Context, v interface{}) (map[string]interface{}, error) {
+	return v.(map[string]interface{}), nil
+}
+
+func (ec *executionContext) unmarshalNDiscussionReplyCreateInput2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐDiscussionReplyCreateInput(ctx context.Context, v interface{}) (model.DiscussionReplyCreateInput, error) {
+	res, err := ec.unmarshalInputDiscussionReplyCreateInput(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
@@ -13937,8 +13885,12 @@ func (ec *executionContext) marshalNPlanDiscussion2ᚖgithubᚗcomᚋcmsgovᚋmi
 	return ec._PlanDiscussion(ctx, sel, v)
 }
 
-func (ec *executionContext) unmarshalNPlanDiscussionInput2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐPlanDiscussionInput(ctx context.Context, v interface{}) (model.PlanDiscussionInput, error) {
-	res, err := ec.unmarshalInputPlanDiscussionInput(ctx, v)
+func (ec *executionContext) unmarshalNPlanDiscussionChanges2map(ctx context.Context, v interface{}) (map[string]interface{}, error) {
+	return v.(map[string]interface{}), nil
+}
+
+func (ec *executionContext) unmarshalNPlanDiscussionCreateInput2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐPlanDiscussionCreateInput(ctx context.Context, v interface{}) (model.PlanDiscussionCreateInput, error) {
+	res, err := ec.unmarshalInputPlanDiscussionCreateInput(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
@@ -14843,6 +14795,44 @@ func (ec *executionContext) unmarshalOString2string(ctx context.Context, v inter
 func (ec *executionContext) marshalOString2string(ctx context.Context, sel ast.SelectionSet, v string) graphql.Marshaler {
 	res := graphql.MarshalString(v)
 	return res
+}
+
+func (ec *executionContext) unmarshalOString2ᚕstringᚄ(ctx context.Context, v interface{}) ([]string, error) {
+	if v == nil {
+		return nil, nil
+	}
+	var vSlice []interface{}
+	if v != nil {
+		vSlice = graphql.CoerceList(v)
+	}
+	var err error
+	res := make([]string, len(vSlice))
+	for i := range vSlice {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
+		res[i], err = ec.unmarshalNString2string(ctx, vSlice[i])
+		if err != nil {
+			return nil, err
+		}
+	}
+	return res, nil
+}
+
+func (ec *executionContext) marshalOString2ᚕstringᚄ(ctx context.Context, sel ast.SelectionSet, v []string) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	ret := make(graphql.Array, len(v))
+	for i := range v {
+		ret[i] = ec.marshalNString2string(ctx, sel, v[i])
+	}
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
 }
 
 func (ec *executionContext) unmarshalOString2ᚖstring(ctx context.Context, v interface{}) (*string, error) {

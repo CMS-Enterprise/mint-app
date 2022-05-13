@@ -65,6 +65,7 @@ export enum TeamRole {
 /**
  * ModelPlanChanges represents the possible changes you can make to a model plan when updating it.
  * Fields explicitly set with NULL will be unset, and omitted fields will be left unchanged.
+ * https: // gqlgen.com/reference/changesets/
  */
 export interface ModelPlanChanges {
   modelName?: string | null;
