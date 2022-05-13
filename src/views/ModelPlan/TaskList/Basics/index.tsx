@@ -76,8 +76,7 @@ const BasicsContent = () => {
 
   const handleFormSubmit = (
     formikValues: PlanBasicModelPlanFormType,
-    isAutoSave: boolean = false,
-    continuesToNextStep: boolean = true
+    redirect?: 'next' | 'back'
   ) => {
     update({
       variables: {
@@ -93,9 +92,9 @@ const BasicsContent = () => {
     })
       .then(response => {
         if (!response?.errors) {
-          if (continuesToNextStep) {
+          if (redirect === 'next') {
             history.push(`/models/${modelId}/task-list/basics/overview`);
-          } else if (!isAutoSave) {
+          } else if (redirect === 'back') {
             history.push(`/models/${modelId}/task-list/`);
           }
         }
@@ -147,7 +146,7 @@ const BasicsContent = () => {
           <Formik
             initialValues={initialValues}
             onSubmit={values => {
-              handleFormSubmit(values);
+              handleFormSubmit(values, 'next');
             }}
             enableReinitialize
             validationSchema={
@@ -382,7 +381,7 @@ const BasicsContent = () => {
                     <Button
                       type="button"
                       className="usa-button usa-button--unstyled"
-                      onClick={() => handleFormSubmit(values, false, false)}
+                      onClick={() => handleFormSubmit(values, 'back')}
                     >
                       <IconArrowBack className="margin-right-1" aria-hidden />
                       {h('saveAndReturn')}
@@ -391,7 +390,11 @@ const BasicsContent = () => {
                   <AutoSave
                     values={values}
                     onSave={() => {
-                      handleFormSubmit(formikRef.current!.values, true, false);
+                      if (
+                        Object.keys(formikRef.current!.touched).length !== 0
+                      ) {
+                        handleFormSubmit(formikRef.current!.values);
+                      }
                     }}
                     debounceDelay={3000}
                   />
