@@ -11,6 +11,7 @@ import { TeamRole } from "./../../types/graphql-global-types";
 
 export interface DeleteModelPlanCollaborator_deletePlanCollaborator {
   __typename: "PlanCollaborator";
+  id: UUID;
   fullName: string;
   teamRole: TeamRole;
   euaUserID: string;
