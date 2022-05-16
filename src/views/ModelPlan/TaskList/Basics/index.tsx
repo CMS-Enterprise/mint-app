@@ -165,6 +165,7 @@ const BasicsContent = () => {
                 errors,
                 handleSubmit,
                 setErrors,
+                setFieldError,
                 setFieldValue,
                 isValid,
                 values
@@ -381,7 +382,13 @@ const BasicsContent = () => {
                     <Button
                       type="button"
                       className="usa-button usa-button--unstyled"
-                      onClick={() => handleFormSubmit(values, 'back')}
+                      onClick={() => {
+                        if (values.modelName === '') {
+                          setFieldError('modelName', 'Enter the Model name');
+                        } else {
+                          handleFormSubmit(values, 'back');
+                        }
+                      }}
                     >
                       <IconArrowBack className="margin-right-1" aria-hidden />
                       {h('saveAndReturn')}
@@ -390,10 +397,18 @@ const BasicsContent = () => {
                   <AutoSave
                     values={values}
                     onSave={() => {
-                      if (
-                        Object.keys(formikRef.current!.touched).length !== 0
-                      ) {
-                        handleFormSubmit(formikRef.current!.values);
+                      if (formikRef.current!.values.modelName === '') {
+                        formikRef.current!.setFieldError(
+                          'modelName',
+                          'Enter the Model name'
+                        );
+                      } else {
+                        formikRef.current!.validateForm();
+                        if (
+                          Object.keys(formikRef.current!.errors).length === 0
+                        ) {
+                          handleFormSubmit(formikRef.current!.values);
+                        }
                       }
                     }}
                     debounceDelay={3000}
