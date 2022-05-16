@@ -10,7 +10,7 @@ import (
 // ModelPlan is the top-level object for an entire draft model plan
 type ModelPlan struct {
 	ID            uuid.UUID      `json:"id" db:"id"`
-	ModelName     *string        `json:"modelName" db:"model_name"`
+	ModelName     string         `json:"modelName" db:"model_name"`
 	ModelCategory *ModelCategory `json:"modelCategory" db:"model_category"`
 	CMSCenters    pq.StringArray `json:"cmsCenters" db:"cms_centers"`
 	CMSOther      *string        `json:"cmsOther" db:"cms_other"`

@@ -1,66 +1,67 @@
 package resolvers
 
 import (
-	"fmt"
-	"testing"
-
-	"github.com/google/uuid"
 	"github.com/stretchr/testify/assert"
 
 	"github.com/cmsgov/mint-app/pkg/models"
 )
 
-func TestModelPlanCreate(t *testing.T) {
-	tc := GetDefaultTestConfigs()
-	plan := models.ModelPlan{}
-	plan.ID = uuid.MustParse("85b3ff03-1be2-4870-b02f-55c764500e48")
-	plan.CreatedBy = tc.Principal
-	plan.ModifiedBy = tc.Principal
-	plan.Status = models.ModelStatusPlanDraft
+func (suite *ResolverSuite) TestModelPlanCreate() {
+	planName := "Test Plan"
+	result, err := ModelPlanCreate(suite.testConfigs.Logger, planName, suite.testConfigs.Store, suite.testConfigs.UserInfo)
 
-	config := NewDBConfig()
-	fmt.Print(config)
+	assert.NoError(suite.T(), err)
+	assert.NotNil(suite.T(), result.ID)
+	assert.EqualValues(suite.T(), planName, result.ModelName)
+	assert.EqualValues(suite.T(), false, result.Archived)
+	assert.EqualValues(suite.T(), suite.testConfigs.UserInfo.EuaUserID, *result.CreatedBy)
+	assert.EqualValues(suite.T(), suite.testConfigs.UserInfo.EuaUserID, *result.ModifiedBy)
+	assert.EqualValues(suite.T(), *result.CreatedDts, *result.ModifiedDts)
+	assert.EqualValues(suite.T(), models.ModelStatusPlanDraft, result.Status)
+}
 
-	principalInfo := models.UserInfo{
-		CommonName: "Fake Tester name",
-		EuaUserID:  "TEST",
+func (suite *ResolverSuite) TestModelPlanUpdate() {
+	plan := createModelPlan(suite.T(), suite.testConfigs)
+
+	changes := map[string]interface{}{
+		"modelName":  "NEW_AND_IMPROVED",
+		"status":     models.ModelStatusIcipComplete,
+		"archived":   true,
+		"cmsCenters": []string{"CMMI", "OTHER"},
+		"cmsOther":   "SOME OTHER CMS CENTER",
+		"cmmiGroups": []string{"PATIENT_CARE_MODELS_GROUP", "SEAMLESS_CARE_MODELS_GROUP"},
 	}
+	updater := "UPDT"
+	result, err := ModelPlanUpdate(suite.testConfigs.Logger, plan.ID, changes, &updater, suite.testConfigs.Store) // update plan with new user "UPDT"
 
-	result, err := ModelPlanCreate(tc.Logger, &plan, tc.Store, &principalInfo)
-	assert.NoError(t, err)
-	assert.NotNil(t, result.ID)
+	assert.NoError(suite.T(), err)
+	assert.EqualValues(suite.T(), plan.ID, result.ID)
+	assert.EqualValues(suite.T(), changes["modelName"], result.ModelName)
+	assert.EqualValues(suite.T(), changes["archived"], result.Archived)
+	assert.EqualValues(suite.T(), changes["cmsCenters"], result.CMSCenters)
+	assert.EqualValues(suite.T(), changes["cmsOther"], *result.CMSOther)
+	assert.EqualValues(suite.T(), changes["cmmiGroups"], result.CMMIGroups)
+	assert.EqualValues(suite.T(), changes["status"], result.Status)
+	assert.EqualValues(suite.T(), suite.testConfigs.UserInfo.EuaUserID, *result.CreatedBy)
+	assert.EqualValues(suite.T(), updater, *result.ModifiedBy)
 }
-func TestModelPlanUpdate(t *testing.T) {
-	tc := GetDefaultTestConfigs()
-	modelName := models.StringPointer("My Test model")
 
-	plan := models.ModelPlan{}
-	plan.ID = uuid.MustParse("85b3ff03-1be2-4870-b02f-55c764500e48")
-	plan.ModifiedBy = tc.Principal
-	plan.CreatedBy = tc.Principal
-	plan.ModelName = modelName
-	plan.Status = models.ModelStatusPlanDraft
+func (suite *ResolverSuite) TestModelPlanGetByID() {
+	plan := createModelPlan(suite.T(), suite.testConfigs)
 
-	result, err := ModelPlanUpdate(tc.Logger, &plan, tc.Principal, tc.Store)
+	result, err := ModelPlanGetByID(suite.testConfigs.Logger, suite.testConfigs.UserInfo.EuaUserID, plan.ID, suite.testConfigs.Store)
 
-	assert.NoError(t, err)
-	assert.NotNil(t, result.ID)
-	assert.EqualValues(t, result.ModelName, plan.ModelName)
+	assert.NoError(suite.T(), err)
+	assert.EqualValues(suite.T(), plan, result)
 }
-func TestModelPlanGetByID(t *testing.T) {
-	tc := GetDefaultTestConfigs()
 
-	uuid := uuid.MustParse("85b3ff03-1be2-4870-b02f-55c764500e48")
-	result, err := ModelPlanGetByID(tc.Logger, *tc.Principal, uuid, tc.Store)
+func (suite *ResolverSuite) TestModelPlanCollectionByUser() {
+	plan := createModelPlan(suite.T(), suite.testConfigs)
 
-	assert.NoError(t, err)
-	assert.NotNil(t, result.ID)
-}
-func TestModelPlanCollectionByUser(t *testing.T) {
-	tc := GetDefaultTestConfigs()
+	result, err := ModelPlanCollectionByUser(suite.testConfigs.Logger, suite.testConfigs.UserInfo.EuaUserID, suite.testConfigs.Store)
 
-	result, err := ModelPlanCollectionByUser(tc.Logger, *tc.Principal, tc.Store)
-
-	assert.NoError(t, err)
-	assert.NotNil(t, result)
+	assert.NoError(suite.T(), err)
+	assert.NotNil(suite.T(), result)
+	assert.Len(suite.T(), result, 1)
+	assert.EqualValues(suite.T(), plan, result[0])
 }

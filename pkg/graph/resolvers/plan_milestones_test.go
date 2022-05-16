@@ -26,10 +26,7 @@ func TestCreatePlanMilestones(t *testing.T) {
 	store, err := storage.NewStore(logger, config, ldClient)
 	assert.NoError(t, err)
 
-	modelName := "FAKE"
-	planTemplate := models.ModelPlan{ModelName: &modelName, CreatedBy: &principal,
-		Status: models.ModelStatusPlanDraft}
-	plan, err := ModelPlanCreate(logger, &planTemplate, store, &principalInfo)
+	plan, err := ModelPlanCreate(logger, "FAKE", store, &principalInfo)
 	assert.NoError(t, err)
 
 	input := models.PlanMilestones{
@@ -59,11 +56,7 @@ func TestFetchPlanMilestonesByID(t *testing.T) {
 		EuaUserID:  principal,
 	}
 
-	modelName := "FAKE"
-
-	planTemplate := models.ModelPlan{ModelName: &modelName, CreatedBy: &principal,
-		Status: models.ModelStatusPlanDraft}
-	plan, err := ModelPlanCreate(logger, &planTemplate, store, &principalInfo)
+	plan, err := ModelPlanCreate(logger, "FAKE", store, &principalInfo)
 	assert.NoError(t, err)
 
 	input := models.PlanMilestones{

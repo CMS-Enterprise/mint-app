@@ -3,7 +3,7 @@ module github.com/cmsgov/mint-app
 go 1.16
 
 require (
-	github.com/99designs/gqlgen v0.16.0
+	github.com/99designs/gqlgen v0.17.5
 	github.com/aws/aws-sdk-go v1.44.4
 	github.com/facebookgo/clock v0.0.0-20150410010913-600d898af40a
 	github.com/go-openapi/errors v0.20.2
@@ -18,12 +18,13 @@ require (
 	github.com/guregu/null v4.0.0+incompatible
 	github.com/jmoiron/sqlx v1.2.0
 	github.com/lib/pq v1.10.3
+	github.com/mitchellh/mapstructure v1.5.0
 	github.com/okta/okta-jwt-verifier-golang v1.3.0
 	github.com/pquerna/otp v1.3.0
 	github.com/spf13/cobra v1.4.0
 	github.com/spf13/viper v1.10.1
-	github.com/stretchr/testify v1.7.0
-	github.com/vektah/gqlparser/v2 v2.3.1
+	github.com/stretchr/testify v1.7.1
+	github.com/vektah/gqlparser/v2 v2.4.2
 	go.uber.org/zap v1.19.1
 	golang.org/x/sync v0.0.0-20210220032951-036812b2e83c
 	gopkg.in/launchdarkly/go-sdk-common.v2 v2.5.0

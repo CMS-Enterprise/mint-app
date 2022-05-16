@@ -74,7 +74,7 @@ func (r *modelPlanResolver) Discussions(ctx context.Context, obj *models.ModelPl
 	return resolvers.PlanDiscussionCollectionByModelPlanID(logger, obj.ID, r.store)
 }
 
-func (r *mutationResolver) CreateModelPlan(ctx context.Context, input model.ModelPlanInput) (*models.ModelPlan, error) {
+func (r *mutationResolver) CreateModelPlan(ctx context.Context, modelName string) (*models.ModelPlan, error) {
 	logger := appcontext.ZLogger(ctx)
 	principal := appcontext.Principal(ctx).ID()
 	principalInfo, err := r.service.FetchUserInfo(ctx, principal)
@@ -86,9 +86,14 @@ func (r *mutationResolver) CreateModelPlan(ctx context.Context, input model.Mode
 		principalInfo = &tempPrincipalInfo
 	}
 
-	plan := ConvertToModelPlan(&input)
+	return resolvers.ModelPlanCreate(logger, modelName, r.store, principalInfo)
+}
 
-	return resolvers.ModelPlanCreate(logger, plan, r.store, principalInfo)
+func (r *mutationResolver) UpdateModelPlan(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.ModelPlan, error) {
+	principal := appcontext.Principal(ctx).ID()
+	logger := appcontext.ZLogger(ctx)
+
+	return resolvers.ModelPlanUpdate(logger, id, changes, &principal, r.store)
 }
 
 func (r *mutationResolver) CreatePlanCollaborator(ctx context.Context, input model.PlanCollaboratorInput) (*models.PlanCollaborator, error) {
@@ -123,20 +128,11 @@ func (r *mutationResolver) CreatePlanBasics(ctx context.Context, input model.Pla
 	return resolvers.CreatePlanBasics(logger, basics, &principal, r.store)
 }
 
-func (r *mutationResolver) UpdateModelPlan(ctx context.Context, input model.ModelPlanInput) (*models.ModelPlan, error) {
-	plan := ConvertToModelPlan(&input)
+func (r *mutationResolver) UpdatePlanBasics(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanBasics, error) {
 	principal := appcontext.Principal(ctx).ID()
 	logger := appcontext.ZLogger(ctx)
 
-	return resolvers.ModelPlanUpdate(logger, plan, &principal, r.store)
-}
-
-func (r *mutationResolver) UpdatePlanBasics(ctx context.Context, input model.PlanBasicsInput) (*models.PlanBasics, error) {
-	basics := ConvertToPlanBasics(&input)
-	principal := appcontext.Principal(ctx).ID()
-	logger := appcontext.ZLogger(ctx)
-
-	return resolvers.UpdatePlanBasics(logger, basics, &principal, r.store)
+	return resolvers.UpdatePlanBasics(logger, id, changes, principal, r.store)
 }
 
 func (r *mutationResolver) CreatePlanMilestones(ctx context.Context, input model.PlanMilestonesInput) (*models.PlanMilestones, error) {
@@ -147,12 +143,11 @@ func (r *mutationResolver) CreatePlanMilestones(ctx context.Context, input model
 	return resolvers.CreatePlanMilestones(logger, basics, &principal, r.store)
 }
 
-func (r *mutationResolver) UpdatePlanMilestones(ctx context.Context, input model.PlanMilestonesInput) (*models.PlanMilestones, error) {
-	basics := ConvertToPlanMilestonesModel(&input)
+func (r *mutationResolver) UpdatePlanMilestones(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanMilestones, error) {
 	principal := appcontext.Principal(ctx).ID()
 	logger := appcontext.ZLogger(ctx)
 
-	return resolvers.UpdatePlanMilestones(logger, basics, &principal, r.store)
+	return resolvers.UpdatePlanMilestones(logger, id, changes, principal, r.store)
 }
 
 func (r *mutationResolver) GeneratePresignedUploadURL(ctx context.Context, input model.GeneratePresignedUploadURLInput) (*model.GeneratePresignedUploadURLPayload, error) {
@@ -192,58 +187,46 @@ func (r *mutationResolver) DeletePlanDocument(ctx context.Context, input model.P
 	return resolvers.PlanDocumentDelete(logger, document, &principal, r.store)
 }
 
-func (r *mutationResolver) CreatePlanDiscussion(ctx context.Context, input model.PlanDiscussionInput) (*models.PlanDiscussion, error) {
-	discussion := ConvertToPlanDiscussion(&input)
-
+func (r *mutationResolver) CreatePlanDiscussion(ctx context.Context, input model.PlanDiscussionCreateInput) (*models.PlanDiscussion, error) {
 	principal := appcontext.Principal(ctx).ID()
 	logger := appcontext.ZLogger(ctx)
 
-	return resolvers.CreatePlanDiscussion(logger, discussion, &principal, r.store)
+	return resolvers.CreatePlanDiscussion(logger, &input, principal, r.store)
 }
 
-func (r *mutationResolver) UpdatePlanDiscussion(ctx context.Context, input model.PlanDiscussionInput) (*models.PlanDiscussion, error) {
-	discussion := ConvertToPlanDiscussion(&input)
-
+func (r *mutationResolver) UpdatePlanDiscussion(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanDiscussion, error) {
 	principal := appcontext.Principal(ctx).ID()
 	logger := appcontext.ZLogger(ctx)
 
-	return resolvers.UpdatePlanDiscussion(logger, discussion, &principal, r.store)
+	return resolvers.UpdatePlanDiscussion(logger, id, changes, principal, r.store)
 }
 
-func (r *mutationResolver) DeletePlanDiscussion(ctx context.Context, input model.PlanDiscussionInput) (*models.PlanDiscussion, error) {
-	discussion := ConvertToPlanDiscussion(&input)
-
+func (r *mutationResolver) DeletePlanDiscussion(ctx context.Context, id uuid.UUID) (*models.PlanDiscussion, error) {
 	principal := appcontext.Principal(ctx).ID()
 	logger := appcontext.ZLogger(ctx)
 
-	return resolvers.DeletePlanDiscussion(logger, discussion, &principal, r.store)
+	return resolvers.DeletePlanDiscussion(logger, id, principal, r.store)
 }
 
-func (r *mutationResolver) CreateDiscussionReply(ctx context.Context, input model.DiscussionReplyInput) (*models.DiscussionReply, error) {
-	reply := ConvertToDiscussionReply(&input)
-
+func (r *mutationResolver) CreateDiscussionReply(ctx context.Context, input model.DiscussionReplyCreateInput) (*models.DiscussionReply, error) {
 	principal := appcontext.Principal(ctx).ID()
 	logger := appcontext.ZLogger(ctx)
 
-	return resolvers.CreateDiscussionReply(logger, reply, &principal, r.store)
+	return resolvers.CreateDiscussionReply(logger, &input, principal, r.store)
 }
 
-func (r *mutationResolver) UpdateDiscussionReply(ctx context.Context, input model.DiscussionReplyInput) (*models.DiscussionReply, error) {
-	reply := ConvertToDiscussionReply(&input)
-
+func (r *mutationResolver) UpdateDiscussionReply(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.DiscussionReply, error) {
 	principal := appcontext.Principal(ctx).ID()
 	logger := appcontext.ZLogger(ctx)
 
-	return resolvers.UpdateDiscussionReply(logger, reply, &principal, r.store)
+	return resolvers.UpdateDiscussionReply(logger, id, changes, principal, r.store)
 }
 
-func (r *mutationResolver) DeleteDiscussionReply(ctx context.Context, input model.DiscussionReplyInput) (*models.DiscussionReply, error) {
-	reply := ConvertToDiscussionReply(&input)
-
+func (r *mutationResolver) DeleteDiscussionReply(ctx context.Context, id uuid.UUID) (*models.DiscussionReply, error) {
 	principal := appcontext.Principal(ctx).ID()
 	logger := appcontext.ZLogger(ctx)
 
-	return resolvers.DeleteDiscussionReply(logger, reply, &principal, r.store)
+	return resolvers.DeleteDiscussionReply(logger, id, principal, r.store)
 }
 
 func (r *planDiscussionResolver) Replies(ctx context.Context, obj *models.PlanDiscussion) ([]*models.DiscussionReply, error) {
@@ -275,18 +258,6 @@ func (r *queryResolver) ModelPlan(ctx context.Context, id uuid.UUID) (*models.Mo
 	principal := appcontext.Principal(ctx).ID()
 
 	return resolvers.ModelPlanGetByID(logger, principal, id, r.store)
-}
-
-func (r *queryResolver) PlanBasics(ctx context.Context, id uuid.UUID) (*models.PlanBasics, error) {
-	logger := appcontext.ZLogger(ctx)
-
-	return resolvers.FetchPlanBasicsByID(logger, id, r.store)
-}
-
-func (r *queryResolver) PlanMilestones(ctx context.Context, id uuid.UUID) (*models.PlanMilestones, error) {
-	logger := appcontext.ZLogger(ctx)
-
-	return resolvers.FetchPlanMilestonesByID(logger, id, r.store)
 }
 
 func (r *queryResolver) PlanDocument(ctx context.Context, id uuid.UUID) (*models.PlanDocument, error) {
@@ -333,6 +304,11 @@ func (r *queryResolver) CedarPersonsByCommonName(ctx context.Context, commonName
 	}
 
 	return response, nil
+}
+
+func (r *queryResolver) PlanCollaboratorByID(ctx context.Context, id uuid.UUID) (*models.PlanCollaborator, error) {
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.FetchCollaboratorByID(logger, id, r.store)
 }
 
 func (r *userInfoResolver) Email(ctx context.Context, obj *models.UserInfo) (string, error) {

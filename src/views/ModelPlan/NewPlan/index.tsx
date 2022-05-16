@@ -39,10 +39,7 @@ const NewPlanContent = () => {
     const { modelName } = formikValues;
     mutate({
       variables: {
-        input: {
-          modelName,
-          status: 'PLAN_DRAFT'
-        }
+        modelName
       }
     }).then(response => {
       if (!response?.errors) {

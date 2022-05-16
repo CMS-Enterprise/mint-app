@@ -10,6 +10,7 @@ import (
 
 	"github.com/cmsgov/mint-app/pkg/apperrors"
 	"github.com/cmsgov/mint-app/pkg/models"
+	"github.com/cmsgov/mint-app/pkg/shared/utilitySQL"
 	"github.com/cmsgov/mint-app/pkg/shared/utilityUUID"
 	"github.com/cmsgov/mint-app/pkg/storage/genericmodel"
 )
@@ -26,6 +27,9 @@ var planDiscussionUpdateSQL string
 //go:embed SQL/plan_discussion_delete.sql
 var planDiscussionDeleteSQL string
 
+//go:embed SQL/plan_discussion_get_by_id.sql
+var planDiscussionGetByID string
+
 //go:embed SQL/discussion_reply_create.sql
 var discussionReplyCreateSQL string
 
@@ -37,6 +41,9 @@ var discussionReplyUpdateSQL string
 
 //go:embed SQL/discussion_reply_delete.sql
 var discussionReplyDeleteSQL string
+
+//go:embed SQL/discussion_reply_get_by_id.sql
+var discussionReplyGetByID string
 
 // PlanDiscussionCreate creates a plan discussion
 func (s *Store) PlanDiscussionCreate(logger *zap.Logger, discussion *models.PlanDiscussion) (*models.PlanDiscussion, error) {
@@ -162,14 +169,30 @@ func (s *Store) DiscussionReplyUpdate(logger *zap.Logger, reply *models.Discussi
 }
 
 // PlanDiscussionDelete deletes the plan discussion for a given id
-func (s *Store) PlanDiscussionDelete(logger *zap.Logger, discussion *models.PlanDiscussion) (*models.PlanDiscussion, error) {
+func (s *Store) PlanDiscussionDelete(logger *zap.Logger, id uuid.UUID) (*models.PlanDiscussion, error) {
 	statement, err := s.db.PrepareNamed(planDiscussionDeleteSQL)
 	if err != nil {
 		return nil, err
 	}
-	//TODO should we use generic error handling?
 
-	err = statement.Get(discussion, discussion)
+	discussion := &models.PlanDiscussion{}
+	err = statement.Get(discussion, utilitySQL.CreateIDQueryMap(id))
+	if err != nil {
+		return nil, err
+	}
+
+	return discussion, nil
+}
+
+// PlanDiscussionByID retrieves the plan discussion for a given id
+func (s *Store) PlanDiscussionByID(logger *zap.Logger, id uuid.UUID) (*models.PlanDiscussion, error) {
+	statement, err := s.db.PrepareNamed(planDiscussionGetByID)
+	if err != nil {
+		return nil, err
+	}
+
+	discussion := &models.PlanDiscussion{}
+	err = statement.Get(discussion, utilitySQL.CreateIDQueryMap(id))
 	if err != nil {
 		return nil, err
 	}
@@ -178,17 +201,34 @@ func (s *Store) PlanDiscussionDelete(logger *zap.Logger, discussion *models.Plan
 }
 
 // DiscussionReplyDelete deletes the discussion reply for a given id
-func (s *Store) DiscussionReplyDelete(logger *zap.Logger, reply *models.DiscussionReply) (*models.DiscussionReply, error) {
+func (s *Store) DiscussionReplyDelete(logger *zap.Logger, id uuid.UUID) (*models.DiscussionReply, error) {
 	statement, err := s.db.PrepareNamed(discussionReplyDeleteSQL)
 	if err != nil {
 		return nil, err
 	}
 	//TODO should we use generic error handling?
 
-	err = statement.Get(reply, reply)
+	discussionReply := &models.DiscussionReply{}
+	err = statement.Get(discussionReply, utilitySQL.CreateIDQueryMap(id))
 	if err != nil {
 		return nil, err
 	}
 
-	return reply, nil
+	return discussionReply, nil
+}
+
+// DiscussionReplyByID retrieves the discussion reply for a given id
+func (s *Store) DiscussionReplyByID(logger *zap.Logger, id uuid.UUID) (*models.DiscussionReply, error) {
+	statement, err := s.db.PrepareNamed(discussionReplyGetByID)
+	if err != nil {
+		return nil, err
+	}
+
+	discussionReply := &models.DiscussionReply{}
+	err = statement.Get(discussionReply, utilitySQL.CreateIDQueryMap(id))
+	if err != nil {
+		return nil, err
+	}
+
+	return discussionReply, nil
 }
