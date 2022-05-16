@@ -14,26 +14,23 @@ type DownloadDocumentType = {
 
 // Util for on demand download of file
 const downloadFile = ({
-  client,
+  client, // graphQL client
   fileID,
   fileType,
   fileName,
-  query,
-  queryType,
-  urlKey
+  query, // gql query for download url
+  queryType, // return query type
+  urlKey // key of returned field of file url
 }: DownloadDocumentType) => {
   return fetchDownloadURL(client, fileID, query, queryType)
     .then((downloadURL: any) => {
-      if (downloadURL) {
-        return downloadDocumentFromURL(downloadURL[urlKey], fileName, fileType)
-          .then(() => {
-            return downloadURL[urlKey];
-          })
-          .catch(error => {
-            throw error;
-          });
-      }
-      throw i18next.t('documents:urlFail');
+      return downloadDocumentFromURL(downloadURL[urlKey], fileName, fileType)
+        .then(() => {
+          return downloadURL[urlKey];
+        })
+        .catch(error => {
+          throw error;
+        });
     })
     .catch((error: any) => {
       throw error;

@@ -7,6 +7,7 @@ import { DateTime } from 'luxon';
 
 import PageLoading from 'components/PageLoading';
 import Alert from 'components/shared/Alert';
+import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import DeleteModelPlanDocument from 'queries/DeleteModelPlanDocument';
 import GetPlanDocumentByModelID from 'queries/GetPlanDocumentByModelID';
 import GetPlanDocumentDownloadURL from 'queries/GetPlanDocumentDownloadURL';
@@ -34,6 +35,7 @@ const PlanDocumentsTable = ({
   hiddenColumns,
   modelID
 }: PlanDocumentsTableProps) => {
+  const { t } = useTranslation('documents');
   const {
     error,
     loading,
@@ -53,7 +55,18 @@ const PlanDocumentsTable = ({
   }
 
   if (error) {
-    return <div>{JSON.stringify(error)}</div>;
+    return (
+      <ErrorAlert
+        testId="formik-validation-errors"
+        classNames="margin-top-3"
+        heading={t('documentTable.error.heading')}
+      >
+        <ErrorAlertMessage
+          errorKey="error-document"
+          message={t('documentTable.error.body')}
+        />
+      </ErrorAlert>
+    );
   }
 
   return (
@@ -121,7 +134,7 @@ const Table = ({ data, hiddenColumns, refetch }: TableProps) => {
         queryType: 'planDocumentDownloadURL',
         urlKey: 'presignedURL'
       })
-        .then((downloadURL: string) => {})
+        .then((downloadURL: string) => {}) // TODO: Returning download URL for cypress testing
         .catch((error: any) => {
           if (error) setDocumentError(error);
         });

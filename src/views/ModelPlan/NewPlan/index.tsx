@@ -7,6 +7,8 @@ import {
   BreadcrumbBar,
   BreadcrumbLink,
   Button,
+  Grid,
+  GridContainer,
   Label,
   TextInput
 } from '@trussworks/react-uswds';
@@ -52,8 +54,8 @@ const NewPlanContent = () => {
 
   return (
     <MainContent data-testid="new-plan">
-      <div className="grid-container">
-        <div className="tablet:grid-col-12">
+      <GridContainer>
+        <Grid desktop={{ col: 12 }}>
           <BreadcrumbBar variant="wrap">
             <Breadcrumb>
               <BreadcrumbLink asCustom={Link} to="/">
@@ -146,8 +148,8 @@ const NewPlanContent = () => {
               );
             }}
           </Formik>
-        </div>
-      </div>
+        </Grid>
+      </GridContainer>
     </MainContent>
   );
 };

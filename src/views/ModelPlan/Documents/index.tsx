@@ -6,6 +6,8 @@ import {
   Breadcrumb,
   BreadcrumbBar,
   BreadcrumbLink,
+  Grid,
+  GridContainer,
   IconArrowBack
 } from '@trussworks/react-uswds';
 
@@ -23,7 +25,7 @@ import NotFound from 'views/NotFound';
 import AddDocument from './AddDocument';
 import PlanDocumentsTable from './table';
 
-const DocumentsContent = () => {
+export const DocumentsContent = () => {
   const { t: h } = useTranslation('draftModelPlan');
   const { t } = useTranslation('documents');
   const { modelID } = useParams<{ modelID: string }>();
@@ -40,9 +42,9 @@ const DocumentsContent = () => {
   const modelPlan = data?.modelPlan || ({} as GetModelPlanTypes);
 
   return (
-    <MainContent data-testid="new-plan">
-      <div className="grid-container">
-        <div className="tablet:grid-col-12">
+    <MainContent data-testid="model-documents">
+      <GridContainer>
+        <Grid desktop={{ col: 12 }}>
           <BreadcrumbBar variant="wrap">
             <Breadcrumb>
               <BreadcrumbLink asCustom={Link} to="/">
@@ -96,8 +98,8 @@ const DocumentsContent = () => {
           </UswdsReactLink>
 
           <PlanDocumentsTable modelID={modelID} />
-        </div>
-      </div>
+        </Grid>
+      </GridContainer>
     </MainContent>
   );
 };

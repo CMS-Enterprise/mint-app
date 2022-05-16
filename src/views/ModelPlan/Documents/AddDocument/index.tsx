@@ -5,6 +5,8 @@ import {
   Breadcrumb,
   BreadcrumbBar,
   BreadcrumbLink,
+  Grid,
+  GridContainer,
   IconArrowBack
 } from '@trussworks/react-uswds';
 
@@ -12,7 +14,7 @@ import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 
-import NewUpload from './fileUpload';
+import DocumentUpload from './documentUpload';
 
 const AddDocument = () => {
   const { t: h } = useTranslation('draftModelPlan');
@@ -20,9 +22,9 @@ const AddDocument = () => {
   const { modelID } = useParams<{ modelID: string }>();
 
   return (
-    <MainContent data-testid="new-plan">
-      <div className="grid-container">
-        <div className="tablet:grid-col-6">
+    <MainContent data-testid="add-document">
+      <GridContainer>
+        <Grid desktop={{ col: 6 }}>
           <BreadcrumbBar variant="wrap">
             <Breadcrumb>
               <BreadcrumbLink asCustom={Link} to="/">
@@ -56,7 +58,7 @@ const AddDocument = () => {
             {t('uploadDescription')}
           </p>
 
-          <NewUpload />
+          <DocumentUpload />
 
           <div className="display-block">
             <UswdsReactLink
@@ -67,8 +69,8 @@ const AddDocument = () => {
               {t('dontUpload')}
             </UswdsReactLink>
           </div>
-        </div>
-      </div>
+        </Grid>
+      </GridContainer>
     </MainContent>
   );
 };

@@ -17,7 +17,16 @@ const documents = {
     noVirusFound: 'No viruses found',
     virusFound: 'Virus found',
     view: 'View',
-    remove: 'Remove'
+    remove: 'Remove',
+    error: {
+      heading: 'There is a problem',
+      body: 'Failed to fetch Model Plan documents'
+    }
+  },
+  uploadError: {
+    heading: 'There is a problem',
+    body:
+      'Something went wrong with EASi. Please try refreshing the page or try again later.'
   },
   downloadFail: 'Failed to download file',
   urlFail: 'Failed to fetch file URL',

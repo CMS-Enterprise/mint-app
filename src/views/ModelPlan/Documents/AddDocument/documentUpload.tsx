@@ -28,7 +28,7 @@ import flattenErrors from 'utils/flattenErrors';
 import { translateDocumentType } from 'utils/modelPlan';
 import { DocumentUploadValidationSchema } from 'validations/documentUploadSchema';
 
-const NewUpload = () => {
+const DocumentUpload = () => {
   const { modelID } = useParams<{ modelID: string }>();
   const history = useHistory();
   const { t } = useTranslation('documents');
@@ -50,6 +50,7 @@ const NewUpload = () => {
     setErrorGeneratingPresignedUrl
   ] = useState(false);
 
+  // Generates s3URL for uploading document
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event?.currentTarget?.files?.[0];
     if (!file) {
@@ -75,6 +76,7 @@ const NewUpload = () => {
       });
   };
 
+  // Uploads the document to s3 bucket and create document on BE
   const onSubmit = (values: FileUploadForm) => {
     const { file } = values;
     if (file && file.name && file.size >= 0 && file.type) {
@@ -144,7 +146,7 @@ const NewUpload = () => {
                 <ErrorAlert
                   testId="document-upload-errors"
                   classNames="margin-bottom-4 margin-top-4"
-                  heading="There is a problem"
+                  heading={t('uploadError.heading')}
                 >
                   {Object.keys(flatErrors).map(key => {
                     return (
@@ -158,10 +160,7 @@ const NewUpload = () => {
                 </ErrorAlert>
               )}
               {isErrorGeneratingPresignedUrl && (
-                <Alert
-                  type="error"
-                  heading={t('uploadDocument.presignedUrlErrorHeader')}
-                >
+                <Alert type="error" heading={t('uploadError.body')}>
                   {t('uploadDocument.presignedUrlErrorBody')}
                 </Alert>
               )}
@@ -211,7 +210,7 @@ const NewUpload = () => {
                       {(Object.keys(DocumentType) as Array<
                         keyof typeof DocumentType
                       >)
-                        .filter(documentType => documentType !== 'OTHER')
+                        .filter(documentType => documentType !== 'OTHER') // Filter 'OTHER' to be last in the radio button list
                         .map(documentType => {
                           return (
                             <Field
@@ -324,4 +323,4 @@ const NewUpload = () => {
   );
 };
 
-export default NewUpload;
+export default DocumentUpload;
