@@ -22,12 +22,12 @@ import FieldGroup from 'components/shared/FieldGroup';
 import teamRoles from 'constants/enums/teamRoles';
 import useUserSearch from 'hooks/getCedarUsers';
 import CreateModelPlanCollaborator from 'queries/CreateModelPlanCollaborator';
-import GetModelPlanCollaborators from 'queries/GetModelCollaborators';
+import GetModelPlanCollaborator from 'queries/GetModelPlanCollaborator';
 import { CreateModelPlanCollaborator as CreateCollaboratorsType } from 'queries/types/CreateModelPlanCollaborator';
 import {
-  GetModelCollaborators,
-  GetModelCollaborators_modelPlan_collaborators as GetCollaboratorsType
-} from 'queries/types/GetModelCollaborators';
+  GetModelCollaborator,
+  GetModelCollaborator_planCollaboratorByID as GetCollaboratorType
+} from 'queries/types/GetModelCollaborator';
 import { UpdateModelPlanCollaborator as UpdateModelPlanCollaboratorType } from 'queries/types/UpdateModelPlanCollaborator';
 import UpdateModelPlanCollaborator from 'queries/UpdateModelPlanCollaborator';
 import { CollaboratorForm } from 'types/collaborator';
@@ -57,21 +57,15 @@ const Collaborators = () => {
     UpdateModelPlanCollaborator
   );
 
-  const { data } = useQuery<GetModelCollaborators>(GetModelPlanCollaborators, {
+  const { data } = useQuery<GetModelCollaborator>(GetModelPlanCollaborator, {
     variables: {
-      id: modelId
+      id: collaboratorId
     },
     skip: !collaboratorId
   });
 
-  // TODO: Replace with query for single user once BE complete
-  const collaborator = (data?.modelPlan?.collaborators.filter(
-    user => user.id === collaboratorId
-  )[0] ?? {
-    euaUserID: '',
-    fullName: '',
-    teamRole: ''
-  }) as GetCollaboratorsType;
+  const collaborator =
+    data?.planCollaboratorByID ?? ({} as GetCollaboratorType);
 
   const handleUpdateDraftModelPlan = (formikValues?: CollaboratorForm) => {
     const { fullName = '', teamRole = '', euaUserID = '' } = formikValues || {};

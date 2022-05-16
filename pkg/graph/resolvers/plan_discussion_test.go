@@ -1,116 +1,165 @@
 package resolvers
 
-// import (
-// 	"testing"
+import (
+	_ "github.com/lib/pq" // required for postgres driver in sql
+	"github.com/stretchr/testify/assert"
 
-// 	"github.com/cmsgov/mint-app/pkg/models"
+	"github.com/cmsgov/mint-app/pkg/graph/model"
+	"github.com/cmsgov/mint-app/pkg/models"
+)
 
-// 	"github.com/google/uuid"
-// 	_ "github.com/lib/pq" // required for postgres driver in sql
-// 	"github.com/stretchr/testify/assert"
-// )
+func (suite *ResolverSuite) TestCreatePlanDiscussion() {
+	plan := createModelPlan(suite.T(), suite.testConfigs)
 
-// func makeTestDiscussion() models.PlanDiscussion {
-// 	return models.PlanDiscussion{
-// 		ID:          uuid.MustParse("89e137b8-59cb-4281-98d4-28309d1f3b76"),
-// 		ModelPlanID: uuid.MustParse("85b3ff03-1be2-4870-b02f-55c764500e48"),
-// 		Content:     "This is a test comment",
-// 		Status:      models.DiscussionUnAnswered,
-// 		CreatedBy:   "TEST",
-// 		ModifiedBy:  "TEST",
-// 	}
-// }
+	input := &model.PlanDiscussionCreateInput{
+		ModelPlanID: plan.ID,
+		Content:     "This is a test comment",
+	}
 
-// func makeDiscussionReply() models.DiscussionReply {
-// 	return models.DiscussionReply{
-// 		ID:           uuid.MustParse("9c5862b4-79ee-4ec0-a4b9-40c2566a5cf9"),
-// 		DiscussionID: uuid.MustParse("89e137b8-59cb-4281-98d4-28309d1f3b76"),
-// 		Content:      "This is a test comment",
-// 		Resolution:   false,
-// 		CreatedBy:    "TEST",
-// 		ModifiedBy:   "TEST",
-// 	}
-// }
+	result, err := CreatePlanDiscussion(suite.testConfigs.Logger, input, suite.testConfigs.UserInfo.EuaUserID, suite.testConfigs.Store)
+	assert.NoError(suite.T(), err)
+	assert.NotNil(suite.T(), result.ID)
+	assert.EqualValues(suite.T(), plan.ID, result.ModelPlanID)
+	assert.EqualValues(suite.T(), input.Content, result.Content)
+	assert.EqualValues(suite.T(), models.DiscussionUnAnswered, result.Status)
+}
 
-// func TestCreatePlanDiscussion(t *testing.T) {
-// 	tc := GetDefaultTestConfigs()
-// 	discussion := makeTestDiscussion()
+func (suite *ResolverSuite) TestUpdatePlanDiscussion() {
+	plan := createModelPlan(suite.T(), suite.testConfigs)
+	discussion := createPlanDiscussion(suite.T(), suite.testConfigs, plan, "This is a test comment")
 
-// 	result, err := CreatePlanDiscussion(tc.Logger, &discussion, tc.Principal, tc.Store)
-// 	assert.NoError(t, err)
-// 	assert.NotNil(t, result.ID)
-// }
+	changes := map[string]interface{}{
+		"content": "This is now updated! Thanks for looking at my test",
+		"status":  models.DiscussionAnswered,
+	}
 
-// func TestUpdatePlanDiscussion(t *testing.T) {
-// 	t.Skip() // TODO until we have no test inter-dependency
-// 	tc := GetDefaultTestConfigs()
-// 	discussion := makeTestDiscussion()
-// 	discussion.Content = "This is now updated"
+	updater := "UPDT"
+	result, err := UpdatePlanDiscussion(suite.testConfigs.Logger, discussion.ID, changes, updater, suite.testConfigs.Store)
 
-// 	result, err := UpdatePlanDiscussion(tc.Logger, &discussion, tc.Principal, tc.Store)
+	assert.NoError(suite.T(), err)
+	assert.EqualValues(suite.T(), discussion.ID, result.ID)
+	assert.EqualValues(suite.T(), changes["content"], result.Content)
+	assert.EqualValues(suite.T(), changes["status"], result.Status)
+	assert.EqualValues(suite.T(), suite.testConfigs.UserInfo.EuaUserID, result.CreatedBy)
+	assert.EqualValues(suite.T(), updater, result.ModifiedBy)
+}
 
-// 	assert.NoError(t, err)
-// 	assert.NotNil(t, result.ID)
+func (suite *ResolverSuite) TestDeletePlanDiscussion() {
+	plan := createModelPlan(suite.T(), suite.testConfigs)
+	discussion := createPlanDiscussion(suite.T(), suite.testConfigs, plan, "This is a test comment")
 
-// 	assert.EqualValues(t, discussion.Content, result.Content)
-// }
+	result, err := DeletePlanDiscussion(suite.testConfigs.Logger, discussion.ID, suite.testConfigs.UserInfo.EuaUserID, suite.testConfigs.Store)
+	assert.NoError(suite.T(), err)
+	assert.EqualValues(suite.T(), discussion, result)
 
-// func TestCreateDiscussionReply(t *testing.T) {
-// 	tc := GetDefaultTestConfigs()
-// 	reply := makeDiscussionReply()
+	// Check that there's no plans for this user
+	discussions, err := PlanDiscussionCollectionByModelPlanID(suite.testConfigs.Logger, discussion.ID, suite.testConfigs.Store)
+	assert.NoError(suite.T(), err)
+	assert.Len(suite.T(), discussions, 0)
+}
 
-// 	result, err := CreateDiscussionReply(tc.Logger, &reply, tc.Principal, tc.Store)
-// 	assert.NoError(t, err)
-// 	assert.NotNil(t, result.ID)
+func (suite *ResolverSuite) TestDeletePlanDiscussionWithReply() {
+	plan := createModelPlan(suite.T(), suite.testConfigs)
+	discussion := createPlanDiscussion(suite.T(), suite.testConfigs, plan, "This is a test comment")
+	_ = createDiscussionReply(suite.T(), suite.testConfigs, discussion, "This is a test reply", false)
 
-// }
+	_, err := DeletePlanDiscussion(suite.testConfigs.Logger, discussion.ID, suite.testConfigs.UserInfo.EuaUserID, suite.testConfigs.Store)
+	assert.Error(suite.T(), err)
+	assert.Contains(suite.T(), err.Error(), "violates foreign key constraint") // maybe a weak check, and should be a custom error type, but works for now
+}
 
-// func TestUpdateDiscussionReply(t *testing.T) {
-// 	tc := GetDefaultTestConfigs()
-// 	reply := makeDiscussionReply()
-// 	reply.Resolution = true
+func (suite *ResolverSuite) TestCreateDiscussionReply() {
+	plan := createModelPlan(suite.T(), suite.testConfigs)
+	discussion := createPlanDiscussion(suite.T(), suite.testConfigs, plan, "This is a test comment")
 
-// 	result, err := UpdateDiscussionReply(tc.Logger, &reply, tc.Principal, tc.Store)
-// 	assert.NoError(t, err)
-// 	assert.EqualValues(t, reply.Resolution, result.Resolution)
-// }
+	input := &model.DiscussionReplyCreateInput{
+		DiscussionID: discussion.ID,
+		Content:      "This is a test reply",
+		Resolution:   true,
+	}
 
-// func TestDiscussionReplyCollectionByDiscusionID(t *testing.T) {
-// 	tc := GetDefaultTestConfigs()
-// 	discussionID := uuid.MustParse("89e137b8-59cb-4281-98d4-28309d1f3b76")
+	result, err := CreateDiscussionReply(suite.testConfigs.Logger, input, suite.testConfigs.UserInfo.EuaUserID, suite.testConfigs.Store)
+	assert.NoError(suite.T(), err)
+	assert.NotNil(suite.T(), result.ID)
+	assert.EqualValues(suite.T(), discussion.ID, result.DiscussionID)
+	assert.EqualValues(suite.T(), input.Content, result.Content)
+	assert.EqualValues(suite.T(), input.Resolution, result.Resolution)
+}
 
-// 	result, err := DiscussionReplyCollectionByDiscusionID(tc.Logger, discussionID, tc.Store)
-// 	assert.NotNil(t, result)
-// 	assert.NoError(t, err)
+func (suite *ResolverSuite) TestUpdateDiscussionReply() {
+	plan := createModelPlan(suite.T(), suite.testConfigs)
+	discussion := createPlanDiscussion(suite.T(), suite.testConfigs, plan, "This is a test comment")
+	reply := createDiscussionReply(suite.T(), suite.testConfigs, discussion, "This is a test reply", false)
 
-// }
+	changes := map[string]interface{}{
+		"content":    "This is now updated! Thanks for looking at my test",
+		"resolution": true,
+	}
+	updater := "UPDT"
 
-// func TestPlanDiscussionCollectionByModelPlanID(t *testing.T) {
-// 	tc := GetDefaultTestConfigs()
-// 	modelPlanID := uuid.MustParse("85b3ff03-1be2-4870-b02f-55c764500e48")
+	result, err := UpdateDiscussionReply(suite.testConfigs.Logger, reply.ID, changes, updater, suite.testConfigs.Store)
+	assert.NoError(suite.T(), err)
+	assert.EqualValues(suite.T(), changes["content"], result.Content)
+	assert.EqualValues(suite.T(), changes["resolution"], result.Resolution)
+	assert.EqualValues(suite.T(), suite.testConfigs.UserInfo.EuaUserID, result.CreatedBy)
+	assert.EqualValues(suite.T(), updater, result.ModifiedBy)
+}
 
-// 	result, err := PlanDiscussionCollectionByModelPlanID(tc.Logger, modelPlanID, tc.Store)
-// 	assert.NotNil(t, result)
-// 	assert.NoError(t, err)
-// }
+func (suite *ResolverSuite) TestDiscussionReplyCollectionByDiscusionID() {
+	plan := createModelPlan(suite.T(), suite.testConfigs)
+	discussion := createPlanDiscussion(suite.T(), suite.testConfigs, plan, "This is a test comment")
+	_ = createDiscussionReply(suite.T(), suite.testConfigs, discussion, "This is a test reply", false)
+	_ = createDiscussionReply(suite.T(), suite.testConfigs, discussion, "This is another test reply", true)
 
-// func TestDeleteDiscussionReply(t *testing.T) {
-// 	tc := GetDefaultTestConfigs()
-// 	reply := makeDiscussionReply()
-// 	reply.Resolution = true
+	result, err := DiscussionReplyCollectionByDiscusionID(suite.testConfigs.Logger, discussion.ID, suite.testConfigs.Store)
+	assert.NoError(suite.T(), err)
+	assert.Len(suite.T(), result, 2)
 
-// 	result, err := DeleteDiscussionReply(tc.Logger, &reply, tc.Principal, tc.Store)
-// 	assert.NoError(t, err)
-// 	assert.NotNil(t, result.ID)
-// }
+	// Check that adding another dicussion doesn't affect the first one
+	discussionTwo := createPlanDiscussion(suite.T(), suite.testConfigs, plan, "This is another test comment")
+	_ = createDiscussionReply(suite.T(), suite.testConfigs, discussionTwo, "This is a test reply", false)
+	_ = createDiscussionReply(suite.T(), suite.testConfigs, discussionTwo, "This is another test reply", true)
+	_ = createDiscussionReply(suite.T(), suite.testConfigs, discussionTwo, "This is a third test reply", true)
 
-// func TestDeletePlanDiscussion(t *testing.T) {
-// 	tc := GetDefaultTestConfigs()
-// 	discussion := makeTestDiscussion()
-// 	discussion.Content = "This is now updated"
+	// Assert the count on the _first_ discussion is still 2
+	result, err = DiscussionReplyCollectionByDiscusionID(suite.testConfigs.Logger, discussion.ID, suite.testConfigs.Store)
+	assert.NoError(suite.T(), err)
+	assert.Len(suite.T(), result, 2)
+}
 
-// 	result, err := DeletePlanDiscussion(tc.Logger, &discussion, tc.Principal, tc.Store)
+func (suite *ResolverSuite) TestPlanDiscussionCollectionByModelPlanID() {
+	plan := createModelPlan(suite.T(), suite.testConfigs)
+	discussion := createPlanDiscussion(suite.T(), suite.testConfigs, plan, "This is a test comment")
+	_ = createDiscussionReply(suite.T(), suite.testConfigs, discussion, "This is a test reply", false)
+	_ = createDiscussionReply(suite.T(), suite.testConfigs, discussion, "This is another test reply", true)
 
-// 	assert.NoError(t, err)
-// 	assert.NotNil(t, result.ID)
-// }
+	result, err := PlanDiscussionCollectionByModelPlanID(suite.testConfigs.Logger, plan.ID, suite.testConfigs.Store)
+	assert.NoError(suite.T(), err)
+	assert.Len(suite.T(), result, 1)
+
+	// Check that adding another dicussion doesn't affect the first one
+	discussionTwo := createPlanDiscussion(suite.T(), suite.testConfigs, plan, "This is another test comment")
+	_ = createDiscussionReply(suite.T(), suite.testConfigs, discussionTwo, "This is a test reply", false)
+	_ = createDiscussionReply(suite.T(), suite.testConfigs, discussionTwo, "This is another test reply", true)
+	_ = createDiscussionReply(suite.T(), suite.testConfigs, discussionTwo, "This is a third test reply", true)
+
+	// Assert the count on the is now 2 after adding another discussion
+	result, err = PlanDiscussionCollectionByModelPlanID(suite.testConfigs.Logger, plan.ID, suite.testConfigs.Store)
+	assert.NoError(suite.T(), err)
+	assert.Len(suite.T(), result, 2)
+}
+
+func (suite *ResolverSuite) TestDeleteDiscussionReply() {
+	plan := createModelPlan(suite.T(), suite.testConfigs)
+	discussion := createPlanDiscussion(suite.T(), suite.testConfigs, plan, "This is a test comment")
+	reply := createDiscussionReply(suite.T(), suite.testConfigs, discussion, "This is a test reply", false)
+	_ = createDiscussionReply(suite.T(), suite.testConfigs, discussion, "This is another test reply", false)
+
+	_, err := DeleteDiscussionReply(suite.testConfigs.Logger, reply.ID, suite.testConfigs.UserInfo.EuaUserID, suite.testConfigs.Store)
+	assert.NoError(suite.T(), err)
+
+	// Should only have 1 left now
+	result, err := DiscussionReplyCollectionByDiscusionID(suite.testConfigs.Logger, discussion.ID, suite.testConfigs.Store)
+	assert.NoError(suite.T(), err)
+	assert.Len(suite.T(), result, 1)
+}
