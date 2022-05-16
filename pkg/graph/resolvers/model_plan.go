@@ -4,6 +4,7 @@ import (
 	"github.com/google/uuid"
 	"go.uber.org/zap"
 
+	"github.com/cmsgov/mint-app/pkg/graph/model"
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/storage"
 )
@@ -26,14 +27,16 @@ func ModelPlanCreate(logger *zap.Logger, modelName string, store *storage.Store,
 	  - this could be in a combined store for collaborator / plan
 	- we could also address this directly in SQL, create the plan and collaborator at the same time.
 	*/
-
-	colab := models.PlanCollaborator{
-		EUAUserID:   *createdPlan.CreatedBy,
+	collabInput := &model.PlanCollaboratorCreateInput{
 		ModelPlanID: createdPlan.ID,
-		TeamRole:    models.TeamRoleModelLead,
+		EuaUserID:   principalInfo.EuaUserID,
 		FullName:    principalInfo.CommonName,
+		TeamRole:    models.TeamRoleModelLead,
 	}
-	_, _ = CreatePlanCollaborator(logger, &colab, createdPlan.CreatedBy, store)
+	_, err = CreatePlanCollaborator(logger, collabInput, principalInfo.EuaUserID, store)
+	if err != nil {
+		return nil, err
+	}
 
 	return createdPlan, err
 }

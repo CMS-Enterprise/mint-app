@@ -63,13 +63,14 @@ func (s *Store) PlanCollaboratorUpdate(_ *zap.Logger, collaborator *models.PlanC
 }
 
 // PlanCollaboratorDelete deletes the plan collaborator for a given id
-func (s *Store) PlanCollaboratorDelete(_ *zap.Logger, collaborator *models.PlanCollaborator) (*models.PlanCollaborator, error) {
+func (s *Store) PlanCollaboratorDelete(_ *zap.Logger, id uuid.UUID) (*models.PlanCollaborator, error) {
 	statement, err := s.db.PrepareNamed(planCollaboratorDeleteSQL)
 	if err != nil {
 		return nil, err
 	}
 
-	err = statement.Get(collaborator, collaborator)
+	collaborator := &models.PlanCollaborator{}
+	err = statement.Get(collaborator, utilitySQL.CreateIDQueryMap(id))
 	if err != nil {
 		return nil, err
 	}

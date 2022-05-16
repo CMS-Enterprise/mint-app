@@ -98,23 +98,3 @@ func ConvertToPlanDocumentModel(input *model.PlanDocumentInput) *models.PlanDocu
 
 	return &documentModel
 }
-
-// ConvertToPlanCollaborator takes an auto-generated plan collaborator input and converts it to a hand-written one
-func ConvertToPlanCollaborator(pci *model.PlanCollaboratorInput) *models.PlanCollaborator {
-	collaborator := models.PlanCollaborator{
-		ModelPlanID: pci.ModelPlanID,
-		EUAUserID:   pci.EuaUserID,
-		FullName:    pci.FullName,
-		TeamRole:    pci.TeamRole,
-		CreatedBy:   pci.CreatedBy,
-		CreatedDts:  pci.CreatedDts,
-		ModifiedBy:  pci.ModifiedBy,
-		ModifiedDts: pci.ModifiedDts,
-	}
-
-	if pci.ID != nil {
-		collaborator.ID = *pci.ID
-	}
-	return &collaborator
-
-}

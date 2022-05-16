@@ -100,19 +100,19 @@ type ComplexityRoot struct {
 		CreateDiscussionReply      func(childComplexity int, input model.DiscussionReplyCreateInput) int
 		CreateModelPlan            func(childComplexity int, modelName string) int
 		CreatePlanBasics           func(childComplexity int, input model.PlanBasicsInput) int
-		CreatePlanCollaborator     func(childComplexity int, input model.PlanCollaboratorInput) int
+		CreatePlanCollaborator     func(childComplexity int, input model.PlanCollaboratorCreateInput) int
 		CreatePlanDiscussion       func(childComplexity int, input model.PlanDiscussionCreateInput) int
 		CreatePlanDocument         func(childComplexity int, input model.PlanDocumentInput) int
 		CreatePlanMilestones       func(childComplexity int, input model.PlanMilestonesInput) int
 		DeleteDiscussionReply      func(childComplexity int, id uuid.UUID) int
-		DeletePlanCollaborator     func(childComplexity int, input model.PlanCollaboratorInput) int
+		DeletePlanCollaborator     func(childComplexity int, id uuid.UUID) int
 		DeletePlanDiscussion       func(childComplexity int, id uuid.UUID) int
 		DeletePlanDocument         func(childComplexity int, input model.PlanDocumentInput) int
 		GeneratePresignedUploadURL func(childComplexity int, input model.GeneratePresignedUploadURLInput) int
 		UpdateDiscussionReply      func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
 		UpdateModelPlan            func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
 		UpdatePlanBasics           func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
-		UpdatePlanCollaborator     func(childComplexity int, input model.PlanCollaboratorInput) int
+		UpdatePlanCollaborator     func(childComplexity int, id uuid.UUID, newRole models.TeamRole) int
 		UpdatePlanDiscussion       func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
 		UpdatePlanDocument         func(childComplexity int, input model.PlanDocumentInput) int
 		UpdatePlanMilestones       func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
@@ -236,9 +236,9 @@ type ModelPlanResolver interface {
 type MutationResolver interface {
 	CreateModelPlan(ctx context.Context, modelName string) (*models.ModelPlan, error)
 	UpdateModelPlan(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.ModelPlan, error)
-	CreatePlanCollaborator(ctx context.Context, input model.PlanCollaboratorInput) (*models.PlanCollaborator, error)
-	UpdatePlanCollaborator(ctx context.Context, input model.PlanCollaboratorInput) (*models.PlanCollaborator, error)
-	DeletePlanCollaborator(ctx context.Context, input model.PlanCollaboratorInput) (*models.PlanCollaborator, error)
+	CreatePlanCollaborator(ctx context.Context, input model.PlanCollaboratorCreateInput) (*models.PlanCollaborator, error)
+	UpdatePlanCollaborator(ctx context.Context, id uuid.UUID, newRole models.TeamRole) (*models.PlanCollaborator, error)
+	DeletePlanCollaborator(ctx context.Context, id uuid.UUID) (*models.PlanCollaborator, error)
 	CreatePlanBasics(ctx context.Context, input model.PlanBasicsInput) (*models.PlanBasics, error)
 	UpdatePlanBasics(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanBasics, error)
 	CreatePlanMilestones(ctx context.Context, input model.PlanMilestonesInput) (*models.PlanMilestones, error)
@@ -538,7 +538,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			return 0, false
 		}
 
-		return e.complexity.Mutation.CreatePlanCollaborator(childComplexity, args["input"].(model.PlanCollaboratorInput)), true
+		return e.complexity.Mutation.CreatePlanCollaborator(childComplexity, args["input"].(model.PlanCollaboratorCreateInput)), true
 
 	case "Mutation.createPlanDiscussion":
 		if e.complexity.Mutation.CreatePlanDiscussion == nil {
@@ -598,7 +598,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			return 0, false
 		}
 
-		return e.complexity.Mutation.DeletePlanCollaborator(childComplexity, args["input"].(model.PlanCollaboratorInput)), true
+		return e.complexity.Mutation.DeletePlanCollaborator(childComplexity, args["id"].(uuid.UUID)), true
 
 	case "Mutation.deletePlanDiscussion":
 		if e.complexity.Mutation.DeletePlanDiscussion == nil {
@@ -682,7 +682,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			return 0, false
 		}
 
-		return e.complexity.Mutation.UpdatePlanCollaborator(childComplexity, args["input"].(model.PlanCollaboratorInput)), true
+		return e.complexity.Mutation.UpdatePlanCollaborator(childComplexity, args["id"].(uuid.UUID), args["newRole"].(models.TeamRole)), true
 
 	case "Mutation.updatePlanDiscussion":
 		if e.complexity.Mutation.UpdatePlanDiscussion == nil {
@@ -1314,7 +1314,7 @@ func (e *executableSchema) Exec(ctx context.Context) graphql.ResponseHandler {
 		ec.unmarshalInputDiscussionReplyCreateInput,
 		ec.unmarshalInputGeneratePresignedUploadURLInput,
 		ec.unmarshalInputPlanBasicsInput,
-		ec.unmarshalInputPlanCollaboratorInput,
+		ec.unmarshalInputPlanCollaboratorCreateInput,
 		ec.unmarshalInputPlanDiscussionCreateInput,
 		ec.unmarshalInputPlanDocumentInput,
 		ec.unmarshalInputPlanDocumentParameters,
@@ -1459,18 +1459,13 @@ type PlanCollaborator {
 }
 
 """
-PlanCollaboratorInput represents the data required to create, modify, or delete a collaborator on a plan
+PlanCollaboratorCreateInput represents the data required to create a collaborator on a plan
 """
-input PlanCollaboratorInput {
-  id: UUID
+input PlanCollaboratorCreateInput {
   modelPlanID: UUID!
   euaUserID: String!
   fullName: String!
   teamRole: TeamRole!
-  createdBy: String
-  createdDts: Time
-  modifiedBy: String
-  modifiedDts: Time
 }
 
 """
@@ -1782,13 +1777,13 @@ createModelPlan(modelName: String!):ModelPlan
 updateModelPlan(id: UUID!, changes: ModelPlanChanges!): ModelPlan
 @hasRole(role: MINT_BASE_USER)
 
-createPlanCollaborator(input: PlanCollaboratorInput!): PlanCollaborator
+createPlanCollaborator(input: PlanCollaboratorCreateInput!): PlanCollaborator
 @hasRole(role: MINT_BASE_USER)
 
-updatePlanCollaborator(input: PlanCollaboratorInput!): PlanCollaborator
+updatePlanCollaborator(id: UUID!, newRole: TeamRole!): PlanCollaborator
 @hasRole(role: MINT_BASE_USER)
 
-deletePlanCollaborator(input: PlanCollaboratorInput!): PlanCollaborator
+deletePlanCollaborator(id: UUID!): PlanCollaborator
 @hasRole(role: MINT_BASE_USER)
 
 createPlanBasics(input: PlanBasicsInput!):PlanBasics
@@ -2003,10 +1998,10 @@ func (ec *executionContext) field_Mutation_createPlanBasics_args(ctx context.Con
 func (ec *executionContext) field_Mutation_createPlanCollaborator_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
-	var arg0 model.PlanCollaboratorInput
+	var arg0 model.PlanCollaboratorCreateInput
 	if tmp, ok := rawArgs["input"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
-		arg0, err = ec.unmarshalNPlanCollaboratorInput2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐPlanCollaboratorInput(ctx, tmp)
+		arg0, err = ec.unmarshalNPlanCollaboratorCreateInput2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐPlanCollaboratorCreateInput(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -2078,15 +2073,15 @@ func (ec *executionContext) field_Mutation_deleteDiscussionReply_args(ctx contex
 func (ec *executionContext) field_Mutation_deletePlanCollaborator_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
-	var arg0 model.PlanCollaboratorInput
-	if tmp, ok := rawArgs["input"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
-		arg0, err = ec.unmarshalNPlanCollaboratorInput2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐPlanCollaboratorInput(ctx, tmp)
+	var arg0 uuid.UUID
+	if tmp, ok := rawArgs["id"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("id"))
+		arg0, err = ec.unmarshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
 	}
-	args["input"] = arg0
+	args["id"] = arg0
 	return args, nil
 }
 
@@ -2210,15 +2205,24 @@ func (ec *executionContext) field_Mutation_updatePlanBasics_args(ctx context.Con
 func (ec *executionContext) field_Mutation_updatePlanCollaborator_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
-	var arg0 model.PlanCollaboratorInput
-	if tmp, ok := rawArgs["input"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
-		arg0, err = ec.unmarshalNPlanCollaboratorInput2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐPlanCollaboratorInput(ctx, tmp)
+	var arg0 uuid.UUID
+	if tmp, ok := rawArgs["id"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("id"))
+		arg0, err = ec.unmarshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
 	}
-	args["input"] = arg0
+	args["id"] = arg0
+	var arg1 models.TeamRole
+	if tmp, ok := rawArgs["newRole"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("newRole"))
+		arg1, err = ec.unmarshalNTeamRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTeamRole(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["newRole"] = arg1
 	return args, nil
 }
 
@@ -4040,7 +4044,7 @@ func (ec *executionContext) _Mutation_createPlanCollaborator(ctx context.Context
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		directive0 := func(rctx context.Context) (interface{}, error) {
 			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Mutation().CreatePlanCollaborator(rctx, fc.Args["input"].(model.PlanCollaboratorInput))
+			return ec.resolvers.Mutation().CreatePlanCollaborator(rctx, fc.Args["input"].(model.PlanCollaboratorCreateInput))
 		}
 		directive1 := func(ctx context.Context) (interface{}, error) {
 			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_BASE_USER")
@@ -4136,7 +4140,7 @@ func (ec *executionContext) _Mutation_updatePlanCollaborator(ctx context.Context
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		directive0 := func(rctx context.Context) (interface{}, error) {
 			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Mutation().UpdatePlanCollaborator(rctx, fc.Args["input"].(model.PlanCollaboratorInput))
+			return ec.resolvers.Mutation().UpdatePlanCollaborator(rctx, fc.Args["id"].(uuid.UUID), fc.Args["newRole"].(models.TeamRole))
 		}
 		directive1 := func(ctx context.Context) (interface{}, error) {
 			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_BASE_USER")
@@ -4232,7 +4236,7 @@ func (ec *executionContext) _Mutation_deletePlanCollaborator(ctx context.Context
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		directive0 := func(rctx context.Context) (interface{}, error) {
 			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Mutation().DeletePlanCollaborator(rctx, fc.Args["input"].(model.PlanCollaboratorInput))
+			return ec.resolvers.Mutation().DeletePlanCollaborator(rctx, fc.Args["id"].(uuid.UUID))
 		}
 		directive1 := func(ctx context.Context) (interface{}, error) {
 			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_BASE_USER")
@@ -11323,8 +11327,8 @@ func (ec *executionContext) unmarshalInputPlanBasicsInput(ctx context.Context, o
 	return it, nil
 }
 
-func (ec *executionContext) unmarshalInputPlanCollaboratorInput(ctx context.Context, obj interface{}) (model.PlanCollaboratorInput, error) {
-	var it model.PlanCollaboratorInput
+func (ec *executionContext) unmarshalInputPlanCollaboratorCreateInput(ctx context.Context, obj interface{}) (model.PlanCollaboratorCreateInput, error) {
+	var it model.PlanCollaboratorCreateInput
 	asMap := map[string]interface{}{}
 	for k, v := range obj.(map[string]interface{}) {
 		asMap[k] = v
@@ -11332,14 +11336,6 @@ func (ec *executionContext) unmarshalInputPlanCollaboratorInput(ctx context.Cont
 
 	for k, v := range asMap {
 		switch k {
-		case "id":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("id"))
-			it.ID, err = ec.unmarshalOUUID2ᚖgithubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, v)
-			if err != nil {
-				return it, err
-			}
 		case "modelPlanID":
 			var err error
 
@@ -11369,38 +11365,6 @@ func (ec *executionContext) unmarshalInputPlanCollaboratorInput(ctx context.Cont
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("teamRole"))
 			it.TeamRole, err = ec.unmarshalNTeamRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTeamRole(ctx, v)
-			if err != nil {
-				return it, err
-			}
-		case "createdBy":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("createdBy"))
-			it.CreatedBy, err = ec.unmarshalOString2ᚖstring(ctx, v)
-			if err != nil {
-				return it, err
-			}
-		case "createdDts":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("createdDts"))
-			it.CreatedDts, err = ec.unmarshalOTime2ᚖtimeᚐTime(ctx, v)
-			if err != nil {
-				return it, err
-			}
-		case "modifiedBy":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("modifiedBy"))
-			it.ModifiedBy, err = ec.unmarshalOString2ᚖstring(ctx, v)
-			if err != nil {
-				return it, err
-			}
-		case "modifiedDts":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("modifiedDts"))
-			it.ModifiedDts, err = ec.unmarshalOTime2ᚖtimeᚐTime(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -13615,8 +13579,8 @@ func (ec *executionContext) marshalNPlanCollaborator2ᚖgithubᚗcomᚋcmsgovᚋ
 	return ec._PlanCollaborator(ctx, sel, v)
 }
 
-func (ec *executionContext) unmarshalNPlanCollaboratorInput2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐPlanCollaboratorInput(ctx context.Context, v interface{}) (model.PlanCollaboratorInput, error) {
-	res, err := ec.unmarshalInputPlanCollaboratorInput(ctx, v)
+func (ec *executionContext) unmarshalNPlanCollaboratorCreateInput2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐPlanCollaboratorCreateInput(ctx context.Context, v interface{}) (model.PlanCollaboratorCreateInput, error) {
+	res, err := ec.unmarshalInputPlanCollaboratorCreateInput(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 

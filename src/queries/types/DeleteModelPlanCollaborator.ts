@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { PlanCollaboratorInput, TeamRole } from "./../../types/graphql-global-types";
+import { TeamRole } from "./../../types/graphql-global-types";
 
 // ====================================================
 // GraphQL mutation operation: DeleteModelPlanCollaborator
@@ -22,5 +22,5 @@ export interface DeleteModelPlanCollaborator {
 }
 
 export interface DeleteModelPlanCollaboratorVariables {
-  input: PlanCollaboratorInput;
+  id: UUID;
 }
