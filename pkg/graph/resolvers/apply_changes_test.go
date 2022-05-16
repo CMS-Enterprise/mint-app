@@ -2,6 +2,7 @@ package resolvers
 
 import (
 	"testing"
+	"time"
 
 	"github.com/google/uuid"
 	_ "github.com/lib/pq" // required for postgres driver in sql
@@ -50,6 +51,63 @@ func TestApplyChanges(t *testing.T) {
 	assert.Equal(t, "Clay", clay.Name)
 	assert.Equal(t, 50, clay.Age)
 	assert.Equal(t, []string{"Clayson the Wise"}, clay.Nicknames)
+}
+
+type PersonWithPointer struct {
+	Name   string  `json:"name"`
+	Parent *string `json:"parent"`
+}
+
+func TestApplyChangesEmptyString(t *testing.T) {
+	mom := "Mom"
+	son := PersonWithPointer{Name: "Son", Parent: &mom}
+
+	sonChanges := map[string]interface{}{
+		"parent": "",
+	}
+	err := ApplyChanges(sonChanges, &son)
+	if err != nil {
+		t.Errorf("ApplyChanges failed: %s", err)
+	}
+	assert.Equal(t, "Son", son.Name)
+	assert.Nil(t, son.Parent) // should set to nil
+}
+
+type AwkwardFirstDate struct {
+	WhenStarted time.Time `json:"whenStarted"`
+	WhenEnded   time.Time `json:"whenEnded"`
+	DidHaveFun  bool      `json:"didHaveFun"`
+}
+
+func TestApplyChangesWithTime(t *testing.T) {
+	fd := AwkwardFirstDate{
+		WhenStarted: time.Now(),
+		WhenEnded:   time.Now(),
+		DidHaveFun:  false,
+	}
+
+	fdChanges := map[string]interface{}{
+		"whenStarted": time.Date(2022, 5, 8, 18, 0, 0, 0, time.UTC), // should work with 'time.Time's
+		"whenEnded":   "2022-05-08T21:00:00Z",                       // and should work with strings in time.RFC3339Nano format
+	}
+	err := ApplyChanges(fdChanges, &fd)
+	if err != nil {
+		t.Errorf("ApplyChanges failed: %s", err)
+	}
+	assert.Equal(t, time.Date(2022, 5, 8, 18, 0, 0, 0, time.UTC), fd.WhenStarted)
+	assert.Equal(t, time.Date(2022, 5, 8, 21, 0, 0, 0, time.UTC), fd.WhenEnded)
+	assert.Equal(t, false, fd.DidHaveFun)
+
+	fdChanges = map[string]interface{}{
+		"didHaveFun": true,
+	}
+	err = ApplyChanges(fdChanges, &fd)
+	if err != nil {
+		t.Errorf("ApplyChanges failed: %s", err)
+	}
+	assert.Equal(t, time.Date(2022, 5, 8, 18, 0, 0, 0, time.UTC), fd.WhenStarted)
+	assert.Equal(t, time.Date(2022, 5, 8, 21, 0, 0, 0, time.UTC), fd.WhenEnded)
+	assert.Equal(t, true, fd.DidHaveFun)
 }
 
 type PersonWithUUID struct {
