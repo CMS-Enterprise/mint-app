@@ -31,11 +31,17 @@ type PlanDocumentsTableProps = {
   modelID: string;
 };
 
+type DocumentStatusType = 'success' | 'error';
+
 const PlanDocumentsTable = ({
   hiddenColumns,
   modelID
 }: PlanDocumentsTableProps) => {
   const { t } = useTranslation('documents');
+  const [documentMessage, setDocumentMessage] = useState('');
+  const [documentStatus, setDocumentStatus] = useState<DocumentStatusType>(
+    'error'
+  );
   const {
     error,
     loading,
@@ -70,11 +76,27 @@ const PlanDocumentsTable = ({
   }
 
   return (
-    <Table
-      data={data}
-      hiddenColumns={hiddenColumns}
-      refetch={refetchDocuments}
-    />
+    <>
+      {documentMessage && (
+        <Alert
+          type={documentStatus}
+          slim
+          data-testid="mandatory-fields-alert"
+          className="margin-y-4"
+        >
+          <span className="mandatory-fields-alert__text">
+            {documentMessage}
+          </span>
+        </Alert>
+      )}
+      <Table
+        data={data}
+        hiddenColumns={hiddenColumns}
+        refetch={refetchDocuments}
+        setDocumentMessage={setDocumentMessage}
+        setDocumentStatus={setDocumentStatus}
+      />
+    </>
   );
 };
 
@@ -84,11 +106,18 @@ type TableProps = {
   data: PlanDocumentByModelIDType[];
   hiddenColumns?: string[];
   refetch: () => any | undefined;
+  setDocumentMessage: (value: string) => void;
+  setDocumentStatus: (value: DocumentStatusType) => void;
 };
 
-const Table = ({ data, hiddenColumns, refetch }: TableProps) => {
+const Table = ({
+  data,
+  hiddenColumns,
+  refetch,
+  setDocumentMessage,
+  setDocumentStatus
+}: TableProps) => {
   const { t } = useTranslation('documents');
-  const [documentError, setDocumentError] = useState();
   const client = useApolloClient();
 
   const [mutate] = useMutation<DeleteModelPlanDocumentVariables>(
@@ -99,6 +128,7 @@ const Table = ({ data, hiddenColumns, refetch }: TableProps) => {
     return (file: PlanDocumentByModelIDType) => {
       mutate({
         variables: {
+          // TODO - update inout variables pending BE changes to delete by ID only
           input: {
             id: file.id,
             modelPlanID: file.modelPlanID,
@@ -111,16 +141,20 @@ const Table = ({ data, hiddenColumns, refetch }: TableProps) => {
       })
         .then(response => {
           if (response?.errors) {
-            setDocumentError(t('removeDocumentFail'));
+            setDocumentMessage(t('removeDocumentFail'));
+            setDocumentStatus('error');
           } else {
+            setDocumentMessage(t('removeDocumentSuccess'));
+            setDocumentStatus('success');
             refetch();
           }
         })
         .catch(() => {
-          setDocumentError(t('removeDocumentFail'));
+          setDocumentMessage(t('removeDocumentFail'));
+          setDocumentStatus('error');
         });
     };
-  }, [mutate, refetch, t]);
+  }, [mutate, refetch, t, setDocumentMessage, setDocumentStatus]);
 
   const handleDownload = useMemo(() => {
     return (file: PlanDocumentByModelIDType) => {
@@ -136,10 +170,13 @@ const Table = ({ data, hiddenColumns, refetch }: TableProps) => {
       })
         .then((downloadURL: string) => {}) // TODO: Returning download URL for cypress testing
         .catch((error: any) => {
-          if (error) setDocumentError(error);
+          if (error) {
+            setDocumentMessage(error);
+            setDocumentStatus('error');
+          }
         });
     };
-  }, [client]);
+  }, [client, setDocumentMessage, setDocumentStatus]);
 
   const columns = useMemo(() => {
     return [
@@ -236,16 +273,6 @@ const Table = ({ data, hiddenColumns, refetch }: TableProps) => {
 
   return (
     <div className="model-plan-table" data-testid="model-plan-documents-table">
-      {documentError && (
-        <Alert
-          type="error"
-          slim
-          data-testid="mandatory-fields-alert"
-          className="margin-y-4"
-        >
-          <span className="mandatory-fields-alert__text">{documentError}</span>
-        </Alert>
-      )}
       <UswdsTable bordered={false} {...getTableProps()} fullWidth scrollable>
         <caption className="usa-sr-only">{t('requestsTable.caption')}</caption>
         <thead>

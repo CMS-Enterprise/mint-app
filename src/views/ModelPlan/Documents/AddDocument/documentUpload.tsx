@@ -59,9 +59,9 @@ const DocumentUpload = () => {
     generateURL({
       variables: {
         input: {
-          fileName: file?.name,
-          mimeType: file?.type,
-          size: file?.size
+          fileName: file.name,
+          mimeType: file.type,
+          size: file.size
         }
       }
     })
