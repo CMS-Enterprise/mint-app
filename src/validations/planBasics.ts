@@ -6,7 +6,7 @@ const datePickerSchema = Yup.date()
 
 const planBasicsSchema = {
   pageOneSchema: Yup.object().shape({
-    modelName: Yup.string().min(1).trim().required('Enter the Model Name'),
+    modelName: Yup.string().trim().required('Enter the Model Name'),
     modelCategory: Yup.string().nullable().required('Enter the Model Category'),
     cmsCenters: Yup.array()
       .min(1, 'Select a CMS Component')
@@ -14,7 +14,7 @@ const planBasicsSchema = {
   }),
 
   pageOneSchemaWithCmmiGroup: Yup.object().shape({
-    modelName: Yup.string().min(1).trim().required('Enter the Model Name'),
+    modelName: Yup.string().trim().required('Enter the Model Name'),
     modelCategory: Yup.string().nullable().required('Enter the Model Category'),
     cmsCenters: Yup.array()
       .min(1, 'Select a CMS Component')
