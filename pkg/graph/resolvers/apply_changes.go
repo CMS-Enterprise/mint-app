@@ -19,10 +19,10 @@ func ApplyChanges(changes map[string]interface{}, to interface{}) error {
 		reflectValue := reflect.ValueOf(value)
 
 		if reflectValue.Kind() == reflect.String {
-			valAsString, _ := reflectValue.Interface().(string)
+			valAsString, ok := reflectValue.Interface().(string)
 
-			// Convert empty strings to `nil``
-			if len(valAsString) == 0 {
+			// Convert empty strings to `nil`
+			if ok && len(valAsString) == 0 {
 				changes[key] = nil
 				continue
 			}
