@@ -201,6 +201,19 @@ input PlanBasicsInput {
 }
 
 """
+PlanBasicsChanges represents the possible changes you can make to a Plan Basics object when updating it.
+Fields explicitly set with NULL will be unset, and omitted fields will be left unchanged.
+https://gqlgen.com/reference/changesets/
+"""
+input PlanBasicsChanges @goModel(model: "map[string]interface{}") {
+  modelType: ModelType
+  problem: String
+  goal: String
+  testInventions: String
+  note: String
+}
+
+"""
 Represents a person response from CEDAR LDAP
 """
 type UserInfo {
@@ -270,6 +283,30 @@ input PlanMilestonesInput {
   modifiedBy: String
   modifiedDts: Time
   status: TaskStatus
+}
+
+"""
+PlanMilestoneChanges represents the possible changes you can make to a Plan Milestones object when updating it.
+Fields explicitly set with NULL will be unset, and omitted fields will be left unchanged.
+https://gqlgen.com/reference/changesets/
+"""
+input PlanMilestoneChanges @goModel(model: "map[string]interface{}") {
+  completeICIP: Time
+  clearanceStarts: Time
+  clearanceEnds: Time
+
+  announced: Time
+
+  applicationsStart: Time
+  applicationsEnd: Time
+
+  performancePeriodStarts: Time
+  performancePeriodEnds: Time
+  wrapUpEnds: Time
+  highLevelNote: String
+
+  phasedIn: Boolean
+  phasedInNote: String
 }
 
 """
@@ -346,8 +383,6 @@ Query definition for the schema
 type Query {
   currentUser: CurrentUser
   modelPlan(id: UUID!) : ModelPlan
-  planBasics(id: UUID!) : PlanBasics
-  planMilestones(id: UUID!) : PlanMilestones
   planDocument(id: UUID!) : PlanDocument
   planDocumentDownloadURL(id: UUID!) : PlanDocumentPayload
   readPlanDocumentByModelID(id: UUID!) : [PlanDocument]
@@ -378,13 +413,13 @@ deletePlanCollaborator(input: PlanCollaboratorInput!): PlanCollaborator
 createPlanBasics(input: PlanBasicsInput!):PlanBasics
 @hasRole(role: MINT_BASE_USER)
 
-updatePlanBasics(input: PlanBasicsInput!): PlanBasics
+updatePlanBasics(id: UUID!, changes: PlanBasicsChanges!): PlanBasics
 @hasRole(role: MINT_BASE_USER)
 
 createPlanMilestones(input: PlanMilestonesInput!): PlanMilestones
 @hasRole(role: MINT_BASE_USER)
 
-updatePlanMilestones(input: PlanMilestonesInput!): PlanMilestones
+updatePlanMilestones(id: UUID!, changes: PlanMilestoneChanges!): PlanMilestones
 @hasRole(role: MINT_BASE_USER)
 
 generatePresignedUploadURL(input: GeneratePresignedUploadURLInput!): GeneratePresignedUploadURLPayload

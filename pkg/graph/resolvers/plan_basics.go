@@ -24,11 +24,21 @@ func CreatePlanBasics(logger *zap.Logger, input *models.PlanBasics, principal *s
 }
 
 // UpdatePlanBasics implements resolver logic to update a plan basics object
-func UpdatePlanBasics(logger *zap.Logger, input *models.PlanBasics, principal *string, store *storage.Store) (*models.PlanBasics, error) {
-	input.ModifiedBy = principal
-	input.CalcStatus()
+func UpdatePlanBasics(logger *zap.Logger, id uuid.UUID, changes map[string]interface{}, principal string, store *storage.Store) (*models.PlanBasics, error) {
+	// Get existing basics
+	existingBasics, err := store.PlanBasicsGetByID(logger, id)
+	if err != nil {
+		return nil, err
+	}
 
-	retBasics, err := store.PlanBasicsUpdate(logger, input)
+	err = ApplyChanges(changes, existingBasics)
+	if err != nil {
+		return nil, err
+	}
+	existingBasics.ModifiedBy = &principal
+	existingBasics.CalcStatus()
+
+	retBasics, err := store.PlanBasicsUpdate(logger, existingBasics)
 	return retBasics, err
 }
 

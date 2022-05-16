@@ -128,12 +128,11 @@ func (r *mutationResolver) CreatePlanBasics(ctx context.Context, input model.Pla
 	return resolvers.CreatePlanBasics(logger, basics, &principal, r.store)
 }
 
-func (r *mutationResolver) UpdatePlanBasics(ctx context.Context, input model.PlanBasicsInput) (*models.PlanBasics, error) {
-	basics := ConvertToPlanBasics(&input)
+func (r *mutationResolver) UpdatePlanBasics(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanBasics, error) {
 	principal := appcontext.Principal(ctx).ID()
 	logger := appcontext.ZLogger(ctx)
 
-	return resolvers.UpdatePlanBasics(logger, basics, &principal, r.store)
+	return resolvers.UpdatePlanBasics(logger, id, changes, principal, r.store)
 }
 
 func (r *mutationResolver) CreatePlanMilestones(ctx context.Context, input model.PlanMilestonesInput) (*models.PlanMilestones, error) {
@@ -144,12 +143,11 @@ func (r *mutationResolver) CreatePlanMilestones(ctx context.Context, input model
 	return resolvers.CreatePlanMilestones(logger, basics, &principal, r.store)
 }
 
-func (r *mutationResolver) UpdatePlanMilestones(ctx context.Context, input model.PlanMilestonesInput) (*models.PlanMilestones, error) {
-	basics := ConvertToPlanMilestonesModel(&input)
+func (r *mutationResolver) UpdatePlanMilestones(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanMilestones, error) {
 	principal := appcontext.Principal(ctx).ID()
 	logger := appcontext.ZLogger(ctx)
 
-	return resolvers.UpdatePlanMilestones(logger, basics, &principal, r.store)
+	return resolvers.UpdatePlanMilestones(logger, id, changes, principal, r.store)
 }
 
 func (r *mutationResolver) GeneratePresignedUploadURL(ctx context.Context, input model.GeneratePresignedUploadURLInput) (*model.GeneratePresignedUploadURLPayload, error) {
@@ -260,18 +258,6 @@ func (r *queryResolver) ModelPlan(ctx context.Context, id uuid.UUID) (*models.Mo
 	principal := appcontext.Principal(ctx).ID()
 
 	return resolvers.ModelPlanGetByID(logger, principal, id, r.store)
-}
-
-func (r *queryResolver) PlanBasics(ctx context.Context, id uuid.UUID) (*models.PlanBasics, error) {
-	logger := appcontext.ZLogger(ctx)
-
-	return resolvers.FetchPlanBasicsByID(logger, id, r.store)
-}
-
-func (r *queryResolver) PlanMilestones(ctx context.Context, id uuid.UUID) (*models.PlanMilestones, error) {
-	logger := appcontext.ZLogger(ctx)
-
-	return resolvers.FetchPlanMilestonesByID(logger, id, r.store)
 }
 
 func (r *queryResolver) PlanDocument(ctx context.Context, id uuid.UUID) (*models.PlanDocument, error) {

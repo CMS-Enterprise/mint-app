@@ -19,11 +19,21 @@ func CreatePlanMilestones(logger *zap.Logger, input *models.PlanMilestones, prin
 }
 
 // UpdatePlanMilestones implements resolver logic to update a plan milestones object
-func UpdatePlanMilestones(logger *zap.Logger, input *models.PlanMilestones, principal *string, store *storage.Store) (*models.PlanMilestones, error) {
-	input.ModifiedBy = principal
-	input.CalcStatus()
+func UpdatePlanMilestones(logger *zap.Logger, id uuid.UUID, changes map[string]interface{}, principal string, store *storage.Store) (*models.PlanMilestones, error) {
+	// Get existing milestones
+	existingMilestones, err := store.FetchPlanMilestonesByID(logger, id)
+	if err != nil {
+		return nil, err
+	}
 
-	result, err := store.PlanMilestonesUpdate(logger, input)
+	err = ApplyChanges(changes, existingMilestones)
+	if err != nil {
+		return nil, err
+	}
+	existingMilestones.ModifiedBy = &principal
+	existingMilestones.CalcStatus()
+
+	result, err := store.PlanMilestonesUpdate(logger, existingMilestones)
 	return result, err
 }
 
