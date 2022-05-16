@@ -8,16 +8,16 @@ import (
 	"github.com/mitchellh/mapstructure"
 )
 
-// ApplyChanges applies arbitrary changes from a map to a struct
-// Code largely copied from GQLGen's docs on changesets
-// https://gqlgen.com/reference/changesets/
-func ApplyChanges(changes map[string]interface{}, to interface{}) error {
-	// Perform some pre-processing of the changes
-	// This is done here rather than in DecodeHook because it's easy to infer intent on things like "" -> nil or [] -> nil here
+// sanitizeChanges performs some pre-processing of the changes map for "known" cases that we'd like to handle.
+// Currently, these include:
+// - Empty strings are converted to nil
+// - Empty slices are converted to nil
+func sanitizeChanges(changes map[string]interface{}) {
 	for key, value := range changes {
 		// Get the reflect value for type comparisons
 		reflectValue := reflect.ValueOf(value)
 
+		// String operations
 		if reflectValue.Kind() == reflect.String {
 			valAsString, ok := reflectValue.Interface().(string)
 
@@ -35,6 +35,13 @@ func ApplyChanges(changes map[string]interface{}, to interface{}) error {
 			changes[key] = nil
 		}
 	}
+}
+
+// ApplyChanges applies arbitrary changes from a map to a struct
+// Code largely copied from GQLGen's docs on changesets
+// https://gqlgen.com/reference/changesets/
+func ApplyChanges(changes map[string]interface{}, to interface{}) error {
+	sanitizeChanges(changes)
 
 	// Set up the decoder. This is almost exactly ripped from https://gqlgen.com/reference/changesets/
 	dec, err := mapstructure.NewDecoder(&mapstructure.DecoderConfig{
