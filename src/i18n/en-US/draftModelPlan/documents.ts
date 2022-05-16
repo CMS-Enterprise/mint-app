@@ -28,10 +28,20 @@ const documents = {
     body:
       'Something went wrong with EASi. Please try refreshing the page or try again later.'
   },
+  removeDocumentModal: {
+    header: 'Confirm you want to remove {{-documentName}}.',
+    warning:
+      'You will not be able to access this document after it is removed.',
+    confirm: 'Remove document',
+    cancel: 'Keep document',
+    confirmationText_name:
+      'The document for {{-documentName}} has been removed',
+    confirmationText_noName: 'The document has been removed'
+  },
   downloadFail: 'Failed to download file',
   urlFail: 'Failed to fetch file URL',
-  removeDocumentFail: 'Failed to remove document',
-  removeDocumentSuccess: 'Successfully removed document',
+  removeDocumentFail: 'Failed to remove document {{-documentName}}',
+  removeDocumentSuccess: 'Success! Document {{-documentName}} removed.',
   uploadDocument: 'Upload a document',
   uploadDescription:
     'Choose a document to upload, such as a recent concept document, policy paper, or any additional model background information.',

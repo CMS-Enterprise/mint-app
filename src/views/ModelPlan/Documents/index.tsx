@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link, Route, Switch, useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
@@ -14,6 +14,7 @@ import {
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
+import Alert from 'components/shared/Alert';
 import GetModelPlanQuery from 'queries/GetModelPlanQuery';
 import {
   GetModelPlan,
@@ -25,10 +26,16 @@ import NotFound from 'views/NotFound';
 import AddDocument from './AddDocument';
 import PlanDocumentsTable from './table';
 
+type DocumentStatusType = 'success' | 'error';
+
 export const DocumentsContent = () => {
   const { t: h } = useTranslation('draftModelPlan');
   const { t } = useTranslation('documents');
   const { modelID } = useParams<{ modelID: string }>();
+  const [documentMessage, setDocumentMessage] = useState('');
+  const [documentStatus, setDocumentStatus] = useState<DocumentStatusType>(
+    'error'
+  );
 
   const { data } = useQuery<GetModelPlan, GetModelPlanVariables>(
     GetModelPlanQuery,
@@ -61,6 +68,19 @@ export const DocumentsContent = () => {
             </Breadcrumb>
             <Breadcrumb current>{t('heading')}</Breadcrumb>
           </BreadcrumbBar>
+
+          {documentMessage && (
+            <Alert
+              type={documentStatus}
+              slim
+              data-testid="mandatory-fields-alert"
+              className="margin-y-4"
+            >
+              <span className="mandatory-fields-alert__text">
+                {documentMessage}
+              </span>
+            </Alert>
+          )}
 
           <PageHeading className="margin-top-4 margin-bottom-0">
             {t('heading')}
@@ -97,7 +117,11 @@ export const DocumentsContent = () => {
             {t('addADocument')}
           </UswdsReactLink>
 
-          <PlanDocumentsTable modelID={modelID} />
+          <PlanDocumentsTable
+            modelID={modelID}
+            setDocumentMessage={setDocumentMessage}
+            setDocumentStatus={setDocumentStatus}
+          />
         </Grid>
       </GridContainer>
     </MainContent>

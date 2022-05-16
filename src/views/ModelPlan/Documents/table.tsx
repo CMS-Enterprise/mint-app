@@ -5,8 +5,9 @@ import { useApolloClient, useMutation, useQuery } from '@apollo/client';
 import { Button, Table as UswdsTable } from '@trussworks/react-uswds';
 import { DateTime } from 'luxon';
 
+import Modal from 'components/Modal';
+import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
-import Alert from 'components/shared/Alert';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import DeleteModelPlanDocument from 'queries/DeleteModelPlanDocument';
 import GetPlanDocumentByModelID from 'queries/GetPlanDocumentByModelID';
@@ -29,19 +30,19 @@ import {
 type PlanDocumentsTableProps = {
   hiddenColumns?: string[];
   modelID: string;
+  setDocumentMessage: (value: string) => void;
+  setDocumentStatus: (value: DocumentStatusType) => void;
 };
 
 type DocumentStatusType = 'success' | 'error';
 
 const PlanDocumentsTable = ({
   hiddenColumns,
-  modelID
+  modelID,
+  setDocumentMessage,
+  setDocumentStatus
 }: PlanDocumentsTableProps) => {
   const { t } = useTranslation('documents');
-  const [documentMessage, setDocumentMessage] = useState('');
-  const [documentStatus, setDocumentStatus] = useState<DocumentStatusType>(
-    'error'
-  );
   const {
     error,
     loading,
@@ -76,27 +77,13 @@ const PlanDocumentsTable = ({
   }
 
   return (
-    <>
-      {documentMessage && (
-        <Alert
-          type={documentStatus}
-          slim
-          data-testid="mandatory-fields-alert"
-          className="margin-y-4"
-        >
-          <span className="mandatory-fields-alert__text">
-            {documentMessage}
-          </span>
-        </Alert>
-      )}
-      <Table
-        data={data}
-        hiddenColumns={hiddenColumns}
-        refetch={refetchDocuments}
-        setDocumentMessage={setDocumentMessage}
-        setDocumentStatus={setDocumentStatus}
-      />
-    </>
+    <Table
+      data={data}
+      hiddenColumns={hiddenColumns}
+      refetch={refetchDocuments}
+      setDocumentMessage={setDocumentMessage}
+      setDocumentStatus={setDocumentStatus}
+    />
   );
 };
 
@@ -119,6 +106,10 @@ const Table = ({
 }: TableProps) => {
   const { t } = useTranslation('documents');
   const client = useApolloClient();
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [fileToRemove, setFileToRemove] = useState<PlanDocumentByModelIDType>(
+    {} as PlanDocumentByModelIDType
+  );
 
   const [mutate] = useMutation<DeleteModelPlanDocumentVariables>(
     DeleteModelPlanDocument
@@ -141,20 +132,55 @@ const Table = ({
       })
         .then(response => {
           if (response?.errors) {
-            setDocumentMessage(t('removeDocumentFail'));
+            setDocumentMessage(
+              t('removeDocumentFail', {
+                documentName: file.fileName
+              })
+            );
             setDocumentStatus('error');
           } else {
-            setDocumentMessage(t('removeDocumentSuccess'));
+            setDocumentMessage(
+              t('removeDocumentSuccess', {
+                documentName: file.fileName
+              })
+            );
             setDocumentStatus('success');
             refetch();
           }
         })
         .catch(() => {
-          setDocumentMessage(t('removeDocumentFail'));
+          setDocumentMessage(
+            t('removeDocumentFail', {
+              documentName: file.fileName
+            })
+          );
           setDocumentStatus('error');
         });
     };
   }, [mutate, refetch, t, setDocumentMessage, setDocumentStatus]);
+
+  const renderModal = () => {
+    return (
+      <Modal isOpen={isModalOpen} closeModal={() => setModalOpen(false)}>
+        <PageHeading headingLevel="h2" className="margin-top-0">
+          {t('removeDocumentModal.header', {
+            documentName: fileToRemove.fileName
+          })}
+        </PageHeading>
+        <p>{t('removeDocumentModal.warning')}</p>
+        <Button
+          type="button"
+          className="margin-right-4"
+          onClick={() => handleDelete(fileToRemove)}
+        >
+          {t('removeDocumentModal.confirm')}
+        </Button>
+        <Button type="button" unstyled onClick={() => setModalOpen(false)}>
+          {t('removeDocumentModal.cancel')}
+        </Button>
+      </Modal>
+    );
+  };
 
   const handleDownload = useMemo(() => {
     return (file: PlanDocumentByModelIDType) => {
@@ -209,36 +235,41 @@ const Table = ({
         Header: t('documentTable.actions'),
         accessor: 'virusScanned',
         Cell: ({ row, value }: any) => {
-          if (value) {
-            return row.original.virusClean ? (
-              <>
-                <Button
-                  type="button"
-                  unstyled
-                  className="margin-right-1"
-                  onClick={() => handleDownload(row.original)}
-                >
-                  {t('documentTable.view')}
-                </Button>
-                <Button
-                  type="button"
-                  unstyled
-                  className="text-red"
-                  data-testid="remove-document"
-                  onClick={() => handleDelete(row.original)}
-                >
-                  {t('documentTable.remove')}
-                </Button>
-              </>
-            ) : (
-              t('documentTable.virusFound')
-            );
-          }
-          return t('documentTable.scanInProgress');
+          // if (value) {
+          //   return row.original.virusClean ? (
+          return (
+            <>
+              <Button
+                type="button"
+                unstyled
+                className="margin-right-1"
+                onClick={() => handleDownload(row.original)}
+              >
+                {t('documentTable.view')}
+              </Button>
+              <Button
+                type="button"
+                unstyled
+                className="text-red"
+                data-testid="remove-document"
+                onClick={() => {
+                  setModalOpen(true);
+                  setFileToRemove(row.original);
+                }}
+              >
+                {t('documentTable.remove')}
+              </Button>
+            </>
+          );
+          //   ) : (
+          //     t('documentTable.virusFound')
+          //   );
+          // }
+          // return t('documentTable.scanInProgress');
         }
       }
     ];
-  }, [t, handleDownload, handleDelete]);
+  }, [t, handleDownload]);
 
   const {
     getTableProps,
@@ -273,6 +304,7 @@ const Table = ({
 
   return (
     <div className="model-plan-table" data-testid="model-plan-documents-table">
+      {renderModal()}
       <UswdsTable bordered={false} {...getTableProps()} fullWidth scrollable>
         <caption className="usa-sr-only">{t('requestsTable.caption')}</caption>
         <thead>
