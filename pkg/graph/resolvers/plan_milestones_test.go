@@ -1,79 +1,64 @@
 package resolvers
 
 import (
-	"testing"
+	"time"
 
 	"github.com/cmsgov/mint-app/pkg/models"
-
-	_ "github.com/lib/pq" // required for postgres driver in sql
-	"github.com/stretchr/testify/assert"
-	"go.uber.org/zap"
-	ld "gopkg.in/launchdarkly/go-server-sdk.v5"
-
-	"github.com/cmsgov/mint-app/pkg/storage"
 )
 
-func TestCreatePlanMilestones(t *testing.T) {
-	config := NewDBConfig()
-	ldClient, _ := ld.MakeCustomClient("fake", ld.Config{Offline: true}, 0)
-	logger := zap.NewNop()
-	principal := "FAKE"
-	principalInfo := models.UserInfo{
-		CommonName: "Fake Tester name",
-		EuaUserID:  principal,
-	}
+func (suite *ResolverSuite) TestFetchPlanMilestonesByModelPlanID() {
+	plan := suite.createModelPlan("Plan For Milestones") // should create the milestones as part of the resolver
 
-	store, err := storage.NewStore(logger, config, ldClient)
-	assert.NoError(t, err)
+	milestones, err := FetchPlanMilestonesByModelPlanID(suite.testConfigs.Logger, &suite.testConfigs.UserInfo.EuaUserID, plan.ID, suite.testConfigs.Store)
 
-	plan, err := ModelPlanCreate(logger, "FAKE", store, &principalInfo)
-	assert.NoError(t, err)
+	suite.NoError(err)
+	suite.EqualValues(milestones.ModelPlanID, plan.ID)
+	suite.EqualValues(milestones.Status, models.TaskReady)
+	suite.EqualValues(*milestones.CreatedBy, suite.testConfigs.UserInfo.EuaUserID)
+	suite.EqualValues(*milestones.ModifiedBy, suite.testConfigs.UserInfo.EuaUserID)
 
-	input := models.PlanMilestones{
-		ModelPlanID: plan.ID,
-	}
-	milestones, err := CreatePlanMilestones(logger, &input, &principal, store)
-	assert.NoError(t, err)
-	assert.Equal(t, plan.ID.String(), milestones.GetPlanID().String())
-
-	sqlResult, err := store.DeletePlanMilestonesByID(logger, milestones.ID)
-	assert.NoError(t, err)
-
-	rowsAffected, err := sqlResult.RowsAffected()
-	assert.NoError(t, err)
-	assert.Equal(t, 1, int(rowsAffected))
-
+	// Many of the fields are nil upon creation
+	suite.Nil(milestones.CompleteICIP)
+	suite.Nil(milestones.ClearanceStarts)
+	suite.Nil(milestones.ClearanceEnds)
+	suite.Nil(milestones.Announced)
+	suite.Nil(milestones.ApplicationsStart)
+	suite.Nil(milestones.ApplicationsEnd)
+	suite.Nil(milestones.PerformancePeriodStarts)
+	suite.Nil(milestones.PerformancePeriodEnds)
+	suite.Nil(milestones.WrapUpEnds)
+	suite.Nil(milestones.HighLevelNote)
+	suite.Nil(milestones.PhasedIn)
+	suite.Nil(milestones.PhasedInNote)
 }
 
-func TestFetchPlanMilestonesByID(t *testing.T) {
-	config := NewDBConfig()
-	ldClient, _ := ld.MakeCustomClient("fake", ld.Config{Offline: true}, 0)
-	logger := zap.NewNop()
-	store, _ := storage.NewStore(logger, config, ldClient)
-	principal := "FAKE"
-	principalInfo := models.UserInfo{
-		CommonName: "Fake Tester name",
-		EuaUserID:  principal,
+func (suite *ResolverSuite) TestUpdatePlanMilestones() {
+	plan := suite.createModelPlan("Plan For Milestones") // should create the milestones as part of the resolver
+
+	milestones, err := FetchPlanMilestonesByModelPlanID(suite.testConfigs.Logger, &suite.testConfigs.UserInfo.EuaUserID, plan.ID, suite.testConfigs.Store)
+	suite.NoError(err)
+
+	changes := map[string]interface{}{
+		"completeICIP":  "2020-05-13T20:47:50.12Z",
+		"phasedIn":      true,
+		"highLevelNote": "Some high level note",
 	}
+	updater := "UPDT"
 
-	plan, err := ModelPlanCreate(logger, "FAKE", store, &principalInfo)
-	assert.NoError(t, err)
+	updatedMilestones, err := UpdatePlanMilestones(suite.testConfigs.Logger, milestones.ID, changes, updater, suite.testConfigs.Store)
 
-	input := models.PlanMilestones{
-		ModelPlanID: plan.ID,
-	}
-	payload, err := CreatePlanMilestones(logger, &input, &principal, store)
-	assert.NoError(t, err)
-
-	milestones, err := FetchPlanMilestonesByID(logger, payload.ID, store)
-	assert.NoError(t, err)
-	assert.NotNil(t, milestones)
-
-	sqlResult, err := store.DeletePlanMilestonesByID(logger, milestones.ID)
-	assert.NoError(t, err)
-
-	rowsAffected, err := sqlResult.RowsAffected()
-	assert.NoError(t, err)
-	assert.Equal(t, 1, int(rowsAffected))
-
+	suite.NoError(err)
+	suite.EqualValues(updater, *updatedMilestones.ModifiedBy)
+	suite.EqualValues(true, updatedMilestones.CompleteICIP.Equal(time.Date(2020, 5, 13, 20, 47, 50, 120000000, time.UTC)))
+	suite.Nil(updatedMilestones.ClearanceStarts)
+	suite.Nil(updatedMilestones.ClearanceEnds)
+	suite.Nil(updatedMilestones.Announced)
+	suite.Nil(updatedMilestones.ApplicationsStart)
+	suite.Nil(updatedMilestones.ApplicationsEnd)
+	suite.Nil(updatedMilestones.PerformancePeriodStarts)
+	suite.Nil(updatedMilestones.PerformancePeriodEnds)
+	suite.Nil(updatedMilestones.WrapUpEnds)
+	suite.EqualValues("Some high level note", *updatedMilestones.HighLevelNote)
+	suite.EqualValues(true, *updatedMilestones.PhasedIn)
+	suite.Nil(updatedMilestones.PhasedInNote)
 }

@@ -99,11 +99,9 @@ type ComplexityRoot struct {
 	Mutation struct {
 		CreateDiscussionReply      func(childComplexity int, input model.DiscussionReplyCreateInput) int
 		CreateModelPlan            func(childComplexity int, modelName string) int
-		CreatePlanBasics           func(childComplexity int, input model.PlanBasicsInput) int
 		CreatePlanCollaborator     func(childComplexity int, input model.PlanCollaboratorInput) int
 		CreatePlanDiscussion       func(childComplexity int, input model.PlanDiscussionCreateInput) int
 		CreatePlanDocument         func(childComplexity int, input model.PlanDocumentInput) int
-		CreatePlanMilestones       func(childComplexity int, input model.PlanMilestonesInput) int
 		DeleteDiscussionReply      func(childComplexity int, id uuid.UUID) int
 		DeletePlanCollaborator     func(childComplexity int, input model.PlanCollaboratorInput) int
 		DeletePlanDiscussion       func(childComplexity int, id uuid.UUID) int
@@ -239,9 +237,7 @@ type MutationResolver interface {
 	CreatePlanCollaborator(ctx context.Context, input model.PlanCollaboratorInput) (*models.PlanCollaborator, error)
 	UpdatePlanCollaborator(ctx context.Context, input model.PlanCollaboratorInput) (*models.PlanCollaborator, error)
 	DeletePlanCollaborator(ctx context.Context, input model.PlanCollaboratorInput) (*models.PlanCollaborator, error)
-	CreatePlanBasics(ctx context.Context, input model.PlanBasicsInput) (*models.PlanBasics, error)
 	UpdatePlanBasics(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanBasics, error)
-	CreatePlanMilestones(ctx context.Context, input model.PlanMilestonesInput) (*models.PlanMilestones, error)
 	UpdatePlanMilestones(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanMilestones, error)
 	GeneratePresignedUploadURL(ctx context.Context, input model.GeneratePresignedUploadURLInput) (*model.GeneratePresignedUploadURLPayload, error)
 	CreatePlanDocument(ctx context.Context, input model.PlanDocumentInput) (*model.PlanDocumentPayload, error)
@@ -516,18 +512,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Mutation.CreateModelPlan(childComplexity, args["modelName"].(string)), true
 
-	case "Mutation.createPlanBasics":
-		if e.complexity.Mutation.CreatePlanBasics == nil {
-			break
-		}
-
-		args, err := ec.field_Mutation_createPlanBasics_args(context.TODO(), rawArgs)
-		if err != nil {
-			return 0, false
-		}
-
-		return e.complexity.Mutation.CreatePlanBasics(childComplexity, args["input"].(model.PlanBasicsInput)), true
-
 	case "Mutation.createPlanCollaborator":
 		if e.complexity.Mutation.CreatePlanCollaborator == nil {
 			break
@@ -563,18 +547,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Mutation.CreatePlanDocument(childComplexity, args["input"].(model.PlanDocumentInput)), true
-
-	case "Mutation.createPlanMilestones":
-		if e.complexity.Mutation.CreatePlanMilestones == nil {
-			break
-		}
-
-		args, err := ec.field_Mutation_createPlanMilestones_args(context.TODO(), rawArgs)
-		if err != nil {
-			return 0, false
-		}
-
-		return e.complexity.Mutation.CreatePlanMilestones(childComplexity, args["input"].(model.PlanMilestonesInput)), true
 
 	case "Mutation.deleteDiscussionReply":
 		if e.complexity.Mutation.DeleteDiscussionReply == nil {
@@ -1313,12 +1285,10 @@ func (e *executableSchema) Exec(ctx context.Context) graphql.ResponseHandler {
 	inputUnmarshalMap := graphql.BuildUnmarshalerMap(
 		ec.unmarshalInputDiscussionReplyCreateInput,
 		ec.unmarshalInputGeneratePresignedUploadURLInput,
-		ec.unmarshalInputPlanBasicsInput,
 		ec.unmarshalInputPlanCollaboratorInput,
 		ec.unmarshalInputPlanDiscussionCreateInput,
 		ec.unmarshalInputPlanDocumentInput,
 		ec.unmarshalInputPlanDocumentParameters,
-		ec.unmarshalInputPlanMilestonesInput,
 	)
 	first := true
 
@@ -1561,26 +1531,6 @@ type PlanBasics {
   status: TaskStatus!
 }
 
-
-"""
-Represents plan basics
-"""
-input PlanBasicsInput {
-  id: UUID
-  modelPlanID: UUID
-
-  modelType: ModelType
-  problem: String
-  goal: String
-  testInventions: String
-  note: String
-  createdBy: String
-  createdDts: Time
-  modifiedBy: String
-  modifiedDts: Time
-  status: TaskStatus
-}
-
 """
 PlanBasicsChanges represents the possible changes you can make to a Plan Basics object when updating it.
 Fields explicitly set with NULL will be unset, and omitted fields will be left unchanged.
@@ -1606,38 +1556,6 @@ type UserInfo {
 Represents plan milestones
 """
 type PlanMilestones {
-  id: UUID
-  modelPlanID: UUID
-
-  completeICIP: Time
-  clearanceStarts: Time
-  clearanceEnds: Time
-
-  announced: Time
-
-  applicationsStart: Time
-  applicationsEnd: Time
-
-  performancePeriodStarts: Time
-  performancePeriodEnds: Time
-  wrapUpEnds: Time
-  highLevelNote: String
-
-  phasedIn: Boolean
-  phasedInNote: String
-
-
-  createdBy: String
-  createdDts: Time
-  modifiedBy: String
-  modifiedDts: Time
-  status: TaskStatus
-}
-
-"""
-Represents plan milestones input
-"""
-input PlanMilestonesInput {
   id: UUID
   modelPlanID: UUID
 
@@ -1791,13 +1709,7 @@ updatePlanCollaborator(input: PlanCollaboratorInput!): PlanCollaborator
 deletePlanCollaborator(input: PlanCollaboratorInput!): PlanCollaborator
 @hasRole(role: MINT_BASE_USER)
 
-createPlanBasics(input: PlanBasicsInput!):PlanBasics
-@hasRole(role: MINT_BASE_USER)
-
 updatePlanBasics(id: UUID!, changes: PlanBasicsChanges!): PlanBasics
-@hasRole(role: MINT_BASE_USER)
-
-createPlanMilestones(input: PlanMilestonesInput!): PlanMilestones
 @hasRole(role: MINT_BASE_USER)
 
 updatePlanMilestones(id: UUID!, changes: PlanMilestoneChanges!): PlanMilestones
@@ -1985,21 +1897,6 @@ func (ec *executionContext) field_Mutation_createModelPlan_args(ctx context.Cont
 	return args, nil
 }
 
-func (ec *executionContext) field_Mutation_createPlanBasics_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
-	var err error
-	args := map[string]interface{}{}
-	var arg0 model.PlanBasicsInput
-	if tmp, ok := rawArgs["input"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
-		arg0, err = ec.unmarshalNPlanBasicsInput2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐPlanBasicsInput(ctx, tmp)
-		if err != nil {
-			return nil, err
-		}
-	}
-	args["input"] = arg0
-	return args, nil
-}
-
 func (ec *executionContext) field_Mutation_createPlanCollaborator_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
@@ -2037,21 +1934,6 @@ func (ec *executionContext) field_Mutation_createPlanDocument_args(ctx context.C
 	if tmp, ok := rawArgs["input"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
 		arg0, err = ec.unmarshalNPlanDocumentInput2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐPlanDocumentInput(ctx, tmp)
-		if err != nil {
-			return nil, err
-		}
-	}
-	args["input"] = arg0
-	return args, nil
-}
-
-func (ec *executionContext) field_Mutation_createPlanMilestones_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
-	var err error
-	args := map[string]interface{}{}
-	var arg0 model.PlanMilestonesInput
-	if tmp, ok := rawArgs["input"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
-		arg0, err = ec.unmarshalNPlanMilestonesInput2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐPlanMilestonesInput(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -4313,108 +4195,6 @@ func (ec *executionContext) fieldContext_Mutation_deletePlanCollaborator(ctx con
 	return fc, nil
 }
 
-func (ec *executionContext) _Mutation_createPlanBasics(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Mutation_createPlanBasics(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		directive0 := func(rctx context.Context) (interface{}, error) {
-			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Mutation().CreatePlanBasics(rctx, fc.Args["input"].(model.PlanBasicsInput))
-		}
-		directive1 := func(ctx context.Context) (interface{}, error) {
-			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_BASE_USER")
-			if err != nil {
-				return nil, err
-			}
-			if ec.directives.HasRole == nil {
-				return nil, errors.New("directive hasRole is not implemented")
-			}
-			return ec.directives.HasRole(ctx, nil, directive0, role)
-		}
-
-		tmp, err := directive1(rctx)
-		if err != nil {
-			return nil, graphql.ErrorOnPath(ctx, err)
-		}
-		if tmp == nil {
-			return nil, nil
-		}
-		if data, ok := tmp.(*models.PlanBasics); ok {
-			return data, nil
-		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.PlanBasics`, tmp)
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		return graphql.Null
-	}
-	res := resTmp.(*models.PlanBasics)
-	fc.Result = res
-	return ec.marshalOPlanBasics2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanBasics(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_Mutation_createPlanBasics(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Mutation",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "id":
-				return ec.fieldContext_PlanBasics_id(ctx, field)
-			case "modelPlanID":
-				return ec.fieldContext_PlanBasics_modelPlanID(ctx, field)
-			case "modelType":
-				return ec.fieldContext_PlanBasics_modelType(ctx, field)
-			case "problem":
-				return ec.fieldContext_PlanBasics_problem(ctx, field)
-			case "goal":
-				return ec.fieldContext_PlanBasics_goal(ctx, field)
-			case "testInventions":
-				return ec.fieldContext_PlanBasics_testInventions(ctx, field)
-			case "note":
-				return ec.fieldContext_PlanBasics_note(ctx, field)
-			case "createdBy":
-				return ec.fieldContext_PlanBasics_createdBy(ctx, field)
-			case "createdDts":
-				return ec.fieldContext_PlanBasics_createdDts(ctx, field)
-			case "modifiedBy":
-				return ec.fieldContext_PlanBasics_modifiedBy(ctx, field)
-			case "modifiedDts":
-				return ec.fieldContext_PlanBasics_modifiedDts(ctx, field)
-			case "status":
-				return ec.fieldContext_PlanBasics_status(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type PlanBasics", field.Name)
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_createPlanBasics_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return
-	}
-	return fc, nil
-}
-
 func (ec *executionContext) _Mutation_updatePlanBasics(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_Mutation_updatePlanBasics(ctx, field)
 	if err != nil {
@@ -4511,122 +4291,6 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanBasics(ctx context.C
 	}()
 	ctx = graphql.WithFieldContext(ctx, fc)
 	if fc.Args, err = ec.field_Mutation_updatePlanBasics_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Mutation_createPlanMilestones(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Mutation_createPlanMilestones(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		directive0 := func(rctx context.Context) (interface{}, error) {
-			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Mutation().CreatePlanMilestones(rctx, fc.Args["input"].(model.PlanMilestonesInput))
-		}
-		directive1 := func(ctx context.Context) (interface{}, error) {
-			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_BASE_USER")
-			if err != nil {
-				return nil, err
-			}
-			if ec.directives.HasRole == nil {
-				return nil, errors.New("directive hasRole is not implemented")
-			}
-			return ec.directives.HasRole(ctx, nil, directive0, role)
-		}
-
-		tmp, err := directive1(rctx)
-		if err != nil {
-			return nil, graphql.ErrorOnPath(ctx, err)
-		}
-		if tmp == nil {
-			return nil, nil
-		}
-		if data, ok := tmp.(*models.PlanMilestones); ok {
-			return data, nil
-		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.PlanMilestones`, tmp)
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		return graphql.Null
-	}
-	res := resTmp.(*models.PlanMilestones)
-	fc.Result = res
-	return ec.marshalOPlanMilestones2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanMilestones(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_Mutation_createPlanMilestones(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Mutation",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "id":
-				return ec.fieldContext_PlanMilestones_id(ctx, field)
-			case "modelPlanID":
-				return ec.fieldContext_PlanMilestones_modelPlanID(ctx, field)
-			case "completeICIP":
-				return ec.fieldContext_PlanMilestones_completeICIP(ctx, field)
-			case "clearanceStarts":
-				return ec.fieldContext_PlanMilestones_clearanceStarts(ctx, field)
-			case "clearanceEnds":
-				return ec.fieldContext_PlanMilestones_clearanceEnds(ctx, field)
-			case "announced":
-				return ec.fieldContext_PlanMilestones_announced(ctx, field)
-			case "applicationsStart":
-				return ec.fieldContext_PlanMilestones_applicationsStart(ctx, field)
-			case "applicationsEnd":
-				return ec.fieldContext_PlanMilestones_applicationsEnd(ctx, field)
-			case "performancePeriodStarts":
-				return ec.fieldContext_PlanMilestones_performancePeriodStarts(ctx, field)
-			case "performancePeriodEnds":
-				return ec.fieldContext_PlanMilestones_performancePeriodEnds(ctx, field)
-			case "wrapUpEnds":
-				return ec.fieldContext_PlanMilestones_wrapUpEnds(ctx, field)
-			case "highLevelNote":
-				return ec.fieldContext_PlanMilestones_highLevelNote(ctx, field)
-			case "phasedIn":
-				return ec.fieldContext_PlanMilestones_phasedIn(ctx, field)
-			case "phasedInNote":
-				return ec.fieldContext_PlanMilestones_phasedInNote(ctx, field)
-			case "createdBy":
-				return ec.fieldContext_PlanMilestones_createdBy(ctx, field)
-			case "createdDts":
-				return ec.fieldContext_PlanMilestones_createdDts(ctx, field)
-			case "modifiedBy":
-				return ec.fieldContext_PlanMilestones_modifiedBy(ctx, field)
-			case "modifiedDts":
-				return ec.fieldContext_PlanMilestones_modifiedDts(ctx, field)
-			case "status":
-				return ec.fieldContext_PlanMilestones_status(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type PlanMilestones", field.Name)
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_createPlanMilestones_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return
 	}
@@ -11212,117 +10876,6 @@ func (ec *executionContext) unmarshalInputGeneratePresignedUploadURLInput(ctx co
 	return it, nil
 }
 
-func (ec *executionContext) unmarshalInputPlanBasicsInput(ctx context.Context, obj interface{}) (model.PlanBasicsInput, error) {
-	var it model.PlanBasicsInput
-	asMap := map[string]interface{}{}
-	for k, v := range obj.(map[string]interface{}) {
-		asMap[k] = v
-	}
-
-	for k, v := range asMap {
-		switch k {
-		case "id":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("id"))
-			it.ID, err = ec.unmarshalOUUID2ᚖgithubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, v)
-			if err != nil {
-				return it, err
-			}
-		case "modelPlanID":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("modelPlanID"))
-			it.ModelPlanID, err = ec.unmarshalOUUID2ᚖgithubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, v)
-			if err != nil {
-				return it, err
-			}
-		case "modelType":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("modelType"))
-			it.ModelType, err = ec.unmarshalOModelType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelType(ctx, v)
-			if err != nil {
-				return it, err
-			}
-		case "problem":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("problem"))
-			it.Problem, err = ec.unmarshalOString2ᚖstring(ctx, v)
-			if err != nil {
-				return it, err
-			}
-		case "goal":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("goal"))
-			it.Goal, err = ec.unmarshalOString2ᚖstring(ctx, v)
-			if err != nil {
-				return it, err
-			}
-		case "testInventions":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("testInventions"))
-			it.TestInventions, err = ec.unmarshalOString2ᚖstring(ctx, v)
-			if err != nil {
-				return it, err
-			}
-		case "note":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("note"))
-			it.Note, err = ec.unmarshalOString2ᚖstring(ctx, v)
-			if err != nil {
-				return it, err
-			}
-		case "createdBy":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("createdBy"))
-			it.CreatedBy, err = ec.unmarshalOString2ᚖstring(ctx, v)
-			if err != nil {
-				return it, err
-			}
-		case "createdDts":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("createdDts"))
-			it.CreatedDts, err = ec.unmarshalOTime2ᚖtimeᚐTime(ctx, v)
-			if err != nil {
-				return it, err
-			}
-		case "modifiedBy":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("modifiedBy"))
-			it.ModifiedBy, err = ec.unmarshalOString2ᚖstring(ctx, v)
-			if err != nil {
-				return it, err
-			}
-		case "modifiedDts":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("modifiedDts"))
-			it.ModifiedDts, err = ec.unmarshalOTime2ᚖtimeᚐTime(ctx, v)
-			if err != nil {
-				return it, err
-			}
-		case "status":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("status"))
-			it.Status, err = ec.unmarshalOTaskStatus2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTaskStatus(ctx, v)
-			if err != nil {
-				return it, err
-			}
-		}
-	}
-
-	return it, nil
-}
-
 func (ec *executionContext) unmarshalInputPlanCollaboratorInput(ctx context.Context, obj interface{}) (model.PlanCollaboratorInput, error) {
 	var it model.PlanCollaboratorInput
 	asMap := map[string]interface{}{}
@@ -11542,173 +11095,6 @@ func (ec *executionContext) unmarshalInputPlanDocumentParameters(ctx context.Con
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("optionalNotes"))
 			it.OptionalNotes, err = ec.unmarshalOString2ᚖstring(ctx, v)
-			if err != nil {
-				return it, err
-			}
-		}
-	}
-
-	return it, nil
-}
-
-func (ec *executionContext) unmarshalInputPlanMilestonesInput(ctx context.Context, obj interface{}) (model.PlanMilestonesInput, error) {
-	var it model.PlanMilestonesInput
-	asMap := map[string]interface{}{}
-	for k, v := range obj.(map[string]interface{}) {
-		asMap[k] = v
-	}
-
-	for k, v := range asMap {
-		switch k {
-		case "id":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("id"))
-			it.ID, err = ec.unmarshalOUUID2ᚖgithubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, v)
-			if err != nil {
-				return it, err
-			}
-		case "modelPlanID":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("modelPlanID"))
-			it.ModelPlanID, err = ec.unmarshalOUUID2ᚖgithubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, v)
-			if err != nil {
-				return it, err
-			}
-		case "completeICIP":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("completeICIP"))
-			it.CompleteIcip, err = ec.unmarshalOTime2ᚖtimeᚐTime(ctx, v)
-			if err != nil {
-				return it, err
-			}
-		case "clearanceStarts":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("clearanceStarts"))
-			it.ClearanceStarts, err = ec.unmarshalOTime2ᚖtimeᚐTime(ctx, v)
-			if err != nil {
-				return it, err
-			}
-		case "clearanceEnds":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("clearanceEnds"))
-			it.ClearanceEnds, err = ec.unmarshalOTime2ᚖtimeᚐTime(ctx, v)
-			if err != nil {
-				return it, err
-			}
-		case "announced":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("announced"))
-			it.Announced, err = ec.unmarshalOTime2ᚖtimeᚐTime(ctx, v)
-			if err != nil {
-				return it, err
-			}
-		case "applicationsStart":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("applicationsStart"))
-			it.ApplicationsStart, err = ec.unmarshalOTime2ᚖtimeᚐTime(ctx, v)
-			if err != nil {
-				return it, err
-			}
-		case "applicationsEnd":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("applicationsEnd"))
-			it.ApplicationsEnd, err = ec.unmarshalOTime2ᚖtimeᚐTime(ctx, v)
-			if err != nil {
-				return it, err
-			}
-		case "performancePeriodStarts":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("performancePeriodStarts"))
-			it.PerformancePeriodStarts, err = ec.unmarshalOTime2ᚖtimeᚐTime(ctx, v)
-			if err != nil {
-				return it, err
-			}
-		case "performancePeriodEnds":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("performancePeriodEnds"))
-			it.PerformancePeriodEnds, err = ec.unmarshalOTime2ᚖtimeᚐTime(ctx, v)
-			if err != nil {
-				return it, err
-			}
-		case "wrapUpEnds":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("wrapUpEnds"))
-			it.WrapUpEnds, err = ec.unmarshalOTime2ᚖtimeᚐTime(ctx, v)
-			if err != nil {
-				return it, err
-			}
-		case "highLevelNote":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("highLevelNote"))
-			it.HighLevelNote, err = ec.unmarshalOString2ᚖstring(ctx, v)
-			if err != nil {
-				return it, err
-			}
-		case "phasedIn":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("phasedIn"))
-			it.PhasedIn, err = ec.unmarshalOBoolean2ᚖbool(ctx, v)
-			if err != nil {
-				return it, err
-			}
-		case "phasedInNote":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("phasedInNote"))
-			it.PhasedInNote, err = ec.unmarshalOString2ᚖstring(ctx, v)
-			if err != nil {
-				return it, err
-			}
-		case "createdBy":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("createdBy"))
-			it.CreatedBy, err = ec.unmarshalOString2ᚖstring(ctx, v)
-			if err != nil {
-				return it, err
-			}
-		case "createdDts":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("createdDts"))
-			it.CreatedDts, err = ec.unmarshalOTime2ᚖtimeᚐTime(ctx, v)
-			if err != nil {
-				return it, err
-			}
-		case "modifiedBy":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("modifiedBy"))
-			it.ModifiedBy, err = ec.unmarshalOString2ᚖstring(ctx, v)
-			if err != nil {
-				return it, err
-			}
-		case "modifiedDts":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("modifiedDts"))
-			it.ModifiedDts, err = ec.unmarshalOTime2ᚖtimeᚐTime(ctx, v)
-			if err != nil {
-				return it, err
-			}
-		case "status":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("status"))
-			it.Status, err = ec.unmarshalOTaskStatus2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTaskStatus(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -12123,22 +11509,10 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 				return ec._Mutation_deletePlanCollaborator(ctx, field)
 			})
 
-		case "createPlanBasics":
-
-			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_createPlanBasics(ctx, field)
-			})
-
 		case "updatePlanBasics":
 
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._Mutation_updatePlanBasics(ctx, field)
-			})
-
-		case "createPlanMilestones":
-
-			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_createPlanMilestones(ctx, field)
 			})
 
 		case "updatePlanMilestones":
@@ -13552,11 +12926,6 @@ func (ec *executionContext) unmarshalNPlanBasicsChanges2map(ctx context.Context,
 	return v.(map[string]interface{}), nil
 }
 
-func (ec *executionContext) unmarshalNPlanBasicsInput2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐPlanBasicsInput(ctx context.Context, v interface{}) (model.PlanBasicsInput, error) {
-	res, err := ec.unmarshalInputPlanBasicsInput(ctx, v)
-	return res, graphql.ErrorOnPath(ctx, err)
-}
-
 func (ec *executionContext) marshalNPlanCollaborator2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanCollaborator(ctx context.Context, sel ast.SelectionSet, v models.PlanCollaborator) graphql.Marshaler {
 	return ec._PlanCollaborator(ctx, sel, &v)
 }
@@ -13749,11 +13118,6 @@ func (ec *executionContext) unmarshalNPlanDocumentParameters2ᚖgithubᚗcomᚋc
 
 func (ec *executionContext) unmarshalNPlanMilestoneChanges2map(ctx context.Context, v interface{}) (map[string]interface{}, error) {
 	return v.(map[string]interface{}), nil
-}
-
-func (ec *executionContext) unmarshalNPlanMilestonesInput2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐPlanMilestonesInput(ctx context.Context, v interface{}) (model.PlanMilestonesInput, error) {
-	res, err := ec.unmarshalInputPlanMilestonesInput(ctx, v)
-	return res, graphql.ErrorOnPath(ctx, err)
 }
 
 func (ec *executionContext) unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx context.Context, v interface{}) (model.Role, error) {
@@ -14652,23 +14016,6 @@ func (ec *executionContext) unmarshalOTaskStatus2githubᚗcomᚋcmsgovᚋmintᚑ
 
 func (ec *executionContext) marshalOTaskStatus2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTaskStatus(ctx context.Context, sel ast.SelectionSet, v models.TaskStatus) graphql.Marshaler {
 	res := graphql.MarshalString(string(v))
-	return res
-}
-
-func (ec *executionContext) unmarshalOTaskStatus2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTaskStatus(ctx context.Context, v interface{}) (*models.TaskStatus, error) {
-	if v == nil {
-		return nil, nil
-	}
-	tmp, err := graphql.UnmarshalString(v)
-	res := models.TaskStatus(tmp)
-	return &res, graphql.ErrorOnPath(ctx, err)
-}
-
-func (ec *executionContext) marshalOTaskStatus2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTaskStatus(ctx context.Context, sel ast.SelectionSet, v *models.TaskStatus) graphql.Marshaler {
-	if v == nil {
-		return graphql.Null
-	}
-	res := graphql.MarshalString(string(*v))
 	return res
 }
 
