@@ -36,7 +36,7 @@ describe('The Model Plan Task List', () => {
       goal: null,
       testInventions: null,
       note: null,
-      status: 'COMPLETE'
+      status: 'READY'
     },
     milestones: {
       id: 'adsf',
@@ -53,7 +53,7 @@ describe('The Model Plan Task List', () => {
       highLevelNote: null,
       phasedIn: null,
       phasedInNote: null,
-      status: 'COMPLETE'
+      status: 'READY'
     }
   } as GetModelPlanTypes;
 
@@ -119,7 +119,8 @@ describe('The Model Plan Task List', () => {
 
   describe('Statuses', () => {
     it('renders proper buttons for Model Basics', async () => {
-      modelPlan.basics = null;
+      modelPlan.modelCategory = null;
+      modelPlan.cmsCenters = [];
       render(
         <MemoryRouter initialEntries={[`/models/${modelPlan.id}/task-list`]}>
           <MockedProvider
