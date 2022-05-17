@@ -1,69 +1,47 @@
 package resolvers
 
-// import (
-// 	"testing"
+import (
+	"github.com/cmsgov/mint-app/pkg/models"
+)
 
-// 	"github.com/cmsgov/mint-app/pkg/models"
+func (suite *ResolverSuite) TestPlanBasicsGetByModelPlanID() {
+	plan := suite.createModelPlan("Plan For Basics") // should create the basics as part of the resolver
 
-// 	"github.com/google/uuid"
-// 	"github.com/stretchr/testify/assert"
-// )
+	basics, err := PlanBasicsGetByModelPlanID(suite.testConfigs.Logger, &suite.testConfigs.UserInfo.EuaUserID, plan.ID, suite.testConfigs.Store)
 
-// func TestCreatePlanBasics(t *testing.T) {
-// 	tc := GetDefaultTestConfigs()
+	suite.NoError(err)
+	suite.EqualValues(basics.ModelPlanID, plan.ID)
+	suite.EqualValues(basics.Status, models.TaskReady)
+	suite.EqualValues(*basics.CreatedBy, suite.testConfigs.UserInfo.EuaUserID)
+	suite.EqualValues(*basics.ModifiedBy, suite.testConfigs.UserInfo.EuaUserID)
 
-// 	basics := models.PlanBasics{}
+	// Many of the fields are nil upon creation
+	suite.Nil(basics.ModelType)
+	suite.Nil(basics.Problem)
+	suite.Nil(basics.Goal)
+	suite.Nil(basics.TestInventions)
+	suite.Nil(basics.Note)
+}
 
-// 	basics.ID = uuid.MustParse("0576c351-c480-4f85-97a4-b7c1d691a3cb")
-// 	basics.ModelPlanID = uuid.MustParse("85b3ff03-1be2-4870-b02f-55c764500e48")
+func (suite *ResolverSuite) TestUpdatePlanBasics() {
+	plan := suite.createModelPlan("Plan For Basics") // should create the milestones as part of the resolver
 
-// 	result, err := CreatePlanBasics(tc.Logger, &basics, tc.Principal, tc.Store)
-// 	assert.NoError(t, err)
-// 	assert.NotNil(t, result.ID)
-// }
+	basics, err := PlanBasicsGetByModelPlanID(suite.testConfigs.Logger, &suite.testConfigs.UserInfo.EuaUserID, plan.ID, suite.testConfigs.Store)
+	suite.NoError(err)
 
-// func TestUpdatePlanBasics(t *testing.T) {
-// 	tc := GetDefaultTestConfigs()
+	changes := map[string]interface{}{
+		"modelType": models.MTVoluntary,
+		"goal":      "Some goal",
+	}
+	updater := "UPDT"
 
-// 	basics := models.PlanBasics{}
-// 	basics.Problem = models.StringPointer("This is a problem")
-// 	basics.ModifiedBy = tc.Principal
-// 	basics.CreatedBy = tc.Principal
+	updatedBasics, err := UpdatePlanBasics(suite.testConfigs.Logger, basics.ID, changes, updater, suite.testConfigs.Store)
 
-// 	basics.ID = uuid.MustParse("0576c351-c480-4f85-97a4-b7c1d691a3cb")
-// 	basics.ModelPlanID = uuid.MustParse("85b3ff03-1be2-4870-b02f-55c764500e48")
-
-// 	result, err := UpdatePlanBasics(tc.Logger, &basics, tc.Principal, tc.Store)
-// 	assert.NoError(t, err)
-// 	assert.NotNil(t, result.ID)
-
-// 	assert.EqualValues(t, basics.Problem, result.Problem)
-// }
-
-// func TestPlanBasicsGetByModelPlanID(t *testing.T) {
-// 	tc := GetDefaultTestConfigs()
-
-// 	basics := models.PlanBasics{}
-// 	basics.Problem = models.StringPointer("This is a problem")
-// 	basics.ModifiedBy = tc.Principal
-// 	basics.CreatedBy = tc.Principal
-
-// 	basics.ID = uuid.MustParse("0576c351-c480-4f85-97a4-b7c1d691a3cb")
-// 	modelPlanID := uuid.MustParse("85b3ff03-1be2-4870-b02f-55c764500e48")
-
-// 	result, err := PlanBasicsGetByModelPlanID(tc.Logger, tc.Principal, modelPlanID, tc.Store)
-// 	assert.NoError(t, err)
-// 	assert.NotNil(t, result.ID)
-
-// 	assert.EqualValues(t, modelPlanID, result.ModelPlanID)
-// }
-
-// func TestFetchPlanBasicsByID(t *testing.T) {
-// 	tc := GetDefaultTestConfigs()
-
-// 	id := uuid.MustParse("0576c351-c480-4f85-97a4-b7c1d691a3cb")
-
-// 	plan, err := FetchPlanBasicsByID(tc.Logger, id, tc.Store)
-// 	assert.Nil(t, err)
-// 	assert.NotNil(t, plan)
-// }
+	suite.NoError(err)
+	suite.EqualValues(updater, *updatedBasics.ModifiedBy)
+	suite.EqualValues(models.MTVoluntary, *updatedBasics.ModelType)
+	suite.Nil(updatedBasics.Problem)
+	suite.EqualValues("Some goal", *updatedBasics.Goal)
+	suite.Nil(updatedBasics.TestInventions)
+	suite.Nil(updatedBasics.Note)
+}

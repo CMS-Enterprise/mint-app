@@ -42,22 +42,6 @@ type LaunchDarklySettings struct {
 	SignedHash string `json:"signedHash"`
 }
 
-// Represents plan basics
-type PlanBasicsInput struct {
-	ID             *uuid.UUID         `json:"id"`
-	ModelPlanID    *uuid.UUID         `json:"modelPlanID"`
-	ModelType      *models.ModelType  `json:"modelType"`
-	Problem        *string            `json:"problem"`
-	Goal           *string            `json:"goal"`
-	TestInventions *string            `json:"testInventions"`
-	Note           *string            `json:"note"`
-	CreatedBy      *string            `json:"createdBy"`
-	CreatedDts     *time.Time         `json:"createdDts"`
-	ModifiedBy     *string            `json:"modifiedBy"`
-	ModifiedDts    *time.Time         `json:"modifiedDts"`
-	Status         *models.TaskStatus `json:"status"`
-}
-
 // PlanCollaboratorInput represents the data required to create, modify, or delete a collaborator on a plan
 type PlanCollaboratorInput struct {
 	ID          *uuid.UUID      `json:"id"`
@@ -99,29 +83,6 @@ type PlanDocumentParameters struct {
 type PlanDocumentPayload struct {
 	Document     *models.PlanDocument `json:"document"`
 	PresignedURL *string              `json:"presignedURL"`
-}
-
-// Represents plan milestones input
-type PlanMilestonesInput struct {
-	ID                      *uuid.UUID         `json:"id"`
-	ModelPlanID             *uuid.UUID         `json:"modelPlanID"`
-	CompleteIcip            *time.Time         `json:"completeICIP"`
-	ClearanceStarts         *time.Time         `json:"clearanceStarts"`
-	ClearanceEnds           *time.Time         `json:"clearanceEnds"`
-	Announced               *time.Time         `json:"announced"`
-	ApplicationsStart       *time.Time         `json:"applicationsStart"`
-	ApplicationsEnd         *time.Time         `json:"applicationsEnd"`
-	PerformancePeriodStarts *time.Time         `json:"performancePeriodStarts"`
-	PerformancePeriodEnds   *time.Time         `json:"performancePeriodEnds"`
-	WrapUpEnds              *time.Time         `json:"wrapUpEnds"`
-	HighLevelNote           *string            `json:"highLevelNote"`
-	PhasedIn                *bool              `json:"phasedIn"`
-	PhasedInNote            *string            `json:"phasedInNote"`
-	CreatedBy               *string            `json:"createdBy"`
-	CreatedDts              *time.Time         `json:"createdDts"`
-	ModifiedBy              *string            `json:"modifiedBy"`
-	ModifiedDts             *time.Time         `json:"modifiedDts"`
-	Status                  *models.TaskStatus `json:"status"`
 }
 
 type CMMIGroup string
