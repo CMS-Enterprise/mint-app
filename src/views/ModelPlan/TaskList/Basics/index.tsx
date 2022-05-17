@@ -129,10 +129,6 @@ const BasicsContent = () => {
     validationSchema = planBasicsSchema.pageOneSchema;
   }
 
-  useEffect(() => {
-    console.log(`showOther: ${showOther}`);
-  }, [showOther]);
-
   return (
     <MainContent className="margin-bottom-5">
       <div className="grid-container">
@@ -417,7 +413,6 @@ const BasicsContent = () => {
                       }}
                     >
                       {/* TODO:
-                        1. I need to figure out the other valdation schema
                         2. Ensure all steps of form works
                         3. milestone errors
                       */}

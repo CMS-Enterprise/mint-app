@@ -79,9 +79,8 @@ const Overview = () => {
   ) => {
     update({
       variables: {
-        input: {
-          id,
-          modelPlanID: modelId,
+        id,
+        changes: {
           modelType: formikValues.modelType,
           problem: formikValues.problem,
           goal: formikValues.goal,
