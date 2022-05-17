@@ -91,31 +91,13 @@ export interface ModelPlanChanges {
 }
 
 /**
- * PlanBasicsChanges represents the possible changes you can make to a Plan Basics object when updating it.
- * Fields explicitly set with NULL will be unset, and omitted fields will be left unchanged.
- * https: // gqlgen.com/reference/changesets/
+ * PlanCollaboratorCreateInput represents the data required to create a collaborator on a plan
  */
-export interface PlanBasicsChanges {
-  modelType?: ModelType | null;
-  problem?: string | null;
-  goal?: string | null;
-  testInventions?: string | null;
-  note?: string | null;
-}
-
-/**
- * PlanCollaboratorInput represents the data required to create, modify, or delete a collaborator on a plan
- */
-export interface PlanCollaboratorInput {
-  id?: UUID | null;
+export interface PlanCollaboratorCreateInput {
   modelPlanID: UUID;
   euaUserID: string;
   fullName: string;
   teamRole: TeamRole;
-  createdBy?: string | null;
-  createdDts?: Time | null;
-  modifiedBy?: string | null;
-  modifiedDts?: Time | null;
 }
 
 /**
