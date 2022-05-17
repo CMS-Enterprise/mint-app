@@ -74,7 +74,7 @@ const Status = () => {
   return (
     <MainContent>
       <GridContainer>
-        <Grid col={6}>
+        <Grid desktop={{ col: 6 }}>
           <BreadcrumbBar variant="wrap">
             <Breadcrumb>
               <BreadcrumbLink asCustom={Link} to="/">
