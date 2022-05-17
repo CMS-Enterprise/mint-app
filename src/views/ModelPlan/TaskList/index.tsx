@@ -70,31 +70,26 @@ const TaskList = () => {
   const taskListItemStatus = (key: string) => {
     switch (key) {
       case 'basics':
-        if (basics === null) {
-          return 'READY';
-        }
         if (
           basics?.status === 'COMPLETE' &&
           milestones?.status === 'COMPLETE'
         ) {
           return 'COMPLETE';
         }
-        return 'IN_PROGRESS';
-
-      // (basics === null) ? return 'READY' : 'IN_PROGRESS';
+        return basics!.status;
       // TODO: Add these model plans when BE integrates it
       // case 'characteristics':
-      //   return characteristics === null ? 'READY' : 'IN_PROGRESS';
+      //   return;
       // case 'participants':
-      //   return participants === null ? 'READY' : 'IN_PROGRESS';
+      //   return;
       // case 'beneficiaries':
-      //   return beneficiaries === null ? 'READY' : 'IN_PROGRESS';
+      //   return;
       // case 'operations':
-      //   return operations === null ? 'READY' : 'IN_PROGRESS';
+      //   return;
       // case 'payment':
-      //   return payment === null ? 'READY' : 'IN_PROGRESS';
+      //   return;
       // case 'finalizeModelPlan':
-      //   return finalizeModelPlan === null ? 'READY' : 'IN_PROGRESS';
+      //   return;
       default:
         return 'CANNOT_START';
     }
