@@ -175,26 +175,6 @@ type PlanBasics {
   status: TaskStatus!
 }
 
-
-"""
-Represents plan basics
-"""
-input PlanBasicsInput {
-  id: UUID
-  modelPlanID: UUID
-
-  modelType: ModelType
-  problem: String
-  goal: String
-  testInventions: String
-  note: String
-  createdBy: String
-  createdDts: Time
-  modifiedBy: String
-  modifiedDts: Time
-  status: TaskStatus
-}
-
 """
 PlanBasicsChanges represents the possible changes you can make to a Plan Basics object when updating it.
 Fields explicitly set with NULL will be unset, and omitted fields will be left unchanged.
@@ -220,38 +200,6 @@ type UserInfo {
 Represents plan milestones
 """
 type PlanMilestones {
-  id: UUID
-  modelPlanID: UUID
-
-  completeICIP: Time
-  clearanceStarts: Time
-  clearanceEnds: Time
-
-  announced: Time
-
-  applicationsStart: Time
-  applicationsEnd: Time
-
-  performancePeriodStarts: Time
-  performancePeriodEnds: Time
-  wrapUpEnds: Time
-  highLevelNote: String
-
-  phasedIn: Boolean
-  phasedInNote: String
-
-
-  createdBy: String
-  createdDts: Time
-  modifiedBy: String
-  modifiedDts: Time
-  status: TaskStatus
-}
-
-"""
-Represents plan milestones input
-"""
-input PlanMilestonesInput {
   id: UUID
   modelPlanID: UUID
 
@@ -405,13 +353,7 @@ updatePlanCollaborator(id: UUID!, newRole: TeamRole!): PlanCollaborator
 deletePlanCollaborator(id: UUID!): PlanCollaborator
 @hasRole(role: MINT_BASE_USER)
 
-createPlanBasics(input: PlanBasicsInput!):PlanBasics
-@hasRole(role: MINT_BASE_USER)
-
 updatePlanBasics(id: UUID!, changes: PlanBasicsChanges!): PlanBasics
-@hasRole(role: MINT_BASE_USER)
-
-createPlanMilestones(input: PlanMilestonesInput!): PlanMilestones
 @hasRole(role: MINT_BASE_USER)
 
 updatePlanMilestones(id: UUID!, changes: PlanMilestoneChanges!): PlanMilestones

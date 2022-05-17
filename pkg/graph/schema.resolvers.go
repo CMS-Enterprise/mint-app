@@ -117,27 +117,11 @@ func (r *mutationResolver) DeletePlanCollaborator(ctx context.Context, id uuid.U
 	return resolvers.DeletePlanCollaborator(logger, id, principal, r.store)
 }
 
-func (r *mutationResolver) CreatePlanBasics(ctx context.Context, input model.PlanBasicsInput) (*models.PlanBasics, error) {
-	basics := ConvertToPlanBasics(&input)
-	principal := appcontext.Principal(ctx).ID()
-	logger := appcontext.ZLogger(ctx)
-
-	return resolvers.CreatePlanBasics(logger, basics, &principal, r.store)
-}
-
 func (r *mutationResolver) UpdatePlanBasics(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanBasics, error) {
 	principal := appcontext.Principal(ctx).ID()
 	logger := appcontext.ZLogger(ctx)
 
 	return resolvers.UpdatePlanBasics(logger, id, changes, principal, r.store)
-}
-
-func (r *mutationResolver) CreatePlanMilestones(ctx context.Context, input model.PlanMilestonesInput) (*models.PlanMilestones, error) {
-	basics := ConvertToPlanMilestonesModel(&input)
-	principal := appcontext.Principal(ctx).ID()
-	logger := appcontext.ZLogger(ctx)
-
-	return resolvers.CreatePlanMilestones(logger, basics, &principal, r.store)
 }
 
 func (r *mutationResolver) UpdatePlanMilestones(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanMilestones, error) {

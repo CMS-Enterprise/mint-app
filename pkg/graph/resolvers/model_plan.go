@@ -9,6 +9,8 @@ import (
 )
 
 // ModelPlanCreate implements resolver logic to create a model plan
+// TODO Revist this function, as we probably want to add all of these DB entries inthe scope of a single SQL transaction
+// so that we can roll back if there is an error with any of these calls.
 func ModelPlanCreate(logger *zap.Logger, modelName string, store *storage.Store, principalInfo *models.UserInfo) (*models.ModelPlan, error) {
 	plan := &models.ModelPlan{
 		ModelName:  modelName,
@@ -17,15 +19,13 @@ func ModelPlanCreate(logger *zap.Logger, modelName string, store *storage.Store,
 		ModifiedBy: &principalInfo.EuaUserID,
 	}
 
+	// Create the model plan itself
 	createdPlan, err := store.ModelPlanCreate(logger, plan)
 	if err != nil {
 		return nil, err
 	}
-	/*TODO Revist this
-	- we might want to add a plan collaborator in the scope of a single SQLX transaction and roll back the transaction if a collaborator was not successfully created
-	  - this could be in a combined store for collaborator / plan
-	- we could also address this directly in SQL, create the plan and collaborator at the same time.
-	*/
+
+	// Create an initial collaborator for the plan
 	collab := &models.PlanCollaborator{
 		ModelPlanID: createdPlan.ID,
 		EUAUserID:   principalInfo.EuaUserID,
@@ -35,6 +35,30 @@ func ModelPlanCreate(logger *zap.Logger, modelName string, store *storage.Store,
 		ModifiedBy:  &principalInfo.EuaUserID,
 	}
 	_, err = store.PlanCollaboratorCreate(logger, collab)
+	if err != nil {
+		return nil, err
+	}
+
+	// Create a default plan basics object
+	basics := &models.PlanBasics{
+		ModelPlanID: createdPlan.ID,
+		CreatedBy:   &principalInfo.EuaUserID,
+		ModifiedBy:  &principalInfo.EuaUserID,
+	}
+	basics.CalcStatus()
+	_, err = store.PlanBasicsCreate(logger, basics)
+	if err != nil {
+		return nil, err
+	}
+
+	// Create a default plan milestones object
+	milestones := &models.PlanMilestones{
+		ModelPlanID: createdPlan.ID,
+		CreatedBy:   &principalInfo.EuaUserID,
+		ModifiedBy:  &principalInfo.EuaUserID,
+	}
+	milestones.CalcStatus()
+	_, err = store.PlanMilestonesCreate(logger, milestones)
 	if err != nil {
 		return nil, err
 	}
