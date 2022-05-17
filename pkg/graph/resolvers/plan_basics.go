@@ -8,21 +8,6 @@ import (
 	"github.com/cmsgov/mint-app/pkg/storage"
 )
 
-// CreatePlanBasics implements resolver logic to create a plan basics object
-func CreatePlanBasics(logger *zap.Logger, input *models.PlanBasics, principal *string, store *storage.Store) (*models.PlanBasics, error) {
-	input.CreatedBy = principal
-
-	input.ModifiedBy = input.CreatedBy
-	input.CalcStatus()
-	retBasics, err := store.PlanBasicsCreate(logger, input)
-
-	// payload := model.CreatePlanBasicsPayload{
-	// 	ID:         createdPlan.ID,
-	// 	UserErrors: nil,
-	// }
-	return retBasics, err
-}
-
 // UpdatePlanBasics implements resolver logic to update a plan basics object
 func UpdatePlanBasics(logger *zap.Logger, id uuid.UUID, changes map[string]interface{}, principal string, store *storage.Store) (*models.PlanBasics, error) {
 	// Get existing basics
@@ -51,14 +36,4 @@ func PlanBasicsGetByModelPlanID(logger *zap.Logger, principal *string, modelPlan
 
 	return plan, nil
 
-}
-
-// FetchPlanBasicsByID implements resolver logic to get plan basics by ID
-func FetchPlanBasicsByID(logger *zap.Logger, id uuid.UUID, store *storage.Store) (*models.PlanBasics, error) {
-	plan, err := store.PlanBasicsGetByID(logger, id)
-	if err != nil {
-		return nil, err
-	}
-
-	return plan, nil
 }

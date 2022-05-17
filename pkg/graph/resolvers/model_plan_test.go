@@ -1,8 +1,6 @@
 package resolvers
 
 import (
-	"github.com/stretchr/testify/assert"
-
 	"github.com/cmsgov/mint-app/pkg/models"
 )
 
@@ -10,18 +8,18 @@ func (suite *ResolverSuite) TestModelPlanCreate() {
 	planName := "Test Plan"
 	result, err := ModelPlanCreate(suite.testConfigs.Logger, planName, suite.testConfigs.Store, suite.testConfigs.UserInfo)
 
-	assert.NoError(suite.T(), err)
-	assert.NotNil(suite.T(), result.ID)
-	assert.EqualValues(suite.T(), planName, result.ModelName)
-	assert.EqualValues(suite.T(), false, result.Archived)
-	assert.EqualValues(suite.T(), suite.testConfigs.UserInfo.EuaUserID, *result.CreatedBy)
-	assert.EqualValues(suite.T(), suite.testConfigs.UserInfo.EuaUserID, *result.ModifiedBy)
-	assert.EqualValues(suite.T(), *result.CreatedDts, *result.ModifiedDts)
-	assert.EqualValues(suite.T(), models.ModelStatusPlanDraft, result.Status)
+	suite.NoError(err)
+	suite.NotNil(result.ID)
+	suite.EqualValues(planName, result.ModelName)
+	suite.EqualValues(false, result.Archived)
+	suite.EqualValues(suite.testConfigs.UserInfo.EuaUserID, *result.CreatedBy)
+	suite.EqualValues(suite.testConfigs.UserInfo.EuaUserID, *result.ModifiedBy)
+	suite.EqualValues(*result.CreatedDts, *result.ModifiedDts)
+	suite.EqualValues(models.ModelStatusPlanDraft, result.Status)
 }
 
 func (suite *ResolverSuite) TestModelPlanUpdate() {
-	plan := createModelPlan(suite.T(), suite.testConfigs)
+	plan := suite.createModelPlan("Test Plan")
 
 	changes := map[string]interface{}{
 		"modelName":  "NEW_AND_IMPROVED",
@@ -34,34 +32,34 @@ func (suite *ResolverSuite) TestModelPlanUpdate() {
 	updater := "UPDT"
 	result, err := ModelPlanUpdate(suite.testConfigs.Logger, plan.ID, changes, &updater, suite.testConfigs.Store) // update plan with new user "UPDT"
 
-	assert.NoError(suite.T(), err)
-	assert.EqualValues(suite.T(), plan.ID, result.ID)
-	assert.EqualValues(suite.T(), changes["modelName"], result.ModelName)
-	assert.EqualValues(suite.T(), changes["archived"], result.Archived)
-	assert.EqualValues(suite.T(), changes["cmsCenters"], result.CMSCenters)
-	assert.EqualValues(suite.T(), changes["cmsOther"], *result.CMSOther)
-	assert.EqualValues(suite.T(), changes["cmmiGroups"], result.CMMIGroups)
-	assert.EqualValues(suite.T(), changes["status"], result.Status)
-	assert.EqualValues(suite.T(), suite.testConfigs.UserInfo.EuaUserID, *result.CreatedBy)
-	assert.EqualValues(suite.T(), updater, *result.ModifiedBy)
+	suite.NoError(err)
+	suite.EqualValues(plan.ID, result.ID)
+	suite.EqualValues(changes["modelName"], result.ModelName)
+	suite.EqualValues(changes["archived"], result.Archived)
+	suite.EqualValues(changes["cmsCenters"], result.CMSCenters)
+	suite.EqualValues(changes["cmsOther"], *result.CMSOther)
+	suite.EqualValues(changes["cmmiGroups"], result.CMMIGroups)
+	suite.EqualValues(changes["status"], result.Status)
+	suite.EqualValues(suite.testConfigs.UserInfo.EuaUserID, *result.CreatedBy)
+	suite.EqualValues(updater, *result.ModifiedBy)
 }
 
 func (suite *ResolverSuite) TestModelPlanGetByID() {
-	plan := createModelPlan(suite.T(), suite.testConfigs)
+	plan := suite.createModelPlan("Test Plan")
 
 	result, err := ModelPlanGetByID(suite.testConfigs.Logger, suite.testConfigs.UserInfo.EuaUserID, plan.ID, suite.testConfigs.Store)
 
-	assert.NoError(suite.T(), err)
-	assert.EqualValues(suite.T(), plan, result)
+	suite.NoError(err)
+	suite.EqualValues(plan, result)
 }
 
 func (suite *ResolverSuite) TestModelPlanCollectionByUser() {
-	plan := createModelPlan(suite.T(), suite.testConfigs)
+	plan := suite.createModelPlan("Test Plan")
 
 	result, err := ModelPlanCollectionByUser(suite.testConfigs.Logger, suite.testConfigs.UserInfo.EuaUserID, suite.testConfigs.Store)
 
-	assert.NoError(suite.T(), err)
-	assert.NotNil(suite.T(), result)
-	assert.Len(suite.T(), result, 1)
-	assert.EqualValues(suite.T(), plan, result[0])
+	suite.NoError(err)
+	suite.NotNil(result)
+	suite.Len(result, 1)
+	suite.EqualValues(plan, result[0])
 }

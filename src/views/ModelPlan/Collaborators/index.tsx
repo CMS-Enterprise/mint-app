@@ -73,7 +73,7 @@ const Collaborators = () => {
   ) => {
     mutate({
       variables: {
-        input: collaborator
+        id: collaborator.id
       }
     })
       .then(response => {
