@@ -93,42 +93,35 @@ const Milestones = () => {
     formikValues: PlanBasicsMilestoneTypes,
     redirect?: 'task-list'
   ) => {
-    const inputVariables = {
-      modelPlanID: modelId,
-      completeICIP: formikValues.completeICIP,
-      clearanceStarts: formikValues.clearanceStarts,
-      clearanceEnds: formikValues.clearanceEnds,
-      announced: formikValues.announced,
-      applicationsStart: formikValues.applicationsStart,
-      applicationsEnd: formikValues.applicationsEnd,
-      performancePeriodStarts: formikValues.performancePeriodStarts,
-      performancePeriodEnds: formikValues.performancePeriodEnds,
-      wrapUpEnds: formikValues.wrapUpEnds,
-      highLevelNote: formikValues.highLevelNote,
-      phasedIn: formikValues.phasedIn,
-      phasedInNote: formikValues.phasedInNote
-    };
-
-    if (data?.modelPlan?.milestones !== null) {
-      update({
-        variables: {
-          input: {
-            id: milestones?.id,
-            ...inputVariables
+    update({
+      variables: {
+        id: milestones?.id,
+        changes: {
+          completeICIP: formikValues.completeICIP,
+          clearanceStarts: formikValues.clearanceStarts,
+          clearanceEnds: formikValues.clearanceEnds,
+          announced: formikValues.announced,
+          applicationsStart: formikValues.applicationsStart,
+          applicationsEnd: formikValues.applicationsEnd,
+          performancePeriodStarts: formikValues.performancePeriodStarts,
+          performancePeriodEnds: formikValues.performancePeriodEnds,
+          wrapUpEnds: formikValues.wrapUpEnds,
+          highLevelNote: formikValues.highLevelNote,
+          phasedIn: formikValues.phasedIn,
+          phasedInNote: formikValues.phasedInNote
+        }
+      }
+    })
+      .then(response => {
+        if (!response?.errors) {
+          if (redirect === 'task-list') {
+            history.push(`/models/${modelId}/task-list`);
           }
         }
       })
-        .then(response => {
-          if (!response?.errors) {
-            if (redirect === 'task-list') {
-              history.push(`/models/${modelId}/task-list`);
-            }
-          }
-        })
-        .catch(errors => {
-          formikRef?.current?.setErrors(errors);
-        });
-    }
+      .catch(errors => {
+        formikRef?.current?.setErrors(errors);
+      });
   };
 
   return (
