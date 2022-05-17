@@ -302,7 +302,7 @@ const Overview = () => {
                     <Button
                       type="button"
                       className="usa-button usa-button--unstyled"
-                      onClick={() => handleFormSubmit(values, 'back')}
+                      onClick={() => handleFormSubmit(values, 'task-list')}
                     >
                       <IconArrowBack className="margin-right-1" aria-hidden />
                       {h('saveAndReturn')}
