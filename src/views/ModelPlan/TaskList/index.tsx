@@ -51,6 +51,8 @@ const TaskList = () => {
 
   const {
     modelName,
+    modelCategory,
+    cmsCenters,
     modifiedDts,
     basics,
     milestones
@@ -76,7 +78,10 @@ const TaskList = () => {
         ) {
           return 'COMPLETE';
         }
-        return basics!.status;
+        if (modelCategory === null && cmsCenters.length === 0) {
+          return 'READY';
+        }
+        return 'IN_PROGRESS';
       // TODO: Add these model plans when BE integrates it
       // case 'characteristics':
       //   return;
