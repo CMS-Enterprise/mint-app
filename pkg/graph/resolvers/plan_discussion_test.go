@@ -2,7 +2,6 @@ package resolvers
 
 import (
 	_ "github.com/lib/pq" // required for postgres driver in sql
-	"github.com/stretchr/testify/assert"
 
 	"github.com/cmsgov/mint-app/pkg/graph/model"
 	"github.com/cmsgov/mint-app/pkg/models"
@@ -17,11 +16,11 @@ func (suite *ResolverSuite) TestCreatePlanDiscussion() {
 	}
 
 	result, err := CreatePlanDiscussion(suite.testConfigs.Logger, input, suite.testConfigs.UserInfo.EuaUserID, suite.testConfigs.Store)
-	assert.NoError(suite.T(), err)
-	assert.NotNil(suite.T(), result.ID)
-	assert.EqualValues(suite.T(), plan.ID, result.ModelPlanID)
-	assert.EqualValues(suite.T(), input.Content, result.Content)
-	assert.EqualValues(suite.T(), models.DiscussionUnAnswered, result.Status)
+	suite.NoError(err)
+	suite.NotNil(result.ID)
+	suite.EqualValues(plan.ID, result.ModelPlanID)
+	suite.EqualValues(input.Content, result.Content)
+	suite.EqualValues(models.DiscussionUnAnswered, result.Status)
 }
 
 func (suite *ResolverSuite) TestUpdatePlanDiscussion() {
@@ -36,12 +35,12 @@ func (suite *ResolverSuite) TestUpdatePlanDiscussion() {
 	updater := "UPDT"
 	result, err := UpdatePlanDiscussion(suite.testConfigs.Logger, discussion.ID, changes, updater, suite.testConfigs.Store)
 
-	assert.NoError(suite.T(), err)
-	assert.EqualValues(suite.T(), discussion.ID, result.ID)
-	assert.EqualValues(suite.T(), changes["content"], result.Content)
-	assert.EqualValues(suite.T(), changes["status"], result.Status)
-	assert.EqualValues(suite.T(), suite.testConfigs.UserInfo.EuaUserID, result.CreatedBy)
-	assert.EqualValues(suite.T(), updater, result.ModifiedBy)
+	suite.NoError(err)
+	suite.EqualValues(discussion.ID, result.ID)
+	suite.EqualValues(changes["content"], result.Content)
+	suite.EqualValues(changes["status"], result.Status)
+	suite.EqualValues(suite.testConfigs.UserInfo.EuaUserID, result.CreatedBy)
+	suite.EqualValues(updater, result.ModifiedBy)
 }
 
 func (suite *ResolverSuite) TestDeletePlanDiscussion() {
@@ -49,13 +48,13 @@ func (suite *ResolverSuite) TestDeletePlanDiscussion() {
 	discussion := suite.createPlanDiscussion(plan, "This is a test comment")
 
 	result, err := DeletePlanDiscussion(suite.testConfigs.Logger, discussion.ID, suite.testConfigs.UserInfo.EuaUserID, suite.testConfigs.Store)
-	assert.NoError(suite.T(), err)
-	assert.EqualValues(suite.T(), discussion, result)
+	suite.NoError(err)
+	suite.EqualValues(discussion, result)
 
 	// Check that there's no plans for this user
 	discussions, err := PlanDiscussionCollectionByModelPlanID(suite.testConfigs.Logger, discussion.ID, suite.testConfigs.Store)
-	assert.NoError(suite.T(), err)
-	assert.Len(suite.T(), discussions, 0)
+	suite.NoError(err)
+	suite.Len(discussions, 0)
 }
 
 func (suite *ResolverSuite) TestDeletePlanDiscussionWithReply() {
@@ -64,8 +63,8 @@ func (suite *ResolverSuite) TestDeletePlanDiscussionWithReply() {
 	_ = suite.createDiscussionReply(discussion, "This is a test reply", false)
 
 	_, err := DeletePlanDiscussion(suite.testConfigs.Logger, discussion.ID, suite.testConfigs.UserInfo.EuaUserID, suite.testConfigs.Store)
-	assert.Error(suite.T(), err)
-	assert.Contains(suite.T(), err.Error(), "violates foreign key constraint") // maybe a weak check, and should be a custom error type, but works for now
+	suite.Error(err)
+	suite.Contains(err.Error(), "violates foreign key constraint") // maybe a weak check, and should be a custom error type, but works for now
 }
 
 func (suite *ResolverSuite) TestCreateDiscussionReply() {
@@ -79,11 +78,11 @@ func (suite *ResolverSuite) TestCreateDiscussionReply() {
 	}
 
 	result, err := CreateDiscussionReply(suite.testConfigs.Logger, input, suite.testConfigs.UserInfo.EuaUserID, suite.testConfigs.Store)
-	assert.NoError(suite.T(), err)
-	assert.NotNil(suite.T(), result.ID)
-	assert.EqualValues(suite.T(), discussion.ID, result.DiscussionID)
-	assert.EqualValues(suite.T(), input.Content, result.Content)
-	assert.EqualValues(suite.T(), input.Resolution, result.Resolution)
+	suite.NoError(err)
+	suite.NotNil(result.ID)
+	suite.EqualValues(discussion.ID, result.DiscussionID)
+	suite.EqualValues(input.Content, result.Content)
+	suite.EqualValues(input.Resolution, result.Resolution)
 }
 
 func (suite *ResolverSuite) TestUpdateDiscussionReply() {
@@ -98,11 +97,11 @@ func (suite *ResolverSuite) TestUpdateDiscussionReply() {
 	updater := "UPDT"
 
 	result, err := UpdateDiscussionReply(suite.testConfigs.Logger, reply.ID, changes, updater, suite.testConfigs.Store)
-	assert.NoError(suite.T(), err)
-	assert.EqualValues(suite.T(), changes["content"], result.Content)
-	assert.EqualValues(suite.T(), changes["resolution"], result.Resolution)
-	assert.EqualValues(suite.T(), suite.testConfigs.UserInfo.EuaUserID, result.CreatedBy)
-	assert.EqualValues(suite.T(), updater, result.ModifiedBy)
+	suite.NoError(err)
+	suite.EqualValues(changes["content"], result.Content)
+	suite.EqualValues(changes["resolution"], result.Resolution)
+	suite.EqualValues(suite.testConfigs.UserInfo.EuaUserID, result.CreatedBy)
+	suite.EqualValues(updater, result.ModifiedBy)
 }
 
 func (suite *ResolverSuite) TestDiscussionReplyCollectionByDiscusionID() {
@@ -112,8 +111,8 @@ func (suite *ResolverSuite) TestDiscussionReplyCollectionByDiscusionID() {
 	_ = suite.createDiscussionReply(discussion, "This is another test reply", true)
 
 	result, err := DiscussionReplyCollectionByDiscusionID(suite.testConfigs.Logger, discussion.ID, suite.testConfigs.Store)
-	assert.NoError(suite.T(), err)
-	assert.Len(suite.T(), result, 2)
+	suite.NoError(err)
+	suite.Len(result, 2)
 
 	// Check that adding another dicussion doesn't affect the first one
 	discussionTwo := suite.createPlanDiscussion(plan, "This is another test comment")
@@ -123,8 +122,8 @@ func (suite *ResolverSuite) TestDiscussionReplyCollectionByDiscusionID() {
 
 	// Assert the count on the _first_ discussion is still 2
 	result, err = DiscussionReplyCollectionByDiscusionID(suite.testConfigs.Logger, discussion.ID, suite.testConfigs.Store)
-	assert.NoError(suite.T(), err)
-	assert.Len(suite.T(), result, 2)
+	suite.NoError(err)
+	suite.Len(result, 2)
 }
 
 func (suite *ResolverSuite) TestPlanDiscussionCollectionByModelPlanID() {
@@ -134,8 +133,8 @@ func (suite *ResolverSuite) TestPlanDiscussionCollectionByModelPlanID() {
 	_ = suite.createDiscussionReply(discussion, "This is another test reply", true)
 
 	result, err := PlanDiscussionCollectionByModelPlanID(suite.testConfigs.Logger, plan.ID, suite.testConfigs.Store)
-	assert.NoError(suite.T(), err)
-	assert.Len(suite.T(), result, 1)
+	suite.NoError(err)
+	suite.Len(result, 1)
 
 	// Check that adding another dicussion doesn't affect the first one
 	discussionTwo := suite.createPlanDiscussion(plan, "This is another test comment")
@@ -145,8 +144,8 @@ func (suite *ResolverSuite) TestPlanDiscussionCollectionByModelPlanID() {
 
 	// Assert the count on the is now 2 after adding another discussion
 	result, err = PlanDiscussionCollectionByModelPlanID(suite.testConfigs.Logger, plan.ID, suite.testConfigs.Store)
-	assert.NoError(suite.T(), err)
-	assert.Len(suite.T(), result, 2)
+	suite.NoError(err)
+	suite.Len(result, 2)
 }
 
 func (suite *ResolverSuite) TestDeleteDiscussionReply() {
@@ -156,10 +155,10 @@ func (suite *ResolverSuite) TestDeleteDiscussionReply() {
 	_ = suite.createDiscussionReply(discussion, "This is another test reply", false)
 
 	_, err := DeleteDiscussionReply(suite.testConfigs.Logger, reply.ID, suite.testConfigs.UserInfo.EuaUserID, suite.testConfigs.Store)
-	assert.NoError(suite.T(), err)
+	suite.NoError(err)
 
 	// Should only have 1 left now
 	result, err := DiscussionReplyCollectionByDiscusionID(suite.testConfigs.Logger, discussion.ID, suite.testConfigs.Store)
-	assert.NoError(suite.T(), err)
-	assert.Len(suite.T(), result, 1)
+	suite.NoError(err)
+	suite.Len(result, 1)
 }
