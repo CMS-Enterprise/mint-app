@@ -13,16 +13,15 @@ const TaskListButton = ({ path, status }: TaskListButtonProps) => {
   const { modelId } = useParams<{ modelId: string }>();
   const history = useHistory();
 
-  const handleCreatePlanBasics = () => {
-    history.push(`/models/${modelId}/task-list/${path}`);
-  };
-
   if (status === 'CANNOT_START' || status === 'COMPLETE') {
     return <></>;
   }
 
   return (
-    <Button type="button" onClick={handleCreatePlanBasics}>
+    <Button
+      type="button"
+      onClick={() => history.push(`/models/${modelId}/task-list/${path}`)}
+    >
       {status === 'READY'
         ? t('taskListButton.start')
         : t('taskListButton.continue')}
