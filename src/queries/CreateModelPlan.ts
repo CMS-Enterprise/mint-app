@@ -5,6 +5,52 @@ export default gql`
     createModelPlan(modelName: $modelName) {
       id
       createdBy
+      modelName
+      modelCategory
+      cmsCenters
+      cmsOther
+      cmmiGroups
+      basics {
+        id
+        modelPlanID
+        modelType
+        problem
+        goal
+        testInventions
+        note
+        createdBy
+        createdDts
+        modifiedBy
+        modifiedDts
+        status
+      }
+      milestones {
+        id
+        modelPlanID
+        completeICIP
+        clearanceStarts
+        clearanceEnds
+        announced
+        applicationsStart
+        applicationsEnd
+        performancePeriodStarts
+        performancePeriodEnds
+        wrapUpEnds
+        highLevelNote
+        phasedIn
+        phasedInNote
+        createdBy
+        createdDts
+        modifiedBy
+        modifiedDts
+        status
+      }
+      collaborators {
+        id
+        fullName
+        euaUserID
+        teamRole
+      }
     }
   }
 `;
