@@ -6,7 +6,6 @@ import (
 	"fmt"
 	"io"
 	"strconv"
-	"time"
 
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/google/uuid"
@@ -42,17 +41,12 @@ type LaunchDarklySettings struct {
 	SignedHash string `json:"signedHash"`
 }
 
-// PlanCollaboratorInput represents the data required to create, modify, or delete a collaborator on a plan
-type PlanCollaboratorInput struct {
-	ID          *uuid.UUID      `json:"id"`
+// PlanCollaboratorCreateInput represents the data required to create a collaborator on a plan
+type PlanCollaboratorCreateInput struct {
 	ModelPlanID uuid.UUID       `json:"modelPlanID"`
 	EuaUserID   string          `json:"euaUserID"`
 	FullName    string          `json:"fullName"`
 	TeamRole    models.TeamRole `json:"teamRole"`
-	CreatedBy   *string         `json:"createdBy"`
-	CreatedDts  *time.Time      `json:"createdDts"`
-	ModifiedBy  *string         `json:"modifiedBy"`
-	ModifiedDts *time.Time      `json:"modifiedDts"`
 }
 
 // PlanDiscussionCreateInput represents the necessary fields to create a plan discussion

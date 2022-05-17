@@ -78,18 +78,13 @@ type PlanCollaborator {
 }
 
 """
-PlanCollaboratorInput represents the data required to create, modify, or delete a collaborator on a plan
+PlanCollaboratorCreateInput represents the data required to create a collaborator on a plan
 """
-input PlanCollaboratorInput {
-  id: UUID
+input PlanCollaboratorCreateInput {
   modelPlanID: UUID!
   euaUserID: String!
   fullName: String!
   teamRole: TeamRole!
-  createdBy: String
-  createdDts: Time
-  modifiedBy: String
-  modifiedDts: Time
 }
 
 """
@@ -349,13 +344,13 @@ createModelPlan(modelName: String!):ModelPlan
 updateModelPlan(id: UUID!, changes: ModelPlanChanges!): ModelPlan
 @hasRole(role: MINT_BASE_USER)
 
-createPlanCollaborator(input: PlanCollaboratorInput!): PlanCollaborator
+createPlanCollaborator(input: PlanCollaboratorCreateInput!): PlanCollaborator
 @hasRole(role: MINT_BASE_USER)
 
-updatePlanCollaborator(input: PlanCollaboratorInput!): PlanCollaborator
+updatePlanCollaborator(id: UUID!, newRole: TeamRole!): PlanCollaborator
 @hasRole(role: MINT_BASE_USER)
 
-deletePlanCollaborator(input: PlanCollaboratorInput!): PlanCollaborator
+deletePlanCollaborator(id: UUID!): PlanCollaborator
 @hasRole(role: MINT_BASE_USER)
 
 updatePlanBasics(id: UUID!, changes: PlanBasicsChanges!): PlanBasics
