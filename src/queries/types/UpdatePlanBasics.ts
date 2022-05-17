@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { PlanBasicsInput, ModelType } from "./../../types/graphql-global-types";
+import { PlanBasicsChanges, ModelType } from "./../../types/graphql-global-types";
 
 // ====================================================
 // GraphQL mutation operation: UpdatePlanBasics
@@ -25,5 +25,6 @@ export interface UpdatePlanBasics {
 }
 
 export interface UpdatePlanBasicsVariables {
-  input: PlanBasicsInput;
+  id: UUID;
+  changes: PlanBasicsChanges;
 }
