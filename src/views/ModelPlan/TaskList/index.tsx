@@ -117,6 +117,18 @@ const TaskList = () => {
               </Trans>
             </p>
             <SummaryBox
+              heading="Discussions"
+              className="bg-primary-lighter border-0 radius-0 padding-2"
+            >
+              <p className="margin-0">
+                There are no discussions yet.{' '}
+                <UswdsReactLink variant="unstyled" to="/">
+                  Ask a question{' '}
+                </UswdsReactLink>
+                to get started
+              </p>
+            </SummaryBox>
+            <SummaryBox
               heading=""
               className="bg-base-lightest border-0 radius-0 padding-2"
             >
