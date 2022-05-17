@@ -79,7 +79,7 @@ const TaskList = () => {
     discussions?.filter(
       (discussion: DiscussionType) => discussion.status === 'UNANSWERED'
     ).length || 0;
-  const answeredQuestion = discussions?.length - unansweredQuestions;
+  const answeredQuestions = discussions?.length - unansweredQuestions;
 
   const taskListItemStatus = (key: string) => {
     switch (key) {
@@ -172,12 +172,21 @@ const TaskList = () => {
                   <>
                     <div>
                       <IconAnnouncement />{' '}
-                      <strong>{unansweredQuestions}</strong> {d('unanswered')}
-                      {unansweredQuestions > 1 && 's'}{' '}
-                      {/* Adding 's' for pluraltiy */}
-                      <strong>{answeredQuestion}</strong> {d('answered')}
-                      {answeredQuestion > 1 && 's'}{' '}
-                      {/* Adding 's' for pluraltiy */}
+                      {unansweredQuestions > 0 && (
+                        <>
+                          <strong>{unansweredQuestions}</strong>{' '}
+                          {d('unanswered')}
+                          {unansweredQuestions > 1 && 's'}{' '}
+                          {/* Adding 's' for pluraltiy */}
+                        </>
+                      )}
+                      {answeredQuestions > 0 && (
+                        <>
+                          <strong>{answeredQuestions}</strong> {d('answered')}
+                          {answeredQuestions > 1 && 's'}{' '}
+                          {/* Adding 's' for pluraltiy */}
+                        </>
+                      )}
                     </div>
                   </>
                 ) : (

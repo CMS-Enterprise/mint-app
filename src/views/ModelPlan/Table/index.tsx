@@ -43,6 +43,8 @@ type TableProps = {
 const Table = ({ data, hiddenColumns }: TableProps) => {
   const { t } = useTranslation('home');
 
+  console.log(data);
+
   const columns = useMemo(() => {
     return [
       {
