@@ -27,23 +27,23 @@ const Discussions = ({
   return (
     <ReactModal
       isOpen={isOpen}
-      overlayClassName="mint-modal__overlay"
-      className="mint-modal__content"
+      overlayClassName="mint-discussions__overlay"
+      className="mint-discussions__content"
       onAfterOpen={handleOpenModal}
       onAfterClose={noScroll.off}
       onRequestClose={closeModal}
-      shouldCloseOnOverlayClick={false}
+      shouldCloseOnOverlayClick
       appElement={document.getElementById('root')!}
     >
       <button
         type="button"
-        className="mint-modal__x-button"
+        className="mint-discussions__x-button"
         aria-label="Close Modal"
         onClick={closeModal}
       >
         <i className="fa fa-times" />
       </button>
-      <div className="mint-modal__body">{children}</div>
+      <div className="mint-discussions__body">{children}</div>
     </ReactModal>
   );
 };

@@ -1,3 +1,4 @@
+import discussions from './draftModelPlan/discussions';
 import draftModelPlan from './draftModelPlan/draftModelPlan';
 import newModel from './draftModelPlan/newModel';
 import accessibilityStatement from './accessibilityStatement';
@@ -18,6 +19,7 @@ const enUS = {
   accessibilityStatement,
   auth,
   cookies,
+  discussions,
   draftModelPlan,
   error,
   footer,

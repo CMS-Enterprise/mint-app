@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link, useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
@@ -6,6 +6,8 @@ import {
   Breadcrumb,
   BreadcrumbBar,
   BreadcrumbLink,
+  Button,
+  IconAnnouncement,
   SummaryBox
 } from '@trussworks/react-uswds';
 
@@ -17,8 +19,11 @@ import GetModelPlanQuery from 'queries/GetModelPlanQuery';
 import {
   GetModelPlan,
   GetModelPlan_modelPlan as GetModelPlanTypes,
+  GetModelPlan_modelPlan_discussions as DiscussionType,
   GetModelPlanVariables
 } from 'queries/types/GetModelPlan';
+
+import Discussions from '../Discussions';
 
 import TaskListButton from './_components/TaskListButton';
 import TaskListItem, {
@@ -36,7 +41,9 @@ type TaskListItemProps = {
 
 const TaskList = () => {
   const { t } = useTranslation('modelPlanTaskList');
+  const { t: d } = useTranslation('discussions');
   const { modelId } = useParams<{ modelId: string }>();
+  const [isDiscussionOpen, setIsDiscussionOpen] = useState(false);
 
   const { data } = useQuery<GetModelPlan, GetModelPlanVariables>(
     GetModelPlanQuery,
@@ -47,11 +54,14 @@ const TaskList = () => {
     }
   );
 
+  console.log(data);
+
   const modelPlan = data?.modelPlan || ({} as GetModelPlanTypes);
 
   const {
     modelName,
-    basics
+    basics,
+    discussions
     // TODO: Add these model plans when BE integrates it
     // characteristics,
     // participants,
@@ -64,6 +74,12 @@ const TaskList = () => {
   const taskListItem: TaskListItemProps[] = t('numberedList', {
     returnObjects: true
   });
+
+  const unansweredQuestions =
+    discussions?.filter(
+      (discussion: DiscussionType) => discussion.status === 'UNANSWERED'
+    ).length || 0;
+  const answeredQuestion = discussions?.length - unansweredQuestions;
 
   const taskListItemStatus = (key: string) => {
     switch (key) {
@@ -87,11 +103,42 @@ const TaskList = () => {
     }
   };
 
+  const renderDiscussions = () => {
+    return (
+      <Discussions
+        isOpen={isDiscussionOpen}
+        closeModal={() => setIsDiscussionOpen(false)}
+      >
+        <PageHeading headingLevel="h2" className="margin-top-0">
+          {t('withdraw_modal.header', {
+            requestName: modelPlan.modelName
+          })}
+        </PageHeading>
+        <p>{t('withdraw_modal.warning')}</p>
+        <Button
+          type="button"
+          className="margin-right-4"
+          onClick={() => console.log('hey')}
+        >
+          {t('withdraw_modal.confirm')}
+        </Button>
+        <Button
+          type="button"
+          unstyled
+          onClick={() => setIsDiscussionOpen(false)}
+        >
+          {t('withdraw_modal.cancel')}
+        </Button>
+      </Discussions>
+    );
+  };
+
   return (
     <MainContent
       className="model-plan-task-list grid-container"
       data-testid="model-plan-task-list"
     >
+      {renderDiscussions()}
       <div className="grid-row">
         <BreadcrumbBar variant="wrap">
           <Breadcrumb>
@@ -117,16 +164,44 @@ const TaskList = () => {
               </Trans>
             </p>
             <SummaryBox
-              heading="Discussions"
+              heading={d('heading')}
               className="bg-primary-lighter border-0 radius-0 padding-2"
             >
-              <p className="margin-0">
-                There are no discussions yet.{' '}
-                <UswdsReactLink variant="unstyled" to="/">
-                  Ask a question{' '}
-                </UswdsReactLink>
-                to get started
-              </p>
+              <div className="mint-header__basic">
+                {discussions?.length > 0 ? (
+                  <>
+                    <div>
+                      <IconAnnouncement />{' '}
+                      <strong>{unansweredQuestions}</strong> {d('unanswered')}
+                      {unansweredQuestions > 1 && 's'}{' '}
+                      {/* Adding 's' for pluraltiy */}
+                      <strong>{answeredQuestion}</strong> {d('answered')}
+                      {answeredQuestion > 1 && 's'}{' '}
+                      {/* Adding 's' for pluraltiy */}
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    {d('noDiscussions')}
+                    <Button
+                      className="line-height-body-5 test-withdraw-request"
+                      type="button"
+                      unstyled
+                      onClick={() => setIsDiscussionOpen(true)}
+                    >
+                      {d('askAQuestionLink')}{' '}
+                    </Button>{' '}
+                    {d('toGetStarted')}
+                  </>
+                )}
+                <Button
+                  type="button"
+                  unstyled
+                  onClick={() => setIsDiscussionOpen(true)}
+                >
+                  {d('viewDiscussions')}
+                </Button>
+              </div>
             </SummaryBox>
             <SummaryBox
               heading=""

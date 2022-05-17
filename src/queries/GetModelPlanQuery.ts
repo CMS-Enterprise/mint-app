@@ -14,6 +14,21 @@ export default gql`
       basics {
         id
       }
+      discussions {
+        id
+        content
+        status
+        createdBy
+        createdDts
+        replies {
+          id
+          content
+          discussionID
+          resolution
+          createdBy
+          createdDts
+        }
+      }
     }
   }
 `;

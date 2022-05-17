@@ -88,6 +88,14 @@ export interface PlanCollaboratorCreateInput {
   teamRole: TeamRole;
 }
 
+/**
+ * PlanDiscussionCreateInput represents the necessary fields to create a plan discussion
+ */
+export interface PlanDiscussionCreateInput {
+  modelPlanID: UUID;
+  content: string;
+}
+
 //==============================================================
 // END Enums and Input Objects
 //==============================================================
