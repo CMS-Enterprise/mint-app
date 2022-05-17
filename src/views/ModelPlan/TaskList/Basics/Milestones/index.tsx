@@ -24,9 +24,7 @@ import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import TextAreaField from 'components/shared/TextAreaField';
-import CreatePlanMilestones from 'queries/CreatePlanMilestones';
 import GetModelPlanQuery from 'queries/GetModelPlanQuery';
-import { CreatePlanMilestones as CreatePlanMilestonesType } from 'queries/types/CreatePlanMilestones';
 import {
   GetModelPlan,
   GetModelPlanVariables
@@ -38,7 +36,7 @@ import planBasicsSchema from 'validations/planBasics';
 
 import './index.scss';
 
-type PlanBasicsOverviewTypes = {
+type PlanBasicsMilestoneTypes = {
   completeICIP: string | null;
   clearanceStarts: string | null;
   clearanceEnds: string | null;
@@ -59,7 +57,7 @@ const Milestones = () => {
   const { modelId } = useParams<{ modelId: string }>();
 
   const history = useHistory();
-  const formikRef = useRef<FormikProps<PlanBasicsOverviewTypes>>(null);
+  const formikRef = useRef<FormikProps<PlanBasicsMilestoneTypes>>(null);
   const [hasHighLevelNote, setHasHighLevelNote] = useState(false);
   const [hasAdditionalNote, setHasAdditionalNote] = useState(false);
 
@@ -74,10 +72,9 @@ const Milestones = () => {
 
   const { modelName, milestones } = data?.modelPlan || {};
 
-  const [create] = useMutation<CreatePlanMilestonesType>(CreatePlanMilestones);
   const [update] = useMutation<UpdatePlanMilestonesType>(UpdatePlanMilestones);
 
-  const initialValues: PlanBasicsOverviewTypes = {
+  const initialValues: PlanBasicsMilestoneTypes = {
     completeICIP: milestones?.completeICIP ?? null,
     clearanceStarts: milestones?.clearanceStarts ?? null,
     clearanceEnds: milestones?.clearanceEnds ?? null,
@@ -93,7 +90,7 @@ const Milestones = () => {
   };
 
   const handleFormSubmit = (
-    formikValues: PlanBasicsOverviewTypes,
+    formikValues: PlanBasicsMilestoneTypes,
     redirect?: 'task-list'
   ) => {
     const inputVariables = {
@@ -117,24 +114,6 @@ const Milestones = () => {
         variables: {
           input: {
             id: milestones?.id,
-            ...inputVariables
-          }
-        }
-      })
-        .then(response => {
-          if (!response?.errors) {
-            if (redirect === 'task-list') {
-              history.push(`/models/${modelId}/task-list`);
-            }
-          }
-        })
-        .catch(errors => {
-          formikRef?.current?.setErrors(errors);
-        });
-    } else {
-      create({
-        variables: {
-          input: {
             ...inputVariables
           }
         }
@@ -199,7 +178,7 @@ const Milestones = () => {
             validateOnMount={false}
             innerRef={formikRef}
           >
-            {(formikProps: FormikProps<PlanBasicsOverviewTypes>) => {
+            {(formikProps: FormikProps<PlanBasicsMilestoneTypes>) => {
               const {
                 dirty,
                 errors,
