@@ -28,8 +28,33 @@ describe('The Model Plan Task List', () => {
     cmsOther: 'The Center for Awesomeness ',
     modifiedDts: '2022-05-12T15:01:39.190679Z',
     archived: false,
-    basics: null,
-    milestones: null
+    basics: {
+      id: 'adsf',
+      modelPlanID: '6e224030-09d5-46f7-ad04-4bb851b36eab',
+      modelType: null,
+      problem: null,
+      goal: null,
+      testInventions: null,
+      note: null,
+      status: 'COMPLETE'
+    },
+    milestones: {
+      id: 'adsf',
+      modelPlanID: '6e224030-09d5-46f7-ad04-4bb851b36eab',
+      completeICIP: null,
+      clearanceStarts: null,
+      clearanceEnds: null,
+      announced: null,
+      applicationsStart: null,
+      applicationsEnd: null,
+      performancePeriodStarts: null,
+      performancePeriodEnds: null,
+      wrapUpEnds: null,
+      highLevelNote: null,
+      phasedIn: null,
+      phasedInNote: null,
+      status: 'COMPLETE'
+    }
   } as GetModelPlanTypes;
 
   const modelPlanQuery = (modelPlanDraft: GetModelPlanTypes) => {
@@ -107,8 +132,10 @@ describe('The Model Plan Task List', () => {
       );
 
       await waitFor(() => {
-        expect(screen.getAllByTestId('tag')[0]).toHaveClass('bg-accent-cool');
-        expect(screen.getAllByTestId('tag')[0]).toHaveTextContent(
+        expect(screen.getAllByTestId('tasklist-tag')[0]).toHaveClass(
+          'bg-accent-cool'
+        );
+        expect(screen.getAllByTestId('tasklist-tag')[0]).toHaveTextContent(
           'Ready to start'
         );
       });
