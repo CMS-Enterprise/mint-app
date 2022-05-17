@@ -114,10 +114,10 @@ const BasicsContent = () => {
   };
 
   // 4 options
-  // 1. normal -- wihtout any extras
-  // 2. normal + cmmi group
-  // 3. normal  + other group
-  // 4. normal + Cmmi + other
+  // 1. Basics (name, category, CMS Component without CMMI and Other)
+  // 2. Basics + cmmi group
+  // 3. Basics + other group
+  // 4. Basics + Cmmi + Other
   let validationSchema;
   if (isCmmiGroupShown && showOther) {
     validationSchema = planBasicsSchema.pageOneSchemaWithOtherAndCmmi;
