@@ -125,13 +125,13 @@ const Status = () => {
                     }}
                   >
                     <FieldGroup scrollElement="status" error={!!errors.status}>
-                      <Label htmlFor="IntakeForm-RequesterComponent">
+                      <Label htmlFor="Status-Dropdown">
                         {t('status.label')}
                       </Label>
                       <ErrorMessage name="status" />
                       <Field
                         as={Dropdown}
-                        id="collaborator-role"
+                        id="Status-Dropdown"
                         name="role"
                         value={values.status}
                         onChange={(e: any) => {
@@ -141,7 +141,7 @@ const Status = () => {
                         {Object.keys(modelStatus).map(role => {
                           return (
                             <option
-                              key={`Collaborator-Role-${translateModelPlanStatus(
+                              key={`Status-Dropdown-${translateModelPlanStatus(
                                 modelStatus[role]
                               )}`}
                               value={role}
