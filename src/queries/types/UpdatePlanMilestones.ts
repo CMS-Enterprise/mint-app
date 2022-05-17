@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { PlanMilestonesInput } from "./../../types/graphql-global-types";
+import { PlanMilestoneChanges } from "./../../types/graphql-global-types";
 
 // ====================================================
 // GraphQL mutation operation: UpdatePlanMilestones
@@ -32,5 +32,6 @@ export interface UpdatePlanMilestones {
 }
 
 export interface UpdatePlanMilestonesVariables {
-  input: PlanMilestonesInput;
+  id: UUID;
+  changes: PlanMilestoneChanges;
 }

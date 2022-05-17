@@ -104,24 +104,6 @@ export interface PlanBasicsChanges {
 }
 
 /**
- * Represents plan basics
- */
-export interface PlanBasicsInput {
-  id?: UUID | null;
-  modelPlanID?: UUID | null;
-  modelType?: ModelType | null;
-  problem?: string | null;
-  goal?: string | null;
-  testInventions?: string | null;
-  note?: string | null;
-  createdBy?: string | null;
-  createdDts?: Time | null;
-  modifiedBy?: string | null;
-  modifiedDts?: Time | null;
-  status?: TaskStatus | null;
-}
-
-/**
  * PlanCollaboratorInput represents the data required to create, modify, or delete a collaborator on a plan
  */
 export interface PlanCollaboratorInput {
@@ -137,11 +119,11 @@ export interface PlanCollaboratorInput {
 }
 
 /**
- * Represents plan milestones input
+ * PlanMilestoneChanges represents the possible changes you can make to a Plan Milestones object when updating it.
+ * Fields explicitly set with NULL will be unset, and omitted fields will be left unchanged.
+ * https: // gqlgen.com/reference/changesets/
  */
-export interface PlanMilestonesInput {
-  id?: UUID | null;
-  modelPlanID?: UUID | null;
+export interface PlanMilestoneChanges {
   completeICIP?: Time | null;
   clearanceStarts?: Time | null;
   clearanceEnds?: Time | null;
@@ -154,11 +136,6 @@ export interface PlanMilestonesInput {
   highLevelNote?: string | null;
   phasedIn?: boolean | null;
   phasedInNote?: string | null;
-  createdBy?: string | null;
-  createdDts?: Time | null;
-  modifiedBy?: string | null;
-  modifiedDts?: Time | null;
-  status?: TaskStatus | null;
 }
 
 //==============================================================
