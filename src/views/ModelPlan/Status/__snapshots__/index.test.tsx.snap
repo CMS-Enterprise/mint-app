@@ -13,7 +13,7 @@ exports[`Model Plan Status Update page matches snapshot 1`] = `
       data-testid="gridContainer"
     >
       <div
-        class="grid-col-6"
+        class="desktop:grid-col-6"
         data-testid="grid"
       >
         <nav
@@ -77,14 +77,14 @@ exports[`Model Plan Status Update page matches snapshot 1`] = `
             <label
               class="usa-label"
               data-testid="label"
-              for="IntakeForm-RequesterComponent"
+              for="Status-Dropdown"
             >
               What is the status of your Model Plan?
             </label>
             <select
               class="usa-select"
               data-testid="dropdown"
-              id="collaborator-role"
+              id="Status-Dropdown"
               name="role"
             >
               <option
