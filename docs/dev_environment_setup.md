@@ -135,7 +135,6 @@ We use [Yarn](https://yarnpkg.com/) to manage our JavaScript dependencies. It ca
 
 **Windows+WSL:** Install Ruby with `sudo apt install ruby-full`.
 
-(#direnv)
 ## Direnv
 
 **MacOS:** Install with `brew install direnv`.
@@ -163,7 +162,7 @@ $
 
 ## Setting up pre-commit Git hooks
 
-This repo uses [`pre-commit`](https://pre-commit.com/) to manage pre-commit Git hooks for maintaining several quality and stylistic standards; see [`.pre-commit-config.yaml`](./.pre-commit-config.yaml) for details.
+This repo uses [`pre-commit`](https://pre-commit.com/) to manage pre-commit Git hooks for maintaining several quality and stylistic standards; see [`.pre-commit-config.yaml`](/.pre-commit-config.yaml) for details.
 
 **MacOS:** Install with `brew install pre-commit`.
 
@@ -201,30 +200,16 @@ To install the frontend's dependencies, run `yarn install --frozen-lockfile`. Th
 
 ## go-swagger
 
-[`go-swagger`](https://goswagger.io/install.html) is used for generating code based on Swagger files that describe the CEDAR APIs.
+[`go-swagger`](https://goswagger.io/) is used for generating code based on Swagger files that describe the CEDAR APIs.
 
-**MacOS:** Install with
-```terminal
-brew tap go-swagger/go-swagger
-brew install go-swagger
-```
-
-**Windows+WSL:** Install with
-```terminal
-sudo apt update
-sudo apt install -y apt-transport-https gnupg curl
-curl -1sLf 'https://dl.cloudsmith.io/public/go-swagger/go-swagger/gpg.2F8CB673971B5C9E.key' | sudo apt-key add -
-curl -1sLf 'https://dl.cloudsmith.io/public/go-swagger/go-swagger/config.deb.txt?distro=debian&codename=any-version' | sudo tee /etc/apt/sources.list.d/go-swagger-go-swagger.list
-sudo apt update
-sudo apt install swagger
-```
+We currently use `v.0.28.0` of this tool, and the binaries for it [can be found here](https://github.com/go-swagger/go-swagger/releases/tag/v0.28.0). M1 Mac users should use the `arm64` binaries, while other Linux distros should be able to use the `amd64` binaries.
 
 ## VSCode-specific tools
 
 **Windows+WSL:** From the Ubuntu command line, navigate to the root of this repository, then run `code .` to open VS Code with this repository opened.
 
 **All developers:**
-- VS Code will recommend installing the extensions specified in [`.vscode/extensions.json`](./.vscode/extensions.json). Install all of them.
+- VS Code will recommend installing the extensions specified in [`.vscode/extensions.json`](/.vscode/extensions.json). Install all of them.
 > - **Windows+WSL:** The GitLens extension will likely not work. It is dependent on another extension which VSCode installs on the windows side. If it doesn't work, you can safely ignore it.
 - The Go extension should prompt you to install the analysis tools it uses. Install all of them. See [these instructions](https://github.com/golang/vscode-go/blob/master/README.md#tools) for more details.
 
