@@ -1,4 +1,4 @@
-import React, { Fragment, useRef, useState } from 'react';
+import React, { Fragment, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, Route, Switch, useHistory, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
@@ -59,6 +59,7 @@ const BasicsContent = () => {
   const formikRef = useRef<FormikProps<PlanBasicModelPlanFormType>>(null);
   const history = useHistory();
   const [isCmmiGroupShown, setIsCmmiGroupShown] = useState(false);
+  const [showOther, setShowOther] = useState(false);
 
   const { data } = useQuery<GetModelPlan, GetModelPlanVariables>(
     GetModelPlanQuery,
@@ -112,6 +113,26 @@ const BasicsContent = () => {
     cmsOther: cmsOther ?? ''
   };
 
+  // 4 options
+  // 1. normal -- wihtout any extras
+  // 2. normal + cmmi group
+  // 3. normal  + other group
+  // 4. normal + Cmmi + other
+  let validationSchema;
+  if (isCmmiGroupShown && showOther) {
+    validationSchema = planBasicsSchema.pageOneSchemaWithOtherAndCmmi;
+  } else if (isCmmiGroupShown) {
+    validationSchema = planBasicsSchema.pageOneSchemaWithCmmiGroup;
+  } else if (showOther) {
+    validationSchema = planBasicsSchema.pageOneSchemaWithOther;
+  } else {
+    validationSchema = planBasicsSchema.pageOneSchema;
+  }
+
+  useEffect(() => {
+    console.log(`showOther: ${showOther}`);
+  }, [showOther]);
+
   return (
     <MainContent className="margin-bottom-5">
       <div className="grid-container">
@@ -149,11 +170,7 @@ const BasicsContent = () => {
               handleFormSubmit(values, 'next');
             }}
             enableReinitialize
-            validationSchema={
-              isCmmiGroupShown
-                ? planBasicsSchema.pageOneSchemaWithCmmiGroup
-                : planBasicsSchema.pageOneSchema
-            }
+            validationSchema={validationSchema}
             validateOnBlur={false}
             validateOnChange={false}
             validateOnMount={false}
@@ -295,6 +312,9 @@ const BasicsContent = () => {
                                       if (e.target.value === 'CMMI') {
                                         setIsCmmiGroupShown(true);
                                       }
+                                      if (e.target.value === 'OTHER') {
+                                        setShowOther(!showOther);
+                                      }
                                     }}
                                   />
                                 </Fragment>
@@ -302,10 +322,16 @@ const BasicsContent = () => {
                             })}
 
                             {values.cmsCenters.includes('OTHER') && (
-                              <FieldGroup className="margin-top-4">
+                              <FieldGroup
+                                className="margin-top-4"
+                                error={!!flatErrors.cmsOther}
+                              >
                                 <Label htmlFor="plan-basics-cmsCategory--Other">
                                   {h('pleaseSpecify')}
                                 </Label>
+                                <FieldErrorMsg>
+                                  {flatErrors.cmsOther}
+                                </FieldErrorMsg>
                                 <Field
                                   as={TextInput}
                                   id="plan-basics-cmsCategory--Other"
@@ -390,6 +416,11 @@ const BasicsContent = () => {
                         }
                       }}
                     >
+                      {/* TODO:
+                        1. I need to figure out the other valdation schema
+                        2. Ensure all steps of form works
+                        3. milestone errors
+                      */}
                       <IconArrowBack className="margin-right-1" aria-hidden />
                       {h('saveAndReturn')}
                     </Button>
