@@ -1,8 +1,8 @@
 import { gql } from '@apollo/client';
 
 export default gql`
-  mutation UpdatePlanBasics($input: PlanBasicsInput!) {
-    updatePlanBasics(input: $input) {
+  mutation UpdatePlanBasics($id: UUID!, $changes: PlanBasicsChanges!) {
+    updatePlanBasics(id: $id, changes: $changes) {
       id
       modelPlanID
       modelType
