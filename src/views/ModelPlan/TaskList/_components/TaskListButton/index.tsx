@@ -1,11 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
-import { useMutation } from '@apollo/client';
 import { Button } from '@trussworks/react-uswds';
-
-import CreatePlanBasics from 'queries/CreatePlanBasics';
-import { CreatePlanBasics as CreatePlanBasicsType } from 'queries/types/CreatePlanBasics';
 
 type TaskListButtonProps = {
   path: string;
@@ -16,24 +12,9 @@ const TaskListButton = ({ path, status }: TaskListButtonProps) => {
   const { t } = useTranslation('modelPlanTaskList');
   const { modelId } = useParams<{ modelId: string }>();
   const history = useHistory();
-  const [create] = useMutation<CreatePlanBasicsType>(CreatePlanBasics);
 
   const handleCreatePlanBasics = () => {
-    if (status === 'READY') {
-      create({
-        variables: {
-          input: {
-            modelPlanID: modelId
-          }
-        }
-      }).then(response => {
-        if (!response.errors) {
-          history.push(`task-list/${path}`);
-        }
-      });
-    } else {
-      history.push(`/models/${modelId}/task-list/${path}`);
-    }
+    history.push(`/models/${modelId}/task-list/${path}`);
   };
 
   if (status === 'CANNOT_START' || status === 'COMPLETE') {
