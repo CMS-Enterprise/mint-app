@@ -26,14 +26,18 @@ func ModelPlanCreate(logger *zap.Logger, modelName string, store *storage.Store,
 	  - this could be in a combined store for collaborator / plan
 	- we could also address this directly in SQL, create the plan and collaborator at the same time.
 	*/
-
-	colab := models.PlanCollaborator{
-		EUAUserID:   *createdPlan.CreatedBy,
+	collab := &models.PlanCollaborator{
 		ModelPlanID: createdPlan.ID,
-		TeamRole:    models.TeamRoleModelLead,
+		EUAUserID:   principalInfo.EuaUserID,
 		FullName:    principalInfo.CommonName,
+		TeamRole:    models.TeamRoleModelLead,
+		CreatedBy:   &principalInfo.EuaUserID,
+		ModifiedBy:  &principalInfo.EuaUserID,
 	}
-	_, _ = CreatePlanCollaborator(logger, &colab, createdPlan.CreatedBy, store)
+	_, err = store.PlanCollaboratorCreate(logger, collab)
+	if err != nil {
+		return nil, err
+	}
 
 	return createdPlan, err
 }

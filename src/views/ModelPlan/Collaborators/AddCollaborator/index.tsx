@@ -73,13 +73,8 @@ const Collaborators = () => {
     if (collaboratorId) {
       update({
         variables: {
-          input: {
-            id: collaboratorId,
-            fullName,
-            teamRole,
-            euaUserID,
-            modelPlanID: modelId
-          }
+          id: collaboratorId,
+          newRole: teamRole
         }
       })
         .then(response => {
@@ -139,7 +134,7 @@ const Collaborators = () => {
               formikProps: FormikProps<{
                 euaUserId: string;
                 fullName: string;
-                teamRole: string;
+                teamRole: string | null;
               }>
             ) => {
               const {
@@ -256,7 +251,7 @@ const Collaborators = () => {
                           setFieldValue('teamRole', e.target.value);
                         }}
                       >
-                        <option value="" key="default-select" disabled>
+                        <option key="default-select" disabled selected>
                           {`-${h('select')}-`}
                         </option>
                         {Object.keys(teamRoles).map(role => {

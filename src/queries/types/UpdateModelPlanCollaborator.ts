@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { PlanCollaboratorInput, TeamRole } from "./../../types/graphql-global-types";
+import { TeamRole } from "./../../types/graphql-global-types";
 
 // ====================================================
 // GraphQL mutation operation: UpdateModelPlanCollaborator
@@ -22,5 +22,6 @@ export interface UpdateModelPlanCollaborator {
 }
 
 export interface UpdateModelPlanCollaboratorVariables {
-  input: PlanCollaboratorInput;
+  id: UUID;
+  newRole: TeamRole;
 }
