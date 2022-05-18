@@ -40,6 +40,7 @@ const basics = {
   goal: 'Goal',
   goalHelp:
     'Please include the high level goal of the program and a description of the project.',
+  validDate: 'Please use a valid date format',
   testInterventions: 'Test Interventions',
   highLevelTimeline: 'High level timeline',
   completeICIP: 'Complete ICIP',

@@ -195,7 +195,7 @@ const Milestones = () => {
                   setFieldValue(field, new Date(e).toISOString());
                   validateField(field);
                 } catch (error) {
-                  setFieldError(field, 'Please use a valid date format');
+                  setFieldError(field, t('validDate'));
                 }
               };
               return (
