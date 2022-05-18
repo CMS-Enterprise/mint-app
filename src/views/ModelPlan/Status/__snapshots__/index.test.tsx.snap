@@ -125,7 +125,7 @@ exports[`Model Plan Status Update page matches snapshot 1`] = `
               <option
                 value="PLAN_COMPLETE"
               >
-                Model plan compelte
+                Model plan complete
               </option>
               <option
                 value="PLAN_DRAFT"
