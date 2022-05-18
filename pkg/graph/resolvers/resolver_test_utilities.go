@@ -1,12 +1,7 @@
 package resolvers
 
 import (
-	"testing"
-
-	"github.com/stretchr/testify/assert"
-
 	"github.com/cmsgov/mint-app/pkg/appconfig"
-	"github.com/cmsgov/mint-app/pkg/graph/model"
 	"github.com/cmsgov/mint-app/pkg/models"
 
 	"go.uber.org/zap"
@@ -70,31 +65,4 @@ func getTestDependencies() (storage.DBConfig, *ld.LDClient, *zap.Logger, *models
 
 	return config, ldClient, logger, userInfo
 
-}
-
-func createModelPlan(t *testing.T, tc *TestConfigs) *models.ModelPlan {
-	mp, err := ModelPlanCreate(tc.Logger, "Test Plan", tc.Store, tc.UserInfo)
-	assert.NoError(t, err)
-	return mp
-}
-
-func createPlanDiscussion(t *testing.T, tc *TestConfigs, mp *models.ModelPlan, content string) *models.PlanDiscussion {
-	input := &model.PlanDiscussionCreateInput{
-		ModelPlanID: mp.ID,
-		Content:     "This is a test comment",
-	}
-	pd, err := CreatePlanDiscussion(tc.Logger, input, tc.UserInfo.EuaUserID, tc.Store)
-	assert.NoError(t, err)
-	return pd
-}
-
-func createDiscussionReply(t *testing.T, tc *TestConfigs, pd *models.PlanDiscussion, content string, resolution bool) *models.DiscussionReply {
-	input := &model.DiscussionReplyCreateInput{
-		DiscussionID: pd.ID,
-		Content:      content,
-		Resolution:   resolution,
-	}
-	dr, err := CreateDiscussionReply(tc.Logger, input, tc.UserInfo.EuaUserID, tc.Store)
-	assert.NoError(t, err)
-	return dr
 }

@@ -4,33 +4,43 @@ import (
 	"github.com/google/uuid"
 	"go.uber.org/zap"
 
+	"github.com/cmsgov/mint-app/pkg/graph/model"
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/storage"
 )
 
 // CreatePlanCollaborator implements resolver logic to create a plan collaborator
-func CreatePlanCollaborator(logger *zap.Logger, input *models.PlanCollaborator, principal *string, store *storage.Store) (*models.PlanCollaborator, error) {
+func CreatePlanCollaborator(logger *zap.Logger, input *model.PlanCollaboratorCreateInput, principal string, store *storage.Store) (*models.PlanCollaborator, error) {
+	collaborator := &models.PlanCollaborator{
+		ModelPlanID: input.ModelPlanID,
+		FullName:    input.FullName,
+		TeamRole:    input.TeamRole,
+		EUAUserID:   input.EuaUserID,
+		CreatedBy:   &principal,
+		ModifiedBy:  &principal,
+	}
 
-	input.CreatedBy = principal
-
-	input.ModifiedBy = input.CreatedBy
-	retCollaborator, err := store.PlanCollaboratorCreate(logger, input)
-
+	retCollaborator, err := store.PlanCollaboratorCreate(logger, collaborator)
 	return retCollaborator, err
 }
 
 // UpdatePlanCollaborator implements resolver logic to update a plan collaborator
-func UpdatePlanCollaborator(logger *zap.Logger, input *models.PlanCollaborator, principal *string, store *storage.Store) (*models.PlanCollaborator, error) {
-	input.ModifiedBy = principal
+func UpdatePlanCollaborator(logger *zap.Logger, id uuid.UUID, newRole models.TeamRole, principal string, store *storage.Store) (*models.PlanCollaborator, error) {
+	// Get existing collaborator
+	existingCollaborator, err := store.PlanCollaboratorFetchByID(id)
+	if err != nil {
+		return nil, err
+	}
 
-	retCollaborator, err := store.PlanCollaboratorUpdate(logger, input)
-	return retCollaborator, err
+	existingCollaborator.TeamRole = newRole
+	existingCollaborator.ModifiedBy = &principal
 
+	return store.PlanCollaboratorUpdate(logger, existingCollaborator)
 }
 
 // DeletePlanCollaborator implements resolver logic to delete a plan collaborator
-func DeletePlanCollaborator(logger *zap.Logger, input *models.PlanCollaborator, principal *string, store *storage.Store) (*models.PlanCollaborator, error) {
-	retCollaborator, err := store.PlanCollaboratorDelete(logger, input)
+func DeletePlanCollaborator(logger *zap.Logger, id uuid.UUID, principal string, store *storage.Store) (*models.PlanCollaborator, error) {
+	retCollaborator, err := store.PlanCollaboratorDelete(logger, id)
 	return retCollaborator, err
 }
 

@@ -9,7 +9,7 @@ import (
 )
 
 func (suite *ResolverSuite) TestCreatePlanDiscussion() {
-	plan := createModelPlan(suite.T(), suite.testConfigs)
+	plan := suite.createModelPlan("Test Plan")
 
 	input := &model.PlanDiscussionCreateInput{
 		ModelPlanID: plan.ID,
@@ -25,8 +25,8 @@ func (suite *ResolverSuite) TestCreatePlanDiscussion() {
 }
 
 func (suite *ResolverSuite) TestUpdatePlanDiscussion() {
-	plan := createModelPlan(suite.T(), suite.testConfigs)
-	discussion := createPlanDiscussion(suite.T(), suite.testConfigs, plan, "This is a test comment")
+	plan := suite.createModelPlan("Test Plan")
+	discussion := suite.createPlanDiscussion(plan, "This is a test comment")
 
 	changes := map[string]interface{}{
 		"content": "This is now updated! Thanks for looking at my test",
@@ -45,8 +45,8 @@ func (suite *ResolverSuite) TestUpdatePlanDiscussion() {
 }
 
 func (suite *ResolverSuite) TestDeletePlanDiscussion() {
-	plan := createModelPlan(suite.T(), suite.testConfigs)
-	discussion := createPlanDiscussion(suite.T(), suite.testConfigs, plan, "This is a test comment")
+	plan := suite.createModelPlan("Test Plan")
+	discussion := suite.createPlanDiscussion(plan, "This is a test comment")
 
 	result, err := DeletePlanDiscussion(suite.testConfigs.Logger, discussion.ID, suite.testConfigs.UserInfo.EuaUserID, suite.testConfigs.Store)
 	assert.NoError(suite.T(), err)
@@ -59,9 +59,9 @@ func (suite *ResolverSuite) TestDeletePlanDiscussion() {
 }
 
 func (suite *ResolverSuite) TestDeletePlanDiscussionWithReply() {
-	plan := createModelPlan(suite.T(), suite.testConfigs)
-	discussion := createPlanDiscussion(suite.T(), suite.testConfigs, plan, "This is a test comment")
-	_ = createDiscussionReply(suite.T(), suite.testConfigs, discussion, "This is a test reply", false)
+	plan := suite.createModelPlan("Test Plan")
+	discussion := suite.createPlanDiscussion(plan, "This is a test comment")
+	_ = suite.createDiscussionReply(discussion, "This is a test reply", false)
 
 	_, err := DeletePlanDiscussion(suite.testConfigs.Logger, discussion.ID, suite.testConfigs.UserInfo.EuaUserID, suite.testConfigs.Store)
 	assert.Error(suite.T(), err)
@@ -69,8 +69,8 @@ func (suite *ResolverSuite) TestDeletePlanDiscussionWithReply() {
 }
 
 func (suite *ResolverSuite) TestCreateDiscussionReply() {
-	plan := createModelPlan(suite.T(), suite.testConfigs)
-	discussion := createPlanDiscussion(suite.T(), suite.testConfigs, plan, "This is a test comment")
+	plan := suite.createModelPlan("Test Plan")
+	discussion := suite.createPlanDiscussion(plan, "This is a test comment")
 
 	input := &model.DiscussionReplyCreateInput{
 		DiscussionID: discussion.ID,
@@ -87,9 +87,9 @@ func (suite *ResolverSuite) TestCreateDiscussionReply() {
 }
 
 func (suite *ResolverSuite) TestUpdateDiscussionReply() {
-	plan := createModelPlan(suite.T(), suite.testConfigs)
-	discussion := createPlanDiscussion(suite.T(), suite.testConfigs, plan, "This is a test comment")
-	reply := createDiscussionReply(suite.T(), suite.testConfigs, discussion, "This is a test reply", false)
+	plan := suite.createModelPlan("Test Plan")
+	discussion := suite.createPlanDiscussion(plan, "This is a test comment")
+	reply := suite.createDiscussionReply(discussion, "This is a test reply", false)
 
 	changes := map[string]interface{}{
 		"content":    "This is now updated! Thanks for looking at my test",
@@ -106,20 +106,20 @@ func (suite *ResolverSuite) TestUpdateDiscussionReply() {
 }
 
 func (suite *ResolverSuite) TestDiscussionReplyCollectionByDiscusionID() {
-	plan := createModelPlan(suite.T(), suite.testConfigs)
-	discussion := createPlanDiscussion(suite.T(), suite.testConfigs, plan, "This is a test comment")
-	_ = createDiscussionReply(suite.T(), suite.testConfigs, discussion, "This is a test reply", false)
-	_ = createDiscussionReply(suite.T(), suite.testConfigs, discussion, "This is another test reply", true)
+	plan := suite.createModelPlan("Test Plan")
+	discussion := suite.createPlanDiscussion(plan, "This is a test comment")
+	_ = suite.createDiscussionReply(discussion, "This is a test reply", false)
+	_ = suite.createDiscussionReply(discussion, "This is another test reply", true)
 
 	result, err := DiscussionReplyCollectionByDiscusionID(suite.testConfigs.Logger, discussion.ID, suite.testConfigs.Store)
 	assert.NoError(suite.T(), err)
 	assert.Len(suite.T(), result, 2)
 
 	// Check that adding another dicussion doesn't affect the first one
-	discussionTwo := createPlanDiscussion(suite.T(), suite.testConfigs, plan, "This is another test comment")
-	_ = createDiscussionReply(suite.T(), suite.testConfigs, discussionTwo, "This is a test reply", false)
-	_ = createDiscussionReply(suite.T(), suite.testConfigs, discussionTwo, "This is another test reply", true)
-	_ = createDiscussionReply(suite.T(), suite.testConfigs, discussionTwo, "This is a third test reply", true)
+	discussionTwo := suite.createPlanDiscussion(plan, "This is another test comment")
+	_ = suite.createDiscussionReply(discussionTwo, "This is a test reply", false)
+	_ = suite.createDiscussionReply(discussionTwo, "This is another test reply", true)
+	_ = suite.createDiscussionReply(discussionTwo, "This is a third test reply", true)
 
 	// Assert the count on the _first_ discussion is still 2
 	result, err = DiscussionReplyCollectionByDiscusionID(suite.testConfigs.Logger, discussion.ID, suite.testConfigs.Store)
@@ -128,20 +128,20 @@ func (suite *ResolverSuite) TestDiscussionReplyCollectionByDiscusionID() {
 }
 
 func (suite *ResolverSuite) TestPlanDiscussionCollectionByModelPlanID() {
-	plan := createModelPlan(suite.T(), suite.testConfigs)
-	discussion := createPlanDiscussion(suite.T(), suite.testConfigs, plan, "This is a test comment")
-	_ = createDiscussionReply(suite.T(), suite.testConfigs, discussion, "This is a test reply", false)
-	_ = createDiscussionReply(suite.T(), suite.testConfigs, discussion, "This is another test reply", true)
+	plan := suite.createModelPlan("Test Plan")
+	discussion := suite.createPlanDiscussion(plan, "This is a test comment")
+	_ = suite.createDiscussionReply(discussion, "This is a test reply", false)
+	_ = suite.createDiscussionReply(discussion, "This is another test reply", true)
 
 	result, err := PlanDiscussionCollectionByModelPlanID(suite.testConfigs.Logger, plan.ID, suite.testConfigs.Store)
 	assert.NoError(suite.T(), err)
 	assert.Len(suite.T(), result, 1)
 
 	// Check that adding another dicussion doesn't affect the first one
-	discussionTwo := createPlanDiscussion(suite.T(), suite.testConfigs, plan, "This is another test comment")
-	_ = createDiscussionReply(suite.T(), suite.testConfigs, discussionTwo, "This is a test reply", false)
-	_ = createDiscussionReply(suite.T(), suite.testConfigs, discussionTwo, "This is another test reply", true)
-	_ = createDiscussionReply(suite.T(), suite.testConfigs, discussionTwo, "This is a third test reply", true)
+	discussionTwo := suite.createPlanDiscussion(plan, "This is another test comment")
+	_ = suite.createDiscussionReply(discussionTwo, "This is a test reply", false)
+	_ = suite.createDiscussionReply(discussionTwo, "This is another test reply", true)
+	_ = suite.createDiscussionReply(discussionTwo, "This is a third test reply", true)
 
 	// Assert the count on the is now 2 after adding another discussion
 	result, err = PlanDiscussionCollectionByModelPlanID(suite.testConfigs.Logger, plan.ID, suite.testConfigs.Store)
@@ -150,10 +150,10 @@ func (suite *ResolverSuite) TestPlanDiscussionCollectionByModelPlanID() {
 }
 
 func (suite *ResolverSuite) TestDeleteDiscussionReply() {
-	plan := createModelPlan(suite.T(), suite.testConfigs)
-	discussion := createPlanDiscussion(suite.T(), suite.testConfigs, plan, "This is a test comment")
-	reply := createDiscussionReply(suite.T(), suite.testConfigs, discussion, "This is a test reply", false)
-	_ = createDiscussionReply(suite.T(), suite.testConfigs, discussion, "This is another test reply", false)
+	plan := suite.createModelPlan("Test Plan")
+	discussion := suite.createPlanDiscussion(plan, "This is a test comment")
+	reply := suite.createDiscussionReply(discussion, "This is a test reply", false)
+	_ = suite.createDiscussionReply(discussion, "This is another test reply", false)
 
 	_, err := DeleteDiscussionReply(suite.testConfigs.Logger, reply.ID, suite.testConfigs.UserInfo.EuaUserID, suite.testConfigs.Store)
 	assert.NoError(suite.T(), err)

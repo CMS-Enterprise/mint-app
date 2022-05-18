@@ -28,6 +28,7 @@ import TaskListItem, {
   TaskListLastUpdated
 } from './_components/TaskListItem';
 import TaskListSideNav from './_components/TaskListSideNav';
+import TaskListStatus from './_components/TaskListStatus';
 
 import './index.scss';
 
@@ -54,7 +55,8 @@ const TaskList = () => {
   const {
     modelName,
     basics,
-    documents
+    documents,
+    status
     // TODO: Add these model plans when BE integrates it
     // characteristics,
     // participants,
@@ -121,6 +123,7 @@ const TaskList = () => {
                     indexZero {modelName} indexTwo
                   </Trans>
                 </p>
+                <TaskListStatus modelId={modelID} status={status} />
                 <SummaryBox
                   heading=""
                   className="bg-base-lightest border-0 radius-0 padding-2"

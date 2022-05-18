@@ -96,18 +96,13 @@ export interface ModelPlanChanges {
 }
 
 /**
- * PlanCollaboratorInput represents the data required to create, modify, or delete a collaborator on a plan
+ * PlanCollaboratorCreateInput represents the data required to create a collaborator on a plan
  */
-export interface PlanCollaboratorInput {
-  id?: UUID | null;
+export interface PlanCollaboratorCreateInput {
   modelPlanID: UUID;
   euaUserID: string;
   fullName: string;
   teamRole: TeamRole;
-  createdBy?: string | null;
-  createdDts?: Time | null;
-  modifiedBy?: string | null;
-  modifiedDts?: Time | null;
 }
 
 /**
