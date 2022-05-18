@@ -28,6 +28,7 @@ export default gql`
           createdBy
           createdDts
         }
+      }
       documents {
         id
         fileName

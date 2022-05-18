@@ -7,9 +7,9 @@ import {
   BreadcrumbBar,
   BreadcrumbLink,
   Button,
-  IconAnnouncement,
   Grid,
   GridContainer,
+  IconAnnouncement,
   SummaryBox
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
@@ -174,56 +174,94 @@ const TaskList = () => {
         refetch={refetch}
         closeModal={() => setIsDiscussionOpen(false)}
       />
-
-      <div className="grid-row">
-        <BreadcrumbBar variant="wrap">
-          <Breadcrumb>
-            <BreadcrumbLink asCustom={Link} to="/">
-              <span>{t('navigation.home')}</span>
-            </BreadcrumbLink>
-          </Breadcrumb>
-          <Breadcrumb current>{t('navigation.modelPlanTaskList')}</Breadcrumb>
-        </BreadcrumbBar>
-      </div>
-      {data && (<>
-            <PageHeading className="margin-bottom-0">
-              {t('navigation.modelPlanTaskList')}
-            </PageHeading>
-            <p
-              className="margin-top-0 margin-bottom-2 font-body-lg"
-              data-testid="model-plan-name"
-            >
-              <Trans i18nKey="modelPlanTaskList:subheading">
-                indexZero {modelName} indexTwo
-              </Trans>
-            </p>
-            <TaskListStatus modelID={modelID} status={status} />
-            {dicussionBanner()}
-            <SummaryBox
-              heading=""
-              className="bg-base-lightest border-0 radius-0 padding-2"
-            >
-              <p className="margin-0 margin-bottom-1">
-                <Trans i18nKey="modelPlanTaskList:summaryBox.copy">
-                  indexZero {modelName} indexTwo
-                </Trans>
-              </p>
-              <UswdsReactLink
-                className="usa-button usa-button--outline"
-                variant="unstyled"
-                to="/"
-              >
-                {t('summaryBox.cta')}
-              </UswdsReactLink>
-            </SummaryBox>
-            <ol
-              data-testid="task-list"
-              className="model-plan-task-list__task-list model-plan-task-list__task-list--primary margin-y-6 padding-left-0"
-            >
-              {Object.keys(taskListItem).map((key: any) => {
-                const lastTaskItem = Object.keys(taskListItem).slice(-1)[0];
-                const path =
-                  key === 'finalizeModelPlan' ? 'submit-request' : key;
+      <GridContainer>
+        <Grid desktop={{ col: 12 }}>
+          <BreadcrumbBar variant="wrap">
+            <Breadcrumb>
+              <BreadcrumbLink asCustom={Link} to="/">
+                <span>{t('navigation.home')}</span>
+              </BreadcrumbLink>
+            </Breadcrumb>
+            <Breadcrumb current>{t('navigation.modelPlanTaskList')}</Breadcrumb>
+          </BreadcrumbBar>
+        </Grid>
+        <Grid row gap>
+          <Grid desktop={{ col: 9 }}>
+            {data && (
+              <>
+                <PageHeading className="margin-top-4 margin-bottom-0">
+                  {t('navigation.modelPlanTaskList')}
+                </PageHeading>
+                <p
+                  className="margin-top-0 margin-bottom-2 font-body-lg"
+                  data-testid="model-plan-name"
+                >
+                  <Trans i18nKey="modelPlanTaskList:subheading">
+                    indexZero {modelName} indexTwo
+                  </Trans>
+                </p>
+                <TaskListStatus modelID={modelID} status={status} />
+                {dicussionBanner()}
+                <SummaryBox
+                  heading=""
+                  className="bg-base-lightest border-0 radius-0 padding-2"
+                >
+                  {documents?.length > 0 ? (
+                    <>
+                      <p
+                        className="margin-0 margin-bottom-1"
+                        data-testid="document-items"
+                      >
+                        <strong>{documents.length} </strong>
+                        <Trans i18nKey="modelPlanTaskList:summaryBox.existingDocuments">
+                          indexZero {modelName} indexTwo
+                        </Trans>
+                      </p>
+                      <Grid row gap>
+                        <Grid tablet={{ col: 4 }}>
+                          <UswdsReactLink
+                            variant="unstyled"
+                            className="margin-right-4"
+                            to={`/models/${modelID}/documents`}
+                          >
+                            {t('summaryBox.viewAll')}
+                          </UswdsReactLink>
+                        </Grid>
+                        <Grid tablet={{ col: 4 }}>
+                          <UswdsReactLink
+                            variant="unstyled"
+                            to={`/models/${modelID}/documents/add-document`}
+                          >
+                            {t('summaryBox.uploadAnother')}
+                          </UswdsReactLink>
+                        </Grid>
+                      </Grid>
+                    </>
+                  ) : (
+                    <>
+                      <p className="margin-0 margin-bottom-1">
+                        <Trans i18nKey="modelPlanTaskList:summaryBox.copy">
+                          indexZero {modelName} indexTwo
+                        </Trans>
+                      </p>
+                      <UswdsReactLink
+                        className="usa-button usa-button--outline"
+                        variant="unstyled"
+                        to={`/models/${modelID}/documents`}
+                      >
+                        {t('summaryBox.cta')}
+                      </UswdsReactLink>
+                    </>
+                  )}
+                </SummaryBox>
+                <ol
+                  data-testid="task-list"
+                  className="model-plan-task-list__task-list model-plan-task-list__task-list--primary margin-top-6 margin-bottom-0 padding-left-0"
+                >
+                  {Object.keys(taskListItem).map((key: any) => {
+                    const lastTaskItem = Object.keys(taskListItem).slice(-1)[0];
+                    const path =
+                      key === 'finalizeModelPlan' ? 'submit-request' : key;
 
                     return (
                       <Fragment key={key}>
@@ -261,7 +299,7 @@ const TaskList = () => {
                   })}
                 </ol>
               </>
-            </>)}
+            )}
           </Grid>
           <Grid desktop={{ col: 3 }}>
             <TaskListSideNav modelPlan={modelPlan} />

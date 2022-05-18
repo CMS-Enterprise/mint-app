@@ -106,6 +106,14 @@ export interface PlanCollaboratorCreateInput {
 }
 
 /**
+ * PlanDiscussionCreateInput represents the necessary fields to create a plan discussion
+ */
+export interface PlanDiscussionCreateInput {
+  modelPlanID: UUID;
+  content: string;
+}
+
+/**
  * PlanDocumentInput represents the data required to create, modify, or delete a document on a plan
  */
 export interface PlanDocumentInput {
