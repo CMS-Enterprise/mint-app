@@ -9,7 +9,7 @@ const modelPlan = {
   },
   planStatuses: {
     planDraft: 'Draft model plan',
-    planComplete: 'Model plan compelte',
+    planComplete: 'Model plan complete',
     icipComplete: 'ICIP complete',
     cmmiClearance: 'Internal (CMMI) clearance',
     cmsClearance: 'CMS clearance',
