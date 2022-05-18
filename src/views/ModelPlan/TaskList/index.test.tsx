@@ -133,11 +133,8 @@ describe('The Model Plan Task List', () => {
       );
 
       await waitFor(() => {
-        expect(screen.getAllByTestId('tasklist-tag')[0]).toHaveClass(
+        expect(screen.getByText('Ready to start')).toHaveClass(
           'bg-accent-cool'
-        );
-        expect(screen.getAllByTestId('tasklist-tag')[0]).toHaveTextContent(
-          'Ready to start'
         );
       });
     });
