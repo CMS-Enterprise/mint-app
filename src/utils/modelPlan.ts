@@ -1,6 +1,8 @@
 import i18next from 'i18next';
 
+import { GetModelPlan_modelPlan_discussions as DiscussionType } from 'queries/types/GetModelPlan';
 import { DocumentType } from 'types/graphql-global-types';
+
 /**
  * Translate the API enum to a human readable string
  */
@@ -66,4 +68,16 @@ export const translateDocumentType = (documentType: DocumentType) => {
     default:
       return '';
   }
+};
+
+export const getUnansweredQuestions = (discussions: DiscussionType[]) => {
+  const unansweredQuestions =
+    discussions?.filter(
+      (discussion: DiscussionType) => discussion.status === 'UNANSWERED'
+    ).length || 0;
+  const answeredQuestions = discussions?.length - unansweredQuestions;
+  return {
+    unansweredQuestions,
+    answeredQuestions
+  };
 };

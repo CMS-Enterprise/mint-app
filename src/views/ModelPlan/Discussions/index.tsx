@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import ReactModal from 'react-modal';
 import { useMutation } from '@apollo/client';
 import {
+  Accordion,
   Button,
   Grid,
   GridContainer,
@@ -25,6 +26,7 @@ import CreateModelPlanDiscussion from 'queries/CreateModelPlanDiscussion';
 import { CreateModelPlanDiscussion as CreateModelPlanDiscussionType } from 'queries/types/CreateModelPlanDiscussion';
 import { GetModelPlan_modelPlan_discussions as DiscussionType } from 'queries/types/GetModelPlan';
 import flattenErrors from 'utils/flattenErrors';
+import { getUnansweredQuestions } from 'utils/modelPlan';
 
 import './index.scss';
 
@@ -55,6 +57,18 @@ const Discussions = ({
     'success'
   );
   const [discussionStatusMessage, setDiscussionStatusMessage] = useState('');
+  const [isRenderQuestion, setIsRenderQuestion] = useState(false);
+
+  useEffect(() => {
+    console.log(discussions);
+    if (discussions?.length === 0) {
+      setIsRenderQuestion(true);
+    }
+  }, [discussions]);
+
+  const { unansweredQuestions, answeredQuestions } = getUnansweredQuestions(
+    discussions
+  );
 
   const [create] = useMutation<CreateModelPlanDiscussionType>(
     CreateModelPlanDiscussion
@@ -156,11 +170,17 @@ const Discussions = ({
                       name="content"
                     />
                   </FieldGroup>
-                  <div className="margin-top-5 display-block">
+                  <div className="margin-y-5 display-block">
                     <Button
                       className="usa-button usa-button--outline"
                       type="button"
-                      onClick={closeModal}
+                      onClick={() => {
+                        if (isRenderQuestion) {
+                          setIsRenderQuestion(false);
+                        } else {
+                          closeModal();
+                        }
+                      }}
                     >
                       {h('cancel')}
                     </Button>
@@ -181,19 +201,57 @@ const Discussions = ({
     );
   };
 
+  const discussionAccordion = ['UNANSWERED', 'ANSWERED'].map(status => (
+    <Accordion
+      key={status}
+      multiselectable
+      items={[
+        {
+          title:
+            status === 'UNANSWERED' ? (
+              <strong>
+                {unansweredQuestions} {t('unanswered')}
+                {unansweredQuestions > 1 && 's'}
+              </strong>
+            ) : (
+              <strong>
+                {answeredQuestions} {t('answered')}
+                {answeredQuestions > 1 && 's'}
+              </strong>
+            ),
+          content: <></>,
+          expanded: false,
+          id: status,
+          headingLevel: 'h4'
+        }
+      ]}
+    />
+  ));
+
+  const formatDiscussions = (discussions: DiscussionType[]) => {};
+
   const renderDiscussions = () => {
     return (
       <>
-        {' '}
         <PageHeading headingLevel="h1" className="margin-top-0">
           {t('heading')}
         </PageHeading>
-        <div className="display-flex">
+        <div className="display-flex margin-bottom-4">
           <IconAnnouncement className="text-primary margin-right-1" />
-          <Button type="button" unstyled onClick={() => console.log('hey')}>
+          <Button
+            type="button"
+            unstyled
+            onClick={() => setIsRenderQuestion(true)}
+          >
             {t('askAQuestionLink')}
           </Button>
         </div>
+        {discussionStatusMessage && (
+          <Alert type={discussionStatus} className="margin-bottom-4">
+            {discussionStatusMessage}
+          </Alert>
+        )}
+        {discussionAccordion}
       </>
     );
   };
@@ -222,7 +280,7 @@ const Discussions = ({
       </div>
       <GridContainer className="padding-y-8">
         <Grid desktop={{ col: 12 }}>
-          {discussions?.length > 0 ? renderDiscussions() : renderQuestion()}
+          {isRenderQuestion ? renderQuestion() : renderDiscussions()}
         </Grid>
       </GridContainer>
     </ReactModal>

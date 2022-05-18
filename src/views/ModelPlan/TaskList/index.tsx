@@ -25,6 +25,7 @@ import {
   GetModelPlan_modelPlan_discussions as DiscussionType,
   GetModelPlanVariables
 } from 'queries/types/GetModelPlan';
+import { getUnansweredQuestions } from 'utils/modelPlan';
 
 import Discussions from '../Discussions';
 
@@ -79,11 +80,9 @@ const TaskList = () => {
     returnObjects: true
   });
 
-  const unansweredQuestions =
-    discussions?.filter(
-      (discussion: DiscussionType) => discussion.status === 'UNANSWERED'
-    ).length || 0;
-  const answeredQuestions = discussions?.length - unansweredQuestions;
+  const { unansweredQuestions, answeredQuestions } = getUnansweredQuestions(
+    discussions
+  );
 
   const taskListItemStatus = (key: string) => {
     switch (key) {
@@ -167,13 +166,15 @@ const TaskList = () => {
       className="model-plan-task-list"
       data-testid="model-plan-task-list"
     >
-      <Discussions
-        modelID={modelID}
-        isOpen={isDiscussionOpen}
-        discussions={discussions}
-        refetch={refetch}
-        closeModal={() => setIsDiscussionOpen(false)}
-      />
+      {isDiscussionOpen && (
+        <Discussions
+          modelID={modelID}
+          isOpen={isDiscussionOpen}
+          discussions={discussions}
+          refetch={refetch}
+          closeModal={() => setIsDiscussionOpen(false)}
+        />
+      )}
       <GridContainer>
         <Grid desktop={{ col: 12 }}>
           <BreadcrumbBar variant="wrap">
