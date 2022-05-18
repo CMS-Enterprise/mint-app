@@ -234,15 +234,9 @@ type ModelPlanResolver interface {
 type MutationResolver interface {
 	CreateModelPlan(ctx context.Context, modelName string) (*models.ModelPlan, error)
 	UpdateModelPlan(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.ModelPlan, error)
-<<<<<<< HEAD
-	CreatePlanCollaborator(ctx context.Context, input model.PlanCollaboratorInput) (*models.PlanCollaborator, error)
-	UpdatePlanCollaborator(ctx context.Context, input model.PlanCollaboratorInput) (*models.PlanCollaborator, error)
-	DeletePlanCollaborator(ctx context.Context, input model.PlanCollaboratorInput) (*models.PlanCollaborator, error)
-=======
 	CreatePlanCollaborator(ctx context.Context, input model.PlanCollaboratorCreateInput) (*models.PlanCollaborator, error)
 	UpdatePlanCollaborator(ctx context.Context, id uuid.UUID, newRole models.TeamRole) (*models.PlanCollaborator, error)
 	DeletePlanCollaborator(ctx context.Context, id uuid.UUID) (*models.PlanCollaborator, error)
->>>>>>> main
 	UpdatePlanBasics(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanBasics, error)
 	UpdatePlanMilestones(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanMilestones, error)
 	GeneratePresignedUploadURL(ctx context.Context, input model.GeneratePresignedUploadURLInput) (*model.GeneratePresignedUploadURLPayload, error)
@@ -1291,11 +1285,7 @@ func (e *executableSchema) Exec(ctx context.Context) graphql.ResponseHandler {
 	inputUnmarshalMap := graphql.BuildUnmarshalerMap(
 		ec.unmarshalInputDiscussionReplyCreateInput,
 		ec.unmarshalInputGeneratePresignedUploadURLInput,
-<<<<<<< HEAD
-		ec.unmarshalInputPlanCollaboratorInput,
-=======
 		ec.unmarshalInputPlanCollaboratorCreateInput,
->>>>>>> main
 		ec.unmarshalInputPlanDiscussionCreateInput,
 		ec.unmarshalInputPlanDocumentInput,
 		ec.unmarshalInputPlanDocumentParameters,
@@ -1711,11 +1701,7 @@ createPlanCollaborator(input: PlanCollaboratorCreateInput!): PlanCollaborator
 updatePlanCollaborator(id: UUID!, newRole: TeamRole!): PlanCollaborator
 @hasRole(role: MINT_BASE_USER)
 
-<<<<<<< HEAD
-deletePlanCollaborator(input: PlanCollaboratorInput!): PlanCollaborator
-=======
 deletePlanCollaborator(id: UUID!): PlanCollaborator
->>>>>>> main
 @hasRole(role: MINT_BASE_USER)
 
 updatePlanBasics(id: UUID!, changes: PlanBasicsChanges!): PlanBasics
@@ -10894,13 +10880,8 @@ func (ec *executionContext) unmarshalInputGeneratePresignedUploadURLInput(ctx co
 	return it, nil
 }
 
-<<<<<<< HEAD
-func (ec *executionContext) unmarshalInputPlanCollaboratorInput(ctx context.Context, obj interface{}) (model.PlanCollaboratorInput, error) {
-	var it model.PlanCollaboratorInput
-=======
 func (ec *executionContext) unmarshalInputPlanCollaboratorCreateInput(ctx context.Context, obj interface{}) (model.PlanCollaboratorCreateInput, error) {
 	var it model.PlanCollaboratorCreateInput
->>>>>>> main
 	asMap := map[string]interface{}{}
 	for k, v := range obj.(map[string]interface{}) {
 		asMap[k] = v
@@ -10908,17 +10889,6 @@ func (ec *executionContext) unmarshalInputPlanCollaboratorCreateInput(ctx contex
 
 	for k, v := range asMap {
 		switch k {
-<<<<<<< HEAD
-		case "id":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("id"))
-			it.ID, err = ec.unmarshalOUUID2ᚖgithubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, v)
-			if err != nil {
-				return it, err
-			}
-=======
->>>>>>> main
 		case "modelPlanID":
 			var err error
 
