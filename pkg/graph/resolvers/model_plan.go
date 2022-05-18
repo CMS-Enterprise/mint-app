@@ -16,7 +16,7 @@ func ModelPlanCreate(logger *zap.Logger, modelName string, store *storage.Store,
 		ModelName:  modelName,
 		Status:     models.ModelStatusPlanDraft,
 		CreatedBy:  &principalInfo.EuaUserID,
-		ModifiedBy: &principalInfo.EuaUserID,
+		ModifiedBy: nil,
 	}
 
 	// Create the model plan itself
@@ -32,7 +32,7 @@ func ModelPlanCreate(logger *zap.Logger, modelName string, store *storage.Store,
 		FullName:    principalInfo.CommonName,
 		TeamRole:    models.TeamRoleModelLead,
 		CreatedBy:   &principalInfo.EuaUserID,
-		ModifiedBy:  &principalInfo.EuaUserID,
+		ModifiedBy:  nil,
 	}
 	_, err = store.PlanCollaboratorCreate(logger, collab)
 	if err != nil {
@@ -43,7 +43,7 @@ func ModelPlanCreate(logger *zap.Logger, modelName string, store *storage.Store,
 	basics := &models.PlanBasics{
 		ModelPlanID: createdPlan.ID,
 		CreatedBy:   &principalInfo.EuaUserID,
-		ModifiedBy:  &principalInfo.EuaUserID,
+		ModifiedBy:  nil,
 	}
 	basics.CalcStatus()
 	_, err = store.PlanBasicsCreate(logger, basics)
@@ -55,7 +55,7 @@ func ModelPlanCreate(logger *zap.Logger, modelName string, store *storage.Store,
 	milestones := &models.PlanMilestones{
 		ModelPlanID: createdPlan.ID,
 		CreatedBy:   &principalInfo.EuaUserID,
-		ModifiedBy:  &principalInfo.EuaUserID,
+		ModifiedBy:  nil,
 	}
 	milestones.CalcStatus()
 	_, err = store.PlanMilestonesCreate(logger, milestones)
@@ -78,6 +78,7 @@ func ModelPlanUpdate(logger *zap.Logger, id uuid.UUID, changes map[string]interf
 	if err != nil {
 		return nil, err
 	}
+
 	existingPlan.ModifiedBy = principal
 
 	retPlan, err := store.ModelPlanUpdate(logger, existingPlan)

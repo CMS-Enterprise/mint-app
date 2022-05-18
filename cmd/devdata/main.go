@@ -64,7 +64,7 @@ func main() {
 		p.CMMIGroups = pq.StringArray{"STATE_INNOVATIONS_GROUP", "POLICY_AND_PROGRAMS_GROUP"}
 
 		p.CreatedBy = models.StringPointer("ABCD")
-		p.ModifiedBy = models.StringPointer("ABCD")
+		p.ModifiedBy = nil
 	})
 	makePlanCollaborator(uuid.MustParse("f11eb129-2c80-4080-9440-439cbe1a286f"), "MINT", logger, store, func(c *models.PlanCollaborator) {
 		c.FullName = "Mr. Mint"
@@ -90,7 +90,7 @@ func main() {
 		p.CMMIGroups = pq.StringArray{"POLICY_AND_PROGRAMS_GROUP", "SEAMLESS_CARE_MODELS_GROUP"}
 
 		p.CreatedBy = models.StringPointer("MINT")
-		p.ModifiedBy = models.StringPointer("MINT")
+		p.ModifiedBy = nil
 	})
 	makePlanCollaborator(pmGreatPlan.ID, "MINT", logger, store, func(c *models.PlanCollaborator) {
 		c.FullName = "Mr. Mint"
@@ -129,7 +129,7 @@ func main() {
 		pd.Content = "What is the purpose of this plan?"
 		pd.Status = models.DiscussionAnswered
 		pd.CreatedBy = "JAKE"
-		pd.ModifiedBy = "JAKE"
+		pd.ModifiedBy = nil
 
 	})
 
@@ -137,7 +137,7 @@ func main() {
 		d.Content = "To make more candy"
 		d.Resolution = true
 		d.CreatedBy = "FINN"
-		d.ModifiedBy = "FINN"
+		d.ModifiedBy = nil
 
 	})
 
@@ -151,7 +151,7 @@ func main() {
 		// p.CMMIGroups = pq.StringArray{"STATE_INNOVATIONS_GROUP", "POLICY_AND_PROGRAMS_GROUP", "SEAMLESS_CARE_MODELS_GROUP"}
 
 		p.CreatedBy = models.StringPointer("MINT")
-		p.ModifiedBy = models.StringPointer("MINT")
+		p.ModifiedBy = nil
 	})
 
 	makePlanBasics(plan2.ID, logger, store, func(b *models.PlanBasics) {
@@ -210,7 +210,7 @@ func makeModelPlan(modelName string, logger *zap.Logger, store *storage.Store, c
 		ModelName:  modelName,
 		Archived:   false,
 		CreatedBy:  models.StringPointer("ABCD"),
-		ModifiedBy: models.StringPointer("ABCD"),
+		ModifiedBy: nil,
 		Status:     status,
 	}
 
@@ -231,7 +231,7 @@ func makePlanCollaborator(mpID uuid.UUID, euaID string, logger *zap.Logger, stor
 		ModelPlanID: mpID,
 
 		CreatedBy:  models.StringPointer("ABCD"),
-		ModifiedBy: models.StringPointer("ABCD"),
+		ModifiedBy: nil,
 	}
 	for _, cb := range callbacks {
 		cb(&collab)
@@ -247,7 +247,7 @@ func makePlanBasics(uuid uuid.UUID, logger *zap.Logger, store *storage.Store, ca
 	basics := models.PlanBasics{
 		ModelPlanID: uuid,
 		CreatedBy:   models.StringPointer("ABCD"),
-		ModifiedBy:  models.StringPointer("ABCD"),
+		ModifiedBy:  nil,
 		Status:      status,
 	}
 
@@ -296,7 +296,7 @@ func makePlanDiscussion(uuid uuid.UUID, logger *zap.Logger, store *storage.Store
 		Content:     "This is a test comment",
 		Status:      models.DiscussionUnAnswered,
 		CreatedBy:   "ABCD",
-		ModifiedBy:  "ABCD",
+		ModifiedBy:  nil,
 	}
 
 	for _, cb := range callbacks {
@@ -315,7 +315,7 @@ func makeDiscussionReply(uuid uuid.UUID, logger *zap.Logger, store *storage.Stor
 		Content:      "This is a test reply",
 		Resolution:   false,
 		CreatedBy:    "ABCD",
-		ModifiedBy:   "ABCD",
+		ModifiedBy:   nil,
 	}
 
 	for _, cb := range callbacks {
@@ -345,7 +345,7 @@ func makePlanMilestones(uuid uuid.UUID, logger *zap.Logger, store *storage.Store
 		// PhasedIn: ,
 		// PhasedInNote: ,
 		CreatedBy:  models.StringPointer("ABCD"),
-		ModifiedBy: models.StringPointer("ABCD"),
+		ModifiedBy: nil,
 		Status:     models.TaskReady,
 	}
 
@@ -353,7 +353,6 @@ func makePlanMilestones(uuid uuid.UUID, logger *zap.Logger, store *storage.Store
 		cb(&milestones)
 	}
 
-	dbmilestones, _ := store.PlanMilestonesCreate(logger, &milestones)
-	return dbmilestones
-
+	dbMilestones, _ := store.PlanMilestonesCreate(logger, &milestones)
+	return dbMilestones
 }

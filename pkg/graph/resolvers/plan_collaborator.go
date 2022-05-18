@@ -17,7 +17,7 @@ func CreatePlanCollaborator(logger *zap.Logger, input *model.PlanCollaboratorCre
 		TeamRole:    input.TeamRole,
 		EUAUserID:   input.EuaUserID,
 		CreatedBy:   &principal,
-		ModifiedBy:  &principal,
+		ModifiedBy:  nil,
 	}
 
 	retCollaborator, err := store.PlanCollaboratorCreate(logger, collaborator)
@@ -32,8 +32,8 @@ func UpdatePlanCollaborator(logger *zap.Logger, id uuid.UUID, newRole models.Tea
 		return nil, err
 	}
 
-	existingCollaborator.TeamRole = newRole
 	existingCollaborator.ModifiedBy = &principal
+	existingCollaborator.TeamRole = newRole
 
 	return store.PlanCollaboratorUpdate(logger, existingCollaborator)
 }

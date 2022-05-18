@@ -68,7 +68,7 @@ func (s *Store) PlanDocumentCreate(
 		DeletedAt:            nil,
 		CreatedBy:            principal,
 		CreatedDts:           nil,
-		ModifiedBy:           principal,
+		ModifiedBy:           nil,
 		ModifiedDts:          nil,
 	}
 
