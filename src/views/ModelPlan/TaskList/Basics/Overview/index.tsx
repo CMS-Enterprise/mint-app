@@ -286,7 +286,9 @@ const Overview = () => {
                       <Button
                         type="button"
                         className="usa-button usa-button--outline margin-bottom-1"
-                        onClick={() => history.goBack()}
+                        onClick={() =>
+                          history.push(`/models/${modelId}/task-list/basics`)
+                        }
                       >
                         {h('back')}
                       </Button>

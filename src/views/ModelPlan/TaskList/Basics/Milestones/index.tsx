@@ -578,7 +578,11 @@ const Milestones = () => {
                       <Button
                         type="button"
                         className="usa-button usa-button--outline margin-bottom-1"
-                        onClick={() => history.goBack()}
+                        onClick={() =>
+                          history.push(
+                            `/models/${modelId}/task-list/basics/overview`
+                          )
+                        }
                       >
                         {h('back')}
                       </Button>
