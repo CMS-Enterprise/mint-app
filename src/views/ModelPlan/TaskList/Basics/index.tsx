@@ -33,7 +33,7 @@ import { UpdateModelPlan as UpdateModelPlanType } from 'queries/types/UpdateMode
 import UpdateModelPlan from 'queries/UpdateModelPlan';
 import flattenErrors from 'utils/flattenErrors';
 import {
-  translateCmmiGroup,
+  translateCmmiGroups,
   translateCmsCenter,
   translateModelCategory
 } from 'utils/modelPlan';
@@ -47,7 +47,7 @@ type PlanBasicModelPlanFormType = {
   modelName: string;
   modelCategory: string | null;
   cmsCenters: string[];
-  cmmiGroup: string[];
+  cmmiGroups: string[];
   cmsOther: string;
 };
 
@@ -58,7 +58,7 @@ const BasicsContent = () => {
 
   const formikRef = useRef<FormikProps<PlanBasicModelPlanFormType>>(null);
   const history = useHistory();
-  const [isCmmiGroupShown, setIsCmmiGroupShown] = useState(false);
+  const [areCmmiGroupsShown, setAreCmmiGroupsShown] = useState(false);
   const [showOther, setShowOther] = useState(false);
 
   const { data } = useQuery<GetModelPlan, GetModelPlanVariables>(
@@ -86,7 +86,7 @@ const BasicsContent = () => {
           modelName: formikValues.modelName,
           modelCategory: formikValues.modelCategory,
           cmsCenters: formikValues.cmsCenters,
-          cmmiGroups: formikValues.cmmiGroup,
+          cmmiGroups: formikValues.cmmiGroups,
           cmsOther: formikValues.cmsOther
         }
       }
@@ -109,7 +109,7 @@ const BasicsContent = () => {
     modelName: modelName as string,
     modelCategory: modelCategory ?? null,
     cmsCenters: cmsCenters ?? [],
-    cmmiGroup: cmmiGroups ?? [],
+    cmmiGroups: cmmiGroups ?? [],
     cmsOther: cmsOther ?? ''
   };
 
@@ -119,10 +119,10 @@ const BasicsContent = () => {
   // 3. Basics + other group
   // 4. Basics + Cmmi + Other
   let validationSchema;
-  if (isCmmiGroupShown && showOther) {
+  if (areCmmiGroupsShown && showOther) {
     validationSchema = planBasicsSchema.pageOneSchemaWithOtherAndCmmi;
-  } else if (isCmmiGroupShown) {
-    validationSchema = planBasicsSchema.pageOneSchemaWithCmmiGroup;
+  } else if (areCmmiGroupsShown) {
+    validationSchema = planBasicsSchema.pageOneSchemaWithCmmiGroups;
   } else if (showOther) {
     validationSchema = planBasicsSchema.pageOneSchemaWithOther;
   } else {
@@ -306,7 +306,7 @@ const BasicsContent = () => {
                                         arrayHelpers.remove(idx);
                                       }
                                       if (e.target.value === 'CMMI') {
-                                        setIsCmmiGroupShown(true);
+                                        setAreCmmiGroupsShown(true);
                                       }
                                       if (e.target.value === 'OTHER') {
                                         setShowOther(!showOther);
@@ -346,14 +346,14 @@ const BasicsContent = () => {
                         className="margin-top-4"
                       >
                         <FieldArray
-                          name="cmmiGroup"
+                          name="cmmiGroups"
                           render={arrayHelpers => (
                             <>
                               <legend className="usa-label text-normal">
                                 {t('cmmiGroup')}
                               </legend>
                               <FieldErrorMsg>
-                                {flatErrors.cmmiGroup}
+                                {flatErrors.cmmiGroups}
                               </FieldErrorMsg>
 
                               {(t('cmmiGroups', {
@@ -366,9 +366,9 @@ const BasicsContent = () => {
                                       id={`new-plan-cmmiGroup--${key}`}
                                       name="cmmiGroup"
                                       label={item}
-                                      value={translateCmmiGroup(item)}
-                                      checked={values.cmmiGroup.includes(
-                                        translateCmmiGroup(item)
+                                      value={translateCmmiGroups(item)}
+                                      checked={values.cmmiGroups.includes(
+                                        translateCmmiGroups(item)
                                       )}
                                       onChange={(
                                         e: React.ChangeEvent<HTMLInputElement>
@@ -376,7 +376,7 @@ const BasicsContent = () => {
                                         if (e.target.checked) {
                                           arrayHelpers.push(e.target.value);
                                         } else {
-                                          const idx = values.cmmiGroup.indexOf(
+                                          const idx = values.cmmiGroups.indexOf(
                                             e.target.value
                                           );
                                           arrayHelpers.remove(idx);
@@ -412,10 +412,6 @@ const BasicsContent = () => {
                         }
                       }}
                     >
-                      {/* TODO:
-                        2. Ensure all steps of form works
-                        3. milestone errors
-                      */}
                       <IconArrowBack className="margin-right-1" aria-hidden />
                       {h('saveAndReturn')}
                     </Button>

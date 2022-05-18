@@ -63,7 +63,7 @@ export const translateCmsCenter = (category: string) => {
   }
 };
 
-export const translateCmmiGroup = (category: string) => {
+export const translateCmmiGroups = (category: string) => {
   switch (category) {
     case 'Patient Care Models Group (PCMG)':
       return 'PATIENT_CARE_MODELS_GROUP';

@@ -29,18 +29,18 @@ const planBasicsSchema = {
       .min(1, 'Select a CMS Component')
       .required('Select a CMS Component'),
     cmsOther: Yup.string().required('Please specific CMS Component'),
-    cmmiGroup: Yup.array()
+    cmmiGroups: Yup.array()
       .min(1, 'Select a CMMI Group')
       .required('Select a CMMI Group')
   }),
 
-  pageOneSchemaWithCmmiGroup: Yup.object().shape({
+  pageOneSchemaWithCmmiGroups: Yup.object().shape({
     modelName: Yup.string().trim().required('Enter the Model Name'),
     modelCategory: Yup.string().nullable().required('Enter the Model Category'),
     cmsCenters: Yup.array()
       .min(1, 'Select a CMS Component')
       .required('Select a CMS Component'),
-    cmmiGroup: Yup.array()
+    cmmiGroups: Yup.array()
       .min(1, 'Select a CMMI Group')
       .required('Select a CMMI Group')
   }),
