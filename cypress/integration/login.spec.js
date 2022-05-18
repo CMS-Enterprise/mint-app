@@ -5,7 +5,7 @@ describe('Logging in', () => {
   });
 
   it('logs in with local auth', () => {
-    cy.localLogin({ name: 'TEST', role: '' });
+    cy.localLogin({ name: 'MINT', role: '' });
 
     cy.get('h1', { timeout: 20000 }).should('have.text', 'Welcome to MINT');
   });

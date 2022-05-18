@@ -5,24 +5,6 @@ import { render, screen, waitFor } from '@testing-library/react';
 
 import NewPlan from './index';
 
-jest.mock('@okta/okta-react', () => ({
-  useOktaAuth: () => {
-    return {
-      authState: {
-        isAuthenticated: true
-      },
-      oktaAuth: {
-        getUser: async () => {
-          return {
-            name: 'John Doe'
-          };
-        },
-        logout: async () => {}
-      }
-    };
-  }
-}));
-
 describe('New Model Plan page', () => {
   it('renders without errors', async () => {
     render(

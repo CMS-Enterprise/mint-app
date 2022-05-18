@@ -32,6 +32,10 @@ export interface GetModelPlan_modelPlan_discussions {
   createdBy: string | null;
   createdDts: Time | null;
   replies: GetModelPlan_modelPlan_discussions_replies[];
+export interface GetModelPlan_modelPlan_documents {
+  __typename: "PlanDocument";
+  id: UUID;
+  fileName: string | null;
 }
 
 export interface GetModelPlan_modelPlan {
@@ -46,6 +50,7 @@ export interface GetModelPlan_modelPlan {
   status: ModelStatus;
   basics: GetModelPlan_modelPlan_basics | null;
   discussions: GetModelPlan_modelPlan_discussions[];
+  documents: GetModelPlan_modelPlan_documents[];
 }
 
 export interface GetModelPlan {

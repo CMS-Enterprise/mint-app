@@ -1,6 +1,6 @@
 describe('The Collaborator/Team Member Form', () => {
   beforeEach(() => {
-    cy.localLogin({ name: 'TEST' });
+    cy.localLogin({ name: 'MINT' });
   });
 
   it('adds a collaborator to model plan', () => {
@@ -24,8 +24,6 @@ describe('The Collaborator/Team Member Form', () => {
 
     cy.contains('a', 'Add team member').click();
 
-    cy.wait(1000);
-
     cy.get('input')
       .type('Jerry{downArrow}{enter}')
       .should('have.value', 'Jerry Seinfeld, SF13');
@@ -34,11 +32,7 @@ describe('The Collaborator/Team Member Form', () => {
 
     cy.get('select').select('Evaluation').should('have.value', 'EVALUATION');
 
-    cy.wait(1000);
-
     cy.contains('button', 'Add team member').click();
-
-    cy.wait(1000);
 
     cy.get('table').within(() => {
       cy.get('tbody').within(() => {
@@ -60,17 +54,11 @@ describe('The Collaborator/Team Member Form', () => {
       });
     });
 
-    cy.wait(1000);
-
     cy.get('input').should('be.disabled');
 
     cy.get('select').select('Model Team').should('have.value', 'MODEL_TEAM');
 
-    cy.wait(1000);
-
     cy.contains('button', 'Update team member').click();
-
-    cy.wait(1000);
 
     cy.get('table').within(() => {
       cy.get('tbody').within(() => {
@@ -91,11 +79,7 @@ describe('The Collaborator/Team Member Form', () => {
       });
     });
 
-    cy.wait(1000);
-
     cy.contains('button', 'Yes, remove team member').click();
-
-    cy.wait(1000);
 
     cy.get('table').within(() => {
       cy.get('tbody').within(() => {

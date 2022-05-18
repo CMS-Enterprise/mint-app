@@ -8,6 +8,8 @@ import {
   BreadcrumbLink,
   Button,
   IconAnnouncement,
+  Grid,
+  GridContainer,
   SummaryBox
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
@@ -62,6 +64,7 @@ const TaskList = () => {
     modelName,
     basics,
     discussions,
+    documents,
     status
     // TODO: Add these model plans when BE integrates it
     // characteristics,
@@ -161,7 +164,7 @@ const TaskList = () => {
 
   return (
     <MainContent
-      className="model-plan-task-list grid-container"
+      className="model-plan-task-list"
       data-testid="model-plan-task-list"
     >
       <Discussions
@@ -182,9 +185,7 @@ const TaskList = () => {
           <Breadcrumb current>{t('navigation.modelPlanTaskList')}</Breadcrumb>
         </BreadcrumbBar>
       </div>
-      {data && (
-        <div className="grid-row grid-gap-lg">
-          <div className="tablet:grid-col-9">
+      {data && (<>
             <PageHeading className="margin-bottom-0">
               {t('navigation.modelPlanTaskList')}
             </PageHeading>
@@ -224,47 +225,49 @@ const TaskList = () => {
                 const path =
                   key === 'finalizeModelPlan' ? 'submit-request' : key;
 
-                return (
-                  <Fragment key={key}>
-                    <TaskListItem
-                      key={key}
-                      testId="task-list-intake-form"
-                      heading={taskListItem[key].heading}
-                      status={taskListItemStatus(key)}
-                    >
-                      <div className="model-plan-task-list__task-row display-flex flex-justify flex-align-start">
-                        <TaskListDescription>
-                          <p className="margin-top-0">
-                            {taskListItem[key].copy}
-                          </p>
-                        </TaskListDescription>
-                        {taskListItemStatus(key) === 'IN_PROGRESS' && (
-                          <TaskListLastUpdated>
-                            <p className="margin-y-0">
-                              {t('taskListItem.lastUpdated')}
-                            </p>
-                            <p className="margin-y-0">4/1/2022</p>
-                          </TaskListLastUpdated>
+                    return (
+                      <Fragment key={key}>
+                        <TaskListItem
+                          key={key}
+                          testId="task-list-intake-form"
+                          heading={taskListItem[key].heading}
+                          status={taskListItemStatus(key)}
+                        >
+                          <div className="model-plan-task-list__task-row display-flex flex-justify flex-align-start">
+                            <TaskListDescription>
+                              <p className="margin-top-0">
+                                {taskListItem[key].copy}
+                              </p>
+                            </TaskListDescription>
+                            {taskListItemStatus(key) === 'IN_PROGRESS' && (
+                              <TaskListLastUpdated>
+                                <p className="margin-y-0">
+                                  {t('taskListItem.lastUpdated')}
+                                </p>
+                                <p className="margin-y-0">4/1/2022</p>
+                              </TaskListLastUpdated>
+                            )}
+                          </div>
+                          <TaskListButton
+                            path={path}
+                            status={taskListItemStatus(key)}
+                          />
+                        </TaskListItem>
+                        {key !== lastTaskItem && (
+                          <Divider className="margin-bottom-4" />
                         )}
-                      </div>
-                      <TaskListButton
-                        path={path}
-                        status={taskListItemStatus(key)}
-                      />
-                    </TaskListItem>
-                    {key !== lastTaskItem && (
-                      <Divider className="margin-bottom-4" />
-                    )}
-                  </Fragment>
-                );
-              })}
-            </ol>
-          </div>
-          <div className="tablet:grid-col-3">
+                      </Fragment>
+                    );
+                  })}
+                </ol>
+              </>
+            </>)}
+          </Grid>
+          <Grid desktop={{ col: 3 }}>
             <TaskListSideNav modelPlan={modelPlan} />
-          </div>
-        </div>
-      )}
+          </Grid>
+        </Grid>
+      </GridContainer>
     </MainContent>
   );
 };

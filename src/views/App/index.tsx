@@ -21,6 +21,7 @@ import Home from 'views/Home';
 import Login from 'views/Login';
 import ModelPlan from 'views/ModelPlan';
 import Collaborators from 'views/ModelPlan/Collaborators';
+import Documents from 'views/ModelPlan/Documents';
 import NewPlan from 'views/ModelPlan/NewPlan';
 import Status from 'views/ModelPlan/Status';
 import StepsOverview from 'views/ModelPlan/StepsOverview';
@@ -83,7 +84,8 @@ const AppRoutes = () => {
         exact
         component={Collaborators}
       />
-      <SecureRoute path="/models/:modelID/status" exact component={Status} />
+      <SecureRoute path="/models/:modelID/documents" component={Documents} />
+      <SecureRoute path="/models/:modelId/status" exact component={Status} />
       <SecureRoute
         path="/models/:modelID/task-list"
         exact
