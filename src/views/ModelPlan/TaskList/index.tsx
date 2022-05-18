@@ -10,6 +10,7 @@ import {
   IconAnnouncement,
   SummaryBox
 } from '@trussworks/react-uswds';
+import classNames from 'classnames';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
@@ -53,8 +54,6 @@ const TaskList = () => {
       }
     }
   );
-
-  console.log(data);
 
   const modelPlan = data?.modelPlan || ({} as GetModelPlanTypes);
 
@@ -103,33 +102,58 @@ const TaskList = () => {
     }
   };
 
-  const renderDiscussions = () => {
+  const dicussionBanner = () => {
     return (
-      <Discussions
-        isOpen={isDiscussionOpen}
-        closeModal={() => setIsDiscussionOpen(false)}
+      <SummaryBox
+        heading={d('heading')}
+        className="bg-primary-lighter border-0 radius-0 padding-2"
       >
-        <PageHeading headingLevel="h2" className="margin-top-0">
-          {t('withdraw_modal.header', {
-            requestName: modelPlan.modelName
+        <div
+          className={classNames({
+            'mint-header__basic': discussions?.length > 0
           })}
-        </PageHeading>
-        <p>{t('withdraw_modal.warning')}</p>
-        <Button
-          type="button"
-          className="margin-right-4"
-          onClick={() => console.log('hey')}
         >
-          {t('withdraw_modal.confirm')}
-        </Button>
-        <Button
-          type="button"
-          unstyled
-          onClick={() => setIsDiscussionOpen(false)}
-        >
-          {t('withdraw_modal.cancel')}
-        </Button>
-      </Discussions>
+          {discussions?.length > 0 ? (
+            <>
+              <div>
+                <IconAnnouncement />{' '}
+                {unansweredQuestions > 0 && (
+                  <>
+                    <strong>{unansweredQuestions}</strong> {d('unanswered')}
+                    {unansweredQuestions > 1 && 's'}
+                  </>
+                )}
+                {answeredQuestions > 0 && (
+                  <>
+                    <strong>{answeredQuestions}</strong> {d('answered')}
+                    {answeredQuestions > 1 && 's'}
+                  </>
+                )}
+              </div>
+              <Button
+                type="button"
+                unstyled
+                onClick={() => setIsDiscussionOpen(true)}
+              >
+                {d('viewDiscussions')}
+              </Button>
+            </>
+          ) : (
+            <>
+              {d('noDiscussions')}
+              <Button
+                className="line-height-body-5 test-withdraw-request"
+                type="button"
+                unstyled
+                onClick={() => setIsDiscussionOpen(true)}
+              >
+                {d('askAQuestionLink')}{' '}
+              </Button>{' '}
+              {d('toGetStarted')}
+            </>
+          )}
+        </div>
+      </SummaryBox>
     );
   };
 
@@ -138,7 +162,12 @@ const TaskList = () => {
       className="model-plan-task-list grid-container"
       data-testid="model-plan-task-list"
     >
-      {renderDiscussions()}
+      <Discussions
+        isOpen={isDiscussionOpen}
+        discussions={discussions}
+        closeModal={() => setIsDiscussionOpen(false)}
+      />
+
       <div className="grid-row">
         <BreadcrumbBar variant="wrap">
           <Breadcrumb>
@@ -163,55 +192,9 @@ const TaskList = () => {
                 indexZero {modelName} indexTwo
               </Trans>
             </p>
-            <SummaryBox
-              heading={d('heading')}
-              className="bg-primary-lighter border-0 radius-0 padding-2"
-            >
-              <div className="mint-header__basic">
-                {discussions?.length > 0 ? (
-                  <>
-                    <div>
-                      <IconAnnouncement />{' '}
-                      {unansweredQuestions > 0 && (
-                        <>
-                          <strong>{unansweredQuestions}</strong>{' '}
-                          {d('unanswered')}
-                          {unansweredQuestions > 1 && 's'}{' '}
-                          {/* Adding 's' for pluraltiy */}
-                        </>
-                      )}
-                      {answeredQuestions > 0 && (
-                        <>
-                          <strong>{answeredQuestions}</strong> {d('answered')}
-                          {answeredQuestions > 1 && 's'}{' '}
-                          {/* Adding 's' for pluraltiy */}
-                        </>
-                      )}
-                    </div>
-                  </>
-                ) : (
-                  <>
-                    {d('noDiscussions')}
-                    <Button
-                      className="line-height-body-5 test-withdraw-request"
-                      type="button"
-                      unstyled
-                      onClick={() => setIsDiscussionOpen(true)}
-                    >
-                      {d('askAQuestionLink')}{' '}
-                    </Button>{' '}
-                    {d('toGetStarted')}
-                  </>
-                )}
-                <Button
-                  type="button"
-                  unstyled
-                  onClick={() => setIsDiscussionOpen(true)}
-                >
-                  {d('viewDiscussions')}
-                </Button>
-              </div>
-            </SummaryBox>
+
+            {dicussionBanner()}
+
             <SummaryBox
               heading=""
               className="bg-base-lightest border-0 radius-0 padding-2"

@@ -23,16 +23,17 @@
         width: 100%;
       }
     }
+
+    &__x-button-container {
+        width: 100%;
+        box-shadow: 0px .25rem .5rem rgba(0, 0, 0, 0.1);
+        padding: 1rem 2rem 1rem 1rem;
+    }
   
     &__x-button {
-      display: block;
-      margin: 1rem 1rem 1rem auto;
-      padding: 0;
       background: none;
       border: 0;
-      font-size: 1.5rem;
-      line-height: 1.5rem;
-      color: #000;
+      line-height: 0;
   
       &:hover {
         cursor: pointer;
@@ -40,7 +41,7 @@
     }
   
     &__body {
-      padding: 0 2rem 2rem;
+      padding: 4rem 2rem 2rem;
     }
   }
   

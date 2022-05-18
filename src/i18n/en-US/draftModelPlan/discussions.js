@@ -1,5 +1,6 @@
 const discussions = {
   heading: 'Discussions',
+  modalHeading: 'Model discussions',
   askAQuestion: 'Ask a question',
   description:
     'Need help with something? Ask a question here and someone will get back to you with an answer. If you need help on a specific question or field, please include the name of the question or field and the section it’s located in.',
