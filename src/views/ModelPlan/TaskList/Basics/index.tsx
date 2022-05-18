@@ -79,6 +79,10 @@ const BasicsContent = () => {
     formikValues: PlanBasicModelPlanFormType,
     redirect?: 'next' | 'back'
   ) => {
+    if (!formikValues.modelName) {
+      formikRef?.current?.setFieldError('modelName', 'Enter the Model name');
+      return;
+    }
     update({
       variables: {
         id: modelId,
@@ -178,7 +182,6 @@ const BasicsContent = () => {
                 errors,
                 handleSubmit,
                 setErrors,
-                setFieldError,
                 setFieldValue,
                 isValid,
                 values
@@ -404,13 +407,7 @@ const BasicsContent = () => {
                     <Button
                       type="button"
                       className="usa-button usa-button--unstyled"
-                      onClick={() => {
-                        if (values.modelName === '') {
-                          setFieldError('modelName', 'Enter the Model name');
-                        } else {
-                          handleFormSubmit(values, 'back');
-                        }
-                      }}
+                      onClick={() => handleFormSubmit(values, 'back')}
                     >
                       <IconArrowBack className="margin-right-1" aria-hidden />
                       {h('saveAndReturn')}
@@ -419,19 +416,8 @@ const BasicsContent = () => {
                   <AutoSave
                     values={values}
                     onSave={() => {
-                      if (formikRef.current!.values.modelName === '') {
-                        formikRef.current!.setFieldError(
-                          'modelName',
-                          'Enter the Model name'
-                        );
-                      } else {
-                        formikRef.current!.validateForm();
-                        if (
-                          Object.keys(formikRef.current!.errors).length === 0
-                        ) {
-                          handleFormSubmit(formikRef.current!.values);
-                        }
-                      }
+                      if (formikRef.current!.values.modelName)
+                        handleFormSubmit(formikRef.current!.values);
                     }}
                     debounceDelay={3000}
                   />
