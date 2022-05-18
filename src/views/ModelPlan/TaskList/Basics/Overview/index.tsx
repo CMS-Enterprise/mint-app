@@ -8,6 +8,8 @@ import {
   BreadcrumbLink,
   Button,
   Fieldset,
+  Grid,
+  GridContainer,
   IconAdd,
   IconArrowBack,
   Label,
@@ -107,8 +109,8 @@ const Overview = () => {
 
   return (
     <MainContent className="margin-bottom-5">
-      <div className="grid-container">
-        <div className="tablet:grid-col-12">
+      <GridContainer>
+        <Grid desktop={{ col: 12 }}>
           <BreadcrumbBar variant="wrap">
             <Breadcrumb>
               <BreadcrumbLink asCustom={Link} to="/">
@@ -325,13 +327,13 @@ const Overview = () => {
               );
             }}
           </Formik>
-        </div>
+        </Grid>
         <PageNumber
           currentPage={2}
           totalPages={3}
           className="margin-bottom-10"
         />
-      </div>
+      </GridContainer>
     </MainContent>
   );
 };

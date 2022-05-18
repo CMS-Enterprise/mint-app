@@ -9,6 +9,8 @@ import {
   Button,
   DatePicker,
   Fieldset,
+  Grid,
+  GridContainer,
   IconAdd,
   IconArrowBack,
   Label,
@@ -126,8 +128,8 @@ const Milestones = () => {
 
   return (
     <MainContent className="margin-bottom-5">
-      <div className="grid-container">
-        <div className="tablet:grid-col-12">
+      <GridContainer>
+        <Grid desktop={{ col: 12 }}>
           <BreadcrumbBar variant="wrap">
             <Breadcrumb>
               <BreadcrumbLink asCustom={Link} to="/">
@@ -619,13 +621,13 @@ const Milestones = () => {
               );
             }}
           </Formik>
-        </div>
+        </Grid>
         <PageNumber
           currentPage={3}
           totalPages={3}
           className="margin-bottom-10"
         />
-      </div>
+      </GridContainer>
     </MainContent>
   );
 };
