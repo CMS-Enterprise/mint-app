@@ -63,6 +63,18 @@ func ModelPlanCreate(logger *zap.Logger, modelName string, store *storage.Store,
 		return nil, err
 	}
 
+	// Create a default plan general characteristics object
+	generalCharacteristics := &models.PlanGeneralCharacteristics{
+		ModelPlanID: createdPlan.ID,
+		CreatedBy:   &principalInfo.EuaUserID,
+		ModifiedBy:  &principalInfo.EuaUserID,
+	}
+	generalCharacteristics.CalcStatus()
+	_, err = store.PlanGeneralCharacteristicsCreate(logger, generalCharacteristics)
+	if err != nil {
+		return nil, err
+	}
+
 	return createdPlan, err
 }
 

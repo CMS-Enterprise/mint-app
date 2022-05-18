@@ -3,7 +3,10 @@
 [sqlfluff]
 dialect = postgres
 ignore = parsing
-exclude_rules = L016
+
+# Ignoring L014 because it seems to want to uppercase column names if there are capitalized enums defined before the table (like in V11__Add_Plan_General_Characteristics)
+# Ignoring L016 because we break line-length requirements in a few places with comments
+exclude_rules = L014, L016
 
 [sqlfluff:rules:L010]
 # Inconsistent capitalisation of keywords.

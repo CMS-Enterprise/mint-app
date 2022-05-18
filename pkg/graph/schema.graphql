@@ -40,6 +40,7 @@ type ModelPlan {
   modifiedDts: Time
   basics: PlanBasics
   milestones: PlanMilestones
+  generalCharacteristics: PlanGeneralCharacteristics!
   collaborators: [PlanCollaborator!]!
   documents: [PlanDocument!]!
   discussions: [PlanDiscussion!]!
@@ -321,6 +322,148 @@ input DiscussionReplyChanges @goModel(model: "map[string]interface{}") {
 }
 
 """
+PlanGeneralCharacteristics represents a plan general characteristics object
+"""
+type PlanGeneralCharacteristics {
+  id: UUID
+  modelPlanID: UUID
+
+  # Page 1
+  isNewModel: Boolean
+  existingModel: String
+  resemblesExistingModel: Boolean
+  resemblesExistingModelWhich: [String!]!
+  resemblesExistingModelHow: String
+  resemblesExistingModelNote: String
+  hasComponentsOrTracks: Boolean
+  hasComponentsOrTracksDiffer: String
+  hasComponentsOrTracksNote: String
+
+  # Page 2
+  alternativePaymentModel: Boolean
+  alternativePaymentModelTypes: [AlternativePaymentModelType!]!
+  alternativePaymentModelNote: String
+  keyCharacteristics: [KeyCharacteristic!]!
+  keyCharacteristicsOther: String
+  collectPlanBids: Boolean
+  collectPlanBidsNote: String
+  managePartCDEnrollment: Boolean
+  managePartCDEnrollmentNote: String
+  planContactUpdated: Boolean
+  planContactUpdatedNote: String
+
+  # Page 3
+  careCoordinationInvolved: Boolean
+  careCoordinationInvolvedDescription: String
+  careCoordinationInvolvedNote: String
+  additionalServicesInvolved: Boolean
+  additionalServicesInvolvedDescription: String
+  additionalServicesInvolvedNote: String
+  communityPartnersInvolved: Boolean
+  communityPartnersInvolvedDescription: String
+  communityPartnersInvolvedNote: String
+
+  # Page 4
+  geographiesTargeted: Boolean
+  geographiesTargetedTypes: [GeographyType!]!
+  geographiesTargetedTypesOther: String
+  geographiesTargetedAppliedTo: [GeographyApplication!]!
+  geographiesTargetedAppliedToOther: String
+  geographiesTargetedNote: String
+  participationOptions: Boolean
+  participationOptionsNote: String
+  agreementTypes: [AgreementType!]!
+  agreementTypesOther: String
+  multiplePatricipationAgreementsNeeded: Boolean
+  multiplePatricipationAgreementsNeededNote: String
+
+  # Page 5
+  rulemakingRequired: Boolean
+  rulemakingRequiredDescription: String
+  rulemakingRequiredNote: String
+  authorityAllowances: [AuthorityAllowance!]!
+  authorityAllowancesOther: String
+  authorityAllowancesNote: String
+  waiversRequired: Boolean
+  waiversRequiredTypes: [WaiverType!]!
+  waiversRequiredNote: String
+
+  createdBy: String
+  createdDts: Time
+  modifiedBy: String
+  modifiedDts: Time
+  status: TaskStatus!
+}
+
+"""
+PlanGeneralCharacteristicsChanges represents the possible changes you can make to a
+general characteristics object when updating it.
+Fields explicitly set with NULL will be unset, and omitted fields will be left unchanged.
+https://gqlgen.com/reference/changesets/
+"""
+input PlanGeneralCharacteristicsChanges @goModel(model: "map[string]interface{}") {
+  # Page 1
+  isNewModel: Boolean
+  existingModel: String
+  resemblesExistingModel: Boolean
+  resemblesExistingModelWhich: [String!]
+  resemblesExistingModelHow: String
+  resemblesExistingModelNote: String
+  hasComponentsOrTracks: Boolean
+  hasComponentsOrTracksDiffer: String
+  hasComponentsOrTracksNote: String
+
+  # Page 2
+  alternativePaymentModel: Boolean
+  alternativePaymentModelTypes: [AlternativePaymentModelType!]
+  alternativePaymentModelNote: String
+  keyCharacteristics: [KeyCharacteristic!]
+  keyCharacteristicsOther: String
+  collectPlanBids: Boolean
+  collectPlanBidsNote: String
+  managePartCDEnrollment: Boolean
+  managePartCDEnrollmentNote: String
+  planContactUpdated: Boolean
+  planContactUpdatedNote: String
+
+  # Page 3
+  careCoordinationInvolved: Boolean
+  careCoordinationInvolvedDescription: String
+  careCoordinationInvolvedNote: String
+  additionalServicesInvolved: Boolean
+  additionalServicesInvolvedDescription: String
+  additionalServicesInvolvedNote: String
+  communityPartnersInvolved: Boolean
+  communityPartnersInvolvedDescription: String
+  communityPartnersInvolvedNote: String
+
+  # Page 4
+  geographiesTargeted: Boolean
+  geographiesTargetedTypes: [GeographyType!]
+  geographiesTargetedTypesOther: String
+  geographiesTargetedAppliedTo: [GeographyApplication!]
+  geographiesTargetedAppliedToOther: String
+  geographiesTargetedNote: String
+  participationOptions: Boolean
+  participationOptionsNote: String
+  agreementTypes: [AgreementType!]
+  agreementTypesOther: String
+  multiplePatricipationAgreementsNeeded: Boolean
+  multiplePatricipationAgreementsNeededNote: String
+
+  # Page 5
+  rulemakingRequired: Boolean
+  rulemakingRequiredDescription: String
+  rulemakingRequiredNote: String
+  authorityAllowances: [AuthorityAllowance!]
+  authorityAllowancesOther: String
+  authorityAllowancesNote: String
+  waiversRequired: Boolean
+  waiversRequiredTypes: [WaiverType!]
+  waiversRequiredNote: String
+}
+
+"""
 Query definition for the schema
 """
 type Query {
@@ -357,6 +500,9 @@ updatePlanBasics(id: UUID!, changes: PlanBasicsChanges!): PlanBasics
 @hasRole(role: MINT_BASE_USER)
 
 updatePlanMilestones(id: UUID!, changes: PlanMilestoneChanges!): PlanMilestones
+@hasRole(role: MINT_BASE_USER)
+
+updatePlanGeneralCharacteristics(id: UUID!, changes: PlanGeneralCharacteristicsChanges!): PlanGeneralCharacteristics!
 @hasRole(role: MINT_BASE_USER)
 
 generatePresignedUploadURL(input: GeneratePresignedUploadURLInput!): GeneratePresignedUploadURLPayload
@@ -464,6 +610,56 @@ enum DocumentType {
   ICIP_DRAFT,
   MARKET_RESEARCH,
   OTHER
+}
+
+enum AlternativePaymentModelType {
+  REGULAR
+  MIPS
+  ADVANCED
+}
+
+enum KeyCharacteristic {
+  EPISODE_BASED
+  PART_C
+  PART_D
+  PAYMENT
+  POPULATION_BASED
+  PREVENTATIVE
+  SERVICE_DELIVERY
+  SHARED_SAVINGS
+  OTHER
+}
+
+enum GeographyType {
+  STATE
+  REGION
+  OTHER
+}
+
+enum GeographyApplication {
+  PARTICIPANTS
+  PROVIDERS
+  BENEFICIARIES
+  OTHER
+}
+
+enum AgreementType {
+  PARTICIPATION
+  COOPERATIVE
+  OTHER
+}
+
+enum AuthorityAllowance {
+  ACA
+  CONGRESSIONALLY_MANDATED
+  SSA_PART_B
+  OTHER
+}
+
+enum WaiverType {
+  FRAUD_ABUSE
+  PROGRAM_PAYMENT
+  MEDICAID
 }
 
 directive @hasRole(role: Role!) on FIELD_DEFINITION

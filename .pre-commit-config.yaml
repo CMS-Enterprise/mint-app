@@ -103,7 +103,7 @@ repos:
         name: Add newlines to end of files
         files: \.(sql|scss|md|js|ts|tsx|go|yml|yaml)$
   - repo: https://github.com/sqlfluff/sqlfluff
-    rev: 0.13.0
+    rev: 0.13.1
     hooks:
       - id: sqlfluff-fix
       - id: sqlfluff-lint
