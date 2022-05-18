@@ -9,15 +9,15 @@ export const Basics = () => {
     <MainContent className="grid-container" data-testid="model-basics">
       <Switch>
         <Route
-          path="/models/:modelId/task-list/basics/info"
+          path="/models/:modelID/task-list/basics/info"
           render={() => <NotFound />}
         />
         <Route
-          path="/models/:modelId/task-list/basics/overview"
+          path="/models/:modelID/task-list/basics/overview"
           render={() => <NotFound />}
         />
         <Route
-          path="/models/:modelId/task-list/basics/milestones"
+          path="/models/:modelID/task-list/basics/milestones"
           render={() => <NotFound />}
         />
         <Route path="*" render={() => <NotFoundPartial />} />

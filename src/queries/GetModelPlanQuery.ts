@@ -14,6 +14,10 @@ export default gql`
       basics {
         id
       }
+      documents {
+        id
+        fileName
+      }
     }
   }
 `;

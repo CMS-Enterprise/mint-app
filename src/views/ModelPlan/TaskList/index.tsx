@@ -6,6 +6,8 @@ import {
   Breadcrumb,
   BreadcrumbBar,
   BreadcrumbLink,
+  Grid,
+  GridContainer,
   SummaryBox
 } from '@trussworks/react-uswds';
 
@@ -37,13 +39,13 @@ type TaskListItemProps = {
 
 const TaskList = () => {
   const { t } = useTranslation('modelPlanTaskList');
-  const { modelId } = useParams<{ modelId: string }>();
+  const { modelID } = useParams<{ modelID: string }>();
 
   const { data } = useQuery<GetModelPlan, GetModelPlanVariables>(
     GetModelPlanQuery,
     {
       variables: {
-        id: modelId
+        id: modelID
       }
     }
   );
@@ -53,6 +55,7 @@ const TaskList = () => {
   const {
     modelName,
     basics,
+    documents,
     status
     // TODO: Add these model plans when BE integrates it
     // characteristics,
@@ -91,101 +94,140 @@ const TaskList = () => {
 
   return (
     <MainContent
-      className="model-plan-task-list grid-container"
+      className="model-plan-task-list"
       data-testid="model-plan-task-list"
     >
-      <div className="grid-row">
-        <BreadcrumbBar variant="wrap">
-          <Breadcrumb>
-            <BreadcrumbLink asCustom={Link} to="/">
-              <span>{t('navigation.home')}</span>
-            </BreadcrumbLink>
-          </Breadcrumb>
-          <Breadcrumb current>{t('navigation.modelPlanTaskList')}</Breadcrumb>
-        </BreadcrumbBar>
-      </div>
-      {data && (
-        <div className="grid-row grid-gap-lg">
-          <div className="tablet:grid-col-9">
-            <PageHeading className="margin-bottom-0">
-              {t('navigation.modelPlanTaskList')}
-            </PageHeading>
-            <p
-              className="margin-top-0 margin-bottom-2 font-body-lg"
-              data-testid="model-plan-name"
-            >
-              <Trans i18nKey="modelPlanTaskList:subheading">
-                indexZero {modelName} indexTwo
-              </Trans>
-            </p>
-            <TaskListStatus modelId={modelId} status={status} />
-            <SummaryBox
-              heading=""
-              className="bg-base-lightest border-0 radius-0 padding-2"
-            >
-              <p className="margin-0 margin-bottom-1">
-                <Trans i18nKey="modelPlanTaskList:summaryBox.copy">
-                  indexZero {modelName} indexTwo
-                </Trans>
-              </p>
-              <UswdsReactLink
-                className="usa-button usa-button--outline"
-                variant="unstyled"
-                to="/"
-              >
-                {t('summaryBox.cta')}
-              </UswdsReactLink>
-            </SummaryBox>
-            <ol
-              data-testid="task-list"
-              className="model-plan-task-list__task-list model-plan-task-list__task-list--primary margin-y-6 padding-left-0"
-            >
-              {Object.keys(taskListItem).map((key: any) => {
-                const lastTaskItem = Object.keys(taskListItem).slice(-1)[0];
-                const path =
-                  key === 'finalizeModelPlan' ? 'submit-request' : key;
+      <GridContainer>
+        <Grid desktop={{ col: 12 }}>
+          <BreadcrumbBar variant="wrap">
+            <Breadcrumb>
+              <BreadcrumbLink asCustom={Link} to="/">
+                <span>{t('navigation.home')}</span>
+              </BreadcrumbLink>
+            </Breadcrumb>
+            <Breadcrumb current>{t('navigation.modelPlanTaskList')}</Breadcrumb>
+          </BreadcrumbBar>
+        </Grid>
+        <Grid row gap>
+          <Grid desktop={{ col: 9 }}>
+            {data && (
+              <>
+                <PageHeading className="margin-top-4 margin-bottom-0">
+                  {t('navigation.modelPlanTaskList')}
+                </PageHeading>
+                <p
+                  className="margin-top-0 margin-bottom-2 font-body-lg"
+                  data-testid="model-plan-name"
+                >
+                  <Trans i18nKey="modelPlanTaskList:subheading">
+                    indexZero {modelName} indexTwo
+                  </Trans>
+                </p>
+                <TaskListStatus modelId={modelID} status={status} />
+                <SummaryBox
+                  heading=""
+                  className="bg-base-lightest border-0 radius-0 padding-2"
+                >
+                  {documents?.length > 0 ? (
+                    <>
+                      <p
+                        className="margin-0 margin-bottom-1"
+                        data-testid="document-items"
+                      >
+                        <strong>{documents.length} </strong>
+                        <Trans i18nKey="modelPlanTaskList:summaryBox.existingDocuments">
+                          indexZero {modelName} indexTwo
+                        </Trans>
+                      </p>
+                      <Grid row gap>
+                        <Grid tablet={{ col: 4 }}>
+                          <UswdsReactLink
+                            variant="unstyled"
+                            className="margin-right-4"
+                            to={`/models/${modelID}/documents`}
+                          >
+                            {t('summaryBox.viewAll')}
+                          </UswdsReactLink>
+                        </Grid>
+                        <Grid tablet={{ col: 4 }}>
+                          <UswdsReactLink
+                            variant="unstyled"
+                            to={`/models/${modelID}/documents/add-document`}
+                          >
+                            {t('summaryBox.uploadAnother')}
+                          </UswdsReactLink>
+                        </Grid>
+                      </Grid>
+                    </>
+                  ) : (
+                    <>
+                      <p className="margin-0 margin-bottom-1">
+                        <Trans i18nKey="modelPlanTaskList:summaryBox.copy">
+                          indexZero {modelName} indexTwo
+                        </Trans>
+                      </p>
+                      <UswdsReactLink
+                        className="usa-button usa-button--outline"
+                        variant="unstyled"
+                        to={`/models/${modelID}/documents`}
+                      >
+                        {t('summaryBox.cta')}
+                      </UswdsReactLink>
+                    </>
+                  )}
+                </SummaryBox>
+                <ol
+                  data-testid="task-list"
+                  className="model-plan-task-list__task-list model-plan-task-list__task-list--primary margin-top-6 margin-bottom-0 padding-left-0"
+                >
+                  {Object.keys(taskListItem).map((key: any) => {
+                    const lastTaskItem = Object.keys(taskListItem).slice(-1)[0];
+                    const path =
+                      key === 'finalizeModelPlan' ? 'submit-request' : key;
 
-                return (
-                  <Fragment key={key}>
-                    <TaskListItem
-                      key={key}
-                      testId="task-list-intake-form"
-                      heading={taskListItem[key].heading}
-                      status={taskListItemStatus(key)}
-                    >
-                      <div className="model-plan-task-list__task-row display-flex flex-justify flex-align-start">
-                        <TaskListDescription>
-                          <p className="margin-top-0">
-                            {taskListItem[key].copy}
-                          </p>
-                        </TaskListDescription>
-                        {taskListItemStatus(key) === 'IN_PROGRESS' && (
-                          <TaskListLastUpdated>
-                            <p className="margin-y-0">
-                              {t('taskListItem.lastUpdated')}
-                            </p>
-                            <p className="margin-y-0">4/1/2022</p>
-                          </TaskListLastUpdated>
+                    return (
+                      <Fragment key={key}>
+                        <TaskListItem
+                          key={key}
+                          testId="task-list-intake-form"
+                          heading={taskListItem[key].heading}
+                          status={taskListItemStatus(key)}
+                        >
+                          <div className="model-plan-task-list__task-row display-flex flex-justify flex-align-start">
+                            <TaskListDescription>
+                              <p className="margin-top-0">
+                                {taskListItem[key].copy}
+                              </p>
+                            </TaskListDescription>
+                            {taskListItemStatus(key) === 'IN_PROGRESS' && (
+                              <TaskListLastUpdated>
+                                <p className="margin-y-0">
+                                  {t('taskListItem.lastUpdated')}
+                                </p>
+                                <p className="margin-y-0">4/1/2022</p>
+                              </TaskListLastUpdated>
+                            )}
+                          </div>
+                          <TaskListButton
+                            path={path}
+                            status={taskListItemStatus(key)}
+                          />
+                        </TaskListItem>
+                        {key !== lastTaskItem && (
+                          <Divider className="margin-bottom-4" />
                         )}
-                      </div>
-                      <TaskListButton
-                        path={path}
-                        status={taskListItemStatus(key)}
-                      />
-                    </TaskListItem>
-                    {key !== lastTaskItem && (
-                      <Divider className="margin-bottom-4" />
-                    )}
-                  </Fragment>
-                );
-              })}
-            </ol>
-          </div>
-          <div className="tablet:grid-col-3">
+                      </Fragment>
+                    );
+                  })}
+                </ol>
+              </>
+            )}
+          </Grid>
+          <Grid desktop={{ col: 3 }}>
             <TaskListSideNav modelPlan={modelPlan} />
-          </div>
-        </div>
-      )}
+          </Grid>
+        </Grid>
+      </GridContainer>
     </MainContent>
   );
 };
