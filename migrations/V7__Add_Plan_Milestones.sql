@@ -26,8 +26,8 @@ CREATE TABLE plan_milestones (
 
     created_by EUA_ID NOT NULL,
     created_dts TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    modified_by EUA_ID NOT NULL,
-    modified_dts TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    modified_by EUA_ID,
+    modified_dts TIMESTAMP WITH TIME ZONE,
     status TASK_STATUS NOT NULL DEFAULT 'READY'
 
 );
