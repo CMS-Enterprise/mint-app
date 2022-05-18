@@ -44,14 +44,14 @@ type TaskListItemProps = {
 const TaskList = () => {
   const { t } = useTranslation('modelPlanTaskList');
   const { t: d } = useTranslation('discussions');
-  const { modelId } = useParams<{ modelId: string }>();
+  const { modelID } = useParams<{ modelID: string }>();
   const [isDiscussionOpen, setIsDiscussionOpen] = useState(false);
 
-  const { data } = useQuery<GetModelPlan, GetModelPlanVariables>(
+  const { data, refetch } = useQuery<GetModelPlan, GetModelPlanVariables>(
     GetModelPlanQuery,
     {
       variables: {
-        id: modelId
+        id: modelID
       }
     }
   );
@@ -165,8 +165,10 @@ const TaskList = () => {
       data-testid="model-plan-task-list"
     >
       <Discussions
+        modelID={modelID}
         isOpen={isDiscussionOpen}
         discussions={discussions}
+        refetch={refetch}
         closeModal={() => setIsDiscussionOpen(false)}
       />
 
@@ -194,7 +196,7 @@ const TaskList = () => {
                 indexZero {modelName} indexTwo
               </Trans>
             </p>
-            <TaskListStatus modelId={modelId} status={status} />
+            <TaskListStatus modelID={modelID} status={status} />
             {dicussionBanner()}
             <SummaryBox
               heading=""

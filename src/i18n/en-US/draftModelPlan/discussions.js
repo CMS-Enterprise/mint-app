@@ -13,7 +13,10 @@ const discussions = {
     'There a no discussions yet. Ask a question using the link above to get started.',
   unanswered: 'unanswered question',
   answered: 'answered question',
-  viewDiscussions: 'View discussions'
+  viewDiscussions: 'View discussions',
+  success: 'Success! Your question has been added.',
+  error:
+    'Sorry, we encountered a problem adding your question. Please try again.'
 };
 
 export default discussions;

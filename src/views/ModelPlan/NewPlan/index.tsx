@@ -87,7 +87,7 @@ const NewPlanContent = () => {
                     <ErrorAlert
                       testId="formik-validation-errors"
                       classNames="margin-top-3"
-                      heading="Please check and fix the following"
+                      heading={h('checkAndFix')}
                     >
                       {Object.keys(flatErrors).map(key => {
                         return (
@@ -160,11 +160,11 @@ const NewPlan = () => {
           render={() => <NewPlanContent />}
         />
         <Route
-          path="/models/new-plan/:modelId/collaborators"
+          path="/models/new-plan/:modelID/collaborators"
           render={() => <Collaborators />}
         />
         <Route
-          path="/models/new-plan/:modelId/add-collaborator/:collaboratorId?"
+          path="/models/new-plan/:modelID/add-collaborator/:collaboratorId?"
           render={() => <AddCollaborator />}
         />
 

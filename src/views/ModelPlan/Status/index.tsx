@@ -34,7 +34,7 @@ type StatusFormProps = {
 const Status = () => {
   const { t } = useTranslation('modelPlan');
   const { t: h } = useTranslation('draftModelPlan');
-  const { modelId } = useParams<{ modelId: string }>();
+  const { modelID } = useParams<{ modelID: string }>();
 
   const history = useHistory();
   const formikRef = useRef<FormikProps<StatusFormProps>>(null);
@@ -44,7 +44,7 @@ const Status = () => {
 
   const { data } = useQuery<GetModelPlan>(GetModelPlanQuery, {
     variables: {
-      id: modelId
+      id: modelID
     }
   });
 
@@ -55,7 +55,7 @@ const Status = () => {
   const handleFormSubmit = (formikValues: StatusFormProps) => {
     update({
       variables: {
-        id: modelId,
+        id: modelID,
         changes: {
           status: formikValues.status
         }
@@ -63,7 +63,7 @@ const Status = () => {
     })
       .then(response => {
         if (!response?.errors) {
-          history.push(`/models/${modelId}/task-list/`);
+          history.push(`/models/${modelID}/task-list/`);
         }
       })
       .catch(errors => {
@@ -84,7 +84,7 @@ const Status = () => {
             <Breadcrumb>
               <BreadcrumbLink
                 asCustom={Link}
-                to={`/models/${modelId}/task-list/`}
+                to={`/models/${modelID}/task-list/`}
               >
                 <span>{h('tasklistBreadcrumb')}</span>
               </BreadcrumbLink>
@@ -166,7 +166,7 @@ const Status = () => {
                       type="button"
                       className="usa-button usa-button--unstyled"
                       onClick={() =>
-                        history.push(`/models/${modelId}/task-list/`)
+                        history.push(`/models/${modelID}/task-list/`)
                       }
                     >
                       <IconArrowBack className="margin-right-1" aria-hidden />

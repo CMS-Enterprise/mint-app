@@ -1,42 +1,68 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import ReactModal from 'react-modal';
+import { useMutation } from '@apollo/client';
 import {
   Button,
   Grid,
   GridContainer,
   IconAnnouncement,
   IconClose,
+  Label,
   Textarea
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
+import _ from 'lodash';
 import noScroll from 'no-scroll';
+import * as Yup from 'yup';
 
 import PageHeading from 'components/PageHeading';
+import Alert from 'components/shared/Alert';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
+import CreateModelPlanDiscussion from 'queries/CreateModelPlanDiscussion';
+import { CreateModelPlanDiscussion as CreateModelPlanDiscussionType } from 'queries/types/CreateModelPlanDiscussion';
 import { GetModelPlan_modelPlan_discussions as DiscussionType } from 'queries/types/GetModelPlan';
 import flattenErrors from 'utils/flattenErrors';
 
 import './index.scss';
 
 type DiscussionsProps = {
-  //   children: ReactNode | ReactNodeArray;
+  modelID: string;
   isOpen: boolean;
   discussions: DiscussionType[];
+  refetch: () => any | undefined;
   openModal?: () => void;
   closeModal: () => void;
 };
 
+type DicussionFormPropTypes = {
+  content: string;
+};
+
 const Discussions = ({
-  //   children,
+  modelID,
   isOpen,
   discussions,
+  refetch,
   openModal,
   closeModal
 }: DiscussionsProps) => {
   const { t } = useTranslation('discussions');
+  const { t: h } = useTranslation('draftModelPlan');
+  const [discussionStatus, setDiscussionStatus] = useState<'success' | 'error'>(
+    'success'
+  );
+  const [discussionStatusMessage, setDiscussionStatusMessage] = useState('');
+
+  const [create] = useMutation<CreateModelPlanDiscussionType>(
+    CreateModelPlanDiscussion
+  );
+
+  const validationSchema = Yup.object().shape({
+    content: Yup.string().trim().required('Please enter a question')
+  });
 
   const handleOpenModal = () => {
     noScroll.on();
@@ -45,22 +71,48 @@ const Discussions = ({
     }
   };
 
+  const handleCreateDiscussion = (formikValues: DicussionFormPropTypes) => {
+    create({
+      variables: {
+        input: {
+          modelPlanID: modelID,
+          content: formikValues.content
+        }
+      }
+    })
+      .then(response => {
+        if (!response?.errors) {
+          setDiscussionStatus('success');
+          setDiscussionStatusMessage(t('success'));
+          refetch();
+        }
+      })
+      .catch(() => {
+        setDiscussionStatus('error');
+        setDiscussionStatusMessage(t('error'));
+      });
+  };
+
   const renderQuestion = () => {
     return (
       <>
         {' '}
-        <PageHeading headingLevel="h1" className="margin-top-0">
+        <PageHeading headingLevel="h1" className="margin-y-0">
           {t('askAQuestion')}
         </PageHeading>
+        <p className="margin-bottom-4">{t('description')}</p>
+        {discussionStatusMessage && (
+          <Alert type={discussionStatus}>{discussionStatusMessage}</Alert>
+        )}
         <Formik
           initialValues={{ content: '' }}
-          onSubmit={handleCreateDraftModelPlan}
-          validationSchema={NewModelPlanValidationSchema}
+          onSubmit={handleCreateDiscussion}
+          validationSchema={validationSchema}
           validateOnBlur={false}
           validateOnChange={false}
           validateOnMount={false}
         >
-          {(formikProps: FormikProps<{ content: string }>) => {
+          {(formikProps: FormikProps<DicussionFormPropTypes>) => {
             const { errors, setErrors, handleSubmit, dirty } = formikProps;
             const flatErrors = flattenErrors(errors);
             return (
@@ -69,7 +121,7 @@ const Discussions = ({
                   <ErrorAlert
                     testId="formik-validation-errors"
                     classNames="margin-top-3"
-                    heading="Please check and fix the following"
+                    heading={h('checkAndFix')}
                   >
                     {Object.keys(flatErrors).map(key => {
                       return (
@@ -89,33 +141,35 @@ const Discussions = ({
                   }}
                 >
                   <FieldGroup
-                    scrollElement="modelName"
-                    error={!!flatErrors.modelName}
+                    scrollElement="content"
+                    error={!!flatErrors.content}
                   >
-                    <Label htmlFor="new-plan-model-name">{t('modeName')}</Label>
-                    <FieldErrorMsg>{flatErrors.modelName}</FieldErrorMsg>
+                    <Label htmlFor="discussion-content" className="text-normal">
+                      {t('typeQuestion')}
+                    </Label>
+                    <FieldErrorMsg>{flatErrors.content}</FieldErrorMsg>
                     <Field
+                      className="height-card"
                       as={Textarea}
-                      error={!!flatErrors.modelName}
-                      id="new-plan-model-name"
-                      maxLength={50}
-                      name="modelName"
+                      error={!!flatErrors.content}
+                      id="discussion-content"
+                      name="content"
                     />
                   </FieldGroup>
                   <div className="margin-top-5 display-block">
-                    <UswdsReactLink
-                      className="usa-button usa-button--outline margin-bottom-1"
-                      variant="unstyled"
-                      to="/models/steps-overview"
+                    <Button
+                      className="usa-button usa-button--outline"
+                      type="button"
+                      onClick={closeModal}
                     >
                       {h('cancel')}
-                    </UswdsReactLink>
+                    </Button>
                     <Button
                       type="submit"
                       disabled={!dirty}
                       onClick={() => setErrors({})}
                     >
-                      {h('next')}
+                      {t('save')}
                     </Button>
                   </div>
                 </Form>

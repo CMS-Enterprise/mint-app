@@ -15,7 +15,8 @@ const draftModelPlan = {
   pleaseSpecify: 'Please specify',
   saveAndStartNext: 'Save and start next Model Plan section',
   continueToTaskList: 'Continue to Model Plan task list',
-  noResults: 'No results found'
+  noResults: 'No results found',
+  checkAndFix: 'Please check and fix the following'
 };
 
 export default draftModelPlan;

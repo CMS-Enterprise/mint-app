@@ -40,7 +40,7 @@ describe('Collaborator/Team Member page w/table', () => {
         ]}
       >
         <MockedProvider mocks={mocks} addTypename={false}>
-          <Route path="models/new-plan/:modelId/collaborators">
+          <Route path="models/new-plan/:modelID/collaborators">
             <Collaborators />
           </Route>
         </MockedProvider>
@@ -66,7 +66,7 @@ describe('Collaborator/Team Member page w/table', () => {
         ]}
       >
         <MockedProvider mocks={mocks} addTypename={false}>
-          <Route path="models/new-plan/:modelId/collaborators">
+          <Route path="models/new-plan/:modelID/collaborators">
             <Collaborators />
           </Route>
         </MockedProvider>
