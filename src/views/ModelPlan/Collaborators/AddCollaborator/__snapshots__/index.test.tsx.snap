@@ -77,6 +77,7 @@ exports[`Adding a collaborator page matches snapshot 1`] = `
             >
               <option
                 disabled=""
+                value=""
               >
                 -Select-
               </option>

@@ -3,7 +3,7 @@ import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
 
-import GetModelPlanQuery from 'queries/GetModelPlanQuery';
+import GetModelPlanQuery from 'queries/GetModelPlan';
 import { GetModelPlan_modelPlan as GetModelPlanTypes } from 'queries/types/GetModelPlan';
 import {
   CMMIGroup,
@@ -27,9 +27,41 @@ describe('The Model Plan Task List', () => {
     ],
     cmsCenters: [CMSCenter.CENTER_FOR_MEDICARE, CMSCenter.OTHER],
     cmsOther: 'The Center for Awesomeness ',
+    modifiedDts: '2022-05-12T15:01:39.190679Z',
     archived: false,
-    basics: null,
-    documents: []
+    basics: {
+      id: 'adsf',
+      modelPlanID: '6e224030-09d5-46f7-ad04-4bb851b36eab',
+      modelType: null,
+      problem: null,
+      goal: null,
+      testInventions: null,
+      note: null,
+      status: 'READY'
+    },
+    milestones: {
+      id: 'adsf',
+      modelPlanID: '6e224030-09d5-46f7-ad04-4bb851b36eab',
+      completeICIP: null,
+      clearanceStarts: null,
+      clearanceEnds: null,
+      announced: null,
+      applicationsStart: null,
+      applicationsEnd: null,
+      performancePeriodStarts: null,
+      performancePeriodEnds: null,
+      wrapUpEnds: null,
+      highLevelNote: null,
+      phasedIn: null,
+      phasedInNote: null,
+      status: 'READY'
+    },
+    documents: [
+      {
+        id: '6e224030-09d5-46f7-ad04-4bb851b36eab',
+        fileName: 'test.pdf'
+      }
+    ]
   } as GetModelPlanTypes;
 
   const modelPlanQuery = (modelPlanDraft: GetModelPlanTypes) => {
@@ -94,7 +126,8 @@ describe('The Model Plan Task List', () => {
 
   describe('Statuses', () => {
     it('renders proper buttons for Model Basics', async () => {
-      modelPlan.basics = null;
+      modelPlan.modelCategory = null;
+      modelPlan.cmsCenters = [];
       render(
         <MemoryRouter initialEntries={[`/models/${modelPlan.id}/task-list`]}>
           <MockedProvider

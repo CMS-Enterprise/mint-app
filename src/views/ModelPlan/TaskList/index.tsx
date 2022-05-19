@@ -15,9 +15,9 @@ import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import Divider from 'components/shared/Divider';
-import GetModelPlanQuery from 'queries/GetModelPlanQuery';
+import GetModelPlan from 'queries/GetModelPlan';
 import {
-  GetModelPlan,
+  GetModelPlan as GetModelPlanType,
   GetModelPlan_modelPlan as GetModelPlanTypes,
   GetModelPlanVariables
 } from 'queries/types/GetModelPlan';
@@ -41,8 +41,8 @@ const TaskList = () => {
   const { t } = useTranslation('modelPlanTaskList');
   const { modelID } = useParams<{ modelID: string }>();
 
-  const { data } = useQuery<GetModelPlan, GetModelPlanVariables>(
-    GetModelPlanQuery,
+  const { data } = useQuery<GetModelPlanType, GetModelPlanVariables>(
+    GetModelPlan,
     {
       variables: {
         id: modelID
@@ -54,6 +54,10 @@ const TaskList = () => {
 
   const {
     modelName,
+    modelCategory,
+    cmsCenters,
+    modifiedDts,
+    milestones,
     basics,
     documents,
     status
@@ -73,20 +77,29 @@ const TaskList = () => {
   const taskListItemStatus = (key: string) => {
     switch (key) {
       case 'basics':
-        return basics === null ? 'READY' : 'IN_PROGRESS';
+        if (
+          basics?.status === 'COMPLETE' &&
+          milestones?.status === 'COMPLETE'
+        ) {
+          return 'COMPLETE';
+        }
+        if (modelCategory === null && cmsCenters.length === 0) {
+          return 'READY';
+        }
+        return 'IN_PROGRESS';
       // TODO: Add these model plans when BE integrates it
       // case 'characteristics':
-      //   return characteristics === null ? 'READY' : 'IN_PROGRESS';
+      //   return;
       // case 'participants':
-      //   return participants === null ? 'READY' : 'IN_PROGRESS';
+      //   return;
       // case 'beneficiaries':
-      //   return beneficiaries === null ? 'READY' : 'IN_PROGRESS';
+      //   return;
       // case 'operations':
-      //   return operations === null ? 'READY' : 'IN_PROGRESS';
+      //   return;
       // case 'payment':
-      //   return payment === null ? 'READY' : 'IN_PROGRESS';
+      //   return;
       // case 'finalizeModelPlan':
-      //   return finalizeModelPlan === null ? 'READY' : 'IN_PROGRESS';
+      //   return;
       default:
         return 'CANNOT_START';
     }
@@ -123,7 +136,7 @@ const TaskList = () => {
                     indexZero {modelName} indexTwo
                   </Trans>
                 </p>
-                <TaskListStatus modelId={modelID} status={status} />
+                <TaskListStatus modelID={modelID} status={status} />
                 <SummaryBox
                   heading=""
                   className="bg-base-lightest border-0 radius-0 padding-2"
