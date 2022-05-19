@@ -1,77 +1,104 @@
 package resolvers
 
-// import (
-// 	"testing"
+import (
+	"github.com/cmsgov/mint-app/pkg/graph/model"
+	"github.com/cmsgov/mint-app/pkg/models"
+)
 
-// 	"github.com/cmsgov/mint-app/pkg/models"
+func (suite *ResolverSuite) TestCreatePlanCollaborator() {
+	plan := suite.createModelPlan("Plan For Milestones")
 
-// 	"github.com/google/uuid"
-// 	_ "github.com/lib/pq" // required for postgres driver in sql
-// 	"github.com/stretchr/testify/assert"
-// )
+	collaboratorInput := &model.PlanCollaboratorCreateInput{
+		ModelPlanID: plan.ID,
+		EuaUserID:   "CLAB",
+		FullName:    "Clab O' Rater",
+		TeamRole:    models.TeamRoleLeadership,
+	}
+	collaborator, err := CreatePlanCollaborator(suite.testConfigs.Logger, collaboratorInput, suite.testConfigs.UserInfo.EuaUserID, suite.testConfigs.Store)
 
-// func makeTestCollaborator() models.PlanCollaborator {
-// 	return models.PlanCollaborator{
-// 		FullName:    "Fake name",
-// 		EUAUserID:   "FAKE",
-// 		CreatedBy:   models.StringPointer("FAKE"),
-// 		ID:          uuid.MustParse("f85c15cd-f920-4080-bdeb-e79b3d8f056a"),
-// 		ModelPlanID: uuid.MustParse("85b3ff03-1be2-4870-b02f-55c764500e48"),
-// 		TeamRole:    models.TeamRoleLearning,
-// 	}
-// }
-// func TestCreatePlanCollaborator(t *testing.T) {
-// 	tc := GetDefaultTestConfigs()
-// 	colab := makeTestCollaborator()
+	suite.NoError(err)
+	suite.EqualValues(plan.ID, collaborator.ModelPlanID)
+	suite.EqualValues("CLAB", collaborator.EUAUserID)
+	suite.EqualValues("Clab O' Rater", collaborator.FullName)
+	suite.EqualValues(models.TeamRoleLeadership, collaborator.TeamRole)
+	suite.EqualValues(suite.testConfigs.UserInfo.EuaUserID, *collaborator.CreatedBy)
+	suite.Nil(collaborator.ModifiedBy)
+}
 
-// 	result, err := CreatePlanCollaborator(tc.Logger, &colab, colab.CreatedBy, tc.Store)
-// 	assert.NoError(t, err)
-// 	assert.NotNil(t, result.ID)
-// }
+func (suite *ResolverSuite) TestUpdatePlanCollaborator() {
+	plan := suite.createModelPlan("Plan For Milestones")
+	collaborator := suite.createPlanCollaborator(plan, "CLAB", "Clab O' Rater", models.TeamRoleLeadership)
 
-// func TestUpdatePlanCollaborator(t *testing.T) {
-// 	tc := GetDefaultTestConfigs()
-// 	colab := makeTestCollaborator()
-// 	colab.TeamRole = models.TeamRoleModelTeam
+	updatedCollaborator, err := UpdatePlanCollaborator(suite.testConfigs.Logger, collaborator.ID, models.TeamRoleEvaluation, "UPDT", suite.testConfigs.Store)
+	suite.NoError(err)
+	suite.NotNil(collaborator.ModifiedBy)
+	suite.EqualValues("UPDT", *updatedCollaborator.ModifiedBy)
+	suite.EqualValues("CLAB", updatedCollaborator.EUAUserID)
+	suite.EqualValues("Clab O' Rater", updatedCollaborator.FullName)
+	suite.EqualValues(models.TeamRoleEvaluation, updatedCollaborator.TeamRole)
+}
 
-// 	result, err := UpdatePlanCollaborator(tc.Logger, &colab, colab.CreatedBy, tc.Store)
+func (suite *ResolverSuite) TestUpdatePlanCollaboratorLastModelLead() {
+	plan := suite.createModelPlan("Plan For Milestones")
 
-// 	assert.NoError(t, err)
-// 	assert.NotNil(t, result.ID)
-// 	assert.EqualValues(t, result.TeamRole, colab.TeamRole)
+	collaborators, err := FetchCollaboratorsByModelPlanID(suite.testConfigs.Logger, &suite.testConfigs.UserInfo.EuaUserID, plan.ID, suite.testConfigs.Store)
+	suite.NoError(err)
 
-// }
+	collaborator := collaborators[0]
+	updatedPlanCollaborator, err := UpdatePlanCollaborator(suite.testConfigs.Logger, collaborator.ID, models.TeamRoleEvaluation, "UPDT", suite.testConfigs.Store)
+	suite.Error(err)
+	suite.EqualValues("pq: There must be at least one MODEL_LEAD assigned to each model plan", err.Error())
+	suite.Nil(updatedPlanCollaborator)
+}
 
-// func TestFetchCollaboratorsByModelPlanID(t *testing.T) {
-// 	tc := GetDefaultTestConfigs()
-// 	modelPlanID := uuid.MustParse("85b3ff03-1be2-4870-b02f-55c764500e48")
+func (suite *ResolverSuite) TestFetchCollaboratorsByModelPlanID() {
+	plan := suite.createModelPlan("Plan For Milestones")
+	_ = suite.createPlanCollaborator(plan, "SCND", "Mr. Second Collaborator", models.TeamRoleLeadership)
 
-// 	result, err := FetchCollaboratorsByModelPlanID(tc.Logger, tc.Principal, modelPlanID, tc.Store)
-// 	assert.NoError(t, err)
+	collaborators, err := FetchCollaboratorsByModelPlanID(suite.testConfigs.Logger, &suite.testConfigs.UserInfo.EuaUserID, plan.ID, suite.testConfigs.Store)
+	suite.NoError(err)
+	suite.Len(collaborators, 2)
+	suite.NotEqual(collaborators[0].ID, collaborators[1].ID) // two different collaborators
+	for _, i := range collaborators {
+		suite.Contains([]string{"TEST", "SCND"}, i.EUAUserID) // contains default collaborator and new one
+	}
+}
 
-// 	assert.NotNil(t, result)
+func (suite *ResolverSuite) TestFetchCollaboratorByID() {
+	plan := suite.createModelPlan("Plan For Milestones")
+	collaborator := suite.createPlanCollaborator(plan, "SCND", "Mr. Second Collaborator", models.TeamRoleLeadership)
 
-// }
+	collaboratorByID, err := FetchCollaboratorByID(suite.testConfigs.Logger, collaborator.ID, suite.testConfigs.Store)
+	suite.NoError(err)
+	suite.EqualValues(collaboratorByID, collaborator)
+}
 
-// func TestDeletePlanCollaborator(t *testing.T) {
-// 	tc := GetDefaultTestConfigs()
-// 	collabDel := makeTestCollaborator()
+func (suite *ResolverSuite) TestDeletePlanCollaborator() {
+	plan := suite.createModelPlan("Plan For Milestones")
+	collaborator := suite.createPlanCollaborator(plan, "SCND", "Mr. Second Collaborator", models.TeamRoleLeadership)
 
-// 	dRes, err := DeletePlanCollaborator(tc.Logger, &collabDel, tc.Principal, tc.Store)
-// 	assert.NoError(t, err)
+	// Delete the 2nd collaborator
+	deletedCollaborator, err := DeletePlanCollaborator(suite.testConfigs.Logger, collaborator.ID, suite.testConfigs.UserInfo.EuaUserID, suite.testConfigs.Store)
+	suite.NoError(err)
+	suite.EqualValues(deletedCollaborator, collaborator)
 
-// 	assert.NotNil(t, dRes)
+	// Ensure we get nil when we fetch it
+	// TODO: FetchByID methods should probably error if they don't find what they're looking for,
+	// but FetchByModelPlanID shouldn't (just return an empty slice)
+	collaboratorByID, err := FetchCollaboratorByID(suite.testConfigs.Logger, collaborator.ID, suite.testConfigs.Store)
+	suite.NoError(err)
+	suite.Nil(collaboratorByID)
+}
 
-// 	modelPlanID := uuid.MustParse("85b3ff03-1be2-4870-b02f-55c764500e48")
+func (suite *ResolverSuite) TestDeletePlanCollaboratorLastModelLead() {
+	plan := suite.createModelPlan("Plan For Milestones")
 
-// 	result, err := FetchCollaboratorsByModelPlanID(tc.Logger, tc.Principal, modelPlanID, tc.Store)
-// 	assert.NoError(t, err)
+	collaborators, err := FetchCollaboratorsByModelPlanID(suite.testConfigs.Logger, &suite.testConfigs.UserInfo.EuaUserID, plan.ID, suite.testConfigs.Store)
+	suite.NoError(err)
 
-// 	assert.NotNil(t, result)
-
-// 	modelLead := result[0]
-
-// 	_, err2 := DeletePlanCollaborator(tc.Logger, modelLead, tc.Principal, tc.Store) //this is the last model lead, deleting will cause error
-// 	assert.Error(t, err2)
-
-// }
+	collaborator := collaborators[0]
+	deletedPlanCollaborator, err := DeletePlanCollaborator(suite.testConfigs.Logger, collaborator.ID, "UPDT", suite.testConfigs.Store)
+	suite.Error(err)
+	suite.EqualValues("pq: There must be at least one MODEL_LEAD assigned to each model plan", err.Error())
+	suite.Nil(deletedPlanCollaborator)
+}

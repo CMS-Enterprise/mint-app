@@ -1,0 +1,325 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Model Plan Add Documents page matches snapshot 1`] = `
+<DocumentFragment>
+  <main
+    class="mint-main-content"
+    data-testid="add-document"
+    id="main-content"
+    role="main"
+    tabindex="-1"
+  >
+    <div
+      class="grid-container"
+      data-testid="gridContainer"
+    >
+      <div
+        class="desktop:grid-col-6"
+        data-testid="grid"
+      >
+        <nav
+          aria-label="Breadcrumbs"
+          class="usa-breadcrumb usa-breadcrumb--wrap"
+        >
+          <ol
+            class="usa-breadcrumb__list"
+          >
+            <li
+              class="usa-breadcrumb__list-item"
+            >
+              <a
+                class="usa-breadcrumb__link"
+                href="/"
+              >
+                <span>
+                  Home
+                </span>
+              </a>
+            </li>
+            <li
+              class="usa-breadcrumb__list-item"
+            >
+              <a
+                class="usa-breadcrumb__link"
+                href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/task-list"
+              >
+                <span>
+                  Model Plan task list
+                </span>
+              </a>
+            </li>
+            <li
+              class="usa-breadcrumb__list-item"
+            >
+              <a
+                class="usa-breadcrumb__link"
+                href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/documents"
+              >
+                <span>
+                  Documents
+                </span>
+              </a>
+            </li>
+            <li
+              aria-current="page"
+              class="usa-breadcrumb__list-item usa-current"
+            >
+              Upload Document
+            </li>
+          </ol>
+        </nav>
+        <h1
+          aria-live="polite"
+          class="mint-h1 margin-top-4 margin-bottom-0"
+          tabindex="-1"
+        >
+          Upload a document
+        </h1>
+        <p
+          class="margin-bottom-2 font-body-md line-height-body-4"
+        >
+          Choose a document to upload, such as a recent concept document, policy paper, or any additional model background information.
+        </p>
+        <div>
+          <div>
+            <form
+              action="#"
+            >
+              <div
+                class="usa-form-group"
+                data-scroll="file"
+              >
+                <label
+                  class="usa-label"
+                  data-testid="label"
+                  for="FileUpload-File"
+                >
+                  Document upload
+                </label>
+                <div
+                  aria-disabled="false"
+                  class="easi-file-upload usa-file-input maxw-full"
+                  data-testid="file-upload-wrapper"
+                >
+                  <div
+                    class="usa-file-input__target"
+                  >
+                    <div
+                      aria-hidden="true"
+                      class="usa-file-input__instructions"
+                    >
+                      <span
+                        class="usa-file-input__drag-text"
+                      >
+                        Drag file here or 
+                      </span>
+                      <span
+                        class="usa-file-input__choose"
+                      >
+                         choose from folder
+                      </span>
+                    </div>
+                    <div
+                      class="usa-file-input__box"
+                    />
+                    <input
+                      accept=".pdf,.doc,.docx,.xls,.xlsx"
+                      aria-controls="file-type"
+                      aria-describedby="FileUpload-Description"
+                      aria-expanded="false"
+                      class="usa-file-input__input"
+                      data-testid="file-upload-input"
+                      id="FileUpload-File"
+                      name="file"
+                      type="file"
+                    />
+                  </div>
+                  <div
+                    class="sr-only"
+                    id="FileUpload-Description"
+                  >
+                    Select a file
+                  </div>
+                </div>
+              </div>
+              <div
+                class="usa-form-group"
+                data-scroll="documentType"
+                id="file-type"
+              >
+                <fieldset
+                  class="usa-fieldset margin-top-4"
+                >
+                  <legend
+                    class="usa-label"
+                  >
+                    What type of document are you uploading?
+                  </legend>
+                  <div
+                    class="usa-radio"
+                  >
+                    <input
+                      class="usa-radio__input"
+                      id="FileUpload-CONCEPT_PAPER"
+                      name="documentType"
+                      type="radio"
+                      value="CONCEPT_PAPER"
+                    />
+                    <label
+                      class="usa-radio__label"
+                      for="FileUpload-CONCEPT_PAPER"
+                    >
+                      Concept Paper
+                    </label>
+                  </div>
+                  <div
+                    class="usa-radio"
+                  >
+                    <input
+                      class="usa-radio__input"
+                      id="FileUpload-ICIP_DRAFT"
+                      name="documentType"
+                      type="radio"
+                      value="ICIP_DRAFT"
+                    />
+                    <label
+                      class="usa-radio__label"
+                      for="FileUpload-ICIP_DRAFT"
+                    >
+                      ICIP Draft
+                    </label>
+                  </div>
+                  <div
+                    class="usa-radio"
+                  >
+                    <input
+                      class="usa-radio__input"
+                      id="FileUpload-MARKET_RESEARCH"
+                      name="documentType"
+                      type="radio"
+                      value="MARKET_RESEARCH"
+                    />
+                    <label
+                      class="usa-radio__label"
+                      for="FileUpload-MARKET_RESEARCH"
+                    >
+                      Market Research
+                    </label>
+                  </div>
+                  <div
+                    class="usa-radio"
+                  >
+                    <input
+                      class="usa-radio__input"
+                      id="FileUpload-POLICY_PAPER"
+                      name="documentType"
+                      type="radio"
+                      value="POLICY_PAPER"
+                    />
+                    <label
+                      class="usa-radio__label"
+                      for="FileUpload-POLICY_PAPER"
+                    >
+                      Policy Paper
+                    </label>
+                  </div>
+                  <div
+                    class="usa-radio"
+                  >
+                    <input
+                      class="usa-radio__input"
+                      id="FileUpload-OTHER"
+                      name="documentType"
+                      type="radio"
+                      value="OTHER"
+                    />
+                    <label
+                      class="usa-radio__label"
+                      for="FileUpload-OTHER"
+                    >
+                      Other
+                    </label>
+                  </div>
+                </fieldset>
+              </div>
+              <div
+                class="usa-form-group"
+                data-scroll="optionalNotes"
+                id="optional-notes"
+              >
+                <label
+                  class="usa-label line-height-body-2"
+                  data-testid="label"
+                  for="ModelPlanDocument-optionalNotes"
+                >
+                  Optional notes about the document
+                </label>
+                <textarea
+                  class="usa-textarea model-plan-document__optional-notes height-10"
+                  id="ModelPlanDocument-optionalNotes"
+                  maxlength="2000"
+                  name="optionalNotes"
+                />
+              </div>
+              <div
+                class="padding-top-2 margin-top-2"
+              >
+                <div
+                  class="usa-alert usa-alert--info usa-alert--slim margin-bottom-4"
+                  data-testid="mandatory-fields-alert"
+                >
+                  <div
+                    class="usa-alert__body"
+                  >
+                    <span
+                      class="mandatory-fields-alert__text"
+                    >
+                      To keep CMS safe, documents are scanned for ciruses after uploading. If something goes wrong, we’ll let you know
+                    </span>
+                  </div>
+                </div>
+                <button
+                  class="usa-button"
+                  data-testid="upload-document"
+                  disabled=""
+                  type="submit"
+                >
+                  Upload document
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div
+          class="display-block"
+        >
+          <a
+            class="usa-link display-inline-flex flex-align-center margin-y-3"
+            href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/documents"
+          >
+            <svg
+              aria-hidden="true"
+              class="usa-icon margin-right-1"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M0 0h24v24H0z"
+                fill="none"
+              />
+              <path
+                d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
+              />
+            </svg>
+            Don’t upload and return to previous page
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
+</DocumentFragment>
+`;

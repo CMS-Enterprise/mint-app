@@ -9,7 +9,7 @@ export const SubmitRequest = () => {
     <MainContent className="grid-container" data-testid="model-submit-request">
       <Switch>
         <Route
-          path="/models/:modelId/task-list/submit-request/page-1" // page-* may change pending UX clarifcation
+          path="/models/:modelID/task-list/submit-request/page-1" // page-* may change pending UX clarifcation
           render={() => <NotFound />}
         />
         <Route path="*" render={() => <NotFoundPartial />} />
