@@ -28,10 +28,13 @@ func (suite *ResolverSuite) TestCreatePlanCollaborator() {
 func (suite *ResolverSuite) TestUpdatePlanCollaborator() {
 	plan := suite.createModelPlan("Plan For Milestones")
 	collaborator := suite.createPlanCollaborator(plan, "CLAB", "Clab O' Rater", models.TeamRoleLeadership)
+	suite.Nil(collaborator.ModifiedBy)
+	suite.Nil(collaborator.ModifiedDts)
 
 	updatedCollaborator, err := UpdatePlanCollaborator(suite.testConfigs.Logger, collaborator.ID, models.TeamRoleEvaluation, "UPDT", suite.testConfigs.Store)
 	suite.NoError(err)
-	suite.NotNil(collaborator.ModifiedBy)
+	suite.NotNil(updatedCollaborator.ModifiedBy)
+	suite.NotNil(updatedCollaborator.ModifiedDts)
 	suite.EqualValues("UPDT", *updatedCollaborator.ModifiedBy)
 	suite.EqualValues("CLAB", updatedCollaborator.EUAUserID)
 	suite.EqualValues("Clab O' Rater", updatedCollaborator.FullName)
