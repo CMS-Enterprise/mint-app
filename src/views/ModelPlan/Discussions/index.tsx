@@ -158,14 +158,18 @@ const Discussions = ({
             handleUpdateDiscussion(reply.id);
           }
           setDiscussionStatus('success');
-          setDiscussionStatusMessage(t('success'));
+          setDiscussionStatusMessage(
+            discussionType === 'question' ? t('success') : t('successAnswer')
+          );
           setDiscussionType('discussion');
           refetch();
         }
       })
       .catch(() => {
         setDiscussionStatus('error');
-        setDiscussionStatusMessage(t('error'));
+        setDiscussionStatusMessage(
+          discussionType === 'question' ? t('error') : t('errorAnswer')
+        );
       });
   };
 
@@ -262,7 +266,9 @@ const Discussions = ({
                     error={!!flatErrors.content}
                   >
                     <Label htmlFor="discussion-content" className="text-normal">
-                      {t('typeQuestion')}
+                      {renderType === 'question'
+                        ? t('typeQuestion')
+                        : t('typeAnswer')}
                     </Label>
                     <FieldErrorMsg>{flatErrors.content}</FieldErrorMsg>
                     <Field
@@ -293,7 +299,7 @@ const Discussions = ({
                       disabled={!dirty}
                       onClick={() => setErrors({})}
                     >
-                      {t('save')}
+                      {renderType === 'question' ? t('save') : t('saveAnswer')}
                     </Button>
                   </div>
                 </Form>
