@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { ModelCategory, CMSCenter, CMMIGroup, ModelStatus } from "./../../types/graphql-global-types";
+import { ModelCategory, CMSCenter, CMMIGroup, ModelStatus, TaskStatus } from "./../../types/graphql-global-types";
 
 // ====================================================
 // GraphQL query operation: GetModelPlan
@@ -12,6 +12,16 @@ import { ModelCategory, CMSCenter, CMMIGroup, ModelStatus } from "./../../types/
 export interface GetModelPlan_modelPlan_basics {
   __typename: "PlanBasics";
   id: UUID | null;
+}
+
+export interface GetModelPlan_modelPlan_generalCharacteristics {
+  __typename: "PlanGeneralCharacteristics";
+  id: UUID | null;
+  status: TaskStatus;
+  createdBy: string | null;
+  createdDts: Time | null;
+  modifiedBy: string | null;
+  modifiedDts: Time | null;
 }
 
 export interface GetModelPlan_modelPlan_documents {
@@ -31,6 +41,7 @@ export interface GetModelPlan_modelPlan {
   archived: boolean;
   status: ModelStatus;
   basics: GetModelPlan_modelPlan_basics | null;
+  generalCharacteristics: GetModelPlan_modelPlan_generalCharacteristics;
   documents: GetModelPlan_modelPlan_documents[];
 }
 

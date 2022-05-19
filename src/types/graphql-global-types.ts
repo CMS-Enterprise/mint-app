@@ -62,6 +62,12 @@ export enum ModelStatus {
   PLAN_DRAFT = "PLAN_DRAFT",
 }
 
+export enum TaskStatus {
+  COMPLETE = "COMPLETE",
+  IN_PROGRESS = "IN_PROGRESS",
+  READY = "READY",
+}
+
 export enum TeamRole {
   EVALUATION = "EVALUATION",
   LEADERSHIP = "LEADERSHIP",

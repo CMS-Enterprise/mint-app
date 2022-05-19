@@ -14,6 +14,14 @@ export default gql`
       basics {
         id
       }
+      generalCharacteristics {
+        id
+        status
+        createdBy
+        createdDts
+        modifiedBy
+        modifiedDts
+      }
       documents {
         id
         fileName

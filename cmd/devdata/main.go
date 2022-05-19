@@ -12,6 +12,7 @@ import (
 	ld "gopkg.in/launchdarkly/go-server-sdk.v5"
 
 	"github.com/cmsgov/mint-app/pkg/appconfig"
+	"github.com/cmsgov/mint-app/pkg/graph/model"
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/storage"
 	"github.com/cmsgov/mint-app/pkg/testhelpers"
@@ -180,6 +181,61 @@ func main() {
 
 	})
 
+	makePlanGeneralCharacteristics(pmGreatPlan.ID, logger, store, func(g *models.PlanGeneralCharacteristics) {
+		tBool := true
+		fBool := false
+		g.IsNewModel = &tBool
+		g.ExistingModel = models.StringPointer("My Existing Model")
+		g.ResemblesExistingModel = &tBool
+		g.ResemblesExistingModelWhich = []string{"Exist Model 1", "Exist Model 2"}
+		g.ResemblesExistingModelHow = models.StringPointer("They both have a similar approach to payment")
+		g.ResemblesExistingModelNote = models.StringPointer("Check the payment section of the existing models")
+		g.HasComponentsOrTracks = &tBool
+		g.HasComponentsOrTracksDiffer = models.StringPointer("One track does something one way, the other does it another way")
+		g.HasComponentsOrTracksNote = models.StringPointer("Look at the tracks carefully")
+		g.AlternativePaymentModel = &tBool
+		g.AlternativePaymentModelTypes = []string{model.AlternativePaymentModelTypeMips.String(), model.AlternativePaymentModelTypeAdvanced.String()}
+		g.AlternativePaymentModelNote = models.StringPointer("Has 2 APM types!")
+		g.KeyCharacteristics = []string{model.KeyCharacteristicPartC.String(), model.KeyCharacteristicPartD.String(), model.KeyCharacteristicOther.String()}
+		g.KeyCharacteristicsOther = models.StringPointer("It's got lots of class and character")
+		g.CollectPlanBids = &tBool
+		g.CollectPlanBidsNote = models.StringPointer("It collects SOOO many plan bids you wouldn't even get it broh")
+		g.ManagePartCDEnrollment = &fBool
+		g.ManagePartCDEnrollmentNote = models.StringPointer("It definitely will not manage Part C/D enrollment, are you crazy??")
+		g.PlanContactUpdated = &fBool
+		g.PlanContactUpdatedNote = models.StringPointer("I forgot to update it, but will soon")
+		g.CareCoordinationInvolved = &tBool
+		g.CareCoordinationInvolvedDescription = models.StringPointer("It just is!")
+		g.CareCoordinationInvolvedNote = models.StringPointer("Just think about it")
+		g.AdditionalServicesInvolved = &fBool
+		// g.AdditionalServicesInvolvedDescription = nil
+		// g.AdditionalServicesInvolvedNote = nil
+		g.CommunityPartnersInvolved = &tBool
+		g.CommunityPartnersInvolvedDescription = models.StringPointer("Very involved in the community")
+		g.CommunityPartnersInvolvedNote = models.StringPointer("Check the community partners section")
+		g.GeographiesTargeted = &tBool
+		g.GeographiesTargetedTypes = []string{model.GeographyTypeState.String(), model.GeographyTypeOther.String()}
+		g.GeographiesTargetedTypesOther = models.StringPointer("The WORLD!")
+		g.GeographiesTargetedAppliedTo = []string{model.GeographyApplicationParticipants.String(), model.GeographyApplicationOther.String()}
+		g.GeographiesTargetedAppliedToOther = models.StringPointer("All Humans")
+		// g.GeographiesTargetedNote = nil
+		g.ParticipationOptions = &tBool
+		g.ParticipationOptionsNote = models.StringPointer("Really anyone can participate")
+		g.AgreementTypes = []string{model.AgreementTypeOther.String()}
+		g.AgreementTypesOther = models.StringPointer("A firm handshake")
+		g.MultiplePatricipationAgreementsNeeded = &fBool
+		g.MultiplePatricipationAgreementsNeededNote = models.StringPointer("A firm handshake should be more than enough")
+		g.RulemakingRequired = &tBool
+		g.RulemakingRequiredDescription = models.StringPointer("The golden rule - target date of 05/08/2023")
+		// g.RulemakingRequiredNote = nil
+		g.AuthorityAllowances = []string{model.AuthorityAllowanceCongressionallyMandated.String()}
+		// g.AuthorityAllowancesOther = nil
+		// g.AuthorityAllowancesNote = nil
+		g.WaiversRequired = &tBool
+		g.WaiversRequiredTypes = []string{model.WaiverTypeFraudAbuse.String()}
+		g.WaiversRequiredNote = models.StringPointer("The vertigo is gonna grow 'cause it's so dangerous, you'll have to sign a waiver")
+	})
+
 	/*
 		s3Config := upload.Config{Bucket: "mint-test-bucket", Region: "us-west", IsLocal: true}
 		s3Client := upload.NewS3Client(s3Config)
@@ -324,6 +380,23 @@ func makeDiscussionReply(uuid uuid.UUID, logger *zap.Logger, store *storage.Stor
 
 	dbReply, _ := store.DiscussionReplyCreate(logger, &reply)
 	return dbReply
+
+}
+
+func makePlanGeneralCharacteristics(modelPlanID uuid.UUID, logger *zap.Logger, store *storage.Store, callbacks ...func(*models.PlanGeneralCharacteristics)) *models.PlanGeneralCharacteristics {
+	gc := models.PlanGeneralCharacteristics{
+		ModelPlanID: modelPlanID,
+		CreatedBy:   models.StringPointer("ABCD"),
+		ModifiedBy:  models.StringPointer("ABCD"),
+		Status:      models.TaskReady,
+	}
+
+	for _, cb := range callbacks {
+		cb(&gc)
+	}
+
+	dbGeneralCharacteristics, _ := store.PlanGeneralCharacteristicsCreate(logger, &gc)
+	return dbGeneralCharacteristics
 
 }
 
