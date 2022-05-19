@@ -181,60 +181,7 @@ func main() {
 
 	})
 
-	makePlanGeneralCharacteristics(pmGreatPlan.ID, logger, store, func(g *models.PlanGeneralCharacteristics) {
-		tBool := true
-		fBool := false
-		g.IsNewModel = &tBool
-		g.ExistingModel = models.StringPointer("My Existing Model")
-		g.ResemblesExistingModel = &tBool
-		g.ResemblesExistingModelWhich = []string{"Exist Model 1", "Exist Model 2"}
-		g.ResemblesExistingModelHow = models.StringPointer("They both have a similar approach to payment")
-		g.ResemblesExistingModelNote = models.StringPointer("Check the payment section of the existing models")
-		g.HasComponentsOrTracks = &tBool
-		g.HasComponentsOrTracksDiffer = models.StringPointer("One track does something one way, the other does it another way")
-		g.HasComponentsOrTracksNote = models.StringPointer("Look at the tracks carefully")
-		g.AlternativePaymentModel = &tBool
-		g.AlternativePaymentModelTypes = []string{model.AlternativePaymentModelTypeMips.String(), model.AlternativePaymentModelTypeAdvanced.String()}
-		g.AlternativePaymentModelNote = models.StringPointer("Has 2 APM types!")
-		g.KeyCharacteristics = []string{model.KeyCharacteristicPartC.String(), model.KeyCharacteristicPartD.String(), model.KeyCharacteristicOther.String()}
-		g.KeyCharacteristicsOther = models.StringPointer("It's got lots of class and character")
-		g.CollectPlanBids = &tBool
-		g.CollectPlanBidsNote = models.StringPointer("It collects SOOO many plan bids you wouldn't even get it broh")
-		g.ManagePartCDEnrollment = &fBool
-		g.ManagePartCDEnrollmentNote = models.StringPointer("It definitely will not manage Part C/D enrollment, are you crazy??")
-		g.PlanContactUpdated = &fBool
-		g.PlanContactUpdatedNote = models.StringPointer("I forgot to update it, but will soon")
-		g.CareCoordinationInvolved = &tBool
-		g.CareCoordinationInvolvedDescription = models.StringPointer("It just is!")
-		g.CareCoordinationInvolvedNote = models.StringPointer("Just think about it")
-		g.AdditionalServicesInvolved = &fBool
-		// g.AdditionalServicesInvolvedDescription = nil
-		// g.AdditionalServicesInvolvedNote = nil
-		g.CommunityPartnersInvolved = &tBool
-		g.CommunityPartnersInvolvedDescription = models.StringPointer("Very involved in the community")
-		g.CommunityPartnersInvolvedNote = models.StringPointer("Check the community partners section")
-		g.GeographiesTargeted = &tBool
-		g.GeographiesTargetedTypes = []string{model.GeographyTypeState.String(), model.GeographyTypeOther.String()}
-		g.GeographiesTargetedTypesOther = models.StringPointer("The WORLD!")
-		g.GeographiesTargetedAppliedTo = []string{model.GeographyApplicationParticipants.String(), model.GeographyApplicationOther.String()}
-		g.GeographiesTargetedAppliedToOther = models.StringPointer("All Humans")
-		// g.GeographiesTargetedNote = nil
-		g.ParticipationOptions = &tBool
-		g.ParticipationOptionsNote = models.StringPointer("Really anyone can participate")
-		g.AgreementTypes = []string{model.AgreementTypeOther.String()}
-		g.AgreementTypesOther = models.StringPointer("A firm handshake")
-		g.MultiplePatricipationAgreementsNeeded = &fBool
-		g.MultiplePatricipationAgreementsNeededNote = models.StringPointer("A firm handshake should be more than enough")
-		g.RulemakingRequired = &tBool
-		g.RulemakingRequiredDescription = models.StringPointer("The golden rule - target date of 05/08/2023")
-		// g.RulemakingRequiredNote = nil
-		g.AuthorityAllowances = []string{model.AuthorityAllowanceCongressionallyMandated.String()}
-		// g.AuthorityAllowancesOther = nil
-		// g.AuthorityAllowancesNote = nil
-		g.WaiversRequired = &tBool
-		g.WaiversRequiredTypes = []string{model.WaiverTypeFraudAbuse.String()}
-		g.WaiversRequiredNote = models.StringPointer("The vertigo is gonna grow 'cause it's so dangerous, you'll have to sign a waiver")
-	})
+	makePlanGeneralCharacteristics(pmGreatPlan.ID, logger, store, processPlanGeneralCharacteristics)
 
 	/*
 		s3Config := upload.Config{Bucket: "mint-test-bucket", Region: "us-west", IsLocal: true}
@@ -315,6 +262,24 @@ func makePlanBasics(uuid uuid.UUID, logger *zap.Logger, store *storage.Store, ca
 	return dbBasics
 }
 
+func makePlanDiscussion(uuid uuid.UUID, logger *zap.Logger, store *storage.Store, callbacks ...func(*models.PlanDiscussion)) *models.PlanDiscussion {
+	discussion := models.PlanDiscussion{
+		ModelPlanID: uuid,
+		Content:     "This is a test comment",
+		Status:      models.DiscussionUnAnswered,
+		CreatedBy:   "ABCD",
+		ModifiedBy:  "ABCD",
+	}
+
+	for _, cb := range callbacks {
+		cb(&discussion)
+	}
+
+	dbDiscuss, _ := store.PlanDiscussionCreate(logger, &discussion)
+	return dbDiscuss
+
+}
+
 /*func makePlanDocument(
 	logger *zap.Logger,
 	store *storage.Store,
@@ -345,24 +310,6 @@ func makePlanBasics(uuid uuid.UUID, logger *zap.Logger, store *storage.Store, ca
 
 	return &payload
 }*/
-
-func makePlanDiscussion(uuid uuid.UUID, logger *zap.Logger, store *storage.Store, callbacks ...func(*models.PlanDiscussion)) *models.PlanDiscussion {
-	discussion := models.PlanDiscussion{
-		ModelPlanID: uuid,
-		Content:     "This is a test comment",
-		Status:      models.DiscussionUnAnswered,
-		CreatedBy:   "ABCD",
-		ModifiedBy:  "ABCD",
-	}
-
-	for _, cb := range callbacks {
-		cb(&discussion)
-	}
-
-	dbDiscuss, _ := store.PlanDiscussionCreate(logger, &discussion)
-	return dbDiscuss
-
-}
 
 func makeDiscussionReply(uuid uuid.UUID, logger *zap.Logger, store *storage.Store, callbacks ...func(*models.DiscussionReply)) *models.DiscussionReply {
 
@@ -429,4 +376,58 @@ func makePlanMilestones(uuid uuid.UUID, logger *zap.Logger, store *storage.Store
 	dbmilestones, _ := store.PlanMilestonesCreate(logger, &milestones)
 	return dbmilestones
 
+}
+
+func processPlanGeneralCharacteristics(g *models.PlanGeneralCharacteristics) {
+	fBool := false
+	g.IsNewModel = models.BoolPointer(true)
+	g.ExistingModel = models.StringPointer("My Existing Model")
+	g.ResemblesExistingModel = models.BoolPointer(true)
+	g.ResemblesExistingModelWhich = []string{"Exist Model 1", "Exist Model 2"}
+	g.ResemblesExistingModelHow = models.StringPointer("They both have a similar approach to payment")
+	g.ResemblesExistingModelNote = models.StringPointer("Check the payment section of the existing models")
+	g.HasComponentsOrTracks = models.BoolPointer(true)
+	g.HasComponentsOrTracksDiffer = models.StringPointer("One track does something one way, the other does it another way")
+	g.HasComponentsOrTracksNote = models.StringPointer("Look at the tracks carefully")
+	g.AlternativePaymentModel = models.BoolPointer(true)
+	g.AlternativePaymentModelTypes = []string{model.AlternativePaymentModelTypeMips.String(), model.AlternativePaymentModelTypeAdvanced.String()}
+	g.AlternativePaymentModelNote = models.StringPointer("Has 2 APM types!")
+	g.KeyCharacteristics = []string{model.KeyCharacteristicPartC.String(), model.KeyCharacteristicPartD.String(), model.KeyCharacteristicOther.String()}
+	g.KeyCharacteristicsOther = models.StringPointer("It's got lots of class and character")
+	g.CollectPlanBids = models.BoolPointer(true)
+	g.CollectPlanBidsNote = models.StringPointer("It collects SOOO many plan bids you wouldn't even get it broh")
+	g.ManagePartCDEnrollment = &fBool
+	g.ManagePartCDEnrollmentNote = models.StringPointer("It definitely will not manage Part C/D enrollment, are you crazy??")
+	g.PlanContactUpdated = &fBool
+	g.PlanContactUpdatedNote = models.StringPointer("I forgot to update it, but will soon")
+	g.CareCoordinationInvolved = models.BoolPointer(true)
+	g.CareCoordinationInvolvedDescription = models.StringPointer("It just is!")
+	g.CareCoordinationInvolvedNote = models.StringPointer("Just think about it")
+	g.AdditionalServicesInvolved = &fBool
+	// g.AdditionalServicesInvolvedDescription = nil
+	// g.AdditionalServicesInvolvedNote = nil
+	g.CommunityPartnersInvolved = models.BoolPointer(true)
+	g.CommunityPartnersInvolvedDescription = models.StringPointer("Very involved in the community")
+	g.CommunityPartnersInvolvedNote = models.StringPointer("Check the community partners section")
+	g.GeographiesTargeted = models.BoolPointer(true)
+	g.GeographiesTargetedTypes = []string{model.GeographyTypeState.String(), model.GeographyTypeOther.String()}
+	g.GeographiesTargetedTypesOther = models.StringPointer("The WORLD!")
+	g.GeographiesTargetedAppliedTo = []string{model.GeographyApplicationParticipants.String(), model.GeographyApplicationOther.String()}
+	g.GeographiesTargetedAppliedToOther = models.StringPointer("All Humans")
+	// g.GeographiesTargetedNote = nil
+	g.ParticipationOptions = models.BoolPointer(true)
+	g.ParticipationOptionsNote = models.StringPointer("Really anyone can participate")
+	g.AgreementTypes = []string{model.AgreementTypeOther.String()}
+	g.AgreementTypesOther = models.StringPointer("A firm handshake")
+	g.MultiplePatricipationAgreementsNeeded = &fBool
+	g.MultiplePatricipationAgreementsNeededNote = models.StringPointer("A firm handshake should be more than enough")
+	g.RulemakingRequired = models.BoolPointer(true)
+	g.RulemakingRequiredDescription = models.StringPointer("The golden rule - target date of 05/08/2023")
+	// g.RulemakingRequiredNote = nil
+	g.AuthorityAllowances = []string{model.AuthorityAllowanceCongressionallyMandated.String()}
+	// g.AuthorityAllowancesOther = nil
+	// g.AuthorityAllowancesNote = nil
+	g.WaiversRequired = models.BoolPointer(true)
+	g.WaiversRequiredTypes = []string{model.WaiverTypeFraudAbuse.String()}
+	g.WaiversRequiredNote = models.StringPointer("The vertigo is gonna grow 'cause it's so dangerous, you'll have to sign a waiver")
 }
