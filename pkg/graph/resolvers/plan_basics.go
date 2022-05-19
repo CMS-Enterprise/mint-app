@@ -36,5 +36,4 @@ func PlanBasicsGetByModelPlanID(logger *zap.Logger, principal *string, modelPlan
 	}
 
 	return plan, nil
-
 }
