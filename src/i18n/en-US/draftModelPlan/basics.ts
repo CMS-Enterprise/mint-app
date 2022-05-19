@@ -55,6 +55,7 @@ const basics = {
   performanceEndDate: 'Performance end date',
   demonstrationPerformance: 'Demonstration or model period of performance',
   modelWrapUp: 'Model wrap-up end date',
+  notes: 'Notes',
   tightTimeline:
     'If timelines are tight, might there be pieces of the model that can be phased in over time?',
   tightTimelineInfo:

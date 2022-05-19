@@ -10,7 +10,7 @@ type TaskListButtonProps = {
 
 const TaskListButton = ({ path, status }: TaskListButtonProps) => {
   const { t } = useTranslation('modelPlanTaskList');
-  const { modelId } = useParams<{ modelId: string }>();
+  const { modelID } = useParams<{ modelID: string }>();
   const history = useHistory();
 
   if (status === 'CANNOT_START' || status === 'COMPLETE') {
@@ -20,7 +20,7 @@ const TaskListButton = ({ path, status }: TaskListButtonProps) => {
   return (
     <Button
       type="button"
-      onClick={() => history.push(`/models/${modelId}/task-list/${path}`)}
+      onClick={() => history.push(`/models/${modelID}/task-list/${path}`)}
     >
       {status === 'READY'
         ? t('taskListButton.start')

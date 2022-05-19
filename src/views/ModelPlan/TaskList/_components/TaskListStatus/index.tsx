@@ -7,11 +7,11 @@ import { ModelStatus } from 'types/graphql-global-types';
 import { translateModelPlanStatus } from 'utils/modelPlan';
 
 type TaskListStatusProps = {
-  modelId: string;
+  modelID: string;
   status: ModelStatus;
 };
 
-const TaskListStatus = ({ modelId, status }: TaskListStatusProps) => {
+const TaskListStatus = ({ modelID, status }: TaskListStatusProps) => {
   const { t } = useTranslation('modelPlanTaskList');
 
   return (
@@ -21,7 +21,7 @@ const TaskListStatus = ({ modelId, status }: TaskListStatusProps) => {
         {translateModelPlanStatus(status)}
       </Tag>
       <div>
-        <UswdsReactLink to={`/models/${modelId}/status`}>
+        <UswdsReactLink to={`/models/${modelID}/status`}>
           {t('update')}
         </UswdsReactLink>
       </div>

@@ -1,0 +1,334 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Model Plan Documents page matches snapshot 1`] = `
+<DocumentFragment>
+  <main
+    class="mint-main-content margin-bottom-5"
+    data-testid="model-plan-basics"
+    id="main-content"
+    role="main"
+    tabindex="-1"
+  >
+    <div
+      class="grid-container"
+      data-testid="gridContainer"
+    >
+      <div
+        class="desktop:grid-col-12"
+        data-testid="grid"
+      >
+        <nav
+          aria-label="Breadcrumbs"
+          class="usa-breadcrumb usa-breadcrumb--wrap"
+        >
+          <ol
+            class="usa-breadcrumb__list"
+          >
+            <li
+              class="usa-breadcrumb__list-item"
+            >
+              <a
+                class="usa-breadcrumb__link"
+                href="/"
+              >
+                <span>
+                  Home
+                </span>
+              </a>
+            </li>
+            <li
+              class="usa-breadcrumb__list-item"
+            >
+              <a
+                class="usa-breadcrumb__link"
+                href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/task-list/"
+              >
+                <span>
+                  Model Plan task list
+                </span>
+              </a>
+            </li>
+            <li
+              aria-current="page"
+              class="usa-breadcrumb__list-item usa-current"
+            >
+              Model basics
+            </li>
+          </ol>
+        </nav>
+        <h1
+          aria-live="polite"
+          class="mint-h1 margin-top-4"
+          tabindex="-1"
+        >
+          Model basics
+        </h1>
+        <div
+          class="usa-alert usa-alert--info usa-alert--slim margin-bottom-4"
+          data-testid="mandatory-fields-alert"
+        >
+          <div
+            class="usa-alert__body"
+          >
+            <span
+              class="mandatory-fields-alert__text"
+            >
+              All fields are mandatory
+            </span>
+          </div>
+        </div>
+        <form
+          action="#"
+        >
+          <div
+            class="usa-form-group margin-top-4"
+            data-scroll="modelName"
+          >
+            <label
+              class="usa-label"
+              data-testid="label"
+              for="plan-basics-model-name"
+            >
+              Model name
+            </label>
+            <input
+              class="usa-input"
+              data-testid="textInput"
+              id="plan-basics-model-name"
+              maxlength="50"
+              name="modelName"
+              value=""
+            />
+          </div>
+          <div
+            class="usa-form-group margin-top-4"
+            data-scroll="modelCategory"
+          >
+            <label
+              class="usa-label"
+              data-testid="label"
+              for="plan-basics-model-category"
+            >
+              Model category
+            </label>
+            <select
+              class="usa-select"
+              data-testid="dropdown"
+              id="plan-basics-model-category"
+              name="modelCategory"
+            >
+              <option
+                disabled=""
+              >
+                -Select-
+              </option>
+              <option
+                value="ACCOUNTABLE_CARE"
+              >
+                Accountable Care
+              </option>
+              <option
+                value="DEMONSTRATION"
+              >
+                Demonstration
+              </option>
+              <option
+                value="EPISODE_BASED_PAYMENT_INITIATIVES"
+              >
+                Episode-based Payment Initiatives
+              </option>
+              <option
+                value="INIT_ACCEL_DEV_AND_TEST"
+              >
+                Initiatives to Accelerate the Development and Testing of New Payment and Service Delivery Models
+              </option>
+              <option
+                value="INIT_MEDICAID_CHIP_POP"
+              >
+                Initiatives Focused on the Medicaid and CHIP Population
+              </option>
+              <option
+                value="INIT_SPEED_ADOPT_BEST_PRACTICE"
+              >
+                Initiatives to Speed the Adoption of Best Practices
+              </option>
+              <option
+                value="INIT__MEDICARE_MEDICAID_ENROLLEES"
+              >
+                Initiatives Focused on the Medicare and Medicaid Enrollees
+              </option>
+              <option
+                value="PRIMARY_CARE_TRANSFORMATION"
+              >
+                Primary Care Transformation
+              </option>
+              <option
+                value="UNKNOWN"
+              >
+                Unknown
+              </option>
+            </select>
+          </div>
+          <div
+            class="usa-form-group margin-top-4"
+            data-scroll="cmsCenters"
+          >
+            <legend
+              class="usa-label"
+            >
+              CMS component
+            </legend>
+            <div
+              class="mint-checkbox usa-checkbox"
+            >
+              <input
+                class="usa-checkbox__input"
+                id="new-plan-cmsCenters--0"
+                name="cmsCenters"
+                type="checkbox"
+                value="CMMI"
+              />
+              <label
+                class="usa-checkbox__label"
+                for="new-plan-cmsCenters--0"
+              >
+                CMMI
+              </label>
+            </div>
+            <div
+              class="mint-checkbox usa-checkbox"
+            >
+              <input
+                class="usa-checkbox__input"
+                id="new-plan-cmsCenters--1"
+                name="cmsCenters"
+                type="checkbox"
+                value="CENTER_FOR_MEDICARE"
+              />
+              <label
+                class="usa-checkbox__label"
+                for="new-plan-cmsCenters--1"
+              >
+                Center for Medicare (CM)
+              </label>
+            </div>
+            <div
+              class="mint-checkbox usa-checkbox"
+            >
+              <input
+                class="usa-checkbox__input"
+                id="new-plan-cmsCenters--2"
+                name="cmsCenters"
+                type="checkbox"
+                value="FEDERAL_COORDINATED_HEALTH_CARE_OFFICE"
+              />
+              <label
+                class="usa-checkbox__label"
+                for="new-plan-cmsCenters--2"
+              >
+                Federal Coordinated Health Care
+              </label>
+            </div>
+            <div
+              class="mint-checkbox usa-checkbox"
+            >
+              <input
+                class="usa-checkbox__input"
+                id="new-plan-cmsCenters--3"
+                name="cmsCenters"
+                type="checkbox"
+                value="CENTER_FOR_CLINICAL_STANDARDS_AND_QUALITY"
+              />
+              <label
+                class="usa-checkbox__label"
+                for="new-plan-cmsCenters--3"
+              >
+                Center for Clinical Standards and Quality (CCSQ)
+              </label>
+            </div>
+            <div
+              class="mint-checkbox usa-checkbox"
+            >
+              <input
+                class="usa-checkbox__input"
+                id="new-plan-cmsCenters--4"
+                name="cmsCenters"
+                type="checkbox"
+                value="CENTER_FOR_PROGRAM_INTEGRITY"
+              />
+              <label
+                class="usa-checkbox__label"
+                for="new-plan-cmsCenters--4"
+              >
+                Center for Program Integrity (CPI)
+              </label>
+            </div>
+            <div
+              class="mint-checkbox usa-checkbox"
+            >
+              <input
+                class="usa-checkbox__input"
+                id="new-plan-cmsCenters--5"
+                name="cmsCenters"
+                type="checkbox"
+                value="OTHER"
+              />
+              <label
+                class="usa-checkbox__label"
+                for="new-plan-cmsCenters--5"
+              >
+                Other
+              </label>
+            </div>
+          </div>
+          <div
+            class="margin-top-6 margin-bottom-3"
+          >
+            <button
+              class="usa-button"
+              data-testid="button"
+              type="submit"
+            >
+              Next
+            </button>
+          </div>
+          <button
+            class="usa-button usa-button usa-button--unstyled"
+            data-testid="button"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              class="usa-icon margin-right-1"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M0 0h24v24H0z"
+                fill="none"
+              />
+              <path
+                d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
+              />
+            </svg>
+            Save and return to task list
+          </button>
+        </form>
+      </div>
+      <div
+        class="mint-page-number margin-bottom-10"
+      >
+        <span
+          class="mint-page-number__page-num"
+        >
+          Page 1 of 3
+        </span>
+      </div>
+    </div>
+  </main>
+</DocumentFragment>
+`;

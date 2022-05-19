@@ -131,23 +131,6 @@ export interface PlanCollaboratorCreateInput {
 }
 
 /**
- * PlanMilestoneChanges represents the possible changes you can make to a Plan Milestones object when updating it.
- * Fields explicitly set with NULL will be unset, and omitted fields will be left unchanged.
- * https: // gqlgen.com/reference/changesets/
- */
-export interface PlanMilestoneChanges {
-  completeICIP?: Time | null;
-  clearanceStarts?: Time | null;
-  clearanceEnds?: Time | null;
-  announced?: Time | null;
-  applicationsStart?: Time | null;
-  applicationsEnd?: Time | null;
-  performancePeriodStarts?: Time | null;
-  performancePeriodEnds?: Time | null;
-  wrapUpEnds?: Time | null;
-  highLevelNote?: string | null;
-  phasedIn?: boolean | null;
-  phasedInNote?: string | null;
  * PlanDocumentInput represents the data required to create, modify, or delete a document on a plan
  */
 export interface PlanDocumentInput {
@@ -167,6 +150,26 @@ export interface PlanDocumentParameters {
   documentType?: DocumentType | null;
   otherTypeDescription?: string | null;
   optionalNotes?: string | null;
+}
+
+/**
+ * PlanMilestoneChanges represents the possible changes you can make to a Plan Milestones object when updating it.
+ * Fields explicitly set with NULL will be unset, and omitted fields will be left unchanged.
+ * https: // gqlgen.com/reference/changesets/
+ */
+export interface PlanMilestoneChanges {
+  completeICIP?: Time | null;
+  clearanceStarts?: Time | null;
+  clearanceEnds?: Time | null;
+  announced?: Time | null;
+  applicationsStart?: Time | null;
+  applicationsEnd?: Time | null;
+  performancePeriodStarts?: Time | null;
+  performancePeriodEnds?: Time | null;
+  wrapUpEnds?: Time | null;
+  highLevelNote?: string | null;
+  phasedIn?: boolean | null;
+  phasedInNote?: string | null;
 }
 
 //==============================================================

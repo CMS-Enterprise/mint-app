@@ -15,9 +15,9 @@ import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import Divider from 'components/shared/Divider';
-import GetModelPlanQuery from 'queries/GetModelPlanQuery';
+import GetModelPlan from 'queries/GetModelPlan';
 import {
-  GetModelPlan,
+  GetModelPlan as GetModelPlanType,
   GetModelPlan_modelPlan as GetModelPlanTypes,
   GetModelPlanVariables
 } from 'queries/types/GetModelPlan';
@@ -41,8 +41,8 @@ const TaskList = () => {
   const { t } = useTranslation('modelPlanTaskList');
   const { modelID } = useParams<{ modelID: string }>();
 
-  const { data } = useQuery<GetModelPlan, GetModelPlanVariables>(
-    GetModelPlanQuery,
+  const { data } = useQuery<GetModelPlanType, GetModelPlanVariables>(
+    GetModelPlan,
     {
       variables: {
         id: modelID

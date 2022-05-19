@@ -17,7 +17,6 @@ import {
   Radio
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
-import * as Yup from 'yup';
 
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
@@ -26,9 +25,9 @@ import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import TextAreaField from 'components/shared/TextAreaField';
-import GetModelPlanQuery from 'queries/GetModelPlanQuery';
+import GetModelPlan from 'queries/GetModelPlan';
 import {
-  GetModelPlan,
+  GetModelPlan as GetModelPlanType,
   GetModelPlanVariables
 } from 'queries/types/GetModelPlan';
 import { UpdatePlanMilestones as UpdatePlanMilestonesType } from 'queries/types/UpdatePlanMilestones';
@@ -56,18 +55,18 @@ type PlanBasicsMilestoneTypes = {
 const Milestones = () => {
   const { t } = useTranslation('basics');
   const { t: h } = useTranslation('draftModelPlan');
-  const { modelId } = useParams<{ modelId: string }>();
+  const { modelID } = useParams<{ modelID: string }>();
 
   const history = useHistory();
   const formikRef = useRef<FormikProps<PlanBasicsMilestoneTypes>>(null);
   const [hasHighLevelNote, setHasHighLevelNote] = useState(false);
   const [hasAdditionalNote, setHasAdditionalNote] = useState(false);
 
-  const { data } = useQuery<GetModelPlan, GetModelPlanVariables>(
-    GetModelPlanQuery,
+  const { data } = useQuery<GetModelPlanType, GetModelPlanVariables>(
+    GetModelPlan,
     {
       variables: {
-        id: modelId
+        id: modelID
       }
     }
   );
@@ -117,11 +116,11 @@ const Milestones = () => {
       .then(response => {
         if (!response?.errors) {
           if (redirect === 'task-list') {
-            history.push(`/models/${modelId}/task-list`);
+            history.push(`/models/${modelID}/task-list`);
           } else if (redirect === 'back') {
-            history.push(`/models/${modelId}/overview`);
+            history.push(`/models/${modelID}/overview`);
           } else {
-            history.push(`/models/${modelId}/task-list`);
+            history.push(`/models/${modelID}/task-list`);
           }
         }
       })
@@ -131,7 +130,10 @@ const Milestones = () => {
   };
 
   return (
-    <MainContent className="margin-bottom-5">
+    <MainContent
+      className="margin-bottom-5"
+      data-testid="model-plan-milestones"
+    >
       <GridContainer>
         <Grid desktop={{ col: 12 }}>
           <BreadcrumbBar variant="wrap">
@@ -143,7 +145,7 @@ const Milestones = () => {
             <Breadcrumb>
               <BreadcrumbLink
                 asCustom={Link}
-                to={`/models/${modelId}/task-list/`}
+                to={`/models/${modelID}/task-list/`}
               >
                 <span>{h('tasklistBreadcrumb')}</span>
               </BreadcrumbLink>
@@ -158,7 +160,7 @@ const Milestones = () => {
             data-testid="model-plan-name"
           >
             <Trans i18nKey="modelPlanTaskList:subheading">
-              indexZero {modelName} indexTwo
+              indexZero {{ modelName }} indexTwo
             </Trans>
           </p>
           <p className="margin-bottom-2 font-body-md line-height-sans-4">
@@ -205,7 +207,7 @@ const Milestones = () => {
                     <ErrorAlert
                       testId="formik-validation-errors"
                       classNames="margin-top-3"
-                      heading="Please check and fix the following"
+                      heading={h('checkAndFix')}
                     >
                       {Object.keys(flatErrors).map(key => {
                         return (
@@ -583,7 +585,7 @@ const Milestones = () => {
                           className="height-15"
                           id="ModelType-phasedInNote"
                           name="phasedInNote"
-                          label={t('Notes')}
+                          label={t('notes')}
                         />
                       </FieldGroup>
                     )}

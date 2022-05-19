@@ -3,7 +3,7 @@ import { MemoryRouter } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen } from '@testing-library/react';
 
-import GetModelPlanQuery from 'queries/GetModelPlanQuery';
+import GetModelPlanQuery from 'queries/GetModelPlan';
 import { GetModelPlan_modelPlan as GetModelPlanTypes } from 'queries/types/GetModelPlan';
 import {
   CMMIGroup,

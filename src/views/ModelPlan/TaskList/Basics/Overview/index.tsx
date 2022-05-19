@@ -25,9 +25,9 @@ import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import TextAreaField from 'components/shared/TextAreaField';
-import GetModelPlanQuery from 'queries/GetModelPlanQuery';
+import GetModelPlan from 'queries/GetModelPlan';
 import {
-  GetModelPlan,
+  GetModelPlan as GetModelPlanType,
   GetModelPlanVariables
 } from 'queries/types/GetModelPlan';
 import { UpdatePlanBasics as UpdatePlanBasicsType } from 'queries/types/UpdatePlanBasics';
@@ -46,17 +46,17 @@ interface PlanBasicsOverviewTypes {
 const Overview = () => {
   const { t } = useTranslation('basics');
   const { t: h } = useTranslation('draftModelPlan');
-  const { modelId } = useParams<{ modelId: string }>();
+  const { modelID } = useParams<{ modelID: string }>();
 
   const formikRef = useRef<FormikProps<PlanBasicsOverviewTypes>>(null);
   const history = useHistory();
   const [hasAdditionalNote, setHasAdditionalNote] = useState(false);
 
-  const { data } = useQuery<GetModelPlan, GetModelPlanVariables>(
-    GetModelPlanQuery,
+  const { data } = useQuery<GetModelPlanType, GetModelPlanVariables>(
+    GetModelPlan,
     {
       variables: {
-        id: modelId
+        id: modelID
       }
     }
   );
@@ -94,11 +94,11 @@ const Overview = () => {
       .then(response => {
         if (!response?.errors) {
           if (redirect === 'next') {
-            history.push(`/models/${modelId}/task-list/basics/milestones`);
+            history.push(`/models/${modelID}/task-list/basics/milestones`);
           } else if (redirect === 'back') {
-            history.push(`/models/${modelId}/task-list/basics`);
+            history.push(`/models/${modelID}/task-list/basics`);
           } else if (redirect === 'task-list') {
-            history.push(`/models/${modelId}/task-list/`);
+            history.push(`/models/${modelID}/task-list/`);
           }
         }
       })
@@ -108,7 +108,7 @@ const Overview = () => {
   };
 
   return (
-    <MainContent className="margin-bottom-5">
+    <MainContent className="margin-bottom-5" data-testid="model-plan-overview">
       <GridContainer>
         <Grid desktop={{ col: 12 }}>
           <BreadcrumbBar variant="wrap">
@@ -120,7 +120,7 @@ const Overview = () => {
             <Breadcrumb>
               <BreadcrumbLink
                 asCustom={Link}
-                to={`/models/${modelId}/task-list/`}
+                to={`/models/${modelID}/task-list/`}
               >
                 <span>{h('tasklistBreadcrumb')}</span>
               </BreadcrumbLink>
@@ -170,7 +170,7 @@ const Overview = () => {
                     <ErrorAlert
                       testId="formik-validation-errors"
                       classNames="margin-top-3"
-                      heading="Please check and fix the following"
+                      heading={h('checkAndFix')}
                     >
                       {Object.keys(flatErrors).map(key => {
                         return (
@@ -288,9 +288,7 @@ const Overview = () => {
                       <Button
                         type="button"
                         className="usa-button usa-button--outline margin-bottom-1"
-                        onClick={() =>
-                          history.push(`/models/${modelId}/task-list/basics`)
-                        }
+                        onClick={() => handleFormSubmit(values, 'back')}
                       >
                         {h('back')}
                       </Button>

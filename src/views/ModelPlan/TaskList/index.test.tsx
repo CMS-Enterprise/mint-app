@@ -3,7 +3,7 @@ import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
 
-import GetModelPlanQuery from 'queries/GetModelPlanQuery';
+import GetModelPlanQuery from 'queries/GetModelPlan';
 import { GetModelPlan_modelPlan as GetModelPlanTypes } from 'queries/types/GetModelPlan';
 import {
   CMMIGroup,
@@ -55,7 +55,13 @@ describe('The Model Plan Task List', () => {
       phasedIn: null,
       phasedInNote: null,
       status: 'READY'
-    }
+    },
+    documents: [
+      {
+        id: '6e224030-09d5-46f7-ad04-4bb851b36eab',
+        fileName: 'test.pdf'
+      }
+    ]
   } as GetModelPlanTypes;
 
   const modelPlanQuery = (modelPlanDraft: GetModelPlanTypes) => {

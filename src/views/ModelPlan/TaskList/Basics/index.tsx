@@ -8,6 +8,8 @@ import {
   BreadcrumbLink,
   Button,
   Dropdown,
+  Grid,
+  GridContainer,
   IconArrowBack,
   Label,
   TextInput
@@ -24,9 +26,9 @@ import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import modelCategoryEnum from 'constants/enums/modelCategory';
-import GetModelPlanQuery from 'queries/GetModelPlanQuery';
+import GetModelPlan from 'queries/GetModelPlan';
 import {
-  GetModelPlan,
+  GetModelPlan as GetModelPlanType,
   GetModelPlanVariables
 } from 'queries/types/GetModelPlan';
 import { UpdateModelPlan as UpdateModelPlanType } from 'queries/types/UpdateModelPlan';
@@ -54,18 +56,18 @@ type PlanBasicModelPlanFormType = {
 const BasicsContent = () => {
   const { t } = useTranslation('basics');
   const { t: h } = useTranslation('draftModelPlan');
-  const { modelId } = useParams<{ modelId: string }>();
+  const { modelID } = useParams<{ modelID: string }>();
 
   const formikRef = useRef<FormikProps<PlanBasicModelPlanFormType>>(null);
   const history = useHistory();
   const [areCmmiGroupsShown, setAreCmmiGroupsShown] = useState(false);
   const [showOther, setShowOther] = useState(false);
 
-  const { data } = useQuery<GetModelPlan, GetModelPlanVariables>(
-    GetModelPlanQuery,
+  const { data } = useQuery<GetModelPlanType, GetModelPlanVariables>(
+    GetModelPlan,
     {
       variables: {
-        id: modelId
+        id: modelID
       }
     }
   );
@@ -85,7 +87,7 @@ const BasicsContent = () => {
     }
     update({
       variables: {
-        id: modelId,
+        id: modelID,
         changes: {
           modelName: formikValues.modelName,
           modelCategory: formikValues.modelCategory,
@@ -98,9 +100,9 @@ const BasicsContent = () => {
       .then(response => {
         if (!response?.errors) {
           if (redirect === 'next') {
-            history.push(`/models/${modelId}/task-list/basics/overview`);
+            history.push(`/models/${modelID}/task-list/basics/overview`);
           } else if (redirect === 'back') {
-            history.push(`/models/${modelId}/task-list/`);
+            history.push(`/models/${modelID}/task-list/`);
           }
         }
       })
@@ -134,9 +136,9 @@ const BasicsContent = () => {
   }
 
   return (
-    <MainContent className="margin-bottom-5">
-      <div className="grid-container">
-        <div className="tablet:grid-col-12">
+    <MainContent className="margin-bottom-5" data-testid="model-plan-basics">
+      <GridContainer>
+        <Grid desktop={{ col: 12 }}>
           <BreadcrumbBar variant="wrap">
             <Breadcrumb>
               <BreadcrumbLink asCustom={Link} to="/">
@@ -146,7 +148,7 @@ const BasicsContent = () => {
             <Breadcrumb>
               <BreadcrumbLink
                 asCustom={Link}
-                to={`/models/${modelId}/task-list/`}
+                to={`/models/${modelID}/task-list/`}
               >
                 <span>{h('tasklistBreadcrumb')}</span>
               </BreadcrumbLink>
@@ -193,7 +195,7 @@ const BasicsContent = () => {
                     <ErrorAlert
                       testId="formik-validation-errors"
                       classNames="margin-top-3"
-                      heading="Please check and fix the following"
+                      heading={h('checkAndFix')}
                     >
                       {Object.keys(flatErrors).map(key => {
                         return (
@@ -425,13 +427,13 @@ const BasicsContent = () => {
               );
             }}
           </Formik>
-        </div>
+        </Grid>
         <PageNumber
           currentPage={1}
           totalPages={3}
           className="margin-bottom-10"
         />
-      </div>
+      </GridContainer>
     </MainContent>
   );
 };
@@ -440,17 +442,17 @@ export const Basics = () => {
   return (
     <Switch>
       <Route
-        path="/models/:modelId/task-list/basics"
+        path="/models/:modelID/task-list/basics"
         exact
         render={() => <BasicsContent />}
       />
       <Route
-        path="/models/:modelId/task-list/basics/overview"
+        path="/models/:modelID/task-list/basics/overview"
         exact
         render={() => <Overview />}
       />
       <Route
-        path="/models/:modelId/task-list/basics/milestones"
+        path="/models/:modelID/task-list/basics/milestones"
         exact
         render={() => <Milestones />}
       />
