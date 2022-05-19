@@ -72,7 +72,7 @@ const BasicsContent = () => {
     }
   );
 
-  const { modelName, modelCategory, cmsCenters, cmmiGroups, cmsOther } =
+  const { modelName, modelCategory = '', cmsCenters, cmmiGroups, cmsOther } =
     data?.modelPlan || {};
 
   const [update] = useMutation<UpdateModelPlanType>(UpdateModelPlan);
@@ -246,12 +246,12 @@ const BasicsContent = () => {
                         as={Dropdown}
                         id="plan-basics-model-category"
                         name="modelCategory"
-                        value={values.modelCategory}
+                        value={values.modelCategory || ''}
                         onChange={(e: any) => {
                           setFieldValue('modelCategory', e.target.value);
                         }}
                       >
-                        <option key="default-select" disabled selected>
+                        <option key="default-select" disabled value="">
                           {`-${h('select')}-`}
                         </option>
                         {Object.keys(modelCategoryEnum).map(role => {
@@ -260,7 +260,7 @@ const BasicsContent = () => {
                               key={`Model-Category-${translateModelCategory(
                                 modelCategoryEnum[role]
                               )}`}
-                              value={role}
+                              value={role || ''}
                             >
                               {translateModelCategory(modelCategoryEnum[role])}
                             </option>

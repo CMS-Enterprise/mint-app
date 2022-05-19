@@ -118,7 +118,7 @@ const Milestones = () => {
           if (redirect === 'task-list') {
             history.push(`/models/${modelID}/task-list`);
           } else if (redirect === 'back') {
-            history.push(`/models/${modelID}/overview`);
+            history.push(`/models/${modelID}/task-list/basics/overview`);
           } else {
             history.push(`/models/${modelID}/task-list`);
           }
@@ -244,7 +244,7 @@ const Milestones = () => {
                       <FieldErrorMsg>{flatErrors.completeICIP}</FieldErrorMsg>
                       <Field
                         as={DatePicker}
-                        error={!!flatErrors.completeICIP}
+                        error={+!!flatErrors.completeICIP}
                         id="Milestone-completeICIP"
                         maxLength={50}
                         name="completeICIP"
@@ -279,7 +279,7 @@ const Milestones = () => {
                         </FieldErrorMsg>
                         <Field
                           as={DatePicker}
-                          error={!!flatErrors.clearanceStarts}
+                          error={+!!flatErrors.clearanceStarts}
                           id="Milestone-clearanceStarts"
                           maxLength={50}
                           name="clearanceStarts"
@@ -309,7 +309,7 @@ const Milestones = () => {
                         </FieldErrorMsg>
                         <Field
                           as={DatePicker}
-                          error={!!flatErrors.clearanceEnds}
+                          error={+!!flatErrors.clearanceEnds}
                           id="Milestone-clearanceEnds"
                           maxLength={50}
                           name="clearanceEnds"
@@ -335,7 +335,7 @@ const Milestones = () => {
                       <FieldErrorMsg>{flatErrors.announced}</FieldErrorMsg>
                       <Field
                         as={DatePicker}
-                        error={!!flatErrors.announced}
+                        error={+!!flatErrors.announced}
                         id="Milestone-announced"
                         maxLength={50}
                         name="announced"
@@ -370,7 +370,7 @@ const Milestones = () => {
                         </FieldErrorMsg>
                         <Field
                           as={DatePicker}
-                          error={!!flatErrors.applicationsStart}
+                          error={+!!flatErrors.applicationsStart}
                           id="Milestone-applicationsStart"
                           maxLength={50}
                           name="applicationsStart"
@@ -400,7 +400,7 @@ const Milestones = () => {
                         </FieldErrorMsg>
                         <Field
                           as={DatePicker}
-                          error={!!flatErrors.applicationsEnd}
+                          error={+!!flatErrors.applicationsEnd}
                           id="Milestone-applicationsEnd"
                           maxLength={50}
                           name="applicationsEnd"
@@ -436,7 +436,7 @@ const Milestones = () => {
                         </FieldErrorMsg>
                         <Field
                           as={DatePicker}
-                          error={!!flatErrors.performancePeriodStarts}
+                          error={+!!flatErrors.performancePeriodStarts}
                           id="Milestone-performancePeriodStarts"
                           maxLength={50}
                           name="performancePeriodStarts"
@@ -468,7 +468,7 @@ const Milestones = () => {
                         </FieldErrorMsg>
                         <Field
                           as={DatePicker}
-                          error={!!flatErrors.performancePeriodEnds}
+                          error={+!!flatErrors.performancePeriodEnds}
                           id="Milestone-performancePeriodEnds"
                           maxLength={50}
                           name="performancePeriodEnds"
@@ -497,7 +497,7 @@ const Milestones = () => {
                       <FieldErrorMsg>{flatErrors.wrapUpEnds}</FieldErrorMsg>
                       <Field
                         as={DatePicker}
-                        error={!!flatErrors.wrapUpEnds}
+                        error={+!!flatErrors.wrapUpEnds}
                         id="Milestone-wrapUpEnds"
                         maxLength={50}
                         name="wrapUpEnds"
@@ -547,7 +547,7 @@ const Milestones = () => {
                           id="phasedIn-Yes"
                           name="phasedIn"
                           label={h('yes')}
-                          value
+                          value="YES"
                           checked={values.phasedIn === true}
                           onChange={() => {
                             setFieldValue('phasedIn', true);
@@ -558,7 +558,7 @@ const Milestones = () => {
                           id="phasedIn-No"
                           name="phasedIn"
                           label={h('no')}
-                          value={false}
+                          value="FALSE"
                           checked={values.phasedIn === false}
                           onChange={() => {
                             setFieldValue('phasedIn', false);
@@ -595,13 +595,17 @@ const Milestones = () => {
                         type="button"
                         className="usa-button usa-button--outline margin-bottom-1"
                         onClick={() => {
-                          validateForm().then(err => {
-                            if (Object.keys(err).length > 0) {
-                              window.scrollTo(0, 0);
-                            } else {
-                              handleFormSubmit(values, 'back');
-                            }
-                          });
+                          if (Object.keys(errors).length > 0) {
+                            window.scrollTo(0, 0);
+                          } else {
+                            validateForm().then(err => {
+                              if (Object.keys(err).length > 0) {
+                                window.scrollTo(0, 0);
+                              } else {
+                                handleFormSubmit(values, 'task-list');
+                              }
+                            });
+                          }
                         }}
                       >
                         {h('back')}
@@ -618,13 +622,17 @@ const Milestones = () => {
                       type="button"
                       className="usa-button usa-button--unstyled"
                       onClick={() => {
-                        validateForm().then(err => {
-                          if (Object.keys(err).length > 0) {
-                            window.scrollTo(0, 0);
-                          } else {
-                            handleFormSubmit(values, 'task-list');
-                          }
-                        });
+                        if (Object.keys(errors).length > 0) {
+                          window.scrollTo(0, 0);
+                        } else {
+                          validateForm().then(err => {
+                            if (Object.keys(err).length > 0) {
+                              window.scrollTo(0, 0);
+                            } else {
+                              handleFormSubmit(values, 'task-list');
+                            }
+                          });
+                        }
                       }}
                     >
                       <IconArrowBack className="margin-right-1" aria-hidden />

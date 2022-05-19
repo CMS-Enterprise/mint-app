@@ -246,12 +246,12 @@ const Collaborators = () => {
                         as={Dropdown}
                         id="collaborator-role"
                         name="role"
-                        value={values.teamRole}
+                        value={values.teamRole || ''}
                         onChange={(e: any) => {
                           setFieldValue('teamRole', e.target.value);
                         }}
                       >
-                        <option key="default-select" disabled selected>
+                        <option key="default-select" disabled value="">
                           {`-${h('select')}-`}
                         </option>
                         {Object.keys(teamRoles).map(role => {
@@ -260,7 +260,7 @@ const Collaborators = () => {
                               key={`Collaborator-Role-${translateTeamRole(
                                 teamRoles[role]
                               )}`}
-                              value={role}
+                              value={role || ''}
                             >
                               {translateTeamRole(teamRoles[role])}
                             </option>
