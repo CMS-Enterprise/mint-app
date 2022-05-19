@@ -12,10 +12,10 @@ func (suite *ResolverSuite) TestFetchPlanMilestonesByModelPlanID() {
 	milestones, err := FetchPlanMilestonesByModelPlanID(suite.testConfigs.Logger, &suite.testConfigs.UserInfo.EuaUserID, plan.ID, suite.testConfigs.Store)
 
 	suite.NoError(err)
-	suite.EqualValues(milestones.ModelPlanID, plan.ID)
-	suite.EqualValues(milestones.Status, models.TaskReady)
-	suite.EqualValues(*milestones.CreatedBy, suite.testConfigs.UserInfo.EuaUserID)
-	suite.EqualValues(*milestones.ModifiedBy, suite.testConfigs.UserInfo.EuaUserID)
+	suite.EqualValues(plan.ID, milestones.ModelPlanID)
+	suite.EqualValues(models.TaskReady, milestones.Status)
+	suite.EqualValues(suite.testConfigs.UserInfo.EuaUserID, *milestones.CreatedBy)
+	suite.EqualValues(suite.testConfigs.UserInfo.EuaUserID, *milestones.ModifiedBy)
 
 	// Many of the fields are nil upon creation
 	suite.Nil(milestones.CompleteICIP)

@@ -11,9 +11,11 @@ exports[`New Model Plan page matches snapshot 1`] = `
   >
     <div
       class="grid-container"
+      data-testid="gridContainer"
     >
       <div
-        class="tablet:grid-col-12"
+        class="desktop:grid-col-12"
+        data-testid="grid"
       >
         <nav
           aria-label="Breadcrumbs"

@@ -7,6 +7,8 @@ import {
   BreadcrumbBar,
   BreadcrumbLink,
   Button,
+  Grid,
+  GridContainer,
   Label,
   TextInput
 } from '@trussworks/react-uswds';
@@ -49,8 +51,8 @@ const NewPlanContent = () => {
 
   return (
     <MainContent data-testid="new-plan">
-      <div className="grid-container">
-        <div className="tablet:grid-col-12">
+      <GridContainer>
+        <Grid desktop={{ col: 12 }}>
           <BreadcrumbBar variant="wrap">
             <Breadcrumb>
               <BreadcrumbLink asCustom={Link} to="/">
@@ -143,35 +145,29 @@ const NewPlanContent = () => {
               );
             }}
           </Formik>
-        </div>
-      </div>
+        </Grid>
+      </GridContainer>
     </MainContent>
   );
 };
 
 const NewPlan = () => {
   return (
-    <>
-      <Switch>
-        {/* New Plan Pages */}
-        <Route
-          path="/models/new-plan"
-          exact
-          render={() => <NewPlanContent />}
-        />
-        <Route
-          path="/models/new-plan/:modelId/collaborators"
-          render={() => <Collaborators />}
-        />
-        <Route
-          path="/models/new-plan/:modelId/add-collaborator/:collaboratorId?"
-          render={() => <AddCollaborator />}
-        />
+    <Switch>
+      {/* New Plan Pages */}
+      <Route path="/models/new-plan" exact render={() => <NewPlanContent />} />
+      <Route
+        path="/models/new-plan/:modelID/collaborators"
+        render={() => <Collaborators />}
+      />
+      <Route
+        path="/models/new-plan/:modelID/add-collaborator/:collaboratorId?"
+        render={() => <AddCollaborator />}
+      />
 
-        {/* 404 */}
-        <Route path="*" render={() => <NotFound />} />
-      </Switch>
-    </>
+      {/* 404 */}
+      <Route path="*" render={() => <NotFound />} />
+    </Switch>
   );
 };
 

@@ -49,6 +49,18 @@ func (suite *ResolverSuite) createDiscussionReply(pd *models.PlanDiscussion, con
 	return dr
 }
 
+func (suite *ResolverSuite) createPlanCollaborator(mp *models.ModelPlan, EUAUserID string, fullName string, teamRole models.TeamRole) *models.PlanCollaborator {
+	collaboratorInput := &model.PlanCollaboratorCreateInput{
+		ModelPlanID: mp.ID,
+		EuaUserID:   EUAUserID,
+		FullName:    fullName,
+		TeamRole:    teamRole,
+	}
+	collaborator, err := CreatePlanCollaborator(suite.testConfigs.Logger, collaboratorInput, suite.testConfigs.UserInfo.EuaUserID, suite.testConfigs.Store)
+	suite.NoError(err)
+	return collaborator
+}
+
 // TestResolverSuite runs the resolver test suite
 func TestResolverSuite(t *testing.T) {
 	rs := new(ResolverSuite)

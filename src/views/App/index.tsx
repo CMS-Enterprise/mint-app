@@ -21,7 +21,9 @@ import Home from 'views/Home';
 import Login from 'views/Login';
 import ModelPlan from 'views/ModelPlan';
 import Collaborators from 'views/ModelPlan/Collaborators';
+import Documents from 'views/ModelPlan/Documents';
 import NewPlan from 'views/ModelPlan/NewPlan';
+import Status from 'views/ModelPlan/Status';
 import StepsOverview from 'views/ModelPlan/StepsOverview';
 import TaskList from 'views/ModelPlan/TaskList';
 import Basics from 'views/ModelPlan/TaskList/Basics';
@@ -78,49 +80,51 @@ const AppRoutes = () => {
       />
       <SecureRoute path="/models/new-plan" component={NewPlan} />
       <SecureRoute
-        path="/models/:modelId/collaborators"
+        path="/models/:modelID/collaborators"
         exact
         component={Collaborators}
       />
+      <SecureRoute path="/models/:modelID/documents" component={Documents} />
+      <SecureRoute path="/models/:modelId/status" exact component={Status} />
       <SecureRoute
-        path="/models/:modelId/task-list"
+        path="/models/:modelID/task-list"
         exact
         component={TaskList}
       />
       <SecureRoute
-        path="/models/:modelId/task-list/basics"
+        path="/models/:modelID/task-list/basics"
         component={Basics}
       />
       <SecureRoute
-        path="/models/:modelId/task-list/beneficiaries"
+        path="/models/:modelID/task-list/beneficiaries"
         component={Beneficiaries}
       />
       <SecureRoute
-        path="/models/:modelId/task-list/characteristics"
+        path="/models/:modelID/task-list/characteristics"
         component={Characteristics}
       />
       <SecureRoute
-        path="/models/:modelId/task-list/cost-estimate"
+        path="/models/:modelID/task-list/cost-estimate"
         component={CostEstimate}
       />
       <SecureRoute
-        path="/models/:modelId/task-list/operations"
+        path="/models/:modelID/task-list/operations"
         component={Operations}
       />
       <SecureRoute
-        path="/models/:modelId/task-list/participants"
+        path="/models/:modelID/task-list/participants"
         component={Participants}
       />
       <SecureRoute
-        path="/models/:modelId/task-list/payment"
+        path="/models/:modelID/task-list/payment"
         component={Payment}
       />
       <SecureRoute
-        path="/models/:modelId/task-list/population"
+        path="/models/:modelID/task-list/population"
         component={Population}
       />
       <SecureRoute
-        path="/models/:modelId/task-list/submit-request"
+        path="/models/:modelID/task-list/submit-request"
         component={SubmitRequest}
       />
 

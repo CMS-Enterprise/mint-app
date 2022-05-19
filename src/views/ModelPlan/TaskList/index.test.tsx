@@ -16,6 +16,7 @@ import TaskList from './index';
 
 describe('The Model Plan Task List', () => {
   const modelPlan = {
+    __typename: 'ModelPlan',
     id: '6e224030-09d5-46f7-ad04-4bb851b36eab',
     status: ModelStatus.PLAN_DRAFT,
     modelName: 'Test',
@@ -27,7 +28,8 @@ describe('The Model Plan Task List', () => {
     cmsCenters: [CMSCenter.CENTER_FOR_MEDICARE, CMSCenter.OTHER],
     cmsOther: 'The Center for Awesomeness ',
     archived: false,
-    basics: null
+    basics: null,
+    documents: []
   } as GetModelPlanTypes;
 
   const modelPlanQuery = (modelPlanDraft: GetModelPlanTypes) => {
@@ -50,7 +52,7 @@ describe('The Model Plan Task List', () => {
     render(
       <MemoryRouter initialEntries={[`/models/${modelPlan.id}/task-list`]}>
         <MockedProvider mocks={[modelPlanQuery(modelPlan)]} addTypename={false}>
-          <Route path="/models/:modelId/task-list" component={TaskList} />
+          <Route path="/models/:modelID/task-list" component={TaskList} />
         </MockedProvider>
       </MemoryRouter>
     );
@@ -65,7 +67,7 @@ describe('The Model Plan Task List', () => {
     render(
       <MemoryRouter initialEntries={[`/models/${modelPlan.id}/task-list`]}>
         <MockedProvider mocks={[modelPlanQuery(modelPlan)]} addTypename={false}>
-          <Route path="/models/:modelId/task-list" component={TaskList} />
+          <Route path="/models/:modelID/task-list" component={TaskList} />
         </MockedProvider>
       </MemoryRouter>
     );
@@ -78,7 +80,7 @@ describe('The Model Plan Task List', () => {
     render(
       <MemoryRouter initialEntries={[`/models/${modelPlan.id}/task-list`]}>
         <MockedProvider mocks={[modelPlanQuery(modelPlan)]} addTypename={false}>
-          <Route path="/models/:modelId/task-list" component={TaskList} />
+          <Route path="/models/:modelID/task-list" component={TaskList} />
         </MockedProvider>
       </MemoryRouter>
     );
@@ -99,15 +101,14 @@ describe('The Model Plan Task List', () => {
             mocks={[modelPlanQuery(modelPlan)]}
             addTypename={false}
           >
-            <Route path="/models/:modelId/task-list" component={TaskList} />
+            <Route path="/models/:modelID/task-list" component={TaskList} />
           </MockedProvider>
         </MemoryRouter>
       );
 
       await waitFor(() => {
-        expect(screen.getAllByTestId('tag')[0]).toHaveClass('bg-accent-cool');
-        expect(screen.getAllByTestId('tag')[0]).toHaveTextContent(
-          'Ready to start'
+        expect(screen.getByText('Ready to start')).toHaveClass(
+          'bg-accent-cool'
         );
       });
     });
