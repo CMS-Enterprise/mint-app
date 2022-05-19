@@ -13,7 +13,6 @@ func (suite *ResolverSuite) TestPlanBasicsGetByModelPlanID() {
 	suite.EqualValues(basics.ModelPlanID, plan.ID)
 	suite.EqualValues(basics.Status, models.TaskReady)
 	suite.EqualValues(*basics.CreatedBy, suite.testConfigs.UserInfo.EuaUserID)
-	suite.EqualValues(*basics.ModifiedBy, suite.testConfigs.UserInfo.EuaUserID)
 
 	// Many of the fields are nil upon creation
 	suite.Nil(basics.ModelType)

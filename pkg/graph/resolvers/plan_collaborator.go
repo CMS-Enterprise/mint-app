@@ -17,7 +17,6 @@ func CreatePlanCollaborator(logger *zap.Logger, input *model.PlanCollaboratorCre
 		TeamRole:    input.TeamRole,
 		EUAUserID:   input.EuaUserID,
 		CreatedBy:   &principal,
-		ModifiedBy:  nil,
 	}
 
 	retCollaborator, err := store.PlanCollaboratorCreate(logger, collaborator)

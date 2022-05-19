@@ -33,6 +33,9 @@ func (s *Store) PlanBasicsCreate(logger *zap.Logger, basics *models.PlanBasics) 
 		return nil, genericmodel.HandleModelCreationError(logger, err, basics)
 	}
 
+	basics.ModifiedBy = nil
+	basics.ModifiedDts = nil
+
 	err = statement.Get(basics, basics)
 	if err != nil {
 		return nil, genericmodel.HandleModelCreationError(logger, err, basics)

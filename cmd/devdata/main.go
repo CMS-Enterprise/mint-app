@@ -207,11 +207,10 @@ func makeModelPlan(modelName string, logger *zap.Logger, store *storage.Store, c
 	status := models.ModelStatusPlanDraft
 
 	plan := models.ModelPlan{
-		ModelName:  modelName,
-		Archived:   false,
-		CreatedBy:  models.StringPointer("ABCD"),
-		ModifiedBy: nil,
-		Status:     status,
+		ModelName: modelName,
+		Archived:  false,
+		CreatedBy: models.StringPointer("ABCD"),
+		Status:    status,
 	}
 
 	for _, cb := range callbacks {
@@ -230,8 +229,7 @@ func makePlanCollaborator(mpID uuid.UUID, euaID string, logger *zap.Logger, stor
 		FullName:    euaID,
 		ModelPlanID: mpID,
 
-		CreatedBy:  models.StringPointer("ABCD"),
-		ModifiedBy: nil,
+		CreatedBy: models.StringPointer("ABCD"),
 	}
 	for _, cb := range callbacks {
 		cb(&collab)
@@ -247,7 +245,6 @@ func makePlanBasics(uuid uuid.UUID, logger *zap.Logger, store *storage.Store, ca
 	basics := models.PlanBasics{
 		ModelPlanID: uuid,
 		CreatedBy:   models.StringPointer("ABCD"),
-		ModifiedBy:  nil,
 		Status:      status,
 	}
 
@@ -296,7 +293,6 @@ func makePlanDiscussion(uuid uuid.UUID, logger *zap.Logger, store *storage.Store
 		Content:     "This is a test comment",
 		Status:      models.DiscussionUnAnswered,
 		CreatedBy:   "ABCD",
-		ModifiedBy:  nil,
 	}
 
 	for _, cb := range callbacks {
@@ -315,7 +311,6 @@ func makeDiscussionReply(uuid uuid.UUID, logger *zap.Logger, store *storage.Stor
 		Content:      "This is a test reply",
 		Resolution:   false,
 		CreatedBy:    "ABCD",
-		ModifiedBy:   nil,
 	}
 
 	for _, cb := range callbacks {
@@ -344,9 +339,8 @@ func makePlanMilestones(uuid uuid.UUID, logger *zap.Logger, store *storage.Store
 		// HighLevelNote: ,
 		// PhasedIn: ,
 		// PhasedInNote: ,
-		CreatedBy:  models.StringPointer("ABCD"),
-		ModifiedBy: nil,
-		Status:     models.TaskReady,
+		CreatedBy: models.StringPointer("ABCD"),
+		Status:    models.TaskReady,
 	}
 
 	for _, cb := range callbacks {

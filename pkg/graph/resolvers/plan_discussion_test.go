@@ -21,6 +21,7 @@ func (suite *ResolverSuite) TestCreatePlanDiscussion() {
 	assert.NotNil(suite.T(), result.ID)
 	assert.EqualValues(suite.T(), plan.ID, result.ModelPlanID)
 	assert.EqualValues(suite.T(), input.Content, result.Content)
+	assert.Nil(suite.T(), result.ModifiedBy)
 	assert.EqualValues(suite.T(), models.DiscussionUnAnswered, result.Status)
 }
 
@@ -41,7 +42,8 @@ func (suite *ResolverSuite) TestUpdatePlanDiscussion() {
 	assert.EqualValues(suite.T(), changes["content"], result.Content)
 	assert.EqualValues(suite.T(), changes["status"], result.Status)
 	assert.EqualValues(suite.T(), suite.testConfigs.UserInfo.EuaUserID, result.CreatedBy)
-	assert.EqualValues(suite.T(), updater, result.ModifiedBy)
+	assert.NotNil(suite.T(), result.ModifiedBy)
+	assert.EqualValues(suite.T(), updater, *result.ModifiedBy)
 }
 
 func (suite *ResolverSuite) TestDeletePlanDiscussion() {
@@ -90,19 +92,20 @@ func (suite *ResolverSuite) TestUpdateDiscussionReply() {
 	plan := suite.createModelPlan("Test Plan")
 	discussion := suite.createPlanDiscussion(plan, "This is a test comment")
 	reply := suite.createDiscussionReply(discussion, "This is a test reply", false)
+	assert.Nil(suite.T(), reply.ModifiedBy)
 
 	changes := map[string]interface{}{
 		"content":    "This is now updated! Thanks for looking at my test",
 		"resolution": true,
 	}
 	updater := "UPDT"
-
 	result, err := UpdateDiscussionReply(suite.testConfigs.Logger, reply.ID, changes, updater, suite.testConfigs.Store)
+
 	assert.NoError(suite.T(), err)
 	assert.EqualValues(suite.T(), changes["content"], result.Content)
 	assert.EqualValues(suite.T(), changes["resolution"], result.Resolution)
 	assert.EqualValues(suite.T(), suite.testConfigs.UserInfo.EuaUserID, result.CreatedBy)
-	assert.EqualValues(suite.T(), updater, result.ModifiedBy)
+	assert.EqualValues(suite.T(), updater, *result.ModifiedBy)
 }
 
 func (suite *ResolverSuite) TestDiscussionReplyCollectionByDiscusionID() {

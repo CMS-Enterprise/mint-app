@@ -49,6 +49,9 @@ func (s *Store) ModelPlanCreate(logger *zap.Logger, plan *models.ModelPlan) (*mo
 	}
 	retPlan := models.ModelPlan{}
 
+	plan.ModifiedBy = nil
+	plan.ModifiedDts = nil
+
 	err = stmt.Get(&retPlan, plan)
 	if err != nil {
 		logger.Error(

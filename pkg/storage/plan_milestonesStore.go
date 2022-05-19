@@ -37,6 +37,9 @@ func (s *Store) PlanMilestonesCreate(logger *zap.Logger, milestones *models.Plan
 		return nil, genericmodel.HandleModelCreationError(logger, err, milestones)
 	}
 
+	milestones.ModifiedBy = nil
+	milestones.ModifiedDts = nil
+
 	err = statement.Get(milestones, milestones)
 	if err != nil {
 		return nil, genericmodel.HandleModelCreationError(logger, err, milestones)
