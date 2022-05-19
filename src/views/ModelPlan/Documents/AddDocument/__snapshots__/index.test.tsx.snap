@@ -274,7 +274,7 @@ exports[`Model Plan Add Documents page matches snapshot 1`] = `
                     <span
                       class="mandatory-fields-alert__text"
                     >
-                      To keep CMS safe, documents are scanned for ciruses after uploading. If something goes wrong, we’ll let you know
+                      To keep CMS safe, documents are scanned for viruses after uploading. If something goes wrong, we’ll let you know
                     </span>
                   </div>
                 </div>

@@ -12,7 +12,8 @@
     &__content {
       position: absolute;
       width: 50%;
-      height: 100%;
+      height: auto;
+      min-height: 100%;
       background-color: #fff;
       right: 0;
       z-index: 1;
@@ -41,6 +42,10 @@
   
     &__body {
       padding: 4rem 2rem 2rem;
+    }
+
+    &__connected {
+      border-left: .25rem solid color('base-lightest');
     }
   }
   

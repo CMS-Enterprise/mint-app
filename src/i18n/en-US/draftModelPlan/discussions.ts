@@ -16,7 +16,11 @@ const discussions = {
   viewDiscussions: 'View discussions',
   success: 'Success! Your question has been added.',
   error:
-    'Sorry, we encountered a problem adding your question. Please try again.'
+    'Sorry, we encountered a problem adding your question. Please try again.',
+  answer: 'Answer',
+  answerDescription:
+    'Make sure you know the answer to this question before replying. Once a question has been answered, it cannot be replied to again.',
+  ago: 'ago'
 };
 
 export default discussions;

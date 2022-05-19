@@ -10,21 +10,34 @@ import {
   IconAnnouncement,
   IconClose,
   Label,
+  ProcessList,
+  ProcessListItem,
   Textarea
 } from '@trussworks/react-uswds';
+import classNames from 'classnames';
 import { Field, Form, Formik, FormikProps } from 'formik';
-import _ from 'lodash';
+import { DateTime } from 'luxon';
 import noScroll from 'no-scroll';
 import * as Yup from 'yup';
 
 import PageHeading from 'components/PageHeading';
 import Alert from 'components/shared/Alert';
+import Divider from 'components/shared/Divider';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
+import Expire from 'components/shared/Expire';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
+import IconInitial from 'components/shared/IconInitial';
 import CreateModelPlanDiscussion from 'queries/CreateModelPlanDiscussion';
+import CreateModelPlanReply from 'queries/CreateModelPlanReply';
 import { CreateModelPlanDiscussion as CreateModelPlanDiscussionType } from 'queries/types/CreateModelPlanDiscussion';
+import {
+  CreateModelPlanReply as CreateModelPlanReplyType,
+  CreateModelPlanReply_createDiscussionReply as ReplyType
+} from 'queries/types/CreateModelPlanReply';
 import { GetModelPlan_modelPlan_discussions as DiscussionType } from 'queries/types/GetModelPlan';
+import { UpdateModelPlanDiscussion as UpdateModelPlanDiscussionType } from 'queries/types/UpdateModelPlanDiscussion';
+import UpdateModelPlanDiscussion from 'queries/UpdateModelPlanDiscussion';
 import flattenErrors from 'utils/flattenErrors';
 import { getUnansweredQuestions } from 'utils/modelPlan';
 
@@ -61,22 +74,55 @@ const Discussions = ({
     answeredQuestions: 0,
     unansweredQuestions: 0
   });
-  const [isRenderQuestion, setIsRenderQuestion] = useState(false);
+  const [discussionType, setDiscussionType] = useState<
+    'question' | 'reply' | 'discussion'
+  >('question');
+  const [reply, setReply] = useState<DiscussionType | ReplyType | null>(null);
 
   useEffect(() => {
     if (discussions?.length === 0) {
-      setIsRenderQuestion(true);
+      setDiscussionType('question');
+    } else {
+      setDiscussionType('discussion');
     }
     setQuestionCount(getUnansweredQuestions(discussions));
   }, [discussions]);
 
-  const [create] = useMutation<CreateModelPlanDiscussionType>(
+  const [createQuestion] = useMutation<CreateModelPlanDiscussionType>(
     CreateModelPlanDiscussion
   );
+
+  const [createReply] = useMutation<CreateModelPlanReplyType>(
+    CreateModelPlanReply
+  );
+
+  const [updateDiscussion] = useMutation<UpdateModelPlanDiscussionType>(
+    UpdateModelPlanDiscussion
+  );
+
+  const createDiscussions = {
+    question: createQuestion,
+    reply: createReply
+  };
 
   const validationSchema = Yup.object().shape({
     content: Yup.string().trim().required('Please enter a question')
   });
+
+  const getTimeElapsed = (discussionCreated: string) => {
+    const date1 = DateTime.local();
+    const date2 = DateTime.fromISO(discussionCreated);
+
+    const diff = date1.diff(date2, [
+      'years',
+      'months',
+      'days',
+      'hours',
+      'minutes'
+    ]);
+
+    return `${parseInt(diff.toObject().minutes)} minutes`;
+  };
 
   const handleOpenModal = () => {
     noScroll.on();
@@ -86,19 +132,36 @@ const Discussions = ({
   };
 
   const handleCreateDiscussion = (formikValues: DicussionFormPropTypes) => {
-    create({
+    let payload = {};
+
+    if (discussionType === 'question') {
+      payload = {
+        modelPlanID: modelID,
+        content: formikValues.content
+      };
+    } else if (discussionType === 'reply' && reply) {
+      payload = {
+        discussionID: reply.id,
+        content: formikValues.content,
+        resolution: true
+      };
+    } else {
+      return; // Currently we have no mutations when discussions is displayed
+    }
+
+    createDiscussions[discussionType]({
       variables: {
-        input: {
-          modelPlanID: modelID,
-          content: formikValues.content
-        }
+        input: payload
       }
     })
       .then(response => {
         if (!response?.errors) {
+          if (discussionType === 'reply' && reply?.id) {
+            handleUpdateDiscussion(reply.id);
+          }
           setDiscussionStatus('success');
           setDiscussionStatusMessage(t('success'));
-          setIsRenderQuestion(false);
+          setDiscussionType('discussion');
           refetch();
         }
       })
@@ -108,16 +171,57 @@ const Discussions = ({
       });
   };
 
-  const renderQuestion = () => {
+  const handleUpdateDiscussion = (id: string) => {
+    updateDiscussion({
+      variables: {
+        id,
+        changes: {
+          status: 'ANSWERED'
+        }
+      }
+    })
+      .then(response => {
+        if (!response?.errors) {
+          refetch();
+        }
+      })
+      .catch(() => {
+        setDiscussionStatus('error');
+        setDiscussionStatusMessage(t('error'));
+      });
+  };
+
+  const renderQuestion = (renderType: 'question' | 'reply') => {
     return (
       <>
         {' '}
         <PageHeading headingLevel="h1" className="margin-y-0">
-          {t('askAQuestion')}
+          {renderType === 'question' ? t('askAQuestion') : t('answer')}
         </PageHeading>
-        <p className="margin-bottom-4">{t('description')}</p>
+        <p className="margin-bottom-4">
+          {renderType === 'question'
+            ? t('description')
+            : t('answerDescription')}
+        </p>
         {discussionStatusMessage && (
-          <Alert type={discussionStatus}>{discussionStatusMessage}</Alert>
+          <Expire delay={3000} callback={setDiscussionStatusMessage}>
+            <Alert className="margin-bottom-4" type={discussionStatus}>
+              {discussionStatusMessage}
+            </Alert>
+          </Expire>
+        )}
+        {renderType === 'reply' && reply && (
+          <div>
+            <div className="display-flex">
+              <IconInitial user={reply.createdBy} index={0} />
+              <span className="margin-left-2 margin-top-05 text-base">
+                {getTimeElapsed(reply.createdDts)} {t('ago')}
+              </span>
+            </div>
+            <div className="margin-left-5">
+              <p>{reply.content}</p>
+            </div>
+          </div>
         )}
         <Formik
           initialValues={{ content: '' }}
@@ -176,8 +280,9 @@ const Discussions = ({
                       className="usa-button usa-button--outline"
                       type="button"
                       onClick={() => {
-                        if (isRenderQuestion) {
-                          setIsRenderQuestion(false);
+                        if (discussionType) {
+                          setDiscussionStatusMessage('');
+                          setDiscussionType('discussion');
                         } else {
                           closeModal();
                         }
@@ -202,6 +307,76 @@ const Discussions = ({
     );
   };
 
+  const discussionComponent = (
+    discussion: DiscussionType | ReplyType,
+    index: number,
+    connected?: boolean
+  ) => (
+    <div>
+      <div className="display-flex">
+        <IconInitial user={discussion.createdBy} index={index} />
+        <span className="margin-left-2 margin-top-05 text-base">
+          {getTimeElapsed(discussion.createdDts)} {t('ago')}
+        </span>
+      </div>
+
+      <div
+        className={classNames({
+          'mint-discussions__connected margin-left-105 padding-left-3': connected,
+          'padding-left-5': !connected
+        })}
+      >
+        {' '}
+        <p>{discussion.content}</p>
+        <div className="display-flex margin-bottom-4">
+          <IconAnnouncement className="text-primary margin-right-1" />
+          <Button
+            type="button"
+            unstyled
+            onClick={() => {
+              setDiscussionStatusMessage('');
+              setDiscussionType('reply');
+              setReply(discussion);
+            }}
+          >
+            {t('answer')}
+          </Button>
+        </div>
+      </div>
+    </div>
+  );
+
+  const formatDiscussions = (discussionsContent: DiscussionType[]) => {
+    return discussionsContent.map((discussion, index) => {
+      return (
+        <div
+          className={classNames({
+            'margin-top-4': index > 0,
+            'margin-top-2': index === 0
+          })}
+        >
+          {discussion.replies.length > 0 ? (
+            <div>
+              {[
+                discussion,
+                ...discussion.replies
+              ].map((discussionReply: ReplyType | DiscussionType, replyIndex) =>
+                discussionComponent(
+                  discussionReply,
+                  index,
+                  replyIndex !== discussion.replies.length
+                )
+              )}
+            </div>
+          ) : (
+            discussionComponent(discussion, index)
+          )}
+          {index !== discussionsContent.length - 1 && <Divider />}
+        </div>
+      );
+    });
+  };
+
   const discussionAccordion = ['UNANSWERED', 'ANSWERED'].map(status => (
     <Accordion
       key={status}
@@ -220,16 +395,16 @@ const Discussions = ({
                 {questionCount.answeredQuestions > 1 && 's'}
               </strong>
             ),
-          content: <></>,
-          expanded: false,
+          content: formatDiscussions(
+            discussions.filter(discussion => discussion.status === status)
+          ),
+          expanded: status === 'UNANSWERED',
           id: status,
           headingLevel: 'h4'
         }
       ]}
     />
   ));
-
-  const formatDiscussions = (discussions: DiscussionType[]) => {};
 
   const renderDiscussions = () => {
     return (
@@ -242,25 +417,37 @@ const Discussions = ({
           <Button
             type="button"
             unstyled
-            onClick={() => setIsRenderQuestion(true)}
+            onClick={() => {
+              setReply(null);
+              setDiscussionType('question');
+            }}
           >
             {t('askAQuestionLink')}
           </Button>
         </div>
         {discussionStatusMessage && (
-          <Alert type={discussionStatus} className="margin-bottom-4">
-            {discussionStatusMessage}
-          </Alert>
+          <Expire delay={3000} callback={setDiscussionStatusMessage}>
+            <Alert type={discussionStatus} className="margin-bottom-4">
+              {discussionStatusMessage}
+            </Alert>
+          </Expire>
         )}
         {discussionAccordion}
       </>
     );
   };
 
+  const chooseRenderMethod = () => {
+    if (discussionType === 'question' || discussionType === 'reply') {
+      return renderQuestion(discussionType);
+    }
+    return renderDiscussions();
+  };
+
   return (
     <ReactModal
       isOpen={isOpen}
-      overlayClassName="mint-discussions__overlay"
+      overlayClassName="mint-discussions__overlay overflow-y-scroll"
       className="mint-discussions__content"
       onAfterOpen={handleOpenModal}
       onAfterClose={noScroll.off}
@@ -280,9 +467,7 @@ const Discussions = ({
         <h4 className="margin-0">{t('modalHeading')}</h4>
       </div>
       <GridContainer className="padding-y-8">
-        <Grid desktop={{ col: 12 }}>
-          {isRenderQuestion ? renderQuestion() : renderDiscussions()}
-        </Grid>
+        <Grid desktop={{ col: 12 }}>{chooseRenderMethod()}</Grid>
       </GridContainer>
     </ReactModal>
   );

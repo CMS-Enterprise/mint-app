@@ -228,8 +228,9 @@ const TaskList = () => {
                       >
                         <strong>{documents.length} </strong>
                         <Trans i18nKey="modelPlanTaskList:summaryBox.existingDocuments">
-                          indexZero {modelName} indexTwo
+                          indexZero {documents.length > 1 ? 's' : ''} indexOne
                         </Trans>
+                        {modelName}
                       </p>
                       <Grid row gap>
                         <Grid tablet={{ col: 4 }}>

@@ -64,7 +64,7 @@ const documents = {
   whatKind: 'What kind of document is this?',
   optionalNotes: 'Optional notes about the document',
   safetyScan:
-    'To keep CMS safe, documents are scanned for ciruses after uploading. If something goes wrong, we’ll let you know',
+    'To keep CMS safe, documents are scanned for viruses after uploading. If something goes wrong, we’ll let you know',
   uploadButton: 'Upload document',
   dontUpload: 'Don’t upload and return to previous page',
   selectFile: 'Select file',
