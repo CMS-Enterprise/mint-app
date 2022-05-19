@@ -137,11 +137,12 @@ const TaskList = () => {
                 {unansweredQuestions > 0 && (
                   <>
                     <strong>{unansweredQuestions}</strong> {d('unanswered')}
-                    {unansweredQuestions > 1 && 's'}
+                    {unansweredQuestions > 1 && 's'}{' '}
                   </>
                 )}
                 {answeredQuestions > 0 && (
                   <>
+                    {unansweredQuestions > 0 && 'and '}
                     <strong>{answeredQuestions}</strong> {d('answered')}
                     {answeredQuestions > 1 && 's'}
                   </>

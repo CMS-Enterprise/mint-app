@@ -10,8 +10,6 @@ import {
   IconAnnouncement,
   IconClose,
   Label,
-  ProcessList,
-  ProcessListItem,
   Textarea
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
@@ -310,7 +308,8 @@ const Discussions = ({
   const discussionComponent = (
     discussion: DiscussionType | ReplyType,
     index: number,
-    connected?: boolean
+    connected?: boolean,
+    askQuestion?: boolean
   ) => (
     <div>
       <div className="display-flex">
@@ -329,18 +328,23 @@ const Discussions = ({
         {' '}
         <p>{discussion.content}</p>
         <div className="display-flex margin-bottom-4">
-          <IconAnnouncement className="text-primary margin-right-1" />
-          <Button
-            type="button"
-            unstyled
-            onClick={() => {
-              setDiscussionStatusMessage('');
-              setDiscussionType('reply');
-              setReply(discussion);
-            }}
-          >
-            {t('answer')}
-          </Button>
+          {askQuestion && (
+            <>
+              {' '}
+              <IconAnnouncement className="text-primary margin-right-1" />
+              <Button
+                type="button"
+                unstyled
+                onClick={() => {
+                  setDiscussionStatusMessage('');
+                  setDiscussionType('reply');
+                  setReply(discussion);
+                }}
+              >
+                {t('answer')}
+              </Button>
+            </>
+          )}
         </div>
       </div>
     </div>
@@ -369,7 +373,7 @@ const Discussions = ({
               )}
             </div>
           ) : (
-            discussionComponent(discussion, index)
+            discussionComponent(discussion, index, null, true)
           )}
           {index !== discussionsContent.length - 1 && <Divider />}
         </div>
