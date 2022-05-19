@@ -17,11 +17,11 @@ import {
   Radio
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
+import * as Yup from 'yup';
 
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
-import AutoSave from 'components/shared/AutoSave';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
@@ -93,7 +93,7 @@ const Milestones = () => {
 
   const handleFormSubmit = (
     formikValues: PlanBasicsMilestoneTypes,
-    redirect?: 'task-list'
+    redirect?: 'back' | 'task-list'
   ) => {
     update({
       variables: {
@@ -117,6 +117,10 @@ const Milestones = () => {
       .then(response => {
         if (!response?.errors) {
           if (redirect === 'task-list') {
+            history.push(`/models/${modelId}/task-list`);
+          } else if (redirect === 'back') {
+            history.push(`/models/${modelId}/overview`);
+          } else {
             history.push(`/models/${modelId}/task-list`);
           }
         }
@@ -164,7 +168,7 @@ const Milestones = () => {
           <Formik
             initialValues={initialValues}
             onSubmit={values => {
-              handleFormSubmit(values, 'task-list');
+              handleFormSubmit(values);
             }}
             enableReinitialize
             validationSchema={planBasicsSchema.pageThreeSchema}
@@ -175,25 +179,22 @@ const Milestones = () => {
           >
             {(formikProps: FormikProps<PlanBasicsMilestoneTypes>) => {
               const {
-                dirty,
                 errors,
                 handleSubmit,
-                isValid,
                 setErrors,
                 setFieldError,
                 setFieldValue,
-                validateField,
+                validateForm,
                 values
               } = formikProps;
               const flatErrors = flattenErrors(errors);
-              const handleOnchange = (e: any, field: string) => {
+              const handleOnBlur = (e: any, field: string) => {
                 if (e === '') {
                   return;
                 }
                 try {
-                  setErrors({});
                   setFieldValue(field, new Date(e).toISOString());
-                  validateField(field);
+                  delete errors[field as keyof PlanBasicsMilestoneTypes];
                 } catch (error) {
                   setFieldError(field, t('validDate'));
                 }
@@ -246,7 +247,9 @@ const Milestones = () => {
                         maxLength={50}
                         name="completeICIP"
                         defaultValue={values.completeICIP}
-                        onChange={(e: any) => handleOnchange(e, 'completeICIP')}
+                        onBlur={(e: any) =>
+                          handleOnBlur(e.target.value, 'completeICIP')
+                        }
                       />
                     </FieldGroup>
 
@@ -279,8 +282,8 @@ const Milestones = () => {
                           maxLength={50}
                           name="clearanceStarts"
                           defaultValue={values.clearanceStarts}
-                          onChange={(e: any) =>
-                            handleOnchange(e, 'clearanceStarts')
+                          onBlur={(e: any) =>
+                            handleOnBlur(e.target.value, 'clearanceStarts')
                           }
                         />
                       </FieldGroup>
@@ -309,8 +312,8 @@ const Milestones = () => {
                           maxLength={50}
                           name="clearanceEnds"
                           defaultValue={values.clearanceEnds}
-                          onChange={(e: any) =>
-                            handleOnchange(e, 'clearanceEnds')
+                          onBlur={(e: any) =>
+                            handleOnBlur(e.target.value, 'clearanceEnds')
                           }
                         />
                       </FieldGroup>
@@ -335,7 +338,9 @@ const Milestones = () => {
                         maxLength={50}
                         name="announced"
                         defaultValue={values.announced}
-                        onChange={(e: any) => handleOnchange(e, 'announced')}
+                        onBlur={(e: any) =>
+                          handleOnBlur(e.target.value, 'announced')
+                        }
                       />
                     </FieldGroup>
 
@@ -368,8 +373,8 @@ const Milestones = () => {
                           maxLength={50}
                           name="applicationsStart"
                           defaultValue={values.applicationsStart}
-                          onChange={(e: any) =>
-                            handleOnchange(e, 'applicationsStart')
+                          onBlur={(e: any) =>
+                            handleOnBlur(e.target.value, 'applicationsStart')
                           }
                         />
                       </FieldGroup>
@@ -398,8 +403,8 @@ const Milestones = () => {
                           maxLength={50}
                           name="applicationsEnd"
                           defaultValue={values.applicationsEnd}
-                          onChange={(e: any) =>
-                            handleOnchange(e, 'applicationsEnd')
+                          onBlur={(e: any) =>
+                            handleOnBlur(e.target.value, 'applicationsEnd')
                           }
                         />
                       </FieldGroup>
@@ -434,8 +439,11 @@ const Milestones = () => {
                           maxLength={50}
                           name="performancePeriodStarts"
                           defaultValue={values.performancePeriodStarts}
-                          onChange={(e: any) =>
-                            handleOnchange(e, 'performancePeriodStarts')
+                          onBlur={(e: any) =>
+                            handleOnBlur(
+                              e.target.value,
+                              'performancePeriodStarts'
+                            )
                           }
                         />
                       </FieldGroup>
@@ -463,8 +471,11 @@ const Milestones = () => {
                           maxLength={50}
                           name="performancePeriodEnds"
                           defaultValue={values.performancePeriodEnds}
-                          onChange={(e: any) =>
-                            handleOnchange(e, 'performancePeriodEnds')
+                          onBlur={(e: any) =>
+                            handleOnBlur(
+                              e.target.value,
+                              'performancePeriodEnds'
+                            )
                           }
                         />
                       </FieldGroup>
@@ -489,7 +500,9 @@ const Milestones = () => {
                         maxLength={50}
                         name="wrapUpEnds"
                         defaultValue={values.wrapUpEnds}
-                        onChange={(e: any) => handleOnchange(e, 'wrapUpEnds')}
+                        onBlur={(e: any) =>
+                          handleOnBlur(e.target.value, 'wrapUpEnds')
+                        }
                       />
                     </FieldGroup>
 
@@ -532,7 +545,7 @@ const Milestones = () => {
                           id="phasedIn-Yes"
                           name="phasedIn"
                           label={h('yes')}
-                          value="YES"
+                          value
                           checked={values.phasedIn === true}
                           onChange={() => {
                             setFieldValue('phasedIn', true);
@@ -543,7 +556,7 @@ const Milestones = () => {
                           id="phasedIn-No"
                           name="phasedIn"
                           label={h('no')}
-                          value="NO"
+                          value={false}
                           checked={values.phasedIn === false}
                           onChange={() => {
                             setFieldValue('phasedIn', false);
@@ -579,17 +592,20 @@ const Milestones = () => {
                       <Button
                         type="button"
                         className="usa-button usa-button--outline margin-bottom-1"
-                        onClick={() =>
-                          history.push(
-                            `/models/${modelId}/task-list/basics/overview`
-                          )
-                        }
+                        onClick={() => {
+                          validateForm().then(err => {
+                            if (Object.keys(err).length > 0) {
+                              window.scrollTo(0, 0);
+                            } else {
+                              handleFormSubmit(values, 'back');
+                            }
+                          });
+                        }}
                       >
                         {h('back')}
                       </Button>
                       <Button
                         type="submit"
-                        disabled={!(dirty || isValid)}
                         className=""
                         onClick={() => setErrors({})}
                       >
@@ -599,23 +615,20 @@ const Milestones = () => {
                     <Button
                       type="button"
                       className="usa-button usa-button--unstyled"
-                      onClick={() => handleFormSubmit(values, 'task-list')}
+                      onClick={() => {
+                        validateForm().then(err => {
+                          if (Object.keys(err).length > 0) {
+                            window.scrollTo(0, 0);
+                          } else {
+                            handleFormSubmit(values, 'task-list');
+                          }
+                        });
+                      }}
                     >
                       <IconArrowBack className="margin-right-1" aria-hidden />
                       {h('saveAndReturn')}
                     </Button>
                   </Form>
-                  <AutoSave
-                    values={values}
-                    onSave={() => {
-                      if (
-                        Object.keys(formikRef.current!.touched).length !== 0
-                      ) {
-                        handleFormSubmit(formikRef.current!.values);
-                      }
-                    }}
-                    debounceDelay={3000}
-                  />
                 </>
               );
             }}
