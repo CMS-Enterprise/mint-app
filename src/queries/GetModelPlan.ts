@@ -1,15 +1,17 @@
 import { gql } from '@apollo/client';
 
 export default gql`
-  mutation CreateModelPlan($modelName: String!) {
-    createModelPlan(modelName: $modelName) {
+  query GetModelPlan($id: UUID!) {
+    modelPlan(id: $id) {
       id
-      createdBy
       modelName
       modelCategory
       cmsCenters
       cmsOther
       cmmiGroups
+      modifiedDts
+      archived
+      status
       basics {
         id
         modelPlanID
@@ -18,10 +20,6 @@ export default gql`
         goal
         testInventions
         note
-        createdBy
-        createdDts
-        modifiedBy
-        modifiedDts
         status
       }
       milestones {
@@ -35,21 +33,15 @@ export default gql`
         applicationsEnd
         performancePeriodStarts
         performancePeriodEnds
-        wrapUpEnds
         highLevelNote
+        wrapUpEnds
         phasedIn
         phasedInNote
-        createdBy
-        createdDts
-        modifiedBy
-        modifiedDts
         status
       }
-      collaborators {
+      documents {
         id
-        fullName
-        euaUserID
-        teamRole
+        fileName
       }
     }
   }

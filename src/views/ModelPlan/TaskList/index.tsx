@@ -18,9 +18,9 @@ import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import Divider from 'components/shared/Divider';
-import GetModelPlanQuery from 'queries/GetModelPlanQuery';
+import GetModelPlan from 'queries/GetModelPlan';
 import {
-  GetModelPlan,
+  GetModelPlan as GetModelPlanType,
   GetModelPlan_modelPlan as GetModelPlanTypes,
   GetModelPlan_modelPlan_discussions as DiscussionType,
   GetModelPlanVariables
@@ -50,8 +50,8 @@ const TaskList = () => {
   const { modelID } = useParams<{ modelID: string }>();
   const [isDiscussionOpen, setIsDiscussionOpen] = useState(false);
 
-  const { data, refetch } = useQuery<GetModelPlan, GetModelPlanVariables>(
-    GetModelPlanQuery,
+  const { data } = useQuery<GetModelPlanType, GetModelPlanVariables>(
+    GetModelPlan,
     {
       variables: {
         id: modelID
@@ -63,6 +63,10 @@ const TaskList = () => {
 
   const {
     modelName,
+    modelCategory,
+    cmsCenters,
+    modifiedDts,
+    milestones,
     basics,
     discussions,
     documents,
@@ -87,20 +91,29 @@ const TaskList = () => {
   const taskListItemStatus = (key: string) => {
     switch (key) {
       case 'basics':
-        return basics === null ? 'READY' : 'IN_PROGRESS';
+        if (
+          basics?.status === 'COMPLETE' &&
+          milestones?.status === 'COMPLETE'
+        ) {
+          return 'COMPLETE';
+        }
+        if (modelCategory === null && cmsCenters.length === 0) {
+          return 'READY';
+        }
+        return 'IN_PROGRESS';
       // TODO: Add these model plans when BE integrates it
       // case 'characteristics':
-      //   return characteristics === null ? 'READY' : 'IN_PROGRESS';
+      //   return;
       // case 'participants':
-      //   return participants === null ? 'READY' : 'IN_PROGRESS';
+      //   return;
       // case 'beneficiaries':
-      //   return beneficiaries === null ? 'READY' : 'IN_PROGRESS';
+      //   return;
       // case 'operations':
-      //   return operations === null ? 'READY' : 'IN_PROGRESS';
+      //   return;
       // case 'payment':
-      //   return payment === null ? 'READY' : 'IN_PROGRESS';
+      //   return;
       // case 'finalizeModelPlan':
-      //   return finalizeModelPlan === null ? 'READY' : 'IN_PROGRESS';
+      //   return;
       default:
         return 'CANNOT_START';
     }

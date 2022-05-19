@@ -62,6 +62,18 @@ export enum ModelStatus {
   PLAN_DRAFT = "PLAN_DRAFT",
 }
 
+export enum ModelType {
+  MANDATORY = "MANDATORY",
+  TBD = "TBD",
+  VOLUNTARY = "VOLUNTARY",
+}
+
+export enum TaskStatus {
+  COMPLETE = "COMPLETE",
+  IN_PROGRESS = "IN_PROGRESS",
+  READY = "READY",
+}
+
 export enum TeamRole {
   EVALUATION = "EVALUATION",
   LEADERSHIP = "LEADERSHIP",
@@ -93,6 +105,19 @@ export interface ModelPlanChanges {
   someNumbers?: number[] | null;
   archived?: boolean | null;
   status?: ModelStatus | null;
+}
+
+/**
+ * PlanBasicsChanges represents the possible changes you can make to a Plan Basics object when updating it.
+ * Fields explicitly set with NULL will be unset, and omitted fields will be left unchanged.
+ * https: // gqlgen.com/reference/changesets/
+ */
+export interface PlanBasicsChanges {
+  modelType?: ModelType | null;
+  problem?: string | null;
+  goal?: string | null;
+  testInventions?: string | null;
+  note?: string | null;
 }
 
 /**
@@ -133,6 +158,26 @@ export interface PlanDocumentParameters {
   documentType?: DocumentType | null;
   otherTypeDescription?: string | null;
   optionalNotes?: string | null;
+}
+
+/**
+ * PlanMilestoneChanges represents the possible changes you can make to a Plan Milestones object when updating it.
+ * Fields explicitly set with NULL will be unset, and omitted fields will be left unchanged.
+ * https: // gqlgen.com/reference/changesets/
+ */
+export interface PlanMilestoneChanges {
+  completeICIP?: Time | null;
+  clearanceStarts?: Time | null;
+  clearanceEnds?: Time | null;
+  announced?: Time | null;
+  applicationsStart?: Time | null;
+  applicationsEnd?: Time | null;
+  performancePeriodStarts?: Time | null;
+  performancePeriodEnds?: Time | null;
+  wrapUpEnds?: Time | null;
+  highLevelNote?: string | null;
+  phasedIn?: boolean | null;
+  phasedInNote?: string | null;
 }
 
 //==============================================================

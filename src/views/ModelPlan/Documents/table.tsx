@@ -235,37 +235,35 @@ const Table = ({
         Header: t('documentTable.actions'),
         accessor: 'virusScanned',
         Cell: ({ row, value }: any) => {
-          // if (value) {
-          //   return row.original.virusClean ? (
-          return (
-            <>
-              <Button
-                type="button"
-                unstyled
-                className="margin-right-1"
-                onClick={() => handleDownload(row.original)}
-              >
-                {t('documentTable.view')}
-              </Button>
-              <Button
-                type="button"
-                unstyled
-                className="text-red"
-                data-testid="remove-document"
-                onClick={() => {
-                  setModalOpen(true);
-                  setFileToRemove(row.original);
-                }}
-              >
-                {t('documentTable.remove')}
-              </Button>
-            </>
-          );
-          //   ) : (
-          //     t('documentTable.virusFound')
-          //   );
-          // }
-          // return t('documentTable.scanInProgress');
+          if (value) {
+            return row.original.virusClean ? (
+              <>
+                <Button
+                  type="button"
+                  unstyled
+                  className="margin-right-1"
+                  onClick={() => handleDownload(row.original)}
+                >
+                  {t('documentTable.view')}
+                </Button>
+                <Button
+                  type="button"
+                  unstyled
+                  className="text-red"
+                  data-testid="remove-document"
+                  onClick={() => {
+                    setModalOpen(true);
+                    setFileToRemove(row.original);
+                  }}
+                >
+                  {t('documentTable.remove')}
+                </Button>
+              </>
+            ) : (
+              t('documentTable.virusFound')
+            );
+          }
+          return t('documentTable.scanInProgress');
         }
       }
     ];

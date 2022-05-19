@@ -20,8 +20,8 @@ import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import FieldGroup from 'components/shared/FieldGroup';
 import modelStatus from 'constants/enums/modelPlanStatuses';
-import GetModelPlanQuery from 'queries/GetModelPlanQuery';
-import { GetModelPlan } from 'queries/types/GetModelPlan';
+import GetModelPlan from 'queries/GetModelPlan';
+import { GetModelPlan as GetModelPlanType } from 'queries/types/GetModelPlan';
 import { UpdateModelPlan as UpdateModelPlanType } from 'queries/types/UpdateModelPlan';
 import UpdateModelPlan from 'queries/UpdateModelPlan';
 import { ModelStatus } from 'types/graphql-global-types';
@@ -42,7 +42,7 @@ const Status = () => {
     status: Yup.string().required('Enter a role for this team member')
   });
 
-  const { data } = useQuery<GetModelPlan>(GetModelPlanQuery, {
+  const { data } = useQuery<GetModelPlanType>(GetModelPlan, {
     variables: {
       id: modelID
     }
