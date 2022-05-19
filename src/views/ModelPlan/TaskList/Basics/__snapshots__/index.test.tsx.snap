@@ -119,6 +119,7 @@ exports[`Model Plan Documents page matches snapshot 1`] = `
             >
               <option
                 disabled=""
+                value=""
               >
                 -Select-
               </option>
