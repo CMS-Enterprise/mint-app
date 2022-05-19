@@ -89,7 +89,7 @@ const NewPlanContent = () => {
                     <ErrorAlert
                       testId="formik-validation-errors"
                       classNames="margin-top-3"
-                      heading="Please check and fix the following"
+                      heading={h('checkAndFix')}
                     >
                       {Object.keys(flatErrors).map(key => {
                         return (

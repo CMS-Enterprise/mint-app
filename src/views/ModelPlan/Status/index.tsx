@@ -20,8 +20,8 @@ import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import FieldGroup from 'components/shared/FieldGroup';
 import modelStatus from 'constants/enums/modelPlanStatuses';
-import GetModelPlanQuery from 'queries/GetModelPlanQuery';
-import { GetModelPlan } from 'queries/types/GetModelPlan';
+import GetModelPlan from 'queries/GetModelPlan';
+import { GetModelPlan as GetModelPlanType } from 'queries/types/GetModelPlan';
 import { UpdateModelPlan as UpdateModelPlanType } from 'queries/types/UpdateModelPlan';
 import UpdateModelPlan from 'queries/UpdateModelPlan';
 import { ModelStatus } from 'types/graphql-global-types';
@@ -34,7 +34,7 @@ type StatusFormProps = {
 const Status = () => {
   const { t } = useTranslation('modelPlan');
   const { t: h } = useTranslation('draftModelPlan');
-  const { modelId } = useParams<{ modelId: string }>();
+  const { modelID } = useParams<{ modelID: string }>();
 
   const history = useHistory();
   const formikRef = useRef<FormikProps<StatusFormProps>>(null);
@@ -42,9 +42,9 @@ const Status = () => {
     status: Yup.string().required('Enter a role for this team member')
   });
 
-  const { data } = useQuery<GetModelPlan>(GetModelPlanQuery, {
+  const { data } = useQuery<GetModelPlanType>(GetModelPlan, {
     variables: {
-      id: modelId
+      id: modelID
     }
   });
 
@@ -55,7 +55,7 @@ const Status = () => {
   const handleFormSubmit = (formikValues: StatusFormProps) => {
     update({
       variables: {
-        id: modelId,
+        id: modelID,
         changes: {
           status: formikValues.status
         }
@@ -63,7 +63,7 @@ const Status = () => {
     })
       .then(response => {
         if (!response?.errors) {
-          history.push(`/models/${modelId}/task-list/`);
+          history.push(`/models/${modelID}/task-list/`);
         }
       })
       .catch(errors => {
@@ -84,7 +84,7 @@ const Status = () => {
             <Breadcrumb>
               <BreadcrumbLink
                 asCustom={Link}
-                to={`/models/${modelId}/task-list/`}
+                to={`/models/${modelID}/task-list/`}
               >
                 <span>{h('tasklistBreadcrumb')}</span>
               </BreadcrumbLink>
@@ -166,7 +166,7 @@ const Status = () => {
                       type="button"
                       className="usa-button usa-button--unstyled"
                       onClick={() =>
-                        history.push(`/models/${modelId}/task-list/`)
+                        history.push(`/models/${modelID}/task-list/`)
                       }
                     >
                       <IconArrowBack className="margin-right-1" aria-hidden />

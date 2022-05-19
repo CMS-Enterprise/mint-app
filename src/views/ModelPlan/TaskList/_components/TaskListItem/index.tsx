@@ -2,8 +2,6 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import classnames from 'classnames';
 
-import Tag from 'components/shared/Tag';
-
 type TaskListLastUpdatedProps = {
   children?: React.ReactNode | React.ReactNodeArray;
 };
@@ -31,7 +29,7 @@ export const TaskListDescription = ({ children }: TaskListDescriptionProps) => {
 type TaskListItemProps = {
   children?: React.ReactNode | React.ReactNodeArray;
   heading: string;
-  status: 'READY' | 'IN_PROGRESS' | 'CANNOT_START';
+  status: 'READY' | 'IN_PROGRESS' | 'CANNOT_START' | 'COMPLETE';
   testId: string;
 };
 
@@ -63,6 +61,10 @@ const TaskListItem = ({
       tagCopy = t('taskListItem.inProgress');
       tagStyle = 'bg-warning';
       break;
+    case 'COMPLETE':
+      tagCopy = t('taskListItem.completed');
+      tagStyle = 'bg-success-dark text-white';
+      break;
     default:
       tagCopy = t('taskListItem.cannotStart');
       tagStyle = 'text-base border-2px border-base';
@@ -73,11 +75,12 @@ const TaskListItem = ({
       <div className="width-full">
         <div className="model-plan-task-list__task-row display-flex flex-justify flex-align-start">
           <h3 className="margin-top-0 margin-bottom-1">{heading}</h3>
-          <Tag
+          <span
+            data-testid="tasklist-tag"
             className={`model-plan-task-list__task-tag line-height-5 text-bold ${tagStyle}`}
           >
             {tagCopy}
-          </Tag>
+          </span>
         </div>
         {children}
       </div>
