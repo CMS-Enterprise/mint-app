@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { ModelCategory, CMSCenter, CMMIGroup, ModelStatus, ModelType, TaskStatus } from "./../../types/graphql-global-types";
+import { ModelCategory, CMSCenter, CMMIGroup, ModelStatus, ModelType, TaskStatus, DiscussionStatus } from "./../../types/graphql-global-types";
 
 // ====================================================
 // GraphQL query operation: GetModelPlan
@@ -40,30 +40,30 @@ export interface GetModelPlan_modelPlan_milestones {
   status: TaskStatus | null;
 }
 
+export interface GetModelPlan_modelPlan_documents {
+  __typename: "PlanDocument";
+  id: UUID;
+  fileName: string | null;
+}
+
 export interface GetModelPlan_modelPlan_discussions_replies {
   __typename: "DiscussionReply";
   id: UUID | null;
-  content: string | null;
   discussionID: UUID;
-  resolution: boolean | null;
+  content: string | null;
   createdBy: string | null;
   createdDts: Time | null;
+  resolution: boolean | null;
 }
 
 export interface GetModelPlan_modelPlan_discussions {
   __typename: "PlanDiscussion";
   id: UUID | null;
   content: string | null;
-  status: DiscussionStatus;
   createdBy: string | null;
   createdDts: Time | null;
+  status: DiscussionStatus;
   replies: GetModelPlan_modelPlan_discussions_replies[];
-}
-
-export interface GetModelPlan_modelPlan_documents {
-  __typename: "PlanDocument";
-  id: UUID;
-  fileName: string | null;
 }
 
 export interface GetModelPlan_modelPlan {
@@ -80,6 +80,7 @@ export interface GetModelPlan_modelPlan {
   basics: GetModelPlan_modelPlan_basics | null;
   milestones: GetModelPlan_modelPlan_milestones | null;
   documents: GetModelPlan_modelPlan_documents[];
+  discussions: GetModelPlan_modelPlan_discussions[];
 }
 
 export interface GetModelPlan {

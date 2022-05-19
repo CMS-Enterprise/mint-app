@@ -57,18 +57,18 @@ const Discussions = ({
     'success'
   );
   const [discussionStatusMessage, setDiscussionStatusMessage] = useState('');
+  const [questionCount, setQuestionCount] = useState({
+    answeredQuestions: 0,
+    unansweredQuestions: 0
+  });
   const [isRenderQuestion, setIsRenderQuestion] = useState(false);
 
   useEffect(() => {
-    console.log(discussions);
     if (discussions?.length === 0) {
       setIsRenderQuestion(true);
     }
+    setQuestionCount(getUnansweredQuestions(discussions));
   }, [discussions]);
-
-  const { unansweredQuestions, answeredQuestions } = getUnansweredQuestions(
-    discussions
-  );
 
   const [create] = useMutation<CreateModelPlanDiscussionType>(
     CreateModelPlanDiscussion
@@ -98,6 +98,7 @@ const Discussions = ({
         if (!response?.errors) {
           setDiscussionStatus('success');
           setDiscussionStatusMessage(t('success'));
+          setIsRenderQuestion(false);
           refetch();
         }
       })
@@ -210,13 +211,13 @@ const Discussions = ({
           title:
             status === 'UNANSWERED' ? (
               <strong>
-                {unansweredQuestions} {t('unanswered')}
-                {unansweredQuestions > 1 && 's'}
+                {questionCount.unansweredQuestions} {t('unanswered')}
+                {questionCount.unansweredQuestions > 1 && 's'}
               </strong>
             ) : (
               <strong>
-                {answeredQuestions} {t('answered')}
-                {answeredQuestions > 1 && 's'}
+                {questionCount.answeredQuestions} {t('answered')}
+                {questionCount.answeredQuestions > 1 && 's'}
               </strong>
             ),
           content: <></>,

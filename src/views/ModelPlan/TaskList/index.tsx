@@ -50,7 +50,7 @@ const TaskList = () => {
   const { modelID } = useParams<{ modelID: string }>();
   const [isDiscussionOpen, setIsDiscussionOpen] = useState(false);
 
-  const { data } = useQuery<GetModelPlanType, GetModelPlanVariables>(
+  const { data, refetch } = useQuery<GetModelPlanType, GetModelPlanVariables>(
     GetModelPlan,
     {
       variables: {
@@ -65,7 +65,7 @@ const TaskList = () => {
     modelName,
     modelCategory,
     cmsCenters,
-    modifiedDts,
+    // modifiedDts,
     milestones,
     basics,
     discussions,

@@ -15,6 +15,8 @@ import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import Alert from 'components/shared/Alert';
+import Expire from 'components/shared/Expire';
+import useMessage from 'hooks/useMessage';
 import GetModelPlan from 'queries/GetModelPlan';
 import {
   GetModelPlan as GetModelPlanType,
@@ -32,6 +34,7 @@ export const DocumentsContent = () => {
   const { t: h } = useTranslation('draftModelPlan');
   const { t } = useTranslation('documents');
   const { modelID } = useParams<{ modelID: string }>();
+  const { message } = useMessage();
   const [documentMessage, setDocumentMessage] = useState('');
   const [documentStatus, setDocumentStatus] = useState<DocumentStatusType>(
     'error'
@@ -69,17 +72,21 @@ export const DocumentsContent = () => {
             <Breadcrumb current>{t('heading')}</Breadcrumb>
           </BreadcrumbBar>
 
+          {message && <Expire delay={4000}>{message}</Expire>}
+
           {documentMessage && (
-            <Alert
-              type={documentStatus}
-              slim
-              data-testid="mandatory-fields-alert"
-              className="margin-y-4"
-            >
-              <span className="mandatory-fields-alert__text">
-                {documentMessage}
-              </span>
-            </Alert>
+            <Expire delay={4000}>
+              <Alert
+                type={documentStatus}
+                slim
+                data-testid="mandatory-fields-alert"
+                className="margin-y-4"
+              >
+                <span className="mandatory-fields-alert__text">
+                  {documentMessage}
+                </span>
+              </Alert>
+            </Expire>
           )}
 
           <PageHeading className="margin-top-4 margin-bottom-0">

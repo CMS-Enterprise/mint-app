@@ -42,6 +42,7 @@ const documents = {
   urlFail: 'Failed to fetch file URL',
   removeDocumentFail: 'Failed to remove document {{-documentName}}',
   removeDocumentSuccess: 'Success! Document {{-documentName}} removed.',
+  documentUploadSuccess: 'Successfully added {{-documentName}}.',
   uploadDocument: 'Upload a document',
   uploadDescription:
     'Choose a document to upload, such as a recent concept document, policy paper, or any additional model background information.',
