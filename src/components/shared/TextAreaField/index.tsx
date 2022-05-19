@@ -1,27 +1,31 @@
 import React from 'react';
 import classnames from 'classnames';
 
+import FieldErrorMsg from 'components/shared/FieldErrorMsg';
+
 type TextAreaFieldProps = {
-  id: string;
   className?: string;
   error?: boolean;
+  hint?: string;
+  id: string;
   label?: string;
-  name: string;
   maxLength?: number;
-  onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
+  name: string;
   onBlur: () => void;
+  onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
   value: string;
 } & JSX.IntrinsicElements['textarea'];
 
 const TextAreaField = ({
-  id,
   className,
   error,
+  hint,
+  id,
   label,
-  name,
   maxLength,
-  onChange,
+  name,
   onBlur,
+  onChange,
   value,
   ...props
 }: TextAreaFieldProps) => {
@@ -39,6 +43,13 @@ const TextAreaField = ({
           {label}
         </label>
       )}
+
+      {hint && (
+        <span className="usa-hint display-block text-normal">{hint}</span>
+      )}
+
+      {error && <FieldErrorMsg>{error}</FieldErrorMsg>}
+
       <textarea
         className={textAreaClasses}
         id={id}

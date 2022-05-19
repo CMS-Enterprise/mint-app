@@ -85,7 +85,7 @@ const AppRoutes = () => {
         component={Collaborators}
       />
       <SecureRoute path="/models/:modelID/documents" component={Documents} />
-      <SecureRoute path="/models/:modelId/status" exact component={Status} />
+      <SecureRoute path="/models/:modelID/status" exact component={Status} />
       <SecureRoute
         path="/models/:modelID/task-list"
         exact

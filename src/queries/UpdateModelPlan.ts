@@ -7,8 +7,11 @@ export default gql`
       modelName
       modelCategory
       cmsCenters
-      cmsOther
       cmmiGroups
+      cmsOther
+      createdBy
+      modifiedBy
+      modifiedDts
       archived
       status
     }

@@ -8,7 +8,7 @@ const draftModelPlan = {
   cancel: 'Cancel',
   select: 'Select',
   additionalNote: 'Add an additional note',
-  datePlaceholder: 'mm/dd/yyy',
+  datePlaceholder: 'mm/dd/yyyy',
   yes: 'Yes',
   no: 'No',
   howSo: 'How so?',
@@ -16,7 +16,8 @@ const draftModelPlan = {
   saveAndStartNext: 'Save and start next Model Plan section',
   continueToTaskList: 'Continue to Model Plan task list',
   returnToTaskList: 'Return to Model Plan task list',
-  noResults: 'No results found'
+  noResults: 'No results found',
+  checkAndFix: 'Please check and fix the following'
 };
 
 export default draftModelPlan;

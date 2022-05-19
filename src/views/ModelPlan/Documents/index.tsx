@@ -15,9 +15,9 @@ import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import Alert from 'components/shared/Alert';
-import GetModelPlanQuery from 'queries/GetModelPlanQuery';
+import GetModelPlan from 'queries/GetModelPlan';
 import {
-  GetModelPlan,
+  GetModelPlan as GetModelPlanType,
   GetModelPlan_modelPlan as GetModelPlanTypes,
   GetModelPlanVariables
 } from 'queries/types/GetModelPlan';
@@ -37,8 +37,8 @@ export const DocumentsContent = () => {
     'error'
   );
 
-  const { data } = useQuery<GetModelPlan, GetModelPlanVariables>(
-    GetModelPlanQuery,
+  const { data } = useQuery<GetModelPlanType, GetModelPlanVariables>(
+    GetModelPlan,
     {
       variables: {
         id: modelID
