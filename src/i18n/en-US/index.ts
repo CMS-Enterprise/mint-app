@@ -1,4 +1,5 @@
 import basics from './draftModelPlan/basics';
+import documents from './draftModelPlan/documents';
 import draftModelPlan from './draftModelPlan/draftModelPlan';
 import newModel from './draftModelPlan/newModel';
 import accessibilityStatement from './accessibilityStatement';
@@ -20,6 +21,7 @@ const enUS = {
   auth,
   basics,
   cookies,
+  documents,
   draftModelPlan,
   error,
   footer,

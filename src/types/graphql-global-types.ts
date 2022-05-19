@@ -30,6 +30,14 @@ export enum DiscussionStatus {
   WAITING_FOR_RESPONSE = "WAITING_FOR_RESPONSE",
 }
 
+export enum DocumentType {
+  CONCEPT_PAPER = "CONCEPT_PAPER",
+  ICIP_DRAFT = "ICIP_DRAFT",
+  MARKET_RESEARCH = "MARKET_RESEARCH",
+  OTHER = "OTHER",
+  POLICY_PAPER = "POLICY_PAPER",
+}
+
 export enum ModelCategory {
   ACCOUNTABLE_CARE = "ACCOUNTABLE_CARE",
   DEMONSTRATION = "DEMONSTRATION",
@@ -72,6 +80,15 @@ export enum TeamRole {
   LEARNING = "LEARNING",
   MODEL_LEAD = "MODEL_LEAD",
   MODEL_TEAM = "MODEL_TEAM",
+}
+
+/**
+ * Input associated with a document to be uploaded
+ */
+export interface GeneratePresignedUploadURLInput {
+  fileName: string;
+  mimeType: string;
+  size: number;
 }
 
 /**
@@ -131,6 +148,25 @@ export interface PlanMilestoneChanges {
   highLevelNote?: string | null;
   phasedIn?: boolean | null;
   phasedInNote?: string | null;
+ * PlanDocumentInput represents the data required to create, modify, or delete a document on a plan
+ */
+export interface PlanDocumentInput {
+  id?: UUID | null;
+  modelPlanID: UUID;
+  documentParameters: PlanDocumentParameters;
+  url?: string | null;
+}
+
+/**
+ * PlanDocumentCreateParameters represents the specific data required to create or modify a document on a plan
+ */
+export interface PlanDocumentParameters {
+  fileName?: string | null;
+  fileSize: number;
+  fileType?: string | null;
+  documentType?: DocumentType | null;
+  otherTypeDescription?: string | null;
+  optionalNotes?: string | null;
 }
 
 //==============================================================

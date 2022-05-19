@@ -20,7 +20,7 @@ import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import teamRoles from 'constants/enums/teamRoles';
-import useUserSearch from 'hooks/getCedarUsers';
+import useUserSearch from 'hooks/useCedarUsers';
 import CreateModelPlanCollaborator from 'queries/CreateModelPlanCollaborator';
 import GetModelPlanCollaborator from 'queries/GetModelPlanCollaborator';
 import { CreateModelPlanCollaborator as CreateCollaboratorsType } from 'queries/types/CreateModelPlanCollaborator';
@@ -38,7 +38,7 @@ import CollaboratorsValidationSchema from 'validations/modelPlanCollaborators';
 import '@reach/combobox/styles.css';
 
 const Collaborators = () => {
-  const { modelId } = useParams<{ modelId: string }>();
+  const { modelID } = useParams<{ modelID: string }>();
   const { collaboratorId } = useParams<{ collaboratorId: string }>();
   const { t: h } = useTranslation('draftModelPlan');
   const { t } = useTranslation('newModel');
@@ -79,7 +79,7 @@ const Collaborators = () => {
       })
         .then(response => {
           if (!response?.errors) {
-            history.push(`/models/new-plan/${modelId}/collaborators`);
+            history.push(`/models/new-plan/${modelID}/collaborators`);
           }
         })
         .catch(errors => {
@@ -92,13 +92,13 @@ const Collaborators = () => {
             fullName,
             teamRole,
             euaUserID,
-            modelPlanID: modelId
+            modelPlanID: modelID
           }
         }
       })
         .then(response => {
           if (!response?.errors) {
-            history.push(`/models/new-plan/${modelId}/collaborators`);
+            history.push(`/models/new-plan/${modelID}/collaborators`);
           }
         })
         .catch(errors => {
@@ -296,7 +296,7 @@ const Collaborators = () => {
               );
             }}
           </Formik>
-          <UswdsReactLink to={`/models/new-plan/${modelId}/collaborators`}>
+          <UswdsReactLink to={`/models/new-plan/${modelID}/collaborators`}>
             <span>&larr; </span>{' '}
             {!collaboratorId
               ? t('dontAddTeamMember')

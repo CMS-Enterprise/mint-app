@@ -29,7 +29,7 @@ const CollaboratorsTable = ({
   setRemoveCollaborator,
   isLastLead
 }: TableProps) => {
-  const { modelId } = useParams<{ modelId: string }>();
+  const { modelID } = useParams<{ modelID: string }>();
   const { t } = useTranslation('newModel');
 
   const columns: any = useMemo(() => {
@@ -66,7 +66,7 @@ const CollaboratorsTable = ({
             <>
               <UswdsReactLink
                 className="margin-right-2"
-                to={`/models/new-plan/${modelId}/add-collaborator/${row.original.id}`}
+                to={`/models/new-plan/${modelID}/add-collaborator/${row.original.id}`}
               >
                 {t('table.edit')}
               </UswdsReactLink>
@@ -91,7 +91,7 @@ const CollaboratorsTable = ({
     ];
   }, [
     t,
-    modelId,
+    modelID,
     setModalOpen,
     setRemoveCollaborator,
     collaborators.length,

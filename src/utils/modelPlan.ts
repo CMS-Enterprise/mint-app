@@ -1,4 +1,6 @@
 import i18next from 'i18next';
+
+import { DocumentType } from 'types/graphql-global-types';
 /**
  * Translate the API enum to a human readable string
  */
@@ -100,6 +102,28 @@ export const translateModelPlanStatus = (status: string) => {
       return i18next.t('modelPlan:planStatuses.cleared');
     case 'ANNOUNCED':
       return i18next.t('modelPlan:planStatuses.announced');
+    default:
+      return '';
+  }
+};
+
+/**
+ * Translate the document type API enum to a human readable string
+ */
+
+// TODO import gql gen document type
+export const translateDocumentType = (documentType: DocumentType) => {
+  switch (documentType) {
+    case 'CONCEPT_PAPER':
+      return i18next.t('documents:documentTypes.concept');
+    case 'POLICY_PAPER':
+      return i18next.t('documents:documentTypes.policy');
+    case 'ICIP_DRAFT':
+      return i18next.t('documents:documentTypes.icipDraft');
+    case 'MARKET_RESEARCH':
+      return i18next.t('documents:documentTypes.marketResearch');
+    case 'OTHER':
+      return i18next.t('documents:documentTypes.other');
     default:
       return '';
   }

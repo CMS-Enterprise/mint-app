@@ -40,6 +40,12 @@ export interface GetModelPlan_modelPlan_milestones {
   status: TaskStatus | null;
 }
 
+export interface GetModelPlan_modelPlan_documents {
+  __typename: "PlanDocument";
+  id: UUID;
+  fileName: string | null;
+}
+
 export interface GetModelPlan_modelPlan {
   __typename: "ModelPlan";
   id: UUID | null;
@@ -53,6 +59,7 @@ export interface GetModelPlan_modelPlan {
   status: ModelStatus;
   basics: GetModelPlan_modelPlan_basics | null;
   milestones: GetModelPlan_modelPlan_milestones | null;
+  documents: GetModelPlan_modelPlan_documents[];
 }
 
 export interface GetModelPlan {

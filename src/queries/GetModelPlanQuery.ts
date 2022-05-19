@@ -39,6 +39,10 @@ export default gql`
         phasedInNote
         status
       }
+      documents {
+        id
+        fileName
+      }
     }
   }
 `;

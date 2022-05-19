@@ -9,7 +9,7 @@ export const Participants = () => {
     <MainContent className="grid-container" data-testid="model-participants">
       <Switch>
         <Route
-          path="/models/:modelId/task-list/participants/page-1" // page-* may change pending UX clarifcation
+          path="/models/:modelID/task-list/participants/page-1" // page-* may change pending UX clarifcation
           render={() => <NotFound />}
         />
         <Route path="*" render={() => <NotFoundPartial />} />

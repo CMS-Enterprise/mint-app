@@ -8,7 +8,10 @@ const modelPlanTaskList = {
   update: 'Update',
   summaryBox: {
     copy: 'There are no documents uploaded for <1>{{modelName}}</1>.',
-    cta: 'Upload a document'
+    existingDocuments: 'documents uploaded for <1>{{modelName}}</1>.',
+    cta: 'Upload a document',
+    viewAll: 'View all model documents',
+    uploadAnother: 'Upload another document'
   },
   sideNav: {
     saveAndExit: 'Save & Exit',

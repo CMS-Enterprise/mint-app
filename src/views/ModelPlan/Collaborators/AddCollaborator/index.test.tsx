@@ -14,7 +14,7 @@ describe('Adding a collaborator page', () => {
         ]}
       >
         <MockedProvider>
-          <Route path="models/new-plan/:modelId/add-collaborator">
+          <Route path="models/new-plan/:modelID/add-collaborator">
             <AddCollaborator />
           </Route>
         </MockedProvider>

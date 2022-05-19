@@ -18,14 +18,14 @@ import { UpdateModelPlan as UpdateModelPlanType } from 'queries/types/UpdateMode
 import UpdateModelPlan from 'queries/UpdateModelPlan';
 
 const TaskListSideNav = ({ modelPlan }: { modelPlan: GetModelPlanType }) => {
-  const { id: modelId } = modelPlan;
+  const { id: modelID } = modelPlan;
   const history = useHistory();
   const { t } = useTranslation('modelPlanTaskList');
   const [isModalOpen, setModalOpen] = useState(false);
 
   const { data } = useQuery<GetModelCollaborators>(GetModelPlanCollaborators, {
     variables: {
-      id: modelId
+      id: modelID
     }
   });
 
@@ -37,7 +37,7 @@ const TaskListSideNav = ({ modelPlan }: { modelPlan: GetModelPlanType }) => {
   const archiveModelPlan = () => {
     update({
       variables: {
-        id: modelId,
+        id: modelID,
         changes: {
           archived: true
         }
@@ -80,7 +80,7 @@ const TaskListSideNav = ({ modelPlan }: { modelPlan: GetModelPlanType }) => {
     <>
       {renderModal()}
       <div
-        className="sidenav-actions margin-left-4 border-top-05 border-primary-lighter padding-top-2"
+        className="sidenav-actions border-top-05 border-primary-lighter padding-top-2 margin-top-2"
         data-testid="sidenav-actions"
       >
         <div className="margin-bottom-1">
@@ -112,7 +112,7 @@ const TaskListSideNav = ({ modelPlan }: { modelPlan: GetModelPlanType }) => {
         <div>
           <h3 className="margin-bottom-05">{t('sideNav.modelTeam')}</h3>
           <div className="margin-bottom-2">
-            <UswdsReactLink to={`/models/${modelId}/collaborators`}>
+            <UswdsReactLink to={`/models/${modelID}/collaborators`}>
               {t('sideNav.editTeam')}
             </UswdsReactLink>
           </div>

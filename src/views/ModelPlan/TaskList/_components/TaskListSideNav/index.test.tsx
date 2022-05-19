@@ -21,7 +21,7 @@ describe('The TaskListSideNavActions', () => {
         ]}
       >
         <MockedProvider>
-          <Route path="models/new-plan/:modelId/task-list">
+          <Route path="models/new-plan/:modelID/task-list">
             <TaskListSideNav modelPlan={modelPlan} />
           </Route>
         </MockedProvider>
