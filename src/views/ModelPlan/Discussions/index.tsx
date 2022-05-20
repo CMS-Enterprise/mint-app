@@ -14,7 +14,6 @@ import {
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { Field, Form, Formik, FormikProps } from 'formik';
-import { DateTime } from 'luxon';
 import noScroll from 'no-scroll';
 import * as Yup from 'yup';
 
@@ -36,6 +35,8 @@ import {
 import { GetModelPlan_modelPlan_discussions as DiscussionType } from 'queries/types/GetModelPlan';
 import { UpdateModelPlanDiscussion as UpdateModelPlanDiscussionType } from 'queries/types/UpdateModelPlanDiscussion';
 import UpdateModelPlanDiscussion from 'queries/UpdateModelPlanDiscussion';
+import { DiscussionStatus } from 'types/graphql-global-types';
+import { getTimeElapsed } from 'utils/date';
 import flattenErrors from 'utils/flattenErrors';
 import { getUnansweredQuestions } from 'utils/modelPlan';
 
@@ -64,18 +65,30 @@ const Discussions = ({
 }: DiscussionsProps) => {
   const { t } = useTranslation('discussions');
   const { t: h } = useTranslation('draftModelPlan');
+
   const [discussionStatus, setDiscussionStatus] = useState<'success' | 'error'>(
     'success'
   );
+
   const [discussionStatusMessage, setDiscussionStatusMessage] = useState('');
+
   const [questionCount, setQuestionCount] = useState({
     answeredQuestions: 0,
     unansweredQuestions: 0
   });
+
   const [discussionType, setDiscussionType] = useState<
     'question' | 'reply' | 'discussion'
   >('question');
+
   const [reply, setReply] = useState<DiscussionType | ReplyType | null>(null);
+
+  const openStatus = (status: DiscussionStatus) => {
+    if (status === 'ANSWERED') {
+      return questionCount.answeredQuestions > 0;
+    }
+    return questionCount.unansweredQuestions > 0;
+  };
 
   useEffect(() => {
     if (discussions?.length === 0) {
@@ -106,21 +119,6 @@ const Discussions = ({
   const validationSchema = Yup.object().shape({
     content: Yup.string().trim().required(`Please enter a ${discussionType}`)
   });
-
-  const getTimeElapsed = (discussionCreated: string) => {
-    const date1 = DateTime.local();
-    const date2 = DateTime.fromISO(discussionCreated);
-
-    const diff = date1.diff(date2, [
-      'years',
-      'months',
-      'days',
-      'hours',
-      'minutes'
-    ]);
-
-    return `${parseInt(diff.toObject().minutes)} minutes`;
-  };
 
   const handleOpenModal = () => {
     noScroll.on();
@@ -161,8 +159,9 @@ const Discussions = ({
           setDiscussionStatusMessage(
             discussionType === 'question' ? t('success') : t('successAnswer')
           );
-          setDiscussionType('discussion');
-          refetch();
+          refetch().then(() => {
+            setDiscussionType('discussion');
+          });
         }
       })
       .catch(() => {
@@ -184,7 +183,9 @@ const Discussions = ({
     })
       .then(response => {
         if (!response?.errors) {
-          refetch();
+          refetch().then(() => {
+            setDiscussionType('discussion');
+          });
         }
       })
       .catch(() => {
@@ -360,6 +361,7 @@ const Discussions = ({
     return discussionsContent.map((discussion, index) => {
       return (
         <div
+          key={discussion.id}
           className={classNames({
             'margin-top-4': index > 0,
             'margin-top-2': index === 0
@@ -379,7 +381,7 @@ const Discussions = ({
               )}
             </div>
           ) : (
-            discussionComponent(discussion, index, null, true)
+            discussionComponent(discussion, index, undefined, true)
           )}
           {index !== discussionsContent.length - 1 && <Divider />}
         </div>
@@ -387,53 +389,48 @@ const Discussions = ({
     });
   };
 
-  type openStatusProps = {
-    [ANSWERED: string]: boolean;
-    UNANSWERED: boolean;
-  };
-
-  const discussionAccordion = ['UNANSWERED', 'ANSWERED'].map(status => {
-    const openStatus: openStatusProps = {
-      ANSWERED: status === 'ANSWERED' && questionCount.answeredQuestions > 0,
-      UNANSWERED:
-        status === 'UNANSWERED' && questionCount.unansweredQuestions > 0
-    };
-    return (
-      <>
-        <Accordion
-          key={status}
-          multiselectable
-          items={[
-            {
-              title:
-                status === 'UNANSWERED' ? (
-                  <strong>
-                    {questionCount.unansweredQuestions} {t('unanswered')}
-                    {questionCount.unansweredQuestions > 1 && 's'}
-                  </strong>
-                ) : (
-                  <strong>
-                    {questionCount.answeredQuestions} {t('answered')}
-                    {questionCount.answeredQuestions > 1 && 's'}
-                  </strong>
+  const discussionAccordion = (Object.keys(DiscussionStatus) as Array<
+    keyof typeof DiscussionStatus
+  >)
+    .filter(status => status !== 'WAITING_FOR_RESPONSE') // Not currently using this status, but it exists for future possibility
+    .reverse() // Unanswered questions should appear for answered.  This method of sorting may need to change if more status/accordions are introduced
+    .map(status => {
+      return (
+        <>
+          <Accordion
+            key={status}
+            multiselectable
+            items={[
+              {
+                title:
+                  status === 'UNANSWERED' ? (
+                    <strong>
+                      {questionCount.unansweredQuestions} {t('unanswered')}
+                      {questionCount.unansweredQuestions > 1 && 's'}
+                    </strong>
+                  ) : (
+                    <strong>
+                      {questionCount.answeredQuestions} {t('answered')}
+                      {questionCount.answeredQuestions > 1 && 's'}
+                    </strong>
+                  ),
+                content: formatDiscussions(
+                  discussions.filter(discussion => discussion.status === status)
                 ),
-              content: formatDiscussions(
-                discussions.filter(discussion => discussion.status === status)
-              ),
-              expanded: openStatus[status],
-              id: status,
-              headingLevel: 'h4'
-            }
-          ]}
-        />
-        {!openStatus[status] && (
-          <Alert className="margin-bottom-2" type="info">
-            {status === 'ANSWERED' ? t('noAnswered') : t('noUanswered')}
-          </Alert>
-        )}
-      </>
-    );
-  });
+                expanded: openStatus(DiscussionStatus[status]),
+                id: status,
+                headingLevel: 'h4'
+              }
+            ]}
+          />
+          {!openStatus(DiscussionStatus[status]) && (
+            <Alert className="margin-bottom-2" type="info">
+              {status === 'ANSWERED' ? t('noAnswered') : t('noUanswered')}
+            </Alert>
+          )}
+        </>
+      );
+    });
 
   const renderDiscussions = () => {
     return (
@@ -448,6 +445,7 @@ const Discussions = ({
             unstyled
             onClick={() => {
               setReply(null);
+              setDiscussionStatusMessage('');
               setDiscussionType('question');
             }}
           >
