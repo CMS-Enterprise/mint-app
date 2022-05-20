@@ -54,6 +54,9 @@ func (s *Store) PlanDiscussionCreate(logger *zap.Logger, discussion *models.Plan
 		return nil, genericmodel.HandleModelCreationError(logger, err, discussion)
 	}
 
+	discussion.ModifiedBy = nil
+	discussion.ModifiedDts = nil
+
 	err = statement.Get(discussion, discussion)
 	if err != nil {
 		return nil, genericmodel.HandleModelCreationError(logger, err, discussion)

@@ -7,8 +7,8 @@ CREATE TABLE plan_discussion (
 
     created_by EUA_ID NOT NULL,
     created_dts TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    modified_by EUA_ID NOT NULL,
-    modified_dts TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP
+    modified_by EUA_ID,
+    modified_dts TIMESTAMP WITH TIME ZONE
 );
 ALTER TABLE plan_discussion
 ADD CONSTRAINT fk_discussion_plan FOREIGN KEY (model_plan_id)
@@ -25,8 +25,8 @@ CREATE TABLE discussion_reply (
 
     created_by EUA_ID NOT NULL,
     created_dts TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    modified_by EUA_ID NOT NULL,
-    modified_dts TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP
+    modified_by EUA_ID,
+    modified_dts TIMESTAMP WITH TIME ZONE
 );
 
 ALTER TABLE discussion_reply

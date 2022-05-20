@@ -68,14 +68,15 @@ func (s *Store) PlanDocumentCreate(
 		DeletedAt:            nil,
 		CreatedBy:            principal,
 		CreatedDts:           nil,
-		ModifiedBy:           principal,
-		ModifiedDts:          nil,
 	}
 
 	statement, err := s.db.PrepareNamed(planDocumentCreateSQL)
 	if err != nil {
 		return nil, genericmodel.HandleModelCreationError(logger, err, document)
 	}
+
+	document.ModifiedBy = nil
+	document.ModifiedDts = nil
 
 	err = statement.Get(&document, &document)
 	if err != nil {

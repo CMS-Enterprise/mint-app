@@ -136,3 +136,8 @@ func (gc PlanGeneralCharacteristics) GetPlanID() uuid.UUID {
 func (gc PlanGeneralCharacteristics) GetModifiedBy() *string {
 	return gc.ModifiedBy
 }
+
+// GetCreatedBy returns the ModifiedBy property for a PlanBasics struct
+func (gc PlanGeneralCharacteristics) GetCreatedBy() *string {
+	return gc.CreatedBy
+}

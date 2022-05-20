@@ -6,8 +6,8 @@ CREATE TABLE plan_collaborator (
     team_role TEAM_ROLE NOT NULL,
     created_by EUA_ID NOT NULL,
     created_dts TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    modified_by EUA_ID NOT NULL,
-    modified_dts TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP
+    modified_by EUA_ID,
+    modified_dts TIMESTAMP WITH TIME ZONE
 );
 
 ALTER TABLE plan_collaborator

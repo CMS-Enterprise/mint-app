@@ -1,6 +1,8 @@
 package resolvers
 
 import (
+	"time"
+
 	"go.uber.org/zap"
 
 	"github.com/google/uuid"
@@ -17,7 +19,6 @@ func CreatePlanDiscussion(logger *zap.Logger, input *model.PlanDiscussionCreateI
 		Content:     input.Content,
 		Status:      models.DiscussionUnAnswered,
 		CreatedBy:   principal,
-		ModifiedBy:  principal,
 	}
 
 	result, err := store.PlanDiscussionCreate(logger, planDiscussion)
@@ -36,7 +37,10 @@ func UpdatePlanDiscussion(logger *zap.Logger, id uuid.UUID, changes map[string]i
 	if err != nil {
 		return nil, err
 	}
-	existingDiscussion.ModifiedBy = principal
+
+	existingDiscussion.ModifiedBy = &principal
+	modifiedTime := time.Now()
+	existingDiscussion.ModifiedDts = &modifiedTime
 
 	result, err := store.PlanDiscussionUpdate(logger, existingDiscussion)
 	return result, err
@@ -55,7 +59,6 @@ func CreateDiscussionReply(logger *zap.Logger, input *model.DiscussionReplyCreat
 		Content:      input.Content,
 		Resolution:   input.Resolution,
 		CreatedBy:    principal,
-		ModifiedBy:   principal,
 	}
 
 	result, err := store.DiscussionReplyCreate(logger, discussionReply)
@@ -74,7 +77,8 @@ func UpdateDiscussionReply(logger *zap.Logger, id uuid.UUID, changes map[string]
 	if err != nil {
 		return nil, err
 	}
-	existingReply.ModifiedBy = principal
+
+	existingReply.ModifiedBy = &principal
 
 	result, err := store.DiscussionReplyUpdate(logger, existingReply)
 	return result, err

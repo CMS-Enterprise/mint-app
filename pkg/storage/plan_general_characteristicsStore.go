@@ -33,6 +33,8 @@ func (s *Store) PlanGeneralCharacteristicsCreate(logger *zap.Logger, gc *models.
 		return nil, genericmodel.HandleModelCreationError(logger, err, gc)
 	}
 
+	gc.ModifiedBy = nil
+	gc.ModifiedDts = nil
 	err = statement.Get(gc, gc)
 	if err != nil {
 		return nil, genericmodel.HandleModelCreationError(logger, err, gc)

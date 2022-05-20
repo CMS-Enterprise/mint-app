@@ -110,3 +110,8 @@ func (p PlanMilestones) GetPlanID() uuid.UUID {
 func (p PlanMilestones) GetModifiedBy() *string {
 	return p.ModifiedBy
 }
+
+// GetCreatedBy returns the CreatedBy property for a PlanMilestones struct
+func (p PlanMilestones) GetCreatedBy() *string {
+	return p.CreatedBy
+}

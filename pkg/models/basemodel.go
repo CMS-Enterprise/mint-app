@@ -9,5 +9,6 @@ type BaseModel interface {
 	GetModelTypeName() string
 	GetID() uuid.UUID
 	GetPlanID() uuid.UUID
+	GetCreatedBy() *string
 	GetModifiedBy() *string
 }

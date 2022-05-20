@@ -22,8 +22,6 @@ func ConvertToPlanDocumentModel(input *model.PlanDocumentInput) *models.PlanDocu
 		DeletedAt:            nil,
 		CreatedBy:            nil,
 		CreatedDts:           nil,
-		ModifiedBy:           nil,
-		ModifiedDts:          nil,
 	}
 
 	if input.ID != nil {
