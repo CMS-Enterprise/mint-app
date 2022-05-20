@@ -391,7 +391,9 @@ const Discussions = ({
           ) : (
             discussionComponent(discussion, index, undefined, true)
           )}
-          {index !== discussionsContent.length - 1 && <Divider />}
+          {index !== discussionsContent.length - 1 && (
+            <Divider className="margin-top-4" />
+          )}
         </div>
       );
     });
