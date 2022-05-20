@@ -25,7 +25,11 @@ const discussions = {
   answer: 'Answer',
   answerDescription:
     'Make sure you know the answer to this question before replying. Once a question has been answered, it cannot be replied to again.',
-  ago: 'ago'
+  ago: 'ago',
+  noAnswered:
+    'There are no answered questions yet. When a question is answered, it will appear here with the response.',
+  noUanswered:
+    'There are no unanswered questions. Ask a question using the link above.'
 };
 
 export default discussions;

@@ -104,7 +104,7 @@ const Discussions = ({
   };
 
   const validationSchema = Yup.object().shape({
-    content: Yup.string().trim().required('Please enter a question')
+    content: Yup.string().trim().required(`Please enter a ${discussionType}`)
   });
 
   const getTimeElapsed = (discussionCreated: string) => {
@@ -333,7 +333,7 @@ const Discussions = ({
       >
         {' '}
         <p>{discussion.content}</p>
-        <div className="display-flex margin-bottom-4">
+        <div className="display-flex margin-bottom-2">
           {askQuestion && (
             <>
               {' '}
@@ -387,34 +387,53 @@ const Discussions = ({
     });
   };
 
-  const discussionAccordion = ['UNANSWERED', 'ANSWERED'].map(status => (
-    <Accordion
-      key={status}
-      multiselectable
-      items={[
-        {
-          title:
-            status === 'UNANSWERED' ? (
-              <strong>
-                {questionCount.unansweredQuestions} {t('unanswered')}
-                {questionCount.unansweredQuestions > 1 && 's'}
-              </strong>
-            ) : (
-              <strong>
-                {questionCount.answeredQuestions} {t('answered')}
-                {questionCount.answeredQuestions > 1 && 's'}
-              </strong>
-            ),
-          content: formatDiscussions(
-            discussions.filter(discussion => discussion.status === status)
-          ),
-          expanded: status === 'UNANSWERED',
-          id: status,
-          headingLevel: 'h4'
-        }
-      ]}
-    />
-  ));
+  type openStatusProps = {
+    [ANSWERED: string]: boolean;
+    UNANSWERED: boolean;
+  };
+
+  const discussionAccordion = ['UNANSWERED', 'ANSWERED'].map(status => {
+    const openStatus: openStatusProps = {
+      ANSWERED: status === 'ANSWERED' && questionCount.answeredQuestions > 0,
+      UNANSWERED:
+        status === 'UNANSWERED' && questionCount.unansweredQuestions > 0
+    };
+    return (
+      <>
+        <Accordion
+          key={status}
+          multiselectable
+          items={[
+            {
+              title:
+                status === 'UNANSWERED' ? (
+                  <strong>
+                    {questionCount.unansweredQuestions} {t('unanswered')}
+                    {questionCount.unansweredQuestions > 1 && 's'}
+                  </strong>
+                ) : (
+                  <strong>
+                    {questionCount.answeredQuestions} {t('answered')}
+                    {questionCount.answeredQuestions > 1 && 's'}
+                  </strong>
+                ),
+              content: formatDiscussions(
+                discussions.filter(discussion => discussion.status === status)
+              ),
+              expanded: openStatus[status],
+              id: status,
+              headingLevel: 'h4'
+            }
+          ]}
+        />
+        {!openStatus[status] && (
+          <Alert className="margin-bottom-2" type="info">
+            {status === 'ANSWERED' ? t('noAnswered') : t('noUanswered')}
+          </Alert>
+        )}
+      </>
+    );
+  });
 
   const renderDiscussions = () => {
     return (

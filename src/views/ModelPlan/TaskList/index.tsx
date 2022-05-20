@@ -22,7 +22,6 @@ import GetModelPlan from 'queries/GetModelPlan';
 import {
   GetModelPlan as GetModelPlanType,
   GetModelPlan_modelPlan as GetModelPlanTypes,
-  GetModelPlan_modelPlan_discussions as DiscussionType,
   GetModelPlanVariables
 } from 'queries/types/GetModelPlan';
 import { getUnansweredQuestions } from 'utils/modelPlan';
@@ -126,7 +125,7 @@ const TaskList = () => {
         className="bg-primary-lighter border-0 radius-0 padding-2"
       >
         <div
-          className={classNames({
+          className={classNames('margin-top-1', {
             'mint-header__basic': discussions?.length > 0
           })}
         >
