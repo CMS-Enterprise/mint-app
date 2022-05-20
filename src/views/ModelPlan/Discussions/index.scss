@@ -46,6 +46,16 @@
 
     &__connected {
       border-left: .25rem solid color('base-lightest');
+      margin-left: .9rem;
+      padding-left: 1.4rem;
+    }
+
+    &__not-connected {
+      padding-left: 2.6rem;
+    }
+
+    &__single-discussion:last-of-type {
+      margin-bottom: -1rem;
     }
   }
   

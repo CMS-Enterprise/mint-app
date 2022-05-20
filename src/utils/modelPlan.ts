@@ -150,14 +150,14 @@ export const sortRepliesByDate = (
   discussionB: DiscussionType
 ) => {
   if (
-    (discussionA.replies[discussionA.replies.length - 1].createdDts || 0) <
-    (discussionB.replies[discussionB.replies.length - 1].createdDts || 0)
+    (discussionA.replies[discussionA.replies.length - 1]?.createdDts || 0) <
+    (discussionB.replies[discussionB.replies.length - 1]?.createdDts || 0)
   ) {
     return 1;
   }
   if (
-    (discussionA.replies[discussionA.replies.length - 1].createdDts || 0) >
-    (discussionB.replies[discussionB.replies.length - 1].createdDts || 0)
+    (discussionA.replies[discussionA.replies.length - 1]?.createdDts || 0) >
+    (discussionB.replies[discussionB.replies.length - 1]?.createdDts || 0)
   ) {
     return -1;
   }

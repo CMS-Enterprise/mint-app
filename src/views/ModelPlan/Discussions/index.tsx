@@ -84,10 +84,16 @@ const Discussions = ({
   const [reply, setReply] = useState<DiscussionType | ReplyType | null>(null);
 
   const openStatus = (status: DiscussionStatus) => {
-    if (status === 'ANSWERED') {
-      return questionCount.answeredQuestions > 0;
+    return status === 'ANSWERED'
+      ? questionCount.answeredQuestions > 0
+      : questionCount.unansweredQuestions > 0;
+  };
+
+  const handleOpenModal = () => {
+    noScroll.on();
+    if (openModal) {
+      openModal();
     }
-    return questionCount.unansweredQuestions > 0;
   };
 
   useEffect(() => {
@@ -111,7 +117,7 @@ const Discussions = ({
     UpdateModelPlanDiscussion
   );
 
-  const createDiscussions = {
+  const createDiscussionMethods = {
     question: createQuestion,
     reply: createReply
   };
@@ -119,13 +125,6 @@ const Discussions = ({
   const validationSchema = Yup.object().shape({
     content: Yup.string().trim().required(`Please enter a ${discussionType}`)
   });
-
-  const handleOpenModal = () => {
-    noScroll.on();
-    if (openModal) {
-      openModal();
-    }
-  };
 
   const handleCreateDiscussion = (formikValues: DicussionFormPropTypes) => {
     let payload = {};
@@ -145,7 +144,7 @@ const Discussions = ({
       return; // Currently we have no mutations when discussions is displayed
     }
 
-    createDiscussions[discussionType]({
+    createDiscussionMethods[discussionType]({
       variables: {
         input: payload
       }
@@ -283,7 +282,7 @@ const Discussions = ({
                   </FieldGroup>
                   <div className="margin-y-5 display-block">
                     <Button
-                      className="usa-button usa-button--outline"
+                      className="usa-button usa-button--outline margin-bottom-1"
                       type="button"
                       onClick={() => {
                         if (discussionType) {
@@ -319,7 +318,7 @@ const Discussions = ({
     connected?: boolean,
     askQuestion?: boolean
   ) => (
-    <div key={discussion.id}>
+    <div className="mint-discussions__single-discussion" key={discussion.id}>
       <div className="display-flex">
         <IconInitial user={discussion.createdBy} index={index} />
         <span className="margin-left-2 margin-top-05 text-base">
@@ -331,16 +330,15 @@ const Discussions = ({
 
       <div
         className={classNames({
-          'mint-discussions__connected margin-left-105 padding-left-3': connected,
-          'padding-left-5': !connected
+          'margin-bottom-4': askQuestion,
+          'mint-discussions__connected': connected,
+          'mint-discussions__not-connected': !connected
         })}
       >
-        {' '}
         <p>{discussion.content}</p>
         <div className="display-flex margin-bottom-2">
           {askQuestion && (
             <>
-              {' '}
               <IconAnnouncement className="text-primary margin-right-1" />
               <Button
                 type="button"
@@ -365,7 +363,7 @@ const Discussions = ({
     status: DiscussionStatus
   ) => {
     if (status === 'ANSWERED') {
-      discussionsContent.sort(sortRepliesByDate);
+      discussionsContent.sort(sortRepliesByDate); // Sort discusssions by the most recent reply for answered questions
     }
 
     return discussionsContent.map((discussion, index) => {
@@ -408,6 +406,9 @@ const Discussions = ({
       return (
         <div key={status}>
           <Accordion
+            className={classNames('margin-bottom-2', {
+              'no-pointer': !openStatus(DiscussionStatus[status])
+            })}
             key={status}
             multiselectable
             items={[
@@ -416,12 +417,12 @@ const Discussions = ({
                   status === 'UNANSWERED' ? (
                     <strong>
                       {questionCount.unansweredQuestions} {t('unanswered')}
-                      {questionCount.unansweredQuestions > 1 && 's'}
+                      {questionCount.unansweredQuestions !== 1 && 's'}
                     </strong>
                   ) : (
                     <strong>
                       {questionCount.answeredQuestions} {t('answered')}
-                      {questionCount.answeredQuestions > 1 && 's'}
+                      {questionCount.answeredQuestions !== 1 && 's'}
                     </strong>
                   ),
                 content: formatDiscussions(
