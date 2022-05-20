@@ -131,6 +131,7 @@ export const translateDocumentType = (documentType: DocumentType) => {
   }
 };
 
+// Returns an object with th number of discussions with answered and unanswered questions
 export const getUnansweredQuestions = (discussions: DiscussionType[]) => {
   const unansweredQuestions =
     discussions?.filter(
@@ -141,4 +142,24 @@ export const getUnansweredQuestions = (discussions: DiscussionType[]) => {
     unansweredQuestions,
     answeredQuestions
   };
+};
+
+// Sorts discussions by the most recent reply
+export const sortRepliesByDate = (
+  discussionA: DiscussionType,
+  discussionB: DiscussionType
+) => {
+  if (
+    (discussionA.replies[discussionA.replies.length - 1].createdDts || 0) <
+    (discussionB.replies[discussionB.replies.length - 1].createdDts || 0)
+  ) {
+    return 1;
+  }
+  if (
+    (discussionA.replies[discussionA.replies.length - 1].createdDts || 0) >
+    (discussionB.replies[discussionB.replies.length - 1].createdDts || 0)
+  ) {
+    return -1;
+  }
+  return 0;
 };

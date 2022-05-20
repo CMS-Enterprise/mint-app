@@ -38,7 +38,7 @@ import UpdateModelPlanDiscussion from 'queries/UpdateModelPlanDiscussion';
 import { DiscussionStatus } from 'types/graphql-global-types';
 import { getTimeElapsed } from 'utils/date';
 import flattenErrors from 'utils/flattenErrors';
-import { getUnansweredQuestions } from 'utils/modelPlan';
+import { getUnansweredQuestions, sortRepliesByDate } from 'utils/modelPlan';
 
 import './index.scss';
 
@@ -197,7 +197,6 @@ const Discussions = ({
   const renderQuestion = (renderType: 'question' | 'reply') => {
     return (
       <>
-        {' '}
         <PageHeading headingLevel="h1" className="margin-y-0">
           {renderType === 'question' ? t('askAQuestion') : t('answer')}
         </PageHeading>
@@ -218,7 +217,9 @@ const Discussions = ({
             <div className="display-flex">
               <IconInitial user={reply.createdBy} index={0} />
               <span className="margin-left-2 margin-top-05 text-base">
-                {getTimeElapsed(reply.createdDts)} {t('ago')}
+                {getTimeElapsed(reply.createdDts)
+                  ? getTimeElapsed(reply.createdDts) + t('ago')
+                  : t('justNow')}
               </span>
             </div>
             <div className="margin-left-5">
@@ -318,11 +319,13 @@ const Discussions = ({
     connected?: boolean,
     askQuestion?: boolean
   ) => (
-    <div>
+    <div key={discussion.id}>
       <div className="display-flex">
         <IconInitial user={discussion.createdBy} index={index} />
         <span className="margin-left-2 margin-top-05 text-base">
-          {getTimeElapsed(discussion.createdDts)} {t('ago')}
+          {getTimeElapsed(discussion.createdDts)
+            ? getTimeElapsed(discussion.createdDts) + t('ago')
+            : t('justNow')}
         </span>
       </div>
 
@@ -357,7 +360,14 @@ const Discussions = ({
     </div>
   );
 
-  const formatDiscussions = (discussionsContent: DiscussionType[]) => {
+  const formatDiscussions = (
+    discussionsContent: DiscussionType[],
+    status: DiscussionStatus
+  ) => {
+    if (status === 'ANSWERED') {
+      discussionsContent.sort(sortRepliesByDate);
+    }
+
     return discussionsContent.map((discussion, index) => {
       return (
         <div
@@ -396,7 +406,7 @@ const Discussions = ({
     .reverse() // Unanswered questions should appear for answered.  This method of sorting may need to change if more status/accordions are introduced
     .map(status => {
       return (
-        <>
+        <div key={status}>
           <Accordion
             key={status}
             multiselectable
@@ -415,7 +425,10 @@ const Discussions = ({
                     </strong>
                   ),
                 content: formatDiscussions(
-                  discussions.filter(discussion => discussion.status === status)
+                  discussions.filter(
+                    discussion => discussion.status === status
+                  ),
+                  DiscussionStatus[status]
                 ),
                 expanded: openStatus(DiscussionStatus[status]),
                 id: status,
@@ -428,7 +441,7 @@ const Discussions = ({
               {status === 'ANSWERED' ? t('noAnswered') : t('noUanswered')}
             </Alert>
           )}
-        </>
+        </div>
       );
     });
 
