@@ -83,7 +83,7 @@ type PlanGeneralCharacteristics struct {
 // CalcStatus returns a TaskStatus based on how many fields have been entered in the PlanGeneralCharacteristics struct
 func (gc *PlanGeneralCharacteristics) CalcStatus() {
 
-	// TODO implement this. Doing it like this for now :)
+	// TODO Implement in https://jiraent.cms.gov/browse/EASI-2048
 	gc.Status = TaskReady
 
 	//TODO look into making a generic function that takes in any parent class object and calcs status
