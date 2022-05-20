@@ -20,6 +20,7 @@ func UpdatePlanMilestones(logger *zap.Logger, id uuid.UUID, changes map[string]i
 	if err != nil {
 		return nil, err
 	}
+
 	existingMilestones.ModifiedBy = &principal
 	existingMilestones.CalcStatus()
 

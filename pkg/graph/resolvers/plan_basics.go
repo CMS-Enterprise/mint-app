@@ -20,6 +20,7 @@ func UpdatePlanBasics(logger *zap.Logger, id uuid.UUID, changes map[string]inter
 	if err != nil {
 		return nil, err
 	}
+
 	existingBasics.ModifiedBy = &principal
 	existingBasics.CalcStatus()
 
@@ -35,5 +36,4 @@ func PlanBasicsGetByModelPlanID(logger *zap.Logger, principal *string, modelPlan
 	}
 
 	return plan, nil
-
 }

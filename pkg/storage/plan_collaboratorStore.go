@@ -39,6 +39,9 @@ func (s *Store) PlanCollaboratorCreate(_ *zap.Logger, collaborator *models.PlanC
 		return nil, err
 	}
 
+	collaborator.ModifiedBy = nil
+	collaborator.ModifiedDts = nil
+
 	err = statement.Get(collaborator, collaborator)
 	if err != nil {
 		return nil, err

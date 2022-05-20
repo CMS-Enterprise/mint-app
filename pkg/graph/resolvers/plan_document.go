@@ -70,6 +70,8 @@ func PlanDocumentUpdate(logger *zap.Logger, s3Client *upload.S3Client, input *mo
 		return nil, genericmodel.HandleModelUpdateError(logger, err, input)
 	}
 
+	document.ModifiedBy = principal
+
 	return createDocumentPayload(s3Client, document)
 }
 

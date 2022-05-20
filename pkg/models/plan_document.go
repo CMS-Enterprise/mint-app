@@ -51,3 +51,8 @@ func (p PlanDocument) GetPlanID() uuid.UUID {
 func (p PlanDocument) GetModifiedBy() *string {
 	return p.ModifiedBy
 }
+
+// GetCreatedBy implements the CreatedBy property
+func (p PlanDocument) GetCreatedBy() *string {
+	return p.CreatedBy
+}

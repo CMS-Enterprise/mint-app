@@ -2,6 +2,7 @@ package resolvers
 
 import (
 	_ "github.com/lib/pq" // required for postgres driver in sql
+	"github.com/stretchr/testify/assert"
 
 	"github.com/cmsgov/mint-app/pkg/graph/model"
 	"github.com/cmsgov/mint-app/pkg/models"
@@ -21,6 +22,8 @@ func (suite *ResolverSuite) TestCreatePlanDiscussion() {
 	suite.EqualValues(plan.ID, result.ModelPlanID)
 	suite.EqualValues(input.Content, result.Content)
 	suite.EqualValues(models.DiscussionUnAnswered, result.Status)
+	suite.Nil(result.ModifiedBy)
+	suite.Nil(result.ModifiedDts)
 }
 
 func (suite *ResolverSuite) TestUpdatePlanDiscussion() {
@@ -40,7 +43,7 @@ func (suite *ResolverSuite) TestUpdatePlanDiscussion() {
 	suite.EqualValues(changes["content"], result.Content)
 	suite.EqualValues(changes["status"], result.Status)
 	suite.EqualValues(suite.testConfigs.UserInfo.EuaUserID, result.CreatedBy)
-	suite.EqualValues(updater, result.ModifiedBy)
+	suite.EqualValues(updater, *result.ModifiedBy)
 }
 
 func (suite *ResolverSuite) TestDeletePlanDiscussion() {
@@ -89,19 +92,22 @@ func (suite *ResolverSuite) TestUpdateDiscussionReply() {
 	plan := suite.createModelPlan("Test Plan")
 	discussion := suite.createPlanDiscussion(plan, "This is a test comment")
 	reply := suite.createDiscussionReply(discussion, "This is a test reply", false)
+	assert.Nil(suite.T(), reply.ModifiedBy)
+	assert.Nil(suite.T(), reply.ModifiedDts)
 
 	changes := map[string]interface{}{
 		"content":    "This is now updated! Thanks for looking at my test",
 		"resolution": true,
 	}
-	updater := "UPDT"
 
+	updater := "UPDT"
 	result, err := UpdateDiscussionReply(suite.testConfigs.Logger, reply.ID, changes, updater, suite.testConfigs.Store)
+
 	suite.NoError(err)
 	suite.EqualValues(changes["content"], result.Content)
 	suite.EqualValues(changes["resolution"], result.Resolution)
 	suite.EqualValues(suite.testConfigs.UserInfo.EuaUserID, result.CreatedBy)
-	suite.EqualValues(updater, result.ModifiedBy)
+	suite.EqualValues(updater, *result.ModifiedBy)
 }
 
 func (suite *ResolverSuite) TestDiscussionReplyCollectionByDiscusionID() {

@@ -13,8 +13,8 @@ func (suite *ResolverSuite) TestModelPlanCreate() {
 	suite.EqualValues(planName, result.ModelName)
 	suite.EqualValues(false, result.Archived)
 	suite.EqualValues(suite.testConfigs.UserInfo.EuaUserID, *result.CreatedBy)
-	suite.EqualValues(suite.testConfigs.UserInfo.EuaUserID, *result.ModifiedBy)
-	suite.EqualValues(*result.CreatedDts, *result.ModifiedDts)
+	suite.Nil(result.ModifiedBy)
+	suite.Nil(result.ModifiedDts)
 	suite.EqualValues(models.ModelStatusPlanDraft, result.Status)
 }
 
@@ -41,6 +41,8 @@ func (suite *ResolverSuite) TestModelPlanUpdate() {
 	suite.EqualValues(changes["cmmiGroups"], result.CMMIGroups)
 	suite.EqualValues(changes["status"], result.Status)
 	suite.EqualValues(suite.testConfigs.UserInfo.EuaUserID, *result.CreatedBy)
+	suite.NotNil(result.ModifiedBy)
+	suite.NotNil(result.ModifiedDts)
 	suite.EqualValues(updater, *result.ModifiedBy)
 }
 
