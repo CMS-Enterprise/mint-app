@@ -325,8 +325,8 @@ input DiscussionReplyChanges @goModel(model: "map[string]interface{}") {
 PlanGeneralCharacteristics represents a plan general characteristics object
 """
 type PlanGeneralCharacteristics {
-  id: UUID
-  modelPlanID: UUID
+  id: UUID!
+  modelPlanID: UUID!
 
   # Page 1
   isNewModel: Boolean
