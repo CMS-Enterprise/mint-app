@@ -350,7 +350,7 @@ func (r *queryResolver) PlanDocumentDownloadURL(ctx context.Context, id uuid.UUI
 		return &model.PlanDocumentPayload{}, err
 	}
 
-	url, err := r.s3Client.NewGetPresignedURL(*document.FileKey)
+	url, err := r.s3Client.NewGetPresignedURL(document.FileKey)
 	if err != nil {
 		return nil, err
 	}

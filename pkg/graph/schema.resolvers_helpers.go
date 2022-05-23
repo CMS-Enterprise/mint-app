@@ -9,14 +9,9 @@ import (
 func ConvertToPlanDocumentModel(input *model.PlanDocumentInput) *models.PlanDocument {
 	documentModel := models.PlanDocument{
 		ModelPlanID:          input.ModelPlanID,
-		FileType:             nil,
-		Bucket:               nil,
-		FileKey:              nil,
 		VirusScanned:         false,
 		VirusClean:           false,
-		FileName:             nil,
 		FileSize:             0,
-		DocumentType:         nil,
 		OtherTypeDescription: nil,
 		OptionalNotes:        nil,
 		DeletedAt:            nil,
@@ -27,10 +22,17 @@ func ConvertToPlanDocumentModel(input *model.PlanDocumentInput) *models.PlanDocu
 	}
 
 	if input.DocumentParameters != nil {
-		documentModel.FileName = input.DocumentParameters.FileName
+		if input.DocumentParameters.FileName != nil {
+			documentModel.FileName = *input.DocumentParameters.FileName
+		}
+		if input.DocumentParameters.FileType != nil {
+			documentModel.FileType = *input.DocumentParameters.FileType
+		}
+		if input.DocumentParameters.DocumentType != nil {
+			documentModel.DocumentType = *input.DocumentParameters.DocumentType
+		}
+
 		documentModel.FileSize = input.DocumentParameters.FileSize
-		documentModel.FileType = input.DocumentParameters.FileType
-		documentModel.DocumentType = input.DocumentParameters.DocumentType
 		documentModel.OtherTypeDescription = input.DocumentParameters.OtherTypeDescription
 		documentModel.OptionalNotes = input.DocumentParameters.OptionalNotes
 	}

@@ -1961,14 +1961,14 @@ PlanDocument represents a document on a plan
 type PlanDocument {
   id: UUID!
   modelPlanID: UUID!
-  fileType: String
-  bucket: String
-  fileKey: String
-  virusScanned: Boolean
-  virusClean: Boolean
-  fileName: String
-  fileSize: Int
-  documentType: DocumentType
+  fileType: String!
+  bucket: String!
+  fileKey: String!
+  virusScanned: Boolean!
+  virusClean: Boolean!
+  fileName: String!
+  fileSize: Int!
+  documentType: DocumentType!
   otherType: String
   optionalNotes: String
   deletedAt: Time
@@ -7809,11 +7809,14 @@ func (ec *executionContext) _PlanDocument_fileType(ctx context.Context, field gr
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
-	res := resTmp.(*string)
+	res := resTmp.(string)
 	fc.Result = res
-	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalNString2string(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanDocument_fileType(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -7850,11 +7853,14 @@ func (ec *executionContext) _PlanDocument_bucket(ctx context.Context, field grap
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
-	res := resTmp.(*string)
+	res := resTmp.(string)
 	fc.Result = res
-	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalNString2string(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanDocument_bucket(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -7891,11 +7897,14 @@ func (ec *executionContext) _PlanDocument_fileKey(ctx context.Context, field gra
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
-	res := resTmp.(*string)
+	res := resTmp.(string)
 	fc.Result = res
-	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalNString2string(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanDocument_fileKey(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -7932,11 +7941,14 @@ func (ec *executionContext) _PlanDocument_virusScanned(ctx context.Context, fiel
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
 	res := resTmp.(bool)
 	fc.Result = res
-	return ec.marshalOBoolean2bool(ctx, field.Selections, res)
+	return ec.marshalNBoolean2bool(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanDocument_virusScanned(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -7973,11 +7985,14 @@ func (ec *executionContext) _PlanDocument_virusClean(ctx context.Context, field 
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
 	res := resTmp.(bool)
 	fc.Result = res
-	return ec.marshalOBoolean2bool(ctx, field.Selections, res)
+	return ec.marshalNBoolean2bool(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanDocument_virusClean(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -8014,11 +8029,14 @@ func (ec *executionContext) _PlanDocument_fileName(ctx context.Context, field gr
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
-	res := resTmp.(*string)
+	res := resTmp.(string)
 	fc.Result = res
-	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalNString2string(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanDocument_fileName(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -8055,11 +8073,14 @@ func (ec *executionContext) _PlanDocument_fileSize(ctx context.Context, field gr
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
 	res := resTmp.(int)
 	fc.Result = res
-	return ec.marshalOInt2int(ctx, field.Selections, res)
+	return ec.marshalNInt2int(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanDocument_fileSize(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -8096,11 +8117,14 @@ func (ec *executionContext) _PlanDocument_documentType(ctx context.Context, fiel
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
-	res := resTmp.(*models.DocumentType)
+	res := resTmp.(models.DocumentType)
 	fc.Result = res
-	return ec.marshalODocumentType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDocumentType(ctx, field.Selections, res)
+	return ec.marshalNDocumentType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDocumentType(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanDocument_documentType(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -15379,34 +15403,58 @@ func (ec *executionContext) _PlanDocument(ctx context.Context, sel ast.Selection
 
 			out.Values[i] = ec._PlanDocument_fileType(ctx, field, obj)
 
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&invalids, 1)
+			}
 		case "bucket":
 
 			out.Values[i] = ec._PlanDocument_bucket(ctx, field, obj)
 
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&invalids, 1)
+			}
 		case "fileKey":
 
 			out.Values[i] = ec._PlanDocument_fileKey(ctx, field, obj)
 
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&invalids, 1)
+			}
 		case "virusScanned":
 
 			out.Values[i] = ec._PlanDocument_virusScanned(ctx, field, obj)
 
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&invalids, 1)
+			}
 		case "virusClean":
 
 			out.Values[i] = ec._PlanDocument_virusClean(ctx, field, obj)
 
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&invalids, 1)
+			}
 		case "fileName":
 
 			out.Values[i] = ec._PlanDocument_fileName(ctx, field, obj)
 
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&invalids, 1)
+			}
 		case "fileSize":
 
 			out.Values[i] = ec._PlanDocument_fileSize(ctx, field, obj)
 
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&invalids, 1)
+			}
 		case "documentType":
 
 			out.Values[i] = ec._PlanDocument_documentType(ctx, field, obj)
 
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&invalids, 1)
+			}
 		case "otherType":
 			field := field
 
@@ -17019,6 +17067,22 @@ func (ec *executionContext) marshalNDiscussionStatus2githubᚗcomᚋcmsgovᚋmin
 	return res
 }
 
+func (ec *executionContext) unmarshalNDocumentType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDocumentType(ctx context.Context, v interface{}) (models.DocumentType, error) {
+	tmp, err := graphql.UnmarshalString(v)
+	res := models.DocumentType(tmp)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalNDocumentType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDocumentType(ctx context.Context, sel ast.SelectionSet, v models.DocumentType) graphql.Marshaler {
+	res := graphql.MarshalString(string(v))
+	if res == graphql.Null {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
+	}
+	return res
+}
+
 func (ec *executionContext) unmarshalNGeneratePresignedUploadURLInput2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐGeneratePresignedUploadURLInput(ctx context.Context, v interface{}) (model.GeneratePresignedUploadURLInput, error) {
 	res, err := ec.unmarshalInputGeneratePresignedUploadURLInput(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
@@ -18571,16 +18635,6 @@ func (ec *executionContext) marshalOGeographyType2ᚕgithubᚗcomᚋcmsgovᚋmin
 	}
 
 	return ret
-}
-
-func (ec *executionContext) unmarshalOInt2int(ctx context.Context, v interface{}) (int, error) {
-	res, err := graphql.UnmarshalInt(v)
-	return res, graphql.ErrorOnPath(ctx, err)
-}
-
-func (ec *executionContext) marshalOInt2int(ctx context.Context, sel ast.SelectionSet, v int) graphql.Marshaler {
-	res := graphql.MarshalInt(v)
-	return res
 }
 
 func (ec *executionContext) unmarshalOInt2ᚕintᚄ(ctx context.Context, v interface{}) ([]int, error) {

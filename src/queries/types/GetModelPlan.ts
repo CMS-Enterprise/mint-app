@@ -43,7 +43,7 @@ export interface GetModelPlan_modelPlan_milestones {
 export interface GetModelPlan_modelPlan_documents {
   __typename: "PlanDocument";
   id: UUID;
-  fileName: string | null;
+  fileName: string;
 }
 
 export interface GetModelPlan_modelPlan {

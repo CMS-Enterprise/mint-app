@@ -12,7 +12,7 @@ import (
 )
 
 func createDocumentPayload(s3Client *upload.S3Client, document *models.PlanDocument) (*model.PlanDocumentPayload, error) {
-	presignedURL, urlErr := s3Client.NewGetPresignedURL(*document.FileKey)
+	presignedURL, urlErr := s3Client.NewGetPresignedURL(document.FileKey)
 	if urlErr != nil {
 		return nil, urlErr
 	}
