@@ -18,8 +18,8 @@ export interface CreateModelPlan_createModelPlan_basics {
   goal: string | null;
   testInventions: string | null;
   note: string | null;
-  createdBy: string | null;
-  createdDts: Time | null;
+  createdBy: string;
+  createdDts: Time;
   modifiedBy: string | null;
   modifiedDts: Time | null;
   status: TaskStatus;
@@ -41,8 +41,8 @@ export interface CreateModelPlan_createModelPlan_milestones {
   highLevelNote: string | null;
   phasedIn: boolean | null;
   phasedInNote: string | null;
-  createdBy: string | null;
-  createdDts: Time | null;
+  createdBy: string;
+  createdDts: Time;
   modifiedBy: string | null;
   modifiedDts: Time | null;
   status: TaskStatus | null;
@@ -59,7 +59,7 @@ export interface CreateModelPlan_createModelPlan_collaborators {
 export interface CreateModelPlan_createModelPlan {
   __typename: "ModelPlan";
   id: UUID | null;
-  createdBy: string | null;
+  createdBy: string;
   modelName: string;
   modelCategory: ModelCategory | null;
   cmsCenters: CMSCenter[];

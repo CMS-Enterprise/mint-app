@@ -26,8 +26,8 @@ type PlanDocument struct {
 
 	DeletedAt *time.Time `json:"deletedAt" db:"deleted_at"`
 
-	CreatedBy   *string    `json:"createdBy" db:"created_by"`
-	CreatedDts  *time.Time `json:"createdDts" db:"created_dts"`
+	CreatedBy   string     `json:"createdBy" db:"created_by"`
+	CreatedDts  time.Time  `json:"createdDts" db:"created_dts"`
 	ModifiedBy  *string    `json:"modifiedBy" db:"modified_by"`
 	ModifiedDts *time.Time `json:"modifiedDts" db:"modified_dts"`
 }
@@ -53,6 +53,6 @@ func (p PlanDocument) GetModifiedBy() *string {
 }
 
 // GetCreatedBy implements the CreatedBy property
-func (p PlanDocument) GetCreatedBy() *string {
+func (p PlanDocument) GetCreatedBy() string {
 	return p.CreatedBy
 }

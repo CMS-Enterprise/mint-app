@@ -161,7 +161,7 @@ func (r *mutationResolver) CreatePlanDocument(ctx context.Context, input model.P
 	logger := appcontext.ZLogger(ctx)
 
 	document := ConvertToPlanDocumentModel(&input)
-	payload, err := resolvers.PlanDocumentCreate(logger, document, input.URL, &principal, r.store, r.s3Client)
+	payload, err := resolvers.PlanDocumentCreate(logger, document, input.URL, principal, r.store, r.s3Client)
 
 	return payload, err
 }

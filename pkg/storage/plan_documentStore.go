@@ -37,7 +37,7 @@ var planDocumentDeleteByIDSQL string
 // PlanDocumentCreate creates a plan document
 func (s *Store) PlanDocumentCreate(
 	logger *zap.Logger,
-	principal *string,
+	principal string,
 	inputDocument *models.PlanDocument,
 	documentURL *string,
 	s3Client *upload.S3Client) (*models.PlanDocument, error) {
@@ -67,7 +67,6 @@ func (s *Store) PlanDocumentCreate(
 		OptionalNotes:        inputDocument.OptionalNotes,
 		DeletedAt:            nil,
 		CreatedBy:            principal,
-		CreatedDts:           nil,
 	}
 
 	statement, err := s.db.PrepareNamed(planDocumentCreateSQL)

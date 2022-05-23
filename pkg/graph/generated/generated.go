@@ -1885,8 +1885,8 @@ type ModelPlan {
   cmsOther: String
   cmmiGroups: [CMMIGroup!]!
   archived: Boolean!
-  createdBy: String
-  createdDts: Time
+  createdBy: String!
+  createdDts: Time!
   modifiedBy: String
   modifiedDts: Time
   basics: PlanBasics
@@ -1923,8 +1923,8 @@ type PlanCollaborator {
   euaUserID: String!
   fullName: String!
   teamRole: TeamRole!
-  createdBy: String
-  createdDts: Time
+  createdBy: String!
+  createdDts: Time!
   modifiedBy: String
   modifiedDts: Time
 }
@@ -1972,8 +1972,8 @@ type PlanDocument {
   otherType: String
   optionalNotes: String
   deletedAt: Time
-  createdBy: String
-  createdDts: Time
+  createdBy: String!
+  createdDts: Time!
   modifiedBy: String
   modifiedDts: Time
 }
@@ -2020,8 +2020,8 @@ type PlanBasics {
   goal: String
   testInventions: String
   note: String
-  createdBy: String
-  createdDts: Time
+  createdBy: String!
+  createdDts: Time!
   modifiedBy: String
   modifiedDts: Time
   status: TaskStatus!
@@ -2073,8 +2073,8 @@ type PlanMilestones {
   phasedInNote: String
 
 
-  createdBy: String
-  createdDts: Time
+  createdBy: String!
+  createdDts: Time!
   modifiedBy: String
   modifiedDts: Time
   status: TaskStatus
@@ -2114,8 +2114,8 @@ type PlanDiscussion  {
 	status: DiscussionStatus!
   replies: [DiscussionReply!]!
 
-  createdBy: String
-  createdDts: Time
+  createdBy: String!
+  createdDts: Time!
   modifiedBy: String
   modifiedDts: Time
 }
@@ -2147,8 +2147,8 @@ type DiscussionReply  {
 	content: String
 	resolution: Boolean
 
-	createdBy: String
-	createdDts: Time
+	createdBy: String!
+	createdDts: Time!
 	modifiedBy: String
 	modifiedDts: Time
 }
@@ -2239,8 +2239,8 @@ type PlanGeneralCharacteristics {
   waiversRequiredTypes: [WaiverType!]!
   waiversRequiredNote: String
 
-  createdBy: String
-  createdDts: Time
+  createdBy: String!
+  createdDts: Time!
   modifiedBy: String
   modifiedDts: Time
   status: TaskStatus!
@@ -3272,11 +3272,14 @@ func (ec *executionContext) _DiscussionReply_createdBy(ctx context.Context, fiel
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
 	res := resTmp.(string)
 	fc.Result = res
-	return ec.marshalOString2string(ctx, field.Selections, res)
+	return ec.marshalNString2string(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_DiscussionReply_createdBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -3313,11 +3316,14 @@ func (ec *executionContext) _DiscussionReply_createdDts(ctx context.Context, fie
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
 	res := resTmp.(time.Time)
 	fc.Result = res
-	return ec.marshalOTime2timeᚐTime(ctx, field.Selections, res)
+	return ec.marshalNTime2timeᚐTime(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_DiscussionReply_createdDts(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -3864,11 +3870,14 @@ func (ec *executionContext) _ModelPlan_createdBy(ctx context.Context, field grap
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
-	res := resTmp.(*string)
+	res := resTmp.(string)
 	fc.Result = res
-	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalNString2string(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_ModelPlan_createdBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -3905,11 +3914,14 @@ func (ec *executionContext) _ModelPlan_createdDts(ctx context.Context, field gra
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
-	res := resTmp.(*time.Time)
+	res := resTmp.(time.Time)
 	fc.Result = res
-	return ec.marshalOTime2ᚖtimeᚐTime(ctx, field.Selections, res)
+	return ec.marshalNTime2timeᚐTime(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_ModelPlan_createdDts(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -6697,11 +6709,14 @@ func (ec *executionContext) _PlanBasics_createdBy(ctx context.Context, field gra
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
-	res := resTmp.(*string)
+	res := resTmp.(string)
 	fc.Result = res
-	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalNString2string(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanBasics_createdBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -6738,11 +6753,14 @@ func (ec *executionContext) _PlanBasics_createdDts(ctx context.Context, field gr
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
-	res := resTmp.(*time.Time)
+	res := resTmp.(time.Time)
 	fc.Result = res
-	return ec.marshalOTime2ᚖtimeᚐTime(ctx, field.Selections, res)
+	return ec.marshalNTime2timeᚐTime(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanBasics_createdDts(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -7125,11 +7143,14 @@ func (ec *executionContext) _PlanCollaborator_createdBy(ctx context.Context, fie
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
-	res := resTmp.(*string)
+	res := resTmp.(string)
 	fc.Result = res
-	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalNString2string(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanCollaborator_createdBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -7166,11 +7187,14 @@ func (ec *executionContext) _PlanCollaborator_createdDts(ctx context.Context, fi
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
-	res := resTmp.(*time.Time)
+	res := resTmp.(time.Time)
 	fc.Result = res
-	return ec.marshalOTime2ᚖtimeᚐTime(ctx, field.Selections, res)
+	return ec.marshalNTime2timeᚐTime(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanCollaborator_createdDts(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -7518,11 +7542,14 @@ func (ec *executionContext) _PlanDiscussion_createdBy(ctx context.Context, field
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
 	res := resTmp.(string)
 	fc.Result = res
-	return ec.marshalOString2string(ctx, field.Selections, res)
+	return ec.marshalNString2string(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanDiscussion_createdBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -7559,11 +7586,14 @@ func (ec *executionContext) _PlanDiscussion_createdDts(ctx context.Context, fiel
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
 	res := resTmp.(time.Time)
 	fc.Result = res
-	return ec.marshalOTime2timeᚐTime(ctx, field.Selections, res)
+	return ec.marshalNTime2timeᚐTime(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanDiscussion_createdDts(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -8221,11 +8251,14 @@ func (ec *executionContext) _PlanDocument_createdBy(ctx context.Context, field g
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
-	res := resTmp.(*string)
+	res := resTmp.(string)
 	fc.Result = res
-	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalNString2string(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanDocument_createdBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -8262,11 +8295,14 @@ func (ec *executionContext) _PlanDocument_createdDts(ctx context.Context, field 
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
-	res := resTmp.(*time.Time)
+	res := resTmp.(time.Time)
 	fc.Result = res
-	return ec.marshalOTime2ᚖtimeᚐTime(ctx, field.Selections, res)
+	return ec.marshalNTime2timeᚐTime(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanDocument_createdDts(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -10659,11 +10695,14 @@ func (ec *executionContext) _PlanGeneralCharacteristics_createdBy(ctx context.Co
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
-	res := resTmp.(*string)
+	res := resTmp.(string)
 	fc.Result = res
-	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalNString2string(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_createdBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -10700,11 +10739,14 @@ func (ec *executionContext) _PlanGeneralCharacteristics_createdDts(ctx context.C
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
-	res := resTmp.(*time.Time)
+	res := resTmp.(time.Time)
 	fc.Result = res
-	return ec.marshalOTime2ᚖtimeᚐTime(ctx, field.Selections, res)
+	return ec.marshalNTime2timeᚐTime(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_createdDts(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -11441,11 +11483,14 @@ func (ec *executionContext) _PlanMilestones_createdBy(ctx context.Context, field
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
-	res := resTmp.(*string)
+	res := resTmp.(string)
 	fc.Result = res
-	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalNString2string(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanMilestones_createdBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -11482,11 +11527,14 @@ func (ec *executionContext) _PlanMilestones_createdDts(ctx context.Context, fiel
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
-	res := resTmp.(*time.Time)
+	res := resTmp.(time.Time)
 	fc.Result = res
-	return ec.marshalOTime2ᚖtimeᚐTime(ctx, field.Selections, res)
+	return ec.marshalNTime2timeᚐTime(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanMilestones_createdDts(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -14584,10 +14632,16 @@ func (ec *executionContext) _DiscussionReply(ctx context.Context, sel ast.Select
 
 			out.Values[i] = ec._DiscussionReply_createdBy(ctx, field, obj)
 
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
 		case "createdDts":
 
 			out.Values[i] = ec._DiscussionReply_createdDts(ctx, field, obj)
 
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
 		case "modifiedBy":
 
 			out.Values[i] = ec._DiscussionReply_modifiedBy(ctx, field, obj)
@@ -14747,10 +14801,16 @@ func (ec *executionContext) _ModelPlan(ctx context.Context, sel ast.SelectionSet
 
 			out.Values[i] = ec._ModelPlan_createdBy(ctx, field, obj)
 
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&invalids, 1)
+			}
 		case "createdDts":
 
 			out.Values[i] = ec._ModelPlan_createdDts(ctx, field, obj)
 
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&invalids, 1)
+			}
 		case "modifiedBy":
 
 			out.Values[i] = ec._ModelPlan_modifiedBy(ctx, field, obj)
@@ -15077,10 +15137,16 @@ func (ec *executionContext) _PlanBasics(ctx context.Context, sel ast.SelectionSe
 
 			out.Values[i] = ec._PlanBasics_createdBy(ctx, field, obj)
 
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
 		case "createdDts":
 
 			out.Values[i] = ec._PlanBasics_createdDts(ctx, field, obj)
 
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
 		case "modifiedBy":
 
 			out.Values[i] = ec._PlanBasics_modifiedBy(ctx, field, obj)
@@ -15156,10 +15222,16 @@ func (ec *executionContext) _PlanCollaborator(ctx context.Context, sel ast.Selec
 
 			out.Values[i] = ec._PlanCollaborator_createdBy(ctx, field, obj)
 
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
 		case "createdDts":
 
 			out.Values[i] = ec._PlanCollaborator_createdDts(ctx, field, obj)
 
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
 		case "modifiedBy":
 
 			out.Values[i] = ec._PlanCollaborator_modifiedBy(ctx, field, obj)
@@ -15232,10 +15304,16 @@ func (ec *executionContext) _PlanDiscussion(ctx context.Context, sel ast.Selecti
 
 			out.Values[i] = ec._PlanDiscussion_createdBy(ctx, field, obj)
 
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&invalids, 1)
+			}
 		case "createdDts":
 
 			out.Values[i] = ec._PlanDiscussion_createdDts(ctx, field, obj)
 
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&invalids, 1)
+			}
 		case "modifiedBy":
 
 			out.Values[i] = ec._PlanDiscussion_modifiedBy(ctx, field, obj)
@@ -15340,10 +15418,16 @@ func (ec *executionContext) _PlanDocument(ctx context.Context, sel ast.Selection
 
 			out.Values[i] = ec._PlanDocument_createdBy(ctx, field, obj)
 
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&invalids, 1)
+			}
 		case "createdDts":
 
 			out.Values[i] = ec._PlanDocument_createdDts(ctx, field, obj)
 
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&invalids, 1)
+			}
 		case "modifiedBy":
 
 			out.Values[i] = ec._PlanDocument_modifiedBy(ctx, field, obj)
@@ -15742,10 +15826,16 @@ func (ec *executionContext) _PlanGeneralCharacteristics(ctx context.Context, sel
 
 			out.Values[i] = ec._PlanGeneralCharacteristics_createdBy(ctx, field, obj)
 
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&invalids, 1)
+			}
 		case "createdDts":
 
 			out.Values[i] = ec._PlanGeneralCharacteristics_createdDts(ctx, field, obj)
 
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&invalids, 1)
+			}
 		case "modifiedBy":
 
 			out.Values[i] = ec._PlanGeneralCharacteristics_modifiedBy(ctx, field, obj)
@@ -15842,10 +15932,16 @@ func (ec *executionContext) _PlanMilestones(ctx context.Context, sel ast.Selecti
 
 			out.Values[i] = ec._PlanMilestones_createdBy(ctx, field, obj)
 
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
 		case "createdDts":
 
 			out.Values[i] = ec._PlanMilestones_createdDts(ctx, field, obj)
 
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
 		case "modifiedBy":
 
 			out.Values[i] = ec._PlanMilestones_modifiedBy(ctx, field, obj)
@@ -17473,6 +17569,21 @@ func (ec *executionContext) marshalNTeamRole2githubᚗcomᚋcmsgovᚋmintᚑapp�
 	return res
 }
 
+func (ec *executionContext) unmarshalNTime2timeᚐTime(ctx context.Context, v interface{}) (time.Time, error) {
+	res, err := graphql.UnmarshalTime(v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalNTime2timeᚐTime(ctx context.Context, sel ast.SelectionSet, v time.Time) graphql.Marshaler {
+	res := graphql.MarshalTime(v)
+	if res == graphql.Null {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
+	}
+	return res
+}
+
 func (ec *executionContext) unmarshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx context.Context, v interface{}) (uuid.UUID, error) {
 	res, err := models.UnmarshalUUID(v)
 	return res, graphql.ErrorOnPath(ctx, err)
@@ -18785,16 +18896,6 @@ func (ec *executionContext) unmarshalOTaskStatus2githubᚗcomᚋcmsgovᚋmintᚑ
 
 func (ec *executionContext) marshalOTaskStatus2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTaskStatus(ctx context.Context, sel ast.SelectionSet, v models.TaskStatus) graphql.Marshaler {
 	res := graphql.MarshalString(string(v))
-	return res
-}
-
-func (ec *executionContext) unmarshalOTime2timeᚐTime(ctx context.Context, v interface{}) (time.Time, error) {
-	res, err := graphql.UnmarshalTime(v)
-	return res, graphql.ErrorOnPath(ctx, err)
-}
-
-func (ec *executionContext) marshalOTime2timeᚐTime(ctx context.Context, sel ast.SelectionSet, v time.Time) graphql.Marshaler {
-	res := graphql.MarshalTime(v)
 	return res
 }
 

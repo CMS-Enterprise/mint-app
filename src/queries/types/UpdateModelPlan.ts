@@ -17,7 +17,7 @@ export interface UpdateModelPlan_updateModelPlan {
   cmsCenters: CMSCenter[];
   cmmiGroups: CMMIGroup[];
   cmsOther: string | null;
-  createdBy: string | null;
+  createdBy: string;
   modifiedBy: string | null;
   modifiedDts: Time | null;
   archived: boolean;

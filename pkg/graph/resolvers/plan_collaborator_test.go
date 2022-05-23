@@ -21,7 +21,7 @@ func (suite *ResolverSuite) TestCreatePlanCollaborator() {
 	suite.EqualValues("CLAB", collaborator.EUAUserID)
 	suite.EqualValues("Clab O' Rater", collaborator.FullName)
 	suite.EqualValues(models.TeamRoleLeadership, collaborator.TeamRole)
-	suite.EqualValues(suite.testConfigs.UserInfo.EuaUserID, *collaborator.CreatedBy)
+	suite.EqualValues(suite.testConfigs.UserInfo.EuaUserID, collaborator.CreatedBy)
 	suite.Nil(collaborator.ModifiedBy)
 }
 

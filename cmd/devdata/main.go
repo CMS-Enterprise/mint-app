@@ -64,7 +64,7 @@ func main() {
 		p.CMSOther = models.StringPointer("The Center for Awesomeness ")
 		p.CMMIGroups = pq.StringArray{"STATE_INNOVATIONS_GROUP", "POLICY_AND_PROGRAMS_GROUP"}
 
-		p.CreatedBy = models.StringPointer("ABCD")
+		p.CreatedBy = "ABCD"
 		p.ModifiedBy = nil
 	})
 	makePlanCollaborator(uuid.MustParse("f11eb129-2c80-4080-9440-439cbe1a286f"), "MINT", logger, store, func(c *models.PlanCollaborator) {
@@ -90,7 +90,7 @@ func main() {
 
 		p.CMMIGroups = pq.StringArray{"POLICY_AND_PROGRAMS_GROUP", "SEAMLESS_CARE_MODELS_GROUP"}
 
-		p.CreatedBy = models.StringPointer("MINT")
+		p.CreatedBy = "MINT"
 		p.ModifiedBy = nil
 	})
 	makePlanCollaborator(pmGreatPlan.ID, "MINT", logger, store, func(c *models.PlanCollaborator) {
@@ -151,7 +151,7 @@ func main() {
 		p.CMSCenters = pq.StringArray{string(cms)}
 		// p.CMMIGroups = pq.StringArray{"STATE_INNOVATIONS_GROUP", "POLICY_AND_PROGRAMS_GROUP", "SEAMLESS_CARE_MODELS_GROUP"}
 
-		p.CreatedBy = models.StringPointer("MINT")
+		p.CreatedBy = "MINT"
 		p.ModifiedBy = nil
 	})
 
@@ -212,7 +212,7 @@ func makeModelPlan(modelName string, logger *zap.Logger, store *storage.Store, c
 	plan := models.ModelPlan{
 		ModelName: modelName,
 		Archived:  false,
-		CreatedBy: models.StringPointer("ABCD"),
+		CreatedBy: "ABCD",
 		Status:    status,
 	}
 
@@ -232,7 +232,7 @@ func makePlanCollaborator(mpID uuid.UUID, euaID string, logger *zap.Logger, stor
 		FullName:    euaID,
 		ModelPlanID: mpID,
 
-		CreatedBy: models.StringPointer("ABCD"),
+		CreatedBy: "ABCD",
 	}
 	for _, cb := range callbacks {
 		cb(&collab)
@@ -247,7 +247,7 @@ func makePlanBasics(uuid uuid.UUID, logger *zap.Logger, store *storage.Store, ca
 
 	basics := models.PlanBasics{
 		ModelPlanID: uuid,
-		CreatedBy:   models.StringPointer("ABCD"),
+		CreatedBy:   "ABCD",
 		Status:      status,
 	}
 
@@ -328,7 +328,7 @@ func makeDiscussionReply(uuid uuid.UUID, logger *zap.Logger, store *storage.Stor
 func makePlanGeneralCharacteristics(modelPlanID uuid.UUID, logger *zap.Logger, store *storage.Store, callbacks ...func(*models.PlanGeneralCharacteristics)) *models.PlanGeneralCharacteristics {
 	gc := models.PlanGeneralCharacteristics{
 		ModelPlanID: modelPlanID,
-		CreatedBy:   models.StringPointer("ABCD"),
+		CreatedBy:   "ABCD",
 		ModifiedBy:  models.StringPointer("ABCD"),
 		Status:      models.TaskReady,
 	}
@@ -359,7 +359,7 @@ func makePlanMilestones(uuid uuid.UUID, logger *zap.Logger, store *storage.Store
 		// HighLevelNote: ,
 		// PhasedIn: ,
 		// PhasedInNote: ,
-		CreatedBy: models.StringPointer("ABCD"),
+		CreatedBy: "ABCD",
 		Status:    models.TaskReady,
 	}
 

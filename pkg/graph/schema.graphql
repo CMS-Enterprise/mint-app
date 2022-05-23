@@ -34,8 +34,8 @@ type ModelPlan {
   cmsOther: String
   cmmiGroups: [CMMIGroup!]!
   archived: Boolean!
-  createdBy: String
-  createdDts: Time
+  createdBy: String!
+  createdDts: Time!
   modifiedBy: String
   modifiedDts: Time
   basics: PlanBasics
@@ -72,8 +72,8 @@ type PlanCollaborator {
   euaUserID: String!
   fullName: String!
   teamRole: TeamRole!
-  createdBy: String
-  createdDts: Time
+  createdBy: String!
+  createdDts: Time!
   modifiedBy: String
   modifiedDts: Time
 }
@@ -121,8 +121,8 @@ type PlanDocument {
   otherType: String
   optionalNotes: String
   deletedAt: Time
-  createdBy: String
-  createdDts: Time
+  createdBy: String!
+  createdDts: Time!
   modifiedBy: String
   modifiedDts: Time
 }
@@ -169,8 +169,8 @@ type PlanBasics {
   goal: String
   testInventions: String
   note: String
-  createdBy: String
-  createdDts: Time
+  createdBy: String!
+  createdDts: Time!
   modifiedBy: String
   modifiedDts: Time
   status: TaskStatus!
@@ -222,8 +222,8 @@ type PlanMilestones {
   phasedInNote: String
 
 
-  createdBy: String
-  createdDts: Time
+  createdBy: String!
+  createdDts: Time!
   modifiedBy: String
   modifiedDts: Time
   status: TaskStatus
@@ -263,8 +263,8 @@ type PlanDiscussion  {
 	status: DiscussionStatus!
   replies: [DiscussionReply!]!
 
-  createdBy: String
-  createdDts: Time
+  createdBy: String!
+  createdDts: Time!
   modifiedBy: String
   modifiedDts: Time
 }
@@ -296,8 +296,8 @@ type DiscussionReply  {
 	content: String
 	resolution: Boolean
 
-	createdBy: String
-	createdDts: Time
+	createdBy: String!
+	createdDts: Time!
 	modifiedBy: String
 	modifiedDts: Time
 }
@@ -388,8 +388,8 @@ type PlanGeneralCharacteristics {
   waiversRequiredTypes: [WaiverType!]!
   waiversRequiredNote: String
 
-  createdBy: String
-  createdDts: Time
+  createdBy: String!
+  createdDts: Time!
   modifiedBy: String
   modifiedDts: Time
   status: TaskStatus!

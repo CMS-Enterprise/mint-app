@@ -20,8 +20,6 @@ func ConvertToPlanDocumentModel(input *model.PlanDocumentInput) *models.PlanDocu
 		OtherTypeDescription: nil,
 		OptionalNotes:        nil,
 		DeletedAt:            nil,
-		CreatedBy:            nil,
-		CreatedDts:           nil,
 	}
 
 	if input.ID != nil {

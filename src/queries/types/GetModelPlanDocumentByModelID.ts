@@ -23,7 +23,7 @@ export interface GetModelPlanDocumentByModelID_readPlanDocumentByModelID {
   documentType: DocumentType | null;
   otherType: string | null;
   optionalNotes: string | null;
-  createdDts: Time | null;
+  createdDts: Time;
 }
 
 export interface GetModelPlanDocumentByModelID {

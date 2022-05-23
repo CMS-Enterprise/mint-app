@@ -22,7 +22,7 @@ export interface GetModelPlanDocument_planDocument {
   fileSize: number | null;
   documentType: DocumentType | null;
   otherType: string | null;
-  createdDts: Time | null;
+  createdDts: Time;
 }
 
 export interface GetModelPlanDocument {

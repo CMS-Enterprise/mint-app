@@ -35,8 +35,8 @@ export interface GetModelPlans_modelPlanCollection {
   cmsCenters: CMSCenter[];
   cmmiGroups: CMMIGroup[];
   status: ModelStatus;
-  createdBy: string | null;
-  createdDts: Time | null;
+  createdBy: string;
+  createdDts: Time;
   modifiedDts: Time | null;
   collaborators: GetModelPlans_modelPlanCollection_collaborators[];
   discussions: GetModelPlans_modelPlanCollection_discussions[];
