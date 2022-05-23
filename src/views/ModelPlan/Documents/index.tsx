@@ -11,7 +11,6 @@ import {
   IconArrowBack
 } from '@trussworks/react-uswds';
 
-import AskAQuestion from 'components/AskAQuestion';
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
@@ -106,8 +105,6 @@ export const DocumentsContent = () => {
           <p className="margin-bottom-2 font-body-md line-height-body-4">
             {t('description')}
           </p>
-
-          <AskAQuestion modelID={modelID} />
 
           <UswdsReactLink
             to={`/models/${modelID}/task-list`}

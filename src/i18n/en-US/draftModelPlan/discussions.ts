@@ -18,11 +18,8 @@ const discussions = {
   viewDiscussions: 'View discussions',
   success: 'Success! Your question has been added.',
   successAnswer: 'Success! Your answer has been added.',
-  errorFetch: {
-    heading: 'There is a problem',
-    body:
-      'Sorry we encountered a problem fetching your discusssions.  Please try again.'
-  },
+  errorFetch:
+    'Sorry we encountered a problem fetching your discusssions.  Please try again.',
   error:
     'Sorry, we encountered a problem adding your question. Please try again.',
   errorAnswer:

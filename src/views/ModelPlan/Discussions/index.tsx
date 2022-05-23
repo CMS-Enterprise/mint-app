@@ -35,10 +35,7 @@ import {
   CreateModelPlanReply_createDiscussionReply as ReplyType
 } from 'queries/types/CreateModelPlanReply';
 import { GetModelPlan_modelPlan_discussions as DiscussionType } from 'queries/types/GetModelPlan';
-import {
-  GetModelPlanDiscussions as GetModelPlanDiscussionsType,
-  GetModelPlanDiscussionsVariables
-} from 'queries/types/GetModelPlanDiscussions';
+import { GetModelPlanDiscussions as GetModelPlanDiscussionsType } from 'queries/types/GetModelPlanDiscussions';
 import { UpdateModelPlanDiscussion as UpdateModelPlanDiscussionType } from 'queries/types/UpdateModelPlanDiscussion';
 import UpdateModelPlanDiscussion from 'queries/UpdateModelPlanDiscussion';
 import { DiscussionStatus } from 'types/graphql-global-types';
@@ -70,10 +67,12 @@ const Discussions = ({
   const { t } = useTranslation('discussions');
   const { t: h } = useTranslation('draftModelPlan');
 
-  const { data, loading, error, refetch } = useQuery<
-    GetModelPlanDiscussionsType,
-    GetModelPlanDiscussionsVariables
-  >(GetModelPlanDiscussions, {
+  const {
+    data,
+    loading,
+    error,
+    refetch
+  } = useQuery<GetModelPlanDiscussionsType>(GetModelPlanDiscussions, {
     variables: {
       id: modelID
     }
@@ -104,27 +103,40 @@ const Discussions = ({
     'question' | 'reply' | 'discussion'
   >('question');
 
-  const validationSchema = Yup.object().shape({
-    content: Yup.string().trim().required(`Please enter a ${discussionType}`)
-  });
-
   const [discussionStatus, setDiscussionStatus] = useState<'success' | 'error'>(
     'success'
   );
 
+  const [discussionStatusMessage, setDiscussionStatusMessage] = useState('');
+
+  // State used to control when the component is being rendered from a form page rather than the task-list
   const [initQuestion, setInitQuestion] = useState<boolean | undefined>(
     askAQuestion
   );
-
-  const [discussionStatusMessage, setDiscussionStatusMessage] = useState('');
 
   const [questionCount, setQuestionCount] = useState({
     answeredQuestions: 0,
     unansweredQuestions: 0
   });
 
+  // State and setter used for containing the related question when replying
   const [reply, setReply] = useState<DiscussionType | ReplyType | null>(null);
 
+  const validationSchema = Yup.object().shape({
+    content: Yup.string().trim().required(`Please enter a ${discussionType}`)
+  });
+
+  // Hook used to conditionally render each discussionType by its setter method
+  useEffect(() => {
+    if (discussions?.length === 0 || initQuestion) {
+      setDiscussionType('question');
+    } else {
+      setDiscussionType('discussion');
+    }
+    setQuestionCount(getUnansweredQuestions(discussions));
+  }, [discussions, initQuestion]);
+
+  // Handles the default expanded render of accordions based on if there are more than zero questions
   const openStatus = (status: DiscussionStatus) => {
     return status === 'ANSWERED'
       ? questionCount.answeredQuestions > 0
@@ -138,18 +150,10 @@ const Discussions = ({
     }
   };
 
-  useEffect(() => {
-    if (discussions?.length === 0 || initQuestion) {
-      setDiscussionType('question');
-    } else {
-      setDiscussionType('discussion');
-    }
-    setQuestionCount(getUnansweredQuestions(discussions));
-  }, [discussions, initQuestion]);
-
   const handleCreateDiscussion = (formikValues: DicussionFormPropTypes) => {
     let payload = {};
 
+    // Setting the mutation payload depending on discussionType
     if (discussionType === 'question') {
       payload = {
         modelPlanID: modelID,
@@ -198,7 +202,7 @@ const Discussions = ({
       variables: {
         id,
         changes: {
-          status: 'ANSWERED'
+          status: 'ANSWERED' // For now any question that has a reply will bw considered "ANSWERED"
         }
       }
     })
@@ -222,11 +226,14 @@ const Discussions = ({
         <PageHeading headingLevel="h1" className="margin-y-0">
           {renderType === 'question' ? t('askAQuestion') : t('answer')}
         </PageHeading>
+
         <p className="margin-bottom-4">
           {renderType === 'question'
             ? t('description')
             : t('answerDescription')}
         </p>
+
+        {/* General error message for mutations that expires after 3 seconds */}
         {discussionStatusMessage && (
           <Expire delay={3000} callback={setDiscussionStatusMessage}>
             <Alert className="margin-bottom-4" type={discussionStatus}>
@@ -234,11 +241,15 @@ const Discussions = ({
             </Alert>
           </Expire>
         )}
+
+        {/* If renderType is reply, render the related question that is being answered */}
         {renderType === 'reply' && reply && (
           <div>
             <div className="display-flex">
+              {/* createdBy should not be null, and TS error will be addressed be BE changes */}
               <IconInitial user={reply.createdBy} index={0} />
               <span className="margin-left-2 margin-top-05 text-base">
+                {/* createdDts should not be null, and TS error will be addressed be BE changes */}
                 {getTimeElapsed(reply.createdDts)
                   ? getTimeElapsed(reply.createdDts) + t('ago')
                   : t('justNow')}
@@ -249,6 +260,7 @@ const Discussions = ({
             </div>
           </div>
         )}
+
         <Formik
           initialValues={{ content: '' }}
           onSubmit={handleCreateDiscussion}
@@ -339,16 +351,18 @@ const Discussions = ({
     discussion: DiscussionType | ReplyType,
     index: number,
     connected?: boolean,
-    askQuestion?: boolean
+    answerQuestion?: boolean
   ) => (
     <div className="mint-discussions__single-discussion" key={discussion.id}>
       <div className="display-flex">
+        {/* createdBy should not be null, and TS error will be addressed be BE changes */}
         <IconInitial
           user={discussion.createdBy}
           index={index}
           className="margin-bottom-2"
         />
         <span className="margin-left-2 margin-top-05 text-base">
+          {/* createdDts should not be null, and TS error will be addressed be BE changes */}
           {getTimeElapsed(discussion.createdDts)
             ? getTimeElapsed(discussion.createdDts) + t('ago')
             : t('justNow')}
@@ -357,14 +371,15 @@ const Discussions = ({
 
       <div
         className={classNames({
-          'margin-bottom-4': askQuestion,
+          'margin-bottom-4': answerQuestion,
           'mint-discussions__connected': connected,
           'mint-discussions__not-connected': !connected
         })}
       >
         <p className="margin-y-0 padding-y-1">{discussion.content}</p>
         <div className="display-flex margin-bottom-2">
-          {askQuestion && (
+          {/* Rendered a link to answer a question if there are no replies/answers */}
+          {answerQuestion && (
             <>
               <IconAnnouncement className="text-primary margin-right-1" />
               <Button
@@ -403,6 +418,7 @@ const Discussions = ({
           })}
         >
           {discussion.replies.length > 0 ? (
+            // If discussions has replies, join together in array for rendering as a connected discussion
             <div>
               {[
                 discussion,
@@ -416,8 +432,10 @@ const Discussions = ({
               )}
             </div>
           ) : (
+            // Render only question if no replies
             discussionComponent(discussion, index, undefined, true)
           )}
+          {/* Divider to separate questions if not the last question */}
           {index !== discussionsContent.length - 1 && (
             <Divider className="margin-top-4" />
           )}
@@ -426,6 +444,7 @@ const Discussions = ({
     });
   };
 
+  // Two main discussion accordion types - "Unanswered" and "Answered" based on enum - DiscussionStatus
   const discussionAccordion = (Object.keys(DiscussionStatus) as Array<
     keyof typeof DiscussionStatus
   >)
@@ -443,6 +462,7 @@ const Discussions = ({
             multiselectable
             items={[
               {
+                // Formatting of accordion headers based on number of questions and their pluraltiy
                 title:
                   status === 'UNANSWERED' ? (
                     <strong>
@@ -467,6 +487,7 @@ const Discussions = ({
               }
             ]}
           />
+          {/* Sets an infobox beneath each accordion if there are zero questions of that type */}
           {!openStatus(DiscussionStatus[status]) && (
             <Alert className="margin-bottom-2" type="info">
               {status === 'ANSWERED' ? t('noAnswered') : t('noUanswered')}
@@ -496,6 +517,7 @@ const Discussions = ({
             {t('askAQuestionLink')}
           </Button>
         </div>
+        {/* General error message for mutations that expires after 3 seconds */}
         {discussionStatusMessage && (
           <Expire delay={3000} callback={setDiscussionStatusMessage}>
             <Alert type={discussionStatus} className="margin-bottom-4">
@@ -503,32 +525,24 @@ const Discussions = ({
             </Alert>
           </Expire>
         )}
-        {discussionAccordion}
+        {/* Render error if failed to fetch discussions */}
+        {error ? (
+          <Alert type="error" className="margin-bottom-4">
+            {t('errorFetch')}
+          </Alert>
+        ) : (
+          discussionAccordion
+        )}
       </>
     );
   };
 
   const chooseRenderMethod = () => {
-    if (discussionType === 'question' || discussionType === 'reply') {
-      return renderQuestion(discussionType);
+    if (error || discussionType === 'discussion') {
+      return renderDiscussions();
     }
-    return renderDiscussions();
+    return renderQuestion(discussionType); // If discussionType === "question" or "reply"
   };
-
-  if (error) {
-    return (
-      <ErrorAlert
-        testId="formik-validation-errors"
-        classNames="margin-y-3"
-        heading={t('errorFetch.heading')}
-      >
-        <ErrorAlertMessage
-          errorKey="error-document"
-          message={t('errorFetch.body')}
-        />
-      </ErrorAlert>
-    );
-  }
 
   return (
     <ReactModal
