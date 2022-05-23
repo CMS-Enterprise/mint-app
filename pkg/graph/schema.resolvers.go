@@ -52,6 +52,13 @@ func (r *modelPlanResolver) Milestones(ctx context.Context, obj *models.ModelPla
 	return resolvers.FetchPlanMilestonesByModelPlanID(logger, &principal, obj.ID, r.store)
 }
 
+func (r *modelPlanResolver) GeneralCharacteristics(ctx context.Context, obj *models.ModelPlan) (*models.PlanGeneralCharacteristics, error) {
+	logger := appcontext.ZLogger(ctx)
+	principal := appcontext.Principal(ctx).ID()
+
+	return resolvers.FetchPlanGeneralCharacteristicsByModelPlanID(logger, principal, obj.ID, r.store)
+}
+
 func (r *modelPlanResolver) Collaborators(ctx context.Context, obj *models.ModelPlan) ([]*models.PlanCollaborator, error) {
 	principal := appcontext.Principal(ctx).ID()
 	logger := appcontext.ZLogger(ctx)
@@ -129,6 +136,13 @@ func (r *mutationResolver) UpdatePlanMilestones(ctx context.Context, id uuid.UUI
 	logger := appcontext.ZLogger(ctx)
 
 	return resolvers.UpdatePlanMilestones(logger, id, changes, principal, r.store)
+}
+
+func (r *mutationResolver) UpdatePlanGeneralCharacteristics(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanGeneralCharacteristics, error) {
+	principal := appcontext.Principal(ctx).ID()
+	logger := appcontext.ZLogger(ctx)
+
+	return resolvers.UpdatePlanGeneralCharacteristics(logger, id, changes, principal, r.store)
 }
 
 func (r *mutationResolver) GeneratePresignedUploadURL(ctx context.Context, input model.GeneratePresignedUploadURLInput) (*model.GeneratePresignedUploadURLPayload, error) {
@@ -218,6 +232,87 @@ func (r *planDiscussionResolver) Replies(ctx context.Context, obj *models.PlanDi
 
 func (r *planDocumentResolver) OtherType(ctx context.Context, obj *models.PlanDocument) (*string, error) {
 	return obj.OtherTypeDescription, nil
+}
+
+func (r *planGeneralCharacteristicsResolver) ResemblesExistingModelWhich(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]string, error) {
+	return obj.ResemblesExistingModelWhich, nil
+}
+
+func (r *planGeneralCharacteristicsResolver) AlternativePaymentModelTypes(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]model.AlternativePaymentModelType, error) {
+	// TODO: We should probably have a better way to handle enum arrays
+	var apmTypes []model.AlternativePaymentModelType
+
+	for _, item := range obj.AlternativePaymentModelTypes {
+		apmTypes = append(apmTypes, model.AlternativePaymentModelType(item))
+	}
+
+	return apmTypes, nil
+}
+
+func (r *planGeneralCharacteristicsResolver) KeyCharacteristics(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]model.KeyCharacteristic, error) {
+	// TODO: We should probably have a better way to handle enum arrays
+	var keyCharacteristics []model.KeyCharacteristic
+
+	for _, item := range obj.KeyCharacteristics {
+		keyCharacteristics = append(keyCharacteristics, model.KeyCharacteristic(item))
+	}
+
+	return keyCharacteristics, nil
+}
+
+func (r *planGeneralCharacteristicsResolver) GeographiesTargetedTypes(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]model.GeographyType, error) {
+	// TODO: We should probably have a better way to handle enum arrays
+	var geographyTypes []model.GeographyType
+
+	for _, item := range obj.GeographiesTargetedTypes {
+		geographyTypes = append(geographyTypes, model.GeographyType(item))
+	}
+
+	return geographyTypes, nil
+}
+
+func (r *planGeneralCharacteristicsResolver) GeographiesTargetedAppliedTo(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]model.GeographyApplication, error) {
+	// TODO: We should probably have a better way to handle enum arrays
+	var geographyApplications []model.GeographyApplication
+
+	for _, item := range obj.GeographiesTargetedAppliedTo {
+		geographyApplications = append(geographyApplications, model.GeographyApplication(item))
+	}
+
+	return geographyApplications, nil
+}
+
+func (r *planGeneralCharacteristicsResolver) AgreementTypes(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]model.AgreementType, error) {
+	// TODO: We should probably have a better way to handle enum arrays
+	var agreementTypes []model.AgreementType
+
+	for _, item := range obj.AgreementTypes {
+		agreementTypes = append(agreementTypes, model.AgreementType(item))
+	}
+
+	return agreementTypes, nil
+}
+
+func (r *planGeneralCharacteristicsResolver) AuthorityAllowances(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]model.AuthorityAllowance, error) {
+	// TODO: We should probably have a better way to handle enum arrays
+	var authorityAllowances []model.AuthorityAllowance
+
+	for _, item := range obj.AuthorityAllowances {
+		authorityAllowances = append(authorityAllowances, model.AuthorityAllowance(item))
+	}
+
+	return authorityAllowances, nil
+}
+
+func (r *planGeneralCharacteristicsResolver) WaiversRequiredTypes(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]model.WaiverType, error) {
+	// TODO: We should probably have a better way to handle enum arrays
+	var waiverTypes []model.WaiverType
+
+	for _, item := range obj.WaiversRequiredTypes {
+		waiverTypes = append(waiverTypes, model.WaiverType(item))
+	}
+
+	return waiverTypes, nil
 }
 
 func (r *queryResolver) CurrentUser(ctx context.Context) (*model.CurrentUser, error) {
@@ -310,6 +405,11 @@ func (r *Resolver) PlanDiscussion() generated.PlanDiscussionResolver {
 // PlanDocument returns generated.PlanDocumentResolver implementation.
 func (r *Resolver) PlanDocument() generated.PlanDocumentResolver { return &planDocumentResolver{r} }
 
+// PlanGeneralCharacteristics returns generated.PlanGeneralCharacteristicsResolver implementation.
+func (r *Resolver) PlanGeneralCharacteristics() generated.PlanGeneralCharacteristicsResolver {
+	return &planGeneralCharacteristicsResolver{r}
+}
+
 // Query returns generated.QueryResolver implementation.
 func (r *Resolver) Query() generated.QueryResolver { return &queryResolver{r} }
 
@@ -320,5 +420,6 @@ type modelPlanResolver struct{ *Resolver }
 type mutationResolver struct{ *Resolver }
 type planDiscussionResolver struct{ *Resolver }
 type planDocumentResolver struct{ *Resolver }
+type planGeneralCharacteristicsResolver struct{ *Resolver }
 type queryResolver struct{ *Resolver }
 type userInfoResolver struct{ *Resolver }

@@ -11,15 +11,15 @@ SET
     modified_dts = CURRENT_TIMESTAMP
 WHERE model_plan.id = :id
 RETURNING
-    id,
-    model_name,
-    model_category,
-    cms_centers,
-    cms_other,
-    cmmi_groups,
-    archived,
-    status,
-    created_by,
-    created_dts,
-    modified_by,
-    modified_dts;
+id,
+model_name,
+model_category,
+cms_centers,
+cms_other,
+cmmi_groups,
+archived,
+status,
+created_by,
+created_dts,
+modified_by,
+modified_dts;
