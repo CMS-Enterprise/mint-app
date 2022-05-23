@@ -554,14 +554,13 @@ const Discussions = ({
           <h4 className="margin-0">{t('modalHeading')}</h4>
         </div>
         <GridContainer className="padding-y-8">
-          {loading ? (
+          {loading && !discussions ? (
             <PageLoading />
           ) : (
             <Grid desktop={{ col: 12 }}>{chooseRenderMethod()}</Grid>
           )}
         </GridContainer>
       </>
-      )
     </ReactModal>
   );
 };
