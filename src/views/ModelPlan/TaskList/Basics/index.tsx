@@ -16,6 +16,7 @@ import {
 } from '@trussworks/react-uswds';
 import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
 
+import AskAQuestion from 'components/AskAQuestion';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
@@ -156,6 +157,9 @@ const BasicsContent = () => {
             <Breadcrumb current>{t('breadcrumb')}</Breadcrumb>
           </BreadcrumbBar>
           <PageHeading className="margin-top-4">{t('heading')}</PageHeading>
+
+          <AskAQuestion modelID={modelID} />
+
           <Alert
             type="info"
             slim
@@ -166,6 +170,7 @@ const BasicsContent = () => {
               {h('mandatoryFields')}
             </span>
           </Alert>
+
           <Formik
             initialValues={initialValues}
             onSubmit={values => {

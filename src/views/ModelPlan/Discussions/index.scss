@@ -57,5 +57,9 @@
     &__single-discussion:last-of-type {
       margin-bottom: -1rem;
     }
+
   }
-  
+
+  .no-button > .usa-accordion__heading > .usa-accordion__button {
+    background-size: 0rem !important;
+  }

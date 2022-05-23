@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import ReactModal from 'react-modal';
-import { useMutation } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import {
   Accordion,
   Button,
@@ -18,6 +18,7 @@ import noScroll from 'no-scroll';
 import * as Yup from 'yup';
 
 import PageHeading from 'components/PageHeading';
+import PageLoading from 'components/PageLoading';
 import Alert from 'components/shared/Alert';
 import Divider from 'components/shared/Divider';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
@@ -27,12 +28,17 @@ import FieldGroup from 'components/shared/FieldGroup';
 import IconInitial from 'components/shared/IconInitial';
 import CreateModelPlanDiscussion from 'queries/CreateModelPlanDiscussion';
 import CreateModelPlanReply from 'queries/CreateModelPlanReply';
+import GetModelPlanDiscussions from 'queries/GetModelPlanDiscussions';
 import { CreateModelPlanDiscussion as CreateModelPlanDiscussionType } from 'queries/types/CreateModelPlanDiscussion';
 import {
   CreateModelPlanReply as CreateModelPlanReplyType,
   CreateModelPlanReply_createDiscussionReply as ReplyType
 } from 'queries/types/CreateModelPlanReply';
 import { GetModelPlan_modelPlan_discussions as DiscussionType } from 'queries/types/GetModelPlan';
+import {
+  GetModelPlanDiscussions as GetModelPlanDiscussionsType,
+  GetModelPlanDiscussionsVariables
+} from 'queries/types/GetModelPlanDiscussions';
 import { UpdateModelPlanDiscussion as UpdateModelPlanDiscussionType } from 'queries/types/UpdateModelPlanDiscussion';
 import UpdateModelPlanDiscussion from 'queries/UpdateModelPlanDiscussion';
 import { DiscussionStatus } from 'types/graphql-global-types';
@@ -45,8 +51,7 @@ import './index.scss';
 type DiscussionsProps = {
   modelID: string;
   isOpen: boolean;
-  discussions: DiscussionType[];
-  refetch: () => any | undefined;
+  askAQuestion?: boolean;
   openModal?: () => void;
   closeModal: () => void;
 };
@@ -58,52 +63,25 @@ type DicussionFormPropTypes = {
 const Discussions = ({
   modelID,
   isOpen,
-  discussions,
-  refetch,
+  askAQuestion,
   openModal,
   closeModal
 }: DiscussionsProps) => {
   const { t } = useTranslation('discussions');
   const { t: h } = useTranslation('draftModelPlan');
 
-  const [discussionStatus, setDiscussionStatus] = useState<'success' | 'error'>(
-    'success'
-  );
-
-  const [discussionStatusMessage, setDiscussionStatusMessage] = useState('');
-
-  const [questionCount, setQuestionCount] = useState({
-    answeredQuestions: 0,
-    unansweredQuestions: 0
+  const { data, loading, error, refetch } = useQuery<
+    GetModelPlanDiscussionsType,
+    GetModelPlanDiscussionsVariables
+  >(GetModelPlanDiscussions, {
+    variables: {
+      id: modelID
+    }
   });
 
-  const [discussionType, setDiscussionType] = useState<
-    'question' | 'reply' | 'discussion'
-  >('question');
-
-  const [reply, setReply] = useState<DiscussionType | ReplyType | null>(null);
-
-  const openStatus = (status: DiscussionStatus) => {
-    return status === 'ANSWERED'
-      ? questionCount.answeredQuestions > 0
-      : questionCount.unansweredQuestions > 0;
-  };
-
-  const handleOpenModal = () => {
-    noScroll.on();
-    if (openModal) {
-      openModal();
-    }
-  };
-
-  useEffect(() => {
-    if (discussions?.length === 0) {
-      setDiscussionType('question');
-    } else {
-      setDiscussionType('discussion');
-    }
-    setQuestionCount(getUnansweredQuestions(discussions));
-  }, [discussions]);
+  const discussions = useMemo(() => {
+    return data?.modelPlan?.discussions || ([] as DiscussionType[]);
+  }, [data?.modelPlan?.discussions]);
 
   const [createQuestion] = useMutation<CreateModelPlanDiscussionType>(
     CreateModelPlanDiscussion
@@ -122,9 +100,52 @@ const Discussions = ({
     reply: createReply
   };
 
+  const [discussionType, setDiscussionType] = useState<
+    'question' | 'reply' | 'discussion'
+  >('question');
+
   const validationSchema = Yup.object().shape({
     content: Yup.string().trim().required(`Please enter a ${discussionType}`)
   });
+
+  const [discussionStatus, setDiscussionStatus] = useState<'success' | 'error'>(
+    'success'
+  );
+
+  const [initQuestion, setInitQuestion] = useState<boolean | undefined>(
+    askAQuestion
+  );
+
+  const [discussionStatusMessage, setDiscussionStatusMessage] = useState('');
+
+  const [questionCount, setQuestionCount] = useState({
+    answeredQuestions: 0,
+    unansweredQuestions: 0
+  });
+
+  const [reply, setReply] = useState<DiscussionType | ReplyType | null>(null);
+
+  const openStatus = (status: DiscussionStatus) => {
+    return status === 'ANSWERED'
+      ? questionCount.answeredQuestions > 0
+      : questionCount.unansweredQuestions > 0;
+  };
+
+  const handleOpenModal = () => {
+    noScroll.on();
+    if (openModal) {
+      openModal();
+    }
+  };
+
+  useEffect(() => {
+    if (discussions?.length === 0 || initQuestion) {
+      setDiscussionType('question');
+    } else {
+      setDiscussionType('discussion');
+    }
+    setQuestionCount(getUnansweredQuestions(discussions));
+  }, [discussions, initQuestion]);
 
   const handleCreateDiscussion = (formikValues: DicussionFormPropTypes) => {
     let payload = {};
@@ -159,6 +180,7 @@ const Discussions = ({
             discussionType === 'question' ? t('success') : t('successAnswer')
           );
           refetch().then(() => {
+            setInitQuestion(false);
             setDiscussionType('discussion');
           });
         }
@@ -183,6 +205,7 @@ const Discussions = ({
       .then(response => {
         if (!response?.errors) {
           refetch().then(() => {
+            setInitQuestion(false);
             setDiscussionType('discussion');
           });
         }
@@ -320,7 +343,11 @@ const Discussions = ({
   ) => (
     <div className="mint-discussions__single-discussion" key={discussion.id}>
       <div className="display-flex">
-        <IconInitial user={discussion.createdBy} index={index} />
+        <IconInitial
+          user={discussion.createdBy}
+          index={index}
+          className="margin-bottom-2"
+        />
         <span className="margin-left-2 margin-top-05 text-base">
           {getTimeElapsed(discussion.createdDts)
             ? getTimeElapsed(discussion.createdDts) + t('ago')
@@ -335,7 +362,7 @@ const Discussions = ({
           'mint-discussions__not-connected': !connected
         })}
       >
-        <p>{discussion.content}</p>
+        <p className="margin-y-0 padding-y-1">{discussion.content}</p>
         <div className="display-flex margin-bottom-2">
           {askQuestion && (
             <>
@@ -409,7 +436,8 @@ const Discussions = ({
         <div key={status}>
           <Accordion
             className={classNames('margin-bottom-2', {
-              'no-pointer': !openStatus(DiscussionStatus[status])
+              'no-pointer': !openStatus(DiscussionStatus[status]),
+              'no-button': !openStatus(DiscussionStatus[status])
             })}
             key={status}
             multiselectable
@@ -487,6 +515,21 @@ const Discussions = ({
     return renderDiscussions();
   };
 
+  if (error) {
+    return (
+      <ErrorAlert
+        testId="formik-validation-errors"
+        classNames="margin-y-3"
+        heading={t('errorFetch.heading')}
+      >
+        <ErrorAlertMessage
+          errorKey="error-document"
+          message={t('errorFetch.body')}
+        />
+      </ErrorAlert>
+    );
+  }
+
   return (
     <ReactModal
       isOpen={isOpen}
@@ -498,20 +541,27 @@ const Discussions = ({
       shouldCloseOnOverlayClick
       appElement={document.getElementById('root')!}
     >
-      <div className="mint-discussions__x-button-container display-flex text-base flex-align-center">
-        <button
-          type="button"
-          className="mint-discussions__x-button margin-right-2"
-          aria-label="Close Modal"
-          onClick={closeModal}
-        >
-          <IconClose size={4} className="text-base" />
-        </button>
-        <h4 className="margin-0">{t('modalHeading')}</h4>
-      </div>
-      <GridContainer className="padding-y-8">
-        <Grid desktop={{ col: 12 }}>{chooseRenderMethod()}</Grid>
-      </GridContainer>
+      <>
+        <div className="mint-discussions__x-button-container display-flex text-base flex-align-center">
+          <button
+            type="button"
+            className="mint-discussions__x-button margin-right-2"
+            aria-label="Close Modal"
+            onClick={closeModal}
+          >
+            <IconClose size={4} className="text-base" />
+          </button>
+          <h4 className="margin-0">{t('modalHeading')}</h4>
+        </div>
+        <GridContainer className="padding-y-8">
+          {loading ? (
+            <PageLoading />
+          ) : (
+            <Grid desktop={{ col: 12 }}>{chooseRenderMethod()}</Grid>
+          )}
+        </GridContainer>
+      </>
+      )
     </ReactModal>
   );
 };

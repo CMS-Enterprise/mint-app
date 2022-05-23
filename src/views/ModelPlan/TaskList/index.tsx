@@ -179,15 +179,6 @@ const TaskList = () => {
       className="model-plan-task-list"
       data-testid="model-plan-task-list"
     >
-      {isDiscussionOpen && (
-        <Discussions
-          modelID={modelID}
-          isOpen={isDiscussionOpen}
-          discussions={discussions}
-          refetch={refetch}
-          closeModal={() => setIsDiscussionOpen(false)}
-        />
-      )}
       <GridContainer>
         <Grid desktop={{ col: 12 }}>
           <BreadcrumbBar variant="wrap">
@@ -214,6 +205,15 @@ const TaskList = () => {
                     indexZero {modelName} indexTwo
                   </Trans>
                 </p>
+
+                {isDiscussionOpen && (
+                  <Discussions
+                    modelID={modelID}
+                    isOpen={isDiscussionOpen}
+                    closeModal={() => setIsDiscussionOpen(false)}
+                  />
+                )}
+
                 <TaskListStatus modelID={modelID} status={status} />
                 {dicussionBanner()}
                 <SummaryBox
