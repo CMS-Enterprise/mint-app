@@ -11,8 +11,8 @@ import { PlanMilestoneChanges } from "./../../types/graphql-global-types";
 
 export interface UpdatePlanMilestones_updatePlanMilestones {
   __typename: "PlanMilestones";
-  id: UUID | null;
-  modelPlanID: UUID | null;
+  id: UUID;
+  modelPlanID: UUID;
   completeICIP: Time | null;
   clearanceStarts: Time | null;
   clearanceEnds: Time | null;

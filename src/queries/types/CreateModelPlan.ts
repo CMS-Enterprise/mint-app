@@ -27,8 +27,8 @@ export interface CreateModelPlan_createModelPlan_basics {
 
 export interface CreateModelPlan_createModelPlan_milestones {
   __typename: "PlanMilestones";
-  id: UUID | null;
-  modelPlanID: UUID | null;
+  id: UUID;
+  modelPlanID: UUID;
   completeICIP: Time | null;
   clearanceStarts: Time | null;
   clearanceEnds: Time | null;
@@ -45,7 +45,7 @@ export interface CreateModelPlan_createModelPlan_milestones {
   createdDts: Time;
   modifiedBy: string | null;
   modifiedDts: Time | null;
-  status: TaskStatus | null;
+  status: TaskStatus;
 }
 
 export interface CreateModelPlan_createModelPlan_collaborators {

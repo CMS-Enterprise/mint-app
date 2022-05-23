@@ -1,5 +1,5 @@
 CREATE TABLE plan_document (
-    id UUID PRIMARY KEY,
+    id UUID PRIMARY KEY NOT NULL,
     model_plan_id UUID NOT NULL,
     file_type TEXT NOT NULL,
     bucket TEXT NOT NULL,

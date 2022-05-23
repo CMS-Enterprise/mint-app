@@ -201,8 +201,8 @@ type UserInfo {
 Represents plan milestones
 """
 type PlanMilestones {
-  id: UUID
-  modelPlanID: UUID
+  id: UUID!
+  modelPlanID: UUID!
 
   completeICIP: Time
   clearanceStarts: Time
@@ -226,7 +226,7 @@ type PlanMilestones {
   createdDts: Time!
   modifiedBy: String
   modifiedDts: Time
-  status: TaskStatus
+  status: TaskStatus!
 }
 
 """

@@ -1,5 +1,5 @@
 CREATE TABLE plan_discussion (
-    id UUID PRIMARY KEY,
+    id UUID PRIMARY KEY NOT NULL,
     model_plan_id UUID NOT NULL,
 
     content TEXT NOT NULL,
