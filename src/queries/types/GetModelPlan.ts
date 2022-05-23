@@ -63,7 +63,7 @@ export interface GetModelPlan_modelPlan {
 }
 
 export interface GetModelPlan {
-  modelPlan: GetModelPlan_modelPlan | null;
+  modelPlan: GetModelPlan_modelPlan;
 }
 
 export interface GetModelPlanVariables {

@@ -25,7 +25,7 @@ export interface GetModelCollaborators_modelPlan {
 }
 
 export interface GetModelCollaborators {
-  modelPlan: GetModelCollaborators_modelPlan | null;
+  modelPlan: GetModelCollaborators_modelPlan;
 }
 
 export interface GetModelCollaboratorsVariables {

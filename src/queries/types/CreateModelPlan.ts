@@ -71,7 +71,7 @@ export interface CreateModelPlan_createModelPlan {
 }
 
 export interface CreateModelPlan {
-  createModelPlan: CreateModelPlan_createModelPlan | null;
+  createModelPlan: CreateModelPlan_createModelPlan;
 }
 
 export interface CreateModelPlanVariables {

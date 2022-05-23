@@ -19,7 +19,7 @@ export interface GetPlanDocumentDownloadURL_planDocumentDownloadURL {
 }
 
 export interface GetPlanDocumentDownloadURL {
-  planDocumentDownloadURL: GetPlanDocumentDownloadURL_planDocumentDownloadURL | null;
+  planDocumentDownloadURL: GetPlanDocumentDownloadURL_planDocumentDownloadURL;
 }
 
 export interface GetPlanDocumentDownloadURLVariables {

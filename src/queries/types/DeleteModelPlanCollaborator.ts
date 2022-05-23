@@ -19,7 +19,7 @@ export interface DeleteModelPlanCollaborator_deletePlanCollaborator {
 }
 
 export interface DeleteModelPlanCollaborator {
-  deletePlanCollaborator: DeleteModelPlanCollaborator_deletePlanCollaborator | null;
+  deletePlanCollaborator: DeleteModelPlanCollaborator_deletePlanCollaborator;
 }
 
 export interface DeleteModelPlanCollaboratorVariables {

@@ -28,7 +28,7 @@ export interface UpdatePlanMilestones_updatePlanMilestones {
 }
 
 export interface UpdatePlanMilestones {
-  updatePlanMilestones: UpdatePlanMilestones_updatePlanMilestones | null;
+  updatePlanMilestones: UpdatePlanMilestones_updatePlanMilestones;
 }
 
 export interface UpdatePlanMilestonesVariables {

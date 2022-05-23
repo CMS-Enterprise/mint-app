@@ -21,7 +21,7 @@ export interface UpdatePlanBasics_updatePlanBasics {
 }
 
 export interface UpdatePlanBasics {
-  updatePlanBasics: UpdatePlanBasics_updatePlanBasics | null;
+  updatePlanBasics: UpdatePlanBasics_updatePlanBasics;
 }
 
 export interface UpdatePlanBasicsVariables {

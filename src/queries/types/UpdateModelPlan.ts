@@ -25,7 +25,7 @@ export interface UpdateModelPlan_updateModelPlan {
 }
 
 export interface UpdateModelPlan {
-  updateModelPlan: UpdateModelPlan_updateModelPlan | null;
+  updateModelPlan: UpdateModelPlan_updateModelPlan;
 }
 
 export interface UpdateModelPlanVariables {

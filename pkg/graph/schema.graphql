@@ -467,12 +467,12 @@ input PlanGeneralCharacteristicsChanges @goModel(model: "map[string]interface{}"
 Query definition for the schema
 """
 type Query {
-  currentUser: CurrentUser
-  modelPlan(id: UUID!) : ModelPlan
-  planDocument(id: UUID!) : PlanDocument
-  planDocumentDownloadURL(id: UUID!) : PlanDocumentPayload
-  readPlanDocumentByModelID(id: UUID!) : [PlanDocument]
-  modelPlanCollection: [ModelPlan]
+  currentUser: CurrentUser!
+  modelPlan(id: UUID!): ModelPlan!
+  planDocument(id: UUID!): PlanDocument!
+  planDocumentDownloadURL(id: UUID!): PlanDocumentPayload!
+  readPlanDocumentByModelID(id: UUID!): [PlanDocument!]!
+  modelPlanCollection: [ModelPlan!]!
   cedarPersonsByCommonName(commonName: String!): [UserInfo!]!
   planCollaboratorByID(id: UUID!): PlanCollaborator!
 }
@@ -481,58 +481,58 @@ type Query {
 Mutations definition for the schema
 """
 type Mutation {
-createModelPlan(modelName: String!):ModelPlan
+createModelPlan(modelName: String!): ModelPlan!
 @hasRole(role: MINT_BASE_USER)
 
-updateModelPlan(id: UUID!, changes: ModelPlanChanges!): ModelPlan
+updateModelPlan(id: UUID!, changes: ModelPlanChanges!): ModelPlan!
 @hasRole(role: MINT_BASE_USER)
 
-createPlanCollaborator(input: PlanCollaboratorCreateInput!): PlanCollaborator
+createPlanCollaborator(input: PlanCollaboratorCreateInput!): PlanCollaborator!
 @hasRole(role: MINT_BASE_USER)
 
-updatePlanCollaborator(id: UUID!, newRole: TeamRole!): PlanCollaborator
+updatePlanCollaborator(id: UUID!, newRole: TeamRole!): PlanCollaborator!
 @hasRole(role: MINT_BASE_USER)
 
-deletePlanCollaborator(id: UUID!): PlanCollaborator
+deletePlanCollaborator(id: UUID!): PlanCollaborator!
 @hasRole(role: MINT_BASE_USER)
 
-updatePlanBasics(id: UUID!, changes: PlanBasicsChanges!): PlanBasics
+updatePlanBasics(id: UUID!, changes: PlanBasicsChanges!): PlanBasics!
 @hasRole(role: MINT_BASE_USER)
 
-updatePlanMilestones(id: UUID!, changes: PlanMilestoneChanges!): PlanMilestones
+updatePlanMilestones(id: UUID!, changes: PlanMilestoneChanges!): PlanMilestones!
 @hasRole(role: MINT_BASE_USER)
 
 updatePlanGeneralCharacteristics(id: UUID!, changes: PlanGeneralCharacteristicsChanges!): PlanGeneralCharacteristics!
 @hasRole(role: MINT_BASE_USER)
 
-generatePresignedUploadURL(input: GeneratePresignedUploadURLInput!): GeneratePresignedUploadURLPayload
+generatePresignedUploadURL(input: GeneratePresignedUploadURLInput!): GeneratePresignedUploadURLPayload!
 @hasRole(role: MINT_BASE_USER)
 
-createPlanDocument(input: PlanDocumentInput!): PlanDocumentPayload
+createPlanDocument(input: PlanDocumentInput!): PlanDocumentPayload!
 @hasRole(role: MINT_BASE_USER)
 
-updatePlanDocument(input: PlanDocumentInput!): PlanDocumentPayload
+updatePlanDocument(input: PlanDocumentInput!): PlanDocumentPayload!
 @hasRole(role: MINT_BASE_USER)
 
 deletePlanDocument(input: PlanDocumentInput!): Int!
 @hasRole(role: MINT_BASE_USER)
 
-createPlanDiscussion(input: PlanDiscussionCreateInput!): PlanDiscussion
+createPlanDiscussion(input: PlanDiscussionCreateInput!): PlanDiscussion!
 @hasRole(role: MINT_BASE_USER)
 
-updatePlanDiscussion(id: UUID!, changes: PlanDiscussionChanges!): PlanDiscussion
+updatePlanDiscussion(id: UUID!, changes: PlanDiscussionChanges!): PlanDiscussion!
 @hasRole(role: MINT_BASE_USER)
 
-deletePlanDiscussion(id: UUID!): PlanDiscussion
+deletePlanDiscussion(id: UUID!): PlanDiscussion!
 @hasRole(role: MINT_BASE_USER)
 
-createDiscussionReply(input: DiscussionReplyCreateInput!): DiscussionReply
+createDiscussionReply(input: DiscussionReplyCreateInput!): DiscussionReply!
 @hasRole(role: MINT_BASE_USER)
 
-updateDiscussionReply(id: UUID!, changes: DiscussionReplyChanges!): DiscussionReply
+updateDiscussionReply(id: UUID!, changes: DiscussionReplyChanges!): DiscussionReply!
 @hasRole(role: MINT_BASE_USER)
 
-deleteDiscussionReply(id: UUID!): DiscussionReply
+deleteDiscussionReply(id: UUID!): DiscussionReply!
 @hasRole(role: MINT_BASE_USER)
 }
 

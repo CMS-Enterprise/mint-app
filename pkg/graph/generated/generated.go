@@ -2318,12 +2318,12 @@ input PlanGeneralCharacteristicsChanges @goModel(model: "map[string]interface{}"
 Query definition for the schema
 """
 type Query {
-  currentUser: CurrentUser
-  modelPlan(id: UUID!) : ModelPlan
-  planDocument(id: UUID!) : PlanDocument
-  planDocumentDownloadURL(id: UUID!) : PlanDocumentPayload
-  readPlanDocumentByModelID(id: UUID!) : [PlanDocument]
-  modelPlanCollection: [ModelPlan]
+  currentUser: CurrentUser!
+  modelPlan(id: UUID!): ModelPlan!
+  planDocument(id: UUID!): PlanDocument!
+  planDocumentDownloadURL(id: UUID!): PlanDocumentPayload!
+  readPlanDocumentByModelID(id: UUID!): [PlanDocument!]!
+  modelPlanCollection: [ModelPlan!]!
   cedarPersonsByCommonName(commonName: String!): [UserInfo!]!
   planCollaboratorByID(id: UUID!): PlanCollaborator!
 }
@@ -2332,58 +2332,58 @@ type Query {
 Mutations definition for the schema
 """
 type Mutation {
-createModelPlan(modelName: String!):ModelPlan
+createModelPlan(modelName: String!): ModelPlan!
 @hasRole(role: MINT_BASE_USER)
 
-updateModelPlan(id: UUID!, changes: ModelPlanChanges!): ModelPlan
+updateModelPlan(id: UUID!, changes: ModelPlanChanges!): ModelPlan!
 @hasRole(role: MINT_BASE_USER)
 
-createPlanCollaborator(input: PlanCollaboratorCreateInput!): PlanCollaborator
+createPlanCollaborator(input: PlanCollaboratorCreateInput!): PlanCollaborator!
 @hasRole(role: MINT_BASE_USER)
 
-updatePlanCollaborator(id: UUID!, newRole: TeamRole!): PlanCollaborator
+updatePlanCollaborator(id: UUID!, newRole: TeamRole!): PlanCollaborator!
 @hasRole(role: MINT_BASE_USER)
 
-deletePlanCollaborator(id: UUID!): PlanCollaborator
+deletePlanCollaborator(id: UUID!): PlanCollaborator!
 @hasRole(role: MINT_BASE_USER)
 
-updatePlanBasics(id: UUID!, changes: PlanBasicsChanges!): PlanBasics
+updatePlanBasics(id: UUID!, changes: PlanBasicsChanges!): PlanBasics!
 @hasRole(role: MINT_BASE_USER)
 
-updatePlanMilestones(id: UUID!, changes: PlanMilestoneChanges!): PlanMilestones
+updatePlanMilestones(id: UUID!, changes: PlanMilestoneChanges!): PlanMilestones!
 @hasRole(role: MINT_BASE_USER)
 
 updatePlanGeneralCharacteristics(id: UUID!, changes: PlanGeneralCharacteristicsChanges!): PlanGeneralCharacteristics!
 @hasRole(role: MINT_BASE_USER)
 
-generatePresignedUploadURL(input: GeneratePresignedUploadURLInput!): GeneratePresignedUploadURLPayload
+generatePresignedUploadURL(input: GeneratePresignedUploadURLInput!): GeneratePresignedUploadURLPayload!
 @hasRole(role: MINT_BASE_USER)
 
-createPlanDocument(input: PlanDocumentInput!): PlanDocumentPayload
+createPlanDocument(input: PlanDocumentInput!): PlanDocumentPayload!
 @hasRole(role: MINT_BASE_USER)
 
-updatePlanDocument(input: PlanDocumentInput!): PlanDocumentPayload
+updatePlanDocument(input: PlanDocumentInput!): PlanDocumentPayload!
 @hasRole(role: MINT_BASE_USER)
 
 deletePlanDocument(input: PlanDocumentInput!): Int!
 @hasRole(role: MINT_BASE_USER)
 
-createPlanDiscussion(input: PlanDiscussionCreateInput!): PlanDiscussion
+createPlanDiscussion(input: PlanDiscussionCreateInput!): PlanDiscussion!
 @hasRole(role: MINT_BASE_USER)
 
-updatePlanDiscussion(id: UUID!, changes: PlanDiscussionChanges!): PlanDiscussion
+updatePlanDiscussion(id: UUID!, changes: PlanDiscussionChanges!): PlanDiscussion!
 @hasRole(role: MINT_BASE_USER)
 
-deletePlanDiscussion(id: UUID!): PlanDiscussion
+deletePlanDiscussion(id: UUID!): PlanDiscussion!
 @hasRole(role: MINT_BASE_USER)
 
-createDiscussionReply(input: DiscussionReplyCreateInput!): DiscussionReply
+createDiscussionReply(input: DiscussionReplyCreateInput!): DiscussionReply!
 @hasRole(role: MINT_BASE_USER)
 
-updateDiscussionReply(id: UUID!, changes: DiscussionReplyChanges!): DiscussionReply
+updateDiscussionReply(id: UUID!, changes: DiscussionReplyChanges!): DiscussionReply!
 @hasRole(role: MINT_BASE_USER)
 
-deleteDiscussionReply(id: UUID!): DiscussionReply
+deleteDiscussionReply(id: UUID!): DiscussionReply!
 @hasRole(role: MINT_BASE_USER)
 }
 
@@ -4636,11 +4636,14 @@ func (ec *executionContext) _Mutation_createModelPlan(ctx context.Context, field
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
 	res := resTmp.(*models.ModelPlan)
 	fc.Result = res
-	return ec.marshalOModelPlan2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelPlan(ctx, field.Selections, res)
+	return ec.marshalNModelPlan2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelPlan(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Mutation_createModelPlan(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -4750,11 +4753,14 @@ func (ec *executionContext) _Mutation_updateModelPlan(ctx context.Context, field
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
 	res := resTmp.(*models.ModelPlan)
 	fc.Result = res
-	return ec.marshalOModelPlan2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelPlan(ctx, field.Selections, res)
+	return ec.marshalNModelPlan2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelPlan(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Mutation_updateModelPlan(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -4864,11 +4870,14 @@ func (ec *executionContext) _Mutation_createPlanCollaborator(ctx context.Context
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
 	res := resTmp.(*models.PlanCollaborator)
 	fc.Result = res
-	return ec.marshalOPlanCollaborator2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanCollaborator(ctx, field.Selections, res)
+	return ec.marshalNPlanCollaborator2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanCollaborator(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Mutation_createPlanCollaborator(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -4960,11 +4969,14 @@ func (ec *executionContext) _Mutation_updatePlanCollaborator(ctx context.Context
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
 	res := resTmp.(*models.PlanCollaborator)
 	fc.Result = res
-	return ec.marshalOPlanCollaborator2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanCollaborator(ctx, field.Selections, res)
+	return ec.marshalNPlanCollaborator2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanCollaborator(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Mutation_updatePlanCollaborator(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -5056,11 +5068,14 @@ func (ec *executionContext) _Mutation_deletePlanCollaborator(ctx context.Context
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
 	res := resTmp.(*models.PlanCollaborator)
 	fc.Result = res
-	return ec.marshalOPlanCollaborator2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanCollaborator(ctx, field.Selections, res)
+	return ec.marshalNPlanCollaborator2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanCollaborator(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Mutation_deletePlanCollaborator(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -5152,11 +5167,14 @@ func (ec *executionContext) _Mutation_updatePlanBasics(ctx context.Context, fiel
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
 	res := resTmp.(*models.PlanBasics)
 	fc.Result = res
-	return ec.marshalOPlanBasics2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanBasics(ctx, field.Selections, res)
+	return ec.marshalNPlanBasics2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanBasics(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Mutation_updatePlanBasics(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -5254,11 +5272,14 @@ func (ec *executionContext) _Mutation_updatePlanMilestones(ctx context.Context, 
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
 	res := resTmp.(*models.PlanMilestones)
 	fc.Result = res
-	return ec.marshalOPlanMilestones2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanMilestones(ctx, field.Selections, res)
+	return ec.marshalNPlanMilestones2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanMilestones(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Mutation_updatePlanMilestones(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -5565,11 +5586,14 @@ func (ec *executionContext) _Mutation_generatePresignedUploadURL(ctx context.Con
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
 	res := resTmp.(*model.GeneratePresignedUploadURLPayload)
 	fc.Result = res
-	return ec.marshalOGeneratePresignedUploadURLPayload2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐGeneratePresignedUploadURLPayload(ctx, field.Selections, res)
+	return ec.marshalNGeneratePresignedUploadURLPayload2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐGeneratePresignedUploadURLPayload(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Mutation_generatePresignedUploadURL(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -5645,11 +5669,14 @@ func (ec *executionContext) _Mutation_createPlanDocument(ctx context.Context, fi
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
 	res := resTmp.(*model.PlanDocumentPayload)
 	fc.Result = res
-	return ec.marshalOPlanDocumentPayload2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐPlanDocumentPayload(ctx, field.Selections, res)
+	return ec.marshalNPlanDocumentPayload2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐPlanDocumentPayload(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Mutation_createPlanDocument(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -5727,11 +5754,14 @@ func (ec *executionContext) _Mutation_updatePlanDocument(ctx context.Context, fi
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
 	res := resTmp.(*model.PlanDocumentPayload)
 	fc.Result = res
-	return ec.marshalOPlanDocumentPayload2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐPlanDocumentPayload(ctx, field.Selections, res)
+	return ec.marshalNPlanDocumentPayload2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐPlanDocumentPayload(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Mutation_updatePlanDocument(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -5888,11 +5918,14 @@ func (ec *executionContext) _Mutation_createPlanDiscussion(ctx context.Context, 
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
 	res := resTmp.(*models.PlanDiscussion)
 	fc.Result = res
-	return ec.marshalOPlanDiscussion2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanDiscussion(ctx, field.Selections, res)
+	return ec.marshalNPlanDiscussion2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanDiscussion(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Mutation_createPlanDiscussion(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -5984,11 +6017,14 @@ func (ec *executionContext) _Mutation_updatePlanDiscussion(ctx context.Context, 
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
 	res := resTmp.(*models.PlanDiscussion)
 	fc.Result = res
-	return ec.marshalOPlanDiscussion2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanDiscussion(ctx, field.Selections, res)
+	return ec.marshalNPlanDiscussion2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanDiscussion(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Mutation_updatePlanDiscussion(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -6080,11 +6116,14 @@ func (ec *executionContext) _Mutation_deletePlanDiscussion(ctx context.Context, 
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
 	res := resTmp.(*models.PlanDiscussion)
 	fc.Result = res
-	return ec.marshalOPlanDiscussion2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanDiscussion(ctx, field.Selections, res)
+	return ec.marshalNPlanDiscussion2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanDiscussion(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Mutation_deletePlanDiscussion(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -6176,11 +6215,14 @@ func (ec *executionContext) _Mutation_createDiscussionReply(ctx context.Context,
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
 	res := resTmp.(*models.DiscussionReply)
 	fc.Result = res
-	return ec.marshalODiscussionReply2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDiscussionReply(ctx, field.Selections, res)
+	return ec.marshalNDiscussionReply2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDiscussionReply(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Mutation_createDiscussionReply(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -6270,11 +6312,14 @@ func (ec *executionContext) _Mutation_updateDiscussionReply(ctx context.Context,
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
 	res := resTmp.(*models.DiscussionReply)
 	fc.Result = res
-	return ec.marshalODiscussionReply2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDiscussionReply(ctx, field.Selections, res)
+	return ec.marshalNDiscussionReply2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDiscussionReply(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Mutation_updateDiscussionReply(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -6364,11 +6409,14 @@ func (ec *executionContext) _Mutation_deleteDiscussionReply(ctx context.Context,
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
 	res := resTmp.(*models.DiscussionReply)
 	fc.Result = res
-	return ec.marshalODiscussionReply2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDiscussionReply(ctx, field.Selections, res)
+	return ec.marshalNDiscussionReply2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDiscussionReply(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Mutation_deleteDiscussionReply(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -11757,11 +11805,14 @@ func (ec *executionContext) _Query_currentUser(ctx context.Context, field graphq
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
 	res := resTmp.(*model.CurrentUser)
 	fc.Result = res
-	return ec.marshalOCurrentUser2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCurrentUser(ctx, field.Selections, res)
+	return ec.marshalNCurrentUser2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCurrentUser(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Query_currentUser(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -11802,11 +11853,14 @@ func (ec *executionContext) _Query_modelPlan(ctx context.Context, field graphql.
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
 	res := resTmp.(*models.ModelPlan)
 	fc.Result = res
-	return ec.marshalOModelPlan2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelPlan(ctx, field.Selections, res)
+	return ec.marshalNModelPlan2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelPlan(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Query_modelPlan(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -11892,11 +11946,14 @@ func (ec *executionContext) _Query_planDocument(ctx context.Context, field graph
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
 	res := resTmp.(*models.PlanDocument)
 	fc.Result = res
-	return ec.marshalOPlanDocument2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanDocument(ctx, field.Selections, res)
+	return ec.marshalNPlanDocument2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanDocument(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Query_planDocument(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -11980,11 +12037,14 @@ func (ec *executionContext) _Query_planDocumentDownloadURL(ctx context.Context, 
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
 	res := resTmp.(*model.PlanDocumentPayload)
 	fc.Result = res
-	return ec.marshalOPlanDocumentPayload2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐPlanDocumentPayload(ctx, field.Selections, res)
+	return ec.marshalNPlanDocumentPayload2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐPlanDocumentPayload(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Query_planDocumentDownloadURL(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -12038,11 +12098,14 @@ func (ec *executionContext) _Query_readPlanDocumentByModelID(ctx context.Context
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
 	res := resTmp.([]*models.PlanDocument)
 	fc.Result = res
-	return ec.marshalOPlanDocument2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanDocument(ctx, field.Selections, res)
+	return ec.marshalNPlanDocument2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanDocumentᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Query_readPlanDocumentByModelID(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -12126,11 +12189,14 @@ func (ec *executionContext) _Query_modelPlanCollection(ctx context.Context, fiel
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
 	res := resTmp.([]*models.ModelPlan)
 	fc.Result = res
-	return ec.marshalOModelPlan2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelPlan(ctx, field.Selections, res)
+	return ec.marshalNModelPlan2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelPlanᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Query_modelPlanCollection(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -15051,42 +15117,63 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 				return ec._Mutation_createModelPlan(ctx, field)
 			})
 
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
 		case "updateModelPlan":
 
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._Mutation_updateModelPlan(ctx, field)
 			})
 
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
 		case "createPlanCollaborator":
 
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._Mutation_createPlanCollaborator(ctx, field)
 			})
 
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
 		case "updatePlanCollaborator":
 
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._Mutation_updatePlanCollaborator(ctx, field)
 			})
 
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
 		case "deletePlanCollaborator":
 
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._Mutation_deletePlanCollaborator(ctx, field)
 			})
 
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
 		case "updatePlanBasics":
 
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._Mutation_updatePlanBasics(ctx, field)
 			})
 
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
 		case "updatePlanMilestones":
 
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._Mutation_updatePlanMilestones(ctx, field)
 			})
 
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
 		case "updatePlanGeneralCharacteristics":
 
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
@@ -15102,18 +15189,27 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 				return ec._Mutation_generatePresignedUploadURL(ctx, field)
 			})
 
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
 		case "createPlanDocument":
 
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._Mutation_createPlanDocument(ctx, field)
 			})
 
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
 		case "updatePlanDocument":
 
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._Mutation_updatePlanDocument(ctx, field)
 			})
 
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
 		case "deletePlanDocument":
 
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
@@ -15129,36 +15225,54 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 				return ec._Mutation_createPlanDiscussion(ctx, field)
 			})
 
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
 		case "updatePlanDiscussion":
 
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._Mutation_updatePlanDiscussion(ctx, field)
 			})
 
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
 		case "deletePlanDiscussion":
 
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._Mutation_deletePlanDiscussion(ctx, field)
 			})
 
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
 		case "createDiscussionReply":
 
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._Mutation_createDiscussionReply(ctx, field)
 			})
 
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
 		case "updateDiscussionReply":
 
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._Mutation_updateDiscussionReply(ctx, field)
 			})
 
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
 		case "deleteDiscussionReply":
 
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._Mutation_deleteDiscussionReply(ctx, field)
 			})
 
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}
@@ -16120,6 +16234,9 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 					}
 				}()
 				res = ec._Query_currentUser(ctx, field)
+				if res == graphql.Null {
+					atomic.AddUint32(&invalids, 1)
+				}
 				return res
 			}
 
@@ -16140,6 +16257,9 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 					}
 				}()
 				res = ec._Query_modelPlan(ctx, field)
+				if res == graphql.Null {
+					atomic.AddUint32(&invalids, 1)
+				}
 				return res
 			}
 
@@ -16160,6 +16280,9 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 					}
 				}()
 				res = ec._Query_planDocument(ctx, field)
+				if res == graphql.Null {
+					atomic.AddUint32(&invalids, 1)
+				}
 				return res
 			}
 
@@ -16180,6 +16303,9 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 					}
 				}()
 				res = ec._Query_planDocumentDownloadURL(ctx, field)
+				if res == graphql.Null {
+					atomic.AddUint32(&invalids, 1)
+				}
 				return res
 			}
 
@@ -16200,6 +16326,9 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 					}
 				}()
 				res = ec._Query_readPlanDocumentByModelID(ctx, field)
+				if res == graphql.Null {
+					atomic.AddUint32(&invalids, 1)
+				}
 				return res
 			}
 
@@ -16220,6 +16349,9 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 					}
 				}()
 				res = ec._Query_modelPlanCollection(ctx, field)
+				if res == graphql.Null {
+					atomic.AddUint32(&invalids, 1)
+				}
 				return res
 			}
 
@@ -17048,6 +17180,24 @@ func (ec *executionContext) marshalNCMSCenter2ᚕgithubᚗcomᚋcmsgovᚋmintᚑ
 	return ret
 }
 
+func (ec *executionContext) marshalNCurrentUser2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCurrentUser(ctx context.Context, sel ast.SelectionSet, v model.CurrentUser) graphql.Marshaler {
+	return ec._CurrentUser(ctx, sel, &v)
+}
+
+func (ec *executionContext) marshalNCurrentUser2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCurrentUser(ctx context.Context, sel ast.SelectionSet, v *model.CurrentUser) graphql.Marshaler {
+	if v == nil {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
+		return graphql.Null
+	}
+	return ec._CurrentUser(ctx, sel, v)
+}
+
+func (ec *executionContext) marshalNDiscussionReply2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDiscussionReply(ctx context.Context, sel ast.SelectionSet, v models.DiscussionReply) graphql.Marshaler {
+	return ec._DiscussionReply(ctx, sel, &v)
+}
+
 func (ec *executionContext) marshalNDiscussionReply2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDiscussionReplyᚄ(ctx context.Context, sel ast.SelectionSet, v []*models.DiscussionReply) graphql.Marshaler {
 	ret := make(graphql.Array, len(v))
 	var wg sync.WaitGroup
@@ -17146,6 +17296,20 @@ func (ec *executionContext) marshalNDocumentType2githubᚗcomᚋcmsgovᚋmintᚑ
 func (ec *executionContext) unmarshalNGeneratePresignedUploadURLInput2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐGeneratePresignedUploadURLInput(ctx context.Context, v interface{}) (model.GeneratePresignedUploadURLInput, error) {
 	res, err := ec.unmarshalInputGeneratePresignedUploadURLInput(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalNGeneratePresignedUploadURLPayload2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐGeneratePresignedUploadURLPayload(ctx context.Context, sel ast.SelectionSet, v model.GeneratePresignedUploadURLPayload) graphql.Marshaler {
+	return ec._GeneratePresignedUploadURLPayload(ctx, sel, &v)
+}
+
+func (ec *executionContext) marshalNGeneratePresignedUploadURLPayload2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐGeneratePresignedUploadURLPayload(ctx context.Context, sel ast.SelectionSet, v *model.GeneratePresignedUploadURLPayload) graphql.Marshaler {
+	if v == nil {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
+		return graphql.Null
+	}
+	return ec._GeneratePresignedUploadURLPayload(ctx, sel, v)
 }
 
 func (ec *executionContext) unmarshalNGeographyApplication2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐGeographyApplication(ctx context.Context, v interface{}) (model.GeographyApplication, error) {
@@ -17386,6 +17550,64 @@ func (ec *executionContext) marshalNLaunchDarklySettings2ᚖgithubᚗcomᚋcmsgo
 	return ec._LaunchDarklySettings(ctx, sel, v)
 }
 
+func (ec *executionContext) marshalNModelPlan2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelPlan(ctx context.Context, sel ast.SelectionSet, v models.ModelPlan) graphql.Marshaler {
+	return ec._ModelPlan(ctx, sel, &v)
+}
+
+func (ec *executionContext) marshalNModelPlan2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelPlanᚄ(ctx context.Context, sel ast.SelectionSet, v []*models.ModelPlan) graphql.Marshaler {
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalNModelPlan2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelPlan(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
+}
+
+func (ec *executionContext) marshalNModelPlan2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelPlan(ctx context.Context, sel ast.SelectionSet, v *models.ModelPlan) graphql.Marshaler {
+	if v == nil {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
+		return graphql.Null
+	}
+	return ec._ModelPlan(ctx, sel, v)
+}
+
 func (ec *executionContext) unmarshalNModelPlanChanges2map(ctx context.Context, v interface{}) (map[string]interface{}, error) {
 	return v.(map[string]interface{}), nil
 }
@@ -17487,6 +17709,10 @@ func (ec *executionContext) unmarshalNPlanCollaboratorCreateInput2githubᚗcom�
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
+func (ec *executionContext) marshalNPlanDiscussion2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanDiscussion(ctx context.Context, sel ast.SelectionSet, v models.PlanDiscussion) graphql.Marshaler {
+	return ec._PlanDiscussion(ctx, sel, &v)
+}
+
 func (ec *executionContext) marshalNPlanDiscussion2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanDiscussionᚄ(ctx context.Context, sel ast.SelectionSet, v []*models.PlanDiscussion) graphql.Marshaler {
 	ret := make(graphql.Array, len(v))
 	var wg sync.WaitGroup
@@ -17548,6 +17774,10 @@ func (ec *executionContext) unmarshalNPlanDiscussionChanges2map(ctx context.Cont
 func (ec *executionContext) unmarshalNPlanDiscussionCreateInput2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐPlanDiscussionCreateInput(ctx context.Context, v interface{}) (model.PlanDiscussionCreateInput, error) {
 	res, err := ec.unmarshalInputPlanDiscussionCreateInput(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalNPlanDocument2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanDocument(ctx context.Context, sel ast.SelectionSet, v models.PlanDocument) graphql.Marshaler {
+	return ec._PlanDocument(ctx, sel, &v)
 }
 
 func (ec *executionContext) marshalNPlanDocument2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanDocumentᚄ(ctx context.Context, sel ast.SelectionSet, v []*models.PlanDocument) graphql.Marshaler {
@@ -17612,6 +17842,20 @@ func (ec *executionContext) unmarshalNPlanDocumentInput2githubᚗcomᚋcmsgovᚋ
 func (ec *executionContext) unmarshalNPlanDocumentParameters2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐPlanDocumentParameters(ctx context.Context, v interface{}) (*model.PlanDocumentParameters, error) {
 	res, err := ec.unmarshalInputPlanDocumentParameters(ctx, v)
 	return &res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalNPlanDocumentPayload2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐPlanDocumentPayload(ctx context.Context, sel ast.SelectionSet, v model.PlanDocumentPayload) graphql.Marshaler {
+	return ec._PlanDocumentPayload(ctx, sel, &v)
+}
+
+func (ec *executionContext) marshalNPlanDocumentPayload2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐPlanDocumentPayload(ctx context.Context, sel ast.SelectionSet, v *model.PlanDocumentPayload) graphql.Marshaler {
+	if v == nil {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
+		return graphql.Null
+	}
+	return ec._PlanDocumentPayload(ctx, sel, v)
 }
 
 func (ec *executionContext) marshalNPlanGeneralCharacteristics2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanGeneralCharacteristics(ctx context.Context, sel ast.SelectionSet, v models.PlanGeneralCharacteristics) graphql.Marshaler {
@@ -18508,20 +18752,6 @@ func (ec *executionContext) marshalOCMSCenter2ᚕgithubᚗcomᚋcmsgovᚋmintᚑ
 	return ret
 }
 
-func (ec *executionContext) marshalOCurrentUser2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCurrentUser(ctx context.Context, sel ast.SelectionSet, v *model.CurrentUser) graphql.Marshaler {
-	if v == nil {
-		return graphql.Null
-	}
-	return ec._CurrentUser(ctx, sel, v)
-}
-
-func (ec *executionContext) marshalODiscussionReply2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDiscussionReply(ctx context.Context, sel ast.SelectionSet, v *models.DiscussionReply) graphql.Marshaler {
-	if v == nil {
-		return graphql.Null
-	}
-	return ec._DiscussionReply(ctx, sel, v)
-}
-
 func (ec *executionContext) unmarshalODiscussionStatus2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDiscussionStatus(ctx context.Context, v interface{}) (*models.DiscussionStatus, error) {
 	if v == nil {
 		return nil, nil
@@ -18554,13 +18784,6 @@ func (ec *executionContext) marshalODocumentType2ᚖgithubᚗcomᚋcmsgovᚋmint
 	}
 	res := graphql.MarshalString(string(*v))
 	return res
-}
-
-func (ec *executionContext) marshalOGeneratePresignedUploadURLPayload2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐGeneratePresignedUploadURLPayload(ctx context.Context, sel ast.SelectionSet, v *model.GeneratePresignedUploadURLPayload) graphql.Marshaler {
-	if v == nil {
-		return graphql.Null
-	}
-	return ec._GeneratePresignedUploadURLPayload(ctx, sel, v)
 }
 
 func (ec *executionContext) unmarshalOGeographyApplication2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐGeographyApplicationᚄ(ctx context.Context, v interface{}) ([]model.GeographyApplication, error) {
@@ -18819,54 +19042,6 @@ func (ec *executionContext) marshalOModelCategory2ᚖgithubᚗcomᚋcmsgovᚋmin
 	return res
 }
 
-func (ec *executionContext) marshalOModelPlan2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelPlan(ctx context.Context, sel ast.SelectionSet, v []*models.ModelPlan) graphql.Marshaler {
-	if v == nil {
-		return graphql.Null
-	}
-	ret := make(graphql.Array, len(v))
-	var wg sync.WaitGroup
-	isLen1 := len(v) == 1
-	if !isLen1 {
-		wg.Add(len(v))
-	}
-	for i := range v {
-		i := i
-		fc := &graphql.FieldContext{
-			Index:  &i,
-			Result: &v[i],
-		}
-		ctx := graphql.WithFieldContext(ctx, fc)
-		f := func(i int) {
-			defer func() {
-				if r := recover(); r != nil {
-					ec.Error(ctx, ec.Recover(ctx, r))
-					ret = nil
-				}
-			}()
-			if !isLen1 {
-				defer wg.Done()
-			}
-			ret[i] = ec.marshalOModelPlan2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelPlan(ctx, sel, v[i])
-		}
-		if isLen1 {
-			f(i)
-		} else {
-			go f(i)
-		}
-
-	}
-	wg.Wait()
-
-	return ret
-}
-
-func (ec *executionContext) marshalOModelPlan2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelPlan(ctx context.Context, sel ast.SelectionSet, v *models.ModelPlan) graphql.Marshaler {
-	if v == nil {
-		return graphql.Null
-	}
-	return ec._ModelPlan(ctx, sel, v)
-}
-
 func (ec *executionContext) unmarshalOModelStatus2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelStatus(ctx context.Context, v interface{}) (*models.ModelStatus, error) {
 	if v == nil {
 		return nil, nil
@@ -18901,87 +19076,11 @@ func (ec *executionContext) marshalOModelType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑ
 	return res
 }
 
-func (ec *executionContext) marshalOPlanBasics2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanBasics(ctx context.Context, sel ast.SelectionSet, v *models.PlanBasics) graphql.Marshaler {
-	if v == nil {
-		return graphql.Null
-	}
-	return ec._PlanBasics(ctx, sel, v)
-}
-
-func (ec *executionContext) marshalOPlanCollaborator2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanCollaborator(ctx context.Context, sel ast.SelectionSet, v *models.PlanCollaborator) graphql.Marshaler {
-	if v == nil {
-		return graphql.Null
-	}
-	return ec._PlanCollaborator(ctx, sel, v)
-}
-
-func (ec *executionContext) marshalOPlanDiscussion2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanDiscussion(ctx context.Context, sel ast.SelectionSet, v *models.PlanDiscussion) graphql.Marshaler {
-	if v == nil {
-		return graphql.Null
-	}
-	return ec._PlanDiscussion(ctx, sel, v)
-}
-
-func (ec *executionContext) marshalOPlanDocument2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanDocument(ctx context.Context, sel ast.SelectionSet, v []*models.PlanDocument) graphql.Marshaler {
-	if v == nil {
-		return graphql.Null
-	}
-	ret := make(graphql.Array, len(v))
-	var wg sync.WaitGroup
-	isLen1 := len(v) == 1
-	if !isLen1 {
-		wg.Add(len(v))
-	}
-	for i := range v {
-		i := i
-		fc := &graphql.FieldContext{
-			Index:  &i,
-			Result: &v[i],
-		}
-		ctx := graphql.WithFieldContext(ctx, fc)
-		f := func(i int) {
-			defer func() {
-				if r := recover(); r != nil {
-					ec.Error(ctx, ec.Recover(ctx, r))
-					ret = nil
-				}
-			}()
-			if !isLen1 {
-				defer wg.Done()
-			}
-			ret[i] = ec.marshalOPlanDocument2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanDocument(ctx, sel, v[i])
-		}
-		if isLen1 {
-			f(i)
-		} else {
-			go f(i)
-		}
-
-	}
-	wg.Wait()
-
-	return ret
-}
-
 func (ec *executionContext) marshalOPlanDocument2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanDocument(ctx context.Context, sel ast.SelectionSet, v *models.PlanDocument) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
 	return ec._PlanDocument(ctx, sel, v)
-}
-
-func (ec *executionContext) marshalOPlanDocumentPayload2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐPlanDocumentPayload(ctx context.Context, sel ast.SelectionSet, v *model.PlanDocumentPayload) graphql.Marshaler {
-	if v == nil {
-		return graphql.Null
-	}
-	return ec._PlanDocumentPayload(ctx, sel, v)
-}
-
-func (ec *executionContext) marshalOPlanMilestones2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanMilestones(ctx context.Context, sel ast.SelectionSet, v *models.PlanMilestones) graphql.Marshaler {
-	if v == nil {
-		return graphql.Null
-	}
-	return ec._PlanMilestones(ctx, sel, v)
 }
 
 func (ec *executionContext) unmarshalOString2string(ctx context.Context, v interface{}) (string, error) {

@@ -43,5 +43,5 @@ export interface GetModelPlans_modelPlanCollection {
 }
 
 export interface GetModelPlans {
-  modelPlanCollection: (GetModelPlans_modelPlanCollection | null)[] | null;
+  modelPlanCollection: GetModelPlans_modelPlanCollection[];
 }

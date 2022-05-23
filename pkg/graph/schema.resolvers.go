@@ -347,7 +347,7 @@ func (r *queryResolver) PlanDocumentDownloadURL(ctx context.Context, id uuid.UUI
 
 	document, err := resolvers.PlanDocumentRead(logger, r.store, r.s3Client, id)
 	if err != nil {
-		return &model.PlanDocumentPayload{}, err
+		return nil, err
 	}
 
 	url, err := r.s3Client.NewGetPresignedURL(document.FileKey)

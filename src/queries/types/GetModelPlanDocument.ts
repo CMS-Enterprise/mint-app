@@ -26,7 +26,7 @@ export interface GetModelPlanDocument_planDocument {
 }
 
 export interface GetModelPlanDocument {
-  planDocument: GetModelPlanDocument_planDocument | null;
+  planDocument: GetModelPlanDocument_planDocument;
 }
 
 export interface GetModelPlanDocumentVariables {

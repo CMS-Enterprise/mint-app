@@ -18,7 +18,7 @@ export interface CreateModelPlanCollaborator_createPlanCollaborator {
 }
 
 export interface CreateModelPlanCollaborator {
-  createPlanCollaborator: CreateModelPlanCollaborator_createPlanCollaborator | null;
+  createPlanCollaborator: CreateModelPlanCollaborator_createPlanCollaborator;
 }
 
 export interface CreateModelPlanCollaboratorVariables {

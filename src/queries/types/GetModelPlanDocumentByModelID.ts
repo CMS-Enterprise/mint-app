@@ -27,7 +27,7 @@ export interface GetModelPlanDocumentByModelID_readPlanDocumentByModelID {
 }
 
 export interface GetModelPlanDocumentByModelID {
-  readPlanDocumentByModelID: (GetModelPlanDocumentByModelID_readPlanDocumentByModelID | null)[] | null;
+  readPlanDocumentByModelID: GetModelPlanDocumentByModelID_readPlanDocumentByModelID[];
 }
 
 export interface GetModelPlanDocumentByModelIDVariables {
