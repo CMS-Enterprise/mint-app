@@ -554,11 +554,13 @@ const Discussions = ({
       onRequestClose={closeModal}
       shouldCloseOnOverlayClick
       appElement={document.getElementById('root')!}
+      data-testid="discussion-modal"
     >
       <>
         <div className="mint-discussions__x-button-container display-flex text-base flex-align-center">
           <button
             type="button"
+            data-testid="close-discussions"
             className="mint-discussions__x-button margin-right-2"
             aria-label="Close Modal"
             onClick={closeModal}
