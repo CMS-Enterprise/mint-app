@@ -246,10 +246,10 @@ const Discussions = ({
         {renderType === 'reply' && reply && (
           <div>
             <div className="display-flex">
-              {/* createdBy should not be null, and TS error will be addressed be BE changes */}
+              {/* TODO: createdBy should not be null, and TS error will be addressed be BE changes */}
               <IconInitial user={reply.createdBy} index={0} />
               <span className="margin-left-2 margin-top-05 text-base">
-                {/* createdDts should not be null, and TS error will be addressed be BE changes */}
+                {/* TODO: createdDts should not be null, and TS error will be addressed be BE changes */}
                 {getTimeElapsed(reply.createdDts)
                   ? getTimeElapsed(reply.createdDts) + t('ago')
                   : t('justNow')}
@@ -355,14 +355,14 @@ const Discussions = ({
   ) => (
     <div className="mint-discussions__single-discussion" key={discussion.id}>
       <div className="display-flex">
-        {/* createdBy should not be null, and TS error will be addressed be BE changes */}
+        {/* TODO: createdBy should not be null, and TS error will be addressed be BE changes */}
         <IconInitial
           user={discussion.createdBy}
           index={index}
           className="margin-bottom-2"
         />
         <span className="margin-left-2 margin-top-05 text-base">
-          {/* createdDts should not be null, and TS error will be addressed be BE changes */}
+          {/* TODO: createdDts should not be null, and TS error will be addressed be BE changes */}
           {getTimeElapsed(discussion.createdDts)
             ? getTimeElapsed(discussion.createdDts) + t('ago')
             : t('justNow')}
