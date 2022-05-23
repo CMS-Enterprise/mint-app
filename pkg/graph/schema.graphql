@@ -27,7 +27,7 @@ scalar Time
 ModelPlan represent the data point for plans about a model. It is the central data type in the application
 """
 type ModelPlan {
-  id: UUID
+  id: UUID!
   modelName: String!
   modelCategory: ModelCategory
   cmsCenters: [CMSCenter!]!
@@ -38,8 +38,8 @@ type ModelPlan {
   createdDts: Time!
   modifiedBy: String
   modifiedDts: Time
-  basics: PlanBasics
-  milestones: PlanMilestones
+  basics: PlanBasics!
+  milestones: PlanMilestones!
   generalCharacteristics: PlanGeneralCharacteristics!
   collaborators: [PlanCollaborator!]!
   documents: [PlanDocument!]!

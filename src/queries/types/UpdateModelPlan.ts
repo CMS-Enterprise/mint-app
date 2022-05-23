@@ -11,7 +11,7 @@ import { ModelPlanChanges, ModelCategory, CMSCenter, CMMIGroup, ModelStatus } fr
 
 export interface UpdateModelPlan_updateModelPlan {
   __typename: "ModelPlan";
-  id: UUID | null;
+  id: UUID;
   modelName: string;
   modelCategory: ModelCategory | null;
   cmsCenters: CMSCenter[];

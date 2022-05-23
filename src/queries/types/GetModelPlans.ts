@@ -29,7 +29,7 @@ export interface GetModelPlans_modelPlanCollection_discussions {
 
 export interface GetModelPlans_modelPlanCollection {
   __typename: "ModelPlan";
-  id: UUID | null;
+  id: UUID;
   modelName: string;
   modelCategory: ModelCategory | null;
   cmsCenters: CMSCenter[];

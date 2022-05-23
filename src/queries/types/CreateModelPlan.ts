@@ -58,15 +58,15 @@ export interface CreateModelPlan_createModelPlan_collaborators {
 
 export interface CreateModelPlan_createModelPlan {
   __typename: "ModelPlan";
-  id: UUID | null;
+  id: UUID;
   createdBy: string;
   modelName: string;
   modelCategory: ModelCategory | null;
   cmsCenters: CMSCenter[];
   cmsOther: string | null;
   cmmiGroups: CMMIGroup[];
-  basics: CreateModelPlan_createModelPlan_basics | null;
-  milestones: CreateModelPlan_createModelPlan_milestones | null;
+  basics: CreateModelPlan_createModelPlan_basics;
+  milestones: CreateModelPlan_createModelPlan_milestones;
   collaborators: CreateModelPlan_createModelPlan_collaborators[];
 }
 

@@ -48,7 +48,7 @@ export interface GetModelPlan_modelPlan_documents {
 
 export interface GetModelPlan_modelPlan {
   __typename: "ModelPlan";
-  id: UUID | null;
+  id: UUID;
   modelName: string;
   modelCategory: ModelCategory | null;
   cmsCenters: CMSCenter[];
@@ -57,8 +57,8 @@ export interface GetModelPlan_modelPlan {
   modifiedDts: Time | null;
   archived: boolean;
   status: ModelStatus;
-  basics: GetModelPlan_modelPlan_basics | null;
-  milestones: GetModelPlan_modelPlan_milestones | null;
+  basics: GetModelPlan_modelPlan_basics;
+  milestones: GetModelPlan_modelPlan_milestones;
   documents: GetModelPlan_modelPlan_documents[];
 }
 
