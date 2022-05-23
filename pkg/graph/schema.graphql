@@ -161,8 +161,8 @@ type PlanDocumentPayload {
 Represents plan basics
 """
 type PlanBasics {
-  id: UUID
-  modelPlanID: UUID
+  id: UUID!
+  modelPlanID: UUID!
 
   modelType: ModelType
   problem: String

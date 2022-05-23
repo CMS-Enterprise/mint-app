@@ -11,8 +11,8 @@ import { ModelCategory, CMSCenter, CMMIGroup, ModelType, TaskStatus, TeamRole } 
 
 export interface CreateModelPlan_createModelPlan_basics {
   __typename: "PlanBasics";
-  id: UUID | null;
-  modelPlanID: UUID | null;
+  id: UUID;
+  modelPlanID: UUID;
   modelType: ModelType | null;
   problem: string | null;
   goal: string | null;

@@ -2012,8 +2012,8 @@ type PlanDocumentPayload {
 Represents plan basics
 """
 type PlanBasics {
-  id: UUID
-  modelPlanID: UUID
+  id: UUID!
+  modelPlanID: UUID!
 
   modelType: ModelType
   problem: String
@@ -6431,11 +6431,14 @@ func (ec *executionContext) _PlanBasics_id(ctx context.Context, field graphql.Co
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
 	res := resTmp.(uuid.UUID)
 	fc.Result = res
-	return ec.marshalOUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
+	return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanBasics_id(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -6472,11 +6475,14 @@ func (ec *executionContext) _PlanBasics_modelPlanID(ctx context.Context, field g
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
 	res := resTmp.(uuid.UUID)
 	fc.Result = res
-	return ec.marshalOUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
+	return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanBasics_modelPlanID(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -15151,10 +15157,16 @@ func (ec *executionContext) _PlanBasics(ctx context.Context, sel ast.SelectionSe
 
 			out.Values[i] = ec._PlanBasics_id(ctx, field, obj)
 
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
 		case "modelPlanID":
 
 			out.Values[i] = ec._PlanBasics_modelPlanID(ctx, field, obj)
 
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
 		case "modelType":
 
 			out.Values[i] = ec._PlanBasics_modelType(ctx, field, obj)

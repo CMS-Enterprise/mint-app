@@ -11,8 +11,8 @@ import { PlanBasicsChanges, ModelType } from "./../../types/graphql-global-types
 
 export interface UpdatePlanBasics_updatePlanBasics {
   __typename: "PlanBasics";
-  id: UUID | null;
-  modelPlanID: UUID | null;
+  id: UUID;
+  modelPlanID: UUID;
   modelType: ModelType | null;
   problem: string | null;
   goal: string | null;
