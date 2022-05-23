@@ -2108,8 +2108,8 @@ input PlanMilestoneChanges @goModel(model: "map[string]interface{}") {
 PlanDiscussion represents plan discussion
 """
 type PlanDiscussion  {
-	id:          UUID
-	modelPlanID: UUID
+	id:          UUID!
+	modelPlanID: UUID!
 	content: String
 	status: DiscussionStatus!
   replies: [DiscussionReply!]!
@@ -2142,7 +2142,7 @@ input PlanDiscussionChanges @goModel(model: "map[string]interface{}") {
 DiscussionReply represents a discussion reply
 """
 type DiscussionReply  {
-	id: UUID
+	id: UUID!
 	discussionID: UUID!
 	content: String
 	resolution: Boolean
@@ -3105,11 +3105,14 @@ func (ec *executionContext) _DiscussionReply_id(ctx context.Context, field graph
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
 	res := resTmp.(uuid.UUID)
 	fc.Result = res
-	return ec.marshalOUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
+	return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_DiscussionReply_id(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -7328,11 +7331,14 @@ func (ec *executionContext) _PlanDiscussion_id(ctx context.Context, field graphq
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
 	res := resTmp.(uuid.UUID)
 	fc.Result = res
-	return ec.marshalOUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
+	return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanDiscussion_id(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -7369,11 +7375,14 @@ func (ec *executionContext) _PlanDiscussion_modelPlanID(ctx context.Context, fie
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
 	res := resTmp.(uuid.UUID)
 	fc.Result = res
-	return ec.marshalOUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
+	return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanDiscussion_modelPlanID(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -14661,6 +14670,9 @@ func (ec *executionContext) _DiscussionReply(ctx context.Context, sel ast.Select
 
 			out.Values[i] = ec._DiscussionReply_id(ctx, field, obj)
 
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
 		case "discussionID":
 
 			out.Values[i] = ec._DiscussionReply_discussionID(ctx, field, obj)
@@ -15328,10 +15340,16 @@ func (ec *executionContext) _PlanDiscussion(ctx context.Context, sel ast.Selecti
 
 			out.Values[i] = ec._PlanDiscussion_id(ctx, field, obj)
 
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&invalids, 1)
+			}
 		case "modelPlanID":
 
 			out.Values[i] = ec._PlanDiscussion_modelPlanID(ctx, field, obj)
 
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&invalids, 1)
+			}
 		case "content":
 
 			out.Values[i] = ec._PlanDiscussion_content(ctx, field, obj)

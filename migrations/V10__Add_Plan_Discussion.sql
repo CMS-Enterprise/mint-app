@@ -18,10 +18,10 @@ ON DELETE NO ACTION;
 
 
 CREATE TABLE discussion_reply (
-    id UUID PRIMARY KEY,
-    discussion_id UUID,
-    content TEXT,
-    resolution BOOLEAN,
+    id UUID PRIMARY KEY NOT NULL,
+    discussion_id UUID NOT NULL,
+    content TEXT NOT NULL,
+    resolution BOOLEAN NOT NULL,
 
     created_by EUA_ID NOT NULL,
     created_dts TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,

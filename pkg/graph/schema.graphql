@@ -257,8 +257,8 @@ input PlanMilestoneChanges @goModel(model: "map[string]interface{}") {
 PlanDiscussion represents plan discussion
 """
 type PlanDiscussion  {
-	id:          UUID
-	modelPlanID: UUID
+	id:          UUID!
+	modelPlanID: UUID!
 	content: String
 	status: DiscussionStatus!
   replies: [DiscussionReply!]!
@@ -291,7 +291,7 @@ input PlanDiscussionChanges @goModel(model: "map[string]interface{}") {
 DiscussionReply represents a discussion reply
 """
 type DiscussionReply  {
-	id: UUID
+	id: UUID!
 	discussionID: UUID!
 	content: String
 	resolution: Boolean
