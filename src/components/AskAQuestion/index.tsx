@@ -22,10 +22,14 @@ const AskAQuestion = ({ modelID }: AskAQuestionType) => {
           closeModal={() => setIsDiscussionOpen(false)}
         />
       )}
-      <div className="padding-2 bg-primary-lighter">
+      <div
+        className="padding-2 bg-primary-lighter"
+        data-testid="ask-a-question"
+      >
         <IconAnnouncement className="text-primary margin-right-1" />
         <Button
           type="button"
+          data-testid="ask-a-question-button"
           unstyled
           onClick={() => setIsDiscussionOpen(true)}
         >
