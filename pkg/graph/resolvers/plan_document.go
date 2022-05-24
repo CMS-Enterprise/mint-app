@@ -12,7 +12,7 @@ import (
 )
 
 func createDocumentPayload(s3Client *upload.S3Client, document *models.PlanDocument) (*model.PlanDocumentPayload, error) {
-	presignedURL, urlErr := s3Client.NewGetPresignedURL(*document.FileKey)
+	presignedURL, urlErr := s3Client.NewGetPresignedURL(document.FileKey)
 	if urlErr != nil {
 		return nil, urlErr
 	}
@@ -30,7 +30,7 @@ func PlanDocumentCreate(
 	logger *zap.Logger,
 	document *models.PlanDocument,
 	documentURL *string,
-	principal *string,
+	principal string,
 	store *storage.Store,
 	s3Client *upload.S3Client) (*model.PlanDocumentPayload, error) {
 	document, err := store.PlanDocumentCreate(logger, principal, document, documentURL, s3Client)

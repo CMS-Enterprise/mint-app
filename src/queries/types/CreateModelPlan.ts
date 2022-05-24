@@ -11,15 +11,15 @@ import { ModelCategory, CMSCenter, CMMIGroup, ModelType, TaskStatus, TeamRole } 
 
 export interface CreateModelPlan_createModelPlan_basics {
   __typename: "PlanBasics";
-  id: UUID | null;
-  modelPlanID: UUID | null;
+  id: UUID;
+  modelPlanID: UUID;
   modelType: ModelType | null;
   problem: string | null;
   goal: string | null;
   testInventions: string | null;
   note: string | null;
-  createdBy: string | null;
-  createdDts: Time | null;
+  createdBy: string;
+  createdDts: Time;
   modifiedBy: string | null;
   modifiedDts: Time | null;
   status: TaskStatus;
@@ -27,8 +27,8 @@ export interface CreateModelPlan_createModelPlan_basics {
 
 export interface CreateModelPlan_createModelPlan_milestones {
   __typename: "PlanMilestones";
-  id: UUID | null;
-  modelPlanID: UUID | null;
+  id: UUID;
+  modelPlanID: UUID;
   completeICIP: Time | null;
   clearanceStarts: Time | null;
   clearanceEnds: Time | null;
@@ -41,11 +41,11 @@ export interface CreateModelPlan_createModelPlan_milestones {
   highLevelNote: string | null;
   phasedIn: boolean | null;
   phasedInNote: string | null;
-  createdBy: string | null;
-  createdDts: Time | null;
+  createdBy: string;
+  createdDts: Time;
   modifiedBy: string | null;
   modifiedDts: Time | null;
-  status: TaskStatus | null;
+  status: TaskStatus;
 }
 
 export interface CreateModelPlan_createModelPlan_collaborators {
@@ -58,20 +58,20 @@ export interface CreateModelPlan_createModelPlan_collaborators {
 
 export interface CreateModelPlan_createModelPlan {
   __typename: "ModelPlan";
-  id: UUID | null;
-  createdBy: string | null;
+  id: UUID;
+  createdBy: string;
   modelName: string;
   modelCategory: ModelCategory | null;
   cmsCenters: CMSCenter[];
   cmsOther: string | null;
   cmmiGroups: CMMIGroup[];
-  basics: CreateModelPlan_createModelPlan_basics | null;
-  milestones: CreateModelPlan_createModelPlan_milestones | null;
+  basics: CreateModelPlan_createModelPlan_basics;
+  milestones: CreateModelPlan_createModelPlan_milestones;
   collaborators: CreateModelPlan_createModelPlan_collaborators[];
 }
 
 export interface CreateModelPlan {
-  createModelPlan: CreateModelPlan_createModelPlan | null;
+  createModelPlan: CreateModelPlan_createModelPlan;
 }
 
 export interface CreateModelPlanVariables {

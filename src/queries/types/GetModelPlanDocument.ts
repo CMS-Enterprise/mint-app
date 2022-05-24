@@ -13,20 +13,20 @@ export interface GetModelPlanDocument_planDocument {
   __typename: "PlanDocument";
   id: UUID;
   modelPlanID: UUID;
-  fileType: string | null;
-  bucket: string | null;
-  fileKey: string | null;
-  virusScanned: boolean | null;
-  virusClean: boolean | null;
-  fileName: string | null;
-  fileSize: number | null;
-  documentType: DocumentType | null;
+  fileType: string;
+  bucket: string;
+  fileKey: string;
+  virusScanned: boolean;
+  virusClean: boolean;
+  fileName: string;
+  fileSize: number;
+  documentType: DocumentType;
   otherType: string | null;
-  createdDts: Time | null;
+  createdDts: Time;
 }
 
 export interface GetModelPlanDocument {
-  planDocument: GetModelPlanDocument_planDocument | null;
+  planDocument: GetModelPlanDocument_planDocument;
 }
 
 export interface GetModelPlanDocumentVariables {
