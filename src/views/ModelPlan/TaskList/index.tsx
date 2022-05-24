@@ -60,8 +60,6 @@ const TaskList = () => {
 
   const modelPlan = data?.modelPlan || ({} as GetModelPlanTypes);
 
-  console.log(modelPlan);
-
   const {
     modelName,
     modelCategory,
