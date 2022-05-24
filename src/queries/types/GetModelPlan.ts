@@ -11,8 +11,8 @@ import { ModelCategory, CMSCenter, CMMIGroup, ModelStatus, ModelType, TaskStatus
 
 export interface GetModelPlan_modelPlan_basics {
   __typename: "PlanBasics";
-  id: UUID | null;
-  modelPlanID: UUID | null;
+  id: UUID;
+  modelPlanID: UUID;
   modelType: ModelType | null;
   problem: string | null;
   goal: string | null;
@@ -23,8 +23,8 @@ export interface GetModelPlan_modelPlan_basics {
 
 export interface GetModelPlan_modelPlan_milestones {
   __typename: "PlanMilestones";
-  id: UUID | null;
-  modelPlanID: UUID | null;
+  id: UUID;
+  modelPlanID: UUID;
   completeICIP: Time | null;
   clearanceStarts: Time | null;
   clearanceEnds: Time | null;
@@ -37,18 +37,18 @@ export interface GetModelPlan_modelPlan_milestones {
   wrapUpEnds: Time | null;
   phasedIn: boolean | null;
   phasedInNote: string | null;
-  status: TaskStatus | null;
+  status: TaskStatus;
 }
 
 export interface GetModelPlan_modelPlan_documents {
   __typename: "PlanDocument";
   id: UUID;
-  fileName: string | null;
+  fileName: string;
 }
 
 export interface GetModelPlan_modelPlan {
   __typename: "ModelPlan";
-  id: UUID | null;
+  id: UUID;
   modelName: string;
   modelCategory: ModelCategory | null;
   cmsCenters: CMSCenter[];
@@ -57,13 +57,13 @@ export interface GetModelPlan_modelPlan {
   modifiedDts: Time | null;
   archived: boolean;
   status: ModelStatus;
-  basics: GetModelPlan_modelPlan_basics | null;
-  milestones: GetModelPlan_modelPlan_milestones | null;
+  basics: GetModelPlan_modelPlan_basics;
+  milestones: GetModelPlan_modelPlan_milestones;
   documents: GetModelPlan_modelPlan_documents[];
 }
 
 export interface GetModelPlan {
-  modelPlan: GetModelPlan_modelPlan | null;
+  modelPlan: GetModelPlan_modelPlan;
 }
 
 export interface GetModelPlanVariables {

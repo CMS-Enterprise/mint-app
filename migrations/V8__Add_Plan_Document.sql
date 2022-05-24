@@ -1,11 +1,11 @@
 CREATE TABLE plan_document (
-    id UUID PRIMARY KEY,
+    id UUID PRIMARY KEY NOT NULL,
     model_plan_id UUID NOT NULL,
     file_type TEXT NOT NULL,
     bucket TEXT NOT NULL,
     file_key TEXT NOT NULL,
-    virus_scanned BOOLEAN,
-    virus_clean BOOLEAN,
+    virus_scanned BOOLEAN NOT NULL,
+    virus_clean BOOLEAN NOT NULL,
     file_name TEXT NOT NULL,
     file_size INTEGER NOT NULL,
     document_type DOCUMENT_TYPE NOT NULL, --  make enum for this

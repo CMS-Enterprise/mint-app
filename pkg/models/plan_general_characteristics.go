@@ -73,8 +73,8 @@ type PlanGeneralCharacteristics struct {
 	WaiversRequiredNote           *string        `json:"waiversRequiredNote" db:"waivers_required_note"`
 
 	// Meta
-	CreatedBy   *string    `json:"createdBy" db:"created_by"`
-	CreatedDts  *time.Time `json:"createdDts" db:"created_dts"`
+	CreatedBy   string     `json:"createdBy" db:"created_by"`
+	CreatedDts  time.Time  `json:"createdDts" db:"created_dts"`
 	ModifiedBy  *string    `json:"modifiedBy" db:"modified_by"`
 	ModifiedDts *time.Time `json:"modifiedDts" db:"modified_dts"`
 	Status      TaskStatus `json:"status" db:"status"`
@@ -138,6 +138,6 @@ func (gc PlanGeneralCharacteristics) GetModifiedBy() *string {
 }
 
 // GetCreatedBy returns the ModifiedBy property for a PlanBasics struct
-func (gc PlanGeneralCharacteristics) GetCreatedBy() *string {
+func (gc PlanGeneralCharacteristics) GetCreatedBy() string {
 	return gc.CreatedBy
 }

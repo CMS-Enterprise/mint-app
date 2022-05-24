@@ -161,7 +161,7 @@ func (r *mutationResolver) CreatePlanDocument(ctx context.Context, input model.P
 	logger := appcontext.ZLogger(ctx)
 
 	document := ConvertToPlanDocumentModel(&input)
-	payload, err := resolvers.PlanDocumentCreate(logger, document, input.URL, &principal, r.store, r.s3Client)
+	payload, err := resolvers.PlanDocumentCreate(logger, document, input.URL, principal, r.store, r.s3Client)
 
 	return payload, err
 }
@@ -347,10 +347,10 @@ func (r *queryResolver) PlanDocumentDownloadURL(ctx context.Context, id uuid.UUI
 
 	document, err := resolvers.PlanDocumentRead(logger, r.store, r.s3Client, id)
 	if err != nil {
-		return &model.PlanDocumentPayload{}, err
+		return nil, err
 	}
 
-	url, err := r.s3Client.NewGetPresignedURL(*document.FileKey)
+	url, err := r.s3Client.NewGetPresignedURL(document.FileKey)
 	if err != nil {
 		return nil, err
 	}

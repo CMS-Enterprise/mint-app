@@ -21,7 +21,7 @@ export interface CreateModelPlanDocument_createPlanDocument {
 }
 
 export interface CreateModelPlanDocument {
-  createPlanDocument: CreateModelPlanDocument_createPlanDocument | null;
+  createPlanDocument: CreateModelPlanDocument_createPlanDocument;
 }
 
 export interface CreateModelPlanDocumentVariables {

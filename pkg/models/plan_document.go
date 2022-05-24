@@ -11,23 +11,23 @@ type PlanDocument struct {
 	ID          uuid.UUID `json:"id" db:"id"`
 	ModelPlanID uuid.UUID `json:"modelPlanID" db:"model_plan_id"`
 
-	FileType *string `json:"fileType" db:"file_type"`
-	Bucket   *string `json:"bucket" db:"bucket"`
-	FileKey  *string `json:"fileKey" db:"file_key"`
+	FileType string `json:"fileType" db:"file_type"`
+	Bucket   string `json:"bucket" db:"bucket"`
+	FileKey  string `json:"fileKey" db:"file_key"`
 
 	VirusScanned bool `json:"virusScanned" db:"virus_scanned"`
 	VirusClean   bool `json:"virusClean" db:"virus_clean"`
 
-	FileName             *string       `json:"fileName" db:"file_name"`
-	FileSize             int           `json:"fileSize" db:"file_size"`
-	DocumentType         *DocumentType `json:"documentType" db:"document_type"`
-	OtherTypeDescription *string       `json:"otherType" db:"other_type"`
-	OptionalNotes        *string       `json:"optionalNotes" db:"optional_notes"`
+	FileName             string       `json:"fileName" db:"file_name"`
+	FileSize             int          `json:"fileSize" db:"file_size"`
+	DocumentType         DocumentType `json:"documentType" db:"document_type"`
+	OtherTypeDescription *string      `json:"otherType" db:"other_type"`
+	OptionalNotes        *string      `json:"optionalNotes" db:"optional_notes"`
 
 	DeletedAt *time.Time `json:"deletedAt" db:"deleted_at"`
 
-	CreatedBy   *string    `json:"createdBy" db:"created_by"`
-	CreatedDts  *time.Time `json:"createdDts" db:"created_dts"`
+	CreatedBy   string     `json:"createdBy" db:"created_by"`
+	CreatedDts  time.Time  `json:"createdDts" db:"created_dts"`
 	ModifiedBy  *string    `json:"modifiedBy" db:"modified_by"`
 	ModifiedDts *time.Time `json:"modifiedDts" db:"modified_dts"`
 }
@@ -53,6 +53,6 @@ func (p PlanDocument) GetModifiedBy() *string {
 }
 
 // GetCreatedBy implements the CreatedBy property
-func (p PlanDocument) GetCreatedBy() *string {
+func (p PlanDocument) GetCreatedBy() string {
 	return p.CreatedBy
 }

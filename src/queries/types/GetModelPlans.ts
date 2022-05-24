@@ -29,19 +29,19 @@ export interface GetModelPlans_modelPlanCollection_discussions {
 
 export interface GetModelPlans_modelPlanCollection {
   __typename: "ModelPlan";
-  id: UUID | null;
+  id: UUID;
   modelName: string;
   modelCategory: ModelCategory | null;
   cmsCenters: CMSCenter[];
   cmmiGroups: CMMIGroup[];
   status: ModelStatus;
-  createdBy: string | null;
-  createdDts: Time | null;
+  createdBy: string;
+  createdDts: Time;
   modifiedDts: Time | null;
   collaborators: GetModelPlans_modelPlanCollection_collaborators[];
   discussions: GetModelPlans_modelPlanCollection_discussions[];
 }
 
 export interface GetModelPlans {
-  modelPlanCollection: (GetModelPlans_modelPlanCollection | null)[] | null;
+  modelPlanCollection: GetModelPlans_modelPlanCollection[];
 }

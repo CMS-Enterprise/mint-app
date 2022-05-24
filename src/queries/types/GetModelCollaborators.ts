@@ -16,7 +16,7 @@ export interface GetModelCollaborators_modelPlan_collaborators {
   euaUserID: string;
   teamRole: TeamRole;
   modelPlanID: UUID;
-  createdDts: Time | null;
+  createdDts: Time;
 }
 
 export interface GetModelCollaborators_modelPlan {
@@ -25,7 +25,7 @@ export interface GetModelCollaborators_modelPlan {
 }
 
 export interface GetModelCollaborators {
-  modelPlan: GetModelCollaborators_modelPlan | null;
+  modelPlan: GetModelCollaborators_modelPlan;
 }
 
 export interface GetModelCollaboratorsVariables {

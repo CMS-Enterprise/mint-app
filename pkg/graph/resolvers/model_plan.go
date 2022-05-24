@@ -15,7 +15,7 @@ func ModelPlanCreate(logger *zap.Logger, modelName string, store *storage.Store,
 	plan := &models.ModelPlan{
 		ModelName: modelName,
 		Status:    models.ModelStatusPlanDraft,
-		CreatedBy: &principalInfo.EuaUserID,
+		CreatedBy: principalInfo.EuaUserID,
 	}
 
 	// Create the model plan itself
@@ -30,7 +30,7 @@ func ModelPlanCreate(logger *zap.Logger, modelName string, store *storage.Store,
 		EUAUserID:   principalInfo.EuaUserID,
 		FullName:    principalInfo.CommonName,
 		TeamRole:    models.TeamRoleModelLead,
-		CreatedBy:   &principalInfo.EuaUserID,
+		CreatedBy:   principalInfo.EuaUserID,
 	}
 	_, err = store.PlanCollaboratorCreate(logger, collab)
 	if err != nil {
@@ -40,7 +40,7 @@ func ModelPlanCreate(logger *zap.Logger, modelName string, store *storage.Store,
 	// Create a default plan basics object
 	basics := &models.PlanBasics{
 		ModelPlanID: createdPlan.ID,
-		CreatedBy:   &principalInfo.EuaUserID,
+		CreatedBy:   principalInfo.EuaUserID,
 	}
 	basics.CalcStatus()
 	_, err = store.PlanBasicsCreate(logger, basics)
@@ -51,7 +51,7 @@ func ModelPlanCreate(logger *zap.Logger, modelName string, store *storage.Store,
 	// Create a default plan milestones object
 	milestones := &models.PlanMilestones{
 		ModelPlanID: createdPlan.ID,
-		CreatedBy:   &principalInfo.EuaUserID,
+		CreatedBy:   principalInfo.EuaUserID,
 	}
 	milestones.CalcStatus()
 	_, err = store.PlanMilestonesCreate(logger, milestones)
@@ -62,7 +62,7 @@ func ModelPlanCreate(logger *zap.Logger, modelName string, store *storage.Store,
 	// Create a default plan general characteristics object
 	generalCharacteristics := &models.PlanGeneralCharacteristics{
 		ModelPlanID: createdPlan.ID,
-		CreatedBy:   &principalInfo.EuaUserID,
+		CreatedBy:   principalInfo.EuaUserID,
 		ModifiedBy:  &principalInfo.EuaUserID,
 	}
 	generalCharacteristics.CalcStatus()
