@@ -385,6 +385,7 @@ const Discussions = ({
               <Button
                 type="button"
                 unstyled
+                role="button"
                 onClick={() => {
                   setDiscussionStatusMessage('');
                   setDiscussionType('reply');
@@ -553,10 +554,10 @@ const Discussions = ({
       onAfterClose={noScroll.off}
       onRequestClose={closeModal}
       shouldCloseOnOverlayClick
-      appElement={document.getElementById('root')!}
-      data-testid="discussion-modal"
+      contentLabel={t('ariaLabel')}
+      appElement={document.getElementById('root')! as HTMLElement}
     >
-      <>
+      <div data-testid="discussion-modal">
         <div className="mint-discussions__x-button-container display-flex text-base flex-align-center">
           <button
             type="button"
@@ -576,7 +577,7 @@ const Discussions = ({
             <Grid desktop={{ col: 12 }}>{chooseRenderMethod()}</Grid>
           )}
         </GridContainer>
-      </>
+      </div>
     </ReactModal>
   );
 };
