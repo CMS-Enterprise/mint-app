@@ -82,6 +82,34 @@ func main() {
 		c.TeamRole = models.TeamRoleLeadership
 	})
 
+	makePlanBasics(uuid.MustParse("f11eb129-2c80-4080-9440-439cbe1a286f"), logger, store, func(b *models.PlanBasics) {
+		b.ModelType = &mandatory
+
+		b.Problem = models.StringPointer("There is not enough candy")
+		b.TestInventions = models.StringPointer("The great candy machine")
+		b.Note = models.StringPointer("The machine doesn't work yet")
+		b.Status = inProgress
+
+	})
+
+	makePlanMilestones(uuid.MustParse("f11eb129-2c80-4080-9440-439cbe1a286f"), logger, store, func(m *models.PlanMilestones) {
+		now := time.Now()
+		phased := false
+		m.CompleteICIP = &now
+		m.ClearanceStarts = &now
+		m.ClearanceEnds = &now
+		m.Announced = &now
+		m.ApplicationsStart = &now
+		m.ApplicationsEnd = &now
+		m.PerformancePeriodStarts = &now
+		m.PerformancePeriodEnds = &now
+		m.WrapUpEnds = &now
+		m.HighLevelNote = models.StringPointer("Theses are my  best guess notes")
+		m.PhasedIn = &phased
+		m.PhasedInNote = models.StringPointer("This can't be phased in")
+
+	})
+
 	makeModelPlan("Mr. Mint", logger, store)
 	pmGreatPlan := makeModelPlan("Mrs. Mint", logger, store, func(p *models.ModelPlan) {
 		p.ID = uuid.MustParse("6e224030-09d5-46f7-ad04-4bb851b36eab")
