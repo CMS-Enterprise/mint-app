@@ -21,16 +21,20 @@ func (suite *ResolverSuite) TestCreatePlanCollaborator() {
 	suite.EqualValues("CLAB", collaborator.EUAUserID)
 	suite.EqualValues("Clab O' Rater", collaborator.FullName)
 	suite.EqualValues(models.TeamRoleLeadership, collaborator.TeamRole)
-	suite.EqualValues(suite.testConfigs.UserInfo.EuaUserID, *collaborator.ModifiedBy)
-	suite.EqualValues(suite.testConfigs.UserInfo.EuaUserID, *collaborator.CreatedBy)
+	suite.EqualValues(suite.testConfigs.UserInfo.EuaUserID, collaborator.CreatedBy)
+	suite.Nil(collaborator.ModifiedBy)
 }
 
 func (suite *ResolverSuite) TestUpdatePlanCollaborator() {
 	plan := suite.createModelPlan("Plan For Milestones")
 	collaborator := suite.createPlanCollaborator(plan, "CLAB", "Clab O' Rater", models.TeamRoleLeadership)
+	suite.Nil(collaborator.ModifiedBy)
+	suite.Nil(collaborator.ModifiedDts)
 
 	updatedCollaborator, err := UpdatePlanCollaborator(suite.testConfigs.Logger, collaborator.ID, models.TeamRoleEvaluation, "UPDT", suite.testConfigs.Store)
 	suite.NoError(err)
+	suite.NotNil(updatedCollaborator.ModifiedBy)
+	suite.NotNil(updatedCollaborator.ModifiedDts)
 	suite.EqualValues("UPDT", *updatedCollaborator.ModifiedBy)
 	suite.EqualValues("CLAB", updatedCollaborator.EUAUserID)
 	suite.EqualValues("Clab O' Rater", updatedCollaborator.FullName)

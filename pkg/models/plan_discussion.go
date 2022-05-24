@@ -13,10 +13,10 @@ type PlanDiscussion struct {
 
 	Content string `json:"content" db:"content"`
 
-	CreatedBy   string    `json:"createdBy" db:"created_by"`
-	CreatedDts  time.Time `json:"createdDts" db:"created_dts"`
-	ModifiedBy  string    `json:"modifiedBy" db:"modified_by"`
-	ModifiedDts time.Time `json:"modifiedDts" db:"modified_dts"`
+	CreatedBy   string     `json:"createdBy" db:"created_by"`
+	CreatedDts  time.Time  `json:"createdDts" db:"created_dts"`
+	ModifiedBy  *string    `json:"modifiedBy" db:"modified_by"`
+	ModifiedDts *time.Time `json:"modifiedDts" db:"modified_dts"`
 
 	Status DiscussionStatus `json:"status" db:"status"`
 }
@@ -28,10 +28,10 @@ type DiscussionReply struct {
 	Content      string    `json:"content" db:"content"`
 	Resolution   bool      `json:"resolution" db:"resolution"` //default to false
 
-	CreatedBy   string    `json:"createdBy" db:"created_by"`
-	CreatedDts  time.Time `json:"createdDts" db:"created_dts"`
-	ModifiedBy  string    `json:"modifiedBy" db:"modified_by"`
-	ModifiedDts time.Time `json:"modifiedDts" db:"modified_dts"`
+	CreatedBy   string     `json:"createdBy" db:"created_by"`
+	CreatedDts  time.Time  `json:"createdDts" db:"created_dts"`
+	ModifiedBy  *string    `json:"modifiedBy" db:"modified_by"`
+	ModifiedDts *time.Time `json:"modifiedDts" db:"modified_dts"`
 }
 
 // GetModelTypeName returns a string name that represents the PlanDiscussion struct
@@ -51,7 +51,12 @@ func (p PlanDiscussion) GetPlanID() uuid.UUID {
 
 // GetModifiedBy returns the ModifiedBy property for a PlanDiscussion struct
 func (p PlanDiscussion) GetModifiedBy() *string {
-	return StringPointer(p.ModifiedBy)
+	return p.ModifiedBy
+}
+
+// GetCreatedBy implements the CreatedBy property
+func (p PlanDiscussion) GetCreatedBy() string {
+	return p.CreatedBy
 }
 
 // GetModelTypeName returns a string name that represents the DiscussionReply struct
@@ -72,5 +77,10 @@ func (r DiscussionReply) GetPlanID() uuid.UUID {
 
 // GetModifiedBy returns the ModifiedBy property for a DiscussionReply struct
 func (r DiscussionReply) GetModifiedBy() *string {
-	return StringPointer(r.ModifiedBy)
+	return r.ModifiedBy
+}
+
+// GetCreatedBy implements the CreatedBy property
+func (r DiscussionReply) GetCreatedBy() string {
+	return r.CreatedBy
 }

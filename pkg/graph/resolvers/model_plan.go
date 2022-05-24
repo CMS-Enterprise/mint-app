@@ -13,10 +13,9 @@ import (
 // so that we can roll back if there is an error with any of these calls.
 func ModelPlanCreate(logger *zap.Logger, modelName string, store *storage.Store, principalInfo *models.UserInfo) (*models.ModelPlan, error) {
 	plan := &models.ModelPlan{
-		ModelName:  modelName,
-		Status:     models.ModelStatusPlanDraft,
-		CreatedBy:  &principalInfo.EuaUserID,
-		ModifiedBy: &principalInfo.EuaUserID,
+		ModelName: modelName,
+		Status:    models.ModelStatusPlanDraft,
+		CreatedBy: principalInfo.EuaUserID,
 	}
 
 	// Create the model plan itself
@@ -31,8 +30,7 @@ func ModelPlanCreate(logger *zap.Logger, modelName string, store *storage.Store,
 		EUAUserID:   principalInfo.EuaUserID,
 		FullName:    principalInfo.CommonName,
 		TeamRole:    models.TeamRoleModelLead,
-		CreatedBy:   &principalInfo.EuaUserID,
-		ModifiedBy:  &principalInfo.EuaUserID,
+		CreatedBy:   principalInfo.EuaUserID,
 	}
 	_, err = store.PlanCollaboratorCreate(logger, collab)
 	if err != nil {
@@ -42,8 +40,7 @@ func ModelPlanCreate(logger *zap.Logger, modelName string, store *storage.Store,
 	// Create a default plan basics object
 	basics := &models.PlanBasics{
 		ModelPlanID: createdPlan.ID,
-		CreatedBy:   &principalInfo.EuaUserID,
-		ModifiedBy:  &principalInfo.EuaUserID,
+		CreatedBy:   principalInfo.EuaUserID,
 	}
 	basics.CalcStatus()
 	_, err = store.PlanBasicsCreate(logger, basics)
@@ -54,11 +51,22 @@ func ModelPlanCreate(logger *zap.Logger, modelName string, store *storage.Store,
 	// Create a default plan milestones object
 	milestones := &models.PlanMilestones{
 		ModelPlanID: createdPlan.ID,
-		CreatedBy:   &principalInfo.EuaUserID,
-		ModifiedBy:  &principalInfo.EuaUserID,
+		CreatedBy:   principalInfo.EuaUserID,
 	}
 	milestones.CalcStatus()
 	_, err = store.PlanMilestonesCreate(logger, milestones)
+	if err != nil {
+		return nil, err
+	}
+
+	// Create a default plan general characteristics object
+	generalCharacteristics := &models.PlanGeneralCharacteristics{
+		ModelPlanID: createdPlan.ID,
+		CreatedBy:   principalInfo.EuaUserID,
+		ModifiedBy:  &principalInfo.EuaUserID,
+	}
+	generalCharacteristics.CalcStatus()
+	_, err = store.PlanGeneralCharacteristicsCreate(logger, generalCharacteristics)
 	if err != nil {
 		return nil, err
 	}
@@ -78,6 +86,7 @@ func ModelPlanUpdate(logger *zap.Logger, id uuid.UUID, changes map[string]interf
 	if err != nil {
 		return nil, err
 	}
+
 	existingPlan.ModifiedBy = principal
 
 	retPlan, err := store.ModelPlanUpdate(logger, existingPlan)

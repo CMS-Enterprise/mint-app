@@ -1,5 +1,5 @@
 CREATE TABLE plan_discussion (
-    id UUID PRIMARY KEY,
+    id UUID PRIMARY KEY NOT NULL,
     model_plan_id UUID NOT NULL,
 
     content TEXT NOT NULL,
@@ -7,8 +7,8 @@ CREATE TABLE plan_discussion (
 
     created_by EUA_ID NOT NULL,
     created_dts TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    modified_by EUA_ID NOT NULL,
-    modified_dts TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP
+    modified_by EUA_ID,
+    modified_dts TIMESTAMP WITH TIME ZONE
 );
 ALTER TABLE plan_discussion
 ADD CONSTRAINT fk_discussion_plan FOREIGN KEY (model_plan_id)
@@ -18,15 +18,15 @@ ON DELETE NO ACTION;
 
 
 CREATE TABLE discussion_reply (
-    id UUID PRIMARY KEY,
-    discussion_id UUID,
-    content TEXT,
-    resolution BOOLEAN,
+    id UUID PRIMARY KEY NOT NULL,
+    discussion_id UUID NOT NULL,
+    content TEXT NOT NULL,
+    resolution BOOLEAN NOT NULL,
 
     created_by EUA_ID NOT NULL,
     created_dts TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    modified_by EUA_ID NOT NULL,
-    modified_dts TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP
+    modified_by EUA_ID,
+    modified_dts TIMESTAMP WITH TIME ZONE
 );
 
 ALTER TABLE discussion_reply

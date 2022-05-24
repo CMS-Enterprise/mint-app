@@ -43,6 +43,7 @@ type ResolverRoot interface {
 	Mutation() MutationResolver
 	PlanDiscussion() PlanDiscussionResolver
 	PlanDocument() PlanDocumentResolver
+	PlanGeneralCharacteristics() PlanGeneralCharacteristicsResolver
 	Query() QueryResolver
 	UserInfo() UserInfoResolver
 }
@@ -77,43 +78,45 @@ type ComplexityRoot struct {
 	}
 
 	ModelPlan struct {
-		Archived      func(childComplexity int) int
-		Basics        func(childComplexity int) int
-		CMSOther      func(childComplexity int) int
-		CmmiGroups    func(childComplexity int) int
-		CmsCenters    func(childComplexity int) int
-		Collaborators func(childComplexity int) int
-		CreatedBy     func(childComplexity int) int
-		CreatedDts    func(childComplexity int) int
-		Discussions   func(childComplexity int) int
-		Documents     func(childComplexity int) int
-		ID            func(childComplexity int) int
-		Milestones    func(childComplexity int) int
-		ModelCategory func(childComplexity int) int
-		ModelName     func(childComplexity int) int
-		ModifiedBy    func(childComplexity int) int
-		ModifiedDts   func(childComplexity int) int
-		Status        func(childComplexity int) int
+		Archived               func(childComplexity int) int
+		Basics                 func(childComplexity int) int
+		CMSOther               func(childComplexity int) int
+		CmmiGroups             func(childComplexity int) int
+		CmsCenters             func(childComplexity int) int
+		Collaborators          func(childComplexity int) int
+		CreatedBy              func(childComplexity int) int
+		CreatedDts             func(childComplexity int) int
+		Discussions            func(childComplexity int) int
+		Documents              func(childComplexity int) int
+		GeneralCharacteristics func(childComplexity int) int
+		ID                     func(childComplexity int) int
+		Milestones             func(childComplexity int) int
+		ModelCategory          func(childComplexity int) int
+		ModelName              func(childComplexity int) int
+		ModifiedBy             func(childComplexity int) int
+		ModifiedDts            func(childComplexity int) int
+		Status                 func(childComplexity int) int
 	}
 
 	Mutation struct {
-		CreateDiscussionReply      func(childComplexity int, input model.DiscussionReplyCreateInput) int
-		CreateModelPlan            func(childComplexity int, modelName string) int
-		CreatePlanCollaborator     func(childComplexity int, input model.PlanCollaboratorCreateInput) int
-		CreatePlanDiscussion       func(childComplexity int, input model.PlanDiscussionCreateInput) int
-		CreatePlanDocument         func(childComplexity int, input model.PlanDocumentInput) int
-		DeleteDiscussionReply      func(childComplexity int, id uuid.UUID) int
-		DeletePlanCollaborator     func(childComplexity int, id uuid.UUID) int
-		DeletePlanDiscussion       func(childComplexity int, id uuid.UUID) int
-		DeletePlanDocument         func(childComplexity int, input model.PlanDocumentInput) int
-		GeneratePresignedUploadURL func(childComplexity int, input model.GeneratePresignedUploadURLInput) int
-		UpdateDiscussionReply      func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
-		UpdateModelPlan            func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
-		UpdatePlanBasics           func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
-		UpdatePlanCollaborator     func(childComplexity int, id uuid.UUID, newRole models.TeamRole) int
-		UpdatePlanDiscussion       func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
-		UpdatePlanDocument         func(childComplexity int, input model.PlanDocumentInput) int
-		UpdatePlanMilestones       func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
+		CreateDiscussionReply            func(childComplexity int, input model.DiscussionReplyCreateInput) int
+		CreateModelPlan                  func(childComplexity int, modelName string) int
+		CreatePlanCollaborator           func(childComplexity int, input model.PlanCollaboratorCreateInput) int
+		CreatePlanDiscussion             func(childComplexity int, input model.PlanDiscussionCreateInput) int
+		CreatePlanDocument               func(childComplexity int, input model.PlanDocumentInput) int
+		DeleteDiscussionReply            func(childComplexity int, id uuid.UUID) int
+		DeletePlanCollaborator           func(childComplexity int, id uuid.UUID) int
+		DeletePlanDiscussion             func(childComplexity int, id uuid.UUID) int
+		DeletePlanDocument               func(childComplexity int, input model.PlanDocumentInput) int
+		GeneratePresignedUploadURL       func(childComplexity int, input model.GeneratePresignedUploadURLInput) int
+		UpdateDiscussionReply            func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
+		UpdateModelPlan                  func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
+		UpdatePlanBasics                 func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
+		UpdatePlanCollaborator           func(childComplexity int, id uuid.UUID, newRole models.TeamRole) int
+		UpdatePlanDiscussion             func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
+		UpdatePlanDocument               func(childComplexity int, input model.PlanDocumentInput) int
+		UpdatePlanGeneralCharacteristics func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
+		UpdatePlanMilestones             func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
 	}
 
 	PlanBasics struct {
@@ -180,6 +183,66 @@ type ComplexityRoot struct {
 		PresignedURL func(childComplexity int) int
 	}
 
+	PlanGeneralCharacteristics struct {
+		AdditionalServicesInvolved                func(childComplexity int) int
+		AdditionalServicesInvolvedDescription     func(childComplexity int) int
+		AdditionalServicesInvolvedNote            func(childComplexity int) int
+		AgreementTypes                            func(childComplexity int) int
+		AgreementTypesOther                       func(childComplexity int) int
+		AlternativePaymentModel                   func(childComplexity int) int
+		AlternativePaymentModelNote               func(childComplexity int) int
+		AlternativePaymentModelTypes              func(childComplexity int) int
+		AuthorityAllowances                       func(childComplexity int) int
+		AuthorityAllowancesNote                   func(childComplexity int) int
+		AuthorityAllowancesOther                  func(childComplexity int) int
+		CareCoordinationInvolved                  func(childComplexity int) int
+		CareCoordinationInvolvedDescription       func(childComplexity int) int
+		CareCoordinationInvolvedNote              func(childComplexity int) int
+		CollectPlanBids                           func(childComplexity int) int
+		CollectPlanBidsNote                       func(childComplexity int) int
+		CommunityPartnersInvolved                 func(childComplexity int) int
+		CommunityPartnersInvolvedDescription      func(childComplexity int) int
+		CommunityPartnersInvolvedNote             func(childComplexity int) int
+		CreatedBy                                 func(childComplexity int) int
+		CreatedDts                                func(childComplexity int) int
+		ExistingModel                             func(childComplexity int) int
+		GeographiesTargeted                       func(childComplexity int) int
+		GeographiesTargetedAppliedTo              func(childComplexity int) int
+		GeographiesTargetedAppliedToOther         func(childComplexity int) int
+		GeographiesTargetedNote                   func(childComplexity int) int
+		GeographiesTargetedTypes                  func(childComplexity int) int
+		GeographiesTargetedTypesOther             func(childComplexity int) int
+		HasComponentsOrTracks                     func(childComplexity int) int
+		HasComponentsOrTracksDiffer               func(childComplexity int) int
+		HasComponentsOrTracksNote                 func(childComplexity int) int
+		ID                                        func(childComplexity int) int
+		IsNewModel                                func(childComplexity int) int
+		KeyCharacteristics                        func(childComplexity int) int
+		KeyCharacteristicsOther                   func(childComplexity int) int
+		ManagePartCDEnrollment                    func(childComplexity int) int
+		ManagePartCDEnrollmentNote                func(childComplexity int) int
+		ModelPlanID                               func(childComplexity int) int
+		ModifiedBy                                func(childComplexity int) int
+		ModifiedDts                               func(childComplexity int) int
+		MultiplePatricipationAgreementsNeeded     func(childComplexity int) int
+		MultiplePatricipationAgreementsNeededNote func(childComplexity int) int
+		ParticipationOptions                      func(childComplexity int) int
+		ParticipationOptionsNote                  func(childComplexity int) int
+		PlanContactUpdated                        func(childComplexity int) int
+		PlanContactUpdatedNote                    func(childComplexity int) int
+		ResemblesExistingModel                    func(childComplexity int) int
+		ResemblesExistingModelHow                 func(childComplexity int) int
+		ResemblesExistingModelNote                func(childComplexity int) int
+		ResemblesExistingModelWhich               func(childComplexity int) int
+		RulemakingRequired                        func(childComplexity int) int
+		RulemakingRequiredDescription             func(childComplexity int) int
+		RulemakingRequiredNote                    func(childComplexity int) int
+		Status                                    func(childComplexity int) int
+		WaiversRequired                           func(childComplexity int) int
+		WaiversRequiredNote                       func(childComplexity int) int
+		WaiversRequiredTypes                      func(childComplexity int) int
+	}
+
 	PlanMilestones struct {
 		Announced               func(childComplexity int) int
 		ApplicationsEnd         func(childComplexity int) int
@@ -227,6 +290,7 @@ type ModelPlanResolver interface {
 
 	Basics(ctx context.Context, obj *models.ModelPlan) (*models.PlanBasics, error)
 	Milestones(ctx context.Context, obj *models.ModelPlan) (*models.PlanMilestones, error)
+	GeneralCharacteristics(ctx context.Context, obj *models.ModelPlan) (*models.PlanGeneralCharacteristics, error)
 	Collaborators(ctx context.Context, obj *models.ModelPlan) ([]*models.PlanCollaborator, error)
 	Documents(ctx context.Context, obj *models.ModelPlan) ([]*models.PlanDocument, error)
 	Discussions(ctx context.Context, obj *models.ModelPlan) ([]*models.PlanDiscussion, error)
@@ -239,6 +303,7 @@ type MutationResolver interface {
 	DeletePlanCollaborator(ctx context.Context, id uuid.UUID) (*models.PlanCollaborator, error)
 	UpdatePlanBasics(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanBasics, error)
 	UpdatePlanMilestones(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanMilestones, error)
+	UpdatePlanGeneralCharacteristics(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanGeneralCharacteristics, error)
 	GeneratePresignedUploadURL(ctx context.Context, input model.GeneratePresignedUploadURLInput) (*model.GeneratePresignedUploadURLPayload, error)
 	CreatePlanDocument(ctx context.Context, input model.PlanDocumentInput) (*model.PlanDocumentPayload, error)
 	UpdatePlanDocument(ctx context.Context, input model.PlanDocumentInput) (*model.PlanDocumentPayload, error)
@@ -255,6 +320,23 @@ type PlanDiscussionResolver interface {
 }
 type PlanDocumentResolver interface {
 	OtherType(ctx context.Context, obj *models.PlanDocument) (*string, error)
+}
+type PlanGeneralCharacteristicsResolver interface {
+	ResemblesExistingModelWhich(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]string, error)
+
+	AlternativePaymentModelTypes(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]model.AlternativePaymentModelType, error)
+
+	KeyCharacteristics(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]model.KeyCharacteristic, error)
+
+	GeographiesTargetedTypes(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]model.GeographyType, error)
+
+	GeographiesTargetedAppliedTo(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]model.GeographyApplication, error)
+
+	AgreementTypes(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]model.AgreementType, error)
+
+	AuthorityAllowances(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]model.AuthorityAllowance, error)
+
+	WaiversRequiredTypes(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]model.WaiverType, error)
 }
 type QueryResolver interface {
 	CurrentUser(ctx context.Context) (*model.CurrentUser, error)
@@ -438,6 +520,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.ModelPlan.Documents(childComplexity), true
+
+	case "ModelPlan.generalCharacteristics":
+		if e.complexity.ModelPlan.GeneralCharacteristics == nil {
+			break
+		}
+
+		return e.complexity.ModelPlan.GeneralCharacteristics(childComplexity), true
 
 	case "ModelPlan.id":
 		if e.complexity.ModelPlan.ID == nil {
@@ -679,6 +768,18 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Mutation.UpdatePlanDocument(childComplexity, args["input"].(model.PlanDocumentInput)), true
+
+	case "Mutation.updatePlanGeneralCharacteristics":
+		if e.complexity.Mutation.UpdatePlanGeneralCharacteristics == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_updatePlanGeneralCharacteristics_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Mutation.UpdatePlanGeneralCharacteristics(childComplexity, args["id"].(uuid.UUID), args["changes"].(map[string]interface{})), true
 
 	case "Mutation.updatePlanMilestones":
 		if e.complexity.Mutation.UpdatePlanMilestones == nil {
@@ -1035,6 +1136,405 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.PlanDocumentPayload.PresignedURL(childComplexity), true
 
+	case "PlanGeneralCharacteristics.additionalServicesInvolved":
+		if e.complexity.PlanGeneralCharacteristics.AdditionalServicesInvolved == nil {
+			break
+		}
+
+		return e.complexity.PlanGeneralCharacteristics.AdditionalServicesInvolved(childComplexity), true
+
+	case "PlanGeneralCharacteristics.additionalServicesInvolvedDescription":
+		if e.complexity.PlanGeneralCharacteristics.AdditionalServicesInvolvedDescription == nil {
+			break
+		}
+
+		return e.complexity.PlanGeneralCharacteristics.AdditionalServicesInvolvedDescription(childComplexity), true
+
+	case "PlanGeneralCharacteristics.additionalServicesInvolvedNote":
+		if e.complexity.PlanGeneralCharacteristics.AdditionalServicesInvolvedNote == nil {
+			break
+		}
+
+		return e.complexity.PlanGeneralCharacteristics.AdditionalServicesInvolvedNote(childComplexity), true
+
+	case "PlanGeneralCharacteristics.agreementTypes":
+		if e.complexity.PlanGeneralCharacteristics.AgreementTypes == nil {
+			break
+		}
+
+		return e.complexity.PlanGeneralCharacteristics.AgreementTypes(childComplexity), true
+
+	case "PlanGeneralCharacteristics.agreementTypesOther":
+		if e.complexity.PlanGeneralCharacteristics.AgreementTypesOther == nil {
+			break
+		}
+
+		return e.complexity.PlanGeneralCharacteristics.AgreementTypesOther(childComplexity), true
+
+	case "PlanGeneralCharacteristics.alternativePaymentModel":
+		if e.complexity.PlanGeneralCharacteristics.AlternativePaymentModel == nil {
+			break
+		}
+
+		return e.complexity.PlanGeneralCharacteristics.AlternativePaymentModel(childComplexity), true
+
+	case "PlanGeneralCharacteristics.alternativePaymentModelNote":
+		if e.complexity.PlanGeneralCharacteristics.AlternativePaymentModelNote == nil {
+			break
+		}
+
+		return e.complexity.PlanGeneralCharacteristics.AlternativePaymentModelNote(childComplexity), true
+
+	case "PlanGeneralCharacteristics.alternativePaymentModelTypes":
+		if e.complexity.PlanGeneralCharacteristics.AlternativePaymentModelTypes == nil {
+			break
+		}
+
+		return e.complexity.PlanGeneralCharacteristics.AlternativePaymentModelTypes(childComplexity), true
+
+	case "PlanGeneralCharacteristics.authorityAllowances":
+		if e.complexity.PlanGeneralCharacteristics.AuthorityAllowances == nil {
+			break
+		}
+
+		return e.complexity.PlanGeneralCharacteristics.AuthorityAllowances(childComplexity), true
+
+	case "PlanGeneralCharacteristics.authorityAllowancesNote":
+		if e.complexity.PlanGeneralCharacteristics.AuthorityAllowancesNote == nil {
+			break
+		}
+
+		return e.complexity.PlanGeneralCharacteristics.AuthorityAllowancesNote(childComplexity), true
+
+	case "PlanGeneralCharacteristics.authorityAllowancesOther":
+		if e.complexity.PlanGeneralCharacteristics.AuthorityAllowancesOther == nil {
+			break
+		}
+
+		return e.complexity.PlanGeneralCharacteristics.AuthorityAllowancesOther(childComplexity), true
+
+	case "PlanGeneralCharacteristics.careCoordinationInvolved":
+		if e.complexity.PlanGeneralCharacteristics.CareCoordinationInvolved == nil {
+			break
+		}
+
+		return e.complexity.PlanGeneralCharacteristics.CareCoordinationInvolved(childComplexity), true
+
+	case "PlanGeneralCharacteristics.careCoordinationInvolvedDescription":
+		if e.complexity.PlanGeneralCharacteristics.CareCoordinationInvolvedDescription == nil {
+			break
+		}
+
+		return e.complexity.PlanGeneralCharacteristics.CareCoordinationInvolvedDescription(childComplexity), true
+
+	case "PlanGeneralCharacteristics.careCoordinationInvolvedNote":
+		if e.complexity.PlanGeneralCharacteristics.CareCoordinationInvolvedNote == nil {
+			break
+		}
+
+		return e.complexity.PlanGeneralCharacteristics.CareCoordinationInvolvedNote(childComplexity), true
+
+	case "PlanGeneralCharacteristics.collectPlanBids":
+		if e.complexity.PlanGeneralCharacteristics.CollectPlanBids == nil {
+			break
+		}
+
+		return e.complexity.PlanGeneralCharacteristics.CollectPlanBids(childComplexity), true
+
+	case "PlanGeneralCharacteristics.collectPlanBidsNote":
+		if e.complexity.PlanGeneralCharacteristics.CollectPlanBidsNote == nil {
+			break
+		}
+
+		return e.complexity.PlanGeneralCharacteristics.CollectPlanBidsNote(childComplexity), true
+
+	case "PlanGeneralCharacteristics.communityPartnersInvolved":
+		if e.complexity.PlanGeneralCharacteristics.CommunityPartnersInvolved == nil {
+			break
+		}
+
+		return e.complexity.PlanGeneralCharacteristics.CommunityPartnersInvolved(childComplexity), true
+
+	case "PlanGeneralCharacteristics.communityPartnersInvolvedDescription":
+		if e.complexity.PlanGeneralCharacteristics.CommunityPartnersInvolvedDescription == nil {
+			break
+		}
+
+		return e.complexity.PlanGeneralCharacteristics.CommunityPartnersInvolvedDescription(childComplexity), true
+
+	case "PlanGeneralCharacteristics.communityPartnersInvolvedNote":
+		if e.complexity.PlanGeneralCharacteristics.CommunityPartnersInvolvedNote == nil {
+			break
+		}
+
+		return e.complexity.PlanGeneralCharacteristics.CommunityPartnersInvolvedNote(childComplexity), true
+
+	case "PlanGeneralCharacteristics.createdBy":
+		if e.complexity.PlanGeneralCharacteristics.CreatedBy == nil {
+			break
+		}
+
+		return e.complexity.PlanGeneralCharacteristics.CreatedBy(childComplexity), true
+
+	case "PlanGeneralCharacteristics.createdDts":
+		if e.complexity.PlanGeneralCharacteristics.CreatedDts == nil {
+			break
+		}
+
+		return e.complexity.PlanGeneralCharacteristics.CreatedDts(childComplexity), true
+
+	case "PlanGeneralCharacteristics.existingModel":
+		if e.complexity.PlanGeneralCharacteristics.ExistingModel == nil {
+			break
+		}
+
+		return e.complexity.PlanGeneralCharacteristics.ExistingModel(childComplexity), true
+
+	case "PlanGeneralCharacteristics.geographiesTargeted":
+		if e.complexity.PlanGeneralCharacteristics.GeographiesTargeted == nil {
+			break
+		}
+
+		return e.complexity.PlanGeneralCharacteristics.GeographiesTargeted(childComplexity), true
+
+	case "PlanGeneralCharacteristics.geographiesTargetedAppliedTo":
+		if e.complexity.PlanGeneralCharacteristics.GeographiesTargetedAppliedTo == nil {
+			break
+		}
+
+		return e.complexity.PlanGeneralCharacteristics.GeographiesTargetedAppliedTo(childComplexity), true
+
+	case "PlanGeneralCharacteristics.geographiesTargetedAppliedToOther":
+		if e.complexity.PlanGeneralCharacteristics.GeographiesTargetedAppliedToOther == nil {
+			break
+		}
+
+		return e.complexity.PlanGeneralCharacteristics.GeographiesTargetedAppliedToOther(childComplexity), true
+
+	case "PlanGeneralCharacteristics.geographiesTargetedNote":
+		if e.complexity.PlanGeneralCharacteristics.GeographiesTargetedNote == nil {
+			break
+		}
+
+		return e.complexity.PlanGeneralCharacteristics.GeographiesTargetedNote(childComplexity), true
+
+	case "PlanGeneralCharacteristics.geographiesTargetedTypes":
+		if e.complexity.PlanGeneralCharacteristics.GeographiesTargetedTypes == nil {
+			break
+		}
+
+		return e.complexity.PlanGeneralCharacteristics.GeographiesTargetedTypes(childComplexity), true
+
+	case "PlanGeneralCharacteristics.geographiesTargetedTypesOther":
+		if e.complexity.PlanGeneralCharacteristics.GeographiesTargetedTypesOther == nil {
+			break
+		}
+
+		return e.complexity.PlanGeneralCharacteristics.GeographiesTargetedTypesOther(childComplexity), true
+
+	case "PlanGeneralCharacteristics.hasComponentsOrTracks":
+		if e.complexity.PlanGeneralCharacteristics.HasComponentsOrTracks == nil {
+			break
+		}
+
+		return e.complexity.PlanGeneralCharacteristics.HasComponentsOrTracks(childComplexity), true
+
+	case "PlanGeneralCharacteristics.hasComponentsOrTracksDiffer":
+		if e.complexity.PlanGeneralCharacteristics.HasComponentsOrTracksDiffer == nil {
+			break
+		}
+
+		return e.complexity.PlanGeneralCharacteristics.HasComponentsOrTracksDiffer(childComplexity), true
+
+	case "PlanGeneralCharacteristics.hasComponentsOrTracksNote":
+		if e.complexity.PlanGeneralCharacteristics.HasComponentsOrTracksNote == nil {
+			break
+		}
+
+		return e.complexity.PlanGeneralCharacteristics.HasComponentsOrTracksNote(childComplexity), true
+
+	case "PlanGeneralCharacteristics.id":
+		if e.complexity.PlanGeneralCharacteristics.ID == nil {
+			break
+		}
+
+		return e.complexity.PlanGeneralCharacteristics.ID(childComplexity), true
+
+	case "PlanGeneralCharacteristics.isNewModel":
+		if e.complexity.PlanGeneralCharacteristics.IsNewModel == nil {
+			break
+		}
+
+		return e.complexity.PlanGeneralCharacteristics.IsNewModel(childComplexity), true
+
+	case "PlanGeneralCharacteristics.keyCharacteristics":
+		if e.complexity.PlanGeneralCharacteristics.KeyCharacteristics == nil {
+			break
+		}
+
+		return e.complexity.PlanGeneralCharacteristics.KeyCharacteristics(childComplexity), true
+
+	case "PlanGeneralCharacteristics.keyCharacteristicsOther":
+		if e.complexity.PlanGeneralCharacteristics.KeyCharacteristicsOther == nil {
+			break
+		}
+
+		return e.complexity.PlanGeneralCharacteristics.KeyCharacteristicsOther(childComplexity), true
+
+	case "PlanGeneralCharacteristics.managePartCDEnrollment":
+		if e.complexity.PlanGeneralCharacteristics.ManagePartCDEnrollment == nil {
+			break
+		}
+
+		return e.complexity.PlanGeneralCharacteristics.ManagePartCDEnrollment(childComplexity), true
+
+	case "PlanGeneralCharacteristics.managePartCDEnrollmentNote":
+		if e.complexity.PlanGeneralCharacteristics.ManagePartCDEnrollmentNote == nil {
+			break
+		}
+
+		return e.complexity.PlanGeneralCharacteristics.ManagePartCDEnrollmentNote(childComplexity), true
+
+	case "PlanGeneralCharacteristics.modelPlanID":
+		if e.complexity.PlanGeneralCharacteristics.ModelPlanID == nil {
+			break
+		}
+
+		return e.complexity.PlanGeneralCharacteristics.ModelPlanID(childComplexity), true
+
+	case "PlanGeneralCharacteristics.modifiedBy":
+		if e.complexity.PlanGeneralCharacteristics.ModifiedBy == nil {
+			break
+		}
+
+		return e.complexity.PlanGeneralCharacteristics.ModifiedBy(childComplexity), true
+
+	case "PlanGeneralCharacteristics.modifiedDts":
+		if e.complexity.PlanGeneralCharacteristics.ModifiedDts == nil {
+			break
+		}
+
+		return e.complexity.PlanGeneralCharacteristics.ModifiedDts(childComplexity), true
+
+	case "PlanGeneralCharacteristics.multiplePatricipationAgreementsNeeded":
+		if e.complexity.PlanGeneralCharacteristics.MultiplePatricipationAgreementsNeeded == nil {
+			break
+		}
+
+		return e.complexity.PlanGeneralCharacteristics.MultiplePatricipationAgreementsNeeded(childComplexity), true
+
+	case "PlanGeneralCharacteristics.multiplePatricipationAgreementsNeededNote":
+		if e.complexity.PlanGeneralCharacteristics.MultiplePatricipationAgreementsNeededNote == nil {
+			break
+		}
+
+		return e.complexity.PlanGeneralCharacteristics.MultiplePatricipationAgreementsNeededNote(childComplexity), true
+
+	case "PlanGeneralCharacteristics.participationOptions":
+		if e.complexity.PlanGeneralCharacteristics.ParticipationOptions == nil {
+			break
+		}
+
+		return e.complexity.PlanGeneralCharacteristics.ParticipationOptions(childComplexity), true
+
+	case "PlanGeneralCharacteristics.participationOptionsNote":
+		if e.complexity.PlanGeneralCharacteristics.ParticipationOptionsNote == nil {
+			break
+		}
+
+		return e.complexity.PlanGeneralCharacteristics.ParticipationOptionsNote(childComplexity), true
+
+	case "PlanGeneralCharacteristics.planContactUpdated":
+		if e.complexity.PlanGeneralCharacteristics.PlanContactUpdated == nil {
+			break
+		}
+
+		return e.complexity.PlanGeneralCharacteristics.PlanContactUpdated(childComplexity), true
+
+	case "PlanGeneralCharacteristics.planContactUpdatedNote":
+		if e.complexity.PlanGeneralCharacteristics.PlanContactUpdatedNote == nil {
+			break
+		}
+
+		return e.complexity.PlanGeneralCharacteristics.PlanContactUpdatedNote(childComplexity), true
+
+	case "PlanGeneralCharacteristics.resemblesExistingModel":
+		if e.complexity.PlanGeneralCharacteristics.ResemblesExistingModel == nil {
+			break
+		}
+
+		return e.complexity.PlanGeneralCharacteristics.ResemblesExistingModel(childComplexity), true
+
+	case "PlanGeneralCharacteristics.resemblesExistingModelHow":
+		if e.complexity.PlanGeneralCharacteristics.ResemblesExistingModelHow == nil {
+			break
+		}
+
+		return e.complexity.PlanGeneralCharacteristics.ResemblesExistingModelHow(childComplexity), true
+
+	case "PlanGeneralCharacteristics.resemblesExistingModelNote":
+		if e.complexity.PlanGeneralCharacteristics.ResemblesExistingModelNote == nil {
+			break
+		}
+
+		return e.complexity.PlanGeneralCharacteristics.ResemblesExistingModelNote(childComplexity), true
+
+	case "PlanGeneralCharacteristics.resemblesExistingModelWhich":
+		if e.complexity.PlanGeneralCharacteristics.ResemblesExistingModelWhich == nil {
+			break
+		}
+
+		return e.complexity.PlanGeneralCharacteristics.ResemblesExistingModelWhich(childComplexity), true
+
+	case "PlanGeneralCharacteristics.rulemakingRequired":
+		if e.complexity.PlanGeneralCharacteristics.RulemakingRequired == nil {
+			break
+		}
+
+		return e.complexity.PlanGeneralCharacteristics.RulemakingRequired(childComplexity), true
+
+	case "PlanGeneralCharacteristics.rulemakingRequiredDescription":
+		if e.complexity.PlanGeneralCharacteristics.RulemakingRequiredDescription == nil {
+			break
+		}
+
+		return e.complexity.PlanGeneralCharacteristics.RulemakingRequiredDescription(childComplexity), true
+
+	case "PlanGeneralCharacteristics.rulemakingRequiredNote":
+		if e.complexity.PlanGeneralCharacteristics.RulemakingRequiredNote == nil {
+			break
+		}
+
+		return e.complexity.PlanGeneralCharacteristics.RulemakingRequiredNote(childComplexity), true
+
+	case "PlanGeneralCharacteristics.status":
+		if e.complexity.PlanGeneralCharacteristics.Status == nil {
+			break
+		}
+
+		return e.complexity.PlanGeneralCharacteristics.Status(childComplexity), true
+
+	case "PlanGeneralCharacteristics.waiversRequired":
+		if e.complexity.PlanGeneralCharacteristics.WaiversRequired == nil {
+			break
+		}
+
+		return e.complexity.PlanGeneralCharacteristics.WaiversRequired(childComplexity), true
+
+	case "PlanGeneralCharacteristics.waiversRequiredNote":
+		if e.complexity.PlanGeneralCharacteristics.WaiversRequiredNote == nil {
+			break
+		}
+
+		return e.complexity.PlanGeneralCharacteristics.WaiversRequiredNote(childComplexity), true
+
+	case "PlanGeneralCharacteristics.waiversRequiredTypes":
+		if e.complexity.PlanGeneralCharacteristics.WaiversRequiredTypes == nil {
+			break
+		}
+
+		return e.complexity.PlanGeneralCharacteristics.WaiversRequiredTypes(childComplexity), true
+
 	case "PlanMilestones.announced":
 		if e.complexity.PlanMilestones.Announced == nil {
 			break
@@ -1378,19 +1878,20 @@ scalar Time
 ModelPlan represent the data point for plans about a model. It is the central data type in the application
 """
 type ModelPlan {
-  id: UUID
+  id: UUID!
   modelName: String!
   modelCategory: ModelCategory
   cmsCenters: [CMSCenter!]!
   cmsOther: String
   cmmiGroups: [CMMIGroup!]!
   archived: Boolean!
-  createdBy: String
-  createdDts: Time
+  createdBy: String!
+  createdDts: Time!
   modifiedBy: String
   modifiedDts: Time
-  basics: PlanBasics
-  milestones: PlanMilestones
+  basics: PlanBasics!
+  milestones: PlanMilestones!
+  generalCharacteristics: PlanGeneralCharacteristics!
   collaborators: [PlanCollaborator!]!
   documents: [PlanDocument!]!
   discussions: [PlanDiscussion!]!
@@ -1422,8 +1923,8 @@ type PlanCollaborator {
   euaUserID: String!
   fullName: String!
   teamRole: TeamRole!
-  createdBy: String
-  createdDts: Time
+  createdBy: String!
+  createdDts: Time!
   modifiedBy: String
   modifiedDts: Time
 }
@@ -1460,19 +1961,19 @@ PlanDocument represents a document on a plan
 type PlanDocument {
   id: UUID!
   modelPlanID: UUID!
-  fileType: String
-  bucket: String
-  fileKey: String
-  virusScanned: Boolean
-  virusClean: Boolean
-  fileName: String
-  fileSize: Int
-  documentType: DocumentType
+  fileType: String!
+  bucket: String!
+  fileKey: String!
+  virusScanned: Boolean!
+  virusClean: Boolean!
+  fileName: String!
+  fileSize: Int!
+  documentType: DocumentType!
   otherType: String
   optionalNotes: String
   deletedAt: Time
-  createdBy: String
-  createdDts: Time
+  createdBy: String!
+  createdDts: Time!
   modifiedBy: String
   modifiedDts: Time
 }
@@ -1511,16 +2012,16 @@ type PlanDocumentPayload {
 Represents plan basics
 """
 type PlanBasics {
-  id: UUID
-  modelPlanID: UUID
+  id: UUID!
+  modelPlanID: UUID!
 
   modelType: ModelType
   problem: String
   goal: String
   testInventions: String
   note: String
-  createdBy: String
-  createdDts: Time
+  createdBy: String!
+  createdDts: Time!
   modifiedBy: String
   modifiedDts: Time
   status: TaskStatus!
@@ -1551,8 +2052,8 @@ type UserInfo {
 Represents plan milestones
 """
 type PlanMilestones {
-  id: UUID
-  modelPlanID: UUID
+  id: UUID!
+  modelPlanID: UUID!
 
   completeICIP: Time
   clearanceStarts: Time
@@ -1572,11 +2073,11 @@ type PlanMilestones {
   phasedInNote: String
 
 
-  createdBy: String
-  createdDts: Time
+  createdBy: String!
+  createdDts: Time!
   modifiedBy: String
   modifiedDts: Time
-  status: TaskStatus
+  status: TaskStatus!
 }
 
 """
@@ -1607,14 +2108,14 @@ input PlanMilestoneChanges @goModel(model: "map[string]interface{}") {
 PlanDiscussion represents plan discussion
 """
 type PlanDiscussion  {
-	id:          UUID
-	modelPlanID: UUID
+	id:          UUID!
+	modelPlanID: UUID!
 	content: String
 	status: DiscussionStatus!
   replies: [DiscussionReply!]!
 
-  createdBy: String
-  createdDts: Time
+  createdBy: String!
+  createdDts: Time!
   modifiedBy: String
   modifiedDts: Time
 }
@@ -1641,13 +2142,13 @@ input PlanDiscussionChanges @goModel(model: "map[string]interface{}") {
 DiscussionReply represents a discussion reply
 """
 type DiscussionReply  {
-	id: UUID
+	id: UUID!
 	discussionID: UUID!
 	content: String
 	resolution: Boolean
 
-	createdBy: String
-	createdDts: Time
+	createdBy: String!
+	createdDts: Time!
 	modifiedBy: String
 	modifiedDts: Time
 }
@@ -1672,15 +2173,157 @@ input DiscussionReplyChanges @goModel(model: "map[string]interface{}") {
 }
 
 """
+PlanGeneralCharacteristics represents a plan general characteristics object
+"""
+type PlanGeneralCharacteristics {
+  id: UUID!
+  modelPlanID: UUID!
+
+  # Page 1
+  isNewModel: Boolean
+  existingModel: String
+  resemblesExistingModel: Boolean
+  resemblesExistingModelWhich: [String!]!
+  resemblesExistingModelHow: String
+  resemblesExistingModelNote: String
+  hasComponentsOrTracks: Boolean
+  hasComponentsOrTracksDiffer: String
+  hasComponentsOrTracksNote: String
+
+  # Page 2
+  alternativePaymentModel: Boolean
+  alternativePaymentModelTypes: [AlternativePaymentModelType!]!
+  alternativePaymentModelNote: String
+  keyCharacteristics: [KeyCharacteristic!]!
+  keyCharacteristicsOther: String
+  collectPlanBids: Boolean
+  collectPlanBidsNote: String
+  managePartCDEnrollment: Boolean
+  managePartCDEnrollmentNote: String
+  planContactUpdated: Boolean
+  planContactUpdatedNote: String
+
+  # Page 3
+  careCoordinationInvolved: Boolean
+  careCoordinationInvolvedDescription: String
+  careCoordinationInvolvedNote: String
+  additionalServicesInvolved: Boolean
+  additionalServicesInvolvedDescription: String
+  additionalServicesInvolvedNote: String
+  communityPartnersInvolved: Boolean
+  communityPartnersInvolvedDescription: String
+  communityPartnersInvolvedNote: String
+
+  # Page 4
+  geographiesTargeted: Boolean
+  geographiesTargetedTypes: [GeographyType!]!
+  geographiesTargetedTypesOther: String
+  geographiesTargetedAppliedTo: [GeographyApplication!]!
+  geographiesTargetedAppliedToOther: String
+  geographiesTargetedNote: String
+  participationOptions: Boolean
+  participationOptionsNote: String
+  agreementTypes: [AgreementType!]!
+  agreementTypesOther: String
+  multiplePatricipationAgreementsNeeded: Boolean
+  multiplePatricipationAgreementsNeededNote: String
+
+  # Page 5
+  rulemakingRequired: Boolean
+  rulemakingRequiredDescription: String
+  rulemakingRequiredNote: String
+  authorityAllowances: [AuthorityAllowance!]!
+  authorityAllowancesOther: String
+  authorityAllowancesNote: String
+  waiversRequired: Boolean
+  waiversRequiredTypes: [WaiverType!]!
+  waiversRequiredNote: String
+
+  createdBy: String!
+  createdDts: Time!
+  modifiedBy: String
+  modifiedDts: Time
+  status: TaskStatus!
+}
+
+"""
+PlanGeneralCharacteristicsChanges represents the possible changes you can make to a
+general characteristics object when updating it.
+Fields explicitly set with NULL will be unset, and omitted fields will be left unchanged.
+https://gqlgen.com/reference/changesets/
+"""
+input PlanGeneralCharacteristicsChanges @goModel(model: "map[string]interface{}") {
+  # Page 1
+  isNewModel: Boolean
+  existingModel: String
+  resemblesExistingModel: Boolean
+  resemblesExistingModelWhich: [String!]
+  resemblesExistingModelHow: String
+  resemblesExistingModelNote: String
+  hasComponentsOrTracks: Boolean
+  hasComponentsOrTracksDiffer: String
+  hasComponentsOrTracksNote: String
+
+  # Page 2
+  alternativePaymentModel: Boolean
+  alternativePaymentModelTypes: [AlternativePaymentModelType!]
+  alternativePaymentModelNote: String
+  keyCharacteristics: [KeyCharacteristic!]
+  keyCharacteristicsOther: String
+  collectPlanBids: Boolean
+  collectPlanBidsNote: String
+  managePartCDEnrollment: Boolean
+  managePartCDEnrollmentNote: String
+  planContactUpdated: Boolean
+  planContactUpdatedNote: String
+
+  # Page 3
+  careCoordinationInvolved: Boolean
+  careCoordinationInvolvedDescription: String
+  careCoordinationInvolvedNote: String
+  additionalServicesInvolved: Boolean
+  additionalServicesInvolvedDescription: String
+  additionalServicesInvolvedNote: String
+  communityPartnersInvolved: Boolean
+  communityPartnersInvolvedDescription: String
+  communityPartnersInvolvedNote: String
+
+  # Page 4
+  geographiesTargeted: Boolean
+  geographiesTargetedTypes: [GeographyType!]
+  geographiesTargetedTypesOther: String
+  geographiesTargetedAppliedTo: [GeographyApplication!]
+  geographiesTargetedAppliedToOther: String
+  geographiesTargetedNote: String
+  participationOptions: Boolean
+  participationOptionsNote: String
+  agreementTypes: [AgreementType!]
+  agreementTypesOther: String
+  multiplePatricipationAgreementsNeeded: Boolean
+  multiplePatricipationAgreementsNeededNote: String
+
+  # Page 5
+  rulemakingRequired: Boolean
+  rulemakingRequiredDescription: String
+  rulemakingRequiredNote: String
+  authorityAllowances: [AuthorityAllowance!]
+  authorityAllowancesOther: String
+  authorityAllowancesNote: String
+  waiversRequired: Boolean
+  waiversRequiredTypes: [WaiverType!]
+  waiversRequiredNote: String
+}
+
+"""
 Query definition for the schema
 """
 type Query {
-  currentUser: CurrentUser
-  modelPlan(id: UUID!) : ModelPlan
-  planDocument(id: UUID!) : PlanDocument
-  planDocumentDownloadURL(id: UUID!) : PlanDocumentPayload
-  readPlanDocumentByModelID(id: UUID!) : [PlanDocument]
-  modelPlanCollection: [ModelPlan]
+  currentUser: CurrentUser!
+  modelPlan(id: UUID!): ModelPlan!
+  planDocument(id: UUID!): PlanDocument!
+  planDocumentDownloadURL(id: UUID!): PlanDocumentPayload!
+  readPlanDocumentByModelID(id: UUID!): [PlanDocument!]!
+  modelPlanCollection: [ModelPlan!]!
   cedarPersonsByCommonName(commonName: String!): [UserInfo!]!
   planCollaboratorByID(id: UUID!): PlanCollaborator!
 }
@@ -1689,55 +2332,58 @@ type Query {
 Mutations definition for the schema
 """
 type Mutation {
-createModelPlan(modelName: String!):ModelPlan
+createModelPlan(modelName: String!): ModelPlan!
 @hasRole(role: MINT_BASE_USER)
 
-updateModelPlan(id: UUID!, changes: ModelPlanChanges!): ModelPlan
+updateModelPlan(id: UUID!, changes: ModelPlanChanges!): ModelPlan!
 @hasRole(role: MINT_BASE_USER)
 
-createPlanCollaborator(input: PlanCollaboratorCreateInput!): PlanCollaborator
+createPlanCollaborator(input: PlanCollaboratorCreateInput!): PlanCollaborator!
 @hasRole(role: MINT_BASE_USER)
 
-updatePlanCollaborator(id: UUID!, newRole: TeamRole!): PlanCollaborator
+updatePlanCollaborator(id: UUID!, newRole: TeamRole!): PlanCollaborator!
 @hasRole(role: MINT_BASE_USER)
 
-deletePlanCollaborator(id: UUID!): PlanCollaborator
+deletePlanCollaborator(id: UUID!): PlanCollaborator!
 @hasRole(role: MINT_BASE_USER)
 
-updatePlanBasics(id: UUID!, changes: PlanBasicsChanges!): PlanBasics
+updatePlanBasics(id: UUID!, changes: PlanBasicsChanges!): PlanBasics!
 @hasRole(role: MINT_BASE_USER)
 
-updatePlanMilestones(id: UUID!, changes: PlanMilestoneChanges!): PlanMilestones
+updatePlanMilestones(id: UUID!, changes: PlanMilestoneChanges!): PlanMilestones!
 @hasRole(role: MINT_BASE_USER)
 
-generatePresignedUploadURL(input: GeneratePresignedUploadURLInput!): GeneratePresignedUploadURLPayload
+updatePlanGeneralCharacteristics(id: UUID!, changes: PlanGeneralCharacteristicsChanges!): PlanGeneralCharacteristics!
 @hasRole(role: MINT_BASE_USER)
 
-createPlanDocument(input: PlanDocumentInput!): PlanDocumentPayload
+generatePresignedUploadURL(input: GeneratePresignedUploadURLInput!): GeneratePresignedUploadURLPayload!
 @hasRole(role: MINT_BASE_USER)
 
-updatePlanDocument(input: PlanDocumentInput!): PlanDocumentPayload
+createPlanDocument(input: PlanDocumentInput!): PlanDocumentPayload!
+@hasRole(role: MINT_BASE_USER)
+
+updatePlanDocument(input: PlanDocumentInput!): PlanDocumentPayload!
 @hasRole(role: MINT_BASE_USER)
 
 deletePlanDocument(input: PlanDocumentInput!): Int!
 @hasRole(role: MINT_BASE_USER)
 
-createPlanDiscussion(input: PlanDiscussionCreateInput!): PlanDiscussion
+createPlanDiscussion(input: PlanDiscussionCreateInput!): PlanDiscussion!
 @hasRole(role: MINT_BASE_USER)
 
-updatePlanDiscussion(id: UUID!, changes: PlanDiscussionChanges!): PlanDiscussion
+updatePlanDiscussion(id: UUID!, changes: PlanDiscussionChanges!): PlanDiscussion!
 @hasRole(role: MINT_BASE_USER)
 
-deletePlanDiscussion(id: UUID!): PlanDiscussion
+deletePlanDiscussion(id: UUID!): PlanDiscussion!
 @hasRole(role: MINT_BASE_USER)
 
-createDiscussionReply(input: DiscussionReplyCreateInput!): DiscussionReply
+createDiscussionReply(input: DiscussionReplyCreateInput!): DiscussionReply!
 @hasRole(role: MINT_BASE_USER)
 
-updateDiscussionReply(id: UUID!, changes: DiscussionReplyChanges!): DiscussionReply
+updateDiscussionReply(id: UUID!, changes: DiscussionReplyChanges!): DiscussionReply!
 @hasRole(role: MINT_BASE_USER)
 
-deleteDiscussionReply(id: UUID!): DiscussionReply
+deleteDiscussionReply(id: UUID!): DiscussionReply!
 @hasRole(role: MINT_BASE_USER)
 }
 
@@ -1815,6 +2461,56 @@ enum DocumentType {
   ICIP_DRAFT,
   MARKET_RESEARCH,
   OTHER
+}
+
+enum AlternativePaymentModelType {
+  REGULAR
+  MIPS
+  ADVANCED
+}
+
+enum KeyCharacteristic {
+  EPISODE_BASED
+  PART_C
+  PART_D
+  PAYMENT
+  POPULATION_BASED
+  PREVENTATIVE
+  SERVICE_DELIVERY
+  SHARED_SAVINGS
+  OTHER
+}
+
+enum GeographyType {
+  STATE
+  REGION
+  OTHER
+}
+
+enum GeographyApplication {
+  PARTICIPANTS
+  PROVIDERS
+  BENEFICIARIES
+  OTHER
+}
+
+enum AgreementType {
+  PARTICIPATION
+  COOPERATIVE
+  OTHER
+}
+
+enum AuthorityAllowance {
+  ACA
+  CONGRESSIONALLY_MANDATED
+  SSA_PART_B
+  OTHER
+}
+
+enum WaiverType {
+  FRAUD_ABUSE
+  PROGRAM_PAYMENT
+  MEDICAID
 }
 
 directive @hasRole(role: Role!) on FIELD_DEFINITION
@@ -2147,6 +2843,30 @@ func (ec *executionContext) field_Mutation_updatePlanDocument_args(ctx context.C
 	return args, nil
 }
 
+func (ec *executionContext) field_Mutation_updatePlanGeneralCharacteristics_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 uuid.UUID
+	if tmp, ok := rawArgs["id"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("id"))
+		arg0, err = ec.unmarshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["id"] = arg0
+	var arg1 map[string]interface{}
+	if tmp, ok := rawArgs["changes"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("changes"))
+		arg1, err = ec.unmarshalNPlanGeneralCharacteristicsChanges2map(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["changes"] = arg1
+	return args, nil
+}
+
 func (ec *executionContext) field_Mutation_updatePlanMilestones_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
@@ -2385,11 +3105,14 @@ func (ec *executionContext) _DiscussionReply_id(ctx context.Context, field graph
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
 	res := resTmp.(uuid.UUID)
 	fc.Result = res
-	return ec.marshalOUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
+	return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_DiscussionReply_id(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -2552,11 +3275,14 @@ func (ec *executionContext) _DiscussionReply_createdBy(ctx context.Context, fiel
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
 	res := resTmp.(string)
 	fc.Result = res
-	return ec.marshalOString2string(ctx, field.Selections, res)
+	return ec.marshalNString2string(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_DiscussionReply_createdBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -2593,11 +3319,14 @@ func (ec *executionContext) _DiscussionReply_createdDts(ctx context.Context, fie
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
 	res := resTmp.(time.Time)
 	fc.Result = res
-	return ec.marshalOTime2timeᚐTime(ctx, field.Selections, res)
+	return ec.marshalNTime2timeᚐTime(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_DiscussionReply_createdDts(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -2636,9 +3365,9 @@ func (ec *executionContext) _DiscussionReply_modifiedBy(ctx context.Context, fie
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(string)
+	res := resTmp.(*string)
 	fc.Result = res
-	return ec.marshalOString2string(ctx, field.Selections, res)
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_DiscussionReply_modifiedBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -2677,9 +3406,9 @@ func (ec *executionContext) _DiscussionReply_modifiedDts(ctx context.Context, fi
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(time.Time)
+	res := resTmp.(*time.Time)
 	fc.Result = res
-	return ec.marshalOTime2timeᚐTime(ctx, field.Selections, res)
+	return ec.marshalOTime2ᚖtimeᚐTime(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_DiscussionReply_modifiedDts(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -2845,11 +3574,14 @@ func (ec *executionContext) _ModelPlan_id(ctx context.Context, field graphql.Col
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
 	res := resTmp.(uuid.UUID)
 	fc.Result = res
-	return ec.marshalOUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
+	return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_ModelPlan_id(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -3144,11 +3876,14 @@ func (ec *executionContext) _ModelPlan_createdBy(ctx context.Context, field grap
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
-	res := resTmp.(*string)
+	res := resTmp.(string)
 	fc.Result = res
-	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalNString2string(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_ModelPlan_createdBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -3185,11 +3920,14 @@ func (ec *executionContext) _ModelPlan_createdDts(ctx context.Context, field gra
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
-	res := resTmp.(*time.Time)
+	res := resTmp.(time.Time)
 	fc.Result = res
-	return ec.marshalOTime2ᚖtimeᚐTime(ctx, field.Selections, res)
+	return ec.marshalNTime2timeᚐTime(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_ModelPlan_createdDts(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -3308,11 +4046,14 @@ func (ec *executionContext) _ModelPlan_basics(ctx context.Context, field graphql
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
 	res := resTmp.(*models.PlanBasics)
 	fc.Result = res
-	return ec.marshalOPlanBasics2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanBasics(ctx, field.Selections, res)
+	return ec.marshalNPlanBasics2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanBasics(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_ModelPlan_basics(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -3375,11 +4116,14 @@ func (ec *executionContext) _ModelPlan_milestones(ctx context.Context, field gra
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
 	res := resTmp.(*models.PlanMilestones)
 	fc.Result = res
-	return ec.marshalOPlanMilestones2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanMilestones(ctx, field.Selections, res)
+	return ec.marshalNPlanMilestones2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanMilestones(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_ModelPlan_milestones(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -3430,6 +4174,166 @@ func (ec *executionContext) fieldContext_ModelPlan_milestones(ctx context.Contex
 				return ec.fieldContext_PlanMilestones_status(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type PlanMilestones", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _ModelPlan_generalCharacteristics(ctx context.Context, field graphql.CollectedField, obj *models.ModelPlan) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_ModelPlan_generalCharacteristics(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.ModelPlan().GeneralCharacteristics(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*models.PlanGeneralCharacteristics)
+	fc.Result = res
+	return ec.marshalNPlanGeneralCharacteristics2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanGeneralCharacteristics(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_ModelPlan_generalCharacteristics(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "ModelPlan",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_PlanGeneralCharacteristics_id(ctx, field)
+			case "modelPlanID":
+				return ec.fieldContext_PlanGeneralCharacteristics_modelPlanID(ctx, field)
+			case "isNewModel":
+				return ec.fieldContext_PlanGeneralCharacteristics_isNewModel(ctx, field)
+			case "existingModel":
+				return ec.fieldContext_PlanGeneralCharacteristics_existingModel(ctx, field)
+			case "resemblesExistingModel":
+				return ec.fieldContext_PlanGeneralCharacteristics_resemblesExistingModel(ctx, field)
+			case "resemblesExistingModelWhich":
+				return ec.fieldContext_PlanGeneralCharacteristics_resemblesExistingModelWhich(ctx, field)
+			case "resemblesExistingModelHow":
+				return ec.fieldContext_PlanGeneralCharacteristics_resemblesExistingModelHow(ctx, field)
+			case "resemblesExistingModelNote":
+				return ec.fieldContext_PlanGeneralCharacteristics_resemblesExistingModelNote(ctx, field)
+			case "hasComponentsOrTracks":
+				return ec.fieldContext_PlanGeneralCharacteristics_hasComponentsOrTracks(ctx, field)
+			case "hasComponentsOrTracksDiffer":
+				return ec.fieldContext_PlanGeneralCharacteristics_hasComponentsOrTracksDiffer(ctx, field)
+			case "hasComponentsOrTracksNote":
+				return ec.fieldContext_PlanGeneralCharacteristics_hasComponentsOrTracksNote(ctx, field)
+			case "alternativePaymentModel":
+				return ec.fieldContext_PlanGeneralCharacteristics_alternativePaymentModel(ctx, field)
+			case "alternativePaymentModelTypes":
+				return ec.fieldContext_PlanGeneralCharacteristics_alternativePaymentModelTypes(ctx, field)
+			case "alternativePaymentModelNote":
+				return ec.fieldContext_PlanGeneralCharacteristics_alternativePaymentModelNote(ctx, field)
+			case "keyCharacteristics":
+				return ec.fieldContext_PlanGeneralCharacteristics_keyCharacteristics(ctx, field)
+			case "keyCharacteristicsOther":
+				return ec.fieldContext_PlanGeneralCharacteristics_keyCharacteristicsOther(ctx, field)
+			case "collectPlanBids":
+				return ec.fieldContext_PlanGeneralCharacteristics_collectPlanBids(ctx, field)
+			case "collectPlanBidsNote":
+				return ec.fieldContext_PlanGeneralCharacteristics_collectPlanBidsNote(ctx, field)
+			case "managePartCDEnrollment":
+				return ec.fieldContext_PlanGeneralCharacteristics_managePartCDEnrollment(ctx, field)
+			case "managePartCDEnrollmentNote":
+				return ec.fieldContext_PlanGeneralCharacteristics_managePartCDEnrollmentNote(ctx, field)
+			case "planContactUpdated":
+				return ec.fieldContext_PlanGeneralCharacteristics_planContactUpdated(ctx, field)
+			case "planContactUpdatedNote":
+				return ec.fieldContext_PlanGeneralCharacteristics_planContactUpdatedNote(ctx, field)
+			case "careCoordinationInvolved":
+				return ec.fieldContext_PlanGeneralCharacteristics_careCoordinationInvolved(ctx, field)
+			case "careCoordinationInvolvedDescription":
+				return ec.fieldContext_PlanGeneralCharacteristics_careCoordinationInvolvedDescription(ctx, field)
+			case "careCoordinationInvolvedNote":
+				return ec.fieldContext_PlanGeneralCharacteristics_careCoordinationInvolvedNote(ctx, field)
+			case "additionalServicesInvolved":
+				return ec.fieldContext_PlanGeneralCharacteristics_additionalServicesInvolved(ctx, field)
+			case "additionalServicesInvolvedDescription":
+				return ec.fieldContext_PlanGeneralCharacteristics_additionalServicesInvolvedDescription(ctx, field)
+			case "additionalServicesInvolvedNote":
+				return ec.fieldContext_PlanGeneralCharacteristics_additionalServicesInvolvedNote(ctx, field)
+			case "communityPartnersInvolved":
+				return ec.fieldContext_PlanGeneralCharacteristics_communityPartnersInvolved(ctx, field)
+			case "communityPartnersInvolvedDescription":
+				return ec.fieldContext_PlanGeneralCharacteristics_communityPartnersInvolvedDescription(ctx, field)
+			case "communityPartnersInvolvedNote":
+				return ec.fieldContext_PlanGeneralCharacteristics_communityPartnersInvolvedNote(ctx, field)
+			case "geographiesTargeted":
+				return ec.fieldContext_PlanGeneralCharacteristics_geographiesTargeted(ctx, field)
+			case "geographiesTargetedTypes":
+				return ec.fieldContext_PlanGeneralCharacteristics_geographiesTargetedTypes(ctx, field)
+			case "geographiesTargetedTypesOther":
+				return ec.fieldContext_PlanGeneralCharacteristics_geographiesTargetedTypesOther(ctx, field)
+			case "geographiesTargetedAppliedTo":
+				return ec.fieldContext_PlanGeneralCharacteristics_geographiesTargetedAppliedTo(ctx, field)
+			case "geographiesTargetedAppliedToOther":
+				return ec.fieldContext_PlanGeneralCharacteristics_geographiesTargetedAppliedToOther(ctx, field)
+			case "geographiesTargetedNote":
+				return ec.fieldContext_PlanGeneralCharacteristics_geographiesTargetedNote(ctx, field)
+			case "participationOptions":
+				return ec.fieldContext_PlanGeneralCharacteristics_participationOptions(ctx, field)
+			case "participationOptionsNote":
+				return ec.fieldContext_PlanGeneralCharacteristics_participationOptionsNote(ctx, field)
+			case "agreementTypes":
+				return ec.fieldContext_PlanGeneralCharacteristics_agreementTypes(ctx, field)
+			case "agreementTypesOther":
+				return ec.fieldContext_PlanGeneralCharacteristics_agreementTypesOther(ctx, field)
+			case "multiplePatricipationAgreementsNeeded":
+				return ec.fieldContext_PlanGeneralCharacteristics_multiplePatricipationAgreementsNeeded(ctx, field)
+			case "multiplePatricipationAgreementsNeededNote":
+				return ec.fieldContext_PlanGeneralCharacteristics_multiplePatricipationAgreementsNeededNote(ctx, field)
+			case "rulemakingRequired":
+				return ec.fieldContext_PlanGeneralCharacteristics_rulemakingRequired(ctx, field)
+			case "rulemakingRequiredDescription":
+				return ec.fieldContext_PlanGeneralCharacteristics_rulemakingRequiredDescription(ctx, field)
+			case "rulemakingRequiredNote":
+				return ec.fieldContext_PlanGeneralCharacteristics_rulemakingRequiredNote(ctx, field)
+			case "authorityAllowances":
+				return ec.fieldContext_PlanGeneralCharacteristics_authorityAllowances(ctx, field)
+			case "authorityAllowancesOther":
+				return ec.fieldContext_PlanGeneralCharacteristics_authorityAllowancesOther(ctx, field)
+			case "authorityAllowancesNote":
+				return ec.fieldContext_PlanGeneralCharacteristics_authorityAllowancesNote(ctx, field)
+			case "waiversRequired":
+				return ec.fieldContext_PlanGeneralCharacteristics_waiversRequired(ctx, field)
+			case "waiversRequiredTypes":
+				return ec.fieldContext_PlanGeneralCharacteristics_waiversRequiredTypes(ctx, field)
+			case "waiversRequiredNote":
+				return ec.fieldContext_PlanGeneralCharacteristics_waiversRequiredNote(ctx, field)
+			case "createdBy":
+				return ec.fieldContext_PlanGeneralCharacteristics_createdBy(ctx, field)
+			case "createdDts":
+				return ec.fieldContext_PlanGeneralCharacteristics_createdDts(ctx, field)
+			case "modifiedBy":
+				return ec.fieldContext_PlanGeneralCharacteristics_modifiedBy(ctx, field)
+			case "modifiedDts":
+				return ec.fieldContext_PlanGeneralCharacteristics_modifiedDts(ctx, field)
+			case "status":
+				return ec.fieldContext_PlanGeneralCharacteristics_status(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type PlanGeneralCharacteristics", field.Name)
 		},
 	}
 	return fc, nil
@@ -3732,11 +4636,14 @@ func (ec *executionContext) _Mutation_createModelPlan(ctx context.Context, field
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
 	res := resTmp.(*models.ModelPlan)
 	fc.Result = res
-	return ec.marshalOModelPlan2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelPlan(ctx, field.Selections, res)
+	return ec.marshalNModelPlan2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelPlan(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Mutation_createModelPlan(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -3773,6 +4680,8 @@ func (ec *executionContext) fieldContext_Mutation_createModelPlan(ctx context.Co
 				return ec.fieldContext_ModelPlan_basics(ctx, field)
 			case "milestones":
 				return ec.fieldContext_ModelPlan_milestones(ctx, field)
+			case "generalCharacteristics":
+				return ec.fieldContext_ModelPlan_generalCharacteristics(ctx, field)
 			case "collaborators":
 				return ec.fieldContext_ModelPlan_collaborators(ctx, field)
 			case "documents":
@@ -3844,11 +4753,14 @@ func (ec *executionContext) _Mutation_updateModelPlan(ctx context.Context, field
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
 	res := resTmp.(*models.ModelPlan)
 	fc.Result = res
-	return ec.marshalOModelPlan2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelPlan(ctx, field.Selections, res)
+	return ec.marshalNModelPlan2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelPlan(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Mutation_updateModelPlan(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -3885,6 +4797,8 @@ func (ec *executionContext) fieldContext_Mutation_updateModelPlan(ctx context.Co
 				return ec.fieldContext_ModelPlan_basics(ctx, field)
 			case "milestones":
 				return ec.fieldContext_ModelPlan_milestones(ctx, field)
+			case "generalCharacteristics":
+				return ec.fieldContext_ModelPlan_generalCharacteristics(ctx, field)
 			case "collaborators":
 				return ec.fieldContext_ModelPlan_collaborators(ctx, field)
 			case "documents":
@@ -3956,11 +4870,14 @@ func (ec *executionContext) _Mutation_createPlanCollaborator(ctx context.Context
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
 	res := resTmp.(*models.PlanCollaborator)
 	fc.Result = res
-	return ec.marshalOPlanCollaborator2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanCollaborator(ctx, field.Selections, res)
+	return ec.marshalNPlanCollaborator2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanCollaborator(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Mutation_createPlanCollaborator(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -4052,11 +4969,14 @@ func (ec *executionContext) _Mutation_updatePlanCollaborator(ctx context.Context
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
 	res := resTmp.(*models.PlanCollaborator)
 	fc.Result = res
-	return ec.marshalOPlanCollaborator2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanCollaborator(ctx, field.Selections, res)
+	return ec.marshalNPlanCollaborator2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanCollaborator(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Mutation_updatePlanCollaborator(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -4148,11 +5068,14 @@ func (ec *executionContext) _Mutation_deletePlanCollaborator(ctx context.Context
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
 	res := resTmp.(*models.PlanCollaborator)
 	fc.Result = res
-	return ec.marshalOPlanCollaborator2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanCollaborator(ctx, field.Selections, res)
+	return ec.marshalNPlanCollaborator2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanCollaborator(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Mutation_deletePlanCollaborator(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -4244,11 +5167,14 @@ func (ec *executionContext) _Mutation_updatePlanBasics(ctx context.Context, fiel
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
 	res := resTmp.(*models.PlanBasics)
 	fc.Result = res
-	return ec.marshalOPlanBasics2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanBasics(ctx, field.Selections, res)
+	return ec.marshalNPlanBasics2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanBasics(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Mutation_updatePlanBasics(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -4346,11 +5272,14 @@ func (ec *executionContext) _Mutation_updatePlanMilestones(ctx context.Context, 
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
 	res := resTmp.(*models.PlanMilestones)
 	fc.Result = res
-	return ec.marshalOPlanMilestones2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanMilestones(ctx, field.Selections, res)
+	return ec.marshalNPlanMilestones2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanMilestones(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Mutation_updatePlanMilestones(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -4417,6 +5346,201 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanMilestones(ctx conte
 	return fc, nil
 }
 
+func (ec *executionContext) _Mutation_updatePlanGeneralCharacteristics(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Mutation_updatePlanGeneralCharacteristics(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		directive0 := func(rctx context.Context) (interface{}, error) {
+			ctx = rctx // use context from middleware stack in children
+			return ec.resolvers.Mutation().UpdatePlanGeneralCharacteristics(rctx, fc.Args["id"].(uuid.UUID), fc.Args["changes"].(map[string]interface{}))
+		}
+		directive1 := func(ctx context.Context) (interface{}, error) {
+			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_BASE_USER")
+			if err != nil {
+				return nil, err
+			}
+			if ec.directives.HasRole == nil {
+				return nil, errors.New("directive hasRole is not implemented")
+			}
+			return ec.directives.HasRole(ctx, nil, directive0, role)
+		}
+
+		tmp, err := directive1(rctx)
+		if err != nil {
+			return nil, graphql.ErrorOnPath(ctx, err)
+		}
+		if tmp == nil {
+			return nil, nil
+		}
+		if data, ok := tmp.(*models.PlanGeneralCharacteristics); ok {
+			return data, nil
+		}
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.PlanGeneralCharacteristics`, tmp)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*models.PlanGeneralCharacteristics)
+	fc.Result = res
+	return ec.marshalNPlanGeneralCharacteristics2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanGeneralCharacteristics(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Mutation_updatePlanGeneralCharacteristics(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_PlanGeneralCharacteristics_id(ctx, field)
+			case "modelPlanID":
+				return ec.fieldContext_PlanGeneralCharacteristics_modelPlanID(ctx, field)
+			case "isNewModel":
+				return ec.fieldContext_PlanGeneralCharacteristics_isNewModel(ctx, field)
+			case "existingModel":
+				return ec.fieldContext_PlanGeneralCharacteristics_existingModel(ctx, field)
+			case "resemblesExistingModel":
+				return ec.fieldContext_PlanGeneralCharacteristics_resemblesExistingModel(ctx, field)
+			case "resemblesExistingModelWhich":
+				return ec.fieldContext_PlanGeneralCharacteristics_resemblesExistingModelWhich(ctx, field)
+			case "resemblesExistingModelHow":
+				return ec.fieldContext_PlanGeneralCharacteristics_resemblesExistingModelHow(ctx, field)
+			case "resemblesExistingModelNote":
+				return ec.fieldContext_PlanGeneralCharacteristics_resemblesExistingModelNote(ctx, field)
+			case "hasComponentsOrTracks":
+				return ec.fieldContext_PlanGeneralCharacteristics_hasComponentsOrTracks(ctx, field)
+			case "hasComponentsOrTracksDiffer":
+				return ec.fieldContext_PlanGeneralCharacteristics_hasComponentsOrTracksDiffer(ctx, field)
+			case "hasComponentsOrTracksNote":
+				return ec.fieldContext_PlanGeneralCharacteristics_hasComponentsOrTracksNote(ctx, field)
+			case "alternativePaymentModel":
+				return ec.fieldContext_PlanGeneralCharacteristics_alternativePaymentModel(ctx, field)
+			case "alternativePaymentModelTypes":
+				return ec.fieldContext_PlanGeneralCharacteristics_alternativePaymentModelTypes(ctx, field)
+			case "alternativePaymentModelNote":
+				return ec.fieldContext_PlanGeneralCharacteristics_alternativePaymentModelNote(ctx, field)
+			case "keyCharacteristics":
+				return ec.fieldContext_PlanGeneralCharacteristics_keyCharacteristics(ctx, field)
+			case "keyCharacteristicsOther":
+				return ec.fieldContext_PlanGeneralCharacteristics_keyCharacteristicsOther(ctx, field)
+			case "collectPlanBids":
+				return ec.fieldContext_PlanGeneralCharacteristics_collectPlanBids(ctx, field)
+			case "collectPlanBidsNote":
+				return ec.fieldContext_PlanGeneralCharacteristics_collectPlanBidsNote(ctx, field)
+			case "managePartCDEnrollment":
+				return ec.fieldContext_PlanGeneralCharacteristics_managePartCDEnrollment(ctx, field)
+			case "managePartCDEnrollmentNote":
+				return ec.fieldContext_PlanGeneralCharacteristics_managePartCDEnrollmentNote(ctx, field)
+			case "planContactUpdated":
+				return ec.fieldContext_PlanGeneralCharacteristics_planContactUpdated(ctx, field)
+			case "planContactUpdatedNote":
+				return ec.fieldContext_PlanGeneralCharacteristics_planContactUpdatedNote(ctx, field)
+			case "careCoordinationInvolved":
+				return ec.fieldContext_PlanGeneralCharacteristics_careCoordinationInvolved(ctx, field)
+			case "careCoordinationInvolvedDescription":
+				return ec.fieldContext_PlanGeneralCharacteristics_careCoordinationInvolvedDescription(ctx, field)
+			case "careCoordinationInvolvedNote":
+				return ec.fieldContext_PlanGeneralCharacteristics_careCoordinationInvolvedNote(ctx, field)
+			case "additionalServicesInvolved":
+				return ec.fieldContext_PlanGeneralCharacteristics_additionalServicesInvolved(ctx, field)
+			case "additionalServicesInvolvedDescription":
+				return ec.fieldContext_PlanGeneralCharacteristics_additionalServicesInvolvedDescription(ctx, field)
+			case "additionalServicesInvolvedNote":
+				return ec.fieldContext_PlanGeneralCharacteristics_additionalServicesInvolvedNote(ctx, field)
+			case "communityPartnersInvolved":
+				return ec.fieldContext_PlanGeneralCharacteristics_communityPartnersInvolved(ctx, field)
+			case "communityPartnersInvolvedDescription":
+				return ec.fieldContext_PlanGeneralCharacteristics_communityPartnersInvolvedDescription(ctx, field)
+			case "communityPartnersInvolvedNote":
+				return ec.fieldContext_PlanGeneralCharacteristics_communityPartnersInvolvedNote(ctx, field)
+			case "geographiesTargeted":
+				return ec.fieldContext_PlanGeneralCharacteristics_geographiesTargeted(ctx, field)
+			case "geographiesTargetedTypes":
+				return ec.fieldContext_PlanGeneralCharacteristics_geographiesTargetedTypes(ctx, field)
+			case "geographiesTargetedTypesOther":
+				return ec.fieldContext_PlanGeneralCharacteristics_geographiesTargetedTypesOther(ctx, field)
+			case "geographiesTargetedAppliedTo":
+				return ec.fieldContext_PlanGeneralCharacteristics_geographiesTargetedAppliedTo(ctx, field)
+			case "geographiesTargetedAppliedToOther":
+				return ec.fieldContext_PlanGeneralCharacteristics_geographiesTargetedAppliedToOther(ctx, field)
+			case "geographiesTargetedNote":
+				return ec.fieldContext_PlanGeneralCharacteristics_geographiesTargetedNote(ctx, field)
+			case "participationOptions":
+				return ec.fieldContext_PlanGeneralCharacteristics_participationOptions(ctx, field)
+			case "participationOptionsNote":
+				return ec.fieldContext_PlanGeneralCharacteristics_participationOptionsNote(ctx, field)
+			case "agreementTypes":
+				return ec.fieldContext_PlanGeneralCharacteristics_agreementTypes(ctx, field)
+			case "agreementTypesOther":
+				return ec.fieldContext_PlanGeneralCharacteristics_agreementTypesOther(ctx, field)
+			case "multiplePatricipationAgreementsNeeded":
+				return ec.fieldContext_PlanGeneralCharacteristics_multiplePatricipationAgreementsNeeded(ctx, field)
+			case "multiplePatricipationAgreementsNeededNote":
+				return ec.fieldContext_PlanGeneralCharacteristics_multiplePatricipationAgreementsNeededNote(ctx, field)
+			case "rulemakingRequired":
+				return ec.fieldContext_PlanGeneralCharacteristics_rulemakingRequired(ctx, field)
+			case "rulemakingRequiredDescription":
+				return ec.fieldContext_PlanGeneralCharacteristics_rulemakingRequiredDescription(ctx, field)
+			case "rulemakingRequiredNote":
+				return ec.fieldContext_PlanGeneralCharacteristics_rulemakingRequiredNote(ctx, field)
+			case "authorityAllowances":
+				return ec.fieldContext_PlanGeneralCharacteristics_authorityAllowances(ctx, field)
+			case "authorityAllowancesOther":
+				return ec.fieldContext_PlanGeneralCharacteristics_authorityAllowancesOther(ctx, field)
+			case "authorityAllowancesNote":
+				return ec.fieldContext_PlanGeneralCharacteristics_authorityAllowancesNote(ctx, field)
+			case "waiversRequired":
+				return ec.fieldContext_PlanGeneralCharacteristics_waiversRequired(ctx, field)
+			case "waiversRequiredTypes":
+				return ec.fieldContext_PlanGeneralCharacteristics_waiversRequiredTypes(ctx, field)
+			case "waiversRequiredNote":
+				return ec.fieldContext_PlanGeneralCharacteristics_waiversRequiredNote(ctx, field)
+			case "createdBy":
+				return ec.fieldContext_PlanGeneralCharacteristics_createdBy(ctx, field)
+			case "createdDts":
+				return ec.fieldContext_PlanGeneralCharacteristics_createdDts(ctx, field)
+			case "modifiedBy":
+				return ec.fieldContext_PlanGeneralCharacteristics_modifiedBy(ctx, field)
+			case "modifiedDts":
+				return ec.fieldContext_PlanGeneralCharacteristics_modifiedDts(ctx, field)
+			case "status":
+				return ec.fieldContext_PlanGeneralCharacteristics_status(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type PlanGeneralCharacteristics", field.Name)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_updatePlanGeneralCharacteristics_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _Mutation_generatePresignedUploadURL(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_Mutation_generatePresignedUploadURL(ctx, field)
 	if err != nil {
@@ -4462,11 +5586,14 @@ func (ec *executionContext) _Mutation_generatePresignedUploadURL(ctx context.Con
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
 	res := resTmp.(*model.GeneratePresignedUploadURLPayload)
 	fc.Result = res
-	return ec.marshalOGeneratePresignedUploadURLPayload2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐGeneratePresignedUploadURLPayload(ctx, field.Selections, res)
+	return ec.marshalNGeneratePresignedUploadURLPayload2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐGeneratePresignedUploadURLPayload(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Mutation_generatePresignedUploadURL(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -4542,11 +5669,14 @@ func (ec *executionContext) _Mutation_createPlanDocument(ctx context.Context, fi
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
 	res := resTmp.(*model.PlanDocumentPayload)
 	fc.Result = res
-	return ec.marshalOPlanDocumentPayload2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐPlanDocumentPayload(ctx, field.Selections, res)
+	return ec.marshalNPlanDocumentPayload2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐPlanDocumentPayload(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Mutation_createPlanDocument(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -4624,11 +5754,14 @@ func (ec *executionContext) _Mutation_updatePlanDocument(ctx context.Context, fi
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
 	res := resTmp.(*model.PlanDocumentPayload)
 	fc.Result = res
-	return ec.marshalOPlanDocumentPayload2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐPlanDocumentPayload(ctx, field.Selections, res)
+	return ec.marshalNPlanDocumentPayload2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐPlanDocumentPayload(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Mutation_updatePlanDocument(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -4785,11 +5918,14 @@ func (ec *executionContext) _Mutation_createPlanDiscussion(ctx context.Context, 
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
 	res := resTmp.(*models.PlanDiscussion)
 	fc.Result = res
-	return ec.marshalOPlanDiscussion2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanDiscussion(ctx, field.Selections, res)
+	return ec.marshalNPlanDiscussion2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanDiscussion(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Mutation_createPlanDiscussion(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -4881,11 +6017,14 @@ func (ec *executionContext) _Mutation_updatePlanDiscussion(ctx context.Context, 
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
 	res := resTmp.(*models.PlanDiscussion)
 	fc.Result = res
-	return ec.marshalOPlanDiscussion2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanDiscussion(ctx, field.Selections, res)
+	return ec.marshalNPlanDiscussion2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanDiscussion(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Mutation_updatePlanDiscussion(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -4977,11 +6116,14 @@ func (ec *executionContext) _Mutation_deletePlanDiscussion(ctx context.Context, 
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
 	res := resTmp.(*models.PlanDiscussion)
 	fc.Result = res
-	return ec.marshalOPlanDiscussion2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanDiscussion(ctx, field.Selections, res)
+	return ec.marshalNPlanDiscussion2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanDiscussion(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Mutation_deletePlanDiscussion(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -5073,11 +6215,14 @@ func (ec *executionContext) _Mutation_createDiscussionReply(ctx context.Context,
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
 	res := resTmp.(*models.DiscussionReply)
 	fc.Result = res
-	return ec.marshalODiscussionReply2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDiscussionReply(ctx, field.Selections, res)
+	return ec.marshalNDiscussionReply2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDiscussionReply(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Mutation_createDiscussionReply(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -5167,11 +6312,14 @@ func (ec *executionContext) _Mutation_updateDiscussionReply(ctx context.Context,
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
 	res := resTmp.(*models.DiscussionReply)
 	fc.Result = res
-	return ec.marshalODiscussionReply2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDiscussionReply(ctx, field.Selections, res)
+	return ec.marshalNDiscussionReply2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDiscussionReply(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Mutation_updateDiscussionReply(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -5261,11 +6409,14 @@ func (ec *executionContext) _Mutation_deleteDiscussionReply(ctx context.Context,
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
 	res := resTmp.(*models.DiscussionReply)
 	fc.Result = res
-	return ec.marshalODiscussionReply2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDiscussionReply(ctx, field.Selections, res)
+	return ec.marshalNDiscussionReply2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDiscussionReply(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Mutation_deleteDiscussionReply(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -5331,11 +6482,14 @@ func (ec *executionContext) _PlanBasics_id(ctx context.Context, field graphql.Co
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
 	res := resTmp.(uuid.UUID)
 	fc.Result = res
-	return ec.marshalOUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
+	return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanBasics_id(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -5372,11 +6526,14 @@ func (ec *executionContext) _PlanBasics_modelPlanID(ctx context.Context, field g
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
 	res := resTmp.(uuid.UUID)
 	fc.Result = res
-	return ec.marshalOUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
+	return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanBasics_modelPlanID(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -5618,11 +6775,14 @@ func (ec *executionContext) _PlanBasics_createdBy(ctx context.Context, field gra
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
-	res := resTmp.(*string)
+	res := resTmp.(string)
 	fc.Result = res
-	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalNString2string(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanBasics_createdBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -5659,11 +6819,14 @@ func (ec *executionContext) _PlanBasics_createdDts(ctx context.Context, field gr
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
-	res := resTmp.(*time.Time)
+	res := resTmp.(time.Time)
 	fc.Result = res
-	return ec.marshalOTime2ᚖtimeᚐTime(ctx, field.Selections, res)
+	return ec.marshalNTime2timeᚐTime(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanBasics_createdDts(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -6046,11 +7209,14 @@ func (ec *executionContext) _PlanCollaborator_createdBy(ctx context.Context, fie
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
-	res := resTmp.(*string)
+	res := resTmp.(string)
 	fc.Result = res
-	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalNString2string(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanCollaborator_createdBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -6087,11 +7253,14 @@ func (ec *executionContext) _PlanCollaborator_createdDts(ctx context.Context, fi
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
-	res := resTmp.(*time.Time)
+	res := resTmp.(time.Time)
 	fc.Result = res
-	return ec.marshalOTime2ᚖtimeᚐTime(ctx, field.Selections, res)
+	return ec.marshalNTime2timeᚐTime(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanCollaborator_createdDts(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -6210,11 +7379,14 @@ func (ec *executionContext) _PlanDiscussion_id(ctx context.Context, field graphq
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
 	res := resTmp.(uuid.UUID)
 	fc.Result = res
-	return ec.marshalOUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
+	return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanDiscussion_id(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -6251,11 +7423,14 @@ func (ec *executionContext) _PlanDiscussion_modelPlanID(ctx context.Context, fie
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
 	res := resTmp.(uuid.UUID)
 	fc.Result = res
-	return ec.marshalOUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
+	return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanDiscussion_modelPlanID(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -6439,11 +7614,14 @@ func (ec *executionContext) _PlanDiscussion_createdBy(ctx context.Context, field
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
 	res := resTmp.(string)
 	fc.Result = res
-	return ec.marshalOString2string(ctx, field.Selections, res)
+	return ec.marshalNString2string(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanDiscussion_createdBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -6480,11 +7658,14 @@ func (ec *executionContext) _PlanDiscussion_createdDts(ctx context.Context, fiel
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
 	res := resTmp.(time.Time)
 	fc.Result = res
-	return ec.marshalOTime2timeᚐTime(ctx, field.Selections, res)
+	return ec.marshalNTime2timeᚐTime(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanDiscussion_createdDts(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -6523,9 +7704,9 @@ func (ec *executionContext) _PlanDiscussion_modifiedBy(ctx context.Context, fiel
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(string)
+	res := resTmp.(*string)
 	fc.Result = res
-	return ec.marshalOString2string(ctx, field.Selections, res)
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanDiscussion_modifiedBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -6564,9 +7745,9 @@ func (ec *executionContext) _PlanDiscussion_modifiedDts(ctx context.Context, fie
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(time.Time)
+	res := resTmp.(*time.Time)
 	fc.Result = res
-	return ec.marshalOTime2timeᚐTime(ctx, field.Selections, res)
+	return ec.marshalOTime2ᚖtimeᚐTime(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanDiscussion_modifiedDts(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -6691,11 +7872,14 @@ func (ec *executionContext) _PlanDocument_fileType(ctx context.Context, field gr
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
-	res := resTmp.(*string)
+	res := resTmp.(string)
 	fc.Result = res
-	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalNString2string(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanDocument_fileType(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -6732,11 +7916,14 @@ func (ec *executionContext) _PlanDocument_bucket(ctx context.Context, field grap
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
-	res := resTmp.(*string)
+	res := resTmp.(string)
 	fc.Result = res
-	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalNString2string(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanDocument_bucket(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -6773,11 +7960,14 @@ func (ec *executionContext) _PlanDocument_fileKey(ctx context.Context, field gra
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
-	res := resTmp.(*string)
+	res := resTmp.(string)
 	fc.Result = res
-	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalNString2string(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanDocument_fileKey(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -6814,11 +8004,14 @@ func (ec *executionContext) _PlanDocument_virusScanned(ctx context.Context, fiel
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
 	res := resTmp.(bool)
 	fc.Result = res
-	return ec.marshalOBoolean2bool(ctx, field.Selections, res)
+	return ec.marshalNBoolean2bool(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanDocument_virusScanned(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -6855,11 +8048,14 @@ func (ec *executionContext) _PlanDocument_virusClean(ctx context.Context, field 
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
 	res := resTmp.(bool)
 	fc.Result = res
-	return ec.marshalOBoolean2bool(ctx, field.Selections, res)
+	return ec.marshalNBoolean2bool(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanDocument_virusClean(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -6896,11 +8092,14 @@ func (ec *executionContext) _PlanDocument_fileName(ctx context.Context, field gr
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
-	res := resTmp.(*string)
+	res := resTmp.(string)
 	fc.Result = res
-	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalNString2string(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanDocument_fileName(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -6937,11 +8136,14 @@ func (ec *executionContext) _PlanDocument_fileSize(ctx context.Context, field gr
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
 	res := resTmp.(int)
 	fc.Result = res
-	return ec.marshalOInt2int(ctx, field.Selections, res)
+	return ec.marshalNInt2int(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanDocument_fileSize(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -6978,11 +8180,14 @@ func (ec *executionContext) _PlanDocument_documentType(ctx context.Context, fiel
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
-	res := resTmp.(*models.DocumentType)
+	res := resTmp.(models.DocumentType)
 	fc.Result = res
-	return ec.marshalODocumentType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDocumentType(ctx, field.Selections, res)
+	return ec.marshalNDocumentType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDocumentType(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanDocument_documentType(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -7142,11 +8347,14 @@ func (ec *executionContext) _PlanDocument_createdBy(ctx context.Context, field g
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
-	res := resTmp.(*string)
+	res := resTmp.(string)
 	fc.Result = res
-	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalNString2string(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanDocument_createdBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -7183,11 +8391,14 @@ func (ec *executionContext) _PlanDocument_createdDts(ctx context.Context, field 
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
-	res := resTmp.(*time.Time)
+	res := resTmp.(time.Time)
 	fc.Result = res
-	return ec.marshalOTime2ᚖtimeᚐTime(ctx, field.Selections, res)
+	return ec.marshalNTime2timeᚐTime(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanDocument_createdDts(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -7403,6 +8614,2382 @@ func (ec *executionContext) fieldContext_PlanDocumentPayload_presignedURL(ctx co
 	return fc, nil
 }
 
+func (ec *executionContext) _PlanGeneralCharacteristics_id(ctx context.Context, field graphql.CollectedField, obj *models.PlanGeneralCharacteristics) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanGeneralCharacteristics_id(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ID, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(uuid.UUID)
+	fc.Result = res
+	return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_id(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanGeneralCharacteristics",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type UUID does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanGeneralCharacteristics_modelPlanID(ctx context.Context, field graphql.CollectedField, obj *models.PlanGeneralCharacteristics) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanGeneralCharacteristics_modelPlanID(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ModelPlanID, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(uuid.UUID)
+	fc.Result = res
+	return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_modelPlanID(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanGeneralCharacteristics",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type UUID does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanGeneralCharacteristics_isNewModel(ctx context.Context, field graphql.CollectedField, obj *models.PlanGeneralCharacteristics) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanGeneralCharacteristics_isNewModel(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.IsNewModel, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*bool)
+	fc.Result = res
+	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_isNewModel(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanGeneralCharacteristics",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanGeneralCharacteristics_existingModel(ctx context.Context, field graphql.CollectedField, obj *models.PlanGeneralCharacteristics) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanGeneralCharacteristics_existingModel(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ExistingModel, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_existingModel(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanGeneralCharacteristics",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanGeneralCharacteristics_resemblesExistingModel(ctx context.Context, field graphql.CollectedField, obj *models.PlanGeneralCharacteristics) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanGeneralCharacteristics_resemblesExistingModel(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ResemblesExistingModel, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*bool)
+	fc.Result = res
+	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_resemblesExistingModel(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanGeneralCharacteristics",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanGeneralCharacteristics_resemblesExistingModelWhich(ctx context.Context, field graphql.CollectedField, obj *models.PlanGeneralCharacteristics) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanGeneralCharacteristics_resemblesExistingModelWhich(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.PlanGeneralCharacteristics().ResemblesExistingModelWhich(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.([]string)
+	fc.Result = res
+	return ec.marshalNString2ᚕstringᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_resemblesExistingModelWhich(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanGeneralCharacteristics",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanGeneralCharacteristics_resemblesExistingModelHow(ctx context.Context, field graphql.CollectedField, obj *models.PlanGeneralCharacteristics) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanGeneralCharacteristics_resemblesExistingModelHow(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ResemblesExistingModelHow, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_resemblesExistingModelHow(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanGeneralCharacteristics",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanGeneralCharacteristics_resemblesExistingModelNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanGeneralCharacteristics) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanGeneralCharacteristics_resemblesExistingModelNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ResemblesExistingModelNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_resemblesExistingModelNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanGeneralCharacteristics",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanGeneralCharacteristics_hasComponentsOrTracks(ctx context.Context, field graphql.CollectedField, obj *models.PlanGeneralCharacteristics) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanGeneralCharacteristics_hasComponentsOrTracks(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.HasComponentsOrTracks, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*bool)
+	fc.Result = res
+	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_hasComponentsOrTracks(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanGeneralCharacteristics",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanGeneralCharacteristics_hasComponentsOrTracksDiffer(ctx context.Context, field graphql.CollectedField, obj *models.PlanGeneralCharacteristics) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanGeneralCharacteristics_hasComponentsOrTracksDiffer(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.HasComponentsOrTracksDiffer, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_hasComponentsOrTracksDiffer(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanGeneralCharacteristics",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanGeneralCharacteristics_hasComponentsOrTracksNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanGeneralCharacteristics) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanGeneralCharacteristics_hasComponentsOrTracksNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.HasComponentsOrTracksNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_hasComponentsOrTracksNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanGeneralCharacteristics",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanGeneralCharacteristics_alternativePaymentModel(ctx context.Context, field graphql.CollectedField, obj *models.PlanGeneralCharacteristics) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanGeneralCharacteristics_alternativePaymentModel(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.AlternativePaymentModel, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*bool)
+	fc.Result = res
+	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_alternativePaymentModel(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanGeneralCharacteristics",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanGeneralCharacteristics_alternativePaymentModelTypes(ctx context.Context, field graphql.CollectedField, obj *models.PlanGeneralCharacteristics) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanGeneralCharacteristics_alternativePaymentModelTypes(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.PlanGeneralCharacteristics().AlternativePaymentModelTypes(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.([]model.AlternativePaymentModelType)
+	fc.Result = res
+	return ec.marshalNAlternativePaymentModelType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐAlternativePaymentModelTypeᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_alternativePaymentModelTypes(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanGeneralCharacteristics",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type AlternativePaymentModelType does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanGeneralCharacteristics_alternativePaymentModelNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanGeneralCharacteristics) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanGeneralCharacteristics_alternativePaymentModelNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.AlternativePaymentModelNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_alternativePaymentModelNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanGeneralCharacteristics",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanGeneralCharacteristics_keyCharacteristics(ctx context.Context, field graphql.CollectedField, obj *models.PlanGeneralCharacteristics) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanGeneralCharacteristics_keyCharacteristics(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.PlanGeneralCharacteristics().KeyCharacteristics(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.([]model.KeyCharacteristic)
+	fc.Result = res
+	return ec.marshalNKeyCharacteristic2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐKeyCharacteristicᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_keyCharacteristics(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanGeneralCharacteristics",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type KeyCharacteristic does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanGeneralCharacteristics_keyCharacteristicsOther(ctx context.Context, field graphql.CollectedField, obj *models.PlanGeneralCharacteristics) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanGeneralCharacteristics_keyCharacteristicsOther(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.KeyCharacteristicsOther, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_keyCharacteristicsOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanGeneralCharacteristics",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanGeneralCharacteristics_collectPlanBids(ctx context.Context, field graphql.CollectedField, obj *models.PlanGeneralCharacteristics) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanGeneralCharacteristics_collectPlanBids(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.CollectPlanBids, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*bool)
+	fc.Result = res
+	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_collectPlanBids(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanGeneralCharacteristics",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanGeneralCharacteristics_collectPlanBidsNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanGeneralCharacteristics) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanGeneralCharacteristics_collectPlanBidsNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.CollectPlanBidsNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_collectPlanBidsNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanGeneralCharacteristics",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanGeneralCharacteristics_managePartCDEnrollment(ctx context.Context, field graphql.CollectedField, obj *models.PlanGeneralCharacteristics) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanGeneralCharacteristics_managePartCDEnrollment(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ManagePartCDEnrollment, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*bool)
+	fc.Result = res
+	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_managePartCDEnrollment(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanGeneralCharacteristics",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanGeneralCharacteristics_managePartCDEnrollmentNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanGeneralCharacteristics) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanGeneralCharacteristics_managePartCDEnrollmentNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ManagePartCDEnrollmentNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_managePartCDEnrollmentNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanGeneralCharacteristics",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanGeneralCharacteristics_planContactUpdated(ctx context.Context, field graphql.CollectedField, obj *models.PlanGeneralCharacteristics) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanGeneralCharacteristics_planContactUpdated(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.PlanContactUpdated, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*bool)
+	fc.Result = res
+	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_planContactUpdated(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanGeneralCharacteristics",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanGeneralCharacteristics_planContactUpdatedNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanGeneralCharacteristics) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanGeneralCharacteristics_planContactUpdatedNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.PlanContactUpdatedNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_planContactUpdatedNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanGeneralCharacteristics",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanGeneralCharacteristics_careCoordinationInvolved(ctx context.Context, field graphql.CollectedField, obj *models.PlanGeneralCharacteristics) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanGeneralCharacteristics_careCoordinationInvolved(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.CareCoordinationInvolved, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*bool)
+	fc.Result = res
+	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_careCoordinationInvolved(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanGeneralCharacteristics",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanGeneralCharacteristics_careCoordinationInvolvedDescription(ctx context.Context, field graphql.CollectedField, obj *models.PlanGeneralCharacteristics) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanGeneralCharacteristics_careCoordinationInvolvedDescription(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.CareCoordinationInvolvedDescription, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_careCoordinationInvolvedDescription(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanGeneralCharacteristics",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanGeneralCharacteristics_careCoordinationInvolvedNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanGeneralCharacteristics) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanGeneralCharacteristics_careCoordinationInvolvedNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.CareCoordinationInvolvedNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_careCoordinationInvolvedNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanGeneralCharacteristics",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanGeneralCharacteristics_additionalServicesInvolved(ctx context.Context, field graphql.CollectedField, obj *models.PlanGeneralCharacteristics) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanGeneralCharacteristics_additionalServicesInvolved(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.AdditionalServicesInvolved, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*bool)
+	fc.Result = res
+	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_additionalServicesInvolved(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanGeneralCharacteristics",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanGeneralCharacteristics_additionalServicesInvolvedDescription(ctx context.Context, field graphql.CollectedField, obj *models.PlanGeneralCharacteristics) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanGeneralCharacteristics_additionalServicesInvolvedDescription(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.AdditionalServicesInvolvedDescription, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_additionalServicesInvolvedDescription(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanGeneralCharacteristics",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanGeneralCharacteristics_additionalServicesInvolvedNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanGeneralCharacteristics) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanGeneralCharacteristics_additionalServicesInvolvedNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.AdditionalServicesInvolvedNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_additionalServicesInvolvedNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanGeneralCharacteristics",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanGeneralCharacteristics_communityPartnersInvolved(ctx context.Context, field graphql.CollectedField, obj *models.PlanGeneralCharacteristics) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanGeneralCharacteristics_communityPartnersInvolved(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.CommunityPartnersInvolved, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*bool)
+	fc.Result = res
+	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_communityPartnersInvolved(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanGeneralCharacteristics",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanGeneralCharacteristics_communityPartnersInvolvedDescription(ctx context.Context, field graphql.CollectedField, obj *models.PlanGeneralCharacteristics) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanGeneralCharacteristics_communityPartnersInvolvedDescription(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.CommunityPartnersInvolvedDescription, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_communityPartnersInvolvedDescription(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanGeneralCharacteristics",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanGeneralCharacteristics_communityPartnersInvolvedNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanGeneralCharacteristics) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanGeneralCharacteristics_communityPartnersInvolvedNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.CommunityPartnersInvolvedNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_communityPartnersInvolvedNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanGeneralCharacteristics",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanGeneralCharacteristics_geographiesTargeted(ctx context.Context, field graphql.CollectedField, obj *models.PlanGeneralCharacteristics) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanGeneralCharacteristics_geographiesTargeted(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.GeographiesTargeted, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*bool)
+	fc.Result = res
+	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_geographiesTargeted(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanGeneralCharacteristics",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanGeneralCharacteristics_geographiesTargetedTypes(ctx context.Context, field graphql.CollectedField, obj *models.PlanGeneralCharacteristics) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanGeneralCharacteristics_geographiesTargetedTypes(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.PlanGeneralCharacteristics().GeographiesTargetedTypes(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.([]model.GeographyType)
+	fc.Result = res
+	return ec.marshalNGeographyType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐGeographyTypeᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_geographiesTargetedTypes(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanGeneralCharacteristics",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type GeographyType does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanGeneralCharacteristics_geographiesTargetedTypesOther(ctx context.Context, field graphql.CollectedField, obj *models.PlanGeneralCharacteristics) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanGeneralCharacteristics_geographiesTargetedTypesOther(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.GeographiesTargetedTypesOther, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_geographiesTargetedTypesOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanGeneralCharacteristics",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanGeneralCharacteristics_geographiesTargetedAppliedTo(ctx context.Context, field graphql.CollectedField, obj *models.PlanGeneralCharacteristics) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanGeneralCharacteristics_geographiesTargetedAppliedTo(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.PlanGeneralCharacteristics().GeographiesTargetedAppliedTo(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.([]model.GeographyApplication)
+	fc.Result = res
+	return ec.marshalNGeographyApplication2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐGeographyApplicationᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_geographiesTargetedAppliedTo(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanGeneralCharacteristics",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type GeographyApplication does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanGeneralCharacteristics_geographiesTargetedAppliedToOther(ctx context.Context, field graphql.CollectedField, obj *models.PlanGeneralCharacteristics) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanGeneralCharacteristics_geographiesTargetedAppliedToOther(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.GeographiesTargetedAppliedToOther, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_geographiesTargetedAppliedToOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanGeneralCharacteristics",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanGeneralCharacteristics_geographiesTargetedNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanGeneralCharacteristics) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanGeneralCharacteristics_geographiesTargetedNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.GeographiesTargetedNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_geographiesTargetedNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanGeneralCharacteristics",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanGeneralCharacteristics_participationOptions(ctx context.Context, field graphql.CollectedField, obj *models.PlanGeneralCharacteristics) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanGeneralCharacteristics_participationOptions(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ParticipationOptions, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*bool)
+	fc.Result = res
+	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_participationOptions(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanGeneralCharacteristics",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanGeneralCharacteristics_participationOptionsNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanGeneralCharacteristics) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanGeneralCharacteristics_participationOptionsNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ParticipationOptionsNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_participationOptionsNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanGeneralCharacteristics",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanGeneralCharacteristics_agreementTypes(ctx context.Context, field graphql.CollectedField, obj *models.PlanGeneralCharacteristics) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanGeneralCharacteristics_agreementTypes(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.PlanGeneralCharacteristics().AgreementTypes(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.([]model.AgreementType)
+	fc.Result = res
+	return ec.marshalNAgreementType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐAgreementTypeᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_agreementTypes(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanGeneralCharacteristics",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type AgreementType does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanGeneralCharacteristics_agreementTypesOther(ctx context.Context, field graphql.CollectedField, obj *models.PlanGeneralCharacteristics) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanGeneralCharacteristics_agreementTypesOther(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.AgreementTypesOther, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_agreementTypesOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanGeneralCharacteristics",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanGeneralCharacteristics_multiplePatricipationAgreementsNeeded(ctx context.Context, field graphql.CollectedField, obj *models.PlanGeneralCharacteristics) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanGeneralCharacteristics_multiplePatricipationAgreementsNeeded(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.MultiplePatricipationAgreementsNeeded, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*bool)
+	fc.Result = res
+	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_multiplePatricipationAgreementsNeeded(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanGeneralCharacteristics",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanGeneralCharacteristics_multiplePatricipationAgreementsNeededNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanGeneralCharacteristics) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanGeneralCharacteristics_multiplePatricipationAgreementsNeededNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.MultiplePatricipationAgreementsNeededNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_multiplePatricipationAgreementsNeededNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanGeneralCharacteristics",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanGeneralCharacteristics_rulemakingRequired(ctx context.Context, field graphql.CollectedField, obj *models.PlanGeneralCharacteristics) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanGeneralCharacteristics_rulemakingRequired(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.RulemakingRequired, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*bool)
+	fc.Result = res
+	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_rulemakingRequired(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanGeneralCharacteristics",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanGeneralCharacteristics_rulemakingRequiredDescription(ctx context.Context, field graphql.CollectedField, obj *models.PlanGeneralCharacteristics) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanGeneralCharacteristics_rulemakingRequiredDescription(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.RulemakingRequiredDescription, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_rulemakingRequiredDescription(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanGeneralCharacteristics",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanGeneralCharacteristics_rulemakingRequiredNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanGeneralCharacteristics) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanGeneralCharacteristics_rulemakingRequiredNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.RulemakingRequiredNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_rulemakingRequiredNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanGeneralCharacteristics",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanGeneralCharacteristics_authorityAllowances(ctx context.Context, field graphql.CollectedField, obj *models.PlanGeneralCharacteristics) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanGeneralCharacteristics_authorityAllowances(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.PlanGeneralCharacteristics().AuthorityAllowances(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.([]model.AuthorityAllowance)
+	fc.Result = res
+	return ec.marshalNAuthorityAllowance2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐAuthorityAllowanceᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_authorityAllowances(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanGeneralCharacteristics",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type AuthorityAllowance does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanGeneralCharacteristics_authorityAllowancesOther(ctx context.Context, field graphql.CollectedField, obj *models.PlanGeneralCharacteristics) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanGeneralCharacteristics_authorityAllowancesOther(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.AuthorityAllowancesOther, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_authorityAllowancesOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanGeneralCharacteristics",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanGeneralCharacteristics_authorityAllowancesNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanGeneralCharacteristics) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanGeneralCharacteristics_authorityAllowancesNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.AuthorityAllowancesNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_authorityAllowancesNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanGeneralCharacteristics",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanGeneralCharacteristics_waiversRequired(ctx context.Context, field graphql.CollectedField, obj *models.PlanGeneralCharacteristics) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanGeneralCharacteristics_waiversRequired(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.WaiversRequired, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*bool)
+	fc.Result = res
+	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_waiversRequired(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanGeneralCharacteristics",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanGeneralCharacteristics_waiversRequiredTypes(ctx context.Context, field graphql.CollectedField, obj *models.PlanGeneralCharacteristics) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanGeneralCharacteristics_waiversRequiredTypes(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.PlanGeneralCharacteristics().WaiversRequiredTypes(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.([]model.WaiverType)
+	fc.Result = res
+	return ec.marshalNWaiverType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐWaiverTypeᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_waiversRequiredTypes(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanGeneralCharacteristics",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type WaiverType does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanGeneralCharacteristics_waiversRequiredNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanGeneralCharacteristics) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanGeneralCharacteristics_waiversRequiredNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.WaiversRequiredNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_waiversRequiredNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanGeneralCharacteristics",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanGeneralCharacteristics_createdBy(ctx context.Context, field graphql.CollectedField, obj *models.PlanGeneralCharacteristics) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanGeneralCharacteristics_createdBy(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.CreatedBy, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalNString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_createdBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanGeneralCharacteristics",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanGeneralCharacteristics_createdDts(ctx context.Context, field graphql.CollectedField, obj *models.PlanGeneralCharacteristics) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanGeneralCharacteristics_createdDts(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.CreatedDts, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(time.Time)
+	fc.Result = res
+	return ec.marshalNTime2timeᚐTime(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_createdDts(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanGeneralCharacteristics",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Time does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanGeneralCharacteristics_modifiedBy(ctx context.Context, field graphql.CollectedField, obj *models.PlanGeneralCharacteristics) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanGeneralCharacteristics_modifiedBy(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ModifiedBy, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_modifiedBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanGeneralCharacteristics",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanGeneralCharacteristics_modifiedDts(ctx context.Context, field graphql.CollectedField, obj *models.PlanGeneralCharacteristics) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanGeneralCharacteristics_modifiedDts(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ModifiedDts, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*time.Time)
+	fc.Result = res
+	return ec.marshalOTime2ᚖtimeᚐTime(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_modifiedDts(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanGeneralCharacteristics",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Time does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanGeneralCharacteristics_status(ctx context.Context, field graphql.CollectedField, obj *models.PlanGeneralCharacteristics) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanGeneralCharacteristics_status(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Status, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(models.TaskStatus)
+	fc.Result = res
+	return ec.marshalNTaskStatus2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTaskStatus(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_status(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanGeneralCharacteristics",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type TaskStatus does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _PlanMilestones_id(ctx context.Context, field graphql.CollectedField, obj *models.PlanMilestones) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_PlanMilestones_id(ctx, field)
 	if err != nil {
@@ -7424,11 +11011,14 @@ func (ec *executionContext) _PlanMilestones_id(ctx context.Context, field graphq
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
 	res := resTmp.(uuid.UUID)
 	fc.Result = res
-	return ec.marshalOUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
+	return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanMilestones_id(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -7465,11 +11055,14 @@ func (ec *executionContext) _PlanMilestones_modelPlanID(ctx context.Context, fie
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
 	res := resTmp.(uuid.UUID)
 	fc.Result = res
-	return ec.marshalOUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
+	return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanMilestones_modelPlanID(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -7998,11 +11591,14 @@ func (ec *executionContext) _PlanMilestones_createdBy(ctx context.Context, field
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
-	res := resTmp.(*string)
+	res := resTmp.(string)
 	fc.Result = res
-	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalNString2string(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanMilestones_createdBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -8039,11 +11635,14 @@ func (ec *executionContext) _PlanMilestones_createdDts(ctx context.Context, fiel
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
-	res := resTmp.(*time.Time)
+	res := resTmp.(time.Time)
 	fc.Result = res
-	return ec.marshalOTime2ᚖtimeᚐTime(ctx, field.Selections, res)
+	return ec.marshalNTime2timeᚐTime(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanMilestones_createdDts(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -8162,11 +11761,14 @@ func (ec *executionContext) _PlanMilestones_status(ctx context.Context, field gr
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
 	res := resTmp.(models.TaskStatus)
 	fc.Result = res
-	return ec.marshalOTaskStatus2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTaskStatus(ctx, field.Selections, res)
+	return ec.marshalNTaskStatus2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTaskStatus(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanMilestones_status(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -8203,11 +11805,14 @@ func (ec *executionContext) _Query_currentUser(ctx context.Context, field graphq
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
 	res := resTmp.(*model.CurrentUser)
 	fc.Result = res
-	return ec.marshalOCurrentUser2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCurrentUser(ctx, field.Selections, res)
+	return ec.marshalNCurrentUser2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCurrentUser(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Query_currentUser(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -8248,11 +11853,14 @@ func (ec *executionContext) _Query_modelPlan(ctx context.Context, field graphql.
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
 	res := resTmp.(*models.ModelPlan)
 	fc.Result = res
-	return ec.marshalOModelPlan2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelPlan(ctx, field.Selections, res)
+	return ec.marshalNModelPlan2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelPlan(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Query_modelPlan(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -8289,6 +11897,8 @@ func (ec *executionContext) fieldContext_Query_modelPlan(ctx context.Context, fi
 				return ec.fieldContext_ModelPlan_basics(ctx, field)
 			case "milestones":
 				return ec.fieldContext_ModelPlan_milestones(ctx, field)
+			case "generalCharacteristics":
+				return ec.fieldContext_ModelPlan_generalCharacteristics(ctx, field)
 			case "collaborators":
 				return ec.fieldContext_ModelPlan_collaborators(ctx, field)
 			case "documents":
@@ -8336,11 +11946,14 @@ func (ec *executionContext) _Query_planDocument(ctx context.Context, field graph
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
 	res := resTmp.(*models.PlanDocument)
 	fc.Result = res
-	return ec.marshalOPlanDocument2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanDocument(ctx, field.Selections, res)
+	return ec.marshalNPlanDocument2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanDocument(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Query_planDocument(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -8424,11 +12037,14 @@ func (ec *executionContext) _Query_planDocumentDownloadURL(ctx context.Context, 
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
 	res := resTmp.(*model.PlanDocumentPayload)
 	fc.Result = res
-	return ec.marshalOPlanDocumentPayload2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐPlanDocumentPayload(ctx, field.Selections, res)
+	return ec.marshalNPlanDocumentPayload2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐPlanDocumentPayload(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Query_planDocumentDownloadURL(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -8482,11 +12098,14 @@ func (ec *executionContext) _Query_readPlanDocumentByModelID(ctx context.Context
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
 	res := resTmp.([]*models.PlanDocument)
 	fc.Result = res
-	return ec.marshalOPlanDocument2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanDocument(ctx, field.Selections, res)
+	return ec.marshalNPlanDocument2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanDocumentᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Query_readPlanDocumentByModelID(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -8570,11 +12189,14 @@ func (ec *executionContext) _Query_modelPlanCollection(ctx context.Context, fiel
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
 	res := resTmp.([]*models.ModelPlan)
 	fc.Result = res
-	return ec.marshalOModelPlan2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelPlan(ctx, field.Selections, res)
+	return ec.marshalNModelPlan2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelPlanᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Query_modelPlanCollection(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -8611,6 +12233,8 @@ func (ec *executionContext) fieldContext_Query_modelPlanCollection(ctx context.C
 				return ec.fieldContext_ModelPlan_basics(ctx, field)
 			case "milestones":
 				return ec.fieldContext_ModelPlan_milestones(ctx, field)
+			case "generalCharacteristics":
+				return ec.fieldContext_ModelPlan_generalCharacteristics(ctx, field)
 			case "collaborators":
 				return ec.fieldContext_ModelPlan_collaborators(ctx, field)
 			case "documents":
@@ -11118,6 +14742,9 @@ func (ec *executionContext) _DiscussionReply(ctx context.Context, sel ast.Select
 
 			out.Values[i] = ec._DiscussionReply_id(ctx, field, obj)
 
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
 		case "discussionID":
 
 			out.Values[i] = ec._DiscussionReply_discussionID(ctx, field, obj)
@@ -11137,10 +14764,16 @@ func (ec *executionContext) _DiscussionReply(ctx context.Context, sel ast.Select
 
 			out.Values[i] = ec._DiscussionReply_createdBy(ctx, field, obj)
 
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
 		case "createdDts":
 
 			out.Values[i] = ec._DiscussionReply_createdDts(ctx, field, obj)
 
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
 		case "modifiedBy":
 
 			out.Values[i] = ec._DiscussionReply_modifiedBy(ctx, field, obj)
@@ -11234,6 +14867,9 @@ func (ec *executionContext) _ModelPlan(ctx context.Context, sel ast.SelectionSet
 
 			out.Values[i] = ec._ModelPlan_id(ctx, field, obj)
 
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&invalids, 1)
+			}
 		case "modelName":
 
 			out.Values[i] = ec._ModelPlan_modelName(ctx, field, obj)
@@ -11300,10 +14936,16 @@ func (ec *executionContext) _ModelPlan(ctx context.Context, sel ast.SelectionSet
 
 			out.Values[i] = ec._ModelPlan_createdBy(ctx, field, obj)
 
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&invalids, 1)
+			}
 		case "createdDts":
 
 			out.Values[i] = ec._ModelPlan_createdDts(ctx, field, obj)
 
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&invalids, 1)
+			}
 		case "modifiedBy":
 
 			out.Values[i] = ec._ModelPlan_modifiedBy(ctx, field, obj)
@@ -11322,6 +14964,9 @@ func (ec *executionContext) _ModelPlan(ctx context.Context, sel ast.SelectionSet
 					}
 				}()
 				res = ec._ModelPlan_basics(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&invalids, 1)
+				}
 				return res
 			}
 
@@ -11339,6 +14984,29 @@ func (ec *executionContext) _ModelPlan(ctx context.Context, sel ast.SelectionSet
 					}
 				}()
 				res = ec._ModelPlan_milestones(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&invalids, 1)
+				}
+				return res
+			}
+
+			out.Concurrently(i, func() graphql.Marshaler {
+				return innerFunc(ctx)
+
+			})
+		case "generalCharacteristics":
+			field := field
+
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._ModelPlan_generalCharacteristics(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&invalids, 1)
+				}
 				return res
 			}
 
@@ -11449,60 +15117,99 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 				return ec._Mutation_createModelPlan(ctx, field)
 			})
 
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
 		case "updateModelPlan":
 
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._Mutation_updateModelPlan(ctx, field)
 			})
 
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
 		case "createPlanCollaborator":
 
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._Mutation_createPlanCollaborator(ctx, field)
 			})
 
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
 		case "updatePlanCollaborator":
 
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._Mutation_updatePlanCollaborator(ctx, field)
 			})
 
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
 		case "deletePlanCollaborator":
 
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._Mutation_deletePlanCollaborator(ctx, field)
 			})
 
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
 		case "updatePlanBasics":
 
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._Mutation_updatePlanBasics(ctx, field)
 			})
 
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
 		case "updatePlanMilestones":
 
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._Mutation_updatePlanMilestones(ctx, field)
 			})
 
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		case "updatePlanGeneralCharacteristics":
+
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_updatePlanGeneralCharacteristics(ctx, field)
+			})
+
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
 		case "generatePresignedUploadURL":
 
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._Mutation_generatePresignedUploadURL(ctx, field)
 			})
 
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
 		case "createPlanDocument":
 
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._Mutation_createPlanDocument(ctx, field)
 			})
 
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
 		case "updatePlanDocument":
 
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._Mutation_updatePlanDocument(ctx, field)
 			})
 
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
 		case "deletePlanDocument":
 
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
@@ -11518,36 +15225,54 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 				return ec._Mutation_createPlanDiscussion(ctx, field)
 			})
 
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
 		case "updatePlanDiscussion":
 
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._Mutation_updatePlanDiscussion(ctx, field)
 			})
 
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
 		case "deletePlanDiscussion":
 
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._Mutation_deletePlanDiscussion(ctx, field)
 			})
 
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
 		case "createDiscussionReply":
 
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._Mutation_createDiscussionReply(ctx, field)
 			})
 
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
 		case "updateDiscussionReply":
 
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._Mutation_updateDiscussionReply(ctx, field)
 			})
 
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
 		case "deleteDiscussionReply":
 
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._Mutation_deleteDiscussionReply(ctx, field)
 			})
 
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}
@@ -11573,10 +15298,16 @@ func (ec *executionContext) _PlanBasics(ctx context.Context, sel ast.SelectionSe
 
 			out.Values[i] = ec._PlanBasics_id(ctx, field, obj)
 
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
 		case "modelPlanID":
 
 			out.Values[i] = ec._PlanBasics_modelPlanID(ctx, field, obj)
 
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
 		case "modelType":
 
 			out.Values[i] = ec._PlanBasics_modelType(ctx, field, obj)
@@ -11601,10 +15332,16 @@ func (ec *executionContext) _PlanBasics(ctx context.Context, sel ast.SelectionSe
 
 			out.Values[i] = ec._PlanBasics_createdBy(ctx, field, obj)
 
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
 		case "createdDts":
 
 			out.Values[i] = ec._PlanBasics_createdDts(ctx, field, obj)
 
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
 		case "modifiedBy":
 
 			out.Values[i] = ec._PlanBasics_modifiedBy(ctx, field, obj)
@@ -11680,10 +15417,16 @@ func (ec *executionContext) _PlanCollaborator(ctx context.Context, sel ast.Selec
 
 			out.Values[i] = ec._PlanCollaborator_createdBy(ctx, field, obj)
 
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
 		case "createdDts":
 
 			out.Values[i] = ec._PlanCollaborator_createdDts(ctx, field, obj)
 
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
 		case "modifiedBy":
 
 			out.Values[i] = ec._PlanCollaborator_modifiedBy(ctx, field, obj)
@@ -11717,10 +15460,16 @@ func (ec *executionContext) _PlanDiscussion(ctx context.Context, sel ast.Selecti
 
 			out.Values[i] = ec._PlanDiscussion_id(ctx, field, obj)
 
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&invalids, 1)
+			}
 		case "modelPlanID":
 
 			out.Values[i] = ec._PlanDiscussion_modelPlanID(ctx, field, obj)
 
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&invalids, 1)
+			}
 		case "content":
 
 			out.Values[i] = ec._PlanDiscussion_content(ctx, field, obj)
@@ -11756,10 +15505,16 @@ func (ec *executionContext) _PlanDiscussion(ctx context.Context, sel ast.Selecti
 
 			out.Values[i] = ec._PlanDiscussion_createdBy(ctx, field, obj)
 
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&invalids, 1)
+			}
 		case "createdDts":
 
 			out.Values[i] = ec._PlanDiscussion_createdDts(ctx, field, obj)
 
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&invalids, 1)
+			}
 		case "modifiedBy":
 
 			out.Values[i] = ec._PlanDiscussion_modifiedBy(ctx, field, obj)
@@ -11807,34 +15562,58 @@ func (ec *executionContext) _PlanDocument(ctx context.Context, sel ast.Selection
 
 			out.Values[i] = ec._PlanDocument_fileType(ctx, field, obj)
 
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&invalids, 1)
+			}
 		case "bucket":
 
 			out.Values[i] = ec._PlanDocument_bucket(ctx, field, obj)
 
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&invalids, 1)
+			}
 		case "fileKey":
 
 			out.Values[i] = ec._PlanDocument_fileKey(ctx, field, obj)
 
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&invalids, 1)
+			}
 		case "virusScanned":
 
 			out.Values[i] = ec._PlanDocument_virusScanned(ctx, field, obj)
 
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&invalids, 1)
+			}
 		case "virusClean":
 
 			out.Values[i] = ec._PlanDocument_virusClean(ctx, field, obj)
 
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&invalids, 1)
+			}
 		case "fileName":
 
 			out.Values[i] = ec._PlanDocument_fileName(ctx, field, obj)
 
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&invalids, 1)
+			}
 		case "fileSize":
 
 			out.Values[i] = ec._PlanDocument_fileSize(ctx, field, obj)
 
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&invalids, 1)
+			}
 		case "documentType":
 
 			out.Values[i] = ec._PlanDocument_documentType(ctx, field, obj)
 
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&invalids, 1)
+			}
 		case "otherType":
 			field := field
 
@@ -11864,10 +15643,16 @@ func (ec *executionContext) _PlanDocument(ctx context.Context, sel ast.Selection
 
 			out.Values[i] = ec._PlanDocument_createdBy(ctx, field, obj)
 
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&invalids, 1)
+			}
 		case "createdDts":
 
 			out.Values[i] = ec._PlanDocument_createdDts(ctx, field, obj)
 
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&invalids, 1)
+			}
 		case "modifiedBy":
 
 			out.Values[i] = ec._PlanDocument_modifiedBy(ctx, field, obj)
@@ -11916,6 +15701,398 @@ func (ec *executionContext) _PlanDocumentPayload(ctx context.Context, sel ast.Se
 	return out
 }
 
+var planGeneralCharacteristicsImplementors = []string{"PlanGeneralCharacteristics"}
+
+func (ec *executionContext) _PlanGeneralCharacteristics(ctx context.Context, sel ast.SelectionSet, obj *models.PlanGeneralCharacteristics) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, planGeneralCharacteristicsImplementors)
+	out := graphql.NewFieldSet(fields)
+	var invalids uint32
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("PlanGeneralCharacteristics")
+		case "id":
+
+			out.Values[i] = ec._PlanGeneralCharacteristics_id(ctx, field, obj)
+
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&invalids, 1)
+			}
+		case "modelPlanID":
+
+			out.Values[i] = ec._PlanGeneralCharacteristics_modelPlanID(ctx, field, obj)
+
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&invalids, 1)
+			}
+		case "isNewModel":
+
+			out.Values[i] = ec._PlanGeneralCharacteristics_isNewModel(ctx, field, obj)
+
+		case "existingModel":
+
+			out.Values[i] = ec._PlanGeneralCharacteristics_existingModel(ctx, field, obj)
+
+		case "resemblesExistingModel":
+
+			out.Values[i] = ec._PlanGeneralCharacteristics_resemblesExistingModel(ctx, field, obj)
+
+		case "resemblesExistingModelWhich":
+			field := field
+
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._PlanGeneralCharacteristics_resemblesExistingModelWhich(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&invalids, 1)
+				}
+				return res
+			}
+
+			out.Concurrently(i, func() graphql.Marshaler {
+				return innerFunc(ctx)
+
+			})
+		case "resemblesExistingModelHow":
+
+			out.Values[i] = ec._PlanGeneralCharacteristics_resemblesExistingModelHow(ctx, field, obj)
+
+		case "resemblesExistingModelNote":
+
+			out.Values[i] = ec._PlanGeneralCharacteristics_resemblesExistingModelNote(ctx, field, obj)
+
+		case "hasComponentsOrTracks":
+
+			out.Values[i] = ec._PlanGeneralCharacteristics_hasComponentsOrTracks(ctx, field, obj)
+
+		case "hasComponentsOrTracksDiffer":
+
+			out.Values[i] = ec._PlanGeneralCharacteristics_hasComponentsOrTracksDiffer(ctx, field, obj)
+
+		case "hasComponentsOrTracksNote":
+
+			out.Values[i] = ec._PlanGeneralCharacteristics_hasComponentsOrTracksNote(ctx, field, obj)
+
+		case "alternativePaymentModel":
+
+			out.Values[i] = ec._PlanGeneralCharacteristics_alternativePaymentModel(ctx, field, obj)
+
+		case "alternativePaymentModelTypes":
+			field := field
+
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._PlanGeneralCharacteristics_alternativePaymentModelTypes(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&invalids, 1)
+				}
+				return res
+			}
+
+			out.Concurrently(i, func() graphql.Marshaler {
+				return innerFunc(ctx)
+
+			})
+		case "alternativePaymentModelNote":
+
+			out.Values[i] = ec._PlanGeneralCharacteristics_alternativePaymentModelNote(ctx, field, obj)
+
+		case "keyCharacteristics":
+			field := field
+
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._PlanGeneralCharacteristics_keyCharacteristics(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&invalids, 1)
+				}
+				return res
+			}
+
+			out.Concurrently(i, func() graphql.Marshaler {
+				return innerFunc(ctx)
+
+			})
+		case "keyCharacteristicsOther":
+
+			out.Values[i] = ec._PlanGeneralCharacteristics_keyCharacteristicsOther(ctx, field, obj)
+
+		case "collectPlanBids":
+
+			out.Values[i] = ec._PlanGeneralCharacteristics_collectPlanBids(ctx, field, obj)
+
+		case "collectPlanBidsNote":
+
+			out.Values[i] = ec._PlanGeneralCharacteristics_collectPlanBidsNote(ctx, field, obj)
+
+		case "managePartCDEnrollment":
+
+			out.Values[i] = ec._PlanGeneralCharacteristics_managePartCDEnrollment(ctx, field, obj)
+
+		case "managePartCDEnrollmentNote":
+
+			out.Values[i] = ec._PlanGeneralCharacteristics_managePartCDEnrollmentNote(ctx, field, obj)
+
+		case "planContactUpdated":
+
+			out.Values[i] = ec._PlanGeneralCharacteristics_planContactUpdated(ctx, field, obj)
+
+		case "planContactUpdatedNote":
+
+			out.Values[i] = ec._PlanGeneralCharacteristics_planContactUpdatedNote(ctx, field, obj)
+
+		case "careCoordinationInvolved":
+
+			out.Values[i] = ec._PlanGeneralCharacteristics_careCoordinationInvolved(ctx, field, obj)
+
+		case "careCoordinationInvolvedDescription":
+
+			out.Values[i] = ec._PlanGeneralCharacteristics_careCoordinationInvolvedDescription(ctx, field, obj)
+
+		case "careCoordinationInvolvedNote":
+
+			out.Values[i] = ec._PlanGeneralCharacteristics_careCoordinationInvolvedNote(ctx, field, obj)
+
+		case "additionalServicesInvolved":
+
+			out.Values[i] = ec._PlanGeneralCharacteristics_additionalServicesInvolved(ctx, field, obj)
+
+		case "additionalServicesInvolvedDescription":
+
+			out.Values[i] = ec._PlanGeneralCharacteristics_additionalServicesInvolvedDescription(ctx, field, obj)
+
+		case "additionalServicesInvolvedNote":
+
+			out.Values[i] = ec._PlanGeneralCharacteristics_additionalServicesInvolvedNote(ctx, field, obj)
+
+		case "communityPartnersInvolved":
+
+			out.Values[i] = ec._PlanGeneralCharacteristics_communityPartnersInvolved(ctx, field, obj)
+
+		case "communityPartnersInvolvedDescription":
+
+			out.Values[i] = ec._PlanGeneralCharacteristics_communityPartnersInvolvedDescription(ctx, field, obj)
+
+		case "communityPartnersInvolvedNote":
+
+			out.Values[i] = ec._PlanGeneralCharacteristics_communityPartnersInvolvedNote(ctx, field, obj)
+
+		case "geographiesTargeted":
+
+			out.Values[i] = ec._PlanGeneralCharacteristics_geographiesTargeted(ctx, field, obj)
+
+		case "geographiesTargetedTypes":
+			field := field
+
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._PlanGeneralCharacteristics_geographiesTargetedTypes(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&invalids, 1)
+				}
+				return res
+			}
+
+			out.Concurrently(i, func() graphql.Marshaler {
+				return innerFunc(ctx)
+
+			})
+		case "geographiesTargetedTypesOther":
+
+			out.Values[i] = ec._PlanGeneralCharacteristics_geographiesTargetedTypesOther(ctx, field, obj)
+
+		case "geographiesTargetedAppliedTo":
+			field := field
+
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._PlanGeneralCharacteristics_geographiesTargetedAppliedTo(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&invalids, 1)
+				}
+				return res
+			}
+
+			out.Concurrently(i, func() graphql.Marshaler {
+				return innerFunc(ctx)
+
+			})
+		case "geographiesTargetedAppliedToOther":
+
+			out.Values[i] = ec._PlanGeneralCharacteristics_geographiesTargetedAppliedToOther(ctx, field, obj)
+
+		case "geographiesTargetedNote":
+
+			out.Values[i] = ec._PlanGeneralCharacteristics_geographiesTargetedNote(ctx, field, obj)
+
+		case "participationOptions":
+
+			out.Values[i] = ec._PlanGeneralCharacteristics_participationOptions(ctx, field, obj)
+
+		case "participationOptionsNote":
+
+			out.Values[i] = ec._PlanGeneralCharacteristics_participationOptionsNote(ctx, field, obj)
+
+		case "agreementTypes":
+			field := field
+
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._PlanGeneralCharacteristics_agreementTypes(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&invalids, 1)
+				}
+				return res
+			}
+
+			out.Concurrently(i, func() graphql.Marshaler {
+				return innerFunc(ctx)
+
+			})
+		case "agreementTypesOther":
+
+			out.Values[i] = ec._PlanGeneralCharacteristics_agreementTypesOther(ctx, field, obj)
+
+		case "multiplePatricipationAgreementsNeeded":
+
+			out.Values[i] = ec._PlanGeneralCharacteristics_multiplePatricipationAgreementsNeeded(ctx, field, obj)
+
+		case "multiplePatricipationAgreementsNeededNote":
+
+			out.Values[i] = ec._PlanGeneralCharacteristics_multiplePatricipationAgreementsNeededNote(ctx, field, obj)
+
+		case "rulemakingRequired":
+
+			out.Values[i] = ec._PlanGeneralCharacteristics_rulemakingRequired(ctx, field, obj)
+
+		case "rulemakingRequiredDescription":
+
+			out.Values[i] = ec._PlanGeneralCharacteristics_rulemakingRequiredDescription(ctx, field, obj)
+
+		case "rulemakingRequiredNote":
+
+			out.Values[i] = ec._PlanGeneralCharacteristics_rulemakingRequiredNote(ctx, field, obj)
+
+		case "authorityAllowances":
+			field := field
+
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._PlanGeneralCharacteristics_authorityAllowances(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&invalids, 1)
+				}
+				return res
+			}
+
+			out.Concurrently(i, func() graphql.Marshaler {
+				return innerFunc(ctx)
+
+			})
+		case "authorityAllowancesOther":
+
+			out.Values[i] = ec._PlanGeneralCharacteristics_authorityAllowancesOther(ctx, field, obj)
+
+		case "authorityAllowancesNote":
+
+			out.Values[i] = ec._PlanGeneralCharacteristics_authorityAllowancesNote(ctx, field, obj)
+
+		case "waiversRequired":
+
+			out.Values[i] = ec._PlanGeneralCharacteristics_waiversRequired(ctx, field, obj)
+
+		case "waiversRequiredTypes":
+			field := field
+
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._PlanGeneralCharacteristics_waiversRequiredTypes(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&invalids, 1)
+				}
+				return res
+			}
+
+			out.Concurrently(i, func() graphql.Marshaler {
+				return innerFunc(ctx)
+
+			})
+		case "waiversRequiredNote":
+
+			out.Values[i] = ec._PlanGeneralCharacteristics_waiversRequiredNote(ctx, field, obj)
+
+		case "createdBy":
+
+			out.Values[i] = ec._PlanGeneralCharacteristics_createdBy(ctx, field, obj)
+
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&invalids, 1)
+			}
+		case "createdDts":
+
+			out.Values[i] = ec._PlanGeneralCharacteristics_createdDts(ctx, field, obj)
+
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&invalids, 1)
+			}
+		case "modifiedBy":
+
+			out.Values[i] = ec._PlanGeneralCharacteristics_modifiedBy(ctx, field, obj)
+
+		case "modifiedDts":
+
+			out.Values[i] = ec._PlanGeneralCharacteristics_modifiedDts(ctx, field, obj)
+
+		case "status":
+
+			out.Values[i] = ec._PlanGeneralCharacteristics_status(ctx, field, obj)
+
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&invalids, 1)
+			}
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch()
+	if invalids > 0 {
+		return graphql.Null
+	}
+	return out
+}
+
 var planMilestonesImplementors = []string{"PlanMilestones"}
 
 func (ec *executionContext) _PlanMilestones(ctx context.Context, sel ast.SelectionSet, obj *models.PlanMilestones) graphql.Marshaler {
@@ -11930,10 +16107,16 @@ func (ec *executionContext) _PlanMilestones(ctx context.Context, sel ast.Selecti
 
 			out.Values[i] = ec._PlanMilestones_id(ctx, field, obj)
 
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
 		case "modelPlanID":
 
 			out.Values[i] = ec._PlanMilestones_modelPlanID(ctx, field, obj)
 
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
 		case "completeICIP":
 
 			out.Values[i] = ec._PlanMilestones_completeICIP(ctx, field, obj)
@@ -11986,10 +16169,16 @@ func (ec *executionContext) _PlanMilestones(ctx context.Context, sel ast.Selecti
 
 			out.Values[i] = ec._PlanMilestones_createdBy(ctx, field, obj)
 
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
 		case "createdDts":
 
 			out.Values[i] = ec._PlanMilestones_createdDts(ctx, field, obj)
 
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
 		case "modifiedBy":
 
 			out.Values[i] = ec._PlanMilestones_modifiedBy(ctx, field, obj)
@@ -12002,6 +16191,9 @@ func (ec *executionContext) _PlanMilestones(ctx context.Context, sel ast.Selecti
 
 			out.Values[i] = ec._PlanMilestones_status(ctx, field, obj)
 
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}
@@ -12042,6 +16234,9 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 					}
 				}()
 				res = ec._Query_currentUser(ctx, field)
+				if res == graphql.Null {
+					atomic.AddUint32(&invalids, 1)
+				}
 				return res
 			}
 
@@ -12062,6 +16257,9 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 					}
 				}()
 				res = ec._Query_modelPlan(ctx, field)
+				if res == graphql.Null {
+					atomic.AddUint32(&invalids, 1)
+				}
 				return res
 			}
 
@@ -12082,6 +16280,9 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 					}
 				}()
 				res = ec._Query_planDocument(ctx, field)
+				if res == graphql.Null {
+					atomic.AddUint32(&invalids, 1)
+				}
 				return res
 			}
 
@@ -12102,6 +16303,9 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 					}
 				}()
 				res = ec._Query_planDocumentDownloadURL(ctx, field)
+				if res == graphql.Null {
+					atomic.AddUint32(&invalids, 1)
+				}
 				return res
 			}
 
@@ -12122,6 +16326,9 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 					}
 				}()
 				res = ec._Query_readPlanDocumentByModelID(ctx, field)
+				if res == graphql.Null {
+					atomic.AddUint32(&invalids, 1)
+				}
 				return res
 			}
 
@@ -12142,6 +16349,9 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 					}
 				}()
 				res = ec._Query_modelPlanCollection(ctx, field)
+				if res == graphql.Null {
+					atomic.AddUint32(&invalids, 1)
+				}
 				return res
 			}
 
@@ -12594,6 +16804,219 @@ func (ec *executionContext) ___Type(ctx context.Context, sel ast.SelectionSet, o
 
 // region    ***************************** type.gotpl *****************************
 
+func (ec *executionContext) unmarshalNAgreementType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐAgreementType(ctx context.Context, v interface{}) (model.AgreementType, error) {
+	var res model.AgreementType
+	err := res.UnmarshalGQL(v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalNAgreementType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐAgreementType(ctx context.Context, sel ast.SelectionSet, v model.AgreementType) graphql.Marshaler {
+	return v
+}
+
+func (ec *executionContext) unmarshalNAgreementType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐAgreementTypeᚄ(ctx context.Context, v interface{}) ([]model.AgreementType, error) {
+	var vSlice []interface{}
+	if v != nil {
+		vSlice = graphql.CoerceList(v)
+	}
+	var err error
+	res := make([]model.AgreementType, len(vSlice))
+	for i := range vSlice {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
+		res[i], err = ec.unmarshalNAgreementType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐAgreementType(ctx, vSlice[i])
+		if err != nil {
+			return nil, err
+		}
+	}
+	return res, nil
+}
+
+func (ec *executionContext) marshalNAgreementType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐAgreementTypeᚄ(ctx context.Context, sel ast.SelectionSet, v []model.AgreementType) graphql.Marshaler {
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalNAgreementType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐAgreementType(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
+}
+
+func (ec *executionContext) unmarshalNAlternativePaymentModelType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐAlternativePaymentModelType(ctx context.Context, v interface{}) (model.AlternativePaymentModelType, error) {
+	var res model.AlternativePaymentModelType
+	err := res.UnmarshalGQL(v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalNAlternativePaymentModelType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐAlternativePaymentModelType(ctx context.Context, sel ast.SelectionSet, v model.AlternativePaymentModelType) graphql.Marshaler {
+	return v
+}
+
+func (ec *executionContext) unmarshalNAlternativePaymentModelType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐAlternativePaymentModelTypeᚄ(ctx context.Context, v interface{}) ([]model.AlternativePaymentModelType, error) {
+	var vSlice []interface{}
+	if v != nil {
+		vSlice = graphql.CoerceList(v)
+	}
+	var err error
+	res := make([]model.AlternativePaymentModelType, len(vSlice))
+	for i := range vSlice {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
+		res[i], err = ec.unmarshalNAlternativePaymentModelType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐAlternativePaymentModelType(ctx, vSlice[i])
+		if err != nil {
+			return nil, err
+		}
+	}
+	return res, nil
+}
+
+func (ec *executionContext) marshalNAlternativePaymentModelType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐAlternativePaymentModelTypeᚄ(ctx context.Context, sel ast.SelectionSet, v []model.AlternativePaymentModelType) graphql.Marshaler {
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalNAlternativePaymentModelType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐAlternativePaymentModelType(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
+}
+
+func (ec *executionContext) unmarshalNAuthorityAllowance2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐAuthorityAllowance(ctx context.Context, v interface{}) (model.AuthorityAllowance, error) {
+	var res model.AuthorityAllowance
+	err := res.UnmarshalGQL(v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalNAuthorityAllowance2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐAuthorityAllowance(ctx context.Context, sel ast.SelectionSet, v model.AuthorityAllowance) graphql.Marshaler {
+	return v
+}
+
+func (ec *executionContext) unmarshalNAuthorityAllowance2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐAuthorityAllowanceᚄ(ctx context.Context, v interface{}) ([]model.AuthorityAllowance, error) {
+	var vSlice []interface{}
+	if v != nil {
+		vSlice = graphql.CoerceList(v)
+	}
+	var err error
+	res := make([]model.AuthorityAllowance, len(vSlice))
+	for i := range vSlice {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
+		res[i], err = ec.unmarshalNAuthorityAllowance2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐAuthorityAllowance(ctx, vSlice[i])
+		if err != nil {
+			return nil, err
+		}
+	}
+	return res, nil
+}
+
+func (ec *executionContext) marshalNAuthorityAllowance2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐAuthorityAllowanceᚄ(ctx context.Context, sel ast.SelectionSet, v []model.AuthorityAllowance) graphql.Marshaler {
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalNAuthorityAllowance2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐAuthorityAllowance(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
+}
+
 func (ec *executionContext) unmarshalNBoolean2bool(ctx context.Context, v interface{}) (bool, error) {
 	res, err := graphql.UnmarshalBoolean(v)
 	return res, graphql.ErrorOnPath(ctx, err)
@@ -12757,6 +17180,24 @@ func (ec *executionContext) marshalNCMSCenter2ᚕgithubᚗcomᚋcmsgovᚋmintᚑ
 	return ret
 }
 
+func (ec *executionContext) marshalNCurrentUser2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCurrentUser(ctx context.Context, sel ast.SelectionSet, v model.CurrentUser) graphql.Marshaler {
+	return ec._CurrentUser(ctx, sel, &v)
+}
+
+func (ec *executionContext) marshalNCurrentUser2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCurrentUser(ctx context.Context, sel ast.SelectionSet, v *model.CurrentUser) graphql.Marshaler {
+	if v == nil {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
+		return graphql.Null
+	}
+	return ec._CurrentUser(ctx, sel, v)
+}
+
+func (ec *executionContext) marshalNDiscussionReply2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDiscussionReply(ctx context.Context, sel ast.SelectionSet, v models.DiscussionReply) graphql.Marshaler {
+	return ec._DiscussionReply(ctx, sel, &v)
+}
+
 func (ec *executionContext) marshalNDiscussionReply2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDiscussionReplyᚄ(ctx context.Context, sel ast.SelectionSet, v []*models.DiscussionReply) graphql.Marshaler {
 	ret := make(graphql.Array, len(v))
 	var wg sync.WaitGroup
@@ -12836,9 +17277,181 @@ func (ec *executionContext) marshalNDiscussionStatus2githubᚗcomᚋcmsgovᚋmin
 	return res
 }
 
+func (ec *executionContext) unmarshalNDocumentType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDocumentType(ctx context.Context, v interface{}) (models.DocumentType, error) {
+	tmp, err := graphql.UnmarshalString(v)
+	res := models.DocumentType(tmp)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalNDocumentType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDocumentType(ctx context.Context, sel ast.SelectionSet, v models.DocumentType) graphql.Marshaler {
+	res := graphql.MarshalString(string(v))
+	if res == graphql.Null {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
+	}
+	return res
+}
+
 func (ec *executionContext) unmarshalNGeneratePresignedUploadURLInput2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐGeneratePresignedUploadURLInput(ctx context.Context, v interface{}) (model.GeneratePresignedUploadURLInput, error) {
 	res, err := ec.unmarshalInputGeneratePresignedUploadURLInput(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalNGeneratePresignedUploadURLPayload2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐGeneratePresignedUploadURLPayload(ctx context.Context, sel ast.SelectionSet, v model.GeneratePresignedUploadURLPayload) graphql.Marshaler {
+	return ec._GeneratePresignedUploadURLPayload(ctx, sel, &v)
+}
+
+func (ec *executionContext) marshalNGeneratePresignedUploadURLPayload2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐGeneratePresignedUploadURLPayload(ctx context.Context, sel ast.SelectionSet, v *model.GeneratePresignedUploadURLPayload) graphql.Marshaler {
+	if v == nil {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
+		return graphql.Null
+	}
+	return ec._GeneratePresignedUploadURLPayload(ctx, sel, v)
+}
+
+func (ec *executionContext) unmarshalNGeographyApplication2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐGeographyApplication(ctx context.Context, v interface{}) (model.GeographyApplication, error) {
+	var res model.GeographyApplication
+	err := res.UnmarshalGQL(v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalNGeographyApplication2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐGeographyApplication(ctx context.Context, sel ast.SelectionSet, v model.GeographyApplication) graphql.Marshaler {
+	return v
+}
+
+func (ec *executionContext) unmarshalNGeographyApplication2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐGeographyApplicationᚄ(ctx context.Context, v interface{}) ([]model.GeographyApplication, error) {
+	var vSlice []interface{}
+	if v != nil {
+		vSlice = graphql.CoerceList(v)
+	}
+	var err error
+	res := make([]model.GeographyApplication, len(vSlice))
+	for i := range vSlice {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
+		res[i], err = ec.unmarshalNGeographyApplication2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐGeographyApplication(ctx, vSlice[i])
+		if err != nil {
+			return nil, err
+		}
+	}
+	return res, nil
+}
+
+func (ec *executionContext) marshalNGeographyApplication2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐGeographyApplicationᚄ(ctx context.Context, sel ast.SelectionSet, v []model.GeographyApplication) graphql.Marshaler {
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalNGeographyApplication2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐGeographyApplication(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
+}
+
+func (ec *executionContext) unmarshalNGeographyType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐGeographyType(ctx context.Context, v interface{}) (model.GeographyType, error) {
+	var res model.GeographyType
+	err := res.UnmarshalGQL(v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalNGeographyType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐGeographyType(ctx context.Context, sel ast.SelectionSet, v model.GeographyType) graphql.Marshaler {
+	return v
+}
+
+func (ec *executionContext) unmarshalNGeographyType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐGeographyTypeᚄ(ctx context.Context, v interface{}) ([]model.GeographyType, error) {
+	var vSlice []interface{}
+	if v != nil {
+		vSlice = graphql.CoerceList(v)
+	}
+	var err error
+	res := make([]model.GeographyType, len(vSlice))
+	for i := range vSlice {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
+		res[i], err = ec.unmarshalNGeographyType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐGeographyType(ctx, vSlice[i])
+		if err != nil {
+			return nil, err
+		}
+	}
+	return res, nil
+}
+
+func (ec *executionContext) marshalNGeographyType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐGeographyTypeᚄ(ctx context.Context, sel ast.SelectionSet, v []model.GeographyType) graphql.Marshaler {
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalNGeographyType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐGeographyType(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
 }
 
 func (ec *executionContext) unmarshalNInt2int(ctx context.Context, v interface{}) (int, error) {
@@ -12856,6 +17469,77 @@ func (ec *executionContext) marshalNInt2int(ctx context.Context, sel ast.Selecti
 	return res
 }
 
+func (ec *executionContext) unmarshalNKeyCharacteristic2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐKeyCharacteristic(ctx context.Context, v interface{}) (model.KeyCharacteristic, error) {
+	var res model.KeyCharacteristic
+	err := res.UnmarshalGQL(v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalNKeyCharacteristic2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐKeyCharacteristic(ctx context.Context, sel ast.SelectionSet, v model.KeyCharacteristic) graphql.Marshaler {
+	return v
+}
+
+func (ec *executionContext) unmarshalNKeyCharacteristic2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐKeyCharacteristicᚄ(ctx context.Context, v interface{}) ([]model.KeyCharacteristic, error) {
+	var vSlice []interface{}
+	if v != nil {
+		vSlice = graphql.CoerceList(v)
+	}
+	var err error
+	res := make([]model.KeyCharacteristic, len(vSlice))
+	for i := range vSlice {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
+		res[i], err = ec.unmarshalNKeyCharacteristic2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐKeyCharacteristic(ctx, vSlice[i])
+		if err != nil {
+			return nil, err
+		}
+	}
+	return res, nil
+}
+
+func (ec *executionContext) marshalNKeyCharacteristic2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐKeyCharacteristicᚄ(ctx context.Context, sel ast.SelectionSet, v []model.KeyCharacteristic) graphql.Marshaler {
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalNKeyCharacteristic2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐKeyCharacteristic(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
+}
+
 func (ec *executionContext) marshalNLaunchDarklySettings2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐLaunchDarklySettings(ctx context.Context, sel ast.SelectionSet, v *model.LaunchDarklySettings) graphql.Marshaler {
 	if v == nil {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
@@ -12864,6 +17548,64 @@ func (ec *executionContext) marshalNLaunchDarklySettings2ᚖgithubᚗcomᚋcmsgo
 		return graphql.Null
 	}
 	return ec._LaunchDarklySettings(ctx, sel, v)
+}
+
+func (ec *executionContext) marshalNModelPlan2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelPlan(ctx context.Context, sel ast.SelectionSet, v models.ModelPlan) graphql.Marshaler {
+	return ec._ModelPlan(ctx, sel, &v)
+}
+
+func (ec *executionContext) marshalNModelPlan2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelPlanᚄ(ctx context.Context, sel ast.SelectionSet, v []*models.ModelPlan) graphql.Marshaler {
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalNModelPlan2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelPlan(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
+}
+
+func (ec *executionContext) marshalNModelPlan2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelPlan(ctx context.Context, sel ast.SelectionSet, v *models.ModelPlan) graphql.Marshaler {
+	if v == nil {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
+		return graphql.Null
+	}
+	return ec._ModelPlan(ctx, sel, v)
 }
 
 func (ec *executionContext) unmarshalNModelPlanChanges2map(ctx context.Context, v interface{}) (map[string]interface{}, error) {
@@ -12884,6 +17626,20 @@ func (ec *executionContext) marshalNModelStatus2githubᚗcomᚋcmsgovᚋmintᚑa
 		}
 	}
 	return res
+}
+
+func (ec *executionContext) marshalNPlanBasics2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanBasics(ctx context.Context, sel ast.SelectionSet, v models.PlanBasics) graphql.Marshaler {
+	return ec._PlanBasics(ctx, sel, &v)
+}
+
+func (ec *executionContext) marshalNPlanBasics2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanBasics(ctx context.Context, sel ast.SelectionSet, v *models.PlanBasics) graphql.Marshaler {
+	if v == nil {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
+		return graphql.Null
+	}
+	return ec._PlanBasics(ctx, sel, v)
 }
 
 func (ec *executionContext) unmarshalNPlanBasicsChanges2map(ctx context.Context, v interface{}) (map[string]interface{}, error) {
@@ -12953,6 +17709,10 @@ func (ec *executionContext) unmarshalNPlanCollaboratorCreateInput2githubᚗcom�
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
+func (ec *executionContext) marshalNPlanDiscussion2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanDiscussion(ctx context.Context, sel ast.SelectionSet, v models.PlanDiscussion) graphql.Marshaler {
+	return ec._PlanDiscussion(ctx, sel, &v)
+}
+
 func (ec *executionContext) marshalNPlanDiscussion2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanDiscussionᚄ(ctx context.Context, sel ast.SelectionSet, v []*models.PlanDiscussion) graphql.Marshaler {
 	ret := make(graphql.Array, len(v))
 	var wg sync.WaitGroup
@@ -13014,6 +17774,10 @@ func (ec *executionContext) unmarshalNPlanDiscussionChanges2map(ctx context.Cont
 func (ec *executionContext) unmarshalNPlanDiscussionCreateInput2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐPlanDiscussionCreateInput(ctx context.Context, v interface{}) (model.PlanDiscussionCreateInput, error) {
 	res, err := ec.unmarshalInputPlanDiscussionCreateInput(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalNPlanDocument2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanDocument(ctx context.Context, sel ast.SelectionSet, v models.PlanDocument) graphql.Marshaler {
+	return ec._PlanDocument(ctx, sel, &v)
 }
 
 func (ec *executionContext) marshalNPlanDocument2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanDocumentᚄ(ctx context.Context, sel ast.SelectionSet, v []*models.PlanDocument) graphql.Marshaler {
@@ -13080,8 +17844,54 @@ func (ec *executionContext) unmarshalNPlanDocumentParameters2ᚖgithubᚗcomᚋc
 	return &res, graphql.ErrorOnPath(ctx, err)
 }
 
+func (ec *executionContext) marshalNPlanDocumentPayload2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐPlanDocumentPayload(ctx context.Context, sel ast.SelectionSet, v model.PlanDocumentPayload) graphql.Marshaler {
+	return ec._PlanDocumentPayload(ctx, sel, &v)
+}
+
+func (ec *executionContext) marshalNPlanDocumentPayload2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐPlanDocumentPayload(ctx context.Context, sel ast.SelectionSet, v *model.PlanDocumentPayload) graphql.Marshaler {
+	if v == nil {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
+		return graphql.Null
+	}
+	return ec._PlanDocumentPayload(ctx, sel, v)
+}
+
+func (ec *executionContext) marshalNPlanGeneralCharacteristics2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanGeneralCharacteristics(ctx context.Context, sel ast.SelectionSet, v models.PlanGeneralCharacteristics) graphql.Marshaler {
+	return ec._PlanGeneralCharacteristics(ctx, sel, &v)
+}
+
+func (ec *executionContext) marshalNPlanGeneralCharacteristics2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanGeneralCharacteristics(ctx context.Context, sel ast.SelectionSet, v *models.PlanGeneralCharacteristics) graphql.Marshaler {
+	if v == nil {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
+		return graphql.Null
+	}
+	return ec._PlanGeneralCharacteristics(ctx, sel, v)
+}
+
+func (ec *executionContext) unmarshalNPlanGeneralCharacteristicsChanges2map(ctx context.Context, v interface{}) (map[string]interface{}, error) {
+	return v.(map[string]interface{}), nil
+}
+
 func (ec *executionContext) unmarshalNPlanMilestoneChanges2map(ctx context.Context, v interface{}) (map[string]interface{}, error) {
 	return v.(map[string]interface{}), nil
+}
+
+func (ec *executionContext) marshalNPlanMilestones2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanMilestones(ctx context.Context, sel ast.SelectionSet, v models.PlanMilestones) graphql.Marshaler {
+	return ec._PlanMilestones(ctx, sel, &v)
+}
+
+func (ec *executionContext) marshalNPlanMilestones2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanMilestones(ctx context.Context, sel ast.SelectionSet, v *models.PlanMilestones) graphql.Marshaler {
+	if v == nil {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
+		return graphql.Null
+	}
+	return ec._PlanMilestones(ctx, sel, v)
 }
 
 func (ec *executionContext) unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx context.Context, v interface{}) (model.Role, error) {
@@ -13109,6 +17919,38 @@ func (ec *executionContext) marshalNString2string(ctx context.Context, sel ast.S
 	return res
 }
 
+func (ec *executionContext) unmarshalNString2ᚕstringᚄ(ctx context.Context, v interface{}) ([]string, error) {
+	var vSlice []interface{}
+	if v != nil {
+		vSlice = graphql.CoerceList(v)
+	}
+	var err error
+	res := make([]string, len(vSlice))
+	for i := range vSlice {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
+		res[i], err = ec.unmarshalNString2string(ctx, vSlice[i])
+		if err != nil {
+			return nil, err
+		}
+	}
+	return res, nil
+}
+
+func (ec *executionContext) marshalNString2ᚕstringᚄ(ctx context.Context, sel ast.SelectionSet, v []string) graphql.Marshaler {
+	ret := make(graphql.Array, len(v))
+	for i := range v {
+		ret[i] = ec.marshalNString2string(ctx, sel, v[i])
+	}
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
+}
+
 func (ec *executionContext) unmarshalNTaskStatus2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTaskStatus(ctx context.Context, v interface{}) (models.TaskStatus, error) {
 	tmp, err := graphql.UnmarshalString(v)
 	res := models.TaskStatus(tmp)
@@ -13133,6 +17975,21 @@ func (ec *executionContext) unmarshalNTeamRole2githubᚗcomᚋcmsgovᚋmintᚑap
 
 func (ec *executionContext) marshalNTeamRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTeamRole(ctx context.Context, sel ast.SelectionSet, v models.TeamRole) graphql.Marshaler {
 	res := graphql.MarshalString(string(v))
+	if res == graphql.Null {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
+	}
+	return res
+}
+
+func (ec *executionContext) unmarshalNTime2timeᚐTime(ctx context.Context, v interface{}) (time.Time, error) {
+	res, err := graphql.UnmarshalTime(v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalNTime2timeᚐTime(ctx context.Context, sel ast.SelectionSet, v time.Time) graphql.Marshaler {
+	res := graphql.MarshalTime(v)
 	if res == graphql.Null {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
 			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
@@ -13208,6 +18065,77 @@ func (ec *executionContext) marshalNUserInfo2ᚖgithubᚗcomᚋcmsgovᚋmintᚑa
 		return graphql.Null
 	}
 	return ec._UserInfo(ctx, sel, v)
+}
+
+func (ec *executionContext) unmarshalNWaiverType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐWaiverType(ctx context.Context, v interface{}) (model.WaiverType, error) {
+	var res model.WaiverType
+	err := res.UnmarshalGQL(v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalNWaiverType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐWaiverType(ctx context.Context, sel ast.SelectionSet, v model.WaiverType) graphql.Marshaler {
+	return v
+}
+
+func (ec *executionContext) unmarshalNWaiverType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐWaiverTypeᚄ(ctx context.Context, v interface{}) ([]model.WaiverType, error) {
+	var vSlice []interface{}
+	if v != nil {
+		vSlice = graphql.CoerceList(v)
+	}
+	var err error
+	res := make([]model.WaiverType, len(vSlice))
+	for i := range vSlice {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
+		res[i], err = ec.unmarshalNWaiverType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐWaiverType(ctx, vSlice[i])
+		if err != nil {
+			return nil, err
+		}
+	}
+	return res, nil
+}
+
+func (ec *executionContext) marshalNWaiverType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐWaiverTypeᚄ(ctx context.Context, sel ast.SelectionSet, v []model.WaiverType) graphql.Marshaler {
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalNWaiverType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐWaiverType(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
 }
 
 func (ec *executionContext) marshalN__Directive2githubᚗcomᚋ99designsᚋgqlgenᚋgraphqlᚋintrospectionᚐDirective(ctx context.Context, sel ast.SelectionSet, v introspection.Directive) graphql.Marshaler {
@@ -13463,6 +18391,207 @@ func (ec *executionContext) marshalN__TypeKind2string(ctx context.Context, sel a
 	return res
 }
 
+func (ec *executionContext) unmarshalOAgreementType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐAgreementTypeᚄ(ctx context.Context, v interface{}) ([]model.AgreementType, error) {
+	if v == nil {
+		return nil, nil
+	}
+	var vSlice []interface{}
+	if v != nil {
+		vSlice = graphql.CoerceList(v)
+	}
+	var err error
+	res := make([]model.AgreementType, len(vSlice))
+	for i := range vSlice {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
+		res[i], err = ec.unmarshalNAgreementType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐAgreementType(ctx, vSlice[i])
+		if err != nil {
+			return nil, err
+		}
+	}
+	return res, nil
+}
+
+func (ec *executionContext) marshalOAgreementType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐAgreementTypeᚄ(ctx context.Context, sel ast.SelectionSet, v []model.AgreementType) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalNAgreementType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐAgreementType(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
+}
+
+func (ec *executionContext) unmarshalOAlternativePaymentModelType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐAlternativePaymentModelTypeᚄ(ctx context.Context, v interface{}) ([]model.AlternativePaymentModelType, error) {
+	if v == nil {
+		return nil, nil
+	}
+	var vSlice []interface{}
+	if v != nil {
+		vSlice = graphql.CoerceList(v)
+	}
+	var err error
+	res := make([]model.AlternativePaymentModelType, len(vSlice))
+	for i := range vSlice {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
+		res[i], err = ec.unmarshalNAlternativePaymentModelType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐAlternativePaymentModelType(ctx, vSlice[i])
+		if err != nil {
+			return nil, err
+		}
+	}
+	return res, nil
+}
+
+func (ec *executionContext) marshalOAlternativePaymentModelType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐAlternativePaymentModelTypeᚄ(ctx context.Context, sel ast.SelectionSet, v []model.AlternativePaymentModelType) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalNAlternativePaymentModelType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐAlternativePaymentModelType(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
+}
+
+func (ec *executionContext) unmarshalOAuthorityAllowance2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐAuthorityAllowanceᚄ(ctx context.Context, v interface{}) ([]model.AuthorityAllowance, error) {
+	if v == nil {
+		return nil, nil
+	}
+	var vSlice []interface{}
+	if v != nil {
+		vSlice = graphql.CoerceList(v)
+	}
+	var err error
+	res := make([]model.AuthorityAllowance, len(vSlice))
+	for i := range vSlice {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
+		res[i], err = ec.unmarshalNAuthorityAllowance2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐAuthorityAllowance(ctx, vSlice[i])
+		if err != nil {
+			return nil, err
+		}
+	}
+	return res, nil
+}
+
+func (ec *executionContext) marshalOAuthorityAllowance2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐAuthorityAllowanceᚄ(ctx context.Context, sel ast.SelectionSet, v []model.AuthorityAllowance) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalNAuthorityAllowance2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐAuthorityAllowance(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
+}
+
 func (ec *executionContext) unmarshalOBoolean2bool(ctx context.Context, v interface{}) (bool, error) {
 	res, err := graphql.UnmarshalBoolean(v)
 	return res, graphql.ErrorOnPath(ctx, err)
@@ -13623,20 +18752,6 @@ func (ec *executionContext) marshalOCMSCenter2ᚕgithubᚗcomᚋcmsgovᚋmintᚑ
 	return ret
 }
 
-func (ec *executionContext) marshalOCurrentUser2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCurrentUser(ctx context.Context, sel ast.SelectionSet, v *model.CurrentUser) graphql.Marshaler {
-	if v == nil {
-		return graphql.Null
-	}
-	return ec._CurrentUser(ctx, sel, v)
-}
-
-func (ec *executionContext) marshalODiscussionReply2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDiscussionReply(ctx context.Context, sel ast.SelectionSet, v *models.DiscussionReply) graphql.Marshaler {
-	if v == nil {
-		return graphql.Null
-	}
-	return ec._DiscussionReply(ctx, sel, v)
-}
-
 func (ec *executionContext) unmarshalODiscussionStatus2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDiscussionStatus(ctx context.Context, v interface{}) (*models.DiscussionStatus, error) {
 	if v == nil {
 		return nil, nil
@@ -13671,21 +18786,138 @@ func (ec *executionContext) marshalODocumentType2ᚖgithubᚗcomᚋcmsgovᚋmint
 	return res
 }
 
-func (ec *executionContext) marshalOGeneratePresignedUploadURLPayload2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐGeneratePresignedUploadURLPayload(ctx context.Context, sel ast.SelectionSet, v *model.GeneratePresignedUploadURLPayload) graphql.Marshaler {
+func (ec *executionContext) unmarshalOGeographyApplication2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐGeographyApplicationᚄ(ctx context.Context, v interface{}) ([]model.GeographyApplication, error) {
+	if v == nil {
+		return nil, nil
+	}
+	var vSlice []interface{}
+	if v != nil {
+		vSlice = graphql.CoerceList(v)
+	}
+	var err error
+	res := make([]model.GeographyApplication, len(vSlice))
+	for i := range vSlice {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
+		res[i], err = ec.unmarshalNGeographyApplication2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐGeographyApplication(ctx, vSlice[i])
+		if err != nil {
+			return nil, err
+		}
+	}
+	return res, nil
+}
+
+func (ec *executionContext) marshalOGeographyApplication2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐGeographyApplicationᚄ(ctx context.Context, sel ast.SelectionSet, v []model.GeographyApplication) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
-	return ec._GeneratePresignedUploadURLPayload(ctx, sel, v)
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalNGeographyApplication2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐGeographyApplication(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
 }
 
-func (ec *executionContext) unmarshalOInt2int(ctx context.Context, v interface{}) (int, error) {
-	res, err := graphql.UnmarshalInt(v)
-	return res, graphql.ErrorOnPath(ctx, err)
+func (ec *executionContext) unmarshalOGeographyType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐGeographyTypeᚄ(ctx context.Context, v interface{}) ([]model.GeographyType, error) {
+	if v == nil {
+		return nil, nil
+	}
+	var vSlice []interface{}
+	if v != nil {
+		vSlice = graphql.CoerceList(v)
+	}
+	var err error
+	res := make([]model.GeographyType, len(vSlice))
+	for i := range vSlice {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
+		res[i], err = ec.unmarshalNGeographyType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐGeographyType(ctx, vSlice[i])
+		if err != nil {
+			return nil, err
+		}
+	}
+	return res, nil
 }
 
-func (ec *executionContext) marshalOInt2int(ctx context.Context, sel ast.SelectionSet, v int) graphql.Marshaler {
-	res := graphql.MarshalInt(v)
-	return res
+func (ec *executionContext) marshalOGeographyType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐGeographyTypeᚄ(ctx context.Context, sel ast.SelectionSet, v []model.GeographyType) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalNGeographyType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐGeographyType(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
 }
 
 func (ec *executionContext) unmarshalOInt2ᚕintᚄ(ctx context.Context, v interface{}) ([]int, error) {
@@ -13726,24 +18958,27 @@ func (ec *executionContext) marshalOInt2ᚕintᚄ(ctx context.Context, sel ast.S
 	return ret
 }
 
-func (ec *executionContext) unmarshalOModelCategory2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelCategory(ctx context.Context, v interface{}) (*models.ModelCategory, error) {
+func (ec *executionContext) unmarshalOKeyCharacteristic2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐKeyCharacteristicᚄ(ctx context.Context, v interface{}) ([]model.KeyCharacteristic, error) {
 	if v == nil {
 		return nil, nil
 	}
-	tmp, err := graphql.UnmarshalString(v)
-	res := models.ModelCategory(tmp)
-	return &res, graphql.ErrorOnPath(ctx, err)
-}
-
-func (ec *executionContext) marshalOModelCategory2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelCategory(ctx context.Context, sel ast.SelectionSet, v *models.ModelCategory) graphql.Marshaler {
-	if v == nil {
-		return graphql.Null
+	var vSlice []interface{}
+	if v != nil {
+		vSlice = graphql.CoerceList(v)
 	}
-	res := graphql.MarshalString(string(*v))
-	return res
+	var err error
+	res := make([]model.KeyCharacteristic, len(vSlice))
+	for i := range vSlice {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
+		res[i], err = ec.unmarshalNKeyCharacteristic2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐKeyCharacteristic(ctx, vSlice[i])
+		if err != nil {
+			return nil, err
+		}
+	}
+	return res, nil
 }
 
-func (ec *executionContext) marshalOModelPlan2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelPlan(ctx context.Context, sel ast.SelectionSet, v []*models.ModelPlan) graphql.Marshaler {
+func (ec *executionContext) marshalOKeyCharacteristic2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐKeyCharacteristicᚄ(ctx context.Context, sel ast.SelectionSet, v []model.KeyCharacteristic) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
@@ -13770,7 +19005,7 @@ func (ec *executionContext) marshalOModelPlan2ᚕᚖgithubᚗcomᚋcmsgovᚋmint
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalOModelPlan2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelPlan(ctx, sel, v[i])
+			ret[i] = ec.marshalNKeyCharacteristic2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐKeyCharacteristic(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -13781,14 +19016,30 @@ func (ec *executionContext) marshalOModelPlan2ᚕᚖgithubᚗcomᚋcmsgovᚋmint
 	}
 	wg.Wait()
 
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
 	return ret
 }
 
-func (ec *executionContext) marshalOModelPlan2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelPlan(ctx context.Context, sel ast.SelectionSet, v *models.ModelPlan) graphql.Marshaler {
+func (ec *executionContext) unmarshalOModelCategory2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelCategory(ctx context.Context, v interface{}) (*models.ModelCategory, error) {
+	if v == nil {
+		return nil, nil
+	}
+	tmp, err := graphql.UnmarshalString(v)
+	res := models.ModelCategory(tmp)
+	return &res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalOModelCategory2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelCategory(ctx context.Context, sel ast.SelectionSet, v *models.ModelCategory) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
-	return ec._ModelPlan(ctx, sel, v)
+	res := graphql.MarshalString(string(*v))
+	return res
 }
 
 func (ec *executionContext) unmarshalOModelStatus2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelStatus(ctx context.Context, v interface{}) (*models.ModelStatus, error) {
@@ -13825,87 +19076,11 @@ func (ec *executionContext) marshalOModelType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑ
 	return res
 }
 
-func (ec *executionContext) marshalOPlanBasics2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanBasics(ctx context.Context, sel ast.SelectionSet, v *models.PlanBasics) graphql.Marshaler {
-	if v == nil {
-		return graphql.Null
-	}
-	return ec._PlanBasics(ctx, sel, v)
-}
-
-func (ec *executionContext) marshalOPlanCollaborator2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanCollaborator(ctx context.Context, sel ast.SelectionSet, v *models.PlanCollaborator) graphql.Marshaler {
-	if v == nil {
-		return graphql.Null
-	}
-	return ec._PlanCollaborator(ctx, sel, v)
-}
-
-func (ec *executionContext) marshalOPlanDiscussion2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanDiscussion(ctx context.Context, sel ast.SelectionSet, v *models.PlanDiscussion) graphql.Marshaler {
-	if v == nil {
-		return graphql.Null
-	}
-	return ec._PlanDiscussion(ctx, sel, v)
-}
-
-func (ec *executionContext) marshalOPlanDocument2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanDocument(ctx context.Context, sel ast.SelectionSet, v []*models.PlanDocument) graphql.Marshaler {
-	if v == nil {
-		return graphql.Null
-	}
-	ret := make(graphql.Array, len(v))
-	var wg sync.WaitGroup
-	isLen1 := len(v) == 1
-	if !isLen1 {
-		wg.Add(len(v))
-	}
-	for i := range v {
-		i := i
-		fc := &graphql.FieldContext{
-			Index:  &i,
-			Result: &v[i],
-		}
-		ctx := graphql.WithFieldContext(ctx, fc)
-		f := func(i int) {
-			defer func() {
-				if r := recover(); r != nil {
-					ec.Error(ctx, ec.Recover(ctx, r))
-					ret = nil
-				}
-			}()
-			if !isLen1 {
-				defer wg.Done()
-			}
-			ret[i] = ec.marshalOPlanDocument2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanDocument(ctx, sel, v[i])
-		}
-		if isLen1 {
-			f(i)
-		} else {
-			go f(i)
-		}
-
-	}
-	wg.Wait()
-
-	return ret
-}
-
 func (ec *executionContext) marshalOPlanDocument2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanDocument(ctx context.Context, sel ast.SelectionSet, v *models.PlanDocument) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
 	return ec._PlanDocument(ctx, sel, v)
-}
-
-func (ec *executionContext) marshalOPlanDocumentPayload2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐPlanDocumentPayload(ctx context.Context, sel ast.SelectionSet, v *model.PlanDocumentPayload) graphql.Marshaler {
-	if v == nil {
-		return graphql.Null
-	}
-	return ec._PlanDocumentPayload(ctx, sel, v)
-}
-
-func (ec *executionContext) marshalOPlanMilestones2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanMilestones(ctx context.Context, sel ast.SelectionSet, v *models.PlanMilestones) graphql.Marshaler {
-	if v == nil {
-		return graphql.Null
-	}
-	return ec._PlanMilestones(ctx, sel, v)
 }
 
 func (ec *executionContext) unmarshalOString2string(ctx context.Context, v interface{}) (string, error) {
@@ -13972,27 +19147,6 @@ func (ec *executionContext) marshalOString2ᚖstring(ctx context.Context, sel as
 	return res
 }
 
-func (ec *executionContext) unmarshalOTaskStatus2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTaskStatus(ctx context.Context, v interface{}) (models.TaskStatus, error) {
-	tmp, err := graphql.UnmarshalString(v)
-	res := models.TaskStatus(tmp)
-	return res, graphql.ErrorOnPath(ctx, err)
-}
-
-func (ec *executionContext) marshalOTaskStatus2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTaskStatus(ctx context.Context, sel ast.SelectionSet, v models.TaskStatus) graphql.Marshaler {
-	res := graphql.MarshalString(string(v))
-	return res
-}
-
-func (ec *executionContext) unmarshalOTime2timeᚐTime(ctx context.Context, v interface{}) (time.Time, error) {
-	res, err := graphql.UnmarshalTime(v)
-	return res, graphql.ErrorOnPath(ctx, err)
-}
-
-func (ec *executionContext) marshalOTime2timeᚐTime(ctx context.Context, sel ast.SelectionSet, v time.Time) graphql.Marshaler {
-	res := graphql.MarshalTime(v)
-	return res
-}
-
 func (ec *executionContext) unmarshalOTime2ᚖtimeᚐTime(ctx context.Context, v interface{}) (*time.Time, error) {
 	if v == nil {
 		return nil, nil
@@ -14006,16 +19160,6 @@ func (ec *executionContext) marshalOTime2ᚖtimeᚐTime(ctx context.Context, sel
 		return graphql.Null
 	}
 	res := graphql.MarshalTime(*v)
-	return res
-}
-
-func (ec *executionContext) unmarshalOUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx context.Context, v interface{}) (uuid.UUID, error) {
-	res, err := models.UnmarshalUUID(v)
-	return res, graphql.ErrorOnPath(ctx, err)
-}
-
-func (ec *executionContext) marshalOUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx context.Context, sel ast.SelectionSet, v uuid.UUID) graphql.Marshaler {
-	res := models.MarshalUUID(v)
 	return res
 }
 
@@ -14033,6 +19177,73 @@ func (ec *executionContext) marshalOUUID2ᚖgithubᚗcomᚋgoogleᚋuuidᚐUUID(
 	}
 	res := models.MarshalUUID(*v)
 	return res
+}
+
+func (ec *executionContext) unmarshalOWaiverType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐWaiverTypeᚄ(ctx context.Context, v interface{}) ([]model.WaiverType, error) {
+	if v == nil {
+		return nil, nil
+	}
+	var vSlice []interface{}
+	if v != nil {
+		vSlice = graphql.CoerceList(v)
+	}
+	var err error
+	res := make([]model.WaiverType, len(vSlice))
+	for i := range vSlice {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
+		res[i], err = ec.unmarshalNWaiverType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐWaiverType(ctx, vSlice[i])
+		if err != nil {
+			return nil, err
+		}
+	}
+	return res, nil
+}
+
+func (ec *executionContext) marshalOWaiverType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐWaiverTypeᚄ(ctx context.Context, sel ast.SelectionSet, v []model.WaiverType) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalNWaiverType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐWaiverType(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
 }
 
 func (ec *executionContext) marshalO__EnumValue2ᚕgithubᚗcomᚋ99designsᚋgqlgenᚋgraphqlᚋintrospectionᚐEnumValueᚄ(ctx context.Context, sel ast.SelectionSet, v []introspection.EnumValue) graphql.Marshaler {

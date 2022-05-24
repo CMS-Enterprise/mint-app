@@ -14,8 +14,9 @@ func (suite *ResolverSuite) TestFetchPlanMilestonesByModelPlanID() {
 	suite.NoError(err)
 	suite.EqualValues(plan.ID, milestones.ModelPlanID)
 	suite.EqualValues(models.TaskReady, milestones.Status)
-	suite.EqualValues(suite.testConfigs.UserInfo.EuaUserID, *milestones.CreatedBy)
-	suite.EqualValues(suite.testConfigs.UserInfo.EuaUserID, *milestones.ModifiedBy)
+	suite.EqualValues(suite.testConfigs.UserInfo.EuaUserID, milestones.CreatedBy)
+	suite.Nil(milestones.ModifiedBy)
+	suite.Nil(milestones.ModifiedDts)
 
 	// Many of the fields are nil upon creation
 	suite.Nil(milestones.CompleteICIP)
@@ -43,11 +44,16 @@ func (suite *ResolverSuite) TestUpdatePlanMilestones() {
 		"phasedIn":      true,
 		"highLevelNote": "Some high level note",
 	}
-	updater := "UPDT"
 
+	suite.Nil(milestones.ModifiedBy)
+	suite.Nil(milestones.ModifiedDts)
+
+	updater := "UPDT"
 	updatedMilestones, err := UpdatePlanMilestones(suite.testConfigs.Logger, milestones.ID, changes, updater, suite.testConfigs.Store)
 
 	suite.NoError(err)
+	suite.NotNil(updatedMilestones.ModifiedBy)
+	suite.NotNil(updatedMilestones.ModifiedDts)
 	suite.EqualValues(updater, *updatedMilestones.ModifiedBy)
 	suite.EqualValues(true, updatedMilestones.CompleteICIP.Equal(time.Date(2020, 5, 13, 20, 47, 50, 120000000, time.UTC)))
 	suite.Nil(updatedMilestones.ClearanceStarts)

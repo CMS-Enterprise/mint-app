@@ -17,8 +17,8 @@ type ModelPlan struct {
 	CMMIGroups    pq.StringArray `json:"cmmiGroups" db:"cmmi_groups"`
 	Archived      bool           `json:"archived" db:"archived"`
 	Status        ModelStatus    `json:"status" db:"status"`
-	CreatedBy     *string        `json:"createdBy" db:"created_by"`
-	CreatedDts    *time.Time     `json:"createdDts" db:"created_dts"`
+	CreatedBy     string         `json:"createdBy" db:"created_by"`
+	CreatedDts    time.Time      `json:"createdDts" db:"created_dts"`
 	ModifiedBy    *string        `json:"modifiedBy" db:"modified_by"`
 	ModifiedDts   *time.Time     `json:"modifiedDts" db:"modified_dts"`
 }
@@ -36,4 +36,9 @@ func (m ModelPlan) GetPlanID() uuid.UUID {
 // GetModifiedBy returns the ModifiedBy property for a ModelPlan struct
 func (m ModelPlan) GetModifiedBy() *string {
 	return m.ModifiedBy
+}
+
+// GetCreatedBy implements the CreatedBy property
+func (m ModelPlan) GetCreatedBy() string {
+	return m.CreatedBy
 }

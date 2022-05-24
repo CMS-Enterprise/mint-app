@@ -15,7 +15,7 @@ export interface GeneratePresignedUploadURL_generatePresignedUploadURL {
 }
 
 export interface GeneratePresignedUploadURL {
-  generatePresignedUploadURL: GeneratePresignedUploadURL_generatePresignedUploadURL | null;
+  generatePresignedUploadURL: GeneratePresignedUploadURL_generatePresignedUploadURL;
 }
 
 export interface GeneratePresignedUploadURLVariables {

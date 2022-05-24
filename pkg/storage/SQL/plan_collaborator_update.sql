@@ -8,12 +8,12 @@ SET
     modified_dts = CURRENT_TIMESTAMP
 WHERE plan_collaborator.id = :id
 RETURNING
-    id,
-    model_plan_id,
-    eua_user_id,
-    full_name,
-    team_role,
-    created_by,
-    created_dts,
-    modified_by,
-    modified_dts;
+id,
+model_plan_id,
+eua_user_id,
+full_name,
+team_role,
+created_by,
+created_dts,
+modified_by,
+modified_dts;

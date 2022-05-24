@@ -13,8 +13,8 @@ type PlanCollaborator struct {
 	EUAUserID   string     `json:"euaUserId" db:"eua_user_id"`
 	FullName    string     `json:"fullName" db:"full_name"`
 	TeamRole    TeamRole   `json:"teamRole" db:"team_role"`
-	CreatedBy   *string    `json:"createdBy" db:"created_by"`
-	CreatedDts  *time.Time `json:"createdDts" db:"created_dts"`
+	CreatedBy   string     `json:"createdBy" db:"created_by"`
+	CreatedDts  time.Time  `json:"createdDts" db:"created_dts"`
 	ModifiedBy  *string    `json:"modifiedBy" db:"modified_by"`
 	ModifiedDts *time.Time `json:"modifiedDts" db:"modified_dts"`
 }

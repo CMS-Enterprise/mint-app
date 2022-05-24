@@ -37,7 +37,7 @@ var planDocumentDeleteByIDSQL string
 // PlanDocumentCreate creates a plan document
 func (s *Store) PlanDocumentCreate(
 	logger *zap.Logger,
-	principal *string,
+	principal string,
 	inputDocument *models.PlanDocument,
 	documentURL *string,
 	s3Client *upload.S3Client) (*models.PlanDocument, error) {
@@ -56,8 +56,8 @@ func (s *Store) PlanDocumentCreate(
 		ID:                   utilityUUID.ValueOrNewUUID(inputDocument.ID),
 		ModelPlanID:          inputDocument.ModelPlanID,
 		FileType:             inputDocument.FileType,
-		Bucket:               s3Client.GetBucket(),
-		FileKey:              &key,
+		Bucket:               *s3Client.GetBucket(),
+		FileKey:              key,
 		VirusScanned:         false,
 		VirusClean:           false,
 		FileName:             inputDocument.FileName,
@@ -67,15 +67,15 @@ func (s *Store) PlanDocumentCreate(
 		OptionalNotes:        inputDocument.OptionalNotes,
 		DeletedAt:            nil,
 		CreatedBy:            principal,
-		CreatedDts:           nil,
-		ModifiedBy:           principal,
-		ModifiedDts:          nil,
 	}
 
 	statement, err := s.db.PrepareNamed(planDocumentCreateSQL)
 	if err != nil {
 		return nil, genericmodel.HandleModelCreationError(logger, err, document)
 	}
+
+	document.ModifiedBy = nil
+	document.ModifiedDts = nil
 
 	err = statement.Get(&document, &document)
 	if err != nil {
@@ -168,7 +168,7 @@ func planDocumentUpdateVirusScanStatus(s3Client *upload.S3Client, document *mode
 }
 
 func fetchDocumentTag(s3Client *upload.S3Client, document *models.PlanDocument, tagName string) (string, error) {
-	value, valueErr := s3Client.TagValueForKey(*document.FileKey, tagName)
+	value, valueErr := s3Client.TagValueForKey(document.FileKey, tagName)
 	if valueErr != nil {
 		return "", valueErr
 	}

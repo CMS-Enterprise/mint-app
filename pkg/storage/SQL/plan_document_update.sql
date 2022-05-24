@@ -15,21 +15,21 @@ SET
     modified_dts = CURRENT_TIMESTAMP
 
 WHERE plan_document.id = :id
-    RETURNING
-      id,
-      model_plan_id,
-      file_type,
-      bucket,
-      file_key,
-      virus_scanned,
-      virus_clean,
-      file_name,
-      file_size,
-      document_type,
-      other_type,
-      optional_notes,
-      deleted_at,
-      created_by,
-      created_dts,
-      modified_by,
-      modified_dts;
+RETURNING
+id,
+model_plan_id,
+file_type,
+bucket,
+file_key,
+virus_scanned,
+virus_clean,
+file_name,
+file_size,
+document_type,
+other_type,
+optional_notes,
+deleted_at,
+created_by,
+created_dts,
+modified_by,
+modified_dts;

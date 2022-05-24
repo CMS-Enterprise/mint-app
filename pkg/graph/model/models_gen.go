@@ -79,6 +79,137 @@ type PlanDocumentPayload struct {
 	PresignedURL *string              `json:"presignedURL"`
 }
 
+type AgreementType string
+
+const (
+	AgreementTypeParticipation AgreementType = "PARTICIPATION"
+	AgreementTypeCooperative   AgreementType = "COOPERATIVE"
+	AgreementTypeOther         AgreementType = "OTHER"
+)
+
+var AllAgreementType = []AgreementType{
+	AgreementTypeParticipation,
+	AgreementTypeCooperative,
+	AgreementTypeOther,
+}
+
+func (e AgreementType) IsValid() bool {
+	switch e {
+	case AgreementTypeParticipation, AgreementTypeCooperative, AgreementTypeOther:
+		return true
+	}
+	return false
+}
+
+func (e AgreementType) String() string {
+	return string(e)
+}
+
+func (e *AgreementType) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = AgreementType(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid AgreementType", str)
+	}
+	return nil
+}
+
+func (e AgreementType) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
+type AlternativePaymentModelType string
+
+const (
+	AlternativePaymentModelTypeRegular  AlternativePaymentModelType = "REGULAR"
+	AlternativePaymentModelTypeMips     AlternativePaymentModelType = "MIPS"
+	AlternativePaymentModelTypeAdvanced AlternativePaymentModelType = "ADVANCED"
+)
+
+var AllAlternativePaymentModelType = []AlternativePaymentModelType{
+	AlternativePaymentModelTypeRegular,
+	AlternativePaymentModelTypeMips,
+	AlternativePaymentModelTypeAdvanced,
+}
+
+func (e AlternativePaymentModelType) IsValid() bool {
+	switch e {
+	case AlternativePaymentModelTypeRegular, AlternativePaymentModelTypeMips, AlternativePaymentModelTypeAdvanced:
+		return true
+	}
+	return false
+}
+
+func (e AlternativePaymentModelType) String() string {
+	return string(e)
+}
+
+func (e *AlternativePaymentModelType) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = AlternativePaymentModelType(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid AlternativePaymentModelType", str)
+	}
+	return nil
+}
+
+func (e AlternativePaymentModelType) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
+type AuthorityAllowance string
+
+const (
+	AuthorityAllowanceAca                     AuthorityAllowance = "ACA"
+	AuthorityAllowanceCongressionallyMandated AuthorityAllowance = "CONGRESSIONALLY_MANDATED"
+	AuthorityAllowanceSsaPartB                AuthorityAllowance = "SSA_PART_B"
+	AuthorityAllowanceOther                   AuthorityAllowance = "OTHER"
+)
+
+var AllAuthorityAllowance = []AuthorityAllowance{
+	AuthorityAllowanceAca,
+	AuthorityAllowanceCongressionallyMandated,
+	AuthorityAllowanceSsaPartB,
+	AuthorityAllowanceOther,
+}
+
+func (e AuthorityAllowance) IsValid() bool {
+	switch e {
+	case AuthorityAllowanceAca, AuthorityAllowanceCongressionallyMandated, AuthorityAllowanceSsaPartB, AuthorityAllowanceOther:
+		return true
+	}
+	return false
+}
+
+func (e AuthorityAllowance) String() string {
+	return string(e)
+}
+
+func (e *AuthorityAllowance) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = AuthorityAllowance(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid AuthorityAllowance", str)
+	}
+	return nil
+}
+
+func (e AuthorityAllowance) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
 type CMMIGroup string
 
 const (
@@ -126,6 +257,149 @@ func (e CMMIGroup) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
+type GeographyApplication string
+
+const (
+	GeographyApplicationParticipants  GeographyApplication = "PARTICIPANTS"
+	GeographyApplicationProviders     GeographyApplication = "PROVIDERS"
+	GeographyApplicationBeneficiaries GeographyApplication = "BENEFICIARIES"
+	GeographyApplicationOther         GeographyApplication = "OTHER"
+)
+
+var AllGeographyApplication = []GeographyApplication{
+	GeographyApplicationParticipants,
+	GeographyApplicationProviders,
+	GeographyApplicationBeneficiaries,
+	GeographyApplicationOther,
+}
+
+func (e GeographyApplication) IsValid() bool {
+	switch e {
+	case GeographyApplicationParticipants, GeographyApplicationProviders, GeographyApplicationBeneficiaries, GeographyApplicationOther:
+		return true
+	}
+	return false
+}
+
+func (e GeographyApplication) String() string {
+	return string(e)
+}
+
+func (e *GeographyApplication) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = GeographyApplication(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid GeographyApplication", str)
+	}
+	return nil
+}
+
+func (e GeographyApplication) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
+type GeographyType string
+
+const (
+	GeographyTypeState  GeographyType = "STATE"
+	GeographyTypeRegion GeographyType = "REGION"
+	GeographyTypeOther  GeographyType = "OTHER"
+)
+
+var AllGeographyType = []GeographyType{
+	GeographyTypeState,
+	GeographyTypeRegion,
+	GeographyTypeOther,
+}
+
+func (e GeographyType) IsValid() bool {
+	switch e {
+	case GeographyTypeState, GeographyTypeRegion, GeographyTypeOther:
+		return true
+	}
+	return false
+}
+
+func (e GeographyType) String() string {
+	return string(e)
+}
+
+func (e *GeographyType) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = GeographyType(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid GeographyType", str)
+	}
+	return nil
+}
+
+func (e GeographyType) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
+type KeyCharacteristic string
+
+const (
+	KeyCharacteristicEpisodeBased    KeyCharacteristic = "EPISODE_BASED"
+	KeyCharacteristicPartC           KeyCharacteristic = "PART_C"
+	KeyCharacteristicPartD           KeyCharacteristic = "PART_D"
+	KeyCharacteristicPayment         KeyCharacteristic = "PAYMENT"
+	KeyCharacteristicPopulationBased KeyCharacteristic = "POPULATION_BASED"
+	KeyCharacteristicPreventative    KeyCharacteristic = "PREVENTATIVE"
+	KeyCharacteristicServiceDelivery KeyCharacteristic = "SERVICE_DELIVERY"
+	KeyCharacteristicSharedSavings   KeyCharacteristic = "SHARED_SAVINGS"
+	KeyCharacteristicOther           KeyCharacteristic = "OTHER"
+)
+
+var AllKeyCharacteristic = []KeyCharacteristic{
+	KeyCharacteristicEpisodeBased,
+	KeyCharacteristicPartC,
+	KeyCharacteristicPartD,
+	KeyCharacteristicPayment,
+	KeyCharacteristicPopulationBased,
+	KeyCharacteristicPreventative,
+	KeyCharacteristicServiceDelivery,
+	KeyCharacteristicSharedSavings,
+	KeyCharacteristicOther,
+}
+
+func (e KeyCharacteristic) IsValid() bool {
+	switch e {
+	case KeyCharacteristicEpisodeBased, KeyCharacteristicPartC, KeyCharacteristicPartD, KeyCharacteristicPayment, KeyCharacteristicPopulationBased, KeyCharacteristicPreventative, KeyCharacteristicServiceDelivery, KeyCharacteristicSharedSavings, KeyCharacteristicOther:
+		return true
+	}
+	return false
+}
+
+func (e KeyCharacteristic) String() string {
+	return string(e)
+}
+
+func (e *KeyCharacteristic) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = KeyCharacteristic(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid KeyCharacteristic", str)
+	}
+	return nil
+}
+
+func (e KeyCharacteristic) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
 // A user role associated with a job code
 type Role string
 
@@ -167,5 +441,48 @@ func (e *Role) UnmarshalGQL(v interface{}) error {
 }
 
 func (e Role) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
+type WaiverType string
+
+const (
+	WaiverTypeFraudAbuse     WaiverType = "FRAUD_ABUSE"
+	WaiverTypeProgramPayment WaiverType = "PROGRAM_PAYMENT"
+	WaiverTypeMedicaid       WaiverType = "MEDICAID"
+)
+
+var AllWaiverType = []WaiverType{
+	WaiverTypeFraudAbuse,
+	WaiverTypeProgramPayment,
+	WaiverTypeMedicaid,
+}
+
+func (e WaiverType) IsValid() bool {
+	switch e {
+	case WaiverTypeFraudAbuse, WaiverTypeProgramPayment, WaiverTypeMedicaid:
+		return true
+	}
+	return false
+}
+
+func (e WaiverType) String() string {
+	return string(e)
+}
+
+func (e *WaiverType) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = WaiverType(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid WaiverType", str)
+	}
+	return nil
+}
+
+func (e WaiverType) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
