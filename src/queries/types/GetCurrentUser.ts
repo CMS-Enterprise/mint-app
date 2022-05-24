@@ -19,5 +19,5 @@ export interface GetCurrentUser_currentUser {
 }
 
 export interface GetCurrentUser {
-  currentUser: GetCurrentUser_currentUser | null;
+  currentUser: GetCurrentUser_currentUser;
 }

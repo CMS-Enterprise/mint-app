@@ -18,7 +18,7 @@ export interface UpdateModelPlanCollaborator_updatePlanCollaborator {
 }
 
 export interface UpdateModelPlanCollaborator {
-  updatePlanCollaborator: UpdateModelPlanCollaborator_updatePlanCollaborator | null;
+  updatePlanCollaborator: UpdateModelPlanCollaborator_updatePlanCollaborator;
 }
 
 export interface UpdateModelPlanCollaboratorVariables {

@@ -27,19 +27,19 @@ scalar Time
 ModelPlan represent the data point for plans about a model. It is the central data type in the application
 """
 type ModelPlan {
-  id: UUID
+  id: UUID!
   modelName: String!
   modelCategory: ModelCategory
   cmsCenters: [CMSCenter!]!
   cmsOther: String
   cmmiGroups: [CMMIGroup!]!
   archived: Boolean!
-  createdBy: String
-  createdDts: Time
+  createdBy: String!
+  createdDts: Time!
   modifiedBy: String
   modifiedDts: Time
-  basics: PlanBasics
-  milestones: PlanMilestones
+  basics: PlanBasics!
+  milestones: PlanMilestones!
   generalCharacteristics: PlanGeneralCharacteristics!
   collaborators: [PlanCollaborator!]!
   documents: [PlanDocument!]!
@@ -72,8 +72,8 @@ type PlanCollaborator {
   euaUserID: String!
   fullName: String!
   teamRole: TeamRole!
-  createdBy: String
-  createdDts: Time
+  createdBy: String!
+  createdDts: Time!
   modifiedBy: String
   modifiedDts: Time
 }
@@ -110,19 +110,19 @@ PlanDocument represents a document on a plan
 type PlanDocument {
   id: UUID!
   modelPlanID: UUID!
-  fileType: String
-  bucket: String
-  fileKey: String
-  virusScanned: Boolean
-  virusClean: Boolean
-  fileName: String
-  fileSize: Int
-  documentType: DocumentType
+  fileType: String!
+  bucket: String!
+  fileKey: String!
+  virusScanned: Boolean!
+  virusClean: Boolean!
+  fileName: String!
+  fileSize: Int!
+  documentType: DocumentType!
   otherType: String
   optionalNotes: String
   deletedAt: Time
-  createdBy: String
-  createdDts: Time
+  createdBy: String!
+  createdDts: Time!
   modifiedBy: String
   modifiedDts: Time
 }
@@ -161,16 +161,16 @@ type PlanDocumentPayload {
 Represents plan basics
 """
 type PlanBasics {
-  id: UUID
-  modelPlanID: UUID
+  id: UUID!
+  modelPlanID: UUID!
 
   modelType: ModelType
   problem: String
   goal: String
   testInventions: String
   note: String
-  createdBy: String
-  createdDts: Time
+  createdBy: String!
+  createdDts: Time!
   modifiedBy: String
   modifiedDts: Time
   status: TaskStatus!
@@ -201,8 +201,8 @@ type UserInfo {
 Represents plan milestones
 """
 type PlanMilestones {
-  id: UUID
-  modelPlanID: UUID
+  id: UUID!
+  modelPlanID: UUID!
 
   completeICIP: Time
   clearanceStarts: Time
@@ -222,11 +222,11 @@ type PlanMilestones {
   phasedInNote: String
 
 
-  createdBy: String
-  createdDts: Time
+  createdBy: String!
+  createdDts: Time!
   modifiedBy: String
   modifiedDts: Time
-  status: TaskStatus
+  status: TaskStatus!
 }
 
 """
@@ -257,14 +257,14 @@ input PlanMilestoneChanges @goModel(model: "map[string]interface{}") {
 PlanDiscussion represents plan discussion
 """
 type PlanDiscussion  {
-	id:          UUID
-	modelPlanID: UUID
+	id:          UUID!
+	modelPlanID: UUID!
 	content: String
 	status: DiscussionStatus!
   replies: [DiscussionReply!]!
 
-  createdBy: String
-  createdDts: Time
+  createdBy: String!
+  createdDts: Time!
   modifiedBy: String
   modifiedDts: Time
 }
@@ -291,13 +291,13 @@ input PlanDiscussionChanges @goModel(model: "map[string]interface{}") {
 DiscussionReply represents a discussion reply
 """
 type DiscussionReply  {
-	id: UUID
+	id: UUID!
 	discussionID: UUID!
 	content: String
 	resolution: Boolean
 
-	createdBy: String
-	createdDts: Time
+	createdBy: String!
+	createdDts: Time!
 	modifiedBy: String
 	modifiedDts: Time
 }
@@ -325,8 +325,8 @@ input DiscussionReplyChanges @goModel(model: "map[string]interface{}") {
 PlanGeneralCharacteristics represents a plan general characteristics object
 """
 type PlanGeneralCharacteristics {
-  id: UUID
-  modelPlanID: UUID
+  id: UUID!
+  modelPlanID: UUID!
 
   # Page 1
   isNewModel: Boolean
@@ -388,8 +388,8 @@ type PlanGeneralCharacteristics {
   waiversRequiredTypes: [WaiverType!]!
   waiversRequiredNote: String
 
-  createdBy: String
-  createdDts: Time
+  createdBy: String!
+  createdDts: Time!
   modifiedBy: String
   modifiedDts: Time
   status: TaskStatus!
@@ -467,12 +467,12 @@ input PlanGeneralCharacteristicsChanges @goModel(model: "map[string]interface{}"
 Query definition for the schema
 """
 type Query {
-  currentUser: CurrentUser
-  modelPlan(id: UUID!) : ModelPlan
-  planDocument(id: UUID!) : PlanDocument
-  planDocumentDownloadURL(id: UUID!) : PlanDocumentPayload
-  readPlanDocumentByModelID(id: UUID!) : [PlanDocument]
-  modelPlanCollection: [ModelPlan]
+  currentUser: CurrentUser!
+  modelPlan(id: UUID!): ModelPlan!
+  planDocument(id: UUID!): PlanDocument!
+  planDocumentDownloadURL(id: UUID!): PlanDocumentPayload!
+  readPlanDocumentByModelID(id: UUID!): [PlanDocument!]!
+  modelPlanCollection: [ModelPlan!]!
   cedarPersonsByCommonName(commonName: String!): [UserInfo!]!
   planCollaboratorByID(id: UUID!): PlanCollaborator!
 }
@@ -481,58 +481,58 @@ type Query {
 Mutations definition for the schema
 """
 type Mutation {
-createModelPlan(modelName: String!):ModelPlan
+createModelPlan(modelName: String!): ModelPlan!
 @hasRole(role: MINT_BASE_USER)
 
-updateModelPlan(id: UUID!, changes: ModelPlanChanges!): ModelPlan
+updateModelPlan(id: UUID!, changes: ModelPlanChanges!): ModelPlan!
 @hasRole(role: MINT_BASE_USER)
 
-createPlanCollaborator(input: PlanCollaboratorCreateInput!): PlanCollaborator
+createPlanCollaborator(input: PlanCollaboratorCreateInput!): PlanCollaborator!
 @hasRole(role: MINT_BASE_USER)
 
-updatePlanCollaborator(id: UUID!, newRole: TeamRole!): PlanCollaborator
+updatePlanCollaborator(id: UUID!, newRole: TeamRole!): PlanCollaborator!
 @hasRole(role: MINT_BASE_USER)
 
-deletePlanCollaborator(id: UUID!): PlanCollaborator
+deletePlanCollaborator(id: UUID!): PlanCollaborator!
 @hasRole(role: MINT_BASE_USER)
 
-updatePlanBasics(id: UUID!, changes: PlanBasicsChanges!): PlanBasics
+updatePlanBasics(id: UUID!, changes: PlanBasicsChanges!): PlanBasics!
 @hasRole(role: MINT_BASE_USER)
 
-updatePlanMilestones(id: UUID!, changes: PlanMilestoneChanges!): PlanMilestones
+updatePlanMilestones(id: UUID!, changes: PlanMilestoneChanges!): PlanMilestones!
 @hasRole(role: MINT_BASE_USER)
 
 updatePlanGeneralCharacteristics(id: UUID!, changes: PlanGeneralCharacteristicsChanges!): PlanGeneralCharacteristics!
 @hasRole(role: MINT_BASE_USER)
 
-generatePresignedUploadURL(input: GeneratePresignedUploadURLInput!): GeneratePresignedUploadURLPayload
+generatePresignedUploadURL(input: GeneratePresignedUploadURLInput!): GeneratePresignedUploadURLPayload!
 @hasRole(role: MINT_BASE_USER)
 
-createPlanDocument(input: PlanDocumentInput!): PlanDocumentPayload
+createPlanDocument(input: PlanDocumentInput!): PlanDocumentPayload!
 @hasRole(role: MINT_BASE_USER)
 
-updatePlanDocument(input: PlanDocumentInput!): PlanDocumentPayload
+updatePlanDocument(input: PlanDocumentInput!): PlanDocumentPayload!
 @hasRole(role: MINT_BASE_USER)
 
 deletePlanDocument(input: PlanDocumentInput!): Int!
 @hasRole(role: MINT_BASE_USER)
 
-createPlanDiscussion(input: PlanDiscussionCreateInput!): PlanDiscussion
+createPlanDiscussion(input: PlanDiscussionCreateInput!): PlanDiscussion!
 @hasRole(role: MINT_BASE_USER)
 
-updatePlanDiscussion(id: UUID!, changes: PlanDiscussionChanges!): PlanDiscussion
+updatePlanDiscussion(id: UUID!, changes: PlanDiscussionChanges!): PlanDiscussion!
 @hasRole(role: MINT_BASE_USER)
 
-deletePlanDiscussion(id: UUID!): PlanDiscussion
+deletePlanDiscussion(id: UUID!): PlanDiscussion!
 @hasRole(role: MINT_BASE_USER)
 
-createDiscussionReply(input: DiscussionReplyCreateInput!): DiscussionReply
+createDiscussionReply(input: DiscussionReplyCreateInput!): DiscussionReply!
 @hasRole(role: MINT_BASE_USER)
 
-updateDiscussionReply(id: UUID!, changes: DiscussionReplyChanges!): DiscussionReply
+updateDiscussionReply(id: UUID!, changes: DiscussionReplyChanges!): DiscussionReply!
 @hasRole(role: MINT_BASE_USER)
 
-deleteDiscussionReply(id: UUID!): DiscussionReply
+deleteDiscussionReply(id: UUID!): DiscussionReply!
 @hasRole(role: MINT_BASE_USER)
 }
 

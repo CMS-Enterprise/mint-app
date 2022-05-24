@@ -28,8 +28,8 @@ type PlanMilestones struct {
 	PhasedIn     *bool   `json:"phasedIn" db:"phased_in"` //default to false
 	PhasedInNote *string `json:"phasedInNote" db:"phased_in_note"`
 
-	CreatedBy   *string    `json:"createdBy" db:"created_by"`
-	CreatedDts  *time.Time `json:"createdDts" db:"created_dts"`
+	CreatedBy   string     `json:"createdBy" db:"created_by"`
+	CreatedDts  time.Time  `json:"createdDts" db:"created_dts"`
 	ModifiedBy  *string    `json:"modifiedBy" db:"modified_by"`
 	ModifiedDts *time.Time `json:"modifiedDts" db:"modified_dts"`
 
@@ -112,6 +112,6 @@ func (p PlanMilestones) GetModifiedBy() *string {
 }
 
 // GetCreatedBy returns the CreatedBy property for a PlanMilestones struct
-func (p PlanMilestones) GetCreatedBy() *string {
+func (p PlanMilestones) GetCreatedBy() string {
 	return p.CreatedBy
 }

@@ -14,7 +14,7 @@ func (suite *ResolverSuite) TestFetchPlanMilestonesByModelPlanID() {
 	suite.NoError(err)
 	suite.EqualValues(plan.ID, milestones.ModelPlanID)
 	suite.EqualValues(models.TaskReady, milestones.Status)
-	suite.EqualValues(suite.testConfigs.UserInfo.EuaUserID, *milestones.CreatedBy)
+	suite.EqualValues(suite.testConfigs.UserInfo.EuaUserID, milestones.CreatedBy)
 	suite.Nil(milestones.ModifiedBy)
 	suite.Nil(milestones.ModifiedDts)
 

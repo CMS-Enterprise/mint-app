@@ -55,8 +55,8 @@ func (p PlanDiscussion) GetModifiedBy() *string {
 }
 
 // GetCreatedBy implements the CreatedBy property
-func (p PlanDiscussion) GetCreatedBy() *string {
-	return &p.CreatedBy
+func (p PlanDiscussion) GetCreatedBy() string {
+	return p.CreatedBy
 }
 
 // GetModelTypeName returns a string name that represents the DiscussionReply struct
@@ -81,6 +81,6 @@ func (r DiscussionReply) GetModifiedBy() *string {
 }
 
 // GetCreatedBy implements the CreatedBy property
-func (r DiscussionReply) GetCreatedBy() *string {
-	return &r.CreatedBy
+func (r DiscussionReply) GetCreatedBy() string {
+	return r.CreatedBy
 }

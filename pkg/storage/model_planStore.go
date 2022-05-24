@@ -43,7 +43,7 @@ func (s *Store) ModelPlanCreate(logger *zap.Logger, plan *models.ModelPlan) (*mo
 	if err != nil {
 		logger.Error(
 			fmt.Sprintf("Failed to create model plan with error %s", err),
-			zap.String("user", models.ValueOrEmpty(plan.CreatedBy)),
+			zap.String("user", plan.CreatedBy),
 		)
 		return nil, err
 	}
@@ -56,7 +56,7 @@ func (s *Store) ModelPlanCreate(logger *zap.Logger, plan *models.ModelPlan) (*mo
 	if err != nil {
 		logger.Error(
 			fmt.Sprintf("Failed to create model plan with error %s", err),
-			zap.String("user", models.ValueOrEmpty(plan.CreatedBy)),
+			zap.String("user", plan.CreatedBy),
 		)
 		return nil, err
 
