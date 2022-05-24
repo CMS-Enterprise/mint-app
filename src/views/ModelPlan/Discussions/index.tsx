@@ -509,8 +509,8 @@ const Discussions = ({
             type="button"
             unstyled
             onClick={() => {
-              setReply(null);
-              setDiscussionStatusMessage('');
+              setReply(null); // Setting reply to null - indicates a new question rather than an answer to a question
+              setDiscussionStatusMessage(''); // Clearing status before asking a new question
               setDiscussionType('question');
             }}
           >
