@@ -59,9 +59,13 @@ const mocks = [
 ];
 
 describe('Model Plan Documents page', () => {
-  it('renders discussions and replies without errors', async () => {
-    window.scrollTo = jest.fn();
+  // ReactModel is throwing warning - App element is not defined. Please use `Modal.setAppElement(el)`.  The app is being set within the modal but RTL is not picking up on it
+  // eslint-disable-next-line
+  console.error = jest.fn();
 
+  jest.spyOn(window, 'scroll');
+
+  it('renders discussions and replies without errors', async () => {
     const { getByText, getByTestId } = render(
       <MockedProvider mocks={mocks} addTypename={false}>
         <Discussions modelID={modelID} isOpen closeModal={() => null} />
@@ -81,8 +85,6 @@ describe('Model Plan Documents page', () => {
   });
 
   it('renders a question', async () => {
-    window.scrollTo = jest.fn();
-
     const { getByText } = render(
       <MockedProvider mocks={mocks} addTypename={false}>
         <Discussions modelID={modelID} isOpen closeModal={() => null} />
@@ -111,8 +113,6 @@ describe('Model Plan Documents page', () => {
   });
 
   it('closes the modal', async () => {
-    window.scrollTo = jest.fn();
-
     const handleClose = jest.fn();
 
     render(
