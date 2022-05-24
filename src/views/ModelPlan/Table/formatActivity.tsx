@@ -11,8 +11,6 @@ const formatRecentActivity = (
 ): React.ReactNode => {
   let discussionActivity;
 
-  console.log(date);
-
   // Formatting date string of last updated model plan
   const updated = `${i18next.t(
     'home:requestsTable.updated'
