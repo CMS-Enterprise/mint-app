@@ -96,7 +96,7 @@ const Table = ({ data, hiddenColumns }: TableProps) => {
       },
       {
         Header: t('requestsTable.headers.recentActivity'),
-        accessor: 'modifiedDts',
+        accessor: 'createdDts',
         Cell: ({ row, value }: any) => {
           const { discussions } = row.original;
           return formatRecentActivity(value, discussions);
