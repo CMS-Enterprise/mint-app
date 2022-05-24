@@ -11,12 +11,12 @@ import { PlanDiscussionChanges, DiscussionStatus } from "./../../types/graphql-g
 
 export interface UpdateModelPlanDiscussion_updatePlanDiscussion {
   __typename: "PlanDiscussion";
-  id: UUID | null;
+  id: UUID;
   status: DiscussionStatus;
 }
 
 export interface UpdateModelPlanDiscussion {
-  updatePlanDiscussion: UpdateModelPlanDiscussion_updatePlanDiscussion | null;
+  updatePlanDiscussion: UpdateModelPlanDiscussion_updatePlanDiscussion;
 }
 
 export interface UpdateModelPlanDiscussionVariables {

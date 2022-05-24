@@ -11,20 +11,20 @@ import { DiscussionStatus } from "./../../types/graphql-global-types";
 
 export interface GetModelPlanDiscussions_modelPlan_discussions_replies {
   __typename: "DiscussionReply";
-  id: UUID | null;
+  id: UUID;
   discussionID: UUID;
   content: string | null;
-  createdBy: string | null;
-  createdDts: Time | null;
+  createdBy: string;
+  createdDts: Time;
   resolution: boolean | null;
 }
 
 export interface GetModelPlanDiscussions_modelPlan_discussions {
   __typename: "PlanDiscussion";
-  id: UUID | null;
+  id: UUID;
   content: string | null;
-  createdBy: string | null;
-  createdDts: Time | null;
+  createdBy: string;
+  createdDts: Time;
   status: DiscussionStatus;
   replies: GetModelPlanDiscussions_modelPlan_discussions_replies[];
 }
@@ -35,7 +35,7 @@ export interface GetModelPlanDiscussions_modelPlan {
 }
 
 export interface GetModelPlanDiscussions {
-  modelPlan: GetModelPlanDiscussions_modelPlan | null;
+  modelPlan: GetModelPlanDiscussions_modelPlan;
 }
 
 export interface GetModelPlanDiscussionsVariables {

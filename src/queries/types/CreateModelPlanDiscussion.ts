@@ -11,15 +11,15 @@ import { PlanDiscussionCreateInput, DiscussionStatus } from "./../../types/graph
 
 export interface CreateModelPlanDiscussion_createPlanDiscussion {
   __typename: "PlanDiscussion";
-  id: UUID | null;
+  id: UUID;
   content: string | null;
   status: DiscussionStatus;
-  createdBy: string | null;
-  createdDts: Time | null;
+  createdBy: string;
+  createdDts: Time;
 }
 
 export interface CreateModelPlanDiscussion {
-  createPlanDiscussion: CreateModelPlanDiscussion_createPlanDiscussion | null;
+  createPlanDiscussion: CreateModelPlanDiscussion_createPlanDiscussion;
 }
 
 export interface CreateModelPlanDiscussionVariables {

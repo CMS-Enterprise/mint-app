@@ -11,16 +11,16 @@ import { DiscussionReplyCreateInput } from "./../../types/graphql-global-types";
 
 export interface CreateModelPlanReply_createDiscussionReply {
   __typename: "DiscussionReply";
-  id: UUID | null;
+  id: UUID;
   discussionID: UUID;
   content: string | null;
   resolution: boolean | null;
-  createdBy: string | null;
-  createdDts: Time | null;
+  createdBy: string;
+  createdDts: Time;
 }
 
 export interface CreateModelPlanReply {
-  createDiscussionReply: CreateModelPlanReply_createDiscussionReply | null;
+  createDiscussionReply: CreateModelPlanReply_createDiscussionReply;
 }
 
 export interface CreateModelPlanReplyVariables {
