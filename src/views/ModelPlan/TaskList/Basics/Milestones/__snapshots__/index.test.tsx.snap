@@ -76,6 +76,7 @@ exports[`Model Plan Documents page matches snapshot 1`] = `
         </p>
         <div
           class="padding-2 bg-primary-lighter"
+          data-testid="ask-a-question"
         >
           <svg
             class="usa-icon text-primary margin-right-1"
@@ -96,7 +97,7 @@ exports[`Model Plan Documents page matches snapshot 1`] = `
           </svg>
           <button
             class="usa-button usa-button--unstyled"
-            data-testid="button"
+            data-testid="ask-a-question-button"
             type="button"
           >
             Ask a question
