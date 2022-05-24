@@ -39,8 +39,8 @@ type PlanBeneficiaries struct {
 	PrecedenceRules                    *string                 `json:"precedenceRules" db:"precedence_rules"`
 
 	// Meta
-	CreatedBy   *string    `json:"createdBy" db:"created_by"`
-	CreatedDts  *time.Time `json:"createdDts" db:"created_dts"`
+	CreatedBy   string     `json:"createdBy" db:"created_by"`
+	CreatedDts  time.Time  `json:"createdDts" db:"created_dts"`
 	ModifiedBy  *string    `json:"modifiedBy" db:"modified_by"`
 	ModifiedDts *time.Time `json:"modifiedDts" db:"modified_dts"`
 	Status      TaskStatus `json:"status" db:"status"`
@@ -74,7 +74,7 @@ func (b PlanBeneficiaries) GetModifiedBy() *string {
 }
 
 // GetCreatedBy returns the ModifiedBy property for a PlanBeneficiaries struct
-func (b PlanBeneficiaries) GetCreatedBy() *string {
+func (b PlanBeneficiaries) GetCreatedBy() string {
 	return b.CreatedBy
 }
 
