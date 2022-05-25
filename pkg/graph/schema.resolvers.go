@@ -5,7 +5,6 @@ package graph
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/google/uuid"
 
@@ -61,7 +60,10 @@ func (r *modelPlanResolver) GeneralCharacteristics(ctx context.Context, obj *mod
 }
 
 func (r *modelPlanResolver) Beneficiaries(ctx context.Context, obj *models.ModelPlan) (*models.PlanBeneficiaries, error) {
-	panic(fmt.Errorf("not implemented"))
+	logger := appcontext.ZLogger(ctx)
+	principal := appcontext.Principal(ctx).ID()
+
+	return resolvers.PlanBeneficiariesGetByModelPlanID(logger, principal, obj.ID, r.store)
 }
 
 func (r *modelPlanResolver) Collaborators(ctx context.Context, obj *models.ModelPlan) ([]*models.PlanCollaborator, error) {
@@ -230,11 +232,25 @@ func (r *mutationResolver) DeleteDiscussionReply(ctx context.Context, id uuid.UU
 }
 
 func (r *planBeneficiariesResolver) Beneficiaries(ctx context.Context, obj *models.PlanBeneficiaries) ([]model.BeneficiariesType, error) {
-	panic(fmt.Errorf("not implemented"))
+	// TODO: We should probably have a better way to handle enum arrays
+	var bTypes []model.BeneficiariesType
+
+	for _, item := range obj.Beneficiaries {
+		bTypes = append(bTypes, model.BeneficiariesType(item))
+	}
+
+	return bTypes, nil
 }
 
 func (r *planBeneficiariesResolver) BeneficiarySelectionMethod(ctx context.Context, obj *models.PlanBeneficiaries) ([]model.SelectionMethodType, error) {
-	panic(fmt.Errorf("not implemented"))
+	// TODO: We should probably have a better way to handle enum arrays
+	var sTypes []model.SelectionMethodType
+
+	for _, item := range obj.BeneficiarySelectionMethod {
+		sTypes = append(sTypes, model.SelectionMethodType(item))
+	}
+
+	return sTypes, nil
 }
 
 func (r *planDiscussionResolver) Replies(ctx context.Context, obj *models.PlanDiscussion) ([]*models.DiscussionReply, error) {

@@ -478,7 +478,7 @@ type PlanBeneficiaries {
   treatDualElligibleDifferent: TriStateAnswer
   treatDualElligibleDifferentHow: String
   treatDualElligibleDifferentNote: String
-  excludeCertainCharacteristics: String
+  excludeCertainCharacteristics: TriStateAnswer
   excludeCertainCharacteristicsCriteria: String
   excludeCertainCharacteristicsNote: String
   #Page 2

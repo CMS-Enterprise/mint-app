@@ -2563,7 +2563,7 @@ type PlanBeneficiaries {
   treatDualElligibleDifferent: TriStateAnswer
   treatDualElligibleDifferentHow: String
   treatDualElligibleDifferentNote: String
-  excludeCertainCharacteristics: String
+  excludeCertainCharacteristics: TriStateAnswer
   excludeCertainCharacteristicsCriteria: String
   excludeCertainCharacteristicsNote: String
   #Page 2
@@ -7747,9 +7747,9 @@ func (ec *executionContext) _PlanBeneficiaries_excludeCertainCharacteristics(ctx
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(*string)
+	res := resTmp.(*models.TriStateAnswer)
 	fc.Result = res
-	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalOTriStateAnswer2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTriStateAnswer(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanBeneficiaries_excludeCertainCharacteristics(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -7759,7 +7759,7 @@ func (ec *executionContext) fieldContext_PlanBeneficiaries_excludeCertainCharact
 		IsMethod:   false,
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type String does not have child fields")
+			return nil, errors.New("field of type TriStateAnswer does not have child fields")
 		},
 	}
 	return fc, nil
