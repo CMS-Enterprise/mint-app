@@ -5,6 +5,7 @@ package graph
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/google/uuid"
 
@@ -57,6 +58,10 @@ func (r *modelPlanResolver) GeneralCharacteristics(ctx context.Context, obj *mod
 	principal := appcontext.Principal(ctx).ID()
 
 	return resolvers.FetchPlanGeneralCharacteristicsByModelPlanID(logger, principal, obj.ID, r.store)
+}
+
+func (r *modelPlanResolver) Beneficiaries(ctx context.Context, obj *models.ModelPlan) (*models.PlanBeneficiaries, error) {
+	panic(fmt.Errorf("not implemented"))
 }
 
 func (r *modelPlanResolver) Collaborators(ctx context.Context, obj *models.ModelPlan) ([]*models.PlanCollaborator, error) {
@@ -222,6 +227,14 @@ func (r *mutationResolver) DeleteDiscussionReply(ctx context.Context, id uuid.UU
 	logger := appcontext.ZLogger(ctx)
 
 	return resolvers.DeleteDiscussionReply(logger, id, principal, r.store)
+}
+
+func (r *planBeneficiariesResolver) Beneficiaries(ctx context.Context, obj *models.PlanBeneficiaries) ([]model.BeneficiariesType, error) {
+	panic(fmt.Errorf("not implemented"))
+}
+
+func (r *planBeneficiariesResolver) BeneficiarySelectionMethod(ctx context.Context, obj *models.PlanBeneficiaries) ([]model.SelectionMethodType, error) {
+	panic(fmt.Errorf("not implemented"))
 }
 
 func (r *planDiscussionResolver) Replies(ctx context.Context, obj *models.PlanDiscussion) ([]*models.DiscussionReply, error) {
@@ -397,6 +410,11 @@ func (r *Resolver) ModelPlan() generated.ModelPlanResolver { return &modelPlanRe
 // Mutation returns generated.MutationResolver implementation.
 func (r *Resolver) Mutation() generated.MutationResolver { return &mutationResolver{r} }
 
+// PlanBeneficiaries returns generated.PlanBeneficiariesResolver implementation.
+func (r *Resolver) PlanBeneficiaries() generated.PlanBeneficiariesResolver {
+	return &planBeneficiariesResolver{r}
+}
+
 // PlanDiscussion returns generated.PlanDiscussionResolver implementation.
 func (r *Resolver) PlanDiscussion() generated.PlanDiscussionResolver {
 	return &planDiscussionResolver{r}
@@ -418,6 +436,7 @@ func (r *Resolver) UserInfo() generated.UserInfoResolver { return &userInfoResol
 
 type modelPlanResolver struct{ *Resolver }
 type mutationResolver struct{ *Resolver }
+type planBeneficiariesResolver struct{ *Resolver }
 type planDiscussionResolver struct{ *Resolver }
 type planDocumentResolver struct{ *Resolver }
 type planGeneralCharacteristicsResolver struct{ *Resolver }
