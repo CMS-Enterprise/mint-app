@@ -152,6 +152,12 @@ func (r *mutationResolver) UpdatePlanGeneralCharacteristics(ctx context.Context,
 	return resolvers.UpdatePlanGeneralCharacteristics(logger, id, changes, principal, r.store)
 }
 
+func (r *mutationResolver) UpdatePlanBeneficiares(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanBeneficiaries, error) {
+	principal := appcontext.Principal(ctx).ID()
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.PlanBeneficiariesUpdate(logger, id, changes, principal, r.store)
+}
+
 func (r *mutationResolver) GeneratePresignedUploadURL(ctx context.Context, input model.GeneratePresignedUploadURLInput) (*model.GeneratePresignedUploadURLPayload, error) {
 	url, err := r.s3Client.NewPutPresignedURL(input.MimeType)
 	if err != nil {

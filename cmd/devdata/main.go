@@ -433,7 +433,7 @@ func processPlanGeneralCharacteristics(g *models.PlanGeneralCharacteristics) {
 
 func processPlanBeneficiaries(b *models.PlanBeneficiaries) {
 
-	// b.ID = "Hello"
+	b.ID = uuid.MustParse("b7aa2c9f-9e38-4e95-92d9-60bd791e8c59")
 	// b.ModelPlanID = "Hello"
 	var yes = models.TriYes
 	var conf = models.ConfidenceSlightly
