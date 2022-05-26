@@ -487,10 +487,11 @@ type PlanBeneficiaries {
   confidenceNote: String
   beneficiarySelectionMethod: [SelectionMethodType!]
   beneficiarySelectionOther: String
-  #Page 3
   beneficiarySelectionNote: String
+  #Page 3
   beneficiarySelectionFrequency: SelectionFrequencyType
   beneficiarySelectionFrequencyOther: String
+  beneficiarySelectionFrequencyNote: String
   beneficiaryOverlap: OverlapType
   beneficiaryOverlapNote: String
   precedenceRules: String
@@ -519,10 +520,11 @@ input PlanBeneficiariesChanges @goModel(model: "map[string]interface{}") {
   confidenceNote: String
   beneficiarySelectionMethod: [SelectionMethodType!]
   beneficiarySelectionOther: String
-  #Page 3
   beneficiarySelectionNote: String
+  #Page 3
   beneficiarySelectionFrequency: SelectionFrequencyType
   beneficiarySelectionFrequencyOther: String
+  beneficiarySelectionFrequencyNote: String
   beneficiaryOverlap: OverlapType
   beneficiaryOverlapNote: String
   precedenceRules: String

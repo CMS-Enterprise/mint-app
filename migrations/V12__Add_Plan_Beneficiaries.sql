@@ -63,10 +63,11 @@ CREATE TABLE plan_beneficiaries (
     confidence_note TEXT,
     beneficiary_selection_method SELECTION_METHOD_TYPE[],
     beneficiary_selection_other TEXT,
-    --page 3
     beneficiary_selection_note TEXT,
+    --page 3
     beneficiary_selection_frequency SELECTION_FREQUENCY_TYPE,
     beneficiary_selection_frequency_other TEXT,
+    beneficiary_selection_frequency_note TEXT,
     beneficiary_overlap OVERLAP_TYPE,
     beneficiary_overlap_note TEXT,
     precedence_rules TEXT,

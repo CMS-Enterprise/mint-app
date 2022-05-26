@@ -18,6 +18,7 @@ SELECT
     beneficiary_selection_note,
     beneficiary_selection_frequency,
     beneficiary_selection_frequency_other,
+    beneficiary_selection_frequency_note,
     beneficiary_overlap,
     beneficiary_overlap_note,
     precedence_rules,

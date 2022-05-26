@@ -29,11 +29,12 @@ type PlanBeneficiaries struct {
 	ConfidenceNote             *string         `json:"confidenceNote" db:"confidence_note"`
 	BeneficiarySelectionMethod pq.StringArray  `json:"beneficiarySelectionMethod" db:"beneficiary_selection_method"`
 	BeneficiarySelectionOther  *string         `json:"beneficiarySelectionOther" db:"beneficiary_selection_other"`
+	BeneficiarySelectionNote   *string         `json:"beneficiarySelectionNote" db:"beneficiary_selection_note"`
 
 	// Page 3
-	BeneficiarySelectionNote           *string                 `json:"beneficiarySelectionNote" db:"beneficiary_selection_note"`
 	BeneficiarySelectionFrequency      *SelectionFrequencyType `json:"beneficiarySelectionFrequency" db:"beneficiary_selection_frequency"`
 	BeneficiarySelectionFrequencyOther *string                 `json:"beneficiarySelectionFrequencyOther" db:"beneficiary_selection_frequency_other"`
+	BeneficiarySelectionFrequencyNote  *string                 `json:"beneficiarySelectionFrequencyNote" db:"beneficiary_selection_frequency_note"`
 	BeneficiaryOverlap                 *OverlapType            `json:"beneficiaryOverlap" db:"beneficiary_overlap"`
 	BeneficiaryOverlapNote             *string                 `json:"beneficiaryOverlapNote" db:"beneficiary_overlap_note"`
 	PrecedenceRules                    *string                 `json:"precedenceRules" db:"precedence_rules"`

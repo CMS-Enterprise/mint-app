@@ -81,6 +81,11 @@ func main() {
 		c.FullName = "Betty Alpha"
 		c.TeamRole = models.TeamRoleLeadership
 	})
+	makePlanBeneficiaries(uuid.MustParse("f11eb129-2c80-4080-9440-439cbe1a286f"), logger, store, func(b *models.PlanBeneficiaries) {
+		processPlanBeneficiaries(b)
+		b.ID = uuid.MustParse("4ba095f6-c209-4b37-9008-c2476d628504")
+		b.NumberPeopleImpacted = models.IntPointer(25)
+	})
 
 	makeModelPlan("Mr. Mint", logger, store)
 	pmGreatPlan := makeModelPlan("Mrs. Mint", logger, store, func(p *models.ModelPlan) {
@@ -456,7 +461,8 @@ func processPlanBeneficiaries(b *models.PlanBeneficiaries) {
 	b.BeneficiarySelectionOther = models.StringPointer("Competitive wrestling, elimination style")
 	b.BeneficiarySelectionNote = models.StringPointer("Priority given to provider sign up")
 	b.BeneficiarySelectionFrequency = &freq
-	b.BeneficiarySelectionFrequencyOther = models.StringPointer("Also as needed")
+	b.BeneficiarySelectionFrequencyOther = models.StringPointer("On February 29th when it occurs")
+	b.BeneficiarySelectionFrequencyNote = models.StringPointer("Also as needed")
 	b.BeneficiaryOverlap = &overlap
 	b.BeneficiaryOverlapNote = models.StringPointer("This will likely overlap")
 	b.PrecedenceRules = models.StringPointer("This takes precendence over all other models")
