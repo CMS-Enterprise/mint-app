@@ -2596,7 +2596,7 @@ type PlanBeneficiaries {
   beneficiarySelectionOther: String
   beneficiarySelectionNote: String
   #Page 3
-  beneficiarySelectionFrequency: SelectionFrequencyType
+  beneficiarySelectionFrequency: FrequencyType
   beneficiarySelectionFrequencyOther: String
   beneficiarySelectionFrequencyNote: String
   beneficiaryOverlap: OverlapType
@@ -2629,7 +2629,7 @@ input PlanBeneficiariesChanges @goModel(model: "map[string]interface{}") {
   beneficiarySelectionOther: String
   beneficiarySelectionNote: String
   #Page 3
-  beneficiarySelectionFrequency: SelectionFrequencyType
+  beneficiarySelectionFrequency: FrequencyType
   beneficiarySelectionFrequencyOther: String
   beneficiarySelectionFrequencyNote: String
   beneficiaryOverlap: OverlapType
@@ -2871,7 +2871,7 @@ enum ConfidenceType {
   FAIRLY
   COMPLETELY  
 }
-enum SelectionFrequencyType {
+enum FrequencyType {
   ANNUALLY
   BIANNUALLY
   QUARTERLY
@@ -8334,9 +8334,9 @@ func (ec *executionContext) _PlanBeneficiaries_beneficiarySelectionFrequency(ctx
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(*models.SelectionFrequencyType)
+	res := resTmp.(*models.FrequencyType)
 	fc.Result = res
-	return ec.marshalOSelectionFrequencyType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐSelectionFrequencyType(ctx, field.Selections, res)
+	return ec.marshalOFrequencyType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFrequencyType(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanBeneficiaries_beneficiarySelectionFrequency(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -8346,7 +8346,7 @@ func (ec *executionContext) fieldContext_PlanBeneficiaries_beneficiarySelectionF
 		IsMethod:   false,
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type SelectionFrequencyType does not have child fields")
+			return nil, errors.New("field of type FrequencyType does not have child fields")
 		},
 	}
 	return fc, nil
@@ -20918,6 +20918,23 @@ func (ec *executionContext) marshalODocumentType2ᚖgithubᚗcomᚋcmsgovᚋmint
 	return res
 }
 
+func (ec *executionContext) unmarshalOFrequencyType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFrequencyType(ctx context.Context, v interface{}) (*models.FrequencyType, error) {
+	if v == nil {
+		return nil, nil
+	}
+	tmp, err := graphql.UnmarshalString(v)
+	res := models.FrequencyType(tmp)
+	return &res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalOFrequencyType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFrequencyType(ctx context.Context, sel ast.SelectionSet, v *models.FrequencyType) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	res := graphql.MarshalString(string(*v))
+	return res
+}
+
 func (ec *executionContext) unmarshalOGeographyApplication2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐGeographyApplicationᚄ(ctx context.Context, v interface{}) ([]model.GeographyApplication, error) {
 	if v == nil {
 		return nil, nil
@@ -21246,23 +21263,6 @@ func (ec *executionContext) marshalOPlanDocument2ᚖgithubᚗcomᚋcmsgovᚋmint
 		return graphql.Null
 	}
 	return ec._PlanDocument(ctx, sel, v)
-}
-
-func (ec *executionContext) unmarshalOSelectionFrequencyType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐSelectionFrequencyType(ctx context.Context, v interface{}) (*models.SelectionFrequencyType, error) {
-	if v == nil {
-		return nil, nil
-	}
-	tmp, err := graphql.UnmarshalString(v)
-	res := models.SelectionFrequencyType(tmp)
-	return &res, graphql.ErrorOnPath(ctx, err)
-}
-
-func (ec *executionContext) marshalOSelectionFrequencyType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐSelectionFrequencyType(ctx context.Context, sel ast.SelectionSet, v *models.SelectionFrequencyType) graphql.Marshaler {
-	if v == nil {
-		return graphql.Null
-	}
-	res := graphql.MarshalString(string(*v))
-	return res
 }
 
 func (ec *executionContext) unmarshalOSelectionMethodType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐSelectionMethodTypeᚄ(ctx context.Context, v interface{}) ([]model.SelectionMethodType, error) {

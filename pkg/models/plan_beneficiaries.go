@@ -32,12 +32,12 @@ type PlanBeneficiaries struct {
 	BeneficiarySelectionNote   *string         `json:"beneficiarySelectionNote" db:"beneficiary_selection_note"`
 
 	// Page 3
-	BeneficiarySelectionFrequency      *SelectionFrequencyType `json:"beneficiarySelectionFrequency" db:"beneficiary_selection_frequency"`
-	BeneficiarySelectionFrequencyOther *string                 `json:"beneficiarySelectionFrequencyOther" db:"beneficiary_selection_frequency_other"`
-	BeneficiarySelectionFrequencyNote  *string                 `json:"beneficiarySelectionFrequencyNote" db:"beneficiary_selection_frequency_note"`
-	BeneficiaryOverlap                 *OverlapType            `json:"beneficiaryOverlap" db:"beneficiary_overlap"`
-	BeneficiaryOverlapNote             *string                 `json:"beneficiaryOverlapNote" db:"beneficiary_overlap_note"`
-	PrecedenceRules                    *string                 `json:"precedenceRules" db:"precedence_rules"`
+	BeneficiarySelectionFrequency      *FrequencyType `json:"beneficiarySelectionFrequency" db:"beneficiary_selection_frequency"`
+	BeneficiarySelectionFrequencyOther *string        `json:"beneficiarySelectionFrequencyOther" db:"beneficiary_selection_frequency_other"`
+	BeneficiarySelectionFrequencyNote  *string        `json:"beneficiarySelectionFrequencyNote" db:"beneficiary_selection_frequency_note"`
+	BeneficiaryOverlap                 *OverlapType   `json:"beneficiaryOverlap" db:"beneficiary_overlap"`
+	BeneficiaryOverlapNote             *string        `json:"beneficiaryOverlapNote" db:"beneficiary_overlap_note"`
+	PrecedenceRules                    *string        `json:"precedenceRules" db:"precedence_rules"`
 
 	// Meta
 	CreatedBy   string     `json:"createdBy" db:"created_by"`
@@ -79,19 +79,6 @@ func (b PlanBeneficiaries) GetCreatedBy() string {
 	return b.CreatedBy
 }
 
-// SelectionFrequencyType represents the possible Frequency options
-type SelectionFrequencyType string
-
-// These constants represent the different values of CMSCenter
-const (
-	SelectionAnnually   SelectionFrequencyType = "ANNUALLY"
-	SelectionBiannually SelectionFrequencyType = "BIANNUALLY"
-	SelectionQuarterly  SelectionFrequencyType = "QUARTERLY"
-	SelectionMonthly    SelectionFrequencyType = "MONTHLY"
-	SelectionRolling    SelectionFrequencyType = "ROLLING"
-	SelectionOther      SelectionFrequencyType = "OTHER"
-)
-
 //OverlapType represents the possible Overlap Type answers
 type OverlapType string
 
@@ -100,15 +87,4 @@ const (
 	OverlapYesNeedPolicies OverlapType = "YES_NEED_POLICIES"
 	OverlapYesNoIssues     OverlapType = "YES_NO_ISSUES"
 	OverlapNo              OverlapType = "NO"
-)
-
-//ConfidenceType representes the values possible for the amount of confidence in an answer
-type ConfidenceType string
-
-//These represent Confidence Type Answers
-const (
-	ConfidenceNotAtAll   ConfidenceType = "NOT_AT_ALL"
-	ConfidenceSlightly   ConfidenceType = "SLIGHTLY"
-	ConfidenceFairly     ConfidenceType = "FAIRLY"
-	ConfidenceCompletely ConfidenceType = "COMPLETELY"
 )

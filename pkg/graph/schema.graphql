@@ -489,7 +489,7 @@ type PlanBeneficiaries {
   beneficiarySelectionOther: String
   beneficiarySelectionNote: String
   #Page 3
-  beneficiarySelectionFrequency: SelectionFrequencyType
+  beneficiarySelectionFrequency: FrequencyType
   beneficiarySelectionFrequencyOther: String
   beneficiarySelectionFrequencyNote: String
   beneficiaryOverlap: OverlapType
@@ -522,7 +522,7 @@ input PlanBeneficiariesChanges @goModel(model: "map[string]interface{}") {
   beneficiarySelectionOther: String
   beneficiarySelectionNote: String
   #Page 3
-  beneficiarySelectionFrequency: SelectionFrequencyType
+  beneficiarySelectionFrequency: FrequencyType
   beneficiarySelectionFrequencyOther: String
   beneficiarySelectionFrequencyNote: String
   beneficiaryOverlap: OverlapType
@@ -764,7 +764,7 @@ enum ConfidenceType {
   FAIRLY
   COMPLETELY  
 }
-enum SelectionFrequencyType {
+enum FrequencyType {
   ANNUALLY
   BIANNUALLY
   QUARTERLY

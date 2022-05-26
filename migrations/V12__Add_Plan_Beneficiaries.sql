@@ -9,12 +9,7 @@ CREATE TYPE BENEFICIARIES_TYPE AS ENUM (
     'NA'
 );
 
-CREATE TYPE CONFIDENCE_TYPE AS ENUM (
-    'NOT_AT_ALL',
-    'SLIGHTLY',
-    'FAIRLY',
-    'COMPLETELY'
-);
+
 
 CREATE TYPE SELECTION_METHOD_TYPE AS ENUM (
     'HISTORICAL',
@@ -26,14 +21,6 @@ CREATE TYPE SELECTION_METHOD_TYPE AS ENUM (
     'NA'
 );
 
-CREATE TYPE SELECTION_FREQUENCY_TYPE AS ENUM (
-    'ANNUALLY',
-    'BIANNUALLY',
-    'QUARTERLY',
-    'MONTHLY',
-    'ROLLING',
-    'OTHER'
-);
 
 CREATE TYPE OVERLAP_TYPE AS ENUM (
     'YES_NEED_POLICIES',
@@ -65,7 +52,7 @@ CREATE TABLE plan_beneficiaries (
     beneficiary_selection_other TEXT,
     beneficiary_selection_note TEXT,
     --page 3
-    beneficiary_selection_frequency SELECTION_FREQUENCY_TYPE,
+    beneficiary_selection_frequency FREQUENCY_TYPE,
     beneficiary_selection_frequency_other TEXT,
     beneficiary_selection_frequency_note TEXT,
     beneficiary_overlap OVERLAP_TYPE,
@@ -79,3 +66,9 @@ CREATE TABLE plan_beneficiaries (
     status TASK_STATUS NOT NULL DEFAULT 'READY'
 
 );
+
+ALTER TABLE plan_beneficiaries
+ADD CONSTRAINT fk_beneficiaries_plan FOREIGN KEY (model_plan_id)
+REFERENCES public.model_plan (id) MATCH SIMPLE
+ON UPDATE NO ACTION
+ON DELETE NO ACTION
