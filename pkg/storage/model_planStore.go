@@ -2,7 +2,6 @@ package storage
 
 import (
 	"database/sql"
-	"errors"
 	"fmt"
 
 	"github.com/cmsgov/mint-app/pkg/shared/utilitySQL"
@@ -108,14 +107,6 @@ func (s *Store) ModelPlanGetByID(logger *zap.Logger, id uuid.UUID) (*models.Mode
 	err = stmt.Get(&plan, arg)
 
 	if err != nil {
-		if errors.Is(err, sql.ErrNoRows) {
-			logger.Info(
-				"No model plan found",
-				zap.Error(err),
-				zap.String("id", id.String()),
-			)
-			return nil, &apperrors.ResourceNotFoundError{Err: err, Resource: models.ModelPlan{}}
-		}
 		logger.Error(
 			"Failed to fetch model plan",
 			zap.Error(err),
@@ -123,7 +114,7 @@ func (s *Store) ModelPlanGetByID(logger *zap.Logger, id uuid.UUID) (*models.Mode
 		)
 		return nil, &apperrors.QueryError{
 			Err:       err,
-			Model:     id,
+			Model:     plan,
 			Operation: apperrors.QueryFetch,
 		}
 	}
@@ -147,14 +138,6 @@ func (s *Store) ModelPlanCollectionByUser(logger *zap.Logger, EUAID string, arch
 	err = stmt.Select(&modelPlans, arg) //this returns more than one
 
 	if err != nil {
-		if errors.Is(err, sql.ErrNoRows) {
-			logger.Info(
-				"No model plans for user found",
-				zap.Error(err),
-				zap.String("euaID", EUAID),
-			)
-			return nil, &apperrors.ResourceNotFoundError{Err: err, Resource: models.ModelPlan{}}
-		}
 		logger.Error(
 			"Failed to fetch model plans",
 			zap.Error(err),

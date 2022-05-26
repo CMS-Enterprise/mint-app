@@ -1,9 +1,7 @@
 package storage
 
 import (
-	"database/sql"
 	_ "embed"
-	"errors"
 
 	"github.com/google/uuid"
 	"go.uber.org/zap"
@@ -95,14 +93,6 @@ func (s *Store) DiscussionReplyCollectionByDiscusionID(logger *zap.Logger, discu
 	err = stmt.Select(&replies, arg) //this returns more than one
 
 	if err != nil {
-		if errors.Is(err, sql.ErrNoRows) {
-			logger.Info(
-				"No replies for this discussion",
-				zap.Error(err),
-				zap.String("discussion_id", discussionID.String()),
-			)
-			return nil, &apperrors.ResourceNotFoundError{Err: err, Resource: models.ModelPlan{}}
-		}
 		logger.Error(
 			"Failed to fetch discusion replies",
 			zap.Error(err),
@@ -135,7 +125,7 @@ func (s *Store) PlanDiscussionCollectionByModelPlanID(logger *zap.Logger, modelP
 	err = stmt.Select(&discusions, arg) //this returns more than one
 
 	if err != nil {
-		return nil, genericmodel.HandleModelFetchByIDError(logger, err, modelPlanID)
+		return nil, err
 	}
 	return discusions, nil
 

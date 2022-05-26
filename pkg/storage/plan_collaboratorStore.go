@@ -1,9 +1,7 @@
 package storage
 
 import (
-	"database/sql"
 	_ "embed"
-	"errors"
 
 	"github.com/cmsgov/mint-app/pkg/shared/utilitySQL"
 
@@ -96,10 +94,6 @@ func (s *Store) PlanCollaboratorsByModelPlanID(_ *zap.Logger, modelPlanID uuid.U
 
 	err = statement.Select(&collaborators, arg)
 	if err != nil {
-		if errors.Is(err, sql.ErrNoRows) {
-			return collaborators, nil
-		}
-
 		return nil, err
 	}
 
@@ -116,10 +110,6 @@ func (s *Store) PlanCollaboratorFetchByID(id uuid.UUID) (*models.PlanCollaborato
 	var collaborator models.PlanCollaborator
 	err = statement.Get(&collaborator, utilitySQL.CreateIDQueryMap(id))
 	if err != nil {
-		if errors.Is(err, sql.ErrNoRows) {
-			return nil, nil
-		}
-
 		return nil, err
 	}
 
