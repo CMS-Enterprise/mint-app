@@ -79,6 +79,14 @@ type PlanCollaborator {
 }
 
 """
+EventCollaboratorChanged represents a change in the subscription
+"""
+type EventCollaboratorChanged {
+  changeType: CollaboratorChangedAction!
+  collaborator: PlanCollaborator!
+}
+
+"""
 PlanCollaboratorCreateInput represents the data required to create a collaborator on a plan
 """
 input PlanCollaboratorCreateInput {
@@ -481,6 +489,9 @@ type Query {
 Mutations definition for the schema
 """
 type Mutation {
+subscriptionUnregisterCollaboratorChanged(modelPlanID: UUID!): Boolean!
+@hasRole(role: MINT_BASE_USER)
+
 createModelPlan(modelName: String!): ModelPlan!
 @hasRole(role: MINT_BASE_USER)
 
@@ -536,6 +547,17 @@ deleteDiscussionReply(id: UUID!): DiscussionReply!
 @hasRole(role: MINT_BASE_USER)
 }
 
+type Subscription {
+  subscriptionFileScanCompleted: Boolean!
+  @hasRole(role: MINT_BASE_USER)
+
+  subscriptionTaskListSectionUpdated: Boolean!
+  @hasRole(role: MINT_BASE_USER)
+
+  subscriptionRegisterCollaboratorChanged(modelPlanID: UUID!): EventCollaboratorChanged!
+  @hasRole(role: MINT_BASE_USER)
+}
+
 enum TaskStatus {
   READY
   IN_PROGRESS
@@ -555,6 +577,12 @@ enum ModelType
   VOLUNTARY
   MANDATORY
   TBD
+}
+
+enum CollaboratorChangedAction {
+  ADDED,
+  UPDATED,
+  REMOVED
 }
 
 enum ModelCategory {

@@ -23,6 +23,12 @@ type DiscussionReplyCreateInput struct {
 	Resolution   bool      `json:"resolution"`
 }
 
+// EventCollaboratorChanged represents a change in the subscription
+type EventCollaboratorChanged struct {
+	ChangeType   CollaboratorChangedAction `json:"changeType"`
+	Collaborator *models.PlanCollaborator  `json:"collaborator"`
+}
+
 // Input associated with a document to be uploaded
 type GeneratePresignedUploadURLInput struct {
 	FileName string `json:"fileName"`
@@ -254,6 +260,49 @@ func (e *CMMIGroup) UnmarshalGQL(v interface{}) error {
 }
 
 func (e CMMIGroup) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
+type CollaboratorChangedAction string
+
+const (
+	CollaboratorChangedActionAdded   CollaboratorChangedAction = "ADDED"
+	CollaboratorChangedActionUpdated CollaboratorChangedAction = "UPDATED"
+	CollaboratorChangedActionRemoved CollaboratorChangedAction = "REMOVED"
+)
+
+var AllCollaboratorChangedAction = []CollaboratorChangedAction{
+	CollaboratorChangedActionAdded,
+	CollaboratorChangedActionUpdated,
+	CollaboratorChangedActionRemoved,
+}
+
+func (e CollaboratorChangedAction) IsValid() bool {
+	switch e {
+	case CollaboratorChangedActionAdded, CollaboratorChangedActionUpdated, CollaboratorChangedActionRemoved:
+		return true
+	}
+	return false
+}
+
+func (e CollaboratorChangedAction) String() string {
+	return string(e)
+}
+
+func (e *CollaboratorChangedAction) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = CollaboratorChangedAction(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid CollaboratorChangedAction", str)
+	}
+	return nil
+}
+
+func (e CollaboratorChangedAction) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 

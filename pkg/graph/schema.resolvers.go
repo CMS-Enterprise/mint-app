@@ -5,6 +5,7 @@ package graph
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/google/uuid"
 
@@ -79,6 +80,17 @@ func (r *modelPlanResolver) Discussions(ctx context.Context, obj *models.ModelPl
 	logger := appcontext.ZLogger(ctx)
 
 	return resolvers.PlanDiscussionCollectionByModelPlanID(logger, obj.ID, r.store)
+}
+
+func (r *mutationResolver) SubscriptionUnregisterCollaboratorChanged(ctx context.Context, modelPlanID uuid.UUID) (bool, error) {
+	principal := appcontext.Principal(ctx).ID()
+
+	err := resolvers.SubscriptionUnregisterCollaboratorChanged(modelPlanID, principal)
+	if err != nil {
+		return false, err
+	}
+
+	return true, nil
 }
 
 func (r *mutationResolver) CreateModelPlan(ctx context.Context, modelName string) (*models.ModelPlan, error) {
@@ -387,6 +399,20 @@ func (r *queryResolver) PlanCollaboratorByID(ctx context.Context, id uuid.UUID) 
 	return resolvers.FetchCollaboratorByID(logger, id, r.store)
 }
 
+func (r *subscriptionResolver) SubscriptionFileScanCompleted(ctx context.Context) (<-chan bool, error) {
+	panic(fmt.Errorf("not implemented"))
+}
+
+func (r *subscriptionResolver) SubscriptionTaskListSectionUpdated(ctx context.Context) (<-chan bool, error) {
+	panic(fmt.Errorf("not implemented"))
+}
+
+func (r *subscriptionResolver) SubscriptionRegisterCollaboratorChanged(ctx context.Context, modelPlanID uuid.UUID) (<-chan *model.EventCollaboratorChanged, error) {
+	principal := appcontext.Principal(ctx).ID()
+
+	return resolvers.SubscriptionRegisterCollaboratorChanged(ctx.Done(), principal, modelPlanID)
+}
+
 func (r *userInfoResolver) Email(ctx context.Context, obj *models.UserInfo) (string, error) {
 	return string(obj.Email), nil
 }
@@ -413,6 +439,9 @@ func (r *Resolver) PlanGeneralCharacteristics() generated.PlanGeneralCharacteris
 // Query returns generated.QueryResolver implementation.
 func (r *Resolver) Query() generated.QueryResolver { return &queryResolver{r} }
 
+// Subscription returns generated.SubscriptionResolver implementation.
+func (r *Resolver) Subscription() generated.SubscriptionResolver { return &subscriptionResolver{r} }
+
 // UserInfo returns generated.UserInfoResolver implementation.
 func (r *Resolver) UserInfo() generated.UserInfoResolver { return &userInfoResolver{r} }
 
@@ -422,4 +451,5 @@ type planDiscussionResolver struct{ *Resolver }
 type planDocumentResolver struct{ *Resolver }
 type planGeneralCharacteristicsResolver struct{ *Resolver }
 type queryResolver struct{ *Resolver }
+type subscriptionResolver struct{ *Resolver }
 type userInfoResolver struct{ *Resolver }

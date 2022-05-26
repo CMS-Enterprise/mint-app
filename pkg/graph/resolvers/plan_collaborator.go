@@ -20,6 +20,12 @@ func CreatePlanCollaborator(logger *zap.Logger, input *model.PlanCollaboratorCre
 	}
 
 	retCollaborator, err := store.PlanCollaboratorCreate(logger, collaborator)
+	if err != nil {
+		return retCollaborator, err
+	}
+
+	NotifySubscribersEventCollaboratorChanged(retCollaborator, model.CollaboratorChangedActionAdded)
+
 	return retCollaborator, err
 }
 
@@ -34,12 +40,16 @@ func UpdatePlanCollaborator(logger *zap.Logger, id uuid.UUID, newRole models.Tea
 	existingCollaborator.ModifiedBy = &principal
 	existingCollaborator.TeamRole = newRole
 
+	NotifySubscribersEventCollaboratorChanged(existingCollaborator, model.CollaboratorChangedActionUpdated)
+
 	return store.PlanCollaboratorUpdate(logger, existingCollaborator)
 }
 
 // DeletePlanCollaborator implements resolver logic to delete a plan collaborator
 func DeletePlanCollaborator(logger *zap.Logger, id uuid.UUID, principal string, store *storage.Store) (*models.PlanCollaborator, error) {
 	retCollaborator, err := store.PlanCollaboratorDelete(logger, id)
+	NotifySubscribersEventCollaboratorChanged(retCollaborator, model.CollaboratorChangedActionAdded)
+
 	return retCollaborator, err
 }
 
