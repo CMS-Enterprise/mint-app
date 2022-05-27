@@ -5,6 +5,7 @@ package graph
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/google/uuid"
 
@@ -57,6 +58,10 @@ func (r *modelPlanResolver) GeneralCharacteristics(ctx context.Context, obj *mod
 	principal := appcontext.Principal(ctx).ID()
 
 	return resolvers.FetchPlanGeneralCharacteristicsByModelPlanID(logger, principal, obj.ID, r.store)
+}
+
+func (r *modelPlanResolver) ProvidersAndParticipants(ctx context.Context, obj *models.ModelPlan) (*models.PlanProvidersAndParticipants, error) {
+	panic(fmt.Errorf("not implemented"))
 }
 
 func (r *modelPlanResolver) Beneficiaries(ctx context.Context, obj *models.ModelPlan) (*models.PlanBeneficiaries, error) {
@@ -156,6 +161,10 @@ func (r *mutationResolver) UpdatePlanBeneficiares(ctx context.Context, id uuid.U
 	principal := appcontext.Principal(ctx).ID()
 	logger := appcontext.ZLogger(ctx)
 	return resolvers.PlanBeneficiariesUpdate(logger, id, changes, principal, r.store)
+}
+
+func (r *mutationResolver) UpdatePlanPlanProvidersAndParticipants(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanProvidersAndParticipants, error) {
+	panic(fmt.Errorf("not implemented"))
 }
 
 func (r *mutationResolver) GeneratePresignedUploadURL(ctx context.Context, input model.GeneratePresignedUploadURLInput) (*model.GeneratePresignedUploadURLPayload, error) {
@@ -350,6 +359,30 @@ func (r *planGeneralCharacteristicsResolver) WaiversRequiredTypes(ctx context.Co
 	return waiverTypes, nil
 }
 
+func (r *planProvidersAndParticipantsResolver) Participants(ctx context.Context, obj *models.PlanProvidersAndParticipants) (*model.ParticipantsType, error) {
+	panic(fmt.Errorf("not implemented"))
+}
+
+func (r *planProvidersAndParticipantsResolver) SelectionMethod(ctx context.Context, obj *models.PlanProvidersAndParticipants) (*model.ParticipantSelectionType, error) {
+	panic(fmt.Errorf("not implemented"))
+}
+
+func (r *planProvidersAndParticipantsResolver) CommunicationMethod(ctx context.Context, obj *models.PlanProvidersAndParticipants) (*model.ParticipantCommunicationType, error) {
+	panic(fmt.Errorf("not implemented"))
+}
+
+func (r *planProvidersAndParticipantsResolver) ParticipantsIds(ctx context.Context, obj *models.PlanProvidersAndParticipants) (*model.ParticipantsIDType, error) {
+	panic(fmt.Errorf("not implemented"))
+}
+
+func (r *planProvidersAndParticipantsResolver) ProviderAddMethod(ctx context.Context, obj *models.PlanProvidersAndParticipants) (*model.ProviderAddType, error) {
+	panic(fmt.Errorf("not implemented"))
+}
+
+func (r *planProvidersAndParticipantsResolver) ProviderLeaveMethod(ctx context.Context, obj *models.PlanProvidersAndParticipants) (*model.ProviderLeaveType, error) {
+	panic(fmt.Errorf("not implemented"))
+}
+
 func (r *queryResolver) CurrentUser(ctx context.Context) (*model.CurrentUser, error) {
 	ldUser := flags.Principal(ctx)
 	userKey := ldUser.GetKey()
@@ -450,6 +483,11 @@ func (r *Resolver) PlanGeneralCharacteristics() generated.PlanGeneralCharacteris
 	return &planGeneralCharacteristicsResolver{r}
 }
 
+// PlanProvidersAndParticipants returns generated.PlanProvidersAndParticipantsResolver implementation.
+func (r *Resolver) PlanProvidersAndParticipants() generated.PlanProvidersAndParticipantsResolver {
+	return &planProvidersAndParticipantsResolver{r}
+}
+
 // Query returns generated.QueryResolver implementation.
 func (r *Resolver) Query() generated.QueryResolver { return &queryResolver{r} }
 
@@ -462,5 +500,6 @@ type planBeneficiariesResolver struct{ *Resolver }
 type planDiscussionResolver struct{ *Resolver }
 type planDocumentResolver struct{ *Resolver }
 type planGeneralCharacteristicsResolver struct{ *Resolver }
+type planProvidersAndParticipantsResolver struct{ *Resolver }
 type queryResolver struct{ *Resolver }
 type userInfoResolver struct{ *Resolver }
