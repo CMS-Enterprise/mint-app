@@ -1,6 +1,5 @@
 UPDATE plan_beneficiaries
-SET id = :id,
-    model_plan_id = :model_plan_id,
+SET
     beneficiaries = :beneficiaries,
     beneficiaries_other = :beneficiaries_other,
     beneficiaries_note = :beneficiaries_note,
