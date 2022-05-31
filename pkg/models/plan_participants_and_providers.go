@@ -51,7 +51,7 @@ type PlanParticipantsAndProviders struct {
 	GainsharePaymentsNote   *string        `json:"gainsharePaymentsNote" db:"gainshare_payments_note"`
 	ParticipantsIds         pq.StringArray `json:"participantsIds" db:"participants_ids"`
 	ParticipantsIdsOther    *string        `json:"participantsIdsOther" db:"participants_ids_other"`
-	ParticipantsIDSNote     *string        `json:"participantsIDSNote" db:"participants__ids_note"`
+	ParticipantsIDSNote     *string        `json:"participantsIDSNote" db:"participants_ids_note"`
 
 	//page 5
 	ProviderAdditionFrequency      *FrequencyType `json:"providerAdditionFrequency" db:"provider_addition_frequency"`
