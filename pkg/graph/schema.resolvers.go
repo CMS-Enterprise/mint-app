@@ -5,6 +5,7 @@ package graph
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/google/uuid"
 
@@ -387,6 +388,10 @@ func (r *planParticipantsAndProvidersResolver) CommunicationMethod(ctx context.C
 		communicationTypes = append(communicationTypes, model.ParticipantCommunicationType(item))
 	}
 	return communicationTypes, nil
+}
+
+func (r *planParticipantsAndProvidersResolver) GainsharePaymentsTrack(ctx context.Context, obj *models.PlanParticipantsAndProviders) (*string, error) {
+	panic(fmt.Errorf("not implemented"))
 }
 
 func (r *planParticipantsAndProvidersResolver) ParticipantsIds(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.ParticipantsIDType, error) {

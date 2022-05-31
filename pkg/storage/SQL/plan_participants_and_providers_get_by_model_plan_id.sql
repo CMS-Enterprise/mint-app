@@ -29,7 +29,7 @@ SELECT
     coordinate_work,
     coordinate_work_note,
     gainshare_payments,
-    gainshare_payments_method,
+    gainshare_payments_track,
     gainshare_payments_note,
     participants_ids,
     participants_ids_other,

@@ -529,7 +529,7 @@ func processPlanParticipantsAndProviders(pp *models.PlanParticipantsAndProviders
 	pp.CoordinateWork = models.BoolPointer(true)
 	pp.CoordinateWorkNote = models.StringPointer("Weekly meetings will be held")
 	pp.GainsharePayments = models.BoolPointer(true)
-	pp.GainsharePaymentsMethod = models.StringPointer("")
+	pp.GainsharePaymentsTrack = models.BoolPointer(true)
 	pp.GainsharePaymentsNote = models.StringPointer("This only applies to the first 50 participants")
 	pp.ParticipantsIds = pq.StringArray{"TINS", "OTHER"}
 	pp.ParticipantsIdsOther = models.StringPointer("Candy Kingdom Operations Number")

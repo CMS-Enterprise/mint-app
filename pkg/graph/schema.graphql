@@ -574,7 +574,7 @@ type PlanParticipantsAndProviders {
   coordinateWork:          Boolean       
   coordinateWorkNote:      String       
   gainsharePayments:       Boolean       
-  gainsharePaymentsMethod: String       
+  gainsharePaymentsTrack: String       
   gainsharePaymentsNote:   String       
   participantsIds:         [ParticipantsIDType!]
   participantsIdsOther:    String       
@@ -645,7 +645,7 @@ input PlanParticipantsAndProvidersChanges @goModel(model: "map[string]interface{
   coordinateWork:          Boolean       
   coordinateWorkNote:      String       
   gainsharePayments:       Boolean       
-  gainsharePaymentsMethod: String       
+  gainsharePaymentsTrack: String       
   gainsharePaymentsNote:   String       
   participantsIds:         [ParticipantsIDType!]
   participantsIdsOther:    String       

@@ -115,7 +115,7 @@ CREATE TABLE plan_participants_and_providers (
     coordinate_work BOOL,
     coordinate_work_note TEXT,
     gainshare_payments BOOL,
-    gainshare_payments_method TEXT,
+    gainshare_payments_track BOOL,
     gainshare_payments_note TEXT,
     participants_ids PARTICIPANTS_ID_TYPE[],
     participants_ids_other TEXT,

@@ -313,8 +313,8 @@ type ComplexityRoot struct {
 		EstimateConfidence                func(childComplexity int) int
 		ExpectedNumberOfParticipants      func(childComplexity int) int
 		GainsharePayments                 func(childComplexity int) int
-		GainsharePaymentsMethod           func(childComplexity int) int
 		GainsharePaymentsNote             func(childComplexity int) int
+		GainsharePaymentsTrack            func(childComplexity int) int
 		ID                                func(childComplexity int) int
 		MedicareProviderType              func(childComplexity int) int
 		ModelApplicationLevel             func(childComplexity int) int
@@ -445,6 +445,8 @@ type PlanParticipantsAndProvidersResolver interface {
 	SelectionMethod(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.ParticipantSelectionType, error)
 
 	CommunicationMethod(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.ParticipantCommunicationType, error)
+
+	GainsharePaymentsTrack(ctx context.Context, obj *models.PlanParticipantsAndProviders) (*string, error)
 
 	ParticipantsIds(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.ParticipantsIDType, error)
 
@@ -2086,19 +2088,19 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.PlanParticipantsAndProviders.GainsharePayments(childComplexity), true
 
-	case "PlanParticipantsAndProviders.gainsharePaymentsMethod":
-		if e.complexity.PlanParticipantsAndProviders.GainsharePaymentsMethod == nil {
-			break
-		}
-
-		return e.complexity.PlanParticipantsAndProviders.GainsharePaymentsMethod(childComplexity), true
-
 	case "PlanParticipantsAndProviders.gainsharePaymentsNote":
 		if e.complexity.PlanParticipantsAndProviders.GainsharePaymentsNote == nil {
 			break
 		}
 
 		return e.complexity.PlanParticipantsAndProviders.GainsharePaymentsNote(childComplexity), true
+
+	case "PlanParticipantsAndProviders.gainsharePaymentsTrack":
+		if e.complexity.PlanParticipantsAndProviders.GainsharePaymentsTrack == nil {
+			break
+		}
+
+		return e.complexity.PlanParticipantsAndProviders.GainsharePaymentsTrack(childComplexity), true
 
 	case "PlanParticipantsAndProviders.id":
 		if e.complexity.PlanParticipantsAndProviders.ID == nil {
@@ -3137,7 +3139,7 @@ type PlanParticipantsAndProviders {
   coordinateWork:          Boolean       
   coordinateWorkNote:      String       
   gainsharePayments:       Boolean       
-  gainsharePaymentsMethod: String       
+  gainsharePaymentsTrack: String       
   gainsharePaymentsNote:   String       
   participantsIds:         [ParticipantsIDType!]
   participantsIdsOther:    String       
@@ -3208,7 +3210,7 @@ input PlanParticipantsAndProvidersChanges @goModel(model: "map[string]interface{
   coordinateWork:          Boolean       
   coordinateWorkNote:      String       
   gainsharePayments:       Boolean       
-  gainsharePaymentsMethod: String       
+  gainsharePaymentsTrack: String       
   gainsharePaymentsNote:   String       
   participantsIds:         [ParticipantsIDType!]
   participantsIdsOther:    String       
@@ -5528,8 +5530,8 @@ func (ec *executionContext) fieldContext_ModelPlan_providersAndParticipants(ctx 
 				return ec.fieldContext_PlanParticipantsAndProviders_coordinateWorkNote(ctx, field)
 			case "gainsharePayments":
 				return ec.fieldContext_PlanParticipantsAndProviders_gainsharePayments(ctx, field)
-			case "gainsharePaymentsMethod":
-				return ec.fieldContext_PlanParticipantsAndProviders_gainsharePaymentsMethod(ctx, field)
+			case "gainsharePaymentsTrack":
+				return ec.fieldContext_PlanParticipantsAndProviders_gainsharePaymentsTrack(ctx, field)
 			case "gainsharePaymentsNote":
 				return ec.fieldContext_PlanParticipantsAndProviders_gainsharePaymentsNote(ctx, field)
 			case "participantsIds":
@@ -7151,8 +7153,8 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanPlanParticipantsAndP
 				return ec.fieldContext_PlanParticipantsAndProviders_coordinateWorkNote(ctx, field)
 			case "gainsharePayments":
 				return ec.fieldContext_PlanParticipantsAndProviders_gainsharePayments(ctx, field)
-			case "gainsharePaymentsMethod":
-				return ec.fieldContext_PlanParticipantsAndProviders_gainsharePaymentsMethod(ctx, field)
+			case "gainsharePaymentsTrack":
+				return ec.fieldContext_PlanParticipantsAndProviders_gainsharePaymentsTrack(ctx, field)
 			case "gainsharePaymentsNote":
 				return ec.fieldContext_PlanParticipantsAndProviders_gainsharePaymentsNote(ctx, field)
 			case "participantsIds":
@@ -15058,9 +15060,9 @@ func (ec *executionContext) _PlanParticipantsAndProviders_expectedNumberOfPartic
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(int)
+	res := resTmp.(*int)
 	fc.Result = res
-	return ec.marshalOInt2int(ctx, field.Selections, res)
+	return ec.marshalOInt2ᚖint(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_expectedNumberOfParticipants(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -15855,8 +15857,8 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_gainshareP
 	return fc, nil
 }
 
-func (ec *executionContext) _PlanParticipantsAndProviders_gainsharePaymentsMethod(ctx context.Context, field graphql.CollectedField, obj *models.PlanParticipantsAndProviders) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanParticipantsAndProviders_gainsharePaymentsMethod(ctx, field)
+func (ec *executionContext) _PlanParticipantsAndProviders_gainsharePaymentsTrack(ctx context.Context, field graphql.CollectedField, obj *models.PlanParticipantsAndProviders) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProviders_gainsharePaymentsTrack(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -15869,7 +15871,7 @@ func (ec *executionContext) _PlanParticipantsAndProviders_gainsharePaymentsMetho
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.GainsharePaymentsMethod, nil
+		return ec.resolvers.PlanParticipantsAndProviders().GainsharePaymentsTrack(rctx, obj)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -15883,12 +15885,12 @@ func (ec *executionContext) _PlanParticipantsAndProviders_gainsharePaymentsMetho
 	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_gainsharePaymentsMethod(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_gainsharePaymentsTrack(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "PlanParticipantsAndProviders",
 		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
+		IsMethod:   true,
+		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type String does not have child fields")
 		},
@@ -21602,10 +21604,23 @@ func (ec *executionContext) _PlanParticipantsAndProviders(ctx context.Context, s
 
 			out.Values[i] = ec._PlanParticipantsAndProviders_gainsharePayments(ctx, field, obj)
 
-		case "gainsharePaymentsMethod":
+		case "gainsharePaymentsTrack":
+			field := field
 
-			out.Values[i] = ec._PlanParticipantsAndProviders_gainsharePaymentsMethod(ctx, field, obj)
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._PlanParticipantsAndProviders_gainsharePaymentsTrack(ctx, field, obj)
+				return res
+			}
 
+			out.Concurrently(i, func() graphql.Marshaler {
+				return innerFunc(ctx)
+
+			})
 		case "gainsharePaymentsNote":
 
 			out.Values[i] = ec._PlanParticipantsAndProviders_gainsharePaymentsNote(ctx, field, obj)
@@ -24679,16 +24694,6 @@ func (ec *executionContext) marshalOGeographyType2ᚕgithubᚗcomᚋcmsgovᚋmin
 	}
 
 	return ret
-}
-
-func (ec *executionContext) unmarshalOInt2int(ctx context.Context, v interface{}) (int, error) {
-	res, err := graphql.UnmarshalInt(v)
-	return res, graphql.ErrorOnPath(ctx, err)
-}
-
-func (ec *executionContext) marshalOInt2int(ctx context.Context, sel ast.SelectionSet, v int) graphql.Marshaler {
-	res := graphql.MarshalInt(v)
-	return res
 }
 
 func (ec *executionContext) unmarshalOInt2ᚕintᚄ(ctx context.Context, v interface{}) ([]int, error) {

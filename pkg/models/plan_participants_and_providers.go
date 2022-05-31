@@ -44,14 +44,14 @@ type PlanParticipantsAndProviders struct {
 	WillRiskChangeNote    *string              `json:"willRiskChangeNote" db:"will_risk_change_note"`
 
 	//page 4
-	CoordinateWork          *bool          `json:"coordinateWork" db:"coordinate_work"`
-	CoordinateWorkNote      *string        `json:"coordinateWorkNote" db:"coordinate_work_note"`
-	GainsharePayments       *bool          `json:"gainsharePayments" db:"gainshare_payments"`
-	GainsharePaymentsMethod *string        `json:"gainsharePaymentsMethod" db:"gainshare_payments_method"`
-	GainsharePaymentsNote   *string        `json:"gainsharePaymentsNote" db:"gainshare_payments_note"`
-	ParticipantsIds         pq.StringArray `json:"participantsIds" db:"participants_ids"`
-	ParticipantsIdsOther    *string        `json:"participantsIdsOther" db:"participants_ids_other"`
-	ParticipantsIDSNote     *string        `json:"participantsIDSNote" db:"participants_ids_note"`
+	CoordinateWork         *bool          `json:"coordinateWork" db:"coordinate_work"`
+	CoordinateWorkNote     *string        `json:"coordinateWorkNote" db:"coordinate_work_note"`
+	GainsharePayments      *bool          `json:"gainsharePayments" db:"gainshare_payments"`
+	GainsharePaymentsTrack *bool          `json:"gainsharePaymentsTrack" db:"gainshare_payments_track"` /// TODO --> This should probably be a bool
+	GainsharePaymentsNote  *string        `json:"gainsharePaymentsNote" db:"gainshare_payments_note"`
+	ParticipantsIds        pq.StringArray `json:"participantsIds" db:"participants_ids"`
+	ParticipantsIdsOther   *string        `json:"participantsIdsOther" db:"participants_ids_other"`
+	ParticipantsIDSNote    *string        `json:"participantsIDSNote" db:"participants_ids_note"`
 
 	//page 5
 	ProviderAdditionFrequency      *FrequencyType `json:"providerAdditionFrequency" db:"provider_addition_frequency"`
