@@ -5,7 +5,6 @@ package graph
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/google/uuid"
 
@@ -60,8 +59,11 @@ func (r *modelPlanResolver) GeneralCharacteristics(ctx context.Context, obj *mod
 	return resolvers.FetchPlanGeneralCharacteristicsByModelPlanID(logger, principal, obj.ID, r.store)
 }
 
-func (r *modelPlanResolver) ProvidersAndParticipants(ctx context.Context, obj *models.ModelPlan) (*models.PlanProvidersAndParticipants, error) {
-	panic(fmt.Errorf("not implemented"))
+func (r *modelPlanResolver) ProvidersAndParticipants(ctx context.Context, obj *models.ModelPlan) (*models.PlanParticipantsAndProviders, error) {
+	logger := appcontext.ZLogger(ctx)
+	principal := appcontext.Principal(ctx).ID()
+
+	return resolvers.PlanParticipantsAndProvidersGetByModelPlanID(logger, principal, obj.ID, r.store)
 }
 
 func (r *modelPlanResolver) Beneficiaries(ctx context.Context, obj *models.ModelPlan) (*models.PlanBeneficiaries, error) {
@@ -163,8 +165,11 @@ func (r *mutationResolver) UpdatePlanBeneficiares(ctx context.Context, id uuid.U
 	return resolvers.PlanBeneficiariesUpdate(logger, id, changes, principal, r.store)
 }
 
-func (r *mutationResolver) UpdatePlanPlanProvidersAndParticipants(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanProvidersAndParticipants, error) {
-	panic(fmt.Errorf("not implemented"))
+func (r *mutationResolver) UpdatePlanPlanParticipantsAndProviders(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanParticipantsAndProviders, error) {
+	principal := appcontext.Principal(ctx).ID()
+	logger := appcontext.ZLogger(ctx)
+
+	return resolvers.PlanParticipantsAndProvidersUpdate(logger, id, changes, principal, r.store)
 }
 
 func (r *mutationResolver) GeneratePresignedUploadURL(ctx context.Context, input model.GeneratePresignedUploadURLInput) (*model.GeneratePresignedUploadURLPayload, error) {
@@ -359,28 +364,53 @@ func (r *planGeneralCharacteristicsResolver) WaiversRequiredTypes(ctx context.Co
 	return waiverTypes, nil
 }
 
-func (r *planProvidersAndParticipantsResolver) Participants(ctx context.Context, obj *models.PlanProvidersAndParticipants) (*model.ParticipantsType, error) {
-	panic(fmt.Errorf("not implemented"))
+func (r *planParticipantsAndProvidersResolver) Participants(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.ParticipantsType, error) {
+	// TODO: We should probably have a better way to handle enum arrays
+	var participants []model.ParticipantsType
+	for _, item := range obj.Participants {
+		participants = append(participants, model.ParticipantsType(item))
+	}
+	return participants, nil
 }
 
-func (r *planProvidersAndParticipantsResolver) SelectionMethod(ctx context.Context, obj *models.PlanProvidersAndParticipants) (*model.ParticipantSelectionType, error) {
-	panic(fmt.Errorf("not implemented"))
+func (r *planParticipantsAndProvidersResolver) SelectionMethod(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.ParticipantSelectionType, error) {
+	var selectionTypes []model.ParticipantSelectionType
+	for _, item := range obj.SelectionMethod {
+		selectionTypes = append(selectionTypes, model.ParticipantSelectionType(item))
+	}
+	return selectionTypes, nil
 }
 
-func (r *planProvidersAndParticipantsResolver) CommunicationMethod(ctx context.Context, obj *models.PlanProvidersAndParticipants) (*model.ParticipantCommunicationType, error) {
-	panic(fmt.Errorf("not implemented"))
+func (r *planParticipantsAndProvidersResolver) CommunicationMethod(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.ParticipantCommunicationType, error) {
+	var communicationTypes []model.ParticipantCommunicationType
+	for _, item := range obj.CommunicationMethod {
+		communicationTypes = append(communicationTypes, model.ParticipantCommunicationType(item))
+	}
+	return communicationTypes, nil
 }
 
-func (r *planProvidersAndParticipantsResolver) ParticipantsIds(ctx context.Context, obj *models.PlanProvidersAndParticipants) (*model.ParticipantsIDType, error) {
-	panic(fmt.Errorf("not implemented"))
+func (r *planParticipantsAndProvidersResolver) ParticipantsIds(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.ParticipantsIDType, error) {
+	var participantsIDTypes []model.ParticipantsIDType
+	for _, item := range obj.ParticipantsIds {
+		participantsIDTypes = append(participantsIDTypes, model.ParticipantsIDType(item))
+	}
+	return participantsIDTypes, nil
 }
 
-func (r *planProvidersAndParticipantsResolver) ProviderAddMethod(ctx context.Context, obj *models.PlanProvidersAndParticipants) (*model.ProviderAddType, error) {
-	panic(fmt.Errorf("not implemented"))
+func (r *planParticipantsAndProvidersResolver) ProviderAddMethod(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.ProviderAddType, error) {
+	var providerAddTypes []model.ProviderAddType
+	for _, item := range obj.ProviderAddMethod {
+		providerAddTypes = append(providerAddTypes, model.ProviderAddType(item))
+	}
+	return providerAddTypes, nil
 }
 
-func (r *planProvidersAndParticipantsResolver) ProviderLeaveMethod(ctx context.Context, obj *models.PlanProvidersAndParticipants) (*model.ProviderLeaveType, error) {
-	panic(fmt.Errorf("not implemented"))
+func (r *planParticipantsAndProvidersResolver) ProviderLeaveMethod(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.ProviderLeaveType, error) {
+	var providerLeaveTypes []model.ProviderLeaveType
+	for _, item := range obj.ProviderLeaveMethod {
+		providerLeaveTypes = append(providerLeaveTypes, model.ProviderLeaveType(item))
+	}
+	return providerLeaveTypes, nil
 }
 
 func (r *queryResolver) CurrentUser(ctx context.Context) (*model.CurrentUser, error) {
@@ -483,9 +513,9 @@ func (r *Resolver) PlanGeneralCharacteristics() generated.PlanGeneralCharacteris
 	return &planGeneralCharacteristicsResolver{r}
 }
 
-// PlanProvidersAndParticipants returns generated.PlanProvidersAndParticipantsResolver implementation.
-func (r *Resolver) PlanProvidersAndParticipants() generated.PlanProvidersAndParticipantsResolver {
-	return &planProvidersAndParticipantsResolver{r}
+// PlanParticipantsAndProviders returns generated.PlanParticipantsAndProvidersResolver implementation.
+func (r *Resolver) PlanParticipantsAndProviders() generated.PlanParticipantsAndProvidersResolver {
+	return &planParticipantsAndProvidersResolver{r}
 }
 
 // Query returns generated.QueryResolver implementation.
@@ -500,6 +530,6 @@ type planBeneficiariesResolver struct{ *Resolver }
 type planDiscussionResolver struct{ *Resolver }
 type planDocumentResolver struct{ *Resolver }
 type planGeneralCharacteristicsResolver struct{ *Resolver }
-type planProvidersAndParticipantsResolver struct{ *Resolver }
+type planParticipantsAndProvidersResolver struct{ *Resolver }
 type queryResolver struct{ *Resolver }
 type userInfoResolver struct{ *Resolver }

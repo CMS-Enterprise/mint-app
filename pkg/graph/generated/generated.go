@@ -45,7 +45,7 @@ type ResolverRoot interface {
 	PlanDiscussion() PlanDiscussionResolver
 	PlanDocument() PlanDocumentResolver
 	PlanGeneralCharacteristics() PlanGeneralCharacteristicsResolver
-	PlanProvidersAndParticipants() PlanProvidersAndParticipantsResolver
+	PlanParticipantsAndProviders() PlanParticipantsAndProvidersResolver
 	Query() QueryResolver
 	UserInfo() UserInfoResolver
 }
@@ -122,7 +122,7 @@ type ComplexityRoot struct {
 		UpdatePlanDocument                     func(childComplexity int, input model.PlanDocumentInput) int
 		UpdatePlanGeneralCharacteristics       func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
 		UpdatePlanMilestones                   func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
-		UpdatePlanPlanProvidersAndParticipants func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
+		UpdatePlanPlanParticipantsAndProviders func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
 	}
 
 	PlanBasics struct {
@@ -302,7 +302,7 @@ type ComplexityRoot struct {
 		WrapUpEnds              func(childComplexity int) int
 	}
 
-	PlanProvidersAndParticipants struct {
+	PlanParticipantsAndProviders struct {
 		CommunicationMethod               func(childComplexity int) int
 		CommunicationNote                 func(childComplexity int) int
 		ConfidenceNote                    func(childComplexity int) int
@@ -383,7 +383,7 @@ type ModelPlanResolver interface {
 	Basics(ctx context.Context, obj *models.ModelPlan) (*models.PlanBasics, error)
 	Milestones(ctx context.Context, obj *models.ModelPlan) (*models.PlanMilestones, error)
 	GeneralCharacteristics(ctx context.Context, obj *models.ModelPlan) (*models.PlanGeneralCharacteristics, error)
-	ProvidersAndParticipants(ctx context.Context, obj *models.ModelPlan) (*models.PlanProvidersAndParticipants, error)
+	ProvidersAndParticipants(ctx context.Context, obj *models.ModelPlan) (*models.PlanParticipantsAndProviders, error)
 	Beneficiaries(ctx context.Context, obj *models.ModelPlan) (*models.PlanBeneficiaries, error)
 	Collaborators(ctx context.Context, obj *models.ModelPlan) ([]*models.PlanCollaborator, error)
 	Documents(ctx context.Context, obj *models.ModelPlan) ([]*models.PlanDocument, error)
@@ -399,7 +399,7 @@ type MutationResolver interface {
 	UpdatePlanMilestones(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanMilestones, error)
 	UpdatePlanGeneralCharacteristics(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanGeneralCharacteristics, error)
 	UpdatePlanBeneficiares(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanBeneficiaries, error)
-	UpdatePlanPlanProvidersAndParticipants(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanProvidersAndParticipants, error)
+	UpdatePlanPlanParticipantsAndProviders(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanParticipantsAndProviders, error)
 	GeneratePresignedUploadURL(ctx context.Context, input model.GeneratePresignedUploadURLInput) (*model.GeneratePresignedUploadURLPayload, error)
 	CreatePlanDocument(ctx context.Context, input model.PlanDocumentInput) (*model.PlanDocumentPayload, error)
 	UpdatePlanDocument(ctx context.Context, input model.PlanDocumentInput) (*model.PlanDocumentPayload, error)
@@ -439,18 +439,18 @@ type PlanGeneralCharacteristicsResolver interface {
 
 	WaiversRequiredTypes(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]model.WaiverType, error)
 }
-type PlanProvidersAndParticipantsResolver interface {
-	Participants(ctx context.Context, obj *models.PlanProvidersAndParticipants) (*model.ParticipantsType, error)
+type PlanParticipantsAndProvidersResolver interface {
+	Participants(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.ParticipantsType, error)
 
-	SelectionMethod(ctx context.Context, obj *models.PlanProvidersAndParticipants) (*model.ParticipantSelectionType, error)
+	SelectionMethod(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.ParticipantSelectionType, error)
 
-	CommunicationMethod(ctx context.Context, obj *models.PlanProvidersAndParticipants) (*model.ParticipantCommunicationType, error)
+	CommunicationMethod(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.ParticipantCommunicationType, error)
 
-	ParticipantsIds(ctx context.Context, obj *models.PlanProvidersAndParticipants) (*model.ParticipantsIDType, error)
+	ParticipantsIds(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.ParticipantsIDType, error)
 
-	ProviderAddMethod(ctx context.Context, obj *models.PlanProvidersAndParticipants) (*model.ProviderAddType, error)
+	ProviderAddMethod(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.ProviderAddType, error)
 
-	ProviderLeaveMethod(ctx context.Context, obj *models.PlanProvidersAndParticipants) (*model.ProviderLeaveType, error)
+	ProviderLeaveMethod(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.ProviderLeaveType, error)
 }
 type QueryResolver interface {
 	CurrentUser(ctx context.Context) (*model.CurrentUser, error)
@@ -933,17 +933,17 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Mutation.UpdatePlanMilestones(childComplexity, args["id"].(uuid.UUID), args["changes"].(map[string]interface{})), true
 
-	case "Mutation.updatePlanPlanProvidersAndParticipants":
-		if e.complexity.Mutation.UpdatePlanPlanProvidersAndParticipants == nil {
+	case "Mutation.updatePlanPlanParticipantsAndProviders":
+		if e.complexity.Mutation.UpdatePlanPlanParticipantsAndProviders == nil {
 			break
 		}
 
-		args, err := ec.field_Mutation_updatePlanPlanProvidersAndParticipants_args(context.TODO(), rawArgs)
+		args, err := ec.field_Mutation_updatePlanPlanParticipantsAndProviders_args(context.TODO(), rawArgs)
 		if err != nil {
 			return 0, false
 		}
 
-		return e.complexity.Mutation.UpdatePlanPlanProvidersAndParticipants(childComplexity, args["id"].(uuid.UUID), args["changes"].(map[string]interface{})), true
+		return e.complexity.Mutation.UpdatePlanPlanParticipantsAndProviders(childComplexity, args["id"].(uuid.UUID), args["changes"].(map[string]interface{})), true
 
 	case "PlanBasics.createdBy":
 		if e.complexity.PlanBasics.CreatedBy == nil {
@@ -2016,369 +2016,369 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.PlanMilestones.WrapUpEnds(childComplexity), true
 
-	case "PlanProvidersAndParticipants.communicationMethod":
-		if e.complexity.PlanProvidersAndParticipants.CommunicationMethod == nil {
+	case "PlanParticipantsAndProviders.communicationMethod":
+		if e.complexity.PlanParticipantsAndProviders.CommunicationMethod == nil {
 			break
 		}
 
-		return e.complexity.PlanProvidersAndParticipants.CommunicationMethod(childComplexity), true
+		return e.complexity.PlanParticipantsAndProviders.CommunicationMethod(childComplexity), true
 
-	case "PlanProvidersAndParticipants.communicationNote":
-		if e.complexity.PlanProvidersAndParticipants.CommunicationNote == nil {
+	case "PlanParticipantsAndProviders.communicationNote":
+		if e.complexity.PlanParticipantsAndProviders.CommunicationNote == nil {
 			break
 		}
 
-		return e.complexity.PlanProvidersAndParticipants.CommunicationNote(childComplexity), true
+		return e.complexity.PlanParticipantsAndProviders.CommunicationNote(childComplexity), true
 
-	case "PlanProvidersAndParticipants.confidenceNote":
-		if e.complexity.PlanProvidersAndParticipants.ConfidenceNote == nil {
+	case "PlanParticipantsAndProviders.confidenceNote":
+		if e.complexity.PlanParticipantsAndProviders.ConfidenceNote == nil {
 			break
 		}
 
-		return e.complexity.PlanProvidersAndParticipants.ConfidenceNote(childComplexity), true
+		return e.complexity.PlanParticipantsAndProviders.ConfidenceNote(childComplexity), true
 
-	case "PlanProvidersAndParticipants.coordinateWork":
-		if e.complexity.PlanProvidersAndParticipants.CoordinateWork == nil {
+	case "PlanParticipantsAndProviders.coordinateWork":
+		if e.complexity.PlanParticipantsAndProviders.CoordinateWork == nil {
 			break
 		}
 
-		return e.complexity.PlanProvidersAndParticipants.CoordinateWork(childComplexity), true
+		return e.complexity.PlanParticipantsAndProviders.CoordinateWork(childComplexity), true
 
-	case "PlanProvidersAndParticipants.coordinateWorkNote":
-		if e.complexity.PlanProvidersAndParticipants.CoordinateWorkNote == nil {
+	case "PlanParticipantsAndProviders.coordinateWorkNote":
+		if e.complexity.PlanParticipantsAndProviders.CoordinateWorkNote == nil {
 			break
 		}
 
-		return e.complexity.PlanProvidersAndParticipants.CoordinateWorkNote(childComplexity), true
+		return e.complexity.PlanParticipantsAndProviders.CoordinateWorkNote(childComplexity), true
 
-	case "PlanProvidersAndParticipants.createdBy":
-		if e.complexity.PlanProvidersAndParticipants.CreatedBy == nil {
+	case "PlanParticipantsAndProviders.createdBy":
+		if e.complexity.PlanParticipantsAndProviders.CreatedBy == nil {
 			break
 		}
 
-		return e.complexity.PlanProvidersAndParticipants.CreatedBy(childComplexity), true
+		return e.complexity.PlanParticipantsAndProviders.CreatedBy(childComplexity), true
 
-	case "PlanProvidersAndParticipants.createdDts":
-		if e.complexity.PlanProvidersAndParticipants.CreatedDts == nil {
+	case "PlanParticipantsAndProviders.createdDts":
+		if e.complexity.PlanParticipantsAndProviders.CreatedDts == nil {
 			break
 		}
 
-		return e.complexity.PlanProvidersAndParticipants.CreatedDts(childComplexity), true
+		return e.complexity.PlanParticipantsAndProviders.CreatedDts(childComplexity), true
 
-	case "PlanProvidersAndParticipants.estimateConfidence":
-		if e.complexity.PlanProvidersAndParticipants.EstimateConfidence == nil {
+	case "PlanParticipantsAndProviders.estimateConfidence":
+		if e.complexity.PlanParticipantsAndProviders.EstimateConfidence == nil {
 			break
 		}
 
-		return e.complexity.PlanProvidersAndParticipants.EstimateConfidence(childComplexity), true
+		return e.complexity.PlanParticipantsAndProviders.EstimateConfidence(childComplexity), true
 
-	case "PlanProvidersAndParticipants.expectedNumberOfParticipants":
-		if e.complexity.PlanProvidersAndParticipants.ExpectedNumberOfParticipants == nil {
+	case "PlanParticipantsAndProviders.expectedNumberOfParticipants":
+		if e.complexity.PlanParticipantsAndProviders.ExpectedNumberOfParticipants == nil {
 			break
 		}
 
-		return e.complexity.PlanProvidersAndParticipants.ExpectedNumberOfParticipants(childComplexity), true
+		return e.complexity.PlanParticipantsAndProviders.ExpectedNumberOfParticipants(childComplexity), true
 
-	case "PlanProvidersAndParticipants.gainsharePayments":
-		if e.complexity.PlanProvidersAndParticipants.GainsharePayments == nil {
+	case "PlanParticipantsAndProviders.gainsharePayments":
+		if e.complexity.PlanParticipantsAndProviders.GainsharePayments == nil {
 			break
 		}
 
-		return e.complexity.PlanProvidersAndParticipants.GainsharePayments(childComplexity), true
+		return e.complexity.PlanParticipantsAndProviders.GainsharePayments(childComplexity), true
 
-	case "PlanProvidersAndParticipants.gainsharePaymentsMethod":
-		if e.complexity.PlanProvidersAndParticipants.GainsharePaymentsMethod == nil {
+	case "PlanParticipantsAndProviders.gainsharePaymentsMethod":
+		if e.complexity.PlanParticipantsAndProviders.GainsharePaymentsMethod == nil {
 			break
 		}
 
-		return e.complexity.PlanProvidersAndParticipants.GainsharePaymentsMethod(childComplexity), true
+		return e.complexity.PlanParticipantsAndProviders.GainsharePaymentsMethod(childComplexity), true
 
-	case "PlanProvidersAndParticipants.gainsharePaymentsNote":
-		if e.complexity.PlanProvidersAndParticipants.GainsharePaymentsNote == nil {
+	case "PlanParticipantsAndProviders.gainsharePaymentsNote":
+		if e.complexity.PlanParticipantsAndProviders.GainsharePaymentsNote == nil {
 			break
 		}
 
-		return e.complexity.PlanProvidersAndParticipants.GainsharePaymentsNote(childComplexity), true
+		return e.complexity.PlanParticipantsAndProviders.GainsharePaymentsNote(childComplexity), true
 
-	case "PlanProvidersAndParticipants.id":
-		if e.complexity.PlanProvidersAndParticipants.ID == nil {
+	case "PlanParticipantsAndProviders.id":
+		if e.complexity.PlanParticipantsAndProviders.ID == nil {
 			break
 		}
 
-		return e.complexity.PlanProvidersAndParticipants.ID(childComplexity), true
+		return e.complexity.PlanParticipantsAndProviders.ID(childComplexity), true
 
-	case "PlanProvidersAndParticipants.medicareProviderType":
-		if e.complexity.PlanProvidersAndParticipants.MedicareProviderType == nil {
+	case "PlanParticipantsAndProviders.medicareProviderType":
+		if e.complexity.PlanParticipantsAndProviders.MedicareProviderType == nil {
 			break
 		}
 
-		return e.complexity.PlanProvidersAndParticipants.MedicareProviderType(childComplexity), true
+		return e.complexity.PlanParticipantsAndProviders.MedicareProviderType(childComplexity), true
 
-	case "PlanProvidersAndParticipants.modelApplicationLevel":
-		if e.complexity.PlanProvidersAndParticipants.ModelApplicationLevel == nil {
+	case "PlanParticipantsAndProviders.modelApplicationLevel":
+		if e.complexity.PlanParticipantsAndProviders.ModelApplicationLevel == nil {
 			break
 		}
 
-		return e.complexity.PlanProvidersAndParticipants.ModelApplicationLevel(childComplexity), true
+		return e.complexity.PlanParticipantsAndProviders.ModelApplicationLevel(childComplexity), true
 
-	case "PlanProvidersAndParticipants.modelPlanID":
-		if e.complexity.PlanProvidersAndParticipants.ModelPlanID == nil {
+	case "PlanParticipantsAndProviders.modelPlanID":
+		if e.complexity.PlanParticipantsAndProviders.ModelPlanID == nil {
 			break
 		}
 
-		return e.complexity.PlanProvidersAndParticipants.ModelPlanID(childComplexity), true
+		return e.complexity.PlanParticipantsAndProviders.ModelPlanID(childComplexity), true
 
-	case "PlanProvidersAndParticipants.modifiedBy":
-		if e.complexity.PlanProvidersAndParticipants.ModifiedBy == nil {
+	case "PlanParticipantsAndProviders.modifiedBy":
+		if e.complexity.PlanParticipantsAndProviders.ModifiedBy == nil {
 			break
 		}
 
-		return e.complexity.PlanProvidersAndParticipants.ModifiedBy(childComplexity), true
+		return e.complexity.PlanParticipantsAndProviders.ModifiedBy(childComplexity), true
 
-	case "PlanProvidersAndParticipants.modifiedDts":
-		if e.complexity.PlanProvidersAndParticipants.ModifiedDts == nil {
+	case "PlanParticipantsAndProviders.modifiedDts":
+		if e.complexity.PlanParticipantsAndProviders.ModifiedDts == nil {
 			break
 		}
 
-		return e.complexity.PlanProvidersAndParticipants.ModifiedDts(childComplexity), true
+		return e.complexity.PlanParticipantsAndProviders.ModifiedDts(childComplexity), true
 
-	case "PlanProvidersAndParticipants.participantAssumeRisk":
-		if e.complexity.PlanProvidersAndParticipants.ParticipantAssumeRisk == nil {
+	case "PlanParticipantsAndProviders.participantAssumeRisk":
+		if e.complexity.PlanParticipantsAndProviders.ParticipantAssumeRisk == nil {
 			break
 		}
 
-		return e.complexity.PlanProvidersAndParticipants.ParticipantAssumeRisk(childComplexity), true
+		return e.complexity.PlanParticipantsAndProviders.ParticipantAssumeRisk(childComplexity), true
 
-	case "PlanProvidersAndParticipants.participants":
-		if e.complexity.PlanProvidersAndParticipants.Participants == nil {
+	case "PlanParticipantsAndProviders.participants":
+		if e.complexity.PlanParticipantsAndProviders.Participants == nil {
 			break
 		}
 
-		return e.complexity.PlanProvidersAndParticipants.Participants(childComplexity), true
+		return e.complexity.PlanParticipantsAndProviders.Participants(childComplexity), true
 
-	case "PlanProvidersAndParticipants.participantsCurrentlyInModels":
-		if e.complexity.PlanProvidersAndParticipants.ParticipantsCurrentlyInModels == nil {
+	case "PlanParticipantsAndProviders.participantsCurrentlyInModels":
+		if e.complexity.PlanParticipantsAndProviders.ParticipantsCurrentlyInModels == nil {
 			break
 		}
 
-		return e.complexity.PlanProvidersAndParticipants.ParticipantsCurrentlyInModels(childComplexity), true
+		return e.complexity.PlanParticipantsAndProviders.ParticipantsCurrentlyInModels(childComplexity), true
 
-	case "PlanProvidersAndParticipants.participantsCurrentlyInModelsNote":
-		if e.complexity.PlanProvidersAndParticipants.ParticipantsCurrentlyInModelsNote == nil {
+	case "PlanParticipantsAndProviders.participantsCurrentlyInModelsNote":
+		if e.complexity.PlanParticipantsAndProviders.ParticipantsCurrentlyInModelsNote == nil {
 			break
 		}
 
-		return e.complexity.PlanProvidersAndParticipants.ParticipantsCurrentlyInModelsNote(childComplexity), true
+		return e.complexity.PlanParticipantsAndProviders.ParticipantsCurrentlyInModelsNote(childComplexity), true
 
-	case "PlanProvidersAndParticipants.participantsIDSNote":
-		if e.complexity.PlanProvidersAndParticipants.ParticipantsIDSNote == nil {
+	case "PlanParticipantsAndProviders.participantsIDSNote":
+		if e.complexity.PlanParticipantsAndProviders.ParticipantsIDSNote == nil {
 			break
 		}
 
-		return e.complexity.PlanProvidersAndParticipants.ParticipantsIDSNote(childComplexity), true
+		return e.complexity.PlanParticipantsAndProviders.ParticipantsIDSNote(childComplexity), true
 
-	case "PlanProvidersAndParticipants.participantsIds":
-		if e.complexity.PlanProvidersAndParticipants.ParticipantsIds == nil {
+	case "PlanParticipantsAndProviders.participantsIds":
+		if e.complexity.PlanParticipantsAndProviders.ParticipantsIds == nil {
 			break
 		}
 
-		return e.complexity.PlanProvidersAndParticipants.ParticipantsIds(childComplexity), true
+		return e.complexity.PlanParticipantsAndProviders.ParticipantsIds(childComplexity), true
 
-	case "PlanProvidersAndParticipants.participantsIdsOther":
-		if e.complexity.PlanProvidersAndParticipants.ParticipantsIdsOther == nil {
+	case "PlanParticipantsAndProviders.participantsIdsOther":
+		if e.complexity.PlanParticipantsAndProviders.ParticipantsIdsOther == nil {
 			break
 		}
 
-		return e.complexity.PlanProvidersAndParticipants.ParticipantsIdsOther(childComplexity), true
+		return e.complexity.PlanParticipantsAndProviders.ParticipantsIdsOther(childComplexity), true
 
-	case "PlanProvidersAndParticipants.participantsNote":
-		if e.complexity.PlanProvidersAndParticipants.ParticipantsNote == nil {
+	case "PlanParticipantsAndProviders.participantsNote":
+		if e.complexity.PlanParticipantsAndProviders.ParticipantsNote == nil {
 			break
 		}
 
-		return e.complexity.PlanProvidersAndParticipants.ParticipantsNote(childComplexity), true
+		return e.complexity.PlanParticipantsAndProviders.ParticipantsNote(childComplexity), true
 
-	case "PlanProvidersAndParticipants.participantsOther":
-		if e.complexity.PlanProvidersAndParticipants.ParticipantsOther == nil {
+	case "PlanParticipantsAndProviders.participantsOther":
+		if e.complexity.PlanParticipantsAndProviders.ParticipantsOther == nil {
 			break
 		}
 
-		return e.complexity.PlanProvidersAndParticipants.ParticipantsOther(childComplexity), true
+		return e.complexity.PlanParticipantsAndProviders.ParticipantsOther(childComplexity), true
 
-	case "PlanProvidersAndParticipants.providerAddMethod":
-		if e.complexity.PlanProvidersAndParticipants.ProviderAddMethod == nil {
+	case "PlanParticipantsAndProviders.providerAddMethod":
+		if e.complexity.PlanParticipantsAndProviders.ProviderAddMethod == nil {
 			break
 		}
 
-		return e.complexity.PlanProvidersAndParticipants.ProviderAddMethod(childComplexity), true
+		return e.complexity.PlanParticipantsAndProviders.ProviderAddMethod(childComplexity), true
 
-	case "PlanProvidersAndParticipants.providerAddMethodNote":
-		if e.complexity.PlanProvidersAndParticipants.ProviderAddMethodNote == nil {
+	case "PlanParticipantsAndProviders.providerAddMethodNote":
+		if e.complexity.PlanParticipantsAndProviders.ProviderAddMethodNote == nil {
 			break
 		}
 
-		return e.complexity.PlanProvidersAndParticipants.ProviderAddMethodNote(childComplexity), true
+		return e.complexity.PlanParticipantsAndProviders.ProviderAddMethodNote(childComplexity), true
 
-	case "PlanProvidersAndParticipants.providerAddMethodOther":
-		if e.complexity.PlanProvidersAndParticipants.ProviderAddMethodOther == nil {
+	case "PlanParticipantsAndProviders.providerAddMethodOther":
+		if e.complexity.PlanParticipantsAndProviders.ProviderAddMethodOther == nil {
 			break
 		}
 
-		return e.complexity.PlanProvidersAndParticipants.ProviderAddMethodOther(childComplexity), true
+		return e.complexity.PlanParticipantsAndProviders.ProviderAddMethodOther(childComplexity), true
 
-	case "PlanProvidersAndParticipants.providerAdditionFrequency":
-		if e.complexity.PlanProvidersAndParticipants.ProviderAdditionFrequency == nil {
+	case "PlanParticipantsAndProviders.providerAdditionFrequency":
+		if e.complexity.PlanParticipantsAndProviders.ProviderAdditionFrequency == nil {
 			break
 		}
 
-		return e.complexity.PlanProvidersAndParticipants.ProviderAdditionFrequency(childComplexity), true
+		return e.complexity.PlanParticipantsAndProviders.ProviderAdditionFrequency(childComplexity), true
 
-	case "PlanProvidersAndParticipants.providerAdditionFrequencyNote":
-		if e.complexity.PlanProvidersAndParticipants.ProviderAdditionFrequencyNote == nil {
+	case "PlanParticipantsAndProviders.providerAdditionFrequencyNote":
+		if e.complexity.PlanParticipantsAndProviders.ProviderAdditionFrequencyNote == nil {
 			break
 		}
 
-		return e.complexity.PlanProvidersAndParticipants.ProviderAdditionFrequencyNote(childComplexity), true
+		return e.complexity.PlanParticipantsAndProviders.ProviderAdditionFrequencyNote(childComplexity), true
 
-	case "PlanProvidersAndParticipants.providerAdditionFrequencyOther":
-		if e.complexity.PlanProvidersAndParticipants.ProviderAdditionFrequencyOther == nil {
+	case "PlanParticipantsAndProviders.providerAdditionFrequencyOther":
+		if e.complexity.PlanParticipantsAndProviders.ProviderAdditionFrequencyOther == nil {
 			break
 		}
 
-		return e.complexity.PlanProvidersAndParticipants.ProviderAdditionFrequencyOther(childComplexity), true
+		return e.complexity.PlanParticipantsAndProviders.ProviderAdditionFrequencyOther(childComplexity), true
 
-	case "PlanProvidersAndParticipants.providerLeaveMethod":
-		if e.complexity.PlanProvidersAndParticipants.ProviderLeaveMethod == nil {
+	case "PlanParticipantsAndProviders.providerLeaveMethod":
+		if e.complexity.PlanParticipantsAndProviders.ProviderLeaveMethod == nil {
 			break
 		}
 
-		return e.complexity.PlanProvidersAndParticipants.ProviderLeaveMethod(childComplexity), true
+		return e.complexity.PlanParticipantsAndProviders.ProviderLeaveMethod(childComplexity), true
 
-	case "PlanProvidersAndParticipants.providerLeaveMethodNote":
-		if e.complexity.PlanProvidersAndParticipants.ProviderLeaveMethodNote == nil {
+	case "PlanParticipantsAndProviders.providerLeaveMethodNote":
+		if e.complexity.PlanParticipantsAndProviders.ProviderLeaveMethodNote == nil {
 			break
 		}
 
-		return e.complexity.PlanProvidersAndParticipants.ProviderLeaveMethodNote(childComplexity), true
+		return e.complexity.PlanParticipantsAndProviders.ProviderLeaveMethodNote(childComplexity), true
 
-	case "PlanProvidersAndParticipants.providerLeaveMethodOther":
-		if e.complexity.PlanProvidersAndParticipants.ProviderLeaveMethodOther == nil {
+	case "PlanParticipantsAndProviders.providerLeaveMethodOther":
+		if e.complexity.PlanParticipantsAndProviders.ProviderLeaveMethodOther == nil {
 			break
 		}
 
-		return e.complexity.PlanProvidersAndParticipants.ProviderLeaveMethodOther(childComplexity), true
+		return e.complexity.PlanParticipantsAndProviders.ProviderLeaveMethodOther(childComplexity), true
 
-	case "PlanProvidersAndParticipants.providerOverlap":
-		if e.complexity.PlanProvidersAndParticipants.ProviderOverlap == nil {
+	case "PlanParticipantsAndProviders.providerOverlap":
+		if e.complexity.PlanParticipantsAndProviders.ProviderOverlap == nil {
 			break
 		}
 
-		return e.complexity.PlanProvidersAndParticipants.ProviderOverlap(childComplexity), true
+		return e.complexity.PlanParticipantsAndProviders.ProviderOverlap(childComplexity), true
 
-	case "PlanProvidersAndParticipants.providerOverlapHierarchy":
-		if e.complexity.PlanProvidersAndParticipants.ProviderOverlapHierarchy == nil {
+	case "PlanParticipantsAndProviders.providerOverlapHierarchy":
+		if e.complexity.PlanParticipantsAndProviders.ProviderOverlapHierarchy == nil {
 			break
 		}
 
-		return e.complexity.PlanProvidersAndParticipants.ProviderOverlapHierarchy(childComplexity), true
+		return e.complexity.PlanParticipantsAndProviders.ProviderOverlapHierarchy(childComplexity), true
 
-	case "PlanProvidersAndParticipants.providerOverlapNote":
-		if e.complexity.PlanProvidersAndParticipants.ProviderOverlapNote == nil {
+	case "PlanParticipantsAndProviders.providerOverlapNote":
+		if e.complexity.PlanParticipantsAndProviders.ProviderOverlapNote == nil {
 			break
 		}
 
-		return e.complexity.PlanProvidersAndParticipants.ProviderOverlapNote(childComplexity), true
+		return e.complexity.PlanParticipantsAndProviders.ProviderOverlapNote(childComplexity), true
 
-	case "PlanProvidersAndParticipants.recruitmentMethod":
-		if e.complexity.PlanProvidersAndParticipants.RecruitmentMethod == nil {
+	case "PlanParticipantsAndProviders.recruitmentMethod":
+		if e.complexity.PlanParticipantsAndProviders.RecruitmentMethod == nil {
 			break
 		}
 
-		return e.complexity.PlanProvidersAndParticipants.RecruitmentMethod(childComplexity), true
+		return e.complexity.PlanParticipantsAndProviders.RecruitmentMethod(childComplexity), true
 
-	case "PlanProvidersAndParticipants.recruitmentNote":
-		if e.complexity.PlanProvidersAndParticipants.RecruitmentNote == nil {
+	case "PlanParticipantsAndProviders.recruitmentNote":
+		if e.complexity.PlanParticipantsAndProviders.RecruitmentNote == nil {
 			break
 		}
 
-		return e.complexity.PlanProvidersAndParticipants.RecruitmentNote(childComplexity), true
+		return e.complexity.PlanParticipantsAndProviders.RecruitmentNote(childComplexity), true
 
-	case "PlanProvidersAndParticipants.recruitmentOther":
-		if e.complexity.PlanProvidersAndParticipants.RecruitmentOther == nil {
+	case "PlanParticipantsAndProviders.recruitmentOther":
+		if e.complexity.PlanParticipantsAndProviders.RecruitmentOther == nil {
 			break
 		}
 
-		return e.complexity.PlanProvidersAndParticipants.RecruitmentOther(childComplexity), true
+		return e.complexity.PlanParticipantsAndProviders.RecruitmentOther(childComplexity), true
 
-	case "PlanProvidersAndParticipants.riskNote":
-		if e.complexity.PlanProvidersAndParticipants.RiskNote == nil {
+	case "PlanParticipantsAndProviders.riskNote":
+		if e.complexity.PlanParticipantsAndProviders.RiskNote == nil {
 			break
 		}
 
-		return e.complexity.PlanProvidersAndParticipants.RiskNote(childComplexity), true
+		return e.complexity.PlanParticipantsAndProviders.RiskNote(childComplexity), true
 
-	case "PlanProvidersAndParticipants.riskOther":
-		if e.complexity.PlanProvidersAndParticipants.RiskOther == nil {
+	case "PlanParticipantsAndProviders.riskOther":
+		if e.complexity.PlanParticipantsAndProviders.RiskOther == nil {
 			break
 		}
 
-		return e.complexity.PlanProvidersAndParticipants.RiskOther(childComplexity), true
+		return e.complexity.PlanParticipantsAndProviders.RiskOther(childComplexity), true
 
-	case "PlanProvidersAndParticipants.riskType":
-		if e.complexity.PlanProvidersAndParticipants.RiskType == nil {
+	case "PlanParticipantsAndProviders.riskType":
+		if e.complexity.PlanParticipantsAndProviders.RiskType == nil {
 			break
 		}
 
-		return e.complexity.PlanProvidersAndParticipants.RiskType(childComplexity), true
+		return e.complexity.PlanParticipantsAndProviders.RiskType(childComplexity), true
 
-	case "PlanProvidersAndParticipants.selectionMethod":
-		if e.complexity.PlanProvidersAndParticipants.SelectionMethod == nil {
+	case "PlanParticipantsAndProviders.selectionMethod":
+		if e.complexity.PlanParticipantsAndProviders.SelectionMethod == nil {
 			break
 		}
 
-		return e.complexity.PlanProvidersAndParticipants.SelectionMethod(childComplexity), true
+		return e.complexity.PlanParticipantsAndProviders.SelectionMethod(childComplexity), true
 
-	case "PlanProvidersAndParticipants.selectionNote":
-		if e.complexity.PlanProvidersAndParticipants.SelectionNote == nil {
+	case "PlanParticipantsAndProviders.selectionNote":
+		if e.complexity.PlanParticipantsAndProviders.SelectionNote == nil {
 			break
 		}
 
-		return e.complexity.PlanProvidersAndParticipants.SelectionNote(childComplexity), true
+		return e.complexity.PlanParticipantsAndProviders.SelectionNote(childComplexity), true
 
-	case "PlanProvidersAndParticipants.selectionOther":
-		if e.complexity.PlanProvidersAndParticipants.SelectionOther == nil {
+	case "PlanParticipantsAndProviders.selectionOther":
+		if e.complexity.PlanParticipantsAndProviders.SelectionOther == nil {
 			break
 		}
 
-		return e.complexity.PlanProvidersAndParticipants.SelectionOther(childComplexity), true
+		return e.complexity.PlanParticipantsAndProviders.SelectionOther(childComplexity), true
 
-	case "PlanProvidersAndParticipants.statesEngagement":
-		if e.complexity.PlanProvidersAndParticipants.StatesEngagement == nil {
+	case "PlanParticipantsAndProviders.statesEngagement":
+		if e.complexity.PlanParticipantsAndProviders.StatesEngagement == nil {
 			break
 		}
 
-		return e.complexity.PlanProvidersAndParticipants.StatesEngagement(childComplexity), true
+		return e.complexity.PlanParticipantsAndProviders.StatesEngagement(childComplexity), true
 
-	case "PlanProvidersAndParticipants.status":
-		if e.complexity.PlanProvidersAndParticipants.Status == nil {
+	case "PlanParticipantsAndProviders.status":
+		if e.complexity.PlanParticipantsAndProviders.Status == nil {
 			break
 		}
 
-		return e.complexity.PlanProvidersAndParticipants.Status(childComplexity), true
+		return e.complexity.PlanParticipantsAndProviders.Status(childComplexity), true
 
-	case "PlanProvidersAndParticipants.willRiskChange":
-		if e.complexity.PlanProvidersAndParticipants.WillRiskChange == nil {
+	case "PlanParticipantsAndProviders.willRiskChange":
+		if e.complexity.PlanParticipantsAndProviders.WillRiskChange == nil {
 			break
 		}
 
-		return e.complexity.PlanProvidersAndParticipants.WillRiskChange(childComplexity), true
+		return e.complexity.PlanParticipantsAndProviders.WillRiskChange(childComplexity), true
 
-	case "PlanProvidersAndParticipants.willRiskChangeNote":
-		if e.complexity.PlanProvidersAndParticipants.WillRiskChangeNote == nil {
+	case "PlanParticipantsAndProviders.willRiskChangeNote":
+		if e.complexity.PlanParticipantsAndProviders.WillRiskChangeNote == nil {
 			break
 		}
 
-		return e.complexity.PlanProvidersAndParticipants.WillRiskChangeNote(childComplexity), true
+		return e.complexity.PlanParticipantsAndProviders.WillRiskChangeNote(childComplexity), true
 
 	case "Query.cedarPersonsByCommonName":
 		if e.complexity.Query.CedarPersonsByCommonName == nil {
@@ -2604,7 +2604,7 @@ type ModelPlan {
   basics: PlanBasics!
   milestones: PlanMilestones!
   generalCharacteristics: PlanGeneralCharacteristics!
-  providersAndParticipants: PlanProvidersAndParticipants!
+  providersAndParticipants: PlanParticipantsAndProviders!
   beneficiaries: PlanBeneficiaries!
   collaborators: [PlanCollaborator!]!
   documents: [PlanDocument!]!
@@ -3096,14 +3096,14 @@ input PlanBeneficiariesChanges @goModel(model: "map[string]interface{}") {
 }
 
 """
-PlanProvidersAndParticipants is the task list section that deals with information regarding all Providers and Participants
+PlanParticipantsAndProviders is the task list section that deals with information regarding all Providers and Participants
 """
-type PlanProvidersAndParticipants {
+type PlanParticipantsAndProviders {
   id: UUID!
   modelPlanID: UUID!
 
   #Page 1
-  participants:                      ParticipantsType
+  participants:                      [ParticipantsType!]
   medicareProviderType:              String       
   statesEngagement:                  String       
   participantsOther:                 String       
@@ -3119,12 +3119,12 @@ type PlanProvidersAndParticipants {
   recruitmentMethod:            RecruitmentType
   recruitmentOther:             String         
   recruitmentNote:              String         
-  selectionMethod:              ParticipantSelectionType
+  selectionMethod:              [ParticipantSelectionType!]
   selectionOther:               String         
   selectionNote:                String         
 
   #Page 3
-  communicationMethod:   ParticipantCommunicationType      
+  communicationMethod:   [ParticipantCommunicationType!]
   communicationNote:     String             
   participantAssumeRisk: Boolean             
   riskType:              ParticipantRiskType
@@ -3139,7 +3139,7 @@ type PlanProvidersAndParticipants {
   gainsharePayments:       Boolean       
   gainsharePaymentsMethod: String       
   gainsharePaymentsNote:   String       
-  participantsIds:         ParticipantsIDType
+  participantsIds:         [ParticipantsIDType!]
   participantsIdsOther:    String       
   participantsIDSNote:     String       
 
@@ -3147,10 +3147,10 @@ type PlanProvidersAndParticipants {
   providerAdditionFrequency:      FrequencyType
   providerAdditionFrequencyOther: String       
   providerAdditionFrequencyNote:  String       
-  providerAddMethod:              ProviderAddType
+  providerAddMethod:              [ProviderAddType!]
   providerAddMethodOther:         String       
   providerAddMethodNote:          String       
-  providerLeaveMethod:            ProviderLeaveType
+  providerLeaveMethod:            [ProviderLeaveType!]
   providerLeaveMethodOther:       String       
   providerLeaveMethodNote:        String       
   providerOverlap:                OverlapType  
@@ -3167,14 +3167,14 @@ type PlanProvidersAndParticipants {
 }
 
 """
-PlanProvidersAndParticipantsChanges represents the possible changes you can make to a
+PlanParticipantsAndProvidersChanges represents the possible changes you can make to a
 providers and participants object when updating it.
 Fields explicitly set with NULL will be unset, and omitted fields will be left unchanged.
 https://gqlgen.com/reference/changesets/
 """
-input PlanProvidersAndParticipantsChanges @goModel(model: "map[string]interface{}") {
+input PlanParticipantsAndProvidersChanges @goModel(model: "map[string]interface{}") {
   #Page 1
-  participants:                      ParticipantsType
+  participants:                      [ParticipantsType!]
   medicareProviderType:              String       
   statesEngagement:                  String       
   participantsOther:                 String       
@@ -3190,12 +3190,12 @@ input PlanProvidersAndParticipantsChanges @goModel(model: "map[string]interface{
   recruitmentMethod:            RecruitmentType
   recruitmentOther:             String         
   recruitmentNote:              String         
-  selectionMethod:              ParticipantSelectionType
+  selectionMethod:              [ParticipantSelectionType!]
   selectionOther:               String         
   selectionNote:                String         
 
   #Page 3
-  communicationMethod:   ParticipantCommunicationType      
+  communicationMethod:   [ParticipantCommunicationType!]
   communicationNote:     String             
   participantAssumeRisk: Boolean             
   riskType:              ParticipantRiskType
@@ -3210,7 +3210,7 @@ input PlanProvidersAndParticipantsChanges @goModel(model: "map[string]interface{
   gainsharePayments:       Boolean       
   gainsharePaymentsMethod: String       
   gainsharePaymentsNote:   String       
-  participantsIds:         ParticipantsIDType
+  participantsIds:         [ParticipantsIDType!]
   participantsIdsOther:    String       
   participantsIDSNote:     String       
 
@@ -3218,15 +3218,15 @@ input PlanProvidersAndParticipantsChanges @goModel(model: "map[string]interface{
   providerAdditionFrequency:      FrequencyType
   providerAdditionFrequencyOther: String       
   providerAdditionFrequencyNote:  String       
-  providerAddMethod:              ProviderAddType
+  providerAddMethod:              [ProviderAddType!]
   providerAddMethodOther:         String       
   providerAddMethodNote:          String       
-  providerLeaveMethod:            ProviderLeaveType
+  providerLeaveMethod:            [ProviderLeaveType!]
   providerLeaveMethodOther:       String       
   providerLeaveMethodNote:        String       
   providerOverlap:                OverlapType  
   providerOverlapHierarchy:       String       
-  providerOverlapNote:            String       
+  providerOverlapNote:            String     
 
 }
 
@@ -3275,7 +3275,7 @@ updatePlanGeneralCharacteristics(id: UUID!, changes: PlanGeneralCharacteristicsC
 updatePlanBeneficiares(id: UUID!, changes: PlanBeneficiariesChanges!): PlanBeneficiaries!
 @hasRole(role: MINT_BASE_USER)
 
-updatePlanPlanProvidersAndParticipants(id: UUID!, changes: PlanProvidersAndParticipantsChanges!): PlanProvidersAndParticipants!
+updatePlanPlanParticipantsAndProviders(id: UUID!, changes: PlanParticipantsAndProvidersChanges!): PlanParticipantsAndProviders!
 @hasRole(role: MINT_BASE_USER)
 
 
@@ -3957,7 +3957,7 @@ func (ec *executionContext) field_Mutation_updatePlanMilestones_args(ctx context
 	return args, nil
 }
 
-func (ec *executionContext) field_Mutation_updatePlanPlanProvidersAndParticipants_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+func (ec *executionContext) field_Mutation_updatePlanPlanParticipantsAndProviders_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
 	var arg0 uuid.UUID
@@ -3972,7 +3972,7 @@ func (ec *executionContext) field_Mutation_updatePlanPlanProvidersAndParticipant
 	var arg1 map[string]interface{}
 	if tmp, ok := rawArgs["changes"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("changes"))
-		arg1, err = ec.unmarshalNPlanProvidersAndParticipantsChanges2map(ctx, tmp)
+		arg1, err = ec.unmarshalNPlanParticipantsAndProvidersChanges2map(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -5455,9 +5455,9 @@ func (ec *executionContext) _ModelPlan_providersAndParticipants(ctx context.Cont
 		}
 		return graphql.Null
 	}
-	res := resTmp.(*models.PlanProvidersAndParticipants)
+	res := resTmp.(*models.PlanParticipantsAndProviders)
 	fc.Result = res
-	return ec.marshalNPlanProvidersAndParticipants2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanProvidersAndParticipants(ctx, field.Selections, res)
+	return ec.marshalNPlanParticipantsAndProviders2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanParticipantsAndProviders(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_ModelPlan_providersAndParticipants(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -5469,111 +5469,111 @@ func (ec *executionContext) fieldContext_ModelPlan_providersAndParticipants(ctx 
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			switch field.Name {
 			case "id":
-				return ec.fieldContext_PlanProvidersAndParticipants_id(ctx, field)
+				return ec.fieldContext_PlanParticipantsAndProviders_id(ctx, field)
 			case "modelPlanID":
-				return ec.fieldContext_PlanProvidersAndParticipants_modelPlanID(ctx, field)
+				return ec.fieldContext_PlanParticipantsAndProviders_modelPlanID(ctx, field)
 			case "participants":
-				return ec.fieldContext_PlanProvidersAndParticipants_participants(ctx, field)
+				return ec.fieldContext_PlanParticipantsAndProviders_participants(ctx, field)
 			case "medicareProviderType":
-				return ec.fieldContext_PlanProvidersAndParticipants_medicareProviderType(ctx, field)
+				return ec.fieldContext_PlanParticipantsAndProviders_medicareProviderType(ctx, field)
 			case "statesEngagement":
-				return ec.fieldContext_PlanProvidersAndParticipants_statesEngagement(ctx, field)
+				return ec.fieldContext_PlanParticipantsAndProviders_statesEngagement(ctx, field)
 			case "participantsOther":
-				return ec.fieldContext_PlanProvidersAndParticipants_participantsOther(ctx, field)
+				return ec.fieldContext_PlanParticipantsAndProviders_participantsOther(ctx, field)
 			case "participantsNote":
-				return ec.fieldContext_PlanProvidersAndParticipants_participantsNote(ctx, field)
+				return ec.fieldContext_PlanParticipantsAndProviders_participantsNote(ctx, field)
 			case "participantsCurrentlyInModels":
-				return ec.fieldContext_PlanProvidersAndParticipants_participantsCurrentlyInModels(ctx, field)
+				return ec.fieldContext_PlanParticipantsAndProviders_participantsCurrentlyInModels(ctx, field)
 			case "participantsCurrentlyInModelsNote":
-				return ec.fieldContext_PlanProvidersAndParticipants_participantsCurrentlyInModelsNote(ctx, field)
+				return ec.fieldContext_PlanParticipantsAndProviders_participantsCurrentlyInModelsNote(ctx, field)
 			case "modelApplicationLevel":
-				return ec.fieldContext_PlanProvidersAndParticipants_modelApplicationLevel(ctx, field)
+				return ec.fieldContext_PlanParticipantsAndProviders_modelApplicationLevel(ctx, field)
 			case "expectedNumberOfParticipants":
-				return ec.fieldContext_PlanProvidersAndParticipants_expectedNumberOfParticipants(ctx, field)
+				return ec.fieldContext_PlanParticipantsAndProviders_expectedNumberOfParticipants(ctx, field)
 			case "estimateConfidence":
-				return ec.fieldContext_PlanProvidersAndParticipants_estimateConfidence(ctx, field)
+				return ec.fieldContext_PlanParticipantsAndProviders_estimateConfidence(ctx, field)
 			case "confidenceNote":
-				return ec.fieldContext_PlanProvidersAndParticipants_confidenceNote(ctx, field)
+				return ec.fieldContext_PlanParticipantsAndProviders_confidenceNote(ctx, field)
 			case "recruitmentMethod":
-				return ec.fieldContext_PlanProvidersAndParticipants_recruitmentMethod(ctx, field)
+				return ec.fieldContext_PlanParticipantsAndProviders_recruitmentMethod(ctx, field)
 			case "recruitmentOther":
-				return ec.fieldContext_PlanProvidersAndParticipants_recruitmentOther(ctx, field)
+				return ec.fieldContext_PlanParticipantsAndProviders_recruitmentOther(ctx, field)
 			case "recruitmentNote":
-				return ec.fieldContext_PlanProvidersAndParticipants_recruitmentNote(ctx, field)
+				return ec.fieldContext_PlanParticipantsAndProviders_recruitmentNote(ctx, field)
 			case "selectionMethod":
-				return ec.fieldContext_PlanProvidersAndParticipants_selectionMethod(ctx, field)
+				return ec.fieldContext_PlanParticipantsAndProviders_selectionMethod(ctx, field)
 			case "selectionOther":
-				return ec.fieldContext_PlanProvidersAndParticipants_selectionOther(ctx, field)
+				return ec.fieldContext_PlanParticipantsAndProviders_selectionOther(ctx, field)
 			case "selectionNote":
-				return ec.fieldContext_PlanProvidersAndParticipants_selectionNote(ctx, field)
+				return ec.fieldContext_PlanParticipantsAndProviders_selectionNote(ctx, field)
 			case "communicationMethod":
-				return ec.fieldContext_PlanProvidersAndParticipants_communicationMethod(ctx, field)
+				return ec.fieldContext_PlanParticipantsAndProviders_communicationMethod(ctx, field)
 			case "communicationNote":
-				return ec.fieldContext_PlanProvidersAndParticipants_communicationNote(ctx, field)
+				return ec.fieldContext_PlanParticipantsAndProviders_communicationNote(ctx, field)
 			case "participantAssumeRisk":
-				return ec.fieldContext_PlanProvidersAndParticipants_participantAssumeRisk(ctx, field)
+				return ec.fieldContext_PlanParticipantsAndProviders_participantAssumeRisk(ctx, field)
 			case "riskType":
-				return ec.fieldContext_PlanProvidersAndParticipants_riskType(ctx, field)
+				return ec.fieldContext_PlanParticipantsAndProviders_riskType(ctx, field)
 			case "riskOther":
-				return ec.fieldContext_PlanProvidersAndParticipants_riskOther(ctx, field)
+				return ec.fieldContext_PlanParticipantsAndProviders_riskOther(ctx, field)
 			case "riskNote":
-				return ec.fieldContext_PlanProvidersAndParticipants_riskNote(ctx, field)
+				return ec.fieldContext_PlanParticipantsAndProviders_riskNote(ctx, field)
 			case "willRiskChange":
-				return ec.fieldContext_PlanProvidersAndParticipants_willRiskChange(ctx, field)
+				return ec.fieldContext_PlanParticipantsAndProviders_willRiskChange(ctx, field)
 			case "willRiskChangeNote":
-				return ec.fieldContext_PlanProvidersAndParticipants_willRiskChangeNote(ctx, field)
+				return ec.fieldContext_PlanParticipantsAndProviders_willRiskChangeNote(ctx, field)
 			case "coordinateWork":
-				return ec.fieldContext_PlanProvidersAndParticipants_coordinateWork(ctx, field)
+				return ec.fieldContext_PlanParticipantsAndProviders_coordinateWork(ctx, field)
 			case "coordinateWorkNote":
-				return ec.fieldContext_PlanProvidersAndParticipants_coordinateWorkNote(ctx, field)
+				return ec.fieldContext_PlanParticipantsAndProviders_coordinateWorkNote(ctx, field)
 			case "gainsharePayments":
-				return ec.fieldContext_PlanProvidersAndParticipants_gainsharePayments(ctx, field)
+				return ec.fieldContext_PlanParticipantsAndProviders_gainsharePayments(ctx, field)
 			case "gainsharePaymentsMethod":
-				return ec.fieldContext_PlanProvidersAndParticipants_gainsharePaymentsMethod(ctx, field)
+				return ec.fieldContext_PlanParticipantsAndProviders_gainsharePaymentsMethod(ctx, field)
 			case "gainsharePaymentsNote":
-				return ec.fieldContext_PlanProvidersAndParticipants_gainsharePaymentsNote(ctx, field)
+				return ec.fieldContext_PlanParticipantsAndProviders_gainsharePaymentsNote(ctx, field)
 			case "participantsIds":
-				return ec.fieldContext_PlanProvidersAndParticipants_participantsIds(ctx, field)
+				return ec.fieldContext_PlanParticipantsAndProviders_participantsIds(ctx, field)
 			case "participantsIdsOther":
-				return ec.fieldContext_PlanProvidersAndParticipants_participantsIdsOther(ctx, field)
+				return ec.fieldContext_PlanParticipantsAndProviders_participantsIdsOther(ctx, field)
 			case "participantsIDSNote":
-				return ec.fieldContext_PlanProvidersAndParticipants_participantsIDSNote(ctx, field)
+				return ec.fieldContext_PlanParticipantsAndProviders_participantsIDSNote(ctx, field)
 			case "providerAdditionFrequency":
-				return ec.fieldContext_PlanProvidersAndParticipants_providerAdditionFrequency(ctx, field)
+				return ec.fieldContext_PlanParticipantsAndProviders_providerAdditionFrequency(ctx, field)
 			case "providerAdditionFrequencyOther":
-				return ec.fieldContext_PlanProvidersAndParticipants_providerAdditionFrequencyOther(ctx, field)
+				return ec.fieldContext_PlanParticipantsAndProviders_providerAdditionFrequencyOther(ctx, field)
 			case "providerAdditionFrequencyNote":
-				return ec.fieldContext_PlanProvidersAndParticipants_providerAdditionFrequencyNote(ctx, field)
+				return ec.fieldContext_PlanParticipantsAndProviders_providerAdditionFrequencyNote(ctx, field)
 			case "providerAddMethod":
-				return ec.fieldContext_PlanProvidersAndParticipants_providerAddMethod(ctx, field)
+				return ec.fieldContext_PlanParticipantsAndProviders_providerAddMethod(ctx, field)
 			case "providerAddMethodOther":
-				return ec.fieldContext_PlanProvidersAndParticipants_providerAddMethodOther(ctx, field)
+				return ec.fieldContext_PlanParticipantsAndProviders_providerAddMethodOther(ctx, field)
 			case "providerAddMethodNote":
-				return ec.fieldContext_PlanProvidersAndParticipants_providerAddMethodNote(ctx, field)
+				return ec.fieldContext_PlanParticipantsAndProviders_providerAddMethodNote(ctx, field)
 			case "providerLeaveMethod":
-				return ec.fieldContext_PlanProvidersAndParticipants_providerLeaveMethod(ctx, field)
+				return ec.fieldContext_PlanParticipantsAndProviders_providerLeaveMethod(ctx, field)
 			case "providerLeaveMethodOther":
-				return ec.fieldContext_PlanProvidersAndParticipants_providerLeaveMethodOther(ctx, field)
+				return ec.fieldContext_PlanParticipantsAndProviders_providerLeaveMethodOther(ctx, field)
 			case "providerLeaveMethodNote":
-				return ec.fieldContext_PlanProvidersAndParticipants_providerLeaveMethodNote(ctx, field)
+				return ec.fieldContext_PlanParticipantsAndProviders_providerLeaveMethodNote(ctx, field)
 			case "providerOverlap":
-				return ec.fieldContext_PlanProvidersAndParticipants_providerOverlap(ctx, field)
+				return ec.fieldContext_PlanParticipantsAndProviders_providerOverlap(ctx, field)
 			case "providerOverlapHierarchy":
-				return ec.fieldContext_PlanProvidersAndParticipants_providerOverlapHierarchy(ctx, field)
+				return ec.fieldContext_PlanParticipantsAndProviders_providerOverlapHierarchy(ctx, field)
 			case "providerOverlapNote":
-				return ec.fieldContext_PlanProvidersAndParticipants_providerOverlapNote(ctx, field)
+				return ec.fieldContext_PlanParticipantsAndProviders_providerOverlapNote(ctx, field)
 			case "createdBy":
-				return ec.fieldContext_PlanProvidersAndParticipants_createdBy(ctx, field)
+				return ec.fieldContext_PlanParticipantsAndProviders_createdBy(ctx, field)
 			case "createdDts":
-				return ec.fieldContext_PlanProvidersAndParticipants_createdDts(ctx, field)
+				return ec.fieldContext_PlanParticipantsAndProviders_createdDts(ctx, field)
 			case "modifiedBy":
-				return ec.fieldContext_PlanProvidersAndParticipants_modifiedBy(ctx, field)
+				return ec.fieldContext_PlanParticipantsAndProviders_modifiedBy(ctx, field)
 			case "modifiedDts":
-				return ec.fieldContext_PlanProvidersAndParticipants_modifiedDts(ctx, field)
+				return ec.fieldContext_PlanParticipantsAndProviders_modifiedDts(ctx, field)
 			case "status":
-				return ec.fieldContext_PlanProvidersAndParticipants_status(ctx, field)
+				return ec.fieldContext_PlanParticipantsAndProviders_status(ctx, field)
 			}
-			return nil, fmt.Errorf("no field named %q was found under type PlanProvidersAndParticipants", field.Name)
+			return nil, fmt.Errorf("no field named %q was found under type PlanParticipantsAndProviders", field.Name)
 		},
 	}
 	return fc, nil
@@ -7028,8 +7028,8 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanBeneficiares(ctx con
 	return fc, nil
 }
 
-func (ec *executionContext) _Mutation_updatePlanPlanProvidersAndParticipants(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Mutation_updatePlanPlanProvidersAndParticipants(ctx, field)
+func (ec *executionContext) _Mutation_updatePlanPlanParticipantsAndProviders(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Mutation_updatePlanPlanParticipantsAndProviders(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -7043,7 +7043,7 @@ func (ec *executionContext) _Mutation_updatePlanPlanProvidersAndParticipants(ctx
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		directive0 := func(rctx context.Context) (interface{}, error) {
 			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Mutation().UpdatePlanPlanProvidersAndParticipants(rctx, fc.Args["id"].(uuid.UUID), fc.Args["changes"].(map[string]interface{}))
+			return ec.resolvers.Mutation().UpdatePlanPlanParticipantsAndProviders(rctx, fc.Args["id"].(uuid.UUID), fc.Args["changes"].(map[string]interface{}))
 		}
 		directive1 := func(ctx context.Context) (interface{}, error) {
 			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_BASE_USER")
@@ -7063,10 +7063,10 @@ func (ec *executionContext) _Mutation_updatePlanPlanProvidersAndParticipants(ctx
 		if tmp == nil {
 			return nil, nil
 		}
-		if data, ok := tmp.(*models.PlanProvidersAndParticipants); ok {
+		if data, ok := tmp.(*models.PlanParticipantsAndProviders); ok {
 			return data, nil
 		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.PlanProvidersAndParticipants`, tmp)
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.PlanParticipantsAndProviders`, tmp)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -7078,12 +7078,12 @@ func (ec *executionContext) _Mutation_updatePlanPlanProvidersAndParticipants(ctx
 		}
 		return graphql.Null
 	}
-	res := resTmp.(*models.PlanProvidersAndParticipants)
+	res := resTmp.(*models.PlanParticipantsAndProviders)
 	fc.Result = res
-	return ec.marshalNPlanProvidersAndParticipants2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanProvidersAndParticipants(ctx, field.Selections, res)
+	return ec.marshalNPlanParticipantsAndProviders2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanParticipantsAndProviders(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Mutation_updatePlanPlanProvidersAndParticipants(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Mutation_updatePlanPlanParticipantsAndProviders(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Mutation",
 		Field:      field,
@@ -7092,111 +7092,111 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanPlanProvidersAndPart
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			switch field.Name {
 			case "id":
-				return ec.fieldContext_PlanProvidersAndParticipants_id(ctx, field)
+				return ec.fieldContext_PlanParticipantsAndProviders_id(ctx, field)
 			case "modelPlanID":
-				return ec.fieldContext_PlanProvidersAndParticipants_modelPlanID(ctx, field)
+				return ec.fieldContext_PlanParticipantsAndProviders_modelPlanID(ctx, field)
 			case "participants":
-				return ec.fieldContext_PlanProvidersAndParticipants_participants(ctx, field)
+				return ec.fieldContext_PlanParticipantsAndProviders_participants(ctx, field)
 			case "medicareProviderType":
-				return ec.fieldContext_PlanProvidersAndParticipants_medicareProviderType(ctx, field)
+				return ec.fieldContext_PlanParticipantsAndProviders_medicareProviderType(ctx, field)
 			case "statesEngagement":
-				return ec.fieldContext_PlanProvidersAndParticipants_statesEngagement(ctx, field)
+				return ec.fieldContext_PlanParticipantsAndProviders_statesEngagement(ctx, field)
 			case "participantsOther":
-				return ec.fieldContext_PlanProvidersAndParticipants_participantsOther(ctx, field)
+				return ec.fieldContext_PlanParticipantsAndProviders_participantsOther(ctx, field)
 			case "participantsNote":
-				return ec.fieldContext_PlanProvidersAndParticipants_participantsNote(ctx, field)
+				return ec.fieldContext_PlanParticipantsAndProviders_participantsNote(ctx, field)
 			case "participantsCurrentlyInModels":
-				return ec.fieldContext_PlanProvidersAndParticipants_participantsCurrentlyInModels(ctx, field)
+				return ec.fieldContext_PlanParticipantsAndProviders_participantsCurrentlyInModels(ctx, field)
 			case "participantsCurrentlyInModelsNote":
-				return ec.fieldContext_PlanProvidersAndParticipants_participantsCurrentlyInModelsNote(ctx, field)
+				return ec.fieldContext_PlanParticipantsAndProviders_participantsCurrentlyInModelsNote(ctx, field)
 			case "modelApplicationLevel":
-				return ec.fieldContext_PlanProvidersAndParticipants_modelApplicationLevel(ctx, field)
+				return ec.fieldContext_PlanParticipantsAndProviders_modelApplicationLevel(ctx, field)
 			case "expectedNumberOfParticipants":
-				return ec.fieldContext_PlanProvidersAndParticipants_expectedNumberOfParticipants(ctx, field)
+				return ec.fieldContext_PlanParticipantsAndProviders_expectedNumberOfParticipants(ctx, field)
 			case "estimateConfidence":
-				return ec.fieldContext_PlanProvidersAndParticipants_estimateConfidence(ctx, field)
+				return ec.fieldContext_PlanParticipantsAndProviders_estimateConfidence(ctx, field)
 			case "confidenceNote":
-				return ec.fieldContext_PlanProvidersAndParticipants_confidenceNote(ctx, field)
+				return ec.fieldContext_PlanParticipantsAndProviders_confidenceNote(ctx, field)
 			case "recruitmentMethod":
-				return ec.fieldContext_PlanProvidersAndParticipants_recruitmentMethod(ctx, field)
+				return ec.fieldContext_PlanParticipantsAndProviders_recruitmentMethod(ctx, field)
 			case "recruitmentOther":
-				return ec.fieldContext_PlanProvidersAndParticipants_recruitmentOther(ctx, field)
+				return ec.fieldContext_PlanParticipantsAndProviders_recruitmentOther(ctx, field)
 			case "recruitmentNote":
-				return ec.fieldContext_PlanProvidersAndParticipants_recruitmentNote(ctx, field)
+				return ec.fieldContext_PlanParticipantsAndProviders_recruitmentNote(ctx, field)
 			case "selectionMethod":
-				return ec.fieldContext_PlanProvidersAndParticipants_selectionMethod(ctx, field)
+				return ec.fieldContext_PlanParticipantsAndProviders_selectionMethod(ctx, field)
 			case "selectionOther":
-				return ec.fieldContext_PlanProvidersAndParticipants_selectionOther(ctx, field)
+				return ec.fieldContext_PlanParticipantsAndProviders_selectionOther(ctx, field)
 			case "selectionNote":
-				return ec.fieldContext_PlanProvidersAndParticipants_selectionNote(ctx, field)
+				return ec.fieldContext_PlanParticipantsAndProviders_selectionNote(ctx, field)
 			case "communicationMethod":
-				return ec.fieldContext_PlanProvidersAndParticipants_communicationMethod(ctx, field)
+				return ec.fieldContext_PlanParticipantsAndProviders_communicationMethod(ctx, field)
 			case "communicationNote":
-				return ec.fieldContext_PlanProvidersAndParticipants_communicationNote(ctx, field)
+				return ec.fieldContext_PlanParticipantsAndProviders_communicationNote(ctx, field)
 			case "participantAssumeRisk":
-				return ec.fieldContext_PlanProvidersAndParticipants_participantAssumeRisk(ctx, field)
+				return ec.fieldContext_PlanParticipantsAndProviders_participantAssumeRisk(ctx, field)
 			case "riskType":
-				return ec.fieldContext_PlanProvidersAndParticipants_riskType(ctx, field)
+				return ec.fieldContext_PlanParticipantsAndProviders_riskType(ctx, field)
 			case "riskOther":
-				return ec.fieldContext_PlanProvidersAndParticipants_riskOther(ctx, field)
+				return ec.fieldContext_PlanParticipantsAndProviders_riskOther(ctx, field)
 			case "riskNote":
-				return ec.fieldContext_PlanProvidersAndParticipants_riskNote(ctx, field)
+				return ec.fieldContext_PlanParticipantsAndProviders_riskNote(ctx, field)
 			case "willRiskChange":
-				return ec.fieldContext_PlanProvidersAndParticipants_willRiskChange(ctx, field)
+				return ec.fieldContext_PlanParticipantsAndProviders_willRiskChange(ctx, field)
 			case "willRiskChangeNote":
-				return ec.fieldContext_PlanProvidersAndParticipants_willRiskChangeNote(ctx, field)
+				return ec.fieldContext_PlanParticipantsAndProviders_willRiskChangeNote(ctx, field)
 			case "coordinateWork":
-				return ec.fieldContext_PlanProvidersAndParticipants_coordinateWork(ctx, field)
+				return ec.fieldContext_PlanParticipantsAndProviders_coordinateWork(ctx, field)
 			case "coordinateWorkNote":
-				return ec.fieldContext_PlanProvidersAndParticipants_coordinateWorkNote(ctx, field)
+				return ec.fieldContext_PlanParticipantsAndProviders_coordinateWorkNote(ctx, field)
 			case "gainsharePayments":
-				return ec.fieldContext_PlanProvidersAndParticipants_gainsharePayments(ctx, field)
+				return ec.fieldContext_PlanParticipantsAndProviders_gainsharePayments(ctx, field)
 			case "gainsharePaymentsMethod":
-				return ec.fieldContext_PlanProvidersAndParticipants_gainsharePaymentsMethod(ctx, field)
+				return ec.fieldContext_PlanParticipantsAndProviders_gainsharePaymentsMethod(ctx, field)
 			case "gainsharePaymentsNote":
-				return ec.fieldContext_PlanProvidersAndParticipants_gainsharePaymentsNote(ctx, field)
+				return ec.fieldContext_PlanParticipantsAndProviders_gainsharePaymentsNote(ctx, field)
 			case "participantsIds":
-				return ec.fieldContext_PlanProvidersAndParticipants_participantsIds(ctx, field)
+				return ec.fieldContext_PlanParticipantsAndProviders_participantsIds(ctx, field)
 			case "participantsIdsOther":
-				return ec.fieldContext_PlanProvidersAndParticipants_participantsIdsOther(ctx, field)
+				return ec.fieldContext_PlanParticipantsAndProviders_participantsIdsOther(ctx, field)
 			case "participantsIDSNote":
-				return ec.fieldContext_PlanProvidersAndParticipants_participantsIDSNote(ctx, field)
+				return ec.fieldContext_PlanParticipantsAndProviders_participantsIDSNote(ctx, field)
 			case "providerAdditionFrequency":
-				return ec.fieldContext_PlanProvidersAndParticipants_providerAdditionFrequency(ctx, field)
+				return ec.fieldContext_PlanParticipantsAndProviders_providerAdditionFrequency(ctx, field)
 			case "providerAdditionFrequencyOther":
-				return ec.fieldContext_PlanProvidersAndParticipants_providerAdditionFrequencyOther(ctx, field)
+				return ec.fieldContext_PlanParticipantsAndProviders_providerAdditionFrequencyOther(ctx, field)
 			case "providerAdditionFrequencyNote":
-				return ec.fieldContext_PlanProvidersAndParticipants_providerAdditionFrequencyNote(ctx, field)
+				return ec.fieldContext_PlanParticipantsAndProviders_providerAdditionFrequencyNote(ctx, field)
 			case "providerAddMethod":
-				return ec.fieldContext_PlanProvidersAndParticipants_providerAddMethod(ctx, field)
+				return ec.fieldContext_PlanParticipantsAndProviders_providerAddMethod(ctx, field)
 			case "providerAddMethodOther":
-				return ec.fieldContext_PlanProvidersAndParticipants_providerAddMethodOther(ctx, field)
+				return ec.fieldContext_PlanParticipantsAndProviders_providerAddMethodOther(ctx, field)
 			case "providerAddMethodNote":
-				return ec.fieldContext_PlanProvidersAndParticipants_providerAddMethodNote(ctx, field)
+				return ec.fieldContext_PlanParticipantsAndProviders_providerAddMethodNote(ctx, field)
 			case "providerLeaveMethod":
-				return ec.fieldContext_PlanProvidersAndParticipants_providerLeaveMethod(ctx, field)
+				return ec.fieldContext_PlanParticipantsAndProviders_providerLeaveMethod(ctx, field)
 			case "providerLeaveMethodOther":
-				return ec.fieldContext_PlanProvidersAndParticipants_providerLeaveMethodOther(ctx, field)
+				return ec.fieldContext_PlanParticipantsAndProviders_providerLeaveMethodOther(ctx, field)
 			case "providerLeaveMethodNote":
-				return ec.fieldContext_PlanProvidersAndParticipants_providerLeaveMethodNote(ctx, field)
+				return ec.fieldContext_PlanParticipantsAndProviders_providerLeaveMethodNote(ctx, field)
 			case "providerOverlap":
-				return ec.fieldContext_PlanProvidersAndParticipants_providerOverlap(ctx, field)
+				return ec.fieldContext_PlanParticipantsAndProviders_providerOverlap(ctx, field)
 			case "providerOverlapHierarchy":
-				return ec.fieldContext_PlanProvidersAndParticipants_providerOverlapHierarchy(ctx, field)
+				return ec.fieldContext_PlanParticipantsAndProviders_providerOverlapHierarchy(ctx, field)
 			case "providerOverlapNote":
-				return ec.fieldContext_PlanProvidersAndParticipants_providerOverlapNote(ctx, field)
+				return ec.fieldContext_PlanParticipantsAndProviders_providerOverlapNote(ctx, field)
 			case "createdBy":
-				return ec.fieldContext_PlanProvidersAndParticipants_createdBy(ctx, field)
+				return ec.fieldContext_PlanParticipantsAndProviders_createdBy(ctx, field)
 			case "createdDts":
-				return ec.fieldContext_PlanProvidersAndParticipants_createdDts(ctx, field)
+				return ec.fieldContext_PlanParticipantsAndProviders_createdDts(ctx, field)
 			case "modifiedBy":
-				return ec.fieldContext_PlanProvidersAndParticipants_modifiedBy(ctx, field)
+				return ec.fieldContext_PlanParticipantsAndProviders_modifiedBy(ctx, field)
 			case "modifiedDts":
-				return ec.fieldContext_PlanProvidersAndParticipants_modifiedDts(ctx, field)
+				return ec.fieldContext_PlanParticipantsAndProviders_modifiedDts(ctx, field)
 			case "status":
-				return ec.fieldContext_PlanProvidersAndParticipants_status(ctx, field)
+				return ec.fieldContext_PlanParticipantsAndProviders_status(ctx, field)
 			}
-			return nil, fmt.Errorf("no field named %q was found under type PlanProvidersAndParticipants", field.Name)
+			return nil, fmt.Errorf("no field named %q was found under type PlanParticipantsAndProviders", field.Name)
 		},
 	}
 	defer func() {
@@ -7206,7 +7206,7 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanPlanProvidersAndPart
 		}
 	}()
 	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_updatePlanPlanProvidersAndParticipants_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+	if fc.Args, err = ec.field_Mutation_updatePlanPlanParticipantsAndProviders_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return
 	}
@@ -14619,8 +14619,8 @@ func (ec *executionContext) fieldContext_PlanMilestones_status(ctx context.Conte
 	return fc, nil
 }
 
-func (ec *executionContext) _PlanProvidersAndParticipants_id(ctx context.Context, field graphql.CollectedField, obj *models.PlanProvidersAndParticipants) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanProvidersAndParticipants_id(ctx, field)
+func (ec *executionContext) _PlanParticipantsAndProviders_id(ctx context.Context, field graphql.CollectedField, obj *models.PlanParticipantsAndProviders) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProviders_id(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -14650,9 +14650,9 @@ func (ec *executionContext) _PlanProvidersAndParticipants_id(ctx context.Context
 	return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_PlanProvidersAndParticipants_id(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_id(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
-		Object:     "PlanProvidersAndParticipants",
+		Object:     "PlanParticipantsAndProviders",
 		Field:      field,
 		IsMethod:   false,
 		IsResolver: false,
@@ -14663,8 +14663,8 @@ func (ec *executionContext) fieldContext_PlanProvidersAndParticipants_id(ctx con
 	return fc, nil
 }
 
-func (ec *executionContext) _PlanProvidersAndParticipants_modelPlanID(ctx context.Context, field graphql.CollectedField, obj *models.PlanProvidersAndParticipants) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanProvidersAndParticipants_modelPlanID(ctx, field)
+func (ec *executionContext) _PlanParticipantsAndProviders_modelPlanID(ctx context.Context, field graphql.CollectedField, obj *models.PlanParticipantsAndProviders) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProviders_modelPlanID(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -14694,9 +14694,9 @@ func (ec *executionContext) _PlanProvidersAndParticipants_modelPlanID(ctx contex
 	return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_PlanProvidersAndParticipants_modelPlanID(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_modelPlanID(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
-		Object:     "PlanProvidersAndParticipants",
+		Object:     "PlanParticipantsAndProviders",
 		Field:      field,
 		IsMethod:   false,
 		IsResolver: false,
@@ -14707,8 +14707,8 @@ func (ec *executionContext) fieldContext_PlanProvidersAndParticipants_modelPlanI
 	return fc, nil
 }
 
-func (ec *executionContext) _PlanProvidersAndParticipants_participants(ctx context.Context, field graphql.CollectedField, obj *models.PlanProvidersAndParticipants) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanProvidersAndParticipants_participants(ctx, field)
+func (ec *executionContext) _PlanParticipantsAndProviders_participants(ctx context.Context, field graphql.CollectedField, obj *models.PlanParticipantsAndProviders) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProviders_participants(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -14721,7 +14721,7 @@ func (ec *executionContext) _PlanProvidersAndParticipants_participants(ctx conte
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.PlanProvidersAndParticipants().Participants(rctx, obj)
+		return ec.resolvers.PlanParticipantsAndProviders().Participants(rctx, obj)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -14730,14 +14730,14 @@ func (ec *executionContext) _PlanProvidersAndParticipants_participants(ctx conte
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(*model.ParticipantsType)
+	res := resTmp.([]model.ParticipantsType)
 	fc.Result = res
-	return ec.marshalOParticipantsType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐParticipantsType(ctx, field.Selections, res)
+	return ec.marshalOParticipantsType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐParticipantsTypeᚄ(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_PlanProvidersAndParticipants_participants(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_participants(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
-		Object:     "PlanProvidersAndParticipants",
+		Object:     "PlanParticipantsAndProviders",
 		Field:      field,
 		IsMethod:   true,
 		IsResolver: true,
@@ -14748,8 +14748,8 @@ func (ec *executionContext) fieldContext_PlanProvidersAndParticipants_participan
 	return fc, nil
 }
 
-func (ec *executionContext) _PlanProvidersAndParticipants_medicareProviderType(ctx context.Context, field graphql.CollectedField, obj *models.PlanProvidersAndParticipants) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanProvidersAndParticipants_medicareProviderType(ctx, field)
+func (ec *executionContext) _PlanParticipantsAndProviders_medicareProviderType(ctx context.Context, field graphql.CollectedField, obj *models.PlanParticipantsAndProviders) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProviders_medicareProviderType(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -14776,9 +14776,9 @@ func (ec *executionContext) _PlanProvidersAndParticipants_medicareProviderType(c
 	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_PlanProvidersAndParticipants_medicareProviderType(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_medicareProviderType(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
-		Object:     "PlanProvidersAndParticipants",
+		Object:     "PlanParticipantsAndProviders",
 		Field:      field,
 		IsMethod:   false,
 		IsResolver: false,
@@ -14789,8 +14789,8 @@ func (ec *executionContext) fieldContext_PlanProvidersAndParticipants_medicarePr
 	return fc, nil
 }
 
-func (ec *executionContext) _PlanProvidersAndParticipants_statesEngagement(ctx context.Context, field graphql.CollectedField, obj *models.PlanProvidersAndParticipants) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanProvidersAndParticipants_statesEngagement(ctx, field)
+func (ec *executionContext) _PlanParticipantsAndProviders_statesEngagement(ctx context.Context, field graphql.CollectedField, obj *models.PlanParticipantsAndProviders) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProviders_statesEngagement(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -14817,9 +14817,9 @@ func (ec *executionContext) _PlanProvidersAndParticipants_statesEngagement(ctx c
 	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_PlanProvidersAndParticipants_statesEngagement(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_statesEngagement(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
-		Object:     "PlanProvidersAndParticipants",
+		Object:     "PlanParticipantsAndProviders",
 		Field:      field,
 		IsMethod:   false,
 		IsResolver: false,
@@ -14830,8 +14830,8 @@ func (ec *executionContext) fieldContext_PlanProvidersAndParticipants_statesEnga
 	return fc, nil
 }
 
-func (ec *executionContext) _PlanProvidersAndParticipants_participantsOther(ctx context.Context, field graphql.CollectedField, obj *models.PlanProvidersAndParticipants) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanProvidersAndParticipants_participantsOther(ctx, field)
+func (ec *executionContext) _PlanParticipantsAndProviders_participantsOther(ctx context.Context, field graphql.CollectedField, obj *models.PlanParticipantsAndProviders) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProviders_participantsOther(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -14858,9 +14858,9 @@ func (ec *executionContext) _PlanProvidersAndParticipants_participantsOther(ctx 
 	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_PlanProvidersAndParticipants_participantsOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_participantsOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
-		Object:     "PlanProvidersAndParticipants",
+		Object:     "PlanParticipantsAndProviders",
 		Field:      field,
 		IsMethod:   false,
 		IsResolver: false,
@@ -14871,8 +14871,8 @@ func (ec *executionContext) fieldContext_PlanProvidersAndParticipants_participan
 	return fc, nil
 }
 
-func (ec *executionContext) _PlanProvidersAndParticipants_participantsNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanProvidersAndParticipants) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanProvidersAndParticipants_participantsNote(ctx, field)
+func (ec *executionContext) _PlanParticipantsAndProviders_participantsNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanParticipantsAndProviders) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProviders_participantsNote(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -14899,9 +14899,9 @@ func (ec *executionContext) _PlanProvidersAndParticipants_participantsNote(ctx c
 	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_PlanProvidersAndParticipants_participantsNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_participantsNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
-		Object:     "PlanProvidersAndParticipants",
+		Object:     "PlanParticipantsAndProviders",
 		Field:      field,
 		IsMethod:   false,
 		IsResolver: false,
@@ -14912,8 +14912,8 @@ func (ec *executionContext) fieldContext_PlanProvidersAndParticipants_participan
 	return fc, nil
 }
 
-func (ec *executionContext) _PlanProvidersAndParticipants_participantsCurrentlyInModels(ctx context.Context, field graphql.CollectedField, obj *models.PlanProvidersAndParticipants) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanProvidersAndParticipants_participantsCurrentlyInModels(ctx, field)
+func (ec *executionContext) _PlanParticipantsAndProviders_participantsCurrentlyInModels(ctx context.Context, field graphql.CollectedField, obj *models.PlanParticipantsAndProviders) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProviders_participantsCurrentlyInModels(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -14940,9 +14940,9 @@ func (ec *executionContext) _PlanProvidersAndParticipants_participantsCurrentlyI
 	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_PlanProvidersAndParticipants_participantsCurrentlyInModels(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_participantsCurrentlyInModels(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
-		Object:     "PlanProvidersAndParticipants",
+		Object:     "PlanParticipantsAndProviders",
 		Field:      field,
 		IsMethod:   false,
 		IsResolver: false,
@@ -14953,8 +14953,8 @@ func (ec *executionContext) fieldContext_PlanProvidersAndParticipants_participan
 	return fc, nil
 }
 
-func (ec *executionContext) _PlanProvidersAndParticipants_participantsCurrentlyInModelsNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanProvidersAndParticipants) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanProvidersAndParticipants_participantsCurrentlyInModelsNote(ctx, field)
+func (ec *executionContext) _PlanParticipantsAndProviders_participantsCurrentlyInModelsNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanParticipantsAndProviders) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProviders_participantsCurrentlyInModelsNote(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -14981,9 +14981,9 @@ func (ec *executionContext) _PlanProvidersAndParticipants_participantsCurrentlyI
 	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_PlanProvidersAndParticipants_participantsCurrentlyInModelsNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_participantsCurrentlyInModelsNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
-		Object:     "PlanProvidersAndParticipants",
+		Object:     "PlanParticipantsAndProviders",
 		Field:      field,
 		IsMethod:   false,
 		IsResolver: false,
@@ -14994,8 +14994,8 @@ func (ec *executionContext) fieldContext_PlanProvidersAndParticipants_participan
 	return fc, nil
 }
 
-func (ec *executionContext) _PlanProvidersAndParticipants_modelApplicationLevel(ctx context.Context, field graphql.CollectedField, obj *models.PlanProvidersAndParticipants) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanProvidersAndParticipants_modelApplicationLevel(ctx, field)
+func (ec *executionContext) _PlanParticipantsAndProviders_modelApplicationLevel(ctx context.Context, field graphql.CollectedField, obj *models.PlanParticipantsAndProviders) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProviders_modelApplicationLevel(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -15022,9 +15022,9 @@ func (ec *executionContext) _PlanProvidersAndParticipants_modelApplicationLevel(
 	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_PlanProvidersAndParticipants_modelApplicationLevel(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_modelApplicationLevel(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
-		Object:     "PlanProvidersAndParticipants",
+		Object:     "PlanParticipantsAndProviders",
 		Field:      field,
 		IsMethod:   false,
 		IsResolver: false,
@@ -15035,8 +15035,8 @@ func (ec *executionContext) fieldContext_PlanProvidersAndParticipants_modelAppli
 	return fc, nil
 }
 
-func (ec *executionContext) _PlanProvidersAndParticipants_expectedNumberOfParticipants(ctx context.Context, field graphql.CollectedField, obj *models.PlanProvidersAndParticipants) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanProvidersAndParticipants_expectedNumberOfParticipants(ctx, field)
+func (ec *executionContext) _PlanParticipantsAndProviders_expectedNumberOfParticipants(ctx context.Context, field graphql.CollectedField, obj *models.PlanParticipantsAndProviders) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProviders_expectedNumberOfParticipants(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -15063,9 +15063,9 @@ func (ec *executionContext) _PlanProvidersAndParticipants_expectedNumberOfPartic
 	return ec.marshalOInt2int(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_PlanProvidersAndParticipants_expectedNumberOfParticipants(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_expectedNumberOfParticipants(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
-		Object:     "PlanProvidersAndParticipants",
+		Object:     "PlanParticipantsAndProviders",
 		Field:      field,
 		IsMethod:   false,
 		IsResolver: false,
@@ -15076,8 +15076,8 @@ func (ec *executionContext) fieldContext_PlanProvidersAndParticipants_expectedNu
 	return fc, nil
 }
 
-func (ec *executionContext) _PlanProvidersAndParticipants_estimateConfidence(ctx context.Context, field graphql.CollectedField, obj *models.PlanProvidersAndParticipants) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanProvidersAndParticipants_estimateConfidence(ctx, field)
+func (ec *executionContext) _PlanParticipantsAndProviders_estimateConfidence(ctx context.Context, field graphql.CollectedField, obj *models.PlanParticipantsAndProviders) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProviders_estimateConfidence(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -15104,9 +15104,9 @@ func (ec *executionContext) _PlanProvidersAndParticipants_estimateConfidence(ctx
 	return ec.marshalOConfidenceType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐConfidenceType(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_PlanProvidersAndParticipants_estimateConfidence(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_estimateConfidence(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
-		Object:     "PlanProvidersAndParticipants",
+		Object:     "PlanParticipantsAndProviders",
 		Field:      field,
 		IsMethod:   false,
 		IsResolver: false,
@@ -15117,8 +15117,8 @@ func (ec *executionContext) fieldContext_PlanProvidersAndParticipants_estimateCo
 	return fc, nil
 }
 
-func (ec *executionContext) _PlanProvidersAndParticipants_confidenceNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanProvidersAndParticipants) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanProvidersAndParticipants_confidenceNote(ctx, field)
+func (ec *executionContext) _PlanParticipantsAndProviders_confidenceNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanParticipantsAndProviders) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProviders_confidenceNote(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -15145,9 +15145,9 @@ func (ec *executionContext) _PlanProvidersAndParticipants_confidenceNote(ctx con
 	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_PlanProvidersAndParticipants_confidenceNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_confidenceNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
-		Object:     "PlanProvidersAndParticipants",
+		Object:     "PlanParticipantsAndProviders",
 		Field:      field,
 		IsMethod:   false,
 		IsResolver: false,
@@ -15158,8 +15158,8 @@ func (ec *executionContext) fieldContext_PlanProvidersAndParticipants_confidence
 	return fc, nil
 }
 
-func (ec *executionContext) _PlanProvidersAndParticipants_recruitmentMethod(ctx context.Context, field graphql.CollectedField, obj *models.PlanProvidersAndParticipants) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanProvidersAndParticipants_recruitmentMethod(ctx, field)
+func (ec *executionContext) _PlanParticipantsAndProviders_recruitmentMethod(ctx context.Context, field graphql.CollectedField, obj *models.PlanParticipantsAndProviders) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProviders_recruitmentMethod(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -15186,9 +15186,9 @@ func (ec *executionContext) _PlanProvidersAndParticipants_recruitmentMethod(ctx 
 	return ec.marshalORecruitmentType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐRecruitmentType(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_PlanProvidersAndParticipants_recruitmentMethod(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_recruitmentMethod(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
-		Object:     "PlanProvidersAndParticipants",
+		Object:     "PlanParticipantsAndProviders",
 		Field:      field,
 		IsMethod:   false,
 		IsResolver: false,
@@ -15199,8 +15199,8 @@ func (ec *executionContext) fieldContext_PlanProvidersAndParticipants_recruitmen
 	return fc, nil
 }
 
-func (ec *executionContext) _PlanProvidersAndParticipants_recruitmentOther(ctx context.Context, field graphql.CollectedField, obj *models.PlanProvidersAndParticipants) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanProvidersAndParticipants_recruitmentOther(ctx, field)
+func (ec *executionContext) _PlanParticipantsAndProviders_recruitmentOther(ctx context.Context, field graphql.CollectedField, obj *models.PlanParticipantsAndProviders) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProviders_recruitmentOther(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -15227,9 +15227,9 @@ func (ec *executionContext) _PlanProvidersAndParticipants_recruitmentOther(ctx c
 	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_PlanProvidersAndParticipants_recruitmentOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_recruitmentOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
-		Object:     "PlanProvidersAndParticipants",
+		Object:     "PlanParticipantsAndProviders",
 		Field:      field,
 		IsMethod:   false,
 		IsResolver: false,
@@ -15240,8 +15240,8 @@ func (ec *executionContext) fieldContext_PlanProvidersAndParticipants_recruitmen
 	return fc, nil
 }
 
-func (ec *executionContext) _PlanProvidersAndParticipants_recruitmentNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanProvidersAndParticipants) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanProvidersAndParticipants_recruitmentNote(ctx, field)
+func (ec *executionContext) _PlanParticipantsAndProviders_recruitmentNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanParticipantsAndProviders) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProviders_recruitmentNote(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -15268,9 +15268,9 @@ func (ec *executionContext) _PlanProvidersAndParticipants_recruitmentNote(ctx co
 	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_PlanProvidersAndParticipants_recruitmentNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_recruitmentNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
-		Object:     "PlanProvidersAndParticipants",
+		Object:     "PlanParticipantsAndProviders",
 		Field:      field,
 		IsMethod:   false,
 		IsResolver: false,
@@ -15281,8 +15281,8 @@ func (ec *executionContext) fieldContext_PlanProvidersAndParticipants_recruitmen
 	return fc, nil
 }
 
-func (ec *executionContext) _PlanProvidersAndParticipants_selectionMethod(ctx context.Context, field graphql.CollectedField, obj *models.PlanProvidersAndParticipants) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanProvidersAndParticipants_selectionMethod(ctx, field)
+func (ec *executionContext) _PlanParticipantsAndProviders_selectionMethod(ctx context.Context, field graphql.CollectedField, obj *models.PlanParticipantsAndProviders) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProviders_selectionMethod(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -15295,7 +15295,7 @@ func (ec *executionContext) _PlanProvidersAndParticipants_selectionMethod(ctx co
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.PlanProvidersAndParticipants().SelectionMethod(rctx, obj)
+		return ec.resolvers.PlanParticipantsAndProviders().SelectionMethod(rctx, obj)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -15304,14 +15304,14 @@ func (ec *executionContext) _PlanProvidersAndParticipants_selectionMethod(ctx co
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(*model.ParticipantSelectionType)
+	res := resTmp.([]model.ParticipantSelectionType)
 	fc.Result = res
-	return ec.marshalOParticipantSelectionType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐParticipantSelectionType(ctx, field.Selections, res)
+	return ec.marshalOParticipantSelectionType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐParticipantSelectionTypeᚄ(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_PlanProvidersAndParticipants_selectionMethod(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_selectionMethod(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
-		Object:     "PlanProvidersAndParticipants",
+		Object:     "PlanParticipantsAndProviders",
 		Field:      field,
 		IsMethod:   true,
 		IsResolver: true,
@@ -15322,8 +15322,8 @@ func (ec *executionContext) fieldContext_PlanProvidersAndParticipants_selectionM
 	return fc, nil
 }
 
-func (ec *executionContext) _PlanProvidersAndParticipants_selectionOther(ctx context.Context, field graphql.CollectedField, obj *models.PlanProvidersAndParticipants) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanProvidersAndParticipants_selectionOther(ctx, field)
+func (ec *executionContext) _PlanParticipantsAndProviders_selectionOther(ctx context.Context, field graphql.CollectedField, obj *models.PlanParticipantsAndProviders) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProviders_selectionOther(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -15350,9 +15350,9 @@ func (ec *executionContext) _PlanProvidersAndParticipants_selectionOther(ctx con
 	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_PlanProvidersAndParticipants_selectionOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_selectionOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
-		Object:     "PlanProvidersAndParticipants",
+		Object:     "PlanParticipantsAndProviders",
 		Field:      field,
 		IsMethod:   false,
 		IsResolver: false,
@@ -15363,8 +15363,8 @@ func (ec *executionContext) fieldContext_PlanProvidersAndParticipants_selectionO
 	return fc, nil
 }
 
-func (ec *executionContext) _PlanProvidersAndParticipants_selectionNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanProvidersAndParticipants) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanProvidersAndParticipants_selectionNote(ctx, field)
+func (ec *executionContext) _PlanParticipantsAndProviders_selectionNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanParticipantsAndProviders) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProviders_selectionNote(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -15391,9 +15391,9 @@ func (ec *executionContext) _PlanProvidersAndParticipants_selectionNote(ctx cont
 	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_PlanProvidersAndParticipants_selectionNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_selectionNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
-		Object:     "PlanProvidersAndParticipants",
+		Object:     "PlanParticipantsAndProviders",
 		Field:      field,
 		IsMethod:   false,
 		IsResolver: false,
@@ -15404,8 +15404,8 @@ func (ec *executionContext) fieldContext_PlanProvidersAndParticipants_selectionN
 	return fc, nil
 }
 
-func (ec *executionContext) _PlanProvidersAndParticipants_communicationMethod(ctx context.Context, field graphql.CollectedField, obj *models.PlanProvidersAndParticipants) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanProvidersAndParticipants_communicationMethod(ctx, field)
+func (ec *executionContext) _PlanParticipantsAndProviders_communicationMethod(ctx context.Context, field graphql.CollectedField, obj *models.PlanParticipantsAndProviders) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProviders_communicationMethod(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -15418,7 +15418,7 @@ func (ec *executionContext) _PlanProvidersAndParticipants_communicationMethod(ct
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.PlanProvidersAndParticipants().CommunicationMethod(rctx, obj)
+		return ec.resolvers.PlanParticipantsAndProviders().CommunicationMethod(rctx, obj)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -15427,14 +15427,14 @@ func (ec *executionContext) _PlanProvidersAndParticipants_communicationMethod(ct
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(*model.ParticipantCommunicationType)
+	res := resTmp.([]model.ParticipantCommunicationType)
 	fc.Result = res
-	return ec.marshalOParticipantCommunicationType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐParticipantCommunicationType(ctx, field.Selections, res)
+	return ec.marshalOParticipantCommunicationType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐParticipantCommunicationTypeᚄ(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_PlanProvidersAndParticipants_communicationMethod(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_communicationMethod(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
-		Object:     "PlanProvidersAndParticipants",
+		Object:     "PlanParticipantsAndProviders",
 		Field:      field,
 		IsMethod:   true,
 		IsResolver: true,
@@ -15445,8 +15445,8 @@ func (ec *executionContext) fieldContext_PlanProvidersAndParticipants_communicat
 	return fc, nil
 }
 
-func (ec *executionContext) _PlanProvidersAndParticipants_communicationNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanProvidersAndParticipants) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanProvidersAndParticipants_communicationNote(ctx, field)
+func (ec *executionContext) _PlanParticipantsAndProviders_communicationNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanParticipantsAndProviders) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProviders_communicationNote(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -15473,9 +15473,9 @@ func (ec *executionContext) _PlanProvidersAndParticipants_communicationNote(ctx 
 	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_PlanProvidersAndParticipants_communicationNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_communicationNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
-		Object:     "PlanProvidersAndParticipants",
+		Object:     "PlanParticipantsAndProviders",
 		Field:      field,
 		IsMethod:   false,
 		IsResolver: false,
@@ -15486,8 +15486,8 @@ func (ec *executionContext) fieldContext_PlanProvidersAndParticipants_communicat
 	return fc, nil
 }
 
-func (ec *executionContext) _PlanProvidersAndParticipants_participantAssumeRisk(ctx context.Context, field graphql.CollectedField, obj *models.PlanProvidersAndParticipants) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanProvidersAndParticipants_participantAssumeRisk(ctx, field)
+func (ec *executionContext) _PlanParticipantsAndProviders_participantAssumeRisk(ctx context.Context, field graphql.CollectedField, obj *models.PlanParticipantsAndProviders) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProviders_participantAssumeRisk(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -15514,9 +15514,9 @@ func (ec *executionContext) _PlanProvidersAndParticipants_participantAssumeRisk(
 	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_PlanProvidersAndParticipants_participantAssumeRisk(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_participantAssumeRisk(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
-		Object:     "PlanProvidersAndParticipants",
+		Object:     "PlanParticipantsAndProviders",
 		Field:      field,
 		IsMethod:   false,
 		IsResolver: false,
@@ -15527,8 +15527,8 @@ func (ec *executionContext) fieldContext_PlanProvidersAndParticipants_participan
 	return fc, nil
 }
 
-func (ec *executionContext) _PlanProvidersAndParticipants_riskType(ctx context.Context, field graphql.CollectedField, obj *models.PlanProvidersAndParticipants) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanProvidersAndParticipants_riskType(ctx, field)
+func (ec *executionContext) _PlanParticipantsAndProviders_riskType(ctx context.Context, field graphql.CollectedField, obj *models.PlanParticipantsAndProviders) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProviders_riskType(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -15555,9 +15555,9 @@ func (ec *executionContext) _PlanProvidersAndParticipants_riskType(ctx context.C
 	return ec.marshalOParticipantRiskType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐParticipantRiskType(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_PlanProvidersAndParticipants_riskType(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_riskType(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
-		Object:     "PlanProvidersAndParticipants",
+		Object:     "PlanParticipantsAndProviders",
 		Field:      field,
 		IsMethod:   false,
 		IsResolver: false,
@@ -15568,8 +15568,8 @@ func (ec *executionContext) fieldContext_PlanProvidersAndParticipants_riskType(c
 	return fc, nil
 }
 
-func (ec *executionContext) _PlanProvidersAndParticipants_riskOther(ctx context.Context, field graphql.CollectedField, obj *models.PlanProvidersAndParticipants) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanProvidersAndParticipants_riskOther(ctx, field)
+func (ec *executionContext) _PlanParticipantsAndProviders_riskOther(ctx context.Context, field graphql.CollectedField, obj *models.PlanParticipantsAndProviders) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProviders_riskOther(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -15596,9 +15596,9 @@ func (ec *executionContext) _PlanProvidersAndParticipants_riskOther(ctx context.
 	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_PlanProvidersAndParticipants_riskOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_riskOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
-		Object:     "PlanProvidersAndParticipants",
+		Object:     "PlanParticipantsAndProviders",
 		Field:      field,
 		IsMethod:   false,
 		IsResolver: false,
@@ -15609,8 +15609,8 @@ func (ec *executionContext) fieldContext_PlanProvidersAndParticipants_riskOther(
 	return fc, nil
 }
 
-func (ec *executionContext) _PlanProvidersAndParticipants_riskNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanProvidersAndParticipants) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanProvidersAndParticipants_riskNote(ctx, field)
+func (ec *executionContext) _PlanParticipantsAndProviders_riskNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanParticipantsAndProviders) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProviders_riskNote(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -15637,9 +15637,9 @@ func (ec *executionContext) _PlanProvidersAndParticipants_riskNote(ctx context.C
 	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_PlanProvidersAndParticipants_riskNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_riskNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
-		Object:     "PlanProvidersAndParticipants",
+		Object:     "PlanParticipantsAndProviders",
 		Field:      field,
 		IsMethod:   false,
 		IsResolver: false,
@@ -15650,8 +15650,8 @@ func (ec *executionContext) fieldContext_PlanProvidersAndParticipants_riskNote(c
 	return fc, nil
 }
 
-func (ec *executionContext) _PlanProvidersAndParticipants_willRiskChange(ctx context.Context, field graphql.CollectedField, obj *models.PlanProvidersAndParticipants) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanProvidersAndParticipants_willRiskChange(ctx, field)
+func (ec *executionContext) _PlanParticipantsAndProviders_willRiskChange(ctx context.Context, field graphql.CollectedField, obj *models.PlanParticipantsAndProviders) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProviders_willRiskChange(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -15678,9 +15678,9 @@ func (ec *executionContext) _PlanProvidersAndParticipants_willRiskChange(ctx con
 	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_PlanProvidersAndParticipants_willRiskChange(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_willRiskChange(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
-		Object:     "PlanProvidersAndParticipants",
+		Object:     "PlanParticipantsAndProviders",
 		Field:      field,
 		IsMethod:   false,
 		IsResolver: false,
@@ -15691,8 +15691,8 @@ func (ec *executionContext) fieldContext_PlanProvidersAndParticipants_willRiskCh
 	return fc, nil
 }
 
-func (ec *executionContext) _PlanProvidersAndParticipants_willRiskChangeNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanProvidersAndParticipants) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanProvidersAndParticipants_willRiskChangeNote(ctx, field)
+func (ec *executionContext) _PlanParticipantsAndProviders_willRiskChangeNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanParticipantsAndProviders) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProviders_willRiskChangeNote(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -15719,9 +15719,9 @@ func (ec *executionContext) _PlanProvidersAndParticipants_willRiskChangeNote(ctx
 	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_PlanProvidersAndParticipants_willRiskChangeNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_willRiskChangeNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
-		Object:     "PlanProvidersAndParticipants",
+		Object:     "PlanParticipantsAndProviders",
 		Field:      field,
 		IsMethod:   false,
 		IsResolver: false,
@@ -15732,8 +15732,8 @@ func (ec *executionContext) fieldContext_PlanProvidersAndParticipants_willRiskCh
 	return fc, nil
 }
 
-func (ec *executionContext) _PlanProvidersAndParticipants_coordinateWork(ctx context.Context, field graphql.CollectedField, obj *models.PlanProvidersAndParticipants) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanProvidersAndParticipants_coordinateWork(ctx, field)
+func (ec *executionContext) _PlanParticipantsAndProviders_coordinateWork(ctx context.Context, field graphql.CollectedField, obj *models.PlanParticipantsAndProviders) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProviders_coordinateWork(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -15760,9 +15760,9 @@ func (ec *executionContext) _PlanProvidersAndParticipants_coordinateWork(ctx con
 	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_PlanProvidersAndParticipants_coordinateWork(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_coordinateWork(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
-		Object:     "PlanProvidersAndParticipants",
+		Object:     "PlanParticipantsAndProviders",
 		Field:      field,
 		IsMethod:   false,
 		IsResolver: false,
@@ -15773,8 +15773,8 @@ func (ec *executionContext) fieldContext_PlanProvidersAndParticipants_coordinate
 	return fc, nil
 }
 
-func (ec *executionContext) _PlanProvidersAndParticipants_coordinateWorkNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanProvidersAndParticipants) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanProvidersAndParticipants_coordinateWorkNote(ctx, field)
+func (ec *executionContext) _PlanParticipantsAndProviders_coordinateWorkNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanParticipantsAndProviders) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProviders_coordinateWorkNote(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -15801,9 +15801,9 @@ func (ec *executionContext) _PlanProvidersAndParticipants_coordinateWorkNote(ctx
 	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_PlanProvidersAndParticipants_coordinateWorkNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_coordinateWorkNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
-		Object:     "PlanProvidersAndParticipants",
+		Object:     "PlanParticipantsAndProviders",
 		Field:      field,
 		IsMethod:   false,
 		IsResolver: false,
@@ -15814,8 +15814,8 @@ func (ec *executionContext) fieldContext_PlanProvidersAndParticipants_coordinate
 	return fc, nil
 }
 
-func (ec *executionContext) _PlanProvidersAndParticipants_gainsharePayments(ctx context.Context, field graphql.CollectedField, obj *models.PlanProvidersAndParticipants) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanProvidersAndParticipants_gainsharePayments(ctx, field)
+func (ec *executionContext) _PlanParticipantsAndProviders_gainsharePayments(ctx context.Context, field graphql.CollectedField, obj *models.PlanParticipantsAndProviders) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProviders_gainsharePayments(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -15842,9 +15842,9 @@ func (ec *executionContext) _PlanProvidersAndParticipants_gainsharePayments(ctx 
 	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_PlanProvidersAndParticipants_gainsharePayments(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_gainsharePayments(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
-		Object:     "PlanProvidersAndParticipants",
+		Object:     "PlanParticipantsAndProviders",
 		Field:      field,
 		IsMethod:   false,
 		IsResolver: false,
@@ -15855,8 +15855,8 @@ func (ec *executionContext) fieldContext_PlanProvidersAndParticipants_gainshareP
 	return fc, nil
 }
 
-func (ec *executionContext) _PlanProvidersAndParticipants_gainsharePaymentsMethod(ctx context.Context, field graphql.CollectedField, obj *models.PlanProvidersAndParticipants) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanProvidersAndParticipants_gainsharePaymentsMethod(ctx, field)
+func (ec *executionContext) _PlanParticipantsAndProviders_gainsharePaymentsMethod(ctx context.Context, field graphql.CollectedField, obj *models.PlanParticipantsAndProviders) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProviders_gainsharePaymentsMethod(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -15883,9 +15883,9 @@ func (ec *executionContext) _PlanProvidersAndParticipants_gainsharePaymentsMetho
 	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_PlanProvidersAndParticipants_gainsharePaymentsMethod(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_gainsharePaymentsMethod(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
-		Object:     "PlanProvidersAndParticipants",
+		Object:     "PlanParticipantsAndProviders",
 		Field:      field,
 		IsMethod:   false,
 		IsResolver: false,
@@ -15896,8 +15896,8 @@ func (ec *executionContext) fieldContext_PlanProvidersAndParticipants_gainshareP
 	return fc, nil
 }
 
-func (ec *executionContext) _PlanProvidersAndParticipants_gainsharePaymentsNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanProvidersAndParticipants) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanProvidersAndParticipants_gainsharePaymentsNote(ctx, field)
+func (ec *executionContext) _PlanParticipantsAndProviders_gainsharePaymentsNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanParticipantsAndProviders) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProviders_gainsharePaymentsNote(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -15924,9 +15924,9 @@ func (ec *executionContext) _PlanProvidersAndParticipants_gainsharePaymentsNote(
 	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_PlanProvidersAndParticipants_gainsharePaymentsNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_gainsharePaymentsNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
-		Object:     "PlanProvidersAndParticipants",
+		Object:     "PlanParticipantsAndProviders",
 		Field:      field,
 		IsMethod:   false,
 		IsResolver: false,
@@ -15937,8 +15937,8 @@ func (ec *executionContext) fieldContext_PlanProvidersAndParticipants_gainshareP
 	return fc, nil
 }
 
-func (ec *executionContext) _PlanProvidersAndParticipants_participantsIds(ctx context.Context, field graphql.CollectedField, obj *models.PlanProvidersAndParticipants) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanProvidersAndParticipants_participantsIds(ctx, field)
+func (ec *executionContext) _PlanParticipantsAndProviders_participantsIds(ctx context.Context, field graphql.CollectedField, obj *models.PlanParticipantsAndProviders) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProviders_participantsIds(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -15951,7 +15951,7 @@ func (ec *executionContext) _PlanProvidersAndParticipants_participantsIds(ctx co
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.PlanProvidersAndParticipants().ParticipantsIds(rctx, obj)
+		return ec.resolvers.PlanParticipantsAndProviders().ParticipantsIds(rctx, obj)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -15960,14 +15960,14 @@ func (ec *executionContext) _PlanProvidersAndParticipants_participantsIds(ctx co
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(*model.ParticipantsIDType)
+	res := resTmp.([]model.ParticipantsIDType)
 	fc.Result = res
-	return ec.marshalOParticipantsIDType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐParticipantsIDType(ctx, field.Selections, res)
+	return ec.marshalOParticipantsIDType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐParticipantsIDTypeᚄ(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_PlanProvidersAndParticipants_participantsIds(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_participantsIds(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
-		Object:     "PlanProvidersAndParticipants",
+		Object:     "PlanParticipantsAndProviders",
 		Field:      field,
 		IsMethod:   true,
 		IsResolver: true,
@@ -15978,8 +15978,8 @@ func (ec *executionContext) fieldContext_PlanProvidersAndParticipants_participan
 	return fc, nil
 }
 
-func (ec *executionContext) _PlanProvidersAndParticipants_participantsIdsOther(ctx context.Context, field graphql.CollectedField, obj *models.PlanProvidersAndParticipants) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanProvidersAndParticipants_participantsIdsOther(ctx, field)
+func (ec *executionContext) _PlanParticipantsAndProviders_participantsIdsOther(ctx context.Context, field graphql.CollectedField, obj *models.PlanParticipantsAndProviders) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProviders_participantsIdsOther(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -16006,9 +16006,9 @@ func (ec *executionContext) _PlanProvidersAndParticipants_participantsIdsOther(c
 	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_PlanProvidersAndParticipants_participantsIdsOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_participantsIdsOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
-		Object:     "PlanProvidersAndParticipants",
+		Object:     "PlanParticipantsAndProviders",
 		Field:      field,
 		IsMethod:   false,
 		IsResolver: false,
@@ -16019,8 +16019,8 @@ func (ec *executionContext) fieldContext_PlanProvidersAndParticipants_participan
 	return fc, nil
 }
 
-func (ec *executionContext) _PlanProvidersAndParticipants_participantsIDSNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanProvidersAndParticipants) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanProvidersAndParticipants_participantsIDSNote(ctx, field)
+func (ec *executionContext) _PlanParticipantsAndProviders_participantsIDSNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanParticipantsAndProviders) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProviders_participantsIDSNote(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -16047,9 +16047,9 @@ func (ec *executionContext) _PlanProvidersAndParticipants_participantsIDSNote(ct
 	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_PlanProvidersAndParticipants_participantsIDSNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_participantsIDSNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
-		Object:     "PlanProvidersAndParticipants",
+		Object:     "PlanParticipantsAndProviders",
 		Field:      field,
 		IsMethod:   false,
 		IsResolver: false,
@@ -16060,8 +16060,8 @@ func (ec *executionContext) fieldContext_PlanProvidersAndParticipants_participan
 	return fc, nil
 }
 
-func (ec *executionContext) _PlanProvidersAndParticipants_providerAdditionFrequency(ctx context.Context, field graphql.CollectedField, obj *models.PlanProvidersAndParticipants) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanProvidersAndParticipants_providerAdditionFrequency(ctx, field)
+func (ec *executionContext) _PlanParticipantsAndProviders_providerAdditionFrequency(ctx context.Context, field graphql.CollectedField, obj *models.PlanParticipantsAndProviders) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProviders_providerAdditionFrequency(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -16088,9 +16088,9 @@ func (ec *executionContext) _PlanProvidersAndParticipants_providerAdditionFreque
 	return ec.marshalOFrequencyType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFrequencyType(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_PlanProvidersAndParticipants_providerAdditionFrequency(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_providerAdditionFrequency(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
-		Object:     "PlanProvidersAndParticipants",
+		Object:     "PlanParticipantsAndProviders",
 		Field:      field,
 		IsMethod:   false,
 		IsResolver: false,
@@ -16101,8 +16101,8 @@ func (ec *executionContext) fieldContext_PlanProvidersAndParticipants_providerAd
 	return fc, nil
 }
 
-func (ec *executionContext) _PlanProvidersAndParticipants_providerAdditionFrequencyOther(ctx context.Context, field graphql.CollectedField, obj *models.PlanProvidersAndParticipants) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanProvidersAndParticipants_providerAdditionFrequencyOther(ctx, field)
+func (ec *executionContext) _PlanParticipantsAndProviders_providerAdditionFrequencyOther(ctx context.Context, field graphql.CollectedField, obj *models.PlanParticipantsAndProviders) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProviders_providerAdditionFrequencyOther(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -16129,9 +16129,9 @@ func (ec *executionContext) _PlanProvidersAndParticipants_providerAdditionFreque
 	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_PlanProvidersAndParticipants_providerAdditionFrequencyOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_providerAdditionFrequencyOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
-		Object:     "PlanProvidersAndParticipants",
+		Object:     "PlanParticipantsAndProviders",
 		Field:      field,
 		IsMethod:   false,
 		IsResolver: false,
@@ -16142,8 +16142,8 @@ func (ec *executionContext) fieldContext_PlanProvidersAndParticipants_providerAd
 	return fc, nil
 }
 
-func (ec *executionContext) _PlanProvidersAndParticipants_providerAdditionFrequencyNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanProvidersAndParticipants) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanProvidersAndParticipants_providerAdditionFrequencyNote(ctx, field)
+func (ec *executionContext) _PlanParticipantsAndProviders_providerAdditionFrequencyNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanParticipantsAndProviders) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProviders_providerAdditionFrequencyNote(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -16170,9 +16170,9 @@ func (ec *executionContext) _PlanProvidersAndParticipants_providerAdditionFreque
 	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_PlanProvidersAndParticipants_providerAdditionFrequencyNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_providerAdditionFrequencyNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
-		Object:     "PlanProvidersAndParticipants",
+		Object:     "PlanParticipantsAndProviders",
 		Field:      field,
 		IsMethod:   false,
 		IsResolver: false,
@@ -16183,8 +16183,8 @@ func (ec *executionContext) fieldContext_PlanProvidersAndParticipants_providerAd
 	return fc, nil
 }
 
-func (ec *executionContext) _PlanProvidersAndParticipants_providerAddMethod(ctx context.Context, field graphql.CollectedField, obj *models.PlanProvidersAndParticipants) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanProvidersAndParticipants_providerAddMethod(ctx, field)
+func (ec *executionContext) _PlanParticipantsAndProviders_providerAddMethod(ctx context.Context, field graphql.CollectedField, obj *models.PlanParticipantsAndProviders) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProviders_providerAddMethod(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -16197,7 +16197,7 @@ func (ec *executionContext) _PlanProvidersAndParticipants_providerAddMethod(ctx 
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.PlanProvidersAndParticipants().ProviderAddMethod(rctx, obj)
+		return ec.resolvers.PlanParticipantsAndProviders().ProviderAddMethod(rctx, obj)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -16206,14 +16206,14 @@ func (ec *executionContext) _PlanProvidersAndParticipants_providerAddMethod(ctx 
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(*model.ProviderAddType)
+	res := resTmp.([]model.ProviderAddType)
 	fc.Result = res
-	return ec.marshalOProviderAddType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐProviderAddType(ctx, field.Selections, res)
+	return ec.marshalOProviderAddType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐProviderAddTypeᚄ(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_PlanProvidersAndParticipants_providerAddMethod(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_providerAddMethod(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
-		Object:     "PlanProvidersAndParticipants",
+		Object:     "PlanParticipantsAndProviders",
 		Field:      field,
 		IsMethod:   true,
 		IsResolver: true,
@@ -16224,8 +16224,8 @@ func (ec *executionContext) fieldContext_PlanProvidersAndParticipants_providerAd
 	return fc, nil
 }
 
-func (ec *executionContext) _PlanProvidersAndParticipants_providerAddMethodOther(ctx context.Context, field graphql.CollectedField, obj *models.PlanProvidersAndParticipants) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanProvidersAndParticipants_providerAddMethodOther(ctx, field)
+func (ec *executionContext) _PlanParticipantsAndProviders_providerAddMethodOther(ctx context.Context, field graphql.CollectedField, obj *models.PlanParticipantsAndProviders) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProviders_providerAddMethodOther(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -16252,9 +16252,9 @@ func (ec *executionContext) _PlanProvidersAndParticipants_providerAddMethodOther
 	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_PlanProvidersAndParticipants_providerAddMethodOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_providerAddMethodOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
-		Object:     "PlanProvidersAndParticipants",
+		Object:     "PlanParticipantsAndProviders",
 		Field:      field,
 		IsMethod:   false,
 		IsResolver: false,
@@ -16265,8 +16265,8 @@ func (ec *executionContext) fieldContext_PlanProvidersAndParticipants_providerAd
 	return fc, nil
 }
 
-func (ec *executionContext) _PlanProvidersAndParticipants_providerAddMethodNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanProvidersAndParticipants) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanProvidersAndParticipants_providerAddMethodNote(ctx, field)
+func (ec *executionContext) _PlanParticipantsAndProviders_providerAddMethodNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanParticipantsAndProviders) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProviders_providerAddMethodNote(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -16293,9 +16293,9 @@ func (ec *executionContext) _PlanProvidersAndParticipants_providerAddMethodNote(
 	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_PlanProvidersAndParticipants_providerAddMethodNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_providerAddMethodNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
-		Object:     "PlanProvidersAndParticipants",
+		Object:     "PlanParticipantsAndProviders",
 		Field:      field,
 		IsMethod:   false,
 		IsResolver: false,
@@ -16306,8 +16306,8 @@ func (ec *executionContext) fieldContext_PlanProvidersAndParticipants_providerAd
 	return fc, nil
 }
 
-func (ec *executionContext) _PlanProvidersAndParticipants_providerLeaveMethod(ctx context.Context, field graphql.CollectedField, obj *models.PlanProvidersAndParticipants) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanProvidersAndParticipants_providerLeaveMethod(ctx, field)
+func (ec *executionContext) _PlanParticipantsAndProviders_providerLeaveMethod(ctx context.Context, field graphql.CollectedField, obj *models.PlanParticipantsAndProviders) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProviders_providerLeaveMethod(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -16320,7 +16320,7 @@ func (ec *executionContext) _PlanProvidersAndParticipants_providerLeaveMethod(ct
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.PlanProvidersAndParticipants().ProviderLeaveMethod(rctx, obj)
+		return ec.resolvers.PlanParticipantsAndProviders().ProviderLeaveMethod(rctx, obj)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -16329,14 +16329,14 @@ func (ec *executionContext) _PlanProvidersAndParticipants_providerLeaveMethod(ct
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(*model.ProviderLeaveType)
+	res := resTmp.([]model.ProviderLeaveType)
 	fc.Result = res
-	return ec.marshalOProviderLeaveType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐProviderLeaveType(ctx, field.Selections, res)
+	return ec.marshalOProviderLeaveType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐProviderLeaveTypeᚄ(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_PlanProvidersAndParticipants_providerLeaveMethod(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_providerLeaveMethod(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
-		Object:     "PlanProvidersAndParticipants",
+		Object:     "PlanParticipantsAndProviders",
 		Field:      field,
 		IsMethod:   true,
 		IsResolver: true,
@@ -16347,8 +16347,8 @@ func (ec *executionContext) fieldContext_PlanProvidersAndParticipants_providerLe
 	return fc, nil
 }
 
-func (ec *executionContext) _PlanProvidersAndParticipants_providerLeaveMethodOther(ctx context.Context, field graphql.CollectedField, obj *models.PlanProvidersAndParticipants) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanProvidersAndParticipants_providerLeaveMethodOther(ctx, field)
+func (ec *executionContext) _PlanParticipantsAndProviders_providerLeaveMethodOther(ctx context.Context, field graphql.CollectedField, obj *models.PlanParticipantsAndProviders) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProviders_providerLeaveMethodOther(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -16375,9 +16375,9 @@ func (ec *executionContext) _PlanProvidersAndParticipants_providerLeaveMethodOth
 	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_PlanProvidersAndParticipants_providerLeaveMethodOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_providerLeaveMethodOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
-		Object:     "PlanProvidersAndParticipants",
+		Object:     "PlanParticipantsAndProviders",
 		Field:      field,
 		IsMethod:   false,
 		IsResolver: false,
@@ -16388,8 +16388,8 @@ func (ec *executionContext) fieldContext_PlanProvidersAndParticipants_providerLe
 	return fc, nil
 }
 
-func (ec *executionContext) _PlanProvidersAndParticipants_providerLeaveMethodNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanProvidersAndParticipants) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanProvidersAndParticipants_providerLeaveMethodNote(ctx, field)
+func (ec *executionContext) _PlanParticipantsAndProviders_providerLeaveMethodNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanParticipantsAndProviders) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProviders_providerLeaveMethodNote(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -16416,9 +16416,9 @@ func (ec *executionContext) _PlanProvidersAndParticipants_providerLeaveMethodNot
 	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_PlanProvidersAndParticipants_providerLeaveMethodNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_providerLeaveMethodNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
-		Object:     "PlanProvidersAndParticipants",
+		Object:     "PlanParticipantsAndProviders",
 		Field:      field,
 		IsMethod:   false,
 		IsResolver: false,
@@ -16429,8 +16429,8 @@ func (ec *executionContext) fieldContext_PlanProvidersAndParticipants_providerLe
 	return fc, nil
 }
 
-func (ec *executionContext) _PlanProvidersAndParticipants_providerOverlap(ctx context.Context, field graphql.CollectedField, obj *models.PlanProvidersAndParticipants) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanProvidersAndParticipants_providerOverlap(ctx, field)
+func (ec *executionContext) _PlanParticipantsAndProviders_providerOverlap(ctx context.Context, field graphql.CollectedField, obj *models.PlanParticipantsAndProviders) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProviders_providerOverlap(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -16457,9 +16457,9 @@ func (ec *executionContext) _PlanProvidersAndParticipants_providerOverlap(ctx co
 	return ec.marshalOOverlapType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐOverlapType(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_PlanProvidersAndParticipants_providerOverlap(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_providerOverlap(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
-		Object:     "PlanProvidersAndParticipants",
+		Object:     "PlanParticipantsAndProviders",
 		Field:      field,
 		IsMethod:   false,
 		IsResolver: false,
@@ -16470,8 +16470,8 @@ func (ec *executionContext) fieldContext_PlanProvidersAndParticipants_providerOv
 	return fc, nil
 }
 
-func (ec *executionContext) _PlanProvidersAndParticipants_providerOverlapHierarchy(ctx context.Context, field graphql.CollectedField, obj *models.PlanProvidersAndParticipants) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanProvidersAndParticipants_providerOverlapHierarchy(ctx, field)
+func (ec *executionContext) _PlanParticipantsAndProviders_providerOverlapHierarchy(ctx context.Context, field graphql.CollectedField, obj *models.PlanParticipantsAndProviders) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProviders_providerOverlapHierarchy(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -16498,9 +16498,9 @@ func (ec *executionContext) _PlanProvidersAndParticipants_providerOverlapHierarc
 	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_PlanProvidersAndParticipants_providerOverlapHierarchy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_providerOverlapHierarchy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
-		Object:     "PlanProvidersAndParticipants",
+		Object:     "PlanParticipantsAndProviders",
 		Field:      field,
 		IsMethod:   false,
 		IsResolver: false,
@@ -16511,8 +16511,8 @@ func (ec *executionContext) fieldContext_PlanProvidersAndParticipants_providerOv
 	return fc, nil
 }
 
-func (ec *executionContext) _PlanProvidersAndParticipants_providerOverlapNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanProvidersAndParticipants) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanProvidersAndParticipants_providerOverlapNote(ctx, field)
+func (ec *executionContext) _PlanParticipantsAndProviders_providerOverlapNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanParticipantsAndProviders) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProviders_providerOverlapNote(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -16539,9 +16539,9 @@ func (ec *executionContext) _PlanProvidersAndParticipants_providerOverlapNote(ct
 	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_PlanProvidersAndParticipants_providerOverlapNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_providerOverlapNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
-		Object:     "PlanProvidersAndParticipants",
+		Object:     "PlanParticipantsAndProviders",
 		Field:      field,
 		IsMethod:   false,
 		IsResolver: false,
@@ -16552,8 +16552,8 @@ func (ec *executionContext) fieldContext_PlanProvidersAndParticipants_providerOv
 	return fc, nil
 }
 
-func (ec *executionContext) _PlanProvidersAndParticipants_createdBy(ctx context.Context, field graphql.CollectedField, obj *models.PlanProvidersAndParticipants) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanProvidersAndParticipants_createdBy(ctx, field)
+func (ec *executionContext) _PlanParticipantsAndProviders_createdBy(ctx context.Context, field graphql.CollectedField, obj *models.PlanParticipantsAndProviders) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProviders_createdBy(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -16583,9 +16583,9 @@ func (ec *executionContext) _PlanProvidersAndParticipants_createdBy(ctx context.
 	return ec.marshalNString2string(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_PlanProvidersAndParticipants_createdBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_createdBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
-		Object:     "PlanProvidersAndParticipants",
+		Object:     "PlanParticipantsAndProviders",
 		Field:      field,
 		IsMethod:   false,
 		IsResolver: false,
@@ -16596,8 +16596,8 @@ func (ec *executionContext) fieldContext_PlanProvidersAndParticipants_createdBy(
 	return fc, nil
 }
 
-func (ec *executionContext) _PlanProvidersAndParticipants_createdDts(ctx context.Context, field graphql.CollectedField, obj *models.PlanProvidersAndParticipants) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanProvidersAndParticipants_createdDts(ctx, field)
+func (ec *executionContext) _PlanParticipantsAndProviders_createdDts(ctx context.Context, field graphql.CollectedField, obj *models.PlanParticipantsAndProviders) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProviders_createdDts(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -16627,9 +16627,9 @@ func (ec *executionContext) _PlanProvidersAndParticipants_createdDts(ctx context
 	return ec.marshalNTime2timeᚐTime(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_PlanProvidersAndParticipants_createdDts(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_createdDts(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
-		Object:     "PlanProvidersAndParticipants",
+		Object:     "PlanParticipantsAndProviders",
 		Field:      field,
 		IsMethod:   false,
 		IsResolver: false,
@@ -16640,8 +16640,8 @@ func (ec *executionContext) fieldContext_PlanProvidersAndParticipants_createdDts
 	return fc, nil
 }
 
-func (ec *executionContext) _PlanProvidersAndParticipants_modifiedBy(ctx context.Context, field graphql.CollectedField, obj *models.PlanProvidersAndParticipants) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanProvidersAndParticipants_modifiedBy(ctx, field)
+func (ec *executionContext) _PlanParticipantsAndProviders_modifiedBy(ctx context.Context, field graphql.CollectedField, obj *models.PlanParticipantsAndProviders) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProviders_modifiedBy(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -16668,9 +16668,9 @@ func (ec *executionContext) _PlanProvidersAndParticipants_modifiedBy(ctx context
 	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_PlanProvidersAndParticipants_modifiedBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_modifiedBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
-		Object:     "PlanProvidersAndParticipants",
+		Object:     "PlanParticipantsAndProviders",
 		Field:      field,
 		IsMethod:   false,
 		IsResolver: false,
@@ -16681,8 +16681,8 @@ func (ec *executionContext) fieldContext_PlanProvidersAndParticipants_modifiedBy
 	return fc, nil
 }
 
-func (ec *executionContext) _PlanProvidersAndParticipants_modifiedDts(ctx context.Context, field graphql.CollectedField, obj *models.PlanProvidersAndParticipants) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanProvidersAndParticipants_modifiedDts(ctx, field)
+func (ec *executionContext) _PlanParticipantsAndProviders_modifiedDts(ctx context.Context, field graphql.CollectedField, obj *models.PlanParticipantsAndProviders) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProviders_modifiedDts(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -16709,9 +16709,9 @@ func (ec *executionContext) _PlanProvidersAndParticipants_modifiedDts(ctx contex
 	return ec.marshalOTime2ᚖtimeᚐTime(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_PlanProvidersAndParticipants_modifiedDts(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_modifiedDts(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
-		Object:     "PlanProvidersAndParticipants",
+		Object:     "PlanParticipantsAndProviders",
 		Field:      field,
 		IsMethod:   false,
 		IsResolver: false,
@@ -16722,8 +16722,8 @@ func (ec *executionContext) fieldContext_PlanProvidersAndParticipants_modifiedDt
 	return fc, nil
 }
 
-func (ec *executionContext) _PlanProvidersAndParticipants_status(ctx context.Context, field graphql.CollectedField, obj *models.PlanProvidersAndParticipants) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanProvidersAndParticipants_status(ctx, field)
+func (ec *executionContext) _PlanParticipantsAndProviders_status(ctx context.Context, field graphql.CollectedField, obj *models.PlanParticipantsAndProviders) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProviders_status(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -16753,9 +16753,9 @@ func (ec *executionContext) _PlanProvidersAndParticipants_status(ctx context.Con
 	return ec.marshalNTaskStatus2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTaskStatus(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_PlanProvidersAndParticipants_status(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_status(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
-		Object:     "PlanProvidersAndParticipants",
+		Object:     "PlanParticipantsAndProviders",
 		Field:      field,
 		IsMethod:   false,
 		IsResolver: false,
@@ -20222,10 +20222,10 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 			if out.Values[i] == graphql.Null {
 				invalids++
 			}
-		case "updatePlanPlanProvidersAndParticipants":
+		case "updatePlanPlanParticipantsAndProviders":
 
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_updatePlanPlanProvidersAndParticipants(ctx, field)
+				return ec._Mutation_updatePlanPlanParticipantsAndProviders(ctx, field)
 			})
 
 			if out.Values[i] == graphql.Null {
@@ -21427,26 +21427,26 @@ func (ec *executionContext) _PlanMilestones(ctx context.Context, sel ast.Selecti
 	return out
 }
 
-var planProvidersAndParticipantsImplementors = []string{"PlanProvidersAndParticipants"}
+var planParticipantsAndProvidersImplementors = []string{"PlanParticipantsAndProviders"}
 
-func (ec *executionContext) _PlanProvidersAndParticipants(ctx context.Context, sel ast.SelectionSet, obj *models.PlanProvidersAndParticipants) graphql.Marshaler {
-	fields := graphql.CollectFields(ec.OperationContext, sel, planProvidersAndParticipantsImplementors)
+func (ec *executionContext) _PlanParticipantsAndProviders(ctx context.Context, sel ast.SelectionSet, obj *models.PlanParticipantsAndProviders) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, planParticipantsAndProvidersImplementors)
 	out := graphql.NewFieldSet(fields)
 	var invalids uint32
 	for i, field := range fields {
 		switch field.Name {
 		case "__typename":
-			out.Values[i] = graphql.MarshalString("PlanProvidersAndParticipants")
+			out.Values[i] = graphql.MarshalString("PlanParticipantsAndProviders")
 		case "id":
 
-			out.Values[i] = ec._PlanProvidersAndParticipants_id(ctx, field, obj)
+			out.Values[i] = ec._PlanParticipantsAndProviders_id(ctx, field, obj)
 
 			if out.Values[i] == graphql.Null {
 				atomic.AddUint32(&invalids, 1)
 			}
 		case "modelPlanID":
 
-			out.Values[i] = ec._PlanProvidersAndParticipants_modelPlanID(ctx, field, obj)
+			out.Values[i] = ec._PlanParticipantsAndProviders_modelPlanID(ctx, field, obj)
 
 			if out.Values[i] == graphql.Null {
 				atomic.AddUint32(&invalids, 1)
@@ -21460,7 +21460,7 @@ func (ec *executionContext) _PlanProvidersAndParticipants(ctx context.Context, s
 						ec.Error(ctx, ec.Recover(ctx, r))
 					}
 				}()
-				res = ec._PlanProvidersAndParticipants_participants(ctx, field, obj)
+				res = ec._PlanParticipantsAndProviders_participants(ctx, field, obj)
 				return res
 			}
 
@@ -21470,55 +21470,55 @@ func (ec *executionContext) _PlanProvidersAndParticipants(ctx context.Context, s
 			})
 		case "medicareProviderType":
 
-			out.Values[i] = ec._PlanProvidersAndParticipants_medicareProviderType(ctx, field, obj)
+			out.Values[i] = ec._PlanParticipantsAndProviders_medicareProviderType(ctx, field, obj)
 
 		case "statesEngagement":
 
-			out.Values[i] = ec._PlanProvidersAndParticipants_statesEngagement(ctx, field, obj)
+			out.Values[i] = ec._PlanParticipantsAndProviders_statesEngagement(ctx, field, obj)
 
 		case "participantsOther":
 
-			out.Values[i] = ec._PlanProvidersAndParticipants_participantsOther(ctx, field, obj)
+			out.Values[i] = ec._PlanParticipantsAndProviders_participantsOther(ctx, field, obj)
 
 		case "participantsNote":
 
-			out.Values[i] = ec._PlanProvidersAndParticipants_participantsNote(ctx, field, obj)
+			out.Values[i] = ec._PlanParticipantsAndProviders_participantsNote(ctx, field, obj)
 
 		case "participantsCurrentlyInModels":
 
-			out.Values[i] = ec._PlanProvidersAndParticipants_participantsCurrentlyInModels(ctx, field, obj)
+			out.Values[i] = ec._PlanParticipantsAndProviders_participantsCurrentlyInModels(ctx, field, obj)
 
 		case "participantsCurrentlyInModelsNote":
 
-			out.Values[i] = ec._PlanProvidersAndParticipants_participantsCurrentlyInModelsNote(ctx, field, obj)
+			out.Values[i] = ec._PlanParticipantsAndProviders_participantsCurrentlyInModelsNote(ctx, field, obj)
 
 		case "modelApplicationLevel":
 
-			out.Values[i] = ec._PlanProvidersAndParticipants_modelApplicationLevel(ctx, field, obj)
+			out.Values[i] = ec._PlanParticipantsAndProviders_modelApplicationLevel(ctx, field, obj)
 
 		case "expectedNumberOfParticipants":
 
-			out.Values[i] = ec._PlanProvidersAndParticipants_expectedNumberOfParticipants(ctx, field, obj)
+			out.Values[i] = ec._PlanParticipantsAndProviders_expectedNumberOfParticipants(ctx, field, obj)
 
 		case "estimateConfidence":
 
-			out.Values[i] = ec._PlanProvidersAndParticipants_estimateConfidence(ctx, field, obj)
+			out.Values[i] = ec._PlanParticipantsAndProviders_estimateConfidence(ctx, field, obj)
 
 		case "confidenceNote":
 
-			out.Values[i] = ec._PlanProvidersAndParticipants_confidenceNote(ctx, field, obj)
+			out.Values[i] = ec._PlanParticipantsAndProviders_confidenceNote(ctx, field, obj)
 
 		case "recruitmentMethod":
 
-			out.Values[i] = ec._PlanProvidersAndParticipants_recruitmentMethod(ctx, field, obj)
+			out.Values[i] = ec._PlanParticipantsAndProviders_recruitmentMethod(ctx, field, obj)
 
 		case "recruitmentOther":
 
-			out.Values[i] = ec._PlanProvidersAndParticipants_recruitmentOther(ctx, field, obj)
+			out.Values[i] = ec._PlanParticipantsAndProviders_recruitmentOther(ctx, field, obj)
 
 		case "recruitmentNote":
 
-			out.Values[i] = ec._PlanProvidersAndParticipants_recruitmentNote(ctx, field, obj)
+			out.Values[i] = ec._PlanParticipantsAndProviders_recruitmentNote(ctx, field, obj)
 
 		case "selectionMethod":
 			field := field
@@ -21529,7 +21529,7 @@ func (ec *executionContext) _PlanProvidersAndParticipants(ctx context.Context, s
 						ec.Error(ctx, ec.Recover(ctx, r))
 					}
 				}()
-				res = ec._PlanProvidersAndParticipants_selectionMethod(ctx, field, obj)
+				res = ec._PlanParticipantsAndProviders_selectionMethod(ctx, field, obj)
 				return res
 			}
 
@@ -21539,11 +21539,11 @@ func (ec *executionContext) _PlanProvidersAndParticipants(ctx context.Context, s
 			})
 		case "selectionOther":
 
-			out.Values[i] = ec._PlanProvidersAndParticipants_selectionOther(ctx, field, obj)
+			out.Values[i] = ec._PlanParticipantsAndProviders_selectionOther(ctx, field, obj)
 
 		case "selectionNote":
 
-			out.Values[i] = ec._PlanProvidersAndParticipants_selectionNote(ctx, field, obj)
+			out.Values[i] = ec._PlanParticipantsAndProviders_selectionNote(ctx, field, obj)
 
 		case "communicationMethod":
 			field := field
@@ -21554,7 +21554,7 @@ func (ec *executionContext) _PlanProvidersAndParticipants(ctx context.Context, s
 						ec.Error(ctx, ec.Recover(ctx, r))
 					}
 				}()
-				res = ec._PlanProvidersAndParticipants_communicationMethod(ctx, field, obj)
+				res = ec._PlanParticipantsAndProviders_communicationMethod(ctx, field, obj)
 				return res
 			}
 
@@ -21564,51 +21564,51 @@ func (ec *executionContext) _PlanProvidersAndParticipants(ctx context.Context, s
 			})
 		case "communicationNote":
 
-			out.Values[i] = ec._PlanProvidersAndParticipants_communicationNote(ctx, field, obj)
+			out.Values[i] = ec._PlanParticipantsAndProviders_communicationNote(ctx, field, obj)
 
 		case "participantAssumeRisk":
 
-			out.Values[i] = ec._PlanProvidersAndParticipants_participantAssumeRisk(ctx, field, obj)
+			out.Values[i] = ec._PlanParticipantsAndProviders_participantAssumeRisk(ctx, field, obj)
 
 		case "riskType":
 
-			out.Values[i] = ec._PlanProvidersAndParticipants_riskType(ctx, field, obj)
+			out.Values[i] = ec._PlanParticipantsAndProviders_riskType(ctx, field, obj)
 
 		case "riskOther":
 
-			out.Values[i] = ec._PlanProvidersAndParticipants_riskOther(ctx, field, obj)
+			out.Values[i] = ec._PlanParticipantsAndProviders_riskOther(ctx, field, obj)
 
 		case "riskNote":
 
-			out.Values[i] = ec._PlanProvidersAndParticipants_riskNote(ctx, field, obj)
+			out.Values[i] = ec._PlanParticipantsAndProviders_riskNote(ctx, field, obj)
 
 		case "willRiskChange":
 
-			out.Values[i] = ec._PlanProvidersAndParticipants_willRiskChange(ctx, field, obj)
+			out.Values[i] = ec._PlanParticipantsAndProviders_willRiskChange(ctx, field, obj)
 
 		case "willRiskChangeNote":
 
-			out.Values[i] = ec._PlanProvidersAndParticipants_willRiskChangeNote(ctx, field, obj)
+			out.Values[i] = ec._PlanParticipantsAndProviders_willRiskChangeNote(ctx, field, obj)
 
 		case "coordinateWork":
 
-			out.Values[i] = ec._PlanProvidersAndParticipants_coordinateWork(ctx, field, obj)
+			out.Values[i] = ec._PlanParticipantsAndProviders_coordinateWork(ctx, field, obj)
 
 		case "coordinateWorkNote":
 
-			out.Values[i] = ec._PlanProvidersAndParticipants_coordinateWorkNote(ctx, field, obj)
+			out.Values[i] = ec._PlanParticipantsAndProviders_coordinateWorkNote(ctx, field, obj)
 
 		case "gainsharePayments":
 
-			out.Values[i] = ec._PlanProvidersAndParticipants_gainsharePayments(ctx, field, obj)
+			out.Values[i] = ec._PlanParticipantsAndProviders_gainsharePayments(ctx, field, obj)
 
 		case "gainsharePaymentsMethod":
 
-			out.Values[i] = ec._PlanProvidersAndParticipants_gainsharePaymentsMethod(ctx, field, obj)
+			out.Values[i] = ec._PlanParticipantsAndProviders_gainsharePaymentsMethod(ctx, field, obj)
 
 		case "gainsharePaymentsNote":
 
-			out.Values[i] = ec._PlanProvidersAndParticipants_gainsharePaymentsNote(ctx, field, obj)
+			out.Values[i] = ec._PlanParticipantsAndProviders_gainsharePaymentsNote(ctx, field, obj)
 
 		case "participantsIds":
 			field := field
@@ -21619,7 +21619,7 @@ func (ec *executionContext) _PlanProvidersAndParticipants(ctx context.Context, s
 						ec.Error(ctx, ec.Recover(ctx, r))
 					}
 				}()
-				res = ec._PlanProvidersAndParticipants_participantsIds(ctx, field, obj)
+				res = ec._PlanParticipantsAndProviders_participantsIds(ctx, field, obj)
 				return res
 			}
 
@@ -21629,23 +21629,23 @@ func (ec *executionContext) _PlanProvidersAndParticipants(ctx context.Context, s
 			})
 		case "participantsIdsOther":
 
-			out.Values[i] = ec._PlanProvidersAndParticipants_participantsIdsOther(ctx, field, obj)
+			out.Values[i] = ec._PlanParticipantsAndProviders_participantsIdsOther(ctx, field, obj)
 
 		case "participantsIDSNote":
 
-			out.Values[i] = ec._PlanProvidersAndParticipants_participantsIDSNote(ctx, field, obj)
+			out.Values[i] = ec._PlanParticipantsAndProviders_participantsIDSNote(ctx, field, obj)
 
 		case "providerAdditionFrequency":
 
-			out.Values[i] = ec._PlanProvidersAndParticipants_providerAdditionFrequency(ctx, field, obj)
+			out.Values[i] = ec._PlanParticipantsAndProviders_providerAdditionFrequency(ctx, field, obj)
 
 		case "providerAdditionFrequencyOther":
 
-			out.Values[i] = ec._PlanProvidersAndParticipants_providerAdditionFrequencyOther(ctx, field, obj)
+			out.Values[i] = ec._PlanParticipantsAndProviders_providerAdditionFrequencyOther(ctx, field, obj)
 
 		case "providerAdditionFrequencyNote":
 
-			out.Values[i] = ec._PlanProvidersAndParticipants_providerAdditionFrequencyNote(ctx, field, obj)
+			out.Values[i] = ec._PlanParticipantsAndProviders_providerAdditionFrequencyNote(ctx, field, obj)
 
 		case "providerAddMethod":
 			field := field
@@ -21656,7 +21656,7 @@ func (ec *executionContext) _PlanProvidersAndParticipants(ctx context.Context, s
 						ec.Error(ctx, ec.Recover(ctx, r))
 					}
 				}()
-				res = ec._PlanProvidersAndParticipants_providerAddMethod(ctx, field, obj)
+				res = ec._PlanParticipantsAndProviders_providerAddMethod(ctx, field, obj)
 				return res
 			}
 
@@ -21666,11 +21666,11 @@ func (ec *executionContext) _PlanProvidersAndParticipants(ctx context.Context, s
 			})
 		case "providerAddMethodOther":
 
-			out.Values[i] = ec._PlanProvidersAndParticipants_providerAddMethodOther(ctx, field, obj)
+			out.Values[i] = ec._PlanParticipantsAndProviders_providerAddMethodOther(ctx, field, obj)
 
 		case "providerAddMethodNote":
 
-			out.Values[i] = ec._PlanProvidersAndParticipants_providerAddMethodNote(ctx, field, obj)
+			out.Values[i] = ec._PlanParticipantsAndProviders_providerAddMethodNote(ctx, field, obj)
 
 		case "providerLeaveMethod":
 			field := field
@@ -21681,7 +21681,7 @@ func (ec *executionContext) _PlanProvidersAndParticipants(ctx context.Context, s
 						ec.Error(ctx, ec.Recover(ctx, r))
 					}
 				}()
-				res = ec._PlanProvidersAndParticipants_providerLeaveMethod(ctx, field, obj)
+				res = ec._PlanParticipantsAndProviders_providerLeaveMethod(ctx, field, obj)
 				return res
 			}
 
@@ -21691,49 +21691,49 @@ func (ec *executionContext) _PlanProvidersAndParticipants(ctx context.Context, s
 			})
 		case "providerLeaveMethodOther":
 
-			out.Values[i] = ec._PlanProvidersAndParticipants_providerLeaveMethodOther(ctx, field, obj)
+			out.Values[i] = ec._PlanParticipantsAndProviders_providerLeaveMethodOther(ctx, field, obj)
 
 		case "providerLeaveMethodNote":
 
-			out.Values[i] = ec._PlanProvidersAndParticipants_providerLeaveMethodNote(ctx, field, obj)
+			out.Values[i] = ec._PlanParticipantsAndProviders_providerLeaveMethodNote(ctx, field, obj)
 
 		case "providerOverlap":
 
-			out.Values[i] = ec._PlanProvidersAndParticipants_providerOverlap(ctx, field, obj)
+			out.Values[i] = ec._PlanParticipantsAndProviders_providerOverlap(ctx, field, obj)
 
 		case "providerOverlapHierarchy":
 
-			out.Values[i] = ec._PlanProvidersAndParticipants_providerOverlapHierarchy(ctx, field, obj)
+			out.Values[i] = ec._PlanParticipantsAndProviders_providerOverlapHierarchy(ctx, field, obj)
 
 		case "providerOverlapNote":
 
-			out.Values[i] = ec._PlanProvidersAndParticipants_providerOverlapNote(ctx, field, obj)
+			out.Values[i] = ec._PlanParticipantsAndProviders_providerOverlapNote(ctx, field, obj)
 
 		case "createdBy":
 
-			out.Values[i] = ec._PlanProvidersAndParticipants_createdBy(ctx, field, obj)
+			out.Values[i] = ec._PlanParticipantsAndProviders_createdBy(ctx, field, obj)
 
 			if out.Values[i] == graphql.Null {
 				atomic.AddUint32(&invalids, 1)
 			}
 		case "createdDts":
 
-			out.Values[i] = ec._PlanProvidersAndParticipants_createdDts(ctx, field, obj)
+			out.Values[i] = ec._PlanParticipantsAndProviders_createdDts(ctx, field, obj)
 
 			if out.Values[i] == graphql.Null {
 				atomic.AddUint32(&invalids, 1)
 			}
 		case "modifiedBy":
 
-			out.Values[i] = ec._PlanProvidersAndParticipants_modifiedBy(ctx, field, obj)
+			out.Values[i] = ec._PlanParticipantsAndProviders_modifiedBy(ctx, field, obj)
 
 		case "modifiedDts":
 
-			out.Values[i] = ec._PlanProvidersAndParticipants_modifiedDts(ctx, field, obj)
+			out.Values[i] = ec._PlanParticipantsAndProviders_modifiedDts(ctx, field, obj)
 
 		case "status":
 
-			out.Values[i] = ec._PlanProvidersAndParticipants_status(ctx, field, obj)
+			out.Values[i] = ec._PlanParticipantsAndProviders_status(ctx, field, obj)
 
 			if out.Values[i] == graphql.Null {
 				atomic.AddUint32(&invalids, 1)
@@ -23182,6 +23182,46 @@ func (ec *executionContext) marshalNModelStatus2githubᚗcomᚋcmsgovᚋmintᚑa
 	return res
 }
 
+func (ec *executionContext) unmarshalNParticipantCommunicationType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐParticipantCommunicationType(ctx context.Context, v interface{}) (model.ParticipantCommunicationType, error) {
+	var res model.ParticipantCommunicationType
+	err := res.UnmarshalGQL(v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalNParticipantCommunicationType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐParticipantCommunicationType(ctx context.Context, sel ast.SelectionSet, v model.ParticipantCommunicationType) graphql.Marshaler {
+	return v
+}
+
+func (ec *executionContext) unmarshalNParticipantSelectionType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐParticipantSelectionType(ctx context.Context, v interface{}) (model.ParticipantSelectionType, error) {
+	var res model.ParticipantSelectionType
+	err := res.UnmarshalGQL(v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalNParticipantSelectionType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐParticipantSelectionType(ctx context.Context, sel ast.SelectionSet, v model.ParticipantSelectionType) graphql.Marshaler {
+	return v
+}
+
+func (ec *executionContext) unmarshalNParticipantsIDType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐParticipantsIDType(ctx context.Context, v interface{}) (model.ParticipantsIDType, error) {
+	var res model.ParticipantsIDType
+	err := res.UnmarshalGQL(v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalNParticipantsIDType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐParticipantsIDType(ctx context.Context, sel ast.SelectionSet, v model.ParticipantsIDType) graphql.Marshaler {
+	return v
+}
+
+func (ec *executionContext) unmarshalNParticipantsType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐParticipantsType(ctx context.Context, v interface{}) (model.ParticipantsType, error) {
+	var res model.ParticipantsType
+	err := res.UnmarshalGQL(v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalNParticipantsType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐParticipantsType(ctx context.Context, sel ast.SelectionSet, v model.ParticipantsType) graphql.Marshaler {
+	return v
+}
+
 func (ec *executionContext) marshalNPlanBasics2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanBasics(ctx context.Context, sel ast.SelectionSet, v models.PlanBasics) graphql.Marshaler {
 	return ec._PlanBasics(ctx, sel, &v)
 }
@@ -23466,22 +23506,42 @@ func (ec *executionContext) marshalNPlanMilestones2ᚖgithubᚗcomᚋcmsgovᚋmi
 	return ec._PlanMilestones(ctx, sel, v)
 }
 
-func (ec *executionContext) marshalNPlanProvidersAndParticipants2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanProvidersAndParticipants(ctx context.Context, sel ast.SelectionSet, v models.PlanProvidersAndParticipants) graphql.Marshaler {
-	return ec._PlanProvidersAndParticipants(ctx, sel, &v)
+func (ec *executionContext) marshalNPlanParticipantsAndProviders2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanParticipantsAndProviders(ctx context.Context, sel ast.SelectionSet, v models.PlanParticipantsAndProviders) graphql.Marshaler {
+	return ec._PlanParticipantsAndProviders(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalNPlanProvidersAndParticipants2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanProvidersAndParticipants(ctx context.Context, sel ast.SelectionSet, v *models.PlanProvidersAndParticipants) graphql.Marshaler {
+func (ec *executionContext) marshalNPlanParticipantsAndProviders2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanParticipantsAndProviders(ctx context.Context, sel ast.SelectionSet, v *models.PlanParticipantsAndProviders) graphql.Marshaler {
 	if v == nil {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
 			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
 		}
 		return graphql.Null
 	}
-	return ec._PlanProvidersAndParticipants(ctx, sel, v)
+	return ec._PlanParticipantsAndProviders(ctx, sel, v)
 }
 
-func (ec *executionContext) unmarshalNPlanProvidersAndParticipantsChanges2map(ctx context.Context, v interface{}) (map[string]interface{}, error) {
+func (ec *executionContext) unmarshalNPlanParticipantsAndProvidersChanges2map(ctx context.Context, v interface{}) (map[string]interface{}, error) {
 	return v.(map[string]interface{}), nil
+}
+
+func (ec *executionContext) unmarshalNProviderAddType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐProviderAddType(ctx context.Context, v interface{}) (model.ProviderAddType, error) {
+	var res model.ProviderAddType
+	err := res.UnmarshalGQL(v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalNProviderAddType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐProviderAddType(ctx context.Context, sel ast.SelectionSet, v model.ProviderAddType) graphql.Marshaler {
+	return v
+}
+
+func (ec *executionContext) unmarshalNProviderLeaveType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐProviderLeaveType(ctx context.Context, v interface{}) (model.ProviderLeaveType, error) {
+	var res model.ProviderLeaveType
+	err := res.UnmarshalGQL(v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalNProviderLeaveType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐProviderLeaveType(ctx context.Context, sel ast.SelectionSet, v model.ProviderLeaveType) graphql.Marshaler {
+	return v
 }
 
 func (ec *executionContext) unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx context.Context, v interface{}) (model.Role, error) {
@@ -24820,20 +24880,71 @@ func (ec *executionContext) marshalOOverlapType2ᚖgithubᚗcomᚋcmsgovᚋmint�
 	return res
 }
 
-func (ec *executionContext) unmarshalOParticipantCommunicationType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐParticipantCommunicationType(ctx context.Context, v interface{}) (*model.ParticipantCommunicationType, error) {
+func (ec *executionContext) unmarshalOParticipantCommunicationType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐParticipantCommunicationTypeᚄ(ctx context.Context, v interface{}) ([]model.ParticipantCommunicationType, error) {
 	if v == nil {
 		return nil, nil
 	}
-	var res = new(model.ParticipantCommunicationType)
-	err := res.UnmarshalGQL(v)
-	return res, graphql.ErrorOnPath(ctx, err)
+	var vSlice []interface{}
+	if v != nil {
+		vSlice = graphql.CoerceList(v)
+	}
+	var err error
+	res := make([]model.ParticipantCommunicationType, len(vSlice))
+	for i := range vSlice {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
+		res[i], err = ec.unmarshalNParticipantCommunicationType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐParticipantCommunicationType(ctx, vSlice[i])
+		if err != nil {
+			return nil, err
+		}
+	}
+	return res, nil
 }
 
-func (ec *executionContext) marshalOParticipantCommunicationType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐParticipantCommunicationType(ctx context.Context, sel ast.SelectionSet, v *model.ParticipantCommunicationType) graphql.Marshaler {
+func (ec *executionContext) marshalOParticipantCommunicationType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐParticipantCommunicationTypeᚄ(ctx context.Context, sel ast.SelectionSet, v []model.ParticipantCommunicationType) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
-	return v
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalNParticipantCommunicationType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐParticipantCommunicationType(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
 }
 
 func (ec *executionContext) unmarshalOParticipantRiskType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐParticipantRiskType(ctx context.Context, v interface{}) (*models.ParticipantRiskType, error) {
@@ -24853,52 +24964,205 @@ func (ec *executionContext) marshalOParticipantRiskType2ᚖgithubᚗcomᚋcmsgov
 	return res
 }
 
-func (ec *executionContext) unmarshalOParticipantSelectionType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐParticipantSelectionType(ctx context.Context, v interface{}) (*model.ParticipantSelectionType, error) {
+func (ec *executionContext) unmarshalOParticipantSelectionType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐParticipantSelectionTypeᚄ(ctx context.Context, v interface{}) ([]model.ParticipantSelectionType, error) {
 	if v == nil {
 		return nil, nil
 	}
-	var res = new(model.ParticipantSelectionType)
-	err := res.UnmarshalGQL(v)
-	return res, graphql.ErrorOnPath(ctx, err)
+	var vSlice []interface{}
+	if v != nil {
+		vSlice = graphql.CoerceList(v)
+	}
+	var err error
+	res := make([]model.ParticipantSelectionType, len(vSlice))
+	for i := range vSlice {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
+		res[i], err = ec.unmarshalNParticipantSelectionType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐParticipantSelectionType(ctx, vSlice[i])
+		if err != nil {
+			return nil, err
+		}
+	}
+	return res, nil
 }
 
-func (ec *executionContext) marshalOParticipantSelectionType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐParticipantSelectionType(ctx context.Context, sel ast.SelectionSet, v *model.ParticipantSelectionType) graphql.Marshaler {
+func (ec *executionContext) marshalOParticipantSelectionType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐParticipantSelectionTypeᚄ(ctx context.Context, sel ast.SelectionSet, v []model.ParticipantSelectionType) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
-	return v
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalNParticipantSelectionType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐParticipantSelectionType(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
 }
 
-func (ec *executionContext) unmarshalOParticipantsIDType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐParticipantsIDType(ctx context.Context, v interface{}) (*model.ParticipantsIDType, error) {
+func (ec *executionContext) unmarshalOParticipantsIDType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐParticipantsIDTypeᚄ(ctx context.Context, v interface{}) ([]model.ParticipantsIDType, error) {
 	if v == nil {
 		return nil, nil
 	}
-	var res = new(model.ParticipantsIDType)
-	err := res.UnmarshalGQL(v)
-	return res, graphql.ErrorOnPath(ctx, err)
+	var vSlice []interface{}
+	if v != nil {
+		vSlice = graphql.CoerceList(v)
+	}
+	var err error
+	res := make([]model.ParticipantsIDType, len(vSlice))
+	for i := range vSlice {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
+		res[i], err = ec.unmarshalNParticipantsIDType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐParticipantsIDType(ctx, vSlice[i])
+		if err != nil {
+			return nil, err
+		}
+	}
+	return res, nil
 }
 
-func (ec *executionContext) marshalOParticipantsIDType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐParticipantsIDType(ctx context.Context, sel ast.SelectionSet, v *model.ParticipantsIDType) graphql.Marshaler {
+func (ec *executionContext) marshalOParticipantsIDType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐParticipantsIDTypeᚄ(ctx context.Context, sel ast.SelectionSet, v []model.ParticipantsIDType) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
-	return v
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalNParticipantsIDType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐParticipantsIDType(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
 }
 
-func (ec *executionContext) unmarshalOParticipantsType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐParticipantsType(ctx context.Context, v interface{}) (*model.ParticipantsType, error) {
+func (ec *executionContext) unmarshalOParticipantsType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐParticipantsTypeᚄ(ctx context.Context, v interface{}) ([]model.ParticipantsType, error) {
 	if v == nil {
 		return nil, nil
 	}
-	var res = new(model.ParticipantsType)
-	err := res.UnmarshalGQL(v)
-	return res, graphql.ErrorOnPath(ctx, err)
+	var vSlice []interface{}
+	if v != nil {
+		vSlice = graphql.CoerceList(v)
+	}
+	var err error
+	res := make([]model.ParticipantsType, len(vSlice))
+	for i := range vSlice {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
+		res[i], err = ec.unmarshalNParticipantsType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐParticipantsType(ctx, vSlice[i])
+		if err != nil {
+			return nil, err
+		}
+	}
+	return res, nil
 }
 
-func (ec *executionContext) marshalOParticipantsType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐParticipantsType(ctx context.Context, sel ast.SelectionSet, v *model.ParticipantsType) graphql.Marshaler {
+func (ec *executionContext) marshalOParticipantsType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐParticipantsTypeᚄ(ctx context.Context, sel ast.SelectionSet, v []model.ParticipantsType) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
-	return v
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalNParticipantsType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐParticipantsType(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
 }
 
 func (ec *executionContext) marshalOPlanDocument2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanDocument(ctx context.Context, sel ast.SelectionSet, v *models.PlanDocument) graphql.Marshaler {
@@ -24908,36 +25172,138 @@ func (ec *executionContext) marshalOPlanDocument2ᚖgithubᚗcomᚋcmsgovᚋmint
 	return ec._PlanDocument(ctx, sel, v)
 }
 
-func (ec *executionContext) unmarshalOProviderAddType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐProviderAddType(ctx context.Context, v interface{}) (*model.ProviderAddType, error) {
+func (ec *executionContext) unmarshalOProviderAddType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐProviderAddTypeᚄ(ctx context.Context, v interface{}) ([]model.ProviderAddType, error) {
 	if v == nil {
 		return nil, nil
 	}
-	var res = new(model.ProviderAddType)
-	err := res.UnmarshalGQL(v)
-	return res, graphql.ErrorOnPath(ctx, err)
+	var vSlice []interface{}
+	if v != nil {
+		vSlice = graphql.CoerceList(v)
+	}
+	var err error
+	res := make([]model.ProviderAddType, len(vSlice))
+	for i := range vSlice {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
+		res[i], err = ec.unmarshalNProviderAddType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐProviderAddType(ctx, vSlice[i])
+		if err != nil {
+			return nil, err
+		}
+	}
+	return res, nil
 }
 
-func (ec *executionContext) marshalOProviderAddType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐProviderAddType(ctx context.Context, sel ast.SelectionSet, v *model.ProviderAddType) graphql.Marshaler {
+func (ec *executionContext) marshalOProviderAddType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐProviderAddTypeᚄ(ctx context.Context, sel ast.SelectionSet, v []model.ProviderAddType) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
-	return v
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalNProviderAddType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐProviderAddType(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
 }
 
-func (ec *executionContext) unmarshalOProviderLeaveType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐProviderLeaveType(ctx context.Context, v interface{}) (*model.ProviderLeaveType, error) {
+func (ec *executionContext) unmarshalOProviderLeaveType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐProviderLeaveTypeᚄ(ctx context.Context, v interface{}) ([]model.ProviderLeaveType, error) {
 	if v == nil {
 		return nil, nil
 	}
-	var res = new(model.ProviderLeaveType)
-	err := res.UnmarshalGQL(v)
-	return res, graphql.ErrorOnPath(ctx, err)
+	var vSlice []interface{}
+	if v != nil {
+		vSlice = graphql.CoerceList(v)
+	}
+	var err error
+	res := make([]model.ProviderLeaveType, len(vSlice))
+	for i := range vSlice {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
+		res[i], err = ec.unmarshalNProviderLeaveType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐProviderLeaveType(ctx, vSlice[i])
+		if err != nil {
+			return nil, err
+		}
+	}
+	return res, nil
 }
 
-func (ec *executionContext) marshalOProviderLeaveType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐProviderLeaveType(ctx context.Context, sel ast.SelectionSet, v *model.ProviderLeaveType) graphql.Marshaler {
+func (ec *executionContext) marshalOProviderLeaveType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐProviderLeaveTypeᚄ(ctx context.Context, sel ast.SelectionSet, v []model.ProviderLeaveType) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
-	return v
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalNProviderLeaveType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐProviderLeaveType(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
 }
 
 func (ec *executionContext) unmarshalORecruitmentType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐRecruitmentType(ctx context.Context, v interface{}) (*models.RecruitmentType, error) {

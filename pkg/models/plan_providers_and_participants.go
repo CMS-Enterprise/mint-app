@@ -7,8 +7,8 @@ import (
 	"github.com/lib/pq"
 )
 
-//PlanProvidersAndParticipants represents the tasks list section that handles information around participants and providers
-type PlanProvidersAndParticipants struct {
+//PlanParticipantsAndProviders represents the tasks list section that handles information around participants and providers
+type PlanParticipantsAndProviders struct {
 	ID          uuid.UUID `json:"id" db:"id"`
 	ModelPlanID uuid.UUID `json:"modelPlanID" db:"model_plan_id"`
 
@@ -98,34 +98,34 @@ const (
 	RiskOTHER      ParticipantRiskType = "OTHER"
 )
 
-// CalcStatus returns a TaskStatus based on how many fields have been entered in the PlanProvidersAndParticipants struct
-func (pp *PlanProvidersAndParticipants) CalcStatus() {
+// CalcStatus returns a TaskStatus based on how many fields have been entered in the PlanParticipantsAndProviders struct
+func (pp *PlanParticipantsAndProviders) CalcStatus() {
 
 	// TODO Implement in https://jiraent.cms.gov/browse/EASI-2048
 	pp.Status = TaskReady
 }
 
 // GetModelTypeName returns the name of the model
-func (pp PlanProvidersAndParticipants) GetModelTypeName() string {
+func (pp PlanParticipantsAndProviders) GetModelTypeName() string {
 	return "Plan_Beneficiaries"
 }
 
-// GetID returns the ID property for a PlanProvidersAndParticipants struct
-func (pp PlanProvidersAndParticipants) GetID() uuid.UUID {
+// GetID returns the ID property for a PlanParticipantsAndProviders struct
+func (pp PlanParticipantsAndProviders) GetID() uuid.UUID {
 	return pp.ID
 }
 
-// GetPlanID returns the ModelPlanID property for a PlanProvidersAndParticipants struct
-func (pp PlanProvidersAndParticipants) GetPlanID() uuid.UUID {
+// GetPlanID returns the ModelPlanID property for a PlanParticipantsAndProviders struct
+func (pp PlanParticipantsAndProviders) GetPlanID() uuid.UUID {
 	return pp.ModelPlanID
 }
 
-// GetModifiedBy returns the ModifiedBy property for a PlanProvidersAndParticipants struct
-func (pp PlanProvidersAndParticipants) GetModifiedBy() *string {
+// GetModifiedBy returns the ModifiedBy property for a PlanParticipantsAndProviders struct
+func (pp PlanParticipantsAndProviders) GetModifiedBy() *string {
 	return pp.ModifiedBy
 }
 
-// GetCreatedBy returns the ModifiedBy property for a PlanProvidersAndParticipants struct
-func (pp PlanProvidersAndParticipants) GetCreatedBy() string {
+// GetCreatedBy returns the ModifiedBy property for a PlanParticipantsAndProviders struct
+func (pp PlanParticipantsAndProviders) GetCreatedBy() string {
 	return pp.CreatedBy
 }
