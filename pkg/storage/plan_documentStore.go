@@ -5,7 +5,6 @@ import (
 	_ "embed"
 	"net/url"
 
-	"github.com/jmoiron/sqlx"
 	"golang.org/x/sync/errgroup"
 
 	"github.com/cmsgov/mint-app/pkg/shared/utilityUUID"
@@ -95,12 +94,12 @@ func (s *Store) PlanDocumentRead(logger *zap.Logger, s3Client *upload.S3Client, 
 	var document models.PlanDocument
 	err = statement.Get(&document, utilitySQL.CreateIDQueryMap(id))
 	if err != nil {
-		return nil, genericmodel.HandleModelFetchByIDError(logger, err, id)
+		return nil, err
 	}
 
 	err = planDocumentUpdateVirusScanStatus(s3Client, &document)
 	if err != nil {
-		return nil, genericmodel.HandleModelFetchByIDError(logger, err, id)
+		return nil, err
 	}
 
 	return &document, nil
@@ -114,17 +113,13 @@ func (s *Store) PlanDocumentsReadByModelPlanID(
 
 	statement, err := s.db.PrepareNamed(planDocumentGetByModelPlanIDSQL)
 	if err != nil {
-		return nil, genericmodel.HandleModelFetchByIDError(logger, err, modelPlanID)
+		return nil, err
 	}
 
-	queryResults, err := statement.Queryx(utilitySQL.CreateModelPlanIDQueryMap(modelPlanID))
+	var documents []*models.PlanDocument
+	err = statement.Select(&documents, utilitySQL.CreateModelPlanIDQueryMap(modelPlanID))
 	if err != nil {
 		return nil, genericmodel.HandleModelFetchGenericError(logger, err, modelPlanID)
-	}
-
-	documents, err := planDocumentsUnpackQueryResults(logger, modelPlanID, queryResults)
-	if err != nil {
-		return nil, err
 	}
 
 	err = planDocumentsUpdateVirusScanStatuses(s3Client, documents)
@@ -173,25 +168,6 @@ func fetchDocumentTag(s3Client *upload.S3Client, document *models.PlanDocument, 
 		return "", valueErr
 	}
 	return value, nil
-}
-
-func planDocumentsUnpackQueryResults(logger *zap.Logger, modelPlanID uuid.UUID, queryResults *sqlx.Rows) ([]*models.PlanDocument, error) {
-	var documents []*models.PlanDocument
-	for queryResults.Next() {
-		var document models.PlanDocument
-		err := queryResults.StructScan(&document)
-		if err != nil {
-			return nil, genericmodel.HandleModelFetchGenericError(logger, queryResults.Err(), modelPlanID)
-		}
-
-		documents = append(documents, &document)
-	}
-
-	if queryResults.Err() != nil {
-		return nil, genericmodel.HandleModelFetchGenericError(logger, queryResults.Err(), modelPlanID)
-	}
-
-	return documents, nil
 }
 
 func logIfNoRowsFetched(logger *zap.Logger, modelPlanID uuid.UUID, documents []*models.PlanDocument) error {
