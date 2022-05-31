@@ -15,6 +15,7 @@ func (s *Store) TruncateAllTablesDANGEROUS(logger *zap.Logger) error {
     plan_milestones,
     plan_general_characteristics,
 	plan_beneficiaries,
+	plan_participants_and_providers,
     model_plan
 	`
 

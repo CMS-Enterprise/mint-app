@@ -23,7 +23,7 @@ type PlanParticipantsAndProviders struct {
 	ModelApplicationLevel             *string        `json:"modelApplicationLevel" db:"model_application_level"`
 
 	//page 2
-	ExpectedNumberOfParticipants int              `json:"expectedNumberOfParticipants" db:"expected_number_of_participants"`
+	ExpectedNumberOfParticipants *int             `json:"expectedNumberOfParticipants" db:"expected_number_of_participants"`
 	EstimateConfidence           *ConfidenceType  `json:"estimateConfidence" db:"estimate_confidence"`
 	ConfidenceNote               *string          `json:"confidenceNote" db:"confidence_note"`
 	RecruitmentMethod            *RecruitmentType `json:"recruitmentMethod" db:"recruitment_method"`

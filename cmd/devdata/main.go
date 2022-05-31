@@ -86,6 +86,11 @@ func main() {
 		b.ID = uuid.MustParse("4ba095f6-c209-4b37-9008-c2476d628504")
 		b.NumberPeopleImpacted = models.IntPointer(25)
 	})
+	makePlanParticipantsAndProviders(uuid.MustParse("f11eb129-2c80-4080-9440-439cbe1a286f"), logger, store, func(pp *models.PlanParticipantsAndProviders) {
+		processPlanParticipantsAndProviders(pp)
+		pp.ID = uuid.MustParse("da79bad2-b4ce-4975-80bf-bd6e71ae300f")
+		pp.ExpectedNumberOfParticipants = models.IntPointer(25)
+	})
 
 	makeModelPlan("Mr. Mint", logger, store)
 	pmGreatPlan := makeModelPlan("Mrs. Mint", logger, store, func(p *models.ModelPlan) {
@@ -189,6 +194,7 @@ func main() {
 	makePlanGeneralCharacteristics(pmGreatPlan.ID, logger, store, processPlanGeneralCharacteristics)
 
 	makePlanBeneficiaries(pmGreatPlan.ID, logger, store, processPlanBeneficiaries)
+	makePlanParticipantsAndProviders(pmGreatPlan.ID, logger, store, processPlanParticipantsAndProviders)
 
 	/*
 		s3Config := upload.Config{Bucket: "mint-test-bucket", Region: "us-west", IsLocal: true}
@@ -365,6 +371,23 @@ func makePlanBeneficiaries(modelPlanID uuid.UUID, logger *zap.Logger, store *sto
 
 }
 
+func makePlanParticipantsAndProviders(modelPlanID uuid.UUID, logger *zap.Logger, store *storage.Store, callbacks ...func(*models.PlanParticipantsAndProviders)) *models.PlanParticipantsAndProviders {
+	pp := models.PlanParticipantsAndProviders{
+		ModelPlanID: modelPlanID,
+		CreatedBy:   "ABCD",
+		ModifiedBy:  models.StringPointer("ABCD"),
+		Status:      models.TaskReady,
+	}
+
+	for _, cb := range callbacks {
+		cb(&pp)
+	}
+
+	dbPP, _ := store.PlanParticipantsAndProvidersCreate(logger, &pp)
+	return dbPP
+
+}
+
 func makePlanMilestones(uuid uuid.UUID, logger *zap.Logger, store *storage.Store, callbacks ...func(*models.PlanMilestones)) *models.PlanMilestones {
 
 	milestones := models.PlanMilestones{
@@ -466,5 +489,62 @@ func processPlanBeneficiaries(b *models.PlanBeneficiaries) {
 	b.BeneficiaryOverlap = &overlap
 	b.BeneficiaryOverlapNote = models.StringPointer("This will likely overlap")
 	b.PrecedenceRules = models.StringPointer("This takes precendence over all other models")
+
+}
+
+func processPlanParticipantsAndProviders(pp *models.PlanParticipantsAndProviders) {
+
+	pp.ID = uuid.MustParse("b18d2f8c-e77b-4cbb-b992-25b43bec9d4f")
+
+	var conf = models.ConfidenceSlightly
+	var freq = models.SelectionAnnually
+	var overlap = models.OverlapYesNeedPolicies
+	var recruitment = models.RecruitmentOTHER
+	var risk = models.RiskOTHER
+	pp.Participants = pq.StringArray{"MEDICARE_PROVIDERS", "STATES", "OTHER"}
+	pp.MedicareProviderType = models.StringPointer("Oncology Providers")
+	pp.StatesEngagement = models.StringPointer("States will determine administration specific to the state")
+	pp.ParticipantsOther = models.StringPointer("The candy people")
+	pp.ParticipantsNote = models.StringPointer("Additional participants might join at a later date")
+	pp.ParticipantsCurrentlyInModels = models.BoolPointer(true)
+	pp.ParticipantsCurrentlyInModelsNote = models.StringPointer("A good number of candy people participate in other models")
+	pp.ModelApplicationLevel = models.StringPointer(" c92.00 and c92.01")
+	pp.ExpectedNumberOfParticipants = models.IntPointer(26)
+	pp.EstimateConfidence = &conf
+	pp.ConfidenceNote = models.StringPointer("Confidence will increase as the year progresses")
+	pp.RecruitmentMethod = &recruitment
+	pp.RecruitmentOther = models.StringPointer("We will put up signs throughout the kingdom")
+	pp.RecruitmentNote = models.StringPointer("We will hire a contractor to put up the signs")
+	pp.SelectionMethod = pq.StringArray{"MODEL_TEAM_REVIEW_APPLICATIONS", "OTHER"}
+	pp.SelectionOther = models.StringPointer("Anyone who shows up to the open house on friday will automatically be selected")
+	pp.SelectionNote = models.StringPointer("Open houses will be on a by weekly reoccurring basis")
+	pp.CommunicationMethod = pq.StringArray{"MASS_EMAIL", "OTHER"}
+	pp.CommunicationNote = models.StringPointer("If needed we will send text messages")
+	pp.ParticipantAssumeRisk = models.BoolPointer(true)
+	pp.RiskType = &risk
+	pp.RiskOther = models.StringPointer("Programmatic Risk")
+	pp.RiskNote = models.StringPointer("This is specifically dependant on external factors ")
+	pp.WillRiskChange = models.BoolPointer(true)
+	pp.WillRiskChangeNote = models.StringPointer("Less risky as time goes on")
+	pp.CoordinateWork = models.BoolPointer(true)
+	pp.CoordinateWorkNote = models.StringPointer("Weekly meetings will be held")
+	pp.GainsharePayments = models.BoolPointer(true)
+	pp.GainsharePaymentsMethod = models.StringPointer("")
+	pp.GainsharePaymentsNote = models.StringPointer("This only applies to the first 50 participants")
+	pp.ParticipantsIds = pq.StringArray{"TINS", "OTHER"}
+	pp.ParticipantsIdsOther = models.StringPointer("Candy Kingdom Operations Number")
+	pp.ParticipantsIDSNote = models.StringPointer("SSN can e used if the other ids are not avaialble")
+	pp.ProviderAdditionFrequency = &freq
+	pp.ProviderAdditionFrequencyOther = models.StringPointer("every other leap year")
+	pp.ProviderAdditionFrequencyNote = models.StringPointer("Exceptions can be made")
+	pp.ProviderAddMethod = pq.StringArray{"PROSPECTIVELY", "OTHER"}
+	pp.ProviderAddMethodOther = models.StringPointer("Competitive ball-room dancing, free for all")
+	pp.ProviderAddMethodNote = models.StringPointer("Priority given to prospectively")
+	pp.ProviderLeaveMethod = pq.StringArray{"VOLUNTARILY_WITHOUT_IMPLICATIONS", "OTHER"}
+	pp.ProviderLeaveMethodOther = models.StringPointer("When demanded by law")
+	pp.ProviderLeaveMethodNote = models.StringPointer("We don't expect this to be required by law in very many locations")
+	pp.ProviderOverlap = &overlap
+	pp.ProviderOverlapHierarchy = models.StringPointer("When overlap occurs, this model will be a secondary model")
+	pp.ProviderOverlapNote = models.StringPointer("Extenuating circumstances can allow this model to be the dominate model")
 
 }
