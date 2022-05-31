@@ -41,7 +41,7 @@ CREATE TABLE plan_beneficiaries (
     treat_dual_elligible_different TRI_STATE_ANSWER,
     treat_dual_elligible_different_how TEXT,
     treat_dual_elligible_different_note TEXT,
-    exclude_certain_characteristics TEXT,
+    exclude_certain_characteristics TRI_STATE_ANSWER,
     exclude_certain_characteristics_criteria TEXT,
     exclude_certain_characteristics_note TEXT,
     -- page 2
