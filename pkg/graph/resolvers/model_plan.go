@@ -42,7 +42,10 @@ func ModelPlanCreate(logger *zap.Logger, modelName string, store *storage.Store,
 		ModelPlanID: createdPlan.ID,
 		CreatedBy:   principalInfo.EuaUserID,
 	}
-	basics.CalcStatus()
+	err = basics.CalcStatus()
+	if err != nil {
+		return nil, err
+	}
 	_, err = store.PlanBasicsCreate(logger, basics)
 	if err != nil {
 		return nil, err
@@ -53,7 +56,10 @@ func ModelPlanCreate(logger *zap.Logger, modelName string, store *storage.Store,
 		ModelPlanID: createdPlan.ID,
 		CreatedBy:   principalInfo.EuaUserID,
 	}
-	milestones.CalcStatus()
+	err = milestones.CalcStatus()
+	if err != nil {
+		return nil, err
+	}
 	_, err = store.PlanMilestonesCreate(logger, milestones)
 	if err != nil {
 		return nil, err
@@ -65,7 +71,10 @@ func ModelPlanCreate(logger *zap.Logger, modelName string, store *storage.Store,
 		CreatedBy:   principalInfo.EuaUserID,
 		ModifiedBy:  &principalInfo.EuaUserID,
 	}
-	generalCharacteristics.CalcStatus()
+	err = generalCharacteristics.CalcStatus()
+	if err != nil {
+		return nil, err
+	}
 	_, err = store.PlanGeneralCharacteristicsCreate(logger, generalCharacteristics)
 	if err != nil {
 		return nil, err
