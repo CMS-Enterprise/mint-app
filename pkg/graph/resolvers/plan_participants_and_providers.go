@@ -20,7 +20,10 @@ func PlanParticipantsAndProvidersUpdate(logger *zap.Logger, id uuid.UUID, change
 		return nil, err
 	}
 	existingProvidersAndParticipants.ModifiedBy = &principal
-	existingProvidersAndParticipants.CalcStatus()
+	err = existingProvidersAndParticipants.CalcStatus()
+	if err != nil {
+		return nil, err
+	}
 
 	retProvidersAndParticipants, err := store.PlanParticipantsAndProvidersUpdate(logger, existingProvidersAndParticipants)
 	return retProvidersAndParticipants, err

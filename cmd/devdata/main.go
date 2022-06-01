@@ -380,11 +380,14 @@ func makePlanParticipantsAndProviders(modelPlanID uuid.UUID, logger *zap.Logger,
 		ModelPlanID: modelPlanID,
 		CreatedBy:   "ABCD",
 		ModifiedBy:  models.StringPointer("ABCD"),
-		Status:      models.TaskReady,
 	}
 
 	for _, cb := range callbacks {
 		cb(&pp)
+	}
+	err := pp.CalcStatus()
+	if err != nil {
+		panic(err)
 	}
 
 	dbPP, _ := store.PlanParticipantsAndProvidersCreate(logger, &pp)

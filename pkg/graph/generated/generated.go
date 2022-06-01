@@ -103,26 +103,26 @@ type ComplexityRoot struct {
 	}
 
 	Mutation struct {
-		CreateDiscussionReply                  func(childComplexity int, input model.DiscussionReplyCreateInput) int
-		CreateModelPlan                        func(childComplexity int, modelName string) int
-		CreatePlanCollaborator                 func(childComplexity int, input model.PlanCollaboratorCreateInput) int
-		CreatePlanDiscussion                   func(childComplexity int, input model.PlanDiscussionCreateInput) int
-		CreatePlanDocument                     func(childComplexity int, input model.PlanDocumentInput) int
-		DeleteDiscussionReply                  func(childComplexity int, id uuid.UUID) int
-		DeletePlanCollaborator                 func(childComplexity int, id uuid.UUID) int
-		DeletePlanDiscussion                   func(childComplexity int, id uuid.UUID) int
-		DeletePlanDocument                     func(childComplexity int, input model.PlanDocumentInput) int
-		GeneratePresignedUploadURL             func(childComplexity int, input model.GeneratePresignedUploadURLInput) int
-		UpdateDiscussionReply                  func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
-		UpdateModelPlan                        func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
-		UpdatePlanBasics                       func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
-		UpdatePlanBeneficiares                 func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
-		UpdatePlanCollaborator                 func(childComplexity int, id uuid.UUID, newRole models.TeamRole) int
-		UpdatePlanDiscussion                   func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
-		UpdatePlanDocument                     func(childComplexity int, input model.PlanDocumentInput) int
-		UpdatePlanGeneralCharacteristics       func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
-		UpdatePlanMilestones                   func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
-		UpdatePlanPlanParticipantsAndProviders func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
+		CreateDiscussionReply              func(childComplexity int, input model.DiscussionReplyCreateInput) int
+		CreateModelPlan                    func(childComplexity int, modelName string) int
+		CreatePlanCollaborator             func(childComplexity int, input model.PlanCollaboratorCreateInput) int
+		CreatePlanDiscussion               func(childComplexity int, input model.PlanDiscussionCreateInput) int
+		CreatePlanDocument                 func(childComplexity int, input model.PlanDocumentInput) int
+		DeleteDiscussionReply              func(childComplexity int, id uuid.UUID) int
+		DeletePlanCollaborator             func(childComplexity int, id uuid.UUID) int
+		DeletePlanDiscussion               func(childComplexity int, id uuid.UUID) int
+		DeletePlanDocument                 func(childComplexity int, input model.PlanDocumentInput) int
+		GeneratePresignedUploadURL         func(childComplexity int, input model.GeneratePresignedUploadURLInput) int
+		UpdateDiscussionReply              func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
+		UpdateModelPlan                    func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
+		UpdatePlanBasics                   func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
+		UpdatePlanBeneficiares             func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
+		UpdatePlanCollaborator             func(childComplexity int, id uuid.UUID, newRole models.TeamRole) int
+		UpdatePlanDiscussion               func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
+		UpdatePlanDocument                 func(childComplexity int, input model.PlanDocumentInput) int
+		UpdatePlanGeneralCharacteristics   func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
+		UpdatePlanMilestones               func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
+		UpdatePlanParticipantsAndProviders func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
 	}
 
 	PlanBasics struct {
@@ -399,7 +399,7 @@ type MutationResolver interface {
 	UpdatePlanMilestones(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanMilestones, error)
 	UpdatePlanGeneralCharacteristics(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanGeneralCharacteristics, error)
 	UpdatePlanBeneficiares(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanBeneficiaries, error)
-	UpdatePlanPlanParticipantsAndProviders(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanParticipantsAndProviders, error)
+	UpdatePlanParticipantsAndProviders(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanParticipantsAndProviders, error)
 	GeneratePresignedUploadURL(ctx context.Context, input model.GeneratePresignedUploadURLInput) (*model.GeneratePresignedUploadURLPayload, error)
 	CreatePlanDocument(ctx context.Context, input model.PlanDocumentInput) (*model.PlanDocumentPayload, error)
 	UpdatePlanDocument(ctx context.Context, input model.PlanDocumentInput) (*model.PlanDocumentPayload, error)
@@ -445,8 +445,6 @@ type PlanParticipantsAndProvidersResolver interface {
 	SelectionMethod(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.ParticipantSelectionType, error)
 
 	CommunicationMethod(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.ParticipantCommunicationType, error)
-
-	GainsharePaymentsTrack(ctx context.Context, obj *models.PlanParticipantsAndProviders) (*string, error)
 
 	ParticipantsIds(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.ParticipantsIDType, error)
 
@@ -935,17 +933,17 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Mutation.UpdatePlanMilestones(childComplexity, args["id"].(uuid.UUID), args["changes"].(map[string]interface{})), true
 
-	case "Mutation.updatePlanPlanParticipantsAndProviders":
-		if e.complexity.Mutation.UpdatePlanPlanParticipantsAndProviders == nil {
+	case "Mutation.updatePlanParticipantsAndProviders":
+		if e.complexity.Mutation.UpdatePlanParticipantsAndProviders == nil {
 			break
 		}
 
-		args, err := ec.field_Mutation_updatePlanPlanParticipantsAndProviders_args(context.TODO(), rawArgs)
+		args, err := ec.field_Mutation_updatePlanParticipantsAndProviders_args(context.TODO(), rawArgs)
 		if err != nil {
 			return 0, false
 		}
 
-		return e.complexity.Mutation.UpdatePlanPlanParticipantsAndProviders(childComplexity, args["id"].(uuid.UUID), args["changes"].(map[string]interface{})), true
+		return e.complexity.Mutation.UpdatePlanParticipantsAndProviders(childComplexity, args["id"].(uuid.UUID), args["changes"].(map[string]interface{})), true
 
 	case "PlanBasics.createdBy":
 		if e.complexity.PlanBasics.CreatedBy == nil {
@@ -3139,7 +3137,7 @@ type PlanParticipantsAndProviders {
   coordinateWork:          Boolean       
   coordinateWorkNote:      String       
   gainsharePayments:       Boolean       
-  gainsharePaymentsTrack: String       
+  gainsharePaymentsTrack: Boolean       
   gainsharePaymentsNote:   String       
   participantsIds:         [ParticipantsIDType!]
   participantsIdsOther:    String       
@@ -3210,7 +3208,7 @@ input PlanParticipantsAndProvidersChanges @goModel(model: "map[string]interface{
   coordinateWork:          Boolean       
   coordinateWorkNote:      String       
   gainsharePayments:       Boolean       
-  gainsharePaymentsTrack: String       
+  gainsharePaymentsTrack: Boolean       
   gainsharePaymentsNote:   String       
   participantsIds:         [ParticipantsIDType!]
   participantsIdsOther:    String       
@@ -3277,7 +3275,7 @@ updatePlanGeneralCharacteristics(id: UUID!, changes: PlanGeneralCharacteristicsC
 updatePlanBeneficiares(id: UUID!, changes: PlanBeneficiariesChanges!): PlanBeneficiaries!
 @hasRole(role: MINT_BASE_USER)
 
-updatePlanPlanParticipantsAndProviders(id: UUID!, changes: PlanParticipantsAndProvidersChanges!): PlanParticipantsAndProviders!
+updatePlanParticipantsAndProviders(id: UUID!, changes: PlanParticipantsAndProvidersChanges!): PlanParticipantsAndProviders!
 @hasRole(role: MINT_BASE_USER)
 
 
@@ -3959,7 +3957,7 @@ func (ec *executionContext) field_Mutation_updatePlanMilestones_args(ctx context
 	return args, nil
 }
 
-func (ec *executionContext) field_Mutation_updatePlanPlanParticipantsAndProviders_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+func (ec *executionContext) field_Mutation_updatePlanParticipantsAndProviders_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
 	var arg0 uuid.UUID
@@ -7030,8 +7028,8 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanBeneficiares(ctx con
 	return fc, nil
 }
 
-func (ec *executionContext) _Mutation_updatePlanPlanParticipantsAndProviders(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Mutation_updatePlanPlanParticipantsAndProviders(ctx, field)
+func (ec *executionContext) _Mutation_updatePlanParticipantsAndProviders(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Mutation_updatePlanParticipantsAndProviders(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -7045,7 +7043,7 @@ func (ec *executionContext) _Mutation_updatePlanPlanParticipantsAndProviders(ctx
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		directive0 := func(rctx context.Context) (interface{}, error) {
 			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Mutation().UpdatePlanPlanParticipantsAndProviders(rctx, fc.Args["id"].(uuid.UUID), fc.Args["changes"].(map[string]interface{}))
+			return ec.resolvers.Mutation().UpdatePlanParticipantsAndProviders(rctx, fc.Args["id"].(uuid.UUID), fc.Args["changes"].(map[string]interface{}))
 		}
 		directive1 := func(ctx context.Context) (interface{}, error) {
 			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_BASE_USER")
@@ -7085,7 +7083,7 @@ func (ec *executionContext) _Mutation_updatePlanPlanParticipantsAndProviders(ctx
 	return ec.marshalNPlanParticipantsAndProviders2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanParticipantsAndProviders(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Mutation_updatePlanPlanParticipantsAndProviders(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Mutation_updatePlanParticipantsAndProviders(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Mutation",
 		Field:      field,
@@ -7208,7 +7206,7 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanPlanParticipantsAndP
 		}
 	}()
 	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_updatePlanPlanParticipantsAndProviders_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+	if fc.Args, err = ec.field_Mutation_updatePlanParticipantsAndProviders_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return
 	}
@@ -15871,7 +15869,7 @@ func (ec *executionContext) _PlanParticipantsAndProviders_gainsharePaymentsTrack
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.PlanParticipantsAndProviders().GainsharePaymentsTrack(rctx, obj)
+		return obj.GainsharePaymentsTrack, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -15880,19 +15878,19 @@ func (ec *executionContext) _PlanParticipantsAndProviders_gainsharePaymentsTrack
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(*string)
+	res := resTmp.(*bool)
 	fc.Result = res
-	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_gainsharePaymentsTrack(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "PlanParticipantsAndProviders",
 		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
+		IsMethod:   false,
+		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type String does not have child fields")
+			return nil, errors.New("field of type Boolean does not have child fields")
 		},
 	}
 	return fc, nil
@@ -20224,10 +20222,10 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 			if out.Values[i] == graphql.Null {
 				invalids++
 			}
-		case "updatePlanPlanParticipantsAndProviders":
+		case "updatePlanParticipantsAndProviders":
 
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_updatePlanPlanParticipantsAndProviders(ctx, field)
+				return ec._Mutation_updatePlanParticipantsAndProviders(ctx, field)
 			})
 
 			if out.Values[i] == graphql.Null {
@@ -21605,22 +21603,9 @@ func (ec *executionContext) _PlanParticipantsAndProviders(ctx context.Context, s
 			out.Values[i] = ec._PlanParticipantsAndProviders_gainsharePayments(ctx, field, obj)
 
 		case "gainsharePaymentsTrack":
-			field := field
 
-			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._PlanParticipantsAndProviders_gainsharePaymentsTrack(ctx, field, obj)
-				return res
-			}
+			out.Values[i] = ec._PlanParticipantsAndProviders_gainsharePaymentsTrack(ctx, field, obj)
 
-			out.Concurrently(i, func() graphql.Marshaler {
-				return innerFunc(ctx)
-
-			})
 		case "gainsharePaymentsNote":
 
 			out.Values[i] = ec._PlanParticipantsAndProviders_gainsharePaymentsNote(ctx, field, obj)

@@ -574,7 +574,7 @@ type PlanParticipantsAndProviders {
   coordinateWork:          Boolean       
   coordinateWorkNote:      String       
   gainsharePayments:       Boolean       
-  gainsharePaymentsTrack: String       
+  gainsharePaymentsTrack: Boolean       
   gainsharePaymentsNote:   String       
   participantsIds:         [ParticipantsIDType!]
   participantsIdsOther:    String       
@@ -645,7 +645,7 @@ input PlanParticipantsAndProvidersChanges @goModel(model: "map[string]interface{
   coordinateWork:          Boolean       
   coordinateWorkNote:      String       
   gainsharePayments:       Boolean       
-  gainsharePaymentsTrack: String       
+  gainsharePaymentsTrack: Boolean       
   gainsharePaymentsNote:   String       
   participantsIds:         [ParticipantsIDType!]
   participantsIdsOther:    String       
@@ -712,7 +712,7 @@ updatePlanGeneralCharacteristics(id: UUID!, changes: PlanGeneralCharacteristicsC
 updatePlanBeneficiares(id: UUID!, changes: PlanBeneficiariesChanges!): PlanBeneficiaries!
 @hasRole(role: MINT_BASE_USER)
 
-updatePlanPlanParticipantsAndProviders(id: UUID!, changes: PlanParticipantsAndProvidersChanges!): PlanParticipantsAndProviders!
+updatePlanParticipantsAndProviders(id: UUID!, changes: PlanParticipantsAndProvidersChanges!): PlanParticipantsAndProviders!
 @hasRole(role: MINT_BASE_USER)
 
 
