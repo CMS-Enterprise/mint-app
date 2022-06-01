@@ -57,12 +57,17 @@ func LockTaskListSection(pubsub *pubsub.PubSub, modelPlanID uuid.UUID, section s
 		LockedBy: principal,
 	}
 
+	_, found := taskListSectionLocks[modelPlanID]
+	if !found {
+		taskListSectionLocks[modelPlanID] = make(map[string]model.TaskListSectionLockStatus)
+	}
+
 	taskListSectionLockMutex.Lock()
 	taskListSectionLocks[modelPlanID][section] = status
 	taskListSectionLockMutex.Unlock()
 
 	pubsub.Publish(modelPlanID, pubsubevents.TaskListSectionLocksChanged, model.TaskListSectionLockStatusChanged{
-		ChangeType: model.ChangeTypeRemoved,
+		ChangeType: model.ChangeTypeAdded,
 		LockStatus: &status,
 	})
 }
