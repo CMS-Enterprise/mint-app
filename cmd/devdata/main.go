@@ -84,6 +84,8 @@ func main() {
 		processPlanBeneficiaries(b)
 		b.ID = uuid.MustParse("4ba095f6-c209-4b37-9008-c2476d628504")
 		b.NumberPeopleImpacted = models.IntPointer(25)
+		b.PrecedenceRules = nil
+		b.BeneficiaryOverlap = nil
 	})
 
 	makeModelPlan("Mr. Mint", logger, store)
@@ -362,6 +364,11 @@ func makePlanBeneficiaries(modelPlanID uuid.UUID, logger *zap.Logger, store *sto
 
 	for _, cb := range callbacks {
 		cb(&b)
+	}
+
+	err := b.CalcStatus()
+	if err != nil {
+		panic(err)
 	}
 
 	dbBeneficiaries, _ := store.PlanBeneficiariesCreate(logger, &b)
