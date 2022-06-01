@@ -54,6 +54,7 @@ func (suite *ResolverSuite) TestUpdatePlanMilestones() {
 	suite.NoError(err)
 	suite.NotNil(updatedMilestones.ModifiedBy)
 	suite.NotNil(updatedMilestones.ModifiedDts)
+	suite.EqualValues(models.TaskInProgress, updatedMilestones.Status)
 	suite.EqualValues(updater, *updatedMilestones.ModifiedBy)
 	suite.EqualValues(true, updatedMilestones.CompleteICIP.Equal(time.Date(2020, 5, 13, 20, 47, 50, 120000000, time.UTC)))
 	suite.Nil(updatedMilestones.ClearanceStarts)

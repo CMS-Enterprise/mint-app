@@ -67,7 +67,7 @@ func (s *Store) PlanMilestonesUpdate(logger *zap.Logger, plan *models.PlanMilest
 func (s *Store) FetchPlanMilestonesByModelPlanID(logger *zap.Logger, principal *string, modelPlanID uuid.UUID) (*models.PlanMilestones, error) {
 	statement, err := s.db.PrepareNamed(planMilestonesGetByModelPlanIDSQL)
 	if err != nil {
-		return nil, genericmodel.HandleModelFetchByIDError(logger, err, modelPlanID)
+		return nil, err
 	}
 
 	args := map[string]interface{}{
@@ -77,7 +77,7 @@ func (s *Store) FetchPlanMilestonesByModelPlanID(logger *zap.Logger, principal *
 	var plan models.PlanMilestones
 	err = statement.Get(&plan, args)
 	if err != nil {
-		return nil, genericmodel.HandleModelFetchByIDError(logger, err, modelPlanID)
+		return nil, err
 	}
 
 	return &plan, nil
@@ -93,7 +93,7 @@ func (s *Store) FetchPlanMilestonesByID(logger *zap.Logger, id uuid.UUID) (*mode
 	var plan models.PlanMilestones
 	err = statement.Get(&plan, utilitySQL.CreateIDQueryMap(id))
 	if err != nil {
-		return nil, genericmodel.HandleModelFetchByIDError(logger, err, id)
+		return nil, err
 	}
 
 	return &plan, nil

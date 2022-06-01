@@ -70,7 +70,7 @@ func (s *Store) PlanGeneralCharacteristicsGetByID(logger *zap.Logger, id uuid.UU
 	err = statement.Get(&gc, utilitySQL.CreateIDQueryMap(id))
 
 	if err != nil {
-		return nil, genericmodel.HandleModelFetchByIDError(logger, err, id)
+		return nil, err
 	}
 
 	return &gc, nil
@@ -94,7 +94,7 @@ func (s *Store) PlanGeneralCharacteristicsGetByModelPlanID(logger *zap.Logger, p
 	err = statement.Get(&gc, arg)
 
 	if err != nil {
-		return nil, genericmodel.HandleModelFetchByIDError(logger, err, modelPlanID)
+		return nil, err
 	}
 
 	return &gc, nil

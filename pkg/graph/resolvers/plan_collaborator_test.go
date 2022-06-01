@@ -85,11 +85,9 @@ func (suite *ResolverSuite) TestDeletePlanCollaborator() {
 	suite.NoError(err)
 	suite.EqualValues(deletedCollaborator, collaborator)
 
-	// Ensure we get nil when we fetch it
-	// TODO: FetchByID methods should probably error if they don't find what they're looking for,
-	// but FetchByModelPlanID shouldn't (just return an empty slice)
+	// Ensure we get an error when we try fetch it
 	collaboratorByID, err := FetchCollaboratorByID(suite.testConfigs.Logger, collaborator.ID, suite.testConfigs.Store)
-	suite.NoError(err)
+	suite.Error(err)
 	suite.Nil(collaboratorByID)
 }
 
