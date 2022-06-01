@@ -70,11 +70,6 @@ type ComplexityRoot struct {
 		Resolution   func(childComplexity int) int
 	}
 
-	EventCollaboratorChanged struct {
-		ChangeType   func(childComplexity int) int
-		Collaborator func(childComplexity int) int
-	}
-
 	GeneratePresignedUploadURLPayload struct {
 		URL func(childComplexity int) int
 	}
@@ -106,25 +101,26 @@ type ComplexityRoot struct {
 	}
 
 	Mutation struct {
-		CreateDiscussionReply                     func(childComplexity int, input model.DiscussionReplyCreateInput) int
-		CreateModelPlan                           func(childComplexity int, modelName string) int
-		CreatePlanCollaborator                    func(childComplexity int, input model.PlanCollaboratorCreateInput) int
-		CreatePlanDiscussion                      func(childComplexity int, input model.PlanDiscussionCreateInput) int
-		CreatePlanDocument                        func(childComplexity int, input model.PlanDocumentInput) int
-		DeleteDiscussionReply                     func(childComplexity int, id uuid.UUID) int
-		DeletePlanCollaborator                    func(childComplexity int, id uuid.UUID) int
-		DeletePlanDiscussion                      func(childComplexity int, id uuid.UUID) int
-		DeletePlanDocument                        func(childComplexity int, input model.PlanDocumentInput) int
-		GeneratePresignedUploadURL                func(childComplexity int, input model.GeneratePresignedUploadURLInput) int
-		SubscriptionUnregisterCollaboratorChanged func(childComplexity int, modelPlanID uuid.UUID) int
-		UpdateDiscussionReply                     func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
-		UpdateModelPlan                           func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
-		UpdatePlanBasics                          func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
-		UpdatePlanCollaborator                    func(childComplexity int, id uuid.UUID, newRole models.TeamRole) int
-		UpdatePlanDiscussion                      func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
-		UpdatePlanDocument                        func(childComplexity int, input model.PlanDocumentInput) int
-		UpdatePlanGeneralCharacteristics          func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
-		UpdatePlanMilestones                      func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
+		CreateDiscussionReply            func(childComplexity int, input model.DiscussionReplyCreateInput) int
+		CreateModelPlan                  func(childComplexity int, modelName string) int
+		CreatePlanCollaborator           func(childComplexity int, input model.PlanCollaboratorCreateInput) int
+		CreatePlanDiscussion             func(childComplexity int, input model.PlanDiscussionCreateInput) int
+		CreatePlanDocument               func(childComplexity int, input model.PlanDocumentInput) int
+		DeleteDiscussionReply            func(childComplexity int, id uuid.UUID) int
+		DeletePlanCollaborator           func(childComplexity int, id uuid.UUID) int
+		DeletePlanDiscussion             func(childComplexity int, id uuid.UUID) int
+		DeletePlanDocument               func(childComplexity int, input model.PlanDocumentInput) int
+		GeneratePresignedUploadURL       func(childComplexity int, input model.GeneratePresignedUploadURLInput) int
+		LockTaskListSection              func(childComplexity int, modelPlanID uuid.UUID, section string) int
+		UnlockTaskListSection            func(childComplexity int, modelPlanID uuid.UUID, section string) int
+		UpdateDiscussionReply            func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
+		UpdateModelPlan                  func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
+		UpdatePlanBasics                 func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
+		UpdatePlanCollaborator           func(childComplexity int, id uuid.UUID, newRole models.TeamRole) int
+		UpdatePlanDiscussion             func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
+		UpdatePlanDocument               func(childComplexity int, input model.PlanDocumentInput) int
+		UpdatePlanGeneralCharacteristics func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
+		UpdatePlanMilestones             func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
 	}
 
 	PlanBasics struct {
@@ -282,12 +278,21 @@ type ComplexityRoot struct {
 		PlanDocument              func(childComplexity int, id uuid.UUID) int
 		PlanDocumentDownloadURL   func(childComplexity int, id uuid.UUID) int
 		ReadPlanDocumentByModelID func(childComplexity int, id uuid.UUID) int
+		TaskListSectionLocks      func(childComplexity int, modelPlanID uuid.UUID) int
 	}
 
 	Subscription struct {
-		SubscriptionFileScanCompleted           func(childComplexity int) int
-		SubscriptionRegisterCollaboratorChanged func(childComplexity int, modelPlanID uuid.UUID) int
-		SubscriptionTaskListSectionUpdated      func(childComplexity int) int
+		OnTaskListSectionLocksChanged func(childComplexity int, modelPlanID uuid.UUID) int
+	}
+
+	TaskListSectionLockStatus struct {
+		LockedBy func(childComplexity int) int
+		Section  func(childComplexity int) int
+	}
+
+	TaskListSectionLockStatusChanged struct {
+		ChangeType func(childComplexity int) int
+		LockStatus func(childComplexity int) int
 	}
 
 	UserInfo struct {
@@ -310,7 +315,6 @@ type ModelPlanResolver interface {
 	Discussions(ctx context.Context, obj *models.ModelPlan) ([]*models.PlanDiscussion, error)
 }
 type MutationResolver interface {
-	SubscriptionUnregisterCollaboratorChanged(ctx context.Context, modelPlanID uuid.UUID) (bool, error)
 	CreateModelPlan(ctx context.Context, modelName string) (*models.ModelPlan, error)
 	UpdateModelPlan(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.ModelPlan, error)
 	CreatePlanCollaborator(ctx context.Context, input model.PlanCollaboratorCreateInput) (*models.PlanCollaborator, error)
@@ -329,6 +333,8 @@ type MutationResolver interface {
 	CreateDiscussionReply(ctx context.Context, input model.DiscussionReplyCreateInput) (*models.DiscussionReply, error)
 	UpdateDiscussionReply(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.DiscussionReply, error)
 	DeleteDiscussionReply(ctx context.Context, id uuid.UUID) (*models.DiscussionReply, error)
+	LockTaskListSection(ctx context.Context, modelPlanID uuid.UUID, section string) (bool, error)
+	UnlockTaskListSection(ctx context.Context, modelPlanID uuid.UUID, section string) (bool, error)
 }
 type PlanDiscussionResolver interface {
 	Replies(ctx context.Context, obj *models.PlanDiscussion) ([]*models.DiscussionReply, error)
@@ -362,11 +368,10 @@ type QueryResolver interface {
 	ModelPlanCollection(ctx context.Context) ([]*models.ModelPlan, error)
 	CedarPersonsByCommonName(ctx context.Context, commonName string) ([]*models.UserInfo, error)
 	PlanCollaboratorByID(ctx context.Context, id uuid.UUID) (*models.PlanCollaborator, error)
+	TaskListSectionLocks(ctx context.Context, modelPlanID uuid.UUID) ([]*model.TaskListSectionLockStatus, error)
 }
 type SubscriptionResolver interface {
-	SubscriptionFileScanCompleted(ctx context.Context) (<-chan bool, error)
-	SubscriptionTaskListSectionUpdated(ctx context.Context) (<-chan bool, error)
-	SubscriptionRegisterCollaboratorChanged(ctx context.Context, modelPlanID uuid.UUID) (<-chan *model.EventCollaboratorChanged, error)
+	OnTaskListSectionLocksChanged(ctx context.Context, modelPlanID uuid.UUID) (<-chan *model.TaskListSectionLockStatusChanged, error)
 }
 type UserInfoResolver interface {
 	Email(ctx context.Context, obj *models.UserInfo) (string, error)
@@ -449,20 +454,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.DiscussionReply.Resolution(childComplexity), true
-
-	case "EventCollaboratorChanged.changeType":
-		if e.complexity.EventCollaboratorChanged.ChangeType == nil {
-			break
-		}
-
-		return e.complexity.EventCollaboratorChanged.ChangeType(childComplexity), true
-
-	case "EventCollaboratorChanged.collaborator":
-		if e.complexity.EventCollaboratorChanged.Collaborator == nil {
-			break
-		}
-
-		return e.complexity.EventCollaboratorChanged.Collaborator(childComplexity), true
 
 	case "GeneratePresignedUploadURLPayload.url":
 		if e.complexity.GeneratePresignedUploadURLPayload.URL == nil {
@@ -731,17 +722,29 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Mutation.GeneratePresignedUploadURL(childComplexity, args["input"].(model.GeneratePresignedUploadURLInput)), true
 
-	case "Mutation.subscriptionUnregisterCollaboratorChanged":
-		if e.complexity.Mutation.SubscriptionUnregisterCollaboratorChanged == nil {
+	case "Mutation.lockTaskListSection":
+		if e.complexity.Mutation.LockTaskListSection == nil {
 			break
 		}
 
-		args, err := ec.field_Mutation_subscriptionUnregisterCollaboratorChanged_args(context.TODO(), rawArgs)
+		args, err := ec.field_Mutation_lockTaskListSection_args(context.TODO(), rawArgs)
 		if err != nil {
 			return 0, false
 		}
 
-		return e.complexity.Mutation.SubscriptionUnregisterCollaboratorChanged(childComplexity, args["modelPlanID"].(uuid.UUID)), true
+		return e.complexity.Mutation.LockTaskListSection(childComplexity, args["modelPlanID"].(uuid.UUID), args["section"].(string)), true
+
+	case "Mutation.unlockTaskListSection":
+		if e.complexity.Mutation.UnlockTaskListSection == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_unlockTaskListSection_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Mutation.UnlockTaskListSection(childComplexity, args["modelPlanID"].(uuid.UUID), args["section"].(string)), true
 
 	case "Mutation.updateDiscussionReply":
 		if e.complexity.Mutation.UpdateDiscussionReply == nil {
@@ -1800,31 +1803,57 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Query.ReadPlanDocumentByModelID(childComplexity, args["id"].(uuid.UUID)), true
 
-	case "Subscription.subscriptionFileScanCompleted":
-		if e.complexity.Subscription.SubscriptionFileScanCompleted == nil {
+	case "Query.taskListSectionLocks":
+		if e.complexity.Query.TaskListSectionLocks == nil {
 			break
 		}
 
-		return e.complexity.Subscription.SubscriptionFileScanCompleted(childComplexity), true
-
-	case "Subscription.subscriptionRegisterCollaboratorChanged":
-		if e.complexity.Subscription.SubscriptionRegisterCollaboratorChanged == nil {
-			break
-		}
-
-		args, err := ec.field_Subscription_subscriptionRegisterCollaboratorChanged_args(context.TODO(), rawArgs)
+		args, err := ec.field_Query_taskListSectionLocks_args(context.TODO(), rawArgs)
 		if err != nil {
 			return 0, false
 		}
 
-		return e.complexity.Subscription.SubscriptionRegisterCollaboratorChanged(childComplexity, args["modelPlanID"].(uuid.UUID)), true
+		return e.complexity.Query.TaskListSectionLocks(childComplexity, args["modelPlanID"].(uuid.UUID)), true
 
-	case "Subscription.subscriptionTaskListSectionUpdated":
-		if e.complexity.Subscription.SubscriptionTaskListSectionUpdated == nil {
+	case "Subscription.onTaskListSectionLocksChanged":
+		if e.complexity.Subscription.OnTaskListSectionLocksChanged == nil {
 			break
 		}
 
-		return e.complexity.Subscription.SubscriptionTaskListSectionUpdated(childComplexity), true
+		args, err := ec.field_Subscription_onTaskListSectionLocksChanged_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Subscription.OnTaskListSectionLocksChanged(childComplexity, args["modelPlanID"].(uuid.UUID)), true
+
+	case "TaskListSectionLockStatus.lockedBy":
+		if e.complexity.TaskListSectionLockStatus.LockedBy == nil {
+			break
+		}
+
+		return e.complexity.TaskListSectionLockStatus.LockedBy(childComplexity), true
+
+	case "TaskListSectionLockStatus.section":
+		if e.complexity.TaskListSectionLockStatus.Section == nil {
+			break
+		}
+
+		return e.complexity.TaskListSectionLockStatus.Section(childComplexity), true
+
+	case "TaskListSectionLockStatusChanged.changeType":
+		if e.complexity.TaskListSectionLockStatusChanged.ChangeType == nil {
+			break
+		}
+
+		return e.complexity.TaskListSectionLockStatusChanged.ChangeType(childComplexity), true
+
+	case "TaskListSectionLockStatusChanged.lockStatus":
+		if e.complexity.TaskListSectionLockStatusChanged.LockStatus == nil {
+			break
+		}
+
+		return e.complexity.TaskListSectionLockStatusChanged.LockStatus(childComplexity), true
 
 	case "UserInfo.commonName":
 		if e.complexity.UserInfo.CommonName == nil {
@@ -2018,12 +2047,14 @@ type PlanCollaborator {
   modifiedDts: Time
 }
 
-"""
-EventCollaboratorChanged represents a change in the subscription
-"""
-type EventCollaboratorChanged {
-  changeType: CollaboratorChangedAction!
-  collaborator: PlanCollaborator!
+type TaskListSectionLockStatusChanged {
+  changeType: ChangeType!
+  lockStatus: TaskListSectionLockStatus!
+}
+
+type TaskListSectionLockStatus {
+  section: String!
+  lockedBy: String!
 }
 
 """
@@ -2423,15 +2454,13 @@ type Query {
   modelPlanCollection: [ModelPlan!]!
   cedarPersonsByCommonName(commonName: String!): [UserInfo!]!
   planCollaboratorByID(id: UUID!): PlanCollaborator!
+  taskListSectionLocks(modelPlanID: UUID!): [TaskListSectionLockStatus!]!
 }
 
 """
 Mutations definition for the schema
 """
 type Mutation {
-subscriptionUnregisterCollaboratorChanged(modelPlanID: UUID!): Boolean!
-@hasRole(role: MINT_BASE_USER)
-
 createModelPlan(modelName: String!): ModelPlan!
 @hasRole(role: MINT_BASE_USER)
 
@@ -2485,17 +2514,23 @@ updateDiscussionReply(id: UUID!, changes: DiscussionReplyChanges!): DiscussionRe
 
 deleteDiscussionReply(id: UUID!): DiscussionReply!
 @hasRole(role: MINT_BASE_USER)
+
+lockTaskListSection(modelPlanID: UUID!, section: String!): Boolean!
+@hasRole(role: MINT_BASE_USER)
+
+unlockTaskListSection(modelPlanID: UUID!, section: String!): Boolean!
+@hasRole(role: MINT_BASE_USER)
 }
 
 type Subscription {
-  subscriptionFileScanCompleted: Boolean!
+  onTaskListSectionLocksChanged(modelPlanID: UUID!): TaskListSectionLockStatusChanged!
   @hasRole(role: MINT_BASE_USER)
+}
 
-  subscriptionTaskListSectionUpdated: Boolean!
-  @hasRole(role: MINT_BASE_USER)
-
-  subscriptionRegisterCollaboratorChanged(modelPlanID: UUID!): EventCollaboratorChanged!
-  @hasRole(role: MINT_BASE_USER)
+enum ChangeType {
+  ADDED
+  UPDATED
+  REMOVED
 }
 
 enum TaskStatus {
@@ -2517,12 +2552,6 @@ enum ModelType
   VOLUNTARY
   MANDATORY
   TBD
-}
-
-enum CollaboratorChangedAction {
-  ADDED,
-  UPDATED,
-  REMOVED
 }
 
 enum ModelCategory {
@@ -2825,7 +2854,7 @@ func (ec *executionContext) field_Mutation_generatePresignedUploadURL_args(ctx c
 	return args, nil
 }
 
-func (ec *executionContext) field_Mutation_subscriptionUnregisterCollaboratorChanged_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+func (ec *executionContext) field_Mutation_lockTaskListSection_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
 	var arg0 uuid.UUID
@@ -2837,6 +2866,39 @@ func (ec *executionContext) field_Mutation_subscriptionUnregisterCollaboratorCha
 		}
 	}
 	args["modelPlanID"] = arg0
+	var arg1 string
+	if tmp, ok := rawArgs["section"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("section"))
+		arg1, err = ec.unmarshalNString2string(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["section"] = arg1
+	return args, nil
+}
+
+func (ec *executionContext) field_Mutation_unlockTaskListSection_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 uuid.UUID
+	if tmp, ok := rawArgs["modelPlanID"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("modelPlanID"))
+		arg0, err = ec.unmarshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["modelPlanID"] = arg0
+	var arg1 string
+	if tmp, ok := rawArgs["section"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("section"))
+		arg1, err = ec.unmarshalNString2string(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["section"] = arg1
 	return args, nil
 }
 
@@ -3128,7 +3190,22 @@ func (ec *executionContext) field_Query_readPlanDocumentByModelID_args(ctx conte
 	return args, nil
 }
 
-func (ec *executionContext) field_Subscription_subscriptionRegisterCollaboratorChanged_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+func (ec *executionContext) field_Query_taskListSectionLocks_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 uuid.UUID
+	if tmp, ok := rawArgs["modelPlanID"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("modelPlanID"))
+		arg0, err = ec.unmarshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["modelPlanID"] = arg0
+	return args, nil
+}
+
+func (ec *executionContext) field_Subscription_onTaskListSectionLocksChanged_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
 	var arg0 uuid.UUID
@@ -3566,114 +3643,6 @@ func (ec *executionContext) fieldContext_DiscussionReply_modifiedDts(ctx context
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type Time does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _EventCollaboratorChanged_changeType(ctx context.Context, field graphql.CollectedField, obj *model.EventCollaboratorChanged) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_EventCollaboratorChanged_changeType(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.ChangeType, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(model.CollaboratorChangedAction)
-	fc.Result = res
-	return ec.marshalNCollaboratorChangedAction2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCollaboratorChangedAction(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_EventCollaboratorChanged_changeType(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "EventCollaboratorChanged",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type CollaboratorChangedAction does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _EventCollaboratorChanged_collaborator(ctx context.Context, field graphql.CollectedField, obj *model.EventCollaboratorChanged) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_EventCollaboratorChanged_collaborator(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.Collaborator, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(*models.PlanCollaborator)
-	fc.Result = res
-	return ec.marshalNPlanCollaborator2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanCollaborator(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_EventCollaboratorChanged_collaborator(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "EventCollaboratorChanged",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "id":
-				return ec.fieldContext_PlanCollaborator_id(ctx, field)
-			case "modelPlanID":
-				return ec.fieldContext_PlanCollaborator_modelPlanID(ctx, field)
-			case "euaUserID":
-				return ec.fieldContext_PlanCollaborator_euaUserID(ctx, field)
-			case "fullName":
-				return ec.fieldContext_PlanCollaborator_fullName(ctx, field)
-			case "teamRole":
-				return ec.fieldContext_PlanCollaborator_teamRole(ctx, field)
-			case "createdBy":
-				return ec.fieldContext_PlanCollaborator_createdBy(ctx, field)
-			case "createdDts":
-				return ec.fieldContext_PlanCollaborator_createdDts(ctx, field)
-			case "modifiedBy":
-				return ec.fieldContext_PlanCollaborator_modifiedBy(ctx, field)
-			case "modifiedDts":
-				return ec.fieldContext_PlanCollaborator_modifiedDts(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type PlanCollaborator", field.Name)
 		},
 	}
 	return fc, nil
@@ -4842,85 +4811,6 @@ func (ec *executionContext) fieldContext_ModelPlan_status(ctx context.Context, f
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type ModelStatus does not have child fields")
 		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Mutation_subscriptionUnregisterCollaboratorChanged(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Mutation_subscriptionUnregisterCollaboratorChanged(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		directive0 := func(rctx context.Context) (interface{}, error) {
-			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Mutation().SubscriptionUnregisterCollaboratorChanged(rctx, fc.Args["modelPlanID"].(uuid.UUID))
-		}
-		directive1 := func(ctx context.Context) (interface{}, error) {
-			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_BASE_USER")
-			if err != nil {
-				return nil, err
-			}
-			if ec.directives.HasRole == nil {
-				return nil, errors.New("directive hasRole is not implemented")
-			}
-			return ec.directives.HasRole(ctx, nil, directive0, role)
-		}
-
-		tmp, err := directive1(rctx)
-		if err != nil {
-			return nil, graphql.ErrorOnPath(ctx, err)
-		}
-		if tmp == nil {
-			return nil, nil
-		}
-		if data, ok := tmp.(bool); ok {
-			return data, nil
-		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be bool`, tmp)
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(bool)
-	fc.Result = res
-	return ec.marshalNBoolean2bool(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_Mutation_subscriptionUnregisterCollaboratorChanged(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Mutation",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type Boolean does not have child fields")
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_subscriptionUnregisterCollaboratorChanged_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return
 	}
 	return fc, nil
 }
@@ -6789,6 +6679,164 @@ func (ec *executionContext) fieldContext_Mutation_deleteDiscussionReply(ctx cont
 	}()
 	ctx = graphql.WithFieldContext(ctx, fc)
 	if fc.Args, err = ec.field_Mutation_deleteDiscussionReply_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Mutation_lockTaskListSection(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Mutation_lockTaskListSection(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		directive0 := func(rctx context.Context) (interface{}, error) {
+			ctx = rctx // use context from middleware stack in children
+			return ec.resolvers.Mutation().LockTaskListSection(rctx, fc.Args["modelPlanID"].(uuid.UUID), fc.Args["section"].(string))
+		}
+		directive1 := func(ctx context.Context) (interface{}, error) {
+			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_BASE_USER")
+			if err != nil {
+				return nil, err
+			}
+			if ec.directives.HasRole == nil {
+				return nil, errors.New("directive hasRole is not implemented")
+			}
+			return ec.directives.HasRole(ctx, nil, directive0, role)
+		}
+
+		tmp, err := directive1(rctx)
+		if err != nil {
+			return nil, graphql.ErrorOnPath(ctx, err)
+		}
+		if tmp == nil {
+			return nil, nil
+		}
+		if data, ok := tmp.(bool); ok {
+			return data, nil
+		}
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be bool`, tmp)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(bool)
+	fc.Result = res
+	return ec.marshalNBoolean2bool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Mutation_lockTaskListSection(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_lockTaskListSection_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Mutation_unlockTaskListSection(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Mutation_unlockTaskListSection(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		directive0 := func(rctx context.Context) (interface{}, error) {
+			ctx = rctx // use context from middleware stack in children
+			return ec.resolvers.Mutation().UnlockTaskListSection(rctx, fc.Args["modelPlanID"].(uuid.UUID), fc.Args["section"].(string))
+		}
+		directive1 := func(ctx context.Context) (interface{}, error) {
+			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_BASE_USER")
+			if err != nil {
+				return nil, err
+			}
+			if ec.directives.HasRole == nil {
+				return nil, errors.New("directive hasRole is not implemented")
+			}
+			return ec.directives.HasRole(ctx, nil, directive0, role)
+		}
+
+		tmp, err := directive1(rctx)
+		if err != nil {
+			return nil, graphql.ErrorOnPath(ctx, err)
+		}
+		if tmp == nil {
+			return nil, nil
+		}
+		if data, ok := tmp.(bool); ok {
+			return data, nil
+		}
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be bool`, tmp)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(bool)
+	fc.Result = res
+	return ec.marshalNBoolean2bool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Mutation_unlockTaskListSection(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_unlockTaskListSection_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return
 	}
@@ -12722,6 +12770,67 @@ func (ec *executionContext) fieldContext_Query_planCollaboratorByID(ctx context.
 	return fc, nil
 }
 
+func (ec *executionContext) _Query_taskListSectionLocks(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Query_taskListSectionLocks(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Query().TaskListSectionLocks(rctx, fc.Args["modelPlanID"].(uuid.UUID))
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.([]*model.TaskListSectionLockStatus)
+	fc.Result = res
+	return ec.marshalNTaskListSectionLockStatus2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTaskListSectionLockStatusᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Query_taskListSectionLocks(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "section":
+				return ec.fieldContext_TaskListSectionLockStatus_section(ctx, field)
+			case "lockedBy":
+				return ec.fieldContext_TaskListSectionLockStatus_lockedBy(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type TaskListSectionLockStatus", field.Name)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Query_taskListSectionLocks_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _Query___type(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_Query___type(ctx, field)
 	if err != nil {
@@ -12851,8 +12960,8 @@ func (ec *executionContext) fieldContext_Query___schema(ctx context.Context, fie
 	return fc, nil
 }
 
-func (ec *executionContext) _Subscription_subscriptionFileScanCompleted(ctx context.Context, field graphql.CollectedField) (ret func(ctx context.Context) graphql.Marshaler) {
-	fc, err := ec.fieldContext_Subscription_subscriptionFileScanCompleted(ctx, field)
+func (ec *executionContext) _Subscription_onTaskListSectionLocksChanged(ctx context.Context, field graphql.CollectedField) (ret func(ctx context.Context) graphql.Marshaler) {
+	fc, err := ec.fieldContext_Subscription_onTaskListSectionLocksChanged(ctx, field)
 	if err != nil {
 		return nil
 	}
@@ -12866,7 +12975,7 @@ func (ec *executionContext) _Subscription_subscriptionFileScanCompleted(ctx cont
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		directive0 := func(rctx context.Context) (interface{}, error) {
 			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Subscription().SubscriptionFileScanCompleted(rctx)
+			return ec.resolvers.Subscription().OnTaskListSectionLocksChanged(rctx, fc.Args["modelPlanID"].(uuid.UUID))
 		}
 		directive1 := func(ctx context.Context) (interface{}, error) {
 			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_BASE_USER")
@@ -12886,10 +12995,10 @@ func (ec *executionContext) _Subscription_subscriptionFileScanCompleted(ctx cont
 		if tmp == nil {
 			return nil, nil
 		}
-		if data, ok := tmp.(<-chan bool); ok {
+		if data, ok := tmp.(<-chan *model.TaskListSectionLockStatusChanged); ok {
 			return data, nil
 		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be <-chan bool`, tmp)
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be <-chan *github.com/cmsgov/mint-app/pkg/graph/model.TaskListSectionLockStatusChanged`, tmp)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -12902,7 +13011,7 @@ func (ec *executionContext) _Subscription_subscriptionFileScanCompleted(ctx cont
 		return nil
 	}
 	return func(ctx context.Context) graphql.Marshaler {
-		res, ok := <-resTmp.(<-chan bool)
+		res, ok := <-resTmp.(<-chan *model.TaskListSectionLockStatusChanged)
 		if !ok {
 			return nil
 		}
@@ -12910,169 +13019,13 @@ func (ec *executionContext) _Subscription_subscriptionFileScanCompleted(ctx cont
 			w.Write([]byte{'{'})
 			graphql.MarshalString(field.Alias).MarshalGQL(w)
 			w.Write([]byte{':'})
-			ec.marshalNBoolean2bool(ctx, field.Selections, res).MarshalGQL(w)
+			ec.marshalNTaskListSectionLockStatusChanged2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTaskListSectionLockStatusChanged(ctx, field.Selections, res).MarshalGQL(w)
 			w.Write([]byte{'}'})
 		})
 	}
 }
 
-func (ec *executionContext) fieldContext_Subscription_subscriptionFileScanCompleted(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Subscription",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type Boolean does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Subscription_subscriptionTaskListSectionUpdated(ctx context.Context, field graphql.CollectedField) (ret func(ctx context.Context) graphql.Marshaler) {
-	fc, err := ec.fieldContext_Subscription_subscriptionTaskListSectionUpdated(ctx, field)
-	if err != nil {
-		return nil
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = nil
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		directive0 := func(rctx context.Context) (interface{}, error) {
-			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Subscription().SubscriptionTaskListSectionUpdated(rctx)
-		}
-		directive1 := func(ctx context.Context) (interface{}, error) {
-			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_BASE_USER")
-			if err != nil {
-				return nil, err
-			}
-			if ec.directives.HasRole == nil {
-				return nil, errors.New("directive hasRole is not implemented")
-			}
-			return ec.directives.HasRole(ctx, nil, directive0, role)
-		}
-
-		tmp, err := directive1(rctx)
-		if err != nil {
-			return nil, graphql.ErrorOnPath(ctx, err)
-		}
-		if tmp == nil {
-			return nil, nil
-		}
-		if data, ok := tmp.(<-chan bool); ok {
-			return data, nil
-		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be <-chan bool`, tmp)
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return nil
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return nil
-	}
-	return func(ctx context.Context) graphql.Marshaler {
-		res, ok := <-resTmp.(<-chan bool)
-		if !ok {
-			return nil
-		}
-		return graphql.WriterFunc(func(w io.Writer) {
-			w.Write([]byte{'{'})
-			graphql.MarshalString(field.Alias).MarshalGQL(w)
-			w.Write([]byte{':'})
-			ec.marshalNBoolean2bool(ctx, field.Selections, res).MarshalGQL(w)
-			w.Write([]byte{'}'})
-		})
-	}
-}
-
-func (ec *executionContext) fieldContext_Subscription_subscriptionTaskListSectionUpdated(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Subscription",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type Boolean does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Subscription_subscriptionRegisterCollaboratorChanged(ctx context.Context, field graphql.CollectedField) (ret func(ctx context.Context) graphql.Marshaler) {
-	fc, err := ec.fieldContext_Subscription_subscriptionRegisterCollaboratorChanged(ctx, field)
-	if err != nil {
-		return nil
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = nil
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		directive0 := func(rctx context.Context) (interface{}, error) {
-			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Subscription().SubscriptionRegisterCollaboratorChanged(rctx, fc.Args["modelPlanID"].(uuid.UUID))
-		}
-		directive1 := func(ctx context.Context) (interface{}, error) {
-			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_BASE_USER")
-			if err != nil {
-				return nil, err
-			}
-			if ec.directives.HasRole == nil {
-				return nil, errors.New("directive hasRole is not implemented")
-			}
-			return ec.directives.HasRole(ctx, nil, directive0, role)
-		}
-
-		tmp, err := directive1(rctx)
-		if err != nil {
-			return nil, graphql.ErrorOnPath(ctx, err)
-		}
-		if tmp == nil {
-			return nil, nil
-		}
-		if data, ok := tmp.(<-chan *model.EventCollaboratorChanged); ok {
-			return data, nil
-		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be <-chan *github.com/cmsgov/mint-app/pkg/graph/model.EventCollaboratorChanged`, tmp)
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return nil
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return nil
-	}
-	return func(ctx context.Context) graphql.Marshaler {
-		res, ok := <-resTmp.(<-chan *model.EventCollaboratorChanged)
-		if !ok {
-			return nil
-		}
-		return graphql.WriterFunc(func(w io.Writer) {
-			w.Write([]byte{'{'})
-			graphql.MarshalString(field.Alias).MarshalGQL(w)
-			w.Write([]byte{':'})
-			ec.marshalNEventCollaboratorChanged2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐEventCollaboratorChanged(ctx, field.Selections, res).MarshalGQL(w)
-			w.Write([]byte{'}'})
-		})
-	}
-}
-
-func (ec *executionContext) fieldContext_Subscription_subscriptionRegisterCollaboratorChanged(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Subscription_onTaskListSectionLocksChanged(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Subscription",
 		Field:      field,
@@ -13081,11 +13034,11 @@ func (ec *executionContext) fieldContext_Subscription_subscriptionRegisterCollab
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			switch field.Name {
 			case "changeType":
-				return ec.fieldContext_EventCollaboratorChanged_changeType(ctx, field)
-			case "collaborator":
-				return ec.fieldContext_EventCollaboratorChanged_collaborator(ctx, field)
+				return ec.fieldContext_TaskListSectionLockStatusChanged_changeType(ctx, field)
+			case "lockStatus":
+				return ec.fieldContext_TaskListSectionLockStatusChanged_lockStatus(ctx, field)
 			}
-			return nil, fmt.Errorf("no field named %q was found under type EventCollaboratorChanged", field.Name)
+			return nil, fmt.Errorf("no field named %q was found under type TaskListSectionLockStatusChanged", field.Name)
 		},
 	}
 	defer func() {
@@ -13095,9 +13048,191 @@ func (ec *executionContext) fieldContext_Subscription_subscriptionRegisterCollab
 		}
 	}()
 	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Subscription_subscriptionRegisterCollaboratorChanged_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+	if fc.Args, err = ec.field_Subscription_onTaskListSectionLocksChanged_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _TaskListSectionLockStatus_section(ctx context.Context, field graphql.CollectedField, obj *model.TaskListSectionLockStatus) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_TaskListSectionLockStatus_section(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Section, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalNString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_TaskListSectionLockStatus_section(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "TaskListSectionLockStatus",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _TaskListSectionLockStatus_lockedBy(ctx context.Context, field graphql.CollectedField, obj *model.TaskListSectionLockStatus) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_TaskListSectionLockStatus_lockedBy(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.LockedBy, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalNString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_TaskListSectionLockStatus_lockedBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "TaskListSectionLockStatus",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _TaskListSectionLockStatusChanged_changeType(ctx context.Context, field graphql.CollectedField, obj *model.TaskListSectionLockStatusChanged) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_TaskListSectionLockStatusChanged_changeType(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ChangeType, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(model.ChangeType)
+	fc.Result = res
+	return ec.marshalNChangeType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐChangeType(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_TaskListSectionLockStatusChanged_changeType(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "TaskListSectionLockStatusChanged",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type ChangeType does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _TaskListSectionLockStatusChanged_lockStatus(ctx context.Context, field graphql.CollectedField, obj *model.TaskListSectionLockStatusChanged) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_TaskListSectionLockStatusChanged_lockStatus(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.LockStatus, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.TaskListSectionLockStatus)
+	fc.Result = res
+	return ec.marshalNTaskListSectionLockStatus2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTaskListSectionLockStatus(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_TaskListSectionLockStatusChanged_lockStatus(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "TaskListSectionLockStatusChanged",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "section":
+				return ec.fieldContext_TaskListSectionLockStatus_section(ctx, field)
+			case "lockedBy":
+				return ec.fieldContext_TaskListSectionLockStatus_lockedBy(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type TaskListSectionLockStatus", field.Name)
+		},
 	}
 	return fc, nil
 }
@@ -15378,41 +15513,6 @@ func (ec *executionContext) _DiscussionReply(ctx context.Context, sel ast.Select
 	return out
 }
 
-var eventCollaboratorChangedImplementors = []string{"EventCollaboratorChanged"}
-
-func (ec *executionContext) _EventCollaboratorChanged(ctx context.Context, sel ast.SelectionSet, obj *model.EventCollaboratorChanged) graphql.Marshaler {
-	fields := graphql.CollectFields(ec.OperationContext, sel, eventCollaboratorChangedImplementors)
-	out := graphql.NewFieldSet(fields)
-	var invalids uint32
-	for i, field := range fields {
-		switch field.Name {
-		case "__typename":
-			out.Values[i] = graphql.MarshalString("EventCollaboratorChanged")
-		case "changeType":
-
-			out.Values[i] = ec._EventCollaboratorChanged_changeType(ctx, field, obj)
-
-			if out.Values[i] == graphql.Null {
-				invalids++
-			}
-		case "collaborator":
-
-			out.Values[i] = ec._EventCollaboratorChanged_collaborator(ctx, field, obj)
-
-			if out.Values[i] == graphql.Null {
-				invalids++
-			}
-		default:
-			panic("unknown field " + strconv.Quote(field.Name))
-		}
-	}
-	out.Dispatch()
-	if invalids > 0 {
-		return graphql.Null
-	}
-	return out
-}
-
 var generatePresignedUploadURLPayloadImplementors = []string{"GeneratePresignedUploadURLPayload"}
 
 func (ec *executionContext) _GeneratePresignedUploadURLPayload(ctx context.Context, sel ast.SelectionSet, obj *model.GeneratePresignedUploadURLPayload) graphql.Marshaler {
@@ -15731,15 +15831,6 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 		switch field.Name {
 		case "__typename":
 			out.Values[i] = graphql.MarshalString("Mutation")
-		case "subscriptionUnregisterCollaboratorChanged":
-
-			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_subscriptionUnregisterCollaboratorChanged(ctx, field)
-			})
-
-			if out.Values[i] == graphql.Null {
-				invalids++
-			}
 		case "createModelPlan":
 
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
@@ -15897,6 +15988,24 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._Mutation_deleteDiscussionReply(ctx, field)
+			})
+
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		case "lockTaskListSection":
+
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_lockTaskListSection(ctx, field)
+			})
+
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		case "unlockTaskListSection":
+
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_unlockTaskListSection(ctx, field)
 			})
 
 			if out.Values[i] == graphql.Null {
@@ -17037,6 +17146,29 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 			out.Concurrently(i, func() graphql.Marshaler {
 				return rrm(innerCtx)
 			})
+		case "taskListSectionLocks":
+			field := field
+
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Query_taskListSectionLocks(ctx, field)
+				if res == graphql.Null {
+					atomic.AddUint32(&invalids, 1)
+				}
+				return res
+			}
+
+			rrm := func(ctx context.Context) graphql.Marshaler {
+				return ec.OperationContext.RootResolverMiddleware(ctx, innerFunc)
+			}
+
+			out.Concurrently(i, func() graphql.Marshaler {
+				return rrm(innerCtx)
+			})
 		case "__type":
 
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
@@ -17073,15 +17205,81 @@ func (ec *executionContext) _Subscription(ctx context.Context, sel ast.Selection
 	}
 
 	switch fields[0].Name {
-	case "subscriptionFileScanCompleted":
-		return ec._Subscription_subscriptionFileScanCompleted(ctx, fields[0])
-	case "subscriptionTaskListSectionUpdated":
-		return ec._Subscription_subscriptionTaskListSectionUpdated(ctx, fields[0])
-	case "subscriptionRegisterCollaboratorChanged":
-		return ec._Subscription_subscriptionRegisterCollaboratorChanged(ctx, fields[0])
+	case "onTaskListSectionLocksChanged":
+		return ec._Subscription_onTaskListSectionLocksChanged(ctx, fields[0])
 	default:
 		panic("unknown field " + strconv.Quote(fields[0].Name))
 	}
+}
+
+var taskListSectionLockStatusImplementors = []string{"TaskListSectionLockStatus"}
+
+func (ec *executionContext) _TaskListSectionLockStatus(ctx context.Context, sel ast.SelectionSet, obj *model.TaskListSectionLockStatus) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, taskListSectionLockStatusImplementors)
+	out := graphql.NewFieldSet(fields)
+	var invalids uint32
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("TaskListSectionLockStatus")
+		case "section":
+
+			out.Values[i] = ec._TaskListSectionLockStatus_section(ctx, field, obj)
+
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		case "lockedBy":
+
+			out.Values[i] = ec._TaskListSectionLockStatus_lockedBy(ctx, field, obj)
+
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch()
+	if invalids > 0 {
+		return graphql.Null
+	}
+	return out
+}
+
+var taskListSectionLockStatusChangedImplementors = []string{"TaskListSectionLockStatusChanged"}
+
+func (ec *executionContext) _TaskListSectionLockStatusChanged(ctx context.Context, sel ast.SelectionSet, obj *model.TaskListSectionLockStatusChanged) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, taskListSectionLockStatusChangedImplementors)
+	out := graphql.NewFieldSet(fields)
+	var invalids uint32
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("TaskListSectionLockStatusChanged")
+		case "changeType":
+
+			out.Values[i] = ec._TaskListSectionLockStatusChanged_changeType(ctx, field, obj)
+
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		case "lockStatus":
+
+			out.Values[i] = ec._TaskListSectionLockStatusChanged_lockStatus(ctx, field, obj)
+
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch()
+	if invalids > 0 {
+		return graphql.Null
+	}
+	return out
 }
 
 var userInfoImplementors = []string{"UserInfo"}
@@ -17833,13 +18031,13 @@ func (ec *executionContext) marshalNCMSCenter2ᚕgithubᚗcomᚋcmsgovᚋmintᚑ
 	return ret
 }
 
-func (ec *executionContext) unmarshalNCollaboratorChangedAction2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCollaboratorChangedAction(ctx context.Context, v interface{}) (model.CollaboratorChangedAction, error) {
-	var res model.CollaboratorChangedAction
+func (ec *executionContext) unmarshalNChangeType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐChangeType(ctx context.Context, v interface{}) (model.ChangeType, error) {
+	var res model.ChangeType
 	err := res.UnmarshalGQL(v)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) marshalNCollaboratorChangedAction2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCollaboratorChangedAction(ctx context.Context, sel ast.SelectionSet, v model.CollaboratorChangedAction) graphql.Marshaler {
+func (ec *executionContext) marshalNChangeType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐChangeType(ctx context.Context, sel ast.SelectionSet, v model.ChangeType) graphql.Marshaler {
 	return v
 }
 
@@ -17954,20 +18152,6 @@ func (ec *executionContext) marshalNDocumentType2githubᚗcomᚋcmsgovᚋmintᚑ
 		}
 	}
 	return res
-}
-
-func (ec *executionContext) marshalNEventCollaboratorChanged2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐEventCollaboratorChanged(ctx context.Context, sel ast.SelectionSet, v model.EventCollaboratorChanged) graphql.Marshaler {
-	return ec._EventCollaboratorChanged(ctx, sel, &v)
-}
-
-func (ec *executionContext) marshalNEventCollaboratorChanged2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐEventCollaboratorChanged(ctx context.Context, sel ast.SelectionSet, v *model.EventCollaboratorChanged) graphql.Marshaler {
-	if v == nil {
-		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
-			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
-		}
-		return graphql.Null
-	}
-	return ec._EventCollaboratorChanged(ctx, sel, v)
 }
 
 func (ec *executionContext) unmarshalNGeneratePresignedUploadURLInput2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐGeneratePresignedUploadURLInput(ctx context.Context, v interface{}) (model.GeneratePresignedUploadURLInput, error) {
@@ -18626,6 +18810,74 @@ func (ec *executionContext) marshalNString2ᚕstringᚄ(ctx context.Context, sel
 	}
 
 	return ret
+}
+
+func (ec *executionContext) marshalNTaskListSectionLockStatus2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTaskListSectionLockStatusᚄ(ctx context.Context, sel ast.SelectionSet, v []*model.TaskListSectionLockStatus) graphql.Marshaler {
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalNTaskListSectionLockStatus2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTaskListSectionLockStatus(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
+}
+
+func (ec *executionContext) marshalNTaskListSectionLockStatus2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTaskListSectionLockStatus(ctx context.Context, sel ast.SelectionSet, v *model.TaskListSectionLockStatus) graphql.Marshaler {
+	if v == nil {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
+		return graphql.Null
+	}
+	return ec._TaskListSectionLockStatus(ctx, sel, v)
+}
+
+func (ec *executionContext) marshalNTaskListSectionLockStatusChanged2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTaskListSectionLockStatusChanged(ctx context.Context, sel ast.SelectionSet, v model.TaskListSectionLockStatusChanged) graphql.Marshaler {
+	return ec._TaskListSectionLockStatusChanged(ctx, sel, &v)
+}
+
+func (ec *executionContext) marshalNTaskListSectionLockStatusChanged2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTaskListSectionLockStatusChanged(ctx context.Context, sel ast.SelectionSet, v *model.TaskListSectionLockStatusChanged) graphql.Marshaler {
+	if v == nil {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
+		return graphql.Null
+	}
+	return ec._TaskListSectionLockStatusChanged(ctx, sel, v)
 }
 
 func (ec *executionContext) unmarshalNTaskStatus2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTaskStatus(ctx context.Context, v interface{}) (models.TaskStatus, error) {

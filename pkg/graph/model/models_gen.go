@@ -23,12 +23,6 @@ type DiscussionReplyCreateInput struct {
 	Resolution   bool      `json:"resolution"`
 }
 
-// EventCollaboratorChanged represents a change in the subscription
-type EventCollaboratorChanged struct {
-	ChangeType   CollaboratorChangedAction `json:"changeType"`
-	Collaborator *models.PlanCollaborator  `json:"collaborator"`
-}
-
 // Input associated with a document to be uploaded
 type GeneratePresignedUploadURLInput struct {
 	FileName string `json:"fileName"`
@@ -83,6 +77,16 @@ type PlanDocumentParameters struct {
 type PlanDocumentPayload struct {
 	Document     *models.PlanDocument `json:"document"`
 	PresignedURL *string              `json:"presignedURL"`
+}
+
+type TaskListSectionLockStatus struct {
+	Section  string `json:"section"`
+	LockedBy string `json:"lockedBy"`
+}
+
+type TaskListSectionLockStatusChanged struct {
+	ChangeType ChangeType                 `json:"changeType"`
+	LockStatus *TaskListSectionLockStatus `json:"lockStatus"`
 }
 
 type AgreementType string
@@ -263,46 +267,46 @@ func (e CMMIGroup) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
-type CollaboratorChangedAction string
+type ChangeType string
 
 const (
-	CollaboratorChangedActionAdded   CollaboratorChangedAction = "ADDED"
-	CollaboratorChangedActionUpdated CollaboratorChangedAction = "UPDATED"
-	CollaboratorChangedActionRemoved CollaboratorChangedAction = "REMOVED"
+	ChangeTypeAdded   ChangeType = "ADDED"
+	ChangeTypeUpdated ChangeType = "UPDATED"
+	ChangeTypeRemoved ChangeType = "REMOVED"
 )
 
-var AllCollaboratorChangedAction = []CollaboratorChangedAction{
-	CollaboratorChangedActionAdded,
-	CollaboratorChangedActionUpdated,
-	CollaboratorChangedActionRemoved,
+var AllChangeType = []ChangeType{
+	ChangeTypeAdded,
+	ChangeTypeUpdated,
+	ChangeTypeRemoved,
 }
 
-func (e CollaboratorChangedAction) IsValid() bool {
+func (e ChangeType) IsValid() bool {
 	switch e {
-	case CollaboratorChangedActionAdded, CollaboratorChangedActionUpdated, CollaboratorChangedActionRemoved:
+	case ChangeTypeAdded, ChangeTypeUpdated, ChangeTypeRemoved:
 		return true
 	}
 	return false
 }
 
-func (e CollaboratorChangedAction) String() string {
+func (e ChangeType) String() string {
 	return string(e)
 }
 
-func (e *CollaboratorChangedAction) UnmarshalGQL(v interface{}) error {
+func (e *ChangeType) UnmarshalGQL(v interface{}) error {
 	str, ok := v.(string)
 	if !ok {
 		return fmt.Errorf("enums must be strings")
 	}
 
-	*e = CollaboratorChangedAction(str)
+	*e = ChangeType(str)
 	if !e.IsValid() {
-		return fmt.Errorf("%s is not a valid CollaboratorChangedAction", str)
+		return fmt.Errorf("%s is not a valid ChangeType", str)
 	}
 	return nil
 }
 
-func (e CollaboratorChangedAction) MarshalGQL(w io.Writer) {
+func (e ChangeType) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 

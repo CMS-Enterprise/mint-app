@@ -6,6 +6,8 @@ import (
 	"net/url"
 	"testing"
 
+	"github.com/cmsgov/mint-app/pkg/shared/pubsub"
+
 	"github.com/99designs/gqlgen/client"
 	"github.com/99designs/gqlgen/graphql"
 	"github.com/99designs/gqlgen/graphql/handler"
@@ -148,7 +150,8 @@ func TestGraphQLTestSuite(t *testing.T) {
 	var resolverService ResolverService
 	resolverService.FetchUserInfo = cedarLdapClient.FetchUserInfo
 
-	resolver := NewResolver(store, resolverService, &s3Client, &emailClient, ldClient)
+	ps := pubsub.NewPubSub()
+	resolver := NewResolver(store, resolverService, &s3Client, &emailClient, ldClient, ps)
 	schema := generated.NewExecutableSchema(generated.Config{Resolvers: resolver, Directives: directives})
 	graphQLClient := client.New(handler.NewDefaultServer(schema))
 

@@ -5,7 +5,6 @@ package graph
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/google/uuid"
 
@@ -82,17 +81,6 @@ func (r *modelPlanResolver) Discussions(ctx context.Context, obj *models.ModelPl
 	return resolvers.PlanDiscussionCollectionByModelPlanID(logger, obj.ID, r.store)
 }
 
-func (r *mutationResolver) SubscriptionUnregisterCollaboratorChanged(ctx context.Context, modelPlanID uuid.UUID) (bool, error) {
-	principal := appcontext.Principal(ctx).ID()
-
-	err := resolvers.SubscriptionUnregisterCollaboratorChanged(modelPlanID, principal)
-	if err != nil {
-		return false, err
-	}
-
-	return true, nil
-}
-
 func (r *mutationResolver) CreateModelPlan(ctx context.Context, modelName string) (*models.ModelPlan, error) {
 	logger := appcontext.ZLogger(ctx)
 	principal := appcontext.Principal(ctx).ID()
@@ -119,21 +107,21 @@ func (r *mutationResolver) CreatePlanCollaborator(ctx context.Context, input mod
 	principal := appcontext.Principal(ctx).ID()
 	logger := appcontext.ZLogger(ctx)
 
-	return resolvers.CreatePlanCollaborator(logger, &input, principal, r.store)
+	return resolvers.CreatePlanCollaborator(logger, &input, principal, r.store, r.pubsub)
 }
 
 func (r *mutationResolver) UpdatePlanCollaborator(ctx context.Context, id uuid.UUID, newRole models.TeamRole) (*models.PlanCollaborator, error) {
 	principal := appcontext.Principal(ctx).ID()
 	logger := appcontext.ZLogger(ctx)
 
-	return resolvers.UpdatePlanCollaborator(logger, id, newRole, principal, r.store)
+	return resolvers.UpdatePlanCollaborator(logger, id, newRole, principal, r.store, r.pubsub)
 }
 
 func (r *mutationResolver) DeletePlanCollaborator(ctx context.Context, id uuid.UUID) (*models.PlanCollaborator, error) {
 	principal := appcontext.Principal(ctx).ID()
 	logger := appcontext.ZLogger(ctx)
 
-	return resolvers.DeletePlanCollaborator(logger, id, principal, r.store)
+	return resolvers.DeletePlanCollaborator(logger, id, principal, r.store, r.pubsub)
 }
 
 func (r *mutationResolver) UpdatePlanBasics(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanBasics, error) {
@@ -234,6 +222,22 @@ func (r *mutationResolver) DeleteDiscussionReply(ctx context.Context, id uuid.UU
 	logger := appcontext.ZLogger(ctx)
 
 	return resolvers.DeleteDiscussionReply(logger, id, principal, r.store)
+}
+
+func (r *mutationResolver) LockTaskListSection(ctx context.Context, modelPlanID uuid.UUID, section string) (bool, error) {
+	principal := appcontext.Principal(ctx).ID()
+
+	resolvers.LockTaskListSection(r.pubsub, modelPlanID, section, principal)
+
+	return true, nil
+}
+
+func (r *mutationResolver) UnlockTaskListSection(ctx context.Context, modelPlanID uuid.UUID, section string) (bool, error) {
+	principal := appcontext.Principal(ctx).ID()
+
+	resolvers.UnlockTaskListSection(r.pubsub, modelPlanID, section, principal)
+
+	return true, nil
 }
 
 func (r *planDiscussionResolver) Replies(ctx context.Context, obj *models.PlanDiscussion) ([]*models.DiscussionReply, error) {
@@ -399,18 +403,14 @@ func (r *queryResolver) PlanCollaboratorByID(ctx context.Context, id uuid.UUID) 
 	return resolvers.FetchCollaboratorByID(logger, id, r.store)
 }
 
-func (r *subscriptionResolver) SubscriptionFileScanCompleted(ctx context.Context) (<-chan bool, error) {
-	panic(fmt.Errorf("not implemented"))
+func (r *queryResolver) TaskListSectionLocks(ctx context.Context, modelPlanID uuid.UUID) ([]*model.TaskListSectionLockStatus, error) {
+	return resolvers.GetTaskListSectionLocks(modelPlanID), nil
 }
 
-func (r *subscriptionResolver) SubscriptionTaskListSectionUpdated(ctx context.Context) (<-chan bool, error) {
-	panic(fmt.Errorf("not implemented"))
-}
-
-func (r *subscriptionResolver) SubscriptionRegisterCollaboratorChanged(ctx context.Context, modelPlanID uuid.UUID) (<-chan *model.EventCollaboratorChanged, error) {
+func (r *subscriptionResolver) OnTaskListSectionLocksChanged(ctx context.Context, modelPlanID uuid.UUID) (<-chan *model.TaskListSectionLockStatusChanged, error) {
 	principal := appcontext.Principal(ctx).ID()
 
-	return resolvers.SubscriptionRegisterCollaboratorChanged(ctx.Done(), principal, modelPlanID)
+	return resolvers.SubscribeTaskListSectionLockChanges(r.pubsub, modelPlanID, principal, ctx.Done())
 }
 
 func (r *userInfoResolver) Email(ctx context.Context, obj *models.UserInfo) (string, error) {

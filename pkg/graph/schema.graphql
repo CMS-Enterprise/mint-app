@@ -78,12 +78,14 @@ type PlanCollaborator {
   modifiedDts: Time
 }
 
-"""
-EventCollaboratorChanged represents a change in the subscription
-"""
-type EventCollaboratorChanged {
-  changeType: CollaboratorChangedAction!
-  collaborator: PlanCollaborator!
+type TaskListSectionLockStatusChanged {
+  changeType: ChangeType!
+  lockStatus: TaskListSectionLockStatus!
+}
+
+type TaskListSectionLockStatus {
+  section: String!
+  lockedBy: String!
 }
 
 """
@@ -483,15 +485,13 @@ type Query {
   modelPlanCollection: [ModelPlan!]!
   cedarPersonsByCommonName(commonName: String!): [UserInfo!]!
   planCollaboratorByID(id: UUID!): PlanCollaborator!
+  taskListSectionLocks(modelPlanID: UUID!): [TaskListSectionLockStatus!]!
 }
 
 """
 Mutations definition for the schema
 """
 type Mutation {
-subscriptionUnregisterCollaboratorChanged(modelPlanID: UUID!): Boolean!
-@hasRole(role: MINT_BASE_USER)
-
 createModelPlan(modelName: String!): ModelPlan!
 @hasRole(role: MINT_BASE_USER)
 
@@ -545,17 +545,23 @@ updateDiscussionReply(id: UUID!, changes: DiscussionReplyChanges!): DiscussionRe
 
 deleteDiscussionReply(id: UUID!): DiscussionReply!
 @hasRole(role: MINT_BASE_USER)
+
+lockTaskListSection(modelPlanID: UUID!, section: String!): Boolean!
+@hasRole(role: MINT_BASE_USER)
+
+unlockTaskListSection(modelPlanID: UUID!, section: String!): Boolean!
+@hasRole(role: MINT_BASE_USER)
 }
 
 type Subscription {
-  subscriptionFileScanCompleted: Boolean!
+  onTaskListSectionLocksChanged(modelPlanID: UUID!): TaskListSectionLockStatusChanged!
   @hasRole(role: MINT_BASE_USER)
+}
 
-  subscriptionTaskListSectionUpdated: Boolean!
-  @hasRole(role: MINT_BASE_USER)
-
-  subscriptionRegisterCollaboratorChanged(modelPlanID: UUID!): EventCollaboratorChanged!
-  @hasRole(role: MINT_BASE_USER)
+enum ChangeType {
+  ADDED
+  UPDATED
+  REMOVED
 }
 
 enum TaskStatus {
@@ -577,12 +583,6 @@ enum ModelType
   VOLUNTARY
   MANDATORY
   TBD
-}
-
-enum CollaboratorChangedAction {
-  ADDED,
-  UPDATED,
-  REMOVED
 }
 
 enum ModelCategory {

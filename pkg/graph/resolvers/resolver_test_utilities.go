@@ -3,6 +3,7 @@ package resolvers
 import (
 	"github.com/cmsgov/mint-app/pkg/appconfig"
 	"github.com/cmsgov/mint-app/pkg/models"
+	"github.com/cmsgov/mint-app/pkg/shared/pubsub"
 
 	"go.uber.org/zap"
 	ld "gopkg.in/launchdarkly/go-server-sdk.v5"
@@ -18,6 +19,7 @@ type TestConfigs struct {
 	Logger   *zap.Logger
 	UserInfo *models.UserInfo
 	Store    *storage.Store
+	PubSub   *pubsub.PubSub
 }
 
 // GetDefaultTestConfigs returns a TestConfigs struct with all of the dependencies needed to run a test
@@ -29,13 +31,14 @@ func GetDefaultTestConfigs() *TestConfigs {
 
 // GetDefaults sets the dependencies for the TestConfigs struct
 func (tc *TestConfigs) GetDefaults() {
-	config, ldClient, logger, userInfo := getTestDependencies()
+	config, ldClient, logger, userInfo, pubsub := getTestDependencies()
 	store, _ := storage.NewStore(logger, config, ldClient)
 	tc.DBConfig = config
 	tc.LDClient = ldClient
 	tc.Logger = logger
 	tc.UserInfo = userInfo
 	tc.Store = store
+	tc.PubSub = pubsub
 }
 
 // NewDBConfig returns a DBConfig struct with values from appconfig
@@ -53,7 +56,7 @@ func NewDBConfig() storage.DBConfig {
 	}
 }
 
-func getTestDependencies() (storage.DBConfig, *ld.LDClient, *zap.Logger, *models.UserInfo) {
+func getTestDependencies() (storage.DBConfig, *ld.LDClient, *zap.Logger, *models.UserInfo, *pubsub.PubSub) {
 	config := NewDBConfig()
 	ldClient, _ := ld.MakeCustomClient("fake", ld.Config{Offline: true}, 0)
 	logger := zap.NewNop()
@@ -62,7 +65,8 @@ func getTestDependencies() (storage.DBConfig, *ld.LDClient, *zap.Logger, *models
 		Email:      "testuser@test.com",
 		EuaUserID:  "TEST",
 	}
+	pubsub := pubsub.NewPubSub()
 
-	return config, ldClient, logger, userInfo
+	return config, ldClient, logger, userInfo, pubsub
 
 }
