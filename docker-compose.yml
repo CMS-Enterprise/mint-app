@@ -32,7 +32,7 @@ services:
       - CLIENT_HOSTNAME=localhost:3005
       - CLIENT_ADDRESS=http://localhost:3005
       - API_PORT=8080
-      - OKTA_CLIENT_ID=0oa2e913coDQeG19S297
+      - OKTA_CLIENT_ID=0oad9awvebnsMwWNa297
       - OKTA_ISSUER=https://test.idp.idm.cms.gov/oauth2/ausd980kt2CBBzStG297
       - GRT_EMAIL=success@simulator.amazonses.com
       - ACCESSIBILITY_TEAM_EMAIL=success@simluator.amazonses.com

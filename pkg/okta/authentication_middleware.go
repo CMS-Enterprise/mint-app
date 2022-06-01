@@ -118,7 +118,7 @@ func (f oktaMiddlewareFactory) newAuthenticationMiddleware(next http.Handler) ht
 func NewJwtVerifier(clientID string, issuer string) *jwtverifier.JwtVerifier {
 	toValidate := map[string]string{}
 	toValidate["cid"] = clientID
-	toValidate["aud"] = "MINT"
+	toValidate["aud"] = "mint"
 
 	jwtVerifierSetup := jwtverifier.JwtVerifier{
 		Issuer:           issuer,
