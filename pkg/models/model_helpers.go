@@ -10,6 +10,11 @@ func BoolPointer(value bool) *bool {
 	return &value
 }
 
+// IntPointer returns a pointer to a bool input
+func IntPointer(val int) *int {
+	return &val
+}
+
 // ValueOrEmpty returns a string if the input is not nil, otherwise returns an empty string
 func ValueOrEmpty(st *string) string {
 	if st != nil {

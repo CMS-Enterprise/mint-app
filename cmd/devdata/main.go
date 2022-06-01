@@ -80,6 +80,13 @@ func main() {
 		c.FullName = "Betty Alpha"
 		c.TeamRole = models.TeamRoleLeadership
 	})
+	makePlanBeneficiaries(uuid.MustParse("f11eb129-2c80-4080-9440-439cbe1a286f"), logger, store, func(b *models.PlanBeneficiaries) {
+		processPlanBeneficiaries(b)
+		b.ID = uuid.MustParse("4ba095f6-c209-4b37-9008-c2476d628504")
+		b.NumberPeopleImpacted = models.IntPointer(25)
+		b.PrecedenceRules = nil
+		b.BeneficiaryOverlap = nil
+	})
 
 	makePlanBasics(uuid.MustParse("f11eb129-2c80-4080-9440-439cbe1a286f"), logger, store, func(b *models.PlanBasics) {
 		b.ModelType = &mandatory
@@ -203,6 +210,8 @@ func main() {
 	})
 
 	makePlanGeneralCharacteristics(pmGreatPlan.ID, logger, store, processPlanGeneralCharacteristics)
+
+	makePlanBeneficiaries(pmGreatPlan.ID, logger, store, processPlanBeneficiaries)
 
 	/*
 		s3Config := upload.Config{Bucket: "mint-test-bucket", Region: "us-west", IsLocal: true}
@@ -371,24 +380,33 @@ func makePlanGeneralCharacteristics(modelPlanID uuid.UUID, logger *zap.Logger, s
 	return dbGeneralCharacteristics
 
 }
+func makePlanBeneficiaries(modelPlanID uuid.UUID, logger *zap.Logger, store *storage.Store, callbacks ...func(*models.PlanBeneficiaries)) *models.PlanBeneficiaries {
+	b := models.PlanBeneficiaries{
+		ModelPlanID: modelPlanID,
+		CreatedBy:   "ABCD",
+		ModifiedBy:  models.StringPointer("ABCD"),
+		Status:      models.TaskReady,
+	}
+
+	for _, cb := range callbacks {
+		cb(&b)
+	}
+
+	err := b.CalcStatus()
+	if err != nil {
+		panic(err)
+	}
+
+	dbBeneficiaries, _ := store.PlanBeneficiariesCreate(logger, &b)
+	return dbBeneficiaries
+
+}
 
 func makePlanMilestones(uuid uuid.UUID, logger *zap.Logger, store *storage.Store, callbacks ...func(*models.PlanMilestones)) *models.PlanMilestones {
 
 	milestones := models.PlanMilestones{
 		ModelPlanID: uuid,
-		// CompleteICIP: ,
 
-		// ClearanceStarts: ,
-		// ClearanceEnds: ,
-		// Announced: ,
-		// ApplicationsStart: ,
-		// ApplicationsEnd: ,
-		// PerformancePeriodStarts: ,
-		// PerformancePeriodEnds: ,
-		// WrapUpEnds: ,
-		// HighLevelNote: ,
-		// PhasedIn: ,
-		// PhasedInNote: ,
 		CreatedBy: "ABCD",
 		Status:    models.TaskReady,
 	}
@@ -458,4 +476,37 @@ func processPlanGeneralCharacteristics(g *models.PlanGeneralCharacteristics) {
 	g.WaiversRequired = models.BoolPointer(true)
 	g.WaiversRequiredTypes = []string{model.WaiverTypeFraudAbuse.String()}
 	g.WaiversRequiredNote = models.StringPointer("The vertigo is gonna grow 'cause it's so dangerous, you'll have to sign a waiver")
+}
+
+func processPlanBeneficiaries(b *models.PlanBeneficiaries) {
+
+	b.ID = uuid.MustParse("b7aa2c9f-9e38-4e95-92d9-60bd791e8c59")
+	// b.ModelPlanID = "Hello"
+	var yes = models.TriYes
+	var conf = models.ConfidenceSlightly
+	var freq = models.SelectionAnnually
+	var overlap = models.OverlapYesNeedPolicies
+
+	b.Beneficiaries = pq.StringArray{"MEDICARE_FFS", "DISEASE_SPECIFIC", "OTHER"}
+	b.BeneficiariesOther = models.StringPointer("The Gumdrop Kids")
+	b.BeneficiariesNote = models.StringPointer("The disease is kidney failure")
+	b.TreatDualElligibleDifferent = &yes
+	b.TreatDualElligibleDifferentHow = models.StringPointer("Priority given to kidney failure")
+	b.TreatDualElligibleDifferentNote = models.StringPointer("Can be overridden by vice-presidential order")
+	b.ExcludeCertainCharacteristics = &yes
+	b.ExcludeCertainCharacteristicsCriteria = models.StringPointer("Exclude any individuals who qualify for 5 other models")
+	b.ExcludeCertainCharacteristicsNote = models.StringPointer("Exceptions can be made by presidential order")
+	b.NumberPeopleImpacted = models.IntPointer(25)
+	b.EstimateConfidence = &conf
+	b.ConfidenceNote = models.StringPointer("This is probably correct")
+	b.BeneficiarySelectionMethod = pq.StringArray{"PROVIDER_SIGN_UP", "OTHER"}
+	b.BeneficiarySelectionOther = models.StringPointer("Competitive wrestling, elimination style")
+	b.BeneficiarySelectionNote = models.StringPointer("Priority given to provider sign up")
+	b.BeneficiarySelectionFrequency = &freq
+	b.BeneficiarySelectionFrequencyOther = models.StringPointer("On February 29th when it occurs")
+	b.BeneficiarySelectionFrequencyNote = models.StringPointer("Also as needed")
+	b.BeneficiaryOverlap = &overlap
+	b.BeneficiaryOverlapNote = models.StringPointer("This will likely overlap")
+	b.PrecedenceRules = models.StringPointer("This takes precendence over all other models")
+
 }
