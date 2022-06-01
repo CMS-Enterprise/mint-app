@@ -87,8 +87,6 @@ func main() {
 		b.Problem = models.StringPointer("There is not enough candy")
 		b.TestInventions = models.StringPointer("The great candy machine")
 		b.Note = models.StringPointer("The machine doesn't work yet")
-		b.Status = inProgress
-
 	})
 
 	makePlanMilestones(uuid.MustParse("f11eb129-2c80-4080-9440-439cbe1a286f"), logger, store, func(m *models.PlanMilestones) {
