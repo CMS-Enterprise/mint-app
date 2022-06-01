@@ -13,18 +13,18 @@ type PlanGeneralCharacteristics struct {
 	ModelPlanID uuid.UUID `json:"modelPlanID" db:"model_plan_id"`
 
 	// Page 1
-	IsNewModel                  *bool          `json:"isNewModel" db:"is_new_model"`
+	IsNewModel                  *bool          `json:"isNewModel" db:"is_new_model" statusWeight:"1"`
 	ExistingModel               *string        `json:"existingModel" db:"existing_model"`
-	ResemblesExistingModel      *bool          `json:"resemblesExistingModel" db:"resembles_existing_model"`
+	ResemblesExistingModel      *bool          `json:"resemblesExistingModel" db:"resembles_existing_model" statusWeight:"1"`
 	ResemblesExistingModelWhich pq.StringArray `json:"resemblesExistingModelWhich" db:"resembles_existing_model_which"`
 	ResemblesExistingModelHow   *string        `json:"resemblesExistingModelHow" db:"resembles_existing_model_how"`
 	ResemblesExistingModelNote  *string        `json:"resemblesExistingModelNote" db:"resembles_existing_model_note"`
-	HasComponentsOrTracks       *bool          `json:"hasComponentsOrTracks" db:"has_components_or_tracks"`
+	HasComponentsOrTracks       *bool          `json:"hasComponentsOrTracks" db:"has_components_or_tracks" statusWeight:"1"`
 	HasComponentsOrTracksDiffer *string        `json:"hasComponentsOrTracksDiffer" db:"has_components_or_tracks_differ"`
 	HasComponentsOrTracksNote   *string        `json:"hasComponentsOrTracksNote" db:"has_components_or_tracks_note"`
 
 	// Page 2
-	AlternativePaymentModel      *bool          `json:"alternativePaymentModel" db:"alternative_payment_model"`
+	AlternativePaymentModel      *bool          `json:"alternativePaymentModel" db:"alternative_payment_model" statusWeight:"1"`
 	AlternativePaymentModelTypes pq.StringArray `json:"alternativePaymentModelTypes" db:"alternative_payment_model_types"`
 	AlternativePaymentModelNote  *string        `json:"alternativePaymentModelNote" db:"alternative_payment_model_note"`
 	KeyCharacteristics           pq.StringArray `json:"keyCharacteristics" db:"key_characteristics"`
@@ -37,24 +37,24 @@ type PlanGeneralCharacteristics struct {
 	PlanContactUpdatedNote       *string        `json:"planContactUpdatedNote" db:"plan_contact_updated_note"`
 
 	// Page 3
-	CareCoordinationInvolved              *bool   `json:"careCoordinationInvolved" db:"care_coordination_involved"`
+	CareCoordinationInvolved              *bool   `json:"careCoordinationInvolved" db:"care_coordination_involved" statusWeight:"1"`
 	CareCoordinationInvolvedDescription   *string `json:"careCoordinationInvolvedDescription" db:"care_coordination_involved_description"`
 	CareCoordinationInvolvedNote          *string `json:"careCoordinationInvolvedNote" db:"care_coordination_involved_note"`
-	AdditionalServicesInvolved            *bool   `json:"additionalServicesInvolved" db:"additional_services_involved"`
+	AdditionalServicesInvolved            *bool   `json:"additionalServicesInvolved" db:"additional_services_involved" statusWeight:"1"`
 	AdditionalServicesInvolvedDescription *string `json:"additionalServicesInvolvedDescription" db:"additional_services_involved_description"`
 	AdditionalServicesInvolvedNote        *string `json:"additionalServicesInvolvedNote" db:"additional_services_involved_note"`
-	CommunityPartnersInvolved             *bool   `json:"communityPartnersInvolved" db:"community_partners_involved"`
+	CommunityPartnersInvolved             *bool   `json:"communityPartnersInvolved" db:"community_partners_involved" statusWeight:"1"`
 	CommunityPartnersInvolvedDescription  *string `json:"communityPartnersInvolvedDescription" db:"community_partners_involved_description"`
 	CommunityPartnersInvolvedNote         *string `json:"communityPartnersInvolvedNote" db:"community_partners_involved_note"`
 
 	// Page 4
-	GeographiesTargeted                       *bool          `json:"geographiesTargeted" db:"geographies_targeted"`
+	GeographiesTargeted                       *bool          `json:"geographiesTargeted" db:"geographies_targeted" statusWeight:"1"`
 	GeographiesTargetedTypes                  pq.StringArray `json:"geographiesTargetedTypes" db:"geographies_targeted_types"`
 	GeographiesTargetedTypesOther             *string        `json:"geographiesTargetedTypesOther" db:"geographies_targeted_types_other"`
 	GeographiesTargetedAppliedTo              pq.StringArray `json:"geographiesTargetedAppliedTo" db:"geographies_targeted_applied_to"`
 	GeographiesTargetedAppliedToOther         *string        `json:"geographiesTargetedAppliedToOther" db:"geographies_targeted_applied_to_other"`
 	GeographiesTargetedNote                   *string        `json:"geographiesTargetedNote" db:"geographies_targeted_note"`
-	ParticipationOptions                      *bool          `json:"participationOptions" db:"participation_options"`
+	ParticipationOptions                      *bool          `json:"participationOptions" db:"participation_options" statusWeight:"1"`
 	ParticipationOptionsNote                  *string        `json:"participationOptionsNote" db:"participation_options_note"`
 	AgreementTypes                            pq.StringArray `json:"agreementTypes" db:"agreement_types"`
 	AgreementTypesOther                       *string        `json:"agreementTypesOther" db:"agreement_types_other"`
@@ -62,13 +62,13 @@ type PlanGeneralCharacteristics struct {
 	MultiplePatricipationAgreementsNeededNote *string        `json:"multiplePatricipationAgreementsNeededNote" db:"multiple_patricipation_agreements_needed_note"`
 
 	// Page 5
-	RulemakingRequired            *bool          `json:"rulemakingRequired" db:"rulemaking_required"`
+	RulemakingRequired            *bool          `json:"rulemakingRequired" db:"rulemaking_required" statusWeight:"1"`
 	RulemakingRequiredDescription *string        `json:"rulemakingRequiredDescription" db:"rulemaking_required_description"`
 	RulemakingRequiredNote        *string        `json:"rulemakingRequiredNote" db:"rulemaking_required_note"`
 	AuthorityAllowances           pq.StringArray `json:"authorityAllowances" db:"authority_allowances"`
 	AuthorityAllowancesOther      *string        `json:"authorityAllowancesOther" db:"authority_allowances_other"`
 	AuthorityAllowancesNote       *string        `json:"authorityAllowancesNote" db:"authority_allowances_note"`
-	WaiversRequired               *bool          `json:"waiversRequired" db:"waivers_required"`
+	WaiversRequired               *bool          `json:"waiversRequired" db:"waivers_required" statusWeight:"1"`
 	WaiversRequiredTypes          pq.StringArray `json:"waiversRequiredTypes" db:"waivers_required_types"`
 	WaiversRequiredNote           *string        `json:"waiversRequiredNote" db:"waivers_required_note"`
 
@@ -80,41 +80,15 @@ type PlanGeneralCharacteristics struct {
 	Status      TaskStatus `json:"status" db:"status"`
 }
 
-// CalcStatus returns a TaskStatus based on how many fields have been entered in the PlanGeneralCharacteristics struct
-func (gc *PlanGeneralCharacteristics) CalcStatus() {
+// CalcStatus calculates the status of the Plan General Characteristics and sets the Status field
+func (gc *PlanGeneralCharacteristics) CalcStatus() error {
+	status, err := GenericallyCalculateStatus(*gc)
+	if err != nil {
+		return err
+	}
 
-	// TODO Implement in https://jiraent.cms.gov/browse/EASI-2048
-	gc.Status = TaskReady
-
-	//TODO look into making a generic function that takes in any parent class object and calcs status
-	// fieldCount := 5
-	// filledField := 0
-	// decidedStat := TaskReady
-
-	// if gc.ModelType != nil {
-	// 	filledField++
-	// }
-
-	// if gc.Problem != nil {
-	// 	filledField++
-	// }
-	// if gc.Goal != nil {
-	// 	filledField++
-	// }
-	// if gc.TestInventions != nil {
-	// 	filledField++
-	// }
-	// if gc.Note != nil {
-	// 	filledField++
-	// }
-
-	// if filledField == fieldCount {
-	// 	decidedStat = TaskComplete
-
-	// } else if filledField > 0 {
-	// 	decidedStat = TaskInProgress
-	// }
-	// gc.Status = decidedStat
+	gc.Status = status
+	return nil
 }
 
 // GetModelTypeName returns a string name that represents the PlanBasics struct

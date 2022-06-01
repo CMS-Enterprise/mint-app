@@ -95,6 +95,7 @@ func (suite *ResolverSuite) TestUpdatePlanGeneralCharacteristics() {
 	suite.True(*updatedGeneralCharacteristics.AlternativePaymentModel)
 	suite.EqualValues([]string{model.AlternativePaymentModelTypeMips.String(), model.AlternativePaymentModelTypeAdvanced.String()}, updatedGeneralCharacteristics.AlternativePaymentModelTypes)
 	suite.EqualValues("Has 2 APM types!", *updatedGeneralCharacteristics.AlternativePaymentModelNote)
+	suite.EqualValues(models.TaskInProgress, updatedGeneralCharacteristics.Status)
 
 	// Assert that no other fields got updated
 	suite.Nil(updatedGeneralCharacteristics.IsNewModel)

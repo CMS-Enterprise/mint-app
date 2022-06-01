@@ -11,11 +11,11 @@ type PlanBasics struct {
 	ID          uuid.UUID `json:"id" db:"id"`
 	ModelPlanID uuid.UUID `json:"modelPlanID" db:"model_plan_id"`
 
-	ModelType *ModelType `json:"modelType" db:"model_type"`
+	ModelType *ModelType `json:"modelType" db:"model_type" statusWeight:"1"`
 
-	Problem        *string `json:"problem" db:"problem"`
-	Goal           *string `json:"goal" db:"goal"`
-	TestInventions *string `json:"testInventions" db:"test_inventions"`
+	Problem        *string `json:"problem" db:"problem" statusWeight:"1"`
+	Goal           *string `json:"goal" db:"goal" statusWeight:"1"`
+	TestInventions *string `json:"testInventions" db:"test_inventions" statusWeight:"1"`
 	Note           *string `json:"note" db:"note"`
 
 	CreatedBy   string     `json:"createdBy" db:"created_by"`
@@ -25,38 +25,15 @@ type PlanBasics struct {
 	Status      TaskStatus `json:"status" db:"status"`
 }
 
-// CalcStatus returns a TaskStatus based on how many fields have been entered in the PlanBasics struct
-func (p *PlanBasics) CalcStatus() {
-
-	//TODO look into making a generic function that takes in any parent class object and calcs status
-	fieldCount := 5
-	filledField := 0
-	decidedStat := TaskReady
-
-	if p.ModelType != nil {
-		filledField++
+// CalcStatus calculates the status of the Plan Basics and sets the Status field
+func (p *PlanBasics) CalcStatus() error {
+	status, err := GenericallyCalculateStatus(*p)
+	if err != nil {
+		return err
 	}
 
-	if p.Problem != nil {
-		filledField++
-	}
-	if p.Goal != nil {
-		filledField++
-	}
-	if p.TestInventions != nil {
-		filledField++
-	}
-	if p.Note != nil {
-		filledField++
-	}
-
-	if filledField == fieldCount {
-		decidedStat = TaskComplete
-
-	} else if filledField > 0 {
-		decidedStat = TaskInProgress
-	}
-	p.Status = decidedStat
+	p.Status = status
+	return nil
 }
 
 // GetModelTypeName returns a string name that represents the PlanBasics struct

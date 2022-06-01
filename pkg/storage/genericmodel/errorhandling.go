@@ -1,8 +1,6 @@
 package genericmodel
 
 import (
-	"database/sql"
-	"errors"
 	"fmt"
 
 	"github.com/google/uuid"
@@ -48,15 +46,6 @@ func createQueryError(err error, model models.BaseModel) error {
 		Model:     model,
 		Operation: apperrors.QueryUpdate,
 	}
-}
-
-// HandleModelFetchByIDError handles errors from a model being fetched by ID
-func HandleModelFetchByIDError(logger *zap.Logger, err error, id uuid.UUID) error {
-	if errors.Is(err, sql.ErrNoRows) {
-		return HandleModelFetchByIDNoRowsError(logger, err, id)
-	}
-
-	return HandleModelFetchGenericError(logger, err, id)
 }
 
 // HandleModelFetchByIDNoRowsError handles an errors when there's no results from a query by ID
