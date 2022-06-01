@@ -22,7 +22,10 @@ func UpdatePlanBasics(logger *zap.Logger, id uuid.UUID, changes map[string]inter
 	}
 
 	existingBasics.ModifiedBy = &principal
-	existingBasics.CalcStatus()
+	err = existingBasics.CalcStatus()
+	if err != nil {
+		return nil, err
+	}
 
 	retBasics, err := store.PlanBasicsUpdate(logger, existingBasics)
 	return retBasics, err
