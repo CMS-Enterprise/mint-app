@@ -551,6 +551,9 @@ lockTaskListSection(modelPlanID: UUID!, section: String!): Boolean!
 
 unlockTaskListSection(modelPlanID: UUID!, section: String!): Boolean!
 @hasRole(role: MINT_BASE_USER)
+
+unlockAllTaskListSections(modelPlanID: UUID!): Boolean!
+@hasRole(role: MINT_ADMIN_USER)
 }
 
 type Subscription {

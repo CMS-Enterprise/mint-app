@@ -38,16 +38,16 @@ func GetTaskListSectionLocks(modelPlanID uuid.UUID) []*model.TaskListSectionLock
 }
 
 // SubscribeTaskListSectionLockChanges creates a Subscriber and registers it for the pubsubevents.TaskListSectionLocksChanged event
-func SubscribeTaskListSectionLockChanges(pubsub *pubsub.PubSub, modelPlanID uuid.UUID, principal string, onDisconnect <-chan struct{}) (<-chan *model.TaskListSectionLockStatusChanged, error) {
+func SubscribeTaskListSectionLockChanges(ps *pubsub.PubSub, modelPlanID uuid.UUID, principal string, onDisconnect <-chan struct{}) (<-chan *model.TaskListSectionLockStatusChanged, error) {
 	subscriber := subscribers.NewTaskListSectionLockChangedSubscriber(principal)
 
-	pubsub.Subscribe(modelPlanID, pubsubevents.TaskListSectionLocksChanged, subscriber, onDisconnect)
+	ps.Subscribe(modelPlanID, pubsubevents.TaskListSectionLocksChanged, subscriber, onDisconnect)
 
 	return subscriber.GetChannel(), nil
 }
 
 // LockTaskListSection will lock the provided task list section on the provided model
-func LockTaskListSection(pubsub *pubsub.PubSub, modelPlanID uuid.UUID, section string, principal string) {
+func LockTaskListSection(ps *pubsub.PubSub, modelPlanID uuid.UUID, section string, principal string) {
 	if isSectionLocked(modelPlanID, section) {
 		return
 	}
@@ -66,7 +66,7 @@ func LockTaskListSection(pubsub *pubsub.PubSub, modelPlanID uuid.UUID, section s
 	taskListSectionLocks[modelPlanID][section] = status
 	taskListSectionLockMutex.Unlock()
 
-	pubsub.Publish(modelPlanID, pubsubevents.TaskListSectionLocksChanged, model.TaskListSectionLockStatusChanged{
+	ps.Publish(modelPlanID, pubsubevents.TaskListSectionLocksChanged, model.TaskListSectionLockStatusChanged{
 		ChangeType: model.ChangeTypeAdded,
 		LockStatus: &status,
 	})
@@ -74,23 +74,41 @@ func LockTaskListSection(pubsub *pubsub.PubSub, modelPlanID uuid.UUID, section s
 
 // UnlockTaskListSection will unlock the provided task list section on the provided model
 //	This method will fail if the provided principal is not the person who locked the task list section
-//	TODO: Allow authorized personnel to unlock task list section which were locked by someone else
-func UnlockTaskListSection(pubsub *pubsub.PubSub, modelPlanID uuid.UUID, section string, principal string) {
+func UnlockTaskListSection(ps *pubsub.PubSub, modelPlanID uuid.UUID, section string, principal string) {
 	if !isSectionLocked(modelPlanID, section) {
 		return
 	}
 
 	status := taskListSectionLocks[modelPlanID][section]
-	if principal == status.LockedBy {
-		taskListSectionLockMutex.Lock()
-		delete(taskListSectionLocks[modelPlanID], section)
-		taskListSectionLockMutex.Unlock()
+	if !isUserAuthorized(status, principal) {
+		return
 	}
 
-	pubsub.Publish(modelPlanID, pubsubevents.TaskListSectionLocksChanged, model.TaskListSectionLockStatusChanged{
+	internalUnlockTaskListSection(ps, modelPlanID, section, status)
+}
+
+func internalUnlockTaskListSection(ps *pubsub.PubSub, modelPlanID uuid.UUID, section string, status model.TaskListSectionLockStatus) {
+	taskListSectionLockMutex.Lock()
+	delete(taskListSectionLocks[modelPlanID], section)
+	taskListSectionLockMutex.Unlock()
+
+	ps.Publish(modelPlanID, pubsubevents.TaskListSectionLocksChanged, model.TaskListSectionLockStatusChanged{
 		ChangeType: model.ChangeTypeRemoved,
 		LockStatus: &status,
 	})
+}
+
+func isUserAuthorized(status model.TaskListSectionLockStatus, principal string) bool {
+	return principal == status.LockedBy
+}
+
+// UnlockAllTaskListSections will unlock all task list sections on the provided model
+func UnlockAllTaskListSections(ps *pubsub.PubSub, modelPlanID uuid.UUID) {
+	for section, status := range taskListSectionLocks[modelPlanID] {
+		internalUnlockTaskListSection(ps, modelPlanID, section, status)
+	}
+
+	delete(taskListSectionLocks, modelPlanID)
 }
 
 func isSectionLocked(modelPlanID uuid.UUID, section string) bool {

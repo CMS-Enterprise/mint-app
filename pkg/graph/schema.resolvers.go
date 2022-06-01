@@ -240,6 +240,11 @@ func (r *mutationResolver) UnlockTaskListSection(ctx context.Context, modelPlanI
 	return true, nil
 }
 
+func (r *mutationResolver) UnlockAllTaskListSections(ctx context.Context, modelPlanID uuid.UUID) (bool, error) {
+	resolvers.UnlockAllTaskListSections(r.pubsub, modelPlanID)
+	return true, nil
+}
+
 func (r *planDiscussionResolver) Replies(ctx context.Context, obj *models.PlanDiscussion) ([]*models.DiscussionReply, error) {
 	//TODO see if you can check if the PlanDiscussion already has replies, and if not go to DB, otherwise return the replies
 	logger := appcontext.ZLogger(ctx)
