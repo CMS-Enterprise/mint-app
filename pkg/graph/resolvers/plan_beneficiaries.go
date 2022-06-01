@@ -21,8 +21,10 @@ func PlanBeneficiariesUpdate(logger *zap.Logger, id uuid.UUID, changes map[strin
 		return nil, err
 	}
 	existingBeneficiaries.ModifiedBy = &principal
-	existingBeneficiaries.CalcStatus()
-
+	err = existingBeneficiaries.CalcStatus()
+	if err != nil {
+		return nil, err
+	}
 	retGeneralCharacteristics, err := store.PlanBeneficiariesUpdate(logger, existingBeneficiaries)
 	return retGeneralCharacteristics, err
 }

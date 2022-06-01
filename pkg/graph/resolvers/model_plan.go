@@ -83,7 +83,10 @@ func ModelPlanCreate(logger *zap.Logger, modelName string, store *storage.Store,
 		ModelPlanID: createdPlan.ID,
 		CreatedBy:   principalInfo.EuaUserID,
 	}
-	beneficiaries.CalcStatus()
+	err = beneficiaries.CalcStatus()
+	if err != nil {
+		return nil, err
+	}
 
 	_, err = store.PlanBeneficiariesCreate(logger, beneficiaries)
 	if err != nil {

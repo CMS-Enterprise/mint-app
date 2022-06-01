@@ -84,6 +84,8 @@ func main() {
 		processPlanBeneficiaries(b)
 		b.ID = uuid.MustParse("4ba095f6-c209-4b37-9008-c2476d628504")
 		b.NumberPeopleImpacted = models.IntPointer(25)
+		b.PrecedenceRules = nil
+		b.BeneficiaryOverlap = nil
 	})
 	makePlanParticipantsAndProviders(uuid.MustParse("f11eb129-2c80-4080-9440-439cbe1a286f"), logger, store, func(pp *models.PlanParticipantsAndProviders) {
 		processPlanParticipantsAndProviders(pp)
