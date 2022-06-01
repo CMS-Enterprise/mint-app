@@ -85,11 +85,7 @@ func (s *Store) PlanBeneficiariesGetByModelPlanID(logger *zap.Logger, principal 
 		return nil, err
 	}
 
-	arg := map[string]interface{}{
-		"model_plan_id": modelPlanID,
-	}
-
-	err = statement.Get(&b, arg)
+	err = statement.Get(&b, utilitySQL.CreateModelPlanIDQueryMap(modelPlanID))
 
 	if err != nil {
 		return nil, err
