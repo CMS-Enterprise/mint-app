@@ -86,8 +86,6 @@ func (s *Store) PlanBeneficiariesGetByModelPlanID(logger *zap.Logger, principal 
 	}
 
 	arg := map[string]interface{}{
-		"modified_by":   principal,
-		"created_by":    principal,
 		"model_plan_id": modelPlanID,
 	}
 
