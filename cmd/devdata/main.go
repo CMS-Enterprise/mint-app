@@ -48,7 +48,6 @@ func main() {
 	ac := models.MCAccountableCare
 	cms := models.CMSCenterForClinicalStandardsAndQuality
 
-	inProgress := models.TaskInProgress
 	voluntary := models.MTVoluntary
 	mandatory := models.MTMandatory
 	cat := models.MCPrimaryCareTransformation
@@ -104,8 +103,6 @@ func main() {
 		b.Problem = models.StringPointer("There is not enough candy")
 		b.TestInventions = models.StringPointer("The great candy machine")
 		b.Note = models.StringPointer("The machine doesn't work yet")
-		b.Status = inProgress
-
 	})
 
 	makePlanMilestones(pmGreatPlan.ID, logger, store, func(m *models.PlanMilestones) {
@@ -160,7 +157,6 @@ func main() {
 		b.Problem = models.StringPointer("There is not enough candy")
 		b.TestInventions = models.StringPointer("The great candy machine")
 		b.Note = models.StringPointer("The machine doesn't work yet")
-		b.Status = inProgress
 	})
 
 	makePlanMilestones(plan2.ID, logger, store, func(m *models.PlanMilestones) {
@@ -178,7 +174,6 @@ func main() {
 		m.HighLevelNote = models.StringPointer("Theses are my  best guess notes")
 		m.PhasedIn = &phased
 		m.PhasedInNote = models.StringPointer("This will be phased in")
-
 	})
 
 	makePlanGeneralCharacteristics(pmGreatPlan.ID, logger, store, processPlanGeneralCharacteristics)
@@ -255,6 +250,10 @@ func makePlanBasics(uuid uuid.UUID, logger *zap.Logger, store *storage.Store, ca
 		cb(&basics)
 	}
 
+	err := basics.CalcStatus()
+	if err != nil {
+		panic(err)
+	}
 	dbBasics, _ := store.PlanBasicsCreate(logger, &basics)
 	return dbBasics
 }
@@ -337,6 +336,11 @@ func makePlanGeneralCharacteristics(modelPlanID uuid.UUID, logger *zap.Logger, s
 		cb(&gc)
 	}
 
+	err := gc.CalcStatus()
+	if err != nil {
+		panic(err)
+	}
+
 	dbGeneralCharacteristics, _ := store.PlanGeneralCharacteristicsCreate(logger, &gc)
 	return dbGeneralCharacteristics
 
@@ -365,6 +369,11 @@ func makePlanMilestones(uuid uuid.UUID, logger *zap.Logger, store *storage.Store
 
 	for _, cb := range callbacks {
 		cb(&milestones)
+	}
+
+	err := milestones.CalcStatus()
+	if err != nil {
+		panic(err)
 	}
 
 	dbMilestones, _ := store.PlanMilestonesCreate(logger, &milestones)

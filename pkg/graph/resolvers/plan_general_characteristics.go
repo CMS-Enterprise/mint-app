@@ -21,7 +21,10 @@ func UpdatePlanGeneralCharacteristics(logger *zap.Logger, id uuid.UUID, changes 
 		return nil, err
 	}
 	existingGeneralCharacteristics.ModifiedBy = &principal
-	existingGeneralCharacteristics.CalcStatus()
+	err = existingGeneralCharacteristics.CalcStatus()
+	if err != nil {
+		return nil, err
+	}
 
 	retGeneralCharacteristics, err := store.PlanGeneralCharacteristicsUpdate(logger, existingGeneralCharacteristics)
 	return retGeneralCharacteristics, err
