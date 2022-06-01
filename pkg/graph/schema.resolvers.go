@@ -59,6 +59,13 @@ func (r *modelPlanResolver) GeneralCharacteristics(ctx context.Context, obj *mod
 	return resolvers.FetchPlanGeneralCharacteristicsByModelPlanID(logger, principal, obj.ID, r.store)
 }
 
+func (r *modelPlanResolver) Beneficiaries(ctx context.Context, obj *models.ModelPlan) (*models.PlanBeneficiaries, error) {
+	logger := appcontext.ZLogger(ctx)
+	principal := appcontext.Principal(ctx).ID()
+
+	return resolvers.PlanBeneficiariesGetByModelPlanID(logger, principal, obj.ID, r.store)
+}
+
 func (r *modelPlanResolver) Collaborators(ctx context.Context, obj *models.ModelPlan) ([]*models.PlanCollaborator, error) {
 	principal := appcontext.Principal(ctx).ID()
 	logger := appcontext.ZLogger(ctx)
@@ -145,6 +152,12 @@ func (r *mutationResolver) UpdatePlanGeneralCharacteristics(ctx context.Context,
 	return resolvers.UpdatePlanGeneralCharacteristics(logger, id, changes, principal, r.store)
 }
 
+func (r *mutationResolver) UpdatePlanBeneficiares(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanBeneficiaries, error) {
+	principal := appcontext.Principal(ctx).ID()
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.PlanBeneficiariesUpdate(logger, id, changes, principal, r.store)
+}
+
 func (r *mutationResolver) GeneratePresignedUploadURL(ctx context.Context, input model.GeneratePresignedUploadURLInput) (*model.GeneratePresignedUploadURLPayload, error) {
 	url, err := r.s3Client.NewPutPresignedURL(input.MimeType)
 	if err != nil {
@@ -222,6 +235,28 @@ func (r *mutationResolver) DeleteDiscussionReply(ctx context.Context, id uuid.UU
 	logger := appcontext.ZLogger(ctx)
 
 	return resolvers.DeleteDiscussionReply(logger, id, principal, r.store)
+}
+
+func (r *planBeneficiariesResolver) Beneficiaries(ctx context.Context, obj *models.PlanBeneficiaries) ([]model.BeneficiariesType, error) {
+	// TODO: We should probably have a better way to handle enum arrays
+	var bTypes []model.BeneficiariesType
+
+	for _, item := range obj.Beneficiaries {
+		bTypes = append(bTypes, model.BeneficiariesType(item))
+	}
+
+	return bTypes, nil
+}
+
+func (r *planBeneficiariesResolver) BeneficiarySelectionMethod(ctx context.Context, obj *models.PlanBeneficiaries) ([]model.SelectionMethodType, error) {
+	// TODO: We should probably have a better way to handle enum arrays
+	var sTypes []model.SelectionMethodType
+
+	for _, item := range obj.BeneficiarySelectionMethod {
+		sTypes = append(sTypes, model.SelectionMethodType(item))
+	}
+
+	return sTypes, nil
 }
 
 func (r *planDiscussionResolver) Replies(ctx context.Context, obj *models.PlanDiscussion) ([]*models.DiscussionReply, error) {
@@ -397,6 +432,11 @@ func (r *Resolver) ModelPlan() generated.ModelPlanResolver { return &modelPlanRe
 // Mutation returns generated.MutationResolver implementation.
 func (r *Resolver) Mutation() generated.MutationResolver { return &mutationResolver{r} }
 
+// PlanBeneficiaries returns generated.PlanBeneficiariesResolver implementation.
+func (r *Resolver) PlanBeneficiaries() generated.PlanBeneficiariesResolver {
+	return &planBeneficiariesResolver{r}
+}
+
 // PlanDiscussion returns generated.PlanDiscussionResolver implementation.
 func (r *Resolver) PlanDiscussion() generated.PlanDiscussionResolver {
 	return &planDiscussionResolver{r}
@@ -418,6 +458,7 @@ func (r *Resolver) UserInfo() generated.UserInfoResolver { return &userInfoResol
 
 type modelPlanResolver struct{ *Resolver }
 type mutationResolver struct{ *Resolver }
+type planBeneficiariesResolver struct{ *Resolver }
 type planDiscussionResolver struct{ *Resolver }
 type planDocumentResolver struct{ *Resolver }
 type planGeneralCharacteristicsResolver struct{ *Resolver }

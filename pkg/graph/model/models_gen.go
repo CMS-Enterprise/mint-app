@@ -210,6 +210,59 @@ func (e AuthorityAllowance) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
+type BeneficiariesType string
+
+const (
+	BeneficiariesTypeMedicareFfs       BeneficiariesType = "MEDICARE_FFS"
+	BeneficiariesTypeMedicareAdvantage BeneficiariesType = "MEDICARE_ADVANTAGE"
+	BeneficiariesTypeMedicarePartD     BeneficiariesType = "MEDICARE_PART_D"
+	BeneficiariesTypeMedicaid          BeneficiariesType = "MEDICAID"
+	BeneficiariesTypeDuallyEligible    BeneficiariesType = "DUALLY_ELIGIBLE"
+	BeneficiariesTypeDiseaseSpecific   BeneficiariesType = "DISEASE_SPECIFIC"
+	BeneficiariesTypeOther             BeneficiariesType = "OTHER"
+	BeneficiariesTypeNa                BeneficiariesType = "NA"
+)
+
+var AllBeneficiariesType = []BeneficiariesType{
+	BeneficiariesTypeMedicareFfs,
+	BeneficiariesTypeMedicareAdvantage,
+	BeneficiariesTypeMedicarePartD,
+	BeneficiariesTypeMedicaid,
+	BeneficiariesTypeDuallyEligible,
+	BeneficiariesTypeDiseaseSpecific,
+	BeneficiariesTypeOther,
+	BeneficiariesTypeNa,
+}
+
+func (e BeneficiariesType) IsValid() bool {
+	switch e {
+	case BeneficiariesTypeMedicareFfs, BeneficiariesTypeMedicareAdvantage, BeneficiariesTypeMedicarePartD, BeneficiariesTypeMedicaid, BeneficiariesTypeDuallyEligible, BeneficiariesTypeDiseaseSpecific, BeneficiariesTypeOther, BeneficiariesTypeNa:
+		return true
+	}
+	return false
+}
+
+func (e BeneficiariesType) String() string {
+	return string(e)
+}
+
+func (e *BeneficiariesType) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = BeneficiariesType(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid BeneficiariesType", str)
+	}
+	return nil
+}
+
+func (e BeneficiariesType) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
 type CMMIGroup string
 
 const (
@@ -441,6 +494,57 @@ func (e *Role) UnmarshalGQL(v interface{}) error {
 }
 
 func (e Role) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
+type SelectionMethodType string
+
+const (
+	SelectionMethodTypeHistorical     SelectionMethodType = "HISTORICAL"
+	SelectionMethodTypeProspective    SelectionMethodType = "PROSPECTIVE"
+	SelectionMethodTypeRetrospective  SelectionMethodType = "RETROSPECTIVE"
+	SelectionMethodTypeVoluntary      SelectionMethodType = "VOLUNTARY"
+	SelectionMethodTypeProviderSignUp SelectionMethodType = "PROVIDER_SIGN_UP"
+	SelectionMethodTypeOther          SelectionMethodType = "OTHER"
+	SelectionMethodTypeNa             SelectionMethodType = "NA"
+)
+
+var AllSelectionMethodType = []SelectionMethodType{
+	SelectionMethodTypeHistorical,
+	SelectionMethodTypeProspective,
+	SelectionMethodTypeRetrospective,
+	SelectionMethodTypeVoluntary,
+	SelectionMethodTypeProviderSignUp,
+	SelectionMethodTypeOther,
+	SelectionMethodTypeNa,
+}
+
+func (e SelectionMethodType) IsValid() bool {
+	switch e {
+	case SelectionMethodTypeHistorical, SelectionMethodTypeProspective, SelectionMethodTypeRetrospective, SelectionMethodTypeVoluntary, SelectionMethodTypeProviderSignUp, SelectionMethodTypeOther, SelectionMethodTypeNa:
+		return true
+	}
+	return false
+}
+
+func (e SelectionMethodType) String() string {
+	return string(e)
+}
+
+func (e *SelectionMethodType) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = SelectionMethodType(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid SelectionMethodType", str)
+	}
+	return nil
+}
+
+func (e SelectionMethodType) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 

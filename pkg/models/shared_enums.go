@@ -182,3 +182,27 @@ func (e *EnumArray) Scan(src interface{}) error {
 
 	return nil
 }
+
+// FrequencyType represents the possible Frequency options
+type FrequencyType string
+
+// These constants represent the different values of CMSCenter
+const (
+	SelectionAnnually   FrequencyType = "ANNUALLY"
+	SelectionBiannually FrequencyType = "BIANNUALLY"
+	SelectionQuarterly  FrequencyType = "QUARTERLY"
+	SelectionMonthly    FrequencyType = "MONTHLY"
+	SelectionRolling    FrequencyType = "ROLLING"
+	SelectionOther      FrequencyType = "OTHER"
+)
+
+//ConfidenceType representes the values possible for the amount of confidence in an answer
+type ConfidenceType string
+
+//These represent Confidence Type Answers
+const (
+	ConfidenceNotAtAll   ConfidenceType = "NOT_AT_ALL"
+	ConfidenceSlightly   ConfidenceType = "SLIGHTLY"
+	ConfidenceFairly     ConfidenceType = "FAIRLY"
+	ConfidenceCompletely ConfidenceType = "COMPLETELY"
+)
