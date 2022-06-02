@@ -58,6 +58,13 @@ export default gql`
           resolution
         }
       }
+      generalCharacteristics {
+        createdBy
+        createdDts
+        modifiedBy
+        modifiedDts
+        status
+      }
     }
   }
 `;

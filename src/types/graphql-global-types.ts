@@ -7,6 +7,25 @@
 // START Enums and Input Objects
 //==============================================================
 
+export enum AgreementType {
+  COOPERATIVE = "COOPERATIVE",
+  OTHER = "OTHER",
+  PARTICIPATION = "PARTICIPATION",
+}
+
+export enum AlternativePaymentModelType {
+  ADVANCED = "ADVANCED",
+  MIPS = "MIPS",
+  REGULAR = "REGULAR",
+}
+
+export enum AuthorityAllowance {
+  ACA = "ACA",
+  CONGRESSIONALLY_MANDATED = "CONGRESSIONALLY_MANDATED",
+  OTHER = "OTHER",
+  SSA_PART_B = "SSA_PART_B",
+}
+
 export enum CMMIGroup {
   PATIENT_CARE_MODELS_GROUP = "PATIENT_CARE_MODELS_GROUP",
   POLICY_AND_PROGRAMS_GROUP = "POLICY_AND_PROGRAMS_GROUP",
@@ -36,6 +55,31 @@ export enum DocumentType {
   MARKET_RESEARCH = "MARKET_RESEARCH",
   OTHER = "OTHER",
   POLICY_PAPER = "POLICY_PAPER",
+}
+
+export enum GeographyApplication {
+  BENEFICIARIES = "BENEFICIARIES",
+  OTHER = "OTHER",
+  PARTICIPANTS = "PARTICIPANTS",
+  PROVIDERS = "PROVIDERS",
+}
+
+export enum GeographyType {
+  OTHER = "OTHER",
+  REGION = "REGION",
+  STATE = "STATE",
+}
+
+export enum KeyCharacteristic {
+  EPISODE_BASED = "EPISODE_BASED",
+  OTHER = "OTHER",
+  PART_C = "PART_C",
+  PART_D = "PART_D",
+  PAYMENT = "PAYMENT",
+  POPULATION_BASED = "POPULATION_BASED",
+  PREVENTATIVE = "PREVENTATIVE",
+  SERVICE_DELIVERY = "SERVICE_DELIVERY",
+  SHARED_SAVINGS = "SHARED_SAVINGS",
 }
 
 export enum ModelCategory {
@@ -80,6 +124,12 @@ export enum TeamRole {
   LEARNING = "LEARNING",
   MODEL_LEAD = "MODEL_LEAD",
   MODEL_TEAM = "MODEL_TEAM",
+}
+
+export enum WaiverType {
+  FRAUD_ABUSE = "FRAUD_ABUSE",
+  MEDICAID = "MEDICAID",
+  PROGRAM_PAYMENT = "PROGRAM_PAYMENT",
 }
 
 /**
@@ -177,6 +227,65 @@ export interface PlanDocumentParameters {
   documentType?: DocumentType | null;
   otherTypeDescription?: string | null;
   optionalNotes?: string | null;
+}
+
+/**
+ * PlanGeneralCharacteristicsChanges represents the possible changes you can make to a
+ * general characteristics object when updating it.
+ * Fields explicitly set with NULL will be unset, and omitted fields will be left unchanged.
+ * https: // gqlgen.com/reference/changesets/
+ */
+export interface PlanGeneralCharacteristicsChanges {
+  isNewModel?: boolean | null;
+  existingModel?: string | null;
+  resemblesExistingModel?: boolean | null;
+  resemblesExistingModelWhich?: string[] | null;
+  resemblesExistingModelHow?: string | null;
+  resemblesExistingModelNote?: string | null;
+  hasComponentsOrTracks?: boolean | null;
+  hasComponentsOrTracksDiffer?: string | null;
+  hasComponentsOrTracksNote?: string | null;
+  alternativePaymentModel?: boolean | null;
+  alternativePaymentModelTypes?: AlternativePaymentModelType[] | null;
+  alternativePaymentModelNote?: string | null;
+  keyCharacteristics?: KeyCharacteristic[] | null;
+  keyCharacteristicsOther?: string | null;
+  collectPlanBids?: boolean | null;
+  collectPlanBidsNote?: string | null;
+  managePartCDEnrollment?: boolean | null;
+  managePartCDEnrollmentNote?: string | null;
+  planContactUpdated?: boolean | null;
+  planContactUpdatedNote?: string | null;
+  careCoordinationInvolved?: boolean | null;
+  careCoordinationInvolvedDescription?: string | null;
+  careCoordinationInvolvedNote?: string | null;
+  additionalServicesInvolved?: boolean | null;
+  additionalServicesInvolvedDescription?: string | null;
+  additionalServicesInvolvedNote?: string | null;
+  communityPartnersInvolved?: boolean | null;
+  communityPartnersInvolvedDescription?: string | null;
+  communityPartnersInvolvedNote?: string | null;
+  geographiesTargeted?: boolean | null;
+  geographiesTargetedTypes?: GeographyType[] | null;
+  geographiesTargetedTypesOther?: string | null;
+  geographiesTargetedAppliedTo?: GeographyApplication[] | null;
+  geographiesTargetedAppliedToOther?: string | null;
+  geographiesTargetedNote?: string | null;
+  participationOptions?: boolean | null;
+  participationOptionsNote?: string | null;
+  agreementTypes?: AgreementType[] | null;
+  agreementTypesOther?: string | null;
+  multiplePatricipationAgreementsNeeded?: boolean | null;
+  multiplePatricipationAgreementsNeededNote?: string | null;
+  rulemakingRequired?: boolean | null;
+  rulemakingRequiredDescription?: string | null;
+  rulemakingRequiredNote?: string | null;
+  authorityAllowances?: AuthorityAllowance[] | null;
+  authorityAllowancesOther?: string | null;
+  authorityAllowancesNote?: string | null;
+  waiversRequired?: boolean | null;
+  waiversRequiredTypes?: WaiverType[] | null;
+  waiversRequiredNote?: string | null;
 }
 
 /**

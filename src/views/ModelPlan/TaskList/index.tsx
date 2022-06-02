@@ -69,9 +69,9 @@ const TaskList = () => {
     basics,
     discussions,
     documents,
-    status
+    status,
     // TODO: Add these model plans when BE integrates it
-    // characteristics,
+    generalCharacteristics
     // participants,
     // beneficiaries,
     // operations,
@@ -101,8 +101,8 @@ const TaskList = () => {
         }
         return 'IN_PROGRESS';
       // TODO: Add these model plans when BE integrates it
-      // case 'characteristics':
-      //   return;
+      case 'characteristics':
+        return generalCharacteristics?.status;
       // case 'participants':
       //   return;
       // case 'beneficiaries':
