@@ -1,8 +1,6 @@
 package resolvers
 
 import (
-	"fmt"
-
 	"github.com/google/uuid"
 	"go.uber.org/zap"
 
@@ -22,10 +20,6 @@ func CreatePlanCollaborator(logger *zap.Logger, input *model.PlanCollaboratorCre
 	}
 
 	retCollaborator, err := store.PlanCollaboratorCreate(logger, collaborator)
-	if err != nil {
-		return retCollaborator, err
-	}
-
 	return retCollaborator, err
 }
 
@@ -37,10 +31,6 @@ func UpdatePlanCollaborator(logger *zap.Logger, id uuid.UUID, newRole models.Tea
 		return nil, err
 	}
 
-	if existingCollaborator == nil {
-		return nil, fmt.Errorf("attempted to update but cannot find plan collaborator [%v]", principal)
-	}
-
 	existingCollaborator.ModifiedBy = &principal
 	existingCollaborator.TeamRole = newRole
 
@@ -50,7 +40,6 @@ func UpdatePlanCollaborator(logger *zap.Logger, id uuid.UUID, newRole models.Tea
 // DeletePlanCollaborator implements resolver logic to delete a plan collaborator
 func DeletePlanCollaborator(logger *zap.Logger, id uuid.UUID, principal string, store *storage.Store) (*models.PlanCollaborator, error) {
 	retCollaborator, err := store.PlanCollaboratorDelete(logger, id)
-
 	return retCollaborator, err
 }
 
