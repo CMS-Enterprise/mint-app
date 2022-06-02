@@ -4,7 +4,7 @@ describe('Model Plan Documents', () => {
   });
 
   it('uploads and removes a document', () => {
-    cy.clickPlanTableByName('Empty Test Plan');
+    cy.clickPlanTableByName('Empty Plan');
 
     cy.contains('a', 'Upload a document').click();
 
@@ -60,7 +60,7 @@ describe('Model Plan Documents', () => {
     cy.get('[data-testid="document-items"]').contains('strong', '1');
 
     cy.get('[data-testid="document-items"]').contains(
-      'document uploaded for Empty Test Plan'
+      'document uploaded for Empty Plan'
     );
   });
 });

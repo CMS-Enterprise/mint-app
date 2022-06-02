@@ -73,7 +73,7 @@ describe('The Model Plan Form', () => {
   });
 
   it('create a minimum Model Basics plan', () => {
-    cy.clickPlanTableByName('Empty Test Plan');
+    cy.clickPlanTableByName('Empty Plan');
 
     cy.location().should(loc => {
       expect(loc.pathname).to.match(/\/models\/.{36}\/task-list/);
@@ -85,7 +85,7 @@ describe('The Model Plan Form', () => {
       expect(loc.pathname).to.match(/\/models\/.{36}\/task-list\/basics/);
     });
 
-    cy.get('#plan-basics-model-name').should('have.value', 'Empty Test Plan');
+    cy.get('#plan-basics-model-name').should('have.value', 'Empty Plan');
     cy.get('#plan-basics-model-category').select('Demonstration');
     cy.get('#plan-basics-model-category').contains('Demonstration');
     cy.get('#new-plan-cmsCenters--1')
@@ -287,7 +287,7 @@ describe('The Model Plan Form', () => {
   });
 
   it('archives a model plan', () => {
-    cy.clickPlanTableByName('Empty Test Plan');
+    cy.clickPlanTableByName('Empty Plan');
 
     cy.contains('button', 'Remove your Model Plan').click();
 
@@ -299,7 +299,7 @@ describe('The Model Plan Form', () => {
 
     cy.get('table').within(() => {
       cy.get('tbody').within(() => {
-        cy.contains('th', 'Empty Test Plan').should('not.exist');
+        cy.contains('th', 'Empty Plan').should('not.exist');
       });
     });
   });

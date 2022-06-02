@@ -4,7 +4,7 @@ describe('Discussion Center', () => {
   });
 
   it('asks a question and answers a question', () => {
-    cy.clickPlanTableByName('Empty Test Plan');
+    cy.clickPlanTableByName('Empty Plan');
 
     cy.contains('button', 'Ask a question').click();
 

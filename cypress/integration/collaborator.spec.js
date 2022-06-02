@@ -4,7 +4,7 @@ describe('The Collaborator/Team Member Form', () => {
   });
 
   it('adds a collaborator to model plan', () => {
-    cy.clickPlanTableByName('Empty Test Plan');
+    cy.clickPlanTableByName('Empty Plan');
     // cy.wait(1000);
     cy.contains('a', 'Edit team').click();
 
@@ -45,7 +45,7 @@ describe('The Collaborator/Team Member Form', () => {
   });
 
   it('edits a collaborator', () => {
-    cy.clickPlanTableByName('Test Plan With Collaborators');
+    cy.clickPlanTableByName('Plan With Collaborators');
 
     cy.contains('a', 'Edit team').click();
 
@@ -72,7 +72,7 @@ describe('The Collaborator/Team Member Form', () => {
   });
 
   it('removes a collaborator', () => {
-    cy.clickPlanTableByName('Test Plan With Collaborators');
+    cy.clickPlanTableByName('Plan With Collaborators');
 
     cy.contains('a', 'Edit team').click();
 
