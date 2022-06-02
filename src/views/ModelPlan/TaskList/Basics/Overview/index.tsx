@@ -17,6 +17,7 @@ import {
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
 
+import AskAQuestion from 'components/AskAQuestion';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
@@ -130,6 +131,7 @@ const Overview = () => {
           <PageHeading className="margin-top-4 margin-bottom-1">
             {t('heading')}
           </PageHeading>
+
           <p
             className="margin-top-0 margin-bottom-1 font-body-lg"
             data-testid="model-plan-name"
@@ -141,6 +143,8 @@ const Overview = () => {
           <p className="margin-bottom-2 font-body-md line-height-sans-4">
             {t('helpText')}
           </p>
+
+          <AskAQuestion modelID={modelID} />
 
           <Formik
             initialValues={initialValues}

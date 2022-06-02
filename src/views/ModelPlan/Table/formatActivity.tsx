@@ -19,7 +19,7 @@ const formatRecentActivity = (
   // Filtering for answered/unanswered question on model plan
   if (discussions.length > 0) {
     const unansweredQuestions = discussions.filter(
-      (discussion: DiscussionType) => !discussion.replies?.length
+      (discussion: DiscussionType) => discussion.status === 'UNANSWERED'
     ).length;
 
     // Checking/formatting for unanswered questions
@@ -36,13 +36,16 @@ const formatRecentActivity = (
     // Checking/formatting for answered questions
     const answeredQuestions = discussions.length - unansweredQuestions;
 
-    recentActivity = answeredQuestions && (
+    recentActivity = (
       <div className="text-bold">
         {recentActivity}{' '}
-        <p>
-          {answeredQuestions} {i18next.t('home:requestsTable.answeredQuestion')}
-          {answeredQuestions > 1 && 's'} {/* Adding 's' for pluraltiy */}
-        </p>
+        {answeredQuestions > 0 && (
+          <p>
+            {answeredQuestions}{' '}
+            {i18next.t('home:requestsTable.answeredQuestion')}
+            {answeredQuestions > 1 && 's'}
+          </p>
+        )}
       </div>
     );
 

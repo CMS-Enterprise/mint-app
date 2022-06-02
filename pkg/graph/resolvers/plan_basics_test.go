@@ -38,6 +38,7 @@ func (suite *ResolverSuite) TestUpdatePlanBasics() {
 
 	suite.NoError(err)
 	suite.EqualValues(updater, *updatedBasics.ModifiedBy)
+	suite.EqualValues(models.TaskInProgress, updatedBasics.Status)
 	suite.EqualValues(models.MTVoluntary, *updatedBasics.ModelType)
 	suite.Nil(updatedBasics.Problem)
 	suite.EqualValues("Some goal", *updatedBasics.Goal)

@@ -8,7 +8,7 @@ import {
   useTable
 } from 'react-table';
 import { useQuery } from '@apollo/client';
-import { Table as UswdsTable } from '@trussworks/react-uswds';
+import { IconFileDownload, Table as UswdsTable } from '@trussworks/react-uswds';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import PageLoading from 'components/PageLoading';
@@ -96,7 +96,7 @@ const Table = ({ data, hiddenColumns }: TableProps) => {
       },
       {
         Header: t('requestsTable.headers.recentActivity'),
-        accessor: 'modifiedDts',
+        accessor: 'createdDts',
         Cell: ({ row, value }: any) => {
           const { discussions } = row.original;
           return formatRecentActivity(value, discussions);
@@ -157,12 +157,26 @@ const Table = ({ data, hiddenColumns }: TableProps) => {
 
   return (
     <div className="model-plan-table">
-      <GlobalClientFilter
-        setGlobalFilter={setGlobalFilter}
-        tableID={t('requestsTable.id')}
-        tableName={t('requestsTable.title')}
-        className="margin-bottom-4"
-      />
+      <div className="mint-header__basic">
+        <GlobalClientFilter
+          setGlobalFilter={setGlobalFilter}
+          tableID={t('requestsTable.id')}
+          tableName={t('requestsTable.title')}
+          className="margin-bottom-4"
+        />
+
+        <div className="flex-align-self-center">
+          <button
+            className="usa-button usa-button--unstyled easi-no-print display-flex margin-bottom-4 text-no-underline"
+            type="button"
+            // onClick={fetchCSV}
+          >
+            <IconFileDownload />
+            &nbsp;
+            <span className="text-underline">{t('downloadCSV')}</span>
+          </button>
+        </div>
+      </div>
 
       <TableResults
         globalFilter={state.globalFilter}

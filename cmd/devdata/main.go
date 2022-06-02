@@ -48,7 +48,6 @@ func main() {
 	ac := models.MCAccountableCare
 	cms := models.CMSCenterForClinicalStandardsAndQuality
 
-	inProgress := models.TaskInProgress
 	voluntary := models.MTVoluntary
 	mandatory := models.MTMandatory
 	cat := models.MCPrimaryCareTransformation
@@ -81,6 +80,39 @@ func main() {
 		c.FullName = "Betty Alpha"
 		c.TeamRole = models.TeamRoleLeadership
 	})
+	makePlanBeneficiaries(uuid.MustParse("f11eb129-2c80-4080-9440-439cbe1a286f"), logger, store, func(b *models.PlanBeneficiaries) {
+		processPlanBeneficiaries(b)
+		b.ID = uuid.MustParse("4ba095f6-c209-4b37-9008-c2476d628504")
+		b.NumberPeopleImpacted = models.IntPointer(25)
+		b.PrecedenceRules = nil
+		b.BeneficiaryOverlap = nil
+	})
+
+	makePlanBasics(uuid.MustParse("f11eb129-2c80-4080-9440-439cbe1a286f"), logger, store, func(b *models.PlanBasics) {
+		b.ModelType = &mandatory
+
+		b.Problem = models.StringPointer("There is not enough candy")
+		b.TestInventions = models.StringPointer("The great candy machine")
+		b.Note = models.StringPointer("The machine doesn't work yet")
+	})
+
+	makePlanMilestones(uuid.MustParse("f11eb129-2c80-4080-9440-439cbe1a286f"), logger, store, func(m *models.PlanMilestones) {
+		now := time.Now()
+		phased := false
+		m.CompleteICIP = &now
+		m.ClearanceStarts = &now
+		m.ClearanceEnds = &now
+		m.Announced = &now
+		m.ApplicationsStart = &now
+		m.ApplicationsEnd = &now
+		m.PerformancePeriodStarts = &now
+		m.PerformancePeriodEnds = &now
+		m.WrapUpEnds = &now
+		m.HighLevelNote = models.StringPointer("Theses are my  best guess notes")
+		m.PhasedIn = &phased
+		m.PhasedInNote = models.StringPointer("This can't be phased in")
+
+	})
 
 	makeModelPlan("Mr. Mint", logger, store)
 	pmGreatPlan := makeModelPlan("Mrs. Mint", logger, store, func(p *models.ModelPlan) {
@@ -104,8 +136,6 @@ func main() {
 		b.Problem = models.StringPointer("There is not enough candy")
 		b.TestInventions = models.StringPointer("The great candy machine")
 		b.Note = models.StringPointer("The machine doesn't work yet")
-		b.Status = inProgress
-
 	})
 
 	makePlanMilestones(pmGreatPlan.ID, logger, store, func(m *models.PlanMilestones) {
@@ -160,7 +190,6 @@ func main() {
 		b.Problem = models.StringPointer("There is not enough candy")
 		b.TestInventions = models.StringPointer("The great candy machine")
 		b.Note = models.StringPointer("The machine doesn't work yet")
-		b.Status = inProgress
 	})
 
 	makePlanMilestones(plan2.ID, logger, store, func(m *models.PlanMilestones) {
@@ -178,10 +207,11 @@ func main() {
 		m.HighLevelNote = models.StringPointer("Theses are my  best guess notes")
 		m.PhasedIn = &phased
 		m.PhasedInNote = models.StringPointer("This will be phased in")
-
 	})
 
 	makePlanGeneralCharacteristics(pmGreatPlan.ID, logger, store, processPlanGeneralCharacteristics)
+
+	makePlanBeneficiaries(pmGreatPlan.ID, logger, store, processPlanBeneficiaries)
 
 	/*
 		s3Config := upload.Config{Bucket: "mint-test-bucket", Region: "us-west", IsLocal: true}
@@ -255,6 +285,10 @@ func makePlanBasics(uuid uuid.UUID, logger *zap.Logger, store *storage.Store, ca
 		cb(&basics)
 	}
 
+	err := basics.CalcStatus()
+	if err != nil {
+		panic(err)
+	}
 	dbBasics, _ := store.PlanBasicsCreate(logger, &basics)
 	return dbBasics
 }
@@ -337,8 +371,34 @@ func makePlanGeneralCharacteristics(modelPlanID uuid.UUID, logger *zap.Logger, s
 		cb(&gc)
 	}
 
+	err := gc.CalcStatus()
+	if err != nil {
+		panic(err)
+	}
+
 	dbGeneralCharacteristics, _ := store.PlanGeneralCharacteristicsCreate(logger, &gc)
 	return dbGeneralCharacteristics
+
+}
+func makePlanBeneficiaries(modelPlanID uuid.UUID, logger *zap.Logger, store *storage.Store, callbacks ...func(*models.PlanBeneficiaries)) *models.PlanBeneficiaries {
+	b := models.PlanBeneficiaries{
+		ModelPlanID: modelPlanID,
+		CreatedBy:   "ABCD",
+		ModifiedBy:  models.StringPointer("ABCD"),
+		Status:      models.TaskReady,
+	}
+
+	for _, cb := range callbacks {
+		cb(&b)
+	}
+
+	err := b.CalcStatus()
+	if err != nil {
+		panic(err)
+	}
+
+	dbBeneficiaries, _ := store.PlanBeneficiariesCreate(logger, &b)
+	return dbBeneficiaries
 
 }
 
@@ -346,25 +406,18 @@ func makePlanMilestones(uuid uuid.UUID, logger *zap.Logger, store *storage.Store
 
 	milestones := models.PlanMilestones{
 		ModelPlanID: uuid,
-		// CompleteICIP: ,
 
-		// ClearanceStarts: ,
-		// ClearanceEnds: ,
-		// Announced: ,
-		// ApplicationsStart: ,
-		// ApplicationsEnd: ,
-		// PerformancePeriodStarts: ,
-		// PerformancePeriodEnds: ,
-		// WrapUpEnds: ,
-		// HighLevelNote: ,
-		// PhasedIn: ,
-		// PhasedInNote: ,
 		CreatedBy: "ABCD",
 		Status:    models.TaskReady,
 	}
 
 	for _, cb := range callbacks {
 		cb(&milestones)
+	}
+
+	err := milestones.CalcStatus()
+	if err != nil {
+		panic(err)
 	}
 
 	dbMilestones, _ := store.PlanMilestonesCreate(logger, &milestones)
@@ -423,4 +476,37 @@ func processPlanGeneralCharacteristics(g *models.PlanGeneralCharacteristics) {
 	g.WaiversRequired = models.BoolPointer(true)
 	g.WaiversRequiredTypes = []string{model.WaiverTypeFraudAbuse.String()}
 	g.WaiversRequiredNote = models.StringPointer("The vertigo is gonna grow 'cause it's so dangerous, you'll have to sign a waiver")
+}
+
+func processPlanBeneficiaries(b *models.PlanBeneficiaries) {
+
+	b.ID = uuid.MustParse("b7aa2c9f-9e38-4e95-92d9-60bd791e8c59")
+	// b.ModelPlanID = "Hello"
+	var yes = models.TriYes
+	var conf = models.ConfidenceSlightly
+	var freq = models.SelectionAnnually
+	var overlap = models.OverlapYesNeedPolicies
+
+	b.Beneficiaries = pq.StringArray{"MEDICARE_FFS", "DISEASE_SPECIFIC", "OTHER"}
+	b.BeneficiariesOther = models.StringPointer("The Gumdrop Kids")
+	b.BeneficiariesNote = models.StringPointer("The disease is kidney failure")
+	b.TreatDualElligibleDifferent = &yes
+	b.TreatDualElligibleDifferentHow = models.StringPointer("Priority given to kidney failure")
+	b.TreatDualElligibleDifferentNote = models.StringPointer("Can be overridden by vice-presidential order")
+	b.ExcludeCertainCharacteristics = &yes
+	b.ExcludeCertainCharacteristicsCriteria = models.StringPointer("Exclude any individuals who qualify for 5 other models")
+	b.ExcludeCertainCharacteristicsNote = models.StringPointer("Exceptions can be made by presidential order")
+	b.NumberPeopleImpacted = models.IntPointer(25)
+	b.EstimateConfidence = &conf
+	b.ConfidenceNote = models.StringPointer("This is probably correct")
+	b.BeneficiarySelectionMethod = pq.StringArray{"PROVIDER_SIGN_UP", "OTHER"}
+	b.BeneficiarySelectionOther = models.StringPointer("Competitive wrestling, elimination style")
+	b.BeneficiarySelectionNote = models.StringPointer("Priority given to provider sign up")
+	b.BeneficiarySelectionFrequency = &freq
+	b.BeneficiarySelectionFrequencyOther = models.StringPointer("On February 29th when it occurs")
+	b.BeneficiarySelectionFrequencyNote = models.StringPointer("Also as needed")
+	b.BeneficiaryOverlap = &overlap
+	b.BeneficiaryOverlapNote = models.StringPointer("This will likely overlap")
+	b.PrecedenceRules = models.StringPointer("This takes precendence over all other models")
+
 }

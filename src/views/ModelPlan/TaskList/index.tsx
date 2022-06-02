@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link, useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
@@ -6,10 +6,13 @@ import {
   Breadcrumb,
   BreadcrumbBar,
   BreadcrumbLink,
+  Button,
   Grid,
   GridContainer,
+  IconAnnouncement,
   SummaryBox
 } from '@trussworks/react-uswds';
+import classNames from 'classnames';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
@@ -21,6 +24,9 @@ import {
   GetModelPlan_modelPlan as GetModelPlanTypes,
   GetModelPlanVariables
 } from 'queries/types/GetModelPlan';
+import { getUnansweredQuestions } from 'utils/modelPlan';
+
+import Discussions from '../Discussions';
 
 import TaskListButton from './_components/TaskListButton';
 import TaskListItem, {
@@ -39,7 +45,9 @@ type TaskListItemProps = {
 
 const TaskList = () => {
   const { t } = useTranslation('modelPlanTaskList');
+  const { t: d } = useTranslation('discussions');
   const { modelID } = useParams<{ modelID: string }>();
+  const [isDiscussionOpen, setIsDiscussionOpen] = useState(false);
 
   const { data } = useQuery<GetModelPlanType, GetModelPlanVariables>(
     GetModelPlan,
@@ -56,9 +64,10 @@ const TaskList = () => {
     modelName,
     modelCategory,
     cmsCenters,
-    modifiedDts,
+    // modifiedDts,
     milestones,
     basics,
+    discussions,
     documents,
     status
     // TODO: Add these model plans when BE integrates it
@@ -73,6 +82,10 @@ const TaskList = () => {
   const taskListItem: TaskListItemProps[] = t('numberedList', {
     returnObjects: true
   });
+
+  const { unansweredQuestions, answeredQuestions } = getUnansweredQuestions(
+    discussions
+  );
 
   const taskListItemStatus = (key: string) => {
     switch (key) {
@@ -103,6 +116,62 @@ const TaskList = () => {
       default:
         return 'CANNOT_START';
     }
+  };
+
+  const dicussionBanner = () => {
+    return (
+      <SummaryBox
+        heading={d('heading')}
+        className="bg-primary-lighter border-0 radius-0 padding-2"
+      >
+        <div
+          className={classNames('margin-top-1', {
+            'mint-header__basic': discussions?.length > 0
+          })}
+        >
+          {discussions?.length > 0 ? (
+            <>
+              <div>
+                <IconAnnouncement />{' '}
+                {unansweredQuestions > 0 && (
+                  <>
+                    <strong>{unansweredQuestions}</strong> {d('unanswered')}
+                    {unansweredQuestions > 1 && 's'}{' '}
+                  </>
+                )}
+                {answeredQuestions > 0 && (
+                  <>
+                    {unansweredQuestions > 0 && 'and '}
+                    <strong>{answeredQuestions}</strong> {d('answered')}
+                    {answeredQuestions > 1 && 's'}
+                  </>
+                )}
+              </div>
+              <Button
+                type="button"
+                unstyled
+                onClick={() => setIsDiscussionOpen(true)}
+              >
+                {d('viewDiscussions')}
+              </Button>
+            </>
+          ) : (
+            <>
+              {d('noDiscussions')}
+              <Button
+                className="line-height-body-5 test-withdraw-request"
+                type="button"
+                unstyled
+                onClick={() => setIsDiscussionOpen(true)}
+              >
+                {d('askAQuestionLink')}{' '}
+              </Button>{' '}
+              {d('toGetStarted')}
+            </>
+          )}
+        </div>
+      </SummaryBox>
+    );
   };
 
   return (
@@ -136,7 +205,17 @@ const TaskList = () => {
                     indexZero {modelName} indexTwo
                   </Trans>
                 </p>
+
+                {isDiscussionOpen && (
+                  <Discussions
+                    modelID={modelID}
+                    isOpen={isDiscussionOpen}
+                    closeModal={() => setIsDiscussionOpen(false)}
+                  />
+                )}
+
                 <TaskListStatus modelID={modelID} status={status} />
+                {dicussionBanner()}
                 <SummaryBox
                   heading=""
                   className="bg-base-lightest border-0 radius-0 padding-2"
@@ -149,8 +228,9 @@ const TaskList = () => {
                       >
                         <strong>{documents.length} </strong>
                         <Trans i18nKey="modelPlanTaskList:summaryBox.existingDocuments">
-                          indexZero {modelName} indexTwo
+                          indexZero {documents.length > 1 ? 's' : ''} indexOne
                         </Trans>
+                        {modelName}
                       </p>
                       <Grid row gap>
                         <Grid tablet={{ col: 4 }}>

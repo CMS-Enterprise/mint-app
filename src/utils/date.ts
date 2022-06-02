@@ -50,3 +50,27 @@ export const getFiscalYear = (date: DateTime): number => {
   }
   return year;
 };
+
+export const getTimeElapsed = (discussionCreated: string) => {
+  const now = DateTime.local();
+  const creationTime = DateTime.fromISO(discussionCreated);
+
+  const timePassed = now
+    .diff(creationTime, ['years', 'months', 'days', 'hours', 'minutes'])
+    .toObject();
+
+  let dateString = '';
+
+  Object.keys(timePassed).forEach(time => {
+    if (timePassed[time as keyof typeof getTimeElapsed] >= 1) {
+      const floatTime = timePassed[time as keyof typeof getTimeElapsed];
+      dateString += `${parseInt(floatTime, 10)} ${
+        timePassed[time as keyof typeof getTimeElapsed] >= 2
+          ? time
+          : time.slice(0, -1) // If singular, remove last letter 's's from time string
+      } `;
+    }
+  });
+
+  return dateString;
+};

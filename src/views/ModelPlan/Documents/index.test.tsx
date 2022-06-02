@@ -3,6 +3,7 @@ import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, waitFor } from '@testing-library/react';
 
+import { MessageProvider } from 'hooks/useMessage';
 import GetModelPlan from 'queries/GetModelPlan';
 import {
   CMMIGroup,
@@ -51,9 +52,11 @@ describe('Model Plan Documents page', () => {
         ]}
       >
         <MockedProvider mocks={mocks} addTypename={false}>
-          <Route path="/models/:modelID/documents">
-            <DocumentsContent />
-          </Route>
+          <MessageProvider>
+            <Route path="/models/:modelID/documents">
+              <DocumentsContent />
+            </Route>
+          </MessageProvider>
         </MockedProvider>
       </MemoryRouter>
     );

@@ -61,6 +61,36 @@ describe('The Model Plan Task List', () => {
         id: '6e224030-09d5-46f7-ad04-4bb851b36eab',
         fileName: 'test.pdf'
       }
+    ],
+    discussions: [
+      {
+        __typename: 'PlanDiscussion',
+        id: '123',
+        content: 'This is a question.',
+        createdBy: 'John Doe',
+        createdDts: '2022-05-12T15:01:39.190679Z',
+        status: 'UNANSWERED',
+        replies: []
+      },
+      {
+        __typename: 'PlanDiscussion',
+        id: '456',
+        content: 'This is a second question.',
+        createdBy: 'Jane Doe',
+        createdDts: '2022-05-12T15:01:39.190679Z',
+        status: 'ANSWERED',
+        replies: [
+          {
+            __typename: 'DiscussionReply',
+            discussionID: '456',
+            resolution: true,
+            id: 'abc',
+            content: 'This is an answer.',
+            createdBy: 'Jack Doe',
+            createdDts: '2022-05-12T15:01:39.190679Z'
+          }
+        ]
+      }
     ]
   } as GetModelPlanTypes;
 

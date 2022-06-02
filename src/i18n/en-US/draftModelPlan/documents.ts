@@ -42,6 +42,7 @@ const documents = {
   urlFail: 'Failed to fetch file URL',
   removeDocumentFail: 'Failed to remove document {{-documentName}}',
   removeDocumentSuccess: 'Success! Document {{-documentName}} removed.',
+  documentUploadSuccess: 'Successfully added {{-documentName}}.',
   uploadDocument: 'Upload a document',
   uploadDescription:
     'Choose a document to upload, such as a recent concept document, policy paper, or any additional model background information.',
@@ -63,7 +64,7 @@ const documents = {
   whatKind: 'What kind of document is this?',
   optionalNotes: 'Optional notes about the document',
   safetyScan:
-    'To keep CMS safe, documents are scanned for ciruses after uploading. If something goes wrong, we’ll let you know',
+    'To keep CMS safe, documents are scanned for viruses after uploading. If something goes wrong, we’ll let you know',
   uploadButton: 'Upload document',
   dontUpload: 'Don’t upload and return to previous page',
   selectFile: 'Select file',

@@ -3,6 +3,8 @@ import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, waitFor } from '@testing-library/react';
 
+import { MessageProvider } from 'hooks/useMessage';
+
 import AddDocument from './index';
 
 describe('Model Plan Add Documents page', () => {
@@ -14,9 +16,11 @@ describe('Model Plan Add Documents page', () => {
             '/models/f11eb129-2c80-4080-9440-439cbe1a286f/documents/add-document'
           ]}
         >
-          <Route path="/models/:modelID/documents/add-document">
-            <AddDocument />
-          </Route>
+          <MessageProvider>
+            <Route path="/models/:modelID/documents/add-document">
+              <AddDocument />
+            </Route>
+          </MessageProvider>
         </MemoryRouter>
       </MockedProvider>
     );

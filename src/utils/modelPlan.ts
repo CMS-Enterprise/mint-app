@@ -1,6 +1,8 @@
 import i18next from 'i18next';
 
+import { GetModelPlan_modelPlan_discussions as DiscussionType } from 'queries/types/GetModelPlan';
 import { DocumentType } from 'types/graphql-global-types';
+
 /**
  * Translate the API enum to a human readable string
  */
@@ -127,4 +129,37 @@ export const translateDocumentType = (documentType: DocumentType) => {
     default:
       return '';
   }
+};
+
+// Returns an object with th number of discussions with answered and unanswered questions
+export const getUnansweredQuestions = (discussions: DiscussionType[]) => {
+  const unansweredQuestions =
+    discussions?.filter(
+      (discussion: DiscussionType) => discussion.status === 'UNANSWERED'
+    ).length || 0;
+  const answeredQuestions = discussions?.length - unansweredQuestions;
+  return {
+    unansweredQuestions,
+    answeredQuestions
+  };
+};
+
+// Sorts discussions by the most recent reply
+export const sortRepliesByDate = (
+  discussionA: DiscussionType,
+  discussionB: DiscussionType
+) => {
+  if (
+    (discussionA.replies[discussionA.replies.length - 1]?.createdDts || 0) <
+    (discussionB.replies[discussionB.replies.length - 1]?.createdDts || 0)
+  ) {
+    return 1;
+  }
+  if (
+    (discussionA.replies[discussionA.replies.length - 1]?.createdDts || 0) >
+    (discussionB.replies[discussionB.replies.length - 1]?.createdDts || 0)
+  ) {
+    return -1;
+  }
+  return 0;
 };
