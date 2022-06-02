@@ -21,7 +21,7 @@ type Server struct {
 	Config      *viper.Viper
 	logger      *zap.Logger
 	environment appconfig.Environment
-	pubsub      *pubsub.ServicePubSub
+	pubsub      pubsub.PubSub
 }
 
 func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
