@@ -1,4 +1,5 @@
 import basics from './draftModelPlan/basics';
+import discussions from './draftModelPlan/discussions';
 import documents from './draftModelPlan/documents';
 import draftModelPlan from './draftModelPlan/draftModelPlan';
 import newModel from './draftModelPlan/newModel';
@@ -21,6 +22,7 @@ const enUS = {
   auth,
   basics,
   cookies,
+  discussions,
   documents,
   draftModelPlan,
   error,

@@ -83,6 +83,15 @@ export enum TeamRole {
 }
 
 /**
+ * DiscussionReplyCreateInput represents the necessary fields to create a discussion reply
+ */
+export interface DiscussionReplyCreateInput {
+  discussionID: UUID;
+  content: string;
+  resolution: boolean;
+}
+
+/**
  * Input associated with a document to be uploaded
  */
 export interface GeneratePresignedUploadURLInput {
@@ -128,6 +137,24 @@ export interface PlanCollaboratorCreateInput {
   euaUserID: string;
   fullName: string;
   teamRole: TeamRole;
+}
+
+/**
+ * PlanDiscussionChanges represents the possible changes you can make to a plan discussion when updating it.
+ * Fields explicitly set with NULL will be unset, and omitted fields will be left unchanged.
+ * https: // gqlgen.com/reference/changesets/
+ */
+export interface PlanDiscussionChanges {
+  content?: string | null;
+  status?: DiscussionStatus | null;
+}
+
+/**
+ * PlanDiscussionCreateInput represents the necessary fields to create a plan discussion
+ */
+export interface PlanDiscussionCreateInput {
+  modelPlanID: UUID;
+  content: string;
 }
 
 /**

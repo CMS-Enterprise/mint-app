@@ -1,6 +1,13 @@
 import React from 'react';
+import classNames from 'classnames';
 
-const IconInitial = ({ user, index = 0 }: { user: string; index?: number }) => {
+type IconInitialType = {
+  user: string;
+  index?: number;
+  className?: string;
+};
+
+const IconInitial = ({ user, index = 0, className }: IconInitialType) => {
   const arrayOfColors = [
     'bg-accent-cool-lighter',
     'bg-secondary-lighter',
@@ -9,7 +16,13 @@ const IconInitial = ({ user, index = 0 }: { user: string; index?: number }) => {
   ];
 
   return (
-    <li className="display-flex flex-align-center margin-bottom-1" key={user}>
+    <li
+      className={classNames(
+        'display-flex flex-align-center margin-bottom-1',
+        className
+      )}
+      key={user}
+    >
       <div
         className={`display-flex flex-align-center flex-justify-center circle-4 margin-right-1 ${
           arrayOfColors[index % arrayOfColors.length]

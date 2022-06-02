@@ -77,6 +77,10 @@ h5 {
   cursor: pointer !important;
 }
 
+.no-pointer {
+  pointer-events: none;
+}
+
 .skipnav {
   top: 0;
   left: 0;

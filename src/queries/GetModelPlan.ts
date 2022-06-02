@@ -43,6 +43,21 @@ export default gql`
         id
         fileName
       }
+      discussions {
+        id
+        content
+        createdBy
+        createdDts
+        status
+        replies {
+          id
+          discussionID
+          content
+          createdBy
+          createdDts
+          resolution
+        }
+      }
     }
   }
 `;

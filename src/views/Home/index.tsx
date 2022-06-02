@@ -2,7 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { Alert, IconFileDownload, SummaryBox } from '@trussworks/react-uswds';
+import { Alert, SummaryBox } from '@trussworks/react-uswds';
 import classnames from 'classnames';
 import { useFlags } from 'launchdarkly-react-client-sdk';
 
@@ -66,17 +66,6 @@ const Home = () => {
                   ? t('requestsTable.admin.heading')
                   : t('requestsTable.basic.heading')}
               </h2>
-              <div className="flex-align-self-center margin-top-4">
-                <button
-                  className="usa-button usa-button--unstyled easi-no-print display-flex margin-bottom-4 text-no-underline"
-                  type="button"
-                  // onClick={fetchCSV}
-                >
-                  <IconFileDownload />
-                  &nbsp;
-                  <span className="text-underline">{t('downloadCSV')}</span>
-                </button>
-              </div>
             </div>
           </div>
           <div className="tablet:grid-col-12">

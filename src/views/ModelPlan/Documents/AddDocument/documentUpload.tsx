@@ -15,6 +15,7 @@ import FieldGroup from 'components/shared/FieldGroup';
 import { RadioField } from 'components/shared/RadioField';
 import TextAreaField from 'components/shared/TextAreaField';
 import TextField from 'components/shared/TextField';
+import useMessage from 'hooks/useMessage';
 import CreateModelPlanDocument from 'queries/CreateModelPlanDocument';
 import GetGeneratedPresignedUploadURL from 'queries/GetGeneratedPresignedUploadURL';
 import {
@@ -32,6 +33,7 @@ const DocumentUpload = () => {
   const { modelID } = useParams<{ modelID: string }>();
   const history = useHistory();
   const { t } = useTranslation('documents');
+  const { showMessageOnNextPage } = useMessage();
 
   const [s3URL, setS3URL] = useState('');
   const [
@@ -105,6 +107,22 @@ const DocumentUpload = () => {
         })
           .then(response => {
             if (!response.errors) {
+              showMessageOnNextPage(
+                <>
+                  <Alert
+                    type="success"
+                    slim
+                    data-testid="mandatory-fields-alert"
+                    className="margin-y-4"
+                  >
+                    <span className="mandatory-fields-alert__text">
+                      {t('documentUploadSuccess', {
+                        documentName: file.name
+                      })}
+                    </span>
+                  </Alert>
+                </>
+              );
               history.push(`/models/${modelID}/documents`);
             }
           })

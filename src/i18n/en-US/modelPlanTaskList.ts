@@ -8,7 +8,7 @@ const modelPlanTaskList = {
   update: 'Update',
   summaryBox: {
     copy: 'There are no documents uploaded for <1>{{modelName}}</1>.',
-    existingDocuments: 'documents uploaded for <1>{{modelName}}</1>.',
+    existingDocuments: 'document<1>{{plural}}</1> uploaded for ',
     cta: 'Upload a document',
     viewAll: 'View all model documents',
     uploadAnother: 'Upload another document'
