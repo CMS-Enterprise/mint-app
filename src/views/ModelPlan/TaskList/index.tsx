@@ -317,7 +317,7 @@ const TaskList = () => {
             )}
           </Grid>
           <Grid desktop={{ col: 3 }}>
-            <TaskListSideNav modelPlan={modelPlan} />
+            {data && <TaskListSideNav modelPlan={modelPlan} />}
           </Grid>
         </Grid>
       </GridContainer>
