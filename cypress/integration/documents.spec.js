@@ -4,7 +4,9 @@ describe('Model Plan Documents', () => {
   });
 
   it('uploads and removes a document', () => {
-    cy.visit(`/models/f11eb129-2c80-4080-9440-439cbe1a286f/documents`);
+    cy.clickPlanTableByName('Empty Test Plan');
+
+    cy.contains('a', 'Upload a document').click();
 
     cy.contains('h1', 'Documents');
 
@@ -55,9 +57,10 @@ describe('Model Plan Documents', () => {
 
     cy.contains('a', 'Return to Model Plan task list').click();
 
+    cy.get('[data-testid="document-items"]').contains('strong', '1');
+
     cy.get('[data-testid="document-items"]').contains(
-      'p',
-      '1 documents uploaded for My excellent plan that I just initiated.'
+      'document uploaded for Empty Test Plan'
     );
   });
 });

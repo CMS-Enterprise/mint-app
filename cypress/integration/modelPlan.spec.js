@@ -73,8 +73,7 @@ describe('The Model Plan Form', () => {
   });
 
   it('create a minimum Model Basics plan', () => {
-    cy.visit('/models');
-    cy.contains('a', 'My New Model Plan').click();
+    cy.clickPlanTableByName('Empty Test Plan');
 
     cy.location().should(loc => {
       expect(loc.pathname).to.match(/\/models\/.{36}\/task-list/);
@@ -86,7 +85,7 @@ describe('The Model Plan Form', () => {
       expect(loc.pathname).to.match(/\/models\/.{36}\/task-list\/basics/);
     });
 
-    cy.get('#plan-basics-model-name').should('have.value', 'My New Model Plan');
+    cy.get('#plan-basics-model-name').should('have.value', 'Empty Test Plan');
     cy.get('#plan-basics-model-category').select('Demonstration');
     cy.get('#plan-basics-model-category').contains('Demonstration');
     cy.get('#new-plan-cmsCenters--1')
@@ -119,6 +118,7 @@ describe('The Model Plan Form', () => {
     });
 
     cy.get('.model-plan-task-list__last-updated-status').should('be.visible');
+    cy.get('[data-testid="tasklist-tag"]').first().contains('In progress');
   });
 
   it('completes a Model Plan Basics', () => {
@@ -170,6 +170,22 @@ describe('The Model Plan Form', () => {
       .first()
       .check({ force: true })
       .should('be.checked');
+
+    cy.get('#ModelType-Problem')
+      .first()
+      .type('The problem')
+      .should('have.value', 'The problem');
+
+    cy.get('#ModelType-Goal')
+      .first()
+      .type('The goal')
+      .should('have.value', 'The goal');
+
+    cy.get('#ModelType-testInterventions')
+      .first()
+      .type('The interventions')
+      .should('have.value', 'The interventions');
+
     cy.contains('button', 'Next').click();
 
     cy.location().should(loc => {
@@ -221,7 +237,7 @@ describe('The Model Plan Form', () => {
       expect(loc.pathname).to.match(/\/models\/.{36}\/task-list/);
     });
 
-    cy.get('[data-testid="tag"]').first().contains('Completed');
+    cy.get('[data-testid="tasklist-tag"]').first().contains('Completed');
   });
 
   it('updates model plan status', () => {
@@ -271,7 +287,7 @@ describe('The Model Plan Form', () => {
   });
 
   it('archives a model plan', () => {
-    cy.visit('/models/f11eb129-2c80-4080-9440-439cbe1a286f/task-list');
+    cy.clickPlanTableByName('Empty Test Plan');
 
     cy.contains('button', 'Remove your Model Plan').click();
 
@@ -283,9 +299,7 @@ describe('The Model Plan Form', () => {
 
     cy.get('table').within(() => {
       cy.get('tbody').within(() => {
-        cy.contains('th', 'My excellent plan that I just initiated').should(
-          'not.exist'
-        );
+        cy.contains('th', 'Empty Test Plan').should('not.exist');
       });
     });
   });
