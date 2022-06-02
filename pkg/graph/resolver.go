@@ -29,7 +29,7 @@ type Resolver struct {
 	s3Client    *upload.S3Client
 	emailClient *email.Client
 	ldClient    *ldclient.LDClient
-	pubsub      *pubsub.PubSub
+	pubsub      *pubsub.ServicePubSub
 }
 
 // ResolverService holds service methods for use in resolvers
@@ -48,7 +48,7 @@ func NewResolver(
 	s3Client *upload.S3Client,
 	emailClient *email.Client,
 	ldClient *ldclient.LDClient,
-	pubsub *pubsub.PubSub,
+	pubsub *pubsub.ServicePubSub,
 ) *Resolver {
 	return &Resolver{store: store, service: service, s3Client: s3Client, emailClient: emailClient, ldClient: ldClient, pubsub: pubsub}
 }

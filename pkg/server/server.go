@@ -21,7 +21,7 @@ type Server struct {
 	Config      *viper.Viper
 	logger      *zap.Logger
 	environment appconfig.Environment
-	pubsub      *pubsub.PubSub
+	pubsub      *pubsub.ServicePubSub
 }
 
 func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
@@ -53,7 +53,7 @@ func NewServer(config *viper.Viper) *Server {
 		Config:      config,
 		logger:      zapLogger,
 		environment: environment,
-		pubsub:      pubsub.NewPubSub(),
+		pubsub:      pubsub.NewServicePubSub(),
 	}
 
 	// set up routes

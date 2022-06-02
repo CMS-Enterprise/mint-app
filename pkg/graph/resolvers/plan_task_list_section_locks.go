@@ -21,8 +21,26 @@ func init() {
 	taskListSectionLockMutex = sync.Mutex{}
 }
 
+// PlanTaskListSectionLocks defines an interface to implement or mock
+type PlanTaskListSectionLocks interface {
+	GetTaskListSectionLocks(modelPlanID uuid.UUID) []*model.TaskListSectionLockStatus
+	SubscribeTaskListSectionLockChanges(ps pubsub.PubSub, modelPlanID uuid.UUID, principal string, onDisconnect <-chan struct{}) (<-chan *model.TaskListSectionLockStatusChanged, error)
+	LockTaskListSection(ps pubsub.PubSub, modelPlanID uuid.UUID, section string, principal string)
+	UnlockTaskListSection(ps pubsub.PubSub, modelPlanID uuid.UUID, section string, principal string)
+	UnlockAllTaskListSections(ps pubsub.PubSub, modelPlanID uuid.UUID)
+}
+
+// PlanTaskListSectionLocksResolverImplementation is an implementation of the PlanTaskListSectionLocks interface
+type PlanTaskListSectionLocksResolverImplementation struct {
+}
+
+// NewPlanTaskListSectionLocksResolverImplementation is a constructor to create an instance of PlanTaskListSectionLocksResolverImplementation
+func NewPlanTaskListSectionLocksResolverImplementation() *PlanTaskListSectionLocksResolverImplementation {
+	return &PlanTaskListSectionLocksResolverImplementation{}
+}
+
 // GetTaskListSectionLocks returns the list of locked task list sections. Any sections not included should be considered as unlocked.
-func GetTaskListSectionLocks(modelPlanID uuid.UUID) []*model.TaskListSectionLockStatus {
+func (p PlanTaskListSectionLocksResolverImplementation) GetTaskListSectionLocks(modelPlanID uuid.UUID) []*model.TaskListSectionLockStatus {
 	sectionsLockedMap, found := taskListSectionLocks[modelPlanID]
 	if !found {
 		return nil
@@ -38,7 +56,7 @@ func GetTaskListSectionLocks(modelPlanID uuid.UUID) []*model.TaskListSectionLock
 }
 
 // SubscribeTaskListSectionLockChanges creates a Subscriber and registers it for the pubsubevents.TaskListSectionLocksChanged event
-func SubscribeTaskListSectionLockChanges(ps *pubsub.PubSub, modelPlanID uuid.UUID, principal string, onDisconnect <-chan struct{}) (<-chan *model.TaskListSectionLockStatusChanged, error) {
+func (p PlanTaskListSectionLocksResolverImplementation) SubscribeTaskListSectionLockChanges(ps pubsub.PubSub, modelPlanID uuid.UUID, principal string, onDisconnect <-chan struct{}) (<-chan *model.TaskListSectionLockStatusChanged, error) {
 	subscriber := subscribers.NewTaskListSectionLockChangedSubscriber(principal)
 
 	ps.Subscribe(modelPlanID, pubsubevents.TaskListSectionLocksChanged, subscriber, onDisconnect)
@@ -47,7 +65,7 @@ func SubscribeTaskListSectionLockChanges(ps *pubsub.PubSub, modelPlanID uuid.UUI
 }
 
 // LockTaskListSection will lock the provided task list section on the provided model
-func LockTaskListSection(ps *pubsub.PubSub, modelPlanID uuid.UUID, section string, principal string) {
+func (p PlanTaskListSectionLocksResolverImplementation) LockTaskListSection(ps pubsub.PubSub, modelPlanID uuid.UUID, section string, principal string) {
 	if isSectionLocked(modelPlanID, section) {
 		return
 	}
@@ -74,7 +92,7 @@ func LockTaskListSection(ps *pubsub.PubSub, modelPlanID uuid.UUID, section strin
 
 // UnlockTaskListSection will unlock the provided task list section on the provided model
 //	This method will fail if the provided principal is not the person who locked the task list section
-func UnlockTaskListSection(ps *pubsub.PubSub, modelPlanID uuid.UUID, section string, principal string) {
+func (p PlanTaskListSectionLocksResolverImplementation) UnlockTaskListSection(ps pubsub.PubSub, modelPlanID uuid.UUID, section string, principal string) {
 	if !isSectionLocked(modelPlanID, section) {
 		return
 	}
@@ -87,7 +105,7 @@ func UnlockTaskListSection(ps *pubsub.PubSub, modelPlanID uuid.UUID, section str
 	internalUnlockTaskListSection(ps, modelPlanID, section, status)
 }
 
-func internalUnlockTaskListSection(ps *pubsub.PubSub, modelPlanID uuid.UUID, section string, status model.TaskListSectionLockStatus) {
+func internalUnlockTaskListSection(ps pubsub.PubSub, modelPlanID uuid.UUID, section string, status model.TaskListSectionLockStatus) {
 	taskListSectionLockMutex.Lock()
 	delete(taskListSectionLocks[modelPlanID], section)
 	taskListSectionLockMutex.Unlock()
@@ -103,7 +121,7 @@ func isUserAuthorized(status model.TaskListSectionLockStatus, principal string) 
 }
 
 // UnlockAllTaskListSections will unlock all task list sections on the provided model
-func UnlockAllTaskListSections(ps *pubsub.PubSub, modelPlanID uuid.UUID) {
+func (p PlanTaskListSectionLocksResolverImplementation) UnlockAllTaskListSections(ps pubsub.PubSub, modelPlanID uuid.UUID) {
 	for section, status := range taskListSectionLocks[modelPlanID] {
 		internalUnlockTaskListSection(ps, modelPlanID, section, status)
 	}
@@ -119,4 +137,29 @@ func isSectionLocked(modelPlanID uuid.UUID, section string) bool {
 
 	_, found = session[section]
 	return found
+}
+
+// GetTaskListSectionLocks is a convenience relay method to call the corresponding method on a resolver implementation
+func GetTaskListSectionLocks(modelPlanID uuid.UUID) []*model.TaskListSectionLockStatus {
+	return NewPlanTaskListSectionLocksResolverImplementation().GetTaskListSectionLocks(modelPlanID)
+}
+
+// SubscribeTaskListSectionLockChanges is a convenience relay method to call the corresponding method on a resolver implementation
+func SubscribeTaskListSectionLockChanges(ps pubsub.PubSub, modelPlanID uuid.UUID, principal string, onDisconnect <-chan struct{}) (<-chan *model.TaskListSectionLockStatusChanged, error) {
+	return NewPlanTaskListSectionLocksResolverImplementation().SubscribeTaskListSectionLockChanges(ps, modelPlanID, principal, onDisconnect)
+}
+
+// LockTaskListSection is a convenience relay method to call the corresponding method on a resolver implementation
+func LockTaskListSection(ps pubsub.PubSub, modelPlanID uuid.UUID, section string, principal string) {
+	NewPlanTaskListSectionLocksResolverImplementation().LockTaskListSection(ps, modelPlanID, section, principal)
+}
+
+// UnlockTaskListSection is a convenience relay method to call the corresponding method on a resolver implementation
+func UnlockTaskListSection(ps pubsub.PubSub, modelPlanID uuid.UUID, section string, principal string) {
+	NewPlanTaskListSectionLocksResolverImplementation().UnlockTaskListSection(ps, modelPlanID, section, principal)
+}
+
+// UnlockAllTaskListSections is a convenience relay method to call the corresponding method on a resolver implementation
+func UnlockAllTaskListSections(ps pubsub.PubSub, modelPlanID uuid.UUID) {
+	NewPlanTaskListSectionLocksResolverImplementation().UnlockAllTaskListSections(ps, modelPlanID)
 }

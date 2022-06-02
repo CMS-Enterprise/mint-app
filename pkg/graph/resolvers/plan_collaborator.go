@@ -6,15 +6,13 @@ import (
 	"github.com/google/uuid"
 	"go.uber.org/zap"
 
-	"github.com/cmsgov/mint-app/pkg/shared/pubsub"
-
 	"github.com/cmsgov/mint-app/pkg/graph/model"
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/storage"
 )
 
 // CreatePlanCollaborator implements resolver logic to create a plan collaborator
-func CreatePlanCollaborator(logger *zap.Logger, input *model.PlanCollaboratorCreateInput, principal string, store *storage.Store, pubsub *pubsub.PubSub) (*models.PlanCollaborator, error) {
+func CreatePlanCollaborator(logger *zap.Logger, input *model.PlanCollaboratorCreateInput, principal string, store *storage.Store) (*models.PlanCollaborator, error) {
 	collaborator := &models.PlanCollaborator{
 		ModelPlanID: input.ModelPlanID,
 		FullName:    input.FullName,
@@ -32,7 +30,7 @@ func CreatePlanCollaborator(logger *zap.Logger, input *model.PlanCollaboratorCre
 }
 
 // UpdatePlanCollaborator implements resolver logic to update a plan collaborator
-func UpdatePlanCollaborator(logger *zap.Logger, id uuid.UUID, newRole models.TeamRole, principal string, store *storage.Store, pubsub *pubsub.PubSub) (*models.PlanCollaborator, error) {
+func UpdatePlanCollaborator(logger *zap.Logger, id uuid.UUID, newRole models.TeamRole, principal string, store *storage.Store) (*models.PlanCollaborator, error) {
 	// Get existing collaborator
 	existingCollaborator, err := store.PlanCollaboratorFetchByID(id)
 	if err != nil {
@@ -50,7 +48,7 @@ func UpdatePlanCollaborator(logger *zap.Logger, id uuid.UUID, newRole models.Tea
 }
 
 // DeletePlanCollaborator implements resolver logic to delete a plan collaborator
-func DeletePlanCollaborator(logger *zap.Logger, id uuid.UUID, principal string, store *storage.Store, pubsub *pubsub.PubSub) (*models.PlanCollaborator, error) {
+func DeletePlanCollaborator(logger *zap.Logger, id uuid.UUID, principal string, store *storage.Store) (*models.PlanCollaborator, error) {
 	retCollaborator, err := store.PlanCollaboratorDelete(logger, id)
 
 	return retCollaborator, err
