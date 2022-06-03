@@ -106,4 +106,6 @@ repos:
     rev: 0.13.1
     hooks:
       - id: sqlfluff-fix
+        exclude: ^scripts/data/
       - id: sqlfluff-lint
+        exclude: ^scripts/data/

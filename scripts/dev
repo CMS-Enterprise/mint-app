@@ -341,9 +341,14 @@ namespace :db do
     sh "docker-compose kill db && docker-compose rm -fv db && docker-compose up -d db"
   end
 
-  desc "Load development dataset"
+  desc "Dump DB to file"
+  task :dump do
+    sh "pg_dump postgres --clean > scripts/data/local-db.sql"
+  end
+
+  desc "Load development dataset from file"
   task :seed do
-    sh "go run cmd/devdata/main.go"
+    sh "psql < scripts/data/local-db.sql"
   end
 
   task :drop_connections do
@@ -361,6 +366,7 @@ namespace :db do
     plan_milestones,
     plan_general_characteristics,
     plan_beneficiaries,
+    plan_participants_and_providers,
     model_plan"
 
     puts "Cleaning database..."
