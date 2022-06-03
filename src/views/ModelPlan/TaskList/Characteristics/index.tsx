@@ -1,4 +1,4 @@
-import React, { Fragment, useRef, useState } from 'react';
+import React, { Fragment, useMemo, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, Route, Switch, useHistory, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
@@ -7,13 +7,17 @@ import {
   BreadcrumbBar,
   BreadcrumbLink,
   Button,
+  ComboBox,
   Dropdown,
+  Fieldset,
   Grid,
   GridContainer,
   IconArrowBack,
   Label,
+  Radio,
   TextInput
 } from '@trussworks/react-uswds';
+import classNames from 'classnames';
 import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
 
 import AskAQuestion from 'components/AskAQuestion';
@@ -26,11 +30,14 @@ import CheckboxField from 'components/shared/CheckboxField';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
+import MultiSelect from 'components/shared/MultiSelect';
 import GetModelPlanCharacteristics from 'queries/GetModelPlanCharacteristics';
+import GetDraftModelPlans from 'queries/GetModelPlans';
 import {
   GetModelPlanCharacteristics as GetModelPlanCharacteristicsType,
-  GetModelPlanCharacteristics_modelPlan as ModelPlanCharacteristicsType
+  GetModelPlanCharacteristics_modelPlan_generalCharacteristics as ModelPlanCharacteristicsType
 } from 'queries/types/GetModelPlanCharacteristics';
+import { GetModelPlans as GetDraftModelPlansType } from 'queries/types/GetModelPlans';
 import { UpdateModelPlanCharacteristicsVariables } from 'queries/types/UpdateModelPlanCharacteristics';
 import UpdateModelPlanCharacteristics from 'queries/UpdateModelPlanCharacteristics';
 import flattenErrors from 'utils/flattenErrors';
@@ -63,6 +70,20 @@ const CharacteristicsContent = () => {
   const [areCmmiGroupsShown, setAreCmmiGroupsShown] = useState(false);
   const [showOther, setShowOther] = useState(false);
 
+  const {
+    data: modelData,
+    error: modelError
+  } = useQuery<GetDraftModelPlansType>(GetDraftModelPlans);
+
+  const modelPlanOptions = useMemo(() => {
+    return (modelData?.modelPlanCollection || []).map(model => {
+      return {
+        label: model!.modelName!,
+        value: model!.id!
+      };
+    });
+  }, [modelData]);
+
   const { data } = useQuery<GetModelPlanCharacteristicsType>(
     GetModelPlanCharacteristics,
     {
@@ -72,11 +93,22 @@ const CharacteristicsContent = () => {
     }
   );
 
-  console.log(data);
+  // console.log(data);
 
-  const { generalCharacteristics } =
-    data?.modelPlan ||
-    ({ generalCharacteristics: {} } as ModelPlanCharacteristicsType);
+  const {
+    id,
+    isNewModel,
+    existingModel,
+    resemblesExistingModel,
+    resemblesExistingModelWhich,
+    resemblesExistingModelHow,
+    resemblesExistingModelNote,
+    hasComponentsOrTracks,
+    hasComponentsOrTracksDiffer,
+    hasComponentsOrTracksNote
+  } =
+    data?.modelPlan?.generalCharacteristics ||
+    ({} as ModelPlanCharacteristicsType);
 
   const [update] = useMutation<UpdateModelPlanCharacteristicsVariables>(
     UpdateModelPlanCharacteristics
@@ -88,7 +120,7 @@ const CharacteristicsContent = () => {
   ) => {
     update({
       variables: {
-        id: modelID,
+        id,
         changes: formikValues
       }
     })
@@ -108,22 +140,39 @@ const CharacteristicsContent = () => {
       });
   };
 
+  const fundingSources = [
+    'Recovery Audit Contractors',
+    'ACA 3021',
+    'Fed Admin',
+    'HITECH Medicaid',
+    'HITECH Medicare',
+    'MIP Base',
+    'Prog Ops',
+    'QIO',
+    'Disc PI Medicare (MIP)',
+    'Part D COB User Fees',
+    'Exchange',
+    'User Fees',
+    'Risk Adj',
+    'Disc PI Medicaid (MIP)',
+    'QIO Prog Ops',
+    'Research',
+    'Survey and Certification',
+    'CLIA',
+    'Other',
+    'Unknown'
+  ];
+
   const initialValues: ModelPlanCharacteristicsFormType = {
-    isNewModel: generalCharacteristics.isNewModel || null,
-    existingModel: generalCharacteristics.existingModel || null,
-    resemblesExistingModel:
-      generalCharacteristics.resemblesExistingModel || null,
-    resemblesExistingModelWhich:
-      generalCharacteristics.resemblesExistingModelWhich || [],
-    resemblesExistingModelHow:
-      generalCharacteristics.resemblesExistingModelHow || '',
-    resemblesExistingModelNote:
-      generalCharacteristics.resemblesExistingModelNote || '',
-    hasComponentsOrTracks: generalCharacteristics.hasComponentsOrTracks || null,
-    hasComponentsOrTracksDiffer:
-      generalCharacteristics.hasComponentsOrTracksDiffer || '',
-    hasComponentsOrTracksNote:
-      generalCharacteristics.hasComponentsOrTracksNote || ''
+    isNewModel: isNewModel ?? null,
+    existingModel: existingModel ?? null,
+    resemblesExistingModel: resemblesExistingModel ?? null,
+    resemblesExistingModelWhich: resemblesExistingModelWhich ?? [],
+    resemblesExistingModelHow: resemblesExistingModelHow ?? '',
+    resemblesExistingModelNote: resemblesExistingModelNote ?? '',
+    hasComponentsOrTracks: hasComponentsOrTracks ?? null,
+    hasComponentsOrTracksDiffer: hasComponentsOrTracksDiffer ?? '',
+    hasComponentsOrTracksNote: hasComponentsOrTracksNote ?? ''
   };
 
   return (
@@ -199,187 +248,155 @@ const CharacteristicsContent = () => {
                 </ErrorAlert>
               )}
               <Form
+                className="tablet:grid-col-6 margin-top-6"
                 onSubmit={e => {
                   handleSubmit(e);
                   window.scrollTo(0, 0);
                 }}
               >
-                {/* <FieldGroup
-                  scrollElement="modelName"
-                  error={!!flatErrors.modelName}
-                  className="margin-top-4"
-                >
-                  <Label htmlFor="plan-basics-model-name">
-                    {t('modelName')}
-                  </Label>
-                  <FieldErrorMsg>{flatErrors.modelName}</FieldErrorMsg>
-                  <Field
-                    as={TextInput}
-                    error={!!flatErrors.modelName}
-                    id="plan-basics-model-name"
-                    maxLength={50}
-                    name="modelName"
-                    defaultValue={modelName}
-                  />
-                </FieldGroup>
-
                 <FieldGroup
-                  scrollElement="modelCategory"
-                  error={!!flatErrors.modelCategory}
-                  className="margin-top-4"
+                  scrollElement="isNewModel"
+                  error={!!flatErrors.isNewModel}
+                  className="margin-y-4"
                 >
-                  <Label htmlFor="plan-basics-model-category">
-                    {t('modelCategory')}
+                  <Label htmlFor="plan-characteristics-is-new-model">
+                    {t('isNewModel')}
                   </Label>
-                  <FieldErrorMsg>{flatErrors.modelCategory}</FieldErrorMsg>
-                  <Field
-                    as={Dropdown}
-                    id="plan-basics-model-category"
-                    name="modelCategory"
-                    value={values.modelCategory || ''}
-                    onChange={(e: any) => {
-                      setFieldValue('modelCategory', e.target.value);
-                    }}
-                  >
-                    <option key="default-select" disabled value="">
-                      {`-${h('select')}-`}
-                    </option>
-                    {Object.keys(modelCategoryEnum).map(role => {
-                      return (
-                        <option
-                          key={`Model-Category-${translateModelCategory(
-                            modelCategoryEnum[role]
-                          )}`}
-                          value={role || ''}
-                        >
-                          {translateModelCategory(modelCategoryEnum[role])}
-                        </option>
-                      );
-                    })}
-                  </Field>
+                  <FieldErrorMsg>{flatErrors.isNewModel}</FieldErrorMsg>
+                  <Fieldset>
+                    <Field
+                      as={Radio}
+                      id="plan-characteristics-is-new-model"
+                      name="isNewModel"
+                      label={t('newModel')}
+                      value="TRUE"
+                      checked={values.isNewModel === true}
+                      onChange={() => {
+                        setFieldValue('isNewModel', true);
+                        setFieldValue('existingModel', '');
+                      }}
+                    />
+                    <Field
+                      as={Radio}
+                      id="plan-characteristics-is-new-model-no"
+                      name="isNewModel"
+                      label={t('newTrack')}
+                      value="FALSE"
+                      checked={values.isNewModel === false}
+                      onChange={() => {
+                        setFieldValue('isNewModel', false);
+                      }}
+                    />
+                  </Fieldset>
                 </FieldGroup>
 
-                <FieldGroup
-                  scrollElement="cmsCenters"
-                  error={!!flatErrors.cmsCenters}
-                  className="margin-top-4"
-                >
-                  <FieldArray
-                    name="cmsCenters"
-                    render={arrayHelpers => (
-                      <>
-                        <legend className="usa-label">
-                          {t('cmsComponent')}
-                        </legend>
-                        <FieldErrorMsg>{flatErrors.cmsCenters}</FieldErrorMsg>
-
-                        {(t('cmsComponents', {
-                          returnObjects: true
-                        }) as string[]).map((item, key) => {
-                          return (
-                            <Fragment key={item}>
-                              <Field
-                                as={CheckboxField}
-                                id={`new-plan-cmsCenters--${key}`}
-                                name="cmsCenters"
-                                label={item}
-                                value={translateCmsCenter(item)}
-                                checked={values.cmsCenters.includes(
-                                  translateCmsCenter(item)
-                                )}
-                                onChange={(
-                                  e: React.ChangeEvent<HTMLInputElement>
-                                ) => {
-                                  if (e.target.checked) {
-                                    arrayHelpers.push(e.target.value);
-                                  } else {
-                                    const idx = values.cmsCenters.indexOf(
-                                      e.target.value
-                                    );
-                                    arrayHelpers.remove(idx);
-                                  }
-                                  if (e.target.value === 'CMMI') {
-                                    setAreCmmiGroupsShown(true);
-                                  }
-                                  if (e.target.value === 'OTHER') {
-                                    setShowOther(!showOther);
-                                  }
-                                }}
-                              />
-                            </Fragment>
-                          );
-                        })}
-
-                        {values.cmsCenters.includes('OTHER') && (
-                          <FieldGroup
-                            className="margin-top-4"
-                            error={!!flatErrors.cmsOther}
-                          >
-                            <Label htmlFor="plan-basics-cmsCategory--Other">
-                              {h('pleaseSpecify')}
-                            </Label>
-                            <FieldErrorMsg>{flatErrors.cmsOther}</FieldErrorMsg>
-                            <Field
-                              as={TextInput}
-                              id="plan-basics-cmsCategory--Other"
-                              maxLength={50}
-                              name="cmsOther"
-                            />
-                          </FieldGroup>
-                        )}
-                      </>
-                    )}
-                  />
-                </FieldGroup>
-                {values.cmsCenters.includes('CMMI') && (
+                {values.isNewModel === false && (
                   <FieldGroup
-                    error={!!flatErrors.cmmiGroup}
-                    className="margin-top-4"
+                    scrollElement="existingModel"
+                    error={!!flatErrors.existingModel}
                   >
-                    <FieldArray
-                      name="cmmiGroups"
-                      render={arrayHelpers => (
-                        <>
-                          <legend className="usa-label text-normal">
-                            {t('cmmiGroup')}
-                          </legend>
-                          <FieldErrorMsg>{flatErrors.cmmiGroups}</FieldErrorMsg>
+                    <Label
+                      htmlFor="plan-characteristics-existing-model"
+                      className="margin-bottom-1 text-normal"
+                    >
+                      {t('whichExistingModel')}
+                    </Label>
+                    <p className="text-base margin-0">{t('startTypeing')}</p>
+                    <FieldErrorMsg>{flatErrors.existingModel}</FieldErrorMsg>
 
-                          {(t('cmmiGroups', {
-                            returnObjects: true
-                          }) as string[]).map((item, key) => {
-                            return (
-                              <Fragment key={item}>
-                                <Field
-                                  as={CheckboxField}
-                                  id={`new-plan-cmmiGroup--${key}`}
-                                  name="cmmiGroup"
-                                  label={item}
-                                  value={translateCmmiGroups(item)}
-                                  checked={values.cmmiGroups.includes(
-                                    translateCmmiGroups(item)
-                                  )}
-                                  onChange={(
-                                    e: React.ChangeEvent<HTMLInputElement>
-                                  ) => {
-                                    if (e.target.checked) {
-                                      arrayHelpers.push(e.target.value);
-                                    } else {
-                                      const idx = values.cmmiGroups.indexOf(
-                                        e.target.value
-                                      );
-                                      arrayHelpers.remove(idx);
-                                    }
-                                  }}
-                                />
-                              </Fragment>
-                            );
-                          })}
-                        </>
-                      )}
+                    <ComboBox
+                      disabled={!!modelError}
+                      id="plan-characteristics-existing-model"
+                      name="existingModel"
+                      className={classNames({ disabled: modelError })}
+                      inputProps={{
+                        id: 'plan-characteristics-existing-model',
+                        name: 'existingModel',
+                        'aria-describedby':
+                          'plan-characteristics-existing-model'
+                      }}
+                      options={modelPlanOptions}
+                      defaultValue={
+                        modelData?.modelPlanCollection?.find(
+                          modelPlan => modelPlan?.modelName === existingModel
+                        )?.id || ''
+                      }
+                      onChange={modelPlanID => {
+                        const model = modelData?.modelPlanCollection?.find(
+                          modelPlan => modelPlan?.id === modelPlanID
+                        );
+                        if (model) {
+                          setFieldValue('existingModel', model.modelName);
+                        } else {
+                          setFieldValue('existingModel', '');
+                        }
+                      }}
                     />
                   </FieldGroup>
-                )} */}
+                )}
+
+                <FieldGroup
+                  scrollElement="resemblesExistingModel"
+                  error={!!flatErrors.resemblesExistingModel}
+                  className="margin-y-6"
+                >
+                  <Label htmlFor="plan-characteristics-resembles-existing-model">
+                    {t('resembleModel')}
+                  </Label>
+                  <FieldErrorMsg>
+                    {flatErrors.resemblesExistingModel}
+                  </FieldErrorMsg>
+                  <Fieldset>
+                    <Field
+                      as={Radio}
+                      id="plan-characteristics-resembles-existing-model"
+                      name="resemblesExistingModel"
+                      label={h('yes')}
+                      value="TRUE"
+                      checked={values.resemblesExistingModel === true}
+                      onChange={() => {
+                        setFieldValue('resemblesExistingModel', true);
+                      }}
+                    />
+                    <Field
+                      as={Radio}
+                      id="plan-characteristics-resembles-existing-model-no"
+                      name="resemblesExistingModel"
+                      label={h('no')}
+                      value="FALSE"
+                      checked={values.resemblesExistingModel === false}
+                      onChange={() => {
+                        setFieldValue('resemblesExistingModel', false);
+                      }}
+                    />
+                  </Fieldset>
+                </FieldGroup>
+
+                <FieldGroup
+                  scrollElement="resemblesExistingModelWhich"
+                  error={!!flatErrors.resemblesExistingModelWhich}
+                  className="margin-top-4"
+                >
+                  <Label htmlFor="plan-basics-resembles-which-model">
+                    {t('modelResemblance')}
+                  </Label>
+                  <p className="text-base margin-y-1">{t('startTypeing')}</p>
+                  <FieldErrorMsg>
+                    {flatErrors.resemblesExistingModelWhich}
+                  </FieldErrorMsg>
+
+                  <Field
+                    as={MultiSelect}
+                    id="plan-basics-resembles-which-model"
+                    name="resemblesExistingModelWhich"
+                    options={fundingSources}
+                    selectedLabel="Selected models"
+                    onChange={(value: string[] | []) => {
+                      setFieldValue('resemblesExistingModelWhich', value);
+                    }}
+                    initialValues={initialValues.resemblesExistingModelWhich}
+                  />
+                </FieldGroup>
 
                 <div className="margin-top-6 margin-bottom-3">
                   <Button
@@ -399,13 +416,15 @@ const CharacteristicsContent = () => {
                   {h('saveAndReturn')}
                 </Button>
               </Form>
-              <AutoSave
-                values={values}
-                onSave={() => {
-                  handleFormSubmit(formikRef.current!.values);
-                }}
-                debounceDelay={3000}
-              />
+              {id && (
+                <AutoSave
+                  values={values}
+                  onSave={() => {
+                    handleFormSubmit(formikRef.current!.values);
+                  }}
+                  debounceDelay={3000}
+                />
+              )}
             </>
           );
         }}

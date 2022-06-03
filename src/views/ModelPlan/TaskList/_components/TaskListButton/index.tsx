@@ -13,7 +13,7 @@ const TaskListButton = ({ path, status }: TaskListButtonProps) => {
   const { modelID } = useParams<{ modelID: string }>();
   const history = useHistory();
 
-  if (status === 'CANNOT_START' || status === 'COMPLETE') {
+  if (status === 'CANNOT_START') {
     return <></>;
   }
 
