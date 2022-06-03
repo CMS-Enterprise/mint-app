@@ -17,7 +17,8 @@ const draftModelPlan = {
   continueToTaskList: 'Continue to Model Plan task list',
   returnToTaskList: 'Return to Model Plan task list',
   noResults: 'No results found',
-  checkAndFix: 'Please check and fix the following'
+  checkAndFix: 'Please check and fix the following',
+  note: 'Notes'
 };
 
 export default draftModelPlan;
