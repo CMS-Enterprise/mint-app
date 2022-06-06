@@ -85,7 +85,7 @@ type TaskListSectionLockStatusChanged {
 }
 
 type TaskListSectionLockStatus {
-  section: String!
+  section: TaskListSection!
   lockedBy: String!
 }
 
@@ -618,13 +618,13 @@ updateDiscussionReply(id: UUID!, changes: DiscussionReplyChanges!): DiscussionRe
 deleteDiscussionReply(id: UUID!): DiscussionReply!
 @hasRole(role: MINT_BASE_USER)
 
-lockTaskListSection(modelPlanID: UUID!, section: String!): Boolean!
+lockTaskListSection(modelPlanID: UUID!, section: TaskListSection!): Boolean!
 @hasRole(role: MINT_BASE_USER)
 
-unlockTaskListSection(modelPlanID: UUID!, section: String!): Boolean!
+unlockTaskListSection(modelPlanID: UUID!, section: TaskListSection!): Boolean!
 @hasRole(role: MINT_BASE_USER)
 
-unlockAllTaskListSections(modelPlanID: UUID!): Boolean!
+unlockAllTaskListSections(modelPlanID: UUID!): [TaskListSectionLockStatus!]!
 @hasRole(role: MINT_ADMIN_USER)
 }
 
@@ -643,6 +643,16 @@ enum TaskStatus {
   READY
   IN_PROGRESS
   COMPLETE
+}
+
+enum TaskListSection {
+  MODEL_BASICS,
+  GENERAL_CHARACTERISTICS,
+  PARTICIPANTS_AND_PROVIDERS,
+  BENEFICIARIES,
+  OPERATIONS_EVALUATION_AND_LEARNING,
+  PAYMENT,
+  IT_TOOLS
 }
 
 enum TeamRole {
@@ -793,7 +803,7 @@ enum ConfidenceType {
   NOT_AT_ALL
   SLIGHTLY
   FAIRLY
-  COMPLETELY  
+  COMPLETELY
 }
 enum FrequencyType {
   ANNUALLY

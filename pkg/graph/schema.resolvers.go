@@ -237,25 +237,20 @@ func (r *mutationResolver) DeleteDiscussionReply(ctx context.Context, id uuid.UU
 	return resolvers.DeleteDiscussionReply(logger, id, principal, r.store)
 }
 
-func (r *mutationResolver) LockTaskListSection(ctx context.Context, modelPlanID uuid.UUID, section string) (bool, error) {
+func (r *mutationResolver) LockTaskListSection(ctx context.Context, modelPlanID uuid.UUID, section model.TaskListSection) (bool, error) {
 	principal := appcontext.Principal(ctx).ID()
 
-	resolvers.LockTaskListSection(r.pubsub, modelPlanID, section, principal)
-
-	return true, nil
+	return resolvers.LockTaskListSection(r.pubsub, modelPlanID, section, principal)
 }
 
-func (r *mutationResolver) UnlockTaskListSection(ctx context.Context, modelPlanID uuid.UUID, section string) (bool, error) {
+func (r *mutationResolver) UnlockTaskListSection(ctx context.Context, modelPlanID uuid.UUID, section model.TaskListSection) (bool, error) {
 	principal := appcontext.Principal(ctx).ID()
 
-	resolvers.UnlockTaskListSection(r.pubsub, modelPlanID, section, principal)
-
-	return true, nil
+	return resolvers.UnlockTaskListSection(r.pubsub, modelPlanID, section, principal)
 }
 
-func (r *mutationResolver) UnlockAllTaskListSections(ctx context.Context, modelPlanID uuid.UUID) (bool, error) {
-	resolvers.UnlockAllTaskListSections(r.pubsub, modelPlanID)
-	return true, nil
+func (r *mutationResolver) UnlockAllTaskListSections(ctx context.Context, modelPlanID uuid.UUID) ([]*model.TaskListSectionLockStatus, error) {
+	return resolvers.UnlockAllTaskListSections(r.pubsub, modelPlanID)
 }
 
 func (r *planBeneficiariesResolver) Beneficiaries(ctx context.Context, obj *models.PlanBeneficiaries) ([]model.BeneficiariesType, error) {
@@ -444,7 +439,7 @@ func (r *queryResolver) PlanCollaboratorByID(ctx context.Context, id uuid.UUID) 
 }
 
 func (r *queryResolver) TaskListSectionLocks(ctx context.Context, modelPlanID uuid.UUID) ([]*model.TaskListSectionLockStatus, error) {
-	return resolvers.GetTaskListSectionLocks(modelPlanID), nil
+	return resolvers.GetTaskListSectionLocks(modelPlanID)
 }
 
 func (r *subscriptionResolver) OnTaskListSectionLocksChanged(ctx context.Context, modelPlanID uuid.UUID) (<-chan *model.TaskListSectionLockStatusChanged, error) {

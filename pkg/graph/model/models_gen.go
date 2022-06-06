@@ -80,8 +80,8 @@ type PlanDocumentPayload struct {
 }
 
 type TaskListSectionLockStatus struct {
-	Section  string `json:"section"`
-	LockedBy string `json:"lockedBy"`
+	Section  TaskListSection `json:"section"`
+	LockedBy string          `json:"lockedBy"`
 }
 
 type TaskListSectionLockStatusChanged struct {
@@ -598,6 +598,57 @@ func (e *SelectionMethodType) UnmarshalGQL(v interface{}) error {
 }
 
 func (e SelectionMethodType) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
+type TaskListSection string
+
+const (
+	TaskListSectionModelBasics                     TaskListSection = "MODEL_BASICS"
+	TaskListSectionGeneralCharacteristics          TaskListSection = "GENERAL_CHARACTERISTICS"
+	TaskListSectionParticipantsAndProviders        TaskListSection = "PARTICIPANTS_AND_PROVIDERS"
+	TaskListSectionBeneficiaries                   TaskListSection = "BENEFICIARIES"
+	TaskListSectionOperationsEvaluationAndLearning TaskListSection = "OPERATIONS_EVALUATION_AND_LEARNING"
+	TaskListSectionPayment                         TaskListSection = "PAYMENT"
+	TaskListSectionItTools                         TaskListSection = "IT_TOOLS"
+)
+
+var AllTaskListSection = []TaskListSection{
+	TaskListSectionModelBasics,
+	TaskListSectionGeneralCharacteristics,
+	TaskListSectionParticipantsAndProviders,
+	TaskListSectionBeneficiaries,
+	TaskListSectionOperationsEvaluationAndLearning,
+	TaskListSectionPayment,
+	TaskListSectionItTools,
+}
+
+func (e TaskListSection) IsValid() bool {
+	switch e {
+	case TaskListSectionModelBasics, TaskListSectionGeneralCharacteristics, TaskListSectionParticipantsAndProviders, TaskListSectionBeneficiaries, TaskListSectionOperationsEvaluationAndLearning, TaskListSectionPayment, TaskListSectionItTools:
+		return true
+	}
+	return false
+}
+
+func (e TaskListSection) String() string {
+	return string(e)
+}
+
+func (e *TaskListSection) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = TaskListSection(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid TaskListSection", str)
+	}
+	return nil
+}
+
+func (e TaskListSection) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 

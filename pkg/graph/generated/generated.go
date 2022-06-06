@@ -113,9 +113,9 @@ type ComplexityRoot struct {
 		DeletePlanDiscussion             func(childComplexity int, id uuid.UUID) int
 		DeletePlanDocument               func(childComplexity int, input model.PlanDocumentInput) int
 		GeneratePresignedUploadURL       func(childComplexity int, input model.GeneratePresignedUploadURLInput) int
-		LockTaskListSection              func(childComplexity int, modelPlanID uuid.UUID, section string) int
+		LockTaskListSection              func(childComplexity int, modelPlanID uuid.UUID, section model.TaskListSection) int
 		UnlockAllTaskListSections        func(childComplexity int, modelPlanID uuid.UUID) int
-		UnlockTaskListSection            func(childComplexity int, modelPlanID uuid.UUID, section string) int
+		UnlockTaskListSection            func(childComplexity int, modelPlanID uuid.UUID, section model.TaskListSection) int
 		UpdateDiscussionReply            func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
 		UpdateModelPlan                  func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
 		UpdatePlanBasics                 func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
@@ -370,9 +370,9 @@ type MutationResolver interface {
 	CreateDiscussionReply(ctx context.Context, input model.DiscussionReplyCreateInput) (*models.DiscussionReply, error)
 	UpdateDiscussionReply(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.DiscussionReply, error)
 	DeleteDiscussionReply(ctx context.Context, id uuid.UUID) (*models.DiscussionReply, error)
-	LockTaskListSection(ctx context.Context, modelPlanID uuid.UUID, section string) (bool, error)
-	UnlockTaskListSection(ctx context.Context, modelPlanID uuid.UUID, section string) (bool, error)
-	UnlockAllTaskListSections(ctx context.Context, modelPlanID uuid.UUID) (bool, error)
+	LockTaskListSection(ctx context.Context, modelPlanID uuid.UUID, section model.TaskListSection) (bool, error)
+	UnlockTaskListSection(ctx context.Context, modelPlanID uuid.UUID, section model.TaskListSection) (bool, error)
+	UnlockAllTaskListSections(ctx context.Context, modelPlanID uuid.UUID) ([]*model.TaskListSectionLockStatus, error)
 }
 type PlanBeneficiariesResolver interface {
 	Beneficiaries(ctx context.Context, obj *models.PlanBeneficiaries) ([]model.BeneficiariesType, error)
@@ -782,7 +782,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			return 0, false
 		}
 
-		return e.complexity.Mutation.LockTaskListSection(childComplexity, args["modelPlanID"].(uuid.UUID), args["section"].(string)), true
+		return e.complexity.Mutation.LockTaskListSection(childComplexity, args["modelPlanID"].(uuid.UUID), args["section"].(model.TaskListSection)), true
 
 	case "Mutation.unlockAllTaskListSections":
 		if e.complexity.Mutation.UnlockAllTaskListSections == nil {
@@ -806,7 +806,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			return 0, false
 		}
 
-		return e.complexity.Mutation.UnlockTaskListSection(childComplexity, args["modelPlanID"].(uuid.UUID), args["section"].(string)), true
+		return e.complexity.Mutation.UnlockTaskListSection(childComplexity, args["modelPlanID"].(uuid.UUID), args["section"].(model.TaskListSection)), true
 
 	case "Mutation.updateDiscussionReply":
 		if e.complexity.Mutation.UpdateDiscussionReply == nil {
@@ -2324,7 +2324,7 @@ type TaskListSectionLockStatusChanged {
 }
 
 type TaskListSectionLockStatus {
-  section: String!
+  section: TaskListSection!
   lockedBy: String!
 }
 
@@ -2857,13 +2857,13 @@ updateDiscussionReply(id: UUID!, changes: DiscussionReplyChanges!): DiscussionRe
 deleteDiscussionReply(id: UUID!): DiscussionReply!
 @hasRole(role: MINT_BASE_USER)
 
-lockTaskListSection(modelPlanID: UUID!, section: String!): Boolean!
+lockTaskListSection(modelPlanID: UUID!, section: TaskListSection!): Boolean!
 @hasRole(role: MINT_BASE_USER)
 
-unlockTaskListSection(modelPlanID: UUID!, section: String!): Boolean!
+unlockTaskListSection(modelPlanID: UUID!, section: TaskListSection!): Boolean!
 @hasRole(role: MINT_BASE_USER)
 
-unlockAllTaskListSections(modelPlanID: UUID!): Boolean!
+unlockAllTaskListSections(modelPlanID: UUID!): [TaskListSectionLockStatus!]!
 @hasRole(role: MINT_ADMIN_USER)
 }
 
@@ -2882,6 +2882,16 @@ enum TaskStatus {
   READY
   IN_PROGRESS
   COMPLETE
+}
+
+enum TaskListSection {
+  MODEL_BASICS,
+  GENERAL_CHARACTERISTICS,
+  PARTICIPANTS_AND_PROVIDERS,
+  BENEFICIARIES,
+  OPERATIONS_EVALUATION_AND_LEARNING,
+  PAYMENT,
+  IT_TOOLS
 }
 
 enum TeamRole {
@@ -3032,7 +3042,7 @@ enum ConfidenceType {
   NOT_AT_ALL
   SLIGHTLY
   FAIRLY
-  COMPLETELY  
+  COMPLETELY
 }
 enum FrequencyType {
   ANNUALLY
@@ -3256,10 +3266,10 @@ func (ec *executionContext) field_Mutation_lockTaskListSection_args(ctx context.
 		}
 	}
 	args["modelPlanID"] = arg0
-	var arg1 string
+	var arg1 model.TaskListSection
 	if tmp, ok := rawArgs["section"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("section"))
-		arg1, err = ec.unmarshalNString2string(ctx, tmp)
+		arg1, err = ec.unmarshalNTaskListSection2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTaskListSection(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -3295,10 +3305,10 @@ func (ec *executionContext) field_Mutation_unlockTaskListSection_args(ctx contex
 		}
 	}
 	args["modelPlanID"] = arg0
-	var arg1 string
+	var arg1 model.TaskListSection
 	if tmp, ok := rawArgs["section"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("section"))
-		arg1, err = ec.unmarshalNString2string(ctx, tmp)
+		arg1, err = ec.unmarshalNTaskListSection2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTaskListSection(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -7372,7 +7382,7 @@ func (ec *executionContext) _Mutation_lockTaskListSection(ctx context.Context, f
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		directive0 := func(rctx context.Context) (interface{}, error) {
 			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Mutation().LockTaskListSection(rctx, fc.Args["modelPlanID"].(uuid.UUID), fc.Args["section"].(string))
+			return ec.resolvers.Mutation().LockTaskListSection(rctx, fc.Args["modelPlanID"].(uuid.UUID), fc.Args["section"].(model.TaskListSection))
 		}
 		directive1 := func(ctx context.Context) (interface{}, error) {
 			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_BASE_USER")
@@ -7451,7 +7461,7 @@ func (ec *executionContext) _Mutation_unlockTaskListSection(ctx context.Context,
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		directive0 := func(rctx context.Context) (interface{}, error) {
 			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Mutation().UnlockTaskListSection(rctx, fc.Args["modelPlanID"].(uuid.UUID), fc.Args["section"].(string))
+			return ec.resolvers.Mutation().UnlockTaskListSection(rctx, fc.Args["modelPlanID"].(uuid.UUID), fc.Args["section"].(model.TaskListSection))
 		}
 		directive1 := func(ctx context.Context) (interface{}, error) {
 			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_BASE_USER")
@@ -7550,10 +7560,10 @@ func (ec *executionContext) _Mutation_unlockAllTaskListSections(ctx context.Cont
 		if tmp == nil {
 			return nil, nil
 		}
-		if data, ok := tmp.(bool); ok {
+		if data, ok := tmp.([]*model.TaskListSectionLockStatus); ok {
 			return data, nil
 		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be bool`, tmp)
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be []*github.com/cmsgov/mint-app/pkg/graph/model.TaskListSectionLockStatus`, tmp)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -7565,9 +7575,9 @@ func (ec *executionContext) _Mutation_unlockAllTaskListSections(ctx context.Cont
 		}
 		return graphql.Null
 	}
-	res := resTmp.(bool)
+	res := resTmp.([]*model.TaskListSectionLockStatus)
 	fc.Result = res
-	return ec.marshalNBoolean2bool(ctx, field.Selections, res)
+	return ec.marshalNTaskListSectionLockStatus2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTaskListSectionLockStatusᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_Mutation_unlockAllTaskListSections(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -7577,7 +7587,13 @@ func (ec *executionContext) fieldContext_Mutation_unlockAllTaskListSections(ctx 
 		IsMethod:   true,
 		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type Boolean does not have child fields")
+			switch field.Name {
+			case "section":
+				return ec.fieldContext_TaskListSectionLockStatus_section(ctx, field)
+			case "lockedBy":
+				return ec.fieldContext_TaskListSectionLockStatus_lockedBy(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type TaskListSectionLockStatus", field.Name)
 		},
 	}
 	defer func() {
@@ -14999,9 +15015,9 @@ func (ec *executionContext) _TaskListSectionLockStatus_section(ctx context.Conte
 		}
 		return graphql.Null
 	}
-	res := resTmp.(string)
+	res := resTmp.(model.TaskListSection)
 	fc.Result = res
-	return ec.marshalNString2string(ctx, field.Selections, res)
+	return ec.marshalNTaskListSection2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTaskListSection(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_TaskListSectionLockStatus_section(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -15011,7 +15027,7 @@ func (ec *executionContext) fieldContext_TaskListSectionLockStatus_section(ctx c
 		IsMethod:   false,
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type String does not have child fields")
+			return nil, errors.New("field of type TaskListSection does not have child fields")
 		},
 	}
 	return fc, nil
@@ -20978,6 +20994,16 @@ func (ec *executionContext) marshalNString2ᚕstringᚄ(ctx context.Context, sel
 	}
 
 	return ret
+}
+
+func (ec *executionContext) unmarshalNTaskListSection2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTaskListSection(ctx context.Context, v interface{}) (model.TaskListSection, error) {
+	var res model.TaskListSection
+	err := res.UnmarshalGQL(v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalNTaskListSection2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTaskListSection(ctx context.Context, sel ast.SelectionSet, v model.TaskListSection) graphql.Marshaler {
+	return v
 }
 
 func (ec *executionContext) marshalNTaskListSectionLockStatus2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTaskListSectionLockStatusᚄ(ctx context.Context, sel ast.SelectionSet, v []*model.TaskListSectionLockStatus) graphql.Marshaler {

@@ -38,11 +38,12 @@ func (m *MockPlanTaskListSectionLocks) EXPECT() *MockPlanTaskListSectionLocksMoc
 }
 
 // GetTaskListSectionLocks mocks base method.
-func (m *MockPlanTaskListSectionLocks) GetTaskListSectionLocks(arg0 uuid.UUID) []*model.TaskListSectionLockStatus {
+func (m *MockPlanTaskListSectionLocks) GetTaskListSectionLocks(arg0 uuid.UUID) ([]*model.TaskListSectionLockStatus, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetTaskListSectionLocks", arg0)
 	ret0, _ := ret[0].([]*model.TaskListSectionLockStatus)
-	return ret0
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
 }
 
 // GetTaskListSectionLocks indicates an expected call of GetTaskListSectionLocks.
@@ -52,9 +53,12 @@ func (mr *MockPlanTaskListSectionLocksMockRecorder) GetTaskListSectionLocks(arg0
 }
 
 // LockTaskListSection mocks base method.
-func (m *MockPlanTaskListSectionLocks) LockTaskListSection(arg0 pubsub.PubSub, arg1 uuid.UUID, arg2, arg3 string) {
+func (m *MockPlanTaskListSectionLocks) LockTaskListSection(arg0 pubsub.PubSub, arg1 uuid.UUID, arg2, arg3 string) (bool, error) {
 	m.ctrl.T.Helper()
-	m.ctrl.Call(m, "LockTaskListSection", arg0, arg1, arg2, arg3)
+	ret := m.ctrl.Call(m, "LockTaskListSection", arg0, arg1, arg2, arg3)
+	ret0, _ := ret[0].(bool)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
 }
 
 // LockTaskListSection indicates an expected call of LockTaskListSection.
@@ -79,9 +83,11 @@ func (mr *MockPlanTaskListSectionLocksMockRecorder) SubscribeTaskListSectionLock
 }
 
 // UnlockAllTaskListSections mocks base method.
-func (m *MockPlanTaskListSectionLocks) UnlockAllTaskListSections(arg0 pubsub.PubSub, arg1 uuid.UUID) {
+func (m *MockPlanTaskListSectionLocks) UnlockAllTaskListSections(arg0 pubsub.PubSub, arg1 uuid.UUID) []model.TaskListSectionLockStatus {
 	m.ctrl.T.Helper()
-	m.ctrl.Call(m, "UnlockAllTaskListSections", arg0, arg1)
+	ret := m.ctrl.Call(m, "UnlockAllTaskListSections", arg0, arg1)
+	ret0, _ := ret[0].([]model.TaskListSectionLockStatus)
+	return ret0
 }
 
 // UnlockAllTaskListSections indicates an expected call of UnlockAllTaskListSections.
@@ -91,9 +97,12 @@ func (mr *MockPlanTaskListSectionLocksMockRecorder) UnlockAllTaskListSections(ar
 }
 
 // UnlockTaskListSection mocks base method.
-func (m *MockPlanTaskListSectionLocks) UnlockTaskListSection(arg0 pubsub.PubSub, arg1 uuid.UUID, arg2, arg3 string) {
+func (m *MockPlanTaskListSectionLocks) UnlockTaskListSection(arg0 pubsub.PubSub, arg1 uuid.UUID, arg2, arg3 string) (bool, error) {
 	m.ctrl.T.Helper()
-	m.ctrl.Call(m, "UnlockTaskListSection", arg0, arg1, arg2, arg3)
+	ret := m.ctrl.Call(m, "UnlockTaskListSection", arg0, arg1, arg2, arg3)
+	ret0, _ := ret[0].(bool)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
 }
 
 // UnlockTaskListSection indicates an expected call of UnlockTaskListSection.
