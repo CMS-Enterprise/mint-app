@@ -341,9 +341,24 @@ namespace :db do
     sh "docker-compose kill db && docker-compose rm -fv db && docker-compose up -d db"
   end
 
-  desc "Load development dataset"
+  desc "Dump DB to file"
+  task :dump do
+    sh "pg_dump postgres --clean > scripts/data/local-db.sql"
+  end
+
+  desc "Load development dataset from file"
   task :seed do
-    sh "go run cmd/devdata/main.go"
+    # Seed DB
+    `psql < scripts/data/local-db.sql > /dev/null`
+    
+    # Seed data files with hardcoded IDs
+    `cp -f scripts/data/sample.pdf tmp/minio/mint-app-file-uploads/b23d964c-3e44-426b-8dcb-aa979adc07a2.pdf`
+    `cp -f scripts/data/sample.pdf tmp/minio/mint-app-file-uploads/3225ae75-8ca7-4b78-aa7e-ea2334226c07.pdf`
+    `cp -f scripts/data/sample.pdf tmp/minio/mint-app-file-uploads/25c81e5a-4940-45fe-85c7-fcbe37a3c317.pdf`
+
+    # Set Statuses
+    `docker-compose run --entrypoint="mc tag set 's3local/mint-app-file-uploads/b23d964c-3e44-426b-8dcb-aa979adc07a2.pdf' 'av-status=CLEAN'" minio_mc`
+    `docker-compose run --entrypoint="mc tag set 's3local/mint-app-file-uploads/25c81e5a-4940-45fe-85c7-fcbe37a3c317.pdf' 'av-status=INFECTED'" minio_mc`
   end
 
   task :drop_connections do
