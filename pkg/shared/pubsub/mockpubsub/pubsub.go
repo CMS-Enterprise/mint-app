@@ -37,7 +37,7 @@ func (m *MockPubSub) EXPECT() *MockPubSubMockRecorder {
 }
 
 // Publish mocks base method.
-func (m *MockPubSub) Publish(arg0 uuid.UUID, arg1 pubsub.Event, arg2 interface{}) {
+func (m *MockPubSub) Publish(arg0 uuid.UUID, arg1 pubsub.EventType, arg2 interface{}) {
 	m.ctrl.T.Helper()
 	m.ctrl.Call(m, "Publish", arg0, arg1, arg2)
 }
@@ -49,7 +49,7 @@ func (mr *MockPubSubMockRecorder) Publish(arg0, arg1, arg2 interface{}) *gomock.
 }
 
 // Subscribe mocks base method.
-func (m *MockPubSub) Subscribe(arg0 uuid.UUID, arg1 pubsub.Event, arg2 pubsub.Subscriber, arg3 <-chan struct{}) {
+func (m *MockPubSub) Subscribe(arg0 uuid.UUID, arg1 pubsub.EventType, arg2 pubsub.Subscriber, arg3 <-chan struct{}) {
 	m.ctrl.T.Helper()
 	m.ctrl.Call(m, "Subscribe", arg0, arg1, arg2, arg3)
 }
@@ -61,7 +61,7 @@ func (mr *MockPubSubMockRecorder) Subscribe(arg0, arg1, arg2, arg3 interface{}) 
 }
 
 // Unsubscribe mocks base method.
-func (m *MockPubSub) Unsubscribe(arg0 uuid.UUID, arg1 pubsub.Event, arg2 string) {
+func (m *MockPubSub) Unsubscribe(arg0 uuid.UUID, arg1 pubsub.EventType, arg2 string) {
 	m.ctrl.T.Helper()
 	m.ctrl.Call(m, "Unsubscribe", arg0, arg1, arg2)
 }

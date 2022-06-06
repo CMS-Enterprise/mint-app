@@ -20,7 +20,7 @@ func NewServicePubSub() *ServicePubSub {
 }
 
 // Subscribe will register the subscriber for notifications of a given eventType within a session
-func (ps *ServicePubSub) Subscribe(sessionID uuid.UUID, eventType Event, subscriber Subscriber, onDisconnect <-chan struct{}) {
+func (ps *ServicePubSub) Subscribe(sessionID uuid.UUID, eventType EventType, subscriber Subscriber, onDisconnect <-chan struct{}) {
 	session, found := ps.sessions[sessionID]
 	if !found {
 		session = ps.createSession(sessionID)
@@ -36,7 +36,7 @@ func (ps *ServicePubSub) Subscribe(sessionID uuid.UUID, eventType Event, subscri
 }
 
 // Unsubscribe unregisters a subscriber from notifications of a given eventType within a session
-func (ps *ServicePubSub) Unsubscribe(sessionID uuid.UUID, eventType Event, subscriberID string) {
+func (ps *ServicePubSub) Unsubscribe(sessionID uuid.UUID, eventType EventType, subscriberID string) {
 	session, wasSessionFound := ps.findSession(sessionID)
 	if !wasSessionFound {
 		return
@@ -59,7 +59,7 @@ func (ps *ServicePubSub) Unsubscribe(sessionID uuid.UUID, eventType Event, subsc
 }
 
 // Publish dispatches an event and corresponding payload to all registered Subscriber entities
-func (ps *ServicePubSub) Publish(sessionID uuid.UUID, eventType Event, payload interface{}) {
+func (ps *ServicePubSub) Publish(sessionID uuid.UUID, eventType EventType, payload interface{}) {
 	session, wasSessionFound := ps.findSession(sessionID)
 	if !wasSessionFound {
 		return
@@ -94,7 +94,7 @@ func (ps *ServicePubSub) assignSubscriber(subscriberMap SubscriberMap, subscribe
 	ps.lock.Unlock()
 }
 
-func (ps *ServicePubSub) createSubscriberMap(session Session, eventType Event) SubscriberMap {
+func (ps *ServicePubSub) createSubscriberMap(session Session, eventType EventType) SubscriberMap {
 	eventListeners := make(SubscriberMap)
 	ps.lock.Lock()
 	session[eventType] = eventListeners
@@ -108,7 +108,7 @@ func (ps *ServicePubSub) deleteSubscriber(subscriberMap SubscriberMap, subscribe
 	ps.lock.Unlock()
 }
 
-func (ps *ServicePubSub) awaitDisconnectUnregister(sessionID uuid.UUID, subscriberID string, eventType Event, onDisconnect <-chan struct{}) {
+func (ps *ServicePubSub) awaitDisconnectUnregister(sessionID uuid.UUID, subscriberID string, eventType EventType, onDisconnect <-chan struct{}) {
 	go func() {
 		<-onDisconnect
 		ps.Unsubscribe(sessionID, eventType, subscriberID)

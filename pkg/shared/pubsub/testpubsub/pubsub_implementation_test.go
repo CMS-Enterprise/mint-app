@@ -20,7 +20,7 @@ func TestPubSubImplementation_Publish(t *testing.T) {
 	ps.Publish(modelPlanID, eventType, payload)
 }
 
-func setupPubSubTest(t *testing.T) (*pubsub.ServicePubSub, *mockpubsub.MockSubscriber, pubsub.Event, string, uuid.UUID, string, chan struct{}) {
+func setupPubSubTest(t *testing.T) (*pubsub.ServicePubSub, *mockpubsub.MockSubscriber, pubsub.EventType, string, uuid.UUID, string, chan struct{}) {
 	mockController := gomock.NewController(t)
 	ps := pubsub.NewServicePubSub()
 	subscriber := mockpubsub.NewMockSubscriber(mockController)

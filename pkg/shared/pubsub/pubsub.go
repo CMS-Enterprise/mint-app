@@ -6,7 +6,7 @@ import (
 
 // PubSub is a service to facilitate a lightweight, thread-safe subscription model
 type PubSub interface {
-	Subscribe(sessionID uuid.UUID, eventType Event, subscriber Subscriber, onDisconnect <-chan struct{})
-	Unsubscribe(sessionID uuid.UUID, eventType Event, subscriberID string)
-	Publish(sessionID uuid.UUID, eventType Event, payload interface{})
+	Subscribe(sessionID uuid.UUID, eventType EventType, subscriber Subscriber, onDisconnect <-chan struct{})
+	Unsubscribe(sessionID uuid.UUID, eventType EventType, subscriberID string)
+	Publish(sessionID uuid.UUID, eventType EventType, payload interface{})
 }
