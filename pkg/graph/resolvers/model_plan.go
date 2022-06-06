@@ -92,6 +92,16 @@ func ModelPlanCreate(logger *zap.Logger, modelName string, store *storage.Store,
 	if err != nil {
 		return nil, err
 	}
+	participantsAndProviders := &models.PlanParticipantsAndProviders{
+		ModelPlanID: createdPlan.ID,
+		CreatedBy:   principalInfo.EuaUserID,
+		ModifiedBy:  &principalInfo.EuaUserID,
+	}
+	err = participantsAndProviders.CalcStatus()
+	if err != nil {
+		return nil, err
+	}
+	_, err = store.PlanParticipantsAndProvidersCreate(logger, participantsAndProviders)
 
 	return createdPlan, err
 }

@@ -206,3 +206,13 @@ const (
 	ConfidenceFairly     ConfidenceType = "FAIRLY"
 	ConfidenceCompletely ConfidenceType = "COMPLETELY"
 )
+
+//OverlapType represents the possible Overlap Type answers
+type OverlapType string
+
+//These constants represent the possible OverLap Type values
+const (
+	OverlapYesNeedPolicies OverlapType = "YES_NEED_POLICIES"
+	OverlapYesNoIssues     OverlapType = "YES_NO_ISSUES"
+	OverlapNo              OverlapType = "NO"
+)
