@@ -74,6 +74,10 @@ func (r *modelPlanResolver) Beneficiaries(ctx context.Context, obj *models.Model
 	return resolvers.PlanBeneficiariesGetByModelPlanID(logger, principal, obj.ID, r.store)
 }
 
+func (r *modelPlanResolver) OpsEvalAndLearning(ctx context.Context, obj *models.ModelPlan) (*models.PlanOpsEvalAndLearning, error) {
+	panic(fmt.Errorf("not implemented"))
+}
+
 func (r *modelPlanResolver) Collaborators(ctx context.Context, obj *models.ModelPlan) ([]*models.PlanCollaborator, error) {
 	principal := appcontext.Principal(ctx).ID()
 	logger := appcontext.ZLogger(ctx)
@@ -170,6 +174,10 @@ func (r *mutationResolver) UpdatePlanParticipantsAndProviders(ctx context.Contex
 	principal := appcontext.Principal(ctx).ID()
 	logger := appcontext.ZLogger(ctx)
 	return resolvers.PlanParticipantsAndProvidersUpdate(logger, id, changes, principal, r.store)
+}
+
+func (r *mutationResolver) UpdatePlanOpsEvalAndLearning(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanOpsEvalAndLearning, error) {
+	panic(fmt.Errorf("not implemented"))
 }
 
 func (r *mutationResolver) GeneratePresignedUploadURL(ctx context.Context, input model.GeneratePresignedUploadURLInput) (*model.GeneratePresignedUploadURLPayload, error) {
@@ -364,6 +372,54 @@ func (r *planGeneralCharacteristicsResolver) WaiversRequiredTypes(ctx context.Co
 	return waiverTypes, nil
 }
 
+func (r *planOpsEvalAndLearningResolver) AgencyOrStateHelp(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]model.AgencyOrStateHelpType, error) {
+	panic(fmt.Errorf("not implemented"))
+}
+
+func (r *planOpsEvalAndLearningResolver) Stakeholders(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]model.StakeholdersType, error) {
+	panic(fmt.Errorf("not implemented"))
+}
+
+func (r *planOpsEvalAndLearningResolver) HelpdeskUse(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]model.HelpdeskUseType, error) {
+	panic(fmt.Errorf("not implemented"))
+}
+
+func (r *planOpsEvalAndLearningResolver) ContractorSupport(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]model.ContractorSupportType, error) {
+	panic(fmt.Errorf("not implemented"))
+}
+
+func (r *planOpsEvalAndLearningResolver) DataMonitoringFileTypes(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]model.MonitoringFileType, error) {
+	panic(fmt.Errorf("not implemented"))
+}
+
+func (r *planOpsEvalAndLearningResolver) EvaluationApproaches(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]model.EvaluationApproachType, error) {
+	panic(fmt.Errorf("not implemented"))
+}
+
+func (r *planOpsEvalAndLearningResolver) CcmInvolvment(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]model.CcmInvolvmentType, error) {
+	panic(fmt.Errorf("not implemented"))
+}
+
+func (r *planOpsEvalAndLearningResolver) DataNeededForMonitoring(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]model.DataForMonitoringType, error) {
+	panic(fmt.Errorf("not implemented"))
+}
+
+func (r *planOpsEvalAndLearningResolver) DataToSendParticicipants(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]model.DataToSendParticipantsType, error) {
+	panic(fmt.Errorf("not implemented"))
+}
+
+func (r *planOpsEvalAndLearningResolver) DataSharingFrequency(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]model.DataFrequencyType, error) {
+	panic(fmt.Errorf("not implemented"))
+}
+
+func (r *planOpsEvalAndLearningResolver) DataCollectionFrequency(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]model.DataFrequencyType, error) {
+	panic(fmt.Errorf("not implemented"))
+}
+
+func (r *planOpsEvalAndLearningResolver) ModelLearningSystems(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]model.ModelLearningSystemType, error) {
+	panic(fmt.Errorf("not implemented"))
+}
+
 func (r *planParticipantsAndProvidersResolver) Participants(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.ParticipantsType, error) {
 	// TODO: We should probably have a better way to handle enum arrays
 	var participants []model.ParticipantsType
@@ -513,6 +569,11 @@ func (r *Resolver) PlanGeneralCharacteristics() generated.PlanGeneralCharacteris
 	return &planGeneralCharacteristicsResolver{r}
 }
 
+// PlanOpsEvalAndLearning returns generated.PlanOpsEvalAndLearningResolver implementation.
+func (r *Resolver) PlanOpsEvalAndLearning() generated.PlanOpsEvalAndLearningResolver {
+	return &planOpsEvalAndLearningResolver{r}
+}
+
 // PlanParticipantsAndProviders returns generated.PlanParticipantsAndProvidersResolver implementation.
 func (r *Resolver) PlanParticipantsAndProviders() generated.PlanParticipantsAndProvidersResolver {
 	return &planParticipantsAndProvidersResolver{r}
@@ -530,6 +591,7 @@ type planBeneficiariesResolver struct{ *Resolver }
 type planDiscussionResolver struct{ *Resolver }
 type planDocumentResolver struct{ *Resolver }
 type planGeneralCharacteristicsResolver struct{ *Resolver }
+type planOpsEvalAndLearningResolver struct{ *Resolver }
 type planParticipantsAndProvidersResolver struct{ *Resolver }
 type queryResolver struct{ *Resolver }
 type userInfoResolver struct{ *Resolver }
