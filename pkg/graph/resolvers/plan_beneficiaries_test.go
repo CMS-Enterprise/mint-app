@@ -8,7 +8,7 @@ import (
 // "github.com/cmsgov/mint-app/pkg/graph/model"
 // "github.com/cmsgov/mint-app/pkg/modelSections"
 func (suite *ResolverSuite) TestPlanBeneficiariesUpdate() {
-	plan := suite.createModelPlan("Plan For Beneficiaries") // should create the general characteristics as part of the resolver
+	plan := suite.createModelPlan("Plan For Beneficiaries") // should create the beneficiaries as part of the resolver
 
 	b, err := PlanBeneficiariesGetByModelPlanID(suite.testConfigs.Logger, suite.testConfigs.UserInfo.EuaUserID, plan.ID, suite.testConfigs.Store)
 	suite.NoError(err)
@@ -54,7 +54,7 @@ func (suite *ResolverSuite) TestPlanBeneficiariesUpdate() {
 }
 
 func (suite *ResolverSuite) TestPlanBeneficiariesGetByModelPlanID() {
-	plan := suite.createModelPlan("Plan For Beneficiaries") // should create the general characteristics as part of the resolver
+	plan := suite.createModelPlan("Plan For Beneficiaries") // should create the beneficiaries as part of the resolver
 
 	b, err := PlanBeneficiariesGetByModelPlanID(suite.testConfigs.Logger, suite.testConfigs.UserInfo.EuaUserID, plan.ID, suite.testConfigs.Store)
 	suite.NoError(err)

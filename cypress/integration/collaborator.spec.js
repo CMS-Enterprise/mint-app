@@ -4,7 +4,9 @@ describe('The Collaborator/Team Member Form', () => {
   });
 
   it('adds a collaborator to model plan', () => {
-    cy.visit(`/models/f11eb129-2c80-4080-9440-439cbe1a286f/collaborators`);
+    cy.clickPlanTableByName('Empty Plan');
+    // cy.wait(1000);
+    cy.contains('a', 'Edit team').click();
 
     cy.contains('h1', 'Add model team members');
 
@@ -17,8 +19,8 @@ describe('The Collaborator/Team Member Form', () => {
       });
 
       cy.get('tbody').within(() => {
-        cy.contains('th', 'Betty Alpha');
-        cy.contains('td', 'Leadership');
+        cy.contains('th', 'mint Doe');
+        cy.contains('td', 'Model Lead');
       });
     });
 
@@ -43,7 +45,9 @@ describe('The Collaborator/Team Member Form', () => {
   });
 
   it('edits a collaborator', () => {
-    cy.visit(`/models/f11eb129-2c80-4080-9440-439cbe1a286f/collaborators`);
+    cy.clickPlanTableByName('Plan With Collaborators');
+
+    cy.contains('a', 'Edit team').click();
 
     cy.get('table').within(() => {
       cy.get('tbody').within(() => {
@@ -68,7 +72,9 @@ describe('The Collaborator/Team Member Form', () => {
   });
 
   it('removes a collaborator', () => {
-    cy.visit(`/models/f11eb129-2c80-4080-9440-439cbe1a286f/collaborators`);
+    cy.clickPlanTableByName('Plan With Collaborators');
+
+    cy.contains('a', 'Edit team').click();
 
     cy.get('table').within(() => {
       cy.get('tbody').within(() => {

@@ -5,6 +5,7 @@ package graph
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/google/uuid"
 
@@ -57,6 +58,13 @@ func (r *modelPlanResolver) GeneralCharacteristics(ctx context.Context, obj *mod
 	principal := appcontext.Principal(ctx).ID()
 
 	return resolvers.FetchPlanGeneralCharacteristicsByModelPlanID(logger, principal, obj.ID, r.store)
+}
+
+func (r *modelPlanResolver) ProvidersAndParticipants(ctx context.Context, obj *models.ModelPlan) (*models.PlanParticipantsAndProviders, error) {
+	logger := appcontext.ZLogger(ctx)
+	principal := appcontext.Principal(ctx).ID()
+
+	return resolvers.PlanParticipantsAndProvidersGetByModelPlanID(logger, principal, obj.ID, r.store)
 }
 
 func (r *modelPlanResolver) Beneficiaries(ctx context.Context, obj *models.ModelPlan) (*models.PlanBeneficiaries, error) {
@@ -156,6 +164,12 @@ func (r *mutationResolver) UpdatePlanBeneficiares(ctx context.Context, id uuid.U
 	principal := appcontext.Principal(ctx).ID()
 	logger := appcontext.ZLogger(ctx)
 	return resolvers.PlanBeneficiariesUpdate(logger, id, changes, principal, r.store)
+}
+
+func (r *mutationResolver) UpdatePlanParticipantsAndProviders(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanParticipantsAndProviders, error) {
+	principal := appcontext.Principal(ctx).ID()
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.PlanParticipantsAndProvidersUpdate(logger, id, changes, principal, r.store)
 }
 
 func (r *mutationResolver) GeneratePresignedUploadURL(ctx context.Context, input model.GeneratePresignedUploadURLInput) (*model.GeneratePresignedUploadURLPayload, error) {
@@ -366,6 +380,55 @@ func (r *planGeneralCharacteristicsResolver) WaiversRequiredTypes(ctx context.Co
 	return waiverTypes, nil
 }
 
+func (r *planParticipantsAndProvidersResolver) Participants(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.ParticipantsType, error) {
+	// TODO: We should probably have a better way to handle enum arrays
+	var participants []model.ParticipantsType
+	for _, item := range obj.Participants {
+		participants = append(participants, model.ParticipantsType(item))
+	}
+	return participants, nil
+}
+
+func (r *planParticipantsAndProvidersResolver) SelectionMethod(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.ParticipantSelectionType, error) {
+	var selectionTypes []model.ParticipantSelectionType
+	for _, item := range obj.SelectionMethod {
+		selectionTypes = append(selectionTypes, model.ParticipantSelectionType(item))
+	}
+	return selectionTypes, nil
+}
+
+func (r *planParticipantsAndProvidersResolver) CommunicationMethod(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.ParticipantCommunicationType, error) {
+	var communicationTypes []model.ParticipantCommunicationType
+	for _, item := range obj.CommunicationMethod {
+		communicationTypes = append(communicationTypes, model.ParticipantCommunicationType(item))
+	}
+	return communicationTypes, nil
+}
+
+func (r *planParticipantsAndProvidersResolver) ParticipantsIds(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.ParticipantsIDType, error) {
+	var participantsIDTypes []model.ParticipantsIDType
+	for _, item := range obj.ParticipantsIds {
+		participantsIDTypes = append(participantsIDTypes, model.ParticipantsIDType(item))
+	}
+	return participantsIDTypes, nil
+}
+
+func (r *planParticipantsAndProvidersResolver) ProviderAddMethod(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.ProviderAddType, error) {
+	var providerAddTypes []model.ProviderAddType
+	for _, item := range obj.ProviderAddMethod {
+		providerAddTypes = append(providerAddTypes, model.ProviderAddType(item))
+	}
+	return providerAddTypes, nil
+}
+
+func (r *planParticipantsAndProvidersResolver) ProviderLeaveMethod(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.ProviderLeaveType, error) {
+	var providerLeaveTypes []model.ProviderLeaveType
+	for _, item := range obj.ProviderLeaveMethod {
+		providerLeaveTypes = append(providerLeaveTypes, model.ProviderLeaveType(item))
+	}
+	return providerLeaveTypes, nil
+}
+
 func (r *queryResolver) CurrentUser(ctx context.Context) (*model.CurrentUser, error) {
 	ldUser := flags.Principal(ctx)
 	userKey := ldUser.GetKey()
@@ -476,6 +539,11 @@ func (r *Resolver) PlanGeneralCharacteristics() generated.PlanGeneralCharacteris
 	return &planGeneralCharacteristicsResolver{r}
 }
 
+// PlanParticipantsAndProviders returns generated.PlanParticipantsAndProvidersResolver implementation.
+func (r *Resolver) PlanParticipantsAndProviders() generated.PlanParticipantsAndProvidersResolver {
+	return &planParticipantsAndProvidersResolver{r}
+}
+
 // Query returns generated.QueryResolver implementation.
 func (r *Resolver) Query() generated.QueryResolver { return &queryResolver{r} }
 
@@ -491,6 +559,23 @@ type planBeneficiariesResolver struct{ *Resolver }
 type planDiscussionResolver struct{ *Resolver }
 type planDocumentResolver struct{ *Resolver }
 type planGeneralCharacteristicsResolver struct{ *Resolver }
+type planParticipantsAndProvidersResolver struct{ *Resolver }
 type queryResolver struct{ *Resolver }
 type subscriptionResolver struct{ *Resolver }
 type userInfoResolver struct{ *Resolver }
+
+// !!! WARNING !!!
+// The code below was going to be deleted when updating resolvers. It has been copied here so you have
+// one last chance to move it out of harms way if you want. There are two reasons this happens:
+//  - When renaming or deleting a resolver the old code will be put in here. You can safely delete
+//    it when you're done.
+//  - You have helper methods in this file. Move them out to keep these resolver files clean.
+func (r *planParticipantsAndProvidersResolver) GainsharePaymentsTrack(ctx context.Context, obj *models.PlanParticipantsAndProviders) (*string, error) {
+	panic(fmt.Errorf("not implemented"))
+}
+func (r *mutationResolver) UpdatePlanPlanParticipantsAndProviders(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanParticipantsAndProviders, error) {
+	principal := appcontext.Principal(ctx).ID()
+	logger := appcontext.ZLogger(ctx)
+
+	return resolvers.PlanParticipantsAndProvidersUpdate(logger, id, changes, principal, r.store)
+}

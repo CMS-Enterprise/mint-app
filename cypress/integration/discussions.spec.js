@@ -4,7 +4,7 @@ describe('Discussion Center', () => {
   });
 
   it('asks a question and answers a question', () => {
-    cy.visit(`/models/f11eb129-2c80-4080-9440-439cbe1a286f/task-list`);
+    cy.clickPlanTableByName('Empty Plan');
 
     cy.contains('button', 'Ask a question').click();
 
