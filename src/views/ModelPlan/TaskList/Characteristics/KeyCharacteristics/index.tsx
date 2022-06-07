@@ -1,4 +1,4 @@
-import React, { Fragment, useMemo, useRef, useState } from 'react';
+import React, { Fragment, useRef, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
@@ -7,7 +7,6 @@ import {
   BreadcrumbBar,
   BreadcrumbLink,
   Button,
-  ComboBox,
   Fieldset,
   IconAdd,
   IconArrowBack,
@@ -15,7 +14,6 @@ import {
   Radio,
   TextInput
 } from '@trussworks/react-uswds';
-import classNames from 'classnames';
 import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
 
 import AskAQuestion from 'components/AskAQuestion';
@@ -30,12 +28,10 @@ import FieldGroup from 'components/shared/FieldGroup';
 import MultiSelect from 'components/shared/MultiSelect';
 import TextAreaField from 'components/shared/TextAreaField';
 import GetModelPlanCharacteristics from 'queries/GetModelPlanCharacteristics';
-import GetDraftModelPlans from 'queries/GetModelPlans';
 import {
   GetModelPlanCharacteristics as GetModelPlanCharacteristicsType,
   GetModelPlanCharacteristics_modelPlan_generalCharacteristics as ModelPlanCharacteristicsFormType
 } from 'queries/types/GetModelPlanCharacteristics';
-import { GetModelPlans as GetDraftModelPlansType } from 'queries/types/GetModelPlans';
 import { UpdateModelPlanCharacteristicsVariables } from 'queries/types/UpdateModelPlanCharacteristics';
 import UpdateModelPlanCharacteristics from 'queries/UpdateModelPlanCharacteristics';
 import {
@@ -47,7 +43,6 @@ import {
   translateAlternativePaymentTypes,
   translateKeyCharacteristics
 } from 'utils/modelPlan';
-import { NotFoundPartial } from 'views/NotFound';
 
 const KeyCharacteristics = () => {
   const { t } = useTranslation('generalCharacteristics');
