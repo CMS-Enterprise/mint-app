@@ -277,6 +277,7 @@ type ComplexityRoot struct {
 		ID                                        func(childComplexity int) int
 		IsNewModel                                func(childComplexity int) int
 		KeyCharacteristics                        func(childComplexity int) int
+		KeyCharacteristicsNote                    func(childComplexity int) int
 		KeyCharacteristicsOther                   func(childComplexity int) int
 		ManagePartCDEnrollment                    func(childComplexity int) int
 		ManagePartCDEnrollmentNote                func(childComplexity int) int
@@ -1879,6 +1880,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.PlanGeneralCharacteristics.KeyCharacteristics(childComplexity), true
 
+	case "PlanGeneralCharacteristics.keyCharacteristicsNote":
+		if e.complexity.PlanGeneralCharacteristics.KeyCharacteristicsNote == nil {
+			break
+		}
+
+		return e.complexity.PlanGeneralCharacteristics.KeyCharacteristicsNote(childComplexity), true
+
 	case "PlanGeneralCharacteristics.keyCharacteristicsOther":
 		if e.complexity.PlanGeneralCharacteristics.KeyCharacteristicsOther == nil {
 			break
@@ -3098,6 +3106,7 @@ type PlanGeneralCharacteristics {
   alternativePaymentModelNote: String
   keyCharacteristics: [KeyCharacteristic!]!
   keyCharacteristicsOther: String
+  keyCharacteristicsNote: String
   collectPlanBids: Boolean
   collectPlanBidsNote: String
   managePartCDEnrollment: Boolean
@@ -3172,6 +3181,7 @@ input PlanGeneralCharacteristicsChanges @goModel(model: "map[string]interface{}"
   alternativePaymentModelNote: String
   keyCharacteristics: [KeyCharacteristic!]
   keyCharacteristicsOther: String
+  keyCharacteristicsNote: String
   collectPlanBids: Boolean
   collectPlanBidsNote: String
   managePartCDEnrollment: Boolean
@@ -6317,6 +6327,8 @@ func (ec *executionContext) fieldContext_ModelPlan_generalCharacteristics(ctx co
 				return ec.fieldContext_PlanGeneralCharacteristics_keyCharacteristics(ctx, field)
 			case "keyCharacteristicsOther":
 				return ec.fieldContext_PlanGeneralCharacteristics_keyCharacteristicsOther(ctx, field)
+			case "keyCharacteristicsNote":
+				return ec.fieldContext_PlanGeneralCharacteristics_keyCharacteristicsNote(ctx, field)
 			case "collectPlanBids":
 				return ec.fieldContext_PlanGeneralCharacteristics_collectPlanBids(ctx, field)
 			case "collectPlanBidsNote":
@@ -7768,6 +7780,8 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanGeneralCharacteristi
 				return ec.fieldContext_PlanGeneralCharacteristics_keyCharacteristics(ctx, field)
 			case "keyCharacteristicsOther":
 				return ec.fieldContext_PlanGeneralCharacteristics_keyCharacteristicsOther(ctx, field)
+			case "keyCharacteristicsNote":
+				return ec.fieldContext_PlanGeneralCharacteristics_keyCharacteristicsNote(ctx, field)
 			case "collectPlanBids":
 				return ec.fieldContext_PlanGeneralCharacteristics_collectPlanBids(ctx, field)
 			case "collectPlanBidsNote":
@@ -13085,6 +13099,47 @@ func (ec *executionContext) _PlanGeneralCharacteristics_keyCharacteristicsOther(
 }
 
 func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_keyCharacteristicsOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanGeneralCharacteristics",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanGeneralCharacteristics_keyCharacteristicsNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanGeneralCharacteristics) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanGeneralCharacteristics_keyCharacteristicsNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.KeyCharacteristicsNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_keyCharacteristicsNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "PlanGeneralCharacteristics",
 		Field:      field,
@@ -22217,6 +22272,10 @@ func (ec *executionContext) _PlanGeneralCharacteristics(ctx context.Context, sel
 		case "keyCharacteristicsOther":
 
 			out.Values[i] = ec._PlanGeneralCharacteristics_keyCharacteristicsOther(ctx, field, obj)
+
+		case "keyCharacteristicsNote":
+
+			out.Values[i] = ec._PlanGeneralCharacteristics_keyCharacteristicsNote(ctx, field, obj)
 
 		case "collectPlanBids":
 

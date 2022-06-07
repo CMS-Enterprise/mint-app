@@ -371,6 +371,7 @@ type PlanGeneralCharacteristics {
   alternativePaymentModelNote: String
   keyCharacteristics: [KeyCharacteristic!]!
   keyCharacteristicsOther: String
+  keyCharacteristicsNote: String
   collectPlanBids: Boolean
   collectPlanBidsNote: String
   managePartCDEnrollment: Boolean
@@ -445,6 +446,7 @@ input PlanGeneralCharacteristicsChanges @goModel(model: "map[string]interface{}"
   alternativePaymentModelNote: String
   keyCharacteristics: [KeyCharacteristic!]
   keyCharacteristicsOther: String
+  keyCharacteristicsNote: String
   collectPlanBids: Boolean
   collectPlanBidsNote: String
   managePartCDEnrollment: Boolean
