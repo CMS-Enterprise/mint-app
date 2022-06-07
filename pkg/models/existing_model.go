@@ -10,7 +10,7 @@ type ExistingModel struct {
 	ModelName string `json:"modelName" db:"model_name"`
 	Stage     string `json:"stage" db:"stage"`
 
-	NumberOfParticpants           *string    `json:"numberOfParticipants" db:"number_of_participants"`
+	NumberOfParticipants          *string    `json:"numberOfParticipants" db:"number_of_participants"`
 	Category                      *string    `json:"category" db:"category"`
 	Authority                     *string    `json:"authority" db:"authority"`
 	Description                   *string    `json:"description" db:"description"`

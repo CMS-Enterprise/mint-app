@@ -79,6 +79,30 @@ type PlanCollaborator {
   modifiedBy: String
   modifiedDts: Time
 }
+"""
+ExistingModel represents a model that already exists outside of the scope of MINT
+"""
+type ExistingModel {
+  id: Int
+  modelName: String
+  stage: String!
+  numberOfParticipants: String
+  category: String
+  authority: String
+  description: String
+  numberOfBeneficiariesImpacted: Int
+  numberOfPhysiciansImpacted: Int
+  dateBegan: Time
+  dateEnded: Time
+  states: String
+  keywords: String
+  url: String
+  displayModelSummary: Boolean
+  createdBy: String!
+  createdDts: Time!
+  modifiedBy: String
+  modifiedDts: Time
+}
 
 """
 PlanCollaboratorCreateInput represents the data required to create a collaborator on a plan
@@ -677,6 +701,7 @@ type Query {
   planDocumentDownloadURL(id: UUID!): PlanDocumentPayload!
   readPlanDocumentByModelID(id: UUID!): [PlanDocument!]!
   modelPlanCollection: [ModelPlan!]!
+  existingModelCollection: [ExistingModel!]!
   cedarPersonsByCommonName(commonName: String!): [UserInfo!]!
   planCollaboratorByID(id: UUID!): PlanCollaborator!
 }
