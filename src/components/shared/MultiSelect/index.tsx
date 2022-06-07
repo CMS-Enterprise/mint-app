@@ -1,10 +1,17 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { IconClose, Tag } from '@trussworks/react-uswds';
+import { Checkbox, IconClose, Tag } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 
+import './index.scss';
+
+type OptionProp = {
+  value: string;
+  label: string;
+};
+
 type OptionsProps = {
-  options: string[];
+  options: OptionProp[];
   selected: string[];
   optionClick: (option: string) => void;
 };
@@ -15,22 +22,15 @@ const Options = ({ options, selected, optionClick }: OptionsProps) => {
     <ul className="easi-multiselect__options usa-list--unstyled padding-y-05 border-1px border-top-0 maxh-card overflow-scroll position-absolute right-0 left-0 z-top bg-white">
       {options.map(option => {
         return (
-          <li
-            className="display-flex flex-align-center padding-y-05 padding-x-1"
-            key={option}
-            role="option"
-            aria-selected={selected.includes(option)}
-          >
-            <label>
-              <input
-                className="margin-right-1 width-2 height-2"
-                type="checkbox"
-                checked={selected.includes(option)}
-                onChange={() => optionClick(option)}
-              />
-              {t(option)}
-            </label>
-          </li>
+          <Checkbox
+            className="padding-left-1 padding-y-05 hover:bg-base-lightest"
+            key={option.value}
+            defaultChecked={selected.includes(option.value)}
+            id={`easi-multiselect__option-${option.value}`}
+            name={`easi-multiselect-${option.value}`}
+            label={t(option.label)}
+            onChange={() => optionClick(option.value)}
+          />
         );
       })}
     </ul>
@@ -40,7 +40,7 @@ const Options = ({ options, selected, optionClick }: OptionsProps) => {
 type MultiSelectProps = {
   className?: string;
   id?: string;
-  options: string[];
+  options: OptionProp[];
   selectedLabel?: string;
   onChange: (value: string[]) => void;
   initialValues: string[];
@@ -75,13 +75,14 @@ export default function MultiSelect({
       return option.toLowerCase().search(searchValue);
     };
     return options
-      .filter(option => searchIndex(option) > -1)
-      .sort((a, b) => searchIndex(a) - searchIndex(b));
+      .filter(option => searchIndex(option.label) > -1)
+      .sort((a, b) => searchIndex(a.label) - searchIndex(b.label));
   };
 
   useEffect(() => {
-    function handleClickOutside(e) {
-      if (selectRef.current && !selectRef.current.contains(e.target)) {
+    function handleClickOutside(e: MouseEvent) {
+      // cast from EventTarget to Node should always be valid; React typings are just weird
+      if (selectRef.current && !selectRef.current.contains(e.target as Node)) {
         setActive(false);
         setSearchValue('');
       }
@@ -91,14 +92,18 @@ export default function MultiSelect({
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [selectRef]);
-
   useEffect(() => {
     onChange(selected);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selected]);
 
   useEffect(() => {
     setSelected(initialValues);
   }, [initialValues]);
+
+  const findOptions = (key: string) => {
+    return options.find(option => option.value === key);
+  };
 
   return (
     <div
@@ -137,7 +142,7 @@ export default function MultiSelect({
                 className="display-flex flex-justify-start margin-y-05"
               >
                 <Tag className="bg-primary-lighter text-ink text-no-uppercase padding-y-1 padding-x-105 display-flex flex-align-center">
-                  {option}
+                  {findOptions(option)?.label}
                   <IconClose
                     className="margin-left-1"
                     onClick={() => optionClick(option)}

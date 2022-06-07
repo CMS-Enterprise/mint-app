@@ -141,7 +141,7 @@ const Overview = () => {
             </Trans>
           </p>
           <p className="margin-bottom-2 font-body-md line-height-sans-4">
-            {t('helpText')}
+            {h('helpText')}
           </p>
 
           <AskAQuestion modelID={modelID} />

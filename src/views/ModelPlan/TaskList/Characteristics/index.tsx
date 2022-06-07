@@ -1,5 +1,5 @@
-import React, { Fragment, useMemo, useRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
+import React, { useMemo, useRef, useState } from 'react';
+import { Trans, useTranslation } from 'react-i18next';
 import { Link, Route, Switch, useHistory, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
 import {
@@ -8,37 +8,32 @@ import {
   BreadcrumbLink,
   Button,
   ComboBox,
-  Dropdown,
   Fieldset,
   Grid,
   GridContainer,
   IconAdd,
   IconArrowBack,
   Label,
-  Radio,
-  TextInput
+  Radio
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
-import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
+import { Field, Form, Formik, FormikProps } from 'formik';
 
 import AskAQuestion from 'components/AskAQuestion';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
-import Alert from 'components/shared/Alert';
 import AutoSave from 'components/shared/AutoSave';
-import CheckboxField from 'components/shared/CheckboxField';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import MultiSelect from 'components/shared/MultiSelect';
 import TextAreaField from 'components/shared/TextAreaField';
-import TextField from 'components/shared/TextField';
 import GetModelPlanCharacteristics from 'queries/GetModelPlanCharacteristics';
 import GetDraftModelPlans from 'queries/GetModelPlans';
 import {
   GetModelPlanCharacteristics as GetModelPlanCharacteristicsType,
-  GetModelPlanCharacteristics_modelPlan_generalCharacteristics as ModelPlanCharacteristicsType
+  GetModelPlanCharacteristics_modelPlan_generalCharacteristics as ModelPlanCharacteristicsFormType
 } from 'queries/types/GetModelPlanCharacteristics';
 import { GetModelPlans as GetDraftModelPlansType } from 'queries/types/GetModelPlans';
 import { UpdateModelPlanCharacteristicsVariables } from 'queries/types/UpdateModelPlanCharacteristics';
@@ -51,18 +46,6 @@ import Involvements from './Involvements';
 import KeyCharacteristics from './KeyCharacteristics';
 import TargetsAndOptions from './TargetsAndOptions';
 
-type ModelPlanCharacteristicsFormType = {
-  isNewModel: boolean | null;
-  existingModel: string | null;
-  resemblesExistingModel: boolean | null;
-  resemblesExistingModelWhich: string[];
-  resemblesExistingModelHow: string;
-  resemblesExistingModelNote: string;
-  hasComponentsOrTracks: boolean | null;
-  hasComponentsOrTracksDiffer: string;
-  hasComponentsOrTracksNote: string;
-};
-
 const CharacteristicsContent = () => {
   const { t } = useTranslation('generalCharacteristics');
   const { t: h } = useTranslation('draftModelPlan');
@@ -71,7 +54,6 @@ const CharacteristicsContent = () => {
   const formikRef = useRef<FormikProps<ModelPlanCharacteristicsFormType>>(null);
   const history = useHistory();
   const [hasAdditionalNote, setHasAdditionalNote] = useState(false);
-  const [showOther, setShowOther] = useState(false);
 
   const {
     data: modelData,
@@ -96,8 +78,6 @@ const CharacteristicsContent = () => {
     }
   );
 
-  // console.log(data);
-
   const {
     id,
     isNewModel,
@@ -111,7 +91,9 @@ const CharacteristicsContent = () => {
     hasComponentsOrTracksNote
   } =
     data?.modelPlan?.generalCharacteristics ||
-    ({} as ModelPlanCharacteristicsType);
+    ({} as ModelPlanCharacteristicsFormType);
+
+  const modelName = data?.modelPlan?.modelName || '';
 
   const [update] = useMutation<UpdateModelPlanCharacteristicsVariables>(
     UpdateModelPlanCharacteristics
@@ -131,7 +113,7 @@ const CharacteristicsContent = () => {
         if (!response?.errors) {
           if (redirect === 'next') {
             history.push(
-              `/models/${modelID}/task-list/characteristics/involvements`
+              `/models/${modelID}/task-list/characteristics/key-characteristics`
             );
           } else if (redirect === 'back') {
             history.push(`/models/${modelID}/task-list/`);
@@ -143,30 +125,7 @@ const CharacteristicsContent = () => {
       });
   };
 
-  const fundingSources = [
-    'Recovery Audit Contractors',
-    'ACA 3021',
-    'Fed Admin',
-    'HITECH Medicaid',
-    'HITECH Medicare',
-    'MIP Base',
-    'Prog Ops',
-    'QIO',
-    'Disc PI Medicare (MIP)',
-    'Part D COB User Fees',
-    'Exchange',
-    'User Fees',
-    'Risk Adj',
-    'Disc PI Medicaid (MIP)',
-    'QIO Prog Ops',
-    'Research',
-    'Survey and Certification',
-    'CLIA',
-    'Other',
-    'Unknown'
-  ];
-
-  const initialValues: ModelPlanCharacteristicsFormType = {
+  const initialValues = {
     isNewModel: isNewModel ?? null,
     existingModel: existingModel ?? null,
     resemblesExistingModel: resemblesExistingModel ?? null,
@@ -176,7 +135,7 @@ const CharacteristicsContent = () => {
     hasComponentsOrTracks: hasComponentsOrTracks ?? null,
     hasComponentsOrTracksDiffer: hasComponentsOrTracksDiffer ?? '',
     hasComponentsOrTracksNote: hasComponentsOrTracksNote ?? ''
-  };
+  } as ModelPlanCharacteristicsFormType;
 
   return (
     <>
@@ -193,20 +152,23 @@ const CharacteristicsContent = () => {
         </Breadcrumb>
         <Breadcrumb current>{t('breadcrumb')}</Breadcrumb>
       </BreadcrumbBar>
-      <PageHeading className="margin-top-4">{t('heading')}</PageHeading>
+      <PageHeading className="margin-top-4 margin-bottom-2">
+        {t('heading')}
+      </PageHeading>
+
+      <p
+        className="margin-top-0 margin-bottom-1 font-body-lg"
+        data-testid="model-plan-name"
+      >
+        <Trans i18nKey="modelPlanTaskList:subheading">
+          indexZero {modelName} indexTwo
+        </Trans>
+      </p>
+      <p className="margin-bottom-2 font-body-md line-height-sans-4">
+        {h('helpText')}
+      </p>
 
       <AskAQuestion modelID={modelID} />
-
-      <Alert
-        type="info"
-        slim
-        data-testid="mandatory-fields-alert"
-        className="margin-bottom-4"
-      >
-        <span className="mandatory-fields-alert__text">
-          {h('mandatoryFields')}
-        </span>
-      </Alert>
 
       <Formik
         initialValues={initialValues}
@@ -396,7 +358,7 @@ const CharacteristicsContent = () => {
                         as={MultiSelect}
                         id="plan-basics-resembles-which-model"
                         name="resemblesExistingModelWhich"
-                        options={fundingSources}
+                        options={modelPlanOptions}
                         selectedLabel="Selected models"
                         onChange={(value: string[] | []) => {
                           setFieldValue('resemblesExistingModelWhich', value);
@@ -547,7 +509,7 @@ const CharacteristicsContent = () => {
           );
         }}
       </Formik>
-      <PageNumber currentPage={1} totalPages={5} className="margin-bottom-10" />
+      <PageNumber currentPage={1} totalPages={5} className="margin-y-6" />
     </>
   );
 };

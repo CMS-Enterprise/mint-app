@@ -109,6 +109,54 @@ export const translateModelPlanStatus = (status: string) => {
   }
 };
 
+export const translateAlternativePaymentTypes = (type: string) => {
+  switch (type) {
+    case 'REGULAR':
+      return i18next.t('generalCharacteristics:apmTypes.regularAPM');
+    case 'MIPS':
+      return i18next.t('generalCharacteristics:apmTypes.MIPSAPM');
+    case 'ADVANCED':
+      return i18next.t('generalCharacteristics:apmTypes.advancedAPM');
+    default:
+      return '';
+  }
+};
+
+export const translateKeyCharacteristics = (characteristic: string) => {
+  switch (characteristic) {
+    case 'EPISODE_BASED':
+      return i18next.t(
+        'generalCharacteristics:keyCharacteristicsTypes.episodeBased'
+      );
+    case 'PART_C':
+      return i18next.t('generalCharacteristics:keyCharacteristicsTypes.partC');
+    case 'PART_D':
+      return i18next.t('generalCharacteristics:keyCharacteristicsTypes.partD');
+    case 'PAYMENT':
+      return i18next.t(
+        'generalCharacteristics:keyCharacteristicsTypes.payment'
+      );
+    case 'POPULATION_BASED':
+      return i18next.t(
+        'generalCharacteristics:keyCharacteristicsTypes.population'
+      );
+    case 'PREVENTATIVE':
+      return i18next.t(
+        'generalCharacteristics:keyCharacteristicsTypes.preventative'
+      );
+    case 'SERVICE_DELIVERY':
+      return i18next.t(
+        'generalCharacteristics:keyCharacteristicsTypes.service'
+      );
+    case 'SHARED_SAVINGS':
+      return i18next.t('generalCharacteristics:keyCharacteristicsTypes.shared');
+    case 'OTHER':
+      return i18next.t('generalCharacteristics:keyCharacteristicsTypes.other');
+    default:
+      return '';
+  }
+};
+
 /**
  * Translate the document type API enum to a human readable string
  */

@@ -19,11 +19,24 @@ const generalCharacteristics = {
   keyCharacteristics:
     'What are the model key characteristics? Select all that apply.',
   modelAPMType: 'What type of APM model?',
-  regularAPM: 'Regular APM',
-  MIPSAPM: 'MIPS APM',
-  advancedAPM: 'Advanced APM',
+  apmTypes: {
+    regularAPM: 'Regular APM',
+    MIPSAPM: 'MIPS APM',
+    advancedAPM: 'Advanced APM'
+  },
   MIPSInfo:
     'In order to be considered by QPP (and to be MIPS or Advanced APM), you will need to collect TINS and NPIs for provider.',
+  keyCharacteristicsTypes: {
+    episodeBased: 'Episode-Based Model',
+    partC: 'Medicare-Advantage (Part C) Model',
+    partD: 'Part D Model',
+    payment: 'Payment Model',
+    population: 'Population-based Model',
+    preventative: 'Preventative Model',
+    service: 'Serivce Delivery Model',
+    shared: 'Shared Savings Model',
+    other: 'Other'
+  },
   reviewPlanBids: 'Will you review and collect plan bids?',
   manageEnrollment: 'Will you manage Part C/D enrollment?',
   updatedContact: 'Have you updated the plan’s contact',

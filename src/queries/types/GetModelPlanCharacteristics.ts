@@ -72,6 +72,7 @@ export interface GetModelPlanCharacteristics_modelPlan_generalCharacteristics {
 
 export interface GetModelPlanCharacteristics_modelPlan {
   __typename: "ModelPlan";
+  modelName: string;
   generalCharacteristics: GetModelPlanCharacteristics_modelPlan_generalCharacteristics;
 }
 
