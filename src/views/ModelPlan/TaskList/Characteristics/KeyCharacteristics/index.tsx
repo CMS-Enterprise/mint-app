@@ -40,6 +40,7 @@ import {
 } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import {
+  sortOtherEnum,
   translateAlternativePaymentTypes,
   translateKeyCharacteristics
 } from 'utils/modelPlan';
@@ -124,20 +125,11 @@ const KeyCharacteristics = () => {
   };
 
   const mappedKeyCharacteristics = Object.keys(KeyCharacteristic)
+    .sort(sortOtherEnum)
     .map(key => ({
       value: key,
       label: translateKeyCharacteristics(key)
-    }))
-    .sort((a, b) => {
-      if (a.label < b.label || b.label === 'Other') {
-        return -1;
-      }
-      if (a.label > b.label) {
-        return 1;
-      }
-      return 0;
-    });
-
+    }));
   const initialValues = {
     alternativePaymentModel: alternativePaymentModel ?? null,
     alternativePaymentModelTypes: alternativePaymentModelTypes ?? [],

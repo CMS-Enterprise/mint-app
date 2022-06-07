@@ -122,6 +122,47 @@ export const translateAlternativePaymentTypes = (type: string) => {
   }
 };
 
+export const translateGeographyTypes = (type: string) => {
+  switch (type) {
+    case 'STATE':
+      return i18next.t('generalCharacteristics:geoState');
+    case 'REGION':
+      return i18next.t('generalCharacteristics:geoRegion');
+    case 'OTHER':
+      return i18next.t('generalCharacteristics:other');
+    default:
+      return '';
+  }
+};
+
+export const translateGeographyApplication = (type: string) => {
+  switch (type) {
+    case 'PARTICIPANTS':
+      return i18next.t('generalCharacteristics:geoParticipants');
+    case 'PROVIDERS':
+      return i18next.t('generalCharacteristics:geoProviders');
+    case 'BENEFICIARIES':
+      return i18next.t('generalCharacteristics:geoBeneficiaries');
+    case 'OTHER':
+      return i18next.t('generalCharacteristics:other');
+    default:
+      return '';
+  }
+};
+
+export const translateAgreementTypes = (type: string) => {
+  switch (type) {
+    case 'PARTICIPATION':
+      return i18next.t('generalCharacteristics:participationAgreement');
+    case 'COOPERATIVE':
+      return i18next.t('generalCharacteristics:coopAgreement');
+    case 'OTHER':
+      return i18next.t('generalCharacteristics:other');
+    default:
+      return '';
+  }
+};
+
 export const translateKeyCharacteristics = (characteristic: string) => {
   switch (characteristic) {
     case 'EPISODE_BASED':
@@ -208,6 +249,17 @@ export const sortRepliesByDate = (
     (discussionB.replies[discussionB.replies.length - 1]?.createdDts || 0)
   ) {
     return -1;
+  }
+  return 0;
+};
+
+// Sort mapped enums to be alphabetical and have 'OTHER' come last
+export const sortOtherEnum = (a: string, b: string) => {
+  if (a < b || b === 'OTHER') {
+    return -1;
+  }
+  if (a > b) {
+    return 1;
   }
   return 0;
 };

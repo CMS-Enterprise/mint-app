@@ -52,13 +52,19 @@ const generalCharacteristics = {
   agreementType: 'What is the agreement type?',
   agreementNote:
     'Note: CMMI writes, Office of General Council (OGC) approves both types of agreements',
+  moreParticipation: 'Will more than one participation agreement be needed?',
+  agreementDepending:
+    'depending on awardee selections or characteristics such as risk/type/size',
   participationAgreement: 'Participation Agreement',
   coopAgreement: 'Co-Operative Agreement/Grant',
   other: 'Other',
   geographyType: 'Geography type is',
+  geographySpecify: 'Please specify what the other geography type is.',
   geoState: 'State',
   geoRegion: 'Region (CBSA, MSA, HRR, etc.)',
   geographyApplied: 'Geographies are applied to',
+  geographyAppliedSpecify:
+    'Please specify what the geographies are applied to.',
   geoParticipants: 'Participants',
   geoProviders: 'Providers',
   geoBeneficiaries: 'Beneficiaries',
