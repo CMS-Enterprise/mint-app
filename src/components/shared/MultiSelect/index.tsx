@@ -56,7 +56,7 @@ export default function MultiSelect({
 }: MultiSelectProps) {
   const [searchValue, setSearchValue] = useState('');
 
-  const [selected, setSelected] = useState<any[]>(initialValues);
+  const [selected, setSelected] = useState<string[]>(initialValues);
   const [active, setActive] = useState(false);
 
   const { t } = useTranslation();

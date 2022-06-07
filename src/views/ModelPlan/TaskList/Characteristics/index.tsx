@@ -359,7 +359,7 @@ const CharacteristicsContent = () => {
                         id="plan-basics-resembles-which-model"
                         name="resemblesExistingModelWhich"
                         options={modelPlanOptions}
-                        selectedLabel="Selected models"
+                        selectedLabel={t('selectedModels')}
                         onChange={(value: string[] | []) => {
                           setFieldValue('resemblesExistingModelWhich', value);
                         }}

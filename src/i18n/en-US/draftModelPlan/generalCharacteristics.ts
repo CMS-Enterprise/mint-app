@@ -11,6 +11,7 @@ const generalCharacteristics = {
   modelResemblance:
     'Which existing models does your proposed track/model most closely resemble?',
   selectedModels: 'Selected models',
+  selectedKeyCharacteristics: 'Selected key characteristics',
   waysResembleModel:
     'In what way does the new model resemble the selected model(s)?',
   tracksDiffer: 'How do the tracks differ?',
@@ -37,6 +38,8 @@ const generalCharacteristics = {
     shared: 'Shared Savings Model',
     other: 'Other'
   },
+  specificQuestions: 'Key characteristic specific questions',
+  pleaseDescribe: 'Please describe the other key characteristics',
   reviewPlanBids: 'Will you review and collect plan bids?',
   manageEnrollment: 'Will you manage Part C/D enrollment?',
   updatedContact: 'Have you updated the plan’s contact',

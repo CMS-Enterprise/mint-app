@@ -57,6 +57,15 @@ const KeyCharacteristics = () => {
   const formikRef = useRef<FormikProps<ModelPlanCharacteristicsFormType>>(null);
   const history = useHistory();
   const [alternativePaymentNote, setAlternativePaymentNote] = useState(false);
+  // const [keyCharacteristicsNote, setkeyCharacteristicsNote] = useState(false);  // TODO: BE needs to implement this field
+  const [isCollectPlanBidsNote, setIsCollectPlanBidsNote] = useState(false);
+  const [
+    isManagePartCDEnrollmentNote,
+    setIsManagePartCDEnrollmentNote
+  ] = useState(false);
+  const [isPlanContactUpdatedNote, setIsPlanContactUpdatedNote] = useState(
+    false
+  );
 
   const { data } = useQuery<GetModelPlanCharacteristicsType>(
     GetModelPlanCharacteristics,
@@ -75,6 +84,7 @@ const KeyCharacteristics = () => {
     alternativePaymentModelTypes,
     alternativePaymentModelNote,
     keyCharacteristics,
+    // keyCharacteristicsNote, TODO: BE needs to implement this field
     keyCharacteristicsOther,
     collectPlanBids,
     collectPlanBidsNote,
@@ -257,7 +267,7 @@ const KeyCharacteristics = () => {
                     <Field
                       as={Radio}
                       id="plan-characteristics-alternative-payment-no"
-                      name="isNewalternativePaymentModelModel"
+                      name="alternativePaymentModel"
                       label={h('no')}
                       value="FALSE"
                       checked={values.alternativePaymentModel === false}
@@ -362,13 +372,205 @@ const KeyCharacteristics = () => {
                     id="plan-characteristics-key-characteristics"
                     name="keyCharacteristics"
                     options={mappedKeyCharacteristics}
-                    selectedLabel="Selected models"
+                    selectedLabel={t('selectedKeyCharacteristics')}
                     onChange={(value: string[] | []) => {
                       setFieldValue('keyCharacteristics', value);
                     }}
                     initialValues={initialValues.keyCharacteristics}
                   />
                 </FieldGroup>
+
+                <FieldGroup
+                  scrollElement="keyCharacteristicsOther"
+                  error={!!flatErrors.keyCharacteristicsOther}
+                >
+                  <Label htmlFor="plan-characteristics-key-other">
+                    {t('specificQuestions')}
+                  </Label>
+                  <p className="text-base margin-y-1 margin-top-3">
+                    {t('pleaseDescribe')}
+                  </p>
+                  <FieldErrorMsg>
+                    {flatErrors.keyCharacteristicsOther}
+                  </FieldErrorMsg>
+                  <Field
+                    as={TextInput}
+                    error={!!flatErrors.keyCharacteristicsOther}
+                    id="plan-characteristics-key-other"
+                    maxLength={50}
+                    name="keyCharacteristicsOther"
+                  />
+                </FieldGroup>
+
+                <FieldGroup
+                  scrollElement="collectPlanBids"
+                  error={!!flatErrors.collectPlanBids}
+                  className="margin-y-4"
+                >
+                  <Label htmlFor="plan-characteristics-collect-bids">
+                    {t('reviewPlanBids')}
+                  </Label>
+                  <FieldErrorMsg>{flatErrors.collectPlanBids}</FieldErrorMsg>
+                  <Fieldset>
+                    <Field
+                      as={Radio}
+                      id="plan-characteristics-collect-bids"
+                      name="collectPlanBids"
+                      label={h('yes')}
+                      value="TRUE"
+                      checked={values.collectPlanBids === true}
+                      onChange={() => {
+                        setFieldValue('collectPlanBids', true);
+                      }}
+                    />
+                    <Field
+                      as={Radio}
+                      id="plan-characteristics-collect-bids-no"
+                      name="collectPlanBids"
+                      label={h('no')}
+                      value="FALSE"
+                      checked={values.collectPlanBids === false}
+                      onChange={() => {
+                        setFieldValue('collectPlanBids', false);
+                      }}
+                    />
+                  </Fieldset>
+                </FieldGroup>
+
+                <Button
+                  type="button"
+                  className="usa-button usa-button--unstyled"
+                  onClick={() => setIsCollectPlanBidsNote(true)}
+                >
+                  <IconAdd className="margin-right-1" aria-hidden />
+                  {h('additionalNote')}
+                </Button>
+
+                {isCollectPlanBidsNote && (
+                  <FieldGroup className="margin-top-4">
+                    <Field
+                      as={TextAreaField}
+                      className="height-15"
+                      id="plan-characteristics-collect-bids-note"
+                      name="collectPlanBidsNote"
+                      label={h('Notes')}
+                    />
+                  </FieldGroup>
+                )}
+
+                <FieldGroup
+                  scrollElement="managePartCDEnrollment"
+                  error={!!flatErrors.managePartCDEnrollment}
+                  className="margin-y-4"
+                >
+                  <Label htmlFor="plan-characteristics-manage-enrollment">
+                    {t('manageEnrollment')}
+                  </Label>
+                  <FieldErrorMsg>
+                    {flatErrors.managePartCDEnrollment}
+                  </FieldErrorMsg>
+                  <Fieldset>
+                    <Field
+                      as={Radio}
+                      id="plan-characteristics-manage-enrollment"
+                      name="managePartCDEnrollment"
+                      label={h('yes')}
+                      value="TRUE"
+                      checked={values.managePartCDEnrollment === true}
+                      onChange={() => {
+                        setFieldValue('managePartCDEnrollment', true);
+                      }}
+                    />
+                    <Field
+                      as={Radio}
+                      id="plan-characteristics-manage-enrollment-no"
+                      name="managePartCDEnrollment"
+                      label={h('no')}
+                      value="FALSE"
+                      checked={values.managePartCDEnrollment === false}
+                      onChange={() => {
+                        setFieldValue('managePartCDEnrollment', false);
+                      }}
+                    />
+                  </Fieldset>
+                </FieldGroup>
+
+                <Button
+                  type="button"
+                  className="usa-button usa-button--unstyled"
+                  onClick={() => setIsManagePartCDEnrollmentNote(true)}
+                >
+                  <IconAdd className="margin-right-1" aria-hidden />
+                  {h('additionalNote')}
+                </Button>
+
+                {isManagePartCDEnrollmentNote && (
+                  <FieldGroup className="margin-top-4">
+                    <Field
+                      as={TextAreaField}
+                      className="height-15"
+                      id="plan-characteristics-manage-enrollment-note"
+                      name="managePartCDEnrollmentNote"
+                      label={h('Notes')}
+                    />
+                  </FieldGroup>
+                )}
+
+                <FieldGroup
+                  scrollElement="planContactUpdated"
+                  error={!!flatErrors.planContactUpdated}
+                  className="margin-y-4"
+                >
+                  <Label htmlFor="plan-characteristics-contact-updated">
+                    {t('updatedContact')}
+                  </Label>
+                  <FieldErrorMsg>{flatErrors.planContactUpdated}</FieldErrorMsg>
+                  <Fieldset>
+                    <Field
+                      as={Radio}
+                      id="plan-characteristics-contact-updated"
+                      name="planContactUpdated"
+                      label={h('yes')}
+                      value="TRUE"
+                      checked={values.planContactUpdated === true}
+                      onChange={() => {
+                        setFieldValue('planContactUpdated', true);
+                      }}
+                    />
+                    <Field
+                      as={Radio}
+                      id="plan-characteristics-contact-updated-no"
+                      name="planContactUpdated"
+                      label={h('no')}
+                      value="FALSE"
+                      checked={values.planContactUpdated === false}
+                      onChange={() => {
+                        setFieldValue('planContactUpdated', false);
+                      }}
+                    />
+                  </Fieldset>
+                </FieldGroup>
+
+                <Button
+                  type="button"
+                  className="usa-button usa-button--unstyled"
+                  onClick={() => setIsPlanContactUpdatedNote(true)}
+                >
+                  <IconAdd className="margin-right-1" aria-hidden />
+                  {h('additionalNote')}
+                </Button>
+
+                {isPlanContactUpdatedNote && (
+                  <FieldGroup className="margin-top-4">
+                    <Field
+                      as={TextAreaField}
+                      className="height-15"
+                      id="plan-characteristics-contact-updated-note"
+                      name="planContactUpdatedNote"
+                      label={h('Notes')}
+                    />
+                  </FieldGroup>
+                )}
 
                 <div className="margin-top-6 margin-bottom-3">
                   <Button
