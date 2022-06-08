@@ -27,6 +27,7 @@ export interface GetModelPlanCharacteristics_modelPlan_generalCharacteristics {
   alternativePaymentModelNote: string | null;
   keyCharacteristics: KeyCharacteristic[];
   keyCharacteristicsOther: string | null;
+  keyCharacteristicsNote: string | null;
   collectPlanBids: boolean | null;
   collectPlanBidsNote: string | null;
   managePartCDEnrollment: boolean | null;

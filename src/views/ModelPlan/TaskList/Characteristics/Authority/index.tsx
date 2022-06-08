@@ -163,13 +163,11 @@ const Authority = () => {
       >
         {(formikProps: FormikProps<ModelPlanCharacteristicsFormType>) => {
           const {
-            dirty,
             errors,
             handleSubmit,
             setErrors,
             setFieldValue,
             validateForm,
-            isValid,
             values
           } = formikProps;
           const flatErrors = flattenErrors(errors);

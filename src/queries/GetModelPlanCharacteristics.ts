@@ -21,6 +21,7 @@ export default gql`
         alternativePaymentModelNote
         keyCharacteristics
         keyCharacteristicsOther
+        keyCharacteristicsNote
         collectPlanBids
         collectPlanBidsNote
         managePartCDEnrollment

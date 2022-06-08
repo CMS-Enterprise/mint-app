@@ -69,7 +69,7 @@ const KeyCharacteristics = () => {
     alternativePaymentModelTypes,
     alternativePaymentModelNote,
     keyCharacteristics,
-    // keyCharacteristicsNote, TODO: BE needs to implement this field
+    keyCharacteristicsNote,
     keyCharacteristicsOther,
     collectPlanBids,
     collectPlanBidsNote,
@@ -126,6 +126,7 @@ const KeyCharacteristics = () => {
     alternativePaymentModelNote: alternativePaymentModelNote ?? '',
     keyCharacteristics: keyCharacteristics ?? [],
     keyCharacteristicsOther: keyCharacteristicsOther ?? '',
+    keyCharacteristicsNote: keyCharacteristicsNote ?? '',
     collectPlanBids: collectPlanBids ?? null,
     collectPlanBidsNote: collectPlanBidsNote ?? '',
     managePartCDEnrollment: managePartCDEnrollment ?? null,
@@ -339,6 +340,11 @@ const KeyCharacteristics = () => {
                     initialValues={initialValues.keyCharacteristics}
                   />
                 </FieldGroup>
+
+                <AddNote
+                  id="plan-characteristics-key-characteristics-note"
+                  field="keyCharacteristicsNote"
+                />
 
                 <FieldGroup
                   scrollElement="keyCharacteristicsOther"

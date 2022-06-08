@@ -250,6 +250,7 @@ export interface PlanGeneralCharacteristicsChanges {
   alternativePaymentModelNote?: string | null;
   keyCharacteristics?: KeyCharacteristic[] | null;
   keyCharacteristicsOther?: string | null;
+  keyCharacteristicsNote?: string | null;
   collectPlanBids?: boolean | null;
   collectPlanBidsNote?: string | null;
   managePartCDEnrollment?: boolean | null;
