@@ -60,7 +60,7 @@ export default function MultiSelect({
   const [active, setActive] = useState(false);
 
   const { t } = useTranslation();
-  const selectRef = useRef(null);
+  const selectRef = useRef<HTMLInputElement>(null);
 
   const optionClick = (option: string) => {
     if (selected.includes(option)) {
