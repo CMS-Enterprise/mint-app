@@ -343,7 +343,7 @@ namespace :db do
 
   desc "Dump DB to file"
   task :dump do
-    sh "pg_dump -T *.*flyway* --data-only postgres > scripts/data/local-db.sql"
+    sh "pg_dump -T *.*flyway* -T *.*existing_model --data-only postgres > scripts/data/local-db.sql"
   end
 
   desc "Load development dataset from file"
