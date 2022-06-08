@@ -672,6 +672,9 @@ input PlanParticipantsAndProvidersChanges @goModel(model: "map[string]interface{
 PlanOpsEvalAndLearning represents the task list section that deals with information regarding the Ops Eval and Learning
 """
 type PlanOpsEvalAndLearning {
+    id: UUID!
+    modelPlanID: UUID!
+
     #Page 1
     agencyOrStateHelp: [AgencyOrStateHelpType!]
     agencyOrStateHelpNote: String
@@ -794,8 +797,6 @@ Fields explicitly set with NULL will be unset, and omitted fields will be left u
 https://gqlgen.com/reference/changesets/
 """
 input PlanOpsEvalAndLearningChanges @goModel(model: "map[string]interface{}") {
-    id: UUID!
-    modelPlanID: UUID!
 
     #Page 1
     agencyOrStateHelp: [AgencyOrStateHelpType!]

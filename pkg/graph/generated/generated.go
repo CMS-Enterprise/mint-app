@@ -366,6 +366,7 @@ type ComplexityRoot struct {
 		HelpdeskUse                                  func(childComplexity int) int
 		HelpdeskUseNote                              func(childComplexity int) int
 		HelpdeskUseOther                             func(childComplexity int) int
+		ID                                           func(childComplexity int) int
 		IcdNote                                      func(childComplexity int) int
 		IcdOwner                                     func(childComplexity int) int
 		IddocOperations                              func(childComplexity int) int
@@ -376,6 +377,7 @@ type ComplexityRoot struct {
 		ModelLearningSystems                         func(childComplexity int) int
 		ModelLearningSystemsNote                     func(childComplexity int) int
 		ModelLearningSystemsOther                    func(childComplexity int) int
+		ModelPlanID                                  func(childComplexity int) int
 		ModifiedBy                                   func(childComplexity int) int
 		ModifiedDts                                  func(childComplexity int) int
 		ProduceBenefitEnhancementFiles               func(childComplexity int) int
@@ -2589,6 +2591,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.PlanOpsEvalAndLearning.HelpdeskUseOther(childComplexity), true
 
+	case "PlanOpsEvalAndLearning.id":
+		if e.complexity.PlanOpsEvalAndLearning.ID == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.ID(childComplexity), true
+
 	case "PlanOpsEvalAndLearning.icdNote":
 		if e.complexity.PlanOpsEvalAndLearning.IcdNote == nil {
 			break
@@ -2658,6 +2667,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.PlanOpsEvalAndLearning.ModelLearningSystemsOther(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.modelPlanID":
+		if e.complexity.PlanOpsEvalAndLearning.ModelPlanID == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.ModelPlanID(childComplexity), true
 
 	case "PlanOpsEvalAndLearning.modifiedBy":
 		if e.complexity.PlanOpsEvalAndLearning.ModifiedBy == nil {
@@ -4095,6 +4111,9 @@ input PlanParticipantsAndProvidersChanges @goModel(model: "map[string]interface{
 PlanOpsEvalAndLearning represents the task list section that deals with information regarding the Ops Eval and Learning
 """
 type PlanOpsEvalAndLearning {
+    id: UUID!
+    modelPlanID: UUID!
+
     #Page 1
     agencyOrStateHelp: [AgencyOrStateHelpType!]
     agencyOrStateHelpNote: String
@@ -4217,8 +4236,6 @@ Fields explicitly set with NULL will be unset, and omitted fields will be left u
 https://gqlgen.com/reference/changesets/
 """
 input PlanOpsEvalAndLearningChanges @goModel(model: "map[string]interface{}") {
-    id: UUID!
-    modelPlanID: UUID!
 
     #Page 1
     agencyOrStateHelp: [AgencyOrStateHelpType!]
@@ -6976,6 +6993,10 @@ func (ec *executionContext) fieldContext_ModelPlan_opsEvalAndLearning(ctx contex
 		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			switch field.Name {
+			case "id":
+				return ec.fieldContext_PlanOpsEvalAndLearning_id(ctx, field)
+			case "modelPlanID":
+				return ec.fieldContext_PlanOpsEvalAndLearning_modelPlanID(ctx, field)
 			case "agencyOrStateHelp":
 				return ec.fieldContext_PlanOpsEvalAndLearning_agencyOrStateHelp(ctx, field)
 			case "agencyOrStateHelpNote":
@@ -8784,6 +8805,10 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanOpsEvalAndLearning(c
 		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			switch field.Name {
+			case "id":
+				return ec.fieldContext_PlanOpsEvalAndLearning_id(ctx, field)
+			case "modelPlanID":
+				return ec.fieldContext_PlanOpsEvalAndLearning_modelPlanID(ctx, field)
 			case "agencyOrStateHelp":
 				return ec.fieldContext_PlanOpsEvalAndLearning_agencyOrStateHelp(ctx, field)
 			case "agencyOrStateHelpNote":
@@ -16410,6 +16435,94 @@ func (ec *executionContext) fieldContext_PlanMilestones_status(ctx context.Conte
 	return fc, nil
 }
 
+func (ec *executionContext) _PlanOpsEvalAndLearning_id(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_id(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ID, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(uuid.UUID)
+	fc.Result = res
+	return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_id(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type UUID does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_modelPlanID(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_modelPlanID(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ModelPlanID, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(uuid.UUID)
+	fc.Result = res
+	return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_modelPlanID(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type UUID does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _PlanOpsEvalAndLearning_agencyOrStateHelp(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_agencyOrStateHelp(ctx, field)
 	if err != nil {
@@ -17007,9 +17120,9 @@ func (ec *executionContext) _PlanOpsEvalAndLearning_iddocOperations(ctx context.
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(models.IddocOperationsType)
+	res := resTmp.(*models.IddocOperationsType)
 	fc.Result = res
-	return ec.marshalOIddocOperationsType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐIddocOperationsType(ctx, field.Selections, res)
+	return ec.marshalOIddocOperationsType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐIddocOperationsType(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_iddocOperations(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -17786,9 +17899,9 @@ func (ec *executionContext) _PlanOpsEvalAndLearning_dataFullTimeOrIncremental(ct
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(models.DataFullTimeOrIncrementalType)
+	res := resTmp.(*models.DataFullTimeOrIncrementalType)
 	fc.Result = res
-	return ec.marshalODataFullTimeOrIncrementalType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDataFullTimeOrIncrementalType(ctx, field.Selections, res)
+	return ec.marshalODataFullTimeOrIncrementalType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDataFullTimeOrIncrementalType(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_dataFullTimeOrIncremental(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -18073,9 +18186,9 @@ func (ec *executionContext) _PlanOpsEvalAndLearning_benchmarkForPerformance(ctx 
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(models.BenchmarkForPerformanceType)
+	res := resTmp.(*models.BenchmarkForPerformanceType)
 	fc.Result = res
-	return ec.marshalOBenchmarkForPerformanceType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐBenchmarkForPerformanceType(ctx, field.Selections, res)
+	return ec.marshalOBenchmarkForPerformanceType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐBenchmarkForPerformanceType(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_benchmarkForPerformance(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -19672,9 +19785,9 @@ func (ec *executionContext) _PlanOpsEvalAndLearning_dataSharingStarts(ctx contex
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(models.DataStartsType)
+	res := resTmp.(*models.DataStartsType)
 	fc.Result = res
-	return ec.marshalODataStartsType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDataStartsType(ctx, field.Selections, res)
+	return ec.marshalODataStartsType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDataStartsType(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_dataSharingStarts(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -19877,9 +19990,9 @@ func (ec *executionContext) _PlanOpsEvalAndLearning_dataCollectionStarts(ctx con
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(models.DataStartsType)
+	res := resTmp.(*models.DataStartsType)
 	fc.Result = res
-	return ec.marshalODataStartsType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDataStartsType(ctx, field.Selections, res)
+	return ec.marshalODataStartsType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDataStartsType(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_dataCollectionStarts(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -20082,9 +20195,9 @@ func (ec *executionContext) _PlanOpsEvalAndLearning_qualityReportingStarts(ctx c
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(models.DataStartsType)
+	res := resTmp.(*models.DataStartsType)
 	fc.Result = res
-	return ec.marshalODataStartsType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDataStartsType(ctx, field.Selections, res)
+	return ec.marshalODataStartsType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDataStartsType(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_qualityReportingStarts(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -27411,6 +27524,20 @@ func (ec *executionContext) _PlanOpsEvalAndLearning(ctx context.Context, sel ast
 		switch field.Name {
 		case "__typename":
 			out.Values[i] = graphql.MarshalString("PlanOpsEvalAndLearning")
+		case "id":
+
+			out.Values[i] = ec._PlanOpsEvalAndLearning_id(ctx, field, obj)
+
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&invalids, 1)
+			}
+		case "modelPlanID":
+
+			out.Values[i] = ec._PlanOpsEvalAndLearning_modelPlanID(ctx, field, obj)
+
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&invalids, 1)
+			}
 		case "agencyOrStateHelp":
 			field := field
 
@@ -31011,17 +31138,6 @@ func (ec *executionContext) marshalOAuthorityAllowance2ᚕgithubᚗcomᚋcmsgov�
 	return ret
 }
 
-func (ec *executionContext) unmarshalOBenchmarkForPerformanceType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐBenchmarkForPerformanceType(ctx context.Context, v interface{}) (models.BenchmarkForPerformanceType, error) {
-	tmp, err := graphql.UnmarshalString(v)
-	res := models.BenchmarkForPerformanceType(tmp)
-	return res, graphql.ErrorOnPath(ctx, err)
-}
-
-func (ec *executionContext) marshalOBenchmarkForPerformanceType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐBenchmarkForPerformanceType(ctx context.Context, sel ast.SelectionSet, v models.BenchmarkForPerformanceType) graphql.Marshaler {
-	res := graphql.MarshalString(string(v))
-	return res
-}
-
 func (ec *executionContext) unmarshalOBenchmarkForPerformanceType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐBenchmarkForPerformanceType(ctx context.Context, v interface{}) (*models.BenchmarkForPerformanceType, error) {
 	if v == nil {
 		return nil, nil
@@ -31551,17 +31667,6 @@ func (ec *executionContext) marshalODataFrequencyType2ᚕgithubᚗcomᚋcmsgov�
 	return ret
 }
 
-func (ec *executionContext) unmarshalODataFullTimeOrIncrementalType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDataFullTimeOrIncrementalType(ctx context.Context, v interface{}) (models.DataFullTimeOrIncrementalType, error) {
-	tmp, err := graphql.UnmarshalString(v)
-	res := models.DataFullTimeOrIncrementalType(tmp)
-	return res, graphql.ErrorOnPath(ctx, err)
-}
-
-func (ec *executionContext) marshalODataFullTimeOrIncrementalType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDataFullTimeOrIncrementalType(ctx context.Context, sel ast.SelectionSet, v models.DataFullTimeOrIncrementalType) graphql.Marshaler {
-	res := graphql.MarshalString(string(v))
-	return res
-}
-
 func (ec *executionContext) unmarshalODataFullTimeOrIncrementalType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDataFullTimeOrIncrementalType(ctx context.Context, v interface{}) (*models.DataFullTimeOrIncrementalType, error) {
 	if v == nil {
 		return nil, nil
@@ -31576,17 +31681,6 @@ func (ec *executionContext) marshalODataFullTimeOrIncrementalType2ᚖgithubᚗco
 		return graphql.Null
 	}
 	res := graphql.MarshalString(string(*v))
-	return res
-}
-
-func (ec *executionContext) unmarshalODataStartsType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDataStartsType(ctx context.Context, v interface{}) (models.DataStartsType, error) {
-	tmp, err := graphql.UnmarshalString(v)
-	res := models.DataStartsType(tmp)
-	return res, graphql.ErrorOnPath(ctx, err)
-}
-
-func (ec *executionContext) marshalODataStartsType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDataStartsType(ctx context.Context, sel ast.SelectionSet, v models.DataStartsType) graphql.Marshaler {
-	res := graphql.MarshalString(string(v))
 	return res
 }
 
@@ -31991,17 +32085,6 @@ func (ec *executionContext) marshalOHelpdeskUseType2ᚕgithubᚗcomᚋcmsgovᚋm
 	}
 
 	return ret
-}
-
-func (ec *executionContext) unmarshalOIddocOperationsType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐIddocOperationsType(ctx context.Context, v interface{}) (models.IddocOperationsType, error) {
-	tmp, err := graphql.UnmarshalString(v)
-	res := models.IddocOperationsType(tmp)
-	return res, graphql.ErrorOnPath(ctx, err)
-}
-
-func (ec *executionContext) marshalOIddocOperationsType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐIddocOperationsType(ctx context.Context, sel ast.SelectionSet, v models.IddocOperationsType) graphql.Marshaler {
-	res := graphql.MarshalString(string(v))
-	return res
 }
 
 func (ec *executionContext) unmarshalOIddocOperationsType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐIddocOperationsType(ctx context.Context, v interface{}) (*models.IddocOperationsType, error) {
