@@ -11,7 +11,6 @@ import {
   Fieldset,
   Grid,
   GridContainer,
-  IconAdd,
   IconArrowBack,
   Label,
   Radio
@@ -19,6 +18,7 @@ import {
 import classNames from 'classnames';
 import { Field, Form, Formik, FormikProps } from 'formik';
 
+import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
@@ -53,7 +53,6 @@ const CharacteristicsContent = () => {
 
   const formikRef = useRef<FormikProps<ModelPlanCharacteristicsFormType>>(null);
   const history = useHistory();
-  const [hasAdditionalNote, setHasAdditionalNote] = useState(false);
 
   const {
     data: modelData,
@@ -222,7 +221,7 @@ const CharacteristicsContent = () => {
                 <FieldGroup
                   scrollElement="isNewModel"
                   error={!!flatErrors.isNewModel}
-                  className="margin-y-4"
+                  className="margin-y-4 margin-bottom-8"
                 >
                   <Label htmlFor="plan-characteristics-is-new-model">
                     {t('isNewModel')}
@@ -253,57 +252,56 @@ const CharacteristicsContent = () => {
                       }}
                     />
                   </Fieldset>
-                </FieldGroup>
-
-                {values.isNewModel === false && (
-                  <FieldGroup
-                    scrollElement="existingModel"
-                    error={!!flatErrors.existingModel}
-                  >
-                    <Label
-                      htmlFor="plan-characteristics-existing-model"
-                      className="margin-bottom-1 text-normal"
+                  {values.isNewModel === false && (
+                    <FieldGroup
+                      scrollElement="existingModel"
+                      error={!!flatErrors.existingModel}
                     >
-                      {t('whichExistingModel')}
-                    </Label>
-                    <p className="text-base margin-0">{t('startTypeing')}</p>
-                    <FieldErrorMsg>{flatErrors.existingModel}</FieldErrorMsg>
+                      <Label
+                        htmlFor="plan-characteristics-existing-model"
+                        className="margin-bottom-1 text-normal"
+                      >
+                        {t('whichExistingModel')}
+                      </Label>
+                      <p className="text-base margin-0">{t('startTypeing')}</p>
+                      <FieldErrorMsg>{flatErrors.existingModel}</FieldErrorMsg>
 
-                    <ComboBox
-                      disabled={!!modelError}
-                      id="plan-characteristics-existing-model"
-                      name="existingModel"
-                      className={classNames({ disabled: modelError })}
-                      inputProps={{
-                        id: 'plan-characteristics-existing-model',
-                        name: 'existingModel',
-                        'aria-describedby':
-                          'plan-characteristics-existing-model'
-                      }}
-                      options={modelPlanOptions}
-                      defaultValue={
-                        modelData?.modelPlanCollection?.find(
-                          modelPlan => modelPlan?.modelName === existingModel
-                        )?.id || ''
-                      }
-                      onChange={modelPlanID => {
-                        const model = modelData?.modelPlanCollection?.find(
-                          modelPlan => modelPlan?.id === modelPlanID
-                        );
-                        if (model) {
-                          setFieldValue('existingModel', model.modelName);
-                        } else {
-                          setFieldValue('existingModel', '');
+                      <ComboBox
+                        disabled={!!modelError}
+                        id="plan-characteristics-existing-model"
+                        name="existingModel"
+                        className={classNames({ disabled: modelError })}
+                        inputProps={{
+                          id: 'plan-characteristics-existing-model',
+                          name: 'existingModel',
+                          'aria-describedby':
+                            'plan-characteristics-existing-model'
+                        }}
+                        options={modelPlanOptions}
+                        defaultValue={
+                          modelData?.modelPlanCollection?.find(
+                            modelPlan => modelPlan?.modelName === existingModel
+                          )?.id || ''
                         }
-                      }}
-                    />
-                  </FieldGroup>
-                )}
+                        onChange={modelPlanID => {
+                          const model = modelData?.modelPlanCollection?.find(
+                            modelPlan => modelPlan?.id === modelPlanID
+                          );
+                          if (model) {
+                            setFieldValue('existingModel', model.modelName);
+                          } else {
+                            setFieldValue('existingModel', '');
+                          }
+                        }}
+                      />
+                    </FieldGroup>
+                  )}
+                </FieldGroup>
 
                 <FieldGroup
                   scrollElement="resemblesExistingModel"
                   error={!!flatErrors.resemblesExistingModel}
-                  className="margin-y-6"
+                  className="margin-y-4 margin-bottom-8"
                 >
                   <Label htmlFor="plan-characteristics-resembles-existing-model">
                     {t('resembleModel')}
@@ -344,7 +342,10 @@ const CharacteristicsContent = () => {
                       error={!!flatErrors.resemblesExistingModelWhich}
                       className="margin-top-4"
                     >
-                      <Label htmlFor="plan-basics-resembles-which-model">
+                      <Label
+                        htmlFor="plan-basics-resembles-which-model"
+                        className="text-normal"
+                      >
                         {t('modelResemblance')}
                       </Label>
                       <p className="text-base margin-y-1">
@@ -391,33 +392,17 @@ const CharacteristicsContent = () => {
                       />
                     </FieldGroup>
 
-                    <Button
-                      type="button"
-                      className="usa-button usa-button--unstyled margin-top-4"
-                      onClick={() => setHasAdditionalNote(true)}
-                    >
-                      <IconAdd className="margin-right-1" aria-hidden />
-                      {h('additionalNote')}
-                    </Button>
-
-                    {hasAdditionalNote && (
-                      <FieldGroup className="margin-top-4">
-                        <Field
-                          as={TextAreaField}
-                          className="height-15"
-                          id="plan-basics-note"
-                          name="resemblesExistingModelNote"
-                          label={h('Notes')}
-                        />
-                      </FieldGroup>
-                    )}
+                    <AddNote
+                      id="plan-characteristics-resemble-existing-note"
+                      field="resemblesExistingModelNote"
+                    />
                   </>
                 )}
 
                 <FieldGroup
                   scrollElement="hasComponentsOrTracks"
                   error={!!flatErrors.hasComponentsOrTracks}
-                  className="margin-y-4"
+                  className="margin-y-4 margin-bottom-8"
                 >
                   <Label htmlFor="plan-characteristics-has-component-or-tracks">
                     {t('differentComponents')}

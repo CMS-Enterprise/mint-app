@@ -8,7 +8,6 @@ import {
   BreadcrumbLink,
   Button,
   Fieldset,
-  IconAdd,
   IconArrowBack,
   Label,
   Radio,
@@ -16,6 +15,7 @@ import {
 } from '@trussworks/react-uswds';
 import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
 
+import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
@@ -26,7 +26,6 @@ import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import MultiSelect from 'components/shared/MultiSelect';
-import TextAreaField from 'components/shared/TextAreaField';
 import GetModelPlanCharacteristics from 'queries/GetModelPlanCharacteristics';
 import {
   GetModelPlanCharacteristics as GetModelPlanCharacteristicsType,
@@ -52,16 +51,6 @@ const KeyCharacteristics = () => {
 
   const formikRef = useRef<FormikProps<ModelPlanCharacteristicsFormType>>(null);
   const history = useHistory();
-  const [alternativePaymentNote, setAlternativePaymentNote] = useState(false);
-  // const [keyCharacteristicsNote, setkeyCharacteristicsNote] = useState(false);  // TODO: BE needs to implement this field
-  const [isCollectPlanBidsNote, setIsCollectPlanBidsNote] = useState(false);
-  const [
-    isManagePartCDEnrollmentNote,
-    setIsManagePartCDEnrollmentNote
-  ] = useState(false);
-  const [isPlanContactUpdatedNote, setIsPlanContactUpdatedNote] = useState(
-    false
-  );
 
   const { data } = useQuery<GetModelPlanCharacteristicsType>(
     GetModelPlanCharacteristics,
@@ -130,6 +119,7 @@ const KeyCharacteristics = () => {
       value: key,
       label: translateKeyCharacteristics(key)
     }));
+
   const initialValues = {
     alternativePaymentModel: alternativePaymentModel ?? null,
     alternativePaymentModelTypes: alternativePaymentModelTypes ?? [],
@@ -230,7 +220,7 @@ const KeyCharacteristics = () => {
                 <FieldGroup
                   scrollElement="alternativePaymentModel"
                   error={!!flatErrors.alternativePaymentModel}
-                  className="margin-y-4"
+                  className="margin-y-4 margin-bottom-8"
                 >
                   <Label htmlFor="plan-characteristics-alternative-payment">
                     {t('modelAPM')}
@@ -263,85 +253,69 @@ const KeyCharacteristics = () => {
                       }}
                     />
                   </Fieldset>
+                  <FieldArray
+                    name="alternativePaymentModelTypes"
+                    render={arrayHelpers => (
+                      <>
+                        <legend className="usa-label text-normal">
+                          {t('modelAPMType')}
+                        </legend>
+                        <FieldErrorMsg>
+                          {flatErrors.alternativePaymentModelTypes}
+                        </FieldErrorMsg>
+
+                        {Object.keys(AlternativePaymentModelType).map(type => {
+                          return (
+                            <Fragment key={type}>
+                              <Field
+                                as={CheckboxField}
+                                id={`plan-characteristics-alternativePaymentModelTypes-${type}`}
+                                name="alternativePaymentModelTypes"
+                                label={translateAlternativePaymentTypes(type)}
+                                value={type}
+                                checked={values.alternativePaymentModelTypes.includes(
+                                  type as AlternativePaymentModelType
+                                )}
+                                onChange={(
+                                  e: React.ChangeEvent<HTMLInputElement>
+                                ) => {
+                                  if (e.target.checked) {
+                                    arrayHelpers.push(e.target.value);
+                                  } else {
+                                    const idx = values.alternativePaymentModelTypes.indexOf(
+                                      e.target
+                                        .value as AlternativePaymentModelType
+                                    );
+                                    arrayHelpers.remove(idx);
+                                  }
+                                }}
+                              />
+                              {type === 'MIPS' &&
+                                values.alternativePaymentModelTypes.includes(
+                                  type as AlternativePaymentModelType
+                                ) && (
+                                  <Alert
+                                    type="info"
+                                    slim
+                                    data-testid="mandatory-fields-alert"
+                                    className="margin-bottom-4 margin-left-4"
+                                  >
+                                    <span className="mandatory-fields-alert__text">
+                                      {t('MIPSInfo')}
+                                    </span>
+                                  </Alert>
+                                )}
+                            </Fragment>
+                          );
+                        })}
+                      </>
+                    )}
+                  />
+                  <AddNote
+                    id="plan-characteristics-alternative-payment-note"
+                    field="alternativePaymentModelNote"
+                  />
                 </FieldGroup>
-
-                <FieldArray
-                  name="alternativePaymentModelTypes"
-                  render={arrayHelpers => (
-                    <>
-                      <legend className="usa-label">{t('modelAPMType')}</legend>
-                      <FieldErrorMsg>
-                        {flatErrors.alternativePaymentModelTypes}
-                      </FieldErrorMsg>
-
-                      {Object.keys(AlternativePaymentModelType).map(type => {
-                        return (
-                          <Fragment key={type}>
-                            <Field
-                              as={CheckboxField}
-                              id={`plan-characteristics-alternativePaymentModelTypes-${type}`}
-                              name="alternativePaymentModelTypes"
-                              label={translateAlternativePaymentTypes(type)}
-                              value={type}
-                              checked={values.alternativePaymentModelTypes.includes(
-                                type as AlternativePaymentModelType
-                              )}
-                              onChange={(
-                                e: React.ChangeEvent<HTMLInputElement>
-                              ) => {
-                                if (e.target.checked) {
-                                  arrayHelpers.push(e.target.value);
-                                } else {
-                                  const idx = values.alternativePaymentModelTypes.indexOf(
-                                    e.target
-                                      .value as AlternativePaymentModelType
-                                  );
-                                  arrayHelpers.remove(idx);
-                                }
-                              }}
-                            />
-                            {type === 'MIPS' &&
-                              values.alternativePaymentModelTypes.includes(
-                                type as AlternativePaymentModelType
-                              ) && (
-                                <Alert
-                                  type="info"
-                                  slim
-                                  data-testid="mandatory-fields-alert"
-                                  className="margin-bottom-4 margin-left-4"
-                                >
-                                  <span className="mandatory-fields-alert__text">
-                                    {t('MIPSInfo')}
-                                  </span>
-                                </Alert>
-                              )}
-                          </Fragment>
-                        );
-                      })}
-                    </>
-                  )}
-                />
-
-                <Button
-                  type="button"
-                  className="usa-button usa-button--unstyled margin-top-4"
-                  onClick={() => setAlternativePaymentNote(true)}
-                >
-                  <IconAdd className="margin-right-1" aria-hidden />
-                  {h('additionalNote')}
-                </Button>
-
-                {alternativePaymentNote && (
-                  <FieldGroup className="margin-top-4">
-                    <Field
-                      as={TextAreaField}
-                      className="height-15"
-                      id="plan-characteristics-note"
-                      name="alternativePaymentModelNote"
-                      label={h('Notes')}
-                    />
-                  </FieldGroup>
-                )}
 
                 <FieldGroup
                   scrollElement="keyCharacteristics"
@@ -349,9 +323,8 @@ const KeyCharacteristics = () => {
                   className="margin-top-4"
                 >
                   <Label htmlFor="plan-characteristics-key-characteristics">
-                    {t('modelResemblance')}
+                    {t('keyCharacteristics')}
                   </Label>
-                  <p className="text-base margin-y-1">{t('startTypeing')}</p>
                   <FieldErrorMsg>{flatErrors.keyCharacteristics}</FieldErrorMsg>
 
                   <Field
@@ -394,7 +367,10 @@ const KeyCharacteristics = () => {
                   error={!!flatErrors.collectPlanBids}
                   className="margin-y-4"
                 >
-                  <Label htmlFor="plan-characteristics-collect-bids">
+                  <Label
+                    htmlFor="plan-characteristics-collect-bids"
+                    className="text-normal"
+                  >
                     {t('reviewPlanBids')}
                   </Label>
                   <FieldErrorMsg>{flatErrors.collectPlanBids}</FieldErrorMsg>
@@ -424,33 +400,21 @@ const KeyCharacteristics = () => {
                   </Fieldset>
                 </FieldGroup>
 
-                <Button
-                  type="button"
-                  className="usa-button usa-button--unstyled"
-                  onClick={() => setIsCollectPlanBidsNote(true)}
-                >
-                  <IconAdd className="margin-right-1" aria-hidden />
-                  {h('additionalNote')}
-                </Button>
-
-                {isCollectPlanBidsNote && (
-                  <FieldGroup className="margin-top-4">
-                    <Field
-                      as={TextAreaField}
-                      className="height-15"
-                      id="plan-characteristics-collect-bids-note"
-                      name="collectPlanBidsNote"
-                      label={h('Notes')}
-                    />
-                  </FieldGroup>
-                )}
+                <AddNote
+                  id="plan-characteristics-collect-bids-note"
+                  field="collectPlanBidsNote"
+                  className="margin-bottom-0"
+                />
 
                 <FieldGroup
                   scrollElement="managePartCDEnrollment"
                   error={!!flatErrors.managePartCDEnrollment}
                   className="margin-y-4"
                 >
-                  <Label htmlFor="plan-characteristics-manage-enrollment">
+                  <Label
+                    htmlFor="plan-characteristics-manage-enrollment"
+                    className="text-normal"
+                  >
                     {t('manageEnrollment')}
                   </Label>
                   <FieldErrorMsg>
@@ -482,33 +446,21 @@ const KeyCharacteristics = () => {
                   </Fieldset>
                 </FieldGroup>
 
-                <Button
-                  type="button"
-                  className="usa-button usa-button--unstyled"
-                  onClick={() => setIsManagePartCDEnrollmentNote(true)}
-                >
-                  <IconAdd className="margin-right-1" aria-hidden />
-                  {h('additionalNote')}
-                </Button>
-
-                {isManagePartCDEnrollmentNote && (
-                  <FieldGroup className="margin-top-4">
-                    <Field
-                      as={TextAreaField}
-                      className="height-15"
-                      id="plan-characteristics-manage-enrollment-note"
-                      name="managePartCDEnrollmentNote"
-                      label={h('Notes')}
-                    />
-                  </FieldGroup>
-                )}
+                <AddNote
+                  id="plan-characteristics-manage-enrollment-note"
+                  field="managePartCDEnrollmentNote"
+                  className="margin-bottom-0"
+                />
 
                 <FieldGroup
                   scrollElement="planContactUpdated"
                   error={!!flatErrors.planContactUpdated}
                   className="margin-y-4"
                 >
-                  <Label htmlFor="plan-characteristics-contact-updated">
+                  <Label
+                    htmlFor="plan-characteristics-contact-updated"
+                    className="text-normal"
+                  >
                     {t('updatedContact')}
                   </Label>
                   <FieldErrorMsg>{flatErrors.planContactUpdated}</FieldErrorMsg>
@@ -538,26 +490,10 @@ const KeyCharacteristics = () => {
                   </Fieldset>
                 </FieldGroup>
 
-                <Button
-                  type="button"
-                  className="usa-button usa-button--unstyled"
-                  onClick={() => setIsPlanContactUpdatedNote(true)}
-                >
-                  <IconAdd className="margin-right-1" aria-hidden />
-                  {h('additionalNote')}
-                </Button>
-
-                {isPlanContactUpdatedNote && (
-                  <FieldGroup className="margin-top-4">
-                    <Field
-                      as={TextAreaField}
-                      className="height-15"
-                      id="plan-characteristics-contact-updated-note"
-                      name="planContactUpdatedNote"
-                      label={h('Notes')}
-                    />
-                  </FieldGroup>
-                )}
+                <AddNote
+                  id="plan-characteristics-contact-updated-note"
+                  field="planContactUpdatedNote"
+                />
 
                 <div className="margin-top-6 margin-bottom-3">
                   <Button

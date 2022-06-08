@@ -78,7 +78,9 @@ const modelPlanTaskList = {
     cannotStart: 'Cannot start yet',
     notNeeded: 'Not needed',
     lastUpdated: 'Last updated:'
-  }
+  },
+  errorHeading: 'Failed to fetch model plan',
+  errorMessage: 'Please try again'
 };
 
 export default modelPlanTaskList;

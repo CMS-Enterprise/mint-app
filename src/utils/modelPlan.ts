@@ -163,6 +163,34 @@ export const translateAgreementTypes = (type: string) => {
   }
 };
 
+export const translateAuthorityAllowance = (type: string) => {
+  switch (type) {
+    case 'ACA':
+      return i18next.t('generalCharacteristics:ACA3021');
+    case 'CONGRESSIONALLY_MANDATED':
+      return i18next.t('generalCharacteristics:mandatedDemonstration');
+    case 'SSA_PART_B':
+      return i18next.t('generalCharacteristics:section1833');
+    case 'OTHER':
+      return i18next.t('generalCharacteristics:other');
+    default:
+      return '';
+  }
+};
+
+export const translateWaiverTypes = (type: string) => {
+  switch (type) {
+    case 'FRAUD_ABUSE':
+      return i18next.t('generalCharacteristics:fraudAndAbuse');
+    case 'PROGRAM_PAYMENT':
+      return i18next.t('generalCharacteristics:programPayment');
+    case 'MEDICAID':
+      return i18next.t('generalCharacteristics:medicaid');
+    default:
+      return '';
+  }
+};
+
 export const translateKeyCharacteristics = (characteristic: string) => {
   switch (characteristic) {
     case 'EPISODE_BASED':

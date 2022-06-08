@@ -8,13 +8,13 @@ import {
   BreadcrumbLink,
   Button,
   Fieldset,
-  IconAdd,
   IconArrowBack,
   Label,
   Radio
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
 
+import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
@@ -39,18 +39,6 @@ const Involvements = () => {
 
   const formikRef = useRef<FormikProps<ModelPlanCharacteristicsFormType>>(null);
   const history = useHistory();
-  const [
-    isCareCoordinationInvolvedNote,
-    setIsCareCoordinationInvolvedNote
-  ] = useState(false);
-  const [
-    isAdditionalServicesInvolvedNote,
-    setIsAdditionalServicesInvolvedNote
-  ] = useState(false);
-  const [
-    isCommunityPartnersInvolvedNote,
-    setIsCommunityPartnersInvolvedNote
-  ] = useState(false);
 
   const { data } = useQuery<GetModelPlanCharacteristicsType>(
     GetModelPlanCharacteristics,
@@ -281,26 +269,10 @@ const Involvements = () => {
                   </Fieldset>
                 </FieldGroup>
 
-                <Button
-                  type="button"
-                  className="usa-button usa-button--unstyled"
-                  onClick={() => setIsCareCoordinationInvolvedNote(true)}
-                >
-                  <IconAdd className="margin-right-1" aria-hidden />
-                  {h('additionalNote')}
-                </Button>
-
-                {isCareCoordinationInvolvedNote && (
-                  <FieldGroup>
-                    <Field
-                      as={TextAreaField}
-                      className="height-15"
-                      id="plan-characteristics-care-coordination-note"
-                      name="careCoordinationInvolvedNote"
-                      label={h('Notes')}
-                    />
-                  </FieldGroup>
-                )}
+                <AddNote
+                  id="plan-characteristics-care-coordination-note"
+                  field="careCoordinationInvolvedNote"
+                />
 
                 <FieldGroup
                   scrollElement="additionalServicesInvolved"
@@ -373,26 +345,10 @@ const Involvements = () => {
                   </Fieldset>
                 </FieldGroup>
 
-                <Button
-                  type="button"
-                  className="usa-button usa-button--unstyled"
-                  onClick={() => setIsAdditionalServicesInvolvedNote(true)}
-                >
-                  <IconAdd className="margin-right-1" aria-hidden />
-                  {h('additionalNote')}
-                </Button>
-
-                {isAdditionalServicesInvolvedNote && (
-                  <FieldGroup>
-                    <Field
-                      as={TextAreaField}
-                      className="height-15"
-                      id="plan-characteristics-additional-services-note"
-                      name="additionalServicesInvolvedNote"
-                      label={h('Notes')}
-                    />
-                  </FieldGroup>
-                )}
+                <AddNote
+                  id="plan-characteristics-additional-services-note"
+                  field="additionalServicesInvolvedNote"
+                />
 
                 <FieldGroup
                   scrollElement="communityPartnersInvolved"
@@ -465,26 +421,10 @@ const Involvements = () => {
                   </Fieldset>
                 </FieldGroup>
 
-                <Button
-                  type="button"
-                  className="usa-button usa-button--unstyled"
-                  onClick={() => setIsCommunityPartnersInvolvedNote(true)}
-                >
-                  <IconAdd className="margin-right-1" aria-hidden />
-                  {h('additionalNote')}
-                </Button>
-
-                {isCommunityPartnersInvolvedNote && (
-                  <FieldGroup>
-                    <Field
-                      as={TextAreaField}
-                      className="height-15"
-                      id="plan-characteristics-community-partners-note"
-                      name="communityPartnersInvolvedNote"
-                      label={h('Notes')}
-                    />
-                  </FieldGroup>
-                )}
+                <AddNote
+                  id="plan-characteristics-community-partners-note"
+                  field="communityPartnersInvolvedNote"
+                />
 
                 <div className="margin-top-6 margin-bottom-3">
                   <Button
