@@ -254,64 +254,70 @@ const KeyCharacteristics = () => {
                       }}
                     />
                   </Fieldset>
-                  <FieldArray
-                    name="alternativePaymentModelTypes"
-                    render={arrayHelpers => (
-                      <>
-                        <legend className="usa-label text-normal">
-                          {t('modelAPMType')}
-                        </legend>
-                        <FieldErrorMsg>
-                          {flatErrors.alternativePaymentModelTypes}
-                        </FieldErrorMsg>
+                  {values.alternativePaymentModel && (
+                    <FieldArray
+                      name="alternativePaymentModelTypes"
+                      render={arrayHelpers => (
+                        <>
+                          <legend className="usa-label text-normal">
+                            {t('modelAPMType')}
+                          </legend>
+                          <FieldErrorMsg>
+                            {flatErrors.alternativePaymentModelTypes}
+                          </FieldErrorMsg>
 
-                        {Object.keys(AlternativePaymentModelType).map(type => {
-                          return (
-                            <Fragment key={type}>
-                              <Field
-                                as={CheckboxField}
-                                id={`plan-characteristics-alternativePaymentModelTypes-${type}`}
-                                name="alternativePaymentModelTypes"
-                                label={translateAlternativePaymentTypes(type)}
-                                value={type}
-                                checked={values.alternativePaymentModelTypes.includes(
-                                  type as AlternativePaymentModelType
-                                )}
-                                onChange={(
-                                  e: React.ChangeEvent<HTMLInputElement>
-                                ) => {
-                                  if (e.target.checked) {
-                                    arrayHelpers.push(e.target.value);
-                                  } else {
-                                    const idx = values.alternativePaymentModelTypes.indexOf(
-                                      e.target
-                                        .value as AlternativePaymentModelType
-                                    );
-                                    arrayHelpers.remove(idx);
-                                  }
-                                }}
-                              />
-                              {type === 'MIPS' &&
-                                values.alternativePaymentModelTypes.includes(
-                                  type as AlternativePaymentModelType
-                                ) && (
-                                  <Alert
-                                    type="info"
-                                    slim
-                                    data-testid="mandatory-fields-alert"
-                                    className="margin-bottom-4 margin-left-4"
-                                  >
-                                    <span className="mandatory-fields-alert__text">
-                                      {t('MIPSInfo')}
-                                    </span>
-                                  </Alert>
-                                )}
-                            </Fragment>
-                          );
-                        })}
-                      </>
-                    )}
-                  />
+                          {Object.keys(AlternativePaymentModelType).map(
+                            type => {
+                              return (
+                                <Fragment key={type}>
+                                  <Field
+                                    as={CheckboxField}
+                                    id={`plan-characteristics-alternativePaymentModelTypes-${type}`}
+                                    name="alternativePaymentModelTypes"
+                                    label={translateAlternativePaymentTypes(
+                                      type
+                                    )}
+                                    value={type}
+                                    checked={values.alternativePaymentModelTypes.includes(
+                                      type as AlternativePaymentModelType
+                                    )}
+                                    onChange={(
+                                      e: React.ChangeEvent<HTMLInputElement>
+                                    ) => {
+                                      if (e.target.checked) {
+                                        arrayHelpers.push(e.target.value);
+                                      } else {
+                                        const idx = values.alternativePaymentModelTypes.indexOf(
+                                          e.target
+                                            .value as AlternativePaymentModelType
+                                        );
+                                        arrayHelpers.remove(idx);
+                                      }
+                                    }}
+                                  />
+                                  {type === 'MIPS' &&
+                                    values.alternativePaymentModelTypes.includes(
+                                      type as AlternativePaymentModelType
+                                    ) && (
+                                      <Alert
+                                        type="info"
+                                        slim
+                                        data-testid="mandatory-fields-alert"
+                                        className="margin-bottom-4 margin-left-4"
+                                      >
+                                        <span className="mandatory-fields-alert__text">
+                                          {t('MIPSInfo')}
+                                        </span>
+                                      </Alert>
+                                    )}
+                                </Fragment>
+                              );
+                            }
+                          )}
+                        </>
+                      )}
+                    />
+                  )}
                   <AddNote
                     id="plan-characteristics-alternative-payment-note"
                     field="alternativePaymentModelNote"

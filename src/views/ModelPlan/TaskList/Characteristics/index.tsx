@@ -333,71 +333,70 @@ const CharacteristicsContent = () => {
                       }}
                     />
                   </Fieldset>
+                  {values.resemblesExistingModel && (
+                    <>
+                      <FieldGroup
+                        scrollElement="resemblesExistingModelWhich"
+                        error={!!flatErrors.resemblesExistingModelWhich}
+                        className="margin-top-4"
+                      >
+                        <Label
+                          htmlFor="plan-basics-resembles-which-model"
+                          className="text-normal"
+                        >
+                          {t('modelResemblance')}
+                        </Label>
+                        <p className="text-base margin-y-1">
+                          {t('startTypeing')}
+                        </p>
+                        <FieldErrorMsg>
+                          {flatErrors.resemblesExistingModelWhich}
+                        </FieldErrorMsg>
+
+                        <Field
+                          as={MultiSelect}
+                          id="plan-basics-resembles-which-model"
+                          name="resemblesExistingModelWhich"
+                          options={modelPlanOptions}
+                          selectedLabel={t('selectedModels')}
+                          onChange={(value: string[] | []) => {
+                            setFieldValue('resemblesExistingModelWhich', value);
+                          }}
+                          initialValues={
+                            initialValues.resemblesExistingModelWhich
+                          }
+                        />
+                      </FieldGroup>
+                      <FieldGroup
+                        scrollElement="resemblesExistingModelHow"
+                        error={!!flatErrors.resemblesExistingModelHow}
+                        className="margin-top-4"
+                      >
+                        <Label
+                          htmlFor="plan-basics-resembles-how-model"
+                          className="text-normal"
+                        >
+                          {t('waysResembleModel')}
+                        </Label>
+                        <FieldErrorMsg>
+                          {flatErrors.resemblesExistingModelHow}
+                        </FieldErrorMsg>
+                        <Field
+                          as={TextAreaField}
+                          className="height-15"
+                          error={flatErrors.resemblesExistingModelHow}
+                          id="plan-basics-resembles-how-model"
+                          name="resemblesExistingModelHow"
+                        />
+                      </FieldGroup>
+
+                      <AddNote
+                        id="plan-characteristics-resemble-existing-note"
+                        field="resemblesExistingModelNote"
+                      />
+                    </>
+                  )}
                 </FieldGroup>
-
-                {values.resemblesExistingModel && (
-                  <>
-                    <FieldGroup
-                      scrollElement="resemblesExistingModelWhich"
-                      error={!!flatErrors.resemblesExistingModelWhich}
-                      className="margin-top-4"
-                    >
-                      <Label
-                        htmlFor="plan-basics-resembles-which-model"
-                        className="text-normal"
-                      >
-                        {t('modelResemblance')}
-                      </Label>
-                      <p className="text-base margin-y-1">
-                        {t('startTypeing')}
-                      </p>
-                      <FieldErrorMsg>
-                        {flatErrors.resemblesExistingModelWhich}
-                      </FieldErrorMsg>
-
-                      <Field
-                        as={MultiSelect}
-                        id="plan-basics-resembles-which-model"
-                        name="resemblesExistingModelWhich"
-                        options={modelPlanOptions}
-                        selectedLabel={t('selectedModels')}
-                        onChange={(value: string[] | []) => {
-                          setFieldValue('resemblesExistingModelWhich', value);
-                        }}
-                        initialValues={
-                          initialValues.resemblesExistingModelWhich
-                        }
-                      />
-                    </FieldGroup>
-                    <FieldGroup
-                      scrollElement="resemblesExistingModelHow"
-                      error={!!flatErrors.resemblesExistingModelHow}
-                      className="margin-top-4"
-                    >
-                      <Label
-                        htmlFor="plan-basics-resembles-how-model"
-                        className="text-normal"
-                      >
-                        {t('waysResembleModel')}
-                      </Label>
-                      <FieldErrorMsg>
-                        {flatErrors.resemblesExistingModelHow}
-                      </FieldErrorMsg>
-                      <Field
-                        as={TextAreaField}
-                        className="height-15"
-                        error={flatErrors.resemblesExistingModelHow}
-                        id="plan-basics-resembles-how-model"
-                        name="resemblesExistingModelHow"
-                      />
-                    </FieldGroup>
-
-                    <AddNote
-                      id="plan-characteristics-resemble-existing-note"
-                      field="resemblesExistingModelNote"
-                    />
-                  </>
-                )}
 
                 <FieldGroup
                   scrollElement="hasComponentsOrTracks"
@@ -432,7 +431,7 @@ const CharacteristicsContent = () => {
                         >
                           <Label
                             htmlFor="plan-characteristics-tracks-differ-how"
-                            className="margin-bottom-1"
+                            className="margin-bottom-1 text-normal"
                           >
                             {t('tracksDiffer')}
                           </Label>
