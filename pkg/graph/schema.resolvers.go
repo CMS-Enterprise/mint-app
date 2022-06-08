@@ -5,7 +5,6 @@ package graph
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/google/uuid"
 
@@ -471,6 +470,11 @@ func (r *queryResolver) ModelPlanCollection(ctx context.Context) ([]*models.Mode
 	return resolvers.ModelPlanCollectionByUser(logger, principal, r.store)
 }
 
+func (r *queryResolver) ExistingModelCollection(ctx context.Context) ([]*models.ExistingModel, error) {
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.ExistingModelCollectionGet(logger, r.store)
+}
+
 func (r *queryResolver) CedarPersonsByCommonName(ctx context.Context, commonName string) ([]*models.UserInfo, error) {
 	response, err := r.service.SearchCommonNameContains(ctx, commonName)
 	if err != nil {
@@ -533,19 +537,3 @@ type planGeneralCharacteristicsResolver struct{ *Resolver }
 type planParticipantsAndProvidersResolver struct{ *Resolver }
 type queryResolver struct{ *Resolver }
 type userInfoResolver struct{ *Resolver }
-
-// !!! WARNING !!!
-// The code below was going to be deleted when updating resolvers. It has been copied here so you have
-// one last chance to move it out of harms way if you want. There are two reasons this happens:
-//  - When renaming or deleting a resolver the old code will be put in here. You can safely delete
-//    it when you're done.
-//  - You have helper methods in this file. Move them out to keep these resolver files clean.
-func (r *planParticipantsAndProvidersResolver) GainsharePaymentsTrack(ctx context.Context, obj *models.PlanParticipantsAndProviders) (*string, error) {
-	panic(fmt.Errorf("not implemented"))
-}
-func (r *mutationResolver) UpdatePlanPlanParticipantsAndProviders(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanParticipantsAndProviders, error) {
-	principal := appcontext.Principal(ctx).ID()
-	logger := appcontext.ZLogger(ctx)
-
-	return resolvers.PlanParticipantsAndProvidersUpdate(logger, id, changes, principal, r.store)
-}
