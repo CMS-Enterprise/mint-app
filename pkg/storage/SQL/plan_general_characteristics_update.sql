@@ -14,6 +14,7 @@ SET
     alternative_payment_model_note = :alternative_payment_model_note,
     key_characteristics = :key_characteristics,
     key_characteristics_other = :key_characteristics_other,
+    key_characteristics_note = :key_characteristics_note,
     collect_plan_bids = :collect_plan_bids,
     collect_plan_bids_note = :collect_plan_bids_note,
     manage_part_c_d_enrollment = :manage_part_c_d_enrollment,

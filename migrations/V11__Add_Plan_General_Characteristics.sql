@@ -69,6 +69,7 @@ CREATE TABLE plan_general_characteristics (
     alternative_payment_model_note TEXT,
     key_characteristics KEY_CHARACTERISTIC[],
     key_characteristics_other TEXT,
+    key_characteristics_note TEXT,
     collect_plan_bids BOOLEAN,
     collect_plan_bids_note TEXT,
     manage_part_c_d_enrollment BOOLEAN,
