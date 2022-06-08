@@ -245,7 +245,7 @@ CREATE TABLE plan_ops_eval_and_learning (
 );
 
 
-ALTER TABLE plans_ops_eval_and_learning
+ALTER TABLE plan_ops_eval_and_learning
 ADD CONSTRAINT fk_ops_eval_and_learning_plan FOREIGN KEY (model_plan_id)
 REFERENCES public.model_plan (id) MATCH SIMPLE
 ON UPDATE NO ACTION

@@ -75,7 +75,9 @@ func (r *modelPlanResolver) Beneficiaries(ctx context.Context, obj *models.Model
 }
 
 func (r *modelPlanResolver) OpsEvalAndLearning(ctx context.Context, obj *models.ModelPlan) (*models.PlanOpsEvalAndLearning, error) {
-	panic(fmt.Errorf("not implemented"))
+	logger := appcontext.ZLogger(ctx)
+
+	return resolvers.PlanOpsEvalAndLearningGetByModelPlanID(logger, obj.ID, r.store)
 }
 
 func (r *modelPlanResolver) Collaborators(ctx context.Context, obj *models.ModelPlan) ([]*models.PlanCollaborator, error) {
@@ -177,7 +179,9 @@ func (r *mutationResolver) UpdatePlanParticipantsAndProviders(ctx context.Contex
 }
 
 func (r *mutationResolver) UpdatePlanOpsEvalAndLearning(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanOpsEvalAndLearning, error) {
-	panic(fmt.Errorf("not implemented"))
+	principal := appcontext.Principal(ctx).ID()
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.PlanOpsEvalAndLearningUpdate(logger, id, changes, principal, r.store)
 }
 
 func (r *mutationResolver) GeneratePresignedUploadURL(ctx context.Context, input model.GeneratePresignedUploadURLInput) (*model.GeneratePresignedUploadURLPayload, error) {
