@@ -123,6 +123,7 @@ CREATE TABLE plan_ops_eval_and_learning (
 
     --page 1
     agency_or_state_help AGENCY_OR_STATE_HELP_TYPE[],
+    agency_or_state_help_other TEXT,
     agency_or_state_help_note TEXT,
     stakeholders STAKEHOLDERS_TYPE[],
     stakeholders_other TEXT,
@@ -144,7 +145,7 @@ CREATE TABLE plan_ops_eval_and_learning (
     technical_contacts_identified BOOL,
     technical_contacts_identified_detail TEXT,
     technical_contacts_identified_note TEXT,
-    capture_participant_info TEXT,
+    capture_participant_info BOOL,
     capture_participant_info_note TEXT,
     icd_owner TEXT,
     draft_icd_due_date TIMESTAMP WITH TIME ZONE,

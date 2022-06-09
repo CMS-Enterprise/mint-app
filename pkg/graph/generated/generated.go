@@ -331,6 +331,7 @@ type ComplexityRoot struct {
 	PlanOpsEvalAndLearning struct {
 		AgencyOrStateHelp                            func(childComplexity int) int
 		AgencyOrStateHelpNote                        func(childComplexity int) int
+		AgencyOrStateHelpOther                       func(childComplexity int) int
 		AnticipatedChallenges                        func(childComplexity int) int
 		AppToSendFilesToKnown                        func(childComplexity int) int
 		AppToSendFilesToNote                         func(childComplexity int) int
@@ -576,6 +577,7 @@ type PlanGeneralCharacteristicsResolver interface {
 }
 type PlanOpsEvalAndLearningResolver interface {
 	AgencyOrStateHelp(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]model.AgencyOrStateHelpType, error)
+	AgencyOrStateHelpOther(ctx context.Context, obj *models.PlanOpsEvalAndLearning) (*string, error)
 
 	Stakeholders(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]model.StakeholdersType, error)
 
@@ -2349,6 +2351,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.PlanOpsEvalAndLearning.AgencyOrStateHelpNote(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.agencyOrStateHelpOther":
+		if e.complexity.PlanOpsEvalAndLearning.AgencyOrStateHelpOther == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.AgencyOrStateHelpOther(childComplexity), true
 
 	case "PlanOpsEvalAndLearning.anticipatedChallenges":
 		if e.complexity.PlanOpsEvalAndLearning.AnticipatedChallenges == nil {
@@ -4314,6 +4323,7 @@ type PlanOpsEvalAndLearning {
 
     #Page 1
     agencyOrStateHelp: [AgencyOrStateHelpType!]
+    agencyOrStateHelpOther: String
     agencyOrStateHelpNote: String
     stakeholders: [StakeholdersType!]
     stakeholdersOther: String
@@ -4334,7 +4344,7 @@ type PlanOpsEvalAndLearning {
     technicalContactsIdentified: Boolean
     technicalContactsIdentifiedDetail: String
     technicalContactsIdentifiedNote: String
-    captureParticipantInfo: String
+    captureParticipantInfo: Boolean
     captureParticipantInfoNote: String
     icdOwner: String
     draftIcdDueDate: Time
@@ -4437,6 +4447,7 @@ input PlanOpsEvalAndLearningChanges @goModel(model: "map[string]interface{}") {
 
     #Page 1
     agencyOrStateHelp: [AgencyOrStateHelpType!]
+    agencyOrStateHelpOther: String
     agencyOrStateHelpNote: String
     stakeholders: [StakeholdersType!]
     stakeholdersOther: String
@@ -4457,7 +4468,7 @@ input PlanOpsEvalAndLearningChanges @goModel(model: "map[string]interface{}") {
     technicalContactsIdentified: Boolean
     technicalContactsIdentifiedDetail: String
     technicalContactsIdentifiedNote: String
-    captureParticipantInfo: String
+    captureParticipantInfo: Boolean
     captureParticipantInfoNote: String
     icdOwner: String
     draftIcdDueDate: Time
@@ -7988,6 +7999,8 @@ func (ec *executionContext) fieldContext_ModelPlan_opsEvalAndLearning(ctx contex
 				return ec.fieldContext_PlanOpsEvalAndLearning_modelPlanID(ctx, field)
 			case "agencyOrStateHelp":
 				return ec.fieldContext_PlanOpsEvalAndLearning_agencyOrStateHelp(ctx, field)
+			case "agencyOrStateHelpOther":
+				return ec.fieldContext_PlanOpsEvalAndLearning_agencyOrStateHelpOther(ctx, field)
 			case "agencyOrStateHelpNote":
 				return ec.fieldContext_PlanOpsEvalAndLearning_agencyOrStateHelpNote(ctx, field)
 			case "stakeholders":
@@ -9802,6 +9815,8 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanOpsEvalAndLearning(c
 				return ec.fieldContext_PlanOpsEvalAndLearning_modelPlanID(ctx, field)
 			case "agencyOrStateHelp":
 				return ec.fieldContext_PlanOpsEvalAndLearning_agencyOrStateHelp(ctx, field)
+			case "agencyOrStateHelpOther":
+				return ec.fieldContext_PlanOpsEvalAndLearning_agencyOrStateHelpOther(ctx, field)
 			case "agencyOrStateHelpNote":
 				return ec.fieldContext_PlanOpsEvalAndLearning_agencyOrStateHelpNote(ctx, field)
 			case "stakeholders":
@@ -17596,6 +17611,47 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_agencyOrStateHel
 	return fc, nil
 }
 
+func (ec *executionContext) _PlanOpsEvalAndLearning_agencyOrStateHelpOther(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_agencyOrStateHelpOther(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.PlanOpsEvalAndLearning().AgencyOrStateHelpOther(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_agencyOrStateHelpOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _PlanOpsEvalAndLearning_agencyOrStateHelpNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_agencyOrStateHelpNote(ctx, field)
 	if err != nil {
@@ -18398,9 +18454,9 @@ func (ec *executionContext) _PlanOpsEvalAndLearning_captureParticipantInfo(ctx c
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(*string)
+	res := resTmp.(*bool)
 	fc.Result = res
-	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_captureParticipantInfo(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -18410,7 +18466,7 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_captureParticipa
 		IsMethod:   false,
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type String does not have child fields")
+			return nil, errors.New("field of type Boolean does not have child fields")
 		},
 	}
 	return fc, nil
@@ -28774,6 +28830,23 @@ func (ec *executionContext) _PlanOpsEvalAndLearning(ctx context.Context, sel ast
 					}
 				}()
 				res = ec._PlanOpsEvalAndLearning_agencyOrStateHelp(ctx, field, obj)
+				return res
+			}
+
+			out.Concurrently(i, func() graphql.Marshaler {
+				return innerFunc(ctx)
+
+			})
+		case "agencyOrStateHelpOther":
+			field := field
+
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._PlanOpsEvalAndLearning_agencyOrStateHelpOther(ctx, field, obj)
 				return res
 			}
 

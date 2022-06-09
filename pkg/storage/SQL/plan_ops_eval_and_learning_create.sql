@@ -2,6 +2,7 @@ INSERT INTO plan_ops_eval_and_learning(
     id,
     model_plan_id,
     agency_or_state_help,
+    agency_or_state_help_other,
     agency_or_state_help_note,
     stakeholders,
     stakeholders_other,
@@ -105,6 +106,7 @@ VALUES (
     :id,
     :model_plan_id,
     :agency_or_state_help,
+    :agency_or_state_help_other,
     :agency_or_state_help_note,
     :stakeholders,
     :stakeholders_other,
@@ -204,10 +206,10 @@ VALUES (
     :modified_by,
     :status
 )
-RETURNING
 id,
 model_plan_id,
 agency_or_state_help,
+agency_or_state_help_other,
 agency_or_state_help_note,
 stakeholders,
 stakeholders_other,

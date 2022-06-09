@@ -5,6 +5,7 @@ package graph
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/google/uuid"
 
@@ -382,6 +383,10 @@ func (r *planOpsEvalAndLearningResolver) AgencyOrStateHelp(ctx context.Context, 
 		agencyOrStateHelpTypes = append(agencyOrStateHelpTypes, model.AgencyOrStateHelpType(item))
 	}
 	return agencyOrStateHelpTypes, nil
+}
+
+func (r *planOpsEvalAndLearningResolver) AgencyOrStateHelpOther(ctx context.Context, obj *models.PlanOpsEvalAndLearning) (*string, error) {
+	panic(fmt.Errorf("not implemented"))
 }
 
 func (r *planOpsEvalAndLearningResolver) Stakeholders(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]model.StakeholdersType, error) {

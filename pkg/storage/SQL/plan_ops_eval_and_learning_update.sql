@@ -1,5 +1,6 @@
 UPDATE plan_ops_eval_and_learning
 SET agency_or_state_help = :agency_or_state_help,
+    agency_or_state_help_other = :agency_or_state_help_other,
     agency_or_state_help_note = :agency_or_state_help_note,
     stakeholders = :stakeholders,
     stakeholders_other = :stakeholders_other,
@@ -103,6 +104,7 @@ RETURNING
 id,
 model_plan_id,
 agency_or_state_help,
+agency_or_state_help_other,
 agency_or_state_help_note,
 stakeholders,
 stakeholders_other,

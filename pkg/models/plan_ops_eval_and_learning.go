@@ -14,6 +14,7 @@ type PlanOpsEvalAndLearning struct {
 
 	//Page 1
 	AgencyOrStateHelp      pq.StringArray `json:"agencyOrStateHelp" db:"agency_or_state_help"`
+	AgencyOrStateHelpOther pq.StringArray `json:"agencyOrStateHelpOther" db:"agency_or_state_help_other"`
 	AgencyOrStateHelpNote  *string        `json:"agencyOrStateHelpNote" db:"agency_or_state_help_note"`
 	Stakeholders           pq.StringArray `json:"stakeholders" db:"stakeholders"`
 	StakeholdersOther      *string        `json:"stakeholdersOther" db:"stakeholders_other"`
@@ -35,7 +36,7 @@ type PlanOpsEvalAndLearning struct {
 	TechnicalContactsIdentified       *bool                `json:"technicalContactsIdentified" db:"technical_contacts_identified"`
 	TechnicalContactsIdentifiedDetail *string              `json:"technicalContactsIdentifiedDetail" db:"technical_contacts_identified_detail"`
 	TechnicalContactsIdentifiedNote   *string              `json:"technicalContactsIdentifiedNote" db:"technical_contacts_identified_note"`
-	CaptureParticipantInfo            *string              `json:"captureParticipantInfo" db:"capture_participant_info"`
+	CaptureParticipantInfo            *bool                `json:"captureParticipantInfo" db:"capture_participant_info"`
 	CaptureParticipantInfoNote        *string              `json:"captureParticipantInfoNote" db:"capture_participant_info_note"`
 	IcdOwner                          *string              `json:"icdOwner" db:"icd_owner"`
 	DraftIcdDueDate                   *time.Time           `json:"draftIcdDueDate" db:"draft_icd_due_date"`
