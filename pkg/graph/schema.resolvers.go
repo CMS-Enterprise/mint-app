@@ -96,6 +96,12 @@ func (r *modelPlanResolver) Discussions(ctx context.Context, obj *models.ModelPl
 	return resolvers.PlanDiscussionCollectionByModelPlanID(logger, obj.ID, r.store)
 }
 
+func (r *modelPlanResolver) Payments(ctx context.Context, obj *models.ModelPlan) (*models.PlanPayments, error) {
+	logger := appcontext.ZLogger(ctx)
+
+	return resolvers.PlanPaymentsReadByModelPlan(logger, r.store, obj.ID)
+}
+
 func (r *mutationResolver) CreateModelPlan(ctx context.Context, modelName string) (*models.ModelPlan, error) {
 	logger := appcontext.ZLogger(ctx)
 	principal := appcontext.Principal(ctx).ID()
@@ -249,6 +255,13 @@ func (r *mutationResolver) DeleteDiscussionReply(ctx context.Context, id uuid.UU
 	logger := appcontext.ZLogger(ctx)
 
 	return resolvers.DeleteDiscussionReply(logger, id, principal, r.store)
+}
+
+func (r *mutationResolver) UpdatePlanPayment(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanPayments, error) {
+	logger := appcontext.ZLogger(ctx)
+	principal := appcontext.Principal(ctx).ID()
+
+	return resolvers.PlanPaymentsUpdate(logger, r.store, id, changes, principal)
 }
 
 func (r *planBeneficiariesResolver) Beneficiaries(ctx context.Context, obj *models.PlanBeneficiaries) ([]model.BeneficiariesType, error) {
@@ -413,6 +426,34 @@ func (r *planParticipantsAndProvidersResolver) ProviderLeaveMethod(ctx context.C
 	return providerLeaveTypes, nil
 }
 
+func (r *planPaymentsResolver) FundingSourceR(ctx context.Context, obj *models.PlanPayments) ([]model.FundingSource, error) {
+	panic(fmt.Errorf("not implemented"))
+}
+
+func (r *planPaymentsResolver) PayRecipients(ctx context.Context, obj *models.PlanPayments) ([]model.PayRecipient, error) {
+	panic(fmt.Errorf("not implemented"))
+}
+
+func (r *planPaymentsResolver) PayType(ctx context.Context, obj *models.PlanPayments) (model.PayType, error) {
+	panic(fmt.Errorf("not implemented"))
+}
+
+func (r *planPaymentsResolver) PayClaims(ctx context.Context, obj *models.PlanPayments) ([]model.ClaimsBasedPayType, error) {
+	panic(fmt.Errorf("not implemented"))
+}
+
+func (r *planPaymentsResolver) NonClaimsPayments(ctx context.Context, obj *models.PlanPayments) ([]model.NonClaimsBasedPayType, error) {
+	panic(fmt.Errorf("not implemented"))
+}
+
+func (r *planPaymentsResolver) ExpectedCalculationComplexityLevel(ctx context.Context, obj *models.PlanPayments) (model.ComplexityCalculationLevelType, error) {
+	panic(fmt.Errorf("not implemented"))
+}
+
+func (r *planPaymentsResolver) AnticipatedPaymentFrequency(ctx context.Context, obj *models.PlanPayments) (model.AnticipatedPaymentFrequencyType, error) {
+	panic(fmt.Errorf("not implemented"))
+}
+
 func (r *queryResolver) CurrentUser(ctx context.Context) (*model.CurrentUser, error) {
 	ldUser := flags.Principal(ctx)
 	userKey := ldUser.GetKey()
@@ -485,6 +526,12 @@ func (r *queryResolver) PlanCollaboratorByID(ctx context.Context, id uuid.UUID) 
 	return resolvers.FetchCollaboratorByID(logger, id, r.store)
 }
 
+func (r *queryResolver) PlanPayments(ctx context.Context, id uuid.UUID) (*models.PlanPayments, error) {
+	logger := appcontext.ZLogger(ctx)
+
+	return resolvers.PlanPaymentsRead(logger, r.store, id)
+}
+
 func (r *userInfoResolver) Email(ctx context.Context, obj *models.UserInfo) (string, error) {
 	return string(obj.Email), nil
 }
@@ -518,6 +565,9 @@ func (r *Resolver) PlanParticipantsAndProviders() generated.PlanParticipantsAndP
 	return &planParticipantsAndProvidersResolver{r}
 }
 
+// PlanPayments returns generated.PlanPaymentsResolver implementation.
+func (r *Resolver) PlanPayments() generated.PlanPaymentsResolver { return &planPaymentsResolver{r} }
+
 // Query returns generated.QueryResolver implementation.
 func (r *Resolver) Query() generated.QueryResolver { return &queryResolver{r} }
 
@@ -531,21 +581,6 @@ type planDiscussionResolver struct{ *Resolver }
 type planDocumentResolver struct{ *Resolver }
 type planGeneralCharacteristicsResolver struct{ *Resolver }
 type planParticipantsAndProvidersResolver struct{ *Resolver }
+type planPaymentsResolver struct{ *Resolver }
 type queryResolver struct{ *Resolver }
 type userInfoResolver struct{ *Resolver }
-
-// !!! WARNING !!!
-// The code below was going to be deleted when updating resolvers. It has been copied here so you have
-// one last chance to move it out of harms way if you want. There are two reasons this happens:
-//  - When renaming or deleting a resolver the old code will be put in here. You can safely delete
-//    it when you're done.
-//  - You have helper methods in this file. Move them out to keep these resolver files clean.
-func (r *planParticipantsAndProvidersResolver) GainsharePaymentsTrack(ctx context.Context, obj *models.PlanParticipantsAndProviders) (*string, error) {
-	panic(fmt.Errorf("not implemented"))
-}
-func (r *mutationResolver) UpdatePlanPlanParticipantsAndProviders(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanParticipantsAndProviders, error) {
-	principal := appcontext.Principal(ctx).ID()
-	logger := appcontext.ZLogger(ctx)
-
-	return resolvers.PlanParticipantsAndProvidersUpdate(logger, id, changes, principal, r.store)
-}
