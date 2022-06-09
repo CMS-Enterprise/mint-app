@@ -5,7 +5,6 @@ package graph
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/google/uuid"
 
@@ -377,51 +376,111 @@ func (r *planGeneralCharacteristicsResolver) WaiversRequiredTypes(ctx context.Co
 }
 
 func (r *planOpsEvalAndLearningResolver) AgencyOrStateHelp(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]model.AgencyOrStateHelpType, error) {
-	panic(fmt.Errorf("not implemented"))
+	// TODO: We should probably have a better way to handle enum arrays //Consider implmenting a generic function to handle this with Generics
+	var agencyOrStateHelpTypes []model.AgencyOrStateHelpType
+	for _, item := range obj.AgencyOrStateHelp {
+		agencyOrStateHelpTypes = append(agencyOrStateHelpTypes, model.AgencyOrStateHelpType(item))
+	}
+	return agencyOrStateHelpTypes, nil
 }
 
 func (r *planOpsEvalAndLearningResolver) Stakeholders(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]model.StakeholdersType, error) {
-	panic(fmt.Errorf("not implemented"))
+	// TODO: We should probably have a better way to handle enum arrays //Consider implmenting a generic function to handle this with Generics
+	var stakeholdersTypes []model.StakeholdersType
+	for _, item := range obj.Stakeholders {
+		stakeholdersTypes = append(stakeholdersTypes, model.StakeholdersType(item))
+	}
+	return stakeholdersTypes, nil
 }
 
 func (r *planOpsEvalAndLearningResolver) HelpdeskUse(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]model.HelpdeskUseType, error) {
-	panic(fmt.Errorf("not implemented"))
+	// TODO: We should probably have a better way to handle enum arrays //Consider implmenting a generic function to handle this with Generics
+	var helpdeskUseTypes []model.HelpdeskUseType
+	for _, item := range obj.HelpdeskUse {
+		helpdeskUseTypes = append(helpdeskUseTypes, model.HelpdeskUseType(item))
+	}
+	return helpdeskUseTypes, nil
 }
 
 func (r *planOpsEvalAndLearningResolver) ContractorSupport(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]model.ContractorSupportType, error) {
-	panic(fmt.Errorf("not implemented"))
+	// TODO: We should probably have a better way to handle enum arrays //Consider implmenting a generic function to handle this with Generics
+	var contractorSupportTypes []model.ContractorSupportType
+	for _, item := range obj.ContractorSupport {
+		contractorSupportTypes = append(contractorSupportTypes, model.ContractorSupportType(item))
+	}
+	return contractorSupportTypes, nil
 }
 
 func (r *planOpsEvalAndLearningResolver) DataMonitoringFileTypes(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]model.MonitoringFileType, error) {
-	panic(fmt.Errorf("not implemented"))
+	// TODO: We should probably have a better way to handle enum arrays //Consider implmenting a generic function to handle this with Generics
+	var monitoringFileTypes []model.MonitoringFileType
+	for _, item := range obj.DataMonitoringFileTypes {
+		monitoringFileTypes = append(monitoringFileTypes, model.MonitoringFileType(item))
+	}
+	return monitoringFileTypes, nil
 }
 
 func (r *planOpsEvalAndLearningResolver) EvaluationApproaches(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]model.EvaluationApproachType, error) {
-	panic(fmt.Errorf("not implemented"))
+	// TODO: We should probably have a better way to handle enum arrays //Consider implmenting a generic function to handle this with Generics
+	var evaluationApproachTypes []model.EvaluationApproachType
+	for _, item := range obj.EvaluationApproaches {
+		evaluationApproachTypes = append(evaluationApproachTypes, model.EvaluationApproachType(item))
+	}
+	return evaluationApproachTypes, nil
 }
 
 func (r *planOpsEvalAndLearningResolver) CcmInvolvment(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]model.CcmInvolvmentType, error) {
-	panic(fmt.Errorf("not implemented"))
+	// TODO: We should probably have a better way to handle enum arrays //Consider implmenting a generic function to handle this with Generics
+	var ccmInvolvmentTypes []model.CcmInvolvmentType
+	for _, item := range obj.CcmInvolvment {
+		ccmInvolvmentTypes = append(ccmInvolvmentTypes, model.CcmInvolvmentType(item))
+	}
+	return ccmInvolvmentTypes, nil
 }
 
 func (r *planOpsEvalAndLearningResolver) DataNeededForMonitoring(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]model.DataForMonitoringType, error) {
-	panic(fmt.Errorf("not implemented"))
+	// TODO: We should probably have a better way to handle enum arrays //Consider implmenting a generic function to handle this with Generics
+	var dataForMonitoringTypes []model.DataForMonitoringType
+	for _, item := range obj.DataNeededForMonitoring {
+		dataForMonitoringTypes = append(dataForMonitoringTypes, model.DataForMonitoringType(item))
+	}
+	return dataForMonitoringTypes, nil
 }
 
 func (r *planOpsEvalAndLearningResolver) DataToSendParticicipants(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]model.DataToSendParticipantsType, error) {
-	panic(fmt.Errorf("not implemented"))
+	// TODO: We should probably have a better way to handle enum arrays //Consider implmenting a generic function to handle this with Generics
+	var dataToSendParticipantsTypes []model.DataToSendParticipantsType
+	for _, item := range obj.DataToSendParticicipants {
+		dataToSendParticipantsTypes = append(dataToSendParticipantsTypes, model.DataToSendParticipantsType(item))
+	}
+	return dataToSendParticipantsTypes, nil
 }
 
 func (r *planOpsEvalAndLearningResolver) DataSharingFrequency(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]model.DataFrequencyType, error) {
-	panic(fmt.Errorf("not implemented"))
+	// TODO: We should probably have a better way to handle enum arrays //Consider implmenting a generic function to handle this with Generics
+	var dataFrequencyTypes []model.DataFrequencyType
+	for _, item := range obj.DataSharingFrequency {
+		dataFrequencyTypes = append(dataFrequencyTypes, model.DataFrequencyType(item))
+	}
+	return dataFrequencyTypes, nil
 }
 
 func (r *planOpsEvalAndLearningResolver) DataCollectionFrequency(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]model.DataFrequencyType, error) {
-	panic(fmt.Errorf("not implemented"))
+	// TODO: We should probably have a better way to handle enum arrays //Consider implmenting a generic function to handle this with Generics
+	var dataFrequencyTypes []model.DataFrequencyType
+	for _, item := range obj.DataCollectionFrequency {
+		dataFrequencyTypes = append(dataFrequencyTypes, model.DataFrequencyType(item))
+	}
+	return dataFrequencyTypes, nil
 }
 
 func (r *planOpsEvalAndLearningResolver) ModelLearningSystems(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]model.ModelLearningSystemType, error) {
-	panic(fmt.Errorf("not implemented"))
+	// TODO: We should probably have a better way to handle enum arrays //Consider implmenting a generic function to handle this with Generics
+	var modelLearningSystemTypes []model.ModelLearningSystemType
+	for _, item := range obj.ModelLearningSystems {
+		modelLearningSystemTypes = append(modelLearningSystemTypes, model.ModelLearningSystemType(item))
+	}
+	return modelLearningSystemTypes, nil
 }
 
 func (r *planParticipantsAndProvidersResolver) Participants(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.ParticipantsType, error) {
