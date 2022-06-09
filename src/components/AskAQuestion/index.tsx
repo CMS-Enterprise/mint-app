@@ -23,7 +23,7 @@ const AskAQuestion = ({ modelID }: AskAQuestionType) => {
         />
       )}
       <div
-        className="padding-2 bg-primary-lighter"
+        className="padding-2 bg-primary-lighter display-flex"
         data-testid="ask-a-question"
       >
         <IconAnnouncement className="text-primary margin-right-1" />

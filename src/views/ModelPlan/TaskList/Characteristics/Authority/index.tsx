@@ -1,4 +1,4 @@
-import React, { Fragment, useRef, useState } from 'react';
+import React, { Fragment, useRef } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
@@ -155,10 +155,6 @@ const Authority = () => {
           handleFormSubmit(values, 'task-list');
         }}
         enableReinitialize
-        // validationSchema={validationSchema}
-        validateOnBlur={false}
-        validateOnChange={false}
-        validateOnMount={false}
         innerRef={formikRef}
       >
         {(formikProps: FormikProps<ModelPlanCharacteristicsFormType>) => {
@@ -167,7 +163,6 @@ const Authority = () => {
             handleSubmit,
             setErrors,
             setFieldValue,
-            validateForm,
             values
           } = formikProps;
           const flatErrors = flattenErrors(errors);
@@ -192,9 +187,9 @@ const Authority = () => {
               )}
               <Form
                 className="tablet:grid-col-6 margin-top-6"
+                data-testid="plan-characteristics-authority-form"
                 onSubmit={e => {
                   handleSubmit(e);
-                  window.scrollTo(0, 0);
                 }}
               >
                 <FieldGroup
@@ -238,6 +233,7 @@ const Authority = () => {
                             as={TextAreaField}
                             error={!!flatErrors.rulemakingRequiredDescription}
                             className="margin-top-0 height-15"
+                            data-testid="plan-characteristics-rulemaking-required-description"
                             id="plan-characteristics-rulemaking-required-description"
                             name="rulemakingRequiredDescription"
                           />
@@ -430,26 +426,12 @@ const Authority = () => {
                     type="button"
                     className="usa-button usa-button--outline margin-bottom-1"
                     onClick={() => {
-                      if (Object.keys(errors).length > 0) {
-                        window.scrollTo(0, 0);
-                      } else {
-                        validateForm().then(err => {
-                          if (Object.keys(err).length > 0) {
-                            window.scrollTo(0, 0);
-                          } else {
-                            handleFormSubmit(values, 'back');
-                          }
-                        });
-                      }
+                      handleFormSubmit(values, 'back');
                     }}
                   >
                     {h('back')}
                   </Button>
-                  <Button
-                    type="submit"
-                    className=""
-                    onClick={() => setErrors({})}
-                  >
+                  <Button type="submit" onClick={() => setErrors({})}>
                     {h('saveAndStartNext')}
                   </Button>
                 </div>
@@ -475,7 +457,7 @@ const Authority = () => {
           );
         }}
       </Formik>
-      <PageNumber currentPage={3} totalPages={5} className="margin-y-6" />
+      <PageNumber currentPage={5} totalPages={5} className="margin-y-6" />
     </>
   );
 };

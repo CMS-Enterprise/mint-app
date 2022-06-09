@@ -1,4 +1,4 @@
-import React, { useMemo, useRef, useState } from 'react';
+import React, { useMemo, useRef } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link, Route, Switch, useHistory, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
@@ -29,8 +29,10 @@ import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import MultiSelect from 'components/shared/MultiSelect';
 import TextAreaField from 'components/shared/TextAreaField';
+import GetExistingModelPlans from 'queries/GetExistingModelPlans';
 import GetModelPlanCharacteristics from 'queries/GetModelPlanCharacteristics';
 import GetDraftModelPlans from 'queries/GetModelPlans';
+import { GetExistingModelPlans as ExistingModelPlanType } from 'queries/types/GetExistingModelPlans';
 import {
   GetModelPlanCharacteristics as GetModelPlanCharacteristicsType,
   GetModelPlanCharacteristics_modelPlan_generalCharacteristics as ModelPlanCharacteristicsFormType
@@ -46,7 +48,7 @@ import Involvements from './Involvements';
 import KeyCharacteristics from './KeyCharacteristics';
 import TargetsAndOptions from './TargetsAndOptions';
 
-const CharacteristicsContent = () => {
+export const CharacteristicsContent = () => {
   const { t } = useTranslation('generalCharacteristics');
   const { t: h } = useTranslation('draftModelPlan');
   const { modelID } = useParams<{ modelID: string }>();
@@ -59,14 +61,31 @@ const CharacteristicsContent = () => {
     error: modelError
   } = useQuery<GetDraftModelPlansType>(GetDraftModelPlans);
 
+  const {
+    data: existingModelData,
+    error: existingModelError
+  } = useQuery<ExistingModelPlanType>(GetExistingModelPlans);
+
   const modelPlanOptions = useMemo(() => {
-    return (modelData?.modelPlanCollection || []).map(model => {
+    const combinedModels = [
+      ...(modelData?.modelPlanCollection || []),
+      ...(existingModelData?.existingModelCollection || [])
+    ].sort((a, b) => {
+      if ((a.modelName || '') < (b?.modelName || '')) {
+        return -1;
+      }
+      if ((a?.modelName || '') > (b?.modelName || '')) {
+        return 1;
+      }
+      return 0;
+    });
+    return combinedModels.map(model => {
       return {
         label: model!.modelName!,
-        value: model!.id!
+        value: model!.id!.toString()
       };
     });
-  }, [modelData]);
+  }, [modelData, existingModelData]);
 
   const { data } = useQuery<GetModelPlanCharacteristicsType>(
     GetModelPlanCharacteristics,
@@ -175,20 +194,14 @@ const CharacteristicsContent = () => {
           handleFormSubmit(values, 'next');
         }}
         enableReinitialize
-        // validationSchema={validationSchema}
-        validateOnBlur={false}
-        validateOnChange={false}
-        validateOnMount={false}
         innerRef={formikRef}
       >
         {(formikProps: FormikProps<ModelPlanCharacteristicsFormType>) => {
           const {
-            dirty,
             errors,
             handleSubmit,
             setErrors,
             setFieldValue,
-            isValid,
             values
           } = formikProps;
           const flatErrors = flattenErrors(errors);
@@ -213,9 +226,9 @@ const CharacteristicsContent = () => {
               )}
               <Form
                 className="tablet:grid-col-6 margin-top-6"
+                data-testid="plan-characteristics-form"
                 onSubmit={e => {
                   handleSubmit(e);
-                  window.scrollTo(0, 0);
                 }}
               >
                 <FieldGroup
@@ -267,10 +280,13 @@ const CharacteristicsContent = () => {
                       <FieldErrorMsg>{flatErrors.existingModel}</FieldErrorMsg>
 
                       <ComboBox
-                        disabled={!!modelError}
+                        disabled={!!modelError || !!existingModelError}
+                        data-test-id="plan-characteristics-existing-model"
                         id="plan-characteristics-existing-model"
                         name="existingModel"
-                        className={classNames({ disabled: modelError })}
+                        className={classNames({
+                          disabled: !!modelError || !!existingModelError
+                        })}
                         inputProps={{
                           id: 'plan-characteristics-existing-model',
                           name: 'existingModel',
@@ -279,16 +295,16 @@ const CharacteristicsContent = () => {
                         }}
                         options={modelPlanOptions}
                         defaultValue={
-                          modelData?.modelPlanCollection?.find(
-                            modelPlan => modelPlan?.modelName === existingModel
-                          )?.id || ''
+                          modelPlanOptions.find(
+                            modelPlan => modelPlan.label === existingModel
+                          )?.value || ''
                         }
                         onChange={modelPlanID => {
-                          const model = modelData?.modelPlanCollection?.find(
-                            modelPlan => modelPlan?.id === modelPlanID
+                          const model = modelPlanOptions.find(
+                            modelPlan => modelPlan.value === modelPlanID
                           );
                           if (model) {
-                            setFieldValue('existingModel', model.modelName);
+                            setFieldValue('existingModel', model.label);
                           } else {
                             setFieldValue('existingModel', '');
                           }
@@ -442,6 +458,7 @@ const CharacteristicsContent = () => {
                             as={TextAreaField}
                             error={!!flatErrors.hasComponentsOrTracksDiffer}
                             className="margin-top-0 height-15"
+                            data-testid="plan-characteristics-tracks-differ-how"
                             id="plan-characteristics-tracks-differ-how"
                             name="hasComponentsOrTracksDiffer"
                           />
@@ -463,11 +480,7 @@ const CharacteristicsContent = () => {
                 </FieldGroup>
 
                 <div className="margin-top-6 margin-bottom-3">
-                  <Button
-                    type="submit"
-                    disabled={!(dirty || isValid)}
-                    onClick={() => setErrors({})}
-                  >
+                  <Button type="submit" onClick={() => setErrors({})}>
                     {h('next')}
                   </Button>
                 </div>

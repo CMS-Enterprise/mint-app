@@ -1,6 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Checkbox, IconClose, Tag } from '@trussworks/react-uswds';
+import {
+  Checkbox,
+  IconClose,
+  IconExpandMore,
+  Tag
+} from '@trussworks/react-uswds';
 import classNames from 'classnames';
 
 import './index.scss';
@@ -123,6 +128,25 @@ export default function MultiSelect({
             onClick={() => setActive(true)}
             onChange={e => setSearchValue(e.target.value)}
           />
+          <div className="easi-multiselect__controls">
+            {selected.length > 0 && (
+              <div className="easi-multiselect__controls-button">
+                <IconClose
+                  onClick={() => setSelected([])}
+                  size={3}
+                  role="button"
+                />
+                <div className="width-1px border-right-1px border-base-lighter height-205 margin-left-1" />
+              </div>
+            )}
+            <div className="easi-multiselect__controls-button easi-multiselect__controls-close">
+              <IconExpandMore
+                onClick={() => setActive(!active)}
+                size={4}
+                role="button"
+              />
+            </div>
+          </div>
         </div>
         {active && (
           <Options

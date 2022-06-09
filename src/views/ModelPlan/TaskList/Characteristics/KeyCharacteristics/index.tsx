@@ -1,4 +1,4 @@
-import React, { Fragment, useRef, useState } from 'react';
+import React, { Fragment, useRef } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
@@ -174,21 +174,14 @@ const KeyCharacteristics = () => {
           handleFormSubmit(values, 'next');
         }}
         enableReinitialize
-        // validationSchema={validationSchema}
-        validateOnBlur={false}
-        validateOnChange={false}
-        validateOnMount={false}
         innerRef={formikRef}
       >
         {(formikProps: FormikProps<ModelPlanCharacteristicsFormType>) => {
           const {
-            dirty,
             errors,
             handleSubmit,
             setErrors,
             setFieldValue,
-            validateForm,
-            isValid,
             values
           } = formikProps;
           const flatErrors = flattenErrors(errors);
@@ -213,9 +206,9 @@ const KeyCharacteristics = () => {
               )}
               <Form
                 className="tablet:grid-col-6 margin-top-6"
+                data-testid="plan-characteristics-key-characteristics-form"
                 onSubmit={e => {
                   handleSubmit(e);
-                  window.scrollTo(0, 0);
                 }}
               >
                 <FieldGroup
@@ -338,6 +331,7 @@ const KeyCharacteristics = () => {
                     as={MultiSelect}
                     id="plan-characteristics-key-characteristics"
                     name="keyCharacteristics"
+                    role="combobox"
                     options={mappedKeyCharacteristics}
                     selectedLabel={t('selectedKeyCharacteristics')}
                     onChange={(value: string[] | []) => {
@@ -352,186 +346,191 @@ const KeyCharacteristics = () => {
                   field="keyCharacteristicsNote"
                 />
 
-                <FieldGroup
-                  scrollElement="keyCharacteristicsOther"
-                  error={!!flatErrors.keyCharacteristicsOther}
-                >
-                  <Label htmlFor="plan-characteristics-key-other">
-                    {t('specificQuestions')}
-                  </Label>
-                  <p className="text-base margin-y-1 margin-top-3">
-                    {t('pleaseDescribe')}
-                  </p>
-                  <FieldErrorMsg>
-                    {flatErrors.keyCharacteristicsOther}
-                  </FieldErrorMsg>
-                  <Field
-                    as={TextInput}
+                {values.keyCharacteristics.includes(
+                  'OTHER' as KeyCharacteristic
+                ) && (
+                  <FieldGroup
+                    scrollElement="keyCharacteristicsOther"
+                    className="margin-top-neg-4"
                     error={!!flatErrors.keyCharacteristicsOther}
-                    id="plan-characteristics-key-other"
-                    maxLength={50}
-                    name="keyCharacteristicsOther"
-                  />
-                </FieldGroup>
-
-                <FieldGroup
-                  scrollElement="collectPlanBids"
-                  error={!!flatErrors.collectPlanBids}
-                  className="margin-y-4"
-                >
-                  <Label
-                    htmlFor="plan-characteristics-collect-bids"
-                    className="text-normal"
                   >
-                    {t('reviewPlanBids')}
-                  </Label>
-                  <FieldErrorMsg>{flatErrors.collectPlanBids}</FieldErrorMsg>
-                  <Fieldset>
+                    <Label htmlFor="plan-characteristics-key-other">
+                      {t('specificQuestions')}
+                    </Label>
+                    <p className="text-base margin-y-1 margin-top-3">
+                      {t('pleaseDescribe')}
+                    </p>
+                    <FieldErrorMsg>
+                      {flatErrors.keyCharacteristicsOther}
+                    </FieldErrorMsg>
                     <Field
-                      as={Radio}
-                      id="plan-characteristics-collect-bids"
-                      name="collectPlanBids"
-                      label={h('yes')}
-                      value="TRUE"
-                      checked={values.collectPlanBids === true}
-                      onChange={() => {
-                        setFieldValue('collectPlanBids', true);
-                      }}
+                      as={TextInput}
+                      data-testid="plan-characteristics-key-other"
+                      error={!!flatErrors.keyCharacteristicsOther}
+                      id="plan-characteristics-key-other"
+                      maxLength={50}
+                      name="keyCharacteristicsOther"
                     />
-                    <Field
-                      as={Radio}
-                      id="plan-characteristics-collect-bids-no"
-                      name="collectPlanBids"
-                      label={h('no')}
-                      value="FALSE"
-                      checked={values.collectPlanBids === false}
-                      onChange={() => {
-                        setFieldValue('collectPlanBids', false);
-                      }}
-                    />
-                  </Fieldset>
-                </FieldGroup>
+                  </FieldGroup>
+                )}
 
-                <AddNote
-                  id="plan-characteristics-collect-bids-note"
-                  field="collectPlanBidsNote"
-                  className="margin-bottom-0"
-                />
+                {(values.keyCharacteristics.includes(
+                  'PART_C' as KeyCharacteristic
+                ) ||
+                  values.keyCharacteristics.includes(
+                    'PART_D' as KeyCharacteristic
+                  )) && (
+                  <>
+                    <FieldGroup
+                      scrollElement="collectPlanBids"
+                      error={!!flatErrors.collectPlanBids}
+                      className="margin-y-4"
+                    >
+                      <Label
+                        htmlFor="plan-characteristics-collect-bids"
+                        className="text-normal"
+                      >
+                        {t('reviewPlanBids')}
+                      </Label>
+                      <FieldErrorMsg>
+                        {flatErrors.collectPlanBids}
+                      </FieldErrorMsg>
+                      <Fieldset>
+                        <Field
+                          as={Radio}
+                          id="plan-characteristics-collect-bids"
+                          name="collectPlanBids"
+                          label={h('yes')}
+                          value="TRUE"
+                          checked={values.collectPlanBids === true}
+                          onChange={() => {
+                            setFieldValue('collectPlanBids', true);
+                          }}
+                        />
+                        <Field
+                          as={Radio}
+                          id="plan-characteristics-collect-bids-no"
+                          name="collectPlanBids"
+                          label={h('no')}
+                          value="FALSE"
+                          checked={values.collectPlanBids === false}
+                          onChange={() => {
+                            setFieldValue('collectPlanBids', false);
+                          }}
+                        />
+                      </Fieldset>
+                    </FieldGroup>
 
-                <FieldGroup
-                  scrollElement="managePartCDEnrollment"
-                  error={!!flatErrors.managePartCDEnrollment}
-                  className="margin-y-4"
-                >
-                  <Label
-                    htmlFor="plan-characteristics-manage-enrollment"
-                    className="text-normal"
-                  >
-                    {t('manageEnrollment')}
-                  </Label>
-                  <FieldErrorMsg>
-                    {flatErrors.managePartCDEnrollment}
-                  </FieldErrorMsg>
-                  <Fieldset>
-                    <Field
-                      as={Radio}
-                      id="plan-characteristics-manage-enrollment"
-                      name="managePartCDEnrollment"
-                      label={h('yes')}
-                      value="TRUE"
-                      checked={values.managePartCDEnrollment === true}
-                      onChange={() => {
-                        setFieldValue('managePartCDEnrollment', true);
-                      }}
+                    <AddNote
+                      id="plan-characteristics-collect-bids-note"
+                      field="collectPlanBidsNote"
+                      className="margin-bottom-0"
                     />
-                    <Field
-                      as={Radio}
-                      id="plan-characteristics-manage-enrollment-no"
-                      name="managePartCDEnrollment"
-                      label={h('no')}
-                      value="FALSE"
-                      checked={values.managePartCDEnrollment === false}
-                      onChange={() => {
-                        setFieldValue('managePartCDEnrollment', false);
-                      }}
-                    />
-                  </Fieldset>
-                </FieldGroup>
 
-                <AddNote
-                  id="plan-characteristics-manage-enrollment-note"
-                  field="managePartCDEnrollmentNote"
-                  className="margin-bottom-0"
-                />
+                    <FieldGroup
+                      scrollElement="managePartCDEnrollment"
+                      error={!!flatErrors.managePartCDEnrollment}
+                      className="margin-y-4"
+                    >
+                      <Label
+                        htmlFor="plan-characteristics-manage-enrollment"
+                        className="text-normal"
+                      >
+                        {t('manageEnrollment')}
+                      </Label>
+                      <FieldErrorMsg>
+                        {flatErrors.managePartCDEnrollment}
+                      </FieldErrorMsg>
+                      <Fieldset>
+                        <Field
+                          as={Radio}
+                          id="plan-characteristics-manage-enrollment"
+                          name="managePartCDEnrollment"
+                          label={h('yes')}
+                          value="TRUE"
+                          checked={values.managePartCDEnrollment === true}
+                          onChange={() => {
+                            setFieldValue('managePartCDEnrollment', true);
+                          }}
+                        />
+                        <Field
+                          as={Radio}
+                          id="plan-characteristics-manage-enrollment-no"
+                          name="managePartCDEnrollment"
+                          label={h('no')}
+                          value="FALSE"
+                          checked={values.managePartCDEnrollment === false}
+                          onChange={() => {
+                            setFieldValue('managePartCDEnrollment', false);
+                          }}
+                        />
+                      </Fieldset>
+                    </FieldGroup>
 
-                <FieldGroup
-                  scrollElement="planContactUpdated"
-                  error={!!flatErrors.planContactUpdated}
-                  className="margin-y-4"
-                >
-                  <Label
-                    htmlFor="plan-characteristics-contact-updated"
-                    className="text-normal"
-                  >
-                    {t('updatedContact')}
-                  </Label>
-                  <FieldErrorMsg>{flatErrors.planContactUpdated}</FieldErrorMsg>
-                  <Fieldset>
-                    <Field
-                      as={Radio}
-                      id="plan-characteristics-contact-updated"
-                      name="planContactUpdated"
-                      label={h('yes')}
-                      value="TRUE"
-                      checked={values.planContactUpdated === true}
-                      onChange={() => {
-                        setFieldValue('planContactUpdated', true);
-                      }}
+                    <AddNote
+                      id="plan-characteristics-manage-enrollment-note"
+                      field="managePartCDEnrollmentNote"
+                      className="margin-bottom-0"
                     />
-                    <Field
-                      as={Radio}
-                      id="plan-characteristics-contact-updated-no"
-                      name="planContactUpdated"
-                      label={h('no')}
-                      value="FALSE"
-                      checked={values.planContactUpdated === false}
-                      onChange={() => {
-                        setFieldValue('planContactUpdated', false);
-                      }}
-                    />
-                  </Fieldset>
-                </FieldGroup>
 
-                <AddNote
-                  id="plan-characteristics-contact-updated-note"
-                  field="planContactUpdatedNote"
-                />
+                    <FieldGroup
+                      scrollElement="planContactUpdated"
+                      error={!!flatErrors.planContactUpdated}
+                      className="margin-y-4"
+                    >
+                      <Label
+                        htmlFor="plan-characteristics-contact-updated"
+                        className="text-normal"
+                      >
+                        {t('updatedContact')}
+                      </Label>
+                      <FieldErrorMsg>
+                        {flatErrors.planContactUpdated}
+                      </FieldErrorMsg>
+                      <Fieldset>
+                        <Field
+                          as={Radio}
+                          id="plan-characteristics-contact-updated"
+                          name="planContactUpdated"
+                          label={h('yes')}
+                          value="TRUE"
+                          checked={values.planContactUpdated === true}
+                          onChange={() => {
+                            setFieldValue('planContactUpdated', true);
+                          }}
+                        />
+                        <Field
+                          as={Radio}
+                          id="plan-characteristics-contact-updated-no"
+                          name="planContactUpdated"
+                          label={h('no')}
+                          value="FALSE"
+                          checked={values.planContactUpdated === false}
+                          onChange={() => {
+                            setFieldValue('planContactUpdated', false);
+                          }}
+                        />
+                      </Fieldset>
+                    </FieldGroup>
+
+                    <AddNote
+                      id="plan-characteristics-contact-updated-note"
+                      field="planContactUpdatedNote"
+                    />
+                  </>
+                )}
 
                 <div className="margin-top-6 margin-bottom-3">
                   <Button
                     type="button"
                     className="usa-button usa-button--outline margin-bottom-1"
                     onClick={() => {
-                      if (Object.keys(errors).length > 0) {
-                        window.scrollTo(0, 0);
-                      } else {
-                        validateForm().then(err => {
-                          if (Object.keys(err).length > 0) {
-                            window.scrollTo(0, 0);
-                          } else {
-                            handleFormSubmit(values, 'back');
-                          }
-                        });
-                      }
+                      handleFormSubmit(values, 'back');
                     }}
                   >
                     {h('back')}
                   </Button>
-                  <Button
-                    type="submit"
-                    disabled={!(dirty || isValid)}
-                    onClick={() => setErrors({})}
-                  >
+                  <Button type="submit" onClick={() => setErrors({})}>
                     {h('next')}
                   </Button>
                 </div>

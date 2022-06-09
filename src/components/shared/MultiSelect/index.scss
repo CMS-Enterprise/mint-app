@@ -1,15 +1,15 @@
 .easi-multiselect__controls {
     position: absolute;
-    right: 1px;
-    top: 1px;
-    height: 38px;
+    right: 2px;
+    top: 3px;
+    height: 35px;
     display: flex;
     align-items: center;
     background-color: white;
   
     &-button {
       height: 22px;
-      width: 32px;
+      width: 38px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -18,6 +18,10 @@
       &:hover {
         color: color('base-darker');
       }
+    }
+
+    &-close {
+      width: 35px;
     }
   }
   

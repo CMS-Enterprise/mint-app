@@ -1,4 +1,4 @@
-import React, { Fragment, useRef, useState } from 'react';
+import React, { Fragment, useRef } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
@@ -171,21 +171,14 @@ const TargetsAndOptions = () => {
           handleFormSubmit(values, 'next');
         }}
         enableReinitialize
-        // validationSchema={validationSchema}
-        validateOnBlur={false}
-        validateOnChange={false}
-        validateOnMount={false}
         innerRef={formikRef}
       >
         {(formikProps: FormikProps<ModelPlanCharacteristicsFormType>) => {
           const {
-            dirty,
             errors,
             handleSubmit,
             setErrors,
             setFieldValue,
-            validateForm,
-            isValid,
             values
           } = formikProps;
           const flatErrors = flattenErrors(errors);
@@ -210,9 +203,9 @@ const TargetsAndOptions = () => {
               )}
               <Form
                 className="tablet:grid-col-6 margin-top-6"
+                data-testid="plan-characteristics-targets-and-options-form"
                 onSubmit={e => {
                   handleSubmit(e);
-                  window.scrollTo(0, 0);
                 }}
               >
                 <FieldGroup
@@ -313,6 +306,7 @@ const TargetsAndOptions = () => {
                                           </FieldErrorMsg>
                                           <Field
                                             as={TextInput}
+                                            data-testid="plan-characteristics-geographies-targeted-other"
                                             id="plan-characteristics-geographies-targeted-other"
                                             maxLength={50}
                                             name="geographiesTargetedTypesOther"
@@ -524,89 +518,83 @@ const TargetsAndOptions = () => {
                   )}
                 />
 
-                <FieldGroup
-                  scrollElement="multiplePatricipationAgreementsNeeded"
-                  error={!!flatErrors.multiplePatricipationAgreementsNeeded}
-                  className="margin-y-4"
-                >
-                  <Label
-                    htmlFor="plan-characteristics-multiple-participation-needed"
-                    className="text-normal"
-                  >
-                    {t('moreParticipation')}
-                  </Label>
-                  <p className="text-base margin-y-1">
-                    {t('agreementDepending')}
-                  </p>
-                  <FieldErrorMsg>
-                    {flatErrors.multiplePatricipationAgreementsNeeded}
-                  </FieldErrorMsg>
-                  <Fieldset>
-                    <Field
-                      as={Radio}
-                      id="plan-characteristics-multiple-participation-needed"
-                      name="multiplePatricipationAgreementsNeeded"
-                      label={h('yes')}
-                      value="TRUE"
-                      checked={
-                        values.multiplePatricipationAgreementsNeeded === true
-                      }
-                      onChange={() => {
-                        setFieldValue(
-                          'multiplePatricipationAgreementsNeeded',
-                          true
-                        );
-                      }}
-                    />
-                    <Field
-                      as={Radio}
-                      id="plan-characteristics-multiple-participation-needed-no"
-                      name="multiplePatricipationAgreementsNeeded"
-                      label={h('no')}
-                      value="FALSE"
-                      checked={
-                        values.multiplePatricipationAgreementsNeeded === false
-                      }
-                      onChange={() => {
-                        setFieldValue(
-                          'multiplePatricipationAgreementsNeeded',
-                          false
-                        );
-                      }}
-                    />
-                  </Fieldset>
-                </FieldGroup>
+                {values.agreementTypes.includes(
+                  'PARTICIPATION' as AgreementType
+                ) && (
+                  <>
+                    <FieldGroup
+                      scrollElement="multiplePatricipationAgreementsNeeded"
+                      error={!!flatErrors.multiplePatricipationAgreementsNeeded}
+                      className="margin-y-4"
+                    >
+                      <Label
+                        htmlFor="plan-characteristics-multiple-participation-needed"
+                        className="text-normal"
+                      >
+                        {t('moreParticipation')}
+                      </Label>
+                      <p className="text-base margin-y-1">
+                        {t('agreementDepending')}
+                      </p>
+                      <FieldErrorMsg>
+                        {flatErrors.multiplePatricipationAgreementsNeeded}
+                      </FieldErrorMsg>
+                      <Fieldset>
+                        <Field
+                          as={Radio}
+                          id="plan-characteristics-multiple-participation-needed"
+                          name="multiplePatricipationAgreementsNeeded"
+                          label={h('yes')}
+                          value="TRUE"
+                          checked={
+                            values.multiplePatricipationAgreementsNeeded ===
+                            true
+                          }
+                          onChange={() => {
+                            setFieldValue(
+                              'multiplePatricipationAgreementsNeeded',
+                              true
+                            );
+                          }}
+                        />
+                        <Field
+                          as={Radio}
+                          id="plan-characteristics-multiple-participation-needed-no"
+                          name="multiplePatricipationAgreementsNeeded"
+                          label={h('no')}
+                          value="FALSE"
+                          checked={
+                            values.multiplePatricipationAgreementsNeeded ===
+                            false
+                          }
+                          onChange={() => {
+                            setFieldValue(
+                              'multiplePatricipationAgreementsNeeded',
+                              false
+                            );
+                          }}
+                        />
+                      </Fieldset>
+                    </FieldGroup>
 
-                <AddNote
-                  id="plan-characteristics-multiple-participation-needed-note"
-                  field="multiplePatricipationAgreementsNeededNote"
-                />
+                    <AddNote
+                      id="plan-characteristics-multiple-participation-needed-note"
+                      field="multiplePatricipationAgreementsNeededNote"
+                    />
+                  </>
+                )}
 
                 <div className="margin-top-6 margin-bottom-3">
                   <Button
                     type="button"
                     className="usa-button usa-button--outline margin-bottom-1"
                     onClick={() => {
-                      if (Object.keys(errors).length > 0) {
-                        window.scrollTo(0, 0);
-                      } else {
-                        validateForm().then(err => {
-                          if (Object.keys(err).length > 0) {
-                            window.scrollTo(0, 0);
-                          } else {
-                            handleFormSubmit(values, 'back');
-                          }
-                        });
-                      }
+                      handleFormSubmit(values, 'back');
                     }}
                   >
                     {h('back')}
                   </Button>
-                  <Button
-                    type="submit"
-                    disabled={!(dirty || isValid)}
-                    onClick={() => setErrors({})}
-                  >
+                  <Button type="submit" onClick={() => setErrors({})}>
                     {h('next')}
                   </Button>
                 </div>

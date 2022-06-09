@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
@@ -154,21 +154,14 @@ const Involvements = () => {
           handleFormSubmit(values, 'next');
         }}
         enableReinitialize
-        // validationSchema={validationSchema}
-        validateOnBlur={false}
-        validateOnChange={false}
-        validateOnMount={false}
         innerRef={formikRef}
       >
         {(formikProps: FormikProps<ModelPlanCharacteristicsFormType>) => {
           const {
-            dirty,
             errors,
             handleSubmit,
             setErrors,
             setFieldValue,
-            validateForm,
-            isValid,
             values
           } = formikProps;
           const flatErrors = flattenErrors(errors);
@@ -193,9 +186,9 @@ const Involvements = () => {
               )}
               <Form
                 className="tablet:grid-col-6 margin-top-6"
+                data-testid="plan-characteristics-involvements-form"
                 onSubmit={e => {
                   handleSubmit(e);
-                  window.scrollTo(0, 0);
                 }}
               >
                 <FieldGroup
@@ -236,7 +229,7 @@ const Involvements = () => {
                         >
                           <Label
                             htmlFor="plan-characteristics-care-coordination-description"
-                            className="margin-bottom-1"
+                            className="margin-bottom-1 text-normal"
                           >
                             {h('howSo')}
                           </Label>
@@ -312,7 +305,7 @@ const Involvements = () => {
                         >
                           <Label
                             htmlFor="plan-characteristics-additional-services-description"
-                            className="margin-bottom-1"
+                            className="margin-bottom-1 text-normal"
                           >
                             {h('howSo')}
                           </Label>
@@ -325,6 +318,7 @@ const Involvements = () => {
                               !!flatErrors.additionalServicesInvolvedDescription
                             }
                             className="margin-top-0 height-15"
+                            data-testid="plan-characteristics-additional-services-description"
                             id="plan-characteristics-additional-services-description"
                             name="additionalServicesInvolvedDescription"
                           />
@@ -388,7 +382,7 @@ const Involvements = () => {
                         >
                           <Label
                             htmlFor="plan-characteristics-community-partners-description"
-                            className="margin-bottom-1"
+                            className="margin-bottom-1 text-normal"
                           >
                             {h('howSo')}
                           </Label>
@@ -431,26 +425,12 @@ const Involvements = () => {
                     type="button"
                     className="usa-button usa-button--outline margin-bottom-1"
                     onClick={() => {
-                      if (Object.keys(errors).length > 0) {
-                        window.scrollTo(0, 0);
-                      } else {
-                        validateForm().then(err => {
-                          if (Object.keys(err).length > 0) {
-                            window.scrollTo(0, 0);
-                          } else {
-                            handleFormSubmit(values, 'back');
-                          }
-                        });
-                      }
+                      handleFormSubmit(values, 'back');
                     }}
                   >
                     {h('back')}
                   </Button>
-                  <Button
-                    type="submit"
-                    disabled={!(dirty || isValid)}
-                    onClick={() => setErrors({})}
-                  >
+                  <Button type="submit" onClick={() => setErrors({})}>
                     {h('next')}
                   </Button>
                 </div>
