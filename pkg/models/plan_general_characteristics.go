@@ -29,6 +29,7 @@ type PlanGeneralCharacteristics struct {
 	AlternativePaymentModelNote  *string        `json:"alternativePaymentModelNote" db:"alternative_payment_model_note"`
 	KeyCharacteristics           pq.StringArray `json:"keyCharacteristics" db:"key_characteristics"`
 	KeyCharacteristicsOther      *string        `json:"keyCharacteristicsOther" db:"key_characteristics_other"`
+	KeyCharacteristicsNote       *string        `json:"keyCharacteristicsNote" db:"key_characteristics_note"`
 	CollectPlanBids              *bool          `json:"collectPlanBids" db:"collect_plan_bids"`
 	CollectPlanBidsNote          *string        `json:"collectPlanBidsNote" db:"collect_plan_bids_note"`
 	ManagePartCDEnrollment       *bool          `json:"managePartCDEnrollment" db:"manage_part_c_d_enrollment"`

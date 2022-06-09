@@ -71,6 +71,28 @@ type ComplexityRoot struct {
 		Resolution   func(childComplexity int) int
 	}
 
+	ExistingModel struct {
+		Authority                     func(childComplexity int) int
+		Category                      func(childComplexity int) int
+		CreatedBy                     func(childComplexity int) int
+		CreatedDts                    func(childComplexity int) int
+		DateBegan                     func(childComplexity int) int
+		DateEnded                     func(childComplexity int) int
+		Description                   func(childComplexity int) int
+		DisplayModelSummary           func(childComplexity int) int
+		ID                            func(childComplexity int) int
+		Keywords                      func(childComplexity int) int
+		ModelName                     func(childComplexity int) int
+		ModifiedBy                    func(childComplexity int) int
+		ModifiedDts                   func(childComplexity int) int
+		NumberOfBeneficiariesImpacted func(childComplexity int) int
+		NumberOfParticipants          func(childComplexity int) int
+		NumberOfPhysiciansImpacted    func(childComplexity int) int
+		Stage                         func(childComplexity int) int
+		States                        func(childComplexity int) int
+		URL                           func(childComplexity int) int
+	}
+
 	GeneratePresignedUploadURLPayload struct {
 		URL func(childComplexity int) int
 	}
@@ -258,6 +280,7 @@ type ComplexityRoot struct {
 		ID                                        func(childComplexity int) int
 		IsNewModel                                func(childComplexity int) int
 		KeyCharacteristics                        func(childComplexity int) int
+		KeyCharacteristicsNote                    func(childComplexity int) int
 		KeyCharacteristicsOther                   func(childComplexity int) int
 		ManagePartCDEnrollment                    func(childComplexity int) int
 		ManagePartCDEnrollmentNote                func(childComplexity int) int
@@ -469,6 +492,7 @@ type ComplexityRoot struct {
 	Query struct {
 		CedarPersonsByCommonName  func(childComplexity int, commonName string) int
 		CurrentUser               func(childComplexity int) int
+		ExistingModelCollection   func(childComplexity int) int
 		ModelPlan                 func(childComplexity int, id uuid.UUID) int
 		ModelPlanCollection       func(childComplexity int) int
 		PlanCollaboratorByID      func(childComplexity int, id uuid.UUID) int
@@ -595,6 +619,7 @@ type QueryResolver interface {
 	PlanDocumentDownloadURL(ctx context.Context, id uuid.UUID) (*model.PlanDocumentPayload, error)
 	ReadPlanDocumentByModelID(ctx context.Context, id uuid.UUID) ([]*models.PlanDocument, error)
 	ModelPlanCollection(ctx context.Context) ([]*models.ModelPlan, error)
+	ExistingModelCollection(ctx context.Context) ([]*models.ExistingModel, error)
 	CedarPersonsByCommonName(ctx context.Context, commonName string) ([]*models.UserInfo, error)
 	PlanCollaboratorByID(ctx context.Context, id uuid.UUID) (*models.PlanCollaborator, error)
 }
@@ -679,6 +704,139 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.DiscussionReply.Resolution(childComplexity), true
+
+	case "ExistingModel.authority":
+		if e.complexity.ExistingModel.Authority == nil {
+			break
+		}
+
+		return e.complexity.ExistingModel.Authority(childComplexity), true
+
+	case "ExistingModel.category":
+		if e.complexity.ExistingModel.Category == nil {
+			break
+		}
+
+		return e.complexity.ExistingModel.Category(childComplexity), true
+
+	case "ExistingModel.createdBy":
+		if e.complexity.ExistingModel.CreatedBy == nil {
+			break
+		}
+
+		return e.complexity.ExistingModel.CreatedBy(childComplexity), true
+
+	case "ExistingModel.createdDts":
+		if e.complexity.ExistingModel.CreatedDts == nil {
+			break
+		}
+
+		return e.complexity.ExistingModel.CreatedDts(childComplexity), true
+
+	case "ExistingModel.dateBegan":
+		if e.complexity.ExistingModel.DateBegan == nil {
+			break
+		}
+
+		return e.complexity.ExistingModel.DateBegan(childComplexity), true
+
+	case "ExistingModel.dateEnded":
+		if e.complexity.ExistingModel.DateEnded == nil {
+			break
+		}
+
+		return e.complexity.ExistingModel.DateEnded(childComplexity), true
+
+	case "ExistingModel.description":
+		if e.complexity.ExistingModel.Description == nil {
+			break
+		}
+
+		return e.complexity.ExistingModel.Description(childComplexity), true
+
+	case "ExistingModel.displayModelSummary":
+		if e.complexity.ExistingModel.DisplayModelSummary == nil {
+			break
+		}
+
+		return e.complexity.ExistingModel.DisplayModelSummary(childComplexity), true
+
+	case "ExistingModel.id":
+		if e.complexity.ExistingModel.ID == nil {
+			break
+		}
+
+		return e.complexity.ExistingModel.ID(childComplexity), true
+
+	case "ExistingModel.keywords":
+		if e.complexity.ExistingModel.Keywords == nil {
+			break
+		}
+
+		return e.complexity.ExistingModel.Keywords(childComplexity), true
+
+	case "ExistingModel.modelName":
+		if e.complexity.ExistingModel.ModelName == nil {
+			break
+		}
+
+		return e.complexity.ExistingModel.ModelName(childComplexity), true
+
+	case "ExistingModel.modifiedBy":
+		if e.complexity.ExistingModel.ModifiedBy == nil {
+			break
+		}
+
+		return e.complexity.ExistingModel.ModifiedBy(childComplexity), true
+
+	case "ExistingModel.modifiedDts":
+		if e.complexity.ExistingModel.ModifiedDts == nil {
+			break
+		}
+
+		return e.complexity.ExistingModel.ModifiedDts(childComplexity), true
+
+	case "ExistingModel.numberOfBeneficiariesImpacted":
+		if e.complexity.ExistingModel.NumberOfBeneficiariesImpacted == nil {
+			break
+		}
+
+		return e.complexity.ExistingModel.NumberOfBeneficiariesImpacted(childComplexity), true
+
+	case "ExistingModel.numberOfParticipants":
+		if e.complexity.ExistingModel.NumberOfParticipants == nil {
+			break
+		}
+
+		return e.complexity.ExistingModel.NumberOfParticipants(childComplexity), true
+
+	case "ExistingModel.numberOfPhysiciansImpacted":
+		if e.complexity.ExistingModel.NumberOfPhysiciansImpacted == nil {
+			break
+		}
+
+		return e.complexity.ExistingModel.NumberOfPhysiciansImpacted(childComplexity), true
+
+	case "ExistingModel.stage":
+		if e.complexity.ExistingModel.Stage == nil {
+			break
+		}
+
+		return e.complexity.ExistingModel.Stage(childComplexity), true
+
+	case "ExistingModel.states":
+		if e.complexity.ExistingModel.States == nil {
+			break
+		}
+
+		return e.complexity.ExistingModel.States(childComplexity), true
+
+	case "ExistingModel.url":
+		if e.complexity.ExistingModel.URL == nil {
+			break
+		}
+
+		return e.complexity.ExistingModel.URL(childComplexity), true
 
 	case "GeneratePresignedUploadURLPayload.url":
 		if e.complexity.GeneratePresignedUploadURLPayload.URL == nil {
@@ -1876,6 +2034,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.PlanGeneralCharacteristics.KeyCharacteristics(childComplexity), true
+
+	case "PlanGeneralCharacteristics.keyCharacteristicsNote":
+		if e.complexity.PlanGeneralCharacteristics.KeyCharacteristicsNote == nil {
+			break
+		}
+
+		return e.complexity.PlanGeneralCharacteristics.KeyCharacteristicsNote(childComplexity), true
 
 	case "PlanGeneralCharacteristics.keyCharacteristicsOther":
 		if e.complexity.PlanGeneralCharacteristics.KeyCharacteristicsOther == nil {
@@ -3275,6 +3440,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Query.CurrentUser(childComplexity), true
 
+	case "Query.existingModelCollection":
+		if e.complexity.Query.ExistingModelCollection == nil {
+			break
+		}
+
+		return e.complexity.Query.ExistingModelCollection(childComplexity), true
+
 	case "Query.modelPlan":
 		if e.complexity.Query.ModelPlan == nil {
 			break
@@ -3514,6 +3686,30 @@ type PlanCollaborator {
   euaUserID: String!
   fullName: String!
   teamRole: TeamRole!
+  createdBy: String!
+  createdDts: Time!
+  modifiedBy: String
+  modifiedDts: Time
+}
+"""
+ExistingModel represents a model that already exists outside of the scope of MINT
+"""
+type ExistingModel {
+  id: Int
+  modelName: String
+  stage: String!
+  numberOfParticipants: String
+  category: String
+  authority: String
+  description: String
+  numberOfBeneficiariesImpacted: Int
+  numberOfPhysiciansImpacted: Int
+  dateBegan: Time
+  dateEnded: Time
+  states: String
+  keywords: String
+  url: String
+  displayModelSummary: Boolean
   createdBy: String!
   createdDts: Time!
   modifiedBy: String
@@ -3787,6 +3983,7 @@ type PlanGeneralCharacteristics {
   alternativePaymentModelNote: String
   keyCharacteristics: [KeyCharacteristic!]!
   keyCharacteristicsOther: String
+  keyCharacteristicsNote: String
   collectPlanBids: Boolean
   collectPlanBidsNote: String
   managePartCDEnrollment: Boolean
@@ -3861,6 +4058,7 @@ input PlanGeneralCharacteristicsChanges @goModel(model: "map[string]interface{}"
   alternativePaymentModelNote: String
   keyCharacteristics: [KeyCharacteristic!]
   keyCharacteristicsOther: String
+  keyCharacteristicsNote: String
   collectPlanBids: Boolean
   collectPlanBidsNote: String
   managePartCDEnrollment: Boolean
@@ -4353,6 +4551,7 @@ type Query {
   planDocumentDownloadURL(id: UUID!): PlanDocumentPayload!
   readPlanDocumentByModelID(id: UUID!): [PlanDocument!]!
   modelPlanCollection: [ModelPlan!]!
+  existingModelCollection: [ExistingModel!]!
   cedarPersonsByCommonName(commonName: String!): [UserInfo!]!
   planCollaboratorByID(id: UUID!): PlanCollaborator!
 }
@@ -5787,6 +5986,794 @@ func (ec *executionContext) fieldContext_DiscussionReply_modifiedDts(ctx context
 	return fc, nil
 }
 
+func (ec *executionContext) _ExistingModel_id(ctx context.Context, field graphql.CollectedField, obj *models.ExistingModel) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_ExistingModel_id(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ID, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(int)
+	fc.Result = res
+	return ec.marshalOInt2int(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_ExistingModel_id(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "ExistingModel",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Int does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _ExistingModel_modelName(ctx context.Context, field graphql.CollectedField, obj *models.ExistingModel) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_ExistingModel_modelName(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ModelName, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalOString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_ExistingModel_modelName(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "ExistingModel",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _ExistingModel_stage(ctx context.Context, field graphql.CollectedField, obj *models.ExistingModel) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_ExistingModel_stage(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Stage, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalNString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_ExistingModel_stage(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "ExistingModel",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _ExistingModel_numberOfParticipants(ctx context.Context, field graphql.CollectedField, obj *models.ExistingModel) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_ExistingModel_numberOfParticipants(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.NumberOfParticipants, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_ExistingModel_numberOfParticipants(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "ExistingModel",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _ExistingModel_category(ctx context.Context, field graphql.CollectedField, obj *models.ExistingModel) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_ExistingModel_category(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Category, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_ExistingModel_category(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "ExistingModel",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _ExistingModel_authority(ctx context.Context, field graphql.CollectedField, obj *models.ExistingModel) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_ExistingModel_authority(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Authority, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_ExistingModel_authority(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "ExistingModel",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _ExistingModel_description(ctx context.Context, field graphql.CollectedField, obj *models.ExistingModel) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_ExistingModel_description(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Description, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_ExistingModel_description(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "ExistingModel",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _ExistingModel_numberOfBeneficiariesImpacted(ctx context.Context, field graphql.CollectedField, obj *models.ExistingModel) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_ExistingModel_numberOfBeneficiariesImpacted(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.NumberOfBeneficiariesImpacted, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*int)
+	fc.Result = res
+	return ec.marshalOInt2ᚖint(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_ExistingModel_numberOfBeneficiariesImpacted(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "ExistingModel",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Int does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _ExistingModel_numberOfPhysiciansImpacted(ctx context.Context, field graphql.CollectedField, obj *models.ExistingModel) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_ExistingModel_numberOfPhysiciansImpacted(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.NumberOfPhysiciansImpacted, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*int)
+	fc.Result = res
+	return ec.marshalOInt2ᚖint(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_ExistingModel_numberOfPhysiciansImpacted(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "ExistingModel",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Int does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _ExistingModel_dateBegan(ctx context.Context, field graphql.CollectedField, obj *models.ExistingModel) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_ExistingModel_dateBegan(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.DateBegan, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*time.Time)
+	fc.Result = res
+	return ec.marshalOTime2ᚖtimeᚐTime(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_ExistingModel_dateBegan(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "ExistingModel",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Time does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _ExistingModel_dateEnded(ctx context.Context, field graphql.CollectedField, obj *models.ExistingModel) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_ExistingModel_dateEnded(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.DateEnded, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*time.Time)
+	fc.Result = res
+	return ec.marshalOTime2ᚖtimeᚐTime(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_ExistingModel_dateEnded(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "ExistingModel",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Time does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _ExistingModel_states(ctx context.Context, field graphql.CollectedField, obj *models.ExistingModel) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_ExistingModel_states(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.States, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_ExistingModel_states(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "ExistingModel",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _ExistingModel_keywords(ctx context.Context, field graphql.CollectedField, obj *models.ExistingModel) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_ExistingModel_keywords(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Keywords, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_ExistingModel_keywords(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "ExistingModel",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _ExistingModel_url(ctx context.Context, field graphql.CollectedField, obj *models.ExistingModel) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_ExistingModel_url(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.URL, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_ExistingModel_url(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "ExistingModel",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _ExistingModel_displayModelSummary(ctx context.Context, field graphql.CollectedField, obj *models.ExistingModel) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_ExistingModel_displayModelSummary(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.DisplayModelSummary, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*bool)
+	fc.Result = res
+	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_ExistingModel_displayModelSummary(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "ExistingModel",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _ExistingModel_createdBy(ctx context.Context, field graphql.CollectedField, obj *models.ExistingModel) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_ExistingModel_createdBy(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.CreatedBy, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalNString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_ExistingModel_createdBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "ExistingModel",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _ExistingModel_createdDts(ctx context.Context, field graphql.CollectedField, obj *models.ExistingModel) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_ExistingModel_createdDts(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.CreatedDts, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(time.Time)
+	fc.Result = res
+	return ec.marshalNTime2timeᚐTime(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_ExistingModel_createdDts(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "ExistingModel",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Time does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _ExistingModel_modifiedBy(ctx context.Context, field graphql.CollectedField, obj *models.ExistingModel) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_ExistingModel_modifiedBy(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ModifiedBy, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_ExistingModel_modifiedBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "ExistingModel",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _ExistingModel_modifiedDts(ctx context.Context, field graphql.CollectedField, obj *models.ExistingModel) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_ExistingModel_modifiedDts(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ModifiedDts, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*time.Time)
+	fc.Result = res
+	return ec.marshalOTime2ᚖtimeᚐTime(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_ExistingModel_modifiedDts(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "ExistingModel",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Time does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _GeneratePresignedUploadURLPayload_url(ctx context.Context, field graphql.CollectedField, obj *model.GeneratePresignedUploadURLPayload) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_GeneratePresignedUploadURLPayload_url(ctx, field)
 	if err != nil {
@@ -6613,6 +7600,8 @@ func (ec *executionContext) fieldContext_ModelPlan_generalCharacteristics(ctx co
 				return ec.fieldContext_PlanGeneralCharacteristics_keyCharacteristics(ctx, field)
 			case "keyCharacteristicsOther":
 				return ec.fieldContext_PlanGeneralCharacteristics_keyCharacteristicsOther(ctx, field)
+			case "keyCharacteristicsNote":
+				return ec.fieldContext_PlanGeneralCharacteristics_keyCharacteristicsNote(ctx, field)
 			case "collectPlanBids":
 				return ec.fieldContext_PlanGeneralCharacteristics_collectPlanBids(ctx, field)
 			case "collectPlanBidsNote":
@@ -8320,6 +9309,8 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanGeneralCharacteristi
 				return ec.fieldContext_PlanGeneralCharacteristics_keyCharacteristics(ctx, field)
 			case "keyCharacteristicsOther":
 				return ec.fieldContext_PlanGeneralCharacteristics_keyCharacteristicsOther(ctx, field)
+			case "keyCharacteristicsNote":
+				return ec.fieldContext_PlanGeneralCharacteristics_keyCharacteristicsNote(ctx, field)
 			case "collectPlanBids":
 				return ec.fieldContext_PlanGeneralCharacteristics_collectPlanBids(ctx, field)
 			case "collectPlanBidsNote":
@@ -13924,6 +14915,47 @@ func (ec *executionContext) _PlanGeneralCharacteristics_keyCharacteristicsOther(
 }
 
 func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_keyCharacteristicsOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanGeneralCharacteristics",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanGeneralCharacteristics_keyCharacteristicsNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanGeneralCharacteristics) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanGeneralCharacteristics_keyCharacteristicsNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.KeyCharacteristicsNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_keyCharacteristicsNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "PlanGeneralCharacteristics",
 		Field:      field,
@@ -23298,6 +24330,90 @@ func (ec *executionContext) fieldContext_Query_modelPlanCollection(ctx context.C
 	return fc, nil
 }
 
+func (ec *executionContext) _Query_existingModelCollection(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Query_existingModelCollection(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Query().ExistingModelCollection(rctx)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.([]*models.ExistingModel)
+	fc.Result = res
+	return ec.marshalNExistingModel2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐExistingModelᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Query_existingModelCollection(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_ExistingModel_id(ctx, field)
+			case "modelName":
+				return ec.fieldContext_ExistingModel_modelName(ctx, field)
+			case "stage":
+				return ec.fieldContext_ExistingModel_stage(ctx, field)
+			case "numberOfParticipants":
+				return ec.fieldContext_ExistingModel_numberOfParticipants(ctx, field)
+			case "category":
+				return ec.fieldContext_ExistingModel_category(ctx, field)
+			case "authority":
+				return ec.fieldContext_ExistingModel_authority(ctx, field)
+			case "description":
+				return ec.fieldContext_ExistingModel_description(ctx, field)
+			case "numberOfBeneficiariesImpacted":
+				return ec.fieldContext_ExistingModel_numberOfBeneficiariesImpacted(ctx, field)
+			case "numberOfPhysiciansImpacted":
+				return ec.fieldContext_ExistingModel_numberOfPhysiciansImpacted(ctx, field)
+			case "dateBegan":
+				return ec.fieldContext_ExistingModel_dateBegan(ctx, field)
+			case "dateEnded":
+				return ec.fieldContext_ExistingModel_dateEnded(ctx, field)
+			case "states":
+				return ec.fieldContext_ExistingModel_states(ctx, field)
+			case "keywords":
+				return ec.fieldContext_ExistingModel_keywords(ctx, field)
+			case "url":
+				return ec.fieldContext_ExistingModel_url(ctx, field)
+			case "displayModelSummary":
+				return ec.fieldContext_ExistingModel_displayModelSummary(ctx, field)
+			case "createdBy":
+				return ec.fieldContext_ExistingModel_createdBy(ctx, field)
+			case "createdDts":
+				return ec.fieldContext_ExistingModel_createdDts(ctx, field)
+			case "modifiedBy":
+				return ec.fieldContext_ExistingModel_modifiedBy(ctx, field)
+			case "modifiedDts":
+				return ec.fieldContext_ExistingModel_modifiedDts(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type ExistingModel", field.Name)
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _Query_cedarPersonsByCommonName(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_Query_cedarPersonsByCommonName(ctx, field)
 	if err != nil {
@@ -25841,6 +26957,112 @@ func (ec *executionContext) _DiscussionReply(ctx context.Context, sel ast.Select
 	return out
 }
 
+var existingModelImplementors = []string{"ExistingModel"}
+
+func (ec *executionContext) _ExistingModel(ctx context.Context, sel ast.SelectionSet, obj *models.ExistingModel) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, existingModelImplementors)
+	out := graphql.NewFieldSet(fields)
+	var invalids uint32
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("ExistingModel")
+		case "id":
+
+			out.Values[i] = ec._ExistingModel_id(ctx, field, obj)
+
+		case "modelName":
+
+			out.Values[i] = ec._ExistingModel_modelName(ctx, field, obj)
+
+		case "stage":
+
+			out.Values[i] = ec._ExistingModel_stage(ctx, field, obj)
+
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		case "numberOfParticipants":
+
+			out.Values[i] = ec._ExistingModel_numberOfParticipants(ctx, field, obj)
+
+		case "category":
+
+			out.Values[i] = ec._ExistingModel_category(ctx, field, obj)
+
+		case "authority":
+
+			out.Values[i] = ec._ExistingModel_authority(ctx, field, obj)
+
+		case "description":
+
+			out.Values[i] = ec._ExistingModel_description(ctx, field, obj)
+
+		case "numberOfBeneficiariesImpacted":
+
+			out.Values[i] = ec._ExistingModel_numberOfBeneficiariesImpacted(ctx, field, obj)
+
+		case "numberOfPhysiciansImpacted":
+
+			out.Values[i] = ec._ExistingModel_numberOfPhysiciansImpacted(ctx, field, obj)
+
+		case "dateBegan":
+
+			out.Values[i] = ec._ExistingModel_dateBegan(ctx, field, obj)
+
+		case "dateEnded":
+
+			out.Values[i] = ec._ExistingModel_dateEnded(ctx, field, obj)
+
+		case "states":
+
+			out.Values[i] = ec._ExistingModel_states(ctx, field, obj)
+
+		case "keywords":
+
+			out.Values[i] = ec._ExistingModel_keywords(ctx, field, obj)
+
+		case "url":
+
+			out.Values[i] = ec._ExistingModel_url(ctx, field, obj)
+
+		case "displayModelSummary":
+
+			out.Values[i] = ec._ExistingModel_displayModelSummary(ctx, field, obj)
+
+		case "createdBy":
+
+			out.Values[i] = ec._ExistingModel_createdBy(ctx, field, obj)
+
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		case "createdDts":
+
+			out.Values[i] = ec._ExistingModel_createdDts(ctx, field, obj)
+
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		case "modifiedBy":
+
+			out.Values[i] = ec._ExistingModel_modifiedBy(ctx, field, obj)
+
+		case "modifiedDts":
+
+			out.Values[i] = ec._ExistingModel_modifiedDts(ctx, field, obj)
+
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch()
+	if invalids > 0 {
+		return graphql.Null
+	}
+	return out
+}
+
 var generatePresignedUploadURLPayloadImplementors = []string{"GeneratePresignedUploadURLPayload"}
 
 func (ec *executionContext) _GeneratePresignedUploadURLPayload(ctx context.Context, sel ast.SelectionSet, obj *model.GeneratePresignedUploadURLPayload) graphql.Marshaler {
@@ -27137,6 +28359,10 @@ func (ec *executionContext) _PlanGeneralCharacteristics(ctx context.Context, sel
 		case "keyCharacteristicsOther":
 
 			out.Values[i] = ec._PlanGeneralCharacteristics_keyCharacteristicsOther(ctx, field, obj)
+
+		case "keyCharacteristicsNote":
+
+			out.Values[i] = ec._PlanGeneralCharacteristics_keyCharacteristicsNote(ctx, field, obj)
 
 		case "collectPlanBids":
 
@@ -28597,6 +29823,29 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 			out.Concurrently(i, func() graphql.Marshaler {
 				return rrm(innerCtx)
 			})
+		case "existingModelCollection":
+			field := field
+
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Query_existingModelCollection(ctx, field)
+				if res == graphql.Null {
+					atomic.AddUint32(&invalids, 1)
+				}
+				return res
+			}
+
+			rrm := func(ctx context.Context) graphql.Marshaler {
+				return ec.OperationContext.RootResolverMiddleware(ctx, innerFunc)
+			}
+
+			out.Concurrently(i, func() graphql.Marshaler {
+				return rrm(innerCtx)
+			})
 		case "cedarPersonsByCommonName":
 			field := field
 
@@ -29606,6 +30855,60 @@ func (ec *executionContext) unmarshalNEvaluationApproachType2githubᚗcomᚋcmsg
 
 func (ec *executionContext) marshalNEvaluationApproachType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐEvaluationApproachType(ctx context.Context, sel ast.SelectionSet, v model.EvaluationApproachType) graphql.Marshaler {
 	return v
+}
+
+func (ec *executionContext) marshalNExistingModel2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐExistingModelᚄ(ctx context.Context, sel ast.SelectionSet, v []*models.ExistingModel) graphql.Marshaler {
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalNExistingModel2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐExistingModel(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
+}
+
+func (ec *executionContext) marshalNExistingModel2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐExistingModel(ctx context.Context, sel ast.SelectionSet, v *models.ExistingModel) graphql.Marshaler {
+	if v == nil {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
+		return graphql.Null
+	}
+	return ec._ExistingModel(ctx, sel, v)
 }
 
 func (ec *executionContext) unmarshalNGeneratePresignedUploadURLInput2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐGeneratePresignedUploadURLInput(ctx context.Context, v interface{}) (model.GeneratePresignedUploadURLInput, error) {
@@ -32101,6 +33404,16 @@ func (ec *executionContext) marshalOIddocOperationsType2ᚖgithubᚗcomᚋcmsgov
 		return graphql.Null
 	}
 	res := graphql.MarshalString(string(*v))
+	return res
+}
+
+func (ec *executionContext) unmarshalOInt2int(ctx context.Context, v interface{}) (int, error) {
+	res, err := graphql.UnmarshalInt(v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalOInt2int(ctx context.Context, sel ast.SelectionSet, v int) graphql.Marshaler {
+	res := graphql.MarshalInt(v)
 	return res
 }
 
