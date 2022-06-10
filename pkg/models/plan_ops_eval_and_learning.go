@@ -98,7 +98,7 @@ type PlanOpsEvalAndLearning struct {
 	SendFilesBetweenCcwNote                      *string `json:"sendFilesBetweenCcwNote" db:"send_files_between_ccw_note"`
 	AppToSendFilesToKnown                        *bool   `json:"appToSendFilesToKnown" db:"app_to_send_files_to_known" statusWeight:"1"`
 	AppToSendFilesToWhich                        *string `json:"appToSendFilesToWhich" db:"app_to_send_files_to_which"`
-	AppToSendFilesToNote                         *bool   `json:"appToSendFilesToNote" db:"app_to_send_files_to_note"`
+	AppToSendFilesToNote                         *string `json:"appToSendFilesToNote" db:"app_to_send_files_to_note"`
 	UseCcwForFileDistribiutionToParticipants     *bool   `json:"useCcwForFileDistribiutionToParticipants" db:"use_ccw_for_file_distribiution_to_participants" statusWeight:"1"`
 	UseCcwForFileDistribiutionToParticipantsNote *string `json:"useCcwForFileDistribiutionToParticipantsNote" db:"use_ccw_for_file_distribiution_to_participants_note"`
 	DevelopNewQualityMeasures                    *bool   `json:"developNewQualityMeasures" db:"develop_new_quality_measures" statusWeight:"1"`

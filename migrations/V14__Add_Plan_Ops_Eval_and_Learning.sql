@@ -207,7 +207,7 @@ CREATE TABLE plan_ops_eval_and_learning (
     send_files_between_ccw_note TEXT,
     app_to_send_files_to_known BOOL,
     app_to_send_files_to_which TEXT,
-    app_to_send_files_to_note BOOL,
+    app_to_send_files_to_note TEXT,
     use_ccw_for_file_distribiution_to_participants BOOL,
     use_ccw_for_file_distribiution_to_participants_note TEXT,
     develop_new_quality_measures BOOL,

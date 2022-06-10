@@ -4401,7 +4401,7 @@ type PlanOpsEvalAndLearning {
     sendFilesBetweenCcwNote: String
     appToSendFilesToKnown: Boolean
     appToSendFilesToWhich: String
-    appToSendFilesToNote: Boolean
+    appToSendFilesToNote: String
     useCcwForFileDistribiutionToParticipants: Boolean
     useCcwForFileDistribiutionToParticipantsNote: String
     developNewQualityMeasures: Boolean
@@ -4525,7 +4525,7 @@ input PlanOpsEvalAndLearningChanges @goModel(model: "map[string]interface{}") {
     sendFilesBetweenCcwNote: String
     appToSendFilesToKnown: Boolean
     appToSendFilesToWhich: String
-    appToSendFilesToNote: Boolean
+    appToSendFilesToNote: String
     useCcwForFileDistribiutionToParticipants: Boolean
     useCcwForFileDistribiutionToParticipantsNote: String
     developNewQualityMeasures: Boolean
@@ -20586,9 +20586,9 @@ func (ec *executionContext) _PlanOpsEvalAndLearning_appToSendFilesToNote(ctx con
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(*bool)
+	res := resTmp.(*string)
 	fc.Result = res
-	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_appToSendFilesToNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -20598,7 +20598,7 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_appToSendFilesTo
 		IsMethod:   false,
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type Boolean does not have child fields")
+			return nil, errors.New("field of type String does not have child fields")
 		},
 	}
 	return fc, nil

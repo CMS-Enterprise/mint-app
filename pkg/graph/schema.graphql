@@ -781,7 +781,7 @@ type PlanOpsEvalAndLearning {
     sendFilesBetweenCcwNote: String
     appToSendFilesToKnown: Boolean
     appToSendFilesToWhich: String
-    appToSendFilesToNote: Boolean
+    appToSendFilesToNote: String
     useCcwForFileDistribiutionToParticipants: Boolean
     useCcwForFileDistribiutionToParticipantsNote: String
     developNewQualityMeasures: Boolean
@@ -905,7 +905,7 @@ input PlanOpsEvalAndLearningChanges @goModel(model: "map[string]interface{}") {
     sendFilesBetweenCcwNote: String
     appToSendFilesToKnown: Boolean
     appToSendFilesToWhich: String
-    appToSendFilesToNote: Boolean
+    appToSendFilesToNote: String
     useCcwForFileDistribiutionToParticipants: Boolean
     useCcwForFileDistribiutionToParticipantsNote: String
     developNewQualityMeasures: Boolean
