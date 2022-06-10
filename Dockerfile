@@ -25,8 +25,8 @@ RUN update-ca-certificates
 FROM modules AS dev
 
 RUN go install github.com/go-delve/delve/cmd/dlv@latest
-RUN go get golang.org/x/tools/gopls@latest
-RUN go get github.com/cosmtrek/air@895210e492af4a2dc1c5286e7c4a45cc4d8452a7
+RUN go install golang.org/x/tools/gopls@latest
+RUN go install github.com/cosmtrek/air@4612c12f1ed7c899314b8430bc1d841ca2cb061a
 
 COPY config/tls/Entrust_Managed_Services_Root_CA_G2.cer /usr/local/share/ca-certificates/Entrust_Managed_Services_Root_CA_G2.crt
 COPY config/tls/Entrust_Managed_Services_Root_CA.cer /usr/local/share/ca-certificates/Entrust_Managed_Services_Root_CA.crt
