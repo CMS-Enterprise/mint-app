@@ -116,6 +116,9 @@ func ModelPlanCreate(logger *zap.Logger, modelName string, store *storage.Store,
 		return nil, err
 	}
 	_, err = store.PlanOpsEvalAndLearningCreate(logger, opsEvalAndLearning)
+	if err != nil {
+		return nil, err
+	}
 
 	return createdPlan, err
 }

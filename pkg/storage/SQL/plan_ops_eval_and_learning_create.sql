@@ -205,7 +205,7 @@ VALUES (
     :created_by,
     :modified_by,
     :status
-)
+) RETURNING
 id,
 model_plan_id,
 agency_or_state_help,
