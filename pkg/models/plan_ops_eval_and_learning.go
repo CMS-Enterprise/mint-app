@@ -14,7 +14,7 @@ type PlanOpsEvalAndLearning struct {
 
 	//Page 1
 	AgencyOrStateHelp      pq.StringArray `json:"agencyOrStateHelp" db:"agency_or_state_help"`
-	AgencyOrStateHelpOther pq.StringArray `json:"agencyOrStateHelpOther" db:"agency_or_state_help_other"`
+	AgencyOrStateHelpOther *string        `json:"agencyOrStateHelpOther" db:"agency_or_state_help_other"`
 	AgencyOrStateHelpNote  *string        `json:"agencyOrStateHelpNote" db:"agency_or_state_help_note"`
 	Stakeholders           pq.StringArray `json:"stakeholders" db:"stakeholders"`
 	StakeholdersOther      *string        `json:"stakeholdersOther" db:"stakeholders_other"`
