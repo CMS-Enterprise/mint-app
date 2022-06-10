@@ -47,19 +47,19 @@ func PlanPaymentsUpdate(
 	principal string,
 ) (*models.PlanPayments, error) {
 
-	existingProvidersAndParticipants, err := store.PlanPaymentsRead(logger, id)
+	payments, err := store.PlanPaymentsRead(logger, id)
 	if err != nil {
 		return nil, err
 	}
 
-	err = ApplyChanges(changes, existingProvidersAndParticipants)
+	err = ApplyChanges(changes, payments)
 	if err != nil {
 		return nil, err
 	}
 
-	existingProvidersAndParticipants.ModifiedBy = &principal
+	payments.ModifiedBy = &principal
 
 	// TODO: Plan Payments - Calc Status here?
 
-	return store.PlanPaymentsUpdate(logger, existingProvidersAndParticipants)
+	return store.PlanPaymentsUpdate(logger, payments)
 }
