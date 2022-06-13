@@ -20,6 +20,7 @@ const TaskListButton = ({ path, status }: TaskListButtonProps) => {
   return (
     <Button
       type="button"
+      data-testid={path}
       onClick={() => history.push(`/models/${modelID}/task-list/${path}`)}
     >
       {status === 'READY'

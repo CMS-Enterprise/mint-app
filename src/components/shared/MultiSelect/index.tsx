@@ -77,7 +77,7 @@ export default function MultiSelect({
 
   const filterSearchResults = () => {
     const searchIndex = (option: string) => {
-      return option.toLowerCase().search(searchValue);
+      return option.toLowerCase().search(searchValue.toLowerCase());
     };
     return options
       .filter(option => searchIndex(option.label) > -1)
@@ -97,6 +97,7 @@ export default function MultiSelect({
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [selectRef]);
+
   useEffect(() => {
     onChange(selected);
     // eslint-disable-next-line react-hooks/exhaustive-deps

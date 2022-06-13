@@ -357,7 +357,7 @@ export const CharacteristicsContent = () => {
                         className="margin-top-4"
                       >
                         <Label
-                          htmlFor="plan-basics-resembles-which-model"
+                          htmlFor="plan-characteristics-resembles-which-model"
                           className="text-normal"
                         >
                           {t('modelResemblance')}
@@ -371,7 +371,7 @@ export const CharacteristicsContent = () => {
 
                         <Field
                           as={MultiSelect}
-                          id="plan-basics-resembles-which-model"
+                          id="plan-characteristics-resembles-which-model"
                           name="resemblesExistingModelWhich"
                           options={modelPlanOptions}
                           selectedLabel={t('selectedModels')}
@@ -389,7 +389,7 @@ export const CharacteristicsContent = () => {
                         className="margin-top-4"
                       >
                         <Label
-                          htmlFor="plan-basics-resembles-how-model"
+                          htmlFor="plan-characteristics-resembles-how-model"
                           className="text-normal"
                         >
                           {t('waysResembleModel')}
@@ -401,7 +401,7 @@ export const CharacteristicsContent = () => {
                           as={TextAreaField}
                           className="height-15"
                           error={flatErrors.resemblesExistingModelHow}
-                          id="plan-basics-resembles-how-model"
+                          id="plan-characteristics-resembles-how-model"
                           name="resemblesExistingModelHow"
                         />
                       </FieldGroup>

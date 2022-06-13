@@ -265,7 +265,7 @@ const KeyCharacteristics = () => {
                                 <Fragment key={type}>
                                   <Field
                                     as={CheckboxField}
-                                    id={`plan-characteristics-alternativePaymentModelTypes-${type}`}
+                                    id={`plan-characteristics-alternative-payment-${type}`}
                                     name="alternativePaymentModelTypes"
                                     label={translateAlternativePaymentTypes(
                                       type
@@ -288,7 +288,7 @@ const KeyCharacteristics = () => {
                                       }
                                     }}
                                   />
-                                  {type === 'MIPS' &&
+                                  {(type === 'MIPS' || type === 'ADVANCED') &&
                                     values.alternativePaymentModelTypes.includes(
                                       type as AlternativePaymentModelType
                                     ) && (

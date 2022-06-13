@@ -298,7 +298,7 @@ const TaskList = () => {
                         <Fragment key={key}>
                           <TaskListItem
                             key={key}
-                            testId="task-list-intake-form"
+                            testId={`task-list-intake-form-${key}`}
                             heading={taskListItem[key].heading}
                             status={taskListItemStatus(key)}
                           >
