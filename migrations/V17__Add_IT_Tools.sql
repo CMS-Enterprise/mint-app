@@ -70,7 +70,7 @@ CREATE TYPE OEL_TOOLS_EVALUATION_CONTRACTOR_TYPE AS ENUM ( --This might be repea
     'OTHER'
 );
 --PAGE 6
-CREATE TYPE OEL_TOOLS_OBTAIN_DATA_TYPE AS ENUM ( --Check not used elsewhere
+CREATE TYPE OEL_TOOLS_COLLECT_DATA_TYPE AS ENUM ( --Check not used elsewhere
     'IDR',
     'CCW',
     'IDOS',
@@ -78,6 +78,19 @@ CREATE TYPE OEL_TOOLS_OBTAIN_DATA_TYPE AS ENUM ( --Check not used elsewhere
     'CONTRACTOR',
     'OTHER'
 );
+CREATE TYPE OEL_TOOLS_OBTAIN_DATA_TYPE AS ENUM ( --Check not used elsewhere
+    'CCW',
+    'IDOS',
+    'ISP',
+    'OTHER'
+);
+CREATE TYPE OEL_TOOLS_CLAIMS_BASED_MEASURES_TYPE AS ENUM (
+    'IDR',
+    'CCW',
+    'OTHER'
+);
+--PAGE 7
+
 CREATE TABLE it_tools (
     id UUID PRIMARY KEY NOT NULL,
     model_plan_id UUID NOT NULL UNIQUE, --foreign key to model plan
@@ -132,9 +145,16 @@ CREATE TABLE it_tools (
     oel_tools_evaluation_contractor_other TEXT,
     oel_tools_evaluation_contractor_note TEXT,
     --page 6
+    oel_tools_collect_data OEL_TOOLS_COLLECT_DATA_TYPE[],
+    oel_tools_collect_data_other TEXT,
+    oel_tools_collect_data_note TEXT,
     oel_tools_obtain_data OEL_TOOLS_OBTAIN_DATA_TYPE[],
     oel_tools_obtain_data_other TEXT,
     oel_tools_obtain_data_note TEXT,
+    oel_tools_claims_based_measures OEL_TOOLS_CLAIMS_BASED_MEASURES_TYPE[],
+    oel_tools_claims_based_measures_other TEXT,
+    oel_tools_claims_based_measures_note TEXT,
+    --page 7
 
 
     --META DATA
