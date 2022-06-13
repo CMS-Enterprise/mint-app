@@ -166,7 +166,10 @@ export default function MultiSelect({
                 key={option}
                 className="display-flex flex-justify-start margin-y-05"
               >
-                <Tag className="bg-primary-lighter text-ink text-no-uppercase padding-y-1 padding-x-105 display-flex flex-align-center">
+                <Tag
+                  className="bg-primary-lighter text-ink text-no-uppercase padding-y-1 padding-x-105 display-flex flex-align-center"
+                  id={`easi-multiselect__tag-${findOptions(option)?.value}`}
+                >
                   {findOptions(option)?.label}
                   <IconClose
                     className="margin-left-1"
