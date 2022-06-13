@@ -577,7 +577,6 @@ type PlanGeneralCharacteristicsResolver interface {
 }
 type PlanOpsEvalAndLearningResolver interface {
 	AgencyOrStateHelp(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]model.AgencyOrStateHelpType, error)
-	AgencyOrStateHelpOther(ctx context.Context, obj *models.PlanOpsEvalAndLearning) (*string, error)
 
 	Stakeholders(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]model.StakeholdersType, error)
 
@@ -17625,7 +17624,7 @@ func (ec *executionContext) _PlanOpsEvalAndLearning_agencyOrStateHelpOther(ctx c
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.PlanOpsEvalAndLearning().AgencyOrStateHelpOther(rctx, obj)
+		return obj.AgencyOrStateHelpOther, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -17643,8 +17642,8 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_agencyOrStateHel
 	fc = &graphql.FieldContext{
 		Object:     "PlanOpsEvalAndLearning",
 		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
+		IsMethod:   false,
+		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type String does not have child fields")
 		},
@@ -28838,22 +28837,9 @@ func (ec *executionContext) _PlanOpsEvalAndLearning(ctx context.Context, sel ast
 
 			})
 		case "agencyOrStateHelpOther":
-			field := field
 
-			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._PlanOpsEvalAndLearning_agencyOrStateHelpOther(ctx, field, obj)
-				return res
-			}
+			out.Values[i] = ec._PlanOpsEvalAndLearning_agencyOrStateHelpOther(ctx, field, obj)
 
-			out.Concurrently(i, func() graphql.Marshaler {
-				return innerFunc(ctx)
-
-			})
 		case "agencyOrStateHelpNote":
 
 			out.Values[i] = ec._PlanOpsEvalAndLearning_agencyOrStateHelpNote(ctx, field, obj)
