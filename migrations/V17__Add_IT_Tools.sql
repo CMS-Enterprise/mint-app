@@ -20,6 +20,22 @@ CREATE TYPE PP_TOOLS_APP_SUPPORT_CONTRACTOR_TYPE AS ENUM (
     'RMDA',
     'OTHER'
 );
+CREATE TYPE PP_TOOLS_COMMUNICATE_WITH_PARTICIPANT_TYPE AS ENUM (
+    'OUTLOOK_MAILBOX',
+    'GOV_DELIVERY',
+    'SALESFORCE_PORTAL',
+    'OTHER'
+);
+CREATE TYPE PP_TOOLS_MANAGE_PROVIDER_OVERLAP_TYPE AS ENUM (
+    'MDM',
+    'OTHER',
+    'NA'
+);
+CREATE TYPE B_TOOLS_MANAGE_BENEFICIARY_OVERLAP_TYPE AS ENUM ( -- NOTE THIS IS THE SAME AS THE ABOVE TYPE, should we combine to one type?
+    'MDM',
+    'OTHER',
+    'NA'
+);
 
 CREATE TABLE it_tools (
     id UUID PRIMARY KEY NOT NULL,
@@ -45,6 +61,17 @@ CREATE TABLE it_tools (
     pp_tools_app_support_contractor PP_TOOLS_APP_SUPPORT_CONTRACTOR_TYPE[],
     pp_tools_app_support_contractor_other TEXT,
     pp_tools_app_support_contractor_note TEXT,
+    --page 3
+    pp_tools_communicate_with_participant PP_TOOLS_COMMUNICATE_WITH_PARTICIPANT_TYPE[],
+    pp_tools_communicate_with_participant_other TEXT,
+    pp_tools_communicate_with_participant_note TEXT,
+    pp_tools_manage_provider_overlap PP_TOOLS_MANAGE_PROVIDER_OVERLAP_TYPE[], --ALWAYS REQUIRED
+    pp_tools_manage_provider_overlap_other TEXT
+    pp_tools_manage_provider_overlap_note TEXT
+    b_tools_manage_beneficiary_overlap B_TOOLS_MANAGE_BENEFICIARY_OVERLAP_TYPE[], --ALWAYS REQUIRED
+    b_tools_manage_beneficiary_overlap_other TEXT,
+    b_tools_manage_beneficiary_overlap_note TEXT,
+
     --META DATA
     created_by EUA_ID NOT NULL,
     created_dts TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
