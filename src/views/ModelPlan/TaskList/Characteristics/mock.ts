@@ -6,7 +6,7 @@ import {
   TaskStatus
 } from 'types/graphql-global-types';
 
-const charactersticMockData: ModelPlanCharacteristicsType = {
+export const charactersticMockData: ModelPlanCharacteristicsType = {
   __typename: 'PlanGeneralCharacteristics',
   id: '123',
   modelPlanID: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905',
