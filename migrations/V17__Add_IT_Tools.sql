@@ -1,3 +1,4 @@
+--PAGE 1
 CREATE TYPE TOOLS_PART_C_D_TYPE AS ENUM ('MARx', 'OTHER');
 CREATE TYPE TOOLS_COLLECT_BIDS_TYPE AS ENUM ('HPMS', 'OTHER');
 CREATE TYPE TOOLS_UPDATE_CONTRACT_TYPE AS ENUM (
@@ -5,6 +6,7 @@ CREATE TYPE TOOLS_UPDATE_CONTRACT_TYPE AS ENUM (
     'HPMS',
     'OTHER'
 );
+--PAGE 2
 CREATE TYPE PP_TOOLS_TO_ADVERTISE_TYPE AS ENUM (
     'SALESFORCE',
     'GRANT_SOLUTIONS',
@@ -20,6 +22,7 @@ CREATE TYPE PP_TOOLS_APP_SUPPORT_CONTRACTOR_TYPE AS ENUM (
     'RMDA',
     'OTHER'
 );
+--PAGE 3
 CREATE TYPE PP_TOOLS_COMMUNICATE_WITH_PARTICIPANT_TYPE AS ENUM (
     'OUTLOOK_MAILBOX',
     'GOV_DELIVERY',
@@ -36,7 +39,22 @@ CREATE TYPE B_TOOLS_MANAGE_BENEFICIARY_OVERLAP_TYPE AS ENUM ( -- NOTE THIS IS TH
     'OTHER',
     'NA'
 );
-
+--PAGE 4
+CREATE TYPE OEL_TOOLS_WORKING_AGREEMENT_TYPE AS ENUM (
+    'IAA',
+    'OTHER'
+);
+CREATE TYPE OEL_TOOLS_HELPDESK_SUPPORT_TYPE AS ENUM (
+    'CBOSC',
+    'CONTRACTOR',
+    'OTHER'
+);
+CREATE TYPE OEL_TOOLS_MANAGE_ACO_TYPE AS ENUM ( --This might already exist in the other section.. --> IDDOC_OPERATIONS_TYPE
+    'ACO_OS',
+    'ACO_UI',
+    'INNOVATION',
+    'OTHER'
+);
 CREATE TABLE it_tools (
     id UUID PRIMARY KEY NOT NULL,
     model_plan_id UUID NOT NULL UNIQUE,
@@ -71,6 +89,17 @@ CREATE TABLE it_tools (
     b_tools_manage_beneficiary_overlap B_TOOLS_MANAGE_BENEFICIARY_OVERLAP_TYPE[], --ALWAYS REQUIRED
     b_tools_manage_beneficiary_overlap_other TEXT,
     b_tools_manage_beneficiary_overlap_note TEXT,
+    --page 4
+    oel_tools_working_agreement OEL_TOOLS_WORKING_AGREEMENT_TYPE[],
+    oel_tools_working_agreement_other TEXT,
+    oel_tools_working_agreement_note TEXT,
+    oel_tools_helpdesk_support OEL_TOOLS_HELPDESK_SUPPORT_TYPE[],
+    oel_tools_helpdesk_support_other TEXT,
+    oel_tools_helpdesk_support_note TEXT,
+    oel_tools_manage_aco OEL_TOOLS_MANAGE_ACO_TYPE[], --TODO, should this be IDDOC_OPERATIONS_TYPE that is used for OPS_EVAL && LEARNING?
+    oel_tools_manage_aco_other TEXT,
+    oel_tools_manage_aco_note TEXT,
+    --page 5
 
     --META DATA
     created_by EUA_ID NOT NULL,
