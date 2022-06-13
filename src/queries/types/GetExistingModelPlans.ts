@@ -9,7 +9,7 @@
 
 export interface GetExistingModelPlans_existingModelCollection {
   __typename: "ExistingModel";
-  id: number | null;
+  id: string | null;
   modelName: string | null;
 }
 
