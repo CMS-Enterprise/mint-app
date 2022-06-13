@@ -66,6 +66,7 @@ export const CharacteristicsContent = () => {
     error: existingModelError
   } = useQuery<ExistingModelPlanType>(GetExistingModelPlans);
 
+  // Combined MINT models with existing models from DB.  Sorts them alphabetically and returns options for MultiSelect
   const modelPlanOptions = useMemo(() => {
     const combinedModels = [
       ...(modelData?.modelPlanCollection || []),

@@ -21,6 +21,7 @@ const AddNote = ({ field, id, className }: AddNoteType) => {
     <div className={classNames('margin-top-4 margin-bottom-8', className)}>
       <Button
         type="button"
+        data-testid="add-note-toggle"
         className="usa-button usa-button--unstyled"
         onClick={() => setNote(true)}
       >
@@ -34,6 +35,7 @@ const AddNote = ({ field, id, className }: AddNoteType) => {
             as={TextAreaField}
             className="height-15"
             id={id}
+            data-testid={id}
             name={field}
             label={t('Notes')}
           />

@@ -86,7 +86,6 @@ export default function MultiSelect({
 
   useEffect(() => {
     function handleClickOutside(e: MouseEvent) {
-      // cast from EventTarget to Node should always be valid; React typings are just weird
       if (selectRef.current && !selectRef.current.contains(e.target as Node)) {
         setActive(false);
         setSearchValue('');

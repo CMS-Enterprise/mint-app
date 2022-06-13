@@ -4,8 +4,6 @@ import { shallow } from 'enzyme';
 
 import MultiSelect from './index';
 
-describe('RelatedArticle', () => {});
-
 const options = [
   { label: 'Red', value: 'red' },
   { label: 'Green', value: 'green' },
