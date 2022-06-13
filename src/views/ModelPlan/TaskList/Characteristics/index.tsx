@@ -82,7 +82,7 @@ export const CharacteristicsContent = () => {
     return combinedModels.map(model => {
       return {
         label: model!.modelName!,
-        value: model!.id!.toString()
+        value: model!.id!
       };
     });
   }, [modelData, existingModelData]);
