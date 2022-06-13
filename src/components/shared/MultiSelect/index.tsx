@@ -33,7 +33,7 @@ const Options = ({ options, selected, optionClick }: OptionsProps) => {
             defaultChecked={selected.includes(option.value)}
             id={`easi-multiselect__option-${option.value}`}
             name={`easi-multiselect-${option.value}`}
-            label={t(option.label)}
+            label={option.label}
             onChange={() => optionClick(option.value)}
           />
         );

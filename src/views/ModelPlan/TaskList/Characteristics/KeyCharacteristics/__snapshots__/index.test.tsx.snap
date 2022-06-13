@@ -155,7 +155,7 @@ exports[`Model Plan Characteristics matches snapshot 1`] = `
       >
         <button
           class="usa-button usa-button usa-button--unstyled"
-          data-testid="button"
+          data-testid="add-note-toggle"
           type="button"
         >
           <svg
@@ -272,6 +272,7 @@ exports[`Model Plan Characteristics matches snapshot 1`] = `
               <span
                 class="usa-tag bg-primary-lighter text-ink text-no-uppercase padding-y-1 padding-x-105 display-flex flex-align-center"
                 data-testid="tag"
+                id="easi-multiselect__tag-OTHER"
               >
                 Other
                 <svg
@@ -302,7 +303,7 @@ exports[`Model Plan Characteristics matches snapshot 1`] = `
     >
       <button
         class="usa-button usa-button usa-button--unstyled"
-        data-testid="button"
+        data-testid="add-note-toggle"
         type="button"
       >
         <svg

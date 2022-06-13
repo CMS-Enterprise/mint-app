@@ -71,19 +71,11 @@ export const CharacteristicsContent = () => {
     const combinedModels = [
       ...(modelData?.modelPlanCollection || []),
       ...(existingModelData?.existingModelCollection || [])
-    ].sort((a, b) => {
-      if ((a.modelName || '') < (b?.modelName || '')) {
-        return -1;
-      }
-      if ((a?.modelName || '') > (b?.modelName || '')) {
-        return 1;
-      }
-      return 0;
-    });
+    ].sort((a, b) => ((a.modelName || '') > (b.modelName || '') ? 1 : -1));
     return combinedModels.map(model => {
       return {
         label: model!.modelName!,
-        value: model!.id!
+        value: model!.id! as string
       };
     });
   }, [modelData, existingModelData]);
