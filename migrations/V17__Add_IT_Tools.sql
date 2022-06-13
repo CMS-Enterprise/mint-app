@@ -55,10 +55,32 @@ CREATE TYPE OEL_TOOLS_MANAGE_ACO_TYPE AS ENUM ( --This might already exist in th
     'INNOVATION',
     'OTHER'
 );
+--PAGE 5
+CREATE TYPE OEL_TOOLS_PERFORMANCE_BENCHMARK_TYPE AS ENUM ( --IS this already created somewhere?
+    'IDR',
+    'CCW',
+    'OTHER'
+);
+CREATE TYPE OEL_TOOLS_PROCESS_APPEALS_TYPE AS ENUM (
+    'MEDICARE_APPEAL_SYSTEM',
+    'OTHER'
+);
+CREATE TYPE OEL_TOOLS_EVALUATION_CONTRACTOR_TYPE AS ENUM ( --This might be repeated elsewhere
+    'RMDA',
+    'OTHER'
+);
+--PAGE 6
+CREATE TYPE OEL_TOOLS_OBTAIN_DATA_TYPE AS ENUM ( --Check not used elsewhere
+    'IDR',
+    'CCW',
+    'IDOS',
+    'ISP',
+    'CONTRACTOR',
+    'OTHER'
+);
 CREATE TABLE it_tools (
     id UUID PRIMARY KEY NOT NULL,
-    model_plan_id UUID NOT NULL UNIQUE,
-    --foreign key to model plan
+    model_plan_id UUID NOT NULL UNIQUE, --foreign key to model plan
     --page 1
     gc_tools_part_c_d TOOLS_PART_C_D_TYPE[],
     gc_tools_part_c_d_other TEXT,
@@ -100,6 +122,20 @@ CREATE TABLE it_tools (
     oel_tools_manage_aco_other TEXT,
     oel_tools_manage_aco_note TEXT,
     --page 5
+    oel_tools_performance_benchmark OEL_TOOLS_PERFORMANCE_BENCHMARK_TYPE[],
+    oel_tools_performance_benchmark_other TEXT,
+    oel_tools_performance_benchmark_note TEXT,
+    oel_tools_process_appeals OEL_TOOLS_PROCESS_APPEALS_TYPE[],
+    oel_tools_process_appeals_other TEXT,
+    oel_tools_process_appeals_note TEXT,
+    oel_tools_evaluation_contractor OEL_TOOLS_EVALUATION_CONTRACTOR_TYPE[],
+    oel_tools_evaluation_contractor_other TEXT,
+    oel_tools_evaluation_contractor_note TEXT,
+    --page 6
+    oel_tools_obtain_data OEL_TOOLS_OBTAIN_DATA_TYPE[],
+    oel_tools_obtain_data_other TEXT,
+    oel_tools_obtain_data_note TEXT,
+
 
     --META DATA
     created_by EUA_ID NOT NULL,
