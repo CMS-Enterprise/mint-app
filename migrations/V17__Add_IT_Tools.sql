@@ -90,6 +90,37 @@ CREATE TYPE OEL_TOOLS_CLAIMS_BASED_MEASURES_TYPE AS ENUM (
     'OTHER'
 );
 --PAGE 7
+CREATE TYPE OEL_TOOLS_QUALITY_SCORES_TYPE AS ENUM (
+    'EXISTING_DATA_AND_PROCESS',
+    'NEW_DATA_AND_CMMI_PROCESS',
+    'OTHER_NEW_PROCESS',
+    'NONE'
+);
+CREATE TYPE OEL_TOOLS_SEND_REPORTS_TYPE AS ENUM (
+    'IDOS',
+    'RMADA',
+    'INTERNAL_STAFF',
+    'OTHER'
+);
+CREATE TYPE OEL_TOOLS_LEARNING_CONTRACTOR_TYPE AS ENUM (
+    'RMADA',
+    'CROSS_MODEL_CONTRACT',
+    'OTHER'
+);
+--PAGE 8
+CREATE TYPE OEL_TOOLS_PARTICIPANT_COLLABORATION_TYPE AS ENUM (
+    'CONNECT',
+    'OTHER'
+);
+CREATE TYPE OEL_TOOLS_EDUCATE_BENEFICIARIES_TYPE AS ENUM (
+    'OC',
+    'OTHER'
+);
+CREATE TYPE P_TOOLS_MAKE_CLAIMS_PAYMENTS_TYPE AS ENUM (
+    'SHARED_SYSTEMS',
+    'HIGLAS',
+    'OTHER'
+);
 
 CREATE TABLE it_tools (
     id UUID PRIMARY KEY NOT NULL,
@@ -155,6 +186,25 @@ CREATE TABLE it_tools (
     oel_tools_claims_based_measures_other TEXT,
     oel_tools_claims_based_measures_note TEXT,
     --page 7
+    oel_tools_quality_scores OEL_TOOLS_QUALITY_SCORES_TYPE[],
+    oel_tools_quality_scores_other TEXT,
+    oel_tools_quality_scores_note TEXT,
+    oel_tools_send_reports OEL_TOOLS_SEND_REPORTS_TYPE[],
+    oel_tools_send_reports_other TEXT,
+    oel_tools_send_reports_note TEXT,
+    oel_tools_learning_contractor OEL_TOOLS_LEARNING_CONTRACTOR_TYPE[],
+    oel_tools_learning_contractor_other TEXT,
+    oel_tools_learning_contractor_note TEXT,
+    --page 8 
+    oel_tools_participant_collaboration OEL_TOOLS_PARTICIPANT_COLLABORATION_TYPE[],
+    oel_tools_participant_collaboration_other TEXT,
+    oel_tools_participant_collaboration_note TEXT,
+    oel_tools_educate_beneficiaries OEL_TOOLS_EDUCATE_BENEFICIARIES_TYPE[],
+    oel_tools_educate_beneficiaries_other TEXT,
+    oel_tools_educate_beneficiaries_note TEXT,
+    p_tools_make_claims_payments P_TOOLS_MAKE_CLAIMS_PAYMENTS_TYPE[],
+    p_tools_make_claims_payments_other text,
+    p_tools_make_claims_payments_note text,
 
 
     --META DATA
