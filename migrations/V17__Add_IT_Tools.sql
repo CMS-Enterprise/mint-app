@@ -121,7 +121,27 @@ CREATE TYPE P_TOOLS_MAKE_CLAIMS_PAYMENTS_TYPE AS ENUM (
     'HIGLAS',
     'OTHER'
 );
-
+CREATE TYPE P_TOOLS_INFORM_FFS_TYPE AS ENUM (
+    'FFS_COMPETENCY_CENTER',
+    'OTHER'
+);
+CREATE TYPE P_TOOLS_NON_CLAIMS_BASED_PAYMENTS_TYPE AS ENUM (
+    'APPS',
+    'HIGLAS',
+    'IPC',
+    'MAC',
+    'OTHER'
+);
+CREATE TYPE P_TOOLS_SHARED_SAVINGS_PLAN_TYPE AS ENUM (
+    'RMADA',
+    'OTHER'
+);
+CREATE TYPE P_TOOLS_RECOVER_PAYMENTS_TYPE AS ENUM (
+    'APPS',
+    'IPC',
+    'MAC',
+    'OTHER'
+);
 CREATE TABLE it_tools (
     id UUID PRIMARY KEY NOT NULL,
     model_plan_id UUID NOT NULL UNIQUE, --foreign key to model plan
@@ -205,6 +225,21 @@ CREATE TABLE it_tools (
     p_tools_make_claims_payments P_TOOLS_MAKE_CLAIMS_PAYMENTS_TYPE[],
     p_tools_make_claims_payments_other text,
     p_tools_make_claims_payments_note text,
+    --page 9
+    p_tools_inform_ffs P_TOOLS_INFORM_FFS_TYPE[],
+    p_tools_inform_ffs_other TEXT,
+    p_tools_inform_ffs_note TEXT,
+    p_tools_non_claims_based_payments P_TOOLS_NON_CLAIMS_BASED_PAYMENTS_TYPE[],
+    p_tools_non_claims_based_payments_other TEXT,
+    p_tools_non_claims_based_payments_note TEXT,
+    p_tools_shared_savings_plan P_TOOLS_SHARED_SAVINGS_PLAN_TYPE[],
+    p_tools_shared_savings_plan_other TEXT,
+    p_tools_shared_savings_plan_note TEXT,
+    --page 10
+    p_tools_recover_payments P_TOOLS_RECOVER_PAYMENTS_TYPE[],
+    p_tools_recover_payments_other TEXT,
+    p_tools_recover_payments_note TEXT,
+
 
 
     --META DATA
