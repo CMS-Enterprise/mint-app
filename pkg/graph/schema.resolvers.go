@@ -5,6 +5,7 @@ package graph
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/google/uuid"
 
@@ -59,6 +60,12 @@ func (r *modelPlanResolver) Beneficiaries(ctx context.Context, obj *models.Model
 	principal := appcontext.Principal(ctx).ID()
 
 	return resolvers.PlanBeneficiariesGetByModelPlanID(logger, principal, obj.ID, r.store)
+}
+
+func (r *modelPlanResolver) OpsEvalAndLearning(ctx context.Context, obj *models.ModelPlan) (*models.PlanOpsEvalAndLearning, error) {
+	logger := appcontext.ZLogger(ctx)
+
+	return resolvers.PlanOpsEvalAndLearningGetByModelPlanID(logger, obj.ID, r.store)
 }
 
 func (r *modelPlanResolver) Collaborators(ctx context.Context, obj *models.ModelPlan) ([]*models.PlanCollaborator, error) {
@@ -157,6 +164,12 @@ func (r *mutationResolver) UpdatePlanParticipantsAndProviders(ctx context.Contex
 	principal := appcontext.Principal(ctx).ID()
 	logger := appcontext.ZLogger(ctx)
 	return resolvers.PlanParticipantsAndProvidersUpdate(logger, id, changes, principal, r.store)
+}
+
+func (r *mutationResolver) UpdatePlanOpsEvalAndLearning(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanOpsEvalAndLearning, error) {
+	principal := appcontext.Principal(ctx).ID()
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.PlanOpsEvalAndLearningUpdate(logger, id, changes, principal, r.store)
 }
 
 func (r *mutationResolver) GeneratePresignedUploadURL(ctx context.Context, input model.GeneratePresignedUploadURLInput) (*model.GeneratePresignedUploadURLPayload, error) {
@@ -297,6 +310,66 @@ func (r *planGeneralCharacteristicsResolver) WaiversRequiredTypes(ctx context.Co
 	return waiverTypes, nil
 }
 
+func (r *planOpsEvalAndLearningResolver) AgencyOrStateHelp(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]model.AgencyOrStateHelpType, error) {
+	agencyOrStateHelpTypes := models.ConvertEnums[model.AgencyOrStateHelpType](obj.AgencyOrStateHelp)
+	return agencyOrStateHelpTypes, nil
+}
+
+func (r *planOpsEvalAndLearningResolver) Stakeholders(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]model.StakeholdersType, error) {
+	stakeholdersTypes := models.ConvertEnums[model.StakeholdersType](obj.Stakeholders)
+	return stakeholdersTypes, nil
+}
+
+func (r *planOpsEvalAndLearningResolver) HelpdeskUse(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]model.HelpdeskUseType, error) {
+	helpdeskUseTypes := models.ConvertEnums[model.HelpdeskUseType](obj.HelpdeskUse)
+	return helpdeskUseTypes, nil
+}
+
+func (r *planOpsEvalAndLearningResolver) ContractorSupport(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]model.ContractorSupportType, error) {
+	contractorSupportTypes := models.ConvertEnums[model.ContractorSupportType](obj.ContractorSupport)
+	return contractorSupportTypes, nil
+}
+
+func (r *planOpsEvalAndLearningResolver) DataMonitoringFileTypes(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]model.MonitoringFileType, error) {
+	monitoringFileTypes := models.ConvertEnums[model.MonitoringFileType](obj.DataMonitoringFileTypes)
+	return monitoringFileTypes, nil
+}
+
+func (r *planOpsEvalAndLearningResolver) EvaluationApproaches(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]model.EvaluationApproachType, error) {
+	evaluationApproachTypes := models.ConvertEnums[model.EvaluationApproachType](obj.EvaluationApproaches)
+	return evaluationApproachTypes, nil
+}
+
+func (r *planOpsEvalAndLearningResolver) CcmInvolvment(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]model.CcmInvolvmentType, error) {
+	ccmInvolvmentTypes := models.ConvertEnums[model.CcmInvolvmentType](obj.CcmInvolvment)
+	return ccmInvolvmentTypes, nil
+}
+
+func (r *planOpsEvalAndLearningResolver) DataNeededForMonitoring(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]model.DataForMonitoringType, error) {
+	dataForMonitoringTypes := models.ConvertEnums[model.DataForMonitoringType](obj.DataNeededForMonitoring)
+	return dataForMonitoringTypes, nil
+}
+
+func (r *planOpsEvalAndLearningResolver) DataToSendParticicipants(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]model.DataToSendParticipantsType, error) {
+	dataToSendParticipantsTypes := models.ConvertEnums[model.DataToSendParticipantsType](obj.DataToSendParticicipants)
+	return dataToSendParticipantsTypes, nil
+}
+
+func (r *planOpsEvalAndLearningResolver) DataSharingFrequency(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]model.DataFrequencyType, error) {
+	dataFrequencyTypes := models.ConvertEnums[model.DataFrequencyType](obj.DataSharingFrequency)
+	return dataFrequencyTypes, nil
+}
+
+func (r *planOpsEvalAndLearningResolver) DataCollectionFrequency(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]model.DataFrequencyType, error) {
+	dataFrequencyTypes := models.ConvertEnums[model.DataFrequencyType](obj.DataCollectionFrequency)
+	return dataFrequencyTypes, nil
+}
+
+func (r *planOpsEvalAndLearningResolver) ModelLearningSystems(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]model.ModelLearningSystemType, error) {
+	modelLearningSystemTypes := models.ConvertEnums[model.ModelLearningSystemType](obj.ModelLearningSystems)
+	return modelLearningSystemTypes, nil
+}
+
 func (r *planParticipantsAndProvidersResolver) Participants(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.ParticipantsType, error) {
 	participants := models.ConvertEnums[model.ParticipantsType](obj.Participants)
 	return participants, nil
@@ -432,6 +505,11 @@ func (r *Resolver) PlanGeneralCharacteristics() generated.PlanGeneralCharacteris
 	return &planGeneralCharacteristicsResolver{r}
 }
 
+// PlanOpsEvalAndLearning returns generated.PlanOpsEvalAndLearningResolver implementation.
+func (r *Resolver) PlanOpsEvalAndLearning() generated.PlanOpsEvalAndLearningResolver {
+	return &planOpsEvalAndLearningResolver{r}
+}
+
 // PlanParticipantsAndProviders returns generated.PlanParticipantsAndProvidersResolver implementation.
 func (r *Resolver) PlanParticipantsAndProviders() generated.PlanParticipantsAndProvidersResolver {
 	return &planParticipantsAndProvidersResolver{r}
@@ -449,6 +527,17 @@ type planBeneficiariesResolver struct{ *Resolver }
 type planDiscussionResolver struct{ *Resolver }
 type planDocumentResolver struct{ *Resolver }
 type planGeneralCharacteristicsResolver struct{ *Resolver }
+type planOpsEvalAndLearningResolver struct{ *Resolver }
 type planParticipantsAndProvidersResolver struct{ *Resolver }
 type queryResolver struct{ *Resolver }
 type userInfoResolver struct{ *Resolver }
+
+// !!! WARNING !!!
+// The code below was going to be deleted when updating resolvers. It has been copied here so you have
+// one last chance to move it out of harms way if you want. There are two reasons this happens:
+//  - When renaming or deleting a resolver the old code will be put in here. You can safely delete
+//    it when you're done.
+//  - You have helper methods in this file. Move them out to keep these resolver files clean.
+func (r *planOpsEvalAndLearningResolver) AgencyOrStateHelpOther(ctx context.Context, obj *models.PlanOpsEvalAndLearning) (*string, error) {
+	panic(fmt.Errorf("not implemented"))
+}
