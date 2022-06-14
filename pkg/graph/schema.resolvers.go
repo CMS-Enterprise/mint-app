@@ -90,8 +90,10 @@ func (r *modelPlanResolver) Discussions(ctx context.Context, obj *models.ModelPl
 	return resolvers.PlanDiscussionCollectionByModelPlanID(logger, obj.ID, r.store)
 }
 
-func (r *modelPlanResolver) ItTools(ctx context.Context, obj *models.ModelPlan) ([]*models.PlanITTools, error) {
-	panic(fmt.Errorf("not implemented"))
+func (r *modelPlanResolver) ItTools(ctx context.Context, obj *models.ModelPlan) (*models.PlanITTools, error) {
+	logger := appcontext.ZLogger(ctx)
+
+	return resolvers.PlanITToolsGetByModelPlanID(logger, obj.ID, r.store)
 }
 
 func (r *mutationResolver) CreateModelPlan(ctx context.Context, modelName string) (*models.ModelPlan, error) {
@@ -319,115 +321,143 @@ func (r *planGeneralCharacteristicsResolver) WaiversRequiredTypes(ctx context.Co
 }
 
 func (r *planITToolsResolver) GcPartCd(ctx context.Context, obj *models.PlanITTools) ([]model.GcPartCDType, error) {
-	panic(fmt.Errorf("not implemented"))
+	GcPartCDs := models.ConvertEnums[model.GcPartCDType](obj.GcPartCD)
+	return GcPartCDs, nil
 }
 
 func (r *planITToolsResolver) GcCollectBids(ctx context.Context, obj *models.PlanITTools) ([]model.GcCollectBidsType, error) {
-	panic(fmt.Errorf("not implemented"))
+	GcCollectBidss := models.ConvertEnums[model.GcCollectBidsType](obj.GcCollectBids)
+	return GcCollectBidss, nil
 }
 
 func (r *planITToolsResolver) GcUpdateContract(ctx context.Context, obj *models.PlanITTools) ([]model.GcUpdateContractType, error) {
-	panic(fmt.Errorf("not implemented"))
+	GcUpdateContracts := models.ConvertEnums[model.GcUpdateContractType](obj.GcUpdateContract)
+	return GcUpdateContracts, nil
 }
 
 func (r *planITToolsResolver) PpToAdvertise(ctx context.Context, obj *models.PlanITTools) ([]model.PpToAdvertiseType, error) {
-	panic(fmt.Errorf("not implemented"))
+	PpToAdvertises := models.ConvertEnums[model.PpToAdvertiseType](obj.PpToAdvertise)
+	return PpToAdvertises, nil
 }
 
 func (r *planITToolsResolver) PpCollectScoreReview(ctx context.Context, obj *models.PlanITTools) ([]model.PpCollectScoreReviewType, error) {
-	panic(fmt.Errorf("not implemented"))
+	PpCollectScoreReviews := models.ConvertEnums[model.PpCollectScoreReviewType](obj.PpCollectScoreReview)
+	return PpCollectScoreReviews, nil
 }
 
 func (r *planITToolsResolver) PpAppSupportContractor(ctx context.Context, obj *models.PlanITTools) ([]model.PpAppSupportContractorType, error) {
-	panic(fmt.Errorf("not implemented"))
+	PpAppSupportContractors := models.ConvertEnums[model.PpAppSupportContractorType](obj.PpAppSupportContractor)
+	return PpAppSupportContractors, nil
 }
 
 func (r *planITToolsResolver) PpCommunicateWithParticipant(ctx context.Context, obj *models.PlanITTools) ([]model.PpCommunicateWithParticipantType, error) {
-	panic(fmt.Errorf("not implemented"))
+	PpCommunicateWithParticipants := models.ConvertEnums[model.PpCommunicateWithParticipantType](obj.PpCommunicateWithParticipant)
+	return PpCommunicateWithParticipants, nil
 }
 
 func (r *planITToolsResolver) PpManageProviderOverlap(ctx context.Context, obj *models.PlanITTools) ([]model.PpManageProviderOverlapType, error) {
-	panic(fmt.Errorf("not implemented"))
+	PpManageProviderOverlaps := models.ConvertEnums[model.PpManageProviderOverlapType](obj.PpManageProviderOverlap)
+	return PpManageProviderOverlaps, nil
 }
 
 func (r *planITToolsResolver) BManageBeneficiaryOverlap(ctx context.Context, obj *models.PlanITTools) ([]model.BManageBeneficiaryOverlapType, error) {
-	panic(fmt.Errorf("not implemented"))
+	BManageBeneficiaryOverlaps := models.ConvertEnums[model.BManageBeneficiaryOverlapType](obj.BManageBeneficiaryOverlap)
+	return BManageBeneficiaryOverlaps, nil
 }
 
 func (r *planITToolsResolver) OelWorkingAgreement(ctx context.Context, obj *models.PlanITTools) ([]model.OelWorkingAgreementType, error) {
-	panic(fmt.Errorf("not implemented"))
+	OelWorkingAgreements := models.ConvertEnums[model.OelWorkingAgreementType](obj.OelWorkingAgreement)
+	return OelWorkingAgreements, nil
 }
 
 func (r *planITToolsResolver) OelHelpdeskSupport(ctx context.Context, obj *models.PlanITTools) ([]model.OelHelpdeskSupportType, error) {
-	panic(fmt.Errorf("not implemented"))
+	OelHelpdeskSupports := models.ConvertEnums[model.OelHelpdeskSupportType](obj.OelHelpdeskSupport)
+	return OelHelpdeskSupports, nil
 }
 
 func (r *planITToolsResolver) OelManageAco(ctx context.Context, obj *models.PlanITTools) ([]model.OelManageAcoType, error) {
-	panic(fmt.Errorf("not implemented"))
+	OelManageAcos := models.ConvertEnums[model.OelManageAcoType](obj.OelManageAco)
+	return OelManageAcos, nil
 }
 
 func (r *planITToolsResolver) OelPerformanceBenchmark(ctx context.Context, obj *models.PlanITTools) ([]model.OelPerformanceBenchmarkType, error) {
-	panic(fmt.Errorf("not implemented"))
+	OelPerformanceBenchmarks := models.ConvertEnums[model.OelPerformanceBenchmarkType](obj.OelPerformanceBenchmark)
+	return OelPerformanceBenchmarks, nil
 }
 
 func (r *planITToolsResolver) OelProcessAppeals(ctx context.Context, obj *models.PlanITTools) ([]model.OelProcessAppealsType, error) {
-	panic(fmt.Errorf("not implemented"))
+	OelProcessAppealss := models.ConvertEnums[model.OelProcessAppealsType](obj.OelProcessAppeals)
+	return OelProcessAppealss, nil
 }
 
 func (r *planITToolsResolver) OelEvaluationContractor(ctx context.Context, obj *models.PlanITTools) ([]model.OelEvaluationContractorType, error) {
-	panic(fmt.Errorf("not implemented"))
+	OelEvaluationContractors := models.ConvertEnums[model.OelEvaluationContractorType](obj.OelEvaluationContractor)
+	return OelEvaluationContractors, nil
 }
 
 func (r *planITToolsResolver) OelCollectData(ctx context.Context, obj *models.PlanITTools) ([]model.OelCollectDataType, error) {
-	panic(fmt.Errorf("not implemented"))
+	OelCollectDatas := models.ConvertEnums[model.OelCollectDataType](obj.OelCollectData)
+	return OelCollectDatas, nil
 }
 
 func (r *planITToolsResolver) OelObtainData(ctx context.Context, obj *models.PlanITTools) ([]model.OelObtainDataType, error) {
-	panic(fmt.Errorf("not implemented"))
+	OelObtainDatas := models.ConvertEnums[model.OelObtainDataType](obj.OelObtainData)
+	return OelObtainDatas, nil
 }
 
 func (r *planITToolsResolver) OelClaimsBasedMeasures(ctx context.Context, obj *models.PlanITTools) ([]model.OelClaimsBasedMeasuresType, error) {
-	panic(fmt.Errorf("not implemented"))
+	OelClaimsBasedMeasuress := models.ConvertEnums[model.OelClaimsBasedMeasuresType](obj.OelClaimsBasedMeasures)
+	return OelClaimsBasedMeasuress, nil
 }
 
 func (r *planITToolsResolver) OelQualityScores(ctx context.Context, obj *models.PlanITTools) ([]model.OelQualityScoresType, error) {
-	panic(fmt.Errorf("not implemented"))
+	OelQualityScoress := models.ConvertEnums[model.OelQualityScoresType](obj.OelQualityScores)
+	return OelQualityScoress, nil
 }
 
 func (r *planITToolsResolver) OelSendReports(ctx context.Context, obj *models.PlanITTools) ([]model.OelSendReportsType, error) {
-	panic(fmt.Errorf("not implemented"))
+	OelSendReportss := models.ConvertEnums[model.OelSendReportsType](obj.OelSendReports)
+	return OelSendReportss, nil
 }
 
 func (r *planITToolsResolver) OelLearningContractor(ctx context.Context, obj *models.PlanITTools) ([]model.OelLearningContractorType, error) {
-	panic(fmt.Errorf("not implemented"))
+	OelLearningContractors := models.ConvertEnums[model.OelLearningContractorType](obj.OelLearningContractor)
+	return OelLearningContractors, nil
 }
 
 func (r *planITToolsResolver) OelParticipantCollaboration(ctx context.Context, obj *models.PlanITTools) ([]model.OelParticipantCollaborationType, error) {
-	panic(fmt.Errorf("not implemented"))
+	OelParticipantCollaborations := models.ConvertEnums[model.OelParticipantCollaborationType](obj.OelParticipantCollaboration)
+	return OelParticipantCollaborations, nil
 }
 
 func (r *planITToolsResolver) OelEducateBeneficiaries(ctx context.Context, obj *models.PlanITTools) ([]model.OelEducateBeneficiariesType, error) {
-	panic(fmt.Errorf("not implemented"))
+	OelEducateBeneficiariess := models.ConvertEnums[model.OelEducateBeneficiariesType](obj.OelEducateBeneficiaries)
+	return OelEducateBeneficiariess, nil
 }
 
 func (r *planITToolsResolver) PMakeClaimsPayments(ctx context.Context, obj *models.PlanITTools) ([]model.PMakeClaimsPaymentsType, error) {
-	panic(fmt.Errorf("not implemented"))
+	PMakeClaimsPaymentss := models.ConvertEnums[model.PMakeClaimsPaymentsType](obj.PMakeClaimsPayments)
+	return PMakeClaimsPaymentss, nil
 }
 
 func (r *planITToolsResolver) PInformFfs(ctx context.Context, obj *models.PlanITTools) ([]model.PInformFfsType, error) {
-	panic(fmt.Errorf("not implemented"))
+	PInformFfss := models.ConvertEnums[model.PInformFfsType](obj.PInformFfs)
+	return PInformFfss, nil
 }
 
 func (r *planITToolsResolver) PNonClaimsBasedPayments(ctx context.Context, obj *models.PlanITTools) ([]model.PNonClaimsBasedPaymentsType, error) {
-	panic(fmt.Errorf("not implemented"))
+	PNonClaimsBasedPaymentss := models.ConvertEnums[model.PNonClaimsBasedPaymentsType](obj.PNonClaimsBasedPayments)
+	return PNonClaimsBasedPaymentss, nil
 }
 
 func (r *planITToolsResolver) PSharedSavingsPlan(ctx context.Context, obj *models.PlanITTools) ([]model.PSharedSavingsPlanType, error) {
-	panic(fmt.Errorf("not implemented"))
+	PSharedSavingsPlans := models.ConvertEnums[model.PSharedSavingsPlanType](obj.PSharedSavingsPlan)
+	return PSharedSavingsPlans, nil
 }
 
 func (r *planITToolsResolver) PRecoverPayments(ctx context.Context, obj *models.PlanITTools) ([]model.PRecoverPaymentsType, error) {
-	panic(fmt.Errorf("not implemented"))
+	PRecoverPaymentss := models.ConvertEnums[model.PRecoverPaymentsType](obj.PRecoverPayments)
+	return PRecoverPaymentss, nil
 }
 
 func (r *planOpsEvalAndLearningResolver) AgencyOrStateHelp(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]model.AgencyOrStateHelpType, error) {

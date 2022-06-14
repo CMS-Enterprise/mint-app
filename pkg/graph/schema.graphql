@@ -47,7 +47,7 @@ type ModelPlan {
   collaborators: [PlanCollaborator!]!
   documents: [PlanDocument!]!
   discussions: [PlanDiscussion!]!
-  itTools: [PlanITTools!]
+  itTools: PlanITTools!
   status: ModelStatus!
 }
 
