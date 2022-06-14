@@ -66,6 +66,15 @@ export interface GetModelPlan_modelPlan_discussions {
   replies: GetModelPlan_modelPlan_discussions_replies[];
 }
 
+export interface GetModelPlan_modelPlan_generalCharacteristics {
+  __typename: "PlanGeneralCharacteristics";
+  createdBy: string;
+  createdDts: Time;
+  modifiedBy: string | null;
+  modifiedDts: Time | null;
+  status: TaskStatus;
+}
+
 export interface GetModelPlan_modelPlan {
   __typename: "ModelPlan";
   id: UUID;
@@ -81,6 +90,7 @@ export interface GetModelPlan_modelPlan {
   milestones: GetModelPlan_modelPlan_milestones;
   documents: GetModelPlan_modelPlan_documents[];
   discussions: GetModelPlan_modelPlan_discussions[];
+  generalCharacteristics: GetModelPlan_modelPlan_generalCharacteristics;
 }
 
 export interface GetModelPlan {

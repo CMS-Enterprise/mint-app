@@ -109,6 +109,123 @@ export const translateModelPlanStatus = (status: string) => {
   }
 };
 
+export const translateAlternativePaymentTypes = (type: string) => {
+  switch (type) {
+    case 'REGULAR':
+      return i18next.t('generalCharacteristics:apmTypes.regularAPM');
+    case 'MIPS':
+      return i18next.t('generalCharacteristics:apmTypes.MIPSAPM');
+    case 'ADVANCED':
+      return i18next.t('generalCharacteristics:apmTypes.advancedAPM');
+    default:
+      return '';
+  }
+};
+
+export const translateGeographyTypes = (type: string) => {
+  switch (type) {
+    case 'STATE':
+      return i18next.t('generalCharacteristics:geoState');
+    case 'REGION':
+      return i18next.t('generalCharacteristics:geoRegion');
+    case 'OTHER':
+      return i18next.t('generalCharacteristics:other');
+    default:
+      return '';
+  }
+};
+
+export const translateGeographyApplication = (type: string) => {
+  switch (type) {
+    case 'PARTICIPANTS':
+      return i18next.t('generalCharacteristics:geoParticipants');
+    case 'PROVIDERS':
+      return i18next.t('generalCharacteristics:geoProviders');
+    case 'BENEFICIARIES':
+      return i18next.t('generalCharacteristics:geoBeneficiaries');
+    case 'OTHER':
+      return i18next.t('generalCharacteristics:other');
+    default:
+      return '';
+  }
+};
+
+export const translateAgreementTypes = (type: string) => {
+  switch (type) {
+    case 'PARTICIPATION':
+      return i18next.t('generalCharacteristics:participationAgreement');
+    case 'COOPERATIVE':
+      return i18next.t('generalCharacteristics:coopAgreement');
+    case 'OTHER':
+      return i18next.t('generalCharacteristics:other');
+    default:
+      return '';
+  }
+};
+
+export const translateAuthorityAllowance = (type: string) => {
+  switch (type) {
+    case 'ACA':
+      return i18next.t('generalCharacteristics:ACA3021');
+    case 'CONGRESSIONALLY_MANDATED':
+      return i18next.t('generalCharacteristics:mandatedDemonstration');
+    case 'SSA_PART_B':
+      return i18next.t('generalCharacteristics:section1833');
+    case 'OTHER':
+      return i18next.t('generalCharacteristics:other');
+    default:
+      return '';
+  }
+};
+
+export const translateWaiverTypes = (type: string) => {
+  switch (type) {
+    case 'FRAUD_ABUSE':
+      return i18next.t('generalCharacteristics:fraudAndAbuse');
+    case 'PROGRAM_PAYMENT':
+      return i18next.t('generalCharacteristics:programPayment');
+    case 'MEDICAID':
+      return i18next.t('generalCharacteristics:medicaid');
+    default:
+      return '';
+  }
+};
+
+export const translateKeyCharacteristics = (characteristic: string) => {
+  switch (characteristic) {
+    case 'EPISODE_BASED':
+      return i18next.t(
+        'generalCharacteristics:keyCharacteristicsTypes.episodeBased'
+      );
+    case 'PART_C':
+      return i18next.t('generalCharacteristics:keyCharacteristicsTypes.partC');
+    case 'PART_D':
+      return i18next.t('generalCharacteristics:keyCharacteristicsTypes.partD');
+    case 'PAYMENT':
+      return i18next.t(
+        'generalCharacteristics:keyCharacteristicsTypes.payment'
+      );
+    case 'POPULATION_BASED':
+      return i18next.t(
+        'generalCharacteristics:keyCharacteristicsTypes.population'
+      );
+    case 'PREVENTATIVE':
+      return i18next.t(
+        'generalCharacteristics:keyCharacteristicsTypes.preventative'
+      );
+    case 'SERVICE_DELIVERY':
+      return i18next.t(
+        'generalCharacteristics:keyCharacteristicsTypes.service'
+      );
+    case 'SHARED_SAVINGS':
+      return i18next.t('generalCharacteristics:keyCharacteristicsTypes.shared');
+    case 'OTHER':
+      return i18next.t('generalCharacteristics:keyCharacteristicsTypes.other');
+    default:
+      return '';
+  }
+};
+
 /**
  * Translate the document type API enum to a human readable string
  */
@@ -160,6 +277,17 @@ export const sortRepliesByDate = (
     (discussionB.replies[discussionB.replies.length - 1]?.createdDts || 0)
   ) {
     return -1;
+  }
+  return 0;
+};
+
+// Sort mapped enums to be alphabetical and have 'OTHER' come last
+export const sortOtherEnum = (a: string, b: string) => {
+  if (a < b || b === 'OTHER') {
+    return -1;
+  }
+  if (a > b) {
+    return 1;
   }
   return 0;
 };
