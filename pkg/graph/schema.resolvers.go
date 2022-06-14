@@ -173,7 +173,9 @@ func (r *mutationResolver) UpdatePlanParticipantsAndProviders(ctx context.Contex
 }
 
 func (r *mutationResolver) UpdatePlanItTools(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanITTools, error) {
-	panic(fmt.Errorf("not implemented"))
+	principal := appcontext.Principal(ctx).ID()
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.PlanITToolsUpdate(logger, id, changes, principal, r.store)
 }
 
 func (r *mutationResolver) UpdatePlanOpsEvalAndLearning(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanOpsEvalAndLearning, error) {

@@ -253,8 +253,8 @@ CREATE TABLE plan_it_tools (
     modified_dts TIMESTAMP WITH TIME ZONE,
     status TASK_STATUS NOT NULL DEFAULT 'READY'
 );
-ALTER TABLE it_tools
-ADD CONSTRAINT fk_it_plan FOREIGN KEY (model_plan_id)
+ALTER TABLE plan_it_tools
+ADD CONSTRAINT fk_it_tools_plan FOREIGN KEY (model_plan_id)
 REFERENCES public.model_plan (id) MATCH SIMPLE
 ON UPDATE NO ACTION
 ON DELETE NO ACTION
