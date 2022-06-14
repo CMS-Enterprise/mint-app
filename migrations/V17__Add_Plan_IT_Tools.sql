@@ -1,6 +1,6 @@
 --PAGE 1
 CREATE TYPE GC_PART_C_D_TYPE AS ENUM (
-    'MARx',
+    'MARX',
     'OTHER'
 );
 CREATE TYPE GC_COLLECT_BIDS_TYPE AS ENUM (
@@ -176,8 +176,8 @@ CREATE TABLE plan_it_tools (
     pp_communicate_with_participant_other TEXT,
     pp_communicate_with_participant_note TEXT,
     pp_manage_provider_overlap PP_MANAGE_PROVIDER_OVERLAP_TYPE[], --ALWAYS REQUIRED
-    pp_manage_provider_overlap_other TEXT
-    pp_manage_provider_overlap_note TEXT
+    pp_manage_provider_overlap_other TEXT,
+    pp_manage_provider_overlap_note TEXT,
     b_manage_beneficiary_overlap B_MANAGE_BENEFICIARY_OVERLAP_TYPE[], --ALWAYS REQUIRED
     b_manage_beneficiary_overlap_other TEXT,
     b_manage_beneficiary_overlap_note TEXT,
@@ -229,8 +229,8 @@ CREATE TABLE plan_it_tools (
     oel_educate_beneficiaries_other TEXT,
     oel_educate_beneficiaries_note TEXT,
     p_make_claims_payments P_MAKE_CLAIMS_PAYMENTS_TYPE[],
-    p_make_claims_payments_other text,
-    p_make_claims_payments_note text,
+    p_make_claims_payments_other TEXT,
+    p_make_claims_payments_note TEXT,
     --page 9
     p_inform_ffs P_INFORM_FFS_TYPE[],
     p_inform_ffs_other TEXT,
