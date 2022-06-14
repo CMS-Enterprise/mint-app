@@ -2733,7 +2733,7 @@ func (ec *executionContext) introspectType(name string) (*introspection.Type, er
 }
 
 var sources = []*ast.Source{
-	{Name: "pkg/graph/schema.graphql", Input: `
+	{Name: "../schema.graphql", Input: `
 
 """
 The current user's Launch Darkly key
