@@ -138,7 +138,7 @@ type ComplexityRoot struct {
 		UpdateDiscussionReply              func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
 		UpdateModelPlan                    func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
 		UpdatePlanBasics                   func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
-		UpdatePlanBeneficiares             func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
+		UpdatePlanBeneficiaries            func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
 		UpdatePlanCollaborator             func(childComplexity int, id uuid.UUID, newRole models.TeamRole) int
 		UpdatePlanDiscussion               func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
 		UpdatePlanDocument                 func(childComplexity int, input model.PlanDocumentInput) int
@@ -422,7 +422,7 @@ type MutationResolver interface {
 	UpdatePlanBasics(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanBasics, error)
 	UpdatePlanMilestones(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanMilestones, error)
 	UpdatePlanGeneralCharacteristics(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanGeneralCharacteristics, error)
-	UpdatePlanBeneficiares(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanBeneficiaries, error)
+	UpdatePlanBeneficiaries(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanBeneficiaries, error)
 	UpdatePlanParticipantsAndProviders(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanParticipantsAndProviders, error)
 	GeneratePresignedUploadURL(ctx context.Context, input model.GeneratePresignedUploadURLInput) (*model.GeneratePresignedUploadURLPayload, error)
 	CreatePlanDocument(ctx context.Context, input model.PlanDocumentInput) (*model.PlanDocumentPayload, error)
@@ -1019,17 +1019,17 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Mutation.UpdatePlanBasics(childComplexity, args["id"].(uuid.UUID), args["changes"].(map[string]interface{})), true
 
-	case "Mutation.updatePlanBeneficiares":
-		if e.complexity.Mutation.UpdatePlanBeneficiares == nil {
+	case "Mutation.updatePlanBeneficiaries":
+		if e.complexity.Mutation.UpdatePlanBeneficiaries == nil {
 			break
 		}
 
-		args, err := ec.field_Mutation_updatePlanBeneficiares_args(context.TODO(), rawArgs)
+		args, err := ec.field_Mutation_updatePlanBeneficiaries_args(context.TODO(), rawArgs)
 		if err != nil {
 			return 0, false
 		}
 
-		return e.complexity.Mutation.UpdatePlanBeneficiares(childComplexity, args["id"].(uuid.UUID), args["changes"].(map[string]interface{})), true
+		return e.complexity.Mutation.UpdatePlanBeneficiaries(childComplexity, args["id"].(uuid.UUID), args["changes"].(map[string]interface{})), true
 
 	case "Mutation.updatePlanCollaborator":
 		if e.complexity.Mutation.UpdatePlanCollaborator == nil {
@@ -3471,7 +3471,7 @@ updatePlanMilestones(id: UUID!, changes: PlanMilestoneChanges!): PlanMilestones!
 updatePlanGeneralCharacteristics(id: UUID!, changes: PlanGeneralCharacteristicsChanges!): PlanGeneralCharacteristics!
 @hasRole(role: MINT_BASE_USER)
 
-updatePlanBeneficiares(id: UUID!, changes: PlanBeneficiariesChanges!): PlanBeneficiaries!
+updatePlanBeneficiaries(id: UUID!, changes: PlanBeneficiariesChanges!): PlanBeneficiaries!
 @hasRole(role: MINT_BASE_USER)
 
 updatePlanParticipantsAndProviders(id: UUID!, changes: PlanParticipantsAndProvidersChanges!): PlanParticipantsAndProviders!
@@ -4021,7 +4021,7 @@ func (ec *executionContext) field_Mutation_updatePlanBasics_args(ctx context.Con
 	return args, nil
 }
 
-func (ec *executionContext) field_Mutation_updatePlanBeneficiares_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+func (ec *executionContext) field_Mutation_updatePlanBeneficiaries_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
 	var arg0 uuid.UUID
@@ -7882,8 +7882,8 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanGeneralCharacteristi
 	return fc, nil
 }
 
-func (ec *executionContext) _Mutation_updatePlanBeneficiares(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Mutation_updatePlanBeneficiares(ctx, field)
+func (ec *executionContext) _Mutation_updatePlanBeneficiaries(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Mutation_updatePlanBeneficiaries(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -7897,7 +7897,7 @@ func (ec *executionContext) _Mutation_updatePlanBeneficiares(ctx context.Context
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		directive0 := func(rctx context.Context) (interface{}, error) {
 			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Mutation().UpdatePlanBeneficiares(rctx, fc.Args["id"].(uuid.UUID), fc.Args["changes"].(map[string]interface{}))
+			return ec.resolvers.Mutation().UpdatePlanBeneficiaries(rctx, fc.Args["id"].(uuid.UUID), fc.Args["changes"].(map[string]interface{}))
 		}
 		directive1 := func(ctx context.Context) (interface{}, error) {
 			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_BASE_USER")
@@ -7937,7 +7937,7 @@ func (ec *executionContext) _Mutation_updatePlanBeneficiares(ctx context.Context
 	return ec.marshalNPlanBeneficiaries2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanBeneficiaries(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Mutation_updatePlanBeneficiares(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Mutation_updatePlanBeneficiaries(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Mutation",
 		Field:      field,
@@ -8012,7 +8012,7 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanBeneficiares(ctx con
 		}
 	}()
 	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_updatePlanBeneficiares_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+	if fc.Args, err = ec.field_Mutation_updatePlanBeneficiaries_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return
 	}
@@ -21435,10 +21435,10 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 			if out.Values[i] == graphql.Null {
 				invalids++
 			}
-		case "updatePlanBeneficiares":
+		case "updatePlanBeneficiaries":
 
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_updatePlanBeneficiares(ctx, field)
+				return ec._Mutation_updatePlanBeneficiaries(ctx, field)
 			})
 
 			if out.Values[i] == graphql.Null {
