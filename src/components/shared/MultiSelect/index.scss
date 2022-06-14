@@ -1,0 +1,38 @@
+.easi-multiselect__controls {
+    position: absolute;
+    right: 2px;
+    top: 3px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    background-color: white;
+  
+    &-button {
+      height: 22px;
+      width: 38px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: color('base');
+  
+      &:hover {
+        color: color('base-darker');
+      }
+    }
+
+    &-close {
+      width: 35px;
+    }
+  }
+  
+.easi-multiselect__options {
+  max-height: 11em;
+  .usa-checkbox__label {
+    margin: 0;      
+  }
+}
+
+.easi-multiselect__selected-list svg:hover,
+.easi-multiselect__controls-button svg {
+  cursor: pointer;
+}

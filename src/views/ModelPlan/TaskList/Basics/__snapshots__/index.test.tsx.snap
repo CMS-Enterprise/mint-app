@@ -64,7 +64,7 @@ exports[`Model Plan Documents page matches snapshot 1`] = `
           Model basics
         </h1>
         <div
-          class="padding-2 bg-primary-lighter"
+          class="padding-2 bg-primary-lighter display-flex"
           data-testid="ask-a-question"
         >
           <svg

@@ -112,7 +112,7 @@ func (pp *PlanParticipantsAndProviders) CalcStatus() error {
 
 // GetModelTypeName returns the name of the model
 func (pp PlanParticipantsAndProviders) GetModelTypeName() string {
-	return "Plan_Beneficiaries"
+	return "Plan_Participants_And_Providers"
 }
 
 // GetID returns the ID property for a PlanParticipantsAndProviders struct
