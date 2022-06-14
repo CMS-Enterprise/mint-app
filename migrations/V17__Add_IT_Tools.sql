@@ -1,7 +1,13 @@
 --PAGE 1
-CREATE TYPE TOOLS_PART_C_D_TYPE AS ENUM ('MARx', 'OTHER');
-CREATE TYPE TOOLS_COLLECT_BIDS_TYPE AS ENUM ('HPMS', 'OTHER');
-CREATE TYPE TOOLS_UPDATE_CONTRACT_TYPE AS ENUM (
+CREATE TYPE GC_PART_C_D_TYPE AS ENUM (
+    'MARx',
+    'OTHER'
+);
+CREATE TYPE GC_COLLECT_BIDS_TYPE AS ENUM (
+    'HPMS',
+    'OTHER'
+);
+CREATE TYPE GC_UPDATE_CONTRACT_TYPE AS ENUM (
     --TODO Verify this, this is the same type as collect bids, but it seems to make sense to use this type for future use
     'HPMS',
     'OTHER'
@@ -142,17 +148,17 @@ CREATE TYPE P_RECOVER_PAYMENTS_TYPE AS ENUM (
     'MAC',
     'OTHER'
 );
-CREATE TABLE it_tools (
+CREATE TABLE plan_it_tools (
     id UUID PRIMARY KEY NOT NULL,
     model_plan_id UUID NOT NULL UNIQUE, --foreign key to model plan
     --page 1
-    gc_part_c_d TOOLS_PART_C_D_TYPE[],
+    gc_part_c_d GC_PART_C_D_TYPE[],
     gc_part_c_d_other TEXT,
     gc_part_c_d_note TEXT,
-    gc_collect_bids TOOLS_COLLECT_BIDS_TYPE[],
+    gc_collect_bids GC_COLLECT_BIDS_TYPE[],
     gc_collect_bids_other TEXT,
     gc_collect_bids_note TEXT,
-    gc_update_contract TOOLS_UPDATE_CONTRACT_TYPE[],
+    gc_update_contract GC_UPDATE_CONTRACT_TYPE[],
     gc_update_contract_other TEXT,
     gc_update_contract_note TEXT,
     --page 2
