@@ -17,8 +17,7 @@ import (
 )
 
 func (r *modelPlanResolver) CmsCenters(ctx context.Context, obj *models.ModelPlan) ([]models.CMSCenter, error) {
-	cmsCenters := models.ConvertEnums[models.CMSCenter](obj.CMSCenters)
-	return cmsCenters, nil
+	return obj.CMSCenters, nil
 }
 
 func (r *modelPlanResolver) CmmiGroups(ctx context.Context, obj *models.ModelPlan) ([]model.CMMIGroup, error) {
