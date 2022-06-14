@@ -975,7 +975,7 @@ updatePlanMilestones(id: UUID!, changes: PlanMilestoneChanges!): PlanMilestones!
 updatePlanGeneralCharacteristics(id: UUID!, changes: PlanGeneralCharacteristicsChanges!): PlanGeneralCharacteristics!
 @hasRole(role: MINT_BASE_USER)
 
-updatePlanBeneficiares(id: UUID!, changes: PlanBeneficiariesChanges!): PlanBeneficiaries!
+updatePlanBeneficiaries(id: UUID!, changes: PlanBeneficiariesChanges!): PlanBeneficiaries!
 @hasRole(role: MINT_BASE_USER)
 
 updatePlanParticipantsAndProviders(id: UUID!, changes: PlanParticipantsAndProvidersChanges!): PlanParticipantsAndProviders!
