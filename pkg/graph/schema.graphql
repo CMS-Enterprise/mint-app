@@ -704,98 +704,98 @@ type PlanITTools {
 
   #Page 1
   gcPartCD: [GcPartCDType!]
-  gcPartCDOther: String!
-  gcPartCDNote: String!
+  gcPartCDOther: String
+  gcPartCDNote: String
   gcCollectBids: [GcCollectBidsType!]
-  gcCollectBidsOther: String!
-  gcCollectBidsNote: String!
+  gcCollectBidsOther: String
+  gcCollectBidsNote: String
   gcUpdateContract: [GcUpdateContractType!]
-  gcUpdateContractOther: String!
-  gcUpdateContractNote: String!
+  gcUpdateContractOther: String
+  gcUpdateContractNote: String
   #Page 2
   ppToAdvertise: [PpToAdvertiseType!]
-  ppToAdvertiseOther: String!
-  ppToAdvertiseNote: String!
+  ppToAdvertiseOther: String
+  ppToAdvertiseNote: String
   ppCollectScoreReview: [PpCollectScoreReviewType!]
-  ppCollectScoreReviewOther: String!
-  ppCollectScoreReviewNote: String!
+  ppCollectScoreReviewOther: String
+  ppCollectScoreReviewNote: String
   ppAppSupportContractor: [PpAppSupportContractorType!]
-  ppAppSupportContractorOther: String!
-  ppAppSupportContractorNote: String!
+  ppAppSupportContractorOther: String
+  ppAppSupportContractorNote: String
   #Page 3
   ppCommunicateWithParticipant: [PpCommunicateWithParticipantType!]
-  ppCommunicateWithParticipantOther: String!
-  ppCommunicateWithParticipantNote: String!
+  ppCommunicateWithParticipantOther: String
+  ppCommunicateWithParticipantNote: String
   ppManageProviderOverlap: [PpManageProviderOverlapType!] 
-  ppManageProviderOverlapOther: String!
-  ppManageProviderOverlapNote: String!
+  ppManageProviderOverlapOther: String
+  ppManageProviderOverlapNote: String
   bManageBeneficiaryOverlap: [BManageBeneficiaryOverlapType!] 
-  bManageBeneficiaryOverlapOther: String!
-  bManageBeneficiaryOverlapNote: String!
+  bManageBeneficiaryOverlapOther: String
+  bManageBeneficiaryOverlapNote: String
   #Page 4
   oelWorkingAgreement: [OelWorkingAgreementType!]
-  oelWorkingAgreementOther: String!
-  oelWorkingAgreementNote: String!
+  oelWorkingAgreementOther: String
+  oelWorkingAgreementNote: String
   oelHelpdeskSupport: [OelHelpdeskSupportType!]
-  oelHelpdeskSupportOther: String!
-  oelHelpdeskSupportNote: String!
+  oelHelpdeskSupportOther: String
+  oelHelpdeskSupportNote: String
   oelManageAco: [OelManageAcoType!] 
-  oelManageAcoOther: String!
-  oelManageAcoNote: String!
+  oelManageAcoOther: String
+  oelManageAcoNote: String
   #Page 5
   oelPerformanceBenchmark: [OelPerformanceBenchmarkType!]
-  oelPerformanceBenchmarkOther: String!
-  oelPerformanceBenchmarkNote: String!
+  oelPerformanceBenchmarkOther: String
+  oelPerformanceBenchmarkNote: String
   oelProcessAppeals: [OelProcessAppealsType!]
-  oelProcessAppealsOther: String!
-  oelProcessAppealsNote: String!
+  oelProcessAppealsOther: String
+  oelProcessAppealsNote: String
   oelEvaluationContractor: [OelEvaluationContractorType!]
-  oelEvaluationContractorOther: String!
-  oelEvaluationContractorNote: String!
+  oelEvaluationContractorOther: String
+  oelEvaluationContractorNote: String
   #Page 6
   oelCollectData: [OelCollectDataType!]
-  oelCollectDataOther: String!
-  oelCollectDataNote: String!
+  oelCollectDataOther: String
+  oelCollectDataNote: String
   oelObtainData: [OelObtainDataType!]
-  oelObtainDataOther: String!
-  oelObtainDataNote: String!
+  oelObtainDataOther: String
+  oelObtainDataNote: String
   oelClaimsBasedMeasures: [OelClaimsBasedMeasuresType!]
-  oelClaimsBasedMeasuresOther: String!
-  oelClaimsBasedMeasuresNote: String!
+  oelClaimsBasedMeasuresOther: String
+  oelClaimsBasedMeasuresNote: String
   #Page 7
   oelQualityScores: [OelQualityScoresType!]
-  oelQualityScoresOther: String!
-  oelQualityScoresNote: String!
+  oelQualityScoresOther: String
+  oelQualityScoresNote: String
   oelSendReports: [OelSendReportsType!]
-  oelSendReportsOther: String!
-  oelSendReportsNote: String!
+  oelSendReportsOther: String
+  oelSendReportsNote: String
   oelLearningContractor: [OelLearningContractorType!]
-  oelLearningContractorOther: String!
-  oelLearningContractorNote: String!
+  oelLearningContractorOther: String
+  oelLearningContractorNote: String
   #Page 8 
   oelParticipantCollaboration: [OelParticipantCollaborationType!]
-  oelParticipantCollaborationOther: String!
-  oelParticipantCollaborationNote: String!
+  oelParticipantCollaborationOther: String
+  oelParticipantCollaborationNote: String
   oelEducateBeneficiaries: [OelEducateBeneficiariesType!]
-  oelEducateBeneficiariesOther: String!
-  oelEducateBeneficiariesNote: String!
+  oelEducateBeneficiariesOther: String
+  oelEducateBeneficiariesNote: String
   pMakeClaimsPayments: [PMakeClaimsPaymentsType!]
-  pMakeClaimsPaymentsOther: String!
-  pMakeClaimsPaymentsNote: String!
+  pMakeClaimsPaymentsOther: String
+  pMakeClaimsPaymentsNote: String
   #Page 9
   pInformFfs: [PInformFfsType!]
-  pInformFfsOther: String!
-  pInformFfsNote: String!
+  pInformFfsOther: String
+  pInformFfsNote: String
   pNonClaimsBasedPayments: [PNonClaimsBasedPaymentsType!]
-  pNonClaimsBasedPaymentsOther: String!
-  pNonClaimsBasedPaymentsNote: String!
+  pNonClaimsBasedPaymentsOther: String
+  pNonClaimsBasedPaymentsNote: String
   pSharedSavingsPlan: [PSharedSavingsPlanType!]
-  pSharedSavingsPlanOther: String!
-  pSharedSavingsPlanNote: String!
+  pSharedSavingsPlanOther: String
+  pSharedSavingsPlanNote: String
   #Page 10
   pRecoverPayments: [PRecoverPaymentsType!]
-  pRecoverPaymentsOther: String!
-  pRecoverPaymentsNote: String!
+  pRecoverPaymentsOther: String
+  pRecoverPaymentsNote: String
 
   createdBy: String!
   createdDts: Time!
@@ -809,98 +809,99 @@ input PlanITToolsChanges @goModel(model: "map[string]interface{}") {
 
   #Page 1
   gcPartCD: [GcPartCDType!]
-  gcPartCDOther: String!
-  gcPartCDNote: String!
+  gcPartCDOther: String
+  gcPartCDNote: String
   gcCollectBids: [GcCollectBidsType!]
-  gcCollectBidsOther: String!
-  gcCollectBidsNote: String!
+  gcCollectBidsOther: String
+  gcCollectBidsNote: String
   gcUpdateContract: [GcUpdateContractType!]
-  gcUpdateContractOther: String!
-  gcUpdateContractNote: String!
+  gcUpdateContractOther: String
+  gcUpdateContractNote: String
   #Page 2
   ppToAdvertise: [PpToAdvertiseType!]
-  ppToAdvertiseOther: String!
-  ppToAdvertiseNote: String!
+  ppToAdvertiseOther: String
+  ppToAdvertiseNote: String
   ppCollectScoreReview: [PpCollectScoreReviewType!]
-  ppCollectScoreReviewOther: String!
-  ppCollectScoreReviewNote: String!
+  ppCollectScoreReviewOther: String
+  ppCollectScoreReviewNote: String
   ppAppSupportContractor: [PpAppSupportContractorType!]
-  ppAppSupportContractorOther: String!
-  ppAppSupportContractorNote: String!
+  ppAppSupportContractorOther: String
+  ppAppSupportContractorNote: String
   #Page 3
   ppCommunicateWithParticipant: [PpCommunicateWithParticipantType!]
-  ppCommunicateWithParticipantOther: String!
-  ppCommunicateWithParticipantNote: String!
+  ppCommunicateWithParticipantOther: String
+  ppCommunicateWithParticipantNote: String
   ppManageProviderOverlap: [PpManageProviderOverlapType!] 
-  ppManageProviderOverlapOther: String!
-  ppManageProviderOverlapNote: String!
+  ppManageProviderOverlapOther: String
+  ppManageProviderOverlapNote: String
   bManageBeneficiaryOverlap: [BManageBeneficiaryOverlapType!] 
-  bManageBeneficiaryOverlapOther: String!
-  bManageBeneficiaryOverlapNote: String!
+  bManageBeneficiaryOverlapOther: String
+  bManageBeneficiaryOverlapNote: String
   #Page 4
   oelWorkingAgreement: [OelWorkingAgreementType!]
-  oelWorkingAgreementOther: String!
-  oelWorkingAgreementNote: String!
+  oelWorkingAgreementOther: String
+  oelWorkingAgreementNote: String
   oelHelpdeskSupport: [OelHelpdeskSupportType!]
-  oelHelpdeskSupportOther: String!
-  oelHelpdeskSupportNote: String!
+  oelHelpdeskSupportOther: String
+  oelHelpdeskSupportNote: String
   oelManageAco: [OelManageAcoType!] 
-  oelManageAcoOther: String!
-  oelManageAcoNote: String!
+  oelManageAcoOther: String
+  oelManageAcoNote: String
   #Page 5
   oelPerformanceBenchmark: [OelPerformanceBenchmarkType!]
-  oelPerformanceBenchmarkOther: String!
-  oelPerformanceBenchmarkNote: String!
+  oelPerformanceBenchmarkOther: String
+  oelPerformanceBenchmarkNote: String
   oelProcessAppeals: [OelProcessAppealsType!]
-  oelProcessAppealsOther: String!
-  oelProcessAppealsNote: String!
+  oelProcessAppealsOther: String
+  oelProcessAppealsNote: String
   oelEvaluationContractor: [OelEvaluationContractorType!]
-  oelEvaluationContractorOther: String!
-  oelEvaluationContractorNote: String!
+  oelEvaluationContractorOther: String
+  oelEvaluationContractorNote: String
   #Page 6
   oelCollectData: [OelCollectDataType!]
-  oelCollectDataOther: String!
-  oelCollectDataNote: String!
+  oelCollectDataOther: String
+  oelCollectDataNote: String
   oelObtainData: [OelObtainDataType!]
-  oelObtainDataOther: String!
-  oelObtainDataNote: String!
+  oelObtainDataOther: String
+  oelObtainDataNote: String
   oelClaimsBasedMeasures: [OelClaimsBasedMeasuresType!]
-  oelClaimsBasedMeasuresOther: String!
-  oelClaimsBasedMeasuresNote: String!
+  oelClaimsBasedMeasuresOther: String
+  oelClaimsBasedMeasuresNote: String
   #Page 7
   oelQualityScores: [OelQualityScoresType!]
-  oelQualityScoresOther: String!
-  oelQualityScoresNote: String!
+  oelQualityScoresOther: String
+  oelQualityScoresNote: String
   oelSendReports: [OelSendReportsType!]
-  oelSendReportsOther: String!
-  oelSendReportsNote: String!
+  oelSendReportsOther: String
+  oelSendReportsNote: String
   oelLearningContractor: [OelLearningContractorType!]
-  oelLearningContractorOther: String!
-  oelLearningContractorNote: String!
+  oelLearningContractorOther: String
+  oelLearningContractorNote: String
   #Page 8 
   oelParticipantCollaboration: [OelParticipantCollaborationType!]
-  oelParticipantCollaborationOther: String!
-  oelParticipantCollaborationNote: String!
+  oelParticipantCollaborationOther: String
+  oelParticipantCollaborationNote: String
   oelEducateBeneficiaries: [OelEducateBeneficiariesType!]
-  oelEducateBeneficiariesOther: String!
-  oelEducateBeneficiariesNote: String!
+  oelEducateBeneficiariesOther: String
+  oelEducateBeneficiariesNote: String
   pMakeClaimsPayments: [PMakeClaimsPaymentsType!]
-  pMakeClaimsPaymentsOther: String!
-  pMakeClaimsPaymentsNote: String!
+  pMakeClaimsPaymentsOther: String
+  pMakeClaimsPaymentsNote: String
   #Page 9
   pInformFfs: [PInformFfsType!]
-  pInformFfsOther: String!
-  pInformFfsNote: String!
+  pInformFfsOther: String
+  pInformFfsNote: String
   pNonClaimsBasedPayments: [PNonClaimsBasedPaymentsType!]
-  pNonClaimsBasedPaymentsOther: String!
-  pNonClaimsBasedPaymentsNote: String!
+  pNonClaimsBasedPaymentsOther: String
+  pNonClaimsBasedPaymentsNote: String
   pSharedSavingsPlan: [PSharedSavingsPlanType!]
-  pSharedSavingsPlanOther: String!
-  pSharedSavingsPlanNote: String!
+  pSharedSavingsPlanOther: String
+  pSharedSavingsPlanNote: String
   #Page 10
   pRecoverPayments: [PRecoverPaymentsType!]
-  pRecoverPaymentsOther: String!
-  pRecoverPaymentsNote: String!
+  pRecoverPaymentsOther: String
+  pRecoverPaymentsNote: String
+  
 }
 """
 PlanOpsEvalAndLearning represents the task list section that deals with information regarding the Ops Eval and Learning

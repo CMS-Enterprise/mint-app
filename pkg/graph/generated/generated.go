@@ -5135,98 +5135,98 @@ type PlanITTools {
 
   #Page 1
   gcPartCD: [GcPartCDType!]
-  gcPartCDOther: String!
-  gcPartCDNote: String!
+  gcPartCDOther: String
+  gcPartCDNote: String
   gcCollectBids: [GcCollectBidsType!]
-  gcCollectBidsOther: String!
-  gcCollectBidsNote: String!
+  gcCollectBidsOther: String
+  gcCollectBidsNote: String
   gcUpdateContract: [GcUpdateContractType!]
-  gcUpdateContractOther: String!
-  gcUpdateContractNote: String!
+  gcUpdateContractOther: String
+  gcUpdateContractNote: String
   #Page 2
   ppToAdvertise: [PpToAdvertiseType!]
-  ppToAdvertiseOther: String!
-  ppToAdvertiseNote: String!
+  ppToAdvertiseOther: String
+  ppToAdvertiseNote: String
   ppCollectScoreReview: [PpCollectScoreReviewType!]
-  ppCollectScoreReviewOther: String!
-  ppCollectScoreReviewNote: String!
+  ppCollectScoreReviewOther: String
+  ppCollectScoreReviewNote: String
   ppAppSupportContractor: [PpAppSupportContractorType!]
-  ppAppSupportContractorOther: String!
-  ppAppSupportContractorNote: String!
+  ppAppSupportContractorOther: String
+  ppAppSupportContractorNote: String
   #Page 3
   ppCommunicateWithParticipant: [PpCommunicateWithParticipantType!]
-  ppCommunicateWithParticipantOther: String!
-  ppCommunicateWithParticipantNote: String!
+  ppCommunicateWithParticipantOther: String
+  ppCommunicateWithParticipantNote: String
   ppManageProviderOverlap: [PpManageProviderOverlapType!] 
-  ppManageProviderOverlapOther: String!
-  ppManageProviderOverlapNote: String!
+  ppManageProviderOverlapOther: String
+  ppManageProviderOverlapNote: String
   bManageBeneficiaryOverlap: [BManageBeneficiaryOverlapType!] 
-  bManageBeneficiaryOverlapOther: String!
-  bManageBeneficiaryOverlapNote: String!
+  bManageBeneficiaryOverlapOther: String
+  bManageBeneficiaryOverlapNote: String
   #Page 4
   oelWorkingAgreement: [OelWorkingAgreementType!]
-  oelWorkingAgreementOther: String!
-  oelWorkingAgreementNote: String!
+  oelWorkingAgreementOther: String
+  oelWorkingAgreementNote: String
   oelHelpdeskSupport: [OelHelpdeskSupportType!]
-  oelHelpdeskSupportOther: String!
-  oelHelpdeskSupportNote: String!
+  oelHelpdeskSupportOther: String
+  oelHelpdeskSupportNote: String
   oelManageAco: [OelManageAcoType!] 
-  oelManageAcoOther: String!
-  oelManageAcoNote: String!
+  oelManageAcoOther: String
+  oelManageAcoNote: String
   #Page 5
   oelPerformanceBenchmark: [OelPerformanceBenchmarkType!]
-  oelPerformanceBenchmarkOther: String!
-  oelPerformanceBenchmarkNote: String!
+  oelPerformanceBenchmarkOther: String
+  oelPerformanceBenchmarkNote: String
   oelProcessAppeals: [OelProcessAppealsType!]
-  oelProcessAppealsOther: String!
-  oelProcessAppealsNote: String!
+  oelProcessAppealsOther: String
+  oelProcessAppealsNote: String
   oelEvaluationContractor: [OelEvaluationContractorType!]
-  oelEvaluationContractorOther: String!
-  oelEvaluationContractorNote: String!
+  oelEvaluationContractorOther: String
+  oelEvaluationContractorNote: String
   #Page 6
   oelCollectData: [OelCollectDataType!]
-  oelCollectDataOther: String!
-  oelCollectDataNote: String!
+  oelCollectDataOther: String
+  oelCollectDataNote: String
   oelObtainData: [OelObtainDataType!]
-  oelObtainDataOther: String!
-  oelObtainDataNote: String!
+  oelObtainDataOther: String
+  oelObtainDataNote: String
   oelClaimsBasedMeasures: [OelClaimsBasedMeasuresType!]
-  oelClaimsBasedMeasuresOther: String!
-  oelClaimsBasedMeasuresNote: String!
+  oelClaimsBasedMeasuresOther: String
+  oelClaimsBasedMeasuresNote: String
   #Page 7
   oelQualityScores: [OelQualityScoresType!]
-  oelQualityScoresOther: String!
-  oelQualityScoresNote: String!
+  oelQualityScoresOther: String
+  oelQualityScoresNote: String
   oelSendReports: [OelSendReportsType!]
-  oelSendReportsOther: String!
-  oelSendReportsNote: String!
+  oelSendReportsOther: String
+  oelSendReportsNote: String
   oelLearningContractor: [OelLearningContractorType!]
-  oelLearningContractorOther: String!
-  oelLearningContractorNote: String!
+  oelLearningContractorOther: String
+  oelLearningContractorNote: String
   #Page 8 
   oelParticipantCollaboration: [OelParticipantCollaborationType!]
-  oelParticipantCollaborationOther: String!
-  oelParticipantCollaborationNote: String!
+  oelParticipantCollaborationOther: String
+  oelParticipantCollaborationNote: String
   oelEducateBeneficiaries: [OelEducateBeneficiariesType!]
-  oelEducateBeneficiariesOther: String!
-  oelEducateBeneficiariesNote: String!
+  oelEducateBeneficiariesOther: String
+  oelEducateBeneficiariesNote: String
   pMakeClaimsPayments: [PMakeClaimsPaymentsType!]
-  pMakeClaimsPaymentsOther: String!
-  pMakeClaimsPaymentsNote: String!
+  pMakeClaimsPaymentsOther: String
+  pMakeClaimsPaymentsNote: String
   #Page 9
   pInformFfs: [PInformFfsType!]
-  pInformFfsOther: String!
-  pInformFfsNote: String!
+  pInformFfsOther: String
+  pInformFfsNote: String
   pNonClaimsBasedPayments: [PNonClaimsBasedPaymentsType!]
-  pNonClaimsBasedPaymentsOther: String!
-  pNonClaimsBasedPaymentsNote: String!
+  pNonClaimsBasedPaymentsOther: String
+  pNonClaimsBasedPaymentsNote: String
   pSharedSavingsPlan: [PSharedSavingsPlanType!]
-  pSharedSavingsPlanOther: String!
-  pSharedSavingsPlanNote: String!
+  pSharedSavingsPlanOther: String
+  pSharedSavingsPlanNote: String
   #Page 10
   pRecoverPayments: [PRecoverPaymentsType!]
-  pRecoverPaymentsOther: String!
-  pRecoverPaymentsNote: String!
+  pRecoverPaymentsOther: String
+  pRecoverPaymentsNote: String
 
   createdBy: String!
   createdDts: Time!
@@ -5240,98 +5240,99 @@ input PlanITToolsChanges @goModel(model: "map[string]interface{}") {
 
   #Page 1
   gcPartCD: [GcPartCDType!]
-  gcPartCDOther: String!
-  gcPartCDNote: String!
+  gcPartCDOther: String
+  gcPartCDNote: String
   gcCollectBids: [GcCollectBidsType!]
-  gcCollectBidsOther: String!
-  gcCollectBidsNote: String!
+  gcCollectBidsOther: String
+  gcCollectBidsNote: String
   gcUpdateContract: [GcUpdateContractType!]
-  gcUpdateContractOther: String!
-  gcUpdateContractNote: String!
+  gcUpdateContractOther: String
+  gcUpdateContractNote: String
   #Page 2
   ppToAdvertise: [PpToAdvertiseType!]
-  ppToAdvertiseOther: String!
-  ppToAdvertiseNote: String!
+  ppToAdvertiseOther: String
+  ppToAdvertiseNote: String
   ppCollectScoreReview: [PpCollectScoreReviewType!]
-  ppCollectScoreReviewOther: String!
-  ppCollectScoreReviewNote: String!
+  ppCollectScoreReviewOther: String
+  ppCollectScoreReviewNote: String
   ppAppSupportContractor: [PpAppSupportContractorType!]
-  ppAppSupportContractorOther: String!
-  ppAppSupportContractorNote: String!
+  ppAppSupportContractorOther: String
+  ppAppSupportContractorNote: String
   #Page 3
   ppCommunicateWithParticipant: [PpCommunicateWithParticipantType!]
-  ppCommunicateWithParticipantOther: String!
-  ppCommunicateWithParticipantNote: String!
+  ppCommunicateWithParticipantOther: String
+  ppCommunicateWithParticipantNote: String
   ppManageProviderOverlap: [PpManageProviderOverlapType!] 
-  ppManageProviderOverlapOther: String!
-  ppManageProviderOverlapNote: String!
+  ppManageProviderOverlapOther: String
+  ppManageProviderOverlapNote: String
   bManageBeneficiaryOverlap: [BManageBeneficiaryOverlapType!] 
-  bManageBeneficiaryOverlapOther: String!
-  bManageBeneficiaryOverlapNote: String!
+  bManageBeneficiaryOverlapOther: String
+  bManageBeneficiaryOverlapNote: String
   #Page 4
   oelWorkingAgreement: [OelWorkingAgreementType!]
-  oelWorkingAgreementOther: String!
-  oelWorkingAgreementNote: String!
+  oelWorkingAgreementOther: String
+  oelWorkingAgreementNote: String
   oelHelpdeskSupport: [OelHelpdeskSupportType!]
-  oelHelpdeskSupportOther: String!
-  oelHelpdeskSupportNote: String!
+  oelHelpdeskSupportOther: String
+  oelHelpdeskSupportNote: String
   oelManageAco: [OelManageAcoType!] 
-  oelManageAcoOther: String!
-  oelManageAcoNote: String!
+  oelManageAcoOther: String
+  oelManageAcoNote: String
   #Page 5
   oelPerformanceBenchmark: [OelPerformanceBenchmarkType!]
-  oelPerformanceBenchmarkOther: String!
-  oelPerformanceBenchmarkNote: String!
+  oelPerformanceBenchmarkOther: String
+  oelPerformanceBenchmarkNote: String
   oelProcessAppeals: [OelProcessAppealsType!]
-  oelProcessAppealsOther: String!
-  oelProcessAppealsNote: String!
+  oelProcessAppealsOther: String
+  oelProcessAppealsNote: String
   oelEvaluationContractor: [OelEvaluationContractorType!]
-  oelEvaluationContractorOther: String!
-  oelEvaluationContractorNote: String!
+  oelEvaluationContractorOther: String
+  oelEvaluationContractorNote: String
   #Page 6
   oelCollectData: [OelCollectDataType!]
-  oelCollectDataOther: String!
-  oelCollectDataNote: String!
+  oelCollectDataOther: String
+  oelCollectDataNote: String
   oelObtainData: [OelObtainDataType!]
-  oelObtainDataOther: String!
-  oelObtainDataNote: String!
+  oelObtainDataOther: String
+  oelObtainDataNote: String
   oelClaimsBasedMeasures: [OelClaimsBasedMeasuresType!]
-  oelClaimsBasedMeasuresOther: String!
-  oelClaimsBasedMeasuresNote: String!
+  oelClaimsBasedMeasuresOther: String
+  oelClaimsBasedMeasuresNote: String
   #Page 7
   oelQualityScores: [OelQualityScoresType!]
-  oelQualityScoresOther: String!
-  oelQualityScoresNote: String!
+  oelQualityScoresOther: String
+  oelQualityScoresNote: String
   oelSendReports: [OelSendReportsType!]
-  oelSendReportsOther: String!
-  oelSendReportsNote: String!
+  oelSendReportsOther: String
+  oelSendReportsNote: String
   oelLearningContractor: [OelLearningContractorType!]
-  oelLearningContractorOther: String!
-  oelLearningContractorNote: String!
+  oelLearningContractorOther: String
+  oelLearningContractorNote: String
   #Page 8 
   oelParticipantCollaboration: [OelParticipantCollaborationType!]
-  oelParticipantCollaborationOther: String!
-  oelParticipantCollaborationNote: String!
+  oelParticipantCollaborationOther: String
+  oelParticipantCollaborationNote: String
   oelEducateBeneficiaries: [OelEducateBeneficiariesType!]
-  oelEducateBeneficiariesOther: String!
-  oelEducateBeneficiariesNote: String!
+  oelEducateBeneficiariesOther: String
+  oelEducateBeneficiariesNote: String
   pMakeClaimsPayments: [PMakeClaimsPaymentsType!]
-  pMakeClaimsPaymentsOther: String!
-  pMakeClaimsPaymentsNote: String!
+  pMakeClaimsPaymentsOther: String
+  pMakeClaimsPaymentsNote: String
   #Page 9
   pInformFfs: [PInformFfsType!]
-  pInformFfsOther: String!
-  pInformFfsNote: String!
+  pInformFfsOther: String
+  pInformFfsNote: String
   pNonClaimsBasedPayments: [PNonClaimsBasedPaymentsType!]
-  pNonClaimsBasedPaymentsOther: String!
-  pNonClaimsBasedPaymentsNote: String!
+  pNonClaimsBasedPaymentsOther: String
+  pNonClaimsBasedPaymentsNote: String
   pSharedSavingsPlan: [PSharedSavingsPlanType!]
-  pSharedSavingsPlanOther: String!
-  pSharedSavingsPlanNote: String!
+  pSharedSavingsPlanOther: String
+  pSharedSavingsPlanNote: String
   #Page 10
   pRecoverPayments: [PRecoverPaymentsType!]
-  pRecoverPaymentsOther: String!
-  pRecoverPaymentsNote: String!
+  pRecoverPaymentsOther: String
+  pRecoverPaymentsNote: String
+  
 }
 """
 PlanOpsEvalAndLearning represents the task list section that deals with information regarding the Ops Eval and Learning
@@ -18525,14 +18526,11 @@ func (ec *executionContext) _PlanITTools_gcPartCDOther(ctx context.Context, fiel
 		return graphql.Null
 	}
 	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
 		return graphql.Null
 	}
 	res := resTmp.(*string)
 	fc.Result = res
-	return ec.marshalNString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanITTools_gcPartCDOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -18569,14 +18567,11 @@ func (ec *executionContext) _PlanITTools_gcPartCDNote(ctx context.Context, field
 		return graphql.Null
 	}
 	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
 		return graphql.Null
 	}
 	res := resTmp.(*string)
 	fc.Result = res
-	return ec.marshalNString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanITTools_gcPartCDNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -18654,14 +18649,11 @@ func (ec *executionContext) _PlanITTools_gcCollectBidsOther(ctx context.Context,
 		return graphql.Null
 	}
 	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
 		return graphql.Null
 	}
 	res := resTmp.(*string)
 	fc.Result = res
-	return ec.marshalNString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanITTools_gcCollectBidsOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -18698,14 +18690,11 @@ func (ec *executionContext) _PlanITTools_gcCollectBidsNote(ctx context.Context, 
 		return graphql.Null
 	}
 	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
 		return graphql.Null
 	}
 	res := resTmp.(*string)
 	fc.Result = res
-	return ec.marshalNString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanITTools_gcCollectBidsNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -18783,14 +18772,11 @@ func (ec *executionContext) _PlanITTools_gcUpdateContractOther(ctx context.Conte
 		return graphql.Null
 	}
 	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
 		return graphql.Null
 	}
 	res := resTmp.(*string)
 	fc.Result = res
-	return ec.marshalNString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanITTools_gcUpdateContractOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -18827,14 +18813,11 @@ func (ec *executionContext) _PlanITTools_gcUpdateContractNote(ctx context.Contex
 		return graphql.Null
 	}
 	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
 		return graphql.Null
 	}
 	res := resTmp.(*string)
 	fc.Result = res
-	return ec.marshalNString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanITTools_gcUpdateContractNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -18912,14 +18895,11 @@ func (ec *executionContext) _PlanITTools_ppToAdvertiseOther(ctx context.Context,
 		return graphql.Null
 	}
 	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
 		return graphql.Null
 	}
 	res := resTmp.(*string)
 	fc.Result = res
-	return ec.marshalNString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanITTools_ppToAdvertiseOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -18956,14 +18936,11 @@ func (ec *executionContext) _PlanITTools_ppToAdvertiseNote(ctx context.Context, 
 		return graphql.Null
 	}
 	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
 		return graphql.Null
 	}
 	res := resTmp.(*string)
 	fc.Result = res
-	return ec.marshalNString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanITTools_ppToAdvertiseNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -19041,14 +19018,11 @@ func (ec *executionContext) _PlanITTools_ppCollectScoreReviewOther(ctx context.C
 		return graphql.Null
 	}
 	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
 		return graphql.Null
 	}
 	res := resTmp.(*string)
 	fc.Result = res
-	return ec.marshalNString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanITTools_ppCollectScoreReviewOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -19085,14 +19059,11 @@ func (ec *executionContext) _PlanITTools_ppCollectScoreReviewNote(ctx context.Co
 		return graphql.Null
 	}
 	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
 		return graphql.Null
 	}
 	res := resTmp.(*string)
 	fc.Result = res
-	return ec.marshalNString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanITTools_ppCollectScoreReviewNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -19170,14 +19141,11 @@ func (ec *executionContext) _PlanITTools_ppAppSupportContractorOther(ctx context
 		return graphql.Null
 	}
 	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
 		return graphql.Null
 	}
 	res := resTmp.(*string)
 	fc.Result = res
-	return ec.marshalNString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanITTools_ppAppSupportContractorOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -19214,14 +19182,11 @@ func (ec *executionContext) _PlanITTools_ppAppSupportContractorNote(ctx context.
 		return graphql.Null
 	}
 	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
 		return graphql.Null
 	}
 	res := resTmp.(*string)
 	fc.Result = res
-	return ec.marshalNString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanITTools_ppAppSupportContractorNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -19299,14 +19264,11 @@ func (ec *executionContext) _PlanITTools_ppCommunicateWithParticipantOther(ctx c
 		return graphql.Null
 	}
 	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
 		return graphql.Null
 	}
 	res := resTmp.(*string)
 	fc.Result = res
-	return ec.marshalNString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanITTools_ppCommunicateWithParticipantOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -19343,14 +19305,11 @@ func (ec *executionContext) _PlanITTools_ppCommunicateWithParticipantNote(ctx co
 		return graphql.Null
 	}
 	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
 		return graphql.Null
 	}
 	res := resTmp.(*string)
 	fc.Result = res
-	return ec.marshalNString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanITTools_ppCommunicateWithParticipantNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -19428,14 +19387,11 @@ func (ec *executionContext) _PlanITTools_ppManageProviderOverlapOther(ctx contex
 		return graphql.Null
 	}
 	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
 		return graphql.Null
 	}
 	res := resTmp.(*string)
 	fc.Result = res
-	return ec.marshalNString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanITTools_ppManageProviderOverlapOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -19472,14 +19428,11 @@ func (ec *executionContext) _PlanITTools_ppManageProviderOverlapNote(ctx context
 		return graphql.Null
 	}
 	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
 		return graphql.Null
 	}
 	res := resTmp.(*string)
 	fc.Result = res
-	return ec.marshalNString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanITTools_ppManageProviderOverlapNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -19557,14 +19510,11 @@ func (ec *executionContext) _PlanITTools_bManageBeneficiaryOverlapOther(ctx cont
 		return graphql.Null
 	}
 	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
 		return graphql.Null
 	}
 	res := resTmp.(*string)
 	fc.Result = res
-	return ec.marshalNString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanITTools_bManageBeneficiaryOverlapOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -19601,14 +19551,11 @@ func (ec *executionContext) _PlanITTools_bManageBeneficiaryOverlapNote(ctx conte
 		return graphql.Null
 	}
 	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
 		return graphql.Null
 	}
 	res := resTmp.(*string)
 	fc.Result = res
-	return ec.marshalNString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanITTools_bManageBeneficiaryOverlapNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -19686,14 +19633,11 @@ func (ec *executionContext) _PlanITTools_oelWorkingAgreementOther(ctx context.Co
 		return graphql.Null
 	}
 	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
 		return graphql.Null
 	}
 	res := resTmp.(*string)
 	fc.Result = res
-	return ec.marshalNString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanITTools_oelWorkingAgreementOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -19730,14 +19674,11 @@ func (ec *executionContext) _PlanITTools_oelWorkingAgreementNote(ctx context.Con
 		return graphql.Null
 	}
 	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
 		return graphql.Null
 	}
 	res := resTmp.(*string)
 	fc.Result = res
-	return ec.marshalNString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanITTools_oelWorkingAgreementNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -19815,14 +19756,11 @@ func (ec *executionContext) _PlanITTools_oelHelpdeskSupportOther(ctx context.Con
 		return graphql.Null
 	}
 	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
 		return graphql.Null
 	}
 	res := resTmp.(*string)
 	fc.Result = res
-	return ec.marshalNString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanITTools_oelHelpdeskSupportOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -19859,14 +19797,11 @@ func (ec *executionContext) _PlanITTools_oelHelpdeskSupportNote(ctx context.Cont
 		return graphql.Null
 	}
 	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
 		return graphql.Null
 	}
 	res := resTmp.(*string)
 	fc.Result = res
-	return ec.marshalNString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanITTools_oelHelpdeskSupportNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -19944,14 +19879,11 @@ func (ec *executionContext) _PlanITTools_oelManageAcoOther(ctx context.Context, 
 		return graphql.Null
 	}
 	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
 		return graphql.Null
 	}
 	res := resTmp.(*string)
 	fc.Result = res
-	return ec.marshalNString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanITTools_oelManageAcoOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -19988,14 +19920,11 @@ func (ec *executionContext) _PlanITTools_oelManageAcoNote(ctx context.Context, f
 		return graphql.Null
 	}
 	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
 		return graphql.Null
 	}
 	res := resTmp.(*string)
 	fc.Result = res
-	return ec.marshalNString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanITTools_oelManageAcoNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -20073,14 +20002,11 @@ func (ec *executionContext) _PlanITTools_oelPerformanceBenchmarkOther(ctx contex
 		return graphql.Null
 	}
 	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
 		return graphql.Null
 	}
 	res := resTmp.(*string)
 	fc.Result = res
-	return ec.marshalNString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanITTools_oelPerformanceBenchmarkOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -20117,14 +20043,11 @@ func (ec *executionContext) _PlanITTools_oelPerformanceBenchmarkNote(ctx context
 		return graphql.Null
 	}
 	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
 		return graphql.Null
 	}
 	res := resTmp.(*string)
 	fc.Result = res
-	return ec.marshalNString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanITTools_oelPerformanceBenchmarkNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -20202,14 +20125,11 @@ func (ec *executionContext) _PlanITTools_oelProcessAppealsOther(ctx context.Cont
 		return graphql.Null
 	}
 	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
 		return graphql.Null
 	}
 	res := resTmp.(*string)
 	fc.Result = res
-	return ec.marshalNString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanITTools_oelProcessAppealsOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -20246,14 +20166,11 @@ func (ec *executionContext) _PlanITTools_oelProcessAppealsNote(ctx context.Conte
 		return graphql.Null
 	}
 	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
 		return graphql.Null
 	}
 	res := resTmp.(*string)
 	fc.Result = res
-	return ec.marshalNString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanITTools_oelProcessAppealsNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -20331,14 +20248,11 @@ func (ec *executionContext) _PlanITTools_oelEvaluationContractorOther(ctx contex
 		return graphql.Null
 	}
 	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
 		return graphql.Null
 	}
 	res := resTmp.(*string)
 	fc.Result = res
-	return ec.marshalNString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanITTools_oelEvaluationContractorOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -20375,14 +20289,11 @@ func (ec *executionContext) _PlanITTools_oelEvaluationContractorNote(ctx context
 		return graphql.Null
 	}
 	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
 		return graphql.Null
 	}
 	res := resTmp.(*string)
 	fc.Result = res
-	return ec.marshalNString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanITTools_oelEvaluationContractorNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -20460,14 +20371,11 @@ func (ec *executionContext) _PlanITTools_oelCollectDataOther(ctx context.Context
 		return graphql.Null
 	}
 	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
 		return graphql.Null
 	}
 	res := resTmp.(*string)
 	fc.Result = res
-	return ec.marshalNString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanITTools_oelCollectDataOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -20504,14 +20412,11 @@ func (ec *executionContext) _PlanITTools_oelCollectDataNote(ctx context.Context,
 		return graphql.Null
 	}
 	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
 		return graphql.Null
 	}
 	res := resTmp.(*string)
 	fc.Result = res
-	return ec.marshalNString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanITTools_oelCollectDataNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -20589,14 +20494,11 @@ func (ec *executionContext) _PlanITTools_oelObtainDataOther(ctx context.Context,
 		return graphql.Null
 	}
 	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
 		return graphql.Null
 	}
 	res := resTmp.(*string)
 	fc.Result = res
-	return ec.marshalNString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanITTools_oelObtainDataOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -20633,14 +20535,11 @@ func (ec *executionContext) _PlanITTools_oelObtainDataNote(ctx context.Context, 
 		return graphql.Null
 	}
 	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
 		return graphql.Null
 	}
 	res := resTmp.(*string)
 	fc.Result = res
-	return ec.marshalNString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanITTools_oelObtainDataNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -20718,14 +20617,11 @@ func (ec *executionContext) _PlanITTools_oelClaimsBasedMeasuresOther(ctx context
 		return graphql.Null
 	}
 	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
 		return graphql.Null
 	}
 	res := resTmp.(*string)
 	fc.Result = res
-	return ec.marshalNString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanITTools_oelClaimsBasedMeasuresOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -20762,14 +20658,11 @@ func (ec *executionContext) _PlanITTools_oelClaimsBasedMeasuresNote(ctx context.
 		return graphql.Null
 	}
 	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
 		return graphql.Null
 	}
 	res := resTmp.(*string)
 	fc.Result = res
-	return ec.marshalNString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanITTools_oelClaimsBasedMeasuresNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -20847,14 +20740,11 @@ func (ec *executionContext) _PlanITTools_oelQualityScoresOther(ctx context.Conte
 		return graphql.Null
 	}
 	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
 		return graphql.Null
 	}
 	res := resTmp.(*string)
 	fc.Result = res
-	return ec.marshalNString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanITTools_oelQualityScoresOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -20891,14 +20781,11 @@ func (ec *executionContext) _PlanITTools_oelQualityScoresNote(ctx context.Contex
 		return graphql.Null
 	}
 	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
 		return graphql.Null
 	}
 	res := resTmp.(*string)
 	fc.Result = res
-	return ec.marshalNString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanITTools_oelQualityScoresNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -20976,14 +20863,11 @@ func (ec *executionContext) _PlanITTools_oelSendReportsOther(ctx context.Context
 		return graphql.Null
 	}
 	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
 		return graphql.Null
 	}
 	res := resTmp.(*string)
 	fc.Result = res
-	return ec.marshalNString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanITTools_oelSendReportsOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -21020,14 +20904,11 @@ func (ec *executionContext) _PlanITTools_oelSendReportsNote(ctx context.Context,
 		return graphql.Null
 	}
 	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
 		return graphql.Null
 	}
 	res := resTmp.(*string)
 	fc.Result = res
-	return ec.marshalNString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanITTools_oelSendReportsNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -21105,14 +20986,11 @@ func (ec *executionContext) _PlanITTools_oelLearningContractorOther(ctx context.
 		return graphql.Null
 	}
 	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
 		return graphql.Null
 	}
 	res := resTmp.(*string)
 	fc.Result = res
-	return ec.marshalNString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanITTools_oelLearningContractorOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -21149,14 +21027,11 @@ func (ec *executionContext) _PlanITTools_oelLearningContractorNote(ctx context.C
 		return graphql.Null
 	}
 	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
 		return graphql.Null
 	}
 	res := resTmp.(*string)
 	fc.Result = res
-	return ec.marshalNString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanITTools_oelLearningContractorNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -21234,14 +21109,11 @@ func (ec *executionContext) _PlanITTools_oelParticipantCollaborationOther(ctx co
 		return graphql.Null
 	}
 	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
 		return graphql.Null
 	}
 	res := resTmp.(*string)
 	fc.Result = res
-	return ec.marshalNString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanITTools_oelParticipantCollaborationOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -21278,14 +21150,11 @@ func (ec *executionContext) _PlanITTools_oelParticipantCollaborationNote(ctx con
 		return graphql.Null
 	}
 	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
 		return graphql.Null
 	}
 	res := resTmp.(*string)
 	fc.Result = res
-	return ec.marshalNString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanITTools_oelParticipantCollaborationNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -21363,14 +21232,11 @@ func (ec *executionContext) _PlanITTools_oelEducateBeneficiariesOther(ctx contex
 		return graphql.Null
 	}
 	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
 		return graphql.Null
 	}
 	res := resTmp.(*string)
 	fc.Result = res
-	return ec.marshalNString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanITTools_oelEducateBeneficiariesOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -21407,14 +21273,11 @@ func (ec *executionContext) _PlanITTools_oelEducateBeneficiariesNote(ctx context
 		return graphql.Null
 	}
 	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
 		return graphql.Null
 	}
 	res := resTmp.(*string)
 	fc.Result = res
-	return ec.marshalNString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanITTools_oelEducateBeneficiariesNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -21492,14 +21355,11 @@ func (ec *executionContext) _PlanITTools_pMakeClaimsPaymentsOther(ctx context.Co
 		return graphql.Null
 	}
 	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
 		return graphql.Null
 	}
 	res := resTmp.(*string)
 	fc.Result = res
-	return ec.marshalNString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanITTools_pMakeClaimsPaymentsOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -21536,14 +21396,11 @@ func (ec *executionContext) _PlanITTools_pMakeClaimsPaymentsNote(ctx context.Con
 		return graphql.Null
 	}
 	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
 		return graphql.Null
 	}
 	res := resTmp.(*string)
 	fc.Result = res
-	return ec.marshalNString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanITTools_pMakeClaimsPaymentsNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -21621,14 +21478,11 @@ func (ec *executionContext) _PlanITTools_pInformFfsOther(ctx context.Context, fi
 		return graphql.Null
 	}
 	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
 		return graphql.Null
 	}
 	res := resTmp.(*string)
 	fc.Result = res
-	return ec.marshalNString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanITTools_pInformFfsOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -21665,14 +21519,11 @@ func (ec *executionContext) _PlanITTools_pInformFfsNote(ctx context.Context, fie
 		return graphql.Null
 	}
 	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
 		return graphql.Null
 	}
 	res := resTmp.(*string)
 	fc.Result = res
-	return ec.marshalNString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanITTools_pInformFfsNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -21750,14 +21601,11 @@ func (ec *executionContext) _PlanITTools_pNonClaimsBasedPaymentsOther(ctx contex
 		return graphql.Null
 	}
 	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
 		return graphql.Null
 	}
 	res := resTmp.(*string)
 	fc.Result = res
-	return ec.marshalNString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanITTools_pNonClaimsBasedPaymentsOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -21794,14 +21642,11 @@ func (ec *executionContext) _PlanITTools_pNonClaimsBasedPaymentsNote(ctx context
 		return graphql.Null
 	}
 	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
 		return graphql.Null
 	}
 	res := resTmp.(*string)
 	fc.Result = res
-	return ec.marshalNString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanITTools_pNonClaimsBasedPaymentsNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -21879,14 +21724,11 @@ func (ec *executionContext) _PlanITTools_pSharedSavingsPlanOther(ctx context.Con
 		return graphql.Null
 	}
 	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
 		return graphql.Null
 	}
 	res := resTmp.(*string)
 	fc.Result = res
-	return ec.marshalNString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanITTools_pSharedSavingsPlanOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -21923,14 +21765,11 @@ func (ec *executionContext) _PlanITTools_pSharedSavingsPlanNote(ctx context.Cont
 		return graphql.Null
 	}
 	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
 		return graphql.Null
 	}
 	res := resTmp.(*string)
 	fc.Result = res
-	return ec.marshalNString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanITTools_pSharedSavingsPlanNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -22008,14 +21847,11 @@ func (ec *executionContext) _PlanITTools_pRecoverPaymentsOther(ctx context.Conte
 		return graphql.Null
 	}
 	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
 		return graphql.Null
 	}
 	res := resTmp.(*string)
 	fc.Result = res
-	return ec.marshalNString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanITTools_pRecoverPaymentsOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -22052,14 +21888,11 @@ func (ec *executionContext) _PlanITTools_pRecoverPaymentsNote(ctx context.Contex
 		return graphql.Null
 	}
 	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
 		return graphql.Null
 	}
 	res := resTmp.(*string)
 	fc.Result = res
-	return ec.marshalNString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanITTools_pRecoverPaymentsNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -34363,16 +34196,10 @@ func (ec *executionContext) _PlanITTools(ctx context.Context, sel ast.SelectionS
 
 			out.Values[i] = ec._PlanITTools_gcPartCDOther(ctx, field, obj)
 
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&invalids, 1)
-			}
 		case "gcPartCDNote":
 
 			out.Values[i] = ec._PlanITTools_gcPartCDNote(ctx, field, obj)
 
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&invalids, 1)
-			}
 		case "gcCollectBids":
 			field := field
 
@@ -34394,16 +34221,10 @@ func (ec *executionContext) _PlanITTools(ctx context.Context, sel ast.SelectionS
 
 			out.Values[i] = ec._PlanITTools_gcCollectBidsOther(ctx, field, obj)
 
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&invalids, 1)
-			}
 		case "gcCollectBidsNote":
 
 			out.Values[i] = ec._PlanITTools_gcCollectBidsNote(ctx, field, obj)
 
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&invalids, 1)
-			}
 		case "gcUpdateContract":
 			field := field
 
@@ -34425,16 +34246,10 @@ func (ec *executionContext) _PlanITTools(ctx context.Context, sel ast.SelectionS
 
 			out.Values[i] = ec._PlanITTools_gcUpdateContractOther(ctx, field, obj)
 
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&invalids, 1)
-			}
 		case "gcUpdateContractNote":
 
 			out.Values[i] = ec._PlanITTools_gcUpdateContractNote(ctx, field, obj)
 
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&invalids, 1)
-			}
 		case "ppToAdvertise":
 			field := field
 
@@ -34456,16 +34271,10 @@ func (ec *executionContext) _PlanITTools(ctx context.Context, sel ast.SelectionS
 
 			out.Values[i] = ec._PlanITTools_ppToAdvertiseOther(ctx, field, obj)
 
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&invalids, 1)
-			}
 		case "ppToAdvertiseNote":
 
 			out.Values[i] = ec._PlanITTools_ppToAdvertiseNote(ctx, field, obj)
 
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&invalids, 1)
-			}
 		case "ppCollectScoreReview":
 			field := field
 
@@ -34487,16 +34296,10 @@ func (ec *executionContext) _PlanITTools(ctx context.Context, sel ast.SelectionS
 
 			out.Values[i] = ec._PlanITTools_ppCollectScoreReviewOther(ctx, field, obj)
 
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&invalids, 1)
-			}
 		case "ppCollectScoreReviewNote":
 
 			out.Values[i] = ec._PlanITTools_ppCollectScoreReviewNote(ctx, field, obj)
 
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&invalids, 1)
-			}
 		case "ppAppSupportContractor":
 			field := field
 
@@ -34518,16 +34321,10 @@ func (ec *executionContext) _PlanITTools(ctx context.Context, sel ast.SelectionS
 
 			out.Values[i] = ec._PlanITTools_ppAppSupportContractorOther(ctx, field, obj)
 
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&invalids, 1)
-			}
 		case "ppAppSupportContractorNote":
 
 			out.Values[i] = ec._PlanITTools_ppAppSupportContractorNote(ctx, field, obj)
 
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&invalids, 1)
-			}
 		case "ppCommunicateWithParticipant":
 			field := field
 
@@ -34549,16 +34346,10 @@ func (ec *executionContext) _PlanITTools(ctx context.Context, sel ast.SelectionS
 
 			out.Values[i] = ec._PlanITTools_ppCommunicateWithParticipantOther(ctx, field, obj)
 
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&invalids, 1)
-			}
 		case "ppCommunicateWithParticipantNote":
 
 			out.Values[i] = ec._PlanITTools_ppCommunicateWithParticipantNote(ctx, field, obj)
 
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&invalids, 1)
-			}
 		case "ppManageProviderOverlap":
 			field := field
 
@@ -34580,16 +34371,10 @@ func (ec *executionContext) _PlanITTools(ctx context.Context, sel ast.SelectionS
 
 			out.Values[i] = ec._PlanITTools_ppManageProviderOverlapOther(ctx, field, obj)
 
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&invalids, 1)
-			}
 		case "ppManageProviderOverlapNote":
 
 			out.Values[i] = ec._PlanITTools_ppManageProviderOverlapNote(ctx, field, obj)
 
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&invalids, 1)
-			}
 		case "bManageBeneficiaryOverlap":
 			field := field
 
@@ -34611,16 +34396,10 @@ func (ec *executionContext) _PlanITTools(ctx context.Context, sel ast.SelectionS
 
 			out.Values[i] = ec._PlanITTools_bManageBeneficiaryOverlapOther(ctx, field, obj)
 
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&invalids, 1)
-			}
 		case "bManageBeneficiaryOverlapNote":
 
 			out.Values[i] = ec._PlanITTools_bManageBeneficiaryOverlapNote(ctx, field, obj)
 
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&invalids, 1)
-			}
 		case "oelWorkingAgreement":
 			field := field
 
@@ -34642,16 +34421,10 @@ func (ec *executionContext) _PlanITTools(ctx context.Context, sel ast.SelectionS
 
 			out.Values[i] = ec._PlanITTools_oelWorkingAgreementOther(ctx, field, obj)
 
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&invalids, 1)
-			}
 		case "oelWorkingAgreementNote":
 
 			out.Values[i] = ec._PlanITTools_oelWorkingAgreementNote(ctx, field, obj)
 
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&invalids, 1)
-			}
 		case "oelHelpdeskSupport":
 			field := field
 
@@ -34673,16 +34446,10 @@ func (ec *executionContext) _PlanITTools(ctx context.Context, sel ast.SelectionS
 
 			out.Values[i] = ec._PlanITTools_oelHelpdeskSupportOther(ctx, field, obj)
 
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&invalids, 1)
-			}
 		case "oelHelpdeskSupportNote":
 
 			out.Values[i] = ec._PlanITTools_oelHelpdeskSupportNote(ctx, field, obj)
 
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&invalids, 1)
-			}
 		case "oelManageAco":
 			field := field
 
@@ -34704,16 +34471,10 @@ func (ec *executionContext) _PlanITTools(ctx context.Context, sel ast.SelectionS
 
 			out.Values[i] = ec._PlanITTools_oelManageAcoOther(ctx, field, obj)
 
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&invalids, 1)
-			}
 		case "oelManageAcoNote":
 
 			out.Values[i] = ec._PlanITTools_oelManageAcoNote(ctx, field, obj)
 
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&invalids, 1)
-			}
 		case "oelPerformanceBenchmark":
 			field := field
 
@@ -34735,16 +34496,10 @@ func (ec *executionContext) _PlanITTools(ctx context.Context, sel ast.SelectionS
 
 			out.Values[i] = ec._PlanITTools_oelPerformanceBenchmarkOther(ctx, field, obj)
 
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&invalids, 1)
-			}
 		case "oelPerformanceBenchmarkNote":
 
 			out.Values[i] = ec._PlanITTools_oelPerformanceBenchmarkNote(ctx, field, obj)
 
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&invalids, 1)
-			}
 		case "oelProcessAppeals":
 			field := field
 
@@ -34766,16 +34521,10 @@ func (ec *executionContext) _PlanITTools(ctx context.Context, sel ast.SelectionS
 
 			out.Values[i] = ec._PlanITTools_oelProcessAppealsOther(ctx, field, obj)
 
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&invalids, 1)
-			}
 		case "oelProcessAppealsNote":
 
 			out.Values[i] = ec._PlanITTools_oelProcessAppealsNote(ctx, field, obj)
 
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&invalids, 1)
-			}
 		case "oelEvaluationContractor":
 			field := field
 
@@ -34797,16 +34546,10 @@ func (ec *executionContext) _PlanITTools(ctx context.Context, sel ast.SelectionS
 
 			out.Values[i] = ec._PlanITTools_oelEvaluationContractorOther(ctx, field, obj)
 
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&invalids, 1)
-			}
 		case "oelEvaluationContractorNote":
 
 			out.Values[i] = ec._PlanITTools_oelEvaluationContractorNote(ctx, field, obj)
 
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&invalids, 1)
-			}
 		case "oelCollectData":
 			field := field
 
@@ -34828,16 +34571,10 @@ func (ec *executionContext) _PlanITTools(ctx context.Context, sel ast.SelectionS
 
 			out.Values[i] = ec._PlanITTools_oelCollectDataOther(ctx, field, obj)
 
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&invalids, 1)
-			}
 		case "oelCollectDataNote":
 
 			out.Values[i] = ec._PlanITTools_oelCollectDataNote(ctx, field, obj)
 
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&invalids, 1)
-			}
 		case "oelObtainData":
 			field := field
 
@@ -34859,16 +34596,10 @@ func (ec *executionContext) _PlanITTools(ctx context.Context, sel ast.SelectionS
 
 			out.Values[i] = ec._PlanITTools_oelObtainDataOther(ctx, field, obj)
 
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&invalids, 1)
-			}
 		case "oelObtainDataNote":
 
 			out.Values[i] = ec._PlanITTools_oelObtainDataNote(ctx, field, obj)
 
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&invalids, 1)
-			}
 		case "oelClaimsBasedMeasures":
 			field := field
 
@@ -34890,16 +34621,10 @@ func (ec *executionContext) _PlanITTools(ctx context.Context, sel ast.SelectionS
 
 			out.Values[i] = ec._PlanITTools_oelClaimsBasedMeasuresOther(ctx, field, obj)
 
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&invalids, 1)
-			}
 		case "oelClaimsBasedMeasuresNote":
 
 			out.Values[i] = ec._PlanITTools_oelClaimsBasedMeasuresNote(ctx, field, obj)
 
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&invalids, 1)
-			}
 		case "oelQualityScores":
 			field := field
 
@@ -34921,16 +34646,10 @@ func (ec *executionContext) _PlanITTools(ctx context.Context, sel ast.SelectionS
 
 			out.Values[i] = ec._PlanITTools_oelQualityScoresOther(ctx, field, obj)
 
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&invalids, 1)
-			}
 		case "oelQualityScoresNote":
 
 			out.Values[i] = ec._PlanITTools_oelQualityScoresNote(ctx, field, obj)
 
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&invalids, 1)
-			}
 		case "oelSendReports":
 			field := field
 
@@ -34952,16 +34671,10 @@ func (ec *executionContext) _PlanITTools(ctx context.Context, sel ast.SelectionS
 
 			out.Values[i] = ec._PlanITTools_oelSendReportsOther(ctx, field, obj)
 
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&invalids, 1)
-			}
 		case "oelSendReportsNote":
 
 			out.Values[i] = ec._PlanITTools_oelSendReportsNote(ctx, field, obj)
 
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&invalids, 1)
-			}
 		case "oelLearningContractor":
 			field := field
 
@@ -34983,16 +34696,10 @@ func (ec *executionContext) _PlanITTools(ctx context.Context, sel ast.SelectionS
 
 			out.Values[i] = ec._PlanITTools_oelLearningContractorOther(ctx, field, obj)
 
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&invalids, 1)
-			}
 		case "oelLearningContractorNote":
 
 			out.Values[i] = ec._PlanITTools_oelLearningContractorNote(ctx, field, obj)
 
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&invalids, 1)
-			}
 		case "oelParticipantCollaboration":
 			field := field
 
@@ -35014,16 +34721,10 @@ func (ec *executionContext) _PlanITTools(ctx context.Context, sel ast.SelectionS
 
 			out.Values[i] = ec._PlanITTools_oelParticipantCollaborationOther(ctx, field, obj)
 
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&invalids, 1)
-			}
 		case "oelParticipantCollaborationNote":
 
 			out.Values[i] = ec._PlanITTools_oelParticipantCollaborationNote(ctx, field, obj)
 
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&invalids, 1)
-			}
 		case "oelEducateBeneficiaries":
 			field := field
 
@@ -35045,16 +34746,10 @@ func (ec *executionContext) _PlanITTools(ctx context.Context, sel ast.SelectionS
 
 			out.Values[i] = ec._PlanITTools_oelEducateBeneficiariesOther(ctx, field, obj)
 
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&invalids, 1)
-			}
 		case "oelEducateBeneficiariesNote":
 
 			out.Values[i] = ec._PlanITTools_oelEducateBeneficiariesNote(ctx, field, obj)
 
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&invalids, 1)
-			}
 		case "pMakeClaimsPayments":
 			field := field
 
@@ -35076,16 +34771,10 @@ func (ec *executionContext) _PlanITTools(ctx context.Context, sel ast.SelectionS
 
 			out.Values[i] = ec._PlanITTools_pMakeClaimsPaymentsOther(ctx, field, obj)
 
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&invalids, 1)
-			}
 		case "pMakeClaimsPaymentsNote":
 
 			out.Values[i] = ec._PlanITTools_pMakeClaimsPaymentsNote(ctx, field, obj)
 
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&invalids, 1)
-			}
 		case "pInformFfs":
 			field := field
 
@@ -35107,16 +34796,10 @@ func (ec *executionContext) _PlanITTools(ctx context.Context, sel ast.SelectionS
 
 			out.Values[i] = ec._PlanITTools_pInformFfsOther(ctx, field, obj)
 
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&invalids, 1)
-			}
 		case "pInformFfsNote":
 
 			out.Values[i] = ec._PlanITTools_pInformFfsNote(ctx, field, obj)
 
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&invalids, 1)
-			}
 		case "pNonClaimsBasedPayments":
 			field := field
 
@@ -35138,16 +34821,10 @@ func (ec *executionContext) _PlanITTools(ctx context.Context, sel ast.SelectionS
 
 			out.Values[i] = ec._PlanITTools_pNonClaimsBasedPaymentsOther(ctx, field, obj)
 
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&invalids, 1)
-			}
 		case "pNonClaimsBasedPaymentsNote":
 
 			out.Values[i] = ec._PlanITTools_pNonClaimsBasedPaymentsNote(ctx, field, obj)
 
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&invalids, 1)
-			}
 		case "pSharedSavingsPlan":
 			field := field
 
@@ -35169,16 +34846,10 @@ func (ec *executionContext) _PlanITTools(ctx context.Context, sel ast.SelectionS
 
 			out.Values[i] = ec._PlanITTools_pSharedSavingsPlanOther(ctx, field, obj)
 
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&invalids, 1)
-			}
 		case "pSharedSavingsPlanNote":
 
 			out.Values[i] = ec._PlanITTools_pSharedSavingsPlanNote(ctx, field, obj)
 
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&invalids, 1)
-			}
 		case "pRecoverPayments":
 			field := field
 
@@ -35200,16 +34871,10 @@ func (ec *executionContext) _PlanITTools(ctx context.Context, sel ast.SelectionS
 
 			out.Values[i] = ec._PlanITTools_pRecoverPaymentsOther(ctx, field, obj)
 
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&invalids, 1)
-			}
 		case "pRecoverPaymentsNote":
 
 			out.Values[i] = ec._PlanITTools_pRecoverPaymentsNote(ctx, field, obj)
 
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&invalids, 1)
-			}
 		case "createdBy":
 
 			out.Values[i] = ec._PlanITTools_createdBy(ctx, field, obj)
@@ -38655,27 +38320,6 @@ func (ec *executionContext) marshalNString2ᚕstringᚄ(ctx context.Context, sel
 	}
 
 	return ret
-}
-
-func (ec *executionContext) unmarshalNString2ᚖstring(ctx context.Context, v interface{}) (*string, error) {
-	res, err := graphql.UnmarshalString(v)
-	return &res, graphql.ErrorOnPath(ctx, err)
-}
-
-func (ec *executionContext) marshalNString2ᚖstring(ctx context.Context, sel ast.SelectionSet, v *string) graphql.Marshaler {
-	if v == nil {
-		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
-			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
-		}
-		return graphql.Null
-	}
-	res := graphql.MarshalString(*v)
-	if res == graphql.Null {
-		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
-			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
-		}
-	}
-	return res
 }
 
 func (ec *executionContext) unmarshalNTaskStatus2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTaskStatus(ctx context.Context, v interface{}) (models.TaskStatus, error) {
