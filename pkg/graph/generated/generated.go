@@ -45,6 +45,7 @@ type ResolverRoot interface {
 	PlanDiscussion() PlanDiscussionResolver
 	PlanDocument() PlanDocumentResolver
 	PlanGeneralCharacteristics() PlanGeneralCharacteristicsResolver
+	PlanOpsEvalAndLearning() PlanOpsEvalAndLearningResolver
 	PlanParticipantsAndProviders() PlanParticipantsAndProvidersResolver
 	Query() QueryResolver
 	UserInfo() UserInfoResolver
@@ -120,6 +121,7 @@ type ComplexityRoot struct {
 		ModelName                func(childComplexity int) int
 		ModifiedBy               func(childComplexity int) int
 		ModifiedDts              func(childComplexity int) int
+		OpsEvalAndLearning       func(childComplexity int) int
 		ProvidersAndParticipants func(childComplexity int) int
 		Status                   func(childComplexity int) int
 	}
@@ -144,6 +146,7 @@ type ComplexityRoot struct {
 		UpdatePlanDocument                 func(childComplexity int, input model.PlanDocumentInput) int
 		UpdatePlanGeneralCharacteristics   func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
 		UpdatePlanMilestones               func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
+		UpdatePlanOpsEvalAndLearning       func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
 		UpdatePlanParticipantsAndProviders func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
 	}
 
@@ -325,6 +328,113 @@ type ComplexityRoot struct {
 		WrapUpEnds              func(childComplexity int) int
 	}
 
+	PlanOpsEvalAndLearning struct {
+		AgencyOrStateHelp                            func(childComplexity int) int
+		AgencyOrStateHelpNote                        func(childComplexity int) int
+		AgencyOrStateHelpOther                       func(childComplexity int) int
+		AnticipatedChallenges                        func(childComplexity int) int
+		AppToSendFilesToKnown                        func(childComplexity int) int
+		AppToSendFilesToNote                         func(childComplexity int) int
+		AppToSendFilesToWhich                        func(childComplexity int) int
+		AppealFeedback                               func(childComplexity int) int
+		AppealNote                                   func(childComplexity int) int
+		AppealOther                                  func(childComplexity int) int
+		AppealPayments                               func(childComplexity int) int
+		AppealPerformance                            func(childComplexity int) int
+		BenchmarkForPerformance                      func(childComplexity int) int
+		BenchmarkForPerformanceNote                  func(childComplexity int) int
+		CaptureParticipantInfo                       func(childComplexity int) int
+		CaptureParticipantInfoNote                   func(childComplexity int) int
+		CcmInvolvment                                func(childComplexity int) int
+		CcmInvolvmentNote                            func(childComplexity int) int
+		CcmInvolvmentOther                           func(childComplexity int) int
+		ComputePerformanceScores                     func(childComplexity int) int
+		ComputePerformanceScoresNote                 func(childComplexity int) int
+		ContractorSupport                            func(childComplexity int) int
+		ContractorSupportHow                         func(childComplexity int) int
+		ContractorSupportNote                        func(childComplexity int) int
+		ContractorSupportOther                       func(childComplexity int) int
+		CreatedBy                                    func(childComplexity int) int
+		CreatedDts                                   func(childComplexity int) int
+		DataCollectionFrequency                      func(childComplexity int) int
+		DataCollectionFrequencyNote                  func(childComplexity int) int
+		DataCollectionFrequencyOther                 func(childComplexity int) int
+		DataCollectionStarts                         func(childComplexity int) int
+		DataCollectionStartsOther                    func(childComplexity int) int
+		DataFlowDiagramsNeeded                       func(childComplexity int) int
+		DataFullTimeOrIncremental                    func(childComplexity int) int
+		DataMonitoringFileOther                      func(childComplexity int) int
+		DataMonitoringFileTypes                      func(childComplexity int) int
+		DataMonitoringNote                           func(childComplexity int) int
+		DataNeededForMonitoring                      func(childComplexity int) int
+		DataNeededForMonitoringNote                  func(childComplexity int) int
+		DataNeededForMonitoringOther                 func(childComplexity int) int
+		DataResponseFileFrequency                    func(childComplexity int) int
+		DataResponseType                             func(childComplexity int) int
+		DataSharingFrequency                         func(childComplexity int) int
+		DataSharingFrequencyOther                    func(childComplexity int) int
+		DataSharingStarts                            func(childComplexity int) int
+		DataSharingStartsNote                        func(childComplexity int) int
+		DataSharingStartsOther                       func(childComplexity int) int
+		DataToSendParticicipants                     func(childComplexity int) int
+		DataToSendParticicipantsNote                 func(childComplexity int) int
+		DataToSendParticicipantsOther                func(childComplexity int) int
+		DevelopNewQualityMeasures                    func(childComplexity int) int
+		DevelopNewQualityMeasuresNote                func(childComplexity int) int
+		DraftIcdDueDate                              func(childComplexity int) int
+		EftSetUp                                     func(childComplexity int) int
+		EvaluationApproachOther                      func(childComplexity int) int
+		EvaluationApproaches                         func(childComplexity int) int
+		EvalutaionApproachNote                       func(childComplexity int) int
+		FileNamingConventions                        func(childComplexity int) int
+		HelpdeskUse                                  func(childComplexity int) int
+		HelpdeskUseNote                              func(childComplexity int) int
+		HelpdeskUseOther                             func(childComplexity int) int
+		ID                                           func(childComplexity int) int
+		IcdNote                                      func(childComplexity int) int
+		IcdOwner                                     func(childComplexity int) int
+		IddocOperations                              func(childComplexity int) int
+		IddocOperationsNote                          func(childComplexity int) int
+		IddocOperationsOther                         func(childComplexity int) int
+		IddocSupport                                 func(childComplexity int) int
+		IddocSupportNote                             func(childComplexity int) int
+		ModelLearningSystems                         func(childComplexity int) int
+		ModelLearningSystemsNote                     func(childComplexity int) int
+		ModelLearningSystemsOther                    func(childComplexity int) int
+		ModelPlanID                                  func(childComplexity int) int
+		ModifiedBy                                   func(childComplexity int) int
+		ModifiedDts                                  func(childComplexity int) int
+		ProduceBenefitEnhancementFiles               func(childComplexity int) int
+		QualityPerformanceImpactsPayment             func(childComplexity int) int
+		QualityPerformanceImpactsPaymentNote         func(childComplexity int) int
+		QualityReportingStarts                       func(childComplexity int) int
+		QualityReportingStartsNote                   func(childComplexity int) int
+		QualityReportingStartsOther                  func(childComplexity int) int
+		RiskAdjustFeedback                           func(childComplexity int) int
+		RiskAdjustNote                               func(childComplexity int) int
+		RiskAdjustOther                              func(childComplexity int) int
+		RiskAdjustPayments                           func(childComplexity int) int
+		RiskAdjustPerformance                        func(childComplexity int) int
+		SendFilesBetweenCcw                          func(childComplexity int) int
+		SendFilesBetweenCcwNote                      func(childComplexity int) int
+		ShareCclfData                                func(childComplexity int) int
+		ShareCclfDataNote                            func(childComplexity int) int
+		Stakeholders                                 func(childComplexity int) int
+		StakeholdersNote                             func(childComplexity int) int
+		StakeholdersOther                            func(childComplexity int) int
+		Status                                       func(childComplexity int) int
+		StcNeeds                                     func(childComplexity int) int
+		TechnicalContactsIdentified                  func(childComplexity int) int
+		TechnicalContactsIdentifiedDetail            func(childComplexity int) int
+		TechnicalContactsIdentifiedNote              func(childComplexity int) int
+		TestingNote                                  func(childComplexity int) int
+		TestingTimelines                             func(childComplexity int) int
+		UatNeeds                                     func(childComplexity int) int
+		UnsolicitedAdjustmentsIncluded               func(childComplexity int) int
+		UseCcwForFileDistribiutionToParticipants     func(childComplexity int) int
+		UseCcwForFileDistribiutionToParticipantsNote func(childComplexity int) int
+	}
+
 	PlanParticipantsAndProviders struct {
 		CommunicationMethod               func(childComplexity int) int
 		CommunicationNote                 func(childComplexity int) int
@@ -409,6 +519,7 @@ type ModelPlanResolver interface {
 	GeneralCharacteristics(ctx context.Context, obj *models.ModelPlan) (*models.PlanGeneralCharacteristics, error)
 	ProvidersAndParticipants(ctx context.Context, obj *models.ModelPlan) (*models.PlanParticipantsAndProviders, error)
 	Beneficiaries(ctx context.Context, obj *models.ModelPlan) (*models.PlanBeneficiaries, error)
+	OpsEvalAndLearning(ctx context.Context, obj *models.ModelPlan) (*models.PlanOpsEvalAndLearning, error)
 	Collaborators(ctx context.Context, obj *models.ModelPlan) ([]*models.PlanCollaborator, error)
 	Documents(ctx context.Context, obj *models.ModelPlan) ([]*models.PlanDocument, error)
 	Discussions(ctx context.Context, obj *models.ModelPlan) ([]*models.PlanDiscussion, error)
@@ -424,6 +535,7 @@ type MutationResolver interface {
 	UpdatePlanGeneralCharacteristics(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanGeneralCharacteristics, error)
 	UpdatePlanBeneficiaries(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanBeneficiaries, error)
 	UpdatePlanParticipantsAndProviders(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanParticipantsAndProviders, error)
+	UpdatePlanOpsEvalAndLearning(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanOpsEvalAndLearning, error)
 	GeneratePresignedUploadURL(ctx context.Context, input model.GeneratePresignedUploadURLInput) (*model.GeneratePresignedUploadURLPayload, error)
 	CreatePlanDocument(ctx context.Context, input model.PlanDocumentInput) (*model.PlanDocumentPayload, error)
 	UpdatePlanDocument(ctx context.Context, input model.PlanDocumentInput) (*model.PlanDocumentPayload, error)
@@ -462,6 +574,31 @@ type PlanGeneralCharacteristicsResolver interface {
 	AuthorityAllowances(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]model.AuthorityAllowance, error)
 
 	WaiversRequiredTypes(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]model.WaiverType, error)
+}
+type PlanOpsEvalAndLearningResolver interface {
+	AgencyOrStateHelp(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]model.AgencyOrStateHelpType, error)
+
+	Stakeholders(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]model.StakeholdersType, error)
+
+	HelpdeskUse(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]model.HelpdeskUseType, error)
+
+	ContractorSupport(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]model.ContractorSupportType, error)
+
+	DataMonitoringFileTypes(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]model.MonitoringFileType, error)
+
+	EvaluationApproaches(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]model.EvaluationApproachType, error)
+
+	CcmInvolvment(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]model.CcmInvolvmentType, error)
+
+	DataNeededForMonitoring(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]model.DataForMonitoringType, error)
+
+	DataToSendParticicipants(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]model.DataToSendParticipantsType, error)
+
+	DataSharingFrequency(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]model.DataFrequencyType, error)
+
+	DataCollectionFrequency(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]model.DataFrequencyType, error)
+
+	ModelLearningSystems(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]model.ModelLearningSystemType, error)
 }
 type PlanParticipantsAndProvidersResolver interface {
 	Participants(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.ParticipantsType, error)
@@ -849,6 +986,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.ModelPlan.ModifiedDts(childComplexity), true
 
+	case "ModelPlan.opsEvalAndLearning":
+		if e.complexity.ModelPlan.OpsEvalAndLearning == nil {
+			break
+		}
+
+		return e.complexity.ModelPlan.OpsEvalAndLearning(childComplexity), true
+
 	case "ModelPlan.providersAndParticipants":
 		if e.complexity.ModelPlan.ProvidersAndParticipants == nil {
 			break
@@ -1090,6 +1234,18 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Mutation.UpdatePlanMilestones(childComplexity, args["id"].(uuid.UUID), args["changes"].(map[string]interface{})), true
+
+	case "Mutation.updatePlanOpsEvalAndLearning":
+		if e.complexity.Mutation.UpdatePlanOpsEvalAndLearning == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_updatePlanOpsEvalAndLearning_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Mutation.UpdatePlanOpsEvalAndLearning(childComplexity, args["id"].(uuid.UUID), args["changes"].(map[string]interface{})), true
 
 	case "Mutation.updatePlanParticipantsAndProviders":
 		if e.complexity.Mutation.UpdatePlanParticipantsAndProviders == nil {
@@ -2181,6 +2337,734 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.PlanMilestones.WrapUpEnds(childComplexity), true
 
+	case "PlanOpsEvalAndLearning.agencyOrStateHelp":
+		if e.complexity.PlanOpsEvalAndLearning.AgencyOrStateHelp == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.AgencyOrStateHelp(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.agencyOrStateHelpNote":
+		if e.complexity.PlanOpsEvalAndLearning.AgencyOrStateHelpNote == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.AgencyOrStateHelpNote(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.agencyOrStateHelpOther":
+		if e.complexity.PlanOpsEvalAndLearning.AgencyOrStateHelpOther == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.AgencyOrStateHelpOther(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.anticipatedChallenges":
+		if e.complexity.PlanOpsEvalAndLearning.AnticipatedChallenges == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.AnticipatedChallenges(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.appToSendFilesToKnown":
+		if e.complexity.PlanOpsEvalAndLearning.AppToSendFilesToKnown == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.AppToSendFilesToKnown(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.appToSendFilesToNote":
+		if e.complexity.PlanOpsEvalAndLearning.AppToSendFilesToNote == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.AppToSendFilesToNote(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.appToSendFilesToWhich":
+		if e.complexity.PlanOpsEvalAndLearning.AppToSendFilesToWhich == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.AppToSendFilesToWhich(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.appealFeedback":
+		if e.complexity.PlanOpsEvalAndLearning.AppealFeedback == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.AppealFeedback(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.appealNote":
+		if e.complexity.PlanOpsEvalAndLearning.AppealNote == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.AppealNote(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.appealOther":
+		if e.complexity.PlanOpsEvalAndLearning.AppealOther == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.AppealOther(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.appealPayments":
+		if e.complexity.PlanOpsEvalAndLearning.AppealPayments == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.AppealPayments(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.appealPerformance":
+		if e.complexity.PlanOpsEvalAndLearning.AppealPerformance == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.AppealPerformance(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.benchmarkForPerformance":
+		if e.complexity.PlanOpsEvalAndLearning.BenchmarkForPerformance == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.BenchmarkForPerformance(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.benchmarkForPerformanceNote":
+		if e.complexity.PlanOpsEvalAndLearning.BenchmarkForPerformanceNote == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.BenchmarkForPerformanceNote(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.captureParticipantInfo":
+		if e.complexity.PlanOpsEvalAndLearning.CaptureParticipantInfo == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.CaptureParticipantInfo(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.captureParticipantInfoNote":
+		if e.complexity.PlanOpsEvalAndLearning.CaptureParticipantInfoNote == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.CaptureParticipantInfoNote(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.ccmInvolvment":
+		if e.complexity.PlanOpsEvalAndLearning.CcmInvolvment == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.CcmInvolvment(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.ccmInvolvmentNote":
+		if e.complexity.PlanOpsEvalAndLearning.CcmInvolvmentNote == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.CcmInvolvmentNote(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.ccmInvolvmentOther":
+		if e.complexity.PlanOpsEvalAndLearning.CcmInvolvmentOther == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.CcmInvolvmentOther(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.computePerformanceScores":
+		if e.complexity.PlanOpsEvalAndLearning.ComputePerformanceScores == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.ComputePerformanceScores(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.computePerformanceScoresNote":
+		if e.complexity.PlanOpsEvalAndLearning.ComputePerformanceScoresNote == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.ComputePerformanceScoresNote(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.contractorSupport":
+		if e.complexity.PlanOpsEvalAndLearning.ContractorSupport == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.ContractorSupport(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.contractorSupportHow":
+		if e.complexity.PlanOpsEvalAndLearning.ContractorSupportHow == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.ContractorSupportHow(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.contractorSupportNote":
+		if e.complexity.PlanOpsEvalAndLearning.ContractorSupportNote == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.ContractorSupportNote(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.contractorSupportOther":
+		if e.complexity.PlanOpsEvalAndLearning.ContractorSupportOther == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.ContractorSupportOther(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.createdBy":
+		if e.complexity.PlanOpsEvalAndLearning.CreatedBy == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.CreatedBy(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.createdDts":
+		if e.complexity.PlanOpsEvalAndLearning.CreatedDts == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.CreatedDts(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.dataCollectionFrequency":
+		if e.complexity.PlanOpsEvalAndLearning.DataCollectionFrequency == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.DataCollectionFrequency(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.dataCollectionFrequencyNote":
+		if e.complexity.PlanOpsEvalAndLearning.DataCollectionFrequencyNote == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.DataCollectionFrequencyNote(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.dataCollectionFrequencyOther":
+		if e.complexity.PlanOpsEvalAndLearning.DataCollectionFrequencyOther == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.DataCollectionFrequencyOther(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.dataCollectionStarts":
+		if e.complexity.PlanOpsEvalAndLearning.DataCollectionStarts == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.DataCollectionStarts(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.dataCollectionStartsOther":
+		if e.complexity.PlanOpsEvalAndLearning.DataCollectionStartsOther == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.DataCollectionStartsOther(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.dataFlowDiagramsNeeded":
+		if e.complexity.PlanOpsEvalAndLearning.DataFlowDiagramsNeeded == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.DataFlowDiagramsNeeded(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.dataFullTimeOrIncremental":
+		if e.complexity.PlanOpsEvalAndLearning.DataFullTimeOrIncremental == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.DataFullTimeOrIncremental(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.dataMonitoringFileOther":
+		if e.complexity.PlanOpsEvalAndLearning.DataMonitoringFileOther == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.DataMonitoringFileOther(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.dataMonitoringFileTypes":
+		if e.complexity.PlanOpsEvalAndLearning.DataMonitoringFileTypes == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.DataMonitoringFileTypes(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.dataMonitoringNote":
+		if e.complexity.PlanOpsEvalAndLearning.DataMonitoringNote == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.DataMonitoringNote(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.dataNeededForMonitoring":
+		if e.complexity.PlanOpsEvalAndLearning.DataNeededForMonitoring == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.DataNeededForMonitoring(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.dataNeededForMonitoringNote":
+		if e.complexity.PlanOpsEvalAndLearning.DataNeededForMonitoringNote == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.DataNeededForMonitoringNote(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.dataNeededForMonitoringOther":
+		if e.complexity.PlanOpsEvalAndLearning.DataNeededForMonitoringOther == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.DataNeededForMonitoringOther(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.dataResponseFileFrequency":
+		if e.complexity.PlanOpsEvalAndLearning.DataResponseFileFrequency == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.DataResponseFileFrequency(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.dataResponseType":
+		if e.complexity.PlanOpsEvalAndLearning.DataResponseType == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.DataResponseType(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.dataSharingFrequency":
+		if e.complexity.PlanOpsEvalAndLearning.DataSharingFrequency == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.DataSharingFrequency(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.dataSharingFrequencyOther":
+		if e.complexity.PlanOpsEvalAndLearning.DataSharingFrequencyOther == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.DataSharingFrequencyOther(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.dataSharingStarts":
+		if e.complexity.PlanOpsEvalAndLearning.DataSharingStarts == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.DataSharingStarts(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.dataSharingStartsNote":
+		if e.complexity.PlanOpsEvalAndLearning.DataSharingStartsNote == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.DataSharingStartsNote(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.dataSharingStartsOther":
+		if e.complexity.PlanOpsEvalAndLearning.DataSharingStartsOther == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.DataSharingStartsOther(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.dataToSendParticicipants":
+		if e.complexity.PlanOpsEvalAndLearning.DataToSendParticicipants == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.DataToSendParticicipants(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.dataToSendParticicipantsNote":
+		if e.complexity.PlanOpsEvalAndLearning.DataToSendParticicipantsNote == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.DataToSendParticicipantsNote(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.dataToSendParticicipantsOther":
+		if e.complexity.PlanOpsEvalAndLearning.DataToSendParticicipantsOther == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.DataToSendParticicipantsOther(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.developNewQualityMeasures":
+		if e.complexity.PlanOpsEvalAndLearning.DevelopNewQualityMeasures == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.DevelopNewQualityMeasures(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.developNewQualityMeasuresNote":
+		if e.complexity.PlanOpsEvalAndLearning.DevelopNewQualityMeasuresNote == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.DevelopNewQualityMeasuresNote(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.draftIcdDueDate":
+		if e.complexity.PlanOpsEvalAndLearning.DraftIcdDueDate == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.DraftIcdDueDate(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.eftSetUp":
+		if e.complexity.PlanOpsEvalAndLearning.EftSetUp == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.EftSetUp(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.evaluationApproachOther":
+		if e.complexity.PlanOpsEvalAndLearning.EvaluationApproachOther == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.EvaluationApproachOther(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.evaluationApproaches":
+		if e.complexity.PlanOpsEvalAndLearning.EvaluationApproaches == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.EvaluationApproaches(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.evalutaionApproachNote":
+		if e.complexity.PlanOpsEvalAndLearning.EvalutaionApproachNote == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.EvalutaionApproachNote(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.fileNamingConventions":
+		if e.complexity.PlanOpsEvalAndLearning.FileNamingConventions == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.FileNamingConventions(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.helpdeskUse":
+		if e.complexity.PlanOpsEvalAndLearning.HelpdeskUse == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.HelpdeskUse(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.helpdeskUseNote":
+		if e.complexity.PlanOpsEvalAndLearning.HelpdeskUseNote == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.HelpdeskUseNote(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.helpdeskUseOther":
+		if e.complexity.PlanOpsEvalAndLearning.HelpdeskUseOther == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.HelpdeskUseOther(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.id":
+		if e.complexity.PlanOpsEvalAndLearning.ID == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.ID(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.icdNote":
+		if e.complexity.PlanOpsEvalAndLearning.IcdNote == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.IcdNote(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.icdOwner":
+		if e.complexity.PlanOpsEvalAndLearning.IcdOwner == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.IcdOwner(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.iddocOperations":
+		if e.complexity.PlanOpsEvalAndLearning.IddocOperations == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.IddocOperations(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.iddocOperationsNote":
+		if e.complexity.PlanOpsEvalAndLearning.IddocOperationsNote == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.IddocOperationsNote(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.iddocOperationsOther":
+		if e.complexity.PlanOpsEvalAndLearning.IddocOperationsOther == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.IddocOperationsOther(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.iddocSupport":
+		if e.complexity.PlanOpsEvalAndLearning.IddocSupport == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.IddocSupport(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.iddocSupportNote":
+		if e.complexity.PlanOpsEvalAndLearning.IddocSupportNote == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.IddocSupportNote(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.modelLearningSystems":
+		if e.complexity.PlanOpsEvalAndLearning.ModelLearningSystems == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.ModelLearningSystems(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.modelLearningSystemsNote":
+		if e.complexity.PlanOpsEvalAndLearning.ModelLearningSystemsNote == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.ModelLearningSystemsNote(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.modelLearningSystemsOther":
+		if e.complexity.PlanOpsEvalAndLearning.ModelLearningSystemsOther == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.ModelLearningSystemsOther(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.modelPlanID":
+		if e.complexity.PlanOpsEvalAndLearning.ModelPlanID == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.ModelPlanID(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.modifiedBy":
+		if e.complexity.PlanOpsEvalAndLearning.ModifiedBy == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.ModifiedBy(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.modifiedDts":
+		if e.complexity.PlanOpsEvalAndLearning.ModifiedDts == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.ModifiedDts(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.produceBenefitEnhancementFiles":
+		if e.complexity.PlanOpsEvalAndLearning.ProduceBenefitEnhancementFiles == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.ProduceBenefitEnhancementFiles(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.qualityPerformanceImpactsPayment":
+		if e.complexity.PlanOpsEvalAndLearning.QualityPerformanceImpactsPayment == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.QualityPerformanceImpactsPayment(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.qualityPerformanceImpactsPaymentNote":
+		if e.complexity.PlanOpsEvalAndLearning.QualityPerformanceImpactsPaymentNote == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.QualityPerformanceImpactsPaymentNote(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.qualityReportingStarts":
+		if e.complexity.PlanOpsEvalAndLearning.QualityReportingStarts == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.QualityReportingStarts(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.qualityReportingStartsNote":
+		if e.complexity.PlanOpsEvalAndLearning.QualityReportingStartsNote == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.QualityReportingStartsNote(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.qualityReportingStartsOther":
+		if e.complexity.PlanOpsEvalAndLearning.QualityReportingStartsOther == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.QualityReportingStartsOther(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.riskAdjustFeedback":
+		if e.complexity.PlanOpsEvalAndLearning.RiskAdjustFeedback == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.RiskAdjustFeedback(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.riskAdjustNote":
+		if e.complexity.PlanOpsEvalAndLearning.RiskAdjustNote == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.RiskAdjustNote(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.riskAdjustOther":
+		if e.complexity.PlanOpsEvalAndLearning.RiskAdjustOther == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.RiskAdjustOther(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.riskAdjustPayments":
+		if e.complexity.PlanOpsEvalAndLearning.RiskAdjustPayments == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.RiskAdjustPayments(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.riskAdjustPerformance":
+		if e.complexity.PlanOpsEvalAndLearning.RiskAdjustPerformance == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.RiskAdjustPerformance(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.sendFilesBetweenCcw":
+		if e.complexity.PlanOpsEvalAndLearning.SendFilesBetweenCcw == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.SendFilesBetweenCcw(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.sendFilesBetweenCcwNote":
+		if e.complexity.PlanOpsEvalAndLearning.SendFilesBetweenCcwNote == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.SendFilesBetweenCcwNote(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.shareCclfData":
+		if e.complexity.PlanOpsEvalAndLearning.ShareCclfData == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.ShareCclfData(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.shareCclfDataNote":
+		if e.complexity.PlanOpsEvalAndLearning.ShareCclfDataNote == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.ShareCclfDataNote(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.stakeholders":
+		if e.complexity.PlanOpsEvalAndLearning.Stakeholders == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.Stakeholders(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.stakeholdersNote":
+		if e.complexity.PlanOpsEvalAndLearning.StakeholdersNote == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.StakeholdersNote(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.stakeholdersOther":
+		if e.complexity.PlanOpsEvalAndLearning.StakeholdersOther == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.StakeholdersOther(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.status":
+		if e.complexity.PlanOpsEvalAndLearning.Status == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.Status(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.stcNeeds":
+		if e.complexity.PlanOpsEvalAndLearning.StcNeeds == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.StcNeeds(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.technicalContactsIdentified":
+		if e.complexity.PlanOpsEvalAndLearning.TechnicalContactsIdentified == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.TechnicalContactsIdentified(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.technicalContactsIdentifiedDetail":
+		if e.complexity.PlanOpsEvalAndLearning.TechnicalContactsIdentifiedDetail == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.TechnicalContactsIdentifiedDetail(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.technicalContactsIdentifiedNote":
+		if e.complexity.PlanOpsEvalAndLearning.TechnicalContactsIdentifiedNote == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.TechnicalContactsIdentifiedNote(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.testingNote":
+		if e.complexity.PlanOpsEvalAndLearning.TestingNote == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.TestingNote(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.testingTimelines":
+		if e.complexity.PlanOpsEvalAndLearning.TestingTimelines == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.TestingTimelines(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.uatNeeds":
+		if e.complexity.PlanOpsEvalAndLearning.UatNeeds == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.UatNeeds(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.unsolicitedAdjustmentsIncluded":
+		if e.complexity.PlanOpsEvalAndLearning.UnsolicitedAdjustmentsIncluded == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.UnsolicitedAdjustmentsIncluded(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.useCcwForFileDistribiutionToParticipants":
+		if e.complexity.PlanOpsEvalAndLearning.UseCcwForFileDistribiutionToParticipants == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.UseCcwForFileDistribiutionToParticipants(childComplexity), true
+
+	case "PlanOpsEvalAndLearning.useCcwForFileDistribiutionToParticipantsNote":
+		if e.complexity.PlanOpsEvalAndLearning.UseCcwForFileDistribiutionToParticipantsNote == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.UseCcwForFileDistribiutionToParticipantsNote(childComplexity), true
+
 	case "PlanParticipantsAndProviders.communicationMethod":
 		if e.complexity.PlanParticipantsAndProviders.CommunicationMethod == nil {
 			break
@@ -2778,6 +3662,7 @@ type ModelPlan {
   generalCharacteristics: PlanGeneralCharacteristics!
   providersAndParticipants: PlanParticipantsAndProviders!
   beneficiaries: PlanBeneficiaries!
+  opsEvalAndLearning: PlanOpsEvalAndLearning!
   collaborators: [PlanCollaborator!]!
   documents: [PlanDocument!]!
   discussions: [PlanDiscussion!]!
@@ -3429,6 +4314,244 @@ input PlanParticipantsAndProvidersChanges @goModel(model: "map[string]interface{
 }
 
 """
+PlanOpsEvalAndLearning represents the task list section that deals with information regarding the Ops Eval and Learning
+"""
+type PlanOpsEvalAndLearning {
+    id: UUID!
+    modelPlanID: UUID!
+
+    #Page 1
+    agencyOrStateHelp: [AgencyOrStateHelpType!]
+    agencyOrStateHelpOther: String
+    agencyOrStateHelpNote: String
+    stakeholders: [StakeholdersType!]
+    stakeholdersOther: String
+    stakeholdersNote: String
+    helpdeskUse: [HelpdeskUseType!]
+    helpdeskUseOther: String
+    helpdeskUseNote: String
+    contractorSupport: [ContractorSupportType!]
+    contractorSupportOther: String
+    contractorSupportHow: String
+    contractorSupportNote: String
+    iddocSupport: Boolean
+    iddocSupportNote: String
+    #Page 2
+    iddocOperations: IddocOperationsType
+    iddocOperationsOther: String
+    iddocOperationsNote: String
+    technicalContactsIdentified: Boolean
+    technicalContactsIdentifiedDetail: String
+    technicalContactsIdentifiedNote: String
+    captureParticipantInfo: Boolean
+    captureParticipantInfoNote: String
+    icdOwner: String
+    draftIcdDueDate: Time
+    icdNote: String
+    #Page 3
+    uatNeeds: String
+    stcNeeds: String
+    testingTimelines: String
+    testingNote: String
+    dataMonitoringFileTypes: [MonitoringFileType!]
+    dataMonitoringFileOther: String
+    dataResponseType: String
+    dataResponseFileFrequency: String
+    #Page 4
+    dataFullTimeOrIncremental: DataFullTimeOrIncrementalType
+    eftSetUp: Boolean
+    unsolicitedAdjustmentsIncluded: Boolean
+    dataFlowDiagramsNeeded: Boolean
+    produceBenefitEnhancementFiles: Boolean
+    fileNamingConventions: String
+    dataMonitoringNote: String
+    #Page 5
+    benchmarkForPerformance: BenchmarkForPerformanceType
+    benchmarkForPerformanceNote: String
+    computePerformanceScores: Boolean
+    computePerformanceScoresNote: String
+    riskAdjustPerformance: Boolean
+    riskAdjustFeedback: Boolean
+    riskAdjustPayments: Boolean
+    riskAdjustOther: Boolean
+    riskAdjustNote: String
+    appealPerformance: Boolean
+    appealFeedback: Boolean
+    appealPayments: Boolean
+    appealOther: Boolean
+    appealNote: String
+    #Page 6
+    evaluationApproaches: [EvaluationApproachType!]
+    evaluationApproachOther: String
+    evalutaionApproachNote: String
+    ccmInvolvment: [CcmInvolvmentType!]
+    ccmInvolvmentOther: String
+    ccmInvolvmentNote: String
+    dataNeededForMonitoring: [DataForMonitoringType!]
+    dataNeededForMonitoringOther: String
+    dataNeededForMonitoringNote: String
+    dataToSendParticicipants: [DataToSendParticipantsType!]
+    dataToSendParticicipantsOther: String
+    dataToSendParticicipantsNote: String
+    shareCclfData: Boolean
+    shareCclfDataNote: String
+    #Page 7
+    sendFilesBetweenCcw: Boolean
+    sendFilesBetweenCcwNote: String
+    appToSendFilesToKnown: Boolean
+    appToSendFilesToWhich: String
+    appToSendFilesToNote: String
+    useCcwForFileDistribiutionToParticipants: Boolean
+    useCcwForFileDistribiutionToParticipantsNote: String
+    developNewQualityMeasures: Boolean
+    developNewQualityMeasuresNote: String
+    qualityPerformanceImpactsPayment: Boolean
+    qualityPerformanceImpactsPaymentNote: String
+    #Page 8
+    dataSharingStarts: DataStartsType
+    dataSharingStartsOther: String
+    dataSharingFrequency: [DataFrequencyType!]
+    dataSharingFrequencyOther: String
+    dataSharingStartsNote: String
+    dataCollectionStarts: DataStartsType
+    dataCollectionStartsOther: String
+    dataCollectionFrequency: [DataFrequencyType!]
+    dataCollectionFrequencyOther: String
+    dataCollectionFrequencyNote: String
+    qualityReportingStarts: DataStartsType
+    qualityReportingStartsOther: String
+    qualityReportingStartsNote: String
+    #Page 9
+    modelLearningSystems: [ModelLearningSystemType!]
+    modelLearningSystemsOther: String
+    modelLearningSystemsNote: String
+    anticipatedChallenges: String
+
+
+
+    createdBy: String!
+    createdDts: Time!
+    modifiedBy: String
+    modifiedDts: Time
+    status: TaskStatus!
+}
+
+"""
+PlanOpsEvalAndLearningChanges represents the possible changes you can make to a
+ops, eval and learning object when updating it.
+Fields explicitly set with NULL will be unset, and omitted fields will be left unchanged.
+https://gqlgen.com/reference/changesets/
+"""
+input PlanOpsEvalAndLearningChanges @goModel(model: "map[string]interface{}") {
+
+    #Page 1
+    agencyOrStateHelp: [AgencyOrStateHelpType!]
+    agencyOrStateHelpOther: String
+    agencyOrStateHelpNote: String
+    stakeholders: [StakeholdersType!]
+    stakeholdersOther: String
+    stakeholdersNote: String
+    helpdeskUse: [HelpdeskUseType!]
+    helpdeskUseOther: String
+    helpdeskUseNote: String
+    contractorSupport: [ContractorSupportType!]
+    contractorSupportOther: String
+    contractorSupportHow: String
+    contractorSupportNote: String
+    iddocSupport: Boolean
+    iddocSupportNote: String
+    #Page 2
+    iddocOperations: IddocOperationsType
+    iddocOperationsOther: String
+    iddocOperationsNote: String
+    technicalContactsIdentified: Boolean
+    technicalContactsIdentifiedDetail: String
+    technicalContactsIdentifiedNote: String
+    captureParticipantInfo: Boolean
+    captureParticipantInfoNote: String
+    icdOwner: String
+    draftIcdDueDate: Time
+    icdNote: String
+    #Page 3
+    uatNeeds: String
+    stcNeeds: String
+    testingTimelines: String
+    testingNote: String
+    dataMonitoringFileTypes: [MonitoringFileType!]
+    dataMonitoringFileOther: String
+    dataResponseType: String
+    dataResponseFileFrequency: String
+    #Page 4
+    dataFullTimeOrIncremental: DataFullTimeOrIncrementalType
+    eftSetUp: Boolean
+    unsolicitedAdjustmentsIncluded: Boolean
+    dataFlowDiagramsNeeded: Boolean
+    produceBenefitEnhancementFiles: Boolean
+    fileNamingConventions: String
+    dataMonitoringNote: String
+    #Page 5
+    benchmarkForPerformance: BenchmarkForPerformanceType
+    benchmarkForPerformanceNote: String
+    computePerformanceScores: Boolean
+    computePerformanceScoresNote: String
+    riskAdjustPerformance: Boolean
+    riskAdjustFeedback: Boolean
+    riskAdjustPayments: Boolean
+    riskAdjustOther: Boolean
+    riskAdjustNote: String
+    appealPerformance: Boolean
+    appealFeedback: Boolean
+    appealPayments: Boolean
+    appealOther: Boolean
+    appealNote: String
+    #Page 6
+    evaluationApproaches: [EvaluationApproachType!]
+    evaluationApproachOther: String
+    evalutaionApproachNote: String
+    ccmInvolvment: [CcmInvolvmentType!]
+    ccmInvolvmentOther: String
+    ccmInvolvmentNote: String
+    dataNeededForMonitoring: [DataForMonitoringType!]
+    dataNeededForMonitoringOther: String
+    dataNeededForMonitoringNote: String
+    dataToSendParticicipants: [DataToSendParticipantsType!]
+    dataToSendParticicipantsOther: String
+    dataToSendParticicipantsNote: String
+    shareCclfData: Boolean
+    shareCclfDataNote: String
+    #Page 7
+    sendFilesBetweenCcw: Boolean
+    sendFilesBetweenCcwNote: String
+    appToSendFilesToKnown: Boolean
+    appToSendFilesToWhich: String
+    appToSendFilesToNote: String
+    useCcwForFileDistribiutionToParticipants: Boolean
+    useCcwForFileDistribiutionToParticipantsNote: String
+    developNewQualityMeasures: Boolean
+    developNewQualityMeasuresNote: String
+    qualityPerformanceImpactsPayment: Boolean
+    qualityPerformanceImpactsPaymentNote: String
+    #Page 8
+    dataSharingStarts: DataStartsType
+    dataSharingStartsOther: String
+    dataSharingFrequency: [DataFrequencyType!]
+    dataSharingFrequencyOther: String
+    dataSharingStartsNote: String
+    dataCollectionStarts: DataStartsType
+    dataCollectionStartsOther: String
+    dataCollectionFrequency: [DataFrequencyType!]
+    dataCollectionFrequencyOther: String
+    dataCollectionFrequencyNote: String
+    qualityReportingStarts: DataStartsType
+    qualityReportingStartsOther: String
+    qualityReportingStartsNote: String
+    #Page 9
+    modelLearningSystems: [ModelLearningSystemType!]
+    modelLearningSystemsOther: String
+    modelLearningSystemsNote: String
+    anticipatedChallenges: String
+}
+"""
 Query definition for the schema
 """
 type Query {
@@ -3475,6 +4598,9 @@ updatePlanBeneficiaries(id: UUID!, changes: PlanBeneficiariesChanges!): PlanBene
 @hasRole(role: MINT_BASE_USER)
 
 updatePlanParticipantsAndProviders(id: UUID!, changes: PlanParticipantsAndProvidersChanges!): PlanParticipantsAndProviders!
+@hasRole(role: MINT_BASE_USER)
+
+updatePlanOpsEvalAndLearning(id: UUID!, changes: PlanOpsEvalAndLearningChanges!): PlanOpsEvalAndLearning!
 @hasRole(role: MINT_BASE_USER)
 
 
@@ -3753,6 +4879,139 @@ OTHER
 NOT_APPLICABLE
 
 }
+
+#Ops Eval and Learning types begin
+
+enum AgencyOrStateHelpType {
+    YES_STATE
+    YES_AGENCY_IDEAS
+    YES_AGENCY_IAA
+    NO
+    OTHER
+}
+
+enum StakeholdersType {
+    BENEFICIARIES
+    COMMUNITY_ORGANIZATIONS
+    PARTICIPANTS
+    PROFESSIONAL_ORGANIZATIONS
+    PROVIDERS
+    STATES
+    OTHER
+}
+
+enum HelpdeskUseType {
+    CBOSC
+    CONTRACTOR
+    OTHER
+    NO
+}
+
+enum ContractorSupportType {
+    ONE
+    MULTIPLE
+    NONE
+    OTHER
+}
+
+enum MonitoringFileType {
+    BENEFICIARY
+    PROVIDER
+    PART_A
+    PART_B
+    OTHER
+}
+
+enum EvaluationApproachType {
+    CONTROL_INTERVENTION
+    COMPARISON_MATCH
+    INTERRUPTED_TIME
+    NON_MEDICARE_DATA
+    OTHER
+}
+
+enum CcmInvolvmentType {
+    YES_EVALUATION
+    YES__IMPLEMENTATION
+    NO
+    OTHER
+}
+
+enum DataForMonitoringType {
+    SITE_VISITS
+    MEDICARE_CLAIMS
+    MEDICAID_CLAIMS
+    ENCOUNTER_DATA
+    NO_PAY_CLAIMS
+    QUALITY_CLAIMS_BASED_MEASURES
+    QUALITY_REPORTED_MEASURES
+    CLINICAL_DATA
+    NON_CLINICAL_DATA
+    NON_MEDICAL_DATA
+    OTHER
+    NOT_PLANNING_TO_COLLECT_DATA
+}
+
+enum DataToSendParticipantsType {
+    BASELINE_HISTORICAL_DATA
+    CLAIMS_LEVEL_DATA
+    BENEFICIARY_LEVEL_DATA
+    PARTICIPANT_LEVEL_DATA
+    PROVIDER_LEVEL_DATA
+    OTHER_MIPS_DATA
+    NOT_PLANNING_TO_SEND_DATA
+}
+
+enum DataFrequencyType {
+    ANNUALLY
+    BIANNUALLY
+    QUARTERLY
+    MONTHLY
+    SEMI_MONTHLY
+    WEEKLY
+    DAILY
+    OTHER
+    NOT_PLANNING_TO_DO_THIS
+}
+
+enum ModelLearningSystemType {
+    LEARNING_CONTRACTOR
+    IT_PLATFORM_CONNECT
+    PARTICIPANT_COLLABORATION
+    EDUCATE_BENEFICIARIES
+    OTHER
+    NO_LEARNING_SYSTEM
+}
+
+enum IddocOperationsType {
+    ACO_OS
+    ACO_UI
+    INNOVATION
+    OTHER
+}
+
+enum DataFullTimeOrIncrementalType {
+    FULL_TIME
+    INCREMENTAL
+}
+
+enum BenchmarkForPerformanceType {
+    YES_RECONCILE
+    YES_NO_RECONCILE
+    NO
+}
+
+enum DataStartsType {
+    DURING_APPLICATION_PERIOD
+    SHORTLY_BEFORE_THE_START_DATE
+    EARLY_IN_THE_FIRST_PERFORMANCE_YEAR
+    LATER_IN_THE_FIRST_PERFORMANCE_YEAR
+    IN_THE_SUBSEQUENT_PERFORMANCE_YEAR
+    AT_SOME_OTHER_POINT_IN_TIME
+    NOT_PLANNING_TO_DO_THIS
+    OTHER
+}
+#Ops Eval and Learning types end
 
 directive @hasRole(role: Role!) on FIELD_DEFINITION
 
@@ -4148,6 +5407,30 @@ func (ec *executionContext) field_Mutation_updatePlanMilestones_args(ctx context
 	if tmp, ok := rawArgs["changes"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("changes"))
 		arg1, err = ec.unmarshalNPlanMilestoneChanges2map(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["changes"] = arg1
+	return args, nil
+}
+
+func (ec *executionContext) field_Mutation_updatePlanOpsEvalAndLearning_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 uuid.UUID
+	if tmp, ok := rawArgs["id"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("id"))
+		arg0, err = ec.unmarshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["id"] = arg0
+	var arg1 map[string]interface{}
+	if tmp, ok := rawArgs["changes"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("changes"))
+		arg1, err = ec.unmarshalNPlanOpsEvalAndLearningChanges2map(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -6670,6 +7953,260 @@ func (ec *executionContext) fieldContext_ModelPlan_beneficiaries(ctx context.Con
 	return fc, nil
 }
 
+func (ec *executionContext) _ModelPlan_opsEvalAndLearning(ctx context.Context, field graphql.CollectedField, obj *models.ModelPlan) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_ModelPlan_opsEvalAndLearning(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.ModelPlan().OpsEvalAndLearning(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*models.PlanOpsEvalAndLearning)
+	fc.Result = res
+	return ec.marshalNPlanOpsEvalAndLearning2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanOpsEvalAndLearning(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_ModelPlan_opsEvalAndLearning(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "ModelPlan",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_PlanOpsEvalAndLearning_id(ctx, field)
+			case "modelPlanID":
+				return ec.fieldContext_PlanOpsEvalAndLearning_modelPlanID(ctx, field)
+			case "agencyOrStateHelp":
+				return ec.fieldContext_PlanOpsEvalAndLearning_agencyOrStateHelp(ctx, field)
+			case "agencyOrStateHelpOther":
+				return ec.fieldContext_PlanOpsEvalAndLearning_agencyOrStateHelpOther(ctx, field)
+			case "agencyOrStateHelpNote":
+				return ec.fieldContext_PlanOpsEvalAndLearning_agencyOrStateHelpNote(ctx, field)
+			case "stakeholders":
+				return ec.fieldContext_PlanOpsEvalAndLearning_stakeholders(ctx, field)
+			case "stakeholdersOther":
+				return ec.fieldContext_PlanOpsEvalAndLearning_stakeholdersOther(ctx, field)
+			case "stakeholdersNote":
+				return ec.fieldContext_PlanOpsEvalAndLearning_stakeholdersNote(ctx, field)
+			case "helpdeskUse":
+				return ec.fieldContext_PlanOpsEvalAndLearning_helpdeskUse(ctx, field)
+			case "helpdeskUseOther":
+				return ec.fieldContext_PlanOpsEvalAndLearning_helpdeskUseOther(ctx, field)
+			case "helpdeskUseNote":
+				return ec.fieldContext_PlanOpsEvalAndLearning_helpdeskUseNote(ctx, field)
+			case "contractorSupport":
+				return ec.fieldContext_PlanOpsEvalAndLearning_contractorSupport(ctx, field)
+			case "contractorSupportOther":
+				return ec.fieldContext_PlanOpsEvalAndLearning_contractorSupportOther(ctx, field)
+			case "contractorSupportHow":
+				return ec.fieldContext_PlanOpsEvalAndLearning_contractorSupportHow(ctx, field)
+			case "contractorSupportNote":
+				return ec.fieldContext_PlanOpsEvalAndLearning_contractorSupportNote(ctx, field)
+			case "iddocSupport":
+				return ec.fieldContext_PlanOpsEvalAndLearning_iddocSupport(ctx, field)
+			case "iddocSupportNote":
+				return ec.fieldContext_PlanOpsEvalAndLearning_iddocSupportNote(ctx, field)
+			case "iddocOperations":
+				return ec.fieldContext_PlanOpsEvalAndLearning_iddocOperations(ctx, field)
+			case "iddocOperationsOther":
+				return ec.fieldContext_PlanOpsEvalAndLearning_iddocOperationsOther(ctx, field)
+			case "iddocOperationsNote":
+				return ec.fieldContext_PlanOpsEvalAndLearning_iddocOperationsNote(ctx, field)
+			case "technicalContactsIdentified":
+				return ec.fieldContext_PlanOpsEvalAndLearning_technicalContactsIdentified(ctx, field)
+			case "technicalContactsIdentifiedDetail":
+				return ec.fieldContext_PlanOpsEvalAndLearning_technicalContactsIdentifiedDetail(ctx, field)
+			case "technicalContactsIdentifiedNote":
+				return ec.fieldContext_PlanOpsEvalAndLearning_technicalContactsIdentifiedNote(ctx, field)
+			case "captureParticipantInfo":
+				return ec.fieldContext_PlanOpsEvalAndLearning_captureParticipantInfo(ctx, field)
+			case "captureParticipantInfoNote":
+				return ec.fieldContext_PlanOpsEvalAndLearning_captureParticipantInfoNote(ctx, field)
+			case "icdOwner":
+				return ec.fieldContext_PlanOpsEvalAndLearning_icdOwner(ctx, field)
+			case "draftIcdDueDate":
+				return ec.fieldContext_PlanOpsEvalAndLearning_draftIcdDueDate(ctx, field)
+			case "icdNote":
+				return ec.fieldContext_PlanOpsEvalAndLearning_icdNote(ctx, field)
+			case "uatNeeds":
+				return ec.fieldContext_PlanOpsEvalAndLearning_uatNeeds(ctx, field)
+			case "stcNeeds":
+				return ec.fieldContext_PlanOpsEvalAndLearning_stcNeeds(ctx, field)
+			case "testingTimelines":
+				return ec.fieldContext_PlanOpsEvalAndLearning_testingTimelines(ctx, field)
+			case "testingNote":
+				return ec.fieldContext_PlanOpsEvalAndLearning_testingNote(ctx, field)
+			case "dataMonitoringFileTypes":
+				return ec.fieldContext_PlanOpsEvalAndLearning_dataMonitoringFileTypes(ctx, field)
+			case "dataMonitoringFileOther":
+				return ec.fieldContext_PlanOpsEvalAndLearning_dataMonitoringFileOther(ctx, field)
+			case "dataResponseType":
+				return ec.fieldContext_PlanOpsEvalAndLearning_dataResponseType(ctx, field)
+			case "dataResponseFileFrequency":
+				return ec.fieldContext_PlanOpsEvalAndLearning_dataResponseFileFrequency(ctx, field)
+			case "dataFullTimeOrIncremental":
+				return ec.fieldContext_PlanOpsEvalAndLearning_dataFullTimeOrIncremental(ctx, field)
+			case "eftSetUp":
+				return ec.fieldContext_PlanOpsEvalAndLearning_eftSetUp(ctx, field)
+			case "unsolicitedAdjustmentsIncluded":
+				return ec.fieldContext_PlanOpsEvalAndLearning_unsolicitedAdjustmentsIncluded(ctx, field)
+			case "dataFlowDiagramsNeeded":
+				return ec.fieldContext_PlanOpsEvalAndLearning_dataFlowDiagramsNeeded(ctx, field)
+			case "produceBenefitEnhancementFiles":
+				return ec.fieldContext_PlanOpsEvalAndLearning_produceBenefitEnhancementFiles(ctx, field)
+			case "fileNamingConventions":
+				return ec.fieldContext_PlanOpsEvalAndLearning_fileNamingConventions(ctx, field)
+			case "dataMonitoringNote":
+				return ec.fieldContext_PlanOpsEvalAndLearning_dataMonitoringNote(ctx, field)
+			case "benchmarkForPerformance":
+				return ec.fieldContext_PlanOpsEvalAndLearning_benchmarkForPerformance(ctx, field)
+			case "benchmarkForPerformanceNote":
+				return ec.fieldContext_PlanOpsEvalAndLearning_benchmarkForPerformanceNote(ctx, field)
+			case "computePerformanceScores":
+				return ec.fieldContext_PlanOpsEvalAndLearning_computePerformanceScores(ctx, field)
+			case "computePerformanceScoresNote":
+				return ec.fieldContext_PlanOpsEvalAndLearning_computePerformanceScoresNote(ctx, field)
+			case "riskAdjustPerformance":
+				return ec.fieldContext_PlanOpsEvalAndLearning_riskAdjustPerformance(ctx, field)
+			case "riskAdjustFeedback":
+				return ec.fieldContext_PlanOpsEvalAndLearning_riskAdjustFeedback(ctx, field)
+			case "riskAdjustPayments":
+				return ec.fieldContext_PlanOpsEvalAndLearning_riskAdjustPayments(ctx, field)
+			case "riskAdjustOther":
+				return ec.fieldContext_PlanOpsEvalAndLearning_riskAdjustOther(ctx, field)
+			case "riskAdjustNote":
+				return ec.fieldContext_PlanOpsEvalAndLearning_riskAdjustNote(ctx, field)
+			case "appealPerformance":
+				return ec.fieldContext_PlanOpsEvalAndLearning_appealPerformance(ctx, field)
+			case "appealFeedback":
+				return ec.fieldContext_PlanOpsEvalAndLearning_appealFeedback(ctx, field)
+			case "appealPayments":
+				return ec.fieldContext_PlanOpsEvalAndLearning_appealPayments(ctx, field)
+			case "appealOther":
+				return ec.fieldContext_PlanOpsEvalAndLearning_appealOther(ctx, field)
+			case "appealNote":
+				return ec.fieldContext_PlanOpsEvalAndLearning_appealNote(ctx, field)
+			case "evaluationApproaches":
+				return ec.fieldContext_PlanOpsEvalAndLearning_evaluationApproaches(ctx, field)
+			case "evaluationApproachOther":
+				return ec.fieldContext_PlanOpsEvalAndLearning_evaluationApproachOther(ctx, field)
+			case "evalutaionApproachNote":
+				return ec.fieldContext_PlanOpsEvalAndLearning_evalutaionApproachNote(ctx, field)
+			case "ccmInvolvment":
+				return ec.fieldContext_PlanOpsEvalAndLearning_ccmInvolvment(ctx, field)
+			case "ccmInvolvmentOther":
+				return ec.fieldContext_PlanOpsEvalAndLearning_ccmInvolvmentOther(ctx, field)
+			case "ccmInvolvmentNote":
+				return ec.fieldContext_PlanOpsEvalAndLearning_ccmInvolvmentNote(ctx, field)
+			case "dataNeededForMonitoring":
+				return ec.fieldContext_PlanOpsEvalAndLearning_dataNeededForMonitoring(ctx, field)
+			case "dataNeededForMonitoringOther":
+				return ec.fieldContext_PlanOpsEvalAndLearning_dataNeededForMonitoringOther(ctx, field)
+			case "dataNeededForMonitoringNote":
+				return ec.fieldContext_PlanOpsEvalAndLearning_dataNeededForMonitoringNote(ctx, field)
+			case "dataToSendParticicipants":
+				return ec.fieldContext_PlanOpsEvalAndLearning_dataToSendParticicipants(ctx, field)
+			case "dataToSendParticicipantsOther":
+				return ec.fieldContext_PlanOpsEvalAndLearning_dataToSendParticicipantsOther(ctx, field)
+			case "dataToSendParticicipantsNote":
+				return ec.fieldContext_PlanOpsEvalAndLearning_dataToSendParticicipantsNote(ctx, field)
+			case "shareCclfData":
+				return ec.fieldContext_PlanOpsEvalAndLearning_shareCclfData(ctx, field)
+			case "shareCclfDataNote":
+				return ec.fieldContext_PlanOpsEvalAndLearning_shareCclfDataNote(ctx, field)
+			case "sendFilesBetweenCcw":
+				return ec.fieldContext_PlanOpsEvalAndLearning_sendFilesBetweenCcw(ctx, field)
+			case "sendFilesBetweenCcwNote":
+				return ec.fieldContext_PlanOpsEvalAndLearning_sendFilesBetweenCcwNote(ctx, field)
+			case "appToSendFilesToKnown":
+				return ec.fieldContext_PlanOpsEvalAndLearning_appToSendFilesToKnown(ctx, field)
+			case "appToSendFilesToWhich":
+				return ec.fieldContext_PlanOpsEvalAndLearning_appToSendFilesToWhich(ctx, field)
+			case "appToSendFilesToNote":
+				return ec.fieldContext_PlanOpsEvalAndLearning_appToSendFilesToNote(ctx, field)
+			case "useCcwForFileDistribiutionToParticipants":
+				return ec.fieldContext_PlanOpsEvalAndLearning_useCcwForFileDistribiutionToParticipants(ctx, field)
+			case "useCcwForFileDistribiutionToParticipantsNote":
+				return ec.fieldContext_PlanOpsEvalAndLearning_useCcwForFileDistribiutionToParticipantsNote(ctx, field)
+			case "developNewQualityMeasures":
+				return ec.fieldContext_PlanOpsEvalAndLearning_developNewQualityMeasures(ctx, field)
+			case "developNewQualityMeasuresNote":
+				return ec.fieldContext_PlanOpsEvalAndLearning_developNewQualityMeasuresNote(ctx, field)
+			case "qualityPerformanceImpactsPayment":
+				return ec.fieldContext_PlanOpsEvalAndLearning_qualityPerformanceImpactsPayment(ctx, field)
+			case "qualityPerformanceImpactsPaymentNote":
+				return ec.fieldContext_PlanOpsEvalAndLearning_qualityPerformanceImpactsPaymentNote(ctx, field)
+			case "dataSharingStarts":
+				return ec.fieldContext_PlanOpsEvalAndLearning_dataSharingStarts(ctx, field)
+			case "dataSharingStartsOther":
+				return ec.fieldContext_PlanOpsEvalAndLearning_dataSharingStartsOther(ctx, field)
+			case "dataSharingFrequency":
+				return ec.fieldContext_PlanOpsEvalAndLearning_dataSharingFrequency(ctx, field)
+			case "dataSharingFrequencyOther":
+				return ec.fieldContext_PlanOpsEvalAndLearning_dataSharingFrequencyOther(ctx, field)
+			case "dataSharingStartsNote":
+				return ec.fieldContext_PlanOpsEvalAndLearning_dataSharingStartsNote(ctx, field)
+			case "dataCollectionStarts":
+				return ec.fieldContext_PlanOpsEvalAndLearning_dataCollectionStarts(ctx, field)
+			case "dataCollectionStartsOther":
+				return ec.fieldContext_PlanOpsEvalAndLearning_dataCollectionStartsOther(ctx, field)
+			case "dataCollectionFrequency":
+				return ec.fieldContext_PlanOpsEvalAndLearning_dataCollectionFrequency(ctx, field)
+			case "dataCollectionFrequencyOther":
+				return ec.fieldContext_PlanOpsEvalAndLearning_dataCollectionFrequencyOther(ctx, field)
+			case "dataCollectionFrequencyNote":
+				return ec.fieldContext_PlanOpsEvalAndLearning_dataCollectionFrequencyNote(ctx, field)
+			case "qualityReportingStarts":
+				return ec.fieldContext_PlanOpsEvalAndLearning_qualityReportingStarts(ctx, field)
+			case "qualityReportingStartsOther":
+				return ec.fieldContext_PlanOpsEvalAndLearning_qualityReportingStartsOther(ctx, field)
+			case "qualityReportingStartsNote":
+				return ec.fieldContext_PlanOpsEvalAndLearning_qualityReportingStartsNote(ctx, field)
+			case "modelLearningSystems":
+				return ec.fieldContext_PlanOpsEvalAndLearning_modelLearningSystems(ctx, field)
+			case "modelLearningSystemsOther":
+				return ec.fieldContext_PlanOpsEvalAndLearning_modelLearningSystemsOther(ctx, field)
+			case "modelLearningSystemsNote":
+				return ec.fieldContext_PlanOpsEvalAndLearning_modelLearningSystemsNote(ctx, field)
+			case "anticipatedChallenges":
+				return ec.fieldContext_PlanOpsEvalAndLearning_anticipatedChallenges(ctx, field)
+			case "createdBy":
+				return ec.fieldContext_PlanOpsEvalAndLearning_createdBy(ctx, field)
+			case "createdDts":
+				return ec.fieldContext_PlanOpsEvalAndLearning_createdDts(ctx, field)
+			case "modifiedBy":
+				return ec.fieldContext_PlanOpsEvalAndLearning_modifiedBy(ctx, field)
+			case "modifiedDts":
+				return ec.fieldContext_PlanOpsEvalAndLearning_modifiedDts(ctx, field)
+			case "status":
+				return ec.fieldContext_PlanOpsEvalAndLearning_status(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type PlanOpsEvalAndLearning", field.Name)
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _ModelPlan_collaborators(ctx context.Context, field graphql.CollectedField, obj *models.ModelPlan) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_ModelPlan_collaborators(ctx, field)
 	if err != nil {
@@ -7017,6 +8554,8 @@ func (ec *executionContext) fieldContext_Mutation_createModelPlan(ctx context.Co
 				return ec.fieldContext_ModelPlan_providersAndParticipants(ctx, field)
 			case "beneficiaries":
 				return ec.fieldContext_ModelPlan_beneficiaries(ctx, field)
+			case "opsEvalAndLearning":
+				return ec.fieldContext_ModelPlan_opsEvalAndLearning(ctx, field)
 			case "collaborators":
 				return ec.fieldContext_ModelPlan_collaborators(ctx, field)
 			case "documents":
@@ -7138,6 +8677,8 @@ func (ec *executionContext) fieldContext_Mutation_updateModelPlan(ctx context.Co
 				return ec.fieldContext_ModelPlan_providersAndParticipants(ctx, field)
 			case "beneficiaries":
 				return ec.fieldContext_ModelPlan_beneficiaries(ctx, field)
+			case "opsEvalAndLearning":
+				return ec.fieldContext_ModelPlan_opsEvalAndLearning(ctx, field)
 			case "collaborators":
 				return ec.fieldContext_ModelPlan_collaborators(ctx, field)
 			case "documents":
@@ -8198,6 +9739,295 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanParticipantsAndProvi
 	}()
 	ctx = graphql.WithFieldContext(ctx, fc)
 	if fc.Args, err = ec.field_Mutation_updatePlanParticipantsAndProviders_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Mutation_updatePlanOpsEvalAndLearning(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Mutation_updatePlanOpsEvalAndLearning(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		directive0 := func(rctx context.Context) (interface{}, error) {
+			ctx = rctx // use context from middleware stack in children
+			return ec.resolvers.Mutation().UpdatePlanOpsEvalAndLearning(rctx, fc.Args["id"].(uuid.UUID), fc.Args["changes"].(map[string]interface{}))
+		}
+		directive1 := func(ctx context.Context) (interface{}, error) {
+			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_BASE_USER")
+			if err != nil {
+				return nil, err
+			}
+			if ec.directives.HasRole == nil {
+				return nil, errors.New("directive hasRole is not implemented")
+			}
+			return ec.directives.HasRole(ctx, nil, directive0, role)
+		}
+
+		tmp, err := directive1(rctx)
+		if err != nil {
+			return nil, graphql.ErrorOnPath(ctx, err)
+		}
+		if tmp == nil {
+			return nil, nil
+		}
+		if data, ok := tmp.(*models.PlanOpsEvalAndLearning); ok {
+			return data, nil
+		}
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.PlanOpsEvalAndLearning`, tmp)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*models.PlanOpsEvalAndLearning)
+	fc.Result = res
+	return ec.marshalNPlanOpsEvalAndLearning2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanOpsEvalAndLearning(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Mutation_updatePlanOpsEvalAndLearning(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_PlanOpsEvalAndLearning_id(ctx, field)
+			case "modelPlanID":
+				return ec.fieldContext_PlanOpsEvalAndLearning_modelPlanID(ctx, field)
+			case "agencyOrStateHelp":
+				return ec.fieldContext_PlanOpsEvalAndLearning_agencyOrStateHelp(ctx, field)
+			case "agencyOrStateHelpOther":
+				return ec.fieldContext_PlanOpsEvalAndLearning_agencyOrStateHelpOther(ctx, field)
+			case "agencyOrStateHelpNote":
+				return ec.fieldContext_PlanOpsEvalAndLearning_agencyOrStateHelpNote(ctx, field)
+			case "stakeholders":
+				return ec.fieldContext_PlanOpsEvalAndLearning_stakeholders(ctx, field)
+			case "stakeholdersOther":
+				return ec.fieldContext_PlanOpsEvalAndLearning_stakeholdersOther(ctx, field)
+			case "stakeholdersNote":
+				return ec.fieldContext_PlanOpsEvalAndLearning_stakeholdersNote(ctx, field)
+			case "helpdeskUse":
+				return ec.fieldContext_PlanOpsEvalAndLearning_helpdeskUse(ctx, field)
+			case "helpdeskUseOther":
+				return ec.fieldContext_PlanOpsEvalAndLearning_helpdeskUseOther(ctx, field)
+			case "helpdeskUseNote":
+				return ec.fieldContext_PlanOpsEvalAndLearning_helpdeskUseNote(ctx, field)
+			case "contractorSupport":
+				return ec.fieldContext_PlanOpsEvalAndLearning_contractorSupport(ctx, field)
+			case "contractorSupportOther":
+				return ec.fieldContext_PlanOpsEvalAndLearning_contractorSupportOther(ctx, field)
+			case "contractorSupportHow":
+				return ec.fieldContext_PlanOpsEvalAndLearning_contractorSupportHow(ctx, field)
+			case "contractorSupportNote":
+				return ec.fieldContext_PlanOpsEvalAndLearning_contractorSupportNote(ctx, field)
+			case "iddocSupport":
+				return ec.fieldContext_PlanOpsEvalAndLearning_iddocSupport(ctx, field)
+			case "iddocSupportNote":
+				return ec.fieldContext_PlanOpsEvalAndLearning_iddocSupportNote(ctx, field)
+			case "iddocOperations":
+				return ec.fieldContext_PlanOpsEvalAndLearning_iddocOperations(ctx, field)
+			case "iddocOperationsOther":
+				return ec.fieldContext_PlanOpsEvalAndLearning_iddocOperationsOther(ctx, field)
+			case "iddocOperationsNote":
+				return ec.fieldContext_PlanOpsEvalAndLearning_iddocOperationsNote(ctx, field)
+			case "technicalContactsIdentified":
+				return ec.fieldContext_PlanOpsEvalAndLearning_technicalContactsIdentified(ctx, field)
+			case "technicalContactsIdentifiedDetail":
+				return ec.fieldContext_PlanOpsEvalAndLearning_technicalContactsIdentifiedDetail(ctx, field)
+			case "technicalContactsIdentifiedNote":
+				return ec.fieldContext_PlanOpsEvalAndLearning_technicalContactsIdentifiedNote(ctx, field)
+			case "captureParticipantInfo":
+				return ec.fieldContext_PlanOpsEvalAndLearning_captureParticipantInfo(ctx, field)
+			case "captureParticipantInfoNote":
+				return ec.fieldContext_PlanOpsEvalAndLearning_captureParticipantInfoNote(ctx, field)
+			case "icdOwner":
+				return ec.fieldContext_PlanOpsEvalAndLearning_icdOwner(ctx, field)
+			case "draftIcdDueDate":
+				return ec.fieldContext_PlanOpsEvalAndLearning_draftIcdDueDate(ctx, field)
+			case "icdNote":
+				return ec.fieldContext_PlanOpsEvalAndLearning_icdNote(ctx, field)
+			case "uatNeeds":
+				return ec.fieldContext_PlanOpsEvalAndLearning_uatNeeds(ctx, field)
+			case "stcNeeds":
+				return ec.fieldContext_PlanOpsEvalAndLearning_stcNeeds(ctx, field)
+			case "testingTimelines":
+				return ec.fieldContext_PlanOpsEvalAndLearning_testingTimelines(ctx, field)
+			case "testingNote":
+				return ec.fieldContext_PlanOpsEvalAndLearning_testingNote(ctx, field)
+			case "dataMonitoringFileTypes":
+				return ec.fieldContext_PlanOpsEvalAndLearning_dataMonitoringFileTypes(ctx, field)
+			case "dataMonitoringFileOther":
+				return ec.fieldContext_PlanOpsEvalAndLearning_dataMonitoringFileOther(ctx, field)
+			case "dataResponseType":
+				return ec.fieldContext_PlanOpsEvalAndLearning_dataResponseType(ctx, field)
+			case "dataResponseFileFrequency":
+				return ec.fieldContext_PlanOpsEvalAndLearning_dataResponseFileFrequency(ctx, field)
+			case "dataFullTimeOrIncremental":
+				return ec.fieldContext_PlanOpsEvalAndLearning_dataFullTimeOrIncremental(ctx, field)
+			case "eftSetUp":
+				return ec.fieldContext_PlanOpsEvalAndLearning_eftSetUp(ctx, field)
+			case "unsolicitedAdjustmentsIncluded":
+				return ec.fieldContext_PlanOpsEvalAndLearning_unsolicitedAdjustmentsIncluded(ctx, field)
+			case "dataFlowDiagramsNeeded":
+				return ec.fieldContext_PlanOpsEvalAndLearning_dataFlowDiagramsNeeded(ctx, field)
+			case "produceBenefitEnhancementFiles":
+				return ec.fieldContext_PlanOpsEvalAndLearning_produceBenefitEnhancementFiles(ctx, field)
+			case "fileNamingConventions":
+				return ec.fieldContext_PlanOpsEvalAndLearning_fileNamingConventions(ctx, field)
+			case "dataMonitoringNote":
+				return ec.fieldContext_PlanOpsEvalAndLearning_dataMonitoringNote(ctx, field)
+			case "benchmarkForPerformance":
+				return ec.fieldContext_PlanOpsEvalAndLearning_benchmarkForPerformance(ctx, field)
+			case "benchmarkForPerformanceNote":
+				return ec.fieldContext_PlanOpsEvalAndLearning_benchmarkForPerformanceNote(ctx, field)
+			case "computePerformanceScores":
+				return ec.fieldContext_PlanOpsEvalAndLearning_computePerformanceScores(ctx, field)
+			case "computePerformanceScoresNote":
+				return ec.fieldContext_PlanOpsEvalAndLearning_computePerformanceScoresNote(ctx, field)
+			case "riskAdjustPerformance":
+				return ec.fieldContext_PlanOpsEvalAndLearning_riskAdjustPerformance(ctx, field)
+			case "riskAdjustFeedback":
+				return ec.fieldContext_PlanOpsEvalAndLearning_riskAdjustFeedback(ctx, field)
+			case "riskAdjustPayments":
+				return ec.fieldContext_PlanOpsEvalAndLearning_riskAdjustPayments(ctx, field)
+			case "riskAdjustOther":
+				return ec.fieldContext_PlanOpsEvalAndLearning_riskAdjustOther(ctx, field)
+			case "riskAdjustNote":
+				return ec.fieldContext_PlanOpsEvalAndLearning_riskAdjustNote(ctx, field)
+			case "appealPerformance":
+				return ec.fieldContext_PlanOpsEvalAndLearning_appealPerformance(ctx, field)
+			case "appealFeedback":
+				return ec.fieldContext_PlanOpsEvalAndLearning_appealFeedback(ctx, field)
+			case "appealPayments":
+				return ec.fieldContext_PlanOpsEvalAndLearning_appealPayments(ctx, field)
+			case "appealOther":
+				return ec.fieldContext_PlanOpsEvalAndLearning_appealOther(ctx, field)
+			case "appealNote":
+				return ec.fieldContext_PlanOpsEvalAndLearning_appealNote(ctx, field)
+			case "evaluationApproaches":
+				return ec.fieldContext_PlanOpsEvalAndLearning_evaluationApproaches(ctx, field)
+			case "evaluationApproachOther":
+				return ec.fieldContext_PlanOpsEvalAndLearning_evaluationApproachOther(ctx, field)
+			case "evalutaionApproachNote":
+				return ec.fieldContext_PlanOpsEvalAndLearning_evalutaionApproachNote(ctx, field)
+			case "ccmInvolvment":
+				return ec.fieldContext_PlanOpsEvalAndLearning_ccmInvolvment(ctx, field)
+			case "ccmInvolvmentOther":
+				return ec.fieldContext_PlanOpsEvalAndLearning_ccmInvolvmentOther(ctx, field)
+			case "ccmInvolvmentNote":
+				return ec.fieldContext_PlanOpsEvalAndLearning_ccmInvolvmentNote(ctx, field)
+			case "dataNeededForMonitoring":
+				return ec.fieldContext_PlanOpsEvalAndLearning_dataNeededForMonitoring(ctx, field)
+			case "dataNeededForMonitoringOther":
+				return ec.fieldContext_PlanOpsEvalAndLearning_dataNeededForMonitoringOther(ctx, field)
+			case "dataNeededForMonitoringNote":
+				return ec.fieldContext_PlanOpsEvalAndLearning_dataNeededForMonitoringNote(ctx, field)
+			case "dataToSendParticicipants":
+				return ec.fieldContext_PlanOpsEvalAndLearning_dataToSendParticicipants(ctx, field)
+			case "dataToSendParticicipantsOther":
+				return ec.fieldContext_PlanOpsEvalAndLearning_dataToSendParticicipantsOther(ctx, field)
+			case "dataToSendParticicipantsNote":
+				return ec.fieldContext_PlanOpsEvalAndLearning_dataToSendParticicipantsNote(ctx, field)
+			case "shareCclfData":
+				return ec.fieldContext_PlanOpsEvalAndLearning_shareCclfData(ctx, field)
+			case "shareCclfDataNote":
+				return ec.fieldContext_PlanOpsEvalAndLearning_shareCclfDataNote(ctx, field)
+			case "sendFilesBetweenCcw":
+				return ec.fieldContext_PlanOpsEvalAndLearning_sendFilesBetweenCcw(ctx, field)
+			case "sendFilesBetweenCcwNote":
+				return ec.fieldContext_PlanOpsEvalAndLearning_sendFilesBetweenCcwNote(ctx, field)
+			case "appToSendFilesToKnown":
+				return ec.fieldContext_PlanOpsEvalAndLearning_appToSendFilesToKnown(ctx, field)
+			case "appToSendFilesToWhich":
+				return ec.fieldContext_PlanOpsEvalAndLearning_appToSendFilesToWhich(ctx, field)
+			case "appToSendFilesToNote":
+				return ec.fieldContext_PlanOpsEvalAndLearning_appToSendFilesToNote(ctx, field)
+			case "useCcwForFileDistribiutionToParticipants":
+				return ec.fieldContext_PlanOpsEvalAndLearning_useCcwForFileDistribiutionToParticipants(ctx, field)
+			case "useCcwForFileDistribiutionToParticipantsNote":
+				return ec.fieldContext_PlanOpsEvalAndLearning_useCcwForFileDistribiutionToParticipantsNote(ctx, field)
+			case "developNewQualityMeasures":
+				return ec.fieldContext_PlanOpsEvalAndLearning_developNewQualityMeasures(ctx, field)
+			case "developNewQualityMeasuresNote":
+				return ec.fieldContext_PlanOpsEvalAndLearning_developNewQualityMeasuresNote(ctx, field)
+			case "qualityPerformanceImpactsPayment":
+				return ec.fieldContext_PlanOpsEvalAndLearning_qualityPerformanceImpactsPayment(ctx, field)
+			case "qualityPerformanceImpactsPaymentNote":
+				return ec.fieldContext_PlanOpsEvalAndLearning_qualityPerformanceImpactsPaymentNote(ctx, field)
+			case "dataSharingStarts":
+				return ec.fieldContext_PlanOpsEvalAndLearning_dataSharingStarts(ctx, field)
+			case "dataSharingStartsOther":
+				return ec.fieldContext_PlanOpsEvalAndLearning_dataSharingStartsOther(ctx, field)
+			case "dataSharingFrequency":
+				return ec.fieldContext_PlanOpsEvalAndLearning_dataSharingFrequency(ctx, field)
+			case "dataSharingFrequencyOther":
+				return ec.fieldContext_PlanOpsEvalAndLearning_dataSharingFrequencyOther(ctx, field)
+			case "dataSharingStartsNote":
+				return ec.fieldContext_PlanOpsEvalAndLearning_dataSharingStartsNote(ctx, field)
+			case "dataCollectionStarts":
+				return ec.fieldContext_PlanOpsEvalAndLearning_dataCollectionStarts(ctx, field)
+			case "dataCollectionStartsOther":
+				return ec.fieldContext_PlanOpsEvalAndLearning_dataCollectionStartsOther(ctx, field)
+			case "dataCollectionFrequency":
+				return ec.fieldContext_PlanOpsEvalAndLearning_dataCollectionFrequency(ctx, field)
+			case "dataCollectionFrequencyOther":
+				return ec.fieldContext_PlanOpsEvalAndLearning_dataCollectionFrequencyOther(ctx, field)
+			case "dataCollectionFrequencyNote":
+				return ec.fieldContext_PlanOpsEvalAndLearning_dataCollectionFrequencyNote(ctx, field)
+			case "qualityReportingStarts":
+				return ec.fieldContext_PlanOpsEvalAndLearning_qualityReportingStarts(ctx, field)
+			case "qualityReportingStartsOther":
+				return ec.fieldContext_PlanOpsEvalAndLearning_qualityReportingStartsOther(ctx, field)
+			case "qualityReportingStartsNote":
+				return ec.fieldContext_PlanOpsEvalAndLearning_qualityReportingStartsNote(ctx, field)
+			case "modelLearningSystems":
+				return ec.fieldContext_PlanOpsEvalAndLearning_modelLearningSystems(ctx, field)
+			case "modelLearningSystemsOther":
+				return ec.fieldContext_PlanOpsEvalAndLearning_modelLearningSystemsOther(ctx, field)
+			case "modelLearningSystemsNote":
+				return ec.fieldContext_PlanOpsEvalAndLearning_modelLearningSystemsNote(ctx, field)
+			case "anticipatedChallenges":
+				return ec.fieldContext_PlanOpsEvalAndLearning_anticipatedChallenges(ctx, field)
+			case "createdBy":
+				return ec.fieldContext_PlanOpsEvalAndLearning_createdBy(ctx, field)
+			case "createdDts":
+				return ec.fieldContext_PlanOpsEvalAndLearning_createdDts(ctx, field)
+			case "modifiedBy":
+				return ec.fieldContext_PlanOpsEvalAndLearning_modifiedBy(ctx, field)
+			case "modifiedDts":
+				return ec.fieldContext_PlanOpsEvalAndLearning_modifiedDts(ctx, field)
+			case "status":
+				return ec.fieldContext_PlanOpsEvalAndLearning_status(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type PlanOpsEvalAndLearning", field.Name)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_updatePlanOpsEvalAndLearning_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return
 	}
@@ -15651,6 +17481,4285 @@ func (ec *executionContext) fieldContext_PlanMilestones_status(ctx context.Conte
 	return fc, nil
 }
 
+func (ec *executionContext) _PlanOpsEvalAndLearning_id(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_id(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ID, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(uuid.UUID)
+	fc.Result = res
+	return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_id(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type UUID does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_modelPlanID(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_modelPlanID(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ModelPlanID, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(uuid.UUID)
+	fc.Result = res
+	return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_modelPlanID(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type UUID does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_agencyOrStateHelp(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_agencyOrStateHelp(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.PlanOpsEvalAndLearning().AgencyOrStateHelp(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.([]model.AgencyOrStateHelpType)
+	fc.Result = res
+	return ec.marshalOAgencyOrStateHelpType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐAgencyOrStateHelpTypeᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_agencyOrStateHelp(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type AgencyOrStateHelpType does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_agencyOrStateHelpOther(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_agencyOrStateHelpOther(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.AgencyOrStateHelpOther, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_agencyOrStateHelpOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_agencyOrStateHelpNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_agencyOrStateHelpNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.AgencyOrStateHelpNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_agencyOrStateHelpNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_stakeholders(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_stakeholders(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.PlanOpsEvalAndLearning().Stakeholders(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.([]model.StakeholdersType)
+	fc.Result = res
+	return ec.marshalOStakeholdersType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐStakeholdersTypeᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_stakeholders(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type StakeholdersType does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_stakeholdersOther(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_stakeholdersOther(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.StakeholdersOther, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_stakeholdersOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_stakeholdersNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_stakeholdersNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.StakeholdersNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_stakeholdersNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_helpdeskUse(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_helpdeskUse(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.PlanOpsEvalAndLearning().HelpdeskUse(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.([]model.HelpdeskUseType)
+	fc.Result = res
+	return ec.marshalOHelpdeskUseType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐHelpdeskUseTypeᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_helpdeskUse(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type HelpdeskUseType does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_helpdeskUseOther(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_helpdeskUseOther(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.HelpdeskUseOther, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_helpdeskUseOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_helpdeskUseNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_helpdeskUseNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.HelpdeskUseNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_helpdeskUseNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_contractorSupport(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_contractorSupport(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.PlanOpsEvalAndLearning().ContractorSupport(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.([]model.ContractorSupportType)
+	fc.Result = res
+	return ec.marshalOContractorSupportType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐContractorSupportTypeᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_contractorSupport(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type ContractorSupportType does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_contractorSupportOther(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_contractorSupportOther(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ContractorSupportOther, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_contractorSupportOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_contractorSupportHow(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_contractorSupportHow(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ContractorSupportHow, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_contractorSupportHow(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_contractorSupportNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_contractorSupportNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ContractorSupportNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_contractorSupportNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_iddocSupport(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_iddocSupport(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.IddocSupport, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*bool)
+	fc.Result = res
+	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_iddocSupport(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_iddocSupportNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_iddocSupportNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.IddocSupportNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_iddocSupportNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_iddocOperations(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_iddocOperations(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.IddocOperations, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*models.IddocOperationsType)
+	fc.Result = res
+	return ec.marshalOIddocOperationsType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐIddocOperationsType(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_iddocOperations(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type IddocOperationsType does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_iddocOperationsOther(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_iddocOperationsOther(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.IddocOperationsOther, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_iddocOperationsOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_iddocOperationsNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_iddocOperationsNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.IddocOperationsNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_iddocOperationsNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_technicalContactsIdentified(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_technicalContactsIdentified(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.TechnicalContactsIdentified, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*bool)
+	fc.Result = res
+	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_technicalContactsIdentified(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_technicalContactsIdentifiedDetail(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_technicalContactsIdentifiedDetail(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.TechnicalContactsIdentifiedDetail, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_technicalContactsIdentifiedDetail(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_technicalContactsIdentifiedNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_technicalContactsIdentifiedNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.TechnicalContactsIdentifiedNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_technicalContactsIdentifiedNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_captureParticipantInfo(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_captureParticipantInfo(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.CaptureParticipantInfo, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*bool)
+	fc.Result = res
+	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_captureParticipantInfo(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_captureParticipantInfoNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_captureParticipantInfoNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.CaptureParticipantInfoNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_captureParticipantInfoNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_icdOwner(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_icdOwner(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.IcdOwner, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_icdOwner(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_draftIcdDueDate(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_draftIcdDueDate(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.DraftIcdDueDate, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*time.Time)
+	fc.Result = res
+	return ec.marshalOTime2ᚖtimeᚐTime(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_draftIcdDueDate(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Time does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_icdNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_icdNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.IcdNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_icdNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_uatNeeds(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_uatNeeds(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.UatNeeds, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_uatNeeds(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_stcNeeds(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_stcNeeds(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.StcNeeds, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_stcNeeds(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_testingTimelines(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_testingTimelines(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.TestingTimelines, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_testingTimelines(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_testingNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_testingNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.TestingNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_testingNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_dataMonitoringFileTypes(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_dataMonitoringFileTypes(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.PlanOpsEvalAndLearning().DataMonitoringFileTypes(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.([]model.MonitoringFileType)
+	fc.Result = res
+	return ec.marshalOMonitoringFileType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐMonitoringFileTypeᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_dataMonitoringFileTypes(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type MonitoringFileType does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_dataMonitoringFileOther(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_dataMonitoringFileOther(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.DataMonitoringFileOther, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_dataMonitoringFileOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_dataResponseType(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_dataResponseType(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.DataResponseType, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_dataResponseType(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_dataResponseFileFrequency(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_dataResponseFileFrequency(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.DataResponseFileFrequency, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_dataResponseFileFrequency(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_dataFullTimeOrIncremental(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_dataFullTimeOrIncremental(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.DataFullTimeOrIncremental, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*models.DataFullTimeOrIncrementalType)
+	fc.Result = res
+	return ec.marshalODataFullTimeOrIncrementalType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDataFullTimeOrIncrementalType(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_dataFullTimeOrIncremental(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type DataFullTimeOrIncrementalType does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_eftSetUp(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_eftSetUp(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.EftSetUp, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*bool)
+	fc.Result = res
+	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_eftSetUp(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_unsolicitedAdjustmentsIncluded(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_unsolicitedAdjustmentsIncluded(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.UnsolicitedAdjustmentsIncluded, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*bool)
+	fc.Result = res
+	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_unsolicitedAdjustmentsIncluded(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_dataFlowDiagramsNeeded(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_dataFlowDiagramsNeeded(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.DataFlowDiagramsNeeded, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*bool)
+	fc.Result = res
+	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_dataFlowDiagramsNeeded(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_produceBenefitEnhancementFiles(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_produceBenefitEnhancementFiles(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ProduceBenefitEnhancementFiles, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*bool)
+	fc.Result = res
+	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_produceBenefitEnhancementFiles(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_fileNamingConventions(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_fileNamingConventions(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.FileNamingConventions, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_fileNamingConventions(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_dataMonitoringNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_dataMonitoringNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.DataMonitoringNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_dataMonitoringNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_benchmarkForPerformance(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_benchmarkForPerformance(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.BenchmarkForPerformance, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*models.BenchmarkForPerformanceType)
+	fc.Result = res
+	return ec.marshalOBenchmarkForPerformanceType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐBenchmarkForPerformanceType(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_benchmarkForPerformance(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type BenchmarkForPerformanceType does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_benchmarkForPerformanceNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_benchmarkForPerformanceNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.BenchmarkForPerformanceNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_benchmarkForPerformanceNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_computePerformanceScores(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_computePerformanceScores(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ComputePerformanceScores, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*bool)
+	fc.Result = res
+	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_computePerformanceScores(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_computePerformanceScoresNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_computePerformanceScoresNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ComputePerformanceScoresNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_computePerformanceScoresNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_riskAdjustPerformance(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_riskAdjustPerformance(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.RiskAdjustPerformance, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*bool)
+	fc.Result = res
+	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_riskAdjustPerformance(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_riskAdjustFeedback(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_riskAdjustFeedback(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.RiskAdjustFeedback, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*bool)
+	fc.Result = res
+	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_riskAdjustFeedback(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_riskAdjustPayments(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_riskAdjustPayments(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.RiskAdjustPayments, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*bool)
+	fc.Result = res
+	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_riskAdjustPayments(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_riskAdjustOther(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_riskAdjustOther(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.RiskAdjustOther, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*bool)
+	fc.Result = res
+	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_riskAdjustOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_riskAdjustNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_riskAdjustNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.RiskAdjustNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_riskAdjustNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_appealPerformance(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_appealPerformance(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.AppealPerformance, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*bool)
+	fc.Result = res
+	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_appealPerformance(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_appealFeedback(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_appealFeedback(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.AppealFeedback, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*bool)
+	fc.Result = res
+	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_appealFeedback(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_appealPayments(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_appealPayments(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.AppealPayments, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*bool)
+	fc.Result = res
+	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_appealPayments(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_appealOther(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_appealOther(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.AppealOther, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*bool)
+	fc.Result = res
+	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_appealOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_appealNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_appealNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.AppealNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_appealNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_evaluationApproaches(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_evaluationApproaches(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.PlanOpsEvalAndLearning().EvaluationApproaches(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.([]model.EvaluationApproachType)
+	fc.Result = res
+	return ec.marshalOEvaluationApproachType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐEvaluationApproachTypeᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_evaluationApproaches(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type EvaluationApproachType does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_evaluationApproachOther(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_evaluationApproachOther(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.EvaluationApproachOther, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_evaluationApproachOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_evalutaionApproachNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_evalutaionApproachNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.EvalutaionApproachNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_evalutaionApproachNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_ccmInvolvment(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_ccmInvolvment(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.PlanOpsEvalAndLearning().CcmInvolvment(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.([]model.CcmInvolvmentType)
+	fc.Result = res
+	return ec.marshalOCcmInvolvmentType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCcmInvolvmentTypeᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_ccmInvolvment(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type CcmInvolvmentType does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_ccmInvolvmentOther(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_ccmInvolvmentOther(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.CcmInvolvmentOther, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_ccmInvolvmentOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_ccmInvolvmentNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_ccmInvolvmentNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.CcmInvolvmentNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_ccmInvolvmentNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_dataNeededForMonitoring(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_dataNeededForMonitoring(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.PlanOpsEvalAndLearning().DataNeededForMonitoring(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.([]model.DataForMonitoringType)
+	fc.Result = res
+	return ec.marshalODataForMonitoringType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐDataForMonitoringTypeᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_dataNeededForMonitoring(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type DataForMonitoringType does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_dataNeededForMonitoringOther(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_dataNeededForMonitoringOther(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.DataNeededForMonitoringOther, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_dataNeededForMonitoringOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_dataNeededForMonitoringNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_dataNeededForMonitoringNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.DataNeededForMonitoringNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_dataNeededForMonitoringNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_dataToSendParticicipants(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_dataToSendParticicipants(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.PlanOpsEvalAndLearning().DataToSendParticicipants(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.([]model.DataToSendParticipantsType)
+	fc.Result = res
+	return ec.marshalODataToSendParticipantsType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐDataToSendParticipantsTypeᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_dataToSendParticicipants(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type DataToSendParticipantsType does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_dataToSendParticicipantsOther(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_dataToSendParticicipantsOther(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.DataToSendParticicipantsOther, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_dataToSendParticicipantsOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_dataToSendParticicipantsNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_dataToSendParticicipantsNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.DataToSendParticicipantsNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_dataToSendParticicipantsNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_shareCclfData(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_shareCclfData(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ShareCclfData, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*bool)
+	fc.Result = res
+	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_shareCclfData(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_shareCclfDataNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_shareCclfDataNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ShareCclfDataNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_shareCclfDataNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_sendFilesBetweenCcw(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_sendFilesBetweenCcw(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.SendFilesBetweenCcw, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*bool)
+	fc.Result = res
+	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_sendFilesBetweenCcw(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_sendFilesBetweenCcwNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_sendFilesBetweenCcwNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.SendFilesBetweenCcwNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_sendFilesBetweenCcwNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_appToSendFilesToKnown(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_appToSendFilesToKnown(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.AppToSendFilesToKnown, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*bool)
+	fc.Result = res
+	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_appToSendFilesToKnown(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_appToSendFilesToWhich(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_appToSendFilesToWhich(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.AppToSendFilesToWhich, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_appToSendFilesToWhich(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_appToSendFilesToNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_appToSendFilesToNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.AppToSendFilesToNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_appToSendFilesToNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_useCcwForFileDistribiutionToParticipants(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_useCcwForFileDistribiutionToParticipants(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.UseCcwForFileDistribiutionToParticipants, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*bool)
+	fc.Result = res
+	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_useCcwForFileDistribiutionToParticipants(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_useCcwForFileDistribiutionToParticipantsNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_useCcwForFileDistribiutionToParticipantsNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.UseCcwForFileDistribiutionToParticipantsNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_useCcwForFileDistribiutionToParticipantsNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_developNewQualityMeasures(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_developNewQualityMeasures(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.DevelopNewQualityMeasures, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*bool)
+	fc.Result = res
+	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_developNewQualityMeasures(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_developNewQualityMeasuresNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_developNewQualityMeasuresNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.DevelopNewQualityMeasuresNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_developNewQualityMeasuresNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_qualityPerformanceImpactsPayment(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_qualityPerformanceImpactsPayment(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.QualityPerformanceImpactsPayment, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*bool)
+	fc.Result = res
+	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_qualityPerformanceImpactsPayment(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_qualityPerformanceImpactsPaymentNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_qualityPerformanceImpactsPaymentNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.QualityPerformanceImpactsPaymentNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_qualityPerformanceImpactsPaymentNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_dataSharingStarts(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_dataSharingStarts(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.DataSharingStarts, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*models.DataStartsType)
+	fc.Result = res
+	return ec.marshalODataStartsType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDataStartsType(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_dataSharingStarts(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type DataStartsType does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_dataSharingStartsOther(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_dataSharingStartsOther(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.DataSharingStartsOther, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_dataSharingStartsOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_dataSharingFrequency(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_dataSharingFrequency(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.PlanOpsEvalAndLearning().DataSharingFrequency(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.([]model.DataFrequencyType)
+	fc.Result = res
+	return ec.marshalODataFrequencyType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐDataFrequencyTypeᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_dataSharingFrequency(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type DataFrequencyType does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_dataSharingFrequencyOther(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_dataSharingFrequencyOther(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.DataSharingFrequencyOther, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_dataSharingFrequencyOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_dataSharingStartsNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_dataSharingStartsNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.DataSharingStartsNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_dataSharingStartsNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_dataCollectionStarts(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_dataCollectionStarts(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.DataCollectionStarts, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*models.DataStartsType)
+	fc.Result = res
+	return ec.marshalODataStartsType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDataStartsType(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_dataCollectionStarts(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type DataStartsType does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_dataCollectionStartsOther(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_dataCollectionStartsOther(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.DataCollectionStartsOther, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_dataCollectionStartsOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_dataCollectionFrequency(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_dataCollectionFrequency(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.PlanOpsEvalAndLearning().DataCollectionFrequency(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.([]model.DataFrequencyType)
+	fc.Result = res
+	return ec.marshalODataFrequencyType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐDataFrequencyTypeᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_dataCollectionFrequency(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type DataFrequencyType does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_dataCollectionFrequencyOther(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_dataCollectionFrequencyOther(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.DataCollectionFrequencyOther, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_dataCollectionFrequencyOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_dataCollectionFrequencyNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_dataCollectionFrequencyNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.DataCollectionFrequencyNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_dataCollectionFrequencyNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_qualityReportingStarts(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_qualityReportingStarts(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.QualityReportingStarts, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*models.DataStartsType)
+	fc.Result = res
+	return ec.marshalODataStartsType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDataStartsType(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_qualityReportingStarts(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type DataStartsType does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_qualityReportingStartsOther(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_qualityReportingStartsOther(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.QualityReportingStartsOther, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_qualityReportingStartsOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_qualityReportingStartsNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_qualityReportingStartsNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.QualityReportingStartsNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_qualityReportingStartsNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_modelLearningSystems(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_modelLearningSystems(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.PlanOpsEvalAndLearning().ModelLearningSystems(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.([]model.ModelLearningSystemType)
+	fc.Result = res
+	return ec.marshalOModelLearningSystemType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐModelLearningSystemTypeᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_modelLearningSystems(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type ModelLearningSystemType does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_modelLearningSystemsOther(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_modelLearningSystemsOther(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ModelLearningSystemsOther, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_modelLearningSystemsOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_modelLearningSystemsNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_modelLearningSystemsNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ModelLearningSystemsNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_modelLearningSystemsNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_anticipatedChallenges(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_anticipatedChallenges(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.AnticipatedChallenges, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_anticipatedChallenges(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_createdBy(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_createdBy(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.CreatedBy, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalNString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_createdBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_createdDts(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_createdDts(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.CreatedDts, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(time.Time)
+	fc.Result = res
+	return ec.marshalNTime2timeᚐTime(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_createdDts(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Time does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_modifiedBy(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_modifiedBy(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ModifiedBy, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_modifiedBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_modifiedDts(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_modifiedDts(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ModifiedDts, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*time.Time)
+	fc.Result = res
+	return ec.marshalOTime2ᚖtimeᚐTime(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_modifiedDts(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Time does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning_status(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_status(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Status, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(models.TaskStatus)
+	fc.Result = res
+	return ec.marshalNTaskStatus2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTaskStatus(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_status(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type TaskStatus does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _PlanParticipantsAndProviders_id(ctx context.Context, field graphql.CollectedField, obj *models.PlanParticipantsAndProviders) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_PlanParticipantsAndProviders_id(ctx, field)
 	if err != nil {
@@ -17917,6 +24026,8 @@ func (ec *executionContext) fieldContext_Query_modelPlan(ctx context.Context, fi
 				return ec.fieldContext_ModelPlan_providersAndParticipants(ctx, field)
 			case "beneficiaries":
 				return ec.fieldContext_ModelPlan_beneficiaries(ctx, field)
+			case "opsEvalAndLearning":
+				return ec.fieldContext_ModelPlan_opsEvalAndLearning(ctx, field)
 			case "collaborators":
 				return ec.fieldContext_ModelPlan_collaborators(ctx, field)
 			case "documents":
@@ -18257,6 +24368,8 @@ func (ec *executionContext) fieldContext_Query_modelPlanCollection(ctx context.C
 				return ec.fieldContext_ModelPlan_providersAndParticipants(ctx, field)
 			case "beneficiaries":
 				return ec.fieldContext_ModelPlan_beneficiaries(ctx, field)
+			case "opsEvalAndLearning":
+				return ec.fieldContext_ModelPlan_opsEvalAndLearning(ctx, field)
 			case "collaborators":
 				return ec.fieldContext_ModelPlan_collaborators(ctx, field)
 			case "documents":
@@ -21266,6 +27379,26 @@ func (ec *executionContext) _ModelPlan(ctx context.Context, sel ast.SelectionSet
 				return innerFunc(ctx)
 
 			})
+		case "opsEvalAndLearning":
+			field := field
+
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._ModelPlan_opsEvalAndLearning(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&invalids, 1)
+				}
+				return res
+			}
+
+			out.Concurrently(i, func() graphql.Marshaler {
+				return innerFunc(ctx)
+
+			})
 		case "collaborators":
 			field := field
 
@@ -21448,6 +27581,15 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._Mutation_updatePlanParticipantsAndProviders(ctx, field)
+			})
+
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		case "updatePlanOpsEvalAndLearning":
+
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_updatePlanOpsEvalAndLearning(ctx, field)
 			})
 
 			if out.Values[i] == graphql.Null {
@@ -22653,6 +28795,614 @@ func (ec *executionContext) _PlanMilestones(ctx context.Context, sel ast.Selecti
 	return out
 }
 
+var planOpsEvalAndLearningImplementors = []string{"PlanOpsEvalAndLearning"}
+
+func (ec *executionContext) _PlanOpsEvalAndLearning(ctx context.Context, sel ast.SelectionSet, obj *models.PlanOpsEvalAndLearning) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, planOpsEvalAndLearningImplementors)
+	out := graphql.NewFieldSet(fields)
+	var invalids uint32
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("PlanOpsEvalAndLearning")
+		case "id":
+
+			out.Values[i] = ec._PlanOpsEvalAndLearning_id(ctx, field, obj)
+
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&invalids, 1)
+			}
+		case "modelPlanID":
+
+			out.Values[i] = ec._PlanOpsEvalAndLearning_modelPlanID(ctx, field, obj)
+
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&invalids, 1)
+			}
+		case "agencyOrStateHelp":
+			field := field
+
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._PlanOpsEvalAndLearning_agencyOrStateHelp(ctx, field, obj)
+				return res
+			}
+
+			out.Concurrently(i, func() graphql.Marshaler {
+				return innerFunc(ctx)
+
+			})
+		case "agencyOrStateHelpOther":
+
+			out.Values[i] = ec._PlanOpsEvalAndLearning_agencyOrStateHelpOther(ctx, field, obj)
+
+		case "agencyOrStateHelpNote":
+
+			out.Values[i] = ec._PlanOpsEvalAndLearning_agencyOrStateHelpNote(ctx, field, obj)
+
+		case "stakeholders":
+			field := field
+
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._PlanOpsEvalAndLearning_stakeholders(ctx, field, obj)
+				return res
+			}
+
+			out.Concurrently(i, func() graphql.Marshaler {
+				return innerFunc(ctx)
+
+			})
+		case "stakeholdersOther":
+
+			out.Values[i] = ec._PlanOpsEvalAndLearning_stakeholdersOther(ctx, field, obj)
+
+		case "stakeholdersNote":
+
+			out.Values[i] = ec._PlanOpsEvalAndLearning_stakeholdersNote(ctx, field, obj)
+
+		case "helpdeskUse":
+			field := field
+
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._PlanOpsEvalAndLearning_helpdeskUse(ctx, field, obj)
+				return res
+			}
+
+			out.Concurrently(i, func() graphql.Marshaler {
+				return innerFunc(ctx)
+
+			})
+		case "helpdeskUseOther":
+
+			out.Values[i] = ec._PlanOpsEvalAndLearning_helpdeskUseOther(ctx, field, obj)
+
+		case "helpdeskUseNote":
+
+			out.Values[i] = ec._PlanOpsEvalAndLearning_helpdeskUseNote(ctx, field, obj)
+
+		case "contractorSupport":
+			field := field
+
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._PlanOpsEvalAndLearning_contractorSupport(ctx, field, obj)
+				return res
+			}
+
+			out.Concurrently(i, func() graphql.Marshaler {
+				return innerFunc(ctx)
+
+			})
+		case "contractorSupportOther":
+
+			out.Values[i] = ec._PlanOpsEvalAndLearning_contractorSupportOther(ctx, field, obj)
+
+		case "contractorSupportHow":
+
+			out.Values[i] = ec._PlanOpsEvalAndLearning_contractorSupportHow(ctx, field, obj)
+
+		case "contractorSupportNote":
+
+			out.Values[i] = ec._PlanOpsEvalAndLearning_contractorSupportNote(ctx, field, obj)
+
+		case "iddocSupport":
+
+			out.Values[i] = ec._PlanOpsEvalAndLearning_iddocSupport(ctx, field, obj)
+
+		case "iddocSupportNote":
+
+			out.Values[i] = ec._PlanOpsEvalAndLearning_iddocSupportNote(ctx, field, obj)
+
+		case "iddocOperations":
+
+			out.Values[i] = ec._PlanOpsEvalAndLearning_iddocOperations(ctx, field, obj)
+
+		case "iddocOperationsOther":
+
+			out.Values[i] = ec._PlanOpsEvalAndLearning_iddocOperationsOther(ctx, field, obj)
+
+		case "iddocOperationsNote":
+
+			out.Values[i] = ec._PlanOpsEvalAndLearning_iddocOperationsNote(ctx, field, obj)
+
+		case "technicalContactsIdentified":
+
+			out.Values[i] = ec._PlanOpsEvalAndLearning_technicalContactsIdentified(ctx, field, obj)
+
+		case "technicalContactsIdentifiedDetail":
+
+			out.Values[i] = ec._PlanOpsEvalAndLearning_technicalContactsIdentifiedDetail(ctx, field, obj)
+
+		case "technicalContactsIdentifiedNote":
+
+			out.Values[i] = ec._PlanOpsEvalAndLearning_technicalContactsIdentifiedNote(ctx, field, obj)
+
+		case "captureParticipantInfo":
+
+			out.Values[i] = ec._PlanOpsEvalAndLearning_captureParticipantInfo(ctx, field, obj)
+
+		case "captureParticipantInfoNote":
+
+			out.Values[i] = ec._PlanOpsEvalAndLearning_captureParticipantInfoNote(ctx, field, obj)
+
+		case "icdOwner":
+
+			out.Values[i] = ec._PlanOpsEvalAndLearning_icdOwner(ctx, field, obj)
+
+		case "draftIcdDueDate":
+
+			out.Values[i] = ec._PlanOpsEvalAndLearning_draftIcdDueDate(ctx, field, obj)
+
+		case "icdNote":
+
+			out.Values[i] = ec._PlanOpsEvalAndLearning_icdNote(ctx, field, obj)
+
+		case "uatNeeds":
+
+			out.Values[i] = ec._PlanOpsEvalAndLearning_uatNeeds(ctx, field, obj)
+
+		case "stcNeeds":
+
+			out.Values[i] = ec._PlanOpsEvalAndLearning_stcNeeds(ctx, field, obj)
+
+		case "testingTimelines":
+
+			out.Values[i] = ec._PlanOpsEvalAndLearning_testingTimelines(ctx, field, obj)
+
+		case "testingNote":
+
+			out.Values[i] = ec._PlanOpsEvalAndLearning_testingNote(ctx, field, obj)
+
+		case "dataMonitoringFileTypes":
+			field := field
+
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._PlanOpsEvalAndLearning_dataMonitoringFileTypes(ctx, field, obj)
+				return res
+			}
+
+			out.Concurrently(i, func() graphql.Marshaler {
+				return innerFunc(ctx)
+
+			})
+		case "dataMonitoringFileOther":
+
+			out.Values[i] = ec._PlanOpsEvalAndLearning_dataMonitoringFileOther(ctx, field, obj)
+
+		case "dataResponseType":
+
+			out.Values[i] = ec._PlanOpsEvalAndLearning_dataResponseType(ctx, field, obj)
+
+		case "dataResponseFileFrequency":
+
+			out.Values[i] = ec._PlanOpsEvalAndLearning_dataResponseFileFrequency(ctx, field, obj)
+
+		case "dataFullTimeOrIncremental":
+
+			out.Values[i] = ec._PlanOpsEvalAndLearning_dataFullTimeOrIncremental(ctx, field, obj)
+
+		case "eftSetUp":
+
+			out.Values[i] = ec._PlanOpsEvalAndLearning_eftSetUp(ctx, field, obj)
+
+		case "unsolicitedAdjustmentsIncluded":
+
+			out.Values[i] = ec._PlanOpsEvalAndLearning_unsolicitedAdjustmentsIncluded(ctx, field, obj)
+
+		case "dataFlowDiagramsNeeded":
+
+			out.Values[i] = ec._PlanOpsEvalAndLearning_dataFlowDiagramsNeeded(ctx, field, obj)
+
+		case "produceBenefitEnhancementFiles":
+
+			out.Values[i] = ec._PlanOpsEvalAndLearning_produceBenefitEnhancementFiles(ctx, field, obj)
+
+		case "fileNamingConventions":
+
+			out.Values[i] = ec._PlanOpsEvalAndLearning_fileNamingConventions(ctx, field, obj)
+
+		case "dataMonitoringNote":
+
+			out.Values[i] = ec._PlanOpsEvalAndLearning_dataMonitoringNote(ctx, field, obj)
+
+		case "benchmarkForPerformance":
+
+			out.Values[i] = ec._PlanOpsEvalAndLearning_benchmarkForPerformance(ctx, field, obj)
+
+		case "benchmarkForPerformanceNote":
+
+			out.Values[i] = ec._PlanOpsEvalAndLearning_benchmarkForPerformanceNote(ctx, field, obj)
+
+		case "computePerformanceScores":
+
+			out.Values[i] = ec._PlanOpsEvalAndLearning_computePerformanceScores(ctx, field, obj)
+
+		case "computePerformanceScoresNote":
+
+			out.Values[i] = ec._PlanOpsEvalAndLearning_computePerformanceScoresNote(ctx, field, obj)
+
+		case "riskAdjustPerformance":
+
+			out.Values[i] = ec._PlanOpsEvalAndLearning_riskAdjustPerformance(ctx, field, obj)
+
+		case "riskAdjustFeedback":
+
+			out.Values[i] = ec._PlanOpsEvalAndLearning_riskAdjustFeedback(ctx, field, obj)
+
+		case "riskAdjustPayments":
+
+			out.Values[i] = ec._PlanOpsEvalAndLearning_riskAdjustPayments(ctx, field, obj)
+
+		case "riskAdjustOther":
+
+			out.Values[i] = ec._PlanOpsEvalAndLearning_riskAdjustOther(ctx, field, obj)
+
+		case "riskAdjustNote":
+
+			out.Values[i] = ec._PlanOpsEvalAndLearning_riskAdjustNote(ctx, field, obj)
+
+		case "appealPerformance":
+
+			out.Values[i] = ec._PlanOpsEvalAndLearning_appealPerformance(ctx, field, obj)
+
+		case "appealFeedback":
+
+			out.Values[i] = ec._PlanOpsEvalAndLearning_appealFeedback(ctx, field, obj)
+
+		case "appealPayments":
+
+			out.Values[i] = ec._PlanOpsEvalAndLearning_appealPayments(ctx, field, obj)
+
+		case "appealOther":
+
+			out.Values[i] = ec._PlanOpsEvalAndLearning_appealOther(ctx, field, obj)
+
+		case "appealNote":
+
+			out.Values[i] = ec._PlanOpsEvalAndLearning_appealNote(ctx, field, obj)
+
+		case "evaluationApproaches":
+			field := field
+
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._PlanOpsEvalAndLearning_evaluationApproaches(ctx, field, obj)
+				return res
+			}
+
+			out.Concurrently(i, func() graphql.Marshaler {
+				return innerFunc(ctx)
+
+			})
+		case "evaluationApproachOther":
+
+			out.Values[i] = ec._PlanOpsEvalAndLearning_evaluationApproachOther(ctx, field, obj)
+
+		case "evalutaionApproachNote":
+
+			out.Values[i] = ec._PlanOpsEvalAndLearning_evalutaionApproachNote(ctx, field, obj)
+
+		case "ccmInvolvment":
+			field := field
+
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._PlanOpsEvalAndLearning_ccmInvolvment(ctx, field, obj)
+				return res
+			}
+
+			out.Concurrently(i, func() graphql.Marshaler {
+				return innerFunc(ctx)
+
+			})
+		case "ccmInvolvmentOther":
+
+			out.Values[i] = ec._PlanOpsEvalAndLearning_ccmInvolvmentOther(ctx, field, obj)
+
+		case "ccmInvolvmentNote":
+
+			out.Values[i] = ec._PlanOpsEvalAndLearning_ccmInvolvmentNote(ctx, field, obj)
+
+		case "dataNeededForMonitoring":
+			field := field
+
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._PlanOpsEvalAndLearning_dataNeededForMonitoring(ctx, field, obj)
+				return res
+			}
+
+			out.Concurrently(i, func() graphql.Marshaler {
+				return innerFunc(ctx)
+
+			})
+		case "dataNeededForMonitoringOther":
+
+			out.Values[i] = ec._PlanOpsEvalAndLearning_dataNeededForMonitoringOther(ctx, field, obj)
+
+		case "dataNeededForMonitoringNote":
+
+			out.Values[i] = ec._PlanOpsEvalAndLearning_dataNeededForMonitoringNote(ctx, field, obj)
+
+		case "dataToSendParticicipants":
+			field := field
+
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._PlanOpsEvalAndLearning_dataToSendParticicipants(ctx, field, obj)
+				return res
+			}
+
+			out.Concurrently(i, func() graphql.Marshaler {
+				return innerFunc(ctx)
+
+			})
+		case "dataToSendParticicipantsOther":
+
+			out.Values[i] = ec._PlanOpsEvalAndLearning_dataToSendParticicipantsOther(ctx, field, obj)
+
+		case "dataToSendParticicipantsNote":
+
+			out.Values[i] = ec._PlanOpsEvalAndLearning_dataToSendParticicipantsNote(ctx, field, obj)
+
+		case "shareCclfData":
+
+			out.Values[i] = ec._PlanOpsEvalAndLearning_shareCclfData(ctx, field, obj)
+
+		case "shareCclfDataNote":
+
+			out.Values[i] = ec._PlanOpsEvalAndLearning_shareCclfDataNote(ctx, field, obj)
+
+		case "sendFilesBetweenCcw":
+
+			out.Values[i] = ec._PlanOpsEvalAndLearning_sendFilesBetweenCcw(ctx, field, obj)
+
+		case "sendFilesBetweenCcwNote":
+
+			out.Values[i] = ec._PlanOpsEvalAndLearning_sendFilesBetweenCcwNote(ctx, field, obj)
+
+		case "appToSendFilesToKnown":
+
+			out.Values[i] = ec._PlanOpsEvalAndLearning_appToSendFilesToKnown(ctx, field, obj)
+
+		case "appToSendFilesToWhich":
+
+			out.Values[i] = ec._PlanOpsEvalAndLearning_appToSendFilesToWhich(ctx, field, obj)
+
+		case "appToSendFilesToNote":
+
+			out.Values[i] = ec._PlanOpsEvalAndLearning_appToSendFilesToNote(ctx, field, obj)
+
+		case "useCcwForFileDistribiutionToParticipants":
+
+			out.Values[i] = ec._PlanOpsEvalAndLearning_useCcwForFileDistribiutionToParticipants(ctx, field, obj)
+
+		case "useCcwForFileDistribiutionToParticipantsNote":
+
+			out.Values[i] = ec._PlanOpsEvalAndLearning_useCcwForFileDistribiutionToParticipantsNote(ctx, field, obj)
+
+		case "developNewQualityMeasures":
+
+			out.Values[i] = ec._PlanOpsEvalAndLearning_developNewQualityMeasures(ctx, field, obj)
+
+		case "developNewQualityMeasuresNote":
+
+			out.Values[i] = ec._PlanOpsEvalAndLearning_developNewQualityMeasuresNote(ctx, field, obj)
+
+		case "qualityPerformanceImpactsPayment":
+
+			out.Values[i] = ec._PlanOpsEvalAndLearning_qualityPerformanceImpactsPayment(ctx, field, obj)
+
+		case "qualityPerformanceImpactsPaymentNote":
+
+			out.Values[i] = ec._PlanOpsEvalAndLearning_qualityPerformanceImpactsPaymentNote(ctx, field, obj)
+
+		case "dataSharingStarts":
+
+			out.Values[i] = ec._PlanOpsEvalAndLearning_dataSharingStarts(ctx, field, obj)
+
+		case "dataSharingStartsOther":
+
+			out.Values[i] = ec._PlanOpsEvalAndLearning_dataSharingStartsOther(ctx, field, obj)
+
+		case "dataSharingFrequency":
+			field := field
+
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._PlanOpsEvalAndLearning_dataSharingFrequency(ctx, field, obj)
+				return res
+			}
+
+			out.Concurrently(i, func() graphql.Marshaler {
+				return innerFunc(ctx)
+
+			})
+		case "dataSharingFrequencyOther":
+
+			out.Values[i] = ec._PlanOpsEvalAndLearning_dataSharingFrequencyOther(ctx, field, obj)
+
+		case "dataSharingStartsNote":
+
+			out.Values[i] = ec._PlanOpsEvalAndLearning_dataSharingStartsNote(ctx, field, obj)
+
+		case "dataCollectionStarts":
+
+			out.Values[i] = ec._PlanOpsEvalAndLearning_dataCollectionStarts(ctx, field, obj)
+
+		case "dataCollectionStartsOther":
+
+			out.Values[i] = ec._PlanOpsEvalAndLearning_dataCollectionStartsOther(ctx, field, obj)
+
+		case "dataCollectionFrequency":
+			field := field
+
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._PlanOpsEvalAndLearning_dataCollectionFrequency(ctx, field, obj)
+				return res
+			}
+
+			out.Concurrently(i, func() graphql.Marshaler {
+				return innerFunc(ctx)
+
+			})
+		case "dataCollectionFrequencyOther":
+
+			out.Values[i] = ec._PlanOpsEvalAndLearning_dataCollectionFrequencyOther(ctx, field, obj)
+
+		case "dataCollectionFrequencyNote":
+
+			out.Values[i] = ec._PlanOpsEvalAndLearning_dataCollectionFrequencyNote(ctx, field, obj)
+
+		case "qualityReportingStarts":
+
+			out.Values[i] = ec._PlanOpsEvalAndLearning_qualityReportingStarts(ctx, field, obj)
+
+		case "qualityReportingStartsOther":
+
+			out.Values[i] = ec._PlanOpsEvalAndLearning_qualityReportingStartsOther(ctx, field, obj)
+
+		case "qualityReportingStartsNote":
+
+			out.Values[i] = ec._PlanOpsEvalAndLearning_qualityReportingStartsNote(ctx, field, obj)
+
+		case "modelLearningSystems":
+			field := field
+
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._PlanOpsEvalAndLearning_modelLearningSystems(ctx, field, obj)
+				return res
+			}
+
+			out.Concurrently(i, func() graphql.Marshaler {
+				return innerFunc(ctx)
+
+			})
+		case "modelLearningSystemsOther":
+
+			out.Values[i] = ec._PlanOpsEvalAndLearning_modelLearningSystemsOther(ctx, field, obj)
+
+		case "modelLearningSystemsNote":
+
+			out.Values[i] = ec._PlanOpsEvalAndLearning_modelLearningSystemsNote(ctx, field, obj)
+
+		case "anticipatedChallenges":
+
+			out.Values[i] = ec._PlanOpsEvalAndLearning_anticipatedChallenges(ctx, field, obj)
+
+		case "createdBy":
+
+			out.Values[i] = ec._PlanOpsEvalAndLearning_createdBy(ctx, field, obj)
+
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&invalids, 1)
+			}
+		case "createdDts":
+
+			out.Values[i] = ec._PlanOpsEvalAndLearning_createdDts(ctx, field, obj)
+
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&invalids, 1)
+			}
+		case "modifiedBy":
+
+			out.Values[i] = ec._PlanOpsEvalAndLearning_modifiedBy(ctx, field, obj)
+
+		case "modifiedDts":
+
+			out.Values[i] = ec._PlanOpsEvalAndLearning_modifiedDts(ctx, field, obj)
+
+		case "status":
+
+			out.Values[i] = ec._PlanOpsEvalAndLearning_status(ctx, field, obj)
+
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&invalids, 1)
+			}
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch()
+	if invalids > 0 {
+		return graphql.Null
+	}
+	return out
+}
+
 var planParticipantsAndProvidersImplementors = []string{"PlanParticipantsAndProviders"}
 
 func (ec *executionContext) _PlanParticipantsAndProviders(ctx context.Context, sel ast.SelectionSet, obj *models.PlanParticipantsAndProviders) graphql.Marshaler {
@@ -23597,6 +30347,16 @@ func (ec *executionContext) ___Type(ctx context.Context, sel ast.SelectionSet, o
 
 // region    ***************************** type.gotpl *****************************
 
+func (ec *executionContext) unmarshalNAgencyOrStateHelpType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐAgencyOrStateHelpType(ctx context.Context, v interface{}) (model.AgencyOrStateHelpType, error) {
+	var res model.AgencyOrStateHelpType
+	err := res.UnmarshalGQL(v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalNAgencyOrStateHelpType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐAgencyOrStateHelpType(ctx context.Context, sel ast.SelectionSet, v model.AgencyOrStateHelpType) graphql.Marshaler {
+	return v
+}
+
 func (ec *executionContext) unmarshalNAgreementType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐAgreementType(ctx context.Context, v interface{}) (model.AgreementType, error) {
 	var res model.AgreementType
 	err := res.UnmarshalGQL(v)
@@ -23983,6 +30743,26 @@ func (ec *executionContext) marshalNCMSCenter2ᚕgithubᚗcomᚋcmsgovᚋmintᚑ
 	return ret
 }
 
+func (ec *executionContext) unmarshalNCcmInvolvmentType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCcmInvolvmentType(ctx context.Context, v interface{}) (model.CcmInvolvmentType, error) {
+	var res model.CcmInvolvmentType
+	err := res.UnmarshalGQL(v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalNCcmInvolvmentType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCcmInvolvmentType(ctx context.Context, sel ast.SelectionSet, v model.CcmInvolvmentType) graphql.Marshaler {
+	return v
+}
+
+func (ec *executionContext) unmarshalNContractorSupportType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐContractorSupportType(ctx context.Context, v interface{}) (model.ContractorSupportType, error) {
+	var res model.ContractorSupportType
+	err := res.UnmarshalGQL(v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalNContractorSupportType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐContractorSupportType(ctx context.Context, sel ast.SelectionSet, v model.ContractorSupportType) graphql.Marshaler {
+	return v
+}
+
 func (ec *executionContext) marshalNCurrentUser2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCurrentUser(ctx context.Context, sel ast.SelectionSet, v model.CurrentUser) graphql.Marshaler {
 	return ec._CurrentUser(ctx, sel, &v)
 }
@@ -23995,6 +30775,36 @@ func (ec *executionContext) marshalNCurrentUser2ᚖgithubᚗcomᚋcmsgovᚋmint�
 		return graphql.Null
 	}
 	return ec._CurrentUser(ctx, sel, v)
+}
+
+func (ec *executionContext) unmarshalNDataForMonitoringType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐDataForMonitoringType(ctx context.Context, v interface{}) (model.DataForMonitoringType, error) {
+	var res model.DataForMonitoringType
+	err := res.UnmarshalGQL(v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalNDataForMonitoringType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐDataForMonitoringType(ctx context.Context, sel ast.SelectionSet, v model.DataForMonitoringType) graphql.Marshaler {
+	return v
+}
+
+func (ec *executionContext) unmarshalNDataFrequencyType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐDataFrequencyType(ctx context.Context, v interface{}) (model.DataFrequencyType, error) {
+	var res model.DataFrequencyType
+	err := res.UnmarshalGQL(v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalNDataFrequencyType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐDataFrequencyType(ctx context.Context, sel ast.SelectionSet, v model.DataFrequencyType) graphql.Marshaler {
+	return v
+}
+
+func (ec *executionContext) unmarshalNDataToSendParticipantsType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐDataToSendParticipantsType(ctx context.Context, v interface{}) (model.DataToSendParticipantsType, error) {
+	var res model.DataToSendParticipantsType
+	err := res.UnmarshalGQL(v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalNDataToSendParticipantsType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐDataToSendParticipantsType(ctx context.Context, sel ast.SelectionSet, v model.DataToSendParticipantsType) graphql.Marshaler {
+	return v
 }
 
 func (ec *executionContext) marshalNDiscussionReply2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDiscussionReply(ctx context.Context, sel ast.SelectionSet, v models.DiscussionReply) graphql.Marshaler {
@@ -24094,6 +30904,16 @@ func (ec *executionContext) marshalNDocumentType2githubᚗcomᚋcmsgovᚋmintᚑ
 		}
 	}
 	return res
+}
+
+func (ec *executionContext) unmarshalNEvaluationApproachType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐEvaluationApproachType(ctx context.Context, v interface{}) (model.EvaluationApproachType, error) {
+	var res model.EvaluationApproachType
+	err := res.UnmarshalGQL(v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalNEvaluationApproachType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐEvaluationApproachType(ctx context.Context, sel ast.SelectionSet, v model.EvaluationApproachType) graphql.Marshaler {
+	return v
 }
 
 func (ec *executionContext) marshalNExistingModel2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐExistingModelᚄ(ctx context.Context, sel ast.SelectionSet, v []*models.ExistingModel) graphql.Marshaler {
@@ -24311,6 +31131,16 @@ func (ec *executionContext) marshalNGeographyType2ᚕgithubᚗcomᚋcmsgovᚋmin
 	return ret
 }
 
+func (ec *executionContext) unmarshalNHelpdeskUseType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐHelpdeskUseType(ctx context.Context, v interface{}) (model.HelpdeskUseType, error) {
+	var res model.HelpdeskUseType
+	err := res.UnmarshalGQL(v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalNHelpdeskUseType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐHelpdeskUseType(ctx context.Context, sel ast.SelectionSet, v model.HelpdeskUseType) graphql.Marshaler {
+	return v
+}
+
 func (ec *executionContext) unmarshalNInt2int(ctx context.Context, v interface{}) (int, error) {
 	res, err := graphql.UnmarshalInt(v)
 	return res, graphql.ErrorOnPath(ctx, err)
@@ -24407,6 +31237,16 @@ func (ec *executionContext) marshalNLaunchDarklySettings2ᚖgithubᚗcomᚋcmsgo
 	return ec._LaunchDarklySettings(ctx, sel, v)
 }
 
+func (ec *executionContext) unmarshalNModelLearningSystemType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐModelLearningSystemType(ctx context.Context, v interface{}) (model.ModelLearningSystemType, error) {
+	var res model.ModelLearningSystemType
+	err := res.UnmarshalGQL(v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalNModelLearningSystemType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐModelLearningSystemType(ctx context.Context, sel ast.SelectionSet, v model.ModelLearningSystemType) graphql.Marshaler {
+	return v
+}
+
 func (ec *executionContext) marshalNModelPlan2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelPlan(ctx context.Context, sel ast.SelectionSet, v models.ModelPlan) graphql.Marshaler {
 	return ec._ModelPlan(ctx, sel, &v)
 }
@@ -24483,6 +31323,16 @@ func (ec *executionContext) marshalNModelStatus2githubᚗcomᚋcmsgovᚋmintᚑa
 		}
 	}
 	return res
+}
+
+func (ec *executionContext) unmarshalNMonitoringFileType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐMonitoringFileType(ctx context.Context, v interface{}) (model.MonitoringFileType, error) {
+	var res model.MonitoringFileType
+	err := res.UnmarshalGQL(v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalNMonitoringFileType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐMonitoringFileType(ctx context.Context, sel ast.SelectionSet, v model.MonitoringFileType) graphql.Marshaler {
+	return v
 }
 
 func (ec *executionContext) unmarshalNParticipantCommunicationType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐParticipantCommunicationType(ctx context.Context, v interface{}) (model.ParticipantCommunicationType, error) {
@@ -24809,6 +31659,24 @@ func (ec *executionContext) marshalNPlanMilestones2ᚖgithubᚗcomᚋcmsgovᚋmi
 	return ec._PlanMilestones(ctx, sel, v)
 }
 
+func (ec *executionContext) marshalNPlanOpsEvalAndLearning2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanOpsEvalAndLearning(ctx context.Context, sel ast.SelectionSet, v models.PlanOpsEvalAndLearning) graphql.Marshaler {
+	return ec._PlanOpsEvalAndLearning(ctx, sel, &v)
+}
+
+func (ec *executionContext) marshalNPlanOpsEvalAndLearning2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanOpsEvalAndLearning(ctx context.Context, sel ast.SelectionSet, v *models.PlanOpsEvalAndLearning) graphql.Marshaler {
+	if v == nil {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
+		return graphql.Null
+	}
+	return ec._PlanOpsEvalAndLearning(ctx, sel, v)
+}
+
+func (ec *executionContext) unmarshalNPlanOpsEvalAndLearningChanges2map(ctx context.Context, v interface{}) (map[string]interface{}, error) {
+	return v.(map[string]interface{}), nil
+}
+
 func (ec *executionContext) marshalNPlanParticipantsAndProviders2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanParticipantsAndProviders(ctx context.Context, sel ast.SelectionSet, v models.PlanParticipantsAndProviders) graphql.Marshaler {
 	return ec._PlanParticipantsAndProviders(ctx, sel, &v)
 }
@@ -24864,6 +31732,16 @@ func (ec *executionContext) unmarshalNSelectionMethodType2githubᚗcomᚋcmsgov�
 }
 
 func (ec *executionContext) marshalNSelectionMethodType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐSelectionMethodType(ctx context.Context, sel ast.SelectionSet, v model.SelectionMethodType) graphql.Marshaler {
+	return v
+}
+
+func (ec *executionContext) unmarshalNStakeholdersType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐStakeholdersType(ctx context.Context, v interface{}) (model.StakeholdersType, error) {
+	var res model.StakeholdersType
+	err := res.UnmarshalGQL(v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalNStakeholdersType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐStakeholdersType(ctx context.Context, sel ast.SelectionSet, v model.StakeholdersType) graphql.Marshaler {
 	return v
 }
 
@@ -25354,6 +32232,73 @@ func (ec *executionContext) marshalN__TypeKind2string(ctx context.Context, sel a
 	return res
 }
 
+func (ec *executionContext) unmarshalOAgencyOrStateHelpType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐAgencyOrStateHelpTypeᚄ(ctx context.Context, v interface{}) ([]model.AgencyOrStateHelpType, error) {
+	if v == nil {
+		return nil, nil
+	}
+	var vSlice []interface{}
+	if v != nil {
+		vSlice = graphql.CoerceList(v)
+	}
+	var err error
+	res := make([]model.AgencyOrStateHelpType, len(vSlice))
+	for i := range vSlice {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
+		res[i], err = ec.unmarshalNAgencyOrStateHelpType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐAgencyOrStateHelpType(ctx, vSlice[i])
+		if err != nil {
+			return nil, err
+		}
+	}
+	return res, nil
+}
+
+func (ec *executionContext) marshalOAgencyOrStateHelpType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐAgencyOrStateHelpTypeᚄ(ctx context.Context, sel ast.SelectionSet, v []model.AgencyOrStateHelpType) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalNAgencyOrStateHelpType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐAgencyOrStateHelpType(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
+}
+
 func (ec *executionContext) unmarshalOAgreementType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐAgreementTypeᚄ(ctx context.Context, v interface{}) ([]model.AgreementType, error) {
 	if v == nil {
 		return nil, nil
@@ -25553,6 +32498,23 @@ func (ec *executionContext) marshalOAuthorityAllowance2ᚕgithubᚗcomᚋcmsgov�
 	}
 
 	return ret
+}
+
+func (ec *executionContext) unmarshalOBenchmarkForPerformanceType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐBenchmarkForPerformanceType(ctx context.Context, v interface{}) (*models.BenchmarkForPerformanceType, error) {
+	if v == nil {
+		return nil, nil
+	}
+	tmp, err := graphql.UnmarshalString(v)
+	res := models.BenchmarkForPerformanceType(tmp)
+	return &res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalOBenchmarkForPerformanceType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐBenchmarkForPerformanceType(ctx context.Context, sel ast.SelectionSet, v *models.BenchmarkForPerformanceType) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	res := graphql.MarshalString(string(*v))
+	return res
 }
 
 func (ec *executionContext) unmarshalOBeneficiariesType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐBeneficiariesTypeᚄ(ctx context.Context, v interface{}) ([]model.BeneficiariesType, error) {
@@ -25782,6 +32744,73 @@ func (ec *executionContext) marshalOCMSCenter2ᚕgithubᚗcomᚋcmsgovᚋmintᚑ
 	return ret
 }
 
+func (ec *executionContext) unmarshalOCcmInvolvmentType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCcmInvolvmentTypeᚄ(ctx context.Context, v interface{}) ([]model.CcmInvolvmentType, error) {
+	if v == nil {
+		return nil, nil
+	}
+	var vSlice []interface{}
+	if v != nil {
+		vSlice = graphql.CoerceList(v)
+	}
+	var err error
+	res := make([]model.CcmInvolvmentType, len(vSlice))
+	for i := range vSlice {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
+		res[i], err = ec.unmarshalNCcmInvolvmentType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCcmInvolvmentType(ctx, vSlice[i])
+		if err != nil {
+			return nil, err
+		}
+	}
+	return res, nil
+}
+
+func (ec *executionContext) marshalOCcmInvolvmentType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCcmInvolvmentTypeᚄ(ctx context.Context, sel ast.SelectionSet, v []model.CcmInvolvmentType) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalNCcmInvolvmentType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCcmInvolvmentType(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
+}
+
 func (ec *executionContext) unmarshalOConfidenceType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐConfidenceType(ctx context.Context, v interface{}) (*models.ConfidenceType, error) {
 	if v == nil {
 		return nil, nil
@@ -25797,6 +32826,308 @@ func (ec *executionContext) marshalOConfidenceType2ᚖgithubᚗcomᚋcmsgovᚋmi
 	}
 	res := graphql.MarshalString(string(*v))
 	return res
+}
+
+func (ec *executionContext) unmarshalOContractorSupportType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐContractorSupportTypeᚄ(ctx context.Context, v interface{}) ([]model.ContractorSupportType, error) {
+	if v == nil {
+		return nil, nil
+	}
+	var vSlice []interface{}
+	if v != nil {
+		vSlice = graphql.CoerceList(v)
+	}
+	var err error
+	res := make([]model.ContractorSupportType, len(vSlice))
+	for i := range vSlice {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
+		res[i], err = ec.unmarshalNContractorSupportType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐContractorSupportType(ctx, vSlice[i])
+		if err != nil {
+			return nil, err
+		}
+	}
+	return res, nil
+}
+
+func (ec *executionContext) marshalOContractorSupportType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐContractorSupportTypeᚄ(ctx context.Context, sel ast.SelectionSet, v []model.ContractorSupportType) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalNContractorSupportType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐContractorSupportType(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
+}
+
+func (ec *executionContext) unmarshalODataForMonitoringType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐDataForMonitoringTypeᚄ(ctx context.Context, v interface{}) ([]model.DataForMonitoringType, error) {
+	if v == nil {
+		return nil, nil
+	}
+	var vSlice []interface{}
+	if v != nil {
+		vSlice = graphql.CoerceList(v)
+	}
+	var err error
+	res := make([]model.DataForMonitoringType, len(vSlice))
+	for i := range vSlice {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
+		res[i], err = ec.unmarshalNDataForMonitoringType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐDataForMonitoringType(ctx, vSlice[i])
+		if err != nil {
+			return nil, err
+		}
+	}
+	return res, nil
+}
+
+func (ec *executionContext) marshalODataForMonitoringType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐDataForMonitoringTypeᚄ(ctx context.Context, sel ast.SelectionSet, v []model.DataForMonitoringType) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalNDataForMonitoringType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐDataForMonitoringType(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
+}
+
+func (ec *executionContext) unmarshalODataFrequencyType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐDataFrequencyTypeᚄ(ctx context.Context, v interface{}) ([]model.DataFrequencyType, error) {
+	if v == nil {
+		return nil, nil
+	}
+	var vSlice []interface{}
+	if v != nil {
+		vSlice = graphql.CoerceList(v)
+	}
+	var err error
+	res := make([]model.DataFrequencyType, len(vSlice))
+	for i := range vSlice {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
+		res[i], err = ec.unmarshalNDataFrequencyType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐDataFrequencyType(ctx, vSlice[i])
+		if err != nil {
+			return nil, err
+		}
+	}
+	return res, nil
+}
+
+func (ec *executionContext) marshalODataFrequencyType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐDataFrequencyTypeᚄ(ctx context.Context, sel ast.SelectionSet, v []model.DataFrequencyType) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalNDataFrequencyType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐDataFrequencyType(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
+}
+
+func (ec *executionContext) unmarshalODataFullTimeOrIncrementalType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDataFullTimeOrIncrementalType(ctx context.Context, v interface{}) (*models.DataFullTimeOrIncrementalType, error) {
+	if v == nil {
+		return nil, nil
+	}
+	tmp, err := graphql.UnmarshalString(v)
+	res := models.DataFullTimeOrIncrementalType(tmp)
+	return &res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalODataFullTimeOrIncrementalType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDataFullTimeOrIncrementalType(ctx context.Context, sel ast.SelectionSet, v *models.DataFullTimeOrIncrementalType) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	res := graphql.MarshalString(string(*v))
+	return res
+}
+
+func (ec *executionContext) unmarshalODataStartsType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDataStartsType(ctx context.Context, v interface{}) (*models.DataStartsType, error) {
+	if v == nil {
+		return nil, nil
+	}
+	tmp, err := graphql.UnmarshalString(v)
+	res := models.DataStartsType(tmp)
+	return &res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalODataStartsType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDataStartsType(ctx context.Context, sel ast.SelectionSet, v *models.DataStartsType) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	res := graphql.MarshalString(string(*v))
+	return res
+}
+
+func (ec *executionContext) unmarshalODataToSendParticipantsType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐDataToSendParticipantsTypeᚄ(ctx context.Context, v interface{}) ([]model.DataToSendParticipantsType, error) {
+	if v == nil {
+		return nil, nil
+	}
+	var vSlice []interface{}
+	if v != nil {
+		vSlice = graphql.CoerceList(v)
+	}
+	var err error
+	res := make([]model.DataToSendParticipantsType, len(vSlice))
+	for i := range vSlice {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
+		res[i], err = ec.unmarshalNDataToSendParticipantsType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐDataToSendParticipantsType(ctx, vSlice[i])
+		if err != nil {
+			return nil, err
+		}
+	}
+	return res, nil
+}
+
+func (ec *executionContext) marshalODataToSendParticipantsType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐDataToSendParticipantsTypeᚄ(ctx context.Context, sel ast.SelectionSet, v []model.DataToSendParticipantsType) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalNDataToSendParticipantsType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐDataToSendParticipantsType(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
 }
 
 func (ec *executionContext) unmarshalODiscussionStatus2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDiscussionStatus(ctx context.Context, v interface{}) (*models.DiscussionStatus, error) {
@@ -25831,6 +33162,73 @@ func (ec *executionContext) marshalODocumentType2ᚖgithubᚗcomᚋcmsgovᚋmint
 	}
 	res := graphql.MarshalString(string(*v))
 	return res
+}
+
+func (ec *executionContext) unmarshalOEvaluationApproachType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐEvaluationApproachTypeᚄ(ctx context.Context, v interface{}) ([]model.EvaluationApproachType, error) {
+	if v == nil {
+		return nil, nil
+	}
+	var vSlice []interface{}
+	if v != nil {
+		vSlice = graphql.CoerceList(v)
+	}
+	var err error
+	res := make([]model.EvaluationApproachType, len(vSlice))
+	for i := range vSlice {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
+		res[i], err = ec.unmarshalNEvaluationApproachType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐEvaluationApproachType(ctx, vSlice[i])
+		if err != nil {
+			return nil, err
+		}
+	}
+	return res, nil
+}
+
+func (ec *executionContext) marshalOEvaluationApproachType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐEvaluationApproachTypeᚄ(ctx context.Context, sel ast.SelectionSet, v []model.EvaluationApproachType) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalNEvaluationApproachType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐEvaluationApproachType(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
 }
 
 func (ec *executionContext) unmarshalOFrequencyType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFrequencyType(ctx context.Context, v interface{}) (*models.FrequencyType, error) {
@@ -25984,6 +33382,90 @@ func (ec *executionContext) marshalOGeographyType2ᚕgithubᚗcomᚋcmsgovᚋmin
 	return ret
 }
 
+func (ec *executionContext) unmarshalOHelpdeskUseType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐHelpdeskUseTypeᚄ(ctx context.Context, v interface{}) ([]model.HelpdeskUseType, error) {
+	if v == nil {
+		return nil, nil
+	}
+	var vSlice []interface{}
+	if v != nil {
+		vSlice = graphql.CoerceList(v)
+	}
+	var err error
+	res := make([]model.HelpdeskUseType, len(vSlice))
+	for i := range vSlice {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
+		res[i], err = ec.unmarshalNHelpdeskUseType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐHelpdeskUseType(ctx, vSlice[i])
+		if err != nil {
+			return nil, err
+		}
+	}
+	return res, nil
+}
+
+func (ec *executionContext) marshalOHelpdeskUseType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐHelpdeskUseTypeᚄ(ctx context.Context, sel ast.SelectionSet, v []model.HelpdeskUseType) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalNHelpdeskUseType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐHelpdeskUseType(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
+}
+
+func (ec *executionContext) unmarshalOIddocOperationsType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐIddocOperationsType(ctx context.Context, v interface{}) (*models.IddocOperationsType, error) {
+	if v == nil {
+		return nil, nil
+	}
+	tmp, err := graphql.UnmarshalString(v)
+	res := models.IddocOperationsType(tmp)
+	return &res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalOIddocOperationsType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐIddocOperationsType(ctx context.Context, sel ast.SelectionSet, v *models.IddocOperationsType) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	res := graphql.MarshalString(string(*v))
+	return res
+}
+
 func (ec *executionContext) unmarshalOInt2ᚕintᚄ(ctx context.Context, v interface{}) ([]int, error) {
 	if v == nil {
 		return nil, nil
@@ -26122,6 +33604,73 @@ func (ec *executionContext) marshalOModelCategory2ᚖgithubᚗcomᚋcmsgovᚋmin
 	return res
 }
 
+func (ec *executionContext) unmarshalOModelLearningSystemType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐModelLearningSystemTypeᚄ(ctx context.Context, v interface{}) ([]model.ModelLearningSystemType, error) {
+	if v == nil {
+		return nil, nil
+	}
+	var vSlice []interface{}
+	if v != nil {
+		vSlice = graphql.CoerceList(v)
+	}
+	var err error
+	res := make([]model.ModelLearningSystemType, len(vSlice))
+	for i := range vSlice {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
+		res[i], err = ec.unmarshalNModelLearningSystemType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐModelLearningSystemType(ctx, vSlice[i])
+		if err != nil {
+			return nil, err
+		}
+	}
+	return res, nil
+}
+
+func (ec *executionContext) marshalOModelLearningSystemType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐModelLearningSystemTypeᚄ(ctx context.Context, sel ast.SelectionSet, v []model.ModelLearningSystemType) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalNModelLearningSystemType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐModelLearningSystemType(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
+}
+
 func (ec *executionContext) unmarshalOModelStatus2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelStatus(ctx context.Context, v interface{}) (*models.ModelStatus, error) {
 	if v == nil {
 		return nil, nil
@@ -26154,6 +33703,73 @@ func (ec *executionContext) marshalOModelType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑ
 	}
 	res := graphql.MarshalString(string(*v))
 	return res
+}
+
+func (ec *executionContext) unmarshalOMonitoringFileType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐMonitoringFileTypeᚄ(ctx context.Context, v interface{}) ([]model.MonitoringFileType, error) {
+	if v == nil {
+		return nil, nil
+	}
+	var vSlice []interface{}
+	if v != nil {
+		vSlice = graphql.CoerceList(v)
+	}
+	var err error
+	res := make([]model.MonitoringFileType, len(vSlice))
+	for i := range vSlice {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
+		res[i], err = ec.unmarshalNMonitoringFileType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐMonitoringFileType(ctx, vSlice[i])
+		if err != nil {
+			return nil, err
+		}
+	}
+	return res, nil
+}
+
+func (ec *executionContext) marshalOMonitoringFileType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐMonitoringFileTypeᚄ(ctx context.Context, sel ast.SelectionSet, v []model.MonitoringFileType) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalNMonitoringFileType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐMonitoringFileType(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
 }
 
 func (ec *executionContext) unmarshalOOverlapType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐOverlapType(ctx context.Context, v interface{}) (*models.OverlapType, error) {
@@ -26664,6 +34280,73 @@ func (ec *executionContext) marshalOSelectionMethodType2ᚕgithubᚗcomᚋcmsgov
 				defer wg.Done()
 			}
 			ret[i] = ec.marshalNSelectionMethodType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐSelectionMethodType(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
+}
+
+func (ec *executionContext) unmarshalOStakeholdersType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐStakeholdersTypeᚄ(ctx context.Context, v interface{}) ([]model.StakeholdersType, error) {
+	if v == nil {
+		return nil, nil
+	}
+	var vSlice []interface{}
+	if v != nil {
+		vSlice = graphql.CoerceList(v)
+	}
+	var err error
+	res := make([]model.StakeholdersType, len(vSlice))
+	for i := range vSlice {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
+		res[i], err = ec.unmarshalNStakeholdersType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐStakeholdersType(ctx, vSlice[i])
+		if err != nil {
+			return nil, err
+		}
+	}
+	return res, nil
+}
+
+func (ec *executionContext) marshalOStakeholdersType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐStakeholdersTypeᚄ(ctx context.Context, sel ast.SelectionSet, v []model.StakeholdersType) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalNStakeholdersType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐStakeholdersType(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)

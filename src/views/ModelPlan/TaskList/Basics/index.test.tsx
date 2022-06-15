@@ -34,6 +34,8 @@ const mocks = [
           cmsCenters: [CMSCenter.CENTER_FOR_MEDICARE, CMSCenter.OTHER],
           cmsOther: 'The Center for Awesomeness ',
           archived: false,
+          discussions: [],
+          generalCharacteristics: [],
           basics: [],
           documents: [],
           milestones: [],

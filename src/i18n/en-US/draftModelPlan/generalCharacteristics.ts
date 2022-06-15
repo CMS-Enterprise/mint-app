@@ -11,6 +11,7 @@ const generalCharacteristics = {
   modelResemblance:
     'Which existing models does your proposed track/model most closely resemble?',
   selectedModels: 'Selected models',
+  selectedKeyCharacteristics: 'Selected key characteristics',
   waysResembleModel:
     'In what way does the new model resemble the selected model(s)?',
   tracksDiffer: 'How do the tracks differ?',
@@ -19,11 +20,26 @@ const generalCharacteristics = {
   keyCharacteristics:
     'What are the model key characteristics? Select all that apply.',
   modelAPMType: 'What type of APM model?',
-  regularAPM: 'Regular APM',
-  MIPSAPM: 'MIPS APM',
-  advancedAPM: 'Advanced APM',
+  apmTypes: {
+    regularAPM: 'Regular APM',
+    MIPSAPM: 'MIPS APM',
+    advancedAPM: 'Advanced APM'
+  },
   MIPSInfo:
     'In order to be considered by QPP (and to be MIPS or Advanced APM), you will need to collect TINS and NPIs for provider.',
+  keyCharacteristicsTypes: {
+    episodeBased: 'Episode-Based Model',
+    partC: 'Medicare-Advantage (Part C) Model',
+    partD: 'Part D Model',
+    payment: 'Payment Model',
+    population: 'Population-based Model',
+    preventative: 'Preventative Model',
+    service: 'Serivce Delivery Model',
+    shared: 'Shared Savings Model',
+    other: 'Other'
+  },
+  specificQuestions: 'Key characteristic specific questions',
+  pleaseDescribe: 'Please describe the other key characteristics',
   reviewPlanBids: 'Will you review and collect plan bids?',
   manageEnrollment: 'Will you manage Part C/D enrollment?',
   updatedContact: 'Have you updated the plan’s contact',
@@ -36,13 +52,19 @@ const generalCharacteristics = {
   agreementType: 'What is the agreement type?',
   agreementNote:
     'Note: CMMI writes, Office of General Council (OGC) approves both types of agreements',
+  moreParticipation: 'Will more than one participation agreement be needed?',
+  agreementDepending:
+    'depending on awardee selections or characteristics such as risk/type/size',
   participationAgreement: 'Participation Agreement',
   coopAgreement: 'Co-Operative Agreement/Grant',
   other: 'Other',
   geographyType: 'Geography type is',
+  geographySpecify: 'Please specify what the other geography type is.',
   geoState: 'State',
   geoRegion: 'Region (CBSA, MSA, HRR, etc.)',
   geographyApplied: 'Geographies are applied to',
+  geographyAppliedSpecify:
+    'Please specify what the geographies are applied to.',
   geoParticipants: 'Participants',
   geoProviders: 'Providers',
   geoBeneficiaries: 'Beneficiaries',
