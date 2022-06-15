@@ -43,7 +43,7 @@ func GenericallyCalculateStatus(obj interface{}) (TaskStatus, error) {
 			continue
 		}
 
-		// If the field is not a pointer, throw an error (only pointer types can have the statusWeight tag)
+		// If the field is not a pointer, throw an error, and not a pq.StringArray, (only pointer types can have the statusWeight tag)
 		if field.Type.Kind() != reflect.Ptr {
 			switch field.Type {
 			case reflect.TypeOf(pq.StringArray{}):
@@ -67,8 +67,7 @@ func GenericallyCalculateStatus(obj interface{}) (TaskStatus, error) {
 
 		// If the value is not nil, also add the weight to the current weight
 		if !value.IsNil() {
-			if isArray {
-				// pqArray := v.Field(i).Interface().(pq.StringArray)
+			if isArray { //If the field is an array, add the respective weight to the current weight only if the array is not empty
 				if len(v.Field(i).Interface().(pq.StringArray)) == 0 {
 					continue
 				}
