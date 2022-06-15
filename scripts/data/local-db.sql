@@ -3,7 +3,7 @@
 --
 
 -- Dumped from database version 11.12 (Debian 11.12-1.pgdg90+1)
--- Dumped by pg_dump version 14.1
+-- Dumped by pg_dump version 14.2
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -99,9 +99,9 @@ f1b90915-c863-405a-b4ad-4558e01791f0	6e224030-09d5-46f7-ad04-4bb851b36eab	MINT	m
 --
 
 COPY public.plan_document (id, model_plan_id, file_type, bucket, file_key, virus_scanned, virus_clean, file_name, file_size, document_type, other_type, optional_notes, deleted_at, created_by, created_dts, modified_by, modified_dts) FROM stdin;
-13044089-956b-476e-8b86-a1a521ffde59	12897703-dac0-4e65-be7f-4907232eb176	application/pdf	mint-app-file-uploads	b23d964c-3e44-426b-8dcb-aa979adc07a2.pdf	f	f	sample.pdf	3028	CONCEPT_PAPER		Virus scan should be clean	\N	MINT	2022-06-06 13:11:01.286371+00	\N	\N
-e2416f82-2847-4e12-a9c0-5ccea325ea92	12897703-dac0-4e65-be7f-4907232eb176	application/pdf	mint-app-file-uploads	3225ae75-8ca7-4b78-aa7e-ea2334226c07.pdf	f	f	sample.pdf	3028	MARKET_RESEARCH		Virus scan should be pending	\N	MINT	2022-06-06 13:11:13.342637+00	\N	\N
 39536488-354e-4cd8-a8c6-1647f2a56c4e	12897703-dac0-4e65-be7f-4907232eb176	application/pdf	mint-app-file-uploads	25c81e5a-4940-45fe-85c7-fcbe37a3c317.pdf	f	f	sample.pdf	3028	OTHER	Sample Document	Virus scan should be infected	\N	MINT	2022-06-06 13:11:24.674723+00	\N	\N
+13044089-956b-476e-8b86-a1a521ffde59	12897703-dac0-4e65-be7f-4907232eb176	application/pdf	mint-app-file-uploads	b23d964c-3e44-426b-8dcb-aa979adc07a2.pdf	f	f	sample.pdf	3028	CONCEPT_PAPER	\N	Virus scan should be clean	\N	MINT	2022-06-06 13:11:01.286371+00	\N	\N
+e2416f82-2847-4e12-a9c0-5ccea325ea92	12897703-dac0-4e65-be7f-4907232eb176	application/pdf	mint-app-file-uploads	3225ae75-8ca7-4b78-aa7e-ea2334226c07.pdf	f	f	sample.pdf	3028	MARKET_RESEARCH	\N	Virus scan should be pending	\N	MINT	2022-06-06 13:11:13.342637+00	\N	\N
 \.
 
 

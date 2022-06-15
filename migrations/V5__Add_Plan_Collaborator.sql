@@ -2,7 +2,7 @@ CREATE TABLE plan_collaborator (
     id UUID PRIMARY KEY NOT NULL,
     model_plan_id UUID NOT NULL, --foreign key to model plan
     eua_user_id EUA_ID NOT NULL,
-    full_name TEXT NOT NULL,
+    full_name ZERO_STRING NOT NULL,
     team_role TEAM_ROLE NOT NULL,
     created_by EUA_ID NOT NULL,
     created_dts TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,

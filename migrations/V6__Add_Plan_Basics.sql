@@ -4,10 +4,10 @@ CREATE TABLE plan_basics (
 
     model_type MODEL_TYPE,
 
-    problem TEXT,
-    goal TEXT,
-    test_inventions TEXT,
-    note TEXT,
+    problem ZERO_STRING,
+    goal ZERO_STRING,
+    test_inventions ZERO_STRING,
+    note ZERO_STRING,
 
 
 
