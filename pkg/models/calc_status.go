@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"reflect"
 	"strconv"
+
+	"github.com/lib/pq"
 )
 
 // The `statusWeight` tag is used to indicate how much "weight" a field of a struct should hold when
@@ -18,7 +20,7 @@ const tagName = "statusWeight"
 func GenericallyCalculateStatus(obj interface{}) (TaskStatus, error) {
 	currentWeight := 0
 	totalWeight := 0
-
+	isArray := false
 	// Get the type & value of the object
 	v := reflect.ValueOf(obj)
 	t := v.Type()
@@ -43,7 +45,12 @@ func GenericallyCalculateStatus(obj interface{}) (TaskStatus, error) {
 
 		// If the field is not a pointer, throw an error (only pointer types can have the statusWeight tag)
 		if field.Type.Kind() != reflect.Ptr {
-			return TaskStatus(""), fmt.Errorf("field %v is not a pointer (found %v)", field.Name, field.Type)
+			switch field.Type {
+			case reflect.TypeOf(pq.StringArray{}):
+				isArray = true
+			default:
+				return TaskStatus(""), fmt.Errorf("field %v is not a pointer (found %v)", field.Name, field.Type)
+			}
 		}
 
 		// Convert the tag value to an int
@@ -60,6 +67,12 @@ func GenericallyCalculateStatus(obj interface{}) (TaskStatus, error) {
 
 		// If the value is not nil, also add the weight to the current weight
 		if !value.IsNil() {
+			if isArray {
+				// pqArray := v.Field(i).Interface().(pq.StringArray)
+				if len(v.Field(i).Interface().(pq.StringArray)) == 0 {
+					continue
+				}
+			}
 			currentWeight += int(weight)
 		}
 	}

@@ -36,10 +36,10 @@ type PlanITTools struct {
 	PpCommunicateWithParticipant      pq.StringArray `json:"ppCommunicateWithParticipant" db:"pp_communicate_with_participant"`
 	PpCommunicateWithParticipantOther *string        `json:"ppCommunicateWithParticipantOther" db:"pp_communicate_with_participant_other"`
 	PpCommunicateWithParticipantNote  *string        `json:"ppCommunicateWithParticipantNote" db:"pp_communicate_with_participant_note"`
-	PpManageProviderOverlap           pq.StringArray `json:"ppManageProviderOverlap" db:"pp_manage_provider_overlap"`
+	PpManageProviderOverlap           pq.StringArray `json:"ppManageProviderOverlap" db:"pp_manage_provider_overlap" statusWeight:"1"` //Always Required
 	PpManageProviderOverlapOther      *string        `json:"ppManageProviderOverlapOther" db:"pp_manage_provider_overlap_other"`
 	PpManageProviderOverlapNote       *string        `json:"ppManageProviderOverlapNote" db:"pp_manage_provider_overlap_note"`
-	BManageBeneficiaryOverlap         pq.StringArray `json:"bManageBeneficiaryOverlap" db:"b_manage_beneficiary_overlap"`
+	BManageBeneficiaryOverlap         pq.StringArray `json:"bManageBeneficiaryOverlap" db:"b_manage_beneficiary_overlap" statusWeight:"1"` //Always Required
 	BManageBeneficiaryOverlapOther    *string        `json:"bManageBeneficiaryOverlapOther" db:"b_manage_beneficiary_overlap_other"`
 	BManageBeneficiaryOverlapNote     *string        `json:"bManageBeneficiaryOverlapNote" db:"b_manage_beneficiary_overlap_note"`
 	//Page 4
@@ -118,13 +118,17 @@ type PlanITTools struct {
 // CalcStatus returns a TaskStatus based on how many fields have been entered in the PlanITTools struct
 func (it *PlanITTools) CalcStatus() error {
 	//TODO: this section is largely conditional, it might be necessary to override the generic functionality in favor of a more specific one
+	/*
+		if desired, we can provide get other task list questions to determine if a question is required or not
+	*/
 
-	// status, err := GenericallyCalculateStatus(*it)
-	// if err != nil {
-	// 	return err
-	// }
+	status, err := GenericallyCalculateStatus(*it)
+	if err != nil {
+		return err
+	}
 
-	it.Status = TaskReady
+	// it.Status = TaskReady
+	it.Status = status
 	return nil
 }
 
