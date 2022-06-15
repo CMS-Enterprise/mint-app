@@ -43,6 +43,13 @@ export enum CMSCenter {
   OTHER = "OTHER",
 }
 
+export enum ConfidenceType {
+  COMPLETELY = "COMPLETELY",
+  FAIRLY = "FAIRLY",
+  NOT_AT_ALL = "NOT_AT_ALL",
+  SLIGHTLY = "SLIGHTLY",
+}
+
 export enum DiscussionStatus {
   ANSWERED = "ANSWERED",
   UNANSWERED = "UNANSWERED",
@@ -55,6 +62,15 @@ export enum DocumentType {
   MARKET_RESEARCH = "MARKET_RESEARCH",
   OTHER = "OTHER",
   POLICY_PAPER = "POLICY_PAPER",
+}
+
+export enum FrequencyType {
+  ANNUALLY = "ANNUALLY",
+  BIANNUALLY = "BIANNUALLY",
+  MONTHLY = "MONTHLY",
+  OTHER = "OTHER",
+  QUARTERLY = "QUARTERLY",
+  ROLLING = "ROLLING",
 }
 
 export enum GeographyApplication {
@@ -110,6 +126,89 @@ export enum ModelType {
   MANDATORY = "MANDATORY",
   TBD = "TBD",
   VOLUNTARY = "VOLUNTARY",
+}
+
+export enum OverlapType {
+  NO = "NO",
+  YES_NEED_POLICIES = "YES_NEED_POLICIES",
+  YES_NO_ISSUES = "YES_NO_ISSUES",
+}
+
+export enum ParticipantCommunicationType {
+  IT_TOOL = "IT_TOOL",
+  MASS_EMAIL = "MASS_EMAIL",
+  NO_COMMUNICATION = "NO_COMMUNICATION",
+  OTHER = "OTHER",
+}
+
+export enum ParticipantRiskType {
+  CAPITATION = "CAPITATION",
+  ONE_SIDED = "ONE_SIDED",
+  OTHER = "OTHER",
+  TWO_SIDED = "TWO_SIDED",
+}
+
+export enum ParticipantSelectionType {
+  APPLICATION_REVIEW_AND_SCORING_TOOL = "APPLICATION_REVIEW_AND_SCORING_TOOL",
+  APPLICATION_SUPPORT_CONTRACTOR = "APPLICATION_SUPPORT_CONTRACTOR",
+  BASIC_CRITERIA = "BASIC_CRITERIA",
+  CMS_COMPONENT_OR_PROCESS = "CMS_COMPONENT_OR_PROCESS",
+  MODEL_TEAM_REVIEW_APPLICATIONS = "MODEL_TEAM_REVIEW_APPLICATIONS",
+  NO_SELECTING_PARTICIPANTS = "NO_SELECTING_PARTICIPANTS",
+  OTHER = "OTHER",
+  SUPPORT_FROM_CMMI = "SUPPORT_FROM_CMMI",
+}
+
+export enum ParticipantsIDType {
+  CCNS = "CCNS",
+  NO_IDENTIFIERS = "NO_IDENTIFIERS",
+  NPIS = "NPIS",
+  OTHER = "OTHER",
+  TINS = "TINS",
+}
+
+export enum ParticipantsType {
+  COMMERCIAL_PAYERS = "COMMERCIAL_PAYERS",
+  COMMUNITY_BASED_ORGANIZATIONS = "COMMUNITY_BASED_ORGANIZATIONS",
+  CONVENER = "CONVENER",
+  ENTITIES = "ENTITIES",
+  MEDICAID_MANAGED_CARE_ORGANIZATIONS = "MEDICAID_MANAGED_CARE_ORGANIZATIONS",
+  MEDICAID_PROVIDERS = "MEDICAID_PROVIDERS",
+  MEDICARE_ADVANTAGE_PLANS = "MEDICARE_ADVANTAGE_PLANS",
+  MEDICARE_ADVANTAGE_PRESCRIPTION_DRUG_PLANS = "MEDICARE_ADVANTAGE_PRESCRIPTION_DRUG_PLANS",
+  MEDICARE_PROVIDERS = "MEDICARE_PROVIDERS",
+  NON_PROFIT_ORGANIZATIONS = "NON_PROFIT_ORGANIZATIONS",
+  OTHER = "OTHER",
+  STANDALONE_PART_D_PLANS = "STANDALONE_PART_D_PLANS",
+  STATES = "STATES",
+  STATE_MEDICAID_AGENCIES = "STATE_MEDICAID_AGENCIES",
+}
+
+export enum ProviderAddType {
+  MANDATORILY = "MANDATORILY",
+  NA = "NA",
+  ONLINE_TOOLS = "ONLINE_TOOLS",
+  OTHER = "OTHER",
+  PROSPECTIVELY = "PROSPECTIVELY",
+  RETROSPECTIVELY = "RETROSPECTIVELY",
+  VOLUNTARILY = "VOLUNTARILY",
+}
+
+export enum ProviderLeaveType {
+  AFTER_A_CERTAIN_WITH_IMPLICATIONS = "AFTER_A_CERTAIN_WITH_IMPLICATIONS",
+  NOT_ALLOWED_TO_LEAVE = "NOT_ALLOWED_TO_LEAVE",
+  NOT_APPLICABLE = "NOT_APPLICABLE",
+  OTHER = "OTHER",
+  VARIES_BY_TYPE_OF_PROVIDER = "VARIES_BY_TYPE_OF_PROVIDER",
+  VOLUNTARILY_WITHOUT_IMPLICATIONS = "VOLUNTARILY_WITHOUT_IMPLICATIONS",
+}
+
+export enum RecruitmentType {
+  LOI = "LOI",
+  NA = "NA",
+  NOFO = "NOFO",
+  OTHER = "OTHER",
+  RFA = "RFA",
 }
 
 export enum TaskStatus {
@@ -307,6 +406,60 @@ export interface PlanMilestoneChanges {
   highLevelNote?: string | null;
   phasedIn?: boolean | null;
   phasedInNote?: string | null;
+}
+
+/**
+ * PlanParticipantsAndProvidersChanges represents the possible changes you can make to a
+ * providers and participants object when updating it.
+ * Fields explicitly set with NULL will be unset, and omitted fields will be left unchanged.
+ * https: // gqlgen.com/reference/changesets/
+ */
+export interface PlanParticipantsAndProvidersChanges {
+  participants?: ParticipantsType[] | null;
+  medicareProviderType?: string | null;
+  statesEngagement?: string | null;
+  participantsOther?: string | null;
+  participantsNote?: string | null;
+  participantsCurrentlyInModels?: boolean | null;
+  participantsCurrentlyInModelsNote?: string | null;
+  modelApplicationLevel?: string | null;
+  expectedNumberOfParticipants?: number | null;
+  estimateConfidence?: ConfidenceType | null;
+  confidenceNote?: string | null;
+  recruitmentMethod?: RecruitmentType | null;
+  recruitmentOther?: string | null;
+  recruitmentNote?: string | null;
+  selectionMethod?: ParticipantSelectionType[] | null;
+  selectionOther?: string | null;
+  selectionNote?: string | null;
+  communicationMethod?: ParticipantCommunicationType[] | null;
+  communicationNote?: string | null;
+  participantAssumeRisk?: boolean | null;
+  riskType?: ParticipantRiskType | null;
+  riskOther?: string | null;
+  riskNote?: string | null;
+  willRiskChange?: boolean | null;
+  willRiskChangeNote?: string | null;
+  coordinateWork?: boolean | null;
+  coordinateWorkNote?: string | null;
+  gainsharePayments?: boolean | null;
+  gainsharePaymentsTrack?: boolean | null;
+  gainsharePaymentsNote?: string | null;
+  participantsIds?: ParticipantsIDType[] | null;
+  participantsIdsOther?: string | null;
+  participantsIDSNote?: string | null;
+  providerAdditionFrequency?: FrequencyType | null;
+  providerAdditionFrequencyOther?: string | null;
+  providerAdditionFrequencyNote?: string | null;
+  providerAddMethod?: ProviderAddType[] | null;
+  providerAddMethodOther?: string | null;
+  providerAddMethodNote?: string | null;
+  providerLeaveMethod?: ProviderLeaveType[] | null;
+  providerLeaveMethodOther?: string | null;
+  providerLeaveMethodNote?: string | null;
+  providerOverlap?: OverlapType | null;
+  providerOverlapHierarchy?: string | null;
+  providerOverlapNote?: string | null;
 }
 
 //==============================================================

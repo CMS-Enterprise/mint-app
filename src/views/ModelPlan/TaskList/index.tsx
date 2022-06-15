@@ -71,9 +71,8 @@ const TaskList = () => {
     discussions,
     documents,
     status,
-    // TODO: Add these model plans when BE integrates it
-    generalCharacteristics
-    // participants,
+    generalCharacteristics,
+    providersAndParticipants
     // beneficiaries,
     // operations,
     // payment,
@@ -104,8 +103,8 @@ const TaskList = () => {
       // TODO: Add these model plans when BE integrates it
       case 'characteristics':
         return generalCharacteristics?.status;
-      // case 'participants':
-      //   return;
+      case 'participants-and-providers':
+        return providersAndParticipants.status;
       // case 'beneficiaries':
       //   return;
       // case 'operations':

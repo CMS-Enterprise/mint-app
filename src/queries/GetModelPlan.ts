@@ -65,6 +65,13 @@ export default gql`
         modifiedDts
         status
       }
+      providersAndParticipants {
+        createdBy
+        createdDts
+        modifiedBy
+        modifiedDts
+        status
+      }
     }
   }
 `;

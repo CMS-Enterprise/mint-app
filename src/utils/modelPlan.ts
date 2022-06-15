@@ -226,6 +226,51 @@ export const translateKeyCharacteristics = (characteristic: string) => {
   }
 };
 
+export const translateParticipantsType = (type: string) => {
+  switch (type) {
+    case 'MEDICARE_PROVIDERS':
+      return i18next.t(
+        'generalCharacteristics:keyCharacteristicsTypes.episodeBased'
+      );
+    case 'ENTITIES':
+      return i18next.t('generalCharacteristics:keyCharacteristicsTypes.partC');
+    case 'CONVENER':
+      return i18next.t('generalCharacteristics:keyCharacteristicsTypes.partD');
+    case 'MEDICARE_ADVANTAGE_PLANS':
+      return i18next.t(
+        'generalCharacteristics:keyCharacteristicsTypes.payment'
+      );
+    case 'STANDALONE_PART_D_PLANS':
+      return i18next.t(
+        'generalCharacteristics:keyCharacteristicsTypes.population'
+      );
+    case 'MEDICARE_ADVANTAGE_PRESCRIPTION_DRUG_PLANS':
+      return i18next.t(
+        'generalCharacteristics:keyCharacteristicsTypes.preventative'
+      );
+    case 'STATE_MEDICAID_AGENCIES':
+      return i18next.t(
+        'generalCharacteristics:keyCharacteristicsTypes.service'
+      );
+    case 'MEDICAID_MANAGED_CARE_ORGANIZATIONS':
+      return i18next.t('generalCharacteristics:keyCharacteristicsTypes.shared');
+    case 'MEDICAID_PROVIDERS':
+      return i18next.t('generalCharacteristics:keyCharacteristicsTypes.shared');
+    case 'STATES':
+      return i18next.t('generalCharacteristics:keyCharacteristicsTypes.shared');
+    case 'COMMUNITY_BASED_ORGANIZATIONS':
+      return i18next.t('generalCharacteristics:keyCharacteristicsTypes.shared');
+    case 'NON_PROFIT_ORGANIZATIONS':
+      return i18next.t('generalCharacteristics:keyCharacteristicsTypes.shared');
+    case 'COMMERCIAL_PAYERS':
+      return i18next.t('generalCharacteristics:keyCharacteristicsTypes.shared');
+    case 'OTHER':
+      return i18next.t('generalCharacteristics:keyCharacteristicsTypes.other');
+    default:
+      return '';
+  }
+};
+
 /**
  * Translate the document type API enum to a human readable string
  */

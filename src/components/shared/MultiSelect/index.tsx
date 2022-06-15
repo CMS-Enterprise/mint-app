@@ -124,7 +124,7 @@ export default function MultiSelect({
             type="search"
             className="usa-input padding-1 height-full border-0"
             value={searchValue}
-            placeholder={t(`${selected.length} selected`)}
+            placeholder={`${selected.length} selected`}
             onClick={() => setActive(true)}
             onChange={e => setSearchValue(e.target.value)}
           />
@@ -158,7 +158,7 @@ export default function MultiSelect({
       </div>
       {selected.length > 0 && (
         <div className="easi-multiselect__selected-list margin-top-3">
-          {t(selectedLabel)}
+          {selectedLabel}
           <ul className="usa-list--unstyled margin-top-1">
             {selected.map(option => (
               <li

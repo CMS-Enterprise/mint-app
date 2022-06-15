@@ -75,6 +75,15 @@ export interface GetModelPlan_modelPlan_generalCharacteristics {
   status: TaskStatus;
 }
 
+export interface GetModelPlan_modelPlan_providersAndParticipants {
+  __typename: "PlanParticipantsAndProviders";
+  createdBy: string;
+  createdDts: Time;
+  modifiedBy: string | null;
+  modifiedDts: Time | null;
+  status: TaskStatus;
+}
+
 export interface GetModelPlan_modelPlan {
   __typename: "ModelPlan";
   id: UUID;
@@ -91,6 +100,7 @@ export interface GetModelPlan_modelPlan {
   documents: GetModelPlan_modelPlan_documents[];
   discussions: GetModelPlan_modelPlan_discussions[];
   generalCharacteristics: GetModelPlan_modelPlan_generalCharacteristics;
+  providersAndParticipants: GetModelPlan_modelPlan_providersAndParticipants;
 }
 
 export interface GetModelPlan {

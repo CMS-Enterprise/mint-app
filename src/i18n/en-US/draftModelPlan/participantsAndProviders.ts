@@ -5,6 +5,21 @@ const participantsAndProviders = {
   providerInfo:
     'Providers are organizations/indviduals that work with the Participants and deliver care or services to the beneficiaries impacted by our model.',
   whoAreParticipants: 'Who are the particpants? Select all that apply.',
+  participantTypes: {
+    medicareProviders: 'Medicare Providers',
+    entities: 'Entities',
+    convener: '',
+    medicarePlan: '',
+    standalonePartD: '',
+    medicarePrescription: '',
+    stateMedicaid: '',
+    medicaidManagedCare: '',
+    medicaidProviders: '',
+    states: '',
+    community: '',
+    nonProfit: '',
+    commercial: ''
+  },
   participantsCMMI: 'Are the participants in CMMI models now?',
   participantsCMMIInfo:
     'If you have selected more than one participant in the questions above, specify which participants already participate in CMMI models.',
