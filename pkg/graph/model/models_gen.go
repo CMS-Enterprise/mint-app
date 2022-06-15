@@ -1332,19 +1332,19 @@ type OelLearningContractorType string
 
 const (
 	OelLearningContractorTypeRmada              OelLearningContractorType = "RMADA"
-	OelLearningContractorTypeCrossmodelcontract OelLearningContractorType = "CROSSMODELCONTRACT"
+	OelLearningContractorTypeCrossModelContract OelLearningContractorType = "CROSS_MODEL_CONTRACT"
 	OelLearningContractorTypeOther              OelLearningContractorType = "OTHER"
 )
 
 var AllOelLearningContractorType = []OelLearningContractorType{
 	OelLearningContractorTypeRmada,
-	OelLearningContractorTypeCrossmodelcontract,
+	OelLearningContractorTypeCrossModelContract,
 	OelLearningContractorTypeOther,
 }
 
 func (e OelLearningContractorType) IsValid() bool {
 	switch e {
-	case OelLearningContractorTypeRmada, OelLearningContractorTypeCrossmodelcontract, OelLearningContractorTypeOther:
+	case OelLearningContractorTypeRmada, OelLearningContractorTypeCrossModelContract, OelLearningContractorTypeOther:
 		return true
 	}
 	return false
@@ -1374,22 +1374,22 @@ func (e OelLearningContractorType) MarshalGQL(w io.Writer) {
 type OelManageAcoType string
 
 const (
-	OelManageAcoTypeAcoos      OelManageAcoType = "ACOOS"
-	OelManageAcoTypeAcoui      OelManageAcoType = "ACOUI"
+	OelManageAcoTypeAcoOs      OelManageAcoType = "ACO_OS"
+	OelManageAcoTypeAcoUI      OelManageAcoType = "ACO_UI"
 	OelManageAcoTypeInnovation OelManageAcoType = "INNOVATION"
 	OelManageAcoTypeOther      OelManageAcoType = "OTHER"
 )
 
 var AllOelManageAcoType = []OelManageAcoType{
-	OelManageAcoTypeAcoos,
-	OelManageAcoTypeAcoui,
+	OelManageAcoTypeAcoOs,
+	OelManageAcoTypeAcoUI,
 	OelManageAcoTypeInnovation,
 	OelManageAcoTypeOther,
 }
 
 func (e OelManageAcoType) IsValid() bool {
 	switch e {
-	case OelManageAcoTypeAcoos, OelManageAcoTypeAcoui, OelManageAcoTypeInnovation, OelManageAcoTypeOther:
+	case OelManageAcoTypeAcoOs, OelManageAcoTypeAcoUI, OelManageAcoTypeInnovation, OelManageAcoTypeOther:
 		return true
 	}
 	return false
@@ -1548,18 +1548,18 @@ func (e OelPerformanceBenchmarkType) MarshalGQL(w io.Writer) {
 type OelProcessAppealsType string
 
 const (
-	OelProcessAppealsTypeMedicareappealsystem OelProcessAppealsType = "MEDICAREAPPEALSYSTEM"
+	OelProcessAppealsTypeMedicareAppealSystem OelProcessAppealsType = "MEDICARE_APPEAL_SYSTEM"
 	OelProcessAppealsTypeOther                OelProcessAppealsType = "OTHER"
 )
 
 var AllOelProcessAppealsType = []OelProcessAppealsType{
-	OelProcessAppealsTypeMedicareappealsystem,
+	OelProcessAppealsTypeMedicareAppealSystem,
 	OelProcessAppealsTypeOther,
 }
 
 func (e OelProcessAppealsType) IsValid() bool {
 	switch e {
-	case OelProcessAppealsTypeMedicareappealsystem, OelProcessAppealsTypeOther:
+	case OelProcessAppealsTypeMedicareAppealSystem, OelProcessAppealsTypeOther:
 		return true
 	}
 	return false
@@ -1589,22 +1589,22 @@ func (e OelProcessAppealsType) MarshalGQL(w io.Writer) {
 type OelQualityScoresType string
 
 const (
-	OelQualityScoresTypeExistingdataandprocess OelQualityScoresType = "EXISTINGDATAANDPROCESS"
-	OelQualityScoresTypeNewdataandcmmiprocess  OelQualityScoresType = "NEWDATAANDCMMIPROCESS"
-	OelQualityScoresTypeOthernewprocess        OelQualityScoresType = "OTHERNEWPROCESS"
+	OelQualityScoresTypeExistingDataAndProcess OelQualityScoresType = "EXISTING_DATA_AND_PROCESS"
+	OelQualityScoresTypeNewDataAndCmmiProcess  OelQualityScoresType = "NEW_DATA_AND_CMMI_PROCESS"
+	OelQualityScoresTypeOther                  OelQualityScoresType = "OTHER"
 	OelQualityScoresTypeNone                   OelQualityScoresType = "NONE"
 )
 
 var AllOelQualityScoresType = []OelQualityScoresType{
-	OelQualityScoresTypeExistingdataandprocess,
-	OelQualityScoresTypeNewdataandcmmiprocess,
-	OelQualityScoresTypeOthernewprocess,
+	OelQualityScoresTypeExistingDataAndProcess,
+	OelQualityScoresTypeNewDataAndCmmiProcess,
+	OelQualityScoresTypeOther,
 	OelQualityScoresTypeNone,
 }
 
 func (e OelQualityScoresType) IsValid() bool {
 	switch e {
-	case OelQualityScoresTypeExistingdataandprocess, OelQualityScoresTypeNewdataandcmmiprocess, OelQualityScoresTypeOthernewprocess, OelQualityScoresTypeNone:
+	case OelQualityScoresTypeExistingDataAndProcess, OelQualityScoresTypeNewDataAndCmmiProcess, OelQualityScoresTypeOther, OelQualityScoresTypeNone:
 		return true
 	}
 	return false
@@ -1636,20 +1636,20 @@ type OelSendReportsType string
 const (
 	OelSendReportsTypeIDOs          OelSendReportsType = "IDOS"
 	OelSendReportsTypeRmada         OelSendReportsType = "RMADA"
-	OelSendReportsTypeInternalstaff OelSendReportsType = "INTERNALSTAFF"
+	OelSendReportsTypeInternalStaff OelSendReportsType = "INTERNAL_STAFF"
 	OelSendReportsTypeOther         OelSendReportsType = "OTHER"
 )
 
 var AllOelSendReportsType = []OelSendReportsType{
 	OelSendReportsTypeIDOs,
 	OelSendReportsTypeRmada,
-	OelSendReportsTypeInternalstaff,
+	OelSendReportsTypeInternalStaff,
 	OelSendReportsTypeOther,
 }
 
 func (e OelSendReportsType) IsValid() bool {
 	switch e {
-	case OelSendReportsTypeIDOs, OelSendReportsTypeRmada, OelSendReportsTypeInternalstaff, OelSendReportsTypeOther:
+	case OelSendReportsTypeIDOs, OelSendReportsTypeRmada, OelSendReportsTypeInternalStaff, OelSendReportsTypeOther:
 		return true
 	}
 	return false
@@ -1720,18 +1720,18 @@ func (e OelWorkingAgreementType) MarshalGQL(w io.Writer) {
 type PInformFfsType string
 
 const (
-	PInformFfsTypeFfscompetencycenter PInformFfsType = "FFSCOMPETENCYCENTER"
+	PInformFfsTypeFfsCompetencyCenter PInformFfsType = "FFS_COMPETENCY_CENTER"
 	PInformFfsTypeOther               PInformFfsType = "OTHER"
 )
 
 var AllPInformFfsType = []PInformFfsType{
-	PInformFfsTypeFfscompetencycenter,
+	PInformFfsTypeFfsCompetencyCenter,
 	PInformFfsTypeOther,
 }
 
 func (e PInformFfsType) IsValid() bool {
 	switch e {
-	case PInformFfsTypeFfscompetencycenter, PInformFfsTypeOther:
+	case PInformFfsTypeFfsCompetencyCenter, PInformFfsTypeOther:
 		return true
 	}
 	return false
@@ -1761,20 +1761,20 @@ func (e PInformFfsType) MarshalGQL(w io.Writer) {
 type PMakeClaimsPaymentsType string
 
 const (
-	PMakeClaimsPaymentsTypeSharedsystems PMakeClaimsPaymentsType = "SHAREDSYSTEMS"
+	PMakeClaimsPaymentsTypeSharedSystems PMakeClaimsPaymentsType = "SHARED_SYSTEMS"
 	PMakeClaimsPaymentsTypeHiglas        PMakeClaimsPaymentsType = "HIGLAS"
 	PMakeClaimsPaymentsTypeOther         PMakeClaimsPaymentsType = "OTHER"
 )
 
 var AllPMakeClaimsPaymentsType = []PMakeClaimsPaymentsType{
-	PMakeClaimsPaymentsTypeSharedsystems,
+	PMakeClaimsPaymentsTypeSharedSystems,
 	PMakeClaimsPaymentsTypeHiglas,
 	PMakeClaimsPaymentsTypeOther,
 }
 
 func (e PMakeClaimsPaymentsType) IsValid() bool {
 	switch e {
-	case PMakeClaimsPaymentsTypeSharedsystems, PMakeClaimsPaymentsTypeHiglas, PMakeClaimsPaymentsTypeOther:
+	case PMakeClaimsPaymentsTypeSharedSystems, PMakeClaimsPaymentsTypeHiglas, PMakeClaimsPaymentsTypeOther:
 		return true
 	}
 	return false
@@ -2190,20 +2190,20 @@ type PpCollectScoreReviewType string
 const (
 	PpCollectScoreReviewTypeRfa            PpCollectScoreReviewType = "RFA"
 	PpCollectScoreReviewTypeArs            PpCollectScoreReviewType = "ARS"
-	PpCollectScoreReviewTypeGrantsolutions PpCollectScoreReviewType = "GRANTSOLUTIONS"
+	PpCollectScoreReviewTypeGrantSolutions PpCollectScoreReviewType = "GRANT_SOLUTIONS"
 	PpCollectScoreReviewTypeOther          PpCollectScoreReviewType = "OTHER"
 )
 
 var AllPpCollectScoreReviewType = []PpCollectScoreReviewType{
 	PpCollectScoreReviewTypeRfa,
 	PpCollectScoreReviewTypeArs,
-	PpCollectScoreReviewTypeGrantsolutions,
+	PpCollectScoreReviewTypeGrantSolutions,
 	PpCollectScoreReviewTypeOther,
 }
 
 func (e PpCollectScoreReviewType) IsValid() bool {
 	switch e {
-	case PpCollectScoreReviewTypeRfa, PpCollectScoreReviewTypeArs, PpCollectScoreReviewTypeGrantsolutions, PpCollectScoreReviewTypeOther:
+	case PpCollectScoreReviewTypeRfa, PpCollectScoreReviewTypeArs, PpCollectScoreReviewTypeGrantSolutions, PpCollectScoreReviewTypeOther:
 		return true
 	}
 	return false
@@ -2233,22 +2233,22 @@ func (e PpCollectScoreReviewType) MarshalGQL(w io.Writer) {
 type PpCommunicateWithParticipantType string
 
 const (
-	PpCommunicateWithParticipantTypeOutlookmailbox   PpCommunicateWithParticipantType = "OUTLOOKMAILBOX"
-	PpCommunicateWithParticipantTypeGovdelivery      PpCommunicateWithParticipantType = "GOVDELIVERY"
-	PpCommunicateWithParticipantTypeSalesforceportal PpCommunicateWithParticipantType = "SALESFORCEPORTAL"
+	PpCommunicateWithParticipantTypeOutlookMailbox   PpCommunicateWithParticipantType = "OUTLOOK_MAILBOX"
+	PpCommunicateWithParticipantTypeGovDelivery      PpCommunicateWithParticipantType = "GOV_DELIVERY"
+	PpCommunicateWithParticipantTypeSalesforcePortal PpCommunicateWithParticipantType = "SALESFORCE_PORTAL"
 	PpCommunicateWithParticipantTypeOther            PpCommunicateWithParticipantType = "OTHER"
 )
 
 var AllPpCommunicateWithParticipantType = []PpCommunicateWithParticipantType{
-	PpCommunicateWithParticipantTypeOutlookmailbox,
-	PpCommunicateWithParticipantTypeGovdelivery,
-	PpCommunicateWithParticipantTypeSalesforceportal,
+	PpCommunicateWithParticipantTypeOutlookMailbox,
+	PpCommunicateWithParticipantTypeGovDelivery,
+	PpCommunicateWithParticipantTypeSalesforcePortal,
 	PpCommunicateWithParticipantTypeOther,
 }
 
 func (e PpCommunicateWithParticipantType) IsValid() bool {
 	switch e {
-	case PpCommunicateWithParticipantTypeOutlookmailbox, PpCommunicateWithParticipantTypeGovdelivery, PpCommunicateWithParticipantTypeSalesforceportal, PpCommunicateWithParticipantTypeOther:
+	case PpCommunicateWithParticipantTypeOutlookMailbox, PpCommunicateWithParticipantTypeGovDelivery, PpCommunicateWithParticipantTypeSalesforcePortal, PpCommunicateWithParticipantTypeOther:
 		return true
 	}
 	return false
@@ -2322,19 +2322,19 @@ type PpToAdvertiseType string
 
 const (
 	PpToAdvertiseTypeSalesforce     PpToAdvertiseType = "SALESFORCE"
-	PpToAdvertiseTypeGrantsolutions PpToAdvertiseType = "GRANTSOLUTIONS"
+	PpToAdvertiseTypeGrantSolutions PpToAdvertiseType = "GRANT_SOLUTIONS"
 	PpToAdvertiseTypeOther          PpToAdvertiseType = "OTHER"
 )
 
 var AllPpToAdvertiseType = []PpToAdvertiseType{
 	PpToAdvertiseTypeSalesforce,
-	PpToAdvertiseTypeGrantsolutions,
+	PpToAdvertiseTypeGrantSolutions,
 	PpToAdvertiseTypeOther,
 }
 
 func (e PpToAdvertiseType) IsValid() bool {
 	switch e {
-	case PpToAdvertiseTypeSalesforce, PpToAdvertiseTypeGrantsolutions, PpToAdvertiseTypeOther:
+	case PpToAdvertiseTypeSalesforce, PpToAdvertiseTypeGrantSolutions, PpToAdvertiseTypeOther:
 		return true
 	}
 	return false

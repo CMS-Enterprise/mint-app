@@ -5920,13 +5920,13 @@ enum GcUpdateContractType {
 }
 enum PpToAdvertiseType {
     SALESFORCE
-    GRANTSOLUTIONS
+    GRANT_SOLUTIONS
     OTHER
 }
 enum PpCollectScoreReviewType {
     RFA
     ARS
-    GRANTSOLUTIONS
+    GRANT_SOLUTIONS
     OTHER
 }
 enum PpAppSupportContractorType {
@@ -5934,9 +5934,9 @@ enum PpAppSupportContractorType {
     OTHER
 }
 enum PpCommunicateWithParticipantType {
-    OUTLOOKMAILBOX
-    GOVDELIVERY
-    SALESFORCEPORTAL
+    OUTLOOK_MAILBOX
+    GOV_DELIVERY
+    SALESFORCE_PORTAL
     OTHER
 }
 enum PpManageProviderOverlapType {
@@ -5959,8 +5959,8 @@ enum OelHelpdeskSupportType {
     OTHER
 }
 enum OelManageAcoType { 
-    ACOOS
-    ACOUI
+    ACO_OS
+    ACO_UI
     INNOVATION
     OTHER
 }
@@ -5970,7 +5970,7 @@ enum OelPerformanceBenchmarkType {
     OTHER
 }
 enum OelProcessAppealsType {
-    MEDICAREAPPEALSYSTEM
+    MEDICARE_APPEAL_SYSTEM
     OTHER
 }
 enum OelEvaluationContractorType { 
@@ -5997,20 +5997,20 @@ enum OelClaimsBasedMeasuresType {
     OTHER
 }
 enum OelQualityScoresType {
-    EXISTINGDATAANDPROCESS
-    NEWDATAANDCMMIPROCESS
-    OTHERNEWPROCESS
+    EXISTING_DATA_AND_PROCESS
+    NEW_DATA_AND_CMMI_PROCESS
+    OTHER
     NONE
 }
 enum OelSendReportsType {
     IDOS
     RMADA
-    INTERNALSTAFF
+    INTERNAL_STAFF
     OTHER
 }
 enum OelLearningContractorType {
     RMADA
-    CROSSMODELCONTRACT
+    CROSS_MODEL_CONTRACT
     OTHER
 }
 enum OelParticipantCollaborationType {
@@ -6022,12 +6022,12 @@ enum OelEducateBeneficiariesType {
     OTHER
 }
 enum PMakeClaimsPaymentsType {
-    SHAREDSYSTEMS
+    SHARED_SYSTEMS
     HIGLAS
     OTHER
 }
 enum PInformFfsType {
-    FFSCOMPETENCYCENTER
+    FFS_COMPETENCY_CENTER
     OTHER
 }
 enum PNonClaimsBasedPaymentsType {
