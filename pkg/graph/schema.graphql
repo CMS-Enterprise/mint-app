@@ -41,7 +41,7 @@ type ModelPlan {
   basics: PlanBasics!
   milestones: PlanMilestones!
   generalCharacteristics: PlanGeneralCharacteristics!
-  providersAndParticipants: PlanParticipantsAndProviders!
+  participantsAndProviders: PlanParticipantsAndProviders!
   beneficiaries: PlanBeneficiaries!
   opsEvalAndLearning: PlanOpsEvalAndLearning!
   collaborators: [PlanCollaborator!]!
@@ -500,7 +500,7 @@ type PlanBeneficiaries {
   id: UUID!
   modelPlanID: UUID!
   #Page 1
-  beneficiaries: [BeneficiariesType!]
+  beneficiaries: [BeneficiariesType!]!
   beneficiariesOther: String
   beneficiariesNote: String
   treatDualElligibleDifferent: TriStateAnswer
@@ -513,7 +513,7 @@ type PlanBeneficiaries {
   numberPeopleImpacted: Int
   estimateConfidence: ConfidenceType
   confidenceNote: String
-  beneficiarySelectionMethod: [SelectionMethodType!]
+  beneficiarySelectionMethod: [SelectionMethodType!]!
   beneficiarySelectionOther: String
   beneficiarySelectionNote: String
   #Page 3
@@ -567,7 +567,7 @@ type PlanParticipantsAndProviders {
   modelPlanID: UUID!
 
   #Page 1
-  participants:                      [ParticipantsType!]
+  participants:                      [ParticipantsType!]!
   medicareProviderType:              String       
   statesEngagement:                  String       
   participantsOther:                 String       
@@ -583,12 +583,12 @@ type PlanParticipantsAndProviders {
   recruitmentMethod:            RecruitmentType
   recruitmentOther:             String         
   recruitmentNote:              String         
-  selectionMethod:              [ParticipantSelectionType!]
+  selectionMethod:              [ParticipantSelectionType!]!
   selectionOther:               String         
   selectionNote:                String         
 
   #Page 3
-  communicationMethod:   [ParticipantCommunicationType!]
+  communicationMethod:   [ParticipantCommunicationType!]!
   communicationNote:     String             
   participantAssumeRisk: Boolean             
   riskType:              ParticipantRiskType
@@ -603,7 +603,7 @@ type PlanParticipantsAndProviders {
   gainsharePayments:       Boolean       
   gainsharePaymentsTrack: Boolean       
   gainsharePaymentsNote:   String       
-  participantsIds:         [ParticipantsIDType!]
+  participantsIds:         [ParticipantsIDType!]!
   participantsIdsOther:    String       
   participantsIDSNote:     String       
 
@@ -611,10 +611,10 @@ type PlanParticipantsAndProviders {
   providerAdditionFrequency:      FrequencyType
   providerAdditionFrequencyOther: String       
   providerAdditionFrequencyNote:  String       
-  providerAddMethod:              [ProviderAddType!]
+  providerAddMethod:              [ProviderAddType!]!
   providerAddMethodOther:         String       
   providerAddMethodNote:          String       
-  providerLeaveMethod:            [ProviderLeaveType!]
+  providerLeaveMethod:            [ProviderLeaveType!]!
   providerLeaveMethodOther:       String       
   providerLeaveMethodNote:        String       
   providerOverlap:                OverlapType  
@@ -702,16 +702,16 @@ type PlanOpsEvalAndLearning {
     modelPlanID: UUID!
 
     #Page 1
-    agencyOrStateHelp: [AgencyOrStateHelpType!]
+    agencyOrStateHelp: [AgencyOrStateHelpType!]!
     agencyOrStateHelpOther: String
     agencyOrStateHelpNote: String
-    stakeholders: [StakeholdersType!]
+    stakeholders: [StakeholdersType!]!
     stakeholdersOther: String
     stakeholdersNote: String
-    helpdeskUse: [HelpdeskUseType!]
+    helpdeskUse: [HelpdeskUseType!]!
     helpdeskUseOther: String
     helpdeskUseNote: String
-    contractorSupport: [ContractorSupportType!]
+    contractorSupport: [ContractorSupportType!]!
     contractorSupportOther: String
     contractorSupportHow: String
     contractorSupportNote: String
@@ -734,7 +734,7 @@ type PlanOpsEvalAndLearning {
     stcNeeds: String
     testingTimelines: String
     testingNote: String
-    dataMonitoringFileTypes: [MonitoringFileType!]
+    dataMonitoringFileTypes: [MonitoringFileType!]!
     dataMonitoringFileOther: String
     dataResponseType: String
     dataResponseFileFrequency: String
@@ -762,16 +762,16 @@ type PlanOpsEvalAndLearning {
     appealOther: Boolean
     appealNote: String
     #Page 6
-    evaluationApproaches: [EvaluationApproachType!]
+    evaluationApproaches: [EvaluationApproachType!]!
     evaluationApproachOther: String
     evalutaionApproachNote: String
-    ccmInvolvment: [CcmInvolvmentType!]
+    ccmInvolvment: [CcmInvolvmentType!]!
     ccmInvolvmentOther: String
     ccmInvolvmentNote: String
-    dataNeededForMonitoring: [DataForMonitoringType!]
+    dataNeededForMonitoring: [DataForMonitoringType!]!
     dataNeededForMonitoringOther: String
     dataNeededForMonitoringNote: String
-    dataToSendParticicipants: [DataToSendParticipantsType!]
+    dataToSendParticicipants: [DataToSendParticipantsType!]!
     dataToSendParticicipantsOther: String
     dataToSendParticicipantsNote: String
     shareCclfData: Boolean
@@ -791,19 +791,19 @@ type PlanOpsEvalAndLearning {
     #Page 8
     dataSharingStarts: DataStartsType
     dataSharingStartsOther: String
-    dataSharingFrequency: [DataFrequencyType!]
+    dataSharingFrequency: [DataFrequencyType!]!
     dataSharingFrequencyOther: String
     dataSharingStartsNote: String
     dataCollectionStarts: DataStartsType
     dataCollectionStartsOther: String
-    dataCollectionFrequency: [DataFrequencyType!]
+    dataCollectionFrequency: [DataFrequencyType!]!
     dataCollectionFrequencyOther: String
     dataCollectionFrequencyNote: String
     qualityReportingStarts: DataStartsType
     qualityReportingStartsOther: String
     qualityReportingStartsNote: String
     #Page 9
-    modelLearningSystems: [ModelLearningSystemType!]
+    modelLearningSystems: [ModelLearningSystemType!]!
     modelLearningSystemsOther: String
     modelLearningSystemsNote: String
     anticipatedChallenges: String
