@@ -72,7 +72,7 @@ const TaskList = () => {
     documents,
     status,
     generalCharacteristics,
-    providersAndParticipants
+    participantsAndProviders
     // beneficiaries,
     // operations,
     // payment,
@@ -104,7 +104,7 @@ const TaskList = () => {
       case 'characteristics':
         return generalCharacteristics?.status;
       case 'participants-and-providers':
-        return providersAndParticipants.status;
+        return participantsAndProviders.status;
       // case 'beneficiaries':
       //   return;
       // case 'operations':

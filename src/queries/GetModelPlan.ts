@@ -65,7 +65,7 @@ export default gql`
         modifiedDts
         status
       }
-      providersAndParticipants {
+      participantsAndProviders {
         createdBy
         createdDts
         modifiedBy

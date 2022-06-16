@@ -4,7 +4,7 @@ export default gql`
   query GetModelPlanProvidersAndParticipants($id: UUID!) {
     modelPlan(id: $id) {
       modelName
-      providersAndParticipants {
+      participantsAndProviders {
         id
         modelPlanID
         participants
