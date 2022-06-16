@@ -4,8 +4,6 @@ import (
 	"fmt"
 	"reflect"
 	"strconv"
-
-	"github.com/lib/pq"
 )
 
 // The `statusWeight` tag is used to indicate how much "weight" a field of a struct should hold when
@@ -20,7 +18,7 @@ const tagName = "statusWeight"
 func GenericallyCalculateStatus(obj interface{}) (TaskStatus, error) {
 	currentWeight := 0
 	totalWeight := 0
-	isArray := false
+	filledOut := false
 	// Get the type & value of the object
 	v := reflect.ValueOf(obj)
 	t := v.Type()
@@ -34,6 +32,7 @@ func GenericallyCalculateStatus(obj interface{}) (TaskStatus, error) {
 	for i := 0; i < t.NumField(); i++ {
 		// Get the field
 		field := t.Field(i)
+		value := v.Field(i)
 
 		// Get the field's tag value
 		tagValue := field.Tag.Get(tagName)
@@ -43,14 +42,14 @@ func GenericallyCalculateStatus(obj interface{}) (TaskStatus, error) {
 			continue
 		}
 
-		// If the field is not a pointer, throw an error, and not a pq.StringArray, (only pointer types can have the statusWeight tag)
-		if field.Type.Kind() != reflect.Ptr {
-			switch field.Type {
-			case reflect.TypeOf(pq.StringArray{}):
-				isArray = true
-			default:
-				return TaskStatus(""), fmt.Errorf("field %v is not a pointer (found %v)", field.Name, field.Type)
-			}
+		// Check for valid field type, and if the data is filled
+		switch field.Type.Kind() {
+		case reflect.Ptr:
+			filledOut = !value.IsNil()
+		case reflect.Slice:
+			filledOut = value.Len() > 0
+		default:
+			return TaskStatus(""), fmt.Errorf("field %v is not a supported type for status calculation (found %v)", field.Name, field.Type)
 		}
 
 		// Convert the tag value to an int
@@ -59,21 +58,14 @@ func GenericallyCalculateStatus(obj interface{}) (TaskStatus, error) {
 			return TaskStatus(""), err
 		}
 
-		// Get the value of the field
-		value := v.Field(i)
-
 		// Always add weight to the total
 		totalWeight += int(weight)
 
-		// If the value is not nil, also add the weight to the current weight
-		if !value.IsNil() {
-			if isArray { //If the field is an array, add the respective weight to the current weight only if the array is not empty
-				if len(v.Field(i).Interface().(pq.StringArray)) == 0 {
-					continue
-				}
-			}
+		// If the value is filled out also add the weight to the current weight
+		if filledOut {
 			currentWeight += int(weight)
 		}
+
 	}
 
 	if totalWeight == 0 {
