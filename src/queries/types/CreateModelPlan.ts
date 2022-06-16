@@ -16,7 +16,7 @@ export interface CreateModelPlan_createModelPlan_basics {
   modelType: ModelType | null;
   problem: string | null;
   goal: string | null;
-  testInventions: string | null;
+  testInterventions: string | null;
   note: string | null;
   createdBy: string;
   createdDts: Time;

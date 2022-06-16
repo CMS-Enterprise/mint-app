@@ -54,7 +54,7 @@ COPY public.discussion_reply (id, discussion_id, content, resolution, created_by
 -- Data for Name: plan_basics; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.plan_basics (id, model_plan_id, model_type, problem, goal, test_inventions, note, created_by, created_dts, modified_by, modified_dts, status) FROM stdin;
+COPY public.plan_basics (id, model_plan_id, model_type, problem, goal, test_interventions, note, created_by, created_dts, modified_by, modified_dts, status) FROM stdin;
 1c12315a-5647-49cb-9371-8a0a2fa409a4	53054496-6d1f-47f5-b6a0-1edaf73b935e	\N	\N	\N	\N	\N	MINT	2022-06-03 17:41:40.847303+00	\N	\N	READY
 f31f832d-b744-40b5-b881-dd264a3cd9f6	95399697-8c37-4225-b09d-7ca4fd0ad2b0	\N	\N	\N	\N	\N	MINT	2022-06-03 17:41:40.880114+00	\N	\N	READY
 6680c61b-81cf-425c-adb1-d9e2ea356d9a	ce3405a0-3399-4e3a-88d7-3cfc613d2905	VOLUNTARY	The problem	The goal	The interventions	\N	MINT	2022-06-03 17:41:40.914497+00	MINT	2022-06-03 17:41:40.956661+00	COMPLETE
