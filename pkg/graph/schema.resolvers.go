@@ -47,7 +47,7 @@ func (r *modelPlanResolver) GeneralCharacteristics(ctx context.Context, obj *mod
 	return resolvers.FetchPlanGeneralCharacteristicsByModelPlanID(logger, principal, obj.ID, r.store)
 }
 
-func (r *modelPlanResolver) ProvidersAndParticipants(ctx context.Context, obj *models.ModelPlan) (*models.PlanParticipantsAndProviders, error) {
+func (r *modelPlanResolver) ParticipantsAndProviders(ctx context.Context, obj *models.ModelPlan) (*models.PlanParticipantsAndProviders, error) {
 	logger := appcontext.ZLogger(ctx)
 	principal := appcontext.Principal(ctx).ID()
 

@@ -3,7 +3,7 @@
 --
 
 -- Dumped from database version 11.12 (Debian 11.12-1.pgdg90+1)
--- Dumped by pg_dump version 14.1
+-- Dumped by pg_dump version 14.2
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -54,7 +54,7 @@ COPY public.discussion_reply (id, discussion_id, content, resolution, created_by
 -- Data for Name: plan_basics; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.plan_basics (id, model_plan_id, model_type, problem, goal, test_inventions, note, created_by, created_dts, modified_by, modified_dts, status) FROM stdin;
+COPY public.plan_basics (id, model_plan_id, model_type, problem, goal, test_interventions, note, created_by, created_dts, modified_by, modified_dts, status) FROM stdin;
 1c12315a-5647-49cb-9371-8a0a2fa409a4	53054496-6d1f-47f5-b6a0-1edaf73b935e	\N	\N	\N	\N	\N	MINT	2022-06-03 17:41:40.847303+00	\N	\N	READY
 f31f832d-b744-40b5-b881-dd264a3cd9f6	95399697-8c37-4225-b09d-7ca4fd0ad2b0	\N	\N	\N	\N	\N	MINT	2022-06-03 17:41:40.880114+00	\N	\N	READY
 6680c61b-81cf-425c-adb1-d9e2ea356d9a	ce3405a0-3399-4e3a-88d7-3cfc613d2905	VOLUNTARY	The problem	The goal	The interventions	\N	MINT	2022-06-03 17:41:40.914497+00	MINT	2022-06-03 17:41:40.956661+00	COMPLETE
@@ -99,9 +99,9 @@ f1b90915-c863-405a-b4ad-4558e01791f0	6e224030-09d5-46f7-ad04-4bb851b36eab	MINT	m
 --
 
 COPY public.plan_document (id, model_plan_id, file_type, bucket, file_key, virus_scanned, virus_clean, file_name, file_size, document_type, other_type, optional_notes, deleted_at, created_by, created_dts, modified_by, modified_dts) FROM stdin;
-13044089-956b-476e-8b86-a1a521ffde59	12897703-dac0-4e65-be7f-4907232eb176	application/pdf	mint-app-file-uploads	b23d964c-3e44-426b-8dcb-aa979adc07a2.pdf	f	f	sample.pdf	3028	CONCEPT_PAPER		Virus scan should be clean	\N	MINT	2022-06-06 13:11:01.286371+00	\N	\N
-e2416f82-2847-4e12-a9c0-5ccea325ea92	12897703-dac0-4e65-be7f-4907232eb176	application/pdf	mint-app-file-uploads	3225ae75-8ca7-4b78-aa7e-ea2334226c07.pdf	f	f	sample.pdf	3028	MARKET_RESEARCH		Virus scan should be pending	\N	MINT	2022-06-06 13:11:13.342637+00	\N	\N
 39536488-354e-4cd8-a8c6-1647f2a56c4e	12897703-dac0-4e65-be7f-4907232eb176	application/pdf	mint-app-file-uploads	25c81e5a-4940-45fe-85c7-fcbe37a3c317.pdf	f	f	sample.pdf	3028	OTHER	Sample Document	Virus scan should be infected	\N	MINT	2022-06-06 13:11:24.674723+00	\N	\N
+13044089-956b-476e-8b86-a1a521ffde59	12897703-dac0-4e65-be7f-4907232eb176	application/pdf	mint-app-file-uploads	b23d964c-3e44-426b-8dcb-aa979adc07a2.pdf	f	f	sample.pdf	3028	CONCEPT_PAPER	\N	Virus scan should be clean	\N	MINT	2022-06-06 13:11:01.286371+00	\N	\N
+e2416f82-2847-4e12-a9c0-5ccea325ea92	12897703-dac0-4e65-be7f-4907232eb176	application/pdf	mint-app-file-uploads	3225ae75-8ca7-4b78-aa7e-ea2334226c07.pdf	f	f	sample.pdf	3028	MARKET_RESEARCH	\N	Virus scan should be pending	\N	MINT	2022-06-06 13:11:13.342637+00	\N	\N
 \.
 
 

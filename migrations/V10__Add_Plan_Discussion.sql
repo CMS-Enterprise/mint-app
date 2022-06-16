@@ -2,7 +2,7 @@ CREATE TABLE plan_discussion (
     id UUID PRIMARY KEY NOT NULL,
     model_plan_id UUID NOT NULL,
 
-    content TEXT NOT NULL,
+    content ZERO_STRING NOT NULL,
     status DISCUSSION_STATUS NOT NULL DEFAULT 'UNANSWERED',
 
     created_by EUA_ID NOT NULL,
@@ -20,7 +20,7 @@ ON DELETE NO ACTION;
 CREATE TABLE discussion_reply (
     id UUID PRIMARY KEY NOT NULL,
     discussion_id UUID NOT NULL,
-    content TEXT NOT NULL,
+    content ZERO_STRING NOT NULL,
     resolution BOOLEAN NOT NULL,
 
     created_by EUA_ID NOT NULL,

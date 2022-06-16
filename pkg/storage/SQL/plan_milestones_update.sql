@@ -9,9 +9,9 @@ SET
     performance_period_starts = :performance_period_starts,
     performance_period_ends = :performance_period_ends,
     wrap_up_ends = :wrap_up_ends,
-    high_level_note = NULLIF(:high_level_note, ''),
+    high_level_note = :high_level_note,
     phased_in = :phased_in,
-    phased_in_note = NULLIF(:phased_in_note, ''),
+    phased_in_note = :phased_in_note,
     modified_by = :modified_by,
     modified_dts = CURRENT_TIMESTAMP,
     status = :status
