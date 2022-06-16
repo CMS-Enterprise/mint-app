@@ -29,9 +29,9 @@ VALUES (
     :performance_period_starts,
     :performance_period_ends,
     :wrap_up_ends,
-    NULLIF(:high_level_note, ''),
+    :high_level_note,
     :phased_in,
-    NULLIF(:phased_in_note, ''),
+    :phased_in_note,
     :created_by,
     :modified_by,
     :status

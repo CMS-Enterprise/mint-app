@@ -377,6 +377,7 @@ namespace :db do
     plan_general_characteristics,
     plan_beneficiaries,
     plan_participants_and_providers,
+    plan_ops_eval_and_learning,
     model_plan"
 
     puts "Cleaning database..."

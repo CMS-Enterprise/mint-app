@@ -1,19 +1,19 @@
 CREATE TABLE existing_model (
-    id TEXT PRIMARY KEY NOT NULL,
-    model_name TEXT NOT NULL UNIQUE,
-    stage TEXT NOT NULL,
+    id ZERO_STRING PRIMARY KEY NOT NULL,
+    model_name ZERO_STRING NOT NULL UNIQUE,
+    stage ZERO_STRING NOT NULL,
 
-    number_of_participants TEXT, --Not all a number
-    category TEXT,
-    authority TEXT,
-    description TEXT,
+    number_of_participants ZERO_STRING, --Not all a number
+    category ZERO_STRING,
+    authority ZERO_STRING,
+    description ZERO_STRING,
     number_of_beneficiaries_impacted INT,
     number_of_physicians_impacted INT,
     date_began TIMESTAMP WITH TIME ZONE,
     date_ended TIMESTAMP WITH TIME ZONE,
-    states TEXT,
-    keywords TEXT,
-    url TEXT,
+    states ZERO_STRING,
+    keywords ZERO_STRING,
+    url ZERO_STRING,
     display_model_summary BOOL,
 
     created_by EUA_ID NOT NULL,
