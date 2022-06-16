@@ -18,7 +18,7 @@ export default gql`
         modelType
         problem
         goal
-        testInventions
+        testInterventions
         note
         status
       }
