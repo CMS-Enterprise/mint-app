@@ -18,7 +18,7 @@ func (suite *ResolverSuite) TestPlanBasicsGetByModelPlanID() {
 	suite.Nil(basics.ModelType)
 	suite.Nil(basics.Problem)
 	suite.Nil(basics.Goal)
-	suite.Nil(basics.TestInventions)
+	suite.Nil(basics.TestInterventions)
 	suite.Nil(basics.Note)
 }
 
@@ -42,6 +42,6 @@ func (suite *ResolverSuite) TestUpdatePlanBasics() {
 	suite.EqualValues(models.MTVoluntary, *updatedBasics.ModelType)
 	suite.Nil(updatedBasics.Problem)
 	suite.EqualValues("Some goal", *updatedBasics.Goal)
-	suite.Nil(updatedBasics.TestInventions)
+	suite.Nil(updatedBasics.TestInterventions)
 	suite.Nil(updatedBasics.Note)
 }

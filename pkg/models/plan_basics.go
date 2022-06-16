@@ -13,10 +13,10 @@ type PlanBasics struct {
 
 	ModelType *ModelType `json:"modelType" db:"model_type" statusWeight:"1"`
 
-	Problem        *string `json:"problem" db:"problem" statusWeight:"1"`
-	Goal           *string `json:"goal" db:"goal" statusWeight:"1"`
-	TestInventions *string `json:"testInventions" db:"test_inventions" statusWeight:"1"`
-	Note           *string `json:"note" db:"note"`
+	Problem           *string `json:"problem" db:"problem" statusWeight:"1"`
+	Goal              *string `json:"goal" db:"goal" statusWeight:"1"`
+	TestInterventions *string `json:"testInterventions" db:"test_interventions" statusWeight:"1"`
+	Note              *string `json:"note" db:"note"`
 
 	CreatedBy   string     `json:"createdBy" db:"created_by"`
 	CreatedDts  time.Time  `json:"createdDts" db:"created_dts"`

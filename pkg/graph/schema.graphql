@@ -194,7 +194,7 @@ type PlanBasics {
   modelType: ModelType
   problem: String
   goal: String
-  testInventions: String
+  testInterventions: String
   note: String
   createdBy: String!
   createdDts: Time!
@@ -212,7 +212,7 @@ input PlanBasicsChanges @goModel(model: "map[string]interface{}") {
   modelType: ModelType
   problem: String
   goal: String
-  testInventions: String
+  testInterventions: String
   note: String
 }
 

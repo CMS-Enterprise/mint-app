@@ -151,18 +151,18 @@ type ComplexityRoot struct {
 	}
 
 	PlanBasics struct {
-		CreatedBy      func(childComplexity int) int
-		CreatedDts     func(childComplexity int) int
-		Goal           func(childComplexity int) int
-		ID             func(childComplexity int) int
-		ModelPlanID    func(childComplexity int) int
-		ModelType      func(childComplexity int) int
-		ModifiedBy     func(childComplexity int) int
-		ModifiedDts    func(childComplexity int) int
-		Note           func(childComplexity int) int
-		Problem        func(childComplexity int) int
-		Status         func(childComplexity int) int
-		TestInventions func(childComplexity int) int
+		CreatedBy         func(childComplexity int) int
+		CreatedDts        func(childComplexity int) int
+		Goal              func(childComplexity int) int
+		ID                func(childComplexity int) int
+		ModelPlanID       func(childComplexity int) int
+		ModelType         func(childComplexity int) int
+		ModifiedBy        func(childComplexity int) int
+		ModifiedDts       func(childComplexity int) int
+		Note              func(childComplexity int) int
+		Problem           func(childComplexity int) int
+		Status            func(childComplexity int) int
+		TestInterventions func(childComplexity int) int
 	}
 
 	PlanBeneficiaries struct {
@@ -1336,12 +1336,12 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.PlanBasics.Status(childComplexity), true
 
-	case "PlanBasics.testInventions":
-		if e.complexity.PlanBasics.TestInventions == nil {
+	case "PlanBasics.testInterventions":
+		if e.complexity.PlanBasics.TestInterventions == nil {
 			break
 		}
 
-		return e.complexity.PlanBasics.TestInventions(childComplexity), true
+		return e.complexity.PlanBasics.TestInterventions(childComplexity), true
 
 	case "PlanBeneficiaries.beneficiaries":
 		if e.complexity.PlanBeneficiaries.Beneficiaries == nil {
@@ -3813,7 +3813,7 @@ type PlanBasics {
   modelType: ModelType
   problem: String
   goal: String
-  testInventions: String
+  testInterventions: String
   note: String
   createdBy: String!
   createdDts: Time!
@@ -3831,7 +3831,7 @@ input PlanBasicsChanges @goModel(model: "map[string]interface{}") {
   modelType: ModelType
   problem: String
   goal: String
-  testInventions: String
+  testInterventions: String
   note: String
 }
 
@@ -7434,8 +7434,8 @@ func (ec *executionContext) fieldContext_ModelPlan_basics(ctx context.Context, f
 				return ec.fieldContext_PlanBasics_problem(ctx, field)
 			case "goal":
 				return ec.fieldContext_PlanBasics_goal(ctx, field)
-			case "testInventions":
-				return ec.fieldContext_PlanBasics_testInventions(ctx, field)
+			case "testInterventions":
+				return ec.fieldContext_PlanBasics_testInterventions(ctx, field)
 			case "note":
 				return ec.fieldContext_PlanBasics_note(ctx, field)
 			case "createdBy":
@@ -9075,8 +9075,8 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanBasics(ctx context.C
 				return ec.fieldContext_PlanBasics_problem(ctx, field)
 			case "goal":
 				return ec.fieldContext_PlanBasics_goal(ctx, field)
-			case "testInventions":
-				return ec.fieldContext_PlanBasics_testInventions(ctx, field)
+			case "testInterventions":
+				return ec.fieldContext_PlanBasics_testInterventions(ctx, field)
 			case "note":
 				return ec.fieldContext_PlanBasics_note(ctx, field)
 			case "createdBy":
@@ -11165,8 +11165,8 @@ func (ec *executionContext) fieldContext_PlanBasics_goal(ctx context.Context, fi
 	return fc, nil
 }
 
-func (ec *executionContext) _PlanBasics_testInventions(ctx context.Context, field graphql.CollectedField, obj *models.PlanBasics) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanBasics_testInventions(ctx, field)
+func (ec *executionContext) _PlanBasics_testInterventions(ctx context.Context, field graphql.CollectedField, obj *models.PlanBasics) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanBasics_testInterventions(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -11179,7 +11179,7 @@ func (ec *executionContext) _PlanBasics_testInventions(ctx context.Context, fiel
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.TestInventions, nil
+		return obj.TestInterventions, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -11193,7 +11193,7 @@ func (ec *executionContext) _PlanBasics_testInventions(ctx context.Context, fiel
 	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_PlanBasics_testInventions(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_PlanBasics_testInterventions(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "PlanBasics",
 		Field:      field,
@@ -27792,9 +27792,9 @@ func (ec *executionContext) _PlanBasics(ctx context.Context, sel ast.SelectionSe
 
 			out.Values[i] = ec._PlanBasics_goal(ctx, field, obj)
 
-		case "testInventions":
+		case "testInterventions":
 
-			out.Values[i] = ec._PlanBasics_testInventions(ctx, field, obj)
+			out.Values[i] = ec._PlanBasics_testInterventions(ctx, field, obj)
 
 		case "note":
 

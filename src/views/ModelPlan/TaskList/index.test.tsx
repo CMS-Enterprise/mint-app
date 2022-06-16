@@ -36,7 +36,7 @@ describe('The Model Plan Task List', () => {
       modelType: null,
       problem: null,
       goal: null,
-      testInventions: null,
+      testInterventions: null,
       note: null,
       status: 'READY'
     },

@@ -6,7 +6,7 @@ CREATE TABLE plan_basics (
 
     problem ZERO_STRING,
     goal ZERO_STRING,
-    test_inventions ZERO_STRING,
+    test_interventions ZERO_STRING,
     note ZERO_STRING,
 
 
