@@ -1,5 +1,6 @@
 const participantsAndProviders = {
   heading: 'Participants and Providers',
+  breadcrumb: 'Participants and providers',
   participantInfo:
     'Participants are organizations/individuals that have contracts with CMMI to participate in a model or demonstration. Participants may or may not be Medicare-enrolled providers.',
   providerInfo:
@@ -7,19 +8,20 @@ const participantsAndProviders = {
   whoAreParticipants: 'Who are the particpants? Select all that apply.',
   participantTypes: {
     medicareProviders: 'Medicare Providers',
-    entities: 'Entities',
-    convener: '',
-    medicarePlan: '',
-    standalonePartD: '',
-    medicarePrescription: '',
-    stateMedicaid: '',
-    medicaidManagedCare: '',
-    medicaidProviders: '',
-    states: '',
-    community: '',
-    nonProfit: '',
-    commercial: ''
+    entities: 'Entities (e.g., ACO, Direct Contracting Entity)',
+    convener: 'Convener',
+    medicarePlan: 'Medicare Advantage plans',
+    standalonePartD: 'Standalone Part D plans',
+    medicarePrescription: 'Medicare Advantage Prescription Drug (MAPD) plans',
+    stateMedicaid: 'State Medicaid agencies',
+    medicaidManagedCare: 'Medicaid Managed Care organizations',
+    medicaidProviders: 'Medicaid providers',
+    states: 'States',
+    community: 'Community-based organizations',
+    nonProfit: 'Non-profit organizations',
+    commercial: 'Commercial payers'
   },
+  other: 'Other',
   participantsCMMI: 'Are the participants in CMMI models now?',
   participantsCMMIInfo:
     'If you have selected more than one participant in the questions above, specify which participants already participate in CMMI models.',

@@ -60,6 +60,8 @@ export const ParticipantsAndProvidersContent = () => {
     }
   );
 
+  console.log(data);
+
   const {
     id,
     participants,
@@ -117,7 +119,7 @@ export const ParticipantsAndProvidersContent = () => {
 
   const initialValues = {
     participants: participants ?? [],
-    medicareProviderType: medicareProviderType ?? [],
+    medicareProviderType: medicareProviderType ?? '',
     statesEngagement: statesEngagement ?? '',
     participantsOther: participantsOther ?? '',
     participantsNote: participantsNote ?? '',
@@ -209,10 +211,7 @@ export const ParticipantsAndProvidersContent = () => {
                   error={!!flatErrors.participants}
                   className="margin-top-4"
                 >
-                  <Label
-                    htmlFor="participants-and-providers-participants"
-                    className="text-normal"
-                  >
+                  <Label htmlFor="participants-and-providers-participants">
                     {t('whoAreParticipants')}
                   </Label>
                   <FieldErrorMsg>{flatErrors.participants}</FieldErrorMsg>
@@ -229,9 +228,49 @@ export const ParticipantsAndProvidersContent = () => {
                     initialValues={initialValues.participants}
                   />
 
+                  {((values?.participants || []).includes(
+                    'MEDICARE_PROVIDERS' as ParticipantsType
+                  ) ||
+                    (values?.participants || []).includes(
+                      'STATES' as ParticipantsType
+                    ) ||
+                    (values?.participants || []).includes(
+                      'OTHER' as ParticipantsType
+                    )) && (
+                    <p className="margin-top-4 text-bold">
+                      {t('participantQuestions')}
+                    </p>
+                  )}
+
+                  {(values?.participants || []).includes(
+                    'MEDICARE_PROVIDERS' as ParticipantsType
+                  ) && (
+                    <FieldGroup
+                      scrollElement="medicareProviderType"
+                      error={!!flatErrors.medicareProviderType}
+                    >
+                      <Label
+                        htmlFor="plan-characteristics-medicare-type"
+                        className="text-normal"
+                      >
+                        {t('typeMedicateProvider')}
+                      </Label>
+                      <FieldErrorMsg>
+                        {flatErrors.medicareProviderType}
+                      </FieldErrorMsg>
+                      <Field
+                        as={TextAreaField}
+                        className="height-15"
+                        error={flatErrors.medicareProviderType}
+                        id="plan-characteristics-medicare-type"
+                        name="medicareProviderType"
+                      />
+                    </FieldGroup>
+                  )}
+
                   <AddNote
-                    id="participants-and-providers-participants"
-                    field="participants"
+                    id="participants-and-providers-participants-note"
+                    field="participantsNote"
                   />
                 </FieldGroup>
 

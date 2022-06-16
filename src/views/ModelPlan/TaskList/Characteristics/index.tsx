@@ -89,6 +89,8 @@ export const CharacteristicsContent = () => {
     }
   );
 
+  console.log(data);
+
   const {
     id,
     isNewModel,

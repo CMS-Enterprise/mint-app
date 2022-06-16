@@ -230,42 +230,46 @@ export const translateParticipantsType = (type: string) => {
   switch (type) {
     case 'MEDICARE_PROVIDERS':
       return i18next.t(
-        'generalCharacteristics:keyCharacteristicsTypes.episodeBased'
+        'participantsAndProviders:participantTypes.medicareProviders'
       );
     case 'ENTITIES':
-      return i18next.t('generalCharacteristics:keyCharacteristicsTypes.partC');
+      return i18next.t('participantsAndProviders:participantTypes.entities');
     case 'CONVENER':
-      return i18next.t('generalCharacteristics:keyCharacteristicsTypes.partD');
+      return i18next.t('participantsAndProviders:participantTypes.convener');
     case 'MEDICARE_ADVANTAGE_PLANS':
       return i18next.t(
-        'generalCharacteristics:keyCharacteristicsTypes.payment'
+        'participantsAndProviders:participantTypes.medicarePlan'
       );
     case 'STANDALONE_PART_D_PLANS':
       return i18next.t(
-        'generalCharacteristics:keyCharacteristicsTypes.population'
+        'participantsAndProviders:participantTypes.standalonePartD'
       );
     case 'MEDICARE_ADVANTAGE_PRESCRIPTION_DRUG_PLANS':
       return i18next.t(
-        'generalCharacteristics:keyCharacteristicsTypes.preventative'
+        'participantsAndProviders:participantTypes.medicarePrescription'
       );
     case 'STATE_MEDICAID_AGENCIES':
       return i18next.t(
-        'generalCharacteristics:keyCharacteristicsTypes.service'
+        'participantsAndProviders:participantTypes.stateMedicaid'
       );
     case 'MEDICAID_MANAGED_CARE_ORGANIZATIONS':
-      return i18next.t('generalCharacteristics:keyCharacteristicsTypes.shared');
+      return i18next.t(
+        'participantsAndProviders:participantTypes.medicaidManagedCare'
+      );
     case 'MEDICAID_PROVIDERS':
-      return i18next.t('generalCharacteristics:keyCharacteristicsTypes.shared');
+      return i18next.t(
+        'participantsAndProviders:participantTypes.medicaidProviders'
+      );
     case 'STATES':
-      return i18next.t('generalCharacteristics:keyCharacteristicsTypes.shared');
+      return i18next.t('participantsAndProviders:participantTypes.states');
     case 'COMMUNITY_BASED_ORGANIZATIONS':
-      return i18next.t('generalCharacteristics:keyCharacteristicsTypes.shared');
+      return i18next.t('participantsAndProviders:participantTypes.community');
     case 'NON_PROFIT_ORGANIZATIONS':
-      return i18next.t('generalCharacteristics:keyCharacteristicsTypes.shared');
+      return i18next.t('participantsAndProviders:participantTypes.nonProfit');
     case 'COMMERCIAL_PAYERS':
-      return i18next.t('generalCharacteristics:keyCharacteristicsTypes.shared');
+      return i18next.t('participantsAndProviders:participantTypes.commercial');
     case 'OTHER':
-      return i18next.t('generalCharacteristics:keyCharacteristicsTypes.other');
+      return i18next.t('participantsAndProviders:other');
     default:
       return '';
   }
