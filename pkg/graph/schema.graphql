@@ -703,97 +703,97 @@ type PlanITTools {
   modelPlanID: UUID!
 
   #Page 1
-  gcPartCD: [GcPartCDType!]
+  gcPartCD: [GcPartCDType!]!
   gcPartCDOther: String
   gcPartCDNote: String
-  gcCollectBids: [GcCollectBidsType!]
+  gcCollectBids: [GcCollectBidsType!]!
   gcCollectBidsOther: String
   gcCollectBidsNote: String
-  gcUpdateContract: [GcUpdateContractType!]
+  gcUpdateContract: [GcUpdateContractType!]!
   gcUpdateContractOther: String
   gcUpdateContractNote: String
   #Page 2
-  ppToAdvertise: [PpToAdvertiseType!]
+  ppToAdvertise: [PpToAdvertiseType!]!
   ppToAdvertiseOther: String
   ppToAdvertiseNote: String
-  ppCollectScoreReview: [PpCollectScoreReviewType!]
+  ppCollectScoreReview: [PpCollectScoreReviewType!]!
   ppCollectScoreReviewOther: String
   ppCollectScoreReviewNote: String
-  ppAppSupportContractor: [PpAppSupportContractorType!]
+  ppAppSupportContractor: [PpAppSupportContractorType!]!
   ppAppSupportContractorOther: String
   ppAppSupportContractorNote: String
   #Page 3
-  ppCommunicateWithParticipant: [PpCommunicateWithParticipantType!]
+  ppCommunicateWithParticipant: [PpCommunicateWithParticipantType!]!
   ppCommunicateWithParticipantOther: String
   ppCommunicateWithParticipantNote: String
-  ppManageProviderOverlap: [PpManageProviderOverlapType!] 
+  ppManageProviderOverlap: [PpManageProviderOverlapType!]!
   ppManageProviderOverlapOther: String
   ppManageProviderOverlapNote: String
-  bManageBeneficiaryOverlap: [BManageBeneficiaryOverlapType!] 
+  bManageBeneficiaryOverlap: [BManageBeneficiaryOverlapType!]!
   bManageBeneficiaryOverlapOther: String
   bManageBeneficiaryOverlapNote: String
   #Page 4
-  oelWorkingAgreement: [OelWorkingAgreementType!]
+  oelWorkingAgreement: [OelWorkingAgreementType!]!
   oelWorkingAgreementOther: String
   oelWorkingAgreementNote: String
-  oelHelpdeskSupport: [OelHelpdeskSupportType!]
+  oelHelpdeskSupport: [OelHelpdeskSupportType!]!
   oelHelpdeskSupportOther: String
   oelHelpdeskSupportNote: String
-  oelManageAco: [OelManageAcoType!] 
+  oelManageAco: [OelManageAcoType!]!
   oelManageAcoOther: String
   oelManageAcoNote: String
   #Page 5
-  oelPerformanceBenchmark: [OelPerformanceBenchmarkType!]
+  oelPerformanceBenchmark: [OelPerformanceBenchmarkType!]!
   oelPerformanceBenchmarkOther: String
   oelPerformanceBenchmarkNote: String
-  oelProcessAppeals: [OelProcessAppealsType!]
+  oelProcessAppeals: [OelProcessAppealsType!]!
   oelProcessAppealsOther: String
   oelProcessAppealsNote: String
-  oelEvaluationContractor: [OelEvaluationContractorType!]
+  oelEvaluationContractor: [OelEvaluationContractorType!]!
   oelEvaluationContractorOther: String
   oelEvaluationContractorNote: String
   #Page 6
-  oelCollectData: [OelCollectDataType!]
+  oelCollectData: [OelCollectDataType!]!
   oelCollectDataOther: String
   oelCollectDataNote: String
-  oelObtainData: [OelObtainDataType!]
+  oelObtainData: [OelObtainDataType!]!
   oelObtainDataOther: String
   oelObtainDataNote: String
-  oelClaimsBasedMeasures: [OelClaimsBasedMeasuresType!]
+  oelClaimsBasedMeasures: [OelClaimsBasedMeasuresType!]!
   oelClaimsBasedMeasuresOther: String
   oelClaimsBasedMeasuresNote: String
   #Page 7
-  oelQualityScores: [OelQualityScoresType!]
+  oelQualityScores: [OelQualityScoresType!]!
   oelQualityScoresOther: String
   oelQualityScoresNote: String
-  oelSendReports: [OelSendReportsType!]
+  oelSendReports: [OelSendReportsType!]!
   oelSendReportsOther: String
   oelSendReportsNote: String
-  oelLearningContractor: [OelLearningContractorType!]
+  oelLearningContractor: [OelLearningContractorType!]!
   oelLearningContractorOther: String
   oelLearningContractorNote: String
   #Page 8 
-  oelParticipantCollaboration: [OelParticipantCollaborationType!]
+  oelParticipantCollaboration: [OelParticipantCollaborationType!]!
   oelParticipantCollaborationOther: String
   oelParticipantCollaborationNote: String
-  oelEducateBeneficiaries: [OelEducateBeneficiariesType!]
+  oelEducateBeneficiaries: [OelEducateBeneficiariesType!]!
   oelEducateBeneficiariesOther: String
   oelEducateBeneficiariesNote: String
-  pMakeClaimsPayments: [PMakeClaimsPaymentsType!]
+  pMakeClaimsPayments: [PMakeClaimsPaymentsType!]!
   pMakeClaimsPaymentsOther: String
   pMakeClaimsPaymentsNote: String
   #Page 9
-  pInformFfs: [PInformFfsType!]
+  pInformFfs: [PInformFfsType!]!
   pInformFfsOther: String
   pInformFfsNote: String
-  pNonClaimsBasedPayments: [PNonClaimsBasedPaymentsType!]
+  pNonClaimsBasedPayments: [PNonClaimsBasedPaymentsType!]!
   pNonClaimsBasedPaymentsOther: String
   pNonClaimsBasedPaymentsNote: String
-  pSharedSavingsPlan: [PSharedSavingsPlanType!]
+  pSharedSavingsPlan: [PSharedSavingsPlanType!]!
   pSharedSavingsPlanOther: String
   pSharedSavingsPlanNote: String
   #Page 10
-  pRecoverPayments: [PRecoverPaymentsType!]
+  pRecoverPayments: [PRecoverPaymentsType!]!
   pRecoverPaymentsOther: String
   pRecoverPaymentsNote: String
 
