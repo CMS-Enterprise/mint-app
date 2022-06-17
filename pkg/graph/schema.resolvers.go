@@ -17,12 +17,15 @@ import (
 )
 
 func (r *modelPlanResolver) CmsCenters(ctx context.Context, obj *models.ModelPlan) ([]models.CMSCenter, error) {
+	// return obj.CMSCenters, nil
 	return obj.CMSCenters, nil
+	// return models.EnumArray{}, nil
 }
 
-func (r *modelPlanResolver) CmmiGroups(ctx context.Context, obj *models.ModelPlan) ([]model.CMMIGroup, error) {
-	cmmiGroups := models.ConvertEnums[model.CMMIGroup](obj.CMMIGroups)
-	return cmmiGroups, nil
+func (r *modelPlanResolver) CmmiGroups(ctx context.Context, obj *models.ModelPlan) ([]models.CMMIGroup, error) {
+	return obj.CMMIGroups, nil
+	// cmmiGroups := models.ConvertEnums[model.CMMIGroup](obj.CMMIGroups)
+	// return cmmiGroups, nil
 }
 
 func (r *modelPlanResolver) Basics(ctx context.Context, obj *models.ModelPlan) (*models.PlanBasics, error) {

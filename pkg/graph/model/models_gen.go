@@ -263,53 +263,6 @@ func (e BeneficiariesType) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
-type CMMIGroup string
-
-const (
-	CMMIGroupPatientCareModelsGroup                       CMMIGroup = "PATIENT_CARE_MODELS_GROUP"
-	CMMIGroupPolicyAndProgramsGroup                       CMMIGroup = "POLICY_AND_PROGRAMS_GROUP"
-	CMMIGroupPreventiveAndPopulationHealthCareModelsGroup CMMIGroup = "PREVENTIVE_AND_POPULATION_HEALTH_CARE_MODELS_GROUP"
-	CMMIGroupSeamlessCareModelsGroup                      CMMIGroup = "SEAMLESS_CARE_MODELS_GROUP"
-	CMMIGroupStateInnovationsGroup                        CMMIGroup = "STATE_INNOVATIONS_GROUP"
-)
-
-var AllCMMIGroup = []CMMIGroup{
-	CMMIGroupPatientCareModelsGroup,
-	CMMIGroupPolicyAndProgramsGroup,
-	CMMIGroupPreventiveAndPopulationHealthCareModelsGroup,
-	CMMIGroupSeamlessCareModelsGroup,
-	CMMIGroupStateInnovationsGroup,
-}
-
-func (e CMMIGroup) IsValid() bool {
-	switch e {
-	case CMMIGroupPatientCareModelsGroup, CMMIGroupPolicyAndProgramsGroup, CMMIGroupPreventiveAndPopulationHealthCareModelsGroup, CMMIGroupSeamlessCareModelsGroup, CMMIGroupStateInnovationsGroup:
-		return true
-	}
-	return false
-}
-
-func (e CMMIGroup) String() string {
-	return string(e)
-}
-
-func (e *CMMIGroup) UnmarshalGQL(v interface{}) error {
-	str, ok := v.(string)
-	if !ok {
-		return fmt.Errorf("enums must be strings")
-	}
-
-	*e = CMMIGroup(str)
-	if !e.IsValid() {
-		return fmt.Errorf("%s is not a valid CMMIGroup", str)
-	}
-	return nil
-}
-
-func (e CMMIGroup) MarshalGQL(w io.Writer) {
-	fmt.Fprint(w, strconv.Quote(e.String()))
-}
-
 type GeographyApplication string
 
 const (

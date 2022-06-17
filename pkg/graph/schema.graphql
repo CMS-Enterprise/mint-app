@@ -23,6 +23,13 @@ Time values are represented as strings using RFC3339 format, for example 2019-10
 """
 scalar Time
 
+
+# scalar EnumArray
+
+# type CMSArray {
+#   items: [CMSCenter!]!
+
+# }
 """
 ModelPlan represent the data point for plans about a model. It is the central data type in the application
 """
@@ -30,7 +37,8 @@ type ModelPlan {
   id: UUID!
   modelName: String!
   modelCategory: ModelCategory
-  cmsCenters: [CMSCenter!]!
+  # cmsCenters:CMSArray
+  cmsCenters:[CMSCenter!]!
   cmsOther: String
   cmmiGroups: [CMMIGroup!]!
   archived: Boolean!

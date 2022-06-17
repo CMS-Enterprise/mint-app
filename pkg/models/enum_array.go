@@ -3,29 +3,38 @@ package models
 import (
 	"bytes"
 	"database/sql/driver"
+	"strings"
 
-	// "errors"
+	"errors"
 	"fmt"
-	// "github.com/99designs/gqlgen/graphql"
+
+	"github.com/99designs/gqlgen/graphql"
 )
+
+// EnumString is a string that can be converted to an Enum
+type EnumString string
+
+// EnumArray is an array of EnumString
+type EnumArray []EnumString
 
 // type ArrayEnum[T []string] []string
 
 // []string
 
 // MarshalEnumArray allows an EnumArray to be marshalled by graphql
-// func MarshalEnumArray(id uuid.UUID) graphql.Marshaler {
-// 	return graphql.MarshalString(id.String())
-// }
+func MarshalEnumArray(array EnumArray) graphql.Marshaler {
+	// return graphql.MarshalString(array)
+	return graphql.MarshalAny(array)
+}
 
 // UnmarshalEnumArray allows an EnumArray to be unmarshalled by graphql
-// func UnmarshalEnumArray(v interface{}) (uuid.UUID, error) {
-// 	idAsString, ok := v.(string)
-// 	if !ok {
-// 		return uuid.Nil, errors.New("id should be a valid UUID")
-// 	}
-// 	return uuid.Parse(idAsString)
-// }
+func UnmarshalEnumArray(v interface{}) (EnumArray, error) {
+	idAsString, ok := v.(EnumArray)
+	if !ok {
+		return EnumArray{}, errors.New("not a valid EnumArray")
+	}
+	return idAsString, nil
+}
 
 //GenericScan provides functionality
 func GenericScan[ArrayType ~[]memberType, memberType ~string](src interface{}, array *ArrayType) error {
@@ -43,7 +52,7 @@ func GenericScan[ArrayType ~[]memberType, memberType ~string](src interface{}, a
 		return nil
 	}
 
-	return fmt.Errorf("pq: cannot convert %T to StringArray", src)
+	return fmt.Errorf("generic scan: cannot convert %T to an EnumArray", src)
 	//todo call the scan functions here
 
 }
@@ -84,7 +93,7 @@ func scanBytes[ArrayType ~[]memberType, memberType ~string](src []byte, a *Array
 		b := make(ArrayType, len(elems))
 		for i, v := range elems {
 			if b[i] = memberType(v); v == nil { //TODO, we can't use memberType here.... will this work?
-				return fmt.Errorf("pq: parsing array element index %d: cannot convert nil to string", i)
+				return fmt.Errorf(" parsing array element index %d: cannot convert nil to string", i)
 			}
 		}
 		*a = b
@@ -119,7 +128,7 @@ func parseArray(src, del []byte) (dims []int, elems [][]byte, err error) {
 	var depth, i int
 
 	if len(src) < 1 || src[0] != '{' {
-		return nil, nil, fmt.Errorf("pq: unable to parse array; expected %q at offset %d", '{', 0)
+		return nil, nil, fmt.Errorf(" unable to parse array; expected %q at offset %d", '{', 0)
 	}
 
 Open:
@@ -172,7 +181,7 @@ Element:
 				if bytes.HasPrefix(src[i:], del) || src[i] == '}' {
 					elem := src[start:i]
 					if len(elem) == 0 {
-						return nil, nil, fmt.Errorf("pq: unable to parse array; unexpected %q at offset %d", src[i], i)
+						return nil, nil, fmt.Errorf(" unable to parse array; unexpected %q at offset %d", src[i], i)
 					}
 					if bytes.Equal(elem, []byte("NULL")) {
 						elem = nil
@@ -194,7 +203,7 @@ Element:
 			depth--
 			i++
 		} else {
-			return nil, nil, fmt.Errorf("pq: unable to parse array; unexpected %q at offset %d", src[i], i)
+			return nil, nil, fmt.Errorf(" unable to parse array; unexpected %q at offset %d", src[i], i)
 		}
 	}
 
@@ -204,18 +213,29 @@ Close:
 			depth--
 			i++
 		} else {
-			return nil, nil, fmt.Errorf("pq: unable to parse array; unexpected %q at offset %d", src[i], i)
+			return nil, nil, fmt.Errorf(" unable to parse array; unexpected %q at offset %d", src[i], i)
 		}
 	}
 	if depth > 0 {
-		err = fmt.Errorf("pq: unable to parse array; expected %q at offset %d", '}', i)
+		err = fmt.Errorf(" unable to parse array; expected %q at offset %d", '}', i)
 	}
 	if err == nil {
 		for _, d := range dims {
 			if (len(elems) % d) != 0 {
-				err = fmt.Errorf("pq: multidimensional arrays must have elements with matching dimensions")
+				err = fmt.Errorf(" multidimensional arrays must have elements with matching dimensions")
 			}
 		}
 	}
 	return
+}
+
+func scanLinearArray(src, del []byte, typ string) (elems [][]byte, err error) {
+	dims, elems, err := parseArray(src, del)
+	if err != nil {
+		return nil, err
+	}
+	if len(dims) > 1 {
+		return nil, fmt.Errorf(" cannot convert ARRAY%s to %s", strings.Replace(fmt.Sprint(dims), " ", "][", -1), typ)
+	}
+	return elems, err
 }

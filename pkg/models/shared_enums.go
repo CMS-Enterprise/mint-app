@@ -78,16 +78,17 @@ const (
 )
 
 //  CMMIGroup representes the group at CMMI
-// type CMMIGroup EnumString
+type CMMIGroup string
 
-// const (
-// 	CMMIPatientCareModels                       CMMIGroup = "PATIENT_CARE_MODELS_GROUP"
-// 	CMMIPolicyAndPrograms                       CMMIGroup = "POLICY_AND_PROGRAMS_GROUP"
-// 	CMMIPreventiveAndPopulationHealthCareModels CMMIGroup = "PREVENTIVE_AND_POPULATION_HEALTH_CARE_MODELS_GROUP"
-// 	CMMISeamlessCareModels                      CMMIGroup = "SEAMLESS_CARE_MODELS_GROUP"
-// 	CMMIStateInnovations                        CMMIGroup = "STATE_INNOVATIONS_GROUP"
-// 	CMMITBD                                     CMMIGroup = "TBD"
-// )
+// These constants represent the different values of CMMIGroup
+const (
+	CMMIPatientCareModels                       CMMIGroup = "PATIENT_CARE_MODELS_GROUP"
+	CMMIPolicyAndPrograms                       CMMIGroup = "POLICY_AND_PROGRAMS_GROUP"
+	CMMIPreventiveAndPopulationHealthCareModels CMMIGroup = "PREVENTIVE_AND_POPULATION_HEALTH_CARE_MODELS_GROUP"
+	CMMISeamlessCareModels                      CMMIGroup = "SEAMLESS_CARE_MODELS_GROUP"
+	CMMIStateInnovations                        CMMIGroup = "STATE_INNOVATIONS_GROUP"
+	CMMITBD                                     CMMIGroup = "TBD"
+)
 
 // ModelType is an enum that represents the basic type of a model
 type ModelType string
@@ -143,11 +144,11 @@ const (
 	TsFinal           TaskSection = "FINAL"
 )
 
-// EnumString is a string that can be converted to an Enum
-type EnumString string
+// // EnumString is a string that can be converted to an Enum
+// type EnumString string
 
-// EnumArray is an array of EnumString
-type EnumArray []EnumString
+// // EnumArray is an array of EnumString
+// type EnumArray []EnumString
 
 // type EnumArray []interface{}
 
