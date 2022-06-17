@@ -1,6 +1,12 @@
 const participantsAndProviders = {
   heading: 'Participants and Providers',
   breadcrumb: 'Participants and providers',
+  participantsDifferenceHeading:
+    'What’s the difference between participants and providers?',
+  participantsDifferenceInfo:
+    'Participants are <strong>organizations/individuals</strong> that have contracts with CMMI to participate in a model or demonstration. Participants may or may not be Medicare‐enrolled providers.',
+  participantsDifferenceInfo2:
+    'Providers are <strong>organizations/individuals</strong> that work with the Participants and deliver care or services to the beneficiaries impacted by the model.',
   participantInfo:
     'Participants are organizations/individuals that have contracts with CMMI to participate in a model or demonstration. Participants may or may not be Medicare-enrolled providers.',
   providerInfo:
@@ -37,6 +43,9 @@ const participantsAndProviders = {
   howManyParticipants: 'How many participants do you expect?',
   howManyInfo:
     'Note: Sometimes RRCEG provides a minimum for the power calculation. Other times stakeholder research may inform the team about who are good candidates or might be interested in participating.',
+  numberOfParticipants: 'Number of participants',
+  zero: '0',
+  tenThousand: '10,000+',
   estimateConfidence: 'What is your level of confidence on this esitmate?',
   estimateOptions: {
     notAtAll: 'Not at all confident',
@@ -52,7 +61,8 @@ const participantsAndProviders = {
       'CMMI writes, Office of General Council (OGC) reviews and approves',
     nofo:
       'NOFO (Notice of funding opportunity for grants/cooperative agreements',
-    notApplicable: 'Not applicable, it is a mandatory model'
+    notApplicable: 'Not applicable',
+    other: 'Other'
   },
   howWillYouSelect: 'How will you select participants? Select all that appy.',
   selectOtions: {

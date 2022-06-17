@@ -1,4 +1,4 @@
-import React, { useMemo, useRef } from 'react';
+import React, { useRef } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link, Route, Switch, useHistory, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
@@ -7,15 +7,14 @@ import {
   BreadcrumbBar,
   BreadcrumbLink,
   Button,
-  ComboBox,
   Fieldset,
   Grid,
   GridContainer,
   IconArrowBack,
   Label,
-  Radio
+  Radio,
+  SummaryBox
 } from '@trussworks/react-uswds';
-import classNames from 'classnames';
 import { Field, Form, Formik, FormikProps } from 'formik';
 
 import AddNote from 'components/AddNote';
@@ -41,6 +40,10 @@ import flattenErrors from 'utils/flattenErrors';
 import { sortOtherEnum, translateParticipantsType } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
 
+import ParticipantsOptions from './ParticipantsOptions';
+
+import './index.scss';
+
 export const ParticipantsAndProvidersContent = () => {
   const { t } = useTranslation('participantsAndProviders');
   const { t: h } = useTranslation('draftModelPlan');
@@ -60,8 +63,6 @@ export const ParticipantsAndProvidersContent = () => {
     }
   );
 
-  console.log(data);
-
   const {
     id,
     participants,
@@ -73,7 +74,7 @@ export const ParticipantsAndProvidersContent = () => {
     participantsCurrentlyInModelsNote,
     modelApplicationLevel
   } =
-    data?.modelPlan?.providersAndParticipants ||
+    data?.modelPlan?.participantsAndProviders ||
     ({} as ModelPlanParticipantsAndProvidersFormType);
 
   const modelName = data?.modelPlan?.modelName || '';
@@ -98,7 +99,7 @@ export const ParticipantsAndProvidersContent = () => {
         if (!response?.errors) {
           if (redirect === 'next') {
             history.push(
-              `/models/${modelID}/task-list/participants-and-providers/key-characteristics`
+              `/models/${modelID}/task-list/participants-and-providers/participants-options`
             );
           } else if (redirect === 'back') {
             history.push(`/models/${modelID}/task-list/`);
@@ -199,95 +200,244 @@ export const ParticipantsAndProvidersContent = () => {
                   })}
                 </ErrorAlert>
               )}
-              <Form
-                className="tablet:grid-col-6 margin-top-6"
-                data-testid="participants-and-providers-form"
-                onSubmit={e => {
-                  handleSubmit(e);
-                }}
-              >
-                <FieldGroup
-                  scrollElement="participants"
-                  error={!!flatErrors.participants}
-                  className="margin-top-4"
-                >
-                  <Label htmlFor="participants-and-providers-participants">
-                    {t('whoAreParticipants')}
-                  </Label>
-                  <FieldErrorMsg>{flatErrors.participants}</FieldErrorMsg>
-
-                  <Field
-                    as={MultiSelect}
-                    id="participants-and-providers-participants"
-                    name="participants"
-                    options={mappedParticipants}
-                    selectedLabel={t('selectedParticipants')}
-                    onChange={(value: string[] | []) => {
-                      setFieldValue('participants', value);
-                    }}
-                    initialValues={initialValues.participants}
-                  />
-
-                  {((values?.participants || []).includes(
-                    'MEDICARE_PROVIDERS' as ParticipantsType
-                  ) ||
-                    (values?.participants || []).includes(
-                      'STATES' as ParticipantsType
-                    ) ||
-                    (values?.participants || []).includes(
-                      'OTHER' as ParticipantsType
-                    )) && (
-                    <p className="margin-top-4 text-bold">
-                      {t('participantQuestions')}
-                    </p>
-                  )}
-
-                  {(values?.participants || []).includes(
-                    'MEDICARE_PROVIDERS' as ParticipantsType
-                  ) && (
-                    <FieldGroup
-                      scrollElement="medicareProviderType"
-                      error={!!flatErrors.medicareProviderType}
+              <GridContainer className="padding-left-0 padding-right-0">
+                <Grid row gap className="participants-and-providers__info">
+                  <Grid desktop={{ col: 6 }}>
+                    <Form
+                      className="margin-top-6"
+                      data-testid="participants-and-providers-form"
+                      onSubmit={e => {
+                        handleSubmit(e);
+                      }}
                     >
-                      <Label
-                        htmlFor="plan-characteristics-medicare-type"
-                        className="text-normal"
+                      <FieldGroup
+                        scrollElement="participants"
+                        error={!!flatErrors.participants}
+                        className="margin-top-4"
                       >
-                        {t('typeMedicateProvider')}
-                      </Label>
-                      <FieldErrorMsg>
-                        {flatErrors.medicareProviderType}
-                      </FieldErrorMsg>
-                      <Field
-                        as={TextAreaField}
-                        className="height-15"
-                        error={flatErrors.medicareProviderType}
-                        id="plan-characteristics-medicare-type"
-                        name="medicareProviderType"
-                      />
-                    </FieldGroup>
-                  )}
+                        <Label htmlFor="participants-and-providers-participants">
+                          {t('whoAreParticipants')}
+                        </Label>
+                        <FieldErrorMsg>{flatErrors.participants}</FieldErrorMsg>
 
-                  <AddNote
-                    id="participants-and-providers-participants-note"
-                    field="participantsNote"
-                  />
-                </FieldGroup>
+                        <Field
+                          as={MultiSelect}
+                          id="participants-and-providers-participants"
+                          name="participants"
+                          options={mappedParticipants}
+                          selectedLabel={t('selectedParticipants')}
+                          onChange={(value: string[] | []) => {
+                            setFieldValue('participants', value);
+                          }}
+                          initialValues={initialValues.participants}
+                        />
 
-                <div className="margin-top-6 margin-bottom-3">
-                  <Button type="submit" onClick={() => setErrors({})}>
-                    {h('next')}
-                  </Button>
-                </div>
-                <Button
-                  type="button"
-                  className="usa-button usa-button--unstyled"
-                  onClick={() => handleFormSubmit(values, 'back')}
-                >
-                  <IconArrowBack className="margin-right-1" aria-hidden />
-                  {h('saveAndReturn')}
-                </Button>
-              </Form>
+                        {((values?.participants || []).includes(
+                          'MEDICARE_PROVIDERS' as ParticipantsType
+                        ) ||
+                          (values?.participants || []).includes(
+                            'STATES' as ParticipantsType
+                          ) ||
+                          (values?.participants || []).includes(
+                            'OTHER' as ParticipantsType
+                          )) && (
+                          <p className="margin-top-4 text-bold">
+                            {t('participantQuestions')}
+                          </p>
+                        )}
+
+                        {(values?.participants || []).includes(
+                          'MEDICARE_PROVIDERS' as ParticipantsType
+                        ) && (
+                          <FieldGroup
+                            scrollElement="medicareProviderType"
+                            error={!!flatErrors.medicareProviderType}
+                          >
+                            <Label
+                              htmlFor="participants-and-providers-medicare-type"
+                              className="text-normal"
+                            >
+                              {t('typeMedicateProvider')}
+                            </Label>
+                            <FieldErrorMsg>
+                              {flatErrors.medicareProviderType}
+                            </FieldErrorMsg>
+                            <Field
+                              as={TextAreaField}
+                              className="height-15"
+                              error={flatErrors.medicareProviderType}
+                              id="participants-and-providers-medicare-type"
+                              name="medicareProviderType"
+                            />
+                          </FieldGroup>
+                        )}
+
+                        {(values?.participants || []).includes(
+                          'STATES' as ParticipantsType
+                        ) && (
+                          <FieldGroup
+                            scrollElement="statesEngagement"
+                            error={!!flatErrors.statesEngagement}
+                          >
+                            <Label
+                              htmlFor="participants-and-providers-states-engagement"
+                              className="text-normal"
+                            >
+                              {t('describeStates')}
+                            </Label>
+                            <FieldErrorMsg>
+                              {flatErrors.statesEngagement}
+                            </FieldErrorMsg>
+                            <Field
+                              as={TextAreaField}
+                              className="height-15"
+                              error={flatErrors.statesEngagement}
+                              id="participants-and-providers-states-engagement"
+                              name="statesEngagement"
+                            />
+                          </FieldGroup>
+                        )}
+
+                        {(values?.participants || []).includes(
+                          'OTHER' as ParticipantsType
+                        ) && (
+                          <FieldGroup
+                            scrollElement="participantsOther"
+                            error={!!flatErrors.participantsOther}
+                          >
+                            <Label
+                              htmlFor="participants-and-providers-participants-other"
+                              className="text-normal"
+                            >
+                              {t('describeOther')}
+                            </Label>
+                            <FieldErrorMsg>
+                              {flatErrors.participantsOther}
+                            </FieldErrorMsg>
+                            <Field
+                              as={TextAreaField}
+                              className="height-15"
+                              error={flatErrors.participantsOther}
+                              id="participants-and-providers-participants-other"
+                              name="participantsOther"
+                            />
+                          </FieldGroup>
+                        )}
+
+                        <AddNote
+                          id="participants-and-providers-participants-note"
+                          field="participantsNote"
+                        />
+                      </FieldGroup>
+
+                      <FieldGroup
+                        scrollElement="participantsCurrentlyInModels"
+                        error={!!flatErrors.participantsCurrentlyInModels}
+                        className="margin-y-4 margin-bottom-8"
+                      >
+                        <Label htmlFor="participants-and-providers-current-participants">
+                          {t('participantsCMMI')}
+                        </Label>
+                        <p className="text-base margin-0 line-height-body-3">
+                          {t('participantsCMMIInfo')}
+                        </p>
+                        <FieldErrorMsg>
+                          {flatErrors.participantsCurrentlyInModels}
+                        </FieldErrorMsg>
+                        <Fieldset>
+                          <Field
+                            as={Radio}
+                            id="participants-and-providers-current-participants"
+                            name="participantsCurrentlyInModels"
+                            label={h('yes')}
+                            value="TRUE"
+                            checked={
+                              values.participantsCurrentlyInModels === true
+                            }
+                            onChange={() => {
+                              setFieldValue(
+                                'participantsCurrentlyInModels',
+                                true
+                              );
+                            }}
+                          />
+                          <Field
+                            as={Radio}
+                            id="participants-and-providers-current-participants-no"
+                            name="participantsCurrentlyInModels"
+                            label={h('no')}
+                            value="FALSE"
+                            checked={
+                              values.participantsCurrentlyInModels === false
+                            }
+                            onChange={() => {
+                              setFieldValue(
+                                'participantsCurrentlyInModels',
+                                false
+                              );
+                            }}
+                          />
+                        </Fieldset>
+                        <AddNote
+                          id="participants-and-providers-current-participants-note"
+                          field="participantsCurrentlyInModelsNote"
+                        />
+                      </FieldGroup>
+
+                      <FieldGroup
+                        scrollElement="modelApplicationLevel"
+                        error={!!flatErrors.modelApplicationLevel}
+                      >
+                        <Label htmlFor="participants-and-providers-application-level">
+                          {t('modelLevel')}
+                        </Label>
+                        <p className="text-base margin-0 line-height-body-3">
+                          {t('modelLevelInfo')}
+                        </p>
+                        <FieldErrorMsg>
+                          {flatErrors.modelApplicationLevel}
+                        </FieldErrorMsg>
+                        <Field
+                          as={TextAreaField}
+                          className="height-15"
+                          error={flatErrors.modelApplicationLevel}
+                          id="participants-and-providers-application-level"
+                          name="modelApplicationLevel"
+                        />
+                      </FieldGroup>
+
+                      <div className="margin-top-6 margin-bottom-3">
+                        <Button type="submit" onClick={() => setErrors({})}>
+                          {h('next')}
+                        </Button>
+                      </div>
+                      <Button
+                        type="button"
+                        className="usa-button usa-button--unstyled"
+                        onClick={() => handleFormSubmit(values, 'back')}
+                      >
+                        <IconArrowBack className="margin-right-1" aria-hidden />
+                        {h('saveAndReturn')}
+                      </Button>
+                    </Form>
+                  </Grid>
+                  <Grid desktop={{ col: 6 }}>
+                    <SummaryBox
+                      heading={t('participantsDifferenceHeading')}
+                      className="margin-top-6 "
+                    >
+                      <ul>
+                        <li>
+                          <Trans i18nKey="participantsAndProviders:participantsDifferenceInfo" />
+                        </li>
+                        <li>
+                          <Trans i18nKey="participantsAndProviders:participantsDifferenceInfo2" />
+                        </li>
+                      </ul>
+                    </SummaryBox>
+                  </Grid>
+                </Grid>
+              </GridContainer>
               {id && (
                 <AutoSave
                   values={values}
@@ -317,12 +467,12 @@ export const ParticipantsAndProviders = () => {
               exact
               render={() => <ParticipantsAndProvidersContent />}
             />
-            {/* <Route
-              path="/models/:modelID/task-list/characteristics/key-characteristics"
-              exact
-              render={() => <KeyCharacteristics />}
-            />
             <Route
+              path="/models/:modelID/task-list/participants-and-providers/participants-options"
+              exact
+              render={() => <ParticipantsOptions />}
+            />
+            {/* <Route
               path="/models/:modelID/task-list/characteristics/involvements"
               exact
               render={() => <Involvements />}

@@ -275,6 +275,69 @@ export const translateParticipantsType = (type: string) => {
   }
 };
 
+export const translateConfidenceType = (type: string) => {
+  switch (type) {
+    case 'NOT_AT_ALL':
+      return i18next.t('participantsAndProviders:estimateOptions.notAtAll');
+    case 'SLIGHTLY':
+      return i18next.t('participantsAndProviders:estimateOptions.slightly');
+    case 'FAIRLY':
+      return i18next.t('participantsAndProviders:estimateOptions.fairly');
+    case 'COMPLETELY':
+      return i18next.t('participantsAndProviders:estimateOptions.completely');
+    default:
+      return '';
+  }
+};
+
+export const translateRecruitmentType = (type: string) => {
+  switch (type) {
+    case 'LOI':
+      return i18next.t('participantsAndProviders:recruitOptions.loi');
+    case 'RFA':
+      return i18next.t('participantsAndProviders:recruitOptions.rfa');
+    case 'NOFO':
+      return i18next.t('participantsAndProviders:recruitOptions.nofo');
+    case 'OTHER':
+      return i18next.t('participantsAndProviders:recruitOptions.other');
+    case 'NA':
+      return i18next.t('participantsAndProviders:recruitOptions.notApplicable');
+    default:
+      return '';
+  }
+};
+
+export const translateParticipantSelectiontType = (type: string) => {
+  switch (type) {
+    case 'MODEL_TEAM_REVIEW_APPLICATIONS':
+      return i18next.t(
+        'participantsAndProviders:selectOtions.reviewApplications'
+      );
+    case 'SUPPORT_FROM_CMMI':
+      return i18next.t('participantsAndProviders:selectOtions.solicitSupport');
+    case 'CMS_COMPONENT_OR_PROCESS':
+      return i18next.t(
+        'participantsAndProviders:selectOtions.anotherComponent'
+      );
+    case 'APPLICATION_REVIEW_AND_SCORING_TOOL':
+      return i18next.t(
+        'participantsAndProviders:selectOtions.applicationReview'
+      );
+    case 'APPLICATION_SUPPORT_CONTRACTOR':
+      return i18next.t(
+        'participantsAndProviders:selectOtions.applicationSupport'
+      );
+    case 'BASIC_CRITERIA':
+      return i18next.t('participantsAndProviders:selectOtions.criteria');
+    case 'OTHER':
+      return i18next.t('participantsAndProviders:selectOtions.anotherProcess');
+    case 'NO_SELECTING_PARTICIPANTS':
+      return i18next.t('participantsAndProviders:selectOtions.notApplicable');
+    default:
+      return '';
+  }
+};
+
 /**
  * Translate the document type API enum to a human readable string
  */
@@ -332,6 +395,7 @@ export const sortRepliesByDate = (
 
 // Sort mapped enums to be alphabetical and have 'OTHER' come last
 export const sortOtherEnum = (a: string, b: string) => {
+  if (b === 'NA' || b === 'NO_SELECTING_PARTICIPANTS') return -1;
   if (a < b || b === 'OTHER') {
     return -1;
   }

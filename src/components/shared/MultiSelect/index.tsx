@@ -159,12 +159,9 @@ export default function MultiSelect({
       {selected.length > 0 && (
         <div className="easi-multiselect__selected-list margin-top-3">
           {selectedLabel}
-          <ul className="usa-list--unstyled margin-top-1">
+          <ul className="usa-list--unstyled margin-top-1 display-flex flex-justify-start flex-wrap">
             {selected.map(option => (
-              <li
-                key={option}
-                className="display-flex flex-justify-start margin-y-05"
-              >
+              <li key={option} className="margin-right-05 margin-y-05">
                 <Tag
                   className="bg-primary-lighter text-ink text-no-uppercase padding-y-1 padding-x-105 display-flex flex-align-center"
                   id={`easi-multiselect__tag-${findOptions(option)?.value}`}

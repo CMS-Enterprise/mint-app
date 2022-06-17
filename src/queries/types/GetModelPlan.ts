@@ -75,7 +75,7 @@ export interface GetModelPlan_modelPlan_generalCharacteristics {
   status: TaskStatus;
 }
 
-export interface GetModelPlan_modelPlan_providersAndParticipants {
+export interface GetModelPlan_modelPlan_participantsAndProviders {
   __typename: "PlanParticipantsAndProviders";
   createdBy: string;
   createdDts: Time;
@@ -100,7 +100,7 @@ export interface GetModelPlan_modelPlan {
   documents: GetModelPlan_modelPlan_documents[];
   discussions: GetModelPlan_modelPlan_discussions[];
   generalCharacteristics: GetModelPlan_modelPlan_generalCharacteristics;
-  providersAndParticipants: GetModelPlan_modelPlan_providersAndParticipants;
+  participantsAndProviders: GetModelPlan_modelPlan_participantsAndProviders;
 }
 
 export interface GetModelPlan {

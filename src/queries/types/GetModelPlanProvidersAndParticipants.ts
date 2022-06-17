@@ -9,11 +9,11 @@ import { ParticipantsType, ConfidenceType, RecruitmentType, ParticipantSelection
 // GraphQL query operation: GetModelPlanProvidersAndParticipants
 // ====================================================
 
-export interface GetModelPlanProvidersAndParticipants_modelPlan_providersAndParticipants {
+export interface GetModelPlanProvidersAndParticipants_modelPlan_participantsAndProviders {
   __typename: "PlanParticipantsAndProviders";
   id: UUID;
   modelPlanID: UUID;
-  participants: ParticipantsType[] | null;
+  participants: ParticipantsType[];
   medicareProviderType: string | null;
   statesEngagement: string | null;
   participantsOther: string | null;
@@ -27,10 +27,10 @@ export interface GetModelPlanProvidersAndParticipants_modelPlan_providersAndPart
   recruitmentMethod: RecruitmentType | null;
   recruitmentOther: string | null;
   recruitmentNote: string | null;
-  selectionMethod: ParticipantSelectionType[] | null;
+  selectionMethod: ParticipantSelectionType[];
   selectionOther: string | null;
   selectionNote: string | null;
-  communicationMethod: ParticipantCommunicationType[] | null;
+  communicationMethod: ParticipantCommunicationType[];
   communicationNote: string | null;
   participantAssumeRisk: boolean | null;
   riskType: ParticipantRiskType | null;
@@ -43,16 +43,16 @@ export interface GetModelPlanProvidersAndParticipants_modelPlan_providersAndPart
   gainsharePayments: boolean | null;
   gainsharePaymentsTrack: boolean | null;
   gainsharePaymentsNote: string | null;
-  participantsIds: ParticipantsIDType[] | null;
+  participantsIds: ParticipantsIDType[];
   participantsIdsOther: string | null;
   participantsIDSNote: string | null;
   providerAdditionFrequency: FrequencyType | null;
   providerAdditionFrequencyOther: string | null;
   providerAdditionFrequencyNote: string | null;
-  providerAddMethod: ProviderAddType[] | null;
+  providerAddMethod: ProviderAddType[];
   providerAddMethodOther: string | null;
   providerAddMethodNote: string | null;
-  providerLeaveMethod: ProviderLeaveType[] | null;
+  providerLeaveMethod: ProviderLeaveType[];
   providerLeaveMethodOther: string | null;
   providerLeaveMethodNote: string | null;
   providerOverlap: OverlapType | null;
@@ -68,7 +68,7 @@ export interface GetModelPlanProvidersAndParticipants_modelPlan_providersAndPart
 export interface GetModelPlanProvidersAndParticipants_modelPlan {
   __typename: "ModelPlan";
   modelName: string;
-  providersAndParticipants: GetModelPlanProvidersAndParticipants_modelPlan_providersAndParticipants;
+  participantsAndProviders: GetModelPlanProvidersAndParticipants_modelPlan_participantsAndProviders;
 }
 
 export interface GetModelPlanProvidersAndParticipants {

@@ -1,0 +1,7 @@
+.participants-and-providers {
+    &__info {
+        @media screen and (max-width: $tablet) {
+            flex-direction: column-reverse;
+        }
+    }
+}
