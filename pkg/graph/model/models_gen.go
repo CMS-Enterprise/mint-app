@@ -1676,47 +1676,6 @@ func (e OelSendReportsType) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
-type OelWorkingAgreementType string
-
-const (
-	OelWorkingAgreementTypeIaa   OelWorkingAgreementType = "IAA"
-	OelWorkingAgreementTypeOther OelWorkingAgreementType = "OTHER"
-)
-
-var AllOelWorkingAgreementType = []OelWorkingAgreementType{
-	OelWorkingAgreementTypeIaa,
-	OelWorkingAgreementTypeOther,
-}
-
-func (e OelWorkingAgreementType) IsValid() bool {
-	switch e {
-	case OelWorkingAgreementTypeIaa, OelWorkingAgreementTypeOther:
-		return true
-	}
-	return false
-}
-
-func (e OelWorkingAgreementType) String() string {
-	return string(e)
-}
-
-func (e *OelWorkingAgreementType) UnmarshalGQL(v interface{}) error {
-	str, ok := v.(string)
-	if !ok {
-		return fmt.Errorf("enums must be strings")
-	}
-
-	*e = OelWorkingAgreementType(str)
-	if !e.IsValid() {
-		return fmt.Errorf("%s is not a valid OelWorkingAgreementType", str)
-	}
-	return nil
-}
-
-func (e OelWorkingAgreementType) MarshalGQL(w io.Writer) {
-	fmt.Fprint(w, strconv.Quote(e.String()))
-}
-
 type PInformFfsType string
 
 const (

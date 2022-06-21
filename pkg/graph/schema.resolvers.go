@@ -366,11 +366,6 @@ func (r *planITToolsResolver) BManageBeneficiaryOverlap(ctx context.Context, obj
 	return BManageBeneficiaryOverlaps, nil
 }
 
-func (r *planITToolsResolver) OelWorkingAgreement(ctx context.Context, obj *models.PlanITTools) ([]model.OelWorkingAgreementType, error) {
-	OelWorkingAgreements := models.ConvertEnums[model.OelWorkingAgreementType](obj.OelWorkingAgreement)
-	return OelWorkingAgreements, nil
-}
-
 func (r *planITToolsResolver) OelHelpdeskSupport(ctx context.Context, obj *models.PlanITTools) ([]model.OelHelpdeskSupportType, error) {
 	OelHelpdeskSupports := models.ConvertEnums[model.OelHelpdeskSupportType](obj.OelHelpdeskSupport)
 	return OelHelpdeskSupports, nil

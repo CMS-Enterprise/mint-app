@@ -51,9 +51,6 @@ func (suite *ResolverSuite) TestPlanITToolsUpdate() {
 	suite.Nil(it.BManageBeneficiaryOverlapOther)
 	suite.Nil(it.BManageBeneficiaryOverlapNote)
 	//Page 4
-	suite.Nil(it.OelWorkingAgreement)
-	suite.Nil(it.OelWorkingAgreementOther)
-	suite.Nil(it.OelWorkingAgreementNote)
 	suite.Nil(it.OelHelpdeskSupport)
 	suite.Nil(it.OelHelpdeskSupportOther)
 	suite.Nil(it.OelHelpdeskSupportNote)
@@ -159,9 +156,6 @@ func (suite *ResolverSuite) TestPlanITToolsGetByModelPlanID() {
 	suite.Nil(it.BManageBeneficiaryOverlapOther)
 	suite.Nil(it.BManageBeneficiaryOverlapNote)
 	//Page 4
-	suite.Nil(it.OelWorkingAgreement)
-	suite.Nil(it.OelWorkingAgreementOther)
-	suite.Nil(it.OelWorkingAgreementNote)
 	suite.Nil(it.OelHelpdeskSupport)
 	suite.Nil(it.OelHelpdeskSupportOther)
 	suite.Nil(it.OelHelpdeskSupportNote)

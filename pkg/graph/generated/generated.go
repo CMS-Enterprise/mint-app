@@ -367,9 +367,6 @@ type ComplexityRoot struct {
 		OelSendReports                    func(childComplexity int) int
 		OelSendReportsNote                func(childComplexity int) int
 		OelSendReportsOther               func(childComplexity int) int
-		OelWorkingAgreement               func(childComplexity int) int
-		OelWorkingAgreementNote           func(childComplexity int) int
-		OelWorkingAgreementOther          func(childComplexity int) int
 		PInformFfs                        func(childComplexity int) int
 		PInformFfsNote                    func(childComplexity int) int
 		PInformFfsOther                   func(childComplexity int) int
@@ -692,8 +689,6 @@ type PlanITToolsResolver interface {
 	PpManageProviderOverlap(ctx context.Context, obj *models.PlanITTools) ([]model.PpManageProviderOverlapType, error)
 
 	BManageBeneficiaryOverlap(ctx context.Context, obj *models.PlanITTools) ([]model.BManageBeneficiaryOverlapType, error)
-
-	OelWorkingAgreement(ctx context.Context, obj *models.PlanITTools) ([]model.OelWorkingAgreementType, error)
 
 	OelHelpdeskSupport(ctx context.Context, obj *models.PlanITTools) ([]model.OelHelpdeskSupportType, error)
 
@@ -2777,27 +2772,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.PlanITTools.OelSendReportsOther(childComplexity), true
-
-	case "PlanITTools.oelWorkingAgreement":
-		if e.complexity.PlanITTools.OelWorkingAgreement == nil {
-			break
-		}
-
-		return e.complexity.PlanITTools.OelWorkingAgreement(childComplexity), true
-
-	case "PlanITTools.oelWorkingAgreementNote":
-		if e.complexity.PlanITTools.OelWorkingAgreementNote == nil {
-			break
-		}
-
-		return e.complexity.PlanITTools.OelWorkingAgreementNote(childComplexity), true
-
-	case "PlanITTools.oelWorkingAgreementOther":
-		if e.complexity.PlanITTools.OelWorkingAgreementOther == nil {
-			break
-		}
-
-		return e.complexity.PlanITTools.OelWorkingAgreementOther(childComplexity), true
 
 	case "PlanITTools.pInformFfs":
 		if e.complexity.PlanITTools.PInformFfs == nil {
@@ -5164,9 +5138,6 @@ type PlanITTools {
   bManageBeneficiaryOverlapOther: String
   bManageBeneficiaryOverlapNote: String
   #Page 4
-  oelWorkingAgreement: [OelWorkingAgreementType!]!
-  oelWorkingAgreementOther: String
-  oelWorkingAgreementNote: String
   oelHelpdeskSupport: [OelHelpdeskSupportType!]!
   oelHelpdeskSupportOther: String
   oelHelpdeskSupportNote: String
@@ -5269,9 +5240,6 @@ input PlanITToolsChanges @goModel(model: "map[string]interface{}") {
   bManageBeneficiaryOverlapOther: String
   bManageBeneficiaryOverlapNote: String
   #Page 4
-  oelWorkingAgreement: [OelWorkingAgreementType!]
-  oelWorkingAgreementOther: String
-  oelWorkingAgreementNote: String
   oelHelpdeskSupport: [OelHelpdeskSupportType!]
   oelHelpdeskSupportOther: String
   oelHelpdeskSupportNote: String
@@ -5948,10 +5916,6 @@ enum BManageBeneficiaryOverlapType {
     MDM
     OTHER
     NA
-}
-enum OelWorkingAgreementType {
-    IAA
-    OTHER
 }
 enum OelHelpdeskSupportType {
     CBOSC
@@ -9706,12 +9670,6 @@ func (ec *executionContext) fieldContext_ModelPlan_itTools(ctx context.Context, 
 				return ec.fieldContext_PlanITTools_bManageBeneficiaryOverlapOther(ctx, field)
 			case "bManageBeneficiaryOverlapNote":
 				return ec.fieldContext_PlanITTools_bManageBeneficiaryOverlapNote(ctx, field)
-			case "oelWorkingAgreement":
-				return ec.fieldContext_PlanITTools_oelWorkingAgreement(ctx, field)
-			case "oelWorkingAgreementOther":
-				return ec.fieldContext_PlanITTools_oelWorkingAgreementOther(ctx, field)
-			case "oelWorkingAgreementNote":
-				return ec.fieldContext_PlanITTools_oelWorkingAgreementNote(ctx, field)
 			case "oelHelpdeskSupport":
 				return ec.fieldContext_PlanITTools_oelHelpdeskSupport(ctx, field)
 			case "oelHelpdeskSupportOther":
@@ -11292,12 +11250,6 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanItTools(ctx context.
 				return ec.fieldContext_PlanITTools_bManageBeneficiaryOverlapOther(ctx, field)
 			case "bManageBeneficiaryOverlapNote":
 				return ec.fieldContext_PlanITTools_bManageBeneficiaryOverlapNote(ctx, field)
-			case "oelWorkingAgreement":
-				return ec.fieldContext_PlanITTools_oelWorkingAgreement(ctx, field)
-			case "oelWorkingAgreementOther":
-				return ec.fieldContext_PlanITTools_oelWorkingAgreementOther(ctx, field)
-			case "oelWorkingAgreementNote":
-				return ec.fieldContext_PlanITTools_oelWorkingAgreementNote(ctx, field)
 			case "oelHelpdeskSupport":
 				return ec.fieldContext_PlanITTools_oelHelpdeskSupport(ctx, field)
 			case "oelHelpdeskSupportOther":
@@ -19592,132 +19544,6 @@ func (ec *executionContext) _PlanITTools_bManageBeneficiaryOverlapNote(ctx conte
 }
 
 func (ec *executionContext) fieldContext_PlanITTools_bManageBeneficiaryOverlapNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "PlanITTools",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type String does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _PlanITTools_oelWorkingAgreement(ctx context.Context, field graphql.CollectedField, obj *models.PlanITTools) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanITTools_oelWorkingAgreement(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.PlanITTools().OelWorkingAgreement(rctx, obj)
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.([]model.OelWorkingAgreementType)
-	fc.Result = res
-	return ec.marshalNOelWorkingAgreementType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐOelWorkingAgreementTypeᚄ(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_PlanITTools_oelWorkingAgreement(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "PlanITTools",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type OelWorkingAgreementType does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _PlanITTools_oelWorkingAgreementOther(ctx context.Context, field graphql.CollectedField, obj *models.PlanITTools) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanITTools_oelWorkingAgreementOther(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.OelWorkingAgreementOther, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		return graphql.Null
-	}
-	res := resTmp.(*string)
-	fc.Result = res
-	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_PlanITTools_oelWorkingAgreementOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "PlanITTools",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type String does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _PlanITTools_oelWorkingAgreementNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanITTools) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanITTools_oelWorkingAgreementNote(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.OelWorkingAgreementNote, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		return graphql.Null
-	}
-	res := resTmp.(*string)
-	fc.Result = res
-	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_PlanITTools_oelWorkingAgreementNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "PlanITTools",
 		Field:      field,
@@ -34577,34 +34403,6 @@ func (ec *executionContext) _PlanITTools(ctx context.Context, sel ast.SelectionS
 
 			out.Values[i] = ec._PlanITTools_bManageBeneficiaryOverlapNote(ctx, field, obj)
 
-		case "oelWorkingAgreement":
-			field := field
-
-			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._PlanITTools_oelWorkingAgreement(ctx, field, obj)
-				if res == graphql.Null {
-					atomic.AddUint32(&invalids, 1)
-				}
-				return res
-			}
-
-			out.Concurrently(i, func() graphql.Marshaler {
-				return innerFunc(ctx)
-
-			})
-		case "oelWorkingAgreementOther":
-
-			out.Values[i] = ec._PlanITTools_oelWorkingAgreementOther(ctx, field, obj)
-
-		case "oelWorkingAgreementNote":
-
-			out.Values[i] = ec._PlanITTools_oelWorkingAgreementNote(ctx, field, obj)
-
 		case "oelHelpdeskSupport":
 			field := field
 
@@ -39733,77 +39531,6 @@ func (ec *executionContext) marshalNOelSendReportsType2ᚕgithubᚗcomᚋcmsgov�
 	return ret
 }
 
-func (ec *executionContext) unmarshalNOelWorkingAgreementType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐOelWorkingAgreementType(ctx context.Context, v interface{}) (model.OelWorkingAgreementType, error) {
-	var res model.OelWorkingAgreementType
-	err := res.UnmarshalGQL(v)
-	return res, graphql.ErrorOnPath(ctx, err)
-}
-
-func (ec *executionContext) marshalNOelWorkingAgreementType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐOelWorkingAgreementType(ctx context.Context, sel ast.SelectionSet, v model.OelWorkingAgreementType) graphql.Marshaler {
-	return v
-}
-
-func (ec *executionContext) unmarshalNOelWorkingAgreementType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐOelWorkingAgreementTypeᚄ(ctx context.Context, v interface{}) ([]model.OelWorkingAgreementType, error) {
-	var vSlice []interface{}
-	if v != nil {
-		vSlice = graphql.CoerceList(v)
-	}
-	var err error
-	res := make([]model.OelWorkingAgreementType, len(vSlice))
-	for i := range vSlice {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
-		res[i], err = ec.unmarshalNOelWorkingAgreementType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐOelWorkingAgreementType(ctx, vSlice[i])
-		if err != nil {
-			return nil, err
-		}
-	}
-	return res, nil
-}
-
-func (ec *executionContext) marshalNOelWorkingAgreementType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐOelWorkingAgreementTypeᚄ(ctx context.Context, sel ast.SelectionSet, v []model.OelWorkingAgreementType) graphql.Marshaler {
-	ret := make(graphql.Array, len(v))
-	var wg sync.WaitGroup
-	isLen1 := len(v) == 1
-	if !isLen1 {
-		wg.Add(len(v))
-	}
-	for i := range v {
-		i := i
-		fc := &graphql.FieldContext{
-			Index:  &i,
-			Result: &v[i],
-		}
-		ctx := graphql.WithFieldContext(ctx, fc)
-		f := func(i int) {
-			defer func() {
-				if r := recover(); r != nil {
-					ec.Error(ctx, ec.Recover(ctx, r))
-					ret = nil
-				}
-			}()
-			if !isLen1 {
-				defer wg.Done()
-			}
-			ret[i] = ec.marshalNOelWorkingAgreementType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐOelWorkingAgreementType(ctx, sel, v[i])
-		}
-		if isLen1 {
-			f(i)
-		} else {
-			go f(i)
-		}
-
-	}
-	wg.Wait()
-
-	for _, e := range ret {
-		if e == graphql.Null {
-			return graphql.Null
-		}
-	}
-
-	return ret
-}
-
 func (ec *executionContext) unmarshalNPInformFfsType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐPInformFfsType(ctx context.Context, v interface{}) (model.PInformFfsType, error) {
 	var res model.PInformFfsType
 	err := res.UnmarshalGQL(v)
@@ -44577,73 +44304,6 @@ func (ec *executionContext) marshalOOelSendReportsType2ᚕgithubᚗcomᚋcmsgov�
 				defer wg.Done()
 			}
 			ret[i] = ec.marshalNOelSendReportsType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐOelSendReportsType(ctx, sel, v[i])
-		}
-		if isLen1 {
-			f(i)
-		} else {
-			go f(i)
-		}
-
-	}
-	wg.Wait()
-
-	for _, e := range ret {
-		if e == graphql.Null {
-			return graphql.Null
-		}
-	}
-
-	return ret
-}
-
-func (ec *executionContext) unmarshalOOelWorkingAgreementType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐOelWorkingAgreementTypeᚄ(ctx context.Context, v interface{}) ([]model.OelWorkingAgreementType, error) {
-	if v == nil {
-		return nil, nil
-	}
-	var vSlice []interface{}
-	if v != nil {
-		vSlice = graphql.CoerceList(v)
-	}
-	var err error
-	res := make([]model.OelWorkingAgreementType, len(vSlice))
-	for i := range vSlice {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
-		res[i], err = ec.unmarshalNOelWorkingAgreementType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐOelWorkingAgreementType(ctx, vSlice[i])
-		if err != nil {
-			return nil, err
-		}
-	}
-	return res, nil
-}
-
-func (ec *executionContext) marshalOOelWorkingAgreementType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐOelWorkingAgreementTypeᚄ(ctx context.Context, sel ast.SelectionSet, v []model.OelWorkingAgreementType) graphql.Marshaler {
-	if v == nil {
-		return graphql.Null
-	}
-	ret := make(graphql.Array, len(v))
-	var wg sync.WaitGroup
-	isLen1 := len(v) == 1
-	if !isLen1 {
-		wg.Add(len(v))
-	}
-	for i := range v {
-		i := i
-		fc := &graphql.FieldContext{
-			Index:  &i,
-			Result: &v[i],
-		}
-		ctx := graphql.WithFieldContext(ctx, fc)
-		f := func(i int) {
-			defer func() {
-				if r := recover(); r != nil {
-					ec.Error(ctx, ec.Recover(ctx, r))
-					ret = nil
-				}
-			}()
-			if !isLen1 {
-				defer wg.Done()
-			}
-			ret[i] = ec.marshalNOelWorkingAgreementType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐOelWorkingAgreementType(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)

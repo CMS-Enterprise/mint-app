@@ -43,15 +43,12 @@ type PlanITTools struct {
 	BManageBeneficiaryOverlapOther    *string        `json:"bManageBeneficiaryOverlapOther" db:"b_manage_beneficiary_overlap_other"`
 	BManageBeneficiaryOverlapNote     *string        `json:"bManageBeneficiaryOverlapNote" db:"b_manage_beneficiary_overlap_note"`
 	//Page 4
-	OelWorkingAgreement      pq.StringArray `json:"oelWorkingAgreement" db:"oel_working_agreement"`
-	OelWorkingAgreementOther *string        `json:"oelWorkingAgreementOther" db:"oel_working_agreement_other"`
-	OelWorkingAgreementNote  *string        `json:"oelWorkingAgreementNote" db:"oel_working_agreement_note"`
-	OelHelpdeskSupport       pq.StringArray `json:"oelHelpdeskSupport" db:"oel_helpdesk_support"`
-	OelHelpdeskSupportOther  *string        `json:"oelHelpdeskSupportOther" db:"oel_helpdesk_support_other"`
-	OelHelpdeskSupportNote   *string        `json:"oelHelpdeskSupportNote" db:"oel_helpdesk_support_note"`
-	OelManageAco             pq.StringArray `json:"oelManageAco" db:"oel_manage_aco"`
-	OelManageAcoOther        *string        `json:"oelManageAcoOther" db:"oel_manage_aco_other"`
-	OelManageAcoNote         *string        `json:"oelManageAcoNote" db:"oel_manage_aco_note"`
+	OelHelpdeskSupport      pq.StringArray `json:"oelHelpdeskSupport" db:"oel_helpdesk_support"`
+	OelHelpdeskSupportOther *string        `json:"oelHelpdeskSupportOther" db:"oel_helpdesk_support_other"`
+	OelHelpdeskSupportNote  *string        `json:"oelHelpdeskSupportNote" db:"oel_helpdesk_support_note"`
+	OelManageAco            pq.StringArray `json:"oelManageAco" db:"oel_manage_aco"`
+	OelManageAcoOther       *string        `json:"oelManageAcoOther" db:"oel_manage_aco_other"`
+	OelManageAcoNote        *string        `json:"oelManageAcoNote" db:"oel_manage_aco_note"`
 	//Page 5
 	OelPerformanceBenchmark      pq.StringArray `json:"oelPerformanceBenchmark" db:"oel_performance_benchmark"`
 	OelPerformanceBenchmarkOther *string        `json:"oelPerformanceBenchmarkOther" db:"oel_performance_benchmark_other"`

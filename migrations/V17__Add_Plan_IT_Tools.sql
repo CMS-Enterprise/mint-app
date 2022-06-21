@@ -46,10 +46,6 @@ CREATE TYPE B_MANAGE_BENEFICIARY_OVERLAP_TYPE AS ENUM ( -- NOTE THIS IS THE SAME
     'NA'
 );
 --PAGE 4
-CREATE TYPE OEL_WORKING_AGREEMENT_TYPE AS ENUM (
-    'IAA',
-    'OTHER'
-);
 CREATE TYPE OEL_HELPDESK_SUPPORT_TYPE AS ENUM (
     'CBOSC',
     'CONTRACTOR',
@@ -182,9 +178,6 @@ CREATE TABLE plan_it_tools (
     b_manage_beneficiary_overlap_other ZERO_STRING,
     b_manage_beneficiary_overlap_note ZERO_STRING,
     --page 4
-    oel_working_agreement OEL_WORKING_AGREEMENT_TYPE[],
-    oel_working_agreement_other ZERO_STRING,
-    oel_working_agreement_note ZERO_STRING,
     oel_helpdesk_support OEL_HELPDESK_SUPPORT_TYPE[],
     oel_helpdesk_support_other ZERO_STRING,
     oel_helpdesk_support_note ZERO_STRING,

@@ -733,9 +733,6 @@ type PlanITTools {
   bManageBeneficiaryOverlapOther: String
   bManageBeneficiaryOverlapNote: String
   #Page 4
-  oelWorkingAgreement: [OelWorkingAgreementType!]!
-  oelWorkingAgreementOther: String
-  oelWorkingAgreementNote: String
   oelHelpdeskSupport: [OelHelpdeskSupportType!]!
   oelHelpdeskSupportOther: String
   oelHelpdeskSupportNote: String
@@ -838,9 +835,6 @@ input PlanITToolsChanges @goModel(model: "map[string]interface{}") {
   bManageBeneficiaryOverlapOther: String
   bManageBeneficiaryOverlapNote: String
   #Page 4
-  oelWorkingAgreement: [OelWorkingAgreementType!]
-  oelWorkingAgreementOther: String
-  oelWorkingAgreementNote: String
   oelHelpdeskSupport: [OelHelpdeskSupportType!]
   oelHelpdeskSupportOther: String
   oelHelpdeskSupportNote: String
@@ -1517,10 +1511,6 @@ enum BManageBeneficiaryOverlapType {
     MDM
     OTHER
     NA
-}
-enum OelWorkingAgreementType {
-    IAA
-    OTHER
 }
 enum OelHelpdeskSupportType {
     CBOSC
