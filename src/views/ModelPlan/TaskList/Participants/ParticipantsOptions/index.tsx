@@ -334,7 +334,7 @@ export const ParticipantsOptions = () => {
                             </p>
                           )}
                           {key === 'OTHER' && values.recruitmentMethod === key && (
-                            <div className="margin-left-4 margin-y-2">
+                            <div className="margin-left-4 margin-top-1">
                               <Label
                                 htmlFor="participants-and-providers-recruitment-other"
                                 className="text-normal"

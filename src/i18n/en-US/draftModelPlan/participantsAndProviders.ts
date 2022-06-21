@@ -13,7 +13,7 @@ const participantsAndProviders = {
     'Providers are organizations/indviduals that work with the Participants and deliver care or services to the beneficiaries impacted by our model.',
   whoAreParticipants: 'Who are the particpants? Select all that apply.',
   participantTypes: {
-    medicareProviders: 'Medicare Providers',
+    medicareProviders: 'Medicare providers',
     entities: 'Entities (e.g., ACO, Direct Contracting Entity)',
     convener: 'Convener',
     medicarePlan: 'Medicare Advantage plans',
