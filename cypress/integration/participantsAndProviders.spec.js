@@ -92,5 +92,111 @@ describe('The Model Plan Participants and Providers Form', () => {
     cy.get('#participants-and-providers-selection-other')
       .type('The other participants are cool')
       .should('have.value', 'The other participants are cool');
+
+    cy.contains('button', 'Next').click();
+
+    // Page - /participants-and-providers/communication
+    cy.get('#participants-and-providers-communication-method-IT_TOOL')
+      .check({ force: true })
+      .should('be.checked');
+
+    cy.get('#participants-and-providers-risk')
+      .check({ force: true })
+      .should('be.checked');
+
+    cy.get('#participants-and-providers-risk-type-OTHER')
+      .check({ force: true })
+      .should('be.checked');
+
+    cy.get('#participants-and-providers-risk-type-other')
+      .type('Programmatic Risk')
+      .should('have.value', 'Programmatic Risk');
+
+    cy.get('#participants-and-providers-risk-change')
+      .check({ force: true })
+      .should('be.checked');
+
+    cy.contains('button', 'Next').click();
+
+    // Page - /participants-and-providers/coordination
+    cy.get('#participants-and-providers-coordniate-work')
+      .check({ force: true })
+      .should('be.checked');
+
+    cy.get('#participants-and-providers-gainshare-payment')
+      .check({ force: true })
+      .should('be.checked');
+
+    cy.get('#participants-and-providers-gainshare-track')
+      .check({ force: true })
+      .should('be.checked');
+
+    cy.get('#participants-and-providers-participant-id-OTHER')
+      .check({ force: true })
+      .should('be.checked');
+
+    cy.get('#participants-and-providers-participant-id-other')
+      .type('Candy Kingdom Operations Number')
+      .should('have.value', 'Candy Kingdom Operations Number');
+
+    cy.contains('button', 'Next').click();
+
+    // Page - /participants-and-providers/provider-options
+    cy.get('#participants-and-providers-additional-frequency-OTHER')
+      .check({ force: true })
+      .should('be.checked');
+
+    cy.get('#participants-and-providers-additional-frequency-other')
+      .type('Every other leap year')
+      .should('have.value', 'Every other leap year');
+
+    cy.get('#participants-and-providers-provider-add-method').within(() => {
+      cy.get("input[type='search']").click();
+    });
+
+    cy.get('#easi-multiselect__option-OTHER')
+      .check({ force: true })
+      .should('be.checked');
+
+    cy.get('[data-testid="tag"]').first().contains('Other');
+
+    cy.get('#participants-and-providers-provider-add-method-other')
+      .type('Competitive ball-room dancing, free for all')
+      .should('have.value', 'Competitive ball-room dancing, free for all');
+
+    cy.get(
+      '#participants-and-providers-leave-method-VOLUNTARILY_WITHOUT_IMPLICATIONS'
+    )
+      .check({ force: true })
+      .should('be.checked');
+
+    cy.get('#participants-and-providers-leave-method-OTHER')
+      .check({ force: true })
+      .should('be.checked');
+
+    cy.get('#participants-and-providers-leave-method-other')
+      .type('When demanded by law')
+      .should('have.value', 'When demanded by law');
+
+    cy.get('#participants-and-providers-provider-overlap-YES_NEED_POLICIES')
+      .check({ force: true })
+      .should('be.checked');
+
+    cy.get('#participants-and-providers-provider-overlap-hierarchy')
+      .type('When overlap occurs, this model will be a secondary model')
+      .should(
+        'have.value',
+        'When overlap occurs, this model will be a secondary model'
+      );
+
+    cy.contains('button', 'Save and start next Model Plan section').click();
+
+    cy.location().should(loc => {
+      expect(loc.pathname).to.match(/\/models\/.{36}\/task-list/);
+    });
+
+    cy.get(
+      '[data-testid="task-list-intake-form-participants-and-providers"]'
+    ).contains('Completed');
   });
 });
