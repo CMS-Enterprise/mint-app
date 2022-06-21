@@ -60,3 +60,8 @@ models:
   EnumArray:
     model:
     - github.com/cmsgov/mint-app/pkg/models.EnumArray
+    - github.com/cmsgov/mint-app/pkg/models.CMSCenterG
+    - github.com/cmsgov/mint-app/pkg/models.CMMIGroupG
+directives:
+  enumArray:
+    skip_runtime: true #this should only be used for code generation

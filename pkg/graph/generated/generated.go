@@ -2773,7 +2773,7 @@ type ModelPlan {
   modelName: String!
   modelCategory: ModelCategory
   # cmsCenters:CMSArray
-  cmsCenters:[CMSCenter!]!
+  cmsCenters:[CMSCenter!]!  @enumArray(enumType: "CMSGroupG" ) 
   cmsOther: String
   cmmiGroups: [CMMIGroup!]!
   archived: Boolean!
@@ -3562,7 +3562,7 @@ enum ModelStatus {
 	ANNOUNCED
 }
 
-enum CMSCenter {
+enum CMSCenter @enumArray(enumType: "CMSGroupG" ) {
   CMMI
   CENTER_FOR_MEDICARE
   FEDERAL_COORDINATED_HEALTH_CARE_OFFICE
@@ -3763,6 +3763,9 @@ NOT_APPLICABLE
 }
 
 directive @hasRole(role: Role!) on FIELD_DEFINITION
+
+directive @enumArray(enumType: String!) on ENUM | FIELD_DEFINITION
+#/SCALAR
 
 # https://gqlgen.com/config/#inline-config-with-directives
 directive @goModel(

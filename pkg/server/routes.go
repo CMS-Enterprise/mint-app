@@ -166,7 +166,15 @@ func (s *Server) routes(
 			return nil, errors.New("not authorized")
 		}
 		return next(ctx)
-	}}
+	},
+	// , //TODO, if we need a runtime Directive, we would insert the function here.
+	// EnumArray: func(ctx context.Context, obj interface{}, next graphql.Resolver, enumType string) (res interface{}, err error) {
+	// 	if enumType == "CMSGroupG" {
+	// 		return nil, errors.New("looks like you tried to use a CMSGroupG enum. Cool. The directive worked then")
+	// 	}
+	// 	return next(ctx)
+	// }
+	}
 	gqlConfig := generated.Config{Resolvers: resolver, Directives: gqlDirectives}
 	graphqlServer := handler.NewDefaultServer(generated.NewExecutableSchema(gqlConfig))
 	graphqlServer.Use(extension.FixedComplexityLimit(1000))
