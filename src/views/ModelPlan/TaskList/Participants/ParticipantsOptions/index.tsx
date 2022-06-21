@@ -1,29 +1,23 @@
-import React, { useMemo, useRef } from 'react';
+import React, { useRef } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { Link, Route, Switch, useHistory, useParams } from 'react-router-dom';
+import { Link, useHistory, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
 import {
   Breadcrumb,
   BreadcrumbBar,
   BreadcrumbLink,
   Button,
-  ComboBox,
   Fieldset,
-  Grid,
-  GridContainer,
   IconArrowBack,
-  IconVolumeOff,
   Label,
   Radio,
   RangeInput,
   TextInput
 } from '@trussworks/react-uswds';
-import classNames from 'classnames';
 import { Field, Form, Formik, FormikProps } from 'formik';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
-import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import AutoSave from 'components/shared/AutoSave';
@@ -51,7 +45,6 @@ import {
   translateParticipantSelectiontType,
   translateRecruitmentType
 } from 'utils/modelPlan';
-import { NotFoundPartial } from 'views/NotFound';
 
 export const ParticipantsOptions = () => {
   const { t } = useTranslation('participantsAndProviders');
@@ -97,7 +90,7 @@ export const ParticipantsOptions = () => {
 
   const handleFormSubmit = (
     formikValues: ModelPlanParticipantsAndProvidersFormType,
-    redirect?: 'next' | 'back'
+    redirect?: 'next' | 'back' | 'task-list'
   ) => {
     update({
       variables: {
@@ -139,7 +132,7 @@ export const ParticipantsOptions = () => {
     recruitmentMethod: recruitmentMethod ?? null,
     recruitmentOther: recruitmentOther ?? '',
     recruitmentNote: recruitmentNote ?? '',
-    selectionMethod,
+    selectionMethod: selectionMethod || [],
     selectionOther: selectionOther ?? '',
     selectionNote: selectionNote ?? ''
   } as ModelPlanParticipantsAndProvidersFormType;
@@ -217,7 +210,7 @@ export const ParticipantsOptions = () => {
               )}
               <Form
                 className="tablet:grid-col-6 margin-top-6"
-                data-testid="participants-and-providers-form"
+                data-testid="participants-and-providers-options-form"
                 onSubmit={e => {
                   handleSubmit(e);
                 }}
@@ -244,6 +237,7 @@ export const ParticipantsOptions = () => {
                     min={0}
                     max={10000}
                     step={1}
+                    defaultValue={50}
                     onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
                       setFieldValue(
                         'expectedNumberOfParticipants',
@@ -342,7 +336,7 @@ export const ParticipantsOptions = () => {
                           {key === 'OTHER' && values.recruitmentMethod === key && (
                             <div className="margin-left-4 margin-y-2">
                               <Label
-                                htmlFor="participants-and-providersy-recruitment-other"
+                                htmlFor="participants-and-providers-recruitment-other"
                                 className="text-normal"
                               >
                                 {h('pleaseSpecify')}

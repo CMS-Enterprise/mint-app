@@ -68,13 +68,12 @@ const participantsAndProviders = {
   selectOtions: {
     reviewApplications: 'Model team wil review applications',
     solicitSupport: 'Solicit support for CMII staff',
-    anotherComponent: 'Another CMS component or process will prived support',
+    anotherComponent: 'Another CMS component or process will provide support',
     applicationReview: 'Use an Application Review and Scoring tool',
     applicationSupport: 'Get an application support contractor',
     criteria:
       'We have a basic set of criteria and plan to accept any participant that meets them',
-    anotherProcess:
-      'Another CMS process or component supports participant selection',
+    other: 'Other',
     notApplicable: 'Not applicable, it is a mandatory model'
   },
   providerConditions: 'What are the provider model enrollment conditions?',
@@ -87,46 +86,81 @@ const participantsAndProviders = {
   participantCommunicationOptions: {
     sendEmails: 'Send mass emails to new participants',
     itTool: 'Manage ongoing communications with participants using an IT tool',
-    noCommunication: 'We are not planning to communicate'
+    noCommunication: 'We are not planning to communicate',
+    other: 'Other'
   },
   manageParticipants: 'How will you manage participants?',
-  manageParticipantsOptions: {
-    prospectively:
-      'Enroll prospectively (based on previous year’s interactions)',
-    retrospectively:
-      'Enroll retrospectively (once an interaction happens this year)',
-    voluntarily: 'Enroll voluntarily',
-    manditorily: 'Enroll mandatorily',
-    onlineTools:
-      'Use online tools to view what types of participant files and data have been uploaded and downloaded'
-  },
   assumeRisk: 'Will the participants assume risk?',
   riskType: 'What type of risk will the participant assume?',
   riskTypeOptions: {
     twoSided: 'Two-sided',
     oneSided: 'One-sided',
-    capitalization: 'Capitalization'
+    capitalization: 'Capitalization',
+    other: 'Other'
   },
   changeRisk: 'Will the risk arrangement change as the model progresses?',
-  workCoordination:
-    'Will the participants coordinate the work of others (e.g. conveners)?',
+  workCoordination: 'Will the participants coordinate the work of others?',
+  workCoordinationNote: '(e.g. conveners)',
   gainsharing: 'Will there be gainsharing payments?',
   collectIDs: 'Will you collect participant IDs?',
-  overlap: 'Will the providers overlap with other models?',
-  overlapOptions: {
-    yes: 'Yes, we expect to develop policies to manage the overlaps',
-    yesNoIssue: 'Yes, and the overlaps would not be an issue'
-  },
   trackPayments: 'Will you track gainsharing payments?',
-  collectTINs: 'Will you collect TINs, NPIs, CCNs? Selct all that apply.',
+  collectTINs: 'Will you collect participant IDs? If so, select which types.',
   collectTINsInfo:
-    'Note: If this will be a MIPS or Advanced APM, you need to collect provider TIN-NPIs for participants to benefit from QQP. In addition, CPI vetting needs to be performed.',
+    'Note: If this will be a MIPS or Advanced APM, you need to collect provider TIN-NPIs for participants to benefit from QPP. In addition, CPI vetting needs to be preformed.',
   collectTINsOptions: {
     tins: 'TINs',
     npis: 'NPIs',
     ccns: 'CCNs',
-    no: 'No, we will not collect provider identifiers'
-  }
+    no: 'No, we will not collect provider identifiers',
+    other: 'Other'
+  },
+  frequency: 'How frequently are providers added?',
+  frequencyOptions: {
+    annually: 'Annually',
+    biannually: 'Biannually',
+    quarterly: 'Quarterly',
+    monthly: 'Monthly',
+    rolling: 'Rolling',
+    other: 'Other'
+  },
+  decideProviders:
+    'How will you decide to add providers? Select all that apply.',
+  decideProvidersInfo:
+    'Please include details on decision points, timing, and implications of adding them to the model in an additional note.',
+  decideProvidersOptions: {
+    prospectively: 'Add prospectively (based on previous year’s interactions)',
+    retrospectively:
+      'Add retrospectively (once an interaction happens this year)',
+    voluntarily: 'Add voluntarily',
+    manditorily: 'Add mandatorily',
+    onlineTools:
+      'Use online tools to view what types of participant files and data have been uploaded and downloaded',
+    other: 'Other',
+    na: 'Not applicable'
+  },
+  addProvidersHow: 'How you will add providers',
+  decideProvidersDescribe:
+    'Please describe the other method for deciding which providers to add.',
+  canProvidersLeave: 'Can providers leave the model? Select all that apply.',
+  canProvidersLeaveInfo:
+    'Please include details on decision points, timing, and implications of leaving the model in an additional note.',
+  canProvidersLeaveOptions: {
+    voluntarily: 'They can leave voluntarily at any time without implications',
+    certainDate:
+      'They can leave after a certain date but there are implications',
+    varies: 'It varies by type of provider',
+    notAllowed: 'They are not allowed to leave',
+    other: 'Other',
+    notApplicable: 'Not applicable'
+  },
+  overlap: 'Will the providers overlap with other models?',
+  overlapOptions: {
+    yes: 'Yes, we expect to develop policies to manage the overlaps',
+    yesNoIssue: 'Yes, and the overlaps would not be an issue',
+    no: 'No'
+  },
+  overlapInfo:
+    'If model providers can be in multiple models that may interact, please note the desired hierarchy of how any payment changes or edits should be applied.'
 };
 
 export default participantsAndProviders;

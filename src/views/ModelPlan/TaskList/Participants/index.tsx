@@ -40,7 +40,10 @@ import flattenErrors from 'utils/flattenErrors';
 import { sortOtherEnum, translateParticipantsType } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
 
+import Communication from './Communication';
+import Coordination from './Coordination';
 import ParticipantsOptions from './ParticipantsOptions';
+import ProviderOptions from './ProviderOptions';
 
 import './index.scss';
 
@@ -472,21 +475,21 @@ export const ParticipantsAndProviders = () => {
               exact
               render={() => <ParticipantsOptions />}
             />
-            {/* <Route
-              path="/models/:modelID/task-list/characteristics/involvements"
+            <Route
+              path="/models/:modelID/task-list/participants-and-providers/communication"
               exact
-              render={() => <Involvements />}
+              render={() => <Communication />}
             />
             <Route
-              path="/models/:modelID/task-list/characteristics/targets-and-options"
+              path="/models/:modelID/task-list/participants-and-providers/coordination"
               exact
-              render={() => <TargetsAndOptions />}
+              render={() => <Coordination />}
             />
             <Route
-              path="/models/:modelID/task-list/characteristics/authority"
+              path="/models/:modelID/task-list/participants-and-providers/provider-options"
               exact
-              render={() => <Authority />}
-            /> */}
+              render={() => <ProviderOptions />}
+            />
             <Route path="*" render={() => <NotFoundPartial />} />
           </Switch>
         </Grid>
