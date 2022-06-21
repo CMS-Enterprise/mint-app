@@ -437,6 +437,7 @@ type ComplexityRoot struct {
 
 	PlanParticipantsAndProviders struct {
 		CommunicationMethod               func(childComplexity int) int
+		CommunicationMethodOther          func(childComplexity int) int
 		CommunicationNote                 func(childComplexity int) int
 		ConfidenceNote                    func(childComplexity int) int
 		CoordinateWork                    func(childComplexity int) int
@@ -3072,6 +3073,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.PlanParticipantsAndProviders.CommunicationMethod(childComplexity), true
 
+	case "PlanParticipantsAndProviders.communicationMethodOther":
+		if e.complexity.PlanParticipantsAndProviders.CommunicationMethodOther == nil {
+			break
+		}
+
+		return e.complexity.PlanParticipantsAndProviders.CommunicationMethodOther(childComplexity), true
+
 	case "PlanParticipantsAndProviders.communicationNote":
 		if e.complexity.PlanParticipantsAndProviders.CommunicationNote == nil {
 			break
@@ -4208,6 +4216,7 @@ type PlanParticipantsAndProviders {
 
   #Page 3
   communicationMethod:   [ParticipantCommunicationType!]!
+  communicationMethodOther:   String
   communicationNote:     String             
   participantAssumeRisk: Boolean             
   riskType:              ParticipantRiskType
@@ -4279,6 +4288,7 @@ input PlanParticipantsAndProvidersChanges @goModel(model: "map[string]interface{
 
   #Page 3
   communicationMethod:   [ParticipantCommunicationType!]
+  communicationMethodOther:   String
   communicationNote:     String             
   participantAssumeRisk: Boolean             
   riskType:              ParticipantRiskType
@@ -7780,6 +7790,8 @@ func (ec *executionContext) fieldContext_ModelPlan_participantsAndProviders(ctx 
 				return ec.fieldContext_PlanParticipantsAndProviders_selectionNote(ctx, field)
 			case "communicationMethod":
 				return ec.fieldContext_PlanParticipantsAndProviders_communicationMethod(ctx, field)
+			case "communicationMethodOther":
+				return ec.fieldContext_PlanParticipantsAndProviders_communicationMethodOther(ctx, field)
 			case "communicationNote":
 				return ec.fieldContext_PlanParticipantsAndProviders_communicationNote(ctx, field)
 			case "participantAssumeRisk":
@@ -9663,6 +9675,8 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanParticipantsAndProvi
 				return ec.fieldContext_PlanParticipantsAndProviders_selectionNote(ctx, field)
 			case "communicationMethod":
 				return ec.fieldContext_PlanParticipantsAndProviders_communicationMethod(ctx, field)
+			case "communicationMethodOther":
+				return ec.fieldContext_PlanParticipantsAndProviders_communicationMethodOther(ctx, field)
 			case "communicationNote":
 				return ec.fieldContext_PlanParticipantsAndProviders_communicationNote(ctx, field)
 			case "participantAssumeRisk":
@@ -22637,6 +22651,47 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_communicat
 	return fc, nil
 }
 
+func (ec *executionContext) _PlanParticipantsAndProviders_communicationMethodOther(ctx context.Context, field graphql.CollectedField, obj *models.PlanParticipantsAndProviders) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProviders_communicationMethodOther(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.CommunicationMethodOther, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_communicationMethodOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanParticipantsAndProviders",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _PlanParticipantsAndProviders_communicationNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanParticipantsAndProviders) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_PlanParticipantsAndProviders_communicationNote(ctx, field)
 	if err != nil {
@@ -29649,6 +29704,10 @@ func (ec *executionContext) _PlanParticipantsAndProviders(ctx context.Context, s
 				return innerFunc(ctx)
 
 			})
+		case "communicationMethodOther":
+
+			out.Values[i] = ec._PlanParticipantsAndProviders_communicationMethodOther(ctx, field, obj)
+
 		case "communicationNote":
 
 			out.Values[i] = ec._PlanParticipantsAndProviders_communicationNote(ctx, field, obj)
