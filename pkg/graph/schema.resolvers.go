@@ -89,6 +89,12 @@ func (r *modelPlanResolver) Discussions(ctx context.Context, obj *models.ModelPl
 	return resolvers.PlanDiscussionCollectionByModelPlanID(logger, obj.ID, r.store)
 }
 
+func (r *modelPlanResolver) ItTools(ctx context.Context, obj *models.ModelPlan) (*models.PlanITTools, error) {
+	logger := appcontext.ZLogger(ctx)
+
+	return resolvers.PlanITToolsGetByModelPlanID(logger, obj.ID, r.store)
+}
+
 func (r *mutationResolver) CreateModelPlan(ctx context.Context, modelName string) (*models.ModelPlan, error) {
 	logger := appcontext.ZLogger(ctx)
 	principal := appcontext.Principal(ctx).ID()
@@ -163,6 +169,12 @@ func (r *mutationResolver) UpdatePlanParticipantsAndProviders(ctx context.Contex
 	principal := appcontext.Principal(ctx).ID()
 	logger := appcontext.ZLogger(ctx)
 	return resolvers.PlanParticipantsAndProvidersUpdate(logger, id, changes, principal, r.store)
+}
+
+func (r *mutationResolver) UpdatePlanItTools(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanITTools, error) {
+	principal := appcontext.Principal(ctx).ID()
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.PlanITToolsUpdate(logger, id, changes, principal, r.store)
 }
 
 func (r *mutationResolver) UpdatePlanOpsEvalAndLearning(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanOpsEvalAndLearning, error) {
@@ -307,6 +319,141 @@ func (r *planGeneralCharacteristicsResolver) AuthorityAllowances(ctx context.Con
 func (r *planGeneralCharacteristicsResolver) WaiversRequiredTypes(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]model.WaiverType, error) {
 	waiverTypes := models.ConvertEnums[model.WaiverType](obj.WaiversRequiredTypes)
 	return waiverTypes, nil
+}
+
+func (r *planITToolsResolver) GcPartCd(ctx context.Context, obj *models.PlanITTools) ([]model.GcPartCDType, error) {
+	GcPartCDs := models.ConvertEnums[model.GcPartCDType](obj.GcPartCD)
+	return GcPartCDs, nil
+}
+
+func (r *planITToolsResolver) GcCollectBids(ctx context.Context, obj *models.PlanITTools) ([]model.GcCollectBidsType, error) {
+	GcCollectBidss := models.ConvertEnums[model.GcCollectBidsType](obj.GcCollectBids)
+	return GcCollectBidss, nil
+}
+
+func (r *planITToolsResolver) GcUpdateContract(ctx context.Context, obj *models.PlanITTools) ([]model.GcUpdateContractType, error) {
+	GcUpdateContracts := models.ConvertEnums[model.GcUpdateContractType](obj.GcUpdateContract)
+	return GcUpdateContracts, nil
+}
+
+func (r *planITToolsResolver) PpToAdvertise(ctx context.Context, obj *models.PlanITTools) ([]model.PpToAdvertiseType, error) {
+	PpToAdvertises := models.ConvertEnums[model.PpToAdvertiseType](obj.PpToAdvertise)
+	return PpToAdvertises, nil
+}
+
+func (r *planITToolsResolver) PpCollectScoreReview(ctx context.Context, obj *models.PlanITTools) ([]model.PpCollectScoreReviewType, error) {
+	PpCollectScoreReviews := models.ConvertEnums[model.PpCollectScoreReviewType](obj.PpCollectScoreReview)
+	return PpCollectScoreReviews, nil
+}
+
+func (r *planITToolsResolver) PpAppSupportContractor(ctx context.Context, obj *models.PlanITTools) ([]model.PpAppSupportContractorType, error) {
+	PpAppSupportContractors := models.ConvertEnums[model.PpAppSupportContractorType](obj.PpAppSupportContractor)
+	return PpAppSupportContractors, nil
+}
+
+func (r *planITToolsResolver) PpCommunicateWithParticipant(ctx context.Context, obj *models.PlanITTools) ([]model.PpCommunicateWithParticipantType, error) {
+	PpCommunicateWithParticipants := models.ConvertEnums[model.PpCommunicateWithParticipantType](obj.PpCommunicateWithParticipant)
+	return PpCommunicateWithParticipants, nil
+}
+
+func (r *planITToolsResolver) PpManageProviderOverlap(ctx context.Context, obj *models.PlanITTools) ([]model.PpManageProviderOverlapType, error) {
+	PpManageProviderOverlaps := models.ConvertEnums[model.PpManageProviderOverlapType](obj.PpManageProviderOverlap)
+	return PpManageProviderOverlaps, nil
+}
+
+func (r *planITToolsResolver) BManageBeneficiaryOverlap(ctx context.Context, obj *models.PlanITTools) ([]model.BManageBeneficiaryOverlapType, error) {
+	BManageBeneficiaryOverlaps := models.ConvertEnums[model.BManageBeneficiaryOverlapType](obj.BManageBeneficiaryOverlap)
+	return BManageBeneficiaryOverlaps, nil
+}
+
+func (r *planITToolsResolver) OelHelpdeskSupport(ctx context.Context, obj *models.PlanITTools) ([]model.OelHelpdeskSupportType, error) {
+	OelHelpdeskSupports := models.ConvertEnums[model.OelHelpdeskSupportType](obj.OelHelpdeskSupport)
+	return OelHelpdeskSupports, nil
+}
+
+func (r *planITToolsResolver) OelManageAco(ctx context.Context, obj *models.PlanITTools) ([]model.OelManageAcoType, error) {
+	OelManageAcos := models.ConvertEnums[model.OelManageAcoType](obj.OelManageAco)
+	return OelManageAcos, nil
+}
+
+func (r *planITToolsResolver) OelPerformanceBenchmark(ctx context.Context, obj *models.PlanITTools) ([]model.OelPerformanceBenchmarkType, error) {
+	OelPerformanceBenchmarks := models.ConvertEnums[model.OelPerformanceBenchmarkType](obj.OelPerformanceBenchmark)
+	return OelPerformanceBenchmarks, nil
+}
+
+func (r *planITToolsResolver) OelProcessAppeals(ctx context.Context, obj *models.PlanITTools) ([]model.OelProcessAppealsType, error) {
+	OelProcessAppealss := models.ConvertEnums[model.OelProcessAppealsType](obj.OelProcessAppeals)
+	return OelProcessAppealss, nil
+}
+
+func (r *planITToolsResolver) OelEvaluationContractor(ctx context.Context, obj *models.PlanITTools) ([]model.OelEvaluationContractorType, error) {
+	OelEvaluationContractors := models.ConvertEnums[model.OelEvaluationContractorType](obj.OelEvaluationContractor)
+	return OelEvaluationContractors, nil
+}
+
+func (r *planITToolsResolver) OelCollectData(ctx context.Context, obj *models.PlanITTools) ([]model.OelCollectDataType, error) {
+	OelCollectDatas := models.ConvertEnums[model.OelCollectDataType](obj.OelCollectData)
+	return OelCollectDatas, nil
+}
+
+func (r *planITToolsResolver) OelObtainData(ctx context.Context, obj *models.PlanITTools) ([]model.OelObtainDataType, error) {
+	OelObtainDatas := models.ConvertEnums[model.OelObtainDataType](obj.OelObtainData)
+	return OelObtainDatas, nil
+}
+
+func (r *planITToolsResolver) OelClaimsBasedMeasures(ctx context.Context, obj *models.PlanITTools) ([]model.OelClaimsBasedMeasuresType, error) {
+	OelClaimsBasedMeasuress := models.ConvertEnums[model.OelClaimsBasedMeasuresType](obj.OelClaimsBasedMeasures)
+	return OelClaimsBasedMeasuress, nil
+}
+
+func (r *planITToolsResolver) OelQualityScores(ctx context.Context, obj *models.PlanITTools) ([]model.OelQualityScoresType, error) {
+	OelQualityScoress := models.ConvertEnums[model.OelQualityScoresType](obj.OelQualityScores)
+	return OelQualityScoress, nil
+}
+
+func (r *planITToolsResolver) OelSendReports(ctx context.Context, obj *models.PlanITTools) ([]model.OelSendReportsType, error) {
+	OelSendReportss := models.ConvertEnums[model.OelSendReportsType](obj.OelSendReports)
+	return OelSendReportss, nil
+}
+
+func (r *planITToolsResolver) OelLearningContractor(ctx context.Context, obj *models.PlanITTools) ([]model.OelLearningContractorType, error) {
+	OelLearningContractors := models.ConvertEnums[model.OelLearningContractorType](obj.OelLearningContractor)
+	return OelLearningContractors, nil
+}
+
+func (r *planITToolsResolver) OelParticipantCollaboration(ctx context.Context, obj *models.PlanITTools) ([]model.OelParticipantCollaborationType, error) {
+	OelParticipantCollaborations := models.ConvertEnums[model.OelParticipantCollaborationType](obj.OelParticipantCollaboration)
+	return OelParticipantCollaborations, nil
+}
+
+func (r *planITToolsResolver) OelEducateBeneficiaries(ctx context.Context, obj *models.PlanITTools) ([]model.OelEducateBeneficiariesType, error) {
+	OelEducateBeneficiariess := models.ConvertEnums[model.OelEducateBeneficiariesType](obj.OelEducateBeneficiaries)
+	return OelEducateBeneficiariess, nil
+}
+
+func (r *planITToolsResolver) PMakeClaimsPayments(ctx context.Context, obj *models.PlanITTools) ([]model.PMakeClaimsPaymentsType, error) {
+	PMakeClaimsPaymentss := models.ConvertEnums[model.PMakeClaimsPaymentsType](obj.PMakeClaimsPayments)
+	return PMakeClaimsPaymentss, nil
+}
+
+func (r *planITToolsResolver) PInformFfs(ctx context.Context, obj *models.PlanITTools) ([]model.PInformFfsType, error) {
+	PInformFfss := models.ConvertEnums[model.PInformFfsType](obj.PInformFfs)
+	return PInformFfss, nil
+}
+
+func (r *planITToolsResolver) PNonClaimsBasedPayments(ctx context.Context, obj *models.PlanITTools) ([]model.PNonClaimsBasedPaymentsType, error) {
+	PNonClaimsBasedPaymentss := models.ConvertEnums[model.PNonClaimsBasedPaymentsType](obj.PNonClaimsBasedPayments)
+	return PNonClaimsBasedPaymentss, nil
+}
+
+func (r *planITToolsResolver) PSharedSavingsPlan(ctx context.Context, obj *models.PlanITTools) ([]model.PSharedSavingsPlanType, error) {
+	PSharedSavingsPlans := models.ConvertEnums[model.PSharedSavingsPlanType](obj.PSharedSavingsPlan)
+	return PSharedSavingsPlans, nil
+}
+
+func (r *planITToolsResolver) PRecoverPayments(ctx context.Context, obj *models.PlanITTools) ([]model.PRecoverPaymentsType, error) {
+	PRecoverPaymentss := models.ConvertEnums[model.PRecoverPaymentsType](obj.PRecoverPayments)
+	return PRecoverPaymentss, nil
 }
 
 func (r *planOpsEvalAndLearningResolver) AgencyOrStateHelp(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]model.AgencyOrStateHelpType, error) {
@@ -504,6 +651,9 @@ func (r *Resolver) PlanGeneralCharacteristics() generated.PlanGeneralCharacteris
 	return &planGeneralCharacteristicsResolver{r}
 }
 
+// PlanITTools returns generated.PlanITToolsResolver implementation.
+func (r *Resolver) PlanITTools() generated.PlanITToolsResolver { return &planITToolsResolver{r} }
+
 // PlanOpsEvalAndLearning returns generated.PlanOpsEvalAndLearningResolver implementation.
 func (r *Resolver) PlanOpsEvalAndLearning() generated.PlanOpsEvalAndLearningResolver {
 	return &planOpsEvalAndLearningResolver{r}
@@ -526,6 +676,7 @@ type planBeneficiariesResolver struct{ *Resolver }
 type planDiscussionResolver struct{ *Resolver }
 type planDocumentResolver struct{ *Resolver }
 type planGeneralCharacteristicsResolver struct{ *Resolver }
+type planITToolsResolver struct{ *Resolver }
 type planOpsEvalAndLearningResolver struct{ *Resolver }
 type planParticipantsAndProvidersResolver struct{ *Resolver }
 type queryResolver struct{ *Resolver }
