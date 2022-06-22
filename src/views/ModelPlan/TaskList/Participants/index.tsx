@@ -31,7 +31,7 @@ import TextAreaField from 'components/shared/TextAreaField';
 import GetModelPlanParticipantsAndProviders from 'queries/GetModelPlanParticipantsAndProviders';
 import {
   GetModelPlanProvidersAndParticipants as GetModelPlanProvidersAndParticipantsType,
-  GetModelPlanProvidersAndParticipants_modelPlan_providersAndParticipants as ModelPlanParticipantsAndProvidersFormType
+  GetModelPlanProvidersAndParticipants_modelPlan_participantsAndProviders as ModelPlanParticipantsAndProvidersFormType
 } from 'queries/types/GetModelPlanProvidersAndParticipants';
 import { UpdateModelPlanProvidersAndParticipantsVariables } from 'queries/types/UpdateModelPlanProvidersAndParticipants';
 import UpdateModelPlanProvidersAndParticipants from 'queries/UpdateModelPlanProvidersAndParticipants';
@@ -270,6 +270,7 @@ export const ParticipantsAndProvidersContent = () => {
                               className="height-15"
                               error={flatErrors.medicareProviderType}
                               id="participants-and-providers-medicare-type"
+                              data-testid="participants-and-providers-medicare-type"
                               name="medicareProviderType"
                             />
                           </FieldGroup>
@@ -296,6 +297,7 @@ export const ParticipantsAndProvidersContent = () => {
                               className="height-15"
                               error={flatErrors.statesEngagement}
                               id="participants-and-providers-states-engagement"
+                              data-testid="participants-and-providers-states-engagement"
                               name="statesEngagement"
                             />
                           </FieldGroup>
@@ -322,6 +324,7 @@ export const ParticipantsAndProvidersContent = () => {
                               className="height-15"
                               error={flatErrors.participantsOther}
                               id="participants-and-providers-participants-other"
+                              data-testid="participants-and-providers-participants-other"
                               name="participantsOther"
                             />
                           </FieldGroup>

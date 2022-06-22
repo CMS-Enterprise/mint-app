@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { Fragment, useRef } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
@@ -29,7 +29,7 @@ import TextAreaField from 'components/shared/TextAreaField';
 import GetModelPlanParticipantsAndProviders from 'queries/GetModelPlanParticipantsAndProviders';
 import {
   GetModelPlanProvidersAndParticipants as GetModelPlanProvidersAndParticipantsType,
-  GetModelPlanProvidersAndParticipants_modelPlan_providersAndParticipants as ModelPlanParticipantsAndProvidersFormType
+  GetModelPlanProvidersAndParticipants_modelPlan_participantsAndProviders as ModelPlanParticipantsAndProvidersFormType
 } from 'queries/types/GetModelPlanProvidersAndParticipants';
 import { UpdateModelPlanProvidersAndParticipantsVariables } from 'queries/types/UpdateModelPlanProvidersAndParticipants';
 import UpdateModelPlanProvidersAndParticipants from 'queries/UpdateModelPlanProvidersAndParticipants';
@@ -233,11 +233,11 @@ export const ParticipantsOptions = () => {
                     className="maxw-none"
                     error={flatErrors.expectedNumberOfParticipants}
                     id="participants-and-providers-expected-participants"
+                    data-testid="participants-and-providers-expected-participants"
                     name="expectedNumberOfParticipants"
                     min={0}
                     max={10000}
                     step={1}
-                    defaultValue={50}
                     onInput={(e: React.ChangeEvent<HTMLInputElement>) => {
                       setFieldValue(
                         'expectedNumberOfParticipants',
@@ -287,6 +287,7 @@ export const ParticipantsOptions = () => {
                     {Object.keys(ConfidenceType).map(key => (
                       <Field
                         as={Radio}
+                        key={key}
                         id={`participants-and-providers-confidence-${key}`}
                         name="estimateConfidence"
                         label={translateConfidenceType(key)}
@@ -316,7 +317,7 @@ export const ParticipantsOptions = () => {
                     {Object.keys(RecruitmentType)
                       .sort(sortOtherEnum)
                       .map(key => (
-                        <>
+                        <Fragment key={key}>
                           <Field
                             as={Radio}
                             id={`participants-and-providers-recruitment-method-${key}`}
@@ -353,7 +354,7 @@ export const ParticipantsOptions = () => {
                               />
                             </div>
                           )}
-                        </>
+                        </Fragment>
                       ))}
                   </Fieldset>
 

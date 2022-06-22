@@ -29,7 +29,7 @@ import TextAreaField from 'components/shared/TextAreaField';
 import GetModelPlanParticipantsAndProviders from 'queries/GetModelPlanParticipantsAndProviders';
 import {
   GetModelPlanProvidersAndParticipants as GetModelPlanProvidersAndParticipantsType,
-  GetModelPlanProvidersAndParticipants_modelPlan_providersAndParticipants as ModelPlanParticipantsAndProvidersFormType
+  GetModelPlanProvidersAndParticipants_modelPlan_participantsAndProviders as ModelPlanParticipantsAndProvidersFormType
 } from 'queries/types/GetModelPlanProvidersAndParticipants';
 import { UpdateModelPlanProvidersAndParticipantsVariables } from 'queries/types/UpdateModelPlanProvidersAndParticipants';
 import UpdateModelPlanProvidersAndParticipants from 'queries/UpdateModelPlanProvidersAndParticipants';
@@ -244,7 +244,7 @@ export const ProviderOptions = () => {
                     {Object.keys(FrequencyType)
                       .sort(sortOtherEnum)
                       .map(key => (
-                        <>
+                        <Fragment key={key}>
                           <Field
                             as={Radio}
                             id={`participants-and-providers-additional-frequency-${key}`}
@@ -277,7 +277,7 @@ export const ProviderOptions = () => {
                                 />
                               </div>
                             )}
-                        </>
+                        </Fragment>
                       ))}
                   </Fieldset>
                   <AddNote
@@ -332,6 +332,7 @@ export const ProviderOptions = () => {
                         className="height-15"
                         error={flatErrors.providerAddMethodOther}
                         id="participants-and-providers-provider-add-method-other"
+                        data-testid="participants-and-providers-provider-add-method-other"
                         name="providerAddMethodOther"
                       />
                     </FieldGroup>
@@ -384,7 +385,7 @@ export const ProviderOptions = () => {
                                   }
                                 }}
                               />
-                              {type === 'OTHER' &&
+                              {type === ('OTHER' as ProviderLeaveType) &&
                                 values.providerLeaveMethod.includes(type) && (
                                   <div className="margin-left-4 margin-top-neg-2">
                                     <Label
@@ -437,7 +438,7 @@ export const ProviderOptions = () => {
                     {Object.keys(OverlapType)
                       .sort(sortOtherEnum)
                       .map(key => (
-                        <>
+                        <Fragment key={key}>
                           <Field
                             as={Radio}
                             id={`participants-and-providers-provider-overlap-${key}`}
@@ -449,7 +450,7 @@ export const ProviderOptions = () => {
                               setFieldValue('providerOverlap', key);
                             }}
                           />
-                        </>
+                        </Fragment>
                       ))}
                   </Fieldset>
                   {(values.providerOverlap === 'YES_NEED_POLICIES' ||

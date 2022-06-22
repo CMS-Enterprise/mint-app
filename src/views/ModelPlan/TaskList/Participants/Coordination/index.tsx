@@ -1,29 +1,22 @@
-import React, { Fragment, useMemo, useRef } from 'react';
+import React, { Fragment, useRef } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
-import { Link, Route, Switch, useHistory, useParams } from 'react-router-dom';
+import { Link, useHistory, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
 import {
   Breadcrumb,
   BreadcrumbBar,
   BreadcrumbLink,
   Button,
-  ComboBox,
   Fieldset,
-  Grid,
-  GridContainer,
   IconArrowBack,
-  IconVolumeOff,
   Label,
   Radio,
-  RangeInput,
   TextInput
 } from '@trussworks/react-uswds';
-import classNames from 'classnames';
 import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
-import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import AutoSave from 'components/shared/AutoSave';
@@ -31,12 +24,10 @@ import CheckboxField from 'components/shared/CheckboxField';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
-import MultiSelect from 'components/shared/MultiSelect';
-import TextAreaField from 'components/shared/TextAreaField';
 import GetModelPlanParticipantsAndProviders from 'queries/GetModelPlanParticipantsAndProviders';
 import {
   GetModelPlanProvidersAndParticipants as GetModelPlanProvidersAndParticipantsType,
-  GetModelPlanProvidersAndParticipants_modelPlan_providersAndParticipants as ModelPlanParticipantsAndProvidersFormType
+  GetModelPlanProvidersAndParticipants_modelPlan_participantsAndProviders as ModelPlanParticipantsAndProvidersFormType
 } from 'queries/types/GetModelPlanProvidersAndParticipants';
 import { UpdateModelPlanProvidersAndParticipantsVariables } from 'queries/types/UpdateModelPlanProvidersAndParticipants';
 import UpdateModelPlanProvidersAndParticipants from 'queries/UpdateModelPlanProvidersAndParticipants';
@@ -199,7 +190,7 @@ export const Coordination = () => {
               )}
               <Form
                 className="tablet:grid-col-6 margin-top-6"
-                data-testid="participants-and-providers-communication-form"
+                data-testid="participants-and-providers-coordination-form"
                 onSubmit={e => {
                   handleSubmit(e);
                 }}
@@ -362,7 +353,7 @@ export const Coordination = () => {
                                   }
                                 }}
                               />
-                              {type === 'OTHER' &&
+                              {type === ('OTHER' as ParticipantsIDType) &&
                                 values.participantsIds.includes(type) && (
                                   <div className="margin-left-4">
                                     <Label
@@ -378,6 +369,7 @@ export const Coordination = () => {
                                       as={TextInput}
                                       className="maxw-none"
                                       id="participants-and-providers-participant-id-other"
+                                      data-testid="participants-and-providers-participant-id-other"
                                       maxLength={50}
                                       name="participantsIdsOther"
                                     />

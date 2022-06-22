@@ -27,7 +27,7 @@ import FieldGroup from 'components/shared/FieldGroup';
 import GetModelPlanParticipantsAndProviders from 'queries/GetModelPlanParticipantsAndProviders';
 import {
   GetModelPlanProvidersAndParticipants as GetModelPlanProvidersAndParticipantsType,
-  GetModelPlanProvidersAndParticipants_modelPlan_providersAndParticipants as ModelPlanParticipantsAndProvidersFormType
+  GetModelPlanProvidersAndParticipants_modelPlan_participantsAndProviders as ModelPlanParticipantsAndProvidersFormType
 } from 'queries/types/GetModelPlanProvidersAndParticipants';
 import { UpdateModelPlanProvidersAndParticipantsVariables } from 'queries/types/UpdateModelPlanProvidersAndParticipants';
 import UpdateModelPlanProvidersAndParticipants from 'queries/UpdateModelPlanProvidersAndParticipants';
@@ -301,7 +301,7 @@ export const Communication = () => {
                         {Object.keys(ParticipantRiskType)
                           .sort(sortOtherEnum)
                           .map(key => (
-                            <>
+                            <Fragment key={key}>
                               <Field
                                 as={Radio}
                                 id={`participants-and-providers-risk-type-${key}`}
@@ -328,12 +328,13 @@ export const Communication = () => {
                                     as={TextInput}
                                     className="maxw-none"
                                     id="participants-and-providers-risk-type-other"
+                                    data-testid="participants-and-providers-risk-type-other"
                                     maxLength={50}
                                     name="riskOther"
                                   />
                                 </div>
                               )}
-                            </>
+                            </Fragment>
                           ))}
                       </Fieldset>
                     </>
