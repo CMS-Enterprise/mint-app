@@ -483,7 +483,6 @@ type ComplexityRoot struct {
 		FileNamingConventions                        func(childComplexity int) int
 		HelpdeskUse                                  func(childComplexity int) int
 		HelpdeskUseNote                              func(childComplexity int) int
-		HelpdeskUseOther                             func(childComplexity int) int
 		ID                                           func(childComplexity int) int
 		IcdNote                                      func(childComplexity int) int
 		IcdOwner                                     func(childComplexity int) int
@@ -731,8 +730,6 @@ type PlanOpsEvalAndLearningResolver interface {
 	AgencyOrStateHelp(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]model.AgencyOrStateHelpType, error)
 
 	Stakeholders(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]model.StakeholdersType, error)
-
-	HelpdeskUse(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]model.HelpdeskUseType, error)
 
 	ContractorSupport(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]model.ContractorSupportType, error)
 
@@ -3544,13 +3541,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.PlanOpsEvalAndLearning.HelpdeskUseNote(childComplexity), true
 
-	case "PlanOpsEvalAndLearning.helpdeskUseOther":
-		if e.complexity.PlanOpsEvalAndLearning.HelpdeskUseOther == nil {
-			break
-		}
-
-		return e.complexity.PlanOpsEvalAndLearning.HelpdeskUseOther(childComplexity), true
-
 	case "PlanOpsEvalAndLearning.id":
 		if e.complexity.PlanOpsEvalAndLearning.ID == nil {
 			break
@@ -5326,8 +5316,7 @@ type PlanOpsEvalAndLearning {
     stakeholders: [StakeholdersType!]!
     stakeholdersOther: String
     stakeholdersNote: String
-    helpdeskUse: [HelpdeskUseType!]!
-    helpdeskUseOther: String
+    helpdeskUse: Boolean
     helpdeskUseNote: String
     contractorSupport: [ContractorSupportType!]!
     contractorSupportOther: String
@@ -5450,8 +5439,7 @@ input PlanOpsEvalAndLearningChanges @goModel(model: "map[string]interface{}") {
     stakeholders: [StakeholdersType!]
     stakeholdersOther: String
     stakeholdersNote: String
-    helpdeskUse: [HelpdeskUseType!]
-    helpdeskUseOther: String
+    helpdeskUse: Boolean
     helpdeskUseNote: String
     contractorSupport: [ContractorSupportType!]
     contractorSupportOther: String
@@ -6044,12 +6032,6 @@ enum StakeholdersType {
     OTHER
 }
 
-enum HelpdeskUseType {
-    CBOSC
-    CONTRACTOR
-    OTHER
-    NO
-}
 
 enum ContractorSupportType {
     ONE
@@ -9180,8 +9162,6 @@ func (ec *executionContext) fieldContext_ModelPlan_opsEvalAndLearning(ctx contex
 				return ec.fieldContext_PlanOpsEvalAndLearning_stakeholdersNote(ctx, field)
 			case "helpdeskUse":
 				return ec.fieldContext_PlanOpsEvalAndLearning_helpdeskUse(ctx, field)
-			case "helpdeskUseOther":
-				return ec.fieldContext_PlanOpsEvalAndLearning_helpdeskUseOther(ctx, field)
 			case "helpdeskUseNote":
 				return ec.fieldContext_PlanOpsEvalAndLearning_helpdeskUseNote(ctx, field)
 			case "contractorSupport":
@@ -11481,8 +11461,6 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanOpsEvalAndLearning(c
 				return ec.fieldContext_PlanOpsEvalAndLearning_stakeholdersNote(ctx, field)
 			case "helpdeskUse":
 				return ec.fieldContext_PlanOpsEvalAndLearning_helpdeskUse(ctx, field)
-			case "helpdeskUseOther":
-				return ec.fieldContext_PlanOpsEvalAndLearning_helpdeskUseOther(ctx, field)
 			case "helpdeskUseNote":
 				return ec.fieldContext_PlanOpsEvalAndLearning_helpdeskUseNote(ctx, field)
 			case "contractorSupport":
@@ -23200,72 +23178,28 @@ func (ec *executionContext) _PlanOpsEvalAndLearning_helpdeskUse(ctx context.Cont
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.PlanOpsEvalAndLearning().HelpdeskUse(rctx, obj)
+		return obj.HelpdeskUse, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
 		return graphql.Null
 	}
 	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
 		return graphql.Null
 	}
-	res := resTmp.([]model.HelpdeskUseType)
+	res := resTmp.(*bool)
 	fc.Result = res
-	return ec.marshalNHelpdeskUseType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐHelpdeskUseTypeᚄ(ctx, field.Selections, res)
+	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_helpdeskUse(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "PlanOpsEvalAndLearning",
 		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type HelpdeskUseType does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _PlanOpsEvalAndLearning_helpdeskUseOther(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_helpdeskUseOther(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.HelpdeskUseOther, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		return graphql.Null
-	}
-	res := resTmp.(*string)
-	fc.Result = res
-	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_helpdeskUseOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "PlanOpsEvalAndLearning",
-		Field:      field,
 		IsMethod:   false,
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type String does not have child fields")
+			return nil, errors.New("field of type Boolean does not have child fields")
 		},
 	}
 	return fc, nil
@@ -35195,28 +35129,8 @@ func (ec *executionContext) _PlanOpsEvalAndLearning(ctx context.Context, sel ast
 			out.Values[i] = ec._PlanOpsEvalAndLearning_stakeholdersNote(ctx, field, obj)
 
 		case "helpdeskUse":
-			field := field
 
-			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._PlanOpsEvalAndLearning_helpdeskUse(ctx, field, obj)
-				if res == graphql.Null {
-					atomic.AddUint32(&invalids, 1)
-				}
-				return res
-			}
-
-			out.Concurrently(i, func() graphql.Marshaler {
-				return innerFunc(ctx)
-
-			})
-		case "helpdeskUseOther":
-
-			out.Values[i] = ec._PlanOpsEvalAndLearning_helpdeskUseOther(ctx, field, obj)
+			out.Values[i] = ec._PlanOpsEvalAndLearning_helpdeskUse(ctx, field, obj)
 
 		case "helpdeskUseNote":
 
@@ -38261,77 +38175,6 @@ func (ec *executionContext) marshalNGeographyType2ᚕgithubᚗcomᚋcmsgovᚋmin
 				defer wg.Done()
 			}
 			ret[i] = ec.marshalNGeographyType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐGeographyType(ctx, sel, v[i])
-		}
-		if isLen1 {
-			f(i)
-		} else {
-			go f(i)
-		}
-
-	}
-	wg.Wait()
-
-	for _, e := range ret {
-		if e == graphql.Null {
-			return graphql.Null
-		}
-	}
-
-	return ret
-}
-
-func (ec *executionContext) unmarshalNHelpdeskUseType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐHelpdeskUseType(ctx context.Context, v interface{}) (model.HelpdeskUseType, error) {
-	var res model.HelpdeskUseType
-	err := res.UnmarshalGQL(v)
-	return res, graphql.ErrorOnPath(ctx, err)
-}
-
-func (ec *executionContext) marshalNHelpdeskUseType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐHelpdeskUseType(ctx context.Context, sel ast.SelectionSet, v model.HelpdeskUseType) graphql.Marshaler {
-	return v
-}
-
-func (ec *executionContext) unmarshalNHelpdeskUseType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐHelpdeskUseTypeᚄ(ctx context.Context, v interface{}) ([]model.HelpdeskUseType, error) {
-	var vSlice []interface{}
-	if v != nil {
-		vSlice = graphql.CoerceList(v)
-	}
-	var err error
-	res := make([]model.HelpdeskUseType, len(vSlice))
-	for i := range vSlice {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
-		res[i], err = ec.unmarshalNHelpdeskUseType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐHelpdeskUseType(ctx, vSlice[i])
-		if err != nil {
-			return nil, err
-		}
-	}
-	return res, nil
-}
-
-func (ec *executionContext) marshalNHelpdeskUseType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐHelpdeskUseTypeᚄ(ctx context.Context, sel ast.SelectionSet, v []model.HelpdeskUseType) graphql.Marshaler {
-	ret := make(graphql.Array, len(v))
-	var wg sync.WaitGroup
-	isLen1 := len(v) == 1
-	if !isLen1 {
-		wg.Add(len(v))
-	}
-	for i := range v {
-		i := i
-		fc := &graphql.FieldContext{
-			Index:  &i,
-			Result: &v[i],
-		}
-		ctx := graphql.WithFieldContext(ctx, fc)
-		f := func(i int) {
-			defer func() {
-				if r := recover(); r != nil {
-					ec.Error(ctx, ec.Recover(ctx, r))
-					ret = nil
-				}
-			}()
-			if !isLen1 {
-				defer wg.Done()
-			}
-			ret[i] = ec.marshalNHelpdeskUseType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐHelpdeskUseType(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -43102,73 +42945,6 @@ func (ec *executionContext) marshalOGeographyType2ᚕgithubᚗcomᚋcmsgovᚋmin
 				defer wg.Done()
 			}
 			ret[i] = ec.marshalNGeographyType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐGeographyType(ctx, sel, v[i])
-		}
-		if isLen1 {
-			f(i)
-		} else {
-			go f(i)
-		}
-
-	}
-	wg.Wait()
-
-	for _, e := range ret {
-		if e == graphql.Null {
-			return graphql.Null
-		}
-	}
-
-	return ret
-}
-
-func (ec *executionContext) unmarshalOHelpdeskUseType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐHelpdeskUseTypeᚄ(ctx context.Context, v interface{}) ([]model.HelpdeskUseType, error) {
-	if v == nil {
-		return nil, nil
-	}
-	var vSlice []interface{}
-	if v != nil {
-		vSlice = graphql.CoerceList(v)
-	}
-	var err error
-	res := make([]model.HelpdeskUseType, len(vSlice))
-	for i := range vSlice {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
-		res[i], err = ec.unmarshalNHelpdeskUseType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐHelpdeskUseType(ctx, vSlice[i])
-		if err != nil {
-			return nil, err
-		}
-	}
-	return res, nil
-}
-
-func (ec *executionContext) marshalOHelpdeskUseType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐHelpdeskUseTypeᚄ(ctx context.Context, sel ast.SelectionSet, v []model.HelpdeskUseType) graphql.Marshaler {
-	if v == nil {
-		return graphql.Null
-	}
-	ret := make(graphql.Array, len(v))
-	var wg sync.WaitGroup
-	isLen1 := len(v) == 1
-	if !isLen1 {
-		wg.Add(len(v))
-	}
-	for i := range v {
-		i := i
-		fc := &graphql.FieldContext{
-			Index:  &i,
-			Result: &v[i],
-		}
-		ctx := graphql.WithFieldContext(ctx, fc)
-		f := func(i int) {
-			defer func() {
-				if r := recover(); r != nil {
-					ec.Error(ctx, ec.Recover(ctx, r))
-					ret = nil
-				}
-			}()
-			if !isLen1 {
-				defer wg.Done()
-			}
-			ret[i] = ec.marshalNHelpdeskUseType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐHelpdeskUseType(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)

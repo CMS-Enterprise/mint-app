@@ -142,7 +142,6 @@ func (suite *ResolverSuite) TestPlanOpsEvalAndLearningGetByModelPlanID() {
 	suite.Nil(oel.StakeholdersOther)
 	suite.Nil(oel.StakeholdersNote)
 	suite.Nil(oel.HelpdeskUse)
-	suite.Nil(oel.HelpdeskUseOther)
 	suite.Nil(oel.HelpdeskUseNote)
 	suite.Nil(oel.ContractorSupport)
 	suite.Nil(oel.ContractorSupportOther)

@@ -14,12 +14,6 @@ CREATE TYPE STAKEHOLDERS_TYPE AS ENUM (
     'STATES',
     'OTHER'
 );
-CREATE TYPE HELPDESK_USE_TYPE AS ENUM (
-    'CBOSC',
-    'CONTRACTOR',
-    'OTHER',
-    'NO'
-);
 CREATE TYPE CONTRACTOR_SUPPORT_TYPE AS ENUM (
     'ONE',
     'MULTIPLE',
@@ -128,8 +122,7 @@ CREATE TABLE plan_ops_eval_and_learning (
     stakeholders STAKEHOLDERS_TYPE[],
     stakeholders_other ZERO_STRING,
     stakeholders_note ZERO_STRING,
-    helpdesk_use HELPDESK_USE_TYPE[],
-    helpdesk_use_other ZERO_STRING,
+    helpdesk_use BOOL,
     helpdesk_use_note ZERO_STRING,
     contractor_support CONTRACTOR_SUPPORT_TYPE[],
     contractor_support_other ZERO_STRING,

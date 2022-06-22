@@ -8,7 +8,6 @@ SELECT
     stakeholders_other,
     stakeholders_note,
     helpdesk_use,
-    helpdesk_use_other,
     helpdesk_use_note,
     contractor_support,
     contractor_support_other,

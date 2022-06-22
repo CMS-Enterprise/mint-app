@@ -19,8 +19,7 @@ type PlanOpsEvalAndLearning struct {
 	Stakeholders           pq.StringArray `json:"stakeholders" db:"stakeholders"`
 	StakeholdersOther      *string        `json:"stakeholdersOther" db:"stakeholders_other"`
 	StakeholdersNote       *string        `json:"stakeholdersNote" db:"stakeholders_note"`
-	HelpdeskUse            pq.StringArray `json:"helpdeskUse" db:"helpdesk_use"`
-	HelpdeskUseOther       *string        `json:"helpdeskUseOther" db:"helpdesk_use_other"`
+	HelpdeskUse            *bool          `json:"helpdeskUse" db:"helpdesk_use"`
 	HelpdeskUseNote        *string        `json:"helpdeskUseNote" db:"helpdesk_use_note"`
 	ContractorSupport      pq.StringArray `json:"contractorSupport" db:"contractor_support"`
 	ContractorSupportOther *string        `json:"contractorSupportOther" db:"contractor_support_other"`
