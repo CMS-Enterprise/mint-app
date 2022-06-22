@@ -922,9 +922,6 @@ type PlanOpsEvalAndLearning {
     iddocSupport: Boolean
     iddocSupportNote: String
     #Page 2
-    iddocOperations: IddocOperationsType
-    iddocOperationsOther: String
-    iddocOperationsNote: String
     technicalContactsIdentified: Boolean
     technicalContactsIdentifiedDetail: String
     technicalContactsIdentifiedNote: String
@@ -1045,9 +1042,6 @@ input PlanOpsEvalAndLearningChanges @goModel(model: "map[string]interface{}") {
     iddocSupport: Boolean
     iddocSupportNote: String
     #Page 2
-    iddocOperations: IddocOperationsType
-    iddocOperationsOther: String
-    iddocOperationsNote: String
     technicalContactsIdentified: Boolean
     technicalContactsIdentifiedDetail: String
     technicalContactsIdentifiedNote: String
@@ -1706,12 +1700,6 @@ enum ModelLearningSystemType {
     NO_LEARNING_SYSTEM
 }
 
-enum IddocOperationsType {
-    ACO_OS
-    ACO_UI
-    INNOVATION
-    OTHER
-}
 
 enum DataFullTimeOrIncrementalType {
     FULL_TIME

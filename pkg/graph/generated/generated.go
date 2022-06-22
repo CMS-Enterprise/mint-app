@@ -486,9 +486,6 @@ type ComplexityRoot struct {
 		ID                                           func(childComplexity int) int
 		IcdNote                                      func(childComplexity int) int
 		IcdOwner                                     func(childComplexity int) int
-		IddocOperations                              func(childComplexity int) int
-		IddocOperationsNote                          func(childComplexity int) int
-		IddocOperationsOther                         func(childComplexity int) int
 		IddocSupport                                 func(childComplexity int) int
 		IddocSupportNote                             func(childComplexity int) int
 		ModelLearningSystems                         func(childComplexity int) int
@@ -3562,27 +3559,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.PlanOpsEvalAndLearning.IcdOwner(childComplexity), true
 
-	case "PlanOpsEvalAndLearning.iddocOperations":
-		if e.complexity.PlanOpsEvalAndLearning.IddocOperations == nil {
-			break
-		}
-
-		return e.complexity.PlanOpsEvalAndLearning.IddocOperations(childComplexity), true
-
-	case "PlanOpsEvalAndLearning.iddocOperationsNote":
-		if e.complexity.PlanOpsEvalAndLearning.IddocOperationsNote == nil {
-			break
-		}
-
-		return e.complexity.PlanOpsEvalAndLearning.IddocOperationsNote(childComplexity), true
-
-	case "PlanOpsEvalAndLearning.iddocOperationsOther":
-		if e.complexity.PlanOpsEvalAndLearning.IddocOperationsOther == nil {
-			break
-		}
-
-		return e.complexity.PlanOpsEvalAndLearning.IddocOperationsOther(childComplexity), true
-
 	case "PlanOpsEvalAndLearning.iddocSupport":
 		if e.complexity.PlanOpsEvalAndLearning.IddocSupport == nil {
 			break
@@ -5325,9 +5301,6 @@ type PlanOpsEvalAndLearning {
     iddocSupport: Boolean
     iddocSupportNote: String
     #Page 2
-    iddocOperations: IddocOperationsType
-    iddocOperationsOther: String
-    iddocOperationsNote: String
     technicalContactsIdentified: Boolean
     technicalContactsIdentifiedDetail: String
     technicalContactsIdentifiedNote: String
@@ -5448,9 +5421,6 @@ input PlanOpsEvalAndLearningChanges @goModel(model: "map[string]interface{}") {
     iddocSupport: Boolean
     iddocSupportNote: String
     #Page 2
-    iddocOperations: IddocOperationsType
-    iddocOperationsOther: String
-    iddocOperationsNote: String
     technicalContactsIdentified: Boolean
     technicalContactsIdentifiedDetail: String
     technicalContactsIdentifiedNote: String
@@ -6109,12 +6079,6 @@ enum ModelLearningSystemType {
     NO_LEARNING_SYSTEM
 }
 
-enum IddocOperationsType {
-    ACO_OS
-    ACO_UI
-    INNOVATION
-    OTHER
-}
 
 enum DataFullTimeOrIncrementalType {
     FULL_TIME
@@ -9176,12 +9140,6 @@ func (ec *executionContext) fieldContext_ModelPlan_opsEvalAndLearning(ctx contex
 				return ec.fieldContext_PlanOpsEvalAndLearning_iddocSupport(ctx, field)
 			case "iddocSupportNote":
 				return ec.fieldContext_PlanOpsEvalAndLearning_iddocSupportNote(ctx, field)
-			case "iddocOperations":
-				return ec.fieldContext_PlanOpsEvalAndLearning_iddocOperations(ctx, field)
-			case "iddocOperationsOther":
-				return ec.fieldContext_PlanOpsEvalAndLearning_iddocOperationsOther(ctx, field)
-			case "iddocOperationsNote":
-				return ec.fieldContext_PlanOpsEvalAndLearning_iddocOperationsNote(ctx, field)
 			case "technicalContactsIdentified":
 				return ec.fieldContext_PlanOpsEvalAndLearning_technicalContactsIdentified(ctx, field)
 			case "technicalContactsIdentifiedDetail":
@@ -11475,12 +11433,6 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanOpsEvalAndLearning(c
 				return ec.fieldContext_PlanOpsEvalAndLearning_iddocSupport(ctx, field)
 			case "iddocSupportNote":
 				return ec.fieldContext_PlanOpsEvalAndLearning_iddocSupportNote(ctx, field)
-			case "iddocOperations":
-				return ec.fieldContext_PlanOpsEvalAndLearning_iddocOperations(ctx, field)
-			case "iddocOperationsOther":
-				return ec.fieldContext_PlanOpsEvalAndLearning_iddocOperationsOther(ctx, field)
-			case "iddocOperationsNote":
-				return ec.fieldContext_PlanOpsEvalAndLearning_iddocOperationsNote(ctx, field)
 			case "technicalContactsIdentified":
 				return ec.fieldContext_PlanOpsEvalAndLearning_technicalContactsIdentified(ctx, field)
 			case "technicalContactsIdentifiedDetail":
@@ -23495,129 +23447,6 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_iddocSupportNote
 	return fc, nil
 }
 
-func (ec *executionContext) _PlanOpsEvalAndLearning_iddocOperations(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_iddocOperations(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.IddocOperations, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		return graphql.Null
-	}
-	res := resTmp.(*models.IddocOperationsType)
-	fc.Result = res
-	return ec.marshalOIddocOperationsType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐIddocOperationsType(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_iddocOperations(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "PlanOpsEvalAndLearning",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type IddocOperationsType does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _PlanOpsEvalAndLearning_iddocOperationsOther(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_iddocOperationsOther(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.IddocOperationsOther, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		return graphql.Null
-	}
-	res := resTmp.(*string)
-	fc.Result = res
-	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_iddocOperationsOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "PlanOpsEvalAndLearning",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type String does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _PlanOpsEvalAndLearning_iddocOperationsNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_iddocOperationsNote(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.IddocOperationsNote, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		return graphql.Null
-	}
-	res := resTmp.(*string)
-	fc.Result = res
-	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_iddocOperationsNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "PlanOpsEvalAndLearning",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type String does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
 func (ec *executionContext) _PlanOpsEvalAndLearning_technicalContactsIdentified(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_technicalContactsIdentified(ctx, field)
 	if err != nil {
@@ -35176,18 +35005,6 @@ func (ec *executionContext) _PlanOpsEvalAndLearning(ctx context.Context, sel ast
 
 			out.Values[i] = ec._PlanOpsEvalAndLearning_iddocSupportNote(ctx, field, obj)
 
-		case "iddocOperations":
-
-			out.Values[i] = ec._PlanOpsEvalAndLearning_iddocOperations(ctx, field, obj)
-
-		case "iddocOperationsOther":
-
-			out.Values[i] = ec._PlanOpsEvalAndLearning_iddocOperationsOther(ctx, field, obj)
-
-		case "iddocOperationsNote":
-
-			out.Values[i] = ec._PlanOpsEvalAndLearning_iddocOperationsNote(ctx, field, obj)
-
 		case "technicalContactsIdentified":
 
 			out.Values[i] = ec._PlanOpsEvalAndLearning_technicalContactsIdentified(ctx, field, obj)
@@ -42962,23 +42779,6 @@ func (ec *executionContext) marshalOGeographyType2ᚕgithubᚗcomᚋcmsgovᚋmin
 	}
 
 	return ret
-}
-
-func (ec *executionContext) unmarshalOIddocOperationsType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐIddocOperationsType(ctx context.Context, v interface{}) (*models.IddocOperationsType, error) {
-	if v == nil {
-		return nil, nil
-	}
-	tmp, err := graphql.UnmarshalString(v)
-	res := models.IddocOperationsType(tmp)
-	return &res, graphql.ErrorOnPath(ctx, err)
-}
-
-func (ec *executionContext) marshalOIddocOperationsType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐIddocOperationsType(ctx context.Context, sel ast.SelectionSet, v *models.IddocOperationsType) graphql.Marshaler {
-	if v == nil {
-		return graphql.Null
-	}
-	res := graphql.MarshalString(string(*v))
-	return res
 }
 
 func (ec *executionContext) unmarshalOInt2ᚕintᚄ(ctx context.Context, v interface{}) ([]int, error) {
