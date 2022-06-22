@@ -103,6 +103,7 @@ CREATE TABLE plan_participants_and_providers (
 
     --page 3
     communication_method PARTICIPANT_COMMUNICATION_TYPE[],
+    communication_method_other ZERO_STRING,
     communication_note ZERO_STRING,
     participant_assume_risk BOOL,
     risk_type PARTICIPANT_RISK_TYPE,

@@ -590,6 +590,7 @@ type PlanParticipantsAndProviders {
 
   #Page 3
   communicationMethod:   [ParticipantCommunicationType!]!
+  communicationMethodOther:   String
   communicationNote:     String             
   participantAssumeRisk: Boolean             
   riskType:              ParticipantRiskType
@@ -661,6 +662,7 @@ input PlanParticipantsAndProvidersChanges @goModel(model: "map[string]interface{
 
   #Page 3
   communicationMethod:   [ParticipantCommunicationType!]
+  communicationMethodOther:   String
   communicationNote:     String             
   participantAssumeRisk: Boolean             
   riskType:              ParticipantRiskType
