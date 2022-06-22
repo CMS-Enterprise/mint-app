@@ -39,7 +39,7 @@ type ModelPlan {
   modelCategory: ModelCategory
   # cmsCenters:CMSArray
   cmsCenters:[CMSCenter!]!  @enumArray(enumType: "CMSGroupG" ) 
-  cmsOther: String
+  cmsOther: String @goTag(key: "Exclamation" value: "hooray")
   cmmiGroups: [CMMIGroup!]!
   archived: Boolean!
   createdBy: String!
@@ -1031,6 +1031,10 @@ directive @hasRole(role: Role!) on FIELD_DEFINITION
 
 directive @enumArray(enumType: String!) on ENUM | FIELD_DEFINITION
 #/SCALAR
+directive @goTag(
+	key: String!
+	value: String
+) on INPUT_FIELD_DEFINITION | FIELD_DEFINITION
 
 # https://gqlgen.com/config/#inline-config-with-directives
 directive @goModel(
