@@ -433,6 +433,7 @@ export interface PlanParticipantsAndProvidersChanges {
   selectionOther?: string | null;
   selectionNote?: string | null;
   communicationMethod?: ParticipantCommunicationType[] | null;
+  communicationMethodOther?: string | null;
   communicationNote?: string | null;
   participantAssumeRisk?: boolean | null;
   riskType?: ParticipantRiskType | null;

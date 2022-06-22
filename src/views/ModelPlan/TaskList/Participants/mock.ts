@@ -35,6 +35,7 @@ export const participantsAndProvidersData: ModelPlanParticipantsAndProvidersType
   selectionOther: '',
   selectionNote: '',
   communicationMethod: [],
+  communicationMethodOther: '',
   communicationNote: '',
   participantAssumeRisk: true,
   riskType: 'OTHER' as ParticipantRiskType,

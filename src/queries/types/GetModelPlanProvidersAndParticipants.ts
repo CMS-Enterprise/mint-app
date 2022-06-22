@@ -31,6 +31,7 @@ export interface GetModelPlanProvidersAndParticipants_modelPlan_participantsAndP
   selectionOther: string | null;
   selectionNote: string | null;
   communicationMethod: ParticipantCommunicationType[];
+  communicationMethodOther: string | null;
   communicationNote: string | null;
   participantAssumeRisk: boolean | null;
   riskType: ParticipantRiskType | null;

@@ -64,6 +64,7 @@ export const Communication = () => {
   const {
     id,
     communicationMethod,
+    communicationMethodOther,
     communicationNote,
     participantAssumeRisk,
     riskType,
@@ -115,6 +116,7 @@ export const Communication = () => {
 
   const initialValues = {
     communicationMethod: communicationMethod ?? [],
+    communicationMethodOther: communicationMethodOther ?? '',
     communicationNote: communicationNote ?? '',
     participantAssumeRisk: participantAssumeRisk ?? null,
     riskType: riskType || null,
@@ -241,6 +243,29 @@ export const Communication = () => {
                                   }
                                 }}
                               />
+                              {type === 'OTHER' &&
+                                values.communicationMethod.includes(
+                                  'OTHER' as ParticipantCommunicationType
+                                ) && (
+                                  <div className="margin-left-4 margin-top-neg-3">
+                                    <Label
+                                      htmlFor="participants-and-providers-communication-method-other"
+                                      className="text-normal"
+                                    >
+                                      {h('pleaseSpecify')}
+                                    </Label>
+                                    <FieldErrorMsg>
+                                      {flatErrors.communicationMethodOther}
+                                    </FieldErrorMsg>
+                                    <Field
+                                      as={TextInput}
+                                      className="maxw-none"
+                                      id="participants-and-providers-communication-method-other"
+                                      maxLength={50}
+                                      name="communicationMethodOther"
+                                    />
+                                  </div>
+                                )}
                             </Fragment>
                           );
                         })}
