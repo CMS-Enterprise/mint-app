@@ -528,11 +528,15 @@ type PlanPaymentsResolver interface {
 
 	PayRecipients(ctx context.Context, obj *models.PlanPayments) ([]model.PayRecipient, error)
 
+	PayRecipientNote(ctx context.Context, obj *models.PlanPayments) (string, error)
 	PayType(ctx context.Context, obj *models.PlanPayments) (model.PayType, error)
 
 	PayClaims(ctx context.Context, obj *models.PlanPayments) ([]model.ClaimsBasedPayType, error)
 
 	NonClaimsPayments(ctx context.Context, obj *models.PlanPayments) ([]model.NonClaimsBasedPayType, error)
+	NonClaimsPaymentOtherDescription(ctx context.Context, obj *models.PlanPayments) (string, error)
+
+	SharedSystemsInvolvedAdditionalClaimPayment(ctx context.Context, obj *models.PlanPayments) (string, error)
 
 	ExpectedCalculationComplexityLevel(ctx context.Context, obj *models.PlanPayments) (model.ComplexityCalculationLevelType, error)
 
@@ -18362,7 +18366,7 @@ func (ec *executionContext) _PlanPayments_payRecipientNote(ctx context.Context, 
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.PayRecipientNote, nil
+		return ec.resolvers.PlanPayments().PayRecipientNote(rctx, obj)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -18374,17 +18378,17 @@ func (ec *executionContext) _PlanPayments_payRecipientNote(ctx context.Context, 
 		}
 		return graphql.Null
 	}
-	res := resTmp.(*string)
+	res := resTmp.(string)
 	fc.Result = res
-	return ec.marshalNString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalNString2string(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanPayments_payRecipientNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "PlanPayments",
 		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
+		IsMethod:   true,
+		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type String does not have child fields")
 		},
@@ -19459,7 +19463,7 @@ func (ec *executionContext) _PlanPayments_nonClaimsPaymentOtherDescription(ctx c
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.NonClaimsPaymentOtherDescription, nil
+		return ec.resolvers.PlanPayments().NonClaimsPaymentOtherDescription(rctx, obj)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -19471,17 +19475,17 @@ func (ec *executionContext) _PlanPayments_nonClaimsPaymentOtherDescription(ctx c
 		}
 		return graphql.Null
 	}
-	res := resTmp.(*string)
+	res := resTmp.(string)
 	fc.Result = res
-	return ec.marshalNString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalNString2string(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanPayments_nonClaimsPaymentOtherDescription(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "PlanPayments",
 		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
+		IsMethod:   true,
+		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type String does not have child fields")
 		},
@@ -19635,7 +19639,7 @@ func (ec *executionContext) _PlanPayments_sharedSystemsInvolvedAdditionalClaimPa
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.SharedSystemsInvolvedAdditionalClaimPayment, nil
+		return ec.resolvers.PlanPayments().SharedSystemsInvolvedAdditionalClaimPayment(rctx, obj)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -19647,17 +19651,17 @@ func (ec *executionContext) _PlanPayments_sharedSystemsInvolvedAdditionalClaimPa
 		}
 		return graphql.Null
 	}
-	res := resTmp.(*string)
+	res := resTmp.(string)
 	fc.Result = res
-	return ec.marshalNString2ᚖstring(ctx, field.Selections, res)
+	return ec.marshalNString2string(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanPayments_sharedSystemsInvolvedAdditionalClaimPayment(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "PlanPayments",
 		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
+		IsMethod:   true,
+		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type String does not have child fields")
 		},
@@ -25968,12 +25972,25 @@ func (ec *executionContext) _PlanPayments(ctx context.Context, sel ast.Selection
 				atomic.AddUint32(&invalids, 1)
 			}
 		case "payRecipientNote":
+			field := field
 
-			out.Values[i] = ec._PlanPayments_payRecipientNote(ctx, field, obj)
-
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&invalids, 1)
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._PlanPayments_payRecipientNote(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&invalids, 1)
+				}
+				return res
 			}
+
+			out.Concurrently(i, func() graphql.Marshaler {
+				return innerFunc(ctx)
+
+			})
 		case "payType":
 			field := field
 
@@ -26179,12 +26196,25 @@ func (ec *executionContext) _PlanPayments(ctx context.Context, sel ast.Selection
 
 			})
 		case "nonClaimsPaymentOtherDescription":
+			field := field
 
-			out.Values[i] = ec._PlanPayments_nonClaimsPaymentOtherDescription(ctx, field, obj)
-
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&invalids, 1)
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._PlanPayments_nonClaimsPaymentOtherDescription(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&invalids, 1)
+				}
+				return res
 			}
+
+			out.Concurrently(i, func() graphql.Marshaler {
+				return innerFunc(ctx)
+
+			})
 		case "paymentCalculationOwner":
 
 			out.Values[i] = ec._PlanPayments_paymentCalculationOwner(ctx, field, obj)
@@ -26207,12 +26237,25 @@ func (ec *executionContext) _PlanPayments(ctx context.Context, sel ast.Selection
 				atomic.AddUint32(&invalids, 1)
 			}
 		case "sharedSystemsInvolvedAdditionalClaimPayment":
+			field := field
 
-			out.Values[i] = ec._PlanPayments_sharedSystemsInvolvedAdditionalClaimPayment(ctx, field, obj)
-
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&invalids, 1)
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._PlanPayments_sharedSystemsInvolvedAdditionalClaimPayment(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&invalids, 1)
+				}
+				return res
 			}
+
+			out.Concurrently(i, func() graphql.Marshaler {
+				return innerFunc(ctx)
+
+			})
 		case "sharedSystemsInvolvedAdditionalClaimPaymentNote":
 
 			out.Values[i] = ec._PlanPayments_sharedSystemsInvolvedAdditionalClaimPaymentNote(ctx, field, obj)

@@ -1,14 +1,11 @@
 package models
 
 import (
+	"github.com/lib/pq"
 	"time"
 
 	"github.com/cmsgov/mint-app/pkg/models/anticipatedpaymentfrequencytype"
-	"github.com/cmsgov/mint-app/pkg/models/claimsbasedpaytype"
 	"github.com/cmsgov/mint-app/pkg/models/complexitycalculationleveltype"
-	"github.com/cmsgov/mint-app/pkg/models/fundingsource"
-	"github.com/cmsgov/mint-app/pkg/models/nonclaimbasedpaymenttype"
-	"github.com/cmsgov/mint-app/pkg/models/payrecipient"
 	"github.com/cmsgov/mint-app/pkg/models/paytype"
 
 	"github.com/google/uuid"
@@ -20,31 +17,31 @@ type PlanPayments struct {
 	ModelPlanID uuid.UUID `json:"modelPlanID" db:"model_plan_id"`
 
 	// Page 1
-	FundingSource                      []fundingsource.FundingSource `json:"fundingSource" db:"funding_source"`
-	FundingSourceTrustFundDescription  *string                       `json:"fundingSourceTrustFundDescription" db:"funding_source_trust_fund_description"`
-	FundingSourceOtherDescription      *string                       `json:"fundingSourceOtherDescription" db:"funding_source_other_description"`
-	FundingSourceNote                  *string                       `json:"fundingSourceNote" db:"funding_source_note"`
-	FundingSourceR                     []fundingsource.FundingSource `json:"fundingSourceR" db:"funding_source_r"`
-	FundingSourceRTrustFundDescription *string                       `json:"fundingSourceRTrustFundDescription" db:"funding_source_r_trust_fund_description"`
-	FundingSourceROtherDescription     *string                       `json:"fundingSourceROtherDescription" db:"funding_source_r_other_description"`
-	FundingSourceRNote                 *string                       `json:"fundingSourceRNote" db:"funding_source_r_note"`
-	PayRecipients                      []payrecipient.PayRecipient   `json:"payRecipients" db:"pay_recipients"`
-	PayRecipientOtherSpecification     *string                       `json:"payRecipientOtherSpecification" db:"pay_recipient_other_specification"`
-	PayRecipientNote                   *string                       `json:"payRecipientNote" db:"pay_recipient_note"`
-	PayType                            paytype.PayType               `json:"payType" db:"pay_type"`
-	PayTypeNote                        *string                       `json:"payTypeNote" db:"pay_type_note"`
+	FundingSource                      pq.StringArray  `json:"fundingSource" db:"funding_source"`
+	FundingSourceTrustFundDescription  *string         `json:"fundingSourceTrustFundDescription" db:"funding_source_trust_fund_description"`
+	FundingSourceOtherDescription      *string         `json:"fundingSourceOtherDescription" db:"funding_source_other_description"`
+	FundingSourceNote                  *string         `json:"fundingSourceNote" db:"funding_source_note"`
+	FundingSourceR                     pq.StringArray  `json:"fundingSourceR" db:"funding_source_r"`
+	FundingSourceRTrustFundDescription *string         `json:"fundingSourceRTrustFundDescription" db:"funding_source_r_trust_fund_description"`
+	FundingSourceROtherDescription     *string         `json:"fundingSourceROtherDescription" db:"funding_source_r_other_description"`
+	FundingSourceRNote                 *string         `json:"fundingSourceRNote" db:"funding_source_r_note"`
+	PayRecipients                      pq.StringArray  `json:"payRecipients" db:"pay_recipients"`
+	PayRecipientOtherSpecification     *string         `json:"payRecipientsOtherSpecification" db:"pay_recipients_other_specification"`
+	PayRecipientsNote                  *string         `json:"payRecipientsNote" db:"pay_recipients_note"`
+	PayType                            paytype.PayType `json:"payType" db:"pay_type"`
+	PayTypeNote                        *string         `json:"payTypeNote" db:"pay_type_note"`
 
 	// Page 2
-	PayClaims                                      []claimsbasedpaytype.ClaimsBasedPayType `json:"payClaims" db:"pay_claims"`
-	PayClaimsOtherDescription                      *string                                 `json:"payClaimsOtherDescription" db:"pay_claims_other_description"`
-	ShouldAnyProvidersExcludedFFSSystems           *bool                                   `json:"shouldAnyProvidersExcludedFFSSystems" db:"should_any_providers_excluded_ffs_systems"`
-	ShouldAnyProviderExcludedFFSSystemsNote        *string                                 `json:"shouldAnyProviderExcludedFFSSystemsNote" db:"should_any_providers_excluded_ffs_systems_note"`
-	ChangesMedicarePhysicianFeeSchedule            *bool                                   `json:"changesMedicarePhysicianFeeSchedule" db:"changes_medicare_physician_fee_schedule"`
-	ChangesMedicarePhysicianFeeScheduleNote        *string                                 `json:"changesMedicarePhysicianFeeScheduleNote" db:"changes_medicare_physician_fee_schedule_note"`
-	AffectsMedicareSecondaryPayerClaims            *bool                                   `json:"affectsMedicareSecondaryPayerClaims" db:"affects_medicare_secondary_payer_claims"`
-	AffectsMedicareSecondaryPayerClaimsExplanation *string                                 `json:"affectsMedicareSecondaryPayerClaimsExplanation" db:"affects_medicare_secondary_payer_claims_explanation"`
-	AffectsMedicareSecondaryPayerClaimsNote        *string                                 `json:"affectsMedicareSecondaryPayerClaimsNote" db:"affects_medicare_secondary_payer_claims_note"`
-	PayModelDifferentiation                        *string                                 `json:"payModelDifferentiation" db:"pay_model_differentiation"`
+	PayClaims                                      pq.StringArray `json:"payClaims" db:"pay_claims"`
+	PayClaimsOtherDescription                      *string        `json:"payClaimsOtherDescription" db:"pay_claims_other_description"`
+	ShouldAnyProvidersExcludedFFSSystems           *bool          `json:"shouldAnyProvidersExcludedFFSSystems" db:"should_any_providers_excluded_ffs_systems"`
+	ShouldAnyProviderExcludedFFSSystemsNote        *string        `json:"shouldAnyProviderExcludedFFSSystemsNote" db:"should_any_providers_excluded_ffs_systems_note"`
+	ChangesMedicarePhysicianFeeSchedule            *bool          `json:"changesMedicarePhysicianFeeSchedule" db:"changes_medicare_physician_fee_schedule"`
+	ChangesMedicarePhysicianFeeScheduleNote        *string        `json:"changesMedicarePhysicianFeeScheduleNote" db:"changes_medicare_physician_fee_schedule_note"`
+	AffectsMedicareSecondaryPayerClaims            *bool          `json:"affectsMedicareSecondaryPayerClaims" db:"affects_medicare_secondary_payer_claims"`
+	AffectsMedicareSecondaryPayerClaimsExplanation *string        `json:"affectsMedicareSecondaryPayerClaimsExplanation" db:"affects_medicare_secondary_payer_claims_explanation"`
+	AffectsMedicareSecondaryPayerClaimsNote        *string        `json:"affectsMedicareSecondaryPayerClaimsNote" db:"affects_medicare_secondary_payer_claims_note"`
+	PayModelDifferentiation                        *string        `json:"payModelDifferentiation" db:"pay_model_differentiation"`
 
 	// Page 3
 	CreatingDependenciesBetweenServices     *bool   `json:"creatingDependenciesBetweenServices" db:"creating_dependencies_between_services"`
@@ -55,23 +52,23 @@ type PlanPayments struct {
 	IsContractorAwareTestDataRequirements   *bool   `json:"isContractorAwareTestDataRequirements" db:"is_contractor_aware_test_data_requirements"`
 
 	// Page 4
-	BeneficiaryCostSharingLevelAndHandling          *string `json:"benificiaryCostSharingLevelAndHandling" db:"benificiary_cost_sharing_level_and_handling"`
+	BeneficiaryCostSharingLevelAndHandling          *string `json:"beneficiaryCostSharingLevelAndHandling" db:"beneficiary_cost_sharing_level_and_handling"`
 	WaiveBeneficiaryCostSharingForAnyServices       *bool   `json:"waiveBeneficiaryCostSharingForAnyServices" db:"waive_beneficiary_cost_sharing_for_any_services"`
 	WaiveBeneficiaryCostSharingServiceSpecification *string `json:"waiveBeneficiaryCostSharingServiceSpecification" db:"waive_beneficiary_cost_sharing_service_specification"`
 	WaiverOnlyAppliesPartOfPayment                  *bool   `json:"waiverOnlyAppliesPartOfPayment" db:"waiver_only_applies_part_of_payment"`
 	WaiveBeneficiaryCostSharingNote                 *string `json:"waiveBeneficiaryCostSharingNote" db:"waive_beneficiary_cost_sharing_note"`
 
 	// Page 5
-	NonClaimsPayments                               []nonclaimbasedpaymenttype.NonClaimsBasedPaymentType `json:"nonClaimsPayments" db:"non_claims_payments"`
-	NonClaimsPaymentOtherDescription                *string                                              `json:"nonClaimsPaymentOtherDescription" db:"non_claims_payment_other_description"`
-	PaymentCalculationOwner                         *string                                              `json:"paymentCalculationOwner" db:"payment_calculation_owner"`
-	NumberPaymentsPerPayCycle                       *string                                              `json:"numberPaymentsPerPayCycle" db:"number_payments_per_pay_cycle"`
-	NumberPaymentsPerPayCycleNotes                  *string                                              `json:"numberPaymentsPerPayCycleNotes" db:"number_payments_per_pay_cycle_notes"`
-	SharedSystemsInvolvedAdditionalClaimPayment     *string                                              `json:"sharedSystemsInvolvedAdditionalClaimPayment" db:"shared_systems_involved_additional_claim_payment"`
-	SharedSystemsInvolvedAdditionalClaimPaymentNote *string                                              `json:"sharedSystemsInvolvedAdditionalClaimPaymentNote" db:"shared_systems_involved_additional_claim_payment_note"`
-	PlanningToUseInnovationPaymentContractor        *bool                                                `json:"planningToUseInnovationPaymentContractor" db:"planning_to_use_innovation_payment_contractor"`
-	PlanningToUseInnovationPaymentContractorNote    *string                                              `json:"planningToUseInnovationPaymentContractorNote" db:"planning_to_use_innovation_payment_contractor_note"`
-	FundingCenterDescription                        *string                                              `json:"fundingCenterDescription" db:"funding_center_description"`
+	NonClaimsPayments                               pq.StringArray `json:"nonClaimsPayments" db:"non_claims_payments"`
+	NonClaimsPaymentsOtherDescription               *string        `json:"nonClaimsPaymentOtherDescription" db:"non_claims_payments_other_description"`
+	PaymentCalculationOwner                         *string        `json:"paymentCalculationOwner" db:"payment_calculation_owner"`
+	NumberPaymentsPerPayCycle                       *string        `json:"numberPaymentsPerPayCycle" db:"number_payments_per_pay_cycle"`
+	NumberPaymentsPerPayCycleNotes                  *string        `json:"numberPaymentsPerPayCycleNotes" db:"number_payments_per_pay_cycle_notes"`
+	SharedSystemsInvolvedAdditionalClaimPayment     *bool          `json:"sharedSystemsInvolvedAdditionalClaimPayment" db:"shared_systems_involved_additional_claim_payment"`
+	SharedSystemsInvolvedAdditionalClaimPaymentNote *string        `json:"sharedSystemsInvolvedAdditionalClaimPaymentNote" db:"shared_systems_involved_additional_claim_payment_note"`
+	PlanningToUseInnovationPaymentContractor        *bool          `json:"planningToUseInnovationPaymentContractor" db:"planning_to_use_innovation_payment_contractor"`
+	PlanningToUseInnovationPaymentContractorNote    *string        `json:"planningToUseInnovationPaymentContractorNote" db:"planning_to_use_innovation_payment_contractor_note"`
+	FundingCenterDescription                        *string        `json:"fundingCenterDescription" db:"funding_center_description"`
 
 	// Page 6
 	ExpectedCalculationComplexityLevel                       complexitycalculationleveltype.ComplexityCalculationLevelType   `json:"expectedCalculationComplexityLevel" db:"expected_calculation_complexity_level"`
@@ -122,4 +119,15 @@ func (p PlanPayments) GetCreatedBy() string {
 // GetModifiedBy provides the ModifiedBy field
 func (p PlanPayments) GetModifiedBy() *string {
 	return p.ModifiedBy
+}
+
+// CalcStatus calculates the status of the Plan Payments and sets the Status field
+func (p PlanPayments) CalcStatus() error {
+	status, err := GenericallyCalculateStatus(p)
+	if err != nil {
+		return err
+	}
+
+	p.Status = status
+	return nil
 }

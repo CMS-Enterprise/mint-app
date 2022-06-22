@@ -434,6 +434,10 @@ func (r *planPaymentsResolver) PayRecipients(ctx context.Context, obj *models.Pl
 	panic(fmt.Errorf("not implemented"))
 }
 
+func (r *planPaymentsResolver) PayRecipientNote(ctx context.Context, obj *models.PlanPayments) (string, error) {
+	panic(fmt.Errorf("not implemented"))
+}
+
 func (r *planPaymentsResolver) PayType(ctx context.Context, obj *models.PlanPayments) (model.PayType, error) {
 	panic(fmt.Errorf("not implemented"))
 }
@@ -443,6 +447,14 @@ func (r *planPaymentsResolver) PayClaims(ctx context.Context, obj *models.PlanPa
 }
 
 func (r *planPaymentsResolver) NonClaimsPayments(ctx context.Context, obj *models.PlanPayments) ([]model.NonClaimsBasedPayType, error) {
+	panic(fmt.Errorf("not implemented"))
+}
+
+func (r *planPaymentsResolver) NonClaimsPaymentOtherDescription(ctx context.Context, obj *models.PlanPayments) (string, error) {
+	panic(fmt.Errorf("not implemented"))
+}
+
+func (r *planPaymentsResolver) SharedSystemsInvolvedAdditionalClaimPayment(ctx context.Context, obj *models.PlanPayments) (string, error) {
 	panic(fmt.Errorf("not implemented"))
 }
 

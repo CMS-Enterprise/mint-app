@@ -1,6 +1,9 @@
 package main
 
 import (
+	"github.com/cmsgov/mint-app/pkg/models/anticipatedpaymentfrequencytype"
+	"github.com/cmsgov/mint-app/pkg/models/complexitycalculationleveltype"
+	"github.com/cmsgov/mint-app/pkg/models/paytype"
 	"github.com/google/uuid"
 
 	"time"
@@ -240,6 +243,8 @@ func main() {
 
 		makePlanDocument(logger, store, &s3Client, models.StringPointer("FAKE"), inputDocument, planDocumentInput.URL, func(d *models.PlanDocument) {})
 	*/
+
+	makePlanPayments(pmGreatPlan.ID, logger, store, processPlanPayments)
 }
 
 func makeModelPlan(modelName string, logger *zap.Logger, store *storage.Store, callbacks ...func(*models.ModelPlan)) *models.ModelPlan {
@@ -587,4 +592,100 @@ func processPlanParticipantsAndProviders(pp *models.PlanParticipantsAndProviders
 	pp.ProviderOverlapHierarchy = models.StringPointer("When overlap occurs, this model will be a secondary model")
 	pp.ProviderOverlapNote = models.StringPointer("Extenuating circumstances can allow this model to be the dominate model")
 
+}
+
+func makePlanPayments(modelPlanID uuid.UUID, logger *zap.Logger, store *storage.Store, callbacks ...func(payments *models.PlanPayments)) *models.PlanPayments {
+	planPayments := models.PlanPayments{
+		ModelPlanID: modelPlanID,
+		CreatedBy:   "ABCD",
+		ModifiedBy:  models.StringPointer("ABCD"),
+	}
+
+	for _, cb := range callbacks {
+		cb(&planPayments)
+	}
+
+	databaseEntry, _ := store.PlanPaymentsCreate(logger, &planPayments)
+	return databaseEntry
+}
+
+func processPlanPayments(pp *models.PlanPayments) {
+	pp.ID = uuid.MustParse("a18d2f8c-e5cb-4c5d-b21c-3554dbec9c4d")
+
+	// Page 1
+	pp.FundingSource = []string{model.FundingSourcePatientProtectionAffordableCareAct.String()}
+	pp.FundingSourceTrustFundDescription = models.StringPointer("Funding source trust fund description here")
+	pp.FundingSourceOtherDescription = models.StringPointer("Funding source other description here")
+	pp.FundingSourceNote = models.StringPointer("Funding source note here")
+	pp.FundingSourceR = []string{model.FundingSourceOther.String()}
+	pp.FundingSourceRTrustFundDescription = models.StringPointer("Funding source r trust fund description here")
+	pp.FundingSourceROtherDescription = models.StringPointer("Funding source r other description here")
+	pp.FundingSourceRNote = models.StringPointer("Funding source r note here")
+	pp.PayRecipients = []string{model.PayRecipientParticipants.String()}
+	pp.PayRecipientOtherSpecification = models.StringPointer("Pay recipient other specification here")
+	pp.PayRecipientsNote = models.StringPointer("Pay recipient note here")
+	pp.PayType = paytype.ClaimsBasedPayments
+	pp.PayTypeNote = models.StringPointer("Pay type note here")
+
+	// Page 2
+	pp.PayClaims = []string{model.ClaimsBasedPayTypeAdjustmentsToFfsPayments.String()}
+	pp.PayClaimsOtherDescription = models.StringPointer("Pay claims other description here")
+	pp.ShouldAnyProvidersExcludedFFSSystems = models.BoolPointer(true)
+	pp.ShouldAnyProviderExcludedFFSSystemsNote = models.StringPointer("Should any provider excluded FFS systems note here")
+	pp.ChangesMedicarePhysicianFeeSchedule = models.BoolPointer(true)
+	pp.ChangesMedicarePhysicianFeeScheduleNote = models.StringPointer("Changes medicare physician fee schedule note here")
+	pp.AffectsMedicareSecondaryPayerClaims = models.BoolPointer(true)
+	pp.AffectsMedicareSecondaryPayerClaimsExplanation = models.StringPointer("Affects medicare secondary payer claims explanation here")
+	pp.AffectsMedicareSecondaryPayerClaimsNote = models.StringPointer("Affects medicare secondary payer claims note here")
+	pp.PayModelDifferentiation = models.StringPointer("Pay model differentiation here")
+
+	// Page 3
+	pp.CreatingDependenciesBetweenServices = models.BoolPointer(true)
+	pp.CreatingDependenciesBetweenServicesNote = models.StringPointer("Creating dependencies between services note here")
+	pp.NeedsClaimsDataCollection = models.BoolPointer(true)
+	pp.NeedsClaimsDataCollectionNote = models.StringPointer("Needs claims data collection note here")
+	pp.ProvidingThirdPartyFile = models.BoolPointer(true)
+	pp.IsContractorAwareTestDataRequirements = models.BoolPointer(true)
+
+	// Page 4
+	pp.BeneficiaryCostSharingLevelAndHandling = models.StringPointer("Beneficiary cost sharing level and handling here")
+	pp.WaiveBeneficiaryCostSharingForAnyServices = models.BoolPointer(true)
+	pp.WaiveBeneficiaryCostSharingServiceSpecification = models.StringPointer("Waive beneficiary cost sharing service specification")
+	pp.WaiverOnlyAppliesPartOfPayment = models.BoolPointer(true)
+	pp.WaiveBeneficiaryCostSharingNote = models.StringPointer("Waive beneficiary cost sharing note here")
+
+	// Page 5
+	pp.NonClaimsPayments = []string{model.NonClaimsBasedPayTypeAdvancedPayment.String()}
+	pp.NonClaimsPaymentsOtherDescription = models.StringPointer("Non claims payment other description here")
+	pp.PaymentCalculationOwner = models.StringPointer("Payment calculation owner here")
+	pp.NumberPaymentsPerPayCycle = models.StringPointer("30")
+	pp.NumberPaymentsPerPayCycleNotes = models.StringPointer("Number payments per pay cycle notes here")
+	pp.SharedSystemsInvolvedAdditionalClaimPayment = models.BoolPointer(true)
+	pp.SharedSystemsInvolvedAdditionalClaimPaymentNote = models.StringPointer("Shared systems involved additional claim payment note here")
+	pp.PlanningToUseInnovationPaymentContractor = models.BoolPointer(true)
+	pp.PlanningToUseInnovationPaymentContractorNote = models.StringPointer("Planning to use innovation payment contractor note here")
+	pp.FundingCenterDescription = models.StringPointer("Funding center description here")
+
+	// Page 6
+	pp.ExpectedCalculationComplexityLevel = complexitycalculationleveltype.High
+	pp.ExpectedCalculationComplexityLevelNote = models.StringPointer("Expected calculation complexity level note here")
+	pp.CanParticipantsSelectBetweenPaymentMechanisms = models.BoolPointer(true)
+	pp.CanParticipantsSelectBetweenPaymentMechanismsDescription = models.StringPointer("Can participants select between payment mechanisms description here")
+	pp.CanParticipantsSelectBetweenPaymentMechanismsNote = models.StringPointer("Can participants select between mechanisms note here")
+	pp.AnticipatedPaymentFrequency = anticipatedpaymentfrequencytype.Biannually
+	pp.AnticipatedPaymentFrequencyOtherDescription = models.StringPointer("Anticipated payment frequency other description here")
+	pp.AnticipatedPaymentFrequencyNotes = models.StringPointer("Anticipated payment frequency notes here")
+
+	// Page 7
+	pp.WillRecoverPayments = models.BoolPointer(true)
+	pp.WillRecoverPaymentsNotes = models.StringPointer("Will recover payments notes here")
+	pp.AnticipateReconcilingPaymentsRetrospectively = models.BoolPointer(true)
+	pp.AnticipateReconcilingPaymentsRetrospectivelyNotes = models.StringPointer("Anticipate reconciling payments retrospectively notes here")
+	now := time.Now()
+	pp.PaymentStartDate = &now
+	pp.PaymentStartDateNotes = models.StringPointer("Payment start date notes here")
+
+	pp.Status = models.TaskInProgress
+
+	pp.CalcStatus()
 }
