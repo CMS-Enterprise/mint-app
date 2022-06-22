@@ -120,6 +120,20 @@ func ModelPlanCreate(logger *zap.Logger, modelName string, store *storage.Store,
 		return nil, err
 	}
 
+	itTools := &models.PlanITTools{
+		ModelPlanID: createdPlan.ID,
+		CreatedBy:   principalInfo.EuaUserID,
+		ModifiedBy:  &principalInfo.EuaUserID,
+	}
+	err = itTools.CalcStatus()
+	if err != nil {
+		return nil, err
+	}
+	_, err = store.PlanITToolsCreate(logger, itTools)
+	if err != nil {
+		return nil, err
+	}
+
 	return createdPlan, err
 }
 
