@@ -225,18 +225,12 @@ export const ProviderOptions = () => {
                   className="margin-y-4 margin-bottom-8"
                 >
                   <Label htmlFor="participants-and-providers-additional-frequency">
-                    {t('assumeRisk')}
+                    {t('frequency')}
                   </Label>
                   <FieldErrorMsg>
                     {flatErrors.providerAdditionFrequency}
                   </FieldErrorMsg>
 
-                  <Label
-                    htmlFor="participants-and-providers-additional-frequency"
-                    className="text-normal"
-                  >
-                    {t('riskType')}
-                  </Label>
                   <FieldErrorMsg>
                     {flatErrors.providerAdditionFrequency}
                   </FieldErrorMsg>

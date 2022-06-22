@@ -102,14 +102,7 @@ exports[`Model Plan ProviderOptions matches snapshot 1`] = `
         data-testid="label"
         for="participants-and-providers-additional-frequency"
       >
-        Will the participants assume risk?
-      </label>
-      <label
-        class="usa-label text-normal"
-        data-testid="label"
-        for="participants-and-providers-additional-frequency"
-      >
-        What type of risk will the participant assume?
+        How frequently are providers added?
       </label>
       <fieldset
         class="usa-fieldset"
