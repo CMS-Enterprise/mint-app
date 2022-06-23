@@ -913,8 +913,7 @@ type PlanOpsEvalAndLearning {
     stakeholders: [StakeholdersType!]!
     stakeholdersOther: String
     stakeholdersNote: String
-    helpdeskUse: [HelpdeskUseType!]!
-    helpdeskUseOther: String
+    helpdeskUse: Boolean
     helpdeskUseNote: String
     contractorSupport: [ContractorSupportType!]!
     contractorSupportOther: String
@@ -923,9 +922,6 @@ type PlanOpsEvalAndLearning {
     iddocSupport: Boolean
     iddocSupportNote: String
     #Page 2
-    iddocOperations: IddocOperationsType
-    iddocOperationsOther: String
-    iddocOperationsNote: String
     technicalContactsIdentified: Boolean
     technicalContactsIdentifiedDetail: String
     technicalContactsIdentifiedNote: String
@@ -1037,8 +1033,7 @@ input PlanOpsEvalAndLearningChanges @goModel(model: "map[string]interface{}") {
     stakeholders: [StakeholdersType!]
     stakeholdersOther: String
     stakeholdersNote: String
-    helpdeskUse: [HelpdeskUseType!]
-    helpdeskUseOther: String
+    helpdeskUse: Boolean
     helpdeskUseNote: String
     contractorSupport: [ContractorSupportType!]
     contractorSupportOther: String
@@ -1047,9 +1042,6 @@ input PlanOpsEvalAndLearningChanges @goModel(model: "map[string]interface{}") {
     iddocSupport: Boolean
     iddocSupportNote: String
     #Page 2
-    iddocOperations: IddocOperationsType
-    iddocOperationsOther: String
-    iddocOperationsNote: String
     technicalContactsIdentified: Boolean
     technicalContactsIdentifiedDetail: String
     technicalContactsIdentifiedNote: String
@@ -1631,12 +1623,6 @@ enum StakeholdersType {
     OTHER
 }
 
-enum HelpdeskUseType {
-    CBOSC
-    CONTRACTOR
-    OTHER
-    NO
-}
 
 enum ContractorSupportType {
     ONE
@@ -1714,12 +1700,6 @@ enum ModelLearningSystemType {
     NO_LEARNING_SYSTEM
 }
 
-enum IddocOperationsType {
-    ACO_OS
-    ACO_UI
-    INNOVATION
-    OTHER
-}
 
 enum DataFullTimeOrIncrementalType {
     FULL_TIME

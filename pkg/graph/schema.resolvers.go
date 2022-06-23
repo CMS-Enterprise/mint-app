@@ -466,11 +466,6 @@ func (r *planOpsEvalAndLearningResolver) Stakeholders(ctx context.Context, obj *
 	return stakeholdersTypes, nil
 }
 
-func (r *planOpsEvalAndLearningResolver) HelpdeskUse(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]model.HelpdeskUseType, error) {
-	helpdeskUseTypes := models.ConvertEnums[model.HelpdeskUseType](obj.HelpdeskUse)
-	return helpdeskUseTypes, nil
-}
-
 func (r *planOpsEvalAndLearningResolver) ContractorSupport(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]model.ContractorSupportType, error) {
 	contractorSupportTypes := models.ConvertEnums[model.ContractorSupportType](obj.ContractorSupport)
 	return contractorSupportTypes, nil

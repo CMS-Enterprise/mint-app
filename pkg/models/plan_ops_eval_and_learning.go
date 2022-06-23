@@ -19,8 +19,7 @@ type PlanOpsEvalAndLearning struct {
 	Stakeholders           pq.StringArray `json:"stakeholders" db:"stakeholders"`
 	StakeholdersOther      *string        `json:"stakeholdersOther" db:"stakeholders_other"`
 	StakeholdersNote       *string        `json:"stakeholdersNote" db:"stakeholders_note"`
-	HelpdeskUse            pq.StringArray `json:"helpdeskUse" db:"helpdesk_use"`
-	HelpdeskUseOther       *string        `json:"helpdeskUseOther" db:"helpdesk_use_other"`
+	HelpdeskUse            *bool          `json:"helpdeskUse" db:"helpdesk_use"`
 	HelpdeskUseNote        *string        `json:"helpdeskUseNote" db:"helpdesk_use_note"`
 	ContractorSupport      pq.StringArray `json:"contractorSupport" db:"contractor_support"`
 	ContractorSupportOther *string        `json:"contractorSupportOther" db:"contractor_support_other"`
@@ -30,17 +29,14 @@ type PlanOpsEvalAndLearning struct {
 	IddocSupportNote       *string        `json:"iddocSupportNote" db:"iddoc_support_note"`
 
 	//Page 2 (optional based on IddocSupport = true)
-	IddocOperations                   *IddocOperationsType `json:"iddocOperations" db:"iddoc_operations"`
-	IddocOperationsOther              *string              `json:"iddocOperationsOther" db:"iddoc_operations_other"`
-	IddocOperationsNote               *string              `json:"iddocOperationsNote" db:"iddoc_operations_note"`
-	TechnicalContactsIdentified       *bool                `json:"technicalContactsIdentified" db:"technical_contacts_identified"`
-	TechnicalContactsIdentifiedDetail *string              `json:"technicalContactsIdentifiedDetail" db:"technical_contacts_identified_detail"`
-	TechnicalContactsIdentifiedNote   *string              `json:"technicalContactsIdentifiedNote" db:"technical_contacts_identified_note"`
-	CaptureParticipantInfo            *bool                `json:"captureParticipantInfo" db:"capture_participant_info"`
-	CaptureParticipantInfoNote        *string              `json:"captureParticipantInfoNote" db:"capture_participant_info_note"`
-	IcdOwner                          *string              `json:"icdOwner" db:"icd_owner"`
-	DraftIcdDueDate                   *time.Time           `json:"draftIcdDueDate" db:"draft_icd_due_date"`
-	IcdNote                           *string              `json:"icdNote" db:"icd_note"`
+	TechnicalContactsIdentified       *bool      `json:"technicalContactsIdentified" db:"technical_contacts_identified"`
+	TechnicalContactsIdentifiedDetail *string    `json:"technicalContactsIdentifiedDetail" db:"technical_contacts_identified_detail"`
+	TechnicalContactsIdentifiedNote   *string    `json:"technicalContactsIdentifiedNote" db:"technical_contacts_identified_note"`
+	CaptureParticipantInfo            *bool      `json:"captureParticipantInfo" db:"capture_participant_info"`
+	CaptureParticipantInfoNote        *string    `json:"captureParticipantInfoNote" db:"capture_participant_info_note"`
+	IcdOwner                          *string    `json:"icdOwner" db:"icd_owner"`
+	DraftIcdDueDate                   *time.Time `json:"draftIcdDueDate" db:"draft_icd_due_date"`
+	IcdNote                           *string    `json:"icdNote" db:"icd_note"`
 
 	//Page 3 (optional based on IddocSupport = true)
 	UatNeeds                  *string        `json:"uatNeeds" db:"uat_needs"`
@@ -134,17 +130,6 @@ type PlanOpsEvalAndLearning struct {
 	ModifiedDts *time.Time `json:"modifiedDts" db:"modified_dts"`
 	Status      TaskStatus `json:"status" db:"status"`
 }
-
-//IddocOperationsType represents the possible IDDOCOPERATIONSTYPE options
-type IddocOperationsType string
-
-//These constants represent the choices for IDDOCOPERATIONSTYPE
-const (
-	IDDACOOS      IddocOperationsType = "ACO_OS"
-	IDDACOUI      IddocOperationsType = "ACO_UI"
-	IDDINNOVATION IddocOperationsType = "INNOVATION"
-	IDDOTHER      IddocOperationsType = "OTHER"
-)
 
 //DataStartsType represents the possible DATASTARTSTYPE options
 type DataStartsType string
