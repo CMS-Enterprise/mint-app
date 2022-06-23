@@ -77,6 +77,7 @@ const charactersticMock = [
     result: {
       data: {
         modelPlan: {
+          id: '1029',
           modelName: 'My excellent plan that I just initiated',
           generalCharacteristics: charactersticMockData
         }

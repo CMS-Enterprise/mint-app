@@ -3,6 +3,7 @@ import { gql } from '@apollo/client';
 export default gql`
   query GetModelPlanCharacteristics($id: UUID!) {
     modelPlan(id: $id) {
+      id
       modelName
       generalCharacteristics {
         id

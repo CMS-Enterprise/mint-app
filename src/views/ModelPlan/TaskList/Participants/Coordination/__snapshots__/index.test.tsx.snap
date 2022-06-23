@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Model Plan Characteristics matches snapshot 1`] = `
+exports[`Model Plan Coordination matches snapshot 1`] = `
 <DocumentFragment>
   <nav
     aria-label="Breadcrumbs"
@@ -37,7 +37,7 @@ exports[`Model Plan Characteristics matches snapshot 1`] = `
         aria-current="page"
         class="usa-breadcrumb__list-item usa-current"
       >
-        General characteristics
+        Participants and providers
       </li>
     </ol>
   </nav>
@@ -46,7 +46,7 @@ exports[`Model Plan Characteristics matches snapshot 1`] = `
     class="mint-h1 margin-top-4 margin-bottom-2"
     tabindex="-1"
   >
-    General characteristics
+    Participants and Providers
   </h1>
   <p
     class="margin-top-0 margin-bottom-1 font-body-lg"
@@ -91,23 +91,23 @@ exports[`Model Plan Characteristics matches snapshot 1`] = `
   <form
     action="#"
     class="tablet:grid-col-6 margin-top-6"
-    data-testid="plan-characteristics-key-characteristics-form"
+    data-testid="participants-and-providers-coordination-form"
   >
     <div
       class="usa-form-group margin-y-4 margin-bottom-8"
-      data-scroll="alternativePaymentModel"
+      data-scroll="coordinateWork"
     >
       <label
         class="usa-label"
         data-testid="label"
-        for="plan-characteristics-alternative-payment"
+        for="participants-and-providers-coordniate-work"
       >
-        Do you think the model could be Alternative Payment Model (APM)?
+        Will the participants coordinate the work of others?
       </label>
       <p
-        class="text-base margin-y-1"
+        class="text-base margin-0 line-height-body-3"
       >
-        For the Quality Payment Program (QPP)
+        (e.g. conveners)
       </p>
       <fieldset
         class="usa-fieldset"
@@ -119,14 +119,14 @@ exports[`Model Plan Characteristics matches snapshot 1`] = `
         >
           <input
             class="usa-radio__input"
-            id="plan-characteristics-alternative-payment"
-            name="alternativePaymentModel"
+            id="participants-and-providers-coordniate-work"
+            name="coordinateWork"
             type="radio"
             value="TRUE"
           />
           <label
             class="usa-radio__label"
-            for="plan-characteristics-alternative-payment"
+            for="participants-and-providers-coordniate-work"
           >
             Yes
           </label>
@@ -137,14 +137,14 @@ exports[`Model Plan Characteristics matches snapshot 1`] = `
         >
           <input
             class="usa-radio__input"
-            id="plan-characteristics-alternative-payment-no"
-            name="alternativePaymentModel"
+            id="participants-and-providers-coordniate-work-no"
+            name="coordinateWork"
             type="radio"
             value="FALSE"
           />
           <label
             class="usa-radio__label"
-            for="plan-characteristics-alternative-payment-no"
+            for="participants-and-providers-coordniate-work-no"
           >
             No
           </label>
@@ -181,122 +181,200 @@ exports[`Model Plan Characteristics matches snapshot 1`] = `
       </div>
     </div>
     <div
-      class="usa-form-group margin-top-4"
-      data-scroll="keyCharacteristics"
+      class="usa-form-group margin-y-4 margin-bottom-8"
+      data-scroll="gainsharePayments"
     >
       <label
         class="usa-label"
         data-testid="label"
-        for="plan-characteristics-key-characteristics"
+        for="participants-and-providers-gainshare-payment"
       >
-        What are the model key characteristics? Select all that apply.
+        Will there be gainsharing payments?
       </label>
-      <div
-        class="easi-multiselect maxw-mobile-lg position-relative"
-        id="plan-characteristics-key-characteristics"
+      <fieldset
+        class="usa-fieldset"
+        data-testid="fieldset"
       >
         <div
-          class="easi-multiselect__field"
-          role="listbox"
+          class="usa-radio"
+          data-testid="radio"
         >
-          <div
-            class="usa-select maxw-none padding-0"
+          <input
+            class="usa-radio__input"
+            id="participants-and-providers-gainshare-payment"
+            name="gainsharePayments"
+            type="radio"
+            value="TRUE"
+          />
+          <label
+            class="usa-radio__label"
+            for="participants-and-providers-gainshare-payment"
           >
-            <input
-              class="usa-input padding-1 height-full border-0"
-              placeholder="1 selected"
-              type="search"
-              value=""
-            />
-            <div
-              class="easi-multiselect__controls"
-            >
-              <div
-                class="easi-multiselect__controls-button"
-              >
-                <svg
-                  class="usa-icon usa-icon--size-3"
-                  focusable="false"
-                  height="1em"
-                  role="button"
-                  viewBox="0 0 24 24"
-                  width="1em"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M0 0h24v24H0z"
-                    fill="none"
-                  />
-                  <path
-                    d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-                  />
-                </svg>
-                <div
-                  class="width-1px border-right-1px border-base-lighter height-205 margin-left-1"
-                />
-              </div>
-              <div
-                class="easi-multiselect__controls-button easi-multiselect__controls-close"
-              >
-                <svg
-                  class="usa-icon usa-icon--size-4"
-                  focusable="false"
-                  height="1em"
-                  role="button"
-                  viewBox="0 0 24 24"
-                  width="1em"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M0 0h24v24H0z"
-                    fill="none"
-                  />
-                  <path
-                    d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"
-                  />
-                </svg>
-              </div>
-            </div>
-          </div>
+            Yes
+          </label>
         </div>
         <div
-          class="easi-multiselect__selected-list margin-top-3"
+          class="usa-radio"
+          data-testid="radio"
         >
-          Selected key characteristics
-          <ul
-            class="usa-list--unstyled margin-top-1 display-flex flex-justify-start flex-wrap"
+          <input
+            class="usa-radio__input"
+            id="participants-and-providers-gainshare-payment-no"
+            name="gainsharePayments"
+            type="radio"
+            value="FALSE"
+          />
+          <label
+            class="usa-radio__label"
+            for="participants-and-providers-gainshare-payment-no"
           >
-            <li
-              class="margin-right-05 margin-y-05"
-            >
-              <span
-                class="usa-tag bg-primary-lighter text-ink text-no-uppercase padding-y-1 padding-x-105 display-flex flex-align-center"
-                data-testid="tag"
-                id="easi-multiselect__tag-OTHER"
-              >
-                Other
-                <svg
-                  class="usa-icon margin-left-1"
-                  focusable="false"
-                  height="1em"
-                  role="img"
-                  viewBox="0 0 24 24"
-                  width="1em"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M0 0h24v24H0z"
-                    fill="none"
-                  />
-                  <path
-                    d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-                  />
-                </svg>
-              </span>
-            </li>
-          </ul>
+            No
+          </label>
         </div>
+      </fieldset>
+      <div
+        class="margin-top-4 margin-bottom-8"
+      >
+        <button
+          class="usa-button usa-button usa-button--unstyled"
+          data-testid="add-note-toggle"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="usa-icon margin-right-1"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M0 0h24v24H0z"
+              fill="none"
+            />
+            <path
+              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+            />
+          </svg>
+          Add an additional note
+        </button>
       </div>
+    </div>
+    <legend
+      class="usa-label"
+    >
+      Will you collect participant IDs? If so, select which types.
+    </legend>
+    <p
+      class="text-base margin-0 line-height-body-3"
+    >
+      Note: If this will be a MIPS or Advanced APM, you need to collect provider TIN-NPIs for participants to benefit from QPP. In addition, CPI vetting needs to be preformed.
+    </p>
+    <div
+      class="mint-checkbox usa-checkbox"
+    >
+      <input
+        class="usa-checkbox__input"
+        id="participants-and-providers-participant-id-CCNS"
+        name="participantsIds"
+        type="checkbox"
+        value="CCNS"
+      />
+      <label
+        class="usa-checkbox__label"
+        for="participants-and-providers-participant-id-CCNS"
+      >
+        CCNs
+      </label>
+    </div>
+    <div
+      class="mint-checkbox usa-checkbox"
+    >
+      <input
+        class="usa-checkbox__input"
+        id="participants-and-providers-participant-id-NPIS"
+        name="participantsIds"
+        type="checkbox"
+        value="NPIS"
+      />
+      <label
+        class="usa-checkbox__label"
+        for="participants-and-providers-participant-id-NPIS"
+      >
+        NPIs
+      </label>
+    </div>
+    <div
+      class="mint-checkbox usa-checkbox"
+    >
+      <input
+        class="usa-checkbox__input"
+        id="participants-and-providers-participant-id-TINS"
+        name="participantsIds"
+        type="checkbox"
+        value="TINS"
+      />
+      <label
+        class="usa-checkbox__label"
+        for="participants-and-providers-participant-id-TINS"
+      >
+        TINs
+      </label>
+    </div>
+    <div
+      class="mint-checkbox usa-checkbox"
+    >
+      <input
+        class="usa-checkbox__input"
+        id="participants-and-providers-participant-id-OTHER"
+        name="participantsIds"
+        type="checkbox"
+        value="OTHER"
+      />
+      <label
+        class="usa-checkbox__label"
+        for="participants-and-providers-participant-id-OTHER"
+      >
+        Other
+      </label>
+    </div>
+    <div
+      class="margin-left-4"
+    >
+      <label
+        class="usa-label text-normal margin-top-1"
+        data-testid="label"
+        for="participants-and-providers-participant-id-other"
+      >
+        Please specify
+      </label>
+      <input
+        class="usa-input maxw-none"
+        data-testid="participants-and-providers-participant-id-other"
+        id="participants-and-providers-participant-id-other"
+        maxlength="50"
+        name="participantsIdsOther"
+        value="Candy Kingdom Operations Number"
+      />
+    </div>
+    <div
+      class="mint-checkbox usa-checkbox"
+    >
+      <input
+        class="usa-checkbox__input"
+        id="participants-and-providers-participant-id-NO_IDENTIFIERS"
+        name="participantsIds"
+        type="checkbox"
+        value="NO_IDENTIFIERS"
+      />
+      <label
+        class="usa-checkbox__label"
+        for="participants-and-providers-participant-id-NO_IDENTIFIERS"
+      >
+        No, we will not collect provider identifiers
+      </label>
     </div>
     <div
       class="margin-top-4 margin-bottom-8"
@@ -326,31 +404,6 @@ exports[`Model Plan Characteristics matches snapshot 1`] = `
         </svg>
         Add an additional note
       </button>
-    </div>
-    <div
-      class="usa-form-group margin-top-neg-4"
-      data-scroll="keyCharacteristicsOther"
-    >
-      <label
-        class="usa-label"
-        data-testid="label"
-        for="plan-characteristics-key-other"
-      >
-        Key characteristic specific questions
-      </label>
-      <p
-        class="text-base margin-y-1 margin-top-3"
-      >
-        Please describe the other key characteristics
-      </p>
-      <input
-        class="usa-input"
-        data-testid="plan-characteristics-key-other"
-        id="plan-characteristics-key-other"
-        maxlength="50"
-        name="keyCharacteristicsOther"
-        value="Key other note"
-      />
     </div>
     <div
       class="margin-top-6 margin-bottom-3"
@@ -402,7 +455,7 @@ exports[`Model Plan Characteristics matches snapshot 1`] = `
     <span
       class="mint-page-number__page-num"
     >
-      Page 2 of 5
+      Page 4 of 5
     </span>
   </div>
 </DocumentFragment>
