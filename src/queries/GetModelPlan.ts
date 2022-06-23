@@ -74,6 +74,14 @@ export default gql`
         modifiedDts
         status
       }
+      opsEvalAndLearning {
+        id
+        createdBy
+        createdDts
+        modifiedBy
+        modifiedDts
+        status
+      }
     }
   }
 `;

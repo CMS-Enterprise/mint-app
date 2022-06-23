@@ -5,7 +5,9 @@ const operationsEvaluationAndLearning = {
   anotherAgencyOptions: {
     withState: 'Yes, we will partner with states',
     getIdeas: 'Yes, we will get ideas from another agency',
-    getSupport: 'Yes, we will get support from another agenct through IAA'
+    getSupport: 'Yes, we will get support from another agenct through IAA',
+    no: 'No',
+    other: 'Other'
   },
   creatingDependencies:
     'Are you anticipating creating dependencies between services?',
@@ -18,19 +20,23 @@ const operationsEvaluationAndLearning = {
     participants: 'Participants',
     professionalOrganizations: 'Professional organizations',
     providers: 'Providers',
-    states: 'States'
+    states: 'States',
+    other: 'Other'
   },
   helpDesk: 'Do you plan to use a helpdesk?',
   helpDeskOptions: {
     cbosc: 'Through OBOSC',
-    contractor: 'Through a contractor'
+    contractor: 'Through a contractor',
+    other: 'Other',
+    no: 'No'
   },
   whatContractors: 'What contractors will support your model?',
   whatContractorsOptions: {
     one: 'One contractor to support implementation',
     separate:
       'May have separate contractors for different implementation functions',
-    noContractor: 'Do not plan to use an implemenation contractor'
+    noContractor: 'Do not plan to use an implemenation contractor',
+    other: 'Other'
   },
   paymentContractor: 'Is a payment contractor required?',
   paymentContractorInfo:

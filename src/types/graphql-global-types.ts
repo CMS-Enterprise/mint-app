@@ -7,6 +7,14 @@
 // START Enums and Input Objects
 //==============================================================
 
+export enum AgencyOrStateHelpType {
+  NO = "NO",
+  OTHER = "OTHER",
+  YES_AGENCY_IAA = "YES_AGENCY_IAA",
+  YES_AGENCY_IDEAS = "YES_AGENCY_IDEAS",
+  YES_STATE = "YES_STATE",
+}
+
 export enum AgreementType {
   COOPERATIVE = "COOPERATIVE",
   OTHER = "OTHER",
@@ -26,6 +34,12 @@ export enum AuthorityAllowance {
   SSA_PART_B = "SSA_PART_B",
 }
 
+export enum BenchmarkForPerformanceType {
+  NO = "NO",
+  YES_NO_RECONCILE = "YES_NO_RECONCILE",
+  YES_RECONCILE = "YES_RECONCILE",
+}
+
 export enum CMMIGroup {
   PATIENT_CARE_MODELS_GROUP = "PATIENT_CARE_MODELS_GROUP",
   POLICY_AND_PROGRAMS_GROUP = "POLICY_AND_PROGRAMS_GROUP",
@@ -43,11 +57,78 @@ export enum CMSCenter {
   OTHER = "OTHER",
 }
 
+export enum CcmInvolvmentType {
+  NO = "NO",
+  OTHER = "OTHER",
+  YES_EVALUATION = "YES_EVALUATION",
+  YES__IMPLEMENTATION = "YES__IMPLEMENTATION",
+}
+
 export enum ConfidenceType {
   COMPLETELY = "COMPLETELY",
   FAIRLY = "FAIRLY",
   NOT_AT_ALL = "NOT_AT_ALL",
   SLIGHTLY = "SLIGHTLY",
+}
+
+export enum ContractorSupportType {
+  MULTIPLE = "MULTIPLE",
+  NONE = "NONE",
+  ONE = "ONE",
+  OTHER = "OTHER",
+}
+
+export enum DataForMonitoringType {
+  CLINICAL_DATA = "CLINICAL_DATA",
+  ENCOUNTER_DATA = "ENCOUNTER_DATA",
+  MEDICAID_CLAIMS = "MEDICAID_CLAIMS",
+  MEDICARE_CLAIMS = "MEDICARE_CLAIMS",
+  NON_CLINICAL_DATA = "NON_CLINICAL_DATA",
+  NON_MEDICAL_DATA = "NON_MEDICAL_DATA",
+  NOT_PLANNING_TO_COLLECT_DATA = "NOT_PLANNING_TO_COLLECT_DATA",
+  NO_PAY_CLAIMS = "NO_PAY_CLAIMS",
+  OTHER = "OTHER",
+  QUALITY_CLAIMS_BASED_MEASURES = "QUALITY_CLAIMS_BASED_MEASURES",
+  QUALITY_REPORTED_MEASURES = "QUALITY_REPORTED_MEASURES",
+  SITE_VISITS = "SITE_VISITS",
+}
+
+export enum DataFrequencyType {
+  ANNUALLY = "ANNUALLY",
+  BIANNUALLY = "BIANNUALLY",
+  DAILY = "DAILY",
+  MONTHLY = "MONTHLY",
+  NOT_PLANNING_TO_DO_THIS = "NOT_PLANNING_TO_DO_THIS",
+  OTHER = "OTHER",
+  QUARTERLY = "QUARTERLY",
+  SEMI_MONTHLY = "SEMI_MONTHLY",
+  WEEKLY = "WEEKLY",
+}
+
+export enum DataFullTimeOrIncrementalType {
+  FULL_TIME = "FULL_TIME",
+  INCREMENTAL = "INCREMENTAL",
+}
+
+export enum DataStartsType {
+  AT_SOME_OTHER_POINT_IN_TIME = "AT_SOME_OTHER_POINT_IN_TIME",
+  DURING_APPLICATION_PERIOD = "DURING_APPLICATION_PERIOD",
+  EARLY_IN_THE_FIRST_PERFORMANCE_YEAR = "EARLY_IN_THE_FIRST_PERFORMANCE_YEAR",
+  IN_THE_SUBSEQUENT_PERFORMANCE_YEAR = "IN_THE_SUBSEQUENT_PERFORMANCE_YEAR",
+  LATER_IN_THE_FIRST_PERFORMANCE_YEAR = "LATER_IN_THE_FIRST_PERFORMANCE_YEAR",
+  NOT_PLANNING_TO_DO_THIS = "NOT_PLANNING_TO_DO_THIS",
+  OTHER = "OTHER",
+  SHORTLY_BEFORE_THE_START_DATE = "SHORTLY_BEFORE_THE_START_DATE",
+}
+
+export enum DataToSendParticipantsType {
+  BASELINE_HISTORICAL_DATA = "BASELINE_HISTORICAL_DATA",
+  BENEFICIARY_LEVEL_DATA = "BENEFICIARY_LEVEL_DATA",
+  CLAIMS_LEVEL_DATA = "CLAIMS_LEVEL_DATA",
+  NOT_PLANNING_TO_SEND_DATA = "NOT_PLANNING_TO_SEND_DATA",
+  OTHER_MIPS_DATA = "OTHER_MIPS_DATA",
+  PARTICIPANT_LEVEL_DATA = "PARTICIPANT_LEVEL_DATA",
+  PROVIDER_LEVEL_DATA = "PROVIDER_LEVEL_DATA",
 }
 
 export enum DiscussionStatus {
@@ -62,6 +143,14 @@ export enum DocumentType {
   MARKET_RESEARCH = "MARKET_RESEARCH",
   OTHER = "OTHER",
   POLICY_PAPER = "POLICY_PAPER",
+}
+
+export enum EvaluationApproachType {
+  COMPARISON_MATCH = "COMPARISON_MATCH",
+  CONTROL_INTERVENTION = "CONTROL_INTERVENTION",
+  INTERRUPTED_TIME = "INTERRUPTED_TIME",
+  NON_MEDICARE_DATA = "NON_MEDICARE_DATA",
+  OTHER = "OTHER",
 }
 
 export enum FrequencyType {
@@ -84,6 +173,20 @@ export enum GeographyType {
   OTHER = "OTHER",
   REGION = "REGION",
   STATE = "STATE",
+}
+
+export enum HelpdeskUseType {
+  CBOSC = "CBOSC",
+  CONTRACTOR = "CONTRACTOR",
+  NO = "NO",
+  OTHER = "OTHER",
+}
+
+export enum IddocOperationsType {
+  ACO_OS = "ACO_OS",
+  ACO_UI = "ACO_UI",
+  INNOVATION = "INNOVATION",
+  OTHER = "OTHER",
 }
 
 export enum KeyCharacteristic {
@@ -110,6 +213,15 @@ export enum ModelCategory {
   UNKNOWN = "UNKNOWN",
 }
 
+export enum ModelLearningSystemType {
+  EDUCATE_BENEFICIARIES = "EDUCATE_BENEFICIARIES",
+  IT_PLATFORM_CONNECT = "IT_PLATFORM_CONNECT",
+  LEARNING_CONTRACTOR = "LEARNING_CONTRACTOR",
+  NO_LEARNING_SYSTEM = "NO_LEARNING_SYSTEM",
+  OTHER = "OTHER",
+  PARTICIPANT_COLLABORATION = "PARTICIPANT_COLLABORATION",
+}
+
 export enum ModelStatus {
   ANNOUNCED = "ANNOUNCED",
   CLEARED = "CLEARED",
@@ -126,6 +238,14 @@ export enum ModelType {
   MANDATORY = "MANDATORY",
   TBD = "TBD",
   VOLUNTARY = "VOLUNTARY",
+}
+
+export enum MonitoringFileType {
+  BENEFICIARY = "BENEFICIARY",
+  OTHER = "OTHER",
+  PART_A = "PART_A",
+  PART_B = "PART_B",
+  PROVIDER = "PROVIDER",
 }
 
 export enum OverlapType {
@@ -209,6 +329,16 @@ export enum RecruitmentType {
   NOFO = "NOFO",
   OTHER = "OTHER",
   RFA = "RFA",
+}
+
+export enum StakeholdersType {
+  BENEFICIARIES = "BENEFICIARIES",
+  COMMUNITY_ORGANIZATIONS = "COMMUNITY_ORGANIZATIONS",
+  OTHER = "OTHER",
+  PARTICIPANTS = "PARTICIPANTS",
+  PROFESSIONAL_ORGANIZATIONS = "PROFESSIONAL_ORGANIZATIONS",
+  PROVIDERS = "PROVIDERS",
+  STATES = "STATES",
 }
 
 export enum TaskStatus {
@@ -406,6 +536,112 @@ export interface PlanMilestoneChanges {
   highLevelNote?: string | null;
   phasedIn?: boolean | null;
   phasedInNote?: string | null;
+}
+
+/**
+ * PlanOpsEvalAndLearningChanges represents the possible changes you can make to a
+ * ops, eval and learning object when updating it.
+ * Fields explicitly set with NULL will be unset, and omitted fields will be left unchanged.
+ * https: // gqlgen.com/reference/changesets/
+ */
+export interface PlanOpsEvalAndLearningChanges {
+  agencyOrStateHelp?: AgencyOrStateHelpType[] | null;
+  agencyOrStateHelpOther?: string | null;
+  agencyOrStateHelpNote?: string | null;
+  stakeholders?: StakeholdersType[] | null;
+  stakeholdersOther?: string | null;
+  stakeholdersNote?: string | null;
+  helpdeskUse?: HelpdeskUseType[] | null;
+  helpdeskUseOther?: string | null;
+  helpdeskUseNote?: string | null;
+  contractorSupport?: ContractorSupportType[] | null;
+  contractorSupportOther?: string | null;
+  contractorSupportHow?: string | null;
+  contractorSupportNote?: string | null;
+  iddocSupport?: boolean | null;
+  iddocSupportNote?: string | null;
+  iddocOperations?: IddocOperationsType | null;
+  iddocOperationsOther?: string | null;
+  iddocOperationsNote?: string | null;
+  technicalContactsIdentified?: boolean | null;
+  technicalContactsIdentifiedDetail?: string | null;
+  technicalContactsIdentifiedNote?: string | null;
+  captureParticipantInfo?: boolean | null;
+  captureParticipantInfoNote?: string | null;
+  icdOwner?: string | null;
+  draftIcdDueDate?: Time | null;
+  icdNote?: string | null;
+  uatNeeds?: string | null;
+  stcNeeds?: string | null;
+  testingTimelines?: string | null;
+  testingNote?: string | null;
+  dataMonitoringFileTypes?: MonitoringFileType[] | null;
+  dataMonitoringFileOther?: string | null;
+  dataResponseType?: string | null;
+  dataResponseFileFrequency?: string | null;
+  dataFullTimeOrIncremental?: DataFullTimeOrIncrementalType | null;
+  eftSetUp?: boolean | null;
+  unsolicitedAdjustmentsIncluded?: boolean | null;
+  dataFlowDiagramsNeeded?: boolean | null;
+  produceBenefitEnhancementFiles?: boolean | null;
+  fileNamingConventions?: string | null;
+  dataMonitoringNote?: string | null;
+  benchmarkForPerformance?: BenchmarkForPerformanceType | null;
+  benchmarkForPerformanceNote?: string | null;
+  computePerformanceScores?: boolean | null;
+  computePerformanceScoresNote?: string | null;
+  riskAdjustPerformance?: boolean | null;
+  riskAdjustFeedback?: boolean | null;
+  riskAdjustPayments?: boolean | null;
+  riskAdjustOther?: boolean | null;
+  riskAdjustNote?: string | null;
+  appealPerformance?: boolean | null;
+  appealFeedback?: boolean | null;
+  appealPayments?: boolean | null;
+  appealOther?: boolean | null;
+  appealNote?: string | null;
+  evaluationApproaches?: EvaluationApproachType[] | null;
+  evaluationApproachOther?: string | null;
+  evalutaionApproachNote?: string | null;
+  ccmInvolvment?: CcmInvolvmentType[] | null;
+  ccmInvolvmentOther?: string | null;
+  ccmInvolvmentNote?: string | null;
+  dataNeededForMonitoring?: DataForMonitoringType[] | null;
+  dataNeededForMonitoringOther?: string | null;
+  dataNeededForMonitoringNote?: string | null;
+  dataToSendParticicipants?: DataToSendParticipantsType[] | null;
+  dataToSendParticicipantsOther?: string | null;
+  dataToSendParticicipantsNote?: string | null;
+  shareCclfData?: boolean | null;
+  shareCclfDataNote?: string | null;
+  sendFilesBetweenCcw?: boolean | null;
+  sendFilesBetweenCcwNote?: string | null;
+  appToSendFilesToKnown?: boolean | null;
+  appToSendFilesToWhich?: string | null;
+  appToSendFilesToNote?: string | null;
+  useCcwForFileDistribiutionToParticipants?: boolean | null;
+  useCcwForFileDistribiutionToParticipantsNote?: string | null;
+  developNewQualityMeasures?: boolean | null;
+  developNewQualityMeasuresNote?: string | null;
+  qualityPerformanceImpactsPayment?: boolean | null;
+  qualityPerformanceImpactsPaymentNote?: string | null;
+  dataSharingStarts?: DataStartsType | null;
+  dataSharingStartsOther?: string | null;
+  dataSharingFrequency?: DataFrequencyType[] | null;
+  dataSharingFrequencyOther?: string | null;
+  dataSharingStartsNote?: string | null;
+  dataCollectionStarts?: DataStartsType | null;
+  dataCollectionStartsOther?: string | null;
+  dataCollectionFrequency?: DataFrequencyType[] | null;
+  dataCollectionFrequencyOther?: string | null;
+  dataCollectionFrequencyNote?: string | null;
+  qualityReportingStarts?: DataStartsType | null;
+  qualityReportingStartsOther?: string | null;
+  qualityReportingStartsNote?: string | null;
+  modelLearningSystems?: ModelLearningSystemType[] | null;
+  modelLearningSystemsOther?: string | null;
+  modelLearningSystemsNote?: string | null;
+  anticipatedChallenges?: string | null;
 }
 
 /**

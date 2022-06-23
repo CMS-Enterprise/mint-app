@@ -489,6 +489,108 @@ export const translateOverlapType = (type: string) => {
   }
 };
 
+export const translateAgencyOrStateHelpType = (type: string) => {
+  switch (type) {
+    case 'YES_STATE':
+      return i18next.t(
+        'operationsEvaluationAndLearning:anotherAgencyOptions.withState'
+      );
+    case 'YES_AGENCY_IDEAS':
+      return i18next.t(
+        'operationsEvaluationAndLearning:anotherAgencyOptions.getIdeas'
+      );
+    case 'YES_AGENCY_IAA':
+      return i18next.t(
+        'operationsEvaluationAndLearning:anotherAgencyOptions.getSupport'
+      );
+    case 'NO':
+      return i18next.t(
+        'operationsEvaluationAndLearning:anotherAgencyOptions.no'
+      );
+    case 'OTHER':
+      return i18next.t(
+        'operationsEvaluationAndLearning:anotherAgencyOptions.other'
+      );
+    default:
+      return '';
+  }
+};
+
+export const translateStakeholdersType = (type: string) => {
+  switch (type) {
+    case 'BENEFICIARIES':
+      return i18next.t(
+        'operationsEvaluationAndLearning:stakeholdersOptions.beneficiaries'
+      );
+    case 'COMMUNITY_ORGANIZATIONS':
+      return i18next.t(
+        'operationsEvaluationAndLearning:stakeholdersOptions.communityOrganizations'
+      );
+    case 'PARTICIPANTS':
+      return i18next.t(
+        'operationsEvaluationAndLearning:stakeholdersOptions.participants'
+      );
+    case 'PROFESSIONAL_ORGANIZATIONS':
+      return i18next.t(
+        'operationsEvaluationAndLearning:stakeholdersOptions.professionalOrganizations'
+      );
+    case 'PROVIDERS':
+      return i18next.t(
+        'operationsEvaluationAndLearning:stakeholdersOptions.providers'
+      );
+    case 'STATES':
+      return i18next.t(
+        'operationsEvaluationAndLearning:stakeholdersOptions.states'
+      );
+    case 'OTHER':
+      return i18next.t(
+        'operationsEvaluationAndLearning:stakeholdersOptions.other'
+      );
+    default:
+      return '';
+  }
+};
+
+export const translateHelpdeskUseType = (type: string) => {
+  switch (type) {
+    case 'CBOSC':
+      return i18next.t('operationsEvaluationAndLearning:helpDeskOptions.cbosc');
+    case 'CONTRACTOR':
+      return i18next.t(
+        'operationsEvaluationAndLearning:helpDeskOptions.contractor'
+      );
+    case 'OTHER':
+      return i18next.t('operationsEvaluationAndLearning:helpDeskOptions.other');
+    case 'NO':
+      return i18next.t('operationsEvaluationAndLearning:helpDeskOptions.no');
+    default:
+      return '';
+  }
+};
+
+export const translateContractorSupportType = (type: string) => {
+  switch (type) {
+    case 'ONE':
+      return i18next.t(
+        'operationsEvaluationAndLearning:whatContractorsOptions.one'
+      );
+    case 'MULTIPLE':
+      return i18next.t(
+        'operationsEvaluationAndLearning:whatContractorsOptions.separate'
+      );
+    case 'NONE':
+      return i18next.t(
+        'operationsEvaluationAndLearning:whatContractorsOptions.noContractor'
+      );
+    case 'OTHER':
+      return i18next.t(
+        'operationsEvaluationAndLearning:whatContractorsOptions.other'
+      );
+    default:
+      return '';
+  }
+};
+
 /**
  * Translate the document type API enum to a human readable string
  */
