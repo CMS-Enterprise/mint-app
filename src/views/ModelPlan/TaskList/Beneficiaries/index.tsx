@@ -3,7 +3,9 @@ import { Route, Switch } from 'react-router-dom';
 import { Grid, GridContainer } from '@trussworks/react-uswds';
 
 import MainContent from 'components/MainContent';
-import NotFound, { NotFoundPartial } from 'views/NotFound';
+import { NotFoundPartial } from 'views/NotFound';
+
+import BeneficiariesPageOne from './PageOne';
 
 export const Beneficiaries = () => {
   return (
@@ -12,8 +14,9 @@ export const Beneficiaries = () => {
         <Grid desktop={{ col: 12 }}>
           <Switch>
             <Route
-              path="/models/:modelID/task-list/beneficiaries/page-1" // page-* may change pending UX clarifcation
-              render={() => <NotFound />}
+              path="/models/:modelID/task-list/beneficiaries" // page-* may change pending UX clarifcation
+              exact
+              render={() => <BeneficiariesPageOne />}
             />
             <Route path="*" render={() => <NotFoundPartial />} />
           </Switch>
