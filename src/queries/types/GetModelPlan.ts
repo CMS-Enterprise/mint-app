@@ -68,6 +68,7 @@ export interface GetModelPlan_modelPlan_discussions {
 
 export interface GetModelPlan_modelPlan_generalCharacteristics {
   __typename: "PlanGeneralCharacteristics";
+  id: UUID;
   createdBy: string;
   createdDts: Time;
   modifiedBy: string | null;
@@ -77,6 +78,7 @@ export interface GetModelPlan_modelPlan_generalCharacteristics {
 
 export interface GetModelPlan_modelPlan_participantsAndProviders {
   __typename: "PlanParticipantsAndProviders";
+  id: UUID;
   createdBy: string;
   createdDts: Time;
   modifiedBy: string | null;

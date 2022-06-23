@@ -68,6 +68,7 @@ export interface GetModelPlanProvidersAndParticipants_modelPlan_participantsAndP
 
 export interface GetModelPlanProvidersAndParticipants_modelPlan {
   __typename: "ModelPlan";
+  id: UUID;
   modelName: string;
   participantsAndProviders: GetModelPlanProvidersAndParticipants_modelPlan_participantsAndProviders;
 }

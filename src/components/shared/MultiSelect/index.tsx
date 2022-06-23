@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import {
   Checkbox,
   IconClose,
@@ -22,7 +21,6 @@ type OptionsProps = {
 };
 
 const Options = ({ options, selected, optionClick }: OptionsProps) => {
-  const { t } = useTranslation();
   return (
     <ul className="easi-multiselect__options usa-list--unstyled padding-y-05 border-1px border-top-0 maxh-card overflow-scroll position-absolute right-0 left-0 z-top bg-white">
       {options.map(option => {
@@ -64,7 +62,6 @@ export default function MultiSelect({
   const [selected, setSelected] = useState<string[]>(initialValues);
   const [active, setActive] = useState(false);
 
-  const { t } = useTranslation();
   const selectRef = useRef<HTMLInputElement>(null);
 
   const optionClick = (option: string) => {

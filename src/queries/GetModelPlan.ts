@@ -59,6 +59,7 @@ export default gql`
         }
       }
       generalCharacteristics {
+        id
         createdBy
         createdDts
         modifiedBy
@@ -66,6 +67,7 @@ export default gql`
         status
       }
       participantsAndProviders {
+        id
         createdBy
         createdDts
         modifiedBy
