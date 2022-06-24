@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { AgencyOrStateHelpType, StakeholdersType, HelpdeskUseType, ContractorSupportType, IddocOperationsType, MonitoringFileType, DataFullTimeOrIncrementalType, BenchmarkForPerformanceType, EvaluationApproachType, CcmInvolvmentType, DataForMonitoringType, DataToSendParticipantsType, DataStartsType, DataFrequencyType, ModelLearningSystemType, TaskStatus } from "./../../types/graphql-global-types";
+import { AgencyOrStateHelpType, StakeholdersType, ContractorSupportType, MonitoringFileType, DataFullTimeOrIncrementalType, BenchmarkForPerformanceType, EvaluationApproachType, CcmInvolvmentType, DataForMonitoringType, DataToSendParticipantsType, DataStartsType, DataFrequencyType, ModelLearningSystemType, TaskStatus } from "./../../types/graphql-global-types";
 
 // ====================================================
 // GraphQL query operation: GetModelPlanOpsEvalAndLearning
@@ -18,8 +18,7 @@ export interface GetModelPlanOpsEvalAndLearning_modelPlan_opsEvalAndLearning {
   stakeholders: StakeholdersType[];
   stakeholdersOther: string | null;
   stakeholdersNote: string | null;
-  helpdeskUse: HelpdeskUseType[];
-  helpdeskUseOther: string | null;
+  helpdeskUse: boolean | null;
   helpdeskUseNote: string | null;
   contractorSupport: ContractorSupportType[];
   contractorSupportOther: string | null;
@@ -27,9 +26,6 @@ export interface GetModelPlanOpsEvalAndLearning_modelPlan_opsEvalAndLearning {
   contractorSupportNote: string | null;
   iddocSupport: boolean | null;
   iddocSupportNote: string | null;
-  iddocOperations: IddocOperationsType | null;
-  iddocOperationsOther: string | null;
-  iddocOperationsNote: string | null;
   technicalContactsIdentified: boolean | null;
   technicalContactsIdentifiedDetail: string | null;
   technicalContactsIdentifiedNote: string | null;

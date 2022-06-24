@@ -551,23 +551,6 @@ export const translateStakeholdersType = (type: string) => {
   }
 };
 
-export const translateHelpdeskUseType = (type: string) => {
-  switch (type) {
-    case 'CBOSC':
-      return i18next.t('operationsEvaluationAndLearning:helpDeskOptions.cbosc');
-    case 'CONTRACTOR':
-      return i18next.t(
-        'operationsEvaluationAndLearning:helpDeskOptions.contractor'
-      );
-    case 'OTHER':
-      return i18next.t('operationsEvaluationAndLearning:helpDeskOptions.other');
-    case 'NO':
-      return i18next.t('operationsEvaluationAndLearning:helpDeskOptions.no');
-    default:
-      return '';
-  }
-};
-
 export const translateContractorSupportType = (type: string) => {
   switch (type) {
     case 'ONE':
@@ -645,6 +628,18 @@ export const sortRepliesByDate = (
   }
   return 0;
 };
+
+// Used to map MultiSelect options from Enums
+export const mapMultiSelectOptions = (
+  translationMethod: (key: string) => string,
+  type: { [s: number]: string }
+) =>
+  Object.keys(type)
+    .sort(sortOtherEnum)
+    .map(key => ({
+      value: key,
+      label: translationMethod(key)
+    }));
 
 // Sort mapped enums to be alphabetical and have 'OTHER' come last
 export const sortOtherEnum = (a: string, b: string) => {

@@ -39,6 +39,7 @@ import {
 } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import {
+  mapMultiSelectOptions,
   sortOtherEnum,
   translateAlternativePaymentTypes,
   translateKeyCharacteristics
@@ -112,13 +113,6 @@ const KeyCharacteristics = () => {
         formikRef?.current?.setErrors(errors);
       });
   };
-
-  const mappedKeyCharacteristics = Object.keys(KeyCharacteristic)
-    .sort(sortOtherEnum)
-    .map(key => ({
-      value: key,
-      label: translateKeyCharacteristics(key)
-    }));
 
   const initialValues = {
     alternativePaymentModel: alternativePaymentModel ?? null,
@@ -332,7 +326,10 @@ const KeyCharacteristics = () => {
                     id="plan-characteristics-key-characteristics"
                     name="keyCharacteristics"
                     role="combobox"
-                    options={mappedKeyCharacteristics}
+                    options={mapMultiSelectOptions(
+                      translateKeyCharacteristics,
+                      KeyCharacteristic
+                    )}
                     selectedLabel={t('selectedKeyCharacteristics')}
                     onChange={(value: string[] | []) => {
                       setFieldValue('keyCharacteristics', value);

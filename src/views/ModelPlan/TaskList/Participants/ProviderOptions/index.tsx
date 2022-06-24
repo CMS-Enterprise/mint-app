@@ -41,6 +41,7 @@ import {
 } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import {
+  mapMultiSelectOptions,
   sortOtherEnum,
   translateFrequencyType,
   translateOverlapType,
@@ -118,13 +119,6 @@ export const ProviderOptions = () => {
         formikRef?.current?.setErrors(errors);
       });
   };
-
-  const mappedProviderAdd = Object.keys(ProviderAddType)
-    .sort(sortOtherEnum)
-    .map(key => ({
-      value: key,
-      label: translateProviderAddType(key)
-    }));
 
   const initialValues = {
     providerAdditionFrequency: providerAdditionFrequency ?? null,
@@ -297,7 +291,10 @@ export const ProviderOptions = () => {
                     as={MultiSelect}
                     id="participants-and-providers-provider-add-method"
                     name="providerAddMethod"
-                    options={mappedProviderAdd}
+                    options={mapMultiSelectOptions(
+                      translateProviderAddType,
+                      ProviderAddType
+                    )}
                     selectedLabel={t('selectedParticipants')}
                     onChange={(value: string[] | []) => {
                       setFieldValue('providerAddMethod', value);

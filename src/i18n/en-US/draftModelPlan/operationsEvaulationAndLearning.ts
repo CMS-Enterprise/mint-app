@@ -23,6 +23,9 @@ const operationsEvaluationAndLearning = {
     states: 'States',
     other: 'Other'
   },
+  selectedStakeholders: 'Selected stakeholders',
+  pleaseDescribe:
+    'Please describe the other stakeholders you plan to communicate with.',
   helpDesk: 'Do you plan to use a helpdesk?',
   helpDeskOptions: {
     cbosc: 'Through OBOSC',
@@ -30,6 +33,11 @@ const operationsEvaluationAndLearning = {
     other: 'Other',
     no: 'No'
   },
+  iddocSupport: 'Are you planning to use IDDOC support?',
+  iddocSupportInfo:
+    'IDDOC is commonly known as ACO-OS (Accountable Care Organization Operating System). They can provide support for design, development, operations, and maintenance.',
+  iddocSupportInfo2:
+    'If you select yes, there will be additional questions to answer.',
   whatContractors: 'What contractors will support your model?',
   whatContractorsOptions: {
     one: 'One contractor to support implementation',
@@ -38,6 +46,8 @@ const operationsEvaluationAndLearning = {
     noContractor: 'Do not plan to use an implemenation contractor',
     other: 'Other'
   },
+  whatContractorsHow: 'In what capacity will they support your model?',
+  whatContractorsHowInfo: '(implementation, data analysis, quality, etc.)',
   paymentContractor: 'Is a payment contractor required?',
   paymentContractorInfo:
     'Note: If there will be 30+ payees we recomment a contractor.',

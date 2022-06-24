@@ -13,7 +13,6 @@ import {
   IconArrowBack,
   Label,
   Radio,
-  SummaryBox,
   TextInput
 } from '@trussworks/react-uswds';
 import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
@@ -39,19 +38,49 @@ import { UpdateModelPlanOpsEvalAndLearningVariables } from 'queries/types/Update
 import UpdateModelPlanOpsEvalAndLearning from 'queries/UpdateModelPlanOpsEvalAndLearning';
 import {
   AgencyOrStateHelpType,
+  CcmInvolvmentType,
   ContractorSupportType,
-  HelpdeskUseType,
   StakeholdersType
 } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import {
+  mapMultiSelectOptions,
   sortOtherEnum,
   translateAgencyOrStateHelpType,
   translateContractorSupportType,
-  translateHelpdeskUseType,
   translateStakeholdersType
 } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
+
+// Used to render the total pages based on certain answers populated within this task list item
+export const renderTotalPages = (
+  iddoc: boolean | null,
+  qualityOrCCW?: boolean | null
+) => {
+  let totalPages = 5;
+  if (iddoc) totalPages += 3;
+  if (qualityOrCCW) totalPages += 1;
+  return totalPages;
+};
+
+// Used to render the current page based on certain answers populated within this task list item
+export const renderCurrentPage = (
+  currentPage: number,
+  iddoc: boolean | null,
+  qualityOrCCW?: boolean | null
+) => {
+  let adjustedCurrentPage = currentPage;
+  if (currentPage > 2 && !iddoc) adjustedCurrentPage -= 3;
+  if (currentPage > 6 && !qualityOrCCW) adjustedCurrentPage -= 1;
+  return adjustedCurrentPage;
+};
+
+// Checks to see is there is a checked 'Yes' answer within the ccmInvolvment array
+export const isCCWInvolvement = (ccmInvolvment: CcmInvolvmentType[]) => {
+  return ccmInvolvment.some(value =>
+    ['YES_EVALUATION', 'YES_EVYES__IMPLEMENTATIONALUATION'].includes(value)
+  );
+};
 
 export const OpsEvalAndLearningContent = () => {
   const { t } = useTranslation('operationsEvaluationAndLearning');
@@ -74,6 +103,7 @@ export const OpsEvalAndLearningContent = () => {
 
   const {
     id,
+    ccmInvolvment,
     agencyOrStateHelp,
     agencyOrStateHelpOther,
     agencyOrStateHelpNote,
@@ -81,7 +111,6 @@ export const OpsEvalAndLearningContent = () => {
     stakeholdersOther,
     stakeholdersNote,
     helpdeskUse,
-    helpdeskUseOther,
     helpdeskUseNote,
     contractorSupport,
     contractorSupportOther,
@@ -133,7 +162,6 @@ export const OpsEvalAndLearningContent = () => {
     stakeholdersOther: stakeholdersOther ?? '',
     stakeholdersNote: stakeholdersNote ?? null,
     helpdeskUse: helpdeskUse ?? [],
-    helpdeskUseOther: helpdeskUseOther ?? '',
     helpdeskUseNote: helpdeskUseNote ?? '',
     contractorSupport: contractorSupport ?? [],
     contractorSupportOther: contractorSupportOther ?? '',
@@ -224,7 +252,7 @@ export const OpsEvalAndLearningContent = () => {
                   name="agencyOrStateHelp"
                   render={arrayHelpers => (
                     <>
-                      <legend className="usa-label">
+                      <legend className="usa-label maxw-none">
                         {t('anotherAgency')}
                       </legend>
                       <FieldErrorMsg>
@@ -292,6 +320,243 @@ export const OpsEvalAndLearningContent = () => {
                   )}
                 />
 
+                <FieldGroup
+                  scrollElement="stakeholders"
+                  error={!!flatErrors.stakeholders}
+                  className="margin-top-4"
+                >
+                  <Label htmlFor="ops-eval-and-learning-stakeholders">
+                    {t('stakeholders')}
+                  </Label>
+                  <FieldErrorMsg>{flatErrors.stakeholders}</FieldErrorMsg>
+
+                  <Field
+                    as={MultiSelect}
+                    id="ops-eval-and-learning-stakeholders"
+                    name="stakeholders"
+                    role="combobox"
+                    options={mapMultiSelectOptions(
+                      translateStakeholdersType,
+                      StakeholdersType
+                    )}
+                    selectedLabel={t('selectedStakeholders')}
+                    onChange={(value: string[] | []) => {
+                      setFieldValue('stakeholders', value);
+                    }}
+                    initialValues={initialValues.stakeholders}
+                  />
+
+                  {values.stakeholders.includes(
+                    'OTHER' as StakeholdersType
+                  ) && (
+                    <>
+                      <p className="text-base margin-y-1 margin-top-3">
+                        {t('pleaseDescribe')}
+                      </p>
+                      <FieldErrorMsg>
+                        {flatErrors.stakeholdersOther}
+                      </FieldErrorMsg>
+                      <Field
+                        as={TextInput}
+                        data-testid="ops-eval-and-learning-stakeholders-other"
+                        error={!!flatErrors.stakeholdersOther}
+                        id="ops-eval-and-learning-key-other"
+                        maxLength={50}
+                        name="stakeholdersOther"
+                      />
+                    </>
+                  )}
+
+                  <AddNote
+                    id="ops-eval-and-learning-stakeholders-note"
+                    field="stakeholdersNote"
+                  />
+                </FieldGroup>
+
+                <FieldGroup
+                  scrollElement="helpdeskUse"
+                  error={!!flatErrors.helpdeskUse}
+                  className="margin-y-4 margin-bottom-8"
+                >
+                  <Label htmlFor="ops-eval-and-learning-help-desk-use">
+                    {t('helpDesk')}
+                  </Label>
+                  <FieldErrorMsg>{flatErrors.helpdeskUse}</FieldErrorMsg>
+                  <Fieldset>
+                    <Field
+                      as={Radio}
+                      id="ops-eval-and-learning-help-desk-use"
+                      name="helpdeskUse"
+                      label={h('yes')}
+                      value="TRUE"
+                      checked={values.helpdeskUse === true}
+                      onChange={() => {
+                        setFieldValue('helpdeskUse', true);
+                      }}
+                    />
+                    <Field
+                      as={Radio}
+                      id="ops-eval-and-learning-help-desk-use-no"
+                      name="helpdeskUse"
+                      label={h('no')}
+                      value="FALSE"
+                      checked={values.helpdeskUse === false}
+                      onChange={() => {
+                        setFieldValue('helpdeskUse', false);
+                      }}
+                    />
+                  </Fieldset>
+
+                  <AddNote
+                    id="ops-eval-and-learning-help-desk-use-note"
+                    field="helpdeskUseNote"
+                  />
+                </FieldGroup>
+
+                <FieldArray
+                  name="contractorSupport"
+                  render={arrayHelpers => (
+                    <>
+                      <legend className="usa-label maxw-none">
+                        {t('whatContractors')}
+                      </legend>
+                      <FieldErrorMsg>
+                        {flatErrors.contractorSupport}
+                      </FieldErrorMsg>
+
+                      {Object.keys(ContractorSupportType)
+                        .sort(sortOtherEnum)
+                        .map(type => {
+                          return (
+                            <Fragment key={type}>
+                              <Field
+                                as={CheckboxField}
+                                id={`ops-eval-and-learning-contractor-support-${type}`}
+                                name="contractorSupport"
+                                label={translateContractorSupportType(type)}
+                                value={type}
+                                checked={values?.contractorSupport.includes(
+                                  type as ContractorSupportType
+                                )}
+                                onChange={(
+                                  e: React.ChangeEvent<HTMLInputElement>
+                                ) => {
+                                  if (e.target.checked) {
+                                    arrayHelpers.push(e.target.value);
+                                  } else {
+                                    const idx = values.contractorSupport.indexOf(
+                                      e.target.value as ContractorSupportType
+                                    );
+                                    arrayHelpers.remove(idx);
+                                  }
+                                }}
+                              />
+                              {type === 'OTHER' &&
+                                values.contractorSupport.includes(
+                                  'OTHER' as ContractorSupportType
+                                ) && (
+                                  <div className="margin-left-4 margin-top-neg-3">
+                                    <Label
+                                      htmlFor="ops-eval-and-learning-contractor-support-other"
+                                      className="text-normal"
+                                    >
+                                      {h('pleaseSpecify')}
+                                    </Label>
+                                    <FieldErrorMsg>
+                                      {flatErrors.contractorSupportOther}
+                                    </FieldErrorMsg>
+                                    <Field
+                                      as={TextInput}
+                                      className="maxw-none"
+                                      id="ops-eval-and-learning-contractor-support-other"
+                                      maxLength={50}
+                                      name="contractorSupportOther"
+                                    />
+                                  </div>
+                                )}
+                            </Fragment>
+                          );
+                        })}
+
+                      <FieldGroup
+                        scrollElement="contractorSupportHow"
+                        error={!!flatErrors.contractorSupportHow}
+                      >
+                        <Label
+                          htmlFor="ops-eval-and-learning-contractor-support-how"
+                          className="text-normal margin-top-4"
+                        >
+                          {t('whatContractorsHow')}
+                        </Label>
+                        <p className="text-base margin-y-1">
+                          {t('whatContractorsHowInfo')}
+                        </p>
+                        <FieldErrorMsg>
+                          {flatErrors.contractorSupportHow}
+                        </FieldErrorMsg>
+                        <Field
+                          as={TextAreaField}
+                          className="height-15"
+                          error={flatErrors.contractorSupportHow}
+                          id="ops-eval-and-learning-contractor-support-how"
+                          name="contractorSupportHow"
+                        />
+                      </FieldGroup>
+
+                      <AddNote
+                        id="ops-eval-and-learning-contractor-support-note"
+                        field="contractorSupportNote"
+                      />
+                    </>
+                  )}
+                />
+
+                <FieldGroup
+                  scrollElement="iddocSupport"
+                  error={!!flatErrors.iddocSupport}
+                  className="margin-y-4 margin-bottom-8"
+                >
+                  <Label htmlFor="ops-eval-and-learning-iddoc-support">
+                    {t('iddocSupport')}
+                  </Label>
+                  <p className="text-base margin-y-1">
+                    {t('iddocSupportInfo')}
+                  </p>
+                  <p className="text-base margin-y-1 margin-top-2">
+                    {t('iddocSupportInfo2')}
+                  </p>
+                  <FieldErrorMsg>{flatErrors.iddocSupport}</FieldErrorMsg>
+                  <Fieldset>
+                    <Field
+                      as={Radio}
+                      id="ops-eval-and-learning-iddoc-support"
+                      name="iddocSupport"
+                      label={h('yes')}
+                      value="TRUE"
+                      checked={values.iddocSupport === true}
+                      onChange={() => {
+                        setFieldValue('iddocSupport', true);
+                      }}
+                    />
+                    <Field
+                      as={Radio}
+                      id="ops-eval-and-learning-iddoc-support-no"
+                      name="iddocSupport"
+                      label={h('no')}
+                      value="FALSE"
+                      checked={values.iddocSupport === false}
+                      onChange={() => {
+                        setFieldValue('iddocSupport', false);
+                      }}
+                    />
+                  </Fieldset>
+
+                  <AddNote
+                    id="ops-eval-and-learning-iddoc-support-note"
+                    field="iddocSupportNote"
+                  />
+                </FieldGroup>
+
                 <div className="margin-top-6 margin-bottom-3">
                   <Button type="submit" onClick={() => setErrors({})}>
                     {h('next')}
@@ -320,7 +585,20 @@ export const OpsEvalAndLearningContent = () => {
           );
         }}
       </Formik>
-      <PageNumber currentPage={1} totalPages={5} className="margin-y-6" />
+      {data && (
+        <PageNumber
+          currentPage={renderCurrentPage(
+            1,
+            iddocSupport,
+            isCCWInvolvement(ccmInvolvment)
+          )}
+          totalPages={renderTotalPages(
+            iddocSupport,
+            isCCWInvolvement(ccmInvolvment)
+          )}
+          className="margin-y-6"
+        />
+      )}
     </>
   );
 };

@@ -15,7 +15,6 @@ export default gql`
         stakeholdersOther
         stakeholdersNote
         helpdeskUse
-        helpdeskUseOther
         helpdeskUseNote
         contractorSupport
         contractorSupportOther
@@ -24,9 +23,6 @@ export default gql`
         iddocSupport
         iddocSupportNote
         #Page 2
-        iddocOperations
-        iddocOperationsOther
-        iddocOperationsNote
         technicalContactsIdentified
         technicalContactsIdentifiedDetail
         technicalContactsIdentifiedNote

@@ -3,7 +3,7 @@
 exports[`The MultiSelect component matches the snapshot 1`] = `
 <DocumentFragment>
   <div
-    class="easi-multiselect maxw-mobile-lg position-relative"
+    class="easi-multiselect position-relative"
   >
     <div
       class="easi-multiselect__field"
