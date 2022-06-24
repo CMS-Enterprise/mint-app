@@ -1,4 +1,4 @@
-import React, { Fragment, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
@@ -109,7 +109,7 @@ const Overview = () => {
   };
 
   return (
-    <Fragment data-testid="model-plan-overview">
+    <div data-testid="model-plan-overview">
       <BreadcrumbBar variant="wrap">
         <Breadcrumb>
           <BreadcrumbLink asCustom={Link} to="/">
@@ -323,7 +323,7 @@ const Overview = () => {
         }}
       </Formik>
       <PageNumber currentPage={2} totalPages={3} className="margin-bottom-10" />
-    </Fragment>
+    </div>
   );
 };
 

@@ -1,0 +1,450 @@
+import React, { Fragment, useRef, useState } from 'react';
+import { Trans, useTranslation } from 'react-i18next';
+import { Link, useHistory, useParams } from 'react-router-dom';
+import { useMutation, useQuery } from '@apollo/client';
+import {
+  Alert,
+  Breadcrumb,
+  BreadcrumbBar,
+  BreadcrumbLink,
+  Button,
+  DatePicker,
+  Fieldset,
+  IconArrowBack,
+  Label,
+  Radio,
+  TextInput
+} from '@trussworks/react-uswds';
+import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
+
+import AddNote from 'components/AddNote';
+import AskAQuestion from 'components/AskAQuestion';
+import PageHeading from 'components/PageHeading';
+import PageNumber from 'components/PageNumber';
+import AutoSave from 'components/shared/AutoSave';
+import CheckboxField from 'components/shared/CheckboxField';
+import DatePickerWarning from 'components/shared/DatePickerWarning';
+import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
+import FieldErrorMsg from 'components/shared/FieldErrorMsg';
+import FieldGroup from 'components/shared/FieldGroup';
+import MultiSelect from 'components/shared/MultiSelect';
+import TextAreaField from 'components/shared/TextAreaField';
+import GetModelPlanOpsEvalAndLearning from 'queries/GetModelPlanOpsEvalAndLearning';
+import {
+  GetModelPlanOpsEvalAndLearning as GetModelPlanOpsEvalAndLearningType,
+  GetModelPlanOpsEvalAndLearning_modelPlan_opsEvalAndLearning as ModelPlanOpsEvalAndLearningFormType
+} from 'queries/types/GetModelPlanOpsEvalAndLearning';
+import { UpdateModelPlanOpsEvalAndLearningVariables } from 'queries/types/UpdateModelPlanOpsEvalAndLearning';
+import UpdateModelPlanOpsEvalAndLearning from 'queries/UpdateModelPlanOpsEvalAndLearning';
+import flattenErrors from 'utils/flattenErrors';
+
+import { isCCWInvolvement, renderCurrentPage, renderTotalPages } from '..';
+
+const IDDOC = () => {
+  const { t } = useTranslation('operationsEvaluationAndLearning');
+  const { t: h } = useTranslation('draftModelPlan');
+  const { modelID } = useParams<{ modelID: string }>();
+  const [dateInPast, setDateInPast] = useState(false);
+
+  const formikRef = useRef<FormikProps<ModelPlanOpsEvalAndLearningFormType>>(
+    null
+  );
+  const history = useHistory();
+
+  const { data } = useQuery<GetModelPlanOpsEvalAndLearningType>(
+    GetModelPlanOpsEvalAndLearning,
+    {
+      variables: {
+        id: modelID
+      }
+    }
+  );
+
+  const {
+    id,
+    iddocSupport,
+    ccmInvolvment,
+    technicalContactsIdentified,
+    technicalContactsIdentifiedDetail,
+    technicalContactsIdentifiedNote,
+    captureParticipantInfo,
+    captureParticipantInfoNote,
+    icdOwner,
+    draftIcdDueDate,
+    icdNote
+  } =
+    data?.modelPlan?.opsEvalAndLearning ||
+    ({} as ModelPlanOpsEvalAndLearningFormType);
+
+  const modelName = data?.modelPlan?.modelName || '';
+
+  const [update] = useMutation<UpdateModelPlanOpsEvalAndLearningVariables>(
+    UpdateModelPlanOpsEvalAndLearning
+  );
+
+  const handleFormSubmit = (
+    formikValues: ModelPlanOpsEvalAndLearningFormType,
+    redirect?: 'next' | 'back' | 'task-list'
+  ) => {
+    update({
+      variables: {
+        id,
+        changes: formikValues
+      }
+    })
+      .then(response => {
+        if (!response?.errors) {
+          if (redirect === 'next') {
+            history.push(
+              `/models/${modelID}/task-list/ops-eval-and-learning/iddoc-testing`
+            );
+          } else if (redirect === 'back') {
+            history.push(`/models/${modelID}/task-list/ops-eval-and-learning`);
+          } else if (redirect === 'task-list') {
+            history.push(`/models/${modelID}/task-list`);
+          }
+        }
+      })
+      .catch(errors => {
+        formikRef?.current?.setErrors(errors);
+      });
+  };
+
+  const initialValues = {
+    technicalContactsIdentified: technicalContactsIdentified ?? null,
+    technicalContactsIdentifiedDetail: technicalContactsIdentifiedDetail ?? '',
+    technicalContactsIdentifiedNote: technicalContactsIdentifiedNote ?? '',
+    captureParticipantInfo: captureParticipantInfo ?? null,
+    captureParticipantInfoNote: captureParticipantInfoNote ?? '',
+    icdOwner: icdOwner ?? '',
+    draftIcdDueDate: draftIcdDueDate ?? null,
+    icdNote: icdNote ?? ''
+  } as ModelPlanOpsEvalAndLearningFormType;
+
+  return (
+    <>
+      <BreadcrumbBar variant="wrap">
+        <Breadcrumb>
+          <BreadcrumbLink asCustom={Link} to="/">
+            <span>{h('home')}</span>
+          </BreadcrumbLink>
+        </Breadcrumb>
+        <Breadcrumb>
+          <BreadcrumbLink asCustom={Link} to={`/models/${modelID}/task-list/`}>
+            <span>{h('tasklistBreadcrumb')}</span>
+          </BreadcrumbLink>
+        </Breadcrumb>
+        <Breadcrumb current>{t('breadcrumb')}</Breadcrumb>
+      </BreadcrumbBar>
+      <PageHeading className="margin-top-4 margin-bottom-2">
+        {t('heading')}
+      </PageHeading>
+
+      <p
+        className="margin-top-0 margin-bottom-1 font-body-lg"
+        data-testid="model-plan-name"
+      >
+        <Trans i18nKey="modelPlanTaskList:subheading">
+          indexZero {modelName} indexTwo
+        </Trans>
+      </p>
+      <p className="margin-bottom-2 font-body-md line-height-sans-4">
+        {h('helpText')}
+      </p>
+
+      <AskAQuestion modelID={modelID} />
+
+      <Formik
+        initialValues={initialValues}
+        onSubmit={values => {
+          handleFormSubmit(values, 'next');
+        }}
+        enableReinitialize
+        innerRef={formikRef}
+      >
+        {(formikProps: FormikProps<ModelPlanOpsEvalAndLearningFormType>) => {
+          const {
+            errors,
+            handleSubmit,
+            setErrors,
+            setFieldValue,
+            values,
+            setFieldError
+          } = formikProps;
+          const flatErrors = flattenErrors(errors);
+
+          const handleOnBlur = (e: any, field: string) => {
+            if (e === '') {
+              return;
+            }
+            try {
+              setFieldValue(field, new Date(e).toISOString());
+              if (new Date() > new Date(e)) {
+                setDateInPast(true);
+              } else {
+                setDateInPast(false);
+              }
+              delete errors[field as keyof ModelPlanOpsEvalAndLearningFormType];
+            } catch (error) {
+              setFieldError(field, t('validDate'));
+            }
+          };
+
+          return (
+            <>
+              {Object.keys(errors).length > 0 && (
+                <ErrorAlert
+                  testId="formik-validation-errors"
+                  classNames="margin-top-3"
+                  heading={h('checkAndFix')}
+                >
+                  {Object.keys(flatErrors).map(key => {
+                    return (
+                      <ErrorAlertMessage
+                        key={`Error.${key}`}
+                        errorKey={key}
+                        message={flatErrors[key]}
+                      />
+                    );
+                  })}
+                </ErrorAlert>
+              )}
+
+              <Form
+                className="tablet:grid-col-6 margin-top-6"
+                data-testid="ops-eval-and-learning-iddoc-form"
+                onSubmit={e => {
+                  handleSubmit(e);
+                }}
+              >
+                <h3>{t('iddocHeading')}</h3>
+                <FieldGroup
+                  scrollElement="technicalContactsIdentified"
+                  error={!!flatErrors.technicalContactsIdentified}
+                  className="margin-y-4 margin-bottom-8"
+                >
+                  <Label htmlFor="ops-eval-and-learning-technical-contacts-identified-use">
+                    {t('technicalContacts')}
+                  </Label>
+                  <FieldErrorMsg>
+                    {flatErrors.technicalContactsIdentified}
+                  </FieldErrorMsg>
+                  <Fieldset>
+                    <Field
+                      as={Radio}
+                      id="ops-eval-and-learning-technical-contacts-identified-use"
+                      name="technicalContactsIdentified"
+                      label={h('yes')}
+                      value="TRUE"
+                      checked={values.technicalContactsIdentified === true}
+                      onChange={() => {
+                        setFieldValue('technicalContactsIdentified', true);
+                      }}
+                    />
+                    <Field
+                      as={Radio}
+                      id="ops-eval-and-learning-technical-contacts-identified-use-no"
+                      name="technicalContactsIdentified"
+                      label={h('no')}
+                      value="FALSE"
+                      checked={values.technicalContactsIdentified === false}
+                      onChange={() => {
+                        setFieldValue('technicalContactsIdentified', false);
+                      }}
+                    />
+                  </Fieldset>
+
+                  {values.technicalContactsIdentified === true && (
+                    <div className="margin-left-4 margin-top-1">
+                      <Label
+                        htmlFor="ops-eval-and-learning-technical-contacts-identified-detail"
+                        className="text-normal"
+                      >
+                        {h('pleaseSpecify')}
+                      </Label>
+                      <FieldErrorMsg>
+                        {flatErrors.technicalContactsIdentifiedDetail}
+                      </FieldErrorMsg>
+                      <Field
+                        as={TextInput}
+                        id="ops-eval-and-learning-technical-contacts-identified-detail"
+                        maxLength={50}
+                        name="technicalContactsIdentifiedDetail"
+                      />
+                    </div>
+                  )}
+
+                  <AddNote
+                    id="ops-eval-and-learning-technical-contacts-identified-use-note"
+                    field="technicalContactsIdentifiedNote"
+                  />
+                </FieldGroup>
+
+                <FieldGroup
+                  scrollElement="captureParticipantInfo"
+                  error={!!flatErrors.captureParticipantInfo}
+                  className="margin-y-4 margin-bottom-8"
+                >
+                  <Label htmlFor="ops-eval-and-learning-capture-participant-info">
+                    {t('participantInformation')}
+                  </Label>
+                  <p className="text-base margin-y-1 margin-top-2">
+                    {t('participantInformationInfo')}
+                  </p>
+                  <FieldErrorMsg>
+                    {flatErrors.captureParticipantInfo}
+                  </FieldErrorMsg>
+                  <Fieldset>
+                    <Field
+                      as={Radio}
+                      id="ops-eval-and-learning-capture-participant-info"
+                      name="captureParticipantInfo"
+                      label={h('yes')}
+                      value="TRUE"
+                      checked={values.captureParticipantInfo === true}
+                      onChange={() => {
+                        setFieldValue('captureParticipantInfo', true);
+                      }}
+                    />
+                    <Field
+                      as={Radio}
+                      id="ops-eval-and-learning-capture-participant-info-no"
+                      name="captureParticipantInfo"
+                      label={h('no')}
+                      value="FALSE"
+                      checked={values.captureParticipantInfo === false}
+                      onChange={() => {
+                        setFieldValue('captureParticipantInfo', false);
+                      }}
+                    />
+                  </Fieldset>
+
+                  <AddNote
+                    id="ops-eval-and-learning-capture-participant-info-note"
+                    field="captureParticipantInfoNote"
+                  />
+                </FieldGroup>
+
+                <h3>{t('icdHeading')}</h3>
+
+                <p className="margin-y-1 margin-top-2 line-height-body-4">
+                  {t('icdSubheading')}
+                </p>
+
+                <FieldGroup
+                  scrollElement="icdOwner"
+                  className="margin-top-6"
+                  error={!!flatErrors.icdOwner}
+                >
+                  <Label htmlFor="ops-eval-and-learning-capture-icd-owner">
+                    {t('icdOwner')}
+                  </Label>
+                  <FieldErrorMsg>{flatErrors.icdOwner}</FieldErrorMsg>
+                  <Field
+                    as={TextInput}
+                    error={!!flatErrors.icdOwner}
+                    id="ops-eval-and-learning-capture-icd-owner"
+                    maxLength={50}
+                    name="icdOwner"
+                  />
+                </FieldGroup>
+
+                {values.draftIcdDueDate && (
+                  <FieldGroup
+                    scrollElement="draftIcdDueDate"
+                    error={!!flatErrors.draftIcdDueDate}
+                    className="margin-top-6 width-half"
+                  >
+                    <label htmlFor="ops-eval-and-learning-icd-due-date">
+                      {t('draftIDC')}
+                    </label>
+                    <div className="usa-hint margin-y-1">
+                      {h('datePlaceholder')}
+                    </div>
+                    <FieldErrorMsg>{flatErrors.draftIcdDueDate}</FieldErrorMsg>
+                    <div className="width-card-lg position-relative">
+                      <Field
+                        as={DatePicker}
+                        error={+!!flatErrors.draftIcdDueDate}
+                        id="ops-eval-and-learning-icd-due-date"
+                        maxLength={50}
+                        name="draftIcdDueDate"
+                        defaultValue={values.draftIcdDueDate}
+                        onBlur={(e: any) =>
+                          handleOnBlur(e.target.value, 'draftIcdDueDate')
+                        }
+                      />
+                      {dateInPast && (
+                        <DatePickerWarning label="This is a label" />
+                      )}
+                    </div>
+
+                    {dateInPast && (
+                      <Alert type="warning" className="margin-top-4">
+                        {h('dateWarning')}
+                      </Alert>
+                    )}
+
+                    <AddNote
+                      id="ops-eval-and-learning-icd-due-date-note"
+                      field="draftIcdDueDateNote"
+                    />
+                  </FieldGroup>
+                )}
+
+                <div className="margin-top-6 margin-bottom-3">
+                  <Button
+                    type="button"
+                    className="usa-button usa-button--outline margin-bottom-1"
+                    onClick={() => {
+                      handleFormSubmit(values, 'back');
+                    }}
+                  >
+                    {h('back')}
+                  </Button>
+                  <Button type="submit" onClick={() => setErrors({})}>
+                    {h('next')}
+                  </Button>
+                </div>
+                <Button
+                  type="button"
+                  className="usa-button usa-button--unstyled"
+                  onClick={() => handleFormSubmit(values, 'task-list')}
+                >
+                  <IconArrowBack className="margin-right-1" aria-hidden />
+                  {h('saveAndReturn')}
+                </Button>
+              </Form>
+
+              {id && (
+                <AutoSave
+                  values={values}
+                  onSave={() => {
+                    handleFormSubmit(formikRef.current!.values);
+                  }}
+                  debounceDelay={3000}
+                />
+              )}
+            </>
+          );
+        }}
+      </Formik>
+      {data && (
+        <PageNumber
+          currentPage={renderCurrentPage(
+            1,
+            iddocSupport,
+            isCCWInvolvement(ccmInvolvment)
+          )}
+          totalPages={renderTotalPages(
+            iddocSupport,
+            isCCWInvolvement(ccmInvolvment)
+          )}
+          className="margin-y-6"
+        />
+      )}
+    </>
+  );
+};
+
+export default IDDOC;

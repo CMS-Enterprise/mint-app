@@ -69,11 +69,18 @@ const operationsEvaluationAndLearning = {
     ui: 'ACO-IO',
     innovation: '4innovation (4i)'
   },
+  iddocHeading: 'IDDOC operations questions',
+  icdHeading: 'Interface Control Document (ICD) questions',
+  icdSubheading:
+    'An interface control document provides a record of all interface information generated for a project.',
   technicalContacts: 'Are technical contacts identified?',
-  entityInformation: 'Will you capture entity information?',
+  participantInformation: 'Will you capture participant information?',
+  participantInformationInfo:
+    'This means the participant record for a model would be included in the ACO-OS Entity File.',
   interfaceControl: 'ACO-OS interface control questions',
   icdOwner: 'ICD owner',
   draftIDC: 'Draft ICD required by',
+  validDate: 'Please use a valid date format',
   testingQuestions: 'ACO-OS testing specific questions',
   ssmRequest:
     'SSM request to begin analysis at least 1 year before implementation',

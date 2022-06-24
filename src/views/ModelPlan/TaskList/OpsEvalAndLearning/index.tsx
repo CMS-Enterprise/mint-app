@@ -52,6 +52,8 @@ import {
 } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
 
+import IDDOC from './IDDOC';
+
 // Used to render the total pages based on certain answers populated within this task list item
 export const renderTotalPages = (
   iddoc: boolean | null,
@@ -160,7 +162,7 @@ export const OpsEvalAndLearningContent = () => {
     agencyOrStateHelpNote: agencyOrStateHelpNote ?? '',
     stakeholders: stakeholders ?? [],
     stakeholdersOther: stakeholdersOther ?? '',
-    stakeholdersNote: stakeholdersNote ?? null,
+    stakeholdersNote: stakeholdersNote ?? '',
     helpdeskUse: helpdeskUse ?? [],
     helpdeskUseNote: helpdeskUseNote ?? '',
     contractorSupport: contractorSupport ?? [],
@@ -614,42 +616,42 @@ export const OpsEvalAndLearning = () => {
               exact
               render={() => <OpsEvalAndLearningContent />}
             />
-            {/* <Route
+            <Route
               path="/models/:modelID/task-list/ops-eval-and-learning/iddoc"
               exact
-              render={() => <ParticipantsOptions />}
+              render={() => <IDDOC />}
             />
-            <Route
+            {/* <Route
               path="/models/:modelID/task-list/ops-eval-and-learning/iddoc-testing"
               exact
               render={() => <Communication />}
-            />
-            <Route
+            /> */}
+            {/* <Route
               path="/models/:modelID/task-list/ops-eval-and-learning/iddoc-monitoring"
               exact
               render={() => <Coordination />}
-            />
-            <Route
+            /> */}
+            {/* <Route
               path="/models/:modelID/task-list/ops-eval-and-learning/performance"
               exact
               render={() => <ProviderOptions />}
-            />
-            <Route
+            /> */}
+            {/* <Route
               path="/models/:modelID/task-list/ops-eval-and-learning/evaluation"
               exact
               render={() => <ProviderOptions />}
-            />
-            <Route
+            /> */}
+            {/* <Route
               path="/models/:modelID/task-list/ops-eval-and-learning/ccw-and-quality"
               exact
               render={() => <ProviderOptions />}
-            />
-            <Route
+            /> */}
+            {/* <Route
               path="/models/:modelID/task-list/ops-eval-and-learning/data-sharing"
               exact
               render={() => <ProviderOptions />}
-            />
-            <Route
+            /> */}
+            {/* <Route
               path="/models/:modelID/task-list/ops-eval-and-learning/learning"
               exact
               render={() => <ProviderOptions />}
