@@ -23,11 +23,11 @@ import AutoSave from 'components/shared/AutoSave';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
-import GetModelPlanOpsEvalAndLearning from 'queries/GetModelPlanOpsEvalAndLearning';
+import GetIDDOCMonitoring from 'queries/OpsEvalAndLearning/GetIDDOCMonitoring';
 import {
-  GetModelPlanOpsEvalAndLearning as GetModelPlanOpsEvalAndLearningType,
-  GetModelPlanOpsEvalAndLearning_modelPlan_opsEvalAndLearning as ModelPlanOpsEvalAndLearningFormType
-} from 'queries/types/GetModelPlanOpsEvalAndLearning';
+  GetIDDOCMonitoring as GetIDDOCMonitoringType,
+  GetIDDOCMonitoring_modelPlan_opsEvalAndLearning as IDDOCMonitoringFormType
+} from 'queries/OpsEvalAndLearning/types/GetIDDOCMonitoring';
 import { UpdateModelPlanOpsEvalAndLearningVariables } from 'queries/types/UpdateModelPlanOpsEvalAndLearning';
 import UpdateModelPlanOpsEvalAndLearning from 'queries/UpdateModelPlanOpsEvalAndLearning';
 import { DataFullTimeOrIncrementalType } from 'types/graphql-global-types';
@@ -41,19 +41,14 @@ const IDDOCMonitoring = () => {
   const { t: h } = useTranslation('draftModelPlan');
   const { modelID } = useParams<{ modelID: string }>();
 
-  const formikRef = useRef<FormikProps<ModelPlanOpsEvalAndLearningFormType>>(
-    null
-  );
+  const formikRef = useRef<FormikProps<IDDOCMonitoringFormType>>(null);
   const history = useHistory();
 
-  const { data } = useQuery<GetModelPlanOpsEvalAndLearningType>(
-    GetModelPlanOpsEvalAndLearning,
-    {
-      variables: {
-        id: modelID
-      }
+  const { data } = useQuery<GetIDDOCMonitoringType>(GetIDDOCMonitoring, {
+    variables: {
+      id: modelID
     }
-  );
+  });
 
   const {
     id,
@@ -66,9 +61,7 @@ const IDDOCMonitoring = () => {
     produceBenefitEnhancementFiles,
     fileNamingConventions,
     dataMonitoringNote
-  } =
-    data?.modelPlan?.opsEvalAndLearning ||
-    ({} as ModelPlanOpsEvalAndLearningFormType);
+  } = data?.modelPlan?.opsEvalAndLearning || ({} as IDDOCMonitoringFormType);
 
   const modelName = data?.modelPlan?.modelName || '';
 
@@ -77,13 +70,14 @@ const IDDOCMonitoring = () => {
   );
 
   const handleFormSubmit = (
-    formikValues: ModelPlanOpsEvalAndLearningFormType,
+    formikValues: IDDOCMonitoringFormType,
     redirect?: 'next' | 'back' | 'task-list'
   ) => {
+    const { id: updateId, __typename, ...changeValues } = formikValues;
     update({
       variables: {
-        id,
-        changes: formikValues
+        id: updateId,
+        changes: changeValues
       }
     })
       .then(response => {
@@ -106,7 +100,11 @@ const IDDOCMonitoring = () => {
       });
   };
 
-  const initialValues = {
+  const initialValues: IDDOCMonitoringFormType = {
+    __typename: 'PlanOpsEvalAndLearning',
+    id: id ?? '',
+    ccmInvolvment: ccmInvolvment ?? [],
+    iddocSupport: iddocSupport ?? null,
     dataFullTimeOrIncremental: dataFullTimeOrIncremental ?? null,
     eftSetUp: eftSetUp ?? null,
     unsolicitedAdjustmentsIncluded: unsolicitedAdjustmentsIncluded ?? null,
@@ -114,7 +112,7 @@ const IDDOCMonitoring = () => {
     produceBenefitEnhancementFiles: produceBenefitEnhancementFiles ?? null,
     fileNamingConventions: fileNamingConventions ?? '',
     dataMonitoringNote: dataMonitoringNote ?? ''
-  } as ModelPlanOpsEvalAndLearningFormType;
+  };
 
   return (
     <>
@@ -157,7 +155,7 @@ const IDDOCMonitoring = () => {
         enableReinitialize
         innerRef={formikRef}
       >
-        {(formikProps: FormikProps<ModelPlanOpsEvalAndLearningFormType>) => {
+        {(formikProps: FormikProps<IDDOCMonitoringFormType>) => {
           const {
             errors,
             handleSubmit,

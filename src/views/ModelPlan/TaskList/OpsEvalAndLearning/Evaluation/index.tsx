@@ -1,16 +1,16 @@
-import React, { Fragment, useRef } from 'react';
+import React, { useRef } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
 import {
-  Alert,
   Breadcrumb,
   BreadcrumbBar,
   BreadcrumbLink,
   Button,
+  Fieldset,
   IconArrowBack,
   Label,
-  TextInput
+  Radio
 } from '@trussworks/react-uswds';
 import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
 
@@ -19,33 +19,42 @@ import AskAQuestion from 'components/AskAQuestion';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import AutoSave from 'components/shared/AutoSave';
-import CheckboxField from 'components/shared/CheckboxField';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
-import TextAreaField from 'components/shared/TextAreaField';
-import GetIDDOCTesting from 'queries/OpsEvalAndLearning/GetIDDOCTesting';
+import GetEvaluation from 'queries/OpsEvalAndLearning/GetEvaluation';
 import {
-  GetIDDOCTesting as GetIDDOCTestingType,
-  GetIDDOCTesting_modelPlan_opsEvalAndLearning as IDDOCTestingFormType
-} from 'queries/OpsEvalAndLearning/types/GetIDDOCTesting';
+  GetEvaluation as GetEvaluationType,
+  GetEvaluation_modelPlan_opsEvalAndLearning as EvaluationFormType
+} from 'queries/OpsEvalAndLearning/types/GetEvaluation';
 import { UpdateModelPlanOpsEvalAndLearningVariables } from 'queries/types/UpdateModelPlanOpsEvalAndLearning';
 import UpdateModelPlanOpsEvalAndLearning from 'queries/UpdateModelPlanOpsEvalAndLearning';
-import { MonitoringFileType } from 'types/graphql-global-types';
+import {
+  CcmInvolvmentType,
+  DataForMonitoringType,
+  DataToSendParticipantsType,
+  EvaluationApproachType
+} from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
-import { sortOtherEnum, translateMonitoringFileType } from 'utils/modelPlan';
+import {
+  sortOtherEnum,
+  translateCcmInvolvmentType,
+  translateDataForMonitoringType,
+  translateDataToSendParticipantsType,
+  translateEvaluationApproachType
+} from 'utils/modelPlan';
 
 import { isCCWInvolvement, renderCurrentPage, renderTotalPages } from '..';
 
-const IDDOCTesting = () => {
+const Evaluation = () => {
   const { t } = useTranslation('operationsEvaluationAndLearning');
   const { t: h } = useTranslation('draftModelPlan');
   const { modelID } = useParams<{ modelID: string }>();
 
-  const formikRef = useRef<FormikProps<IDDOCTestingFormType>>(null);
+  const formikRef = useRef<FormikProps<EvaluationFormType>>(null);
   const history = useHistory();
 
-  const { data } = useQuery<GetIDDOCTestingType>(GetIDDOCTesting, {
+  const { data } = useQuery<GetEvaluationType>(GetEvaluation, {
     variables: {
       id: modelID
     }
@@ -54,16 +63,21 @@ const IDDOCTesting = () => {
   const {
     id,
     iddocSupport,
+    evaluationApproaches,
+    evaluationApproachOther,
+    evalutaionApproachNote,
     ccmInvolvment,
-    uatNeeds,
-    stcNeeds,
-    testingTimelines,
-    testingNote,
-    dataMonitoringFileTypes,
-    dataMonitoringFileOther,
-    dataResponseType,
-    dataResponseFileFrequency
-  } = data?.modelPlan?.opsEvalAndLearning || ({} as IDDOCTestingFormType);
+    ccmInvolvmentOther,
+    ccmInvolvmentNote,
+    dataNeededForMonitoring,
+    dataNeededForMonitoringOther,
+    dataNeededForMonitoringNote,
+    dataToSendParticicipants,
+    dataToSendParticicipantsOther,
+    dataToSendParticicipantsNote,
+    shareCclfData,
+    shareCclfDataNote
+  } = data?.modelPlan?.opsEvalAndLearning || ({} as EvaluationFormType);
 
   const modelName = data?.modelPlan?.modelName || '';
 
@@ -72,7 +86,7 @@ const IDDOCTesting = () => {
   );
 
   const handleFormSubmit = (
-    formikValues: IDDOCTestingFormType,
+    formikValues: EvaluationFormType,
     redirect?: 'next' | 'back' | 'task-list'
   ) => {
     const { id: updateId, __typename, ...changeValues } = formikValues;
@@ -85,12 +99,18 @@ const IDDOCTesting = () => {
       .then(response => {
         if (!response?.errors) {
           if (redirect === 'next') {
-            history.push(
-              `/models/${modelID}/task-list/ops-eval-and-learning/iddoc-monitoring`
-            );
+            if (isCCWInvolvement(formikValues.ccmInvolvment)) {
+              history.push(
+                `/models/${modelID}/task-list/ops-eval-and-learning/ccw-and-quality`
+              );
+            } else {
+              history.push(
+                `/models/${modelID}/task-list/ops-eval-and-learning/data-sharing`
+              );
+            }
           } else if (redirect === 'back') {
             history.push(
-              `/models/${modelID}/task-list/ops-eval-and-learning/iddoc`
+              `/models/${modelID}/task-list/ops-eval-and-learning/performance`
             );
           } else if (redirect === 'task-list') {
             history.push(`/models/${modelID}/task-list`);
@@ -102,19 +122,24 @@ const IDDOCTesting = () => {
       });
   };
 
-  const initialValues: IDDOCTestingFormType = {
+  const initialValues: EvaluationFormType = {
     __typename: 'PlanOpsEvalAndLearning',
     id: id ?? '',
-    ccmInvolvment: ccmInvolvment ?? [],
     iddocSupport: iddocSupport ?? null,
-    uatNeeds: uatNeeds ?? '',
-    stcNeeds: stcNeeds ?? '',
-    testingTimelines: testingTimelines ?? '',
-    testingNote: testingNote ?? '',
-    dataMonitoringFileTypes: dataMonitoringFileTypes ?? [],
-    dataMonitoringFileOther: dataMonitoringFileOther ?? '',
-    dataResponseType: dataResponseType ?? '',
-    dataResponseFileFrequency: dataResponseFileFrequency ?? ''
+    evaluationApproaches: evaluationApproaches ?? [],
+    evaluationApproachOther: evaluationApproachOther ?? '',
+    evalutaionApproachNote: evalutaionApproachNote ?? '',
+    ccmInvolvment: ccmInvolvment ?? [],
+    ccmInvolvmentOther: ccmInvolvmentOther ?? '',
+    ccmInvolvmentNote: ccmInvolvmentNote ?? '',
+    dataNeededForMonitoring: dataNeededForMonitoring ?? [],
+    dataNeededForMonitoringOther: dataNeededForMonitoringOther ?? '',
+    dataNeededForMonitoringNote: dataNeededForMonitoringNote ?? '',
+    dataToSendParticicipants: dataToSendParticicipants ?? [],
+    dataToSendParticicipantsOther: dataToSendParticicipantsOther ?? '',
+    dataToSendParticicipantsNote: dataToSendParticicipantsNote ?? '',
+    shareCclfData: shareCclfData ?? null,
+    shareCclfDataNote: shareCclfDataNote ?? ''
   };
 
   return (
@@ -158,8 +183,14 @@ const IDDOCTesting = () => {
         enableReinitialize
         innerRef={formikRef}
       >
-        {(formikProps: FormikProps<IDDOCTestingFormType>) => {
-          const { errors, handleSubmit, setErrors, values } = formikProps;
+        {(formikProps: FormikProps<EvaluationFormType>) => {
+          const {
+            errors,
+            handleSubmit,
+            setErrors,
+            values,
+            setFieldValue
+          } = formikProps;
           const flatErrors = flattenErrors(errors);
 
           return (
@@ -184,109 +215,38 @@ const IDDOCTesting = () => {
 
               <Form
                 className="tablet:grid-col-6 margin-top-6"
-                data-testid="ops-eval-and-learning-iddoc-testing-form"
+                data-testid="ops-eval-and-learning-evaluation-form"
                 onSubmit={e => {
                   handleSubmit(e);
                 }}
               >
-                <h3>{t('testingQuestions')}</h3>
-
-                <Alert
-                  type="info"
-                  slim
-                  data-testid="mandatory-fields-alert"
-                  className="margin-bottom-4"
-                >
-                  <span className="mandatory-fields-alert__text">
-                    {t('ssmRequest')}
-                  </span>
-                </Alert>
-
-                <FieldGroup
-                  scrollElement="uatNeeds"
-                  className="margin-top-6"
-                  error={!!flatErrors.uatNeeds}
-                >
-                  <Label htmlFor="ops-eval-and-learning-uat-needs">
-                    {t('uatNeeds')}
-                  </Label>
-                  <FieldErrorMsg>{flatErrors.uatNeeds}</FieldErrorMsg>
-                  <Field
-                    as={TextAreaField}
-                    className="height-15"
-                    error={flatErrors.uatNeeds}
-                    id="ops-eval-and-learning-uat-needs"
-                    name="uatNeeds"
-                  />
-                </FieldGroup>
-
-                <FieldGroup
-                  scrollElement="stcNeeds"
-                  className="margin-top-6"
-                  error={!!flatErrors.stcNeeds}
-                >
-                  <Label htmlFor="ops-eval-and-learning-stc-needs">
-                    {t('stcNeeds')}
-                  </Label>
-                  <FieldErrorMsg>{flatErrors.stcNeeds}</FieldErrorMsg>
-                  <Field
-                    as={TextAreaField}
-                    className="height-15"
-                    error={flatErrors.stcNeeds}
-                    id="ops-eval-and-learning-stc-needs"
-                    name="stcNeeds"
-                  />
-                </FieldGroup>
-
-                <FieldGroup
-                  scrollElement="testingTimelines"
-                  className="margin-top-6"
-                  error={!!flatErrors.testingTimelines}
-                >
-                  <Label htmlFor="ops-eval-and-learning-testing-timelines">
-                    {t('testingTimelines')}
-                  </Label>
-                  <FieldErrorMsg>{flatErrors.testingTimelines}</FieldErrorMsg>
-                  <Field
-                    as={TextAreaField}
-                    className="height-15"
-                    error={flatErrors.testingTimelines}
-                    id="ops-eval-and-learning-testing-timelines"
-                    name="testingTimelines"
-                  />
-                </FieldGroup>
-
-                <AddNote
-                  id="ops-eval-and-learning-testing-note"
-                  field="testingNote"
-                />
-
-                <h3>{t('dataMonitoring')}</h3>
-
-                <FieldArray
-                  name="dataMonitoringFileTypes"
+                {/* <FieldArray
+                  name="providerLeaveMethod"
                   render={arrayHelpers => (
                     <>
-                      <legend className="usa-label maxw-none">
-                        {t('fileTypes')}
+                      <legend className="usa-label">
+                        {t('canProvidersLeave')}
                       </legend>
+                      <p className="text-base margin-0 line-height-body-3">
+                        {t('canProvidersLeaveInfo')}
+                      </p>
                       <FieldErrorMsg>
-                        {flatErrors.dataMonitoringFileTypes}
+                        {flatErrors.providerLeaveMethod}
                       </FieldErrorMsg>
 
-                      {Object.keys(MonitoringFileType)
+                      {Object.keys(ProviderLeaveType)
                         .sort(sortOtherEnum)
                         .map(type => {
                           return (
                             <Fragment key={type}>
                               <Field
                                 as={CheckboxField}
-                                id={`ops-eval-and-learning-data-monitoring-file-${type}`}
-                                name="dataMonitoringFileTypes"
-                                label={translateMonitoringFileType(type)}
+                                id={`participants-and-providers-leave-method-${type}`}
+                                name="providerLeaveMethod"
+                                label={translateProviderLeaveType(type)}
                                 value={type}
-                                checked={values?.dataMonitoringFileTypes.includes(
-                                  type as MonitoringFileType
+                                checked={values?.providerLeaveMethod.includes(
+                                  type as ProviderLeaveType
                                 )}
                                 onChange={(
                                   e: React.ChangeEvent<HTMLInputElement>
@@ -294,80 +254,44 @@ const IDDOCTesting = () => {
                                   if (e.target.checked) {
                                     arrayHelpers.push(e.target.value);
                                   } else {
-                                    const idx = values.dataMonitoringFileTypes.indexOf(
-                                      e.target.value as MonitoringFileType
+                                    const idx = values.providerLeaveMethod.indexOf(
+                                      e.target.value as ProviderLeaveType
                                     );
                                     arrayHelpers.remove(idx);
                                   }
                                 }}
                               />
-                              {type === 'OTHER' &&
-                                values.dataMonitoringFileTypes.includes(
-                                  'OTHER' as MonitoringFileType
-                                ) && (
-                                  <div className="margin-left-4 margin-top-neg-3">
+                              {type === ('OTHER' as ProviderLeaveType) &&
+                                values.providerLeaveMethod.includes(type) && (
+                                  <div className="margin-left-4 margin-top-neg-2">
                                     <Label
-                                      htmlFor="ops-eval-and-learning-data-monitoring-file-other"
+                                      htmlFor="participants-and-providers-leave-method-other"
                                       className="text-normal"
                                     >
                                       {h('pleaseSpecify')}
                                     </Label>
                                     <FieldErrorMsg>
-                                      {flatErrors.dataMonitoringFileOther}
+                                      {flatErrors.providerLeaveMethodOther}
                                     </FieldErrorMsg>
                                     <Field
                                       as={TextInput}
                                       className="maxw-none"
-                                      id="ops-eval-and-learning-data-monitoring-file-other"
+                                      id="participants-and-providers-leave-method-other"
                                       maxLength={50}
-                                      name="dataMonitoringFileOther"
+                                      name="providerLeaveMethodOther"
                                     />
                                   </div>
                                 )}
                             </Fragment>
                           );
                         })}
+                      <AddNote
+                        id="participants-and-providers-leave-method-note"
+                        field="providerLeaveMethodNote"
+                      />
                     </>
                   )}
-                />
-
-                <FieldGroup
-                  scrollElement="dataResponseType"
-                  className="margin-top-6"
-                  error={!!flatErrors.dataResponseType}
-                >
-                  <Label htmlFor="ops-eval-and-learning-data-response-type">
-                    {t('responseTypes')}
-                  </Label>
-                  <FieldErrorMsg>{flatErrors.dataResponseType}</FieldErrorMsg>
-                  <Field
-                    as={TextInput}
-                    error={!!flatErrors.dataResponseType}
-                    id="ops-eval-and-learning-data-response-type"
-                    maxLength={50}
-                    name="dataResponseType"
-                  />
-                </FieldGroup>
-
-                <FieldGroup
-                  scrollElement="dataResponseFileFrequency"
-                  className="margin-top-6"
-                  error={!!flatErrors.dataResponseFileFrequency}
-                >
-                  <Label htmlFor="ops-eval-and-learning-data-file-frequency">
-                    {t('fileFrequency')}
-                  </Label>
-                  <FieldErrorMsg>
-                    {flatErrors.dataResponseFileFrequency}
-                  </FieldErrorMsg>
-                  <Field
-                    as={TextInput}
-                    error={!!flatErrors.dataResponseFileFrequency}
-                    id="ops-eval-and-learning-data-file-frequency"
-                    maxLength={50}
-                    name="dataResponseFileFrequency"
-                  />
-                </FieldGroup>
+                /> */}
 
                 <div className="margin-top-6 margin-bottom-3">
                   <Button
@@ -409,7 +333,7 @@ const IDDOCTesting = () => {
       {data && (
         <PageNumber
           currentPage={renderCurrentPage(
-            4,
+            6,
             iddocSupport,
             isCCWInvolvement(ccmInvolvment)
           )}
@@ -424,4 +348,4 @@ const IDDOCTesting = () => {
   );
 };
 
-export default IDDOCTesting;
+export default Evaluation;

@@ -1,4 +1,4 @@
-import React, { Fragment, useRef, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
@@ -15,25 +15,22 @@ import {
   Radio,
   TextInput
 } from '@trussworks/react-uswds';
-import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
+import { Field, Form, Formik, FormikProps } from 'formik';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import AutoSave from 'components/shared/AutoSave';
-import CheckboxField from 'components/shared/CheckboxField';
 import DatePickerWarning from 'components/shared/DatePickerWarning';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
-import MultiSelect from 'components/shared/MultiSelect';
-import TextAreaField from 'components/shared/TextAreaField';
-import GetModelPlanOpsEvalAndLearning from 'queries/GetModelPlanOpsEvalAndLearning';
+import GetIDDOC from 'queries/GetModelPlanOpsEvalAndLearning';
 import {
-  GetModelPlanOpsEvalAndLearning as GetModelPlanOpsEvalAndLearningType,
-  GetModelPlanOpsEvalAndLearning_modelPlan_opsEvalAndLearning as ModelPlanOpsEvalAndLearningFormType
-} from 'queries/types/GetModelPlanOpsEvalAndLearning';
+  GetIDDOC as GetIDDOCType,
+  GetIDDOC_modelPlan_opsEvalAndLearning as IDDOCFormType
+} from 'queries/OpsEvalAndLearning/types/GetIDDOC';
 import { UpdateModelPlanOpsEvalAndLearningVariables } from 'queries/types/UpdateModelPlanOpsEvalAndLearning';
 import UpdateModelPlanOpsEvalAndLearning from 'queries/UpdateModelPlanOpsEvalAndLearning';
 import flattenErrors from 'utils/flattenErrors';
@@ -46,19 +43,14 @@ const IDDOC = () => {
   const { modelID } = useParams<{ modelID: string }>();
   const [dateInPast, setDateInPast] = useState(false);
 
-  const formikRef = useRef<FormikProps<ModelPlanOpsEvalAndLearningFormType>>(
-    null
-  );
+  const formikRef = useRef<FormikProps<IDDOCFormType>>(null);
   const history = useHistory();
 
-  const { data } = useQuery<GetModelPlanOpsEvalAndLearningType>(
-    GetModelPlanOpsEvalAndLearning,
-    {
-      variables: {
-        id: modelID
-      }
+  const { data } = useQuery<GetIDDOCType>(GetIDDOC, {
+    variables: {
+      id: modelID
     }
-  );
+  });
 
   const {
     id,
@@ -72,9 +64,7 @@ const IDDOC = () => {
     icdOwner,
     draftIcdDueDate,
     icdNote
-  } =
-    data?.modelPlan?.opsEvalAndLearning ||
-    ({} as ModelPlanOpsEvalAndLearningFormType);
+  } = data?.modelPlan?.opsEvalAndLearning || ({} as IDDOCFormType);
 
   const modelName = data?.modelPlan?.modelName || '';
 
@@ -83,13 +73,14 @@ const IDDOC = () => {
   );
 
   const handleFormSubmit = (
-    formikValues: ModelPlanOpsEvalAndLearningFormType,
+    formikValues: IDDOCFormType,
     redirect?: 'next' | 'back' | 'task-list'
   ) => {
+    const { id: updateId, __typename, ...changeValues } = formikValues;
     update({
       variables: {
-        id,
-        changes: formikValues
+        id: updateId,
+        changes: changeValues
       }
     })
       .then(response => {
@@ -110,7 +101,11 @@ const IDDOC = () => {
       });
   };
 
-  const initialValues = {
+  const initialValues: IDDOCFormType = {
+    __typename: 'PlanOpsEvalAndLearning',
+    id: id ?? '',
+    ccmInvolvment: ccmInvolvment ?? [],
+    iddocSupport: iddocSupport ?? null,
     technicalContactsIdentified: technicalContactsIdentified ?? null,
     technicalContactsIdentifiedDetail: technicalContactsIdentifiedDetail ?? '',
     technicalContactsIdentifiedNote: technicalContactsIdentifiedNote ?? '',
@@ -119,7 +114,7 @@ const IDDOC = () => {
     icdOwner: icdOwner ?? '',
     draftIcdDueDate: draftIcdDueDate ?? null,
     icdNote: icdNote ?? ''
-  } as ModelPlanOpsEvalAndLearningFormType;
+  };
 
   return (
     <>
@@ -162,7 +157,7 @@ const IDDOC = () => {
         enableReinitialize
         innerRef={formikRef}
       >
-        {(formikProps: FormikProps<ModelPlanOpsEvalAndLearningFormType>) => {
+        {(formikProps: FormikProps<IDDOCFormType>) => {
           const {
             errors,
             handleSubmit,
@@ -184,7 +179,7 @@ const IDDOC = () => {
               } else {
                 setDateInPast(false);
               }
-              delete errors[field as keyof ModelPlanOpsEvalAndLearningFormType];
+              delete errors[field as keyof IDDOCFormType];
             } catch (error) {
               setFieldError(field, t('validDate'));
             }

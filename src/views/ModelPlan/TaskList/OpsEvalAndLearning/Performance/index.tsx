@@ -22,11 +22,11 @@ import AutoSave from 'components/shared/AutoSave';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
-import GetModelPlanOpsEvalAndLearning from 'queries/GetModelPlanOpsEvalAndLearning';
+import GetPerformance from 'queries/OpsEvalAndLearning/GetPerformance';
 import {
-  GetModelPlanOpsEvalAndLearning as GetModelPlanOpsEvalAndLearningType,
-  GetModelPlanOpsEvalAndLearning_modelPlan_opsEvalAndLearning as ModelPlanOpsEvalAndLearningFormType
-} from 'queries/types/GetModelPlanOpsEvalAndLearning';
+  GetPerformance as GetPerformanceType,
+  GetPerformance_modelPlan_opsEvalAndLearning as PerformanceFormType
+} from 'queries/OpsEvalAndLearning/types/GetPerformance';
 import { UpdateModelPlanOpsEvalAndLearningVariables } from 'queries/types/UpdateModelPlanOpsEvalAndLearning';
 import UpdateModelPlanOpsEvalAndLearning from 'queries/UpdateModelPlanOpsEvalAndLearning';
 import { BenchmarkForPerformanceType } from 'types/graphql-global-types';
@@ -43,19 +43,14 @@ const Performance = () => {
   const { t: h } = useTranslation('draftModelPlan');
   const { modelID } = useParams<{ modelID: string }>();
 
-  const formikRef = useRef<FormikProps<ModelPlanOpsEvalAndLearningFormType>>(
-    null
-  );
+  const formikRef = useRef<FormikProps<PerformanceFormType>>(null);
   const history = useHistory();
 
-  const { data } = useQuery<GetModelPlanOpsEvalAndLearningType>(
-    GetModelPlanOpsEvalAndLearning,
-    {
-      variables: {
-        id: modelID
-      }
+  const { data } = useQuery<GetPerformanceType>(GetPerformance, {
+    variables: {
+      id: modelID
     }
-  );
+  });
 
   const {
     id,
@@ -75,9 +70,7 @@ const Performance = () => {
     appealPayments,
     appealOther,
     appealNote
-  } =
-    data?.modelPlan?.opsEvalAndLearning ||
-    ({} as ModelPlanOpsEvalAndLearningFormType);
+  } = data?.modelPlan?.opsEvalAndLearning || ({} as PerformanceFormType);
 
   const modelName = data?.modelPlan?.modelName || '';
 
@@ -86,13 +79,14 @@ const Performance = () => {
   );
 
   const handleFormSubmit = (
-    formikValues: ModelPlanOpsEvalAndLearningFormType,
+    formikValues: PerformanceFormType,
     redirect?: 'next' | 'back' | 'task-list'
   ) => {
+    const { id: updateId, __typename, ...changeValues } = formikValues;
     update({
       variables: {
-        id,
-        changes: formikValues
+        id: updateId,
+        changes: changeValues
       }
     })
       .then(response => {
@@ -102,7 +96,7 @@ const Performance = () => {
               `/models/${modelID}/task-list/ops-eval-and-learning/evaluation`
             );
           } else if (redirect === 'back') {
-            if (formikValues.iddocSupport) {
+            if (iddocSupport) {
               history.push(
                 `/models/${modelID}/task-list/ops-eval-and-learning/iddoc-monitoring`
               );
@@ -121,7 +115,11 @@ const Performance = () => {
       });
   };
 
-  const initialValues = {
+  const initialValues: PerformanceFormType = {
+    __typename: 'PlanOpsEvalAndLearning',
+    id: id ?? '',
+    ccmInvolvment: ccmInvolvment ?? [],
+    iddocSupport: iddocSupport ?? null,
     benchmarkForPerformance: benchmarkForPerformance ?? null,
     benchmarkForPerformanceNote: benchmarkForPerformanceNote ?? '',
     computePerformanceScores: computePerformanceScores ?? null,
@@ -136,7 +134,7 @@ const Performance = () => {
     appealPayments: appealPayments ?? null,
     appealOther: appealOther ?? null,
     appealNote: appealNote ?? ''
-  } as ModelPlanOpsEvalAndLearningFormType;
+  };
 
   return (
     <>
@@ -179,7 +177,7 @@ const Performance = () => {
         enableReinitialize
         innerRef={formikRef}
       >
-        {(formikProps: FormikProps<ModelPlanOpsEvalAndLearningFormType>) => {
+        {(formikProps: FormikProps<PerformanceFormType>) => {
           const {
             errors,
             handleSubmit,

@@ -118,7 +118,7 @@ const operationsEvaluationAndLearning = {
     no: 'No'
   },
   computeScores: 'Will you compute performance scores?',
-  riskAdjustments: 'Will you make risk adjustments?',
+  riskAdjustments: 'Will you make risk adjustments to the following?',
   performanceScores: 'Performance Scores',
   feedbackResults: 'Feedback Results',
   payments: 'Payments',
@@ -138,7 +138,7 @@ const operationsEvaluationAndLearning = {
     num5:
       'Description of credibility, smoothing, or blending adjustments made to rating cells'
   },
-  participantAppeal: 'Will participants be able to appeal?',
+  participantAppeal: 'Will participants be able to appeal the following?',
   evaluationApproach:
     'What type of evaluation approach are tou considering? Select all that apply.',
   approachOptions: {
@@ -146,10 +146,25 @@ const operationsEvaluationAndLearning = {
     identify: 'Identify a comparison/match group',
     interrupted: 'Interrupted time series',
     leverage:
-      'Leverage non-Medicare data (such as Medicaid data, external data sets)'
+      'Leverage non-Medicare data (such as Medicaid data, external data sets)',
+    other: 'Other'
   },
   dataNeeded:
     'What data do you need to monitor the model? Select all that apply.',
+  dataNeededOptions: {
+    siteVisits: 'Site visits',
+    medicareClaims: 'Medicare claims',
+    medicaidClaims: 'Medicaid claims',
+    encounterData: 'Encounter data',
+    noPayClaims: 'No pay claims',
+    qualityClaims: 'Quality claims-based measures',
+    qualityReported: 'Quality reported measures',
+    clinicalData: 'Clinical data',
+    nonClinical: 'Non-clinical data (e.g., surveys)',
+    nonMedical: 'Non-medical data (e.g., housing, nutrition)',
+    other: 'Other',
+    notPlanningToCollect: 'Not planning to collect data'
+  },
   validatedQuality:
     'Do you plan to develop a new validated quality measure for your model?',
   impactPayment: 'Does quality performance impact payment?',
@@ -157,6 +172,15 @@ const operationsEvaluationAndLearning = {
   additionalDataInfo:
     'Note: If you are not sure what current data is collected via provider billing, please ask Provider Billing Group (PBG)',
   dataToSend: 'What data will you send to participants? Select all that apply.',
+  dataToSendOptions: {
+    baseline: 'Baseline/historical data',
+    claims: 'Claims-level data',
+    beneficiary: 'Beneficiary-level data',
+    participant: 'Participant-level data',
+    provider: 'Provider-level data',
+    other: 'Other-MIPS data',
+    notPlanning: 'Not planning to send data'
+  },
   claimLineFeed:
     'Does the model require that identifiable Claim and Claim Line Feed (CCLFs) data need to be shared with participants?',
   reportingTiming: 'Data and reporting timing',
@@ -168,6 +192,12 @@ const operationsEvaluationAndLearning = {
   reportingFrequency:
     'What is the frequency of reporting either to you or from participants under the model?',
   ccw: 'Is Chronic Conditions Warehouse (CCW) involved in the model?',
+  ccwOptions: {
+    yesEval: 'Yes, for evaluation',
+    yesImpl: 'Yes, for implementation',
+    no: 'No',
+    other: 'Other'
+  },
   ccwSpecific: 'CCW specific questions',
   ccwSendFiles:
     'Will you need to send files between the CCW and other applications?',

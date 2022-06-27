@@ -631,6 +631,136 @@ export const translateBenchmarkForPerformanceType = (type: string) => {
   }
 };
 
+export const translateEvaluationApproachType = (type: string) => {
+  switch (type) {
+    case 'CONTROL_INTERVENTION':
+      return i18next.t(
+        'operationsEvaluationAndLearning:approachOptions.establish'
+      );
+    case 'COMPARISON_MATCH':
+      return i18next.t(
+        'operationsEvaluationAndLearning:approachOptions.identify'
+      );
+    case 'INTERRUPTED_TIME':
+      return i18next.t(
+        'operationsEvaluationAndLearning:approachOptions.interrupted'
+      );
+    case 'NON_MEDICARE_DATA':
+      return i18next.t(
+        'operationsEvaluationAndLearning:approachOptions.leverage'
+      );
+    case 'OTHER':
+      return i18next.t('operationsEvaluationAndLearning:approachOptions.other');
+    default:
+      return '';
+  }
+};
+
+export const translateCcmInvolvmentType = (type: string) => {
+  switch (type) {
+    case 'YES_EVALUATION':
+      return i18next.t('operationsEvaluationAndLearning:ccwOptions.yesEval');
+    case 'YES__IMPLEMENTATION':
+      return i18next.t('operationsEvaluationAndLearning:ccwOptions.yesImpl');
+    case 'NO':
+      return i18next.t('operationsEvaluationAndLearning:ccwOptions.no');
+    case 'OTHER':
+      return i18next.t('operationsEvaluationAndLearning:ccwOptions.other');
+    default:
+      return '';
+  }
+};
+
+export const translateDataForMonitoringType = (type: string) => {
+  switch (type) {
+    case 'SITE_VISITS':
+      return i18next.t(
+        'operationsEvaluationAndLearning:dataNeededOptions.siteVisits'
+      );
+    case 'MEDICARE_CLAIMS':
+      return i18next.t(
+        'operationsEvaluationAndLearning:dataNeededOptions.medicareClaims'
+      );
+    case 'MEDICAID_CLAIMS':
+      return i18next.t(
+        'operationsEvaluationAndLearning:dataNeededOptions.medicaidClaims'
+      );
+    case 'ENCOUNTER_DATA':
+      return i18next.t(
+        'operationsEvaluationAndLearning:dataNeededOptions.encounterData'
+      );
+    case 'NO_PAY_CLAIMS':
+      return i18next.t(
+        'operationsEvaluationAndLearning:dataNeededOptions.noPayClaims'
+      );
+    case 'QUALITY_CLAIMS_BASED_MEASURES':
+      return i18next.t(
+        'operationsEvaluationAndLearning:dataNeededOptions.qualityClaims'
+      );
+    case 'QUALITY_REPORTED_MEASURES':
+      return i18next.t(
+        'operationsEvaluationAndLearning:dataNeededOptions.qualityReported'
+      );
+    case 'CLINICAL_DATA':
+      return i18next.t(
+        'operationsEvaluationAndLearning:dataNeededOptions.clinicalData'
+      );
+    case 'NON_CLINICAL_DATA':
+      return i18next.t(
+        'operationsEvaluationAndLearning:dataNeededOptions.nonClinical'
+      );
+    case 'NON_MEDICAL_DATA':
+      return i18next.t(
+        'operationsEvaluationAndLearning:dataNeededOptions.nonMedical'
+      );
+    case 'OTHER':
+      return i18next.t(
+        'operationsEvaluationAndLearning:dataNeededOptions.other'
+      );
+    case 'NOT_PLANNING_TO_COLLECT_DATA':
+      return i18next.t(
+        'operationsEvaluationAndLearning:dataNeededOptions.notPlanningToCollect'
+      );
+    default:
+      return '';
+  }
+};
+
+export const translateDataToSendParticipantsType = (type: string) => {
+  switch (type) {
+    case 'BASELINE_HISTORICAL_DATA':
+      return i18next.t(
+        'operationsEvaluationAndLearning:dataToSendOptions.baseline'
+      );
+    case 'CLAIMS_LEVEL_DATA':
+      return i18next.t(
+        'operationsEvaluationAndLearning:dataToSendOptions.claims'
+      );
+    case 'BENEFICIARY_LEVEL_DATA':
+      return i18next.t(
+        'operationsEvaluationAndLearning:dataToSendOptions.beneficiary'
+      );
+    case 'PARTICIPANT_LEVEL_DATA':
+      return i18next.t(
+        'operationsEvaluationAndLearning:dataToSendOptions.participant'
+      );
+    case 'PROVIDER_LEVEL_DATA':
+      return i18next.t(
+        'operationsEvaluationAndLearning:dataToSendOptions.provider'
+      );
+    case 'OTHER_MIPS_DATA':
+      return i18next.t(
+        'operationsEvaluationAndLearning:dataToSendOptions.other'
+      );
+    case 'NOT_PLANNING_TO_SEND_DATA':
+      return i18next.t(
+        'operationsEvaluationAndLearning:dataToSendOptions.notPlanning'
+      );
+    default:
+      return '';
+  }
+};
+
 /**
  * Translate the document type API enum to a human readable string
  */
@@ -706,7 +836,9 @@ export const sortOtherEnum = (a: string, b: string) => {
     b === 'NO_SELECTING_PARTICIPANTS' ||
     b === 'NO_COMMUNICATION' ||
     b === 'NO_IDENTIFIERS' ||
-    b === 'NOT_APPLICABLE'
+    b === 'NOT_APPLICABLE' ||
+    b === 'NOT_PLANNING_TO_COLLECT_DATA' ||
+    b === 'NOT_PLANNING_TO_SEND_DATA'
   )
     return -1;
   if (a < b || b === 'OTHER') {

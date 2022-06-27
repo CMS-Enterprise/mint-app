@@ -29,13 +29,13 @@ import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import MultiSelect from 'components/shared/MultiSelect';
 import TextAreaField from 'components/shared/TextAreaField';
-import GetModelPlanOpsEvalAndLearning from 'queries/GetModelPlanOpsEvalAndLearning';
+import GetOpsEvalAndLearning from 'queries/OpsEvalAndLearning/GetOpsEvalAndLearning';
 import {
-  GetModelPlanOpsEvalAndLearning as GetModelPlanOpsEvalAndLearningType,
-  GetModelPlanOpsEvalAndLearning_modelPlan_opsEvalAndLearning as ModelPlanOpsEvalAndLearningFormType
-} from 'queries/types/GetModelPlanOpsEvalAndLearning';
-import { UpdateModelPlanOpsEvalAndLearningVariables } from 'queries/types/UpdateModelPlanOpsEvalAndLearning';
-import UpdateModelPlanOpsEvalAndLearning from 'queries/UpdateModelPlanOpsEvalAndLearning';
+  GetOpsEvalAndLearning as GetOpsEvalAndLearningType,
+  GetOpsEvalAndLearning_modelPlan_opsEvalAndLearning as OpsEvalAndLearningFormType
+} from 'queries/OpsEvalAndLearning/types/GetOpsEvalAndLearning';
+import { UpdatePlanOpsEvalAndLearningVariables } from 'queries/OpsEvalAndLearning/types/UpdatePlanOpsEvalAndLearning';
+import UpdatePlanOpsEvalAndLearning from 'queries/OpsEvalAndLearning/UpdatePlanOpsEvalAndLearning';
 import {
   AgencyOrStateHelpType,
   CcmInvolvmentType,
@@ -52,6 +52,7 @@ import {
 } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
 
+import Evaluation from './Evaluation';
 import IDDOC from './IDDOC';
 import IDDOCMonitoring from './IDDOCMonitoring';
 import IDDOCTesting from './IDDOCTesting';
@@ -92,19 +93,15 @@ export const OpsEvalAndLearningContent = () => {
   const { t: h } = useTranslation('draftModelPlan');
   const { modelID } = useParams<{ modelID: string }>();
 
-  const formikRef = useRef<FormikProps<ModelPlanOpsEvalAndLearningFormType>>(
-    null
-  );
+  const formikRef = useRef<FormikProps<OpsEvalAndLearningFormType>>(null);
+
   const history = useHistory();
 
-  const { data } = useQuery<GetModelPlanOpsEvalAndLearningType>(
-    GetModelPlanOpsEvalAndLearning,
-    {
-      variables: {
-        id: modelID
-      }
+  const { data } = useQuery<GetOpsEvalAndLearningType>(GetOpsEvalAndLearning, {
+    variables: {
+      id: modelID
     }
-  );
+  });
 
   const {
     id,
@@ -123,24 +120,23 @@ export const OpsEvalAndLearningContent = () => {
     contractorSupportNote,
     iddocSupport,
     iddocSupportNote
-  } =
-    data?.modelPlan?.opsEvalAndLearning ||
-    ({} as ModelPlanOpsEvalAndLearningFormType);
+  } = data?.modelPlan?.opsEvalAndLearning || ({} as OpsEvalAndLearningFormType);
 
   const modelName = data?.modelPlan?.modelName || '';
 
-  const [update] = useMutation<UpdateModelPlanOpsEvalAndLearningVariables>(
-    UpdateModelPlanOpsEvalAndLearning
+  const [update] = useMutation<UpdatePlanOpsEvalAndLearningVariables>(
+    UpdatePlanOpsEvalAndLearning
   );
 
   const handleFormSubmit = (
-    formikValues: ModelPlanOpsEvalAndLearningFormType,
+    formikValues: OpsEvalAndLearningFormType,
     redirect?: 'next' | 'back'
   ) => {
+    const { id: updateId, __typename, ...changeValues } = formikValues;
     update({
       variables: {
-        id,
-        changes: formikValues
+        id: updateId,
+        changes: changeValues
       }
     })
       .then(response => {
@@ -165,14 +161,17 @@ export const OpsEvalAndLearningContent = () => {
       });
   };
 
-  const initialValues = {
+  const initialValues: OpsEvalAndLearningFormType = {
+    __typename: 'PlanOpsEvalAndLearning',
+    id: id ?? '',
+    ccmInvolvment: ccmInvolvment ?? [],
     agencyOrStateHelp: agencyOrStateHelp ?? [],
     agencyOrStateHelpOther: agencyOrStateHelpOther ?? '',
     agencyOrStateHelpNote: agencyOrStateHelpNote ?? '',
     stakeholders: stakeholders ?? [],
     stakeholdersOther: stakeholdersOther ?? '',
     stakeholdersNote: stakeholdersNote ?? '',
-    helpdeskUse: helpdeskUse ?? [],
+    helpdeskUse: helpdeskUse ?? null,
     helpdeskUseNote: helpdeskUseNote ?? '',
     contractorSupport: contractorSupport ?? [],
     contractorSupportOther: contractorSupportOther ?? '',
@@ -180,7 +179,7 @@ export const OpsEvalAndLearningContent = () => {
     contractorSupportNote: contractorSupportNote ?? '',
     iddocSupport: iddocSupport ?? null,
     iddocSupportNote: iddocSupportNote ?? ''
-  } as ModelPlanOpsEvalAndLearningFormType;
+  };
 
   return (
     <>
@@ -223,7 +222,7 @@ export const OpsEvalAndLearningContent = () => {
         enableReinitialize
         innerRef={formikRef}
       >
-        {(formikProps: FormikProps<ModelPlanOpsEvalAndLearningFormType>) => {
+        {(formikProps: FormikProps<OpsEvalAndLearningFormType>) => {
           const {
             errors,
             handleSubmit,
@@ -645,11 +644,11 @@ export const OpsEvalAndLearning = () => {
               exact
               render={() => <Performance />}
             />
-            {/* <Route
+            <Route
               path="/models/:modelID/task-list/ops-eval-and-learning/evaluation"
               exact
-              render={() => <ProviderOptions />}
-            /> */}
+              render={() => <Evaluation />}
+            />
             {/* <Route
               path="/models/:modelID/task-list/ops-eval-and-learning/ccw-and-quality"
               exact

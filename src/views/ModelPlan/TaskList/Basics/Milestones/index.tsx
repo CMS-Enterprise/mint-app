@@ -153,7 +153,7 @@ const Milestones = () => {
         data-testid="model-plan-name"
       >
         <Trans i18nKey="modelPlanTaskList:subheading">
-          indexZero {{ modelName }} indexTwo
+          indexZero {modelName} indexTwo
         </Trans>
       </p>
       <p className="margin-bottom-2 font-body-md line-height-sans-4">
