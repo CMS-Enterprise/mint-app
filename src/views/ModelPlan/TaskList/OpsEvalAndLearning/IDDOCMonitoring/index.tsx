@@ -1,9 +1,8 @@
-import React, { Fragment, useRef } from 'react';
+import React, { useRef } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
 import {
-  Alert,
   Breadcrumb,
   BreadcrumbBar,
   BreadcrumbLink,
@@ -14,18 +13,16 @@ import {
   Radio,
   TextInput
 } from '@trussworks/react-uswds';
-import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
+import { Field, Form, Formik, FormikProps } from 'formik';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import AutoSave from 'components/shared/AutoSave';
-import CheckboxField from 'components/shared/CheckboxField';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
-import TextAreaField from 'components/shared/TextAreaField';
 import GetModelPlanOpsEvalAndLearning from 'queries/GetModelPlanOpsEvalAndLearning';
 import {
   GetModelPlanOpsEvalAndLearning as GetModelPlanOpsEvalAndLearningType,
@@ -35,10 +32,7 @@ import { UpdateModelPlanOpsEvalAndLearningVariables } from 'queries/types/Update
 import UpdateModelPlanOpsEvalAndLearning from 'queries/UpdateModelPlanOpsEvalAndLearning';
 import { DataFullTimeOrIncrementalType } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
-import {
-  sortOtherEnum,
-  translateDataFullTimeOrIncrementalType
-} from 'utils/modelPlan';
+import { translateDataFullTimeOrIncrementalType } from 'utils/modelPlan';
 
 import { isCCWInvolvement, renderCurrentPage, renderTotalPages } from '..';
 

@@ -612,6 +612,25 @@ export const translateDataFullTimeOrIncrementalType = (type: string) => {
   }
 };
 
+export const translateBenchmarkForPerformanceType = (type: string) => {
+  switch (type) {
+    case 'YES_RECONCILE':
+      return i18next.t(
+        'operationsEvaluationAndLearning:establishBenchmarkOptions.reconcile'
+      );
+    case 'YES_NO_RECONCILE':
+      return i18next.t(
+        'operationsEvaluationAndLearning:establishBenchmarkOptions.notReconcile'
+      );
+    case 'NO':
+      return i18next.t(
+        'operationsEvaluationAndLearning:establishBenchmarkOptions.no'
+      );
+    default:
+      return '';
+  }
+};
+
 /**
  * Translate the document type API enum to a human readable string
  */

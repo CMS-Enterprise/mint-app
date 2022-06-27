@@ -113,7 +113,9 @@ const operationsEvaluationAndLearning = {
   establishBenchmark: 'Will you establish a benchmark to capture performance?',
   establishBenchmarkOptions: {
     reconcile: 'Yes, and we will reconcile actual performance against it',
-    notReconcile: 'Yes, but we will not reconcile actual performance against it'
+    notReconcile:
+      'Yes, but we will not reconcile actual performance against it',
+    no: 'No'
   },
   computeScores: 'Will you compute performance scores?',
   riskAdjustments: 'Will you make risk adjustments?',
