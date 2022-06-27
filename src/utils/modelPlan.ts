@@ -574,6 +574,33 @@ export const translateContractorSupportType = (type: string) => {
   }
 };
 
+export const translateMonitoringFileType = (type: string) => {
+  switch (type) {
+    case 'BENEFICIARY':
+      return i18next.t(
+        'operationsEvaluationAndLearning:fileTypesOptions.beneficiary'
+      );
+    case 'PROVIDER':
+      return i18next.t(
+        'operationsEvaluationAndLearning:fileTypesOptions.provider'
+      );
+    case 'PART_A':
+      return i18next.t(
+        'operationsEvaluationAndLearning:fileTypesOptions.partA'
+      );
+    case 'PART_B':
+      return i18next.t(
+        'operationsEvaluationAndLearning:fileTypesOptions.partB'
+      );
+    case 'OTHER':
+      return i18next.t(
+        'operationsEvaluationAndLearning:fileTypesOptions.other'
+      );
+    default:
+      return '';
+  }
+};
+
 /**
  * Translate the document type API enum to a human readable string
  */

@@ -387,7 +387,7 @@ const IDDOC = () => {
 
                     <AddNote
                       id="ops-eval-and-learning-icd-due-date-note"
-                      field="draftIcdDueDateNote"
+                      field="icdNote"
                     />
                   </FieldGroup>
                 )}
@@ -432,7 +432,7 @@ const IDDOC = () => {
       {data && (
         <PageNumber
           currentPage={renderCurrentPage(
-            1,
+            2,
             iddocSupport,
             isCCWInvolvement(ccmInvolvment)
           )}

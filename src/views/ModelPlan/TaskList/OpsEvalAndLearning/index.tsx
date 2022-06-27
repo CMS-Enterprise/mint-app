@@ -53,6 +53,7 @@ import {
 import { NotFoundPartial } from 'views/NotFound';
 
 import IDDOC from './IDDOC';
+import IDDOCTesting from './IDDOCTesting';
 
 // Used to render the total pages based on certain answers populated within this task list item
 export const renderTotalPages = (
@@ -143,9 +144,15 @@ export const OpsEvalAndLearningContent = () => {
       .then(response => {
         if (!response?.errors) {
           if (redirect === 'next') {
-            history.push(
-              `/models/${modelID}/task-list/ops-eval-and-learning/iddoc`
-            );
+            if (formikValues.iddocSupport) {
+              history.push(
+                `/models/${modelID}/task-list/ops-eval-and-learning/iddoc`
+              );
+            } else {
+              history.push(
+                `/models/${modelID}/task-list/ops-eval-and-learning/performance`
+              );
+            }
           } else if (redirect === 'back') {
             history.push(`/models/${modelID}/task-list/`);
           }
@@ -621,11 +628,11 @@ export const OpsEvalAndLearning = () => {
               exact
               render={() => <IDDOC />}
             />
-            {/* <Route
+            <Route
               path="/models/:modelID/task-list/ops-eval-and-learning/iddoc-testing"
               exact
-              render={() => <Communication />}
-            /> */}
+              render={() => <IDDOCTesting />}
+            />
             {/* <Route
               path="/models/:modelID/task-list/ops-eval-and-learning/iddoc-monitoring"
               exact

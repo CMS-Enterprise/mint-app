@@ -1,5 +1,6 @@
 const operationsEvaluationAndLearning = {
   heading: 'Operations, evaluation, and learning',
+  breadcrumb: 'Operations, evaluation, and learning',
   anotherAgency:
     'Will another Agency or State help design/operate the model? Select all that apply.',
   anotherAgencyOptions: {
@@ -81,15 +82,22 @@ const operationsEvaluationAndLearning = {
   icdOwner: 'ICD owner',
   draftIDC: 'Draft ICD required by',
   validDate: 'Please use a valid date format',
-  testingQuestions: 'ACO-OS testing specific questions',
+  testingQuestions: 'Testing questions',
   ssmRequest:
     'SSM request to begin analysis at least 1 year before implementation',
-  uatNeeds: 'UAT-test data needs',
-  stcNeeds: 'STC-test needs',
+  uatNeeds: 'User Acceptance Testing (UAT) – test data needs',
+  stcNeeds: 'STC – test data needs',
   testingTimelines: 'Define the testing timelines',
-  dataMonitoring: 'ACO-OS data monitoring specific questions',
+  dataMonitoring: 'Data monitoring questions',
   fileTypes: 'What types of files? Select all that apply.',
-  responseTypes: 'What types of responses? Select all that apply.',
+  fileTypesOptions: {
+    beneficiary: 'Beneficiary',
+    provider: 'Provider',
+    partA: 'Part A',
+    partB: 'Part B',
+    other: 'Other'
+  },
+  responseTypes: 'What types of responses?',
   fileFrequency: 'Frequency of files?',
   timeFrequency: 'Full time or incremental?',
   fullTime: 'Full time',
