@@ -601,6 +601,17 @@ export const translateMonitoringFileType = (type: string) => {
   }
 };
 
+export const translateDataFullTimeOrIncrementalType = (type: string) => {
+  switch (type) {
+    case 'FULL_TIME':
+      return i18next.t('operationsEvaluationAndLearning:fullTime');
+    case 'INCREMENTAL':
+      return i18next.t('operationsEvaluationAndLearning:incremental');
+    default:
+      return '';
+  }
+};
+
 /**
  * Translate the document type API enum to a human readable string
  */

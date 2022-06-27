@@ -8,8 +8,10 @@ import {
   BreadcrumbBar,
   BreadcrumbLink,
   Button,
+  Fieldset,
   IconArrowBack,
   Label,
+  Radio,
   TextInput
 } from '@trussworks/react-uswds';
 import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
@@ -31,13 +33,16 @@ import {
 } from 'queries/types/GetModelPlanOpsEvalAndLearning';
 import { UpdateModelPlanOpsEvalAndLearningVariables } from 'queries/types/UpdateModelPlanOpsEvalAndLearning';
 import UpdateModelPlanOpsEvalAndLearning from 'queries/UpdateModelPlanOpsEvalAndLearning';
-import { MonitoringFileType } from 'types/graphql-global-types';
+import { DataFullTimeOrIncrementalType } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
-import { sortOtherEnum, translateMonitoringFileType } from 'utils/modelPlan';
+import {
+  sortOtherEnum,
+  translateDataFullTimeOrIncrementalType
+} from 'utils/modelPlan';
 
 import { isCCWInvolvement, renderCurrentPage, renderTotalPages } from '..';
 
-const IDDOCTesting = () => {
+const IDDOCMonitoring = () => {
   const { t } = useTranslation('operationsEvaluationAndLearning');
   const { t: h } = useTranslation('draftModelPlan');
   const { modelID } = useParams<{ modelID: string }>();
@@ -60,14 +65,13 @@ const IDDOCTesting = () => {
     id,
     iddocSupport,
     ccmInvolvment,
-    uatNeeds,
-    stcNeeds,
-    testingTimelines,
-    testingNote,
-    dataMonitoringFileTypes,
-    dataMonitoringFileOther,
-    dataResponseType,
-    dataResponseFileFrequency
+    dataFullTimeOrIncremental,
+    eftSetUp,
+    unsolicitedAdjustmentsIncluded,
+    dataFlowDiagramsNeeded,
+    produceBenefitEnhancementFiles,
+    fileNamingConventions,
+    dataMonitoringNote
   } =
     data?.modelPlan?.opsEvalAndLearning ||
     ({} as ModelPlanOpsEvalAndLearningFormType);
@@ -92,11 +96,11 @@ const IDDOCTesting = () => {
         if (!response?.errors) {
           if (redirect === 'next') {
             history.push(
-              `/models/${modelID}/task-list/ops-eval-and-learning/iddoc-monitoring`
+              `/models/${modelID}/task-list/ops-eval-and-learning/performance`
             );
           } else if (redirect === 'back') {
             history.push(
-              `/models/${modelID}/task-list/ops-eval-and-learning/iddoc`
+              `/models/${modelID}/task-list/ops-eval-and-learning/iddoc-testing`
             );
           } else if (redirect === 'task-list') {
             history.push(`/models/${modelID}/task-list`);
@@ -109,14 +113,13 @@ const IDDOCTesting = () => {
   };
 
   const initialValues = {
-    uatNeeds: uatNeeds ?? '',
-    stcNeeds: stcNeeds ?? '',
-    testingTimelines: testingTimelines ?? '',
-    testingNote: testingNote ?? '',
-    dataMonitoringFileTypes: dataMonitoringFileTypes ?? [],
-    dataMonitoringFileOther: dataMonitoringFileOther ?? '',
-    dataResponseType: dataResponseType ?? '',
-    dataResponseFileFrequency: dataResponseFileFrequency ?? ''
+    dataFullTimeOrIncremental: dataFullTimeOrIncremental ?? null,
+    eftSetUp: eftSetUp ?? null,
+    unsolicitedAdjustmentsIncluded: unsolicitedAdjustmentsIncluded ?? null,
+    dataFlowDiagramsNeeded: dataFlowDiagramsNeeded ?? null,
+    produceBenefitEnhancementFiles: produceBenefitEnhancementFiles ?? null,
+    fileNamingConventions: fileNamingConventions ?? '',
+    dataMonitoringNote: dataMonitoringNote ?? ''
   } as ModelPlanOpsEvalAndLearningFormType;
 
   return (
@@ -161,7 +164,13 @@ const IDDOCTesting = () => {
         innerRef={formikRef}
       >
         {(formikProps: FormikProps<ModelPlanOpsEvalAndLearningFormType>) => {
-          const { errors, handleSubmit, setErrors, values } = formikProps;
+          const {
+            errors,
+            handleSubmit,
+            setErrors,
+            values,
+            setFieldValue
+          } = formikProps;
           const flatErrors = flattenErrors(errors);
 
           return (
@@ -186,190 +195,180 @@ const IDDOCTesting = () => {
 
               <Form
                 className="tablet:grid-col-6 margin-top-6"
-                data-testid="ops-eval-and-learning-iddoc-testing-form"
+                data-testid="ops-eval-and-learning-iddoc-monitoring-form"
                 onSubmit={e => {
                   handleSubmit(e);
                 }}
               >
-                <h3>{t('testingQuestions')}</h3>
-
-                <Alert
-                  type="info"
-                  slim
-                  data-testid="mandatory-fields-alert"
-                  className="margin-bottom-4"
-                >
-                  <span className="mandatory-fields-alert__text">
-                    {t('ssmRequest')}
-                  </span>
-                </Alert>
-
                 <FieldGroup
-                  scrollElement="uatNeeds"
-                  className="margin-top-6"
-                  error={!!flatErrors.uatNeeds}
+                  scrollElement="dataFullTimeOrIncremental"
+                  error={!!flatErrors.dataFullTimeOrIncremental}
                 >
-                  <Label htmlFor="ops-eval-and-learning-uat-needs">
-                    {t('uatNeeds')}
+                  <Label htmlFor="ops-eval-and-learning-fulltime-or-incremental">
+                    {t('establishBenchmark')}
                   </Label>
-                  <FieldErrorMsg>{flatErrors.uatNeeds}</FieldErrorMsg>
-                  <Field
-                    as={TextAreaField}
-                    className="height-15"
-                    error={flatErrors.uatNeeds}
-                    id="ops-eval-and-learning-uat-needs"
-                    name="uatNeeds"
-                  />
+                  <FieldErrorMsg>
+                    {flatErrors.dataFullTimeOrIncremental}
+                  </FieldErrorMsg>
+                  <Fieldset>
+                    {Object.keys(DataFullTimeOrIncrementalType).map(key => (
+                      <Field
+                        as={Radio}
+                        key={key}
+                        id={`ops-eval-and-learning-fulltime-or-incremental-${key}`}
+                        name="dataFullTimeOrIncremental"
+                        label={translateDataFullTimeOrIncrementalType(key)}
+                        value={key}
+                        checked={values.dataFullTimeOrIncremental === key}
+                        onChange={() => {
+                          setFieldValue('dataFullTimeOrIncremental', key);
+                        }}
+                      />
+                    ))}
+                  </Fieldset>
                 </FieldGroup>
 
                 <FieldGroup
-                  scrollElement="stcNeeds"
+                  scrollElement="eftSetUp"
+                  error={!!flatErrors.eftSetUp}
                   className="margin-top-6"
-                  error={!!flatErrors.stcNeeds}
                 >
-                  <Label htmlFor="ops-eval-and-learning-stc-needs">
-                    {t('stcNeeds')}
+                  <Label htmlFor="ops-eval-and-learning-eft-setup">
+                    {t('eftAndConnectivity')}
                   </Label>
-                  <FieldErrorMsg>{flatErrors.stcNeeds}</FieldErrorMsg>
-                  <Field
-                    as={TextAreaField}
-                    className="height-15"
-                    error={flatErrors.stcNeeds}
-                    id="ops-eval-and-learning-stc-needs"
-                    name="stcNeeds"
-                  />
+                  <FieldErrorMsg>{flatErrors.eftSetUp}</FieldErrorMsg>
+                  <Fieldset>
+                    {[true, false].map(key => (
+                      <Field
+                        as={Radio}
+                        key={key}
+                        id={`ops-eval-and-learning-eft-setup-${key}`}
+                        name="eftSetUp"
+                        label={key ? h('yes') : h('no')}
+                        value={key ? 'YES' : 'NO'}
+                        checked={values.eftSetUp === key}
+                        onChange={() => {
+                          setFieldValue('eftSetUp', key);
+                        }}
+                      />
+                    ))}
+                  </Fieldset>
                 </FieldGroup>
 
                 <FieldGroup
-                  scrollElement="testingTimelines"
+                  scrollElement="unsolicitedAdjustmentsIncluded"
+                  error={!!flatErrors.unsolicitedAdjustmentsIncluded}
                   className="margin-top-6"
-                  error={!!flatErrors.testingTimelines}
                 >
-                  <Label htmlFor="ops-eval-and-learning-testing-timelines">
-                    {t('testingTimelines')}
+                  <Label htmlFor="ops-eval-and-learning-unsolicted-adjustment-included">
+                    {t('adjustments')}
                   </Label>
-                  <FieldErrorMsg>{flatErrors.testingTimelines}</FieldErrorMsg>
+                  <FieldErrorMsg>
+                    {flatErrors.unsolicitedAdjustmentsIncluded}
+                  </FieldErrorMsg>
+                  <Fieldset>
+                    {[true, false].map(key => (
+                      <Field
+                        as={Radio}
+                        key={key}
+                        id={`ops-eval-and-learning-unsolicted-adjustment-included-${key}`}
+                        name="unsolicitedAdjustmentsIncluded"
+                        label={key ? h('yes') : h('no')}
+                        value={key ? 'YES' : 'NO'}
+                        checked={values.unsolicitedAdjustmentsIncluded === key}
+                        onChange={() => {
+                          setFieldValue('unsolicitedAdjustmentsIncluded', key);
+                        }}
+                      />
+                    ))}
+                  </Fieldset>
+                </FieldGroup>
+
+                <FieldGroup
+                  scrollElement="dataFlowDiagramsNeeded"
+                  error={!!flatErrors.dataFlowDiagramsNeeded}
+                  className="margin-top-6"
+                >
+                  <Label htmlFor="ops-eval-and-learning-diagrams-needed">
+                    {t('diagrams')}
+                  </Label>
+                  <FieldErrorMsg>
+                    {flatErrors.dataFlowDiagramsNeeded}
+                  </FieldErrorMsg>
+                  <Fieldset>
+                    {[true, false].map(key => (
+                      <Field
+                        as={Radio}
+                        key={key}
+                        id={`ops-eval-and-learning-diagrams-needed-${key}`}
+                        name="dataFlowDiagramsNeeded"
+                        label={key ? h('yes') : h('no')}
+                        value={key ? 'YES' : 'NO'}
+                        checked={values.dataFlowDiagramsNeeded === key}
+                        onChange={() => {
+                          setFieldValue('dataFlowDiagramsNeeded', key);
+                        }}
+                      />
+                    ))}
+                  </Fieldset>
+                </FieldGroup>
+
+                <FieldGroup
+                  scrollElement="produceBenefitEnhancementFiles"
+                  error={!!flatErrors.produceBenefitEnhancementFiles}
+                  className="margin-top-6"
+                >
+                  <Label htmlFor="ops-eval-and-learning-produce-benefit-files">
+                    {t('benefitEnhancement')}
+                  </Label>
+                  <p className="text-base margin-y-1">
+                    {t('benefitEnhancementInfo')}
+                  </p>
+                  <FieldErrorMsg>
+                    {flatErrors.produceBenefitEnhancementFiles}
+                  </FieldErrorMsg>
+                  <Fieldset>
+                    {[true, false].map(key => (
+                      <Field
+                        as={Radio}
+                        key={key}
+                        id={`ops-eval-and-learning-produce-benefit-files-${key}`}
+                        name="produceBenefitEnhancementFiles"
+                        label={key ? h('yes') : h('no')}
+                        value={key ? 'YES' : 'NO'}
+                        checked={values.produceBenefitEnhancementFiles === key}
+                        onChange={() => {
+                          setFieldValue('produceBenefitEnhancementFiles', key);
+                        }}
+                      />
+                    ))}
+                  </Fieldset>
+                </FieldGroup>
+
+                <FieldGroup
+                  scrollElement="fileNamingConventions"
+                  className="margin-top-6"
+                  error={!!flatErrors.fileNamingConventions}
+                >
+                  <Label htmlFor="ops-eval-and-learning-file-naming-convention">
+                    {t('namingConventions')}
+                  </Label>
+                  <FieldErrorMsg>
+                    {flatErrors.fileNamingConventions}
+                  </FieldErrorMsg>
                   <Field
-                    as={TextAreaField}
-                    className="height-15"
-                    error={flatErrors.testingTimelines}
-                    id="ops-eval-and-learning-testing-timelines"
-                    name="testingTimelines"
+                    as={TextInput}
+                    error={!!flatErrors.fileNamingConventions}
+                    id="ops-eval-and-learning-file-naming-convention"
+                    maxLength={50}
+                    name="fileNamingConventions"
                   />
                 </FieldGroup>
 
                 <AddNote
-                  id="ops-eval-and-learning-testing-note"
-                  field="testingNote"
+                  id="ops-eval-and-learning-data-monitoring-note"
+                  field="dataMonitoringNote"
                 />
-
-                <h3>{t('dataMonitoring')}</h3>
-
-                <FieldArray
-                  name="dataMonitoringFileTypes"
-                  render={arrayHelpers => (
-                    <>
-                      <legend className="usa-label maxw-none">
-                        {t('fileTypes')}
-                      </legend>
-                      <FieldErrorMsg>
-                        {flatErrors.dataMonitoringFileTypes}
-                      </FieldErrorMsg>
-
-                      {Object.keys(MonitoringFileType)
-                        .sort(sortOtherEnum)
-                        .map(type => {
-                          return (
-                            <Fragment key={type}>
-                              <Field
-                                as={CheckboxField}
-                                id={`ops-eval-and-learning-data-monitoring-file-${type}`}
-                                name="dataMonitoringFileTypes"
-                                label={translateMonitoringFileType(type)}
-                                value={type}
-                                checked={values?.dataMonitoringFileTypes.includes(
-                                  type as MonitoringFileType
-                                )}
-                                onChange={(
-                                  e: React.ChangeEvent<HTMLInputElement>
-                                ) => {
-                                  if (e.target.checked) {
-                                    arrayHelpers.push(e.target.value);
-                                  } else {
-                                    const idx = values.dataMonitoringFileTypes.indexOf(
-                                      e.target.value as MonitoringFileType
-                                    );
-                                    arrayHelpers.remove(idx);
-                                  }
-                                }}
-                              />
-                              {type === 'OTHER' &&
-                                values.dataMonitoringFileTypes.includes(
-                                  'OTHER' as MonitoringFileType
-                                ) && (
-                                  <div className="margin-left-4 margin-top-neg-3">
-                                    <Label
-                                      htmlFor="ops-eval-and-learning-data-monitoring-file-other"
-                                      className="text-normal"
-                                    >
-                                      {h('pleaseSpecify')}
-                                    </Label>
-                                    <FieldErrorMsg>
-                                      {flatErrors.dataMonitoringFileOther}
-                                    </FieldErrorMsg>
-                                    <Field
-                                      as={TextInput}
-                                      className="maxw-none"
-                                      id="ops-eval-and-learning-data-monitoring-file-other"
-                                      maxLength={50}
-                                      name="dataMonitoringFileOther"
-                                    />
-                                  </div>
-                                )}
-                            </Fragment>
-                          );
-                        })}
-                    </>
-                  )}
-                />
-
-                <FieldGroup
-                  scrollElement="dataResponseType"
-                  className="margin-top-6"
-                  error={!!flatErrors.dataResponseType}
-                >
-                  <Label htmlFor="ops-eval-and-learning-data-response-type">
-                    {t('responseTypes')}
-                  </Label>
-                  <FieldErrorMsg>{flatErrors.dataResponseType}</FieldErrorMsg>
-                  <Field
-                    as={TextInput}
-                    error={!!flatErrors.dataResponseType}
-                    id="ops-eval-and-learning-data-response-type"
-                    maxLength={50}
-                    name="dataResponseType"
-                  />
-                </FieldGroup>
-
-                <FieldGroup
-                  scrollElement="dataResponseFileFrequency"
-                  className="margin-top-6"
-                  error={!!flatErrors.dataResponseFileFrequency}
-                >
-                  <Label htmlFor="ops-eval-and-learning-data-file-frequency">
-                    {t('fileFrequency')}
-                  </Label>
-                  <FieldErrorMsg>
-                    {flatErrors.dataResponseFileFrequency}
-                  </FieldErrorMsg>
-                  <Field
-                    as={TextInput}
-                    error={!!flatErrors.dataResponseFileFrequency}
-                    id="ops-eval-and-learning-data-file-frequency"
-                    maxLength={50}
-                    name="dataResponseFileFrequency"
-                  />
-                </FieldGroup>
 
                 <div className="margin-top-6 margin-bottom-3">
                   <Button
@@ -426,4 +425,4 @@ const IDDOCTesting = () => {
   );
 };
 
-export default IDDOCTesting;
+export default IDDOCMonitoring;

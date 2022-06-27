@@ -53,6 +53,7 @@ import {
 import { NotFoundPartial } from 'views/NotFound';
 
 import IDDOC from './IDDOC';
+import IDDOCMonitoring from './IDDOCMonitoring';
 import IDDOCTesting from './IDDOCTesting';
 
 // Used to render the total pages based on certain answers populated within this task list item
@@ -633,11 +634,11 @@ export const OpsEvalAndLearning = () => {
               exact
               render={() => <IDDOCTesting />}
             />
-            {/* <Route
+            <Route
               path="/models/:modelID/task-list/ops-eval-and-learning/iddoc-monitoring"
               exact
-              render={() => <Coordination />}
-            /> */}
+              render={() => <IDDOCMonitoring />}
+            />
             {/* <Route
               path="/models/:modelID/task-list/ops-eval-and-learning/performance"
               exact

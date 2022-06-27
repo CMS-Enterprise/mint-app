@@ -102,10 +102,13 @@ const operationsEvaluationAndLearning = {
   timeFrequency: 'Full time or incremental?',
   fullTime: 'Full time',
   incremental: 'Incremental',
-  eftAndConnectivity: 'Are EFT and connectivity set up?',
+  eftAndConnectivity:
+    'Are Electronic File Transfer (EFT) and connectivity set up?',
   adjustments: 'Will unsolicited adjustments be included?',
   diagrams: 'Are data flow diagrams needed?',
   benefitEnhancement: 'Will you produce Benefit Enhancement Files?',
+  benefitEnhancementInfo:
+    'This means we would use these files for Participating and Preferred Providers.',
   namingConventions: 'File naming conventions',
   establishBenchmark: 'Will you establish a benchmark to capture performance?',
   establishBenchmarkOptions: {
