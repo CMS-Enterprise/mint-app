@@ -34,6 +34,7 @@ import UpdateModelPlanOpsEvalAndLearning from 'queries/UpdateModelPlanOpsEvalAnd
 import { MonitoringFileType } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import { sortOtherEnum, translateMonitoringFileType } from 'utils/modelPlan';
+import { NotFoundPartial } from 'views/NotFound';
 
 import { isCCWInvolvement, renderCurrentPage, renderTotalPages } from '..';
 
@@ -45,11 +46,14 @@ const IDDOCTesting = () => {
   const formikRef = useRef<FormikProps<IDDOCTestingFormType>>(null);
   const history = useHistory();
 
-  const { data } = useQuery<GetIDDOCTestingType>(GetIDDOCTesting, {
-    variables: {
-      id: modelID
+  const { data, loading, error } = useQuery<GetIDDOCTestingType>(
+    GetIDDOCTesting,
+    {
+      variables: {
+        id: modelID
+      }
     }
-  });
+  );
 
   const {
     id,
@@ -116,6 +120,10 @@ const IDDOCTesting = () => {
     dataResponseType: dataResponseType ?? '',
     dataResponseFileFrequency: dataResponseFileFrequency ?? ''
   };
+
+  if ((!loading && error) || (!loading && !data?.modelPlan)) {
+    return <NotFoundPartial />;
+  }
 
   return (
     <>

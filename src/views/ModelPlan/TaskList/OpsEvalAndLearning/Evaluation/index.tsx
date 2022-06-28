@@ -43,6 +43,7 @@ import {
   translateDataToSendParticipantsType,
   translateEvaluationApproachType
 } from 'utils/modelPlan';
+import { NotFoundPartial } from 'views/NotFound';
 
 import { isCCWInvolvement, renderCurrentPage, renderTotalPages } from '..';
 
@@ -54,7 +55,7 @@ const Evaluation = () => {
   const formikRef = useRef<FormikProps<EvaluationFormType>>(null);
   const history = useHistory();
 
-  const { data } = useQuery<GetEvaluationType>(GetEvaluation, {
+  const { data, loading, error } = useQuery<GetEvaluationType>(GetEvaluation, {
     variables: {
       id: modelID
     }
@@ -141,6 +142,10 @@ const Evaluation = () => {
     shareCclfData: shareCclfData ?? null,
     shareCclfDataNote: shareCclfDataNote ?? ''
   };
+
+  if ((!loading && error) || (!loading && !data?.modelPlan)) {
+    return <NotFoundPartial />;
+  }
 
   return (
     <>

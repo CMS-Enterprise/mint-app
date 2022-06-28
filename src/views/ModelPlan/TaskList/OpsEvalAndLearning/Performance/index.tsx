@@ -35,6 +35,7 @@ import {
   sortOtherEnum,
   translateBenchmarkForPerformanceType
 } from 'utils/modelPlan';
+import { NotFoundPartial } from 'views/NotFound';
 
 import { isCCWInvolvement, renderCurrentPage, renderTotalPages } from '..';
 
@@ -46,11 +47,14 @@ const Performance = () => {
   const formikRef = useRef<FormikProps<PerformanceFormType>>(null);
   const history = useHistory();
 
-  const { data } = useQuery<GetPerformanceType>(GetPerformance, {
-    variables: {
-      id: modelID
+  const { data, loading, error } = useQuery<GetPerformanceType>(
+    GetPerformance,
+    {
+      variables: {
+        id: modelID
+      }
     }
-  });
+  );
 
   const {
     id,
@@ -135,6 +139,10 @@ const Performance = () => {
     appealOther: appealOther ?? null,
     appealNote: appealNote ?? ''
   };
+
+  if ((!loading && error) || (!loading && !data?.modelPlan)) {
+    return <NotFoundPartial />;
+  }
 
   return (
     <>

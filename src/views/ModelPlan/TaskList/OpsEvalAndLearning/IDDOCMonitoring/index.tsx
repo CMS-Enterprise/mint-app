@@ -33,6 +33,7 @@ import UpdateModelPlanOpsEvalAndLearning from 'queries/UpdateModelPlanOpsEvalAnd
 import { DataFullTimeOrIncrementalType } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import { translateDataFullTimeOrIncrementalType } from 'utils/modelPlan';
+import { NotFoundPartial } from 'views/NotFound';
 
 import { isCCWInvolvement, renderCurrentPage, renderTotalPages } from '..';
 
@@ -44,11 +45,14 @@ const IDDOCMonitoring = () => {
   const formikRef = useRef<FormikProps<IDDOCMonitoringFormType>>(null);
   const history = useHistory();
 
-  const { data } = useQuery<GetIDDOCMonitoringType>(GetIDDOCMonitoring, {
-    variables: {
-      id: modelID
+  const { data, loading, error } = useQuery<GetIDDOCMonitoringType>(
+    GetIDDOCMonitoring,
+    {
+      variables: {
+        id: modelID
+      }
     }
-  });
+  );
 
   const {
     id,
@@ -113,6 +117,10 @@ const IDDOCMonitoring = () => {
     fileNamingConventions: fileNamingConventions ?? '',
     dataMonitoringNote: dataMonitoringNote ?? ''
   };
+
+  if ((!loading && error) || (!loading && !data?.modelPlan)) {
+    return <NotFoundPartial />;
+  }
 
   return (
     <>

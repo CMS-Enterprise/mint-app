@@ -97,11 +97,14 @@ export const OpsEvalAndLearningContent = () => {
 
   const history = useHistory();
 
-  const { data } = useQuery<GetOpsEvalAndLearningType>(GetOpsEvalAndLearning, {
-    variables: {
-      id: modelID
+  const { data, loading, error } = useQuery<GetOpsEvalAndLearningType>(
+    GetOpsEvalAndLearning,
+    {
+      variables: {
+        id: modelID
+      }
     }
-  });
+  );
 
   const {
     id,
@@ -180,6 +183,10 @@ export const OpsEvalAndLearningContent = () => {
     iddocSupport: iddocSupport ?? null,
     iddocSupportNote: iddocSupportNote ?? ''
   };
+
+  if ((!loading && error) || (!loading && !data?.modelPlan)) {
+    return <NotFoundPartial />;
+  }
 
   return (
     <>

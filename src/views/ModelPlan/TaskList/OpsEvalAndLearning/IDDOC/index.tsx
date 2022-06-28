@@ -34,6 +34,7 @@ import {
 import { UpdateModelPlanOpsEvalAndLearningVariables } from 'queries/types/UpdateModelPlanOpsEvalAndLearning';
 import UpdateModelPlanOpsEvalAndLearning from 'queries/UpdateModelPlanOpsEvalAndLearning';
 import flattenErrors from 'utils/flattenErrors';
+import { NotFoundPartial } from 'views/NotFound';
 
 import { isCCWInvolvement, renderCurrentPage, renderTotalPages } from '..';
 
@@ -46,7 +47,7 @@ const IDDOC = () => {
   const formikRef = useRef<FormikProps<IDDOCFormType>>(null);
   const history = useHistory();
 
-  const { data } = useQuery<GetIDDOCType>(GetIDDOC, {
+  const { data, loading, error } = useQuery<GetIDDOCType>(GetIDDOC, {
     variables: {
       id: modelID
     }
@@ -115,6 +116,10 @@ const IDDOC = () => {
     draftIcdDueDate: draftIcdDueDate ?? null,
     icdNote: icdNote ?? ''
   };
+
+  if ((!loading && error) || (!loading && !data?.modelPlan)) {
+    return <NotFoundPartial />;
+  }
 
   return (
     <>
