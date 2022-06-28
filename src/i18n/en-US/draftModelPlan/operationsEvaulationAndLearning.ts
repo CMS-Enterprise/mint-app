@@ -204,13 +204,14 @@ const operationsEvaluationAndLearning = {
     no: 'No',
     other: 'Other'
   },
-  ccwSpecific: 'CCW specific questions',
+  ccwSpecific: 'Chronic Conditions Warehouse (CCW) questions',
   ccwSendFiles:
     'Will you need to send files between the CCW and other applications?',
   fileTransfers:
     'Do you know which applications will be on the other sides of the file transfers?',
   distributeFiles:
     'Will you use the CCW to distribute files to and from model participants?',
+  qualityQuestions: 'Quality questions',
   includedPayment:
     'Data sources included payment (FFS A,B,D claims... Standardized payment tables...)',
   learningSystem: 'Will the model have a learning system?',
