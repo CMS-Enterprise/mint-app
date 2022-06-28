@@ -12,16 +12,6 @@ const (
 	TeamRoleEvaluation TeamRole = "EVALUATION"
 )
 
-// ModelType is an enum that represents the basic type of a model
-type ModelType string
-
-// These constants represent the different values of ModelType
-const (
-	MTVoluntary ModelType = "VOLUNTARY"
-	MTMandatory ModelType = "MANDATORY"
-	MTTBD       ModelType = "TBD"
-)
-
 // TriStateAnswer is an enum that represents a yes/no/tbd answer
 type TriStateAnswer string
 
