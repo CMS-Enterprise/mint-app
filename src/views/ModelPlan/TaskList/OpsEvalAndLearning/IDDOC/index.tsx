@@ -185,7 +185,7 @@ const IDDOC = () => {
                 setDateInPast(false);
               }
               delete errors[field as keyof IDDOCFormType];
-            } catch (error) {
+            } catch (err) {
               setFieldError(field, t('validDate'));
             }
           };

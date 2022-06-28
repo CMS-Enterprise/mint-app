@@ -761,6 +761,88 @@ export const translateDataToSendParticipantsType = (type: string) => {
   }
 };
 
+export const translateDataStartsType = (type: string) => {
+  switch (type) {
+    case 'DURING_APPLICATION_PERIOD':
+      return i18next.t(
+        'operationsEvaluationAndLearning:dataSharingOptions.during'
+      );
+    case 'SHORTLY_BEFORE_THE_START_DATE':
+      return i18next.t(
+        'operationsEvaluationAndLearning:dataSharingOptions.shortlyBefore'
+      );
+    case 'EARLY_IN_THE_FIRST_PERFORMANCE_YEAR':
+      return i18next.t(
+        'operationsEvaluationAndLearning:dataSharingOptions.early'
+      );
+    case 'LATER_IN_THE_FIRST_PERFORMANCE_YEAR':
+      return i18next.t(
+        'operationsEvaluationAndLearning:dataSharingOptions.later'
+      );
+    case 'IN_THE_SUBSEQUENT_PERFORMANCE_YEAR':
+      return i18next.t(
+        'operationsEvaluationAndLearning:dataSharingOptions.subsequent'
+      );
+    case 'AT_SOME_OTHER_POINT_IN_TIME':
+      return i18next.t(
+        'operationsEvaluationAndLearning:dataSharingOptions.somePoint'
+      );
+    case 'NOT_PLANNING_TO_DO_THIS':
+      return i18next.t(
+        'operationsEvaluationAndLearning:dataSharingOptions.notPlanning'
+      );
+    case 'OTHER':
+      return i18next.t(
+        'operationsEvaluationAndLearning:dataSharingOptions.other'
+      );
+    default:
+      return '';
+  }
+};
+
+export const translateDataFrequencyType = (type: string) => {
+  switch (type) {
+    case 'ANNUALLY':
+      return i18next.t(
+        'operationsEvaluationAndLearning:dataSharingHowOftenOptions.annually'
+      );
+    case 'BIANNUALLY':
+      return i18next.t(
+        'operationsEvaluationAndLearning:dataSharingHowOftenOptions.bianually'
+      );
+    case 'QUARTERLY':
+      return i18next.t(
+        'operationsEvaluationAndLearning:dataSharingHowOftenOptions.quarterly'
+      );
+    case 'MONTHLY':
+      return i18next.t(
+        'operationsEvaluationAndLearning:dataSharingHowOftenOptions.monthly'
+      );
+    case 'SEMI_MONTHLY':
+      return i18next.t(
+        'operationsEvaluationAndLearning:dataSharingHowOftenOptions.semiMonthly'
+      );
+    case 'WEEKLY':
+      return i18next.t(
+        'operationsEvaluationAndLearning:dataSharingHowOftenOptions.weekly'
+      );
+    case 'DAILY':
+      return i18next.t(
+        'operationsEvaluationAndLearning:dataSharingHowOftenOptions.daily'
+      );
+    case 'OTHER':
+      return i18next.t(
+        'operationsEvaluationAndLearning:dataSharingHowOftenOptions.other'
+      );
+    case 'NOT_PLANNING_TO_DO_THIS':
+      return i18next.t(
+        'operationsEvaluationAndLearning:dataSharingHowOftenOptions.notPlanning'
+      );
+    default:
+      return '';
+  }
+};
+
 /**
  * Translate the document type API enum to a human readable string
  */

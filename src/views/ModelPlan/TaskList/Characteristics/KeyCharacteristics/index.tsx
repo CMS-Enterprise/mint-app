@@ -40,7 +40,6 @@ import {
 import flattenErrors from 'utils/flattenErrors';
 import {
   mapMultiSelectOptions,
-  sortOtherEnum,
   translateAlternativePaymentTypes,
   translateKeyCharacteristics
 } from 'utils/modelPlan';

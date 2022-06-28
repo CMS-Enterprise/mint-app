@@ -189,12 +189,36 @@ const operationsEvaluationAndLearning = {
   },
   claimLineFeed:
     'Does the model require that identifiable Claim and Claim Line Feed (CCLFs) data need to be shared with participants?',
-  reportingTiming: 'Data and reporting timing',
+  reportingTiming: 'Data sharing timing and frequency',
   dataSharing: 'Data sharing starts',
   dataSharingInfo:
     'If using ACO-OS support, SSM request to begin analysis at least 1 year before implementation',
+  dataSharingOptions: {
+    during: 'During application period',
+    shortlyBefore: 'Shortly before the start date',
+    early: 'Early in the first performance year',
+    later: 'Later in the first performance year',
+    subsequent: 'In the subsequent performance year',
+    somePoint: 'At some other point in time',
+    notPlanning: 'Not planning to do this',
+    other: 'Other'
+  },
+  dataSharingHowOften: 'How often do you anticipate sharing data?',
+  dataSharingHowOftenSeleted: 'Data sharing frequency',
+  dataSharingHowOftenOptions: {
+    annually: 'Annually',
+    bianually: 'Biannually',
+    quarterly: 'Quarterly',
+    monthly: 'Monthly',
+    semiMonthly: 'Semi-monthly',
+    weekly: 'Weelly',
+    daily: 'Daily',
+    other: 'Other',
+    notPlanning: 'Not planning to do this'
+  },
+  dataCollectionTiming: 'Data collection timing and frequency',
   dataCollection: 'Data collection starts',
-  dataReporting: 'Data reporting starts',
+  dataReporting: 'Quality reporting starts',
   reportingFrequency:
     'What is the frequency of reporting either to you or from participants under the model?',
   ccw: 'Is Chronic Conditions Warehouse (CCW) involved in the model?',

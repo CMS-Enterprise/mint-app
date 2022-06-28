@@ -89,18 +89,12 @@ const CCWAndQuality = () => {
       .then(response => {
         if (!response?.errors) {
           if (redirect === 'next') {
-            if (isCCWInvolvement(formikValues.ccmInvolvment)) {
-              history.push(
-                `/models/${modelID}/task-list/ops-eval-and-learning/ccw-and-quality`
-              );
-            } else {
-              history.push(
-                `/models/${modelID}/task-list/ops-eval-and-learning/data-sharing`
-              );
-            }
+            history.push(
+              `/models/${modelID}/task-list/ops-eval-and-learning/data-sharing`
+            );
           } else if (redirect === 'back') {
             history.push(
-              `/models/${modelID}/task-list/ops-eval-and-learning/performance`
+              `/models/${modelID}/task-list/ops-eval-and-learning/evaluation`
             );
           } else if (redirect === 'task-list') {
             history.push(`/models/${modelID}/task-list`);

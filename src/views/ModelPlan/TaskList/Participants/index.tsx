@@ -39,7 +39,6 @@ import { ParticipantsType } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import {
   mapMultiSelectOptions,
-  sortOtherEnum,
   translateParticipantsType
 } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';

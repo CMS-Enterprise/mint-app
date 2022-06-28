@@ -8,8 +8,6 @@ import {
   BreadcrumbLink,
   Button,
   Fieldset,
-  Grid,
-  GridContainer,
   IconAdd,
   IconArrowBack,
   Label,
@@ -18,7 +16,6 @@ import {
 import { Field, Form, Formik, FormikProps } from 'formik';
 
 import AskAQuestion from 'components/AskAQuestion';
-import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import AutoSave from 'components/shared/AutoSave';

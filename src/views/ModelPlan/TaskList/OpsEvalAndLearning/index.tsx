@@ -53,6 +53,7 @@ import {
 import { NotFoundPartial } from 'views/NotFound';
 
 import CCWAndQuality from './CCWAndQuality';
+import DataSharing from './DataSharing';
 import Evaluation from './Evaluation';
 import IDDOC from './IDDOC';
 import IDDOCMonitoring from './IDDOCMonitoring';
@@ -662,11 +663,11 @@ export const OpsEvalAndLearning = () => {
               exact
               render={() => <CCWAndQuality />}
             />
-            {/* <Route
+            <Route
               path="/models/:modelID/task-list/ops-eval-and-learning/data-sharing"
               exact
-              render={() => <ProviderOptions />}
-            /> */}
+              render={() => <DataSharing />}
+            />
             {/* <Route
               path="/models/:modelID/task-list/ops-eval-and-learning/learning"
               exact
