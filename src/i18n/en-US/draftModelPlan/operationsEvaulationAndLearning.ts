@@ -241,9 +241,10 @@ const operationsEvaluationAndLearning = {
   learningSystem: 'Will the model have a learning system?',
   learningSystemOptions: {
     connector: 'We plan to have a learning connector',
-    connect: 'We plan to use CONNECT',
+    itConnect: 'We plan to use Connect (an IT platform)',
     collaboration: 'We plan to enable participant-to-participant collaboration',
     educate: 'We plan to educate beneficiaries',
+    other: 'Other',
     no: 'No, we will not have a learning system'
   },
   obstacles:

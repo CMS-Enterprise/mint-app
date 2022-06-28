@@ -843,6 +843,37 @@ export const translateDataFrequencyType = (type: string) => {
   }
 };
 
+export const translateModelLearningSystemType = (type: string) => {
+  switch (type) {
+    case 'LEARNING_CONTRACTOR':
+      return i18next.t(
+        'operationsEvaluationAndLearning:learningSystemOptions.connector'
+      );
+    case 'IT_PLATFORM_CONNECT':
+      return i18next.t(
+        'operationsEvaluationAndLearning:learningSystemOptions.itConnect'
+      );
+    case 'PARTICIPANT_COLLABORATION':
+      return i18next.t(
+        'operationsEvaluationAndLearning:learningSystemOptions.collaboration'
+      );
+    case 'EDUCATE_BENEFICIARIES':
+      return i18next.t(
+        'operationsEvaluationAndLearning:learningSystemOptions.educate'
+      );
+    case 'OTHER':
+      return i18next.t(
+        'operationsEvaluationAndLearning:learningSystemOptions.other'
+      );
+    case 'NO_LEARNING_SYSTEM':
+      return i18next.t(
+        'operationsEvaluationAndLearning:learningSystemOptions.no'
+      );
+    default:
+      return '';
+  }
+};
+
 /**
  * Translate the document type API enum to a human readable string
  */
@@ -920,7 +951,8 @@ export const sortOtherEnum = (a: string, b: string) => {
     b === 'NO_IDENTIFIERS' ||
     b === 'NOT_APPLICABLE' ||
     b === 'NOT_PLANNING_TO_COLLECT_DATA' ||
-    b === 'NOT_PLANNING_TO_SEND_DATA'
+    b === 'NOT_PLANNING_TO_SEND_DATA' ||
+    b === 'NO_LEARNING_SYSTEM'
   )
     return -1;
   if (a < b || b === 'OTHER') {
