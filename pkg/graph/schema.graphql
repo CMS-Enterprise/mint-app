@@ -754,7 +754,7 @@ type PlanPayments {
   sharedSystemsInvolvedAdditionalClaimPaymentNote: String!
   planningToUseInnovationPaymentContractor:        Boolean!
   planningToUseInnovationPaymentContractorNote:    String!
-  fundingCenterDescription:                        String!
+  fundingStructureDescription:                        String!
 
   # Page 6
   expectedCalculationComplexityLevel:                       ComplexityCalculationLevelType!
@@ -832,7 +832,7 @@ input PlanPaymentsChanges @goModel(model: "map[string]interface{}") {
   sharedSystemsInvolvedAdditionalClaimPaymentNote: String!
   planningToUseInnovationPaymentContractor:        Boolean!
   planningToUseInnovationPaymentContractorNote:    String!
-  fundingCenterDescription:                        String!
+  fundingStructureDescription:                        String!
 
   # Page 6
   expectedCalculationComplexityLevel:                       ComplexityCalculationLevelType!

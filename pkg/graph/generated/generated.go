@@ -605,12 +605,12 @@ type ComplexityRoot struct {
 		CreatingDependenciesBetweenServicesNote                  func(childComplexity int) int
 		ExpectedCalculationComplexityLevel                       func(childComplexity int) int
 		ExpectedCalculationComplexityLevelNote                   func(childComplexity int) int
-		FundingCenterDescription                                 func(childComplexity int) int
 		FundingSourceNote                                        func(childComplexity int) int
 		FundingSourceR                                           func(childComplexity int) int
 		FundingSourceRNote                                       func(childComplexity int) int
 		FundingSourceROtherDescription                           func(childComplexity int) int
 		FundingSourceRTrustFundDescription                       func(childComplexity int) int
+		FundingStructureDescription                              func(childComplexity int) int
 		ID                                                       func(childComplexity int) int
 		IsContractorAwareTestDataRequirements                    func(childComplexity int) int
 		ModelPlanID                                              func(childComplexity int) int
@@ -4432,13 +4432,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.PlanPayments.ExpectedCalculationComplexityLevelNote(childComplexity), true
 
-	case "PlanPayments.fundingCenterDescription":
-		if e.complexity.PlanPayments.FundingCenterDescription == nil {
-			break
-		}
-
-		return e.complexity.PlanPayments.FundingCenterDescription(childComplexity), true
-
 	case "PlanPayments.fundingSourceNote":
 		if e.complexity.PlanPayments.FundingSourceNote == nil {
 			break
@@ -4473,6 +4466,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.PlanPayments.FundingSourceRTrustFundDescription(childComplexity), true
+
+	case "PlanPayments.fundingStructureDescription":
+		if e.complexity.PlanPayments.FundingStructureDescription == nil {
+			break
+		}
+
+		return e.complexity.PlanPayments.FundingStructureDescription(childComplexity), true
 
 	case "PlanPayments.id":
 		if e.complexity.PlanPayments.ID == nil {
@@ -5682,7 +5682,7 @@ type PlanPayments {
   sharedSystemsInvolvedAdditionalClaimPaymentNote: String!
   planningToUseInnovationPaymentContractor:        Boolean!
   planningToUseInnovationPaymentContractorNote:    String!
-  fundingCenterDescription:                        String!
+  fundingStructureDescription:                        String!
 
   # Page 6
   expectedCalculationComplexityLevel:                       ComplexityCalculationLevelType!
@@ -5760,7 +5760,7 @@ input PlanPaymentsChanges @goModel(model: "map[string]interface{}") {
   sharedSystemsInvolvedAdditionalClaimPaymentNote: String!
   planningToUseInnovationPaymentContractor:        Boolean!
   planningToUseInnovationPaymentContractorNote:    String!
-  fundingCenterDescription:                        String!
+  fundingStructureDescription:                        String!
 
   # Page 6
   expectedCalculationComplexityLevel:                       ComplexityCalculationLevelType!
@@ -10451,8 +10451,8 @@ func (ec *executionContext) fieldContext_ModelPlan_payments(ctx context.Context,
 				return ec.fieldContext_PlanPayments_planningToUseInnovationPaymentContractor(ctx, field)
 			case "planningToUseInnovationPaymentContractorNote":
 				return ec.fieldContext_PlanPayments_planningToUseInnovationPaymentContractorNote(ctx, field)
-			case "fundingCenterDescription":
-				return ec.fieldContext_PlanPayments_fundingCenterDescription(ctx, field)
+			case "fundingStructureDescription":
+				return ec.fieldContext_PlanPayments_fundingStructureDescription(ctx, field)
 			case "expectedCalculationComplexityLevel":
 				return ec.fieldContext_PlanPayments_expectedCalculationComplexityLevel(ctx, field)
 			case "expectedCalculationComplexityLevelNote":
@@ -13665,8 +13665,8 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanPayment(ctx context.
 				return ec.fieldContext_PlanPayments_planningToUseInnovationPaymentContractor(ctx, field)
 			case "planningToUseInnovationPaymentContractorNote":
 				return ec.fieldContext_PlanPayments_planningToUseInnovationPaymentContractorNote(ctx, field)
-			case "fundingCenterDescription":
-				return ec.fieldContext_PlanPayments_fundingCenterDescription(ctx, field)
+			case "fundingStructureDescription":
+				return ec.fieldContext_PlanPayments_fundingStructureDescription(ctx, field)
 			case "expectedCalculationComplexityLevel":
 				return ec.fieldContext_PlanPayments_expectedCalculationComplexityLevel(ctx, field)
 			case "expectedCalculationComplexityLevelNote":
@@ -32159,8 +32159,8 @@ func (ec *executionContext) fieldContext_PlanPayments_planningToUseInnovationPay
 	return fc, nil
 }
 
-func (ec *executionContext) _PlanPayments_fundingCenterDescription(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanPayments_fundingCenterDescription(ctx, field)
+func (ec *executionContext) _PlanPayments_fundingStructureDescription(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_fundingStructureDescription(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -32173,7 +32173,7 @@ func (ec *executionContext) _PlanPayments_fundingCenterDescription(ctx context.C
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.FundingCenterDescription, nil
+		return obj.FundingStructureDescription, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -32190,7 +32190,7 @@ func (ec *executionContext) _PlanPayments_fundingCenterDescription(ctx context.C
 	return ec.marshalNString2ᚖstring(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_PlanPayments_fundingCenterDescription(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_PlanPayments_fundingStructureDescription(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "PlanPayments",
 		Field:      field,
@@ -33864,8 +33864,8 @@ func (ec *executionContext) fieldContext_Query_planPayments(ctx context.Context,
 				return ec.fieldContext_PlanPayments_planningToUseInnovationPaymentContractor(ctx, field)
 			case "planningToUseInnovationPaymentContractorNote":
 				return ec.fieldContext_PlanPayments_planningToUseInnovationPaymentContractorNote(ctx, field)
-			case "fundingCenterDescription":
-				return ec.fieldContext_PlanPayments_fundingCenterDescription(ctx, field)
+			case "fundingStructureDescription":
+				return ec.fieldContext_PlanPayments_fundingStructureDescription(ctx, field)
 			case "expectedCalculationComplexityLevel":
 				return ec.fieldContext_PlanPayments_expectedCalculationComplexityLevel(ctx, field)
 			case "expectedCalculationComplexityLevelNote":
@@ -40329,9 +40329,9 @@ func (ec *executionContext) _PlanPayments(ctx context.Context, sel ast.Selection
 			if out.Values[i] == graphql.Null {
 				atomic.AddUint32(&invalids, 1)
 			}
-		case "fundingCenterDescription":
+		case "fundingStructureDescription":
 
-			out.Values[i] = ec._PlanPayments_fundingCenterDescription(ctx, field, obj)
+			out.Values[i] = ec._PlanPayments_fundingStructureDescription(ctx, field, obj)
 
 			if out.Values[i] == graphql.Null {
 				atomic.AddUint32(&invalids, 1)

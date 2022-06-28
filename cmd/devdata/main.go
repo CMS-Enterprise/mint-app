@@ -661,7 +661,7 @@ func processPlanPayments(pp *models.PlanPayments) {
 	pp.SharedSystemsInvolvedAdditionalClaimPaymentNote = models.StringPointer("Shared systems involved additional claim payment note here")
 	pp.PlanningToUseInnovationPaymentContractor = models.BoolPointer(true)
 	pp.PlanningToUseInnovationPaymentContractorNote = models.StringPointer("Planning to use innovation payment contractor note here")
-	pp.FundingCenterDescription = models.StringPointer("Funding center description here")
+	pp.FundingStructureDescription = models.StringPointer("Funding center description here")
 
 	// Page 6
 	pp.ExpectedCalculationComplexityLevel = models.ComplexityCalculationLevelTypeHigh

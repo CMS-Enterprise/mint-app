@@ -136,75 +136,75 @@ type PlanPayments struct {
 	ModelPlanID uuid.UUID `json:"modelPlanID" db:"model_plan_id"`
 
 	// Page 1
-	FundingSource                      pq.StringArray `json:"fundingSource" db:"funding_source"`
+	FundingSource                      pq.StringArray `json:"fundingSource" db:"funding_source" statusWeight:"1"`
 	FundingSourceTrustFundDescription  *string        `json:"fundingSourceTrustFundDescription" db:"funding_source_trust_fund_description"`
 	FundingSourceOtherDescription      *string        `json:"fundingSourceOtherDescription" db:"funding_source_other_description"`
 	FundingSourceNote                  *string        `json:"fundingSourceNote" db:"funding_source_note"`
-	FundingSourceR                     pq.StringArray `json:"fundingSourceR" db:"funding_source_r"`
+	FundingSourceR                     pq.StringArray `json:"fundingSourceR" db:"funding_source_r" statusWeight:"1"`
 	FundingSourceRTrustFundDescription *string        `json:"fundingSourceRTrustFundDescription" db:"funding_source_r_trust_fund_description"`
 	FundingSourceROtherDescription     *string        `json:"fundingSourceROtherDescription" db:"funding_source_r_other_description"`
 	FundingSourceRNote                 *string        `json:"fundingSourceRNote" db:"funding_source_r_note"`
-	PayRecipients                      pq.StringArray `json:"payRecipients" db:"pay_recipients"`
+	PayRecipients                      pq.StringArray `json:"payRecipients" db:"pay_recipients" statusWeight:"1"`
 	PayRecipientOtherSpecification     *string        `json:"payRecipientsOtherSpecification" db:"pay_recipients_other_specification"`
 	PayRecipientsNote                  *string        `json:"payRecipientsNote" db:"pay_recipients_note"`
-	PayType                            PayType        `json:"payType" db:"pay_type"`
+	PayType                            PayType        `json:"payType" db:"pay_type" statusWeight:"1"`
 	PayTypeNote                        *string        `json:"payTypeNote" db:"pay_type_note"`
 
 	// Page 2
-	PayClaims                                      pq.StringArray `json:"payClaims" db:"pay_claims"`
+	PayClaims                                      pq.StringArray `json:"payClaims" db:"pay_claims" statusWeight:"1"`
 	PayClaimsOtherDescription                      *string        `json:"payClaimsOtherDescription" db:"pay_claims_other_description"`
-	ShouldAnyProvidersExcludedFFSSystems           *bool          `json:"shouldAnyProvidersExcludedFFSSystems" db:"should_any_providers_excluded_ffs_systems"`
+	ShouldAnyProvidersExcludedFFSSystems           *bool          `json:"shouldAnyProvidersExcludedFFSSystems" db:"should_any_providers_excluded_ffs_systems" statusWeight:"1"`
 	ShouldAnyProviderExcludedFFSSystemsNote        *string        `json:"shouldAnyProviderExcludedFFSSystemsNote" db:"should_any_providers_excluded_ffs_systems_note"`
-	ChangesMedicarePhysicianFeeSchedule            *bool          `json:"changesMedicarePhysicianFeeSchedule" db:"changes_medicare_physician_fee_schedule"`
+	ChangesMedicarePhysicianFeeSchedule            *bool          `json:"changesMedicarePhysicianFeeSchedule" db:"changes_medicare_physician_fee_schedule" statusWeight:"1"`
 	ChangesMedicarePhysicianFeeScheduleNote        *string        `json:"changesMedicarePhysicianFeeScheduleNote" db:"changes_medicare_physician_fee_schedule_note"`
-	AffectsMedicareSecondaryPayerClaims            *bool          `json:"affectsMedicareSecondaryPayerClaims" db:"affects_medicare_secondary_payer_claims"`
+	AffectsMedicareSecondaryPayerClaims            *bool          `json:"affectsMedicareSecondaryPayerClaims" db:"affects_medicare_secondary_payer_claims" statusWeight:"1"`
 	AffectsMedicareSecondaryPayerClaimsExplanation *string        `json:"affectsMedicareSecondaryPayerClaimsExplanation" db:"affects_medicare_secondary_payer_claims_explanation"`
 	AffectsMedicareSecondaryPayerClaimsNote        *string        `json:"affectsMedicareSecondaryPayerClaimsNote" db:"affects_medicare_secondary_payer_claims_note"`
-	PayModelDifferentiation                        *string        `json:"payModelDifferentiation" db:"pay_model_differentiation"`
+	PayModelDifferentiation                        *string        `json:"payModelDifferentiation" db:"pay_model_differentiation" statusWeight:"1"`
 
 	// Page 3
-	CreatingDependenciesBetweenServices     *bool   `json:"creatingDependenciesBetweenServices" db:"creating_dependencies_between_services"`
+	CreatingDependenciesBetweenServices     *bool   `json:"creatingDependenciesBetweenServices" db:"creating_dependencies_between_services" statusWeight:"1"`
 	CreatingDependenciesBetweenServicesNote *string `json:"creatingDependenciesBetweenServicesNote" db:"creating_dependencies_between_services_note"`
-	NeedsClaimsDataCollection               *bool   `json:"needsClaimsDataCollection" db:"needs_claims_data_collection"`
+	NeedsClaimsDataCollection               *bool   `json:"needsClaimsDataCollection" db:"needs_claims_data_collection" statusWeight:"1"`
 	NeedsClaimsDataCollectionNote           *string `json:"needsClaimsDataCollectionNote" db:"needs_claims_data_collection_note"`
-	ProvidingThirdPartyFile                 *bool   `json:"providingThirdPartyFile" db:"providing_third_party_file"`
-	IsContractorAwareTestDataRequirements   *bool   `json:"isContractorAwareTestDataRequirements" db:"is_contractor_aware_test_data_requirements"`
+	ProvidingThirdPartyFile                 *bool   `json:"providingThirdPartyFile" db:"providing_third_party_file" statusWeight:"1"`
+	IsContractorAwareTestDataRequirements   *bool   `json:"isContractorAwareTestDataRequirements" db:"is_contractor_aware_test_data_requirements" statusWeight:"1"`
 
 	// Page 4
-	BeneficiaryCostSharingLevelAndHandling          *string `json:"beneficiaryCostSharingLevelAndHandling" db:"beneficiary_cost_sharing_level_and_handling"`
-	WaiveBeneficiaryCostSharingForAnyServices       *bool   `json:"waiveBeneficiaryCostSharingForAnyServices" db:"waive_beneficiary_cost_sharing_for_any_services"`
+	BeneficiaryCostSharingLevelAndHandling          *string `json:"beneficiaryCostSharingLevelAndHandling" db:"beneficiary_cost_sharing_level_and_handling" statusWeight:"1"`
+	WaiveBeneficiaryCostSharingForAnyServices       *bool   `json:"waiveBeneficiaryCostSharingForAnyServices" db:"waive_beneficiary_cost_sharing_for_any_services" statusWeight:"1"`
 	WaiveBeneficiaryCostSharingServiceSpecification *string `json:"waiveBeneficiaryCostSharingServiceSpecification" db:"waive_beneficiary_cost_sharing_service_specification"`
 	WaiverOnlyAppliesPartOfPayment                  *bool   `json:"waiverOnlyAppliesPartOfPayment" db:"waiver_only_applies_part_of_payment"`
 	WaiveBeneficiaryCostSharingNote                 *string `json:"waiveBeneficiaryCostSharingNote" db:"waive_beneficiary_cost_sharing_note"`
 
 	// Page 5
-	NonClaimsPayments                               pq.StringArray `json:"nonClaimsPayments" db:"non_claims_payments"`
+	NonClaimsPayments                               pq.StringArray `json:"nonClaimsPayments" db:"non_claims_payments" statusWeight:"1"`
 	NonClaimsPaymentsOtherDescription               *string        `json:"nonClaimsPaymentOtherDescription" db:"non_claims_payments_other_description"`
-	PaymentCalculationOwner                         *string        `json:"paymentCalculationOwner" db:"payment_calculation_owner"`
-	NumberPaymentsPerPayCycle                       *string        `json:"numberPaymentsPerPayCycle" db:"number_payments_per_pay_cycle"`
+	PaymentCalculationOwner                         *string        `json:"paymentCalculationOwner" db:"payment_calculation_owner" statusWeight:"1"`
+	NumberPaymentsPerPayCycle                       *string        `json:"numberPaymentsPerPayCycle" db:"number_payments_per_pay_cycle" statusWeight:"1"`
 	NumberPaymentsPerPayCycleNotes                  *string        `json:"numberPaymentsPerPayCycleNotes" db:"number_payments_per_pay_cycle_notes"`
-	SharedSystemsInvolvedAdditionalClaimPayment     *bool          `json:"sharedSystemsInvolvedAdditionalClaimPayment" db:"shared_systems_involved_additional_claim_payment"`
+	SharedSystemsInvolvedAdditionalClaimPayment     *bool          `json:"sharedSystemsInvolvedAdditionalClaimPayment" db:"shared_systems_involved_additional_claim_payment" statusWeight:"1"`
 	SharedSystemsInvolvedAdditionalClaimPaymentNote *string        `json:"sharedSystemsInvolvedAdditionalClaimPaymentNote" db:"shared_systems_involved_additional_claim_payment_note"`
-	PlanningToUseInnovationPaymentContractor        *bool          `json:"planningToUseInnovationPaymentContractor" db:"planning_to_use_innovation_payment_contractor"`
+	PlanningToUseInnovationPaymentContractor        *bool          `json:"planningToUseInnovationPaymentContractor" db:"planning_to_use_innovation_payment_contractor" statusWeight:"1"`
 	PlanningToUseInnovationPaymentContractorNote    *string        `json:"planningToUseInnovationPaymentContractorNote" db:"planning_to_use_innovation_payment_contractor_note"`
-	FundingCenterDescription                        *string        `json:"fundingCenterDescription" db:"funding_center_description"`
+	FundingStructureDescription                     *string        `json:"fundingStructureDescription" db:"funding_structure_description" statusWeight:"1"`
 
 	// Page 6
-	ExpectedCalculationComplexityLevel                       ComplexityCalculationLevelType  `json:"expectedCalculationComplexityLevel" db:"expected_calculation_complexity_level"`
+	ExpectedCalculationComplexityLevel                       ComplexityCalculationLevelType  `json:"expectedCalculationComplexityLevel" db:"expected_calculation_complexity_level" statusWeight:"1"`
 	ExpectedCalculationComplexityLevelNote                   *string                         `json:"expectedCalculationComplexityLevelNote" db:"expected_calculation_complexity_level_note"`
-	CanParticipantsSelectBetweenPaymentMechanisms            *bool                           `json:"canParticipantsSelectBetweenPaymentMechanisms" db:"can_participants_select_between_payment_mechanisms"`
+	CanParticipantsSelectBetweenPaymentMechanisms            *bool                           `json:"canParticipantsSelectBetweenPaymentMechanisms" db:"can_participants_select_between_payment_mechanisms" statusWeight:"1"`
 	CanParticipantsSelectBetweenPaymentMechanismsDescription *string                         `json:"canParticipantsSelectBetweenPaymentMechanismsDescription" db:"can_participants_select_between_payment_mechanisms_description"`
 	CanParticipantsSelectBetweenPaymentMechanismsNote        *string                         `json:"canParticipantsSelectBetweenPaymentMechanismsNote" db:"can_participants_select_between_payment_mechanisms_note"`
-	AnticipatedPaymentFrequency                              AnticipatedPaymentFrequencyType `json:"anticipatedPaymentFrequency" db:"anticipated_payment_frequency"`
+	AnticipatedPaymentFrequency                              AnticipatedPaymentFrequencyType `json:"anticipatedPaymentFrequency" db:"anticipated_payment_frequency" statusWeight:"1"`
 	AnticipatedPaymentFrequencyOtherDescription              *string                         `json:"anticipatedPaymentFrequencyOtherDescription" db:"anticipated_payment_frequency_other_description"`
 	AnticipatedPaymentFrequencyNotes                         *string                         `json:"anticipatedPaymentFrequencyNotes" db:"anticipated_payment_frequency_notes"`
 
 	// Page 7
-	WillRecoverPayments                               *bool      `json:"willRecoverPayments" db:"will_recover_payments"`
+	WillRecoverPayments                               *bool      `json:"willRecoverPayments" db:"will_recover_payments" statusWeight:"1"`
 	WillRecoverPaymentsNotes                          *string    `json:"willRecoverPaymentsNotes" db:"will_recover_payments_notes"`
-	AnticipateReconcilingPaymentsRetrospectively      *bool      `json:"anticipateReconcilingPaymentsRetrospectively" db:"anticipate_reconciling_payments_retrospectively"`
+	AnticipateReconcilingPaymentsRetrospectively      *bool      `json:"anticipateReconcilingPaymentsRetrospectively" db:"anticipate_reconciling_payments_retrospectively" statusWeight:"1"`
 	AnticipateReconcilingPaymentsRetrospectivelyNotes *string    `json:"anticipateReconcilingPaymentsRetrospectivelyNotes" db:"anticipate_reconciling_payments_retrospectively_notes"`
-	PaymentStartDate                                  *time.Time `json:"paymentStartDate" db:"payment_start_date"`
+	PaymentStartDate                                  *time.Time `json:"paymentStartDate" db:"payment_start_date" statusWeight:"1"`
 	PaymentStartDateNotes                             *string    `json:"paymentStartDateNotes" db:"payment_start_date_notes"`
 
 	// Meta
