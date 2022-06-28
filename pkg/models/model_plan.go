@@ -1,10 +1,10 @@
 package models
 
 import (
+	"database/sql/driver"
 	"time"
 
 	"github.com/google/uuid"
-	"github.com/lib/pq"
 )
 
 // ModelPlan is the top-level object for an entire draft model plan
@@ -12,9 +12,9 @@ type ModelPlan struct {
 	ID            uuid.UUID      `json:"id" db:"id"`
 	ModelName     string         `json:"modelName" db:"model_name"`
 	ModelCategory *ModelCategory `json:"modelCategory" db:"model_category"`
-	CMSCenters    pq.StringArray `json:"cmsCenters" db:"cms_centers"`
+	CMSCenters    CMSCenterG     `json:"cmsCenters" db:"cms_centers"`
 	CMSOther      *string        `json:"cmsOther" db:"cms_other"`
-	CMMIGroups    pq.StringArray `json:"cmmiGroups" db:"cmmi_groups"`
+	CMMIGroups    CMMIGroupG     `json:"cmmiGroups" db:"cmmi_groups"`
 	Archived      bool           `json:"archived" db:"archived"`
 	Status        ModelStatus    `json:"status" db:"status"`
 	CreatedBy     string         `json:"createdBy" db:"created_by"`
@@ -22,6 +22,12 @@ type ModelPlan struct {
 	ModifiedBy    *string        `json:"modifiedBy" db:"modified_by"`
 	ModifiedDts   *time.Time     `json:"modifiedDts" db:"modified_dts"`
 }
+
+//CMSCenterG is an array of CMSCenter
+type CMSCenterG []CMSCenter
+
+//CMMIGroupG is an array of CMMIGroup
+type CMMIGroupG []CMMIGroup
 
 // GetModelTypeName returns a string name that represents the ModelPlan struct
 func (m ModelPlan) GetModelTypeName() string {
@@ -42,3 +48,49 @@ func (m ModelPlan) GetModifiedBy() *string {
 func (m ModelPlan) GetCreatedBy() string {
 	return m.CreatedBy
 }
+
+//Scan is used by sql.scan to read the values from the DB
+func (a *CMSCenterG) Scan(src interface{}) error {
+	return GenericScan(src, a)
+}
+
+// Value implements the driver.Valuer interface.
+func (a CMSCenterG) Value() (driver.Value, error) {
+	return GenericValue(a)
+}
+
+//Scan is used by sql.scan to read the values from the DB
+func (a *CMMIGroupG) Scan(src interface{}) error {
+	return GenericScan(src, a)
+}
+
+// Value implements the driver.Valuer interface.
+func (a CMMIGroupG) Value() (driver.Value, error) {
+	return GenericValue(a)
+}
+
+//  CMMIGroup representes the group at CMMI
+type CMMIGroup string
+
+// These constancs represent the different values of a CMMIGroup
+const (
+	CMMIPatientCareModels                       CMMIGroup = "PATIENT_CARE_MODELS_GROUP"
+	CMMIPolicyAndPrograms                       CMMIGroup = "POLICY_AND_PROGRAMS_GROUP"
+	CMMIPreventiveAndPopulationHealthCareModels CMMIGroup = "PREVENTIVE_AND_POPULATION_HEALTH_CARE_MODELS_GROUP"
+	CMMISeamlessCareModels                      CMMIGroup = "SEAMLESS_CARE_MODELS_GROUP"
+	CMMIStateInnovations                        CMMIGroup = "STATE_INNOVATIONS_GROUP"
+	CMMITBD                                     CMMIGroup = "TBD"
+)
+
+// CMSCenter represents a CMS center
+type CMSCenter string
+
+// These constants represent the different values of CMSCenter
+const (
+	CMSCMMI                                 CMSCenter = "CMMI"
+	CMSCenterForMedicare                    CMSCenter = "CENTER_FOR_MEDICARE"
+	CMSFederalCoordinatedHealthCareOffice   CMSCenter = "FEDERAL_COORDINATED_HEALTH_CARE_OFFICE"
+	CMSCenterForClinicalStandardsAndQuality CMSCenter = "CENTER_FOR_CLINICAL_STANDARDS_AND_QUALITY"
+	CMSCenterForProgramIntegrity            CMSCenter = "CENTER_FOR_PROGRAM_INTEGRITY"
+	CMSOther                                CMSCenter = "OTHER"
+)

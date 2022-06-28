@@ -603,7 +603,7 @@ type ComplexityRoot struct {
 type ModelPlanResolver interface {
 	CmsCenters(ctx context.Context, obj *models.ModelPlan) ([]models.CMSCenter, error)
 
-	CmmiGroups(ctx context.Context, obj *models.ModelPlan) ([]model.CMMIGroup, error)
+	CmmiGroups(ctx context.Context, obj *models.ModelPlan) ([]models.CMMIGroup, error)
 
 	Basics(ctx context.Context, obj *models.ModelPlan) (*models.PlanBasics, error)
 	Milestones(ctx context.Context, obj *models.ModelPlan) (*models.PlanMilestones, error)
@@ -8267,9 +8267,9 @@ func (ec *executionContext) _ModelPlan_cmmiGroups(ctx context.Context, field gra
 		}
 		return graphql.Null
 	}
-	res := resTmp.([]model.CMMIGroup)
+	res := resTmp.([]models.CMMIGroup)
 	fc.Result = res
-	return ec.marshalNCMMIGroup2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCMMIGroupᚄ(ctx, field.Selections, res)
+	return ec.marshalNCMMIGroup2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐCMMIGroupᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_ModelPlan_cmmiGroups(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -36896,26 +36896,32 @@ func (ec *executionContext) marshalNBoolean2bool(ctx context.Context, sel ast.Se
 	return res
 }
 
-func (ec *executionContext) unmarshalNCMMIGroup2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCMMIGroup(ctx context.Context, v interface{}) (model.CMMIGroup, error) {
-	var res model.CMMIGroup
-	err := res.UnmarshalGQL(v)
+func (ec *executionContext) unmarshalNCMMIGroup2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐCMMIGroup(ctx context.Context, v interface{}) (models.CMMIGroup, error) {
+	tmp, err := graphql.UnmarshalString(v)
+	res := models.CMMIGroup(tmp)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) marshalNCMMIGroup2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCMMIGroup(ctx context.Context, sel ast.SelectionSet, v model.CMMIGroup) graphql.Marshaler {
-	return v
+func (ec *executionContext) marshalNCMMIGroup2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐCMMIGroup(ctx context.Context, sel ast.SelectionSet, v models.CMMIGroup) graphql.Marshaler {
+	res := graphql.MarshalString(string(v))
+	if res == graphql.Null {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
+	}
+	return res
 }
 
-func (ec *executionContext) unmarshalNCMMIGroup2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCMMIGroupᚄ(ctx context.Context, v interface{}) ([]model.CMMIGroup, error) {
+func (ec *executionContext) unmarshalNCMMIGroup2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐCMMIGroupᚄ(ctx context.Context, v interface{}) ([]models.CMMIGroup, error) {
 	var vSlice []interface{}
 	if v != nil {
 		vSlice = graphql.CoerceList(v)
 	}
 	var err error
-	res := make([]model.CMMIGroup, len(vSlice))
+	res := make([]models.CMMIGroup, len(vSlice))
 	for i := range vSlice {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
-		res[i], err = ec.unmarshalNCMMIGroup2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCMMIGroup(ctx, vSlice[i])
+		res[i], err = ec.unmarshalNCMMIGroup2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐCMMIGroup(ctx, vSlice[i])
 		if err != nil {
 			return nil, err
 		}
@@ -36923,7 +36929,7 @@ func (ec *executionContext) unmarshalNCMMIGroup2ᚕgithubᚗcomᚋcmsgovᚋmint�
 	return res, nil
 }
 
-func (ec *executionContext) marshalNCMMIGroup2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCMMIGroupᚄ(ctx context.Context, sel ast.SelectionSet, v []model.CMMIGroup) graphql.Marshaler {
+func (ec *executionContext) marshalNCMMIGroup2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐCMMIGroupᚄ(ctx context.Context, sel ast.SelectionSet, v []models.CMMIGroup) graphql.Marshaler {
 	ret := make(graphql.Array, len(v))
 	var wg sync.WaitGroup
 	isLen1 := len(v) == 1
@@ -36947,7 +36953,7 @@ func (ec *executionContext) marshalNCMMIGroup2ᚕgithubᚗcomᚋcmsgovᚋmintᚑ
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalNCMMIGroup2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCMMIGroup(ctx, sel, v[i])
+			ret[i] = ec.marshalNCMMIGroup2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐCMMIGroup(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -41808,7 +41814,7 @@ func (ec *executionContext) marshalOBoolean2ᚖbool(ctx context.Context, sel ast
 	return res
 }
 
-func (ec *executionContext) unmarshalOCMMIGroup2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCMMIGroupᚄ(ctx context.Context, v interface{}) ([]model.CMMIGroup, error) {
+func (ec *executionContext) unmarshalOCMMIGroup2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐCMMIGroupᚄ(ctx context.Context, v interface{}) ([]models.CMMIGroup, error) {
 	if v == nil {
 		return nil, nil
 	}
@@ -41817,10 +41823,10 @@ func (ec *executionContext) unmarshalOCMMIGroup2ᚕgithubᚗcomᚋcmsgovᚋmint�
 		vSlice = graphql.CoerceList(v)
 	}
 	var err error
-	res := make([]model.CMMIGroup, len(vSlice))
+	res := make([]models.CMMIGroup, len(vSlice))
 	for i := range vSlice {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
-		res[i], err = ec.unmarshalNCMMIGroup2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCMMIGroup(ctx, vSlice[i])
+		res[i], err = ec.unmarshalNCMMIGroup2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐCMMIGroup(ctx, vSlice[i])
 		if err != nil {
 			return nil, err
 		}
@@ -41828,7 +41834,7 @@ func (ec *executionContext) unmarshalOCMMIGroup2ᚕgithubᚗcomᚋcmsgovᚋmint�
 	return res, nil
 }
 
-func (ec *executionContext) marshalOCMMIGroup2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCMMIGroupᚄ(ctx context.Context, sel ast.SelectionSet, v []model.CMMIGroup) graphql.Marshaler {
+func (ec *executionContext) marshalOCMMIGroup2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐCMMIGroupᚄ(ctx context.Context, sel ast.SelectionSet, v []models.CMMIGroup) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
@@ -41855,7 +41861,7 @@ func (ec *executionContext) marshalOCMMIGroup2ᚕgithubᚗcomᚋcmsgovᚋmintᚑ
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalNCMMIGroup2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCMMIGroup(ctx, sel, v[i])
+			ret[i] = ec.marshalNCMMIGroup2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐCMMIGroup(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
