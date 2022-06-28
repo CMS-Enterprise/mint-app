@@ -1,21 +1,5 @@
 package models
 
-// ModelCategory represents the category of a model
-type ModelCategory string
-
-// These constants represent the different values of ModelCategory
-const (
-	MCAccountableCare           ModelCategory = "ACCOUNTABLE_CARE"
-	MCDemonstration             ModelCategory = "DEMONSTRATION"
-	MCEBPaymentInitiatives      ModelCategory = "EPISODE_BASED_PAYMENT_INITIATIVES"
-	MCMedicaidAndChip           ModelCategory = "INIT_MEDICAID_CHIP_POP"
-	MCMedicareAndMedicaid       ModelCategory = "INIT__MEDICARE_MEDICAID_ENROLLEES"
-	MCAccelerateDevAndTest      ModelCategory = "INIT_ACCEL_DEV_AND_TEST"
-	MCSpeedBestPracticeAdopt    ModelCategory = "INIT_SPEED_ADOPT_BEST_PRACTICE"
-	MCPrimaryCareTransformation ModelCategory = "PRIMARY_CARE_TRANSFORMATION"
-	MCTBD                       ModelCategory = "UNKNOWN"
-)
-
 // TeamRole represents the role of a team member
 type TeamRole string
 
@@ -26,36 +10,6 @@ const (
 	TeamRoleLeadership TeamRole = "LEADERSHIP"
 	TeamRoleLearning   TeamRole = "LEARNING"
 	TeamRoleEvaluation TeamRole = "EVALUATION"
-)
-
-/*
-
-	ACCOUNTABLE_CARE,
-	DEMONSTRATION,
-	EPISODE_BASED_PAYMENT_INITIATIVES,
-	INIT_MEDICAID_CHIP_POP,
-	INIT__MEDICARE_MEDICAID_ENROLLEES,
-	--INITIATIVES TO ACCELERATE THE DEVELOPMENT AND TESTING OF NEW PAYMENT AND SERVICE DELIVERY MODELS, --TOO BIG
-	INIT_ACCEL_DEV_AND_TEST,
-	INIT_SPEED_ADOPT_BEST_PRACTICE,
-	PRIMARY_CARE_TRANSFORMATION,
-	UNKNOWN
-*/
-
-// ModelStatus represents the possible statuses of a Model Plan
-type ModelStatus string
-
-// These constants represent the different values of ModelStatus
-const (
-	ModelStatusPlanDraft             ModelStatus = "PLAN_DRAFT"
-	ModelStatusPlanComplete          ModelStatus = "PLAN_COMPLETE"
-	ModelStatusIcipComplete          ModelStatus = "ICIP_COMPLETE"
-	ModelStatusInternalCmmiClearance ModelStatus = "INTERNAL_CMMI_CLEARANCE"
-	ModelStatusCmsClearance          ModelStatus = "CMS_CLEARANCE"
-	ModelStatusHhsClearance          ModelStatus = "HHS_CLEARANCE"
-	ModelStatusOmbAsrfClearance      ModelStatus = "OMB_ASRF_CLEARANCE"
-	ModelStatusCleared               ModelStatus = "CLEARED"
-	ModelStatusAnnounced             ModelStatus = "ANNOUNCED"
 )
 
 // ModelType is an enum that represents the basic type of a model
