@@ -79,6 +79,53 @@ type PlanDocumentPayload struct {
 	PresignedURL *string              `json:"presignedURL"`
 }
 
+type AgencyOrStateHelpType string
+
+const (
+	AgencyOrStateHelpTypeYesState       AgencyOrStateHelpType = "YES_STATE"
+	AgencyOrStateHelpTypeYesAgencyIDEas AgencyOrStateHelpType = "YES_AGENCY_IDEAS"
+	AgencyOrStateHelpTypeYesAgencyIaa   AgencyOrStateHelpType = "YES_AGENCY_IAA"
+	AgencyOrStateHelpTypeNo             AgencyOrStateHelpType = "NO"
+	AgencyOrStateHelpTypeOther          AgencyOrStateHelpType = "OTHER"
+)
+
+var AllAgencyOrStateHelpType = []AgencyOrStateHelpType{
+	AgencyOrStateHelpTypeYesState,
+	AgencyOrStateHelpTypeYesAgencyIDEas,
+	AgencyOrStateHelpTypeYesAgencyIaa,
+	AgencyOrStateHelpTypeNo,
+	AgencyOrStateHelpTypeOther,
+}
+
+func (e AgencyOrStateHelpType) IsValid() bool {
+	switch e {
+	case AgencyOrStateHelpTypeYesState, AgencyOrStateHelpTypeYesAgencyIDEas, AgencyOrStateHelpTypeYesAgencyIaa, AgencyOrStateHelpTypeNo, AgencyOrStateHelpTypeOther:
+		return true
+	}
+	return false
+}
+
+func (e AgencyOrStateHelpType) String() string {
+	return string(e)
+}
+
+func (e *AgencyOrStateHelpType) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = AgencyOrStateHelpType(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid AgencyOrStateHelpType", str)
+	}
+	return nil
+}
+
+func (e AgencyOrStateHelpType) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
 type AgreementType string
 
 const (
@@ -165,59 +212,6 @@ func (e AlternativePaymentModelType) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
-type AnticipatedPaymentFrequencyType string
-
-const (
-	AnticipatedPaymentFrequencyTypeAnnually    AnticipatedPaymentFrequencyType = "ANNUALLY"
-	AnticipatedPaymentFrequencyTypeBiannually  AnticipatedPaymentFrequencyType = "BIANNUALLY"
-	AnticipatedPaymentFrequencyTypeQuarterly   AnticipatedPaymentFrequencyType = "QUARTERLY"
-	AnticipatedPaymentFrequencyTypeMonthly     AnticipatedPaymentFrequencyType = "MONTHLY"
-	AnticipatedPaymentFrequencyTypeSemimonthly AnticipatedPaymentFrequencyType = "SEMIMONTHLY"
-	AnticipatedPaymentFrequencyTypeWeekly      AnticipatedPaymentFrequencyType = "WEEKLY"
-	AnticipatedPaymentFrequencyTypeDaily       AnticipatedPaymentFrequencyType = "DAILY"
-	AnticipatedPaymentFrequencyTypeOther       AnticipatedPaymentFrequencyType = "OTHER"
-)
-
-var AllAnticipatedPaymentFrequencyType = []AnticipatedPaymentFrequencyType{
-	AnticipatedPaymentFrequencyTypeAnnually,
-	AnticipatedPaymentFrequencyTypeBiannually,
-	AnticipatedPaymentFrequencyTypeQuarterly,
-	AnticipatedPaymentFrequencyTypeMonthly,
-	AnticipatedPaymentFrequencyTypeSemimonthly,
-	AnticipatedPaymentFrequencyTypeWeekly,
-	AnticipatedPaymentFrequencyTypeDaily,
-	AnticipatedPaymentFrequencyTypeOther,
-}
-
-func (e AnticipatedPaymentFrequencyType) IsValid() bool {
-	switch e {
-	case AnticipatedPaymentFrequencyTypeAnnually, AnticipatedPaymentFrequencyTypeBiannually, AnticipatedPaymentFrequencyTypeQuarterly, AnticipatedPaymentFrequencyTypeMonthly, AnticipatedPaymentFrequencyTypeSemimonthly, AnticipatedPaymentFrequencyTypeWeekly, AnticipatedPaymentFrequencyTypeDaily, AnticipatedPaymentFrequencyTypeOther:
-		return true
-	}
-	return false
-}
-
-func (e AnticipatedPaymentFrequencyType) String() string {
-	return string(e)
-}
-
-func (e *AnticipatedPaymentFrequencyType) UnmarshalGQL(v interface{}) error {
-	str, ok := v.(string)
-	if !ok {
-		return fmt.Errorf("enums must be strings")
-	}
-
-	*e = AnticipatedPaymentFrequencyType(str)
-	if !e.IsValid() {
-		return fmt.Errorf("%s is not a valid AnticipatedPaymentFrequencyType", str)
-	}
-	return nil
-}
-
-func (e AnticipatedPaymentFrequencyType) MarshalGQL(w io.Writer) {
-	fmt.Fprint(w, strconv.Quote(e.String()))
-}
-
 type AuthorityAllowance string
 
 const (
@@ -260,6 +254,49 @@ func (e *AuthorityAllowance) UnmarshalGQL(v interface{}) error {
 }
 
 func (e AuthorityAllowance) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
+type BManageBeneficiaryOverlapType string
+
+const (
+	BManageBeneficiaryOverlapTypeMdm   BManageBeneficiaryOverlapType = "MDM"
+	BManageBeneficiaryOverlapTypeOther BManageBeneficiaryOverlapType = "OTHER"
+	BManageBeneficiaryOverlapTypeNa    BManageBeneficiaryOverlapType = "NA"
+)
+
+var AllBManageBeneficiaryOverlapType = []BManageBeneficiaryOverlapType{
+	BManageBeneficiaryOverlapTypeMdm,
+	BManageBeneficiaryOverlapTypeOther,
+	BManageBeneficiaryOverlapTypeNa,
+}
+
+func (e BManageBeneficiaryOverlapType) IsValid() bool {
+	switch e {
+	case BManageBeneficiaryOverlapTypeMdm, BManageBeneficiaryOverlapTypeOther, BManageBeneficiaryOverlapTypeNa:
+		return true
+	}
+	return false
+}
+
+func (e BManageBeneficiaryOverlapType) String() string {
+	return string(e)
+}
+
+func (e *BManageBeneficiaryOverlapType) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = BManageBeneficiaryOverlapType(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid BManageBeneficiaryOverlapType", str)
+	}
+	return nil
+}
+
+func (e BManageBeneficiaryOverlapType) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
@@ -363,134 +400,430 @@ func (e CMMIGroup) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
-type ClaimsBasedPayType string
+type CcmInvolvmentType string
 
 const (
-	ClaimsBasedPayTypeAdjustmentsToFfsPayments                         ClaimsBasedPayType = "ADJUSTMENTS_TO_FFS_PAYMENTS"
-	ClaimsBasedPayTypePaymentsCareManagementHomeVisits                 ClaimsBasedPayType = "PAYMENTS_CARE_MANAGEMENT_HOME_VISITS"
-	ClaimsBasedPayTypePaymentsSnfClaimsWithout3dayHospitalAdmissions   ClaimsBasedPayType = "PAYMENTS_SNF_CLAIMS_WITHOUT_3DAY_HOSPITAL_ADMISSIONS"
-	ClaimsBasedPayTypePaymentsTelehealthServicesNotTraditionalMedicare ClaimsBasedPayType = "PAYMENTS_TELEHEALTH_SERVICES_NOT_TRADITIONAL_MEDICARE"
+	CcmInvolvmentTypeYesEvaluation     CcmInvolvmentType = "YES_EVALUATION"
+	CcmInvolvmentTypeYesImplementation CcmInvolvmentType = "YES__IMPLEMENTATION"
+	CcmInvolvmentTypeNo                CcmInvolvmentType = "NO"
+	CcmInvolvmentTypeOther             CcmInvolvmentType = "OTHER"
 )
 
-var AllClaimsBasedPayType = []ClaimsBasedPayType{
-	ClaimsBasedPayTypeAdjustmentsToFfsPayments,
-	ClaimsBasedPayTypePaymentsCareManagementHomeVisits,
-	ClaimsBasedPayTypePaymentsSnfClaimsWithout3dayHospitalAdmissions,
-	ClaimsBasedPayTypePaymentsTelehealthServicesNotTraditionalMedicare,
+var AllCcmInvolvmentType = []CcmInvolvmentType{
+	CcmInvolvmentTypeYesEvaluation,
+	CcmInvolvmentTypeYesImplementation,
+	CcmInvolvmentTypeNo,
+	CcmInvolvmentTypeOther,
 }
 
-func (e ClaimsBasedPayType) IsValid() bool {
+func (e CcmInvolvmentType) IsValid() bool {
 	switch e {
-	case ClaimsBasedPayTypeAdjustmentsToFfsPayments, ClaimsBasedPayTypePaymentsCareManagementHomeVisits, ClaimsBasedPayTypePaymentsSnfClaimsWithout3dayHospitalAdmissions, ClaimsBasedPayTypePaymentsTelehealthServicesNotTraditionalMedicare:
+	case CcmInvolvmentTypeYesEvaluation, CcmInvolvmentTypeYesImplementation, CcmInvolvmentTypeNo, CcmInvolvmentTypeOther:
 		return true
 	}
 	return false
 }
 
-func (e ClaimsBasedPayType) String() string {
+func (e CcmInvolvmentType) String() string {
 	return string(e)
 }
 
-func (e *ClaimsBasedPayType) UnmarshalGQL(v interface{}) error {
+func (e *CcmInvolvmentType) UnmarshalGQL(v interface{}) error {
 	str, ok := v.(string)
 	if !ok {
 		return fmt.Errorf("enums must be strings")
 	}
 
-	*e = ClaimsBasedPayType(str)
+	*e = CcmInvolvmentType(str)
 	if !e.IsValid() {
-		return fmt.Errorf("%s is not a valid ClaimsBasedPayType", str)
+		return fmt.Errorf("%s is not a valid CcmInvolvmentType", str)
 	}
 	return nil
 }
 
-func (e ClaimsBasedPayType) MarshalGQL(w io.Writer) {
+func (e CcmInvolvmentType) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
-type ComplexityCalculationLevelType string
+type ContractorSupportType string
 
 const (
-	ComplexityCalculationLevelTypeLow    ComplexityCalculationLevelType = "LOW"
-	ComplexityCalculationLevelTypeMiddle ComplexityCalculationLevelType = "MIDDLE"
-	ComplexityCalculationLevelTypeHigh   ComplexityCalculationLevelType = "HIGH"
+	ContractorSupportTypeOne      ContractorSupportType = "ONE"
+	ContractorSupportTypeMultiple ContractorSupportType = "MULTIPLE"
+	ContractorSupportTypeNone     ContractorSupportType = "NONE"
+	ContractorSupportTypeOther    ContractorSupportType = "OTHER"
 )
 
-var AllComplexityCalculationLevelType = []ComplexityCalculationLevelType{
-	ComplexityCalculationLevelTypeLow,
-	ComplexityCalculationLevelTypeMiddle,
-	ComplexityCalculationLevelTypeHigh,
+var AllContractorSupportType = []ContractorSupportType{
+	ContractorSupportTypeOne,
+	ContractorSupportTypeMultiple,
+	ContractorSupportTypeNone,
+	ContractorSupportTypeOther,
 }
 
-func (e ComplexityCalculationLevelType) IsValid() bool {
+func (e ContractorSupportType) IsValid() bool {
 	switch e {
-	case ComplexityCalculationLevelTypeLow, ComplexityCalculationLevelTypeMiddle, ComplexityCalculationLevelTypeHigh:
+	case ContractorSupportTypeOne, ContractorSupportTypeMultiple, ContractorSupportTypeNone, ContractorSupportTypeOther:
 		return true
 	}
 	return false
 }
 
-func (e ComplexityCalculationLevelType) String() string {
+func (e ContractorSupportType) String() string {
 	return string(e)
 }
 
-func (e *ComplexityCalculationLevelType) UnmarshalGQL(v interface{}) error {
+func (e *ContractorSupportType) UnmarshalGQL(v interface{}) error {
 	str, ok := v.(string)
 	if !ok {
 		return fmt.Errorf("enums must be strings")
 	}
 
-	*e = ComplexityCalculationLevelType(str)
+	*e = ContractorSupportType(str)
 	if !e.IsValid() {
-		return fmt.Errorf("%s is not a valid ComplexityCalculationLevelType", str)
+		return fmt.Errorf("%s is not a valid ContractorSupportType", str)
 	}
 	return nil
 }
 
-func (e ComplexityCalculationLevelType) MarshalGQL(w io.Writer) {
+func (e ContractorSupportType) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
-type FundingSource string
+type DataForMonitoringType string
 
 const (
-	FundingSourcePatientProtectionAffordableCareAct FundingSource = "PATIENT_PROTECTION_AFFORDABLE_CARE_ACT"
-	FundingSourceTrustFund                          FundingSource = "TRUST_FUND"
-	FundingSourceOther                              FundingSource = "OTHER"
+	DataForMonitoringTypeSiteVisits                 DataForMonitoringType = "SITE_VISITS"
+	DataForMonitoringTypeMedicareClaims             DataForMonitoringType = "MEDICARE_CLAIMS"
+	DataForMonitoringTypeMedicaidClaims             DataForMonitoringType = "MEDICAID_CLAIMS"
+	DataForMonitoringTypeEncounterData              DataForMonitoringType = "ENCOUNTER_DATA"
+	DataForMonitoringTypeNoPayClaims                DataForMonitoringType = "NO_PAY_CLAIMS"
+	DataForMonitoringTypeQualityClaimsBasedMeasures DataForMonitoringType = "QUALITY_CLAIMS_BASED_MEASURES"
+	DataForMonitoringTypeQualityReportedMeasures    DataForMonitoringType = "QUALITY_REPORTED_MEASURES"
+	DataForMonitoringTypeClinicalData               DataForMonitoringType = "CLINICAL_DATA"
+	DataForMonitoringTypeNonClinicalData            DataForMonitoringType = "NON_CLINICAL_DATA"
+	DataForMonitoringTypeNonMedicalData             DataForMonitoringType = "NON_MEDICAL_DATA"
+	DataForMonitoringTypeOther                      DataForMonitoringType = "OTHER"
+	DataForMonitoringTypeNotPlanningToCollectData   DataForMonitoringType = "NOT_PLANNING_TO_COLLECT_DATA"
 )
 
-var AllFundingSource = []FundingSource{
-	FundingSourcePatientProtectionAffordableCareAct,
-	FundingSourceTrustFund,
-	FundingSourceOther,
+var AllDataForMonitoringType = []DataForMonitoringType{
+	DataForMonitoringTypeSiteVisits,
+	DataForMonitoringTypeMedicareClaims,
+	DataForMonitoringTypeMedicaidClaims,
+	DataForMonitoringTypeEncounterData,
+	DataForMonitoringTypeNoPayClaims,
+	DataForMonitoringTypeQualityClaimsBasedMeasures,
+	DataForMonitoringTypeQualityReportedMeasures,
+	DataForMonitoringTypeClinicalData,
+	DataForMonitoringTypeNonClinicalData,
+	DataForMonitoringTypeNonMedicalData,
+	DataForMonitoringTypeOther,
+	DataForMonitoringTypeNotPlanningToCollectData,
 }
 
-func (e FundingSource) IsValid() bool {
+func (e DataForMonitoringType) IsValid() bool {
 	switch e {
-	case FundingSourcePatientProtectionAffordableCareAct, FundingSourceTrustFund, FundingSourceOther:
+	case DataForMonitoringTypeSiteVisits, DataForMonitoringTypeMedicareClaims, DataForMonitoringTypeMedicaidClaims, DataForMonitoringTypeEncounterData, DataForMonitoringTypeNoPayClaims, DataForMonitoringTypeQualityClaimsBasedMeasures, DataForMonitoringTypeQualityReportedMeasures, DataForMonitoringTypeClinicalData, DataForMonitoringTypeNonClinicalData, DataForMonitoringTypeNonMedicalData, DataForMonitoringTypeOther, DataForMonitoringTypeNotPlanningToCollectData:
 		return true
 	}
 	return false
 }
 
-func (e FundingSource) String() string {
+func (e DataForMonitoringType) String() string {
 	return string(e)
 }
 
-func (e *FundingSource) UnmarshalGQL(v interface{}) error {
+func (e *DataForMonitoringType) UnmarshalGQL(v interface{}) error {
 	str, ok := v.(string)
 	if !ok {
 		return fmt.Errorf("enums must be strings")
 	}
 
-	*e = FundingSource(str)
+	*e = DataForMonitoringType(str)
 	if !e.IsValid() {
-		return fmt.Errorf("%s is not a valid FundingSource", str)
+		return fmt.Errorf("%s is not a valid DataForMonitoringType", str)
 	}
 	return nil
 }
 
-func (e FundingSource) MarshalGQL(w io.Writer) {
+func (e DataForMonitoringType) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
+type DataFrequencyType string
+
+const (
+	DataFrequencyTypeAnnually            DataFrequencyType = "ANNUALLY"
+	DataFrequencyTypeBiannually          DataFrequencyType = "BIANNUALLY"
+	DataFrequencyTypeQuarterly           DataFrequencyType = "QUARTERLY"
+	DataFrequencyTypeMonthly             DataFrequencyType = "MONTHLY"
+	DataFrequencyTypeSemiMonthly         DataFrequencyType = "SEMI_MONTHLY"
+	DataFrequencyTypeWeekly              DataFrequencyType = "WEEKLY"
+	DataFrequencyTypeDaily               DataFrequencyType = "DAILY"
+	DataFrequencyTypeOther               DataFrequencyType = "OTHER"
+	DataFrequencyTypeNotPlanningToDoThis DataFrequencyType = "NOT_PLANNING_TO_DO_THIS"
+)
+
+var AllDataFrequencyType = []DataFrequencyType{
+	DataFrequencyTypeAnnually,
+	DataFrequencyTypeBiannually,
+	DataFrequencyTypeQuarterly,
+	DataFrequencyTypeMonthly,
+	DataFrequencyTypeSemiMonthly,
+	DataFrequencyTypeWeekly,
+	DataFrequencyTypeDaily,
+	DataFrequencyTypeOther,
+	DataFrequencyTypeNotPlanningToDoThis,
+}
+
+func (e DataFrequencyType) IsValid() bool {
+	switch e {
+	case DataFrequencyTypeAnnually, DataFrequencyTypeBiannually, DataFrequencyTypeQuarterly, DataFrequencyTypeMonthly, DataFrequencyTypeSemiMonthly, DataFrequencyTypeWeekly, DataFrequencyTypeDaily, DataFrequencyTypeOther, DataFrequencyTypeNotPlanningToDoThis:
+		return true
+	}
+	return false
+}
+
+func (e DataFrequencyType) String() string {
+	return string(e)
+}
+
+func (e *DataFrequencyType) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = DataFrequencyType(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid DataFrequencyType", str)
+	}
+	return nil
+}
+
+func (e DataFrequencyType) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
+type DataToSendParticipantsType string
+
+const (
+	DataToSendParticipantsTypeBaselineHistoricalData DataToSendParticipantsType = "BASELINE_HISTORICAL_DATA"
+	DataToSendParticipantsTypeClaimsLevelData        DataToSendParticipantsType = "CLAIMS_LEVEL_DATA"
+	DataToSendParticipantsTypeBeneficiaryLevelData   DataToSendParticipantsType = "BENEFICIARY_LEVEL_DATA"
+	DataToSendParticipantsTypeParticipantLevelData   DataToSendParticipantsType = "PARTICIPANT_LEVEL_DATA"
+	DataToSendParticipantsTypeProviderLevelData      DataToSendParticipantsType = "PROVIDER_LEVEL_DATA"
+	DataToSendParticipantsTypeOtherMipsData          DataToSendParticipantsType = "OTHER_MIPS_DATA"
+	DataToSendParticipantsTypeNotPlanningToSendData  DataToSendParticipantsType = "NOT_PLANNING_TO_SEND_DATA"
+)
+
+var AllDataToSendParticipantsType = []DataToSendParticipantsType{
+	DataToSendParticipantsTypeBaselineHistoricalData,
+	DataToSendParticipantsTypeClaimsLevelData,
+	DataToSendParticipantsTypeBeneficiaryLevelData,
+	DataToSendParticipantsTypeParticipantLevelData,
+	DataToSendParticipantsTypeProviderLevelData,
+	DataToSendParticipantsTypeOtherMipsData,
+	DataToSendParticipantsTypeNotPlanningToSendData,
+}
+
+func (e DataToSendParticipantsType) IsValid() bool {
+	switch e {
+	case DataToSendParticipantsTypeBaselineHistoricalData, DataToSendParticipantsTypeClaimsLevelData, DataToSendParticipantsTypeBeneficiaryLevelData, DataToSendParticipantsTypeParticipantLevelData, DataToSendParticipantsTypeProviderLevelData, DataToSendParticipantsTypeOtherMipsData, DataToSendParticipantsTypeNotPlanningToSendData:
+		return true
+	}
+	return false
+}
+
+func (e DataToSendParticipantsType) String() string {
+	return string(e)
+}
+
+func (e *DataToSendParticipantsType) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = DataToSendParticipantsType(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid DataToSendParticipantsType", str)
+	}
+	return nil
+}
+
+func (e DataToSendParticipantsType) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
+type EvaluationApproachType string
+
+const (
+	EvaluationApproachTypeControlIntervention EvaluationApproachType = "CONTROL_INTERVENTION"
+	EvaluationApproachTypeComparisonMatch     EvaluationApproachType = "COMPARISON_MATCH"
+	EvaluationApproachTypeInterruptedTime     EvaluationApproachType = "INTERRUPTED_TIME"
+	EvaluationApproachTypeNonMedicareData     EvaluationApproachType = "NON_MEDICARE_DATA"
+	EvaluationApproachTypeOther               EvaluationApproachType = "OTHER"
+)
+
+var AllEvaluationApproachType = []EvaluationApproachType{
+	EvaluationApproachTypeControlIntervention,
+	EvaluationApproachTypeComparisonMatch,
+	EvaluationApproachTypeInterruptedTime,
+	EvaluationApproachTypeNonMedicareData,
+	EvaluationApproachTypeOther,
+}
+
+func (e EvaluationApproachType) IsValid() bool {
+	switch e {
+	case EvaluationApproachTypeControlIntervention, EvaluationApproachTypeComparisonMatch, EvaluationApproachTypeInterruptedTime, EvaluationApproachTypeNonMedicareData, EvaluationApproachTypeOther:
+		return true
+	}
+	return false
+}
+
+func (e EvaluationApproachType) String() string {
+	return string(e)
+}
+
+func (e *EvaluationApproachType) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = EvaluationApproachType(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid EvaluationApproachType", str)
+	}
+	return nil
+}
+
+func (e EvaluationApproachType) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
+type GcCollectBidsType string
+
+const (
+	GcCollectBidsTypeHpms  GcCollectBidsType = "HPMS"
+	GcCollectBidsTypeOther GcCollectBidsType = "OTHER"
+)
+
+var AllGcCollectBidsType = []GcCollectBidsType{
+	GcCollectBidsTypeHpms,
+	GcCollectBidsTypeOther,
+}
+
+func (e GcCollectBidsType) IsValid() bool {
+	switch e {
+	case GcCollectBidsTypeHpms, GcCollectBidsTypeOther:
+		return true
+	}
+	return false
+}
+
+func (e GcCollectBidsType) String() string {
+	return string(e)
+}
+
+func (e *GcCollectBidsType) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = GcCollectBidsType(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid GcCollectBidsType", str)
+	}
+	return nil
+}
+
+func (e GcCollectBidsType) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
+type GcPartCDType string
+
+const (
+	GcPartCDTypeMarx  GcPartCDType = "MARX"
+	GcPartCDTypeOther GcPartCDType = "OTHER"
+)
+
+var AllGcPartCDType = []GcPartCDType{
+	GcPartCDTypeMarx,
+	GcPartCDTypeOther,
+}
+
+func (e GcPartCDType) IsValid() bool {
+	switch e {
+	case GcPartCDTypeMarx, GcPartCDTypeOther:
+		return true
+	}
+	return false
+}
+
+func (e GcPartCDType) String() string {
+	return string(e)
+}
+
+func (e *GcPartCDType) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = GcPartCDType(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid GcPartCDType", str)
+	}
+	return nil
+}
+
+func (e GcPartCDType) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
+type GcUpdateContractType string
+
+const (
+	GcUpdateContractTypeHpms  GcUpdateContractType = "HPMS"
+	GcUpdateContractTypeOther GcUpdateContractType = "OTHER"
+)
+
+var AllGcUpdateContractType = []GcUpdateContractType{
+	GcUpdateContractTypeHpms,
+	GcUpdateContractTypeOther,
+}
+
+func (e GcUpdateContractType) IsValid() bool {
+	switch e {
+	case GcUpdateContractTypeHpms, GcUpdateContractTypeOther:
+		return true
+	}
+	return false
+}
+
+func (e GcUpdateContractType) String() string {
+	return string(e)
+}
+
+func (e *GcUpdateContractType) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = GcUpdateContractType(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid GcUpdateContractType", str)
+	}
+	return nil
+}
+
+func (e GcUpdateContractType) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
@@ -637,6 +970,102 @@ func (e KeyCharacteristic) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
+type ModelLearningSystemType string
+
+const (
+	ModelLearningSystemTypeLearningContractor       ModelLearningSystemType = "LEARNING_CONTRACTOR"
+	ModelLearningSystemTypeItPlatformConnect        ModelLearningSystemType = "IT_PLATFORM_CONNECT"
+	ModelLearningSystemTypeParticipantCollaboration ModelLearningSystemType = "PARTICIPANT_COLLABORATION"
+	ModelLearningSystemTypeEducateBeneficiaries     ModelLearningSystemType = "EDUCATE_BENEFICIARIES"
+	ModelLearningSystemTypeOther                    ModelLearningSystemType = "OTHER"
+	ModelLearningSystemTypeNoLearningSystem         ModelLearningSystemType = "NO_LEARNING_SYSTEM"
+)
+
+var AllModelLearningSystemType = []ModelLearningSystemType{
+	ModelLearningSystemTypeLearningContractor,
+	ModelLearningSystemTypeItPlatformConnect,
+	ModelLearningSystemTypeParticipantCollaboration,
+	ModelLearningSystemTypeEducateBeneficiaries,
+	ModelLearningSystemTypeOther,
+	ModelLearningSystemTypeNoLearningSystem,
+}
+
+func (e ModelLearningSystemType) IsValid() bool {
+	switch e {
+	case ModelLearningSystemTypeLearningContractor, ModelLearningSystemTypeItPlatformConnect, ModelLearningSystemTypeParticipantCollaboration, ModelLearningSystemTypeEducateBeneficiaries, ModelLearningSystemTypeOther, ModelLearningSystemTypeNoLearningSystem:
+		return true
+	}
+	return false
+}
+
+func (e ModelLearningSystemType) String() string {
+	return string(e)
+}
+
+func (e *ModelLearningSystemType) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = ModelLearningSystemType(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid ModelLearningSystemType", str)
+	}
+	return nil
+}
+
+func (e ModelLearningSystemType) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
+type MonitoringFileType string
+
+const (
+	MonitoringFileTypeBeneficiary MonitoringFileType = "BENEFICIARY"
+	MonitoringFileTypeProvider    MonitoringFileType = "PROVIDER"
+	MonitoringFileTypePartA       MonitoringFileType = "PART_A"
+	MonitoringFileTypePartB       MonitoringFileType = "PART_B"
+	MonitoringFileTypeOther       MonitoringFileType = "OTHER"
+)
+
+var AllMonitoringFileType = []MonitoringFileType{
+	MonitoringFileTypeBeneficiary,
+	MonitoringFileTypeProvider,
+	MonitoringFileTypePartA,
+	MonitoringFileTypePartB,
+	MonitoringFileTypeOther,
+}
+
+func (e MonitoringFileType) IsValid() bool {
+	switch e {
+	case MonitoringFileTypeBeneficiary, MonitoringFileTypeProvider, MonitoringFileTypePartA, MonitoringFileTypePartB, MonitoringFileTypeOther:
+		return true
+	}
+	return false
+}
+
+func (e MonitoringFileType) String() string {
+	return string(e)
+}
+
+func (e *MonitoringFileType) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = MonitoringFileType(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid MonitoringFileType", str)
+	}
+	return nil
+}
+
+func (e MonitoringFileType) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
 type NonClaimsBasedPayType string
 
 const (
@@ -693,6 +1122,788 @@ func (e *NonClaimsBasedPayType) UnmarshalGQL(v interface{}) error {
 }
 
 func (e NonClaimsBasedPayType) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
+type OelClaimsBasedMeasuresType string
+
+const (
+	OelClaimsBasedMeasuresTypeIDR   OelClaimsBasedMeasuresType = "IDR"
+	OelClaimsBasedMeasuresTypeCcw   OelClaimsBasedMeasuresType = "CCW"
+	OelClaimsBasedMeasuresTypeOther OelClaimsBasedMeasuresType = "OTHER"
+)
+
+var AllOelClaimsBasedMeasuresType = []OelClaimsBasedMeasuresType{
+	OelClaimsBasedMeasuresTypeIDR,
+	OelClaimsBasedMeasuresTypeCcw,
+	OelClaimsBasedMeasuresTypeOther,
+}
+
+func (e OelClaimsBasedMeasuresType) IsValid() bool {
+	switch e {
+	case OelClaimsBasedMeasuresTypeIDR, OelClaimsBasedMeasuresTypeCcw, OelClaimsBasedMeasuresTypeOther:
+		return true
+	}
+	return false
+}
+
+func (e OelClaimsBasedMeasuresType) String() string {
+	return string(e)
+}
+
+func (e *OelClaimsBasedMeasuresType) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = OelClaimsBasedMeasuresType(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid OelClaimsBasedMeasuresType", str)
+	}
+	return nil
+}
+
+func (e OelClaimsBasedMeasuresType) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
+type OelCollectDataType string
+
+const (
+	OelCollectDataTypeIDR        OelCollectDataType = "IDR"
+	OelCollectDataTypeCcw        OelCollectDataType = "CCW"
+	OelCollectDataTypeIDOs       OelCollectDataType = "IDOS"
+	OelCollectDataTypeIsp        OelCollectDataType = "ISP"
+	OelCollectDataTypeContractor OelCollectDataType = "CONTRACTOR"
+	OelCollectDataTypeOther      OelCollectDataType = "OTHER"
+)
+
+var AllOelCollectDataType = []OelCollectDataType{
+	OelCollectDataTypeIDR,
+	OelCollectDataTypeCcw,
+	OelCollectDataTypeIDOs,
+	OelCollectDataTypeIsp,
+	OelCollectDataTypeContractor,
+	OelCollectDataTypeOther,
+}
+
+func (e OelCollectDataType) IsValid() bool {
+	switch e {
+	case OelCollectDataTypeIDR, OelCollectDataTypeCcw, OelCollectDataTypeIDOs, OelCollectDataTypeIsp, OelCollectDataTypeContractor, OelCollectDataTypeOther:
+		return true
+	}
+	return false
+}
+
+func (e OelCollectDataType) String() string {
+	return string(e)
+}
+
+func (e *OelCollectDataType) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = OelCollectDataType(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid OelCollectDataType", str)
+	}
+	return nil
+}
+
+func (e OelCollectDataType) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
+type OelEducateBeneficiariesType string
+
+const (
+	OelEducateBeneficiariesTypeOc    OelEducateBeneficiariesType = "OC"
+	OelEducateBeneficiariesTypeOther OelEducateBeneficiariesType = "OTHER"
+)
+
+var AllOelEducateBeneficiariesType = []OelEducateBeneficiariesType{
+	OelEducateBeneficiariesTypeOc,
+	OelEducateBeneficiariesTypeOther,
+}
+
+func (e OelEducateBeneficiariesType) IsValid() bool {
+	switch e {
+	case OelEducateBeneficiariesTypeOc, OelEducateBeneficiariesTypeOther:
+		return true
+	}
+	return false
+}
+
+func (e OelEducateBeneficiariesType) String() string {
+	return string(e)
+}
+
+func (e *OelEducateBeneficiariesType) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = OelEducateBeneficiariesType(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid OelEducateBeneficiariesType", str)
+	}
+	return nil
+}
+
+func (e OelEducateBeneficiariesType) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
+type OelEvaluationContractorType string
+
+const (
+	OelEvaluationContractorTypeRmda  OelEvaluationContractorType = "RMDA"
+	OelEvaluationContractorTypeOther OelEvaluationContractorType = "OTHER"
+)
+
+var AllOelEvaluationContractorType = []OelEvaluationContractorType{
+	OelEvaluationContractorTypeRmda,
+	OelEvaluationContractorTypeOther,
+}
+
+func (e OelEvaluationContractorType) IsValid() bool {
+	switch e {
+	case OelEvaluationContractorTypeRmda, OelEvaluationContractorTypeOther:
+		return true
+	}
+	return false
+}
+
+func (e OelEvaluationContractorType) String() string {
+	return string(e)
+}
+
+func (e *OelEvaluationContractorType) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = OelEvaluationContractorType(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid OelEvaluationContractorType", str)
+	}
+	return nil
+}
+
+func (e OelEvaluationContractorType) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
+type OelHelpdeskSupportType string
+
+const (
+	OelHelpdeskSupportTypeCbosc      OelHelpdeskSupportType = "CBOSC"
+	OelHelpdeskSupportTypeContractor OelHelpdeskSupportType = "CONTRACTOR"
+	OelHelpdeskSupportTypeOther      OelHelpdeskSupportType = "OTHER"
+)
+
+var AllOelHelpdeskSupportType = []OelHelpdeskSupportType{
+	OelHelpdeskSupportTypeCbosc,
+	OelHelpdeskSupportTypeContractor,
+	OelHelpdeskSupportTypeOther,
+}
+
+func (e OelHelpdeskSupportType) IsValid() bool {
+	switch e {
+	case OelHelpdeskSupportTypeCbosc, OelHelpdeskSupportTypeContractor, OelHelpdeskSupportTypeOther:
+		return true
+	}
+	return false
+}
+
+func (e OelHelpdeskSupportType) String() string {
+	return string(e)
+}
+
+func (e *OelHelpdeskSupportType) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = OelHelpdeskSupportType(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid OelHelpdeskSupportType", str)
+	}
+	return nil
+}
+
+func (e OelHelpdeskSupportType) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
+type OelLearningContractorType string
+
+const (
+	OelLearningContractorTypeRmada              OelLearningContractorType = "RMADA"
+	OelLearningContractorTypeCrossModelContract OelLearningContractorType = "CROSS_MODEL_CONTRACT"
+	OelLearningContractorTypeOther              OelLearningContractorType = "OTHER"
+)
+
+var AllOelLearningContractorType = []OelLearningContractorType{
+	OelLearningContractorTypeRmada,
+	OelLearningContractorTypeCrossModelContract,
+	OelLearningContractorTypeOther,
+}
+
+func (e OelLearningContractorType) IsValid() bool {
+	switch e {
+	case OelLearningContractorTypeRmada, OelLearningContractorTypeCrossModelContract, OelLearningContractorTypeOther:
+		return true
+	}
+	return false
+}
+
+func (e OelLearningContractorType) String() string {
+	return string(e)
+}
+
+func (e *OelLearningContractorType) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = OelLearningContractorType(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid OelLearningContractorType", str)
+	}
+	return nil
+}
+
+func (e OelLearningContractorType) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
+type OelManageAcoType string
+
+const (
+	OelManageAcoTypeAcoOs      OelManageAcoType = "ACO_OS"
+	OelManageAcoTypeAcoUI      OelManageAcoType = "ACO_UI"
+	OelManageAcoTypeInnovation OelManageAcoType = "INNOVATION"
+	OelManageAcoTypeOther      OelManageAcoType = "OTHER"
+)
+
+var AllOelManageAcoType = []OelManageAcoType{
+	OelManageAcoTypeAcoOs,
+	OelManageAcoTypeAcoUI,
+	OelManageAcoTypeInnovation,
+	OelManageAcoTypeOther,
+}
+
+func (e OelManageAcoType) IsValid() bool {
+	switch e {
+	case OelManageAcoTypeAcoOs, OelManageAcoTypeAcoUI, OelManageAcoTypeInnovation, OelManageAcoTypeOther:
+		return true
+	}
+	return false
+}
+
+func (e OelManageAcoType) String() string {
+	return string(e)
+}
+
+func (e *OelManageAcoType) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = OelManageAcoType(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid OelManageAcoType", str)
+	}
+	return nil
+}
+
+func (e OelManageAcoType) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
+type OelObtainDataType string
+
+const (
+	OelObtainDataTypeCcw   OelObtainDataType = "CCW"
+	OelObtainDataTypeIDOs  OelObtainDataType = "IDOS"
+	OelObtainDataTypeIsp   OelObtainDataType = "ISP"
+	OelObtainDataTypeOther OelObtainDataType = "OTHER"
+)
+
+var AllOelObtainDataType = []OelObtainDataType{
+	OelObtainDataTypeCcw,
+	OelObtainDataTypeIDOs,
+	OelObtainDataTypeIsp,
+	OelObtainDataTypeOther,
+}
+
+func (e OelObtainDataType) IsValid() bool {
+	switch e {
+	case OelObtainDataTypeCcw, OelObtainDataTypeIDOs, OelObtainDataTypeIsp, OelObtainDataTypeOther:
+		return true
+	}
+	return false
+}
+
+func (e OelObtainDataType) String() string {
+	return string(e)
+}
+
+func (e *OelObtainDataType) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = OelObtainDataType(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid OelObtainDataType", str)
+	}
+	return nil
+}
+
+func (e OelObtainDataType) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
+type OelParticipantCollaborationType string
+
+const (
+	OelParticipantCollaborationTypeConnect OelParticipantCollaborationType = "CONNECT"
+	OelParticipantCollaborationTypeOther   OelParticipantCollaborationType = "OTHER"
+)
+
+var AllOelParticipantCollaborationType = []OelParticipantCollaborationType{
+	OelParticipantCollaborationTypeConnect,
+	OelParticipantCollaborationTypeOther,
+}
+
+func (e OelParticipantCollaborationType) IsValid() bool {
+	switch e {
+	case OelParticipantCollaborationTypeConnect, OelParticipantCollaborationTypeOther:
+		return true
+	}
+	return false
+}
+
+func (e OelParticipantCollaborationType) String() string {
+	return string(e)
+}
+
+func (e *OelParticipantCollaborationType) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = OelParticipantCollaborationType(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid OelParticipantCollaborationType", str)
+	}
+	return nil
+}
+
+func (e OelParticipantCollaborationType) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
+type OelPerformanceBenchmarkType string
+
+const (
+	OelPerformanceBenchmarkTypeIDR   OelPerformanceBenchmarkType = "IDR"
+	OelPerformanceBenchmarkTypeCcw   OelPerformanceBenchmarkType = "CCW"
+	OelPerformanceBenchmarkTypeOther OelPerformanceBenchmarkType = "OTHER"
+)
+
+var AllOelPerformanceBenchmarkType = []OelPerformanceBenchmarkType{
+	OelPerformanceBenchmarkTypeIDR,
+	OelPerformanceBenchmarkTypeCcw,
+	OelPerformanceBenchmarkTypeOther,
+}
+
+func (e OelPerformanceBenchmarkType) IsValid() bool {
+	switch e {
+	case OelPerformanceBenchmarkTypeIDR, OelPerformanceBenchmarkTypeCcw, OelPerformanceBenchmarkTypeOther:
+		return true
+	}
+	return false
+}
+
+func (e OelPerformanceBenchmarkType) String() string {
+	return string(e)
+}
+
+func (e *OelPerformanceBenchmarkType) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = OelPerformanceBenchmarkType(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid OelPerformanceBenchmarkType", str)
+	}
+	return nil
+}
+
+func (e OelPerformanceBenchmarkType) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
+type OelProcessAppealsType string
+
+const (
+	OelProcessAppealsTypeMedicareAppealSystem OelProcessAppealsType = "MEDICARE_APPEAL_SYSTEM"
+	OelProcessAppealsTypeOther                OelProcessAppealsType = "OTHER"
+)
+
+var AllOelProcessAppealsType = []OelProcessAppealsType{
+	OelProcessAppealsTypeMedicareAppealSystem,
+	OelProcessAppealsTypeOther,
+}
+
+func (e OelProcessAppealsType) IsValid() bool {
+	switch e {
+	case OelProcessAppealsTypeMedicareAppealSystem, OelProcessAppealsTypeOther:
+		return true
+	}
+	return false
+}
+
+func (e OelProcessAppealsType) String() string {
+	return string(e)
+}
+
+func (e *OelProcessAppealsType) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = OelProcessAppealsType(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid OelProcessAppealsType", str)
+	}
+	return nil
+}
+
+func (e OelProcessAppealsType) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
+type OelQualityScoresType string
+
+const (
+	OelQualityScoresTypeExistingDataAndProcess OelQualityScoresType = "EXISTING_DATA_AND_PROCESS"
+	OelQualityScoresTypeNewDataAndCmmiProcess  OelQualityScoresType = "NEW_DATA_AND_CMMI_PROCESS"
+	OelQualityScoresTypeOther                  OelQualityScoresType = "OTHER"
+	OelQualityScoresTypeNone                   OelQualityScoresType = "NONE"
+)
+
+var AllOelQualityScoresType = []OelQualityScoresType{
+	OelQualityScoresTypeExistingDataAndProcess,
+	OelQualityScoresTypeNewDataAndCmmiProcess,
+	OelQualityScoresTypeOther,
+	OelQualityScoresTypeNone,
+}
+
+func (e OelQualityScoresType) IsValid() bool {
+	switch e {
+	case OelQualityScoresTypeExistingDataAndProcess, OelQualityScoresTypeNewDataAndCmmiProcess, OelQualityScoresTypeOther, OelQualityScoresTypeNone:
+		return true
+	}
+	return false
+}
+
+func (e OelQualityScoresType) String() string {
+	return string(e)
+}
+
+func (e *OelQualityScoresType) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = OelQualityScoresType(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid OelQualityScoresType", str)
+	}
+	return nil
+}
+
+func (e OelQualityScoresType) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
+type OelSendReportsType string
+
+const (
+	OelSendReportsTypeIDOs          OelSendReportsType = "IDOS"
+	OelSendReportsTypeRmada         OelSendReportsType = "RMADA"
+	OelSendReportsTypeInternalStaff OelSendReportsType = "INTERNAL_STAFF"
+	OelSendReportsTypeOther         OelSendReportsType = "OTHER"
+)
+
+var AllOelSendReportsType = []OelSendReportsType{
+	OelSendReportsTypeIDOs,
+	OelSendReportsTypeRmada,
+	OelSendReportsTypeInternalStaff,
+	OelSendReportsTypeOther,
+}
+
+func (e OelSendReportsType) IsValid() bool {
+	switch e {
+	case OelSendReportsTypeIDOs, OelSendReportsTypeRmada, OelSendReportsTypeInternalStaff, OelSendReportsTypeOther:
+		return true
+	}
+	return false
+}
+
+func (e OelSendReportsType) String() string {
+	return string(e)
+}
+
+func (e *OelSendReportsType) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = OelSendReportsType(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid OelSendReportsType", str)
+	}
+	return nil
+}
+
+func (e OelSendReportsType) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
+type PInformFfsType string
+
+const (
+	PInformFfsTypeFfsCompetencyCenter PInformFfsType = "FFS_COMPETENCY_CENTER"
+	PInformFfsTypeOther               PInformFfsType = "OTHER"
+)
+
+var AllPInformFfsType = []PInformFfsType{
+	PInformFfsTypeFfsCompetencyCenter,
+	PInformFfsTypeOther,
+}
+
+func (e PInformFfsType) IsValid() bool {
+	switch e {
+	case PInformFfsTypeFfsCompetencyCenter, PInformFfsTypeOther:
+		return true
+	}
+	return false
+}
+
+func (e PInformFfsType) String() string {
+	return string(e)
+}
+
+func (e *PInformFfsType) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = PInformFfsType(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid PInformFfsType", str)
+	}
+	return nil
+}
+
+func (e PInformFfsType) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
+type PMakeClaimsPaymentsType string
+
+const (
+	PMakeClaimsPaymentsTypeSharedSystems PMakeClaimsPaymentsType = "SHARED_SYSTEMS"
+	PMakeClaimsPaymentsTypeHiglas        PMakeClaimsPaymentsType = "HIGLAS"
+	PMakeClaimsPaymentsTypeOther         PMakeClaimsPaymentsType = "OTHER"
+)
+
+var AllPMakeClaimsPaymentsType = []PMakeClaimsPaymentsType{
+	PMakeClaimsPaymentsTypeSharedSystems,
+	PMakeClaimsPaymentsTypeHiglas,
+	PMakeClaimsPaymentsTypeOther,
+}
+
+func (e PMakeClaimsPaymentsType) IsValid() bool {
+	switch e {
+	case PMakeClaimsPaymentsTypeSharedSystems, PMakeClaimsPaymentsTypeHiglas, PMakeClaimsPaymentsTypeOther:
+		return true
+	}
+	return false
+}
+
+func (e PMakeClaimsPaymentsType) String() string {
+	return string(e)
+}
+
+func (e *PMakeClaimsPaymentsType) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = PMakeClaimsPaymentsType(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid PMakeClaimsPaymentsType", str)
+	}
+	return nil
+}
+
+func (e PMakeClaimsPaymentsType) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
+type PNonClaimsBasedPaymentsType string
+
+const (
+	PNonClaimsBasedPaymentsTypeApps   PNonClaimsBasedPaymentsType = "APPS"
+	PNonClaimsBasedPaymentsTypeHiglas PNonClaimsBasedPaymentsType = "HIGLAS"
+	PNonClaimsBasedPaymentsTypeIPC    PNonClaimsBasedPaymentsType = "IPC"
+	PNonClaimsBasedPaymentsTypeMac    PNonClaimsBasedPaymentsType = "MAC"
+	PNonClaimsBasedPaymentsTypeOther  PNonClaimsBasedPaymentsType = "OTHER"
+)
+
+var AllPNonClaimsBasedPaymentsType = []PNonClaimsBasedPaymentsType{
+	PNonClaimsBasedPaymentsTypeApps,
+	PNonClaimsBasedPaymentsTypeHiglas,
+	PNonClaimsBasedPaymentsTypeIPC,
+	PNonClaimsBasedPaymentsTypeMac,
+	PNonClaimsBasedPaymentsTypeOther,
+}
+
+func (e PNonClaimsBasedPaymentsType) IsValid() bool {
+	switch e {
+	case PNonClaimsBasedPaymentsTypeApps, PNonClaimsBasedPaymentsTypeHiglas, PNonClaimsBasedPaymentsTypeIPC, PNonClaimsBasedPaymentsTypeMac, PNonClaimsBasedPaymentsTypeOther:
+		return true
+	}
+	return false
+}
+
+func (e PNonClaimsBasedPaymentsType) String() string {
+	return string(e)
+}
+
+func (e *PNonClaimsBasedPaymentsType) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = PNonClaimsBasedPaymentsType(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid PNonClaimsBasedPaymentsType", str)
+	}
+	return nil
+}
+
+func (e PNonClaimsBasedPaymentsType) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
+type PRecoverPaymentsType string
+
+const (
+	PRecoverPaymentsTypeApps  PRecoverPaymentsType = "APPS"
+	PRecoverPaymentsTypeIPC   PRecoverPaymentsType = "IPC"
+	PRecoverPaymentsTypeMac   PRecoverPaymentsType = "MAC"
+	PRecoverPaymentsTypeOther PRecoverPaymentsType = "OTHER"
+)
+
+var AllPRecoverPaymentsType = []PRecoverPaymentsType{
+	PRecoverPaymentsTypeApps,
+	PRecoverPaymentsTypeIPC,
+	PRecoverPaymentsTypeMac,
+	PRecoverPaymentsTypeOther,
+}
+
+func (e PRecoverPaymentsType) IsValid() bool {
+	switch e {
+	case PRecoverPaymentsTypeApps, PRecoverPaymentsTypeIPC, PRecoverPaymentsTypeMac, PRecoverPaymentsTypeOther:
+		return true
+	}
+	return false
+}
+
+func (e PRecoverPaymentsType) String() string {
+	return string(e)
+}
+
+func (e *PRecoverPaymentsType) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = PRecoverPaymentsType(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid PRecoverPaymentsType", str)
+	}
+	return nil
+}
+
+func (e PRecoverPaymentsType) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
+type PSharedSavingsPlanType string
+
+const (
+	PSharedSavingsPlanTypeRmada PSharedSavingsPlanType = "RMADA"
+	PSharedSavingsPlanTypeOther PSharedSavingsPlanType = "OTHER"
+)
+
+var AllPSharedSavingsPlanType = []PSharedSavingsPlanType{
+	PSharedSavingsPlanTypeRmada,
+	PSharedSavingsPlanTypeOther,
+}
+
+func (e PSharedSavingsPlanType) IsValid() bool {
+	switch e {
+	case PSharedSavingsPlanTypeRmada, PSharedSavingsPlanTypeOther:
+		return true
+	}
+	return false
+}
+
+func (e PSharedSavingsPlanType) String() string {
+	return string(e)
+}
+
+func (e *PSharedSavingsPlanType) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = PSharedSavingsPlanType(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid PSharedSavingsPlanType", str)
+	}
+	return nil
+}
+
+func (e PSharedSavingsPlanType) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
@@ -906,93 +2117,220 @@ func (e ParticipantsType) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
-type PayRecipient string
+type PpAppSupportContractorType string
 
 const (
-	PayRecipientProviders     PayRecipient = "PROVIDERS"
-	PayRecipientBeneficiaries PayRecipient = "BENEFICIARIES"
-	PayRecipientParticipants  PayRecipient = "PARTICIPANTS"
-	PayRecipientStates        PayRecipient = "STATES"
-	PayRecipientOther         PayRecipient = "OTHER"
+	PpAppSupportContractorTypeRmda  PpAppSupportContractorType = "RMDA"
+	PpAppSupportContractorTypeOther PpAppSupportContractorType = "OTHER"
 )
 
-var AllPayRecipient = []PayRecipient{
-	PayRecipientProviders,
-	PayRecipientBeneficiaries,
-	PayRecipientParticipants,
-	PayRecipientStates,
-	PayRecipientOther,
+var AllPpAppSupportContractorType = []PpAppSupportContractorType{
+	PpAppSupportContractorTypeRmda,
+	PpAppSupportContractorTypeOther,
 }
 
-func (e PayRecipient) IsValid() bool {
+func (e PpAppSupportContractorType) IsValid() bool {
 	switch e {
-	case PayRecipientProviders, PayRecipientBeneficiaries, PayRecipientParticipants, PayRecipientStates, PayRecipientOther:
+	case PpAppSupportContractorTypeRmda, PpAppSupportContractorTypeOther:
 		return true
 	}
 	return false
 }
 
-func (e PayRecipient) String() string {
+func (e PpAppSupportContractorType) String() string {
 	return string(e)
 }
 
-func (e *PayRecipient) UnmarshalGQL(v interface{}) error {
+func (e *PpAppSupportContractorType) UnmarshalGQL(v interface{}) error {
 	str, ok := v.(string)
 	if !ok {
 		return fmt.Errorf("enums must be strings")
 	}
 
-	*e = PayRecipient(str)
+	*e = PpAppSupportContractorType(str)
 	if !e.IsValid() {
-		return fmt.Errorf("%s is not a valid PayRecipient", str)
+		return fmt.Errorf("%s is not a valid PpAppSupportContractorType", str)
 	}
 	return nil
 }
 
-func (e PayRecipient) MarshalGQL(w io.Writer) {
+func (e PpAppSupportContractorType) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
-type PayType string
+type PpCollectScoreReviewType string
 
 const (
-	PayTypeClaimsBasedPayments    PayType = "CLAIMS_BASED_PAYMENTS"
-	PayTypeNonClaimsBasedPayments PayType = "NON_CLAIMS_BASED_PAYMENTS"
-	PayTypeGrants                 PayType = "GRANTS"
+	PpCollectScoreReviewTypeRfa            PpCollectScoreReviewType = "RFA"
+	PpCollectScoreReviewTypeArs            PpCollectScoreReviewType = "ARS"
+	PpCollectScoreReviewTypeGrantSolutions PpCollectScoreReviewType = "GRANT_SOLUTIONS"
+	PpCollectScoreReviewTypeOther          PpCollectScoreReviewType = "OTHER"
 )
 
-var AllPayType = []PayType{
-	PayTypeClaimsBasedPayments,
-	PayTypeNonClaimsBasedPayments,
-	PayTypeGrants,
+var AllPpCollectScoreReviewType = []PpCollectScoreReviewType{
+	PpCollectScoreReviewTypeRfa,
+	PpCollectScoreReviewTypeArs,
+	PpCollectScoreReviewTypeGrantSolutions,
+	PpCollectScoreReviewTypeOther,
 }
 
-func (e PayType) IsValid() bool {
+func (e PpCollectScoreReviewType) IsValid() bool {
 	switch e {
-	case PayTypeClaimsBasedPayments, PayTypeNonClaimsBasedPayments, PayTypeGrants:
+	case PpCollectScoreReviewTypeRfa, PpCollectScoreReviewTypeArs, PpCollectScoreReviewTypeGrantSolutions, PpCollectScoreReviewTypeOther:
 		return true
 	}
 	return false
 }
 
-func (e PayType) String() string {
+func (e PpCollectScoreReviewType) String() string {
 	return string(e)
 }
 
-func (e *PayType) UnmarshalGQL(v interface{}) error {
+func (e *PpCollectScoreReviewType) UnmarshalGQL(v interface{}) error {
 	str, ok := v.(string)
 	if !ok {
 		return fmt.Errorf("enums must be strings")
 	}
 
-	*e = PayType(str)
+	*e = PpCollectScoreReviewType(str)
 	if !e.IsValid() {
-		return fmt.Errorf("%s is not a valid PayType", str)
+		return fmt.Errorf("%s is not a valid PpCollectScoreReviewType", str)
 	}
 	return nil
 }
 
-func (e PayType) MarshalGQL(w io.Writer) {
+func (e PpCollectScoreReviewType) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
+type PpCommunicateWithParticipantType string
+
+const (
+	PpCommunicateWithParticipantTypeOutlookMailbox   PpCommunicateWithParticipantType = "OUTLOOK_MAILBOX"
+	PpCommunicateWithParticipantTypeGovDelivery      PpCommunicateWithParticipantType = "GOV_DELIVERY"
+	PpCommunicateWithParticipantTypeSalesforcePortal PpCommunicateWithParticipantType = "SALESFORCE_PORTAL"
+	PpCommunicateWithParticipantTypeOther            PpCommunicateWithParticipantType = "OTHER"
+)
+
+var AllPpCommunicateWithParticipantType = []PpCommunicateWithParticipantType{
+	PpCommunicateWithParticipantTypeOutlookMailbox,
+	PpCommunicateWithParticipantTypeGovDelivery,
+	PpCommunicateWithParticipantTypeSalesforcePortal,
+	PpCommunicateWithParticipantTypeOther,
+}
+
+func (e PpCommunicateWithParticipantType) IsValid() bool {
+	switch e {
+	case PpCommunicateWithParticipantTypeOutlookMailbox, PpCommunicateWithParticipantTypeGovDelivery, PpCommunicateWithParticipantTypeSalesforcePortal, PpCommunicateWithParticipantTypeOther:
+		return true
+	}
+	return false
+}
+
+func (e PpCommunicateWithParticipantType) String() string {
+	return string(e)
+}
+
+func (e *PpCommunicateWithParticipantType) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = PpCommunicateWithParticipantType(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid PpCommunicateWithParticipantType", str)
+	}
+	return nil
+}
+
+func (e PpCommunicateWithParticipantType) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
+type PpManageProviderOverlapType string
+
+const (
+	PpManageProviderOverlapTypeMdm   PpManageProviderOverlapType = "MDM"
+	PpManageProviderOverlapTypeOther PpManageProviderOverlapType = "OTHER"
+	PpManageProviderOverlapTypeNa    PpManageProviderOverlapType = "NA"
+)
+
+var AllPpManageProviderOverlapType = []PpManageProviderOverlapType{
+	PpManageProviderOverlapTypeMdm,
+	PpManageProviderOverlapTypeOther,
+	PpManageProviderOverlapTypeNa,
+}
+
+func (e PpManageProviderOverlapType) IsValid() bool {
+	switch e {
+	case PpManageProviderOverlapTypeMdm, PpManageProviderOverlapTypeOther, PpManageProviderOverlapTypeNa:
+		return true
+	}
+	return false
+}
+
+func (e PpManageProviderOverlapType) String() string {
+	return string(e)
+}
+
+func (e *PpManageProviderOverlapType) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = PpManageProviderOverlapType(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid PpManageProviderOverlapType", str)
+	}
+	return nil
+}
+
+func (e PpManageProviderOverlapType) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
+type PpToAdvertiseType string
+
+const (
+	PpToAdvertiseTypeSalesforce     PpToAdvertiseType = "SALESFORCE"
+	PpToAdvertiseTypeGrantSolutions PpToAdvertiseType = "GRANT_SOLUTIONS"
+	PpToAdvertiseTypeOther          PpToAdvertiseType = "OTHER"
+)
+
+var AllPpToAdvertiseType = []PpToAdvertiseType{
+	PpToAdvertiseTypeSalesforce,
+	PpToAdvertiseTypeGrantSolutions,
+	PpToAdvertiseTypeOther,
+}
+
+func (e PpToAdvertiseType) IsValid() bool {
+	switch e {
+	case PpToAdvertiseTypeSalesforce, PpToAdvertiseTypeGrantSolutions, PpToAdvertiseTypeOther:
+		return true
+	}
+	return false
+}
+
+func (e PpToAdvertiseType) String() string {
+	return string(e)
+}
+
+func (e *PpToAdvertiseType) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = PpToAdvertiseType(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid PpToAdvertiseType", str)
+	}
+	return nil
+}
+
+func (e PpToAdvertiseType) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
@@ -1188,6 +2526,57 @@ func (e *SelectionMethodType) UnmarshalGQL(v interface{}) error {
 }
 
 func (e SelectionMethodType) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
+type StakeholdersType string
+
+const (
+	StakeholdersTypeBeneficiaries             StakeholdersType = "BENEFICIARIES"
+	StakeholdersTypeCommunityOrganizations    StakeholdersType = "COMMUNITY_ORGANIZATIONS"
+	StakeholdersTypeParticipants              StakeholdersType = "PARTICIPANTS"
+	StakeholdersTypeProfessionalOrganizations StakeholdersType = "PROFESSIONAL_ORGANIZATIONS"
+	StakeholdersTypeProviders                 StakeholdersType = "PROVIDERS"
+	StakeholdersTypeStates                    StakeholdersType = "STATES"
+	StakeholdersTypeOther                     StakeholdersType = "OTHER"
+)
+
+var AllStakeholdersType = []StakeholdersType{
+	StakeholdersTypeBeneficiaries,
+	StakeholdersTypeCommunityOrganizations,
+	StakeholdersTypeParticipants,
+	StakeholdersTypeProfessionalOrganizations,
+	StakeholdersTypeProviders,
+	StakeholdersTypeStates,
+	StakeholdersTypeOther,
+}
+
+func (e StakeholdersType) IsValid() bool {
+	switch e {
+	case StakeholdersTypeBeneficiaries, StakeholdersTypeCommunityOrganizations, StakeholdersTypeParticipants, StakeholdersTypeProfessionalOrganizations, StakeholdersTypeProviders, StakeholdersTypeStates, StakeholdersTypeOther:
+		return true
+	}
+	return false
+}
+
+func (e StakeholdersType) String() string {
+	return string(e)
+}
+
+func (e *StakeholdersType) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = StakeholdersType(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid StakeholdersType", str)
+	}
+	return nil
+}
+
+func (e StakeholdersType) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 

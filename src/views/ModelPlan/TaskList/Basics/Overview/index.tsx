@@ -63,7 +63,7 @@ const Overview = () => {
   );
 
   const { modelName } = data?.modelPlan || {};
-  const { id, modelType, problem, goal, testInventions, note } =
+  const { id, modelType, problem, goal, testInterventions, note } =
     data?.modelPlan?.basics || {};
 
   const [update] = useMutation<UpdatePlanBasicsType>(UpdatePlanBasics);
@@ -72,7 +72,7 @@ const Overview = () => {
     modelType: modelType ?? null,
     problem: problem ?? '',
     goal: goal ?? '',
-    testInterventions: testInventions ?? '',
+    testInterventions: testInterventions ?? '',
     note: note ?? ''
   };
 
@@ -87,7 +87,7 @@ const Overview = () => {
           modelType: formikValues.modelType,
           problem: formikValues.problem,
           goal: formikValues.goal,
-          testInventions: formikValues.testInterventions,
+          testInterventions: formikValues.testInterventions,
           note: formikValues.note
         }
       }
@@ -141,7 +141,7 @@ const Overview = () => {
             </Trans>
           </p>
           <p className="margin-bottom-2 font-body-md line-height-sans-4">
-            {t('helpText')}
+            {h('helpText')}
           </p>
 
           <AskAQuestion modelID={modelID} />

@@ -18,10 +18,10 @@ CREATE TABLE plan_milestones (
     performance_period_ends TIMESTAMP WITH TIME ZONE NULL,
 
     wrap_up_ends TIMESTAMP WITH TIME ZONE NULL,
-    high_level_note TEXT,
+    high_level_note ZERO_STRING,
 
     phased_in BOOLEAN,
-    phased_in_note TEXT,
+    phased_in_note ZERO_STRING,
 
 
     created_by EUA_ID NOT NULL,

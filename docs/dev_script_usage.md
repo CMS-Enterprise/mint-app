@@ -13,7 +13,8 @@ scripts/dev build             # Build the Go application
 scripts/dev db:clean          # Deletes all rows from all tables
 scripts/dev db:migrate        # Runs database migrations and wait for them to complete
 scripts/dev db:recreate       # Destroys the database container and recreates it
-scripts/dev db:seed           # Load development dataset
+scripts/dev db:dump           # Dump DB to file
+scripts/dev db:seed           # Load development dataset from file
 scripts/dev docker:sweep      # Delete all dangling volumes
 scripts/dev down              # Stops all services in the project
 scripts/dev gql               # Generate code from GraphQL schema

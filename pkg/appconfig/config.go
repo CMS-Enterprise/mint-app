@@ -157,7 +157,7 @@ const AWSRegion = "AWS_REGION"
 const CEDARAPIURL = "CEDAR_API_URL"
 
 // CEDARAPIKey is the key for accessing CEDAR
-const CEDARAPIKey = "CEDAR_API_KEY"
+const CEDARAPIKey = "CEDAR_API_KEY" // #nosec G101 false positive - not the actual API key itself
 
 // LDKey is the key for accessing LaunchDarkly
 const LDKey = "LD_SDK_KEY"

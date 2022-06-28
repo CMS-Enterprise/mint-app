@@ -41,7 +41,7 @@ const modelPlanTaskList = {
       copy:
         'Start filling out as much of the general model characteristics as you know and reach out to the Model Assessment Team if you need help.'
     },
-    participants: {
+    'participants-and-providers': {
       heading: 'Participants and providers',
       copy:
         'Start filling out as much of the model participant information as you know and reach out to the Model Assessment Team if you need help.'
@@ -78,7 +78,9 @@ const modelPlanTaskList = {
     cannotStart: 'Cannot start yet',
     notNeeded: 'Not needed',
     lastUpdated: 'Last updated:'
-  }
+  },
+  errorHeading: 'Failed to fetch model plan',
+  errorMessage: 'Please try again'
 };
 
 export default modelPlanTaskList;

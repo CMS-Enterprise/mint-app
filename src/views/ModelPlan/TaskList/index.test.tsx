@@ -12,6 +12,8 @@ import {
   ModelStatus
 } from 'types/graphql-global-types';
 
+import { charactersticMockData } from './Characteristics/mock';
+import { participantsAndProvidersData } from './Participants/mock';
 import TaskList from './index';
 
 describe('The Model Plan Task List', () => {
@@ -35,7 +37,7 @@ describe('The Model Plan Task List', () => {
       modelType: null,
       problem: null,
       goal: null,
-      testInventions: null,
+      testInterventions: null,
       note: null,
       status: 'READY'
     },
@@ -56,6 +58,8 @@ describe('The Model Plan Task List', () => {
       phasedInNote: null,
       status: 'READY'
     },
+    generalCharacteristics: charactersticMockData as any,
+    participantsAndProviders: participantsAndProvidersData as any,
     documents: [
       {
         id: '6e224030-09d5-46f7-ad04-4bb851b36eab',

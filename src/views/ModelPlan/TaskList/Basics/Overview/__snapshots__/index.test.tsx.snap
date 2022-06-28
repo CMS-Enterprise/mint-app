@@ -75,7 +75,7 @@ exports[`Model Plan Documents page matches snapshot 1`] = `
           If there's a question or field that is not applicable to your model or you don't currently know the answer, you may leave it blank. If you need help, ask a question using the link below.
         </p>
         <div
-          class="padding-2 bg-primary-lighter"
+          class="padding-2 bg-primary-lighter display-flex"
           data-testid="ask-a-question"
         >
           <svg

@@ -18,6 +18,7 @@ import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import Divider from 'components/shared/Divider';
+import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import GetModelPlan from 'queries/GetModelPlan';
 import {
   GetModelPlan as GetModelPlanType,
@@ -49,14 +50,14 @@ const TaskList = () => {
   const { modelID } = useParams<{ modelID: string }>();
   const [isDiscussionOpen, setIsDiscussionOpen] = useState(false);
 
-  const { data } = useQuery<GetModelPlanType, GetModelPlanVariables>(
-    GetModelPlan,
-    {
-      variables: {
-        id: modelID
-      }
+  const { data, loading, error } = useQuery<
+    GetModelPlanType,
+    GetModelPlanVariables
+  >(GetModelPlan, {
+    variables: {
+      id: modelID
     }
-  );
+  });
 
   const modelPlan = data?.modelPlan || ({} as GetModelPlanTypes);
 
@@ -69,10 +70,9 @@ const TaskList = () => {
     basics,
     discussions,
     documents,
-    status
-    // TODO: Add these model plans when BE integrates it
-    // characteristics,
-    // participants,
+    status,
+    generalCharacteristics,
+    participantsAndProviders
     // beneficiaries,
     // operations,
     // payment,
@@ -101,10 +101,10 @@ const TaskList = () => {
         }
         return 'IN_PROGRESS';
       // TODO: Add these model plans when BE integrates it
-      // case 'characteristics':
-      //   return;
-      // case 'participants':
-      //   return;
+      case 'characteristics':
+        return generalCharacteristics?.status;
+      case 'participants-and-providers':
+        return participantsAndProviders.status;
       // case 'beneficiaries':
       //   return;
       // case 'operations':
@@ -190,136 +190,152 @@ const TaskList = () => {
             <Breadcrumb current>{t('navigation.modelPlanTaskList')}</Breadcrumb>
           </BreadcrumbBar>
         </Grid>
-        <Grid row gap>
-          <Grid desktop={{ col: 9 }}>
-            {data && (
-              <>
-                <PageHeading className="margin-top-4 margin-bottom-0">
-                  {t('navigation.modelPlanTaskList')}
-                </PageHeading>
-                <p
-                  className="margin-top-0 margin-bottom-2 font-body-lg"
-                  data-testid="model-plan-name"
-                >
-                  <Trans i18nKey="modelPlanTaskList:subheading">
-                    indexZero {modelName} indexTwo
-                  </Trans>
-                </p>
+        {error && (
+          <ErrorAlert
+            testId="formik-validation-errors"
+            classNames="margin-top-3"
+            heading={t('errorHeading')}
+          >
+            <ErrorAlertMessage
+              errorKey="error-document"
+              message={t('errorMessage')}
+            />
+          </ErrorAlert>
+        )}
+        {!loading && data && (
+          <Grid row gap>
+            <Grid desktop={{ col: 9 }}>
+              {data && (
+                <>
+                  <PageHeading className="margin-top-4 margin-bottom-0">
+                    {t('navigation.modelPlanTaskList')}
+                  </PageHeading>
+                  <p
+                    className="margin-top-0 margin-bottom-2 font-body-lg"
+                    data-testid="model-plan-name"
+                  >
+                    <Trans i18nKey="modelPlanTaskList:subheading">
+                      indexZero {modelName} indexTwo
+                    </Trans>
+                  </p>
 
-                {isDiscussionOpen && (
-                  <Discussions
-                    modelID={modelID}
-                    isOpen={isDiscussionOpen}
-                    closeModal={() => setIsDiscussionOpen(false)}
-                  />
-                )}
-
-                <TaskListStatus modelID={modelID} status={status} />
-                {dicussionBanner()}
-                <SummaryBox
-                  heading=""
-                  className="bg-base-lightest border-0 radius-0 padding-2"
-                >
-                  {documents?.length > 0 ? (
-                    <>
-                      <p
-                        className="margin-0 margin-bottom-1"
-                        data-testid="document-items"
-                      >
-                        <strong>{documents.length} </strong>
-                        <Trans i18nKey="modelPlanTaskList:summaryBox.existingDocuments">
-                          indexZero {documents.length > 1 ? 's' : ''} indexOne
-                        </Trans>
-                        {modelName}
-                      </p>
-                      <Grid row gap>
-                        <Grid tablet={{ col: 4 }}>
-                          <UswdsReactLink
-                            variant="unstyled"
-                            className="margin-right-4"
-                            to={`/models/${modelID}/documents`}
-                          >
-                            {t('summaryBox.viewAll')}
-                          </UswdsReactLink>
-                        </Grid>
-                        <Grid tablet={{ col: 4 }}>
-                          <UswdsReactLink
-                            variant="unstyled"
-                            to={`/models/${modelID}/documents/add-document`}
-                          >
-                            {t('summaryBox.uploadAnother')}
-                          </UswdsReactLink>
-                        </Grid>
-                      </Grid>
-                    </>
-                  ) : (
-                    <>
-                      <p className="margin-0 margin-bottom-1">
-                        <Trans i18nKey="modelPlanTaskList:summaryBox.copy">
-                          indexZero {modelName} indexTwo
-                        </Trans>
-                      </p>
-                      <UswdsReactLink
-                        className="usa-button usa-button--outline"
-                        variant="unstyled"
-                        to={`/models/${modelID}/documents`}
-                      >
-                        {t('summaryBox.cta')}
-                      </UswdsReactLink>
-                    </>
+                  {isDiscussionOpen && (
+                    <Discussions
+                      modelID={modelID}
+                      isOpen={isDiscussionOpen}
+                      closeModal={() => setIsDiscussionOpen(false)}
+                    />
                   )}
-                </SummaryBox>
-                <ol
-                  data-testid="task-list"
-                  className="model-plan-task-list__task-list model-plan-task-list__task-list--primary margin-top-6 margin-bottom-0 padding-left-0"
-                >
-                  {Object.keys(taskListItem).map((key: any) => {
-                    const lastTaskItem = Object.keys(taskListItem).slice(-1)[0];
-                    const path =
-                      key === 'finalizeModelPlan' ? 'submit-request' : key;
 
-                    return (
-                      <Fragment key={key}>
-                        <TaskListItem
-                          key={key}
-                          testId="task-list-intake-form"
-                          heading={taskListItem[key].heading}
-                          status={taskListItemStatus(key)}
+                  <TaskListStatus modelID={modelID} status={status} />
+                  {dicussionBanner()}
+                  <SummaryBox
+                    heading=""
+                    className="bg-base-lightest border-0 radius-0 padding-2"
+                  >
+                    {documents?.length > 0 ? (
+                      <>
+                        <p
+                          className="margin-0 margin-bottom-1"
+                          data-testid="document-items"
                         >
-                          <div className="model-plan-task-list__task-row display-flex flex-justify flex-align-start">
-                            <TaskListDescription>
-                              <p className="margin-top-0">
-                                {taskListItem[key].copy}
-                              </p>
-                            </TaskListDescription>
-                            {taskListItemStatus(key) === 'IN_PROGRESS' && (
-                              <TaskListLastUpdated>
-                                <p className="margin-y-0">
-                                  {t('taskListItem.lastUpdated')}
-                                </p>
-                                <p className="margin-y-0">4/1/2022</p>
-                              </TaskListLastUpdated>
-                            )}
-                          </div>
-                          <TaskListButton
-                            path={path}
+                          <strong>{documents.length} </strong>
+                          <Trans i18nKey="modelPlanTaskList:summaryBox.existingDocuments">
+                            indexZero {documents.length > 1 ? 's' : ''} indexOne
+                          </Trans>
+                          {modelName}
+                        </p>
+                        <Grid row gap>
+                          <Grid tablet={{ col: 4 }}>
+                            <UswdsReactLink
+                              variant="unstyled"
+                              className="margin-right-4"
+                              to={`/models/${modelID}/documents`}
+                            >
+                              {t('summaryBox.viewAll')}
+                            </UswdsReactLink>
+                          </Grid>
+                          <Grid tablet={{ col: 4 }}>
+                            <UswdsReactLink
+                              variant="unstyled"
+                              to={`/models/${modelID}/documents/add-document`}
+                            >
+                              {t('summaryBox.uploadAnother')}
+                            </UswdsReactLink>
+                          </Grid>
+                        </Grid>
+                      </>
+                    ) : (
+                      <>
+                        <p className="margin-0 margin-bottom-1">
+                          <Trans i18nKey="modelPlanTaskList:summaryBox.copy">
+                            indexZero {modelName} indexTwo
+                          </Trans>
+                        </p>
+                        <UswdsReactLink
+                          className="usa-button usa-button--outline"
+                          variant="unstyled"
+                          to={`/models/${modelID}/documents`}
+                        >
+                          {t('summaryBox.cta')}
+                        </UswdsReactLink>
+                      </>
+                    )}
+                  </SummaryBox>
+                  <ol
+                    data-testid="task-list"
+                    className="model-plan-task-list__task-list model-plan-task-list__task-list--primary margin-top-6 margin-bottom-0 padding-left-0"
+                  >
+                    {Object.keys(taskListItem).map((key: any) => {
+                      const lastTaskItem = Object.keys(taskListItem).slice(
+                        -1
+                      )[0];
+                      const path =
+                        key === 'finalizeModelPlan' ? 'submit-request' : key;
+
+                      return (
+                        <Fragment key={key}>
+                          <TaskListItem
+                            key={key}
+                            testId={`task-list-intake-form-${key}`}
+                            heading={taskListItem[key].heading}
                             status={taskListItemStatus(key)}
-                          />
-                        </TaskListItem>
-                        {key !== lastTaskItem && (
-                          <Divider className="margin-bottom-4" />
-                        )}
-                      </Fragment>
-                    );
-                  })}
-                </ol>
-              </>
-            )}
+                          >
+                            <div className="model-plan-task-list__task-row display-flex flex-justify flex-align-start">
+                              <TaskListDescription>
+                                <p className="margin-top-0">
+                                  {taskListItem[key].copy}
+                                </p>
+                              </TaskListDescription>
+                              {taskListItemStatus(key) === 'IN_PROGRESS' && (
+                                <TaskListLastUpdated>
+                                  <p className="margin-y-0">
+                                    {t('taskListItem.lastUpdated')}
+                                  </p>
+                                  <p className="margin-y-0">4/1/2022</p>
+                                </TaskListLastUpdated>
+                              )}
+                            </div>
+                            <TaskListButton
+                              path={path}
+                              status={taskListItemStatus(key)}
+                            />
+                          </TaskListItem>
+                          {key !== lastTaskItem && (
+                            <Divider className="margin-bottom-4" />
+                          )}
+                        </Fragment>
+                      );
+                    })}
+                  </ol>
+                </>
+              )}
+            </Grid>
+            <Grid desktop={{ col: 3 }}>
+              {data && <TaskListSideNav modelPlan={modelPlan} />}
+            </Grid>
           </Grid>
-          <Grid desktop={{ col: 3 }}>
-            <TaskListSideNav modelPlan={modelPlan} />
-          </Grid>
-        </Grid>
+        )}
       </GridContainer>
     </MainContent>
   );

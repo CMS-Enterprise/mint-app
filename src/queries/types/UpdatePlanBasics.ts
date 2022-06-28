@@ -16,7 +16,7 @@ export interface UpdatePlanBasics_updatePlanBasics {
   modelType: ModelType | null;
   problem: string | null;
   goal: string | null;
-  testInventions: string | null;
+  testInterventions: string | null;
   note: string | null;
 }
 

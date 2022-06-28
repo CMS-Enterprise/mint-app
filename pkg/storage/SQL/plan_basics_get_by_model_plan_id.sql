@@ -4,7 +4,7 @@ SELECT
     model_type,
     problem,
     goal,
-    test_inventions,
+    test_interventions,
     note,
     created_by,
     created_dts,

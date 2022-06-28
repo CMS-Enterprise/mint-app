@@ -13,13 +13,14 @@ const TaskListButton = ({ path, status }: TaskListButtonProps) => {
   const { modelID } = useParams<{ modelID: string }>();
   const history = useHistory();
 
-  if (status === 'CANNOT_START' || status === 'COMPLETE') {
+  if (status === 'CANNOT_START') {
     return <></>;
   }
 
   return (
     <Button
       type="button"
+      data-testid={path}
       onClick={() => history.push(`/models/${modelID}/task-list/${path}`)}
     >
       {status === 'READY'

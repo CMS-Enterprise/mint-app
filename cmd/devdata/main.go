@@ -1,9 +1,6 @@
 package main
 
 import (
-	"github.com/cmsgov/mint-app/pkg/models/anticipatedpaymentfrequencytype"
-	"github.com/cmsgov/mint-app/pkg/models/complexitycalculationleveltype"
-	"github.com/cmsgov/mint-app/pkg/models/paytype"
 	"github.com/google/uuid"
 
 	"time"
@@ -100,7 +97,7 @@ func main() {
 		b.ModelType = &mandatory
 
 		b.Problem = models.StringPointer("There is not enough candy")
-		b.TestInventions = models.StringPointer("The great candy machine")
+		b.TestInterventions = models.StringPointer("The great candy machine")
 		b.Note = models.StringPointer("The machine doesn't work yet")
 	})
 
@@ -142,7 +139,7 @@ func main() {
 		b.ModelType = &mandatory
 
 		b.Problem = models.StringPointer("There is not enough candy")
-		b.TestInventions = models.StringPointer("The great candy machine")
+		b.TestInterventions = models.StringPointer("The great candy machine")
 		b.Note = models.StringPointer("The machine doesn't work yet")
 	})
 
@@ -196,7 +193,7 @@ func main() {
 	makePlanBasics(plan2.ID, logger, store, func(b *models.PlanBasics) {
 		b.ModelType = &voluntary
 		b.Problem = models.StringPointer("There is not enough candy")
-		b.TestInventions = models.StringPointer("The great candy machine")
+		b.TestInterventions = models.StringPointer("The great candy machine")
 		b.Note = models.StringPointer("The machine doesn't work yet")
 	})
 
@@ -612,7 +609,7 @@ func makePlanPayments(modelPlanID uuid.UUID, logger *zap.Logger, store *storage.
 func processPlanPayments(pp *models.PlanPayments) {
 	pp.ID = uuid.MustParse("a18d2f8c-e5cb-4c5d-b21c-3554dbec9c4d")
 
-	// Page 1
+	/*// Page 1
 	pp.FundingSource = []string{model.FundingSourcePatientProtectionAffordableCareAct.String()}
 	pp.FundingSourceTrustFundDescription = models.StringPointer("Funding source trust fund description here")
 	pp.FundingSourceOtherDescription = models.StringPointer("Funding source other description here")
@@ -624,7 +621,7 @@ func processPlanPayments(pp *models.PlanPayments) {
 	pp.PayRecipients = []string{model.PayRecipientParticipants.String()}
 	pp.PayRecipientOtherSpecification = models.StringPointer("Pay recipient other specification here")
 	pp.PayRecipientsNote = models.StringPointer("Pay recipient note here")
-	pp.PayType = paytype.ClaimsBasedPayments
+	pp.PayType = PayTypeClaimsBasedPayments
 	pp.PayTypeNote = models.StringPointer("Pay type note here")
 
 	// Page 2
@@ -685,7 +682,7 @@ func processPlanPayments(pp *models.PlanPayments) {
 	pp.PaymentStartDate = &now
 	pp.PaymentStartDateNotes = models.StringPointer("Payment start date notes here")
 
-	pp.Status = models.TaskInProgress
+	pp.Status = models.TaskInProgress*/
 
 	pp.CalcStatus()
 }

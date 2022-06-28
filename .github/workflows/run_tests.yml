@@ -26,7 +26,7 @@ on:
 
 env:
   EASI_APP_NODE_VERSION: "16.14.0"
-  EASI_APP_GO_VERSION: "1.16.6"
+  EASI_APP_GO_VERSION: "1.18.3"
   GIT_HASH: ${{ github.event.pull_request.head.sha || github.sha }}
   SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
   DOCKER_BUILDKIT: 1
@@ -53,7 +53,7 @@ jobs:
         with:
           go-version: ${{ env.EASI_APP_GO_VERSION }}
       - name: Login to Docker Hub
-        uses: docker/login-action@dd4fa0671be5250ee6f50aedf4cb05514abda2c7
+        uses: docker/login-action@49ed152c8eca782a232dede0303416e8f356c37b
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
@@ -121,7 +121,7 @@ jobs:
         with:
           ref: ${{ env.GIT_HASH }}
       - name: Set up node
-        uses: actions/setup-node@56337c425554a6be30cdef71bf441f15be286854
+        uses: actions/setup-node@eeb10cff27034e7acf239c5d29f62154018672fd
         with:
           node-version: ${{ env.EASI_APP_NODE_VERSION }}
       - name: Get yarn cache directory path
@@ -150,7 +150,7 @@ jobs:
           REACT_APP_LOCAL_AUTH_ENABLED: true
         run: yarn run build
       - name: Login to Docker Hub
-        uses: docker/login-action@dd4fa0671be5250ee6f50aedf4cb05514abda2c7
+        uses: docker/login-action@49ed152c8eca782a232dede0303416e8f356c37b
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
@@ -201,17 +201,13 @@ jobs:
         with:
           ref: ${{ env.GIT_HASH }}
       - name: Set up node
-        uses: actions/setup-node@56337c425554a6be30cdef71bf441f15be286854
+        uses: actions/setup-node@eeb10cff27034e7acf239c5d29f62154018672fd
         with:
           node-version: ${{ env.EASI_APP_NODE_VERSION }}
       - name: Set up go
         uses: actions/setup-go@fcdc43634adb5f7ae75a9d7a9b9361790f7293e2
         with:
           go-version: ${{ env.EASI_APP_GO_VERSION }}
-      - name: Set up python
-        uses: actions/setup-python@98f2ad02fd48d057ee3b4d4f66525b231c3e52b6
-        with:
-          python-version: "3.9"
       - name: Configure go cache
         uses: actions/cache@48af2dc4a9e8278b89d7fa154b955c30c6aaab09
         with:
@@ -257,7 +253,7 @@ jobs:
         with:
           ref: ${{ env.GIT_HASH }}
       - name: Set up node
-        uses: actions/setup-node@56337c425554a6be30cdef71bf441f15be286854
+        uses: actions/setup-node@eeb10cff27034e7acf239c5d29f62154018672fd
         with:
           node-version: ${{ env.EASI_APP_NODE_VERSION }}
       - name: Get yarn cache directory path
@@ -290,7 +286,7 @@ jobs:
         with:
           ref: ${{ env.GIT_HASH }}
       - name: Set up node
-        uses: actions/setup-node@56337c425554a6be30cdef71bf441f15be286854 # v2.1.5
+        uses: actions/setup-node@eeb10cff27034e7acf239c5d29f62154018672fd # v2.1.5
         with:
           node-version: ${{ env.EASI_APP_NODE_VERSION }}
       - name: Get yarn cache directory path

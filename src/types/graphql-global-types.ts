@@ -7,6 +7,25 @@
 // START Enums and Input Objects
 //==============================================================
 
+export enum AgreementType {
+  COOPERATIVE = "COOPERATIVE",
+  OTHER = "OTHER",
+  PARTICIPATION = "PARTICIPATION",
+}
+
+export enum AlternativePaymentModelType {
+  ADVANCED = "ADVANCED",
+  MIPS = "MIPS",
+  REGULAR = "REGULAR",
+}
+
+export enum AuthorityAllowance {
+  ACA = "ACA",
+  CONGRESSIONALLY_MANDATED = "CONGRESSIONALLY_MANDATED",
+  OTHER = "OTHER",
+  SSA_PART_B = "SSA_PART_B",
+}
+
 export enum CMMIGroup {
   PATIENT_CARE_MODELS_GROUP = "PATIENT_CARE_MODELS_GROUP",
   POLICY_AND_PROGRAMS_GROUP = "POLICY_AND_PROGRAMS_GROUP",
@@ -24,6 +43,13 @@ export enum CMSCenter {
   OTHER = "OTHER",
 }
 
+export enum ConfidenceType {
+  COMPLETELY = "COMPLETELY",
+  FAIRLY = "FAIRLY",
+  NOT_AT_ALL = "NOT_AT_ALL",
+  SLIGHTLY = "SLIGHTLY",
+}
+
 export enum DiscussionStatus {
   ANSWERED = "ANSWERED",
   UNANSWERED = "UNANSWERED",
@@ -36,6 +62,40 @@ export enum DocumentType {
   MARKET_RESEARCH = "MARKET_RESEARCH",
   OTHER = "OTHER",
   POLICY_PAPER = "POLICY_PAPER",
+}
+
+export enum FrequencyType {
+  ANNUALLY = "ANNUALLY",
+  BIANNUALLY = "BIANNUALLY",
+  MONTHLY = "MONTHLY",
+  OTHER = "OTHER",
+  QUARTERLY = "QUARTERLY",
+  ROLLING = "ROLLING",
+}
+
+export enum GeographyApplication {
+  BENEFICIARIES = "BENEFICIARIES",
+  OTHER = "OTHER",
+  PARTICIPANTS = "PARTICIPANTS",
+  PROVIDERS = "PROVIDERS",
+}
+
+export enum GeographyType {
+  OTHER = "OTHER",
+  REGION = "REGION",
+  STATE = "STATE",
+}
+
+export enum KeyCharacteristic {
+  EPISODE_BASED = "EPISODE_BASED",
+  OTHER = "OTHER",
+  PART_C = "PART_C",
+  PART_D = "PART_D",
+  PAYMENT = "PAYMENT",
+  POPULATION_BASED = "POPULATION_BASED",
+  PREVENTATIVE = "PREVENTATIVE",
+  SERVICE_DELIVERY = "SERVICE_DELIVERY",
+  SHARED_SAVINGS = "SHARED_SAVINGS",
 }
 
 export enum ModelCategory {
@@ -68,6 +128,89 @@ export enum ModelType {
   VOLUNTARY = "VOLUNTARY",
 }
 
+export enum OverlapType {
+  NO = "NO",
+  YES_NEED_POLICIES = "YES_NEED_POLICIES",
+  YES_NO_ISSUES = "YES_NO_ISSUES",
+}
+
+export enum ParticipantCommunicationType {
+  IT_TOOL = "IT_TOOL",
+  MASS_EMAIL = "MASS_EMAIL",
+  NO_COMMUNICATION = "NO_COMMUNICATION",
+  OTHER = "OTHER",
+}
+
+export enum ParticipantRiskType {
+  CAPITATION = "CAPITATION",
+  ONE_SIDED = "ONE_SIDED",
+  OTHER = "OTHER",
+  TWO_SIDED = "TWO_SIDED",
+}
+
+export enum ParticipantSelectionType {
+  APPLICATION_REVIEW_AND_SCORING_TOOL = "APPLICATION_REVIEW_AND_SCORING_TOOL",
+  APPLICATION_SUPPORT_CONTRACTOR = "APPLICATION_SUPPORT_CONTRACTOR",
+  BASIC_CRITERIA = "BASIC_CRITERIA",
+  CMS_COMPONENT_OR_PROCESS = "CMS_COMPONENT_OR_PROCESS",
+  MODEL_TEAM_REVIEW_APPLICATIONS = "MODEL_TEAM_REVIEW_APPLICATIONS",
+  NO_SELECTING_PARTICIPANTS = "NO_SELECTING_PARTICIPANTS",
+  OTHER = "OTHER",
+  SUPPORT_FROM_CMMI = "SUPPORT_FROM_CMMI",
+}
+
+export enum ParticipantsIDType {
+  CCNS = "CCNS",
+  NO_IDENTIFIERS = "NO_IDENTIFIERS",
+  NPIS = "NPIS",
+  OTHER = "OTHER",
+  TINS = "TINS",
+}
+
+export enum ParticipantsType {
+  COMMERCIAL_PAYERS = "COMMERCIAL_PAYERS",
+  COMMUNITY_BASED_ORGANIZATIONS = "COMMUNITY_BASED_ORGANIZATIONS",
+  CONVENER = "CONVENER",
+  ENTITIES = "ENTITIES",
+  MEDICAID_MANAGED_CARE_ORGANIZATIONS = "MEDICAID_MANAGED_CARE_ORGANIZATIONS",
+  MEDICAID_PROVIDERS = "MEDICAID_PROVIDERS",
+  MEDICARE_ADVANTAGE_PLANS = "MEDICARE_ADVANTAGE_PLANS",
+  MEDICARE_ADVANTAGE_PRESCRIPTION_DRUG_PLANS = "MEDICARE_ADVANTAGE_PRESCRIPTION_DRUG_PLANS",
+  MEDICARE_PROVIDERS = "MEDICARE_PROVIDERS",
+  NON_PROFIT_ORGANIZATIONS = "NON_PROFIT_ORGANIZATIONS",
+  OTHER = "OTHER",
+  STANDALONE_PART_D_PLANS = "STANDALONE_PART_D_PLANS",
+  STATES = "STATES",
+  STATE_MEDICAID_AGENCIES = "STATE_MEDICAID_AGENCIES",
+}
+
+export enum ProviderAddType {
+  MANDATORILY = "MANDATORILY",
+  NA = "NA",
+  ONLINE_TOOLS = "ONLINE_TOOLS",
+  OTHER = "OTHER",
+  PROSPECTIVELY = "PROSPECTIVELY",
+  RETROSPECTIVELY = "RETROSPECTIVELY",
+  VOLUNTARILY = "VOLUNTARILY",
+}
+
+export enum ProviderLeaveType {
+  AFTER_A_CERTAIN_WITH_IMPLICATIONS = "AFTER_A_CERTAIN_WITH_IMPLICATIONS",
+  NOT_ALLOWED_TO_LEAVE = "NOT_ALLOWED_TO_LEAVE",
+  NOT_APPLICABLE = "NOT_APPLICABLE",
+  OTHER = "OTHER",
+  VARIES_BY_TYPE_OF_PROVIDER = "VARIES_BY_TYPE_OF_PROVIDER",
+  VOLUNTARILY_WITHOUT_IMPLICATIONS = "VOLUNTARILY_WITHOUT_IMPLICATIONS",
+}
+
+export enum RecruitmentType {
+  LOI = "LOI",
+  NA = "NA",
+  NOFO = "NOFO",
+  OTHER = "OTHER",
+  RFA = "RFA",
+}
+
 export enum TaskStatus {
   COMPLETE = "COMPLETE",
   IN_PROGRESS = "IN_PROGRESS",
@@ -80,6 +223,12 @@ export enum TeamRole {
   LEARNING = "LEARNING",
   MODEL_LEAD = "MODEL_LEAD",
   MODEL_TEAM = "MODEL_TEAM",
+}
+
+export enum WaiverType {
+  FRAUD_ABUSE = "FRAUD_ABUSE",
+  MEDICAID = "MEDICAID",
+  PROGRAM_PAYMENT = "PROGRAM_PAYMENT",
 }
 
 /**
@@ -125,7 +274,7 @@ export interface PlanBasicsChanges {
   modelType?: ModelType | null;
   problem?: string | null;
   goal?: string | null;
-  testInventions?: string | null;
+  testInterventions?: string | null;
   note?: string | null;
 }
 
@@ -180,6 +329,66 @@ export interface PlanDocumentParameters {
 }
 
 /**
+ * PlanGeneralCharacteristicsChanges represents the possible changes you can make to a
+ * general characteristics object when updating it.
+ * Fields explicitly set with NULL will be unset, and omitted fields will be left unchanged.
+ * https: // gqlgen.com/reference/changesets/
+ */
+export interface PlanGeneralCharacteristicsChanges {
+  isNewModel?: boolean | null;
+  existingModel?: string | null;
+  resemblesExistingModel?: boolean | null;
+  resemblesExistingModelWhich?: string[] | null;
+  resemblesExistingModelHow?: string | null;
+  resemblesExistingModelNote?: string | null;
+  hasComponentsOrTracks?: boolean | null;
+  hasComponentsOrTracksDiffer?: string | null;
+  hasComponentsOrTracksNote?: string | null;
+  alternativePaymentModel?: boolean | null;
+  alternativePaymentModelTypes?: AlternativePaymentModelType[] | null;
+  alternativePaymentModelNote?: string | null;
+  keyCharacteristics?: KeyCharacteristic[] | null;
+  keyCharacteristicsOther?: string | null;
+  keyCharacteristicsNote?: string | null;
+  collectPlanBids?: boolean | null;
+  collectPlanBidsNote?: string | null;
+  managePartCDEnrollment?: boolean | null;
+  managePartCDEnrollmentNote?: string | null;
+  planContactUpdated?: boolean | null;
+  planContactUpdatedNote?: string | null;
+  careCoordinationInvolved?: boolean | null;
+  careCoordinationInvolvedDescription?: string | null;
+  careCoordinationInvolvedNote?: string | null;
+  additionalServicesInvolved?: boolean | null;
+  additionalServicesInvolvedDescription?: string | null;
+  additionalServicesInvolvedNote?: string | null;
+  communityPartnersInvolved?: boolean | null;
+  communityPartnersInvolvedDescription?: string | null;
+  communityPartnersInvolvedNote?: string | null;
+  geographiesTargeted?: boolean | null;
+  geographiesTargetedTypes?: GeographyType[] | null;
+  geographiesTargetedTypesOther?: string | null;
+  geographiesTargetedAppliedTo?: GeographyApplication[] | null;
+  geographiesTargetedAppliedToOther?: string | null;
+  geographiesTargetedNote?: string | null;
+  participationOptions?: boolean | null;
+  participationOptionsNote?: string | null;
+  agreementTypes?: AgreementType[] | null;
+  agreementTypesOther?: string | null;
+  multiplePatricipationAgreementsNeeded?: boolean | null;
+  multiplePatricipationAgreementsNeededNote?: string | null;
+  rulemakingRequired?: boolean | null;
+  rulemakingRequiredDescription?: string | null;
+  rulemakingRequiredNote?: string | null;
+  authorityAllowances?: AuthorityAllowance[] | null;
+  authorityAllowancesOther?: string | null;
+  authorityAllowancesNote?: string | null;
+  waiversRequired?: boolean | null;
+  waiversRequiredTypes?: WaiverType[] | null;
+  waiversRequiredNote?: string | null;
+}
+
+/**
  * PlanMilestoneChanges represents the possible changes you can make to a Plan Milestones object when updating it.
  * Fields explicitly set with NULL will be unset, and omitted fields will be left unchanged.
  * https: // gqlgen.com/reference/changesets/
@@ -197,6 +406,61 @@ export interface PlanMilestoneChanges {
   highLevelNote?: string | null;
   phasedIn?: boolean | null;
   phasedInNote?: string | null;
+}
+
+/**
+ * PlanParticipantsAndProvidersChanges represents the possible changes you can make to a
+ * providers and participants object when updating it.
+ * Fields explicitly set with NULL will be unset, and omitted fields will be left unchanged.
+ * https: // gqlgen.com/reference/changesets/
+ */
+export interface PlanParticipantsAndProvidersChanges {
+  participants?: ParticipantsType[] | null;
+  medicareProviderType?: string | null;
+  statesEngagement?: string | null;
+  participantsOther?: string | null;
+  participantsNote?: string | null;
+  participantsCurrentlyInModels?: boolean | null;
+  participantsCurrentlyInModelsNote?: string | null;
+  modelApplicationLevel?: string | null;
+  expectedNumberOfParticipants?: number | null;
+  estimateConfidence?: ConfidenceType | null;
+  confidenceNote?: string | null;
+  recruitmentMethod?: RecruitmentType | null;
+  recruitmentOther?: string | null;
+  recruitmentNote?: string | null;
+  selectionMethod?: ParticipantSelectionType[] | null;
+  selectionOther?: string | null;
+  selectionNote?: string | null;
+  communicationMethod?: ParticipantCommunicationType[] | null;
+  communicationMethodOther?: string | null;
+  communicationNote?: string | null;
+  participantAssumeRisk?: boolean | null;
+  riskType?: ParticipantRiskType | null;
+  riskOther?: string | null;
+  riskNote?: string | null;
+  willRiskChange?: boolean | null;
+  willRiskChangeNote?: string | null;
+  coordinateWork?: boolean | null;
+  coordinateWorkNote?: string | null;
+  gainsharePayments?: boolean | null;
+  gainsharePaymentsTrack?: boolean | null;
+  gainsharePaymentsNote?: string | null;
+  participantsIds?: ParticipantsIDType[] | null;
+  participantsIdsOther?: string | null;
+  participantsIDSNote?: string | null;
+  providerAdditionFrequency?: FrequencyType | null;
+  providerAdditionFrequencyOther?: string | null;
+  providerAdditionFrequencyNote?: string | null;
+  providerAddMethod?: ProviderAddType[] | null;
+  providerAddMethodOther?: string | null;
+  providerAddMethodNote?: string | null;
+  providerLeaveMethod?: ProviderLeaveType[] | null;
+  providerLeaveMethodOther?: string | null;
+  providerLeaveMethodNote?: string | null;
+  providerOverlap?: OverlapType | null;
+  providerOverlapHierarchy?: string | null;
+  providerOverlapNote?: string | null;
 }
 
 //==============================================================

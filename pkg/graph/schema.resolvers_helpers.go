@@ -32,9 +32,17 @@ func ConvertToPlanDocumentModel(input *model.PlanDocumentInput) *models.PlanDocu
 			documentModel.DocumentType = *input.DocumentParameters.DocumentType
 		}
 
+		// TODO Replace documentModel.OtherTypeDescription with zero.String rather than check length manually
+		if input.DocumentParameters.OtherTypeDescription != nil && len(*input.DocumentParameters.OtherTypeDescription) == 0 {
+			documentModel.OtherTypeDescription = nil
+		}
+
+		// TODO Replace documentModel.OptionalNotes with zero.String rather than check length manually
+		if input.DocumentParameters.OptionalNotes != nil && len(*input.DocumentParameters.OptionalNotes) == 0 {
+			documentModel.OptionalNotes = nil
+		}
+
 		documentModel.FileSize = input.DocumentParameters.FileSize
-		documentModel.OtherTypeDescription = input.DocumentParameters.OtherTypeDescription
-		documentModel.OptionalNotes = input.DocumentParameters.OptionalNotes
 	}
 
 	return &documentModel
