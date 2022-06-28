@@ -4,6 +4,7 @@ import (
 	"testing"
 
 	"github.com/guregu/null"
+	"github.com/lib/pq"
 	"github.com/stretchr/testify/suite"
 )
 
@@ -25,6 +26,7 @@ func (suite *CalcStatusSuite) TestGenericallyCalculateStatus() {
 		fieldC *bool   `statusWeight:"3"`
 		fieldD *string
 		fieldE string
+		fieldF pq.StringArray `statusWeight:"1"`
 	}
 
 	// 0/3 - Ready
@@ -48,6 +50,7 @@ func (suite *CalcStatusSuite) TestGenericallyCalculateStatus() {
 		fieldC: null.BoolFrom(true).Ptr(),
 		fieldD: null.NewString("", false).Ptr(),
 		fieldE: "",
+		fieldF: pq.StringArray{"test"},
 	})
 	suite.Nil(err)
 	suite.EqualValues(TaskComplete, res)
@@ -77,7 +80,8 @@ func (suite *CalcStatusSuite) TestGenericallyCalculateStatusWrongTypes() {
 	res, err := GenericallyCalculateStatus(TestStructNotPointer{
 		fieldA: "test",
 	})
-	suite.ErrorContains(err, "field fieldA is not a pointer (found string)")
+	// suite.ErrorContains(err, "field fieldA is not a pointer (found string)")
+	suite.ErrorContains(err, "field fieldA is not a supported type for status calculation (found string)")
 	suite.EqualValues(TaskStatus(""), res)
 
 	// Try calling with a non-struct type

@@ -208,10 +208,6 @@ jobs:
         uses: actions/setup-go@fcdc43634adb5f7ae75a9d7a9b9361790f7293e2
         with:
           go-version: ${{ env.EASI_APP_GO_VERSION }}
-      - name: Set up python
-        uses: actions/setup-python@98f2ad02fd48d057ee3b4d4f66525b231c3e52b6
-        with:
-          python-version: "3.9"
       - name: Configure go cache
         uses: actions/cache@48af2dc4a9e8278b89d7fa154b955c30c6aaab09
         with:

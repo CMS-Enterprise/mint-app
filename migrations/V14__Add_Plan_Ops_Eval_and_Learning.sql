@@ -14,12 +14,6 @@ CREATE TYPE STAKEHOLDERS_TYPE AS ENUM (
     'STATES',
     'OTHER'
 );
-CREATE TYPE HELPDESK_USE_TYPE AS ENUM (
-    'CBOSC',
-    'CONTRACTOR',
-    'OTHER',
-    'NO'
-);
 CREATE TYPE CONTRACTOR_SUPPORT_TYPE AS ENUM (
     'ONE',
     'MULTIPLE',
@@ -89,12 +83,6 @@ CREATE TYPE MODEL_LEARNING_SYSTEM_TYPE AS ENUM (
     'OTHER',
     'NO_LEARNING_SYSTEM'
 );
-CREATE TYPE IDDOC_OPERATIONS_TYPE AS ENUM (
-    'ACO_OS',
-    'ACO_UI',
-    'INNOVATION',
-    'OTHER'
-);
 CREATE TYPE DATA_FULL_TIME_OR_INCREMENTAL_TYPE AS ENUM (
     'FULL_TIME',
     'INCREMENTAL'
@@ -128,8 +116,7 @@ CREATE TABLE plan_ops_eval_and_learning (
     stakeholders STAKEHOLDERS_TYPE[],
     stakeholders_other ZERO_STRING,
     stakeholders_note ZERO_STRING,
-    helpdesk_use HELPDESK_USE_TYPE[],
-    helpdesk_use_other ZERO_STRING,
+    helpdesk_use BOOL,
     helpdesk_use_note ZERO_STRING,
     contractor_support CONTRACTOR_SUPPORT_TYPE[],
     contractor_support_other ZERO_STRING,
@@ -139,9 +126,6 @@ CREATE TABLE plan_ops_eval_and_learning (
     iddoc_support_note ZERO_STRING,
 
     --page 2
-    iddoc_operations IDDOC_OPERATIONS_TYPE,
-    iddoc_operations_other ZERO_STRING,
-    iddoc_operations_note ZERO_STRING,
     technical_contacts_identified BOOL,
     technical_contacts_identified_detail ZERO_STRING,
     technical_contacts_identified_note ZERO_STRING,

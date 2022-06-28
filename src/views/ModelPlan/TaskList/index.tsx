@@ -65,15 +65,14 @@ const TaskList = () => {
     modelName,
     modelCategory,
     cmsCenters,
-    modifiedDts,
+    // modifiedDts,
     milestones,
     basics,
     discussions,
     documents,
     status,
-    // TODO: Add these model plans when BE integrates it
-    generalCharacteristics
-    // participants,
+    generalCharacteristics,
+    participantsAndProviders
     // beneficiaries,
     // operations,
     // payment,
@@ -104,8 +103,8 @@ const TaskList = () => {
       // TODO: Add these model plans when BE integrates it
       case 'characteristics':
         return generalCharacteristics?.status;
-      // case 'participants':
-      //   return;
+      case 'participants-and-providers':
+        return participantsAndProviders.status;
       // case 'beneficiaries':
       //   return;
       // case 'operations':
