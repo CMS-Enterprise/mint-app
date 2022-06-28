@@ -609,23 +609,23 @@ func makePlanPayments(modelPlanID uuid.UUID, logger *zap.Logger, store *storage.
 func processPlanPayments(pp *models.PlanPayments) {
 	pp.ID = uuid.MustParse("a18d2f8c-e5cb-4c5d-b21c-3554dbec9c4d")
 
-	/*// Page 1
-	pp.FundingSource = []string{model.FundingSourcePatientProtectionAffordableCareAct.String()}
+	// Page 1
+	pp.FundingSource = []string{string(models.FundingSourcePatientProtectionAffordableCareAct)}
 	pp.FundingSourceTrustFundDescription = models.StringPointer("Funding source trust fund description here")
 	pp.FundingSourceOtherDescription = models.StringPointer("Funding source other description here")
 	pp.FundingSourceNote = models.StringPointer("Funding source note here")
-	pp.FundingSourceR = []string{model.FundingSourceOther.String()}
+	pp.FundingSourceR = []string{string(models.FundingSourceOther)}
 	pp.FundingSourceRTrustFundDescription = models.StringPointer("Funding source r trust fund description here")
 	pp.FundingSourceROtherDescription = models.StringPointer("Funding source r other description here")
 	pp.FundingSourceRNote = models.StringPointer("Funding source r note here")
-	pp.PayRecipients = []string{model.PayRecipientParticipants.String()}
+	pp.PayRecipients = []string{string(models.PayRecipientParticipants)}
 	pp.PayRecipientOtherSpecification = models.StringPointer("Pay recipient other specification here")
 	pp.PayRecipientsNote = models.StringPointer("Pay recipient note here")
-	pp.PayType = PayTypeClaimsBasedPayments
+	pp.PayType = models.PayTypeNonClaimsBasedPayments
 	pp.PayTypeNote = models.StringPointer("Pay type note here")
 
 	// Page 2
-	pp.PayClaims = []string{model.ClaimsBasedPayTypeAdjustmentsToFfsPayments.String()}
+	pp.PayClaims = []string{string(models.ClaimsBasedPayTypeAdjustmentsToFFSPayments)}
 	pp.PayClaimsOtherDescription = models.StringPointer("Pay claims other description here")
 	pp.ShouldAnyProvidersExcludedFFSSystems = models.BoolPointer(true)
 	pp.ShouldAnyProviderExcludedFFSSystemsNote = models.StringPointer("Should any provider excluded FFS systems note here")
@@ -664,12 +664,12 @@ func processPlanPayments(pp *models.PlanPayments) {
 	pp.FundingCenterDescription = models.StringPointer("Funding center description here")
 
 	// Page 6
-	pp.ExpectedCalculationComplexityLevel = complexitycalculationleveltype.High
+	pp.ExpectedCalculationComplexityLevel = models.ComplexityCalculationLevelTypeHigh
 	pp.ExpectedCalculationComplexityLevelNote = models.StringPointer("Expected calculation complexity level note here")
 	pp.CanParticipantsSelectBetweenPaymentMechanisms = models.BoolPointer(true)
 	pp.CanParticipantsSelectBetweenPaymentMechanismsDescription = models.StringPointer("Can participants select between payment mechanisms description here")
 	pp.CanParticipantsSelectBetweenPaymentMechanismsNote = models.StringPointer("Can participants select between mechanisms note here")
-	pp.AnticipatedPaymentFrequency = anticipatedpaymentfrequencytype.Biannually
+	pp.AnticipatedPaymentFrequency = models.AnticipatedPaymentFrequencyTypeBiannually
 	pp.AnticipatedPaymentFrequencyOtherDescription = models.StringPointer("Anticipated payment frequency other description here")
 	pp.AnticipatedPaymentFrequencyNotes = models.StringPointer("Anticipated payment frequency notes here")
 
@@ -682,7 +682,7 @@ func processPlanPayments(pp *models.PlanPayments) {
 	pp.PaymentStartDate = &now
 	pp.PaymentStartDateNotes = models.StringPointer("Payment start date notes here")
 
-	pp.Status = models.TaskInProgress*/
+	pp.Status = models.TaskInProgress
 
-	pp.CalcStatus()
+	_ = pp.CalcStatus()
 }
