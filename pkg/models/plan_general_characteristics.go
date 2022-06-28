@@ -24,18 +24,18 @@ type PlanGeneralCharacteristics struct {
 	HasComponentsOrTracksNote   *string        `json:"hasComponentsOrTracksNote" db:"has_components_or_tracks_note"`
 
 	// Page 2
-	AlternativePaymentModel      *bool          `json:"alternativePaymentModel" db:"alternative_payment_model" statusWeight:"1"`
-	AlternativePaymentModelTypes pq.StringArray `json:"alternativePaymentModelTypes" db:"alternative_payment_model_types"`
-	AlternativePaymentModelNote  *string        `json:"alternativePaymentModelNote" db:"alternative_payment_model_note"`
-	KeyCharacteristics           pq.StringArray `json:"keyCharacteristics" db:"key_characteristics"`
-	KeyCharacteristicsOther      *string        `json:"keyCharacteristicsOther" db:"key_characteristics_other"`
-	KeyCharacteristicsNote       *string        `json:"keyCharacteristicsNote" db:"key_characteristics_note"`
-	CollectPlanBids              *bool          `json:"collectPlanBids" db:"collect_plan_bids"`
-	CollectPlanBidsNote          *string        `json:"collectPlanBidsNote" db:"collect_plan_bids_note"`
-	ManagePartCDEnrollment       *bool          `json:"managePartCDEnrollment" db:"manage_part_c_d_enrollment"`
-	ManagePartCDEnrollmentNote   *string        `json:"managePartCDEnrollmentNote" db:"manage_part_c_d_enrollment_note"`
-	PlanContactUpdated           *bool          `json:"planContactUpdated" db:"plan_contact_updated"`
-	PlanContactUpdatedNote       *string        `json:"planContactUpdatedNote" db:"plan_contact_updated_note"`
+	AlternativePaymentModel      *bool                        `json:"alternativePaymentModel" db:"alternative_payment_model" statusWeight:"1"`
+	AlternativePaymentModelTypes AlternativePaymentModelTypeG `json:"alternativePaymentModelTypes" db:"alternative_payment_model_types"`
+	AlternativePaymentModelNote  *string                      `json:"alternativePaymentModelNote" db:"alternative_payment_model_note"`
+	KeyCharacteristics           KeyCharacteristicG           `json:"keyCharacteristics" db:"key_characteristics"`
+	KeyCharacteristicsOther      *string                      `json:"keyCharacteristicsOther" db:"key_characteristics_other"`
+	KeyCharacteristicsNote       *string                      `json:"keyCharacteristicsNote" db:"key_characteristics_note"`
+	CollectPlanBids              *bool                        `json:"collectPlanBids" db:"collect_plan_bids"`
+	CollectPlanBidsNote          *string                      `json:"collectPlanBidsNote" db:"collect_plan_bids_note"`
+	ManagePartCDEnrollment       *bool                        `json:"managePartCDEnrollment" db:"manage_part_c_d_enrollment"`
+	ManagePartCDEnrollmentNote   *string                      `json:"managePartCDEnrollmentNote" db:"manage_part_c_d_enrollment_note"`
+	PlanContactUpdated           *bool                        `json:"planContactUpdated" db:"plan_contact_updated"`
+	PlanContactUpdatedNote       *string                      `json:"planContactUpdatedNote" db:"plan_contact_updated_note"`
 
 	// Page 3
 	CareCoordinationInvolved              *bool   `json:"careCoordinationInvolved" db:"care_coordination_involved" statusWeight:"1"`
@@ -50,7 +50,7 @@ type PlanGeneralCharacteristics struct {
 
 	// Page 4
 	GeographiesTargeted                       *bool          `json:"geographiesTargeted" db:"geographies_targeted" statusWeight:"1"`
-	GeographiesTargetedTypes                  pq.StringArray `json:"geographiesTargetedTypes" db:"geographies_targeted_types"`
+	GeographiesTargetedTypes                  GeographyTypeG `json:"geographiesTargetedTypes" db:"geographies_targeted_types"`
 	GeographiesTargetedTypesOther             *string        `json:"geographiesTargetedTypesOther" db:"geographies_targeted_types_other"`
 	GeographiesTargetedAppliedTo              pq.StringArray `json:"geographiesTargetedAppliedTo" db:"geographies_targeted_applied_to"`
 	GeographiesTargetedAppliedToOther         *string        `json:"geographiesTargetedAppliedToOther" db:"geographies_targeted_applied_to_other"`
@@ -116,3 +116,48 @@ func (gc PlanGeneralCharacteristics) GetModifiedBy() *string {
 func (gc PlanGeneralCharacteristics) GetCreatedBy() string {
 	return gc.CreatedBy
 }
+
+//AlternativePaymentModelTypeG is an array of AlternativePaymentModelType
+type AlternativePaymentModelTypeG []AlternativePaymentModelType
+
+// AlternativePaymentModelType represents the types of AlternativePaymentModel types.
+type AlternativePaymentModelType string
+
+//These are the options for AlternativePaymentModelType
+const (
+	APMRegular  AlternativePaymentModelType = "REGULAR"
+	APMMips     AlternativePaymentModelType = "MIPS"
+	APMAdvanced AlternativePaymentModelType = "ADVANCED"
+)
+
+//KeyCharacteristicG is an array of KeyCharacteristic
+type KeyCharacteristicG []KeyCharacteristic
+
+// KeyCharacteristic represents the types of KeyCharacteristic types.
+type KeyCharacteristic string
+
+//These are the options for KeyCharacteristic
+const (
+	KCEpisodeBased    KeyCharacteristic = "EPISODE_BASED"
+	KCPartC           KeyCharacteristic = "PART_C"
+	KCPartD           KeyCharacteristic = "PART_D"
+	KCPayment         KeyCharacteristic = "PAYMENT"
+	KCPopulationBased KeyCharacteristic = "POPULATION_BASED"
+	KCPreventative    KeyCharacteristic = "PREVENTATIVE"
+	KCServiceDelivery KeyCharacteristic = "SERVICE_DELIVERY"
+	KCSharedSavings   KeyCharacteristic = "SHARED_SAVINGS"
+	KCOther           KeyCharacteristic = "OTHER"
+)
+
+//GeographyTypeG is an array of GeographyType
+type GeographyTypeG []GeographyType
+
+// GeographyType represents the types of Geography types.
+type GeographyType string
+
+//These are the options for GeographyType
+const (
+	GTState  GeographyType = "STATE"
+	GTRegion GeographyType = "REGION"
+	GTOther  GeographyType = "OTHER"
+)

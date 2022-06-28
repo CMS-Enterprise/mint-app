@@ -284,19 +284,16 @@ func (r *planGeneralCharacteristicsResolver) ResemblesExistingModelWhich(ctx con
 	return obj.ResemblesExistingModelWhich, nil
 }
 
-func (r *planGeneralCharacteristicsResolver) AlternativePaymentModelTypes(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]model.AlternativePaymentModelType, error) {
-	apmTypes := models.ConvertEnums[model.AlternativePaymentModelType](obj.AlternativePaymentModelTypes)
-	return apmTypes, nil
+func (r *planGeneralCharacteristicsResolver) AlternativePaymentModelTypes(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]models.AlternativePaymentModelType, error) {
+	return obj.AlternativePaymentModelTypes, nil
 }
 
-func (r *planGeneralCharacteristicsResolver) KeyCharacteristics(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]model.KeyCharacteristic, error) {
-	keyCharacteristics := models.ConvertEnums[model.KeyCharacteristic](obj.KeyCharacteristics)
-	return keyCharacteristics, nil
+func (r *planGeneralCharacteristicsResolver) KeyCharacteristics(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]models.KeyCharacteristic, error) {
+	return obj.KeyCharacteristics, nil
 }
 
-func (r *planGeneralCharacteristicsResolver) GeographiesTargetedTypes(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]model.GeographyType, error) {
-	geographyTypes := models.ConvertEnums[model.GeographyType](obj.GeographiesTargetedTypes)
-	return geographyTypes, nil
+func (r *planGeneralCharacteristicsResolver) GeographiesTargetedTypes(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]models.GeographyType, error) {
+	return obj.GeographiesTargetedTypes, nil
 }
 
 func (r *planGeneralCharacteristicsResolver) GeographiesTargetedAppliedTo(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]model.GeographyApplication, error) {
