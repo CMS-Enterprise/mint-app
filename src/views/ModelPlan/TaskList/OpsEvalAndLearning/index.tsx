@@ -87,7 +87,7 @@ export const renderCurrentPage = (
 // Checks to see is there is a checked 'Yes' answer within the ccmInvolvment array
 export const isCCWInvolvement = (ccmInvolvment: CcmInvolvmentType[]) => {
   return ccmInvolvment.some(value =>
-    ['YES_EVALUATION', 'YES_EVYES__IMPLEMENTATIONALUATION'].includes(value)
+    ['YES_EVALUATION', 'YES__IMPLEMENTATION'].includes(value)
   );
 };
 

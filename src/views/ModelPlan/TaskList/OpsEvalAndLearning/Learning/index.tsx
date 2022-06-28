@@ -148,7 +148,7 @@ const Learning = () => {
       <Formik
         initialValues={initialValues}
         onSubmit={values => {
-          handleFormSubmit(values, 'next');
+          handleFormSubmit(values, 'task-list');
         }}
         enableReinitialize
         innerRef={formikRef}
@@ -288,7 +288,7 @@ const Learning = () => {
                     {h('back')}
                   </Button>
                   <Button type="submit" onClick={() => setErrors({})}>
-                    {h('next')}
+                    {h('saveAndStartNext')}
                   </Button>
                 </div>
                 <Button
