@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { Fragment, useRef } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
@@ -10,7 +10,8 @@ import {
   Fieldset,
   IconArrowBack,
   Label,
-  Radio
+  Radio,
+  TextInput
 } from '@trussworks/react-uswds';
 import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
 
@@ -19,9 +20,11 @@ import AskAQuestion from 'components/AskAQuestion';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import AutoSave from 'components/shared/AutoSave';
+import CheckboxField from 'components/shared/CheckboxField';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
+import MultiSelect from 'components/shared/MultiSelect';
 import GetEvaluation from 'queries/OpsEvalAndLearning/GetEvaluation';
 import {
   GetEvaluation as GetEvaluationType,
@@ -37,6 +40,7 @@ import {
 } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import {
+  mapMultiSelectOptions,
   sortOtherEnum,
   translateCcmInvolvmentType,
   translateDataForMonitoringType,
@@ -225,33 +229,31 @@ const Evaluation = () => {
                   handleSubmit(e);
                 }}
               >
-                {/* <FieldArray
-                  name="providerLeaveMethod"
+                <FieldArray
+                  name="evaluationApproaches"
                   render={arrayHelpers => (
                     <>
                       <legend className="usa-label">
-                        {t('canProvidersLeave')}
+                        {t('evaluationApproach')}
                       </legend>
-                      <p className="text-base margin-0 line-height-body-3">
-                        {t('canProvidersLeaveInfo')}
-                      </p>
+
                       <FieldErrorMsg>
-                        {flatErrors.providerLeaveMethod}
+                        {flatErrors.evaluationApproaches}
                       </FieldErrorMsg>
 
-                      {Object.keys(ProviderLeaveType)
+                      {Object.keys(EvaluationApproachType)
                         .sort(sortOtherEnum)
                         .map(type => {
                           return (
                             <Fragment key={type}>
                               <Field
                                 as={CheckboxField}
-                                id={`participants-and-providers-leave-method-${type}`}
-                                name="providerLeaveMethod"
-                                label={translateProviderLeaveType(type)}
+                                id={`ops-eval-and-learning-evaluation-approach-${type}`}
+                                name="evaluationApproaches"
+                                label={translateEvaluationApproachType(type)}
                                 value={type}
-                                checked={values?.providerLeaveMethod.includes(
-                                  type as ProviderLeaveType
+                                checked={values?.evaluationApproaches.includes(
+                                  type as EvaluationApproachType
                                 )}
                                 onChange={(
                                   e: React.ChangeEvent<HTMLInputElement>
@@ -259,31 +261,31 @@ const Evaluation = () => {
                                   if (e.target.checked) {
                                     arrayHelpers.push(e.target.value);
                                   } else {
-                                    const idx = values.providerLeaveMethod.indexOf(
-                                      e.target.value as ProviderLeaveType
+                                    const idx = values.evaluationApproaches.indexOf(
+                                      e.target.value as EvaluationApproachType
                                     );
                                     arrayHelpers.remove(idx);
                                   }
                                 }}
                               />
-                              {type === ('OTHER' as ProviderLeaveType) &&
-                                values.providerLeaveMethod.includes(type) && (
+                              {type === ('OTHER' as EvaluationApproachType) &&
+                                values.evaluationApproaches.includes(type) && (
                                   <div className="margin-left-4 margin-top-neg-2">
                                     <Label
-                                      htmlFor="participants-and-providers-leave-method-other"
-                                      className="text-normal"
+                                      htmlFor="ops-eval-and-learning-evaluation-approach-other"
+                                      className="text-normal maxw-none"
                                     >
-                                      {h('pleaseSpecify')}
+                                      {t('evaluationOther')}
                                     </Label>
                                     <FieldErrorMsg>
-                                      {flatErrors.providerLeaveMethodOther}
+                                      {flatErrors.evaluationApproachOther}
                                     </FieldErrorMsg>
                                     <Field
                                       as={TextInput}
                                       className="maxw-none"
-                                      id="participants-and-providers-leave-method-other"
+                                      id="ops-eval-and-learning-evaluation-approach-other"
                                       maxLength={50}
-                                      name="providerLeaveMethodOther"
+                                      name="evaluationApproachOther"
                                     />
                                   </div>
                                 )}
@@ -291,12 +293,230 @@ const Evaluation = () => {
                           );
                         })}
                       <AddNote
-                        id="participants-and-providers-leave-method-note"
-                        field="providerLeaveMethodNote"
+                        id="ops-eval-and-learning-evaluation-approach-note"
+                        field="evalutaionApproachNote"
                       />
                     </>
                   )}
-                /> */}
+                />
+
+                <FieldArray
+                  name="ccmInvolvment"
+                  render={arrayHelpers => (
+                    <>
+                      <legend className="usa-label">{t('ccw')}</legend>
+
+                      <FieldErrorMsg>{flatErrors.ccmInvolvment}</FieldErrorMsg>
+
+                      {Object.keys(CcmInvolvmentType)
+                        .sort(sortOtherEnum)
+                        .map(type => {
+                          return (
+                            <Fragment key={type}>
+                              <Field
+                                as={CheckboxField}
+                                id={`ops-eval-and-learning-cmmi-involvement-${type}`}
+                                name="ccmInvolvment"
+                                label={translateCcmInvolvmentType(type)}
+                                value={type}
+                                checked={values?.ccmInvolvment.includes(
+                                  type as CcmInvolvmentType
+                                )}
+                                onChange={(
+                                  e: React.ChangeEvent<HTMLInputElement>
+                                ) => {
+                                  if (e.target.checked) {
+                                    arrayHelpers.push(e.target.value);
+                                  } else {
+                                    const idx = values.ccmInvolvment.indexOf(
+                                      e.target.value as CcmInvolvmentType
+                                    );
+                                    arrayHelpers.remove(idx);
+                                  }
+                                }}
+                              />
+                              {type === ('OTHER' as CcmInvolvmentType) &&
+                                values.ccmInvolvment.includes(type) && (
+                                  <div className="margin-left-4 margin-top-neg-2">
+                                    <Label
+                                      htmlFor="ops-eval-and-learning-cmmi-involvement-other"
+                                      className="text-normal"
+                                    >
+                                      {h('pleaseSpecify')}
+                                    </Label>
+                                    <FieldErrorMsg>
+                                      {flatErrors.ccmInvolvmentOther}
+                                    </FieldErrorMsg>
+                                    <Field
+                                      as={TextInput}
+                                      className="maxw-none"
+                                      id="ops-eval-and-learning-cmmi-involvement-other"
+                                      maxLength={50}
+                                      name="ccmInvolvmentOther"
+                                    />
+                                  </div>
+                                )}
+                            </Fragment>
+                          );
+                        })}
+                      <AddNote
+                        id="ops-eval-and-learning-cmmi-involvement-note"
+                        field="ccmInvolvmentNote"
+                      />
+                    </>
+                  )}
+                />
+
+                <FieldGroup
+                  scrollElement="dataNeededForMonitoring"
+                  error={!!flatErrors.dataNeededForMonitoring}
+                  className="margin-top-4"
+                >
+                  <Label
+                    htmlFor="ops-eval-and-learning-data-needed"
+                    className="maxw-none"
+                  >
+                    {t('dataNeeded')}
+                  </Label>
+
+                  <p className="text-base margin-y-1">{t('dataNeededInfo')}</p>
+
+                  <FieldErrorMsg>
+                    {flatErrors.dataNeededForMonitoring}
+                  </FieldErrorMsg>
+                  <Field
+                    as={MultiSelect}
+                    id="ops-eval-and-learning-data-needed"
+                    name="dataNeededForMonitoring"
+                    options={mapMultiSelectOptions(
+                      translateDataForMonitoringType,
+                      DataForMonitoringType
+                    )}
+                    selectedLabel={t('selectedData')}
+                    onChange={(value: string[] | []) => {
+                      setFieldValue('dataNeededForMonitoring', value);
+                    }}
+                    initialValues={initialValues.dataNeededForMonitoring}
+                  />
+                  {(values?.dataNeededForMonitoring || []).includes(
+                    'OTHER' as DataForMonitoringType
+                  ) && (
+                    <div className="margin-top-2">
+                      <Label
+                        htmlFor="ops-eval-and-learning-data-needed-other"
+                        className="text-normal"
+                      >
+                        {t('dataNeededOther')}
+                      </Label>
+                      <FieldErrorMsg>
+                        {flatErrors.dataNeededForMonitoringOther}
+                      </FieldErrorMsg>
+                      <Field
+                        as={TextInput}
+                        maxLength={50}
+                        error={flatErrors.dataNeededForMonitoringOther}
+                        id="ops-eval-and-learning-data-needed-other"
+                        name="dataNeededForMonitoringOther"
+                      />
+                    </div>
+                  )}
+
+                  <AddNote
+                    id="ops-eval-and-learning-data-needed-note"
+                    field="dataNeededForMonitoringNote"
+                  />
+                </FieldGroup>
+
+                <FieldGroup
+                  scrollElement="dataToSendParticicipants"
+                  error={!!flatErrors.dataToSendParticicipants}
+                  className="margin-top-4"
+                >
+                  <Label
+                    htmlFor="ops-eval-and-learning-data-to-send"
+                    className="maxw-none"
+                  >
+                    {t('dataNeeded')}
+                  </Label>
+
+                  <FieldErrorMsg>
+                    {flatErrors.dataToSendParticicipants}
+                  </FieldErrorMsg>
+                  <Field
+                    as={MultiSelect}
+                    id="ops-eval-and-learning-data-to-send"
+                    name="dataToSendParticicipants"
+                    options={mapMultiSelectOptions(
+                      translateDataToSendParticipantsType,
+                      DataToSendParticipantsType
+                    )}
+                    selectedLabel={t('selectedData')}
+                    onChange={(value: string[] | []) => {
+                      setFieldValue('dataToSendParticicipants', value);
+                    }}
+                    initialValues={initialValues.dataToSendParticicipants}
+                  />
+                  {(values?.dataToSendParticicipants || []).includes(
+                    'OTHER' as DataToSendParticipantsType
+                  ) && (
+                    <div className="margin-top-2">
+                      <Label
+                        htmlFor="ops-eval-and-learning-data-to-send-other"
+                        className="text-normal"
+                      >
+                        {t('dataNeededOther')}
+                      </Label>
+                      <FieldErrorMsg>
+                        {flatErrors.dataToSendParticicipantsgOther}
+                      </FieldErrorMsg>
+                      <Field
+                        as={TextInput}
+                        maxLength={50}
+                        error={flatErrors.dataToSendParticicipantsOther}
+                        id="ops-eval-and-learning-data-to-send-other"
+                        name="dataToSendParticicipantsOther"
+                      />
+                    </div>
+                  )}
+
+                  <AddNote
+                    id="ops-eval-and-learning-data-to-send-note"
+                    field="dataToSendParticicipantsNote"
+                  />
+                </FieldGroup>
+
+                <FieldGroup
+                  scrollElement="shareCclfData"
+                  error={!!flatErrors.shareCclfData}
+                  className="margin-top-6"
+                >
+                  <Label htmlFor="ops-eval-and-learning-share-cclf-data">
+                    {t('claimLineFeed')}
+                  </Label>
+
+                  <FieldErrorMsg>{flatErrors.shareCclfData}</FieldErrorMsg>
+                  <Fieldset>
+                    {[true, false].map(key => (
+                      <Field
+                        as={Radio}
+                        key={key}
+                        id={`ops-eval-and-learning-share-cclf-data-${key}`}
+                        name="shareCclfData"
+                        label={key ? h('yes') : h('no')}
+                        value={key ? 'YES' : 'NO'}
+                        checked={values.shareCclfData === key}
+                        onChange={() => {
+                          setFieldValue('shareCclfData', key);
+                        }}
+                      />
+                    ))}
+                  </Fieldset>
+
+                  <AddNote
+                    id="ops-eval-and-learning-share-cclf-data-note"
+                    field="shareCclfDataNote"
+                  />
+                </FieldGroup>
 
                 <div className="margin-top-6 margin-bottom-3">
                   <Button

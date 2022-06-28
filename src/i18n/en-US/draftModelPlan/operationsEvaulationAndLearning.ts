@@ -149,8 +149,12 @@ const operationsEvaluationAndLearning = {
       'Leverage non-Medicare data (such as Medicaid data, external data sets)',
     other: 'Other'
   },
+  evaluationOther:
+    'Please describe the other evaluation approach you are considering.',
   dataNeeded:
     'What data do you need to monitor the model? Select all that apply.',
+  dataNeededInfo:
+    'If you select quality claims-based measures or quality reported measures, there will be additional questions to answer.',
   dataNeededOptions: {
     siteVisits: 'Site visits',
     medicareClaims: 'Medicare claims',
@@ -165,6 +169,8 @@ const operationsEvaluationAndLearning = {
     other: 'Other',
     notPlanningToCollect: 'Not planning to collect data'
   },
+  selectedData: 'Selected data',
+  dataNeededOther: 'What other data do you need to monitor?',
   validatedQuality:
     'Do you plan to develop a new validated quality measure for your model?',
   impactPayment: 'Does quality performance impact payment?',
