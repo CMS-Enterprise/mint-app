@@ -4,11 +4,130 @@ import (
 	"github.com/lib/pq"
 	"time"
 
-	"github.com/cmsgov/mint-app/pkg/models/anticipatedpaymentfrequencytype"
-	"github.com/cmsgov/mint-app/pkg/models/complexitycalculationleveltype"
-	"github.com/cmsgov/mint-app/pkg/models/paytype"
-
 	"github.com/google/uuid"
+)
+
+// AnticipatedPaymentFrequencyType is the enumeration of options for this category
+type AnticipatedPaymentFrequencyType string
+
+//goland:noinspection ALL
+const (
+	// AnticipatedPaymentFrequencyTypeAnnually indicates annual payments
+	AnticipatedPaymentFrequencyTypeAnnually AnticipatedPaymentFrequencyType = "ANNUALLY"
+	// AnticipatedPaymentFrequencyTypeBiannually indicates biannual payments
+	AnticipatedPaymentFrequencyTypeBiannually AnticipatedPaymentFrequencyType = "BIANNUALLY"
+	// AnticipatedPaymentFrequencyTypeQuarterly indicates payments every quarter
+	AnticipatedPaymentFrequencyTypeQuarterly AnticipatedPaymentFrequencyType = "QUARTERLY"
+	// AnticipatedPaymentFrequencyTypeMonthly indicates payments every month
+	AnticipatedPaymentFrequencyTypeMonthly AnticipatedPaymentFrequencyType = "MONTHLY"
+	// AnticipatedPaymentFrequencyTypeSemiMonthly indicates semi-monthly payments
+	AnticipatedPaymentFrequencyTypeSemiMonthly AnticipatedPaymentFrequencyType = "SEMI-MONTHLY"
+	// AnticipatedPaymentFrequencyTypeWeekly indicates payments every week
+	AnticipatedPaymentFrequencyTypeWeekly AnticipatedPaymentFrequencyType = "WEEKLY"
+	// AnticipatedPaymentFrequencyTypeDaily indicates payments every day
+	AnticipatedPaymentFrequencyTypeDaily AnticipatedPaymentFrequencyType = "DAILY"
+	// AnticipatedPaymentFrequencyTypeOther indicates another form of payment than provided
+	AnticipatedPaymentFrequencyTypeOther AnticipatedPaymentFrequencyType = "OTHER"
+)
+
+// ComplexityCalculationLevelType is an enumeration of options for this category
+type ComplexityCalculationLevelType string
+
+//goland:noinspection ALL
+const (
+	// ComplexityCalculationLevelTypeLow indicates a low level of calculation complexity
+	ComplexityCalculationLevelTypeLow ComplexityCalculationLevelType = "LOW"
+	// ComplexityCalculationLevelTypeMiddle indicates a moderate level of calculation complexity
+	ComplexityCalculationLevelTypeMiddle ComplexityCalculationLevelType = "MIDDLE"
+	// ComplexityCalculationLevelTypeHigh indicates a high level of calculation complexity
+	ComplexityCalculationLevelTypeHigh ComplexityCalculationLevelType = "HIGH"
+)
+
+// ClaimsBasedPayType is the enumeration of options for this category
+type ClaimsBasedPayType string
+
+//goland:noinspection ALL
+const (
+	// ClaimsBasedPayTypeAdjustmentsToFFSPayments indicates adjustments to FFS payments
+	ClaimsBasedPayTypeAdjustmentsToFFSPayments ClaimsBasedPayType = "ADJUSTMENTS_TO_FFS_PAYMENTS"
+	// ClaimsBasedPayTypeCareManagementHomeVisits indicates care management home visits
+	ClaimsBasedPayTypeCareManagementHomeVisits ClaimsBasedPayType = "CARE_MANAGEMENT_HOME_VISITS"
+	// ClaimsBasedPayTypeSNFClaimsWithout3DayHospitalAdmissions indicates SNF claims without 3-Day hospital admissions
+	ClaimsBasedPayTypeSNFClaimsWithout3DayHospitalAdmissions ClaimsBasedPayType = "SNF_CLAIMS_WITHOUT_3DAY_HOSPITAL_ADMISSIONS"
+	// ClaimsBasedPayTypeTeleHealthServicesNotTraditionalMedicare indicates TeleHealth services not traditional medicare
+	ClaimsBasedPayTypeTeleHealthServicesNotTraditionalMedicare ClaimsBasedPayType = "TELEHEALTH_SERVICES_NOT_TRADITIONAL_MEDICARE"
+)
+
+// FundingSource is an enumeration of options for this category
+type FundingSource string
+
+//goland:noinspection ALL
+const (
+	// FundingSourcePatientProtectionAffordableCareAct indicates the funding source is categorically patient protection affordable care act
+	FundingSourcePatientProtectionAffordableCareAct FundingSource = "PATIENT_PROTECTION_AFFORDABLE_CARE_ACT"
+	// FundingSourceTrustFund indicates the funding source is categorically trust fund
+	FundingSourceTrustFund FundingSource = "TRUST_FUND"
+	// FundingSourceOther indicates the funding source is not included in the provided options
+	FundingSourceOther FundingSource = "Other"
+)
+
+// NonClaimsBasedPaymentType is the enumeration of options for this category
+type NonClaimsBasedPaymentType string
+
+//goland:noinspection ALL
+const (
+	// NonClaimsBasedPaymentTypeAdvancedPayment indicates advanced payment
+	NonClaimsBasedPaymentTypeAdvancedPayment NonClaimsBasedPaymentType = "ADVANCED_PAYMENT"
+	// NonClaimsBasedPaymentTypeBundledEpisodeOfCare indicates bundled episode of care
+	NonClaimsBasedPaymentTypeBundledEpisodeOfCare NonClaimsBasedPaymentType = "BUNDLED_EPISODE_OF_CARE"
+	// NonClaimsBasedPaymentTypeCapitationPopulationBasedFull indicates capitation population based full
+	NonClaimsBasedPaymentTypeCapitationPopulationBasedFull NonClaimsBasedPaymentType = "CAPITATION_POPULATION_BASED_FULL"
+	// NonClaimsBasedPaymentTypeCapitationPopulationBasedPartial indicates capitation population based partial
+	NonClaimsBasedPaymentTypeCapitationPopulationBasedPartial NonClaimsBasedPaymentType = "CAPITATION_POPULATION_BASED_PARTIAL"
+	// NonClaimsBasedPaymentTypeCareCoordinationManagementFee indicates care coordination management fee
+	NonClaimsBasedPaymentTypeCareCoordinationManagementFee NonClaimsBasedPaymentType = "CARE_COORDINATION_MANAGEMENT_FEE"
+	// NonClaimsBasedPaymentTypeGlobalBudget indicates global budget
+	NonClaimsBasedPaymentTypeGlobalBudget NonClaimsBasedPaymentType = "GLOBAL_BUDGET"
+	// NonClaimsBasedPaymentTypeGrants indicates grants
+	NonClaimsBasedPaymentTypeGrants NonClaimsBasedPaymentType = "GRANTS"
+	// NonClaimsBasedPaymentTypeIncentivePayment indicates incentive payment
+	NonClaimsBasedPaymentTypeIncentivePayment NonClaimsBasedPaymentType = "INCENTIVE_PAYMENT"
+	// NonClaimsBasedPaymentTypeMAPDSharedSavings indicates MAPD shared savings
+	NonClaimsBasedPaymentTypeMAPDSharedSavings NonClaimsBasedPaymentType = "MAPD_SHARED_SAVINGS"
+	// NonClaimsBasedPaymentTypeSharedSavings indicates shared savings
+	NonClaimsBasedPaymentTypeSharedSavings NonClaimsBasedPaymentType = "SHARED_SAVINGS"
+	// NonClaimsBasedPaymentTypeOther indicates an option not provided
+	NonClaimsBasedPaymentTypeOther NonClaimsBasedPaymentType = "OTHER"
+)
+
+// PayRecipient is an enumeration of options for this category
+type PayRecipient string
+
+//goland:noinspection ALL
+const (
+	// PayRecipientProviders indicates the pay recipient is a provider
+	PayRecipientProviders PayRecipient = "PROVIDERS"
+	// PayRecipientBeneficiaries indicates the pay recipient is a beneficiary
+	PayRecipientBeneficiaries PayRecipient = "BENEFICIARIES"
+	// PayRecipientParticipants indicates the pay recipient is a participant
+	PayRecipientParticipants PayRecipient = "PARTICIPANTS"
+	// PayRecipientStates indicates the pay recipient is a state
+	PayRecipientStates PayRecipient = "STATES"
+	// PayRecipientOther indicates the pay recipient is not included in the provided options
+	PayRecipientOther PayRecipient = "OTHER"
+)
+
+// PayType is the enumeration of options for this category
+type PayType string
+
+//goland:noinspection ALL
+const (
+	// PayTypeClaimsBasedPayments indicates a claims based payment type
+	PayTypeClaimsBasedPayments PayType = "CLAIMS_BASED_PAYMENTS"
+	// PayTypeNonClaimsBasedPayments indicates a non-claims based payment type
+	PayTypeNonClaimsBasedPayments PayType = "NON_CLAIMS_BASED_PAYMENTS"
+	// PayTypeGrants indicates payments will involve grants
+	PayTypeGrants PayType = "GRANTS"
 )
 
 // PlanPayments defines the data associated with a plan payments model
@@ -17,19 +136,19 @@ type PlanPayments struct {
 	ModelPlanID uuid.UUID `json:"modelPlanID" db:"model_plan_id"`
 
 	// Page 1
-	FundingSource                      pq.StringArray  `json:"fundingSource" db:"funding_source"`
-	FundingSourceTrustFundDescription  *string         `json:"fundingSourceTrustFundDescription" db:"funding_source_trust_fund_description"`
-	FundingSourceOtherDescription      *string         `json:"fundingSourceOtherDescription" db:"funding_source_other_description"`
-	FundingSourceNote                  *string         `json:"fundingSourceNote" db:"funding_source_note"`
-	FundingSourceR                     pq.StringArray  `json:"fundingSourceR" db:"funding_source_r"`
-	FundingSourceRTrustFundDescription *string         `json:"fundingSourceRTrustFundDescription" db:"funding_source_r_trust_fund_description"`
-	FundingSourceROtherDescription     *string         `json:"fundingSourceROtherDescription" db:"funding_source_r_other_description"`
-	FundingSourceRNote                 *string         `json:"fundingSourceRNote" db:"funding_source_r_note"`
-	PayRecipients                      pq.StringArray  `json:"payRecipients" db:"pay_recipients"`
-	PayRecipientOtherSpecification     *string         `json:"payRecipientsOtherSpecification" db:"pay_recipients_other_specification"`
-	PayRecipientsNote                  *string         `json:"payRecipientsNote" db:"pay_recipients_note"`
-	PayType                            paytype.PayType `json:"payType" db:"pay_type"`
-	PayTypeNote                        *string         `json:"payTypeNote" db:"pay_type_note"`
+	FundingSource                      pq.StringArray `json:"fundingSource" db:"funding_source"`
+	FundingSourceTrustFundDescription  *string        `json:"fundingSourceTrustFundDescription" db:"funding_source_trust_fund_description"`
+	FundingSourceOtherDescription      *string        `json:"fundingSourceOtherDescription" db:"funding_source_other_description"`
+	FundingSourceNote                  *string        `json:"fundingSourceNote" db:"funding_source_note"`
+	FundingSourceR                     pq.StringArray `json:"fundingSourceR" db:"funding_source_r"`
+	FundingSourceRTrustFundDescription *string        `json:"fundingSourceRTrustFundDescription" db:"funding_source_r_trust_fund_description"`
+	FundingSourceROtherDescription     *string        `json:"fundingSourceROtherDescription" db:"funding_source_r_other_description"`
+	FundingSourceRNote                 *string        `json:"fundingSourceRNote" db:"funding_source_r_note"`
+	PayRecipients                      pq.StringArray `json:"payRecipients" db:"pay_recipients"`
+	PayRecipientOtherSpecification     *string        `json:"payRecipientsOtherSpecification" db:"pay_recipients_other_specification"`
+	PayRecipientsNote                  *string        `json:"payRecipientsNote" db:"pay_recipients_note"`
+	PayType                            PayType        `json:"payType" db:"pay_type"`
+	PayTypeNote                        *string        `json:"payTypeNote" db:"pay_type_note"`
 
 	// Page 2
 	PayClaims                                      pq.StringArray `json:"payClaims" db:"pay_claims"`
@@ -71,14 +190,14 @@ type PlanPayments struct {
 	FundingCenterDescription                        *string        `json:"fundingCenterDescription" db:"funding_center_description"`
 
 	// Page 6
-	ExpectedCalculationComplexityLevel                       complexitycalculationleveltype.ComplexityCalculationLevelType   `json:"expectedCalculationComplexityLevel" db:"expected_calculation_complexity_level"`
-	ExpectedCalculationComplexityLevelNote                   *string                                                         `json:"expectedCalculationComplexityLevelNote" db:"expected_calculation_complexity_level_note"`
-	CanParticipantsSelectBetweenPaymentMechanisms            *bool                                                           `json:"canParticipantsSelectBetweenPaymentMechanisms" db:"can_participants_select_between_payment_mechanisms"`
-	CanParticipantsSelectBetweenPaymentMechanismsDescription *string                                                         `json:"canParticipantsSelectBetweenPaymentMechanismsDescription" db:"can_participants_select_between_payment_mechanisms_description"`
-	CanParticipantsSelectBetweenPaymentMechanismsNote        *string                                                         `json:"canParticipantsSelectBetweenPaymentMechanismsNote" db:"can_participants_select_between_payment_mechanisms_note"`
-	AnticipatedPaymentFrequency                              anticipatedpaymentfrequencytype.AnticipatedPaymentFrequencyType `json:"anticipatedPaymentFrequency" db:"anticipated_payment_frequency"`
-	AnticipatedPaymentFrequencyOtherDescription              *string                                                         `json:"anticipatedPaymentFrequencyOtherDescription" db:"anticipated_payment_frequency_other_description"`
-	AnticipatedPaymentFrequencyNotes                         *string                                                         `json:"anticipatedPaymentFrequencyNotes" db:"anticipated_payment_frequency_notes"`
+	ExpectedCalculationComplexityLevel                       ComplexityCalculationLevelType  `json:"expectedCalculationComplexityLevel" db:"expected_calculation_complexity_level"`
+	ExpectedCalculationComplexityLevelNote                   *string                         `json:"expectedCalculationComplexityLevelNote" db:"expected_calculation_complexity_level_note"`
+	CanParticipantsSelectBetweenPaymentMechanisms            *bool                           `json:"canParticipantsSelectBetweenPaymentMechanisms" db:"can_participants_select_between_payment_mechanisms"`
+	CanParticipantsSelectBetweenPaymentMechanismsDescription *string                         `json:"canParticipantsSelectBetweenPaymentMechanismsDescription" db:"can_participants_select_between_payment_mechanisms_description"`
+	CanParticipantsSelectBetweenPaymentMechanismsNote        *string                         `json:"canParticipantsSelectBetweenPaymentMechanismsNote" db:"can_participants_select_between_payment_mechanisms_note"`
+	AnticipatedPaymentFrequency                              AnticipatedPaymentFrequencyType `json:"anticipatedPaymentFrequency" db:"anticipated_payment_frequency"`
+	AnticipatedPaymentFrequencyOtherDescription              *string                         `json:"anticipatedPaymentFrequencyOtherDescription" db:"anticipated_payment_frequency_other_description"`
+	AnticipatedPaymentFrequencyNotes                         *string                         `json:"anticipatedPaymentFrequencyNotes" db:"anticipated_payment_frequency_notes"`
 
 	// Page 7
 	WillRecoverPayments                               *bool      `json:"willRecoverPayments" db:"will_recover_payments"`
