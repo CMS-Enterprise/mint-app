@@ -1,10 +1,10 @@
 package models
 
 import (
+	"database/sql/driver"
 	"time"
 
 	"github.com/google/uuid"
-	"github.com/lib/pq"
 )
 
 //PlanOpsEvalAndLearning represents the tasks list section that handles information around operations, evaluation, and learning
@@ -13,20 +13,20 @@ type PlanOpsEvalAndLearning struct {
 	ModelPlanID uuid.UUID `json:"modelPlanID" db:"model_plan_id"`
 
 	//Page 1
-	AgencyOrStateHelp      pq.StringArray `json:"agencyOrStateHelp" db:"agency_or_state_help"`
-	AgencyOrStateHelpOther *string        `json:"agencyOrStateHelpOther" db:"agency_or_state_help_other"`
-	AgencyOrStateHelpNote  *string        `json:"agencyOrStateHelpNote" db:"agency_or_state_help_note"`
-	Stakeholders           pq.StringArray `json:"stakeholders" db:"stakeholders"`
-	StakeholdersOther      *string        `json:"stakeholdersOther" db:"stakeholders_other"`
-	StakeholdersNote       *string        `json:"stakeholdersNote" db:"stakeholders_note"`
-	HelpdeskUse            *bool          `json:"helpdeskUse" db:"helpdesk_use"`
-	HelpdeskUseNote        *string        `json:"helpdeskUseNote" db:"helpdesk_use_note"`
-	ContractorSupport      pq.StringArray `json:"contractorSupport" db:"contractor_support"`
-	ContractorSupportOther *string        `json:"contractorSupportOther" db:"contractor_support_other"`
-	ContractorSupportHow   *string        `json:"contractorSupportHow" db:"contractor_support_how"`
-	ContractorSupportNote  *string        `json:"contractorSupportNote" db:"contractor_support_note"`
-	IddocSupport           *bool          `json:"iddocSupport" db:"iddoc_support" statusWeight:"1"`
-	IddocSupportNote       *string        `json:"iddocSupportNote" db:"iddoc_support_note"`
+	AgencyOrStateHelp      AgencyOrStateHelpTypeG `json:"agencyOrStateHelp" db:"agency_or_state_help"`
+	AgencyOrStateHelpOther *string                `json:"agencyOrStateHelpOther" db:"agency_or_state_help_other"`
+	AgencyOrStateHelpNote  *string                `json:"agencyOrStateHelpNote" db:"agency_or_state_help_note"`
+	Stakeholders           StakeholdersTypeG      `json:"stakeholders" db:"stakeholders"`
+	StakeholdersOther      *string                `json:"stakeholdersOther" db:"stakeholders_other"`
+	StakeholdersNote       *string                `json:"stakeholdersNote" db:"stakeholders_note"`
+	HelpdeskUse            *bool                  `json:"helpdeskUse" db:"helpdesk_use"`
+	HelpdeskUseNote        *string                `json:"helpdeskUseNote" db:"helpdesk_use_note"`
+	ContractorSupport      ContractorSupportTypeG `json:"contractorSupport" db:"contractor_support"`
+	ContractorSupportOther *string                `json:"contractorSupportOther" db:"contractor_support_other"`
+	ContractorSupportHow   *string                `json:"contractorSupportHow" db:"contractor_support_how"`
+	ContractorSupportNote  *string                `json:"contractorSupportNote" db:"contractor_support_note"`
+	IddocSupport           *bool                  `json:"iddocSupport" db:"iddoc_support" statusWeight:"1"`
+	IddocSupportNote       *string                `json:"iddocSupportNote" db:"iddoc_support_note"`
 
 	//Page 2 (optional based on IddocSupport = true)
 	TechnicalContactsIdentified       *bool      `json:"technicalContactsIdentified" db:"technical_contacts_identified"`
@@ -39,14 +39,14 @@ type PlanOpsEvalAndLearning struct {
 	IcdNote                           *string    `json:"icdNote" db:"icd_note"`
 
 	//Page 3 (optional based on IddocSupport = true)
-	UatNeeds                  *string        `json:"uatNeeds" db:"uat_needs"`
-	StcNeeds                  *string        `json:"stcNeeds" db:"stc_needs"`
-	TestingTimelines          *string        `json:"testingTimelines" db:"testing_timelines"`
-	TestingNote               *string        `json:"testingNote" db:"testing_note"`
-	DataMonitoringFileTypes   pq.StringArray `json:"dataMonitoringFileTypes" db:"data_monitoring_file_types"`
-	DataMonitoringFileOther   *string        `json:"dataMonitoringFileOther" db:"data_monitoring_file_other"`
-	DataResponseType          *string        `json:"dataResponseType" db:"data_response_type"`
-	DataResponseFileFrequency *string        `json:"dataResponseFileFrequency" db:"data_response_file_frequency"`
+	UatNeeds                  *string             `json:"uatNeeds" db:"uat_needs"`
+	StcNeeds                  *string             `json:"stcNeeds" db:"stc_needs"`
+	TestingTimelines          *string             `json:"testingTimelines" db:"testing_timelines"`
+	TestingNote               *string             `json:"testingNote" db:"testing_note"`
+	DataMonitoringFileTypes   MonitoringFileTypeG `json:"dataMonitoringFileTypes" db:"data_monitoring_file_types"`
+	DataMonitoringFileOther   *string             `json:"dataMonitoringFileOther" db:"data_monitoring_file_other"`
+	DataResponseType          *string             `json:"dataResponseType" db:"data_response_type"`
+	DataResponseFileFrequency *string             `json:"dataResponseFileFrequency" db:"data_response_file_frequency"`
 
 	//Page 4 (optional based on IddocSupport = true)
 	DataFullTimeOrIncremental      *DataFullTimeOrIncrementalType `json:"dataFullTimeOrIncremental" db:"data_full_time_or_incremental"`
@@ -74,20 +74,20 @@ type PlanOpsEvalAndLearning struct {
 	AppealNote                   *string                      `json:"appealNote" db:"appeal_note"`
 
 	//Page 6
-	EvaluationApproaches          pq.StringArray `json:"evaluationApproaches" db:"evaluation_approaches"`
-	EvaluationApproachOther       *string        `json:"evaluationApproachOther" db:"evaluation_approach_other"`
-	EvalutaionApproachNote        *string        `json:"evalutaionApproachNote" db:"evalutaion_approach_note"`
-	CcmInvolvment                 pq.StringArray `json:"ccmInvolvment" db:"ccm_involvment"`
-	CcmInvolvmentOther            *string        `json:"ccmInvolvmentOther" db:"ccm_involvment_other"`
-	CcmInvolvmentNote             *string        `json:"ccmInvolvmentNote" db:"ccm_involvment_note"`
-	DataNeededForMonitoring       pq.StringArray `json:"dataNeededForMonitoring" db:"data_needed_for_monitoring"`
-	DataNeededForMonitoringOther  *string        `json:"dataNeededForMonitoringOther" db:"data_needed_for_monitoring_other"`
-	DataNeededForMonitoringNote   *string        `json:"dataNeededForMonitoringNote" db:"data_needed_for_monitoring_note"`
-	DataToSendParticicipants      pq.StringArray `json:"dataToSendParticicipants" db:"data_to_send_particicipants"`
-	DataToSendParticicipantsOther *string        `json:"dataToSendParticicipantsOther" db:"data_to_send_particicipants_other"`
-	DataToSendParticicipantsNote  *string        `json:"dataToSendParticicipantsNote" db:"data_to_send_particicipants_note"`
-	ShareCclfData                 *bool          `json:"shareCclfData" db:"share_cclf_data" statusWeight:"1"`
-	ShareCclfDataNote             *string        `json:"shareCclfDataNote" db:"share_cclf_data_note"`
+	EvaluationApproaches          EvaluationApproachTypeG     `json:"evaluationApproaches" db:"evaluation_approaches"`
+	EvaluationApproachOther       *string                     `json:"evaluationApproachOther" db:"evaluation_approach_other"`
+	EvalutaionApproachNote        *string                     `json:"evalutaionApproachNote" db:"evalutaion_approach_note"`
+	CcmInvolvment                 CcmInvolvmentTypeG          `json:"ccmInvolvment" db:"ccm_involvment"`
+	CcmInvolvmentOther            *string                     `json:"ccmInvolvmentOther" db:"ccm_involvment_other"`
+	CcmInvolvmentNote             *string                     `json:"ccmInvolvmentNote" db:"ccm_involvment_note"`
+	DataNeededForMonitoring       DataForMonitoringTypeG      `json:"dataNeededForMonitoring" db:"data_needed_for_monitoring"`
+	DataNeededForMonitoringOther  *string                     `json:"dataNeededForMonitoringOther" db:"data_needed_for_monitoring_other"`
+	DataNeededForMonitoringNote   *string                     `json:"dataNeededForMonitoringNote" db:"data_needed_for_monitoring_note"`
+	DataToSendParticicipants      DataToSendParticipantsTypeG `json:"dataToSendParticicipants" db:"data_to_send_particicipants"`
+	DataToSendParticicipantsOther *string                     `json:"dataToSendParticicipantsOther" db:"data_to_send_particicipants_other"`
+	DataToSendParticicipantsNote  *string                     `json:"dataToSendParticicipantsNote" db:"data_to_send_particicipants_note"`
+	ShareCclfData                 *bool                       `json:"shareCclfData" db:"share_cclf_data" statusWeight:"1"`
+	ShareCclfDataNote             *string                     `json:"shareCclfDataNote" db:"share_cclf_data_note"`
 
 	//Page 7
 	SendFilesBetweenCcw                          *bool   `json:"sendFilesBetweenCcw" db:"send_files_between_ccw" statusWeight:"1"`
@@ -103,25 +103,25 @@ type PlanOpsEvalAndLearning struct {
 	QualityPerformanceImpactsPaymentNote         *string `json:"qualityPerformanceImpactsPaymentNote" db:"quality_performance_impacts_payment_note"`
 
 	//Page 8
-	DataSharingStarts            *DataStartsType `json:"dataSharingStarts" db:"data_sharing_starts" statusWeight:"1"`
-	DataSharingStartsOther       *string         `json:"dataSharingStartsOther" db:"data_sharing_starts_other"`
-	DataSharingFrequency         pq.StringArray  `json:"dataSharingFrequency" db:"data_sharing_frequency"`
-	DataSharingFrequencyOther    *string         `json:"dataSharingFrequencyOther" db:"data_sharing_frequency_other"`
-	DataSharingStartsNote        *string         `json:"dataSharingStartsNote" db:"data_sharing_starts_note"`
-	DataCollectionStarts         *DataStartsType `json:"dataCollectionStarts" db:"data_collection_starts" statusWeight:"1"`
-	DataCollectionStartsOther    *string         `json:"dataCollectionStartsOther" db:"data_collection_starts_other"`
-	DataCollectionFrequency      pq.StringArray  `json:"dataCollectionFrequency" db:"data_collection_frequency"`
-	DataCollectionFrequencyOther *string         `json:"dataCollectionFrequencyOther" db:"data_collection_frequency_other"`
-	DataCollectionFrequencyNote  *string         `json:"dataCollectionFrequencyNote" db:"data_collection_frequency_note"`
-	QualityReportingStarts       *DataStartsType `json:"qualityReportingStarts" db:"quality_reporting_starts" statusWeight:"1"`
-	QualityReportingStartsOther  *string         `json:"qualityReportingStartsOther" db:"quality_reporting_starts_other"`
-	QualityReportingStartsNote   *string         `json:"qualityReportingStartsNote" db:"quality_reporting_starts_note"`
+	DataSharingStarts            *DataStartsType    `json:"dataSharingStarts" db:"data_sharing_starts" statusWeight:"1"`
+	DataSharingStartsOther       *string            `json:"dataSharingStartsOther" db:"data_sharing_starts_other"`
+	DataSharingFrequency         DataFrequencyTypeG `json:"dataSharingFrequency" db:"data_sharing_frequency"`
+	DataSharingFrequencyOther    *string            `json:"dataSharingFrequencyOther" db:"data_sharing_frequency_other"`
+	DataSharingStartsNote        *string            `json:"dataSharingStartsNote" db:"data_sharing_starts_note"`
+	DataCollectionStarts         *DataStartsType    `json:"dataCollectionStarts" db:"data_collection_starts" statusWeight:"1"`
+	DataCollectionStartsOther    *string            `json:"dataCollectionStartsOther" db:"data_collection_starts_other"`
+	DataCollectionFrequency      DataFrequencyTypeG `json:"dataCollectionFrequency" db:"data_collection_frequency"`
+	DataCollectionFrequencyOther *string            `json:"dataCollectionFrequencyOther" db:"data_collection_frequency_other"`
+	DataCollectionFrequencyNote  *string            `json:"dataCollectionFrequencyNote" db:"data_collection_frequency_note"`
+	QualityReportingStarts       *DataStartsType    `json:"qualityReportingStarts" db:"quality_reporting_starts" statusWeight:"1"`
+	QualityReportingStartsOther  *string            `json:"qualityReportingStartsOther" db:"quality_reporting_starts_other"`
+	QualityReportingStartsNote   *string            `json:"qualityReportingStartsNote" db:"quality_reporting_starts_note"`
 
 	//Page 9
-	ModelLearningSystems      pq.StringArray `json:"modelLearningSystems" db:"model_learning_systems"`
-	ModelLearningSystemsOther *string        `json:"modelLearningSystemsOther" db:"model_learning_systems_other"`
-	ModelLearningSystemsNote  *string        `json:"modelLearningSystemsNote" db:"model_learning_systems_note"`
-	AnticipatedChallenges     *string        `json:"anticipatedChallenges" db:"anticipated_challenges" statusWeight:"1"`
+	ModelLearningSystems      ModelLearningSystemTypeG `json:"modelLearningSystems" db:"model_learning_systems"`
+	ModelLearningSystemsOther *string                  `json:"modelLearningSystemsOther" db:"model_learning_systems_other"`
+	ModelLearningSystemsNote  *string                  `json:"modelLearningSystemsNote" db:"model_learning_systems_note"`
+	AnticipatedChallenges     *string                  `json:"anticipatedChallenges" db:"anticipated_challenges" statusWeight:"1"`
 
 	// Meta
 	CreatedBy   string     `json:"createdBy" db:"created_by"`
@@ -201,3 +201,267 @@ func (oel PlanOpsEvalAndLearning) GetModifiedBy() *string {
 func (oel PlanOpsEvalAndLearning) GetCreatedBy() string {
 	return oel.CreatedBy
 }
+
+//AgencyOrStateHelpTypeG is an array of AgencyOrStateHelpType
+type AgencyOrStateHelpTypeG []AgencyOrStateHelpType
+
+//Scan is used by sql.scan to read the values from the DB
+func (a *AgencyOrStateHelpTypeG) Scan(src interface{}) error {
+	return GenericScan(src, a)
+}
+
+//Value implements the driver.Valuer interface.
+func (a AgencyOrStateHelpTypeG) Value() (driver.Value, error) {
+	return GenericValue(a)
+}
+
+// AgencyOrStateHelpType represents the types of AgencyOrStateHelp types.
+type AgencyOrStateHelpType string
+
+//These are the options for AgencyOrStateHelpType
+const (
+	AOSTYesState       AgencyOrStateHelpType = "YES_STATE"
+	AOSTYesAgencyIdeas AgencyOrStateHelpType = "YES_AGENCY_IDEAS"
+	AOSTYesAgencyIaa   AgencyOrStateHelpType = "YES_AGENCY_IAA"
+	AOSTNo             AgencyOrStateHelpType = "NO"
+	AOSTOther          AgencyOrStateHelpType = "OTHER"
+)
+
+//StakeholdersTypeG is an array of StakeholdersType
+type StakeholdersTypeG []StakeholdersType
+
+//Scan is used by sql.scan to read the values from the DB
+func (a *StakeholdersTypeG) Scan(src interface{}) error {
+	return GenericScan(src, a)
+}
+
+//Value implements the driver.Valuer interface.
+func (a StakeholdersTypeG) Value() (driver.Value, error) {
+	return GenericValue(a)
+}
+
+// StakeholdersType represents the types of Stakeholders types.
+type StakeholdersType string
+
+//These are the options for StakeholdersType
+const (
+	STKTBeneficiaries             StakeholdersType = "BENEFICIARIES"
+	STKTCommunityOrganizations    StakeholdersType = "COMMUNITY_ORGANIZATIONS"
+	STKTParticipants              StakeholdersType = "PARTICIPANTS"
+	STKTProfessionalOrganizations StakeholdersType = "PROFESSIONAL_ORGANIZATIONS"
+	STKTProviders                 StakeholdersType = "PROVIDERS"
+	STKTStates                    StakeholdersType = "STATES"
+	STKTOther                     StakeholdersType = "OTHER"
+)
+
+//ContractorSupportTypeG is an array of ContractorSupportType
+type ContractorSupportTypeG []ContractorSupportType
+
+//Scan is used by sql.scan to read the values from the DB
+func (a *ContractorSupportTypeG) Scan(src interface{}) error {
+	return GenericScan(src, a)
+}
+
+//Value implements the driver.Valuer interface.
+func (a ContractorSupportTypeG) Value() (driver.Value, error) {
+	return GenericValue(a)
+}
+
+// ContractorSupportType represents the types of ContractorSupport types.
+type ContractorSupportType string
+
+//These are the options for ContractorSupportType
+const (
+	CSTOne      ContractorSupportType = "ONE"
+	CSTMultiple ContractorSupportType = "MULTIPLE"
+	CSTNone     ContractorSupportType = "NONE"
+	CSTOther    ContractorSupportType = "OTHER"
+)
+
+//MonitoringFileTypeG is an array of MonitoringFileType
+type MonitoringFileTypeG []MonitoringFileType
+
+//Scan is used by sql.scan to read the values from the DB
+func (a *MonitoringFileTypeG) Scan(src interface{}) error {
+	return GenericScan(src, a)
+}
+
+//Value implements the driver.Valuer interface.
+func (a MonitoringFileTypeG) Value() (driver.Value, error) {
+	return GenericValue(a)
+}
+
+// MonitoringFileType represents the types of MonitoringFile types.
+type MonitoringFileType string
+
+//These are the options for MonitoringFileType
+const (
+	MFTBeneficiary MonitoringFileType = "BENEFICIARY"
+	MFTProvider    MonitoringFileType = "PROVIDER"
+	MFTPartA       MonitoringFileType = "PART_A"
+	MFTPartB       MonitoringFileType = "PART_B"
+	MFTOther       MonitoringFileType = "OTHER"
+)
+
+//EvaluationApproachTypeG is an array of EvaluationApproachType
+type EvaluationApproachTypeG []EvaluationApproachType
+
+//Scan is used by sql.scan to read the values from the DB
+func (a *EvaluationApproachTypeG) Scan(src interface{}) error {
+	return GenericScan(src, a)
+}
+
+//Value implements the driver.Valuer interface.
+func (a EvaluationApproachTypeG) Value() (driver.Value, error) {
+	return GenericValue(a)
+}
+
+// EvaluationApproachType represents the types of EvaluationApproach types.
+type EvaluationApproachType string
+
+//These are the options for EvaluationApproachType
+const (
+	EATControlIntervention EvaluationApproachType = "CONTROL_INTERVENTION"
+	EATComparisonMatch     EvaluationApproachType = "COMPARISON_MATCH"
+	EATInterruptedTime     EvaluationApproachType = "INTERRUPTED_TIME"
+	EATNonMedicareData     EvaluationApproachType = "NON_MEDICARE_DATA"
+	EATOther               EvaluationApproachType = "OTHER"
+)
+
+//CcmInvolvmentTypeG is an array of CcmInvolvmentType
+type CcmInvolvmentTypeG []CcmInvolvmentType
+
+//Scan is used by sql.scan to read the values from the DB
+func (a *CcmInvolvmentTypeG) Scan(src interface{}) error {
+	return GenericScan(src, a)
+}
+
+//Value implements the driver.Valuer interface.
+func (a CcmInvolvmentTypeG) Value() (driver.Value, error) {
+	return GenericValue(a)
+}
+
+// CcmInvolvmentType represents the types of CcmInvolvment types.
+type CcmInvolvmentType string
+
+//These are the options for CcmInvolvmentType
+const (
+	CITYesEvaluation     CcmInvolvmentType = "YES_EVALUATION"
+	CITYesImplementation CcmInvolvmentType = "YES__IMPLEMENTATION"
+	CITNo                CcmInvolvmentType = "NO"
+	CITOther             CcmInvolvmentType = "OTHER"
+)
+
+//DataForMonitoringTypeG is an array of DataForMonitoringType
+type DataForMonitoringTypeG []DataForMonitoringType
+
+//Scan is used by sql.scan to read the values from the DB
+func (a *DataForMonitoringTypeG) Scan(src interface{}) error {
+	return GenericScan(src, a)
+}
+
+//Value implements the driver.Valuer interface.
+func (a DataForMonitoringTypeG) Value() (driver.Value, error) {
+	return GenericValue(a)
+}
+
+// DataForMonitoringType represents the types of DataForMonitoring types.
+type DataForMonitoringType string
+
+//These are the options for DataForMonitoringType
+const (
+	DFMTSiteVisits                 DataForMonitoringType = "SITE_VISITS"
+	DFMTMedicareClaims             DataForMonitoringType = "MEDICARE_CLAIMS"
+	DFMTMedicaidClaims             DataForMonitoringType = "MEDICAID_CLAIMS"
+	DFMTEncounterData              DataForMonitoringType = "ENCOUNTER_DATA"
+	DFMTNoPayClaims                DataForMonitoringType = "NO_PAY_CLAIMS"
+	DFMTQualityClaimsBasedMeasures DataForMonitoringType = "QUALITY_CLAIMS_BASED_MEASURES"
+	DFMTQualityReportedMeasures    DataForMonitoringType = "QUALITY_REPORTED_MEASURES"
+	DFMTClinicalData               DataForMonitoringType = "CLINICAL_DATA"
+	DFMTNonClinicalData            DataForMonitoringType = "NON_CLINICAL_DATA"
+	DFMTNonMedicalData             DataForMonitoringType = "NON_MEDICAL_DATA"
+	DFMTOther                      DataForMonitoringType = "OTHER"
+	DFMTNotPlanningToCollectData   DataForMonitoringType = "NOT_PLANNING_TO_COLLECT_DATA"
+)
+
+//DataToSendParticipantsTypeG is an array of DataToSendParticipantsType
+type DataToSendParticipantsTypeG []DataToSendParticipantsType
+
+//Scan is used by sql.scan to read the values from the DB
+func (a *DataToSendParticipantsTypeG) Scan(src interface{}) error {
+	return GenericScan(src, a)
+}
+
+//Value implements the driver.Valuer interface.
+func (a DataToSendParticipantsTypeG) Value() (driver.Value, error) {
+	return GenericValue(a)
+}
+
+// DataToSendParticipantsType represents the types of DataToSendParticipants types.
+type DataToSendParticipantsType string
+
+//These are the options for DataToSendParticipantsType
+const (
+	DTSPTBaselineHistoricalData DataToSendParticipantsType = "BASELINE_HISTORICAL_DATA"
+	DTSPTClaimsLevelData        DataToSendParticipantsType = "CLAIMS_LEVEL_DATA"
+	DTSPTBeneficiaryLevelData   DataToSendParticipantsType = "BENEFICIARY_LEVEL_DATA"
+	DTSPTParticipantLevelData   DataToSendParticipantsType = "PARTICIPANT_LEVEL_DATA"
+	DTSPTProviderLevelData      DataToSendParticipantsType = "PROVIDER_LEVEL_DATA"
+	DTSPTOtherMipsData          DataToSendParticipantsType = "OTHER_MIPS_DATA"
+	DTSPTNotPlanningToSendData  DataToSendParticipantsType = "NOT_PLANNING_TO_SEND_DATA"
+)
+
+//DataFrequencyTypeG is an array of DataFrequencyType
+type DataFrequencyTypeG []DataFrequencyType
+
+//Scan is used by sql.scan to read the values from the DB
+func (a *DataFrequencyTypeG) Scan(src interface{}) error {
+	return GenericScan(src, a)
+}
+
+//Value implements the driver.Valuer interface.
+func (a DataFrequencyTypeG) Value() (driver.Value, error) {
+	return GenericValue(a)
+}
+
+// DataFrequencyType represents the types of DataFrequency types.
+type DataFrequencyType string
+
+//These are the options for DataFrequencyType
+const (
+	DFTAnnually            DataFrequencyType = "ANNUALLY"
+	DFTBiannually          DataFrequencyType = "BIANNUALLY"
+	DFTQuarterly           DataFrequencyType = "QUARTERLY"
+	DFTMonthly             DataFrequencyType = "MONTHLY"
+	DFTSemiMonthly         DataFrequencyType = "SEMI_MONTHLY"
+	DFTWeekly              DataFrequencyType = "WEEKLY"
+	DFTDaily               DataFrequencyType = "DAILY"
+	DFTOther               DataFrequencyType = "OTHER"
+	DFTNotPlanningToDoThis DataFrequencyType = "NOT_PLANNING_TO_DO_THIS"
+)
+
+//ModelLearningSystemTypeG is an array of ModelLearningSystemType
+type ModelLearningSystemTypeG []ModelLearningSystemType
+
+//Scan is used by sql.scan to read the values from the DB
+func (a *ModelLearningSystemTypeG) Scan(src interface{}) error {
+	return GenericScan(src, a)
+}
+
+//Value implements the driver.Valuer interface.
+func (a ModelLearningSystemTypeG) Value() (driver.Value, error) {
+	return GenericValue(a)
+}
+
+// ModelLearningSystemType represents the types of ModelLearningSystem types.
+type ModelLearningSystemType string
+
+//These are the options for ModelLearningSystemType
+const (
+	MLSTLearningContractor       ModelLearningSystemType = "LEARNING_CONTRACTOR"
+	MLSTItPlatformConnect        ModelLearningSystemType = "IT_PLATFORM_CONNECT"
+	MLSTParticipantCollaboration ModelLearningSystemType = "PARTICIPANT_COLLABORATION"
+	MLSTEducateBeneficiaries     ModelLearningSystemType = "EDUCATE_BENEFICIARIES"
+	MLSTOther                    ModelLearningSystemType = "OTHER"
+	MLSTNoLearningSystem         ModelLearningSystemType = "NO_LEARNING_SYSTEM"
+)
