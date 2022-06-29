@@ -641,9 +641,9 @@ type MutationResolver interface {
 	DeleteDiscussionReply(ctx context.Context, id uuid.UUID) (*models.DiscussionReply, error)
 }
 type PlanBeneficiariesResolver interface {
-	Beneficiaries(ctx context.Context, obj *models.PlanBeneficiaries) ([]model.BeneficiariesType, error)
+	Beneficiaries(ctx context.Context, obj *models.PlanBeneficiaries) ([]models.BeneficiariesType, error)
 
-	BeneficiarySelectionMethod(ctx context.Context, obj *models.PlanBeneficiaries) ([]model.SelectionMethodType, error)
+	BeneficiarySelectionMethod(ctx context.Context, obj *models.PlanBeneficiaries) ([]models.SelectionMethodType, error)
 }
 type PlanDiscussionResolver interface {
 	Replies(ctx context.Context, obj *models.PlanDiscussion) ([]*models.DiscussionReply, error)
@@ -13160,9 +13160,9 @@ func (ec *executionContext) _PlanBeneficiaries_beneficiaries(ctx context.Context
 		}
 		return graphql.Null
 	}
-	res := resTmp.([]model.BeneficiariesType)
+	res := resTmp.([]models.BeneficiariesType)
 	fc.Result = res
-	return ec.marshalNBeneficiariesType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐBeneficiariesTypeᚄ(ctx, field.Selections, res)
+	return ec.marshalNBeneficiariesType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐBeneficiariesTypeᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanBeneficiaries_beneficiaries(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -13655,9 +13655,9 @@ func (ec *executionContext) _PlanBeneficiaries_beneficiarySelectionMethod(ctx co
 		}
 		return graphql.Null
 	}
-	res := resTmp.([]model.SelectionMethodType)
+	res := resTmp.([]models.SelectionMethodType)
 	fc.Result = res
-	return ec.marshalNSelectionMethodType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐSelectionMethodTypeᚄ(ctx, field.Selections, res)
+	return ec.marshalNSelectionMethodType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐSelectionMethodTypeᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanBeneficiaries_beneficiarySelectionMethod(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -36828,26 +36828,32 @@ func (ec *executionContext) marshalNBManageBeneficiaryOverlapType2ᚕgithubᚗco
 	return ret
 }
 
-func (ec *executionContext) unmarshalNBeneficiariesType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐBeneficiariesType(ctx context.Context, v interface{}) (model.BeneficiariesType, error) {
-	var res model.BeneficiariesType
-	err := res.UnmarshalGQL(v)
+func (ec *executionContext) unmarshalNBeneficiariesType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐBeneficiariesType(ctx context.Context, v interface{}) (models.BeneficiariesType, error) {
+	tmp, err := graphql.UnmarshalString(v)
+	res := models.BeneficiariesType(tmp)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) marshalNBeneficiariesType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐBeneficiariesType(ctx context.Context, sel ast.SelectionSet, v model.BeneficiariesType) graphql.Marshaler {
-	return v
+func (ec *executionContext) marshalNBeneficiariesType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐBeneficiariesType(ctx context.Context, sel ast.SelectionSet, v models.BeneficiariesType) graphql.Marshaler {
+	res := graphql.MarshalString(string(v))
+	if res == graphql.Null {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
+	}
+	return res
 }
 
-func (ec *executionContext) unmarshalNBeneficiariesType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐBeneficiariesTypeᚄ(ctx context.Context, v interface{}) ([]model.BeneficiariesType, error) {
+func (ec *executionContext) unmarshalNBeneficiariesType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐBeneficiariesTypeᚄ(ctx context.Context, v interface{}) ([]models.BeneficiariesType, error) {
 	var vSlice []interface{}
 	if v != nil {
 		vSlice = graphql.CoerceList(v)
 	}
 	var err error
-	res := make([]model.BeneficiariesType, len(vSlice))
+	res := make([]models.BeneficiariesType, len(vSlice))
 	for i := range vSlice {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
-		res[i], err = ec.unmarshalNBeneficiariesType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐBeneficiariesType(ctx, vSlice[i])
+		res[i], err = ec.unmarshalNBeneficiariesType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐBeneficiariesType(ctx, vSlice[i])
 		if err != nil {
 			return nil, err
 		}
@@ -36855,7 +36861,7 @@ func (ec *executionContext) unmarshalNBeneficiariesType2ᚕgithubᚗcomᚋcmsgov
 	return res, nil
 }
 
-func (ec *executionContext) marshalNBeneficiariesType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐBeneficiariesTypeᚄ(ctx context.Context, sel ast.SelectionSet, v []model.BeneficiariesType) graphql.Marshaler {
+func (ec *executionContext) marshalNBeneficiariesType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐBeneficiariesTypeᚄ(ctx context.Context, sel ast.SelectionSet, v []models.BeneficiariesType) graphql.Marshaler {
 	ret := make(graphql.Array, len(v))
 	var wg sync.WaitGroup
 	isLen1 := len(v) == 1
@@ -36879,7 +36885,7 @@ func (ec *executionContext) marshalNBeneficiariesType2ᚕgithubᚗcomᚋcmsgov�
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalNBeneficiariesType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐBeneficiariesType(ctx, sel, v[i])
+			ret[i] = ec.marshalNBeneficiariesType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐBeneficiariesType(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -40776,26 +40782,32 @@ func (ec *executionContext) marshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpk
 	return v
 }
 
-func (ec *executionContext) unmarshalNSelectionMethodType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐSelectionMethodType(ctx context.Context, v interface{}) (model.SelectionMethodType, error) {
-	var res model.SelectionMethodType
-	err := res.UnmarshalGQL(v)
+func (ec *executionContext) unmarshalNSelectionMethodType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐSelectionMethodType(ctx context.Context, v interface{}) (models.SelectionMethodType, error) {
+	tmp, err := graphql.UnmarshalString(v)
+	res := models.SelectionMethodType(tmp)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) marshalNSelectionMethodType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐSelectionMethodType(ctx context.Context, sel ast.SelectionSet, v model.SelectionMethodType) graphql.Marshaler {
-	return v
+func (ec *executionContext) marshalNSelectionMethodType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐSelectionMethodType(ctx context.Context, sel ast.SelectionSet, v models.SelectionMethodType) graphql.Marshaler {
+	res := graphql.MarshalString(string(v))
+	if res == graphql.Null {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
+	}
+	return res
 }
 
-func (ec *executionContext) unmarshalNSelectionMethodType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐSelectionMethodTypeᚄ(ctx context.Context, v interface{}) ([]model.SelectionMethodType, error) {
+func (ec *executionContext) unmarshalNSelectionMethodType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐSelectionMethodTypeᚄ(ctx context.Context, v interface{}) ([]models.SelectionMethodType, error) {
 	var vSlice []interface{}
 	if v != nil {
 		vSlice = graphql.CoerceList(v)
 	}
 	var err error
-	res := make([]model.SelectionMethodType, len(vSlice))
+	res := make([]models.SelectionMethodType, len(vSlice))
 	for i := range vSlice {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
-		res[i], err = ec.unmarshalNSelectionMethodType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐSelectionMethodType(ctx, vSlice[i])
+		res[i], err = ec.unmarshalNSelectionMethodType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐSelectionMethodType(ctx, vSlice[i])
 		if err != nil {
 			return nil, err
 		}
@@ -40803,7 +40815,7 @@ func (ec *executionContext) unmarshalNSelectionMethodType2ᚕgithubᚗcomᚋcmsg
 	return res, nil
 }
 
-func (ec *executionContext) marshalNSelectionMethodType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐSelectionMethodTypeᚄ(ctx context.Context, sel ast.SelectionSet, v []model.SelectionMethodType) graphql.Marshaler {
+func (ec *executionContext) marshalNSelectionMethodType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐSelectionMethodTypeᚄ(ctx context.Context, sel ast.SelectionSet, v []models.SelectionMethodType) graphql.Marshaler {
 	ret := make(graphql.Array, len(v))
 	var wg sync.WaitGroup
 	isLen1 := len(v) == 1
@@ -40827,7 +40839,7 @@ func (ec *executionContext) marshalNSelectionMethodType2ᚕgithubᚗcomᚋcmsgov
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalNSelectionMethodType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐSelectionMethodType(ctx, sel, v[i])
+			ret[i] = ec.marshalNSelectionMethodType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐSelectionMethodType(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -41763,7 +41775,7 @@ func (ec *executionContext) marshalOBenchmarkForPerformanceType2ᚖgithubᚗcom�
 	return res
 }
 
-func (ec *executionContext) unmarshalOBeneficiariesType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐBeneficiariesTypeᚄ(ctx context.Context, v interface{}) ([]model.BeneficiariesType, error) {
+func (ec *executionContext) unmarshalOBeneficiariesType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐBeneficiariesTypeᚄ(ctx context.Context, v interface{}) ([]models.BeneficiariesType, error) {
 	if v == nil {
 		return nil, nil
 	}
@@ -41772,10 +41784,10 @@ func (ec *executionContext) unmarshalOBeneficiariesType2ᚕgithubᚗcomᚋcmsgov
 		vSlice = graphql.CoerceList(v)
 	}
 	var err error
-	res := make([]model.BeneficiariesType, len(vSlice))
+	res := make([]models.BeneficiariesType, len(vSlice))
 	for i := range vSlice {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
-		res[i], err = ec.unmarshalNBeneficiariesType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐBeneficiariesType(ctx, vSlice[i])
+		res[i], err = ec.unmarshalNBeneficiariesType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐBeneficiariesType(ctx, vSlice[i])
 		if err != nil {
 			return nil, err
 		}
@@ -41783,7 +41795,7 @@ func (ec *executionContext) unmarshalOBeneficiariesType2ᚕgithubᚗcomᚋcmsgov
 	return res, nil
 }
 
-func (ec *executionContext) marshalOBeneficiariesType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐBeneficiariesTypeᚄ(ctx context.Context, sel ast.SelectionSet, v []model.BeneficiariesType) graphql.Marshaler {
+func (ec *executionContext) marshalOBeneficiariesType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐBeneficiariesTypeᚄ(ctx context.Context, sel ast.SelectionSet, v []models.BeneficiariesType) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
@@ -41810,7 +41822,7 @@ func (ec *executionContext) marshalOBeneficiariesType2ᚕgithubᚗcomᚋcmsgov�
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalNBeneficiariesType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐBeneficiariesType(ctx, sel, v[i])
+			ret[i] = ec.marshalNBeneficiariesType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐBeneficiariesType(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -45136,7 +45148,7 @@ func (ec *executionContext) marshalORecruitmentType2ᚖgithubᚗcomᚋcmsgovᚋm
 	return res
 }
 
-func (ec *executionContext) unmarshalOSelectionMethodType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐSelectionMethodTypeᚄ(ctx context.Context, v interface{}) ([]model.SelectionMethodType, error) {
+func (ec *executionContext) unmarshalOSelectionMethodType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐSelectionMethodTypeᚄ(ctx context.Context, v interface{}) ([]models.SelectionMethodType, error) {
 	if v == nil {
 		return nil, nil
 	}
@@ -45145,10 +45157,10 @@ func (ec *executionContext) unmarshalOSelectionMethodType2ᚕgithubᚗcomᚋcmsg
 		vSlice = graphql.CoerceList(v)
 	}
 	var err error
-	res := make([]model.SelectionMethodType, len(vSlice))
+	res := make([]models.SelectionMethodType, len(vSlice))
 	for i := range vSlice {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
-		res[i], err = ec.unmarshalNSelectionMethodType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐSelectionMethodType(ctx, vSlice[i])
+		res[i], err = ec.unmarshalNSelectionMethodType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐSelectionMethodType(ctx, vSlice[i])
 		if err != nil {
 			return nil, err
 		}
@@ -45156,7 +45168,7 @@ func (ec *executionContext) unmarshalOSelectionMethodType2ᚕgithubᚗcomᚋcmsg
 	return res, nil
 }
 
-func (ec *executionContext) marshalOSelectionMethodType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐSelectionMethodTypeᚄ(ctx context.Context, sel ast.SelectionSet, v []model.SelectionMethodType) graphql.Marshaler {
+func (ec *executionContext) marshalOSelectionMethodType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐSelectionMethodTypeᚄ(ctx context.Context, sel ast.SelectionSet, v []models.SelectionMethodType) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
@@ -45183,7 +45195,7 @@ func (ec *executionContext) marshalOSelectionMethodType2ᚕgithubᚗcomᚋcmsgov
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalNSelectionMethodType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐSelectionMethodType(ctx, sel, v[i])
+			ret[i] = ec.marshalNSelectionMethodType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐSelectionMethodType(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)

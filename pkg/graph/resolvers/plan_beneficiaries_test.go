@@ -1,7 +1,6 @@
 package resolvers
 
 import (
-	"github.com/cmsgov/mint-app/pkg/graph/model"
 	"github.com/cmsgov/mint-app/pkg/models"
 )
 
@@ -16,7 +15,7 @@ func (suite *ResolverSuite) TestPlanBeneficiariesUpdate() {
 	changes := map[string]interface{}{
 		"treatDualElligibleDifferent": "YES",
 		"beneficiariesOther":          "The Gumdrop Kids",
-		"beneficiarySelectionMethod":  []string{model.SelectionMethodTypeOther.String(), model.SelectionMethodTypeHistorical.String()},
+		"beneficiarySelectionMethod":  []string{string(models.SMTOther), string(models.SMTHistorical)},
 		"beneficiarySelectionNote":    "Priority given to provider sign up",
 	}
 
@@ -29,7 +28,7 @@ func (suite *ResolverSuite) TestPlanBeneficiariesUpdate() {
 	// Assert that the updated fields are right
 	suite.EqualValues(*updatedBeneficiary.TreatDualElligibleDifferent, models.TriYes)
 	suite.EqualValues(*updatedBeneficiary.BeneficiariesOther, "The Gumdrop Kids")
-	suite.EqualValues(updatedBeneficiary.BeneficiarySelectionMethod, []string{model.SelectionMethodTypeOther.String(), model.SelectionMethodTypeHistorical.String()})
+	suite.EqualValues(updatedBeneficiary.BeneficiarySelectionMethod, []string{string(models.SMTOther), string(models.SMTHistorical)})
 	suite.EqualValues(*updatedBeneficiary.BeneficiarySelectionNote, "Priority given to provider sign up")
 
 	// Assert that no other fields got updated

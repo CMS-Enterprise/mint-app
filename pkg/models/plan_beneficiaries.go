@@ -1,10 +1,10 @@
 package models
 
 import (
+	"database/sql/driver"
 	"time"
 
 	"github.com/google/uuid"
-	"github.com/lib/pq"
 )
 
 //PlanBeneficiaries represents the beneficiaries section of the model plan task list
@@ -13,23 +13,23 @@ type PlanBeneficiaries struct {
 	ModelPlanID uuid.UUID `json:"modelPlanID" db:"model_plan_id"`
 
 	//page 1
-	Beneficiaries                         pq.StringArray  `json:"beneficiaries" db:"beneficiaries"`
-	BeneficiariesOther                    *string         `json:"beneficiariesOther" db:"beneficiaries_other"`
-	BeneficiariesNote                     *string         `json:"beneficiariesNote" db:"beneficiaries_note"`
-	TreatDualElligibleDifferent           *TriStateAnswer `json:"treatDualElligibleDifferent" db:"treat_dual_elligible_different" statusWeight:"1"`
-	TreatDualElligibleDifferentHow        *string         `json:"treatDualElligibleDifferentHow" db:"treat_dual_elligible_different_how"`
-	TreatDualElligibleDifferentNote       *string         `json:"treatDualElligibleDifferentNote" db:"treat_dual_elligible_different_note"`
-	ExcludeCertainCharacteristics         *TriStateAnswer `json:"excludeCertainCharacteristics" db:"exclude_certain_characteristics"  statusWeight:"1"`
-	ExcludeCertainCharacteristicsCriteria *string         `json:"excludeCertainCharacteristicsCriteria" db:"exclude_certain_characteristics_criteria"`
-	ExcludeCertainCharacteristicsNote     *string         `json:"excludeCertainCharacteristicsNote" db:"exclude_certain_characteristics_note"`
+	Beneficiaries                         BeneficiariesTypeG `json:"beneficiaries" db:"beneficiaries"`
+	BeneficiariesOther                    *string            `json:"beneficiariesOther" db:"beneficiaries_other"`
+	BeneficiariesNote                     *string            `json:"beneficiariesNote" db:"beneficiaries_note"`
+	TreatDualElligibleDifferent           *TriStateAnswer    `json:"treatDualElligibleDifferent" db:"treat_dual_elligible_different" statusWeight:"1"`
+	TreatDualElligibleDifferentHow        *string            `json:"treatDualElligibleDifferentHow" db:"treat_dual_elligible_different_how"`
+	TreatDualElligibleDifferentNote       *string            `json:"treatDualElligibleDifferentNote" db:"treat_dual_elligible_different_note"`
+	ExcludeCertainCharacteristics         *TriStateAnswer    `json:"excludeCertainCharacteristics" db:"exclude_certain_characteristics"  statusWeight:"1"`
+	ExcludeCertainCharacteristicsCriteria *string            `json:"excludeCertainCharacteristicsCriteria" db:"exclude_certain_characteristics_criteria"`
+	ExcludeCertainCharacteristicsNote     *string            `json:"excludeCertainCharacteristicsNote" db:"exclude_certain_characteristics_note"`
 
 	// Page 2
-	NumberPeopleImpacted       *int            `json:"numberPeopleImpacted" db:"number_people_impacted" statusWeight:"1"`
-	EstimateConfidence         *ConfidenceType `json:"estimateConfidence" db:"estimate_confidence" statusWeight:"1"`
-	ConfidenceNote             *string         `json:"confidenceNote" db:"confidence_note"`
-	BeneficiarySelectionMethod pq.StringArray  `json:"beneficiarySelectionMethod" db:"beneficiary_selection_method"`
-	BeneficiarySelectionOther  *string         `json:"beneficiarySelectionOther" db:"beneficiary_selection_other"`
-	BeneficiarySelectionNote   *string         `json:"beneficiarySelectionNote" db:"beneficiary_selection_note"`
+	NumberPeopleImpacted       *int                 `json:"numberPeopleImpacted" db:"number_people_impacted" statusWeight:"1"`
+	EstimateConfidence         *ConfidenceType      `json:"estimateConfidence" db:"estimate_confidence" statusWeight:"1"`
+	ConfidenceNote             *string              `json:"confidenceNote" db:"confidence_note"`
+	BeneficiarySelectionMethod SelectionMethodTypeG `json:"beneficiarySelectionMethod" db:"beneficiary_selection_method"`
+	BeneficiarySelectionOther  *string              `json:"beneficiarySelectionOther" db:"beneficiary_selection_other"`
+	BeneficiarySelectionNote   *string              `json:"beneficiarySelectionNote" db:"beneficiary_selection_note"`
 
 	// Page 3
 	BeneficiarySelectionFrequency      *FrequencyType `json:"beneficiarySelectionFrequency" db:"beneficiary_selection_frequency" statusWeight:"1"`
@@ -83,3 +83,58 @@ func (b PlanBeneficiaries) GetModifiedBy() *string {
 func (b PlanBeneficiaries) GetCreatedBy() string {
 	return b.CreatedBy
 }
+
+//BeneficiariesTypeG is an array of BeneficiariesType
+type BeneficiariesTypeG []BeneficiariesType
+
+//Scan is used by sql.scan to read the values from the DB
+func (a *BeneficiariesTypeG) Scan(src interface{}) error {
+	return GenericScan(src, a)
+}
+
+//Value implements the driver.Valuer interface.
+func (a BeneficiariesTypeG) Value() (driver.Value, error) {
+	return GenericValue(a)
+}
+
+// BeneficiariesType represents the types of Beneficiaries types.
+type BeneficiariesType string
+
+//These are the options for BeneficiariesType
+const (
+	BTMedicareFfs       BeneficiariesType = "MEDICARE_FFS"
+	BTMedicareAdvantage BeneficiariesType = "MEDICARE_ADVANTAGE"
+	BTMedicarePartD     BeneficiariesType = "MEDICARE_PART_D"
+	BTMedicaid          BeneficiariesType = "MEDICAID"
+
+	BTDiseaseSpecific BeneficiariesType = "DISEASE_SPECIFIC"
+	BTOther           BeneficiariesType = "OTHER"
+	BTNa              BeneficiariesType = "NA"
+)
+
+//SelectionMethodTypeG is an array of SelectionMethodType
+type SelectionMethodTypeG []SelectionMethodType
+
+//Scan is used by sql.scan to read the values from the DB
+func (a *SelectionMethodTypeG) Scan(src interface{}) error {
+	return GenericScan(src, a)
+}
+
+//Value implements the driver.Valuer interface.
+func (a SelectionMethodTypeG) Value() (driver.Value, error) {
+	return GenericValue(a)
+}
+
+// SelectionMethodType represents the types of SelectionMethod types.
+type SelectionMethodType string
+
+//These are the options for SelectionMethodType
+const (
+	SMTHistorical     SelectionMethodType = "HISTORICAL"
+	SMTProspective    SelectionMethodType = "PROSPECTIVE"
+	SMTRetrospective  SelectionMethodType = "RETROSPECTIVE"
+	SMTVoluntary      SelectionMethodType = "VOLUNTARY"
+	SMTProviderSignUp SelectionMethodType = "PROVIDER_SIGN_UP"
+	SMTOther          SelectionMethodType = "OTHER"
+	SMTNa             SelectionMethodType = "NA"
+)

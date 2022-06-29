@@ -260,14 +260,12 @@ func (r *mutationResolver) DeleteDiscussionReply(ctx context.Context, id uuid.UU
 	return resolvers.DeleteDiscussionReply(logger, id, principal, r.store)
 }
 
-func (r *planBeneficiariesResolver) Beneficiaries(ctx context.Context, obj *models.PlanBeneficiaries) ([]model.BeneficiariesType, error) {
-	bTypes := models.ConvertEnums[model.BeneficiariesType](obj.Beneficiaries)
-	return bTypes, nil
+func (r *planBeneficiariesResolver) Beneficiaries(ctx context.Context, obj *models.PlanBeneficiaries) ([]models.BeneficiariesType, error) {
+	return obj.Beneficiaries, nil
 }
 
-func (r *planBeneficiariesResolver) BeneficiarySelectionMethod(ctx context.Context, obj *models.PlanBeneficiaries) ([]model.SelectionMethodType, error) {
-	sTypes := models.ConvertEnums[model.SelectionMethodType](obj.BeneficiarySelectionMethod)
-	return sTypes, nil
+func (r *planBeneficiariesResolver) BeneficiarySelectionMethod(ctx context.Context, obj *models.PlanBeneficiaries) ([]models.SelectionMethodType, error) {
+	return obj.BeneficiarySelectionMethod, nil
 }
 
 func (r *planDiscussionResolver) Replies(ctx context.Context, obj *models.PlanDiscussion) ([]*models.DiscussionReply, error) {
