@@ -234,7 +234,9 @@ const DataSharing = () => {
                   >
                     {t('dataSharing')}
                   </Label>
-                  <p className="text-base margin-y-1">{t('dataSharingInfo')}</p>
+                  <p className="text-base margin-y-1 line-height-body-4">
+                    {t('dataSharingInfo')}
+                  </p>
                   <FieldErrorMsg>{flatErrors.dataSharingStarts}</FieldErrorMsg>
                   <Field
                     as={Dropdown}
@@ -407,7 +409,7 @@ const DataSharing = () => {
                     htmlFor="ops-eval-and-learning-data-collection-frequency"
                     className="maxw-none text-normal"
                   >
-                    {t('dataSharingHowOften')}
+                    {t('dataCollectionHowOften')}
                   </Label>
 
                   <FieldErrorMsg>

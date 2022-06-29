@@ -241,6 +241,25 @@ const IDDOC = () => {
                         setFieldValue('technicalContactsIdentified', true);
                       }}
                     />
+                    {values.technicalContactsIdentified === true && (
+                      <div className="margin-left-4 margin-top-1">
+                        <Label
+                          htmlFor="ops-eval-and-learning-technical-contacts-identified-detail"
+                          className="text-normal"
+                        >
+                          {h('pleaseSpecify')}
+                        </Label>
+                        <FieldErrorMsg>
+                          {flatErrors.technicalContactsIdentifiedDetail}
+                        </FieldErrorMsg>
+                        <Field
+                          as={TextInput}
+                          id="ops-eval-and-learning-technical-contacts-identified-detail"
+                          maxLength={50}
+                          name="technicalContactsIdentifiedDetail"
+                        />
+                      </div>
+                    )}
                     <Field
                       as={Radio}
                       id="ops-eval-and-learning-technical-contacts-identified-use-no"
@@ -253,26 +272,6 @@ const IDDOC = () => {
                       }}
                     />
                   </Fieldset>
-
-                  {values.technicalContactsIdentified === true && (
-                    <div className="margin-left-4 margin-top-1">
-                      <Label
-                        htmlFor="ops-eval-and-learning-technical-contacts-identified-detail"
-                        className="text-normal"
-                      >
-                        {h('pleaseSpecify')}
-                      </Label>
-                      <FieldErrorMsg>
-                        {flatErrors.technicalContactsIdentifiedDetail}
-                      </FieldErrorMsg>
-                      <Field
-                        as={TextInput}
-                        id="ops-eval-and-learning-technical-contacts-identified-detail"
-                        maxLength={50}
-                        name="technicalContactsIdentifiedDetail"
-                      />
-                    </div>
-                  )}
 
                   <AddNote
                     id="ops-eval-and-learning-technical-contacts-identified-use-note"
@@ -288,7 +287,7 @@ const IDDOC = () => {
                   <Label htmlFor="ops-eval-and-learning-capture-participant-info">
                     {t('participantInformation')}
                   </Label>
-                  <p className="text-base margin-y-1 margin-top-2">
+                  <p className="text-base margin-bottom-1 margin-top-1">
                     {t('participantInformationInfo')}
                   </p>
                   <FieldErrorMsg>
@@ -333,7 +332,7 @@ const IDDOC = () => {
 
                 <FieldGroup
                   scrollElement="icdOwner"
-                  className="margin-top-6"
+                  className="margin-top-4"
                   error={!!flatErrors.icdOwner}
                 >
                   <Label htmlFor="ops-eval-and-learning-capture-icd-owner">
@@ -355,7 +354,10 @@ const IDDOC = () => {
                     error={!!flatErrors.draftIcdDueDate}
                     className="margin-top-6 width-half"
                   >
-                    <label htmlFor="ops-eval-and-learning-icd-due-date">
+                    <label
+                      htmlFor="ops-eval-and-learning-icd-due-date"
+                      className="text-bold"
+                    >
                       {t('draftIDC')}
                     </label>
                     <div className="usa-hint margin-y-1">

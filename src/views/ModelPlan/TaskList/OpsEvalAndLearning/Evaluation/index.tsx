@@ -490,7 +490,10 @@ const Evaluation = () => {
                   error={!!flatErrors.shareCclfData}
                   className="margin-top-6"
                 >
-                  <Label htmlFor="ops-eval-and-learning-share-cclf-data">
+                  <Label
+                    htmlFor="ops-eval-and-learning-share-cclf-data"
+                    className="maxw-none"
+                  >
                     {t('claimLineFeed')}
                   </Label>
 

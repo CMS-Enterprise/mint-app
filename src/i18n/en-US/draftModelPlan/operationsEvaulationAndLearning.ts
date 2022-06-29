@@ -89,6 +89,7 @@ const operationsEvaluationAndLearning = {
   stcNeeds: 'STC – test data needs',
   testingTimelines: 'Define the testing timelines',
   dataMonitoring: 'Data monitoring questions',
+  dataMonitoringContinued: 'Data monitoring questions continued',
   fileTypes: 'What types of files? Select all that apply.',
   fileTypesOptions: {
     beneficiary: 'Beneficiary',
@@ -140,7 +141,7 @@ const operationsEvaluationAndLearning = {
   },
   participantAppeal: 'Will participants be able to appeal the following?',
   evaluationApproach:
-    'What type of evaluation approach are tou considering? Select all that apply.',
+    'What type of evaluation approach are you considering? Select all that apply.',
   approachOptions: {
     establish: 'Establish control and intervention groups',
     identify: 'Identify a comparison/match group',
@@ -218,6 +219,7 @@ const operationsEvaluationAndLearning = {
   },
   dataCollectionTiming: 'Data collection timing and frequency',
   dataCollection: 'Data collection starts',
+  dataCollectionHowOften: 'How often do you anticipate collecting data?',
   dataReporting: 'Quality reporting starts',
   reportingFrequency:
     'What is the frequency of reporting either to you or from participants under the model?',
@@ -248,9 +250,9 @@ const operationsEvaluationAndLearning = {
     no: 'No, we will not have a learning system'
   },
   obstacles:
-    'What obstacles do you anticipate during Model design and implementation?',
+    'What challenges do you anticipate during Model design and implementation?',
   obstaclesInfo:
-    'Please list and known ’unknowns,’ that is, are there policy decisions that you are aware of that aew still pending or are subject to change? If so, please list to the best of your ability.',
+    'Please list and known ’unknowns,’ that is, are there policy decisions that you are aware of that are still pending or are subject to change? If so, please list to the best of your ability.',
   identifyAlternative: 'Identify and alternative iterations of the model.',
   episodeInitiation: 'Episode initiation and termination criteria',
   episodeInitiationInfo:

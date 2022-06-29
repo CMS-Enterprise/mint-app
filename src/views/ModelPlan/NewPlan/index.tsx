@@ -107,6 +107,7 @@ const NewPlanContent = () => {
                       handleSubmit(e);
                       window.scrollTo(0, 0);
                     }}
+                    className="tablet:grid-col-6 margin-top-6"
                   >
                     <FieldGroup
                       scrollElement="modelName"

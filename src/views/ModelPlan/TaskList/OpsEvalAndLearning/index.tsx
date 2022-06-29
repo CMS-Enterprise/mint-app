@@ -370,7 +370,7 @@ export const OpsEvalAndLearningContent = () => {
                     'OTHER' as StakeholdersType
                   ) && (
                     <>
-                      <p className="text-base margin-y-1 margin-top-3">
+                      <p className="margin-y-1 margin-top-3">
                         {t('pleaseDescribe')}
                       </p>
                       <FieldErrorMsg>
@@ -516,7 +516,7 @@ export const OpsEvalAndLearningContent = () => {
                         </FieldErrorMsg>
                         <Field
                           as={TextAreaField}
-                          className="height-15"
+                          className="height-card"
                           error={flatErrors.contractorSupportHow}
                           id="ops-eval-and-learning-contractor-support-how"
                           name="contractorSupportHow"

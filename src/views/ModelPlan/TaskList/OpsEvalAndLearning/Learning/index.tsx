@@ -189,7 +189,7 @@ const Learning = () => {
                   render={arrayHelpers => (
                     <>
                       <legend className="usa-label">
-                        {t('evaluationApproach')}
+                        {t('learningSystem')}
                       </legend>
 
                       <FieldErrorMsg>
@@ -262,7 +262,7 @@ const Learning = () => {
                   <Label htmlFor="ops-eval-and-learning-learning-anticipated-challenges">
                     {t('obstacles')}
                   </Label>
-                  <p className="text-base margin-y-1 margin-top-3">
+                  <p className="text-base margin-y-1 margin-top-2 line-height-body-4">
                     {t('obstaclesInfo')}
                   </p>
                   <FieldErrorMsg>
@@ -270,7 +270,7 @@ const Learning = () => {
                   </FieldErrorMsg>
                   <Field
                     as={TextAreaField}
-                    className="height-15"
+                    className="height-card"
                     error={flatErrors.anticipatedChallenges}
                     id="ops-eval-and-learning-learning-anticipated-challenges"
                     name="anticipatedChallenges"

@@ -200,12 +200,14 @@ const IDDOCMonitoring = () => {
                   handleSubmit(e);
                 }}
               >
+                <h3>{t('dataMonitoringContinued')}</h3>
+
                 <FieldGroup
                   scrollElement="dataFullTimeOrIncremental"
                   error={!!flatErrors.dataFullTimeOrIncremental}
                 >
                   <Label htmlFor="ops-eval-and-learning-fulltime-or-incremental">
-                    {t('establishBenchmark')}
+                    {t('timeFrequency')}
                   </Label>
                   <FieldErrorMsg>
                     {flatErrors.dataFullTimeOrIncremental}

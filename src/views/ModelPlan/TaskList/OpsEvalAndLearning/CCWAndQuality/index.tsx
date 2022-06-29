@@ -357,7 +357,7 @@ const CCWAndQuality = () => {
                     htmlFor="ops-eval-and-learning-develop-measures"
                     className="maxw-none"
                   >
-                    {t('ccwSendFiles')}
+                    {t('validatedQuality')}
                   </Label>
                   <FieldErrorMsg>
                     {flatErrors.developNewQualityMeasures}
