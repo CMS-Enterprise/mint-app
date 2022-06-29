@@ -404,6 +404,7 @@ const CCWAndQuality = () => {
                         as={Radio}
                         key={key}
                         id={`ops-eval-and-learning-performance-impact-${key}`}
+                        data-testid={`ops-eval-and-learning-performance-impact-${key}`}
                         name="qualityPerformanceImpactsPayment"
                         label={key ? h('yes') : h('no')}
                         value={key ? 'YES' : 'NO'}

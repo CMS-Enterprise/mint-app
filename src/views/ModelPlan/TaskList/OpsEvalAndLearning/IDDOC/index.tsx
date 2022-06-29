@@ -26,7 +26,7 @@ import DatePickerWarning from 'components/shared/DatePickerWarning';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
-import GetIDDOC from 'queries/GetModelPlanOpsEvalAndLearning';
+import GetIDDOC from 'queries/OpsEvalAndLearning/GetIDDOC';
 import {
   GetIDDOC as GetIDDOCType,
   GetIDDOC_modelPlan_opsEvalAndLearning as IDDOCFormType
@@ -343,6 +343,7 @@ const IDDOC = () => {
                     as={TextInput}
                     error={!!flatErrors.icdOwner}
                     id="ops-eval-and-learning-capture-icd-owner"
+                    data-testid="ops-eval-and-learning-capture-icd-owner"
                     maxLength={50}
                     name="icdOwner"
                   />

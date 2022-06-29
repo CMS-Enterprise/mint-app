@@ -249,6 +249,7 @@ const Evaluation = () => {
                               <Field
                                 as={CheckboxField}
                                 id={`ops-eval-and-learning-evaluation-approach-${type}`}
+                                data-testid={`ops-eval-and-learning-evaluation-approach-${type}`}
                                 name="evaluationApproaches"
                                 label={translateEvaluationApproachType(type)}
                                 value={type}
@@ -268,7 +269,7 @@ const Evaluation = () => {
                                   }
                                 }}
                               />
-                              {type === ('OTHER' as EvaluationApproachType) &&
+                              {type === EvaluationApproachType.OTHER &&
                                 values.evaluationApproaches.includes(type) && (
                                   <div className="margin-left-4 margin-top-neg-2">
                                     <Label
@@ -335,7 +336,7 @@ const Evaluation = () => {
                                   }
                                 }}
                               />
-                              {type === ('OTHER' as CcmInvolvmentType) &&
+                              {type === CcmInvolvmentType.OTHER &&
                                 values.ccmInvolvment.includes(type) && (
                                   <div className="margin-left-4 margin-top-neg-2">
                                     <Label
@@ -399,7 +400,7 @@ const Evaluation = () => {
                     initialValues={initialValues.dataNeededForMonitoring}
                   />
                   {(values?.dataNeededForMonitoring || []).includes(
-                    'OTHER' as DataForMonitoringType
+                    DataForMonitoringType.OTHER
                   ) && (
                     <div className="margin-top-2">
                       <Label
@@ -457,7 +458,7 @@ const Evaluation = () => {
                     initialValues={initialValues.dataToSendParticicipants}
                   />
                   {(values?.dataToSendParticicipants || []).includes(
-                    'OTHER' as DataToSendParticipantsType
+                    DataToSendParticipantsType.OTHER_MIPS_DATA
                   ) && (
                     <div className="margin-top-2">
                       <Label
@@ -504,6 +505,7 @@ const Evaluation = () => {
                         as={Radio}
                         key={key}
                         id={`ops-eval-and-learning-share-cclf-data-${key}`}
+                        data-testid={`ops-eval-and-learning-share-cclf-data-${key}`}
                         name="shareCclfData"
                         label={key ? h('yes') : h('no')}
                         value={key ? 'YES' : 'NO'}

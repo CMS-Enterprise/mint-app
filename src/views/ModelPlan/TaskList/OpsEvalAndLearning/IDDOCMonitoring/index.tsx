@@ -362,6 +362,7 @@ const IDDOCMonitoring = () => {
                     as={TextInput}
                     error={!!flatErrors.fileNamingConventions}
                     id="ops-eval-and-learning-file-naming-convention"
+                    data-testid="ops-eval-and-learning-file-naming-convention"
                     maxLength={50}
                     name="fileNamingConventions"
                   />

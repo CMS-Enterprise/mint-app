@@ -223,7 +223,7 @@ const Learning = () => {
                                   }
                                 }}
                               />
-                              {type === ('OTHER' as ModelLearningSystemType) &&
+                              {type === ModelLearningSystemType.OTHER &&
                                 values.modelLearningSystems.includes(type) && (
                                   <div className="margin-left-4 margin-top-neg-3">
                                     <Label
@@ -273,6 +273,7 @@ const Learning = () => {
                     className="height-card"
                     error={flatErrors.anticipatedChallenges}
                     id="ops-eval-and-learning-learning-anticipated-challenges"
+                    data-testid="ops-eval-and-learning-learning-anticipated-challenges"
                     name="anticipatedChallenges"
                   />
                 </FieldGroup>

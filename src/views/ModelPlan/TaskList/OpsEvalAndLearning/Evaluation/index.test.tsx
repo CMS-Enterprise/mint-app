@@ -1,0 +1,104 @@
+import React from 'react';
+import { MemoryRouter, Route } from 'react-router-dom';
+import { MockedProvider } from '@apollo/client/testing';
+import { render, screen, waitFor } from '@testing-library/react';
+
+import GetEvaluation from 'queries/OpsEvalAndLearning/GetEvaluation';
+import { GetEvaluation_modelPlan_opsEvalAndLearning as GetEvaluationType } from 'queries/OpsEvalAndLearning/types/GetEvaluation';
+import {
+  CcmInvolvmentType,
+  EvaluationApproachType
+} from 'types/graphql-global-types';
+
+import Evaluation from '.';
+
+const evaluationMockData: GetEvaluationType = {
+  __typename: 'PlanOpsEvalAndLearning',
+  id: '123',
+  ccmInvolvment: [CcmInvolvmentType.YES_EVALUATION],
+  iddocSupport: true,
+  evaluationApproaches: [EvaluationApproachType.COMPARISON_MATCH],
+  evaluationApproachOther: '',
+  evalutaionApproachNote: '',
+  ccmInvolvmentOther: '',
+  ccmInvolvmentNote: '',
+  dataNeededForMonitoring: [],
+  dataNeededForMonitoringOther: '',
+  dataNeededForMonitoringNote: '',
+  dataToSendParticicipants: [],
+  dataToSendParticicipantsOther: '',
+  dataToSendParticicipantsNote: '',
+  shareCclfData: true,
+  shareCclfDataNote: ''
+};
+
+const evaluationMock = [
+  {
+    request: {
+      query: GetEvaluation,
+      variables: { id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905' }
+    },
+    result: {
+      data: {
+        modelPlan: {
+          id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905',
+          modelName: 'My excellent plan that I just initiated',
+          opsEvalAndLearning: evaluationMockData
+        }
+      }
+    }
+  }
+];
+
+describe('Model Plan Ops Eval and Learning', () => {
+  it('renders without errors', async () => {
+    render(
+      <MemoryRouter
+        initialEntries={[
+          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/ops-eval-and-learning/evaluation'
+        ]}
+      >
+        <MockedProvider mocks={evaluationMock} addTypename={false}>
+          <Route path="/models/:modelID/task-list/ops-eval-and-learning/evaluation">
+            <Evaluation />
+          </Route>
+        </MockedProvider>
+      </MemoryRouter>
+    );
+
+    await waitFor(() => {
+      expect(
+        screen.getByTestId('ops-eval-and-learning-evaluation-form')
+      ).toBeInTheDocument();
+    });
+
+    await waitFor(() => {
+      expect(
+        screen.getByTestId('ops-eval-and-learning-share-cclf-data-true')
+      ).toBeChecked();
+    });
+  });
+
+  it('matches snapshot', async () => {
+    const { asFragment } = render(
+      <MemoryRouter
+        initialEntries={[
+          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/ops-eval-and-learning/evaluation'
+        ]}
+      >
+        <MockedProvider mocks={evaluationMock} addTypename={false}>
+          <Route path="/models/:modelID/task-list/ops-eval-and-learning/evaluation">
+            <Evaluation />
+          </Route>
+        </MockedProvider>
+      </MemoryRouter>
+    );
+
+    await waitFor(() => {
+      expect(
+        screen.getByTestId('ops-eval-and-learning-share-cclf-data-true')
+      ).toBeChecked();
+    });
+    expect(asFragment()).toMatchSnapshot();
+  });
+});

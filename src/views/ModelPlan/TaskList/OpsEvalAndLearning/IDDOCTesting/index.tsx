@@ -242,6 +242,7 @@ const IDDOCTesting = () => {
                     className="height-15"
                     error={flatErrors.stcNeeds}
                     id="ops-eval-and-learning-stc-needs"
+                    data-testid="ops-eval-and-learning-stc-needs"
                     name="stcNeeds"
                   />
                 </FieldGroup>
@@ -311,7 +312,7 @@ const IDDOCTesting = () => {
                               />
                               {type === 'OTHER' &&
                                 values.dataMonitoringFileTypes.includes(
-                                  'OTHER' as MonitoringFileType
+                                  MonitoringFileType.OTHER
                                 ) && (
                                   <div className="margin-left-4 margin-top-neg-3">
                                     <Label

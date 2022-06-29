@@ -274,6 +274,7 @@ const Performance = () => {
                         as={Radio}
                         key={key}
                         id={`ops-eval-and-learning-compute-performance-${key}`}
+                        data-testid={`ops-eval-and-learning-compute-performance-${key}`}
                         name="computePerformanceScores"
                         label={key ? h('yes') : h('no')}
                         value={key ? 'YES' : 'NO'}

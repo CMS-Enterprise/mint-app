@@ -313,7 +313,7 @@ const DataSharing = () => {
                     initialValues={initialValues.dataSharingFrequency}
                   />
                   {(values?.dataSharingFrequency || []).includes(
-                    'OTHER' as DataFrequencyType
+                    DataFrequencyType.OTHER
                   ) && (
                     <div className="margin-top-2">
                       <Label
@@ -430,7 +430,7 @@ const DataSharing = () => {
                     initialValues={initialValues.dataCollectionFrequency}
                   />
                   {(values?.dataCollectionFrequency || []).includes(
-                    'OTHER' as DataFrequencyType
+                    DataFrequencyType.OTHER
                   ) && (
                     <div className="margin-top-2">
                       <Label
@@ -509,6 +509,7 @@ const DataSharing = () => {
                         as={TextInput}
                         className="maxw-none"
                         id="ops-eval-and-learning-data-reporting-starts-other"
+                        data-testid="ops-eval-and-learning-data-reporting-starts-other"
                         maxLength={50}
                         name="qualityReportingStartsOther"
                       />

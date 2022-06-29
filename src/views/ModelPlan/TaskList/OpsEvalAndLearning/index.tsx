@@ -308,7 +308,7 @@ export const OpsEvalAndLearningContent = () => {
                               />
                               {type === 'OTHER' &&
                                 values.agencyOrStateHelp.includes(
-                                  'OTHER' as AgencyOrStateHelpType
+                                  AgencyOrStateHelpType.OTHER
                                 ) && (
                                   <div className="margin-left-4 margin-top-neg-3">
                                     <Label
@@ -366,9 +366,7 @@ export const OpsEvalAndLearningContent = () => {
                     initialValues={initialValues.stakeholders}
                   />
 
-                  {values.stakeholders.includes(
-                    'OTHER' as StakeholdersType
-                  ) && (
+                  {values.stakeholders.includes(StakeholdersType.OTHER) && (
                     <>
                       <p className="margin-y-1 margin-top-3">
                         {t('pleaseDescribe')}
@@ -473,7 +471,7 @@ export const OpsEvalAndLearningContent = () => {
                               />
                               {type === 'OTHER' &&
                                 values.contractorSupport.includes(
-                                  'OTHER' as ContractorSupportType
+                                  ContractorSupportType.OTHER
                                 ) && (
                                   <div className="margin-left-4 margin-top-neg-3">
                                     <Label
@@ -519,6 +517,7 @@ export const OpsEvalAndLearningContent = () => {
                           className="height-card"
                           error={flatErrors.contractorSupportHow}
                           id="ops-eval-and-learning-contractor-support-how"
+                          data-testid="ops-eval-and-learning-contractor-support-how"
                           name="contractorSupportHow"
                         />
                       </FieldGroup>
