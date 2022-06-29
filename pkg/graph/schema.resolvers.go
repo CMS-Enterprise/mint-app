@@ -500,34 +500,28 @@ func (r *planOpsEvalAndLearningResolver) ModelLearningSystems(ctx context.Contex
 	return modelLearningSystemTypes, nil
 }
 
-func (r *planParticipantsAndProvidersResolver) Participants(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.ParticipantsType, error) {
-	participants := models.ConvertEnums[model.ParticipantsType](obj.Participants)
-	return participants, nil
+func (r *planParticipantsAndProvidersResolver) Participants(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]models.ParticipantsType, error) {
+	return obj.Participants, nil
 }
 
-func (r *planParticipantsAndProvidersResolver) SelectionMethod(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.ParticipantSelectionType, error) {
-	selectionTypes := models.ConvertEnums[model.ParticipantSelectionType](obj.SelectionMethod)
-	return selectionTypes, nil
+func (r *planParticipantsAndProvidersResolver) SelectionMethod(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]models.ParticipantSelectionType, error) {
+	return obj.SelectionMethod, nil
 }
 
-func (r *planParticipantsAndProvidersResolver) CommunicationMethod(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.ParticipantCommunicationType, error) {
-	communicationTypes := models.ConvertEnums[model.ParticipantCommunicationType](obj.CommunicationMethod)
-	return communicationTypes, nil
+func (r *planParticipantsAndProvidersResolver) CommunicationMethod(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]models.ParticipantCommunicationType, error) {
+	return obj.CommunicationMethod, nil
 }
 
-func (r *planParticipantsAndProvidersResolver) ParticipantsIds(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.ParticipantsIDType, error) {
-	participantsIDTypes := models.ConvertEnums[model.ParticipantsIDType](obj.ParticipantsIds)
-	return participantsIDTypes, nil
+func (r *planParticipantsAndProvidersResolver) ParticipantsIds(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]models.ParticipantsIDType, error) {
+	return obj.ParticipantsIds, nil
 }
 
-func (r *planParticipantsAndProvidersResolver) ProviderAddMethod(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.ProviderAddType, error) {
-	providerAddTypes := models.ConvertEnums[model.ProviderAddType](obj.ProviderAddMethod)
-	return providerAddTypes, nil
+func (r *planParticipantsAndProvidersResolver) ProviderAddMethod(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]models.ProviderAddType, error) {
+	return obj.ProviderAddMethod, nil
 }
 
-func (r *planParticipantsAndProvidersResolver) ProviderLeaveMethod(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.ProviderLeaveType, error) {
-	providerLeaveTypes := models.ConvertEnums[model.ProviderLeaveType](obj.ProviderLeaveMethod)
-	return providerLeaveTypes, nil
+func (r *planParticipantsAndProvidersResolver) ProviderLeaveMethod(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]models.ProviderLeaveType, error) {
+	return obj.ProviderLeaveMethod, nil
 }
 
 func (r *queryResolver) CurrentUser(ctx context.Context) (*model.CurrentUser, error) {

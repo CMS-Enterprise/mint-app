@@ -747,17 +747,17 @@ type PlanOpsEvalAndLearningResolver interface {
 	ModelLearningSystems(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]model.ModelLearningSystemType, error)
 }
 type PlanParticipantsAndProvidersResolver interface {
-	Participants(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.ParticipantsType, error)
+	Participants(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]models.ParticipantsType, error)
 
-	SelectionMethod(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.ParticipantSelectionType, error)
+	SelectionMethod(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]models.ParticipantSelectionType, error)
 
-	CommunicationMethod(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.ParticipantCommunicationType, error)
+	CommunicationMethod(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]models.ParticipantCommunicationType, error)
 
-	ParticipantsIds(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.ParticipantsIDType, error)
+	ParticipantsIds(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]models.ParticipantsIDType, error)
 
-	ProviderAddMethod(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.ProviderAddType, error)
+	ProviderAddMethod(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]models.ProviderAddType, error)
 
-	ProviderLeaveMethod(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.ProviderLeaveType, error)
+	ProviderLeaveMethod(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]models.ProviderLeaveType, error)
 }
 type QueryResolver interface {
 	CurrentUser(ctx context.Context) (*model.CurrentUser, error)
@@ -27038,9 +27038,9 @@ func (ec *executionContext) _PlanParticipantsAndProviders_participants(ctx conte
 		}
 		return graphql.Null
 	}
-	res := resTmp.([]model.ParticipantsType)
+	res := resTmp.([]models.ParticipantsType)
 	fc.Result = res
-	return ec.marshalNParticipantsType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐParticipantsTypeᚄ(ctx, field.Selections, res)
+	return ec.marshalNParticipantsType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐParticipantsTypeᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_participants(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -27615,9 +27615,9 @@ func (ec *executionContext) _PlanParticipantsAndProviders_selectionMethod(ctx co
 		}
 		return graphql.Null
 	}
-	res := resTmp.([]model.ParticipantSelectionType)
+	res := resTmp.([]models.ParticipantSelectionType)
 	fc.Result = res
-	return ec.marshalNParticipantSelectionType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐParticipantSelectionTypeᚄ(ctx, field.Selections, res)
+	return ec.marshalNParticipantSelectionType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐParticipantSelectionTypeᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_selectionMethod(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -27741,9 +27741,9 @@ func (ec *executionContext) _PlanParticipantsAndProviders_communicationMethod(ct
 		}
 		return graphql.Null
 	}
-	res := resTmp.([]model.ParticipantCommunicationType)
+	res := resTmp.([]models.ParticipantCommunicationType)
 	fc.Result = res
-	return ec.marshalNParticipantCommunicationType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐParticipantCommunicationTypeᚄ(ctx, field.Selections, res)
+	return ec.marshalNParticipantCommunicationType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐParticipantCommunicationTypeᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_communicationMethod(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -28318,9 +28318,9 @@ func (ec *executionContext) _PlanParticipantsAndProviders_participantsIds(ctx co
 		}
 		return graphql.Null
 	}
-	res := resTmp.([]model.ParticipantsIDType)
+	res := resTmp.([]models.ParticipantsIDType)
 	fc.Result = res
-	return ec.marshalNParticipantsIDType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐParticipantsIDTypeᚄ(ctx, field.Selections, res)
+	return ec.marshalNParticipantsIDType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐParticipantsIDTypeᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_participantsIds(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -28567,9 +28567,9 @@ func (ec *executionContext) _PlanParticipantsAndProviders_providerAddMethod(ctx 
 		}
 		return graphql.Null
 	}
-	res := resTmp.([]model.ProviderAddType)
+	res := resTmp.([]models.ProviderAddType)
 	fc.Result = res
-	return ec.marshalNProviderAddType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐProviderAddTypeᚄ(ctx, field.Selections, res)
+	return ec.marshalNProviderAddType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐProviderAddTypeᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_providerAddMethod(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -28693,9 +28693,9 @@ func (ec *executionContext) _PlanParticipantsAndProviders_providerLeaveMethod(ct
 		}
 		return graphql.Null
 	}
-	res := resTmp.([]model.ProviderLeaveType)
+	res := resTmp.([]models.ProviderLeaveType)
 	fc.Result = res
-	return ec.marshalNProviderLeaveType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐProviderLeaveTypeᚄ(ctx, field.Selections, res)
+	return ec.marshalNProviderLeaveType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐProviderLeaveTypeᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_providerLeaveMethod(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -39653,26 +39653,32 @@ func (ec *executionContext) marshalNPSharedSavingsPlanType2ᚕgithubᚗcomᚋcms
 	return ret
 }
 
-func (ec *executionContext) unmarshalNParticipantCommunicationType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐParticipantCommunicationType(ctx context.Context, v interface{}) (model.ParticipantCommunicationType, error) {
-	var res model.ParticipantCommunicationType
-	err := res.UnmarshalGQL(v)
+func (ec *executionContext) unmarshalNParticipantCommunicationType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐParticipantCommunicationType(ctx context.Context, v interface{}) (models.ParticipantCommunicationType, error) {
+	tmp, err := graphql.UnmarshalString(v)
+	res := models.ParticipantCommunicationType(tmp)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) marshalNParticipantCommunicationType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐParticipantCommunicationType(ctx context.Context, sel ast.SelectionSet, v model.ParticipantCommunicationType) graphql.Marshaler {
-	return v
+func (ec *executionContext) marshalNParticipantCommunicationType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐParticipantCommunicationType(ctx context.Context, sel ast.SelectionSet, v models.ParticipantCommunicationType) graphql.Marshaler {
+	res := graphql.MarshalString(string(v))
+	if res == graphql.Null {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
+	}
+	return res
 }
 
-func (ec *executionContext) unmarshalNParticipantCommunicationType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐParticipantCommunicationTypeᚄ(ctx context.Context, v interface{}) ([]model.ParticipantCommunicationType, error) {
+func (ec *executionContext) unmarshalNParticipantCommunicationType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐParticipantCommunicationTypeᚄ(ctx context.Context, v interface{}) ([]models.ParticipantCommunicationType, error) {
 	var vSlice []interface{}
 	if v != nil {
 		vSlice = graphql.CoerceList(v)
 	}
 	var err error
-	res := make([]model.ParticipantCommunicationType, len(vSlice))
+	res := make([]models.ParticipantCommunicationType, len(vSlice))
 	for i := range vSlice {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
-		res[i], err = ec.unmarshalNParticipantCommunicationType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐParticipantCommunicationType(ctx, vSlice[i])
+		res[i], err = ec.unmarshalNParticipantCommunicationType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐParticipantCommunicationType(ctx, vSlice[i])
 		if err != nil {
 			return nil, err
 		}
@@ -39680,7 +39686,7 @@ func (ec *executionContext) unmarshalNParticipantCommunicationType2ᚕgithubᚗc
 	return res, nil
 }
 
-func (ec *executionContext) marshalNParticipantCommunicationType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐParticipantCommunicationTypeᚄ(ctx context.Context, sel ast.SelectionSet, v []model.ParticipantCommunicationType) graphql.Marshaler {
+func (ec *executionContext) marshalNParticipantCommunicationType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐParticipantCommunicationTypeᚄ(ctx context.Context, sel ast.SelectionSet, v []models.ParticipantCommunicationType) graphql.Marshaler {
 	ret := make(graphql.Array, len(v))
 	var wg sync.WaitGroup
 	isLen1 := len(v) == 1
@@ -39704,7 +39710,7 @@ func (ec *executionContext) marshalNParticipantCommunicationType2ᚕgithubᚗcom
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalNParticipantCommunicationType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐParticipantCommunicationType(ctx, sel, v[i])
+			ret[i] = ec.marshalNParticipantCommunicationType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐParticipantCommunicationType(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -39724,26 +39730,32 @@ func (ec *executionContext) marshalNParticipantCommunicationType2ᚕgithubᚗcom
 	return ret
 }
 
-func (ec *executionContext) unmarshalNParticipantSelectionType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐParticipantSelectionType(ctx context.Context, v interface{}) (model.ParticipantSelectionType, error) {
-	var res model.ParticipantSelectionType
-	err := res.UnmarshalGQL(v)
+func (ec *executionContext) unmarshalNParticipantSelectionType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐParticipantSelectionType(ctx context.Context, v interface{}) (models.ParticipantSelectionType, error) {
+	tmp, err := graphql.UnmarshalString(v)
+	res := models.ParticipantSelectionType(tmp)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) marshalNParticipantSelectionType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐParticipantSelectionType(ctx context.Context, sel ast.SelectionSet, v model.ParticipantSelectionType) graphql.Marshaler {
-	return v
+func (ec *executionContext) marshalNParticipantSelectionType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐParticipantSelectionType(ctx context.Context, sel ast.SelectionSet, v models.ParticipantSelectionType) graphql.Marshaler {
+	res := graphql.MarshalString(string(v))
+	if res == graphql.Null {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
+	}
+	return res
 }
 
-func (ec *executionContext) unmarshalNParticipantSelectionType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐParticipantSelectionTypeᚄ(ctx context.Context, v interface{}) ([]model.ParticipantSelectionType, error) {
+func (ec *executionContext) unmarshalNParticipantSelectionType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐParticipantSelectionTypeᚄ(ctx context.Context, v interface{}) ([]models.ParticipantSelectionType, error) {
 	var vSlice []interface{}
 	if v != nil {
 		vSlice = graphql.CoerceList(v)
 	}
 	var err error
-	res := make([]model.ParticipantSelectionType, len(vSlice))
+	res := make([]models.ParticipantSelectionType, len(vSlice))
 	for i := range vSlice {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
-		res[i], err = ec.unmarshalNParticipantSelectionType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐParticipantSelectionType(ctx, vSlice[i])
+		res[i], err = ec.unmarshalNParticipantSelectionType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐParticipantSelectionType(ctx, vSlice[i])
 		if err != nil {
 			return nil, err
 		}
@@ -39751,7 +39763,7 @@ func (ec *executionContext) unmarshalNParticipantSelectionType2ᚕgithubᚗcom�
 	return res, nil
 }
 
-func (ec *executionContext) marshalNParticipantSelectionType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐParticipantSelectionTypeᚄ(ctx context.Context, sel ast.SelectionSet, v []model.ParticipantSelectionType) graphql.Marshaler {
+func (ec *executionContext) marshalNParticipantSelectionType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐParticipantSelectionTypeᚄ(ctx context.Context, sel ast.SelectionSet, v []models.ParticipantSelectionType) graphql.Marshaler {
 	ret := make(graphql.Array, len(v))
 	var wg sync.WaitGroup
 	isLen1 := len(v) == 1
@@ -39775,7 +39787,7 @@ func (ec *executionContext) marshalNParticipantSelectionType2ᚕgithubᚗcomᚋc
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalNParticipantSelectionType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐParticipantSelectionType(ctx, sel, v[i])
+			ret[i] = ec.marshalNParticipantSelectionType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐParticipantSelectionType(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -39795,26 +39807,32 @@ func (ec *executionContext) marshalNParticipantSelectionType2ᚕgithubᚗcomᚋc
 	return ret
 }
 
-func (ec *executionContext) unmarshalNParticipantsIDType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐParticipantsIDType(ctx context.Context, v interface{}) (model.ParticipantsIDType, error) {
-	var res model.ParticipantsIDType
-	err := res.UnmarshalGQL(v)
+func (ec *executionContext) unmarshalNParticipantsIDType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐParticipantsIDType(ctx context.Context, v interface{}) (models.ParticipantsIDType, error) {
+	tmp, err := graphql.UnmarshalString(v)
+	res := models.ParticipantsIDType(tmp)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) marshalNParticipantsIDType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐParticipantsIDType(ctx context.Context, sel ast.SelectionSet, v model.ParticipantsIDType) graphql.Marshaler {
-	return v
+func (ec *executionContext) marshalNParticipantsIDType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐParticipantsIDType(ctx context.Context, sel ast.SelectionSet, v models.ParticipantsIDType) graphql.Marshaler {
+	res := graphql.MarshalString(string(v))
+	if res == graphql.Null {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
+	}
+	return res
 }
 
-func (ec *executionContext) unmarshalNParticipantsIDType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐParticipantsIDTypeᚄ(ctx context.Context, v interface{}) ([]model.ParticipantsIDType, error) {
+func (ec *executionContext) unmarshalNParticipantsIDType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐParticipantsIDTypeᚄ(ctx context.Context, v interface{}) ([]models.ParticipantsIDType, error) {
 	var vSlice []interface{}
 	if v != nil {
 		vSlice = graphql.CoerceList(v)
 	}
 	var err error
-	res := make([]model.ParticipantsIDType, len(vSlice))
+	res := make([]models.ParticipantsIDType, len(vSlice))
 	for i := range vSlice {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
-		res[i], err = ec.unmarshalNParticipantsIDType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐParticipantsIDType(ctx, vSlice[i])
+		res[i], err = ec.unmarshalNParticipantsIDType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐParticipantsIDType(ctx, vSlice[i])
 		if err != nil {
 			return nil, err
 		}
@@ -39822,7 +39840,7 @@ func (ec *executionContext) unmarshalNParticipantsIDType2ᚕgithubᚗcomᚋcmsgo
 	return res, nil
 }
 
-func (ec *executionContext) marshalNParticipantsIDType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐParticipantsIDTypeᚄ(ctx context.Context, sel ast.SelectionSet, v []model.ParticipantsIDType) graphql.Marshaler {
+func (ec *executionContext) marshalNParticipantsIDType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐParticipantsIDTypeᚄ(ctx context.Context, sel ast.SelectionSet, v []models.ParticipantsIDType) graphql.Marshaler {
 	ret := make(graphql.Array, len(v))
 	var wg sync.WaitGroup
 	isLen1 := len(v) == 1
@@ -39846,7 +39864,7 @@ func (ec *executionContext) marshalNParticipantsIDType2ᚕgithubᚗcomᚋcmsgov�
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalNParticipantsIDType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐParticipantsIDType(ctx, sel, v[i])
+			ret[i] = ec.marshalNParticipantsIDType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐParticipantsIDType(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -39866,26 +39884,32 @@ func (ec *executionContext) marshalNParticipantsIDType2ᚕgithubᚗcomᚋcmsgov�
 	return ret
 }
 
-func (ec *executionContext) unmarshalNParticipantsType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐParticipantsType(ctx context.Context, v interface{}) (model.ParticipantsType, error) {
-	var res model.ParticipantsType
-	err := res.UnmarshalGQL(v)
+func (ec *executionContext) unmarshalNParticipantsType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐParticipantsType(ctx context.Context, v interface{}) (models.ParticipantsType, error) {
+	tmp, err := graphql.UnmarshalString(v)
+	res := models.ParticipantsType(tmp)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) marshalNParticipantsType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐParticipantsType(ctx context.Context, sel ast.SelectionSet, v model.ParticipantsType) graphql.Marshaler {
-	return v
+func (ec *executionContext) marshalNParticipantsType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐParticipantsType(ctx context.Context, sel ast.SelectionSet, v models.ParticipantsType) graphql.Marshaler {
+	res := graphql.MarshalString(string(v))
+	if res == graphql.Null {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
+	}
+	return res
 }
 
-func (ec *executionContext) unmarshalNParticipantsType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐParticipantsTypeᚄ(ctx context.Context, v interface{}) ([]model.ParticipantsType, error) {
+func (ec *executionContext) unmarshalNParticipantsType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐParticipantsTypeᚄ(ctx context.Context, v interface{}) ([]models.ParticipantsType, error) {
 	var vSlice []interface{}
 	if v != nil {
 		vSlice = graphql.CoerceList(v)
 	}
 	var err error
-	res := make([]model.ParticipantsType, len(vSlice))
+	res := make([]models.ParticipantsType, len(vSlice))
 	for i := range vSlice {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
-		res[i], err = ec.unmarshalNParticipantsType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐParticipantsType(ctx, vSlice[i])
+		res[i], err = ec.unmarshalNParticipantsType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐParticipantsType(ctx, vSlice[i])
 		if err != nil {
 			return nil, err
 		}
@@ -39893,7 +39917,7 @@ func (ec *executionContext) unmarshalNParticipantsType2ᚕgithubᚗcomᚋcmsgov�
 	return res, nil
 }
 
-func (ec *executionContext) marshalNParticipantsType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐParticipantsTypeᚄ(ctx context.Context, sel ast.SelectionSet, v []model.ParticipantsType) graphql.Marshaler {
+func (ec *executionContext) marshalNParticipantsType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐParticipantsTypeᚄ(ctx context.Context, sel ast.SelectionSet, v []models.ParticipantsType) graphql.Marshaler {
 	ret := make(graphql.Array, len(v))
 	var wg sync.WaitGroup
 	isLen1 := len(v) == 1
@@ -39917,7 +39941,7 @@ func (ec *executionContext) marshalNParticipantsType2ᚕgithubᚗcomᚋcmsgovᚋ
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalNParticipantsType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐParticipantsType(ctx, sel, v[i])
+			ret[i] = ec.marshalNParticipantsType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐParticipantsType(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -40630,26 +40654,32 @@ func (ec *executionContext) marshalNPpToAdvertiseType2ᚕgithubᚗcomᚋcmsgov�
 	return ret
 }
 
-func (ec *executionContext) unmarshalNProviderAddType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐProviderAddType(ctx context.Context, v interface{}) (model.ProviderAddType, error) {
-	var res model.ProviderAddType
-	err := res.UnmarshalGQL(v)
+func (ec *executionContext) unmarshalNProviderAddType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐProviderAddType(ctx context.Context, v interface{}) (models.ProviderAddType, error) {
+	tmp, err := graphql.UnmarshalString(v)
+	res := models.ProviderAddType(tmp)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) marshalNProviderAddType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐProviderAddType(ctx context.Context, sel ast.SelectionSet, v model.ProviderAddType) graphql.Marshaler {
-	return v
+func (ec *executionContext) marshalNProviderAddType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐProviderAddType(ctx context.Context, sel ast.SelectionSet, v models.ProviderAddType) graphql.Marshaler {
+	res := graphql.MarshalString(string(v))
+	if res == graphql.Null {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
+	}
+	return res
 }
 
-func (ec *executionContext) unmarshalNProviderAddType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐProviderAddTypeᚄ(ctx context.Context, v interface{}) ([]model.ProviderAddType, error) {
+func (ec *executionContext) unmarshalNProviderAddType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐProviderAddTypeᚄ(ctx context.Context, v interface{}) ([]models.ProviderAddType, error) {
 	var vSlice []interface{}
 	if v != nil {
 		vSlice = graphql.CoerceList(v)
 	}
 	var err error
-	res := make([]model.ProviderAddType, len(vSlice))
+	res := make([]models.ProviderAddType, len(vSlice))
 	for i := range vSlice {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
-		res[i], err = ec.unmarshalNProviderAddType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐProviderAddType(ctx, vSlice[i])
+		res[i], err = ec.unmarshalNProviderAddType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐProviderAddType(ctx, vSlice[i])
 		if err != nil {
 			return nil, err
 		}
@@ -40657,7 +40687,7 @@ func (ec *executionContext) unmarshalNProviderAddType2ᚕgithubᚗcomᚋcmsgov�
 	return res, nil
 }
 
-func (ec *executionContext) marshalNProviderAddType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐProviderAddTypeᚄ(ctx context.Context, sel ast.SelectionSet, v []model.ProviderAddType) graphql.Marshaler {
+func (ec *executionContext) marshalNProviderAddType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐProviderAddTypeᚄ(ctx context.Context, sel ast.SelectionSet, v []models.ProviderAddType) graphql.Marshaler {
 	ret := make(graphql.Array, len(v))
 	var wg sync.WaitGroup
 	isLen1 := len(v) == 1
@@ -40681,7 +40711,7 @@ func (ec *executionContext) marshalNProviderAddType2ᚕgithubᚗcomᚋcmsgovᚋm
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalNProviderAddType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐProviderAddType(ctx, sel, v[i])
+			ret[i] = ec.marshalNProviderAddType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐProviderAddType(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -40701,26 +40731,32 @@ func (ec *executionContext) marshalNProviderAddType2ᚕgithubᚗcomᚋcmsgovᚋm
 	return ret
 }
 
-func (ec *executionContext) unmarshalNProviderLeaveType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐProviderLeaveType(ctx context.Context, v interface{}) (model.ProviderLeaveType, error) {
-	var res model.ProviderLeaveType
-	err := res.UnmarshalGQL(v)
+func (ec *executionContext) unmarshalNProviderLeaveType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐProviderLeaveType(ctx context.Context, v interface{}) (models.ProviderLeaveType, error) {
+	tmp, err := graphql.UnmarshalString(v)
+	res := models.ProviderLeaveType(tmp)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) marshalNProviderLeaveType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐProviderLeaveType(ctx context.Context, sel ast.SelectionSet, v model.ProviderLeaveType) graphql.Marshaler {
-	return v
+func (ec *executionContext) marshalNProviderLeaveType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐProviderLeaveType(ctx context.Context, sel ast.SelectionSet, v models.ProviderLeaveType) graphql.Marshaler {
+	res := graphql.MarshalString(string(v))
+	if res == graphql.Null {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
+	}
+	return res
 }
 
-func (ec *executionContext) unmarshalNProviderLeaveType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐProviderLeaveTypeᚄ(ctx context.Context, v interface{}) ([]model.ProviderLeaveType, error) {
+func (ec *executionContext) unmarshalNProviderLeaveType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐProviderLeaveTypeᚄ(ctx context.Context, v interface{}) ([]models.ProviderLeaveType, error) {
 	var vSlice []interface{}
 	if v != nil {
 		vSlice = graphql.CoerceList(v)
 	}
 	var err error
-	res := make([]model.ProviderLeaveType, len(vSlice))
+	res := make([]models.ProviderLeaveType, len(vSlice))
 	for i := range vSlice {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
-		res[i], err = ec.unmarshalNProviderLeaveType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐProviderLeaveType(ctx, vSlice[i])
+		res[i], err = ec.unmarshalNProviderLeaveType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐProviderLeaveType(ctx, vSlice[i])
 		if err != nil {
 			return nil, err
 		}
@@ -40728,7 +40764,7 @@ func (ec *executionContext) unmarshalNProviderLeaveType2ᚕgithubᚗcomᚋcmsgov
 	return res, nil
 }
 
-func (ec *executionContext) marshalNProviderLeaveType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐProviderLeaveTypeᚄ(ctx context.Context, sel ast.SelectionSet, v []model.ProviderLeaveType) graphql.Marshaler {
+func (ec *executionContext) marshalNProviderLeaveType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐProviderLeaveTypeᚄ(ctx context.Context, sel ast.SelectionSet, v []models.ProviderLeaveType) graphql.Marshaler {
 	ret := make(graphql.Array, len(v))
 	var wg sync.WaitGroup
 	isLen1 := len(v) == 1
@@ -40752,7 +40788,7 @@ func (ec *executionContext) marshalNProviderLeaveType2ᚕgithubᚗcomᚋcmsgov�
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalNProviderLeaveType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐProviderLeaveType(ctx, sel, v[i])
+			ret[i] = ec.marshalNProviderLeaveType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐProviderLeaveType(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -44370,7 +44406,7 @@ func (ec *executionContext) marshalOPSharedSavingsPlanType2ᚕgithubᚗcomᚋcms
 	return ret
 }
 
-func (ec *executionContext) unmarshalOParticipantCommunicationType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐParticipantCommunicationTypeᚄ(ctx context.Context, v interface{}) ([]model.ParticipantCommunicationType, error) {
+func (ec *executionContext) unmarshalOParticipantCommunicationType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐParticipantCommunicationTypeᚄ(ctx context.Context, v interface{}) ([]models.ParticipantCommunicationType, error) {
 	if v == nil {
 		return nil, nil
 	}
@@ -44379,10 +44415,10 @@ func (ec *executionContext) unmarshalOParticipantCommunicationType2ᚕgithubᚗc
 		vSlice = graphql.CoerceList(v)
 	}
 	var err error
-	res := make([]model.ParticipantCommunicationType, len(vSlice))
+	res := make([]models.ParticipantCommunicationType, len(vSlice))
 	for i := range vSlice {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
-		res[i], err = ec.unmarshalNParticipantCommunicationType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐParticipantCommunicationType(ctx, vSlice[i])
+		res[i], err = ec.unmarshalNParticipantCommunicationType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐParticipantCommunicationType(ctx, vSlice[i])
 		if err != nil {
 			return nil, err
 		}
@@ -44390,7 +44426,7 @@ func (ec *executionContext) unmarshalOParticipantCommunicationType2ᚕgithubᚗc
 	return res, nil
 }
 
-func (ec *executionContext) marshalOParticipantCommunicationType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐParticipantCommunicationTypeᚄ(ctx context.Context, sel ast.SelectionSet, v []model.ParticipantCommunicationType) graphql.Marshaler {
+func (ec *executionContext) marshalOParticipantCommunicationType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐParticipantCommunicationTypeᚄ(ctx context.Context, sel ast.SelectionSet, v []models.ParticipantCommunicationType) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
@@ -44417,7 +44453,7 @@ func (ec *executionContext) marshalOParticipantCommunicationType2ᚕgithubᚗcom
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalNParticipantCommunicationType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐParticipantCommunicationType(ctx, sel, v[i])
+			ret[i] = ec.marshalNParticipantCommunicationType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐParticipantCommunicationType(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -44454,7 +44490,7 @@ func (ec *executionContext) marshalOParticipantRiskType2ᚖgithubᚗcomᚋcmsgov
 	return res
 }
 
-func (ec *executionContext) unmarshalOParticipantSelectionType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐParticipantSelectionTypeᚄ(ctx context.Context, v interface{}) ([]model.ParticipantSelectionType, error) {
+func (ec *executionContext) unmarshalOParticipantSelectionType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐParticipantSelectionTypeᚄ(ctx context.Context, v interface{}) ([]models.ParticipantSelectionType, error) {
 	if v == nil {
 		return nil, nil
 	}
@@ -44463,10 +44499,10 @@ func (ec *executionContext) unmarshalOParticipantSelectionType2ᚕgithubᚗcom�
 		vSlice = graphql.CoerceList(v)
 	}
 	var err error
-	res := make([]model.ParticipantSelectionType, len(vSlice))
+	res := make([]models.ParticipantSelectionType, len(vSlice))
 	for i := range vSlice {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
-		res[i], err = ec.unmarshalNParticipantSelectionType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐParticipantSelectionType(ctx, vSlice[i])
+		res[i], err = ec.unmarshalNParticipantSelectionType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐParticipantSelectionType(ctx, vSlice[i])
 		if err != nil {
 			return nil, err
 		}
@@ -44474,7 +44510,7 @@ func (ec *executionContext) unmarshalOParticipantSelectionType2ᚕgithubᚗcom�
 	return res, nil
 }
 
-func (ec *executionContext) marshalOParticipantSelectionType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐParticipantSelectionTypeᚄ(ctx context.Context, sel ast.SelectionSet, v []model.ParticipantSelectionType) graphql.Marshaler {
+func (ec *executionContext) marshalOParticipantSelectionType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐParticipantSelectionTypeᚄ(ctx context.Context, sel ast.SelectionSet, v []models.ParticipantSelectionType) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
@@ -44501,7 +44537,7 @@ func (ec *executionContext) marshalOParticipantSelectionType2ᚕgithubᚗcomᚋc
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalNParticipantSelectionType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐParticipantSelectionType(ctx, sel, v[i])
+			ret[i] = ec.marshalNParticipantSelectionType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐParticipantSelectionType(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -44521,7 +44557,7 @@ func (ec *executionContext) marshalOParticipantSelectionType2ᚕgithubᚗcomᚋc
 	return ret
 }
 
-func (ec *executionContext) unmarshalOParticipantsIDType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐParticipantsIDTypeᚄ(ctx context.Context, v interface{}) ([]model.ParticipantsIDType, error) {
+func (ec *executionContext) unmarshalOParticipantsIDType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐParticipantsIDTypeᚄ(ctx context.Context, v interface{}) ([]models.ParticipantsIDType, error) {
 	if v == nil {
 		return nil, nil
 	}
@@ -44530,10 +44566,10 @@ func (ec *executionContext) unmarshalOParticipantsIDType2ᚕgithubᚗcomᚋcmsgo
 		vSlice = graphql.CoerceList(v)
 	}
 	var err error
-	res := make([]model.ParticipantsIDType, len(vSlice))
+	res := make([]models.ParticipantsIDType, len(vSlice))
 	for i := range vSlice {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
-		res[i], err = ec.unmarshalNParticipantsIDType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐParticipantsIDType(ctx, vSlice[i])
+		res[i], err = ec.unmarshalNParticipantsIDType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐParticipantsIDType(ctx, vSlice[i])
 		if err != nil {
 			return nil, err
 		}
@@ -44541,7 +44577,7 @@ func (ec *executionContext) unmarshalOParticipantsIDType2ᚕgithubᚗcomᚋcmsgo
 	return res, nil
 }
 
-func (ec *executionContext) marshalOParticipantsIDType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐParticipantsIDTypeᚄ(ctx context.Context, sel ast.SelectionSet, v []model.ParticipantsIDType) graphql.Marshaler {
+func (ec *executionContext) marshalOParticipantsIDType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐParticipantsIDTypeᚄ(ctx context.Context, sel ast.SelectionSet, v []models.ParticipantsIDType) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
@@ -44568,7 +44604,7 @@ func (ec *executionContext) marshalOParticipantsIDType2ᚕgithubᚗcomᚋcmsgov�
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalNParticipantsIDType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐParticipantsIDType(ctx, sel, v[i])
+			ret[i] = ec.marshalNParticipantsIDType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐParticipantsIDType(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -44588,7 +44624,7 @@ func (ec *executionContext) marshalOParticipantsIDType2ᚕgithubᚗcomᚋcmsgov�
 	return ret
 }
 
-func (ec *executionContext) unmarshalOParticipantsType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐParticipantsTypeᚄ(ctx context.Context, v interface{}) ([]model.ParticipantsType, error) {
+func (ec *executionContext) unmarshalOParticipantsType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐParticipantsTypeᚄ(ctx context.Context, v interface{}) ([]models.ParticipantsType, error) {
 	if v == nil {
 		return nil, nil
 	}
@@ -44597,10 +44633,10 @@ func (ec *executionContext) unmarshalOParticipantsType2ᚕgithubᚗcomᚋcmsgov�
 		vSlice = graphql.CoerceList(v)
 	}
 	var err error
-	res := make([]model.ParticipantsType, len(vSlice))
+	res := make([]models.ParticipantsType, len(vSlice))
 	for i := range vSlice {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
-		res[i], err = ec.unmarshalNParticipantsType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐParticipantsType(ctx, vSlice[i])
+		res[i], err = ec.unmarshalNParticipantsType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐParticipantsType(ctx, vSlice[i])
 		if err != nil {
 			return nil, err
 		}
@@ -44608,7 +44644,7 @@ func (ec *executionContext) unmarshalOParticipantsType2ᚕgithubᚗcomᚋcmsgov�
 	return res, nil
 }
 
-func (ec *executionContext) marshalOParticipantsType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐParticipantsTypeᚄ(ctx context.Context, sel ast.SelectionSet, v []model.ParticipantsType) graphql.Marshaler {
+func (ec *executionContext) marshalOParticipantsType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐParticipantsTypeᚄ(ctx context.Context, sel ast.SelectionSet, v []models.ParticipantsType) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
@@ -44635,7 +44671,7 @@ func (ec *executionContext) marshalOParticipantsType2ᚕgithubᚗcomᚋcmsgovᚋ
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalNParticipantsType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐParticipantsType(ctx, sel, v[i])
+			ret[i] = ec.marshalNParticipantsType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐParticipantsType(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -44997,7 +45033,7 @@ func (ec *executionContext) marshalOPpToAdvertiseType2ᚕgithubᚗcomᚋcmsgov�
 	return ret
 }
 
-func (ec *executionContext) unmarshalOProviderAddType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐProviderAddTypeᚄ(ctx context.Context, v interface{}) ([]model.ProviderAddType, error) {
+func (ec *executionContext) unmarshalOProviderAddType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐProviderAddTypeᚄ(ctx context.Context, v interface{}) ([]models.ProviderAddType, error) {
 	if v == nil {
 		return nil, nil
 	}
@@ -45006,10 +45042,10 @@ func (ec *executionContext) unmarshalOProviderAddType2ᚕgithubᚗcomᚋcmsgov�
 		vSlice = graphql.CoerceList(v)
 	}
 	var err error
-	res := make([]model.ProviderAddType, len(vSlice))
+	res := make([]models.ProviderAddType, len(vSlice))
 	for i := range vSlice {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
-		res[i], err = ec.unmarshalNProviderAddType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐProviderAddType(ctx, vSlice[i])
+		res[i], err = ec.unmarshalNProviderAddType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐProviderAddType(ctx, vSlice[i])
 		if err != nil {
 			return nil, err
 		}
@@ -45017,7 +45053,7 @@ func (ec *executionContext) unmarshalOProviderAddType2ᚕgithubᚗcomᚋcmsgov�
 	return res, nil
 }
 
-func (ec *executionContext) marshalOProviderAddType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐProviderAddTypeᚄ(ctx context.Context, sel ast.SelectionSet, v []model.ProviderAddType) graphql.Marshaler {
+func (ec *executionContext) marshalOProviderAddType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐProviderAddTypeᚄ(ctx context.Context, sel ast.SelectionSet, v []models.ProviderAddType) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
@@ -45044,7 +45080,7 @@ func (ec *executionContext) marshalOProviderAddType2ᚕgithubᚗcomᚋcmsgovᚋm
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalNProviderAddType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐProviderAddType(ctx, sel, v[i])
+			ret[i] = ec.marshalNProviderAddType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐProviderAddType(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -45064,7 +45100,7 @@ func (ec *executionContext) marshalOProviderAddType2ᚕgithubᚗcomᚋcmsgovᚋm
 	return ret
 }
 
-func (ec *executionContext) unmarshalOProviderLeaveType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐProviderLeaveTypeᚄ(ctx context.Context, v interface{}) ([]model.ProviderLeaveType, error) {
+func (ec *executionContext) unmarshalOProviderLeaveType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐProviderLeaveTypeᚄ(ctx context.Context, v interface{}) ([]models.ProviderLeaveType, error) {
 	if v == nil {
 		return nil, nil
 	}
@@ -45073,10 +45109,10 @@ func (ec *executionContext) unmarshalOProviderLeaveType2ᚕgithubᚗcomᚋcmsgov
 		vSlice = graphql.CoerceList(v)
 	}
 	var err error
-	res := make([]model.ProviderLeaveType, len(vSlice))
+	res := make([]models.ProviderLeaveType, len(vSlice))
 	for i := range vSlice {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
-		res[i], err = ec.unmarshalNProviderLeaveType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐProviderLeaveType(ctx, vSlice[i])
+		res[i], err = ec.unmarshalNProviderLeaveType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐProviderLeaveType(ctx, vSlice[i])
 		if err != nil {
 			return nil, err
 		}
@@ -45084,7 +45120,7 @@ func (ec *executionContext) unmarshalOProviderLeaveType2ᚕgithubᚗcomᚋcmsgov
 	return res, nil
 }
 
-func (ec *executionContext) marshalOProviderLeaveType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐProviderLeaveTypeᚄ(ctx context.Context, sel ast.SelectionSet, v []model.ProviderLeaveType) graphql.Marshaler {
+func (ec *executionContext) marshalOProviderLeaveType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐProviderLeaveTypeᚄ(ctx context.Context, sel ast.SelectionSet, v []models.ProviderLeaveType) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
@@ -45111,7 +45147,7 @@ func (ec *executionContext) marshalOProviderLeaveType2ᚕgithubᚗcomᚋcmsgov�
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalNProviderLeaveType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐProviderLeaveType(ctx, sel, v[i])
+			ret[i] = ec.marshalNProviderLeaveType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐProviderLeaveType(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
