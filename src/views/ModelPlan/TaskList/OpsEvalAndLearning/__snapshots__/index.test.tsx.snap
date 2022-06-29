@@ -319,14 +319,14 @@ exports[`Model Plan Ops Eval and Learning matches snapshot 1`] = `
         >
           <input
             class="usa-radio__input"
-            id="ops-eval-and-learning-help-desk-use"
+            id="ops-eval-and-learning-help-desk-use-true"
             name="helpdeskUse"
             type="radio"
-            value="TRUE"
+            value="YES"
           />
           <label
             class="usa-radio__label"
-            for="ops-eval-and-learning-help-desk-use"
+            for="ops-eval-and-learning-help-desk-use-true"
           >
             Yes
           </label>
@@ -337,14 +337,14 @@ exports[`Model Plan Ops Eval and Learning matches snapshot 1`] = `
         >
           <input
             class="usa-radio__input"
-            id="ops-eval-and-learning-help-desk-use-no"
+            id="ops-eval-and-learning-help-desk-use-false"
             name="helpdeskUse"
             type="radio"
-            value="FALSE"
+            value="NO"
           />
           <label
             class="usa-radio__label"
-            for="ops-eval-and-learning-help-desk-use-no"
+            for="ops-eval-and-learning-help-desk-use-false"
           >
             No
           </label>

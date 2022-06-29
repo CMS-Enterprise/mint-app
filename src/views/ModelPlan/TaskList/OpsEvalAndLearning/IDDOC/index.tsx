@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { Fragment, useRef, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
@@ -229,48 +229,43 @@ const IDDOC = () => {
                   <FieldErrorMsg>
                     {flatErrors.technicalContactsIdentified}
                   </FieldErrorMsg>
+
                   <Fieldset>
-                    <Field
-                      as={Radio}
-                      id="ops-eval-and-learning-technical-contacts-identified-use"
-                      name="technicalContactsIdentified"
-                      label={h('yes')}
-                      value="TRUE"
-                      checked={values.technicalContactsIdentified === true}
-                      onChange={() => {
-                        setFieldValue('technicalContactsIdentified', true);
-                      }}
-                    />
-                    {values.technicalContactsIdentified === true && (
-                      <div className="margin-left-4 margin-top-1">
-                        <Label
-                          htmlFor="ops-eval-and-learning-technical-contacts-identified-detail"
-                          className="text-normal"
-                        >
-                          {h('pleaseSpecify')}
-                        </Label>
-                        <FieldErrorMsg>
-                          {flatErrors.technicalContactsIdentifiedDetail}
-                        </FieldErrorMsg>
+                    {[true, false].map(key => (
+                      <Fragment key={key.toString()}>
                         <Field
-                          as={TextInput}
-                          id="ops-eval-and-learning-technical-contacts-identified-detail"
-                          maxLength={50}
-                          name="technicalContactsIdentifiedDetail"
+                          as={Radio}
+                          id={`ops-eval-and-learning-technical-contacts-identified-use-${key}`}
+                          name="technicalContactsIdentified"
+                          label={key ? h('yes') : h('no')}
+                          value={key ? 'YES' : 'NO'}
+                          checked={values.technicalContactsIdentified === key}
+                          onChange={() => {
+                            setFieldValue('technicalContactsIdentified', key);
+                          }}
                         />
-                      </div>
-                    )}
-                    <Field
-                      as={Radio}
-                      id="ops-eval-and-learning-technical-contacts-identified-use-no"
-                      name="technicalContactsIdentified"
-                      label={h('no')}
-                      value="FALSE"
-                      checked={values.technicalContactsIdentified === false}
-                      onChange={() => {
-                        setFieldValue('technicalContactsIdentified', false);
-                      }}
-                    />
+                        {values.technicalContactsIdentified === true &&
+                          key === true && (
+                            <div className="margin-left-4 margin-top-1">
+                              <Label
+                                htmlFor="ops-eval-and-learning-technical-contacts-identified-detail"
+                                className="text-normal"
+                              >
+                                {h('pleaseSpecify')}
+                              </Label>
+                              <FieldErrorMsg>
+                                {flatErrors.technicalContactsIdentifiedDetail}
+                              </FieldErrorMsg>
+                              <Field
+                                as={TextInput}
+                                id="ops-eval-and-learning-technical-contacts-identified-detail"
+                                maxLength={50}
+                                name="technicalContactsIdentifiedDetail"
+                              />
+                            </div>
+                          )}
+                      </Fragment>
+                    ))}
                   </Fieldset>
 
                   <AddNote
@@ -349,7 +344,7 @@ const IDDOC = () => {
                   />
                 </FieldGroup>
 
-                {values.draftIcdDueDate && (
+                {!loading && (
                   <FieldGroup
                     scrollElement="draftIcdDueDate"
                     error={!!flatErrors.draftIcdDueDate}

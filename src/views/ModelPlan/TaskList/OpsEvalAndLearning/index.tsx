@@ -401,28 +401,20 @@ export const OpsEvalAndLearningContent = () => {
                   </Label>
                   <FieldErrorMsg>{flatErrors.helpdeskUse}</FieldErrorMsg>
                   <Fieldset>
-                    <Field
-                      as={Radio}
-                      id="ops-eval-and-learning-help-desk-use"
-                      name="helpdeskUse"
-                      label={h('yes')}
-                      value="TRUE"
-                      checked={values.helpdeskUse === true}
-                      onChange={() => {
-                        setFieldValue('helpdeskUse', true);
-                      }}
-                    />
-                    <Field
-                      as={Radio}
-                      id="ops-eval-and-learning-help-desk-use-no"
-                      name="helpdeskUse"
-                      label={h('no')}
-                      value="FALSE"
-                      checked={values.helpdeskUse === false}
-                      onChange={() => {
-                        setFieldValue('helpdeskUse', false);
-                      }}
-                    />
+                    {[true, false].map(key => (
+                      <Field
+                        as={Radio}
+                        key={key.toString()}
+                        id={`ops-eval-and-learning-help-desk-use-${key}`}
+                        name="helpdeskUse"
+                        label={key ? h('yes') : h('no')}
+                        value={key ? 'YES' : 'NO'}
+                        checked={values.helpdeskUse === key}
+                        onChange={() => {
+                          setFieldValue('helpdeskUse', key);
+                        }}
+                      />
+                    ))}
                   </Fieldset>
 
                   <AddNote
