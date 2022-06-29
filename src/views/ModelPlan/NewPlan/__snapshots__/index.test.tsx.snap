@@ -67,6 +67,7 @@ exports[`New Model Plan page matches snapshot 1`] = `
         </div>
         <form
           action="#"
+          class="tablet:grid-col-6 margin-top-6"
         >
           <div
             class="usa-form-group"
