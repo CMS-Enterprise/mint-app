@@ -660,13 +660,13 @@ type PlanGeneralCharacteristicsResolver interface {
 
 	GeographiesTargetedTypes(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]models.GeographyType, error)
 
-	GeographiesTargetedAppliedTo(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]model.GeographyApplication, error)
+	GeographiesTargetedAppliedTo(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]models.GeographyApplication, error)
 
-	AgreementTypes(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]model.AgreementType, error)
+	AgreementTypes(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]models.AgreementType, error)
 
-	AuthorityAllowances(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]model.AuthorityAllowance, error)
+	AuthorityAllowances(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]models.AuthorityAllowance, error)
 
-	WaiversRequiredTypes(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]model.WaiverType, error)
+	WaiversRequiredTypes(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]models.WaiverType, error)
 }
 type PlanITToolsResolver interface {
 	GcPartCd(ctx context.Context, obj *models.PlanITTools) ([]model.GcPartCDType, error)
@@ -17340,9 +17340,9 @@ func (ec *executionContext) _PlanGeneralCharacteristics_geographiesTargetedAppli
 		}
 		return graphql.Null
 	}
-	res := resTmp.([]model.GeographyApplication)
+	res := resTmp.([]models.GeographyApplication)
 	fc.Result = res
-	return ec.marshalNGeographyApplication2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐGeographyApplicationᚄ(ctx, field.Selections, res)
+	return ec.marshalNGeographyApplication2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐGeographyApplicationᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_geographiesTargetedAppliedTo(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -17548,9 +17548,9 @@ func (ec *executionContext) _PlanGeneralCharacteristics_agreementTypes(ctx conte
 		}
 		return graphql.Null
 	}
-	res := resTmp.([]model.AgreementType)
+	res := resTmp.([]models.AgreementType)
 	fc.Result = res
-	return ec.marshalNAgreementType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐAgreementTypeᚄ(ctx, field.Selections, res)
+	return ec.marshalNAgreementType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐAgreementTypeᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_agreementTypes(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -17838,9 +17838,9 @@ func (ec *executionContext) _PlanGeneralCharacteristics_authorityAllowances(ctx 
 		}
 		return graphql.Null
 	}
-	res := resTmp.([]model.AuthorityAllowance)
+	res := resTmp.([]models.AuthorityAllowance)
 	fc.Result = res
-	return ec.marshalNAuthorityAllowance2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐAuthorityAllowanceᚄ(ctx, field.Selections, res)
+	return ec.marshalNAuthorityAllowance2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐAuthorityAllowanceᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_authorityAllowances(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -18005,9 +18005,9 @@ func (ec *executionContext) _PlanGeneralCharacteristics_waiversRequiredTypes(ctx
 		}
 		return graphql.Null
 	}
-	res := resTmp.([]model.WaiverType)
+	res := resTmp.([]models.WaiverType)
 	fc.Result = res
-	return ec.marshalNWaiverType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐWaiverTypeᚄ(ctx, field.Selections, res)
+	return ec.marshalNWaiverType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐWaiverTypeᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_waiversRequiredTypes(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -36526,26 +36526,32 @@ func (ec *executionContext) marshalNAgencyOrStateHelpType2ᚕgithubᚗcomᚋcmsg
 	return ret
 }
 
-func (ec *executionContext) unmarshalNAgreementType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐAgreementType(ctx context.Context, v interface{}) (model.AgreementType, error) {
-	var res model.AgreementType
-	err := res.UnmarshalGQL(v)
+func (ec *executionContext) unmarshalNAgreementType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐAgreementType(ctx context.Context, v interface{}) (models.AgreementType, error) {
+	tmp, err := graphql.UnmarshalString(v)
+	res := models.AgreementType(tmp)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) marshalNAgreementType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐAgreementType(ctx context.Context, sel ast.SelectionSet, v model.AgreementType) graphql.Marshaler {
-	return v
+func (ec *executionContext) marshalNAgreementType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐAgreementType(ctx context.Context, sel ast.SelectionSet, v models.AgreementType) graphql.Marshaler {
+	res := graphql.MarshalString(string(v))
+	if res == graphql.Null {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
+	}
+	return res
 }
 
-func (ec *executionContext) unmarshalNAgreementType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐAgreementTypeᚄ(ctx context.Context, v interface{}) ([]model.AgreementType, error) {
+func (ec *executionContext) unmarshalNAgreementType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐAgreementTypeᚄ(ctx context.Context, v interface{}) ([]models.AgreementType, error) {
 	var vSlice []interface{}
 	if v != nil {
 		vSlice = graphql.CoerceList(v)
 	}
 	var err error
-	res := make([]model.AgreementType, len(vSlice))
+	res := make([]models.AgreementType, len(vSlice))
 	for i := range vSlice {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
-		res[i], err = ec.unmarshalNAgreementType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐAgreementType(ctx, vSlice[i])
+		res[i], err = ec.unmarshalNAgreementType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐAgreementType(ctx, vSlice[i])
 		if err != nil {
 			return nil, err
 		}
@@ -36553,7 +36559,7 @@ func (ec *executionContext) unmarshalNAgreementType2ᚕgithubᚗcomᚋcmsgovᚋm
 	return res, nil
 }
 
-func (ec *executionContext) marshalNAgreementType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐAgreementTypeᚄ(ctx context.Context, sel ast.SelectionSet, v []model.AgreementType) graphql.Marshaler {
+func (ec *executionContext) marshalNAgreementType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐAgreementTypeᚄ(ctx context.Context, sel ast.SelectionSet, v []models.AgreementType) graphql.Marshaler {
 	ret := make(graphql.Array, len(v))
 	var wg sync.WaitGroup
 	isLen1 := len(v) == 1
@@ -36577,7 +36583,7 @@ func (ec *executionContext) marshalNAgreementType2ᚕgithubᚗcomᚋcmsgovᚋmin
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalNAgreementType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐAgreementType(ctx, sel, v[i])
+			ret[i] = ec.marshalNAgreementType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐAgreementType(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -36674,26 +36680,32 @@ func (ec *executionContext) marshalNAlternativePaymentModelType2ᚕgithubᚗcom�
 	return ret
 }
 
-func (ec *executionContext) unmarshalNAuthorityAllowance2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐAuthorityAllowance(ctx context.Context, v interface{}) (model.AuthorityAllowance, error) {
-	var res model.AuthorityAllowance
-	err := res.UnmarshalGQL(v)
+func (ec *executionContext) unmarshalNAuthorityAllowance2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐAuthorityAllowance(ctx context.Context, v interface{}) (models.AuthorityAllowance, error) {
+	tmp, err := graphql.UnmarshalString(v)
+	res := models.AuthorityAllowance(tmp)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) marshalNAuthorityAllowance2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐAuthorityAllowance(ctx context.Context, sel ast.SelectionSet, v model.AuthorityAllowance) graphql.Marshaler {
-	return v
+func (ec *executionContext) marshalNAuthorityAllowance2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐAuthorityAllowance(ctx context.Context, sel ast.SelectionSet, v models.AuthorityAllowance) graphql.Marshaler {
+	res := graphql.MarshalString(string(v))
+	if res == graphql.Null {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
+	}
+	return res
 }
 
-func (ec *executionContext) unmarshalNAuthorityAllowance2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐAuthorityAllowanceᚄ(ctx context.Context, v interface{}) ([]model.AuthorityAllowance, error) {
+func (ec *executionContext) unmarshalNAuthorityAllowance2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐAuthorityAllowanceᚄ(ctx context.Context, v interface{}) ([]models.AuthorityAllowance, error) {
 	var vSlice []interface{}
 	if v != nil {
 		vSlice = graphql.CoerceList(v)
 	}
 	var err error
-	res := make([]model.AuthorityAllowance, len(vSlice))
+	res := make([]models.AuthorityAllowance, len(vSlice))
 	for i := range vSlice {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
-		res[i], err = ec.unmarshalNAuthorityAllowance2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐAuthorityAllowance(ctx, vSlice[i])
+		res[i], err = ec.unmarshalNAuthorityAllowance2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐAuthorityAllowance(ctx, vSlice[i])
 		if err != nil {
 			return nil, err
 		}
@@ -36701,7 +36713,7 @@ func (ec *executionContext) unmarshalNAuthorityAllowance2ᚕgithubᚗcomᚋcmsgo
 	return res, nil
 }
 
-func (ec *executionContext) marshalNAuthorityAllowance2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐAuthorityAllowanceᚄ(ctx context.Context, sel ast.SelectionSet, v []model.AuthorityAllowance) graphql.Marshaler {
+func (ec *executionContext) marshalNAuthorityAllowance2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐAuthorityAllowanceᚄ(ctx context.Context, sel ast.SelectionSet, v []models.AuthorityAllowance) graphql.Marshaler {
 	ret := make(graphql.Array, len(v))
 	var wg sync.WaitGroup
 	isLen1 := len(v) == 1
@@ -36725,7 +36737,7 @@ func (ec *executionContext) marshalNAuthorityAllowance2ᚕgithubᚗcomᚋcmsgov�
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalNAuthorityAllowance2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐAuthorityAllowance(ctx, sel, v[i])
+			ret[i] = ec.marshalNAuthorityAllowance2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐAuthorityAllowance(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -37881,26 +37893,32 @@ func (ec *executionContext) marshalNGeneratePresignedUploadURLPayload2ᚖgithub�
 	return ec._GeneratePresignedUploadURLPayload(ctx, sel, v)
 }
 
-func (ec *executionContext) unmarshalNGeographyApplication2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐGeographyApplication(ctx context.Context, v interface{}) (model.GeographyApplication, error) {
-	var res model.GeographyApplication
-	err := res.UnmarshalGQL(v)
+func (ec *executionContext) unmarshalNGeographyApplication2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐGeographyApplication(ctx context.Context, v interface{}) (models.GeographyApplication, error) {
+	tmp, err := graphql.UnmarshalString(v)
+	res := models.GeographyApplication(tmp)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) marshalNGeographyApplication2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐGeographyApplication(ctx context.Context, sel ast.SelectionSet, v model.GeographyApplication) graphql.Marshaler {
-	return v
+func (ec *executionContext) marshalNGeographyApplication2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐGeographyApplication(ctx context.Context, sel ast.SelectionSet, v models.GeographyApplication) graphql.Marshaler {
+	res := graphql.MarshalString(string(v))
+	if res == graphql.Null {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
+	}
+	return res
 }
 
-func (ec *executionContext) unmarshalNGeographyApplication2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐGeographyApplicationᚄ(ctx context.Context, v interface{}) ([]model.GeographyApplication, error) {
+func (ec *executionContext) unmarshalNGeographyApplication2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐGeographyApplicationᚄ(ctx context.Context, v interface{}) ([]models.GeographyApplication, error) {
 	var vSlice []interface{}
 	if v != nil {
 		vSlice = graphql.CoerceList(v)
 	}
 	var err error
-	res := make([]model.GeographyApplication, len(vSlice))
+	res := make([]models.GeographyApplication, len(vSlice))
 	for i := range vSlice {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
-		res[i], err = ec.unmarshalNGeographyApplication2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐGeographyApplication(ctx, vSlice[i])
+		res[i], err = ec.unmarshalNGeographyApplication2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐGeographyApplication(ctx, vSlice[i])
 		if err != nil {
 			return nil, err
 		}
@@ -37908,7 +37926,7 @@ func (ec *executionContext) unmarshalNGeographyApplication2ᚕgithubᚗcomᚋcms
 	return res, nil
 }
 
-func (ec *executionContext) marshalNGeographyApplication2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐGeographyApplicationᚄ(ctx context.Context, sel ast.SelectionSet, v []model.GeographyApplication) graphql.Marshaler {
+func (ec *executionContext) marshalNGeographyApplication2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐGeographyApplicationᚄ(ctx context.Context, sel ast.SelectionSet, v []models.GeographyApplication) graphql.Marshaler {
 	ret := make(graphql.Array, len(v))
 	var wg sync.WaitGroup
 	isLen1 := len(v) == 1
@@ -37932,7 +37950,7 @@ func (ec *executionContext) marshalNGeographyApplication2ᚕgithubᚗcomᚋcmsgo
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalNGeographyApplication2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐGeographyApplication(ctx, sel, v[i])
+			ret[i] = ec.marshalNGeographyApplication2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐGeographyApplication(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -41063,26 +41081,32 @@ func (ec *executionContext) marshalNUserInfo2ᚖgithubᚗcomᚋcmsgovᚋmintᚑa
 	return ec._UserInfo(ctx, sel, v)
 }
 
-func (ec *executionContext) unmarshalNWaiverType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐWaiverType(ctx context.Context, v interface{}) (model.WaiverType, error) {
-	var res model.WaiverType
-	err := res.UnmarshalGQL(v)
+func (ec *executionContext) unmarshalNWaiverType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐWaiverType(ctx context.Context, v interface{}) (models.WaiverType, error) {
+	tmp, err := graphql.UnmarshalString(v)
+	res := models.WaiverType(tmp)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) marshalNWaiverType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐWaiverType(ctx context.Context, sel ast.SelectionSet, v model.WaiverType) graphql.Marshaler {
-	return v
+func (ec *executionContext) marshalNWaiverType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐWaiverType(ctx context.Context, sel ast.SelectionSet, v models.WaiverType) graphql.Marshaler {
+	res := graphql.MarshalString(string(v))
+	if res == graphql.Null {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
+	}
+	return res
 }
 
-func (ec *executionContext) unmarshalNWaiverType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐWaiverTypeᚄ(ctx context.Context, v interface{}) ([]model.WaiverType, error) {
+func (ec *executionContext) unmarshalNWaiverType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐWaiverTypeᚄ(ctx context.Context, v interface{}) ([]models.WaiverType, error) {
 	var vSlice []interface{}
 	if v != nil {
 		vSlice = graphql.CoerceList(v)
 	}
 	var err error
-	res := make([]model.WaiverType, len(vSlice))
+	res := make([]models.WaiverType, len(vSlice))
 	for i := range vSlice {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
-		res[i], err = ec.unmarshalNWaiverType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐWaiverType(ctx, vSlice[i])
+		res[i], err = ec.unmarshalNWaiverType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐWaiverType(ctx, vSlice[i])
 		if err != nil {
 			return nil, err
 		}
@@ -41090,7 +41114,7 @@ func (ec *executionContext) unmarshalNWaiverType2ᚕgithubᚗcomᚋcmsgovᚋmint
 	return res, nil
 }
 
-func (ec *executionContext) marshalNWaiverType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐWaiverTypeᚄ(ctx context.Context, sel ast.SelectionSet, v []model.WaiverType) graphql.Marshaler {
+func (ec *executionContext) marshalNWaiverType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐWaiverTypeᚄ(ctx context.Context, sel ast.SelectionSet, v []models.WaiverType) graphql.Marshaler {
 	ret := make(graphql.Array, len(v))
 	var wg sync.WaitGroup
 	isLen1 := len(v) == 1
@@ -41114,7 +41138,7 @@ func (ec *executionContext) marshalNWaiverType2ᚕgithubᚗcomᚋcmsgovᚋmint�
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalNWaiverType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐWaiverType(ctx, sel, v[i])
+			ret[i] = ec.marshalNWaiverType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐWaiverType(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -41454,7 +41478,7 @@ func (ec *executionContext) marshalOAgencyOrStateHelpType2ᚕgithubᚗcomᚋcmsg
 	return ret
 }
 
-func (ec *executionContext) unmarshalOAgreementType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐAgreementTypeᚄ(ctx context.Context, v interface{}) ([]model.AgreementType, error) {
+func (ec *executionContext) unmarshalOAgreementType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐAgreementTypeᚄ(ctx context.Context, v interface{}) ([]models.AgreementType, error) {
 	if v == nil {
 		return nil, nil
 	}
@@ -41463,10 +41487,10 @@ func (ec *executionContext) unmarshalOAgreementType2ᚕgithubᚗcomᚋcmsgovᚋm
 		vSlice = graphql.CoerceList(v)
 	}
 	var err error
-	res := make([]model.AgreementType, len(vSlice))
+	res := make([]models.AgreementType, len(vSlice))
 	for i := range vSlice {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
-		res[i], err = ec.unmarshalNAgreementType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐAgreementType(ctx, vSlice[i])
+		res[i], err = ec.unmarshalNAgreementType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐAgreementType(ctx, vSlice[i])
 		if err != nil {
 			return nil, err
 		}
@@ -41474,7 +41498,7 @@ func (ec *executionContext) unmarshalOAgreementType2ᚕgithubᚗcomᚋcmsgovᚋm
 	return res, nil
 }
 
-func (ec *executionContext) marshalOAgreementType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐAgreementTypeᚄ(ctx context.Context, sel ast.SelectionSet, v []model.AgreementType) graphql.Marshaler {
+func (ec *executionContext) marshalOAgreementType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐAgreementTypeᚄ(ctx context.Context, sel ast.SelectionSet, v []models.AgreementType) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
@@ -41501,7 +41525,7 @@ func (ec *executionContext) marshalOAgreementType2ᚕgithubᚗcomᚋcmsgovᚋmin
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalNAgreementType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐAgreementType(ctx, sel, v[i])
+			ret[i] = ec.marshalNAgreementType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐAgreementType(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -41588,7 +41612,7 @@ func (ec *executionContext) marshalOAlternativePaymentModelType2ᚕgithubᚗcom�
 	return ret
 }
 
-func (ec *executionContext) unmarshalOAuthorityAllowance2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐAuthorityAllowanceᚄ(ctx context.Context, v interface{}) ([]model.AuthorityAllowance, error) {
+func (ec *executionContext) unmarshalOAuthorityAllowance2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐAuthorityAllowanceᚄ(ctx context.Context, v interface{}) ([]models.AuthorityAllowance, error) {
 	if v == nil {
 		return nil, nil
 	}
@@ -41597,10 +41621,10 @@ func (ec *executionContext) unmarshalOAuthorityAllowance2ᚕgithubᚗcomᚋcmsgo
 		vSlice = graphql.CoerceList(v)
 	}
 	var err error
-	res := make([]model.AuthorityAllowance, len(vSlice))
+	res := make([]models.AuthorityAllowance, len(vSlice))
 	for i := range vSlice {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
-		res[i], err = ec.unmarshalNAuthorityAllowance2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐAuthorityAllowance(ctx, vSlice[i])
+		res[i], err = ec.unmarshalNAuthorityAllowance2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐAuthorityAllowance(ctx, vSlice[i])
 		if err != nil {
 			return nil, err
 		}
@@ -41608,7 +41632,7 @@ func (ec *executionContext) unmarshalOAuthorityAllowance2ᚕgithubᚗcomᚋcmsgo
 	return res, nil
 }
 
-func (ec *executionContext) marshalOAuthorityAllowance2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐAuthorityAllowanceᚄ(ctx context.Context, sel ast.SelectionSet, v []model.AuthorityAllowance) graphql.Marshaler {
+func (ec *executionContext) marshalOAuthorityAllowance2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐAuthorityAllowanceᚄ(ctx context.Context, sel ast.SelectionSet, v []models.AuthorityAllowance) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
@@ -41635,7 +41659,7 @@ func (ec *executionContext) marshalOAuthorityAllowance2ᚕgithubᚗcomᚋcmsgov�
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalNAuthorityAllowance2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐAuthorityAllowance(ctx, sel, v[i])
+			ret[i] = ec.marshalNAuthorityAllowance2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐAuthorityAllowance(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -42671,7 +42695,7 @@ func (ec *executionContext) marshalOGcUpdateContractType2ᚕgithubᚗcomᚋcmsgo
 	return ret
 }
 
-func (ec *executionContext) unmarshalOGeographyApplication2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐGeographyApplicationᚄ(ctx context.Context, v interface{}) ([]model.GeographyApplication, error) {
+func (ec *executionContext) unmarshalOGeographyApplication2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐGeographyApplicationᚄ(ctx context.Context, v interface{}) ([]models.GeographyApplication, error) {
 	if v == nil {
 		return nil, nil
 	}
@@ -42680,10 +42704,10 @@ func (ec *executionContext) unmarshalOGeographyApplication2ᚕgithubᚗcomᚋcms
 		vSlice = graphql.CoerceList(v)
 	}
 	var err error
-	res := make([]model.GeographyApplication, len(vSlice))
+	res := make([]models.GeographyApplication, len(vSlice))
 	for i := range vSlice {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
-		res[i], err = ec.unmarshalNGeographyApplication2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐGeographyApplication(ctx, vSlice[i])
+		res[i], err = ec.unmarshalNGeographyApplication2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐGeographyApplication(ctx, vSlice[i])
 		if err != nil {
 			return nil, err
 		}
@@ -42691,7 +42715,7 @@ func (ec *executionContext) unmarshalOGeographyApplication2ᚕgithubᚗcomᚋcms
 	return res, nil
 }
 
-func (ec *executionContext) marshalOGeographyApplication2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐGeographyApplicationᚄ(ctx context.Context, sel ast.SelectionSet, v []model.GeographyApplication) graphql.Marshaler {
+func (ec *executionContext) marshalOGeographyApplication2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐGeographyApplicationᚄ(ctx context.Context, sel ast.SelectionSet, v []models.GeographyApplication) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
@@ -42718,7 +42742,7 @@ func (ec *executionContext) marshalOGeographyApplication2ᚕgithubᚗcomᚋcmsgo
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalNGeographyApplication2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐGeographyApplication(ctx, sel, v[i])
+			ret[i] = ec.marshalNGeographyApplication2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐGeographyApplication(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -45359,7 +45383,7 @@ func (ec *executionContext) marshalOUUID2ᚖgithubᚗcomᚋgoogleᚋuuidᚐUUID(
 	return res
 }
 
-func (ec *executionContext) unmarshalOWaiverType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐWaiverTypeᚄ(ctx context.Context, v interface{}) ([]model.WaiverType, error) {
+func (ec *executionContext) unmarshalOWaiverType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐWaiverTypeᚄ(ctx context.Context, v interface{}) ([]models.WaiverType, error) {
 	if v == nil {
 		return nil, nil
 	}
@@ -45368,10 +45392,10 @@ func (ec *executionContext) unmarshalOWaiverType2ᚕgithubᚗcomᚋcmsgovᚋmint
 		vSlice = graphql.CoerceList(v)
 	}
 	var err error
-	res := make([]model.WaiverType, len(vSlice))
+	res := make([]models.WaiverType, len(vSlice))
 	for i := range vSlice {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
-		res[i], err = ec.unmarshalNWaiverType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐWaiverType(ctx, vSlice[i])
+		res[i], err = ec.unmarshalNWaiverType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐWaiverType(ctx, vSlice[i])
 		if err != nil {
 			return nil, err
 		}
@@ -45379,7 +45403,7 @@ func (ec *executionContext) unmarshalOWaiverType2ᚕgithubᚗcomᚋcmsgovᚋmint
 	return res, nil
 }
 
-func (ec *executionContext) marshalOWaiverType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐWaiverTypeᚄ(ctx context.Context, sel ast.SelectionSet, v []model.WaiverType) graphql.Marshaler {
+func (ec *executionContext) marshalOWaiverType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐWaiverTypeᚄ(ctx context.Context, sel ast.SelectionSet, v []models.WaiverType) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
@@ -45406,7 +45430,7 @@ func (ec *executionContext) marshalOWaiverType2ᚕgithubᚗcomᚋcmsgovᚋmint�
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalNWaiverType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐWaiverType(ctx, sel, v[i])
+			ret[i] = ec.marshalNWaiverType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐWaiverType(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)

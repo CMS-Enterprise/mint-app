@@ -126,94 +126,6 @@ func (e AgencyOrStateHelpType) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
-type AgreementType string
-
-const (
-	AgreementTypeParticipation AgreementType = "PARTICIPATION"
-	AgreementTypeCooperative   AgreementType = "COOPERATIVE"
-	AgreementTypeOther         AgreementType = "OTHER"
-)
-
-var AllAgreementType = []AgreementType{
-	AgreementTypeParticipation,
-	AgreementTypeCooperative,
-	AgreementTypeOther,
-}
-
-func (e AgreementType) IsValid() bool {
-	switch e {
-	case AgreementTypeParticipation, AgreementTypeCooperative, AgreementTypeOther:
-		return true
-	}
-	return false
-}
-
-func (e AgreementType) String() string {
-	return string(e)
-}
-
-func (e *AgreementType) UnmarshalGQL(v interface{}) error {
-	str, ok := v.(string)
-	if !ok {
-		return fmt.Errorf("enums must be strings")
-	}
-
-	*e = AgreementType(str)
-	if !e.IsValid() {
-		return fmt.Errorf("%s is not a valid AgreementType", str)
-	}
-	return nil
-}
-
-func (e AgreementType) MarshalGQL(w io.Writer) {
-	fmt.Fprint(w, strconv.Quote(e.String()))
-}
-
-type AuthorityAllowance string
-
-const (
-	AuthorityAllowanceAca                     AuthorityAllowance = "ACA"
-	AuthorityAllowanceCongressionallyMandated AuthorityAllowance = "CONGRESSIONALLY_MANDATED"
-	AuthorityAllowanceSsaPartB                AuthorityAllowance = "SSA_PART_B"
-	AuthorityAllowanceOther                   AuthorityAllowance = "OTHER"
-)
-
-var AllAuthorityAllowance = []AuthorityAllowance{
-	AuthorityAllowanceAca,
-	AuthorityAllowanceCongressionallyMandated,
-	AuthorityAllowanceSsaPartB,
-	AuthorityAllowanceOther,
-}
-
-func (e AuthorityAllowance) IsValid() bool {
-	switch e {
-	case AuthorityAllowanceAca, AuthorityAllowanceCongressionallyMandated, AuthorityAllowanceSsaPartB, AuthorityAllowanceOther:
-		return true
-	}
-	return false
-}
-
-func (e AuthorityAllowance) String() string {
-	return string(e)
-}
-
-func (e *AuthorityAllowance) UnmarshalGQL(v interface{}) error {
-	str, ok := v.(string)
-	if !ok {
-		return fmt.Errorf("enums must be strings")
-	}
-
-	*e = AuthorityAllowance(str)
-	if !e.IsValid() {
-		return fmt.Errorf("%s is not a valid AuthorityAllowance", str)
-	}
-	return nil
-}
-
-func (e AuthorityAllowance) MarshalGQL(w io.Writer) {
-	fmt.Fprint(w, strconv.Quote(e.String()))
-}
-
 type BManageBeneficiaryOverlapType string
 
 const (
@@ -734,51 +646,6 @@ func (e *GcUpdateContractType) UnmarshalGQL(v interface{}) error {
 }
 
 func (e GcUpdateContractType) MarshalGQL(w io.Writer) {
-	fmt.Fprint(w, strconv.Quote(e.String()))
-}
-
-type GeographyApplication string
-
-const (
-	GeographyApplicationParticipants  GeographyApplication = "PARTICIPANTS"
-	GeographyApplicationProviders     GeographyApplication = "PROVIDERS"
-	GeographyApplicationBeneficiaries GeographyApplication = "BENEFICIARIES"
-	GeographyApplicationOther         GeographyApplication = "OTHER"
-)
-
-var AllGeographyApplication = []GeographyApplication{
-	GeographyApplicationParticipants,
-	GeographyApplicationProviders,
-	GeographyApplicationBeneficiaries,
-	GeographyApplicationOther,
-}
-
-func (e GeographyApplication) IsValid() bool {
-	switch e {
-	case GeographyApplicationParticipants, GeographyApplicationProviders, GeographyApplicationBeneficiaries, GeographyApplicationOther:
-		return true
-	}
-	return false
-}
-
-func (e GeographyApplication) String() string {
-	return string(e)
-}
-
-func (e *GeographyApplication) UnmarshalGQL(v interface{}) error {
-	str, ok := v.(string)
-	if !ok {
-		return fmt.Errorf("enums must be strings")
-	}
-
-	*e = GeographyApplication(str)
-	if !e.IsValid() {
-		return fmt.Errorf("%s is not a valid GeographyApplication", str)
-	}
-	return nil
-}
-
-func (e GeographyApplication) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
@@ -2330,48 +2197,5 @@ func (e *StakeholdersType) UnmarshalGQL(v interface{}) error {
 }
 
 func (e StakeholdersType) MarshalGQL(w io.Writer) {
-	fmt.Fprint(w, strconv.Quote(e.String()))
-}
-
-type WaiverType string
-
-const (
-	WaiverTypeFraudAbuse     WaiverType = "FRAUD_ABUSE"
-	WaiverTypeProgramPayment WaiverType = "PROGRAM_PAYMENT"
-	WaiverTypeMedicaid       WaiverType = "MEDICAID"
-)
-
-var AllWaiverType = []WaiverType{
-	WaiverTypeFraudAbuse,
-	WaiverTypeProgramPayment,
-	WaiverTypeMedicaid,
-}
-
-func (e WaiverType) IsValid() bool {
-	switch e {
-	case WaiverTypeFraudAbuse, WaiverTypeProgramPayment, WaiverTypeMedicaid:
-		return true
-	}
-	return false
-}
-
-func (e WaiverType) String() string {
-	return string(e)
-}
-
-func (e *WaiverType) UnmarshalGQL(v interface{}) error {
-	str, ok := v.(string)
-	if !ok {
-		return fmt.Errorf("enums must be strings")
-	}
-
-	*e = WaiverType(str)
-	if !e.IsValid() {
-		return fmt.Errorf("%s is not a valid WaiverType", str)
-	}
-	return nil
-}
-
-func (e WaiverType) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }

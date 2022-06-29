@@ -1,6 +1,7 @@
 package models
 
 import (
+	"database/sql/driver"
 	"time"
 
 	"github.com/google/uuid"
@@ -49,29 +50,29 @@ type PlanGeneralCharacteristics struct {
 	CommunityPartnersInvolvedNote         *string `json:"communityPartnersInvolvedNote" db:"community_partners_involved_note"`
 
 	// Page 4
-	GeographiesTargeted                       *bool          `json:"geographiesTargeted" db:"geographies_targeted" statusWeight:"1"`
-	GeographiesTargetedTypes                  GeographyTypeG `json:"geographiesTargetedTypes" db:"geographies_targeted_types"`
-	GeographiesTargetedTypesOther             *string        `json:"geographiesTargetedTypesOther" db:"geographies_targeted_types_other"`
-	GeographiesTargetedAppliedTo              pq.StringArray `json:"geographiesTargetedAppliedTo" db:"geographies_targeted_applied_to"`
-	GeographiesTargetedAppliedToOther         *string        `json:"geographiesTargetedAppliedToOther" db:"geographies_targeted_applied_to_other"`
-	GeographiesTargetedNote                   *string        `json:"geographiesTargetedNote" db:"geographies_targeted_note"`
-	ParticipationOptions                      *bool          `json:"participationOptions" db:"participation_options" statusWeight:"1"`
-	ParticipationOptionsNote                  *string        `json:"participationOptionsNote" db:"participation_options_note"`
-	AgreementTypes                            pq.StringArray `json:"agreementTypes" db:"agreement_types"`
-	AgreementTypesOther                       *string        `json:"agreementTypesOther" db:"agreement_types_other"`
-	MultiplePatricipationAgreementsNeeded     *bool          `json:"multiplePatricipationAgreementsNeeded" db:"multiple_patricipation_agreements_needed"`
-	MultiplePatricipationAgreementsNeededNote *string        `json:"multiplePatricipationAgreementsNeededNote" db:"multiple_patricipation_agreements_needed_note"`
+	GeographiesTargeted                       *bool                 `json:"geographiesTargeted" db:"geographies_targeted" statusWeight:"1"`
+	GeographiesTargetedTypes                  GeographyTypeG        `json:"geographiesTargetedTypes" db:"geographies_targeted_types"`
+	GeographiesTargetedTypesOther             *string               `json:"geographiesTargetedTypesOther" db:"geographies_targeted_types_other"`
+	GeographiesTargetedAppliedTo              GeographyApplicationG `json:"geographiesTargetedAppliedTo" db:"geographies_targeted_applied_to"`
+	GeographiesTargetedAppliedToOther         *string               `json:"geographiesTargetedAppliedToOther" db:"geographies_targeted_applied_to_other"`
+	GeographiesTargetedNote                   *string               `json:"geographiesTargetedNote" db:"geographies_targeted_note"`
+	ParticipationOptions                      *bool                 `json:"participationOptions" db:"participation_options" statusWeight:"1"`
+	ParticipationOptionsNote                  *string               `json:"participationOptionsNote" db:"participation_options_note"`
+	AgreementTypes                            AgreementTypeG        `json:"agreementTypes" db:"agreement_types"`
+	AgreementTypesOther                       *string               `json:"agreementTypesOther" db:"agreement_types_other"`
+	MultiplePatricipationAgreementsNeeded     *bool                 `json:"multiplePatricipationAgreementsNeeded" db:"multiple_patricipation_agreements_needed"`
+	MultiplePatricipationAgreementsNeededNote *string               `json:"multiplePatricipationAgreementsNeededNote" db:"multiple_patricipation_agreements_needed_note"`
 
 	// Page 5
-	RulemakingRequired            *bool          `json:"rulemakingRequired" db:"rulemaking_required" statusWeight:"1"`
-	RulemakingRequiredDescription *string        `json:"rulemakingRequiredDescription" db:"rulemaking_required_description"`
-	RulemakingRequiredNote        *string        `json:"rulemakingRequiredNote" db:"rulemaking_required_note"`
-	AuthorityAllowances           pq.StringArray `json:"authorityAllowances" db:"authority_allowances"`
-	AuthorityAllowancesOther      *string        `json:"authorityAllowancesOther" db:"authority_allowances_other"`
-	AuthorityAllowancesNote       *string        `json:"authorityAllowancesNote" db:"authority_allowances_note"`
-	WaiversRequired               *bool          `json:"waiversRequired" db:"waivers_required" statusWeight:"1"`
-	WaiversRequiredTypes          pq.StringArray `json:"waiversRequiredTypes" db:"waivers_required_types"`
-	WaiversRequiredNote           *string        `json:"waiversRequiredNote" db:"waivers_required_note"`
+	RulemakingRequired            *bool               `json:"rulemakingRequired" db:"rulemaking_required" statusWeight:"1"`
+	RulemakingRequiredDescription *string             `json:"rulemakingRequiredDescription" db:"rulemaking_required_description"`
+	RulemakingRequiredNote        *string             `json:"rulemakingRequiredNote" db:"rulemaking_required_note"`
+	AuthorityAllowances           AuthorityAllowanceG `json:"authorityAllowances" db:"authority_allowances"`
+	AuthorityAllowancesOther      *string             `json:"authorityAllowancesOther" db:"authority_allowances_other"`
+	AuthorityAllowancesNote       *string             `json:"authorityAllowancesNote" db:"authority_allowances_note"`
+	WaiversRequired               *bool               `json:"waiversRequired" db:"waivers_required" statusWeight:"1"`
+	WaiversRequiredTypes          WaiverTypeG         `json:"waiversRequiredTypes" db:"waivers_required_types"`
+	WaiversRequiredNote           *string             `json:"waiversRequiredNote" db:"waivers_required_note"`
 
 	// Meta
 	CreatedBy   string     `json:"createdBy" db:"created_by"`
@@ -152,6 +153,16 @@ const (
 //GeographyTypeG is an array of GeographyType
 type GeographyTypeG []GeographyType
 
+//Scan is used by sql.scan to read the values from the DB
+func (a *GeographyTypeG) Scan(src interface{}) error {
+	return GenericScan(src, a)
+}
+
+// Value implements the driver.Valuer interface.
+func (a GeographyTypeG) Value() (driver.Value, error) {
+	return GenericValue(a)
+}
+
 // GeographyType represents the types of Geography types.
 type GeographyType string
 
@@ -160,4 +171,98 @@ const (
 	GTState  GeographyType = "STATE"
 	GTRegion GeographyType = "REGION"
 	GTOther  GeographyType = "OTHER"
+)
+
+//GeographyApplicationG is an array of GeographyApplication
+type GeographyApplicationG []GeographyApplication
+
+//Scan is used by sql.scan to read the values from the DB
+func (a *GeographyApplicationG) Scan(src interface{}) error {
+	return GenericScan(src, a)
+}
+
+// Value implements the driver.Valuer interface.
+func (a GeographyApplicationG) Value() (driver.Value, error) {
+	return GenericValue(a)
+}
+
+// GeographyApplication represents the types of GeographyApplication types.
+type GeographyApplication string
+
+//These are the options for GeographyApplication
+const (
+	GAParticipants  GeographyApplication = "PARTICIPANTS"
+	GAProviders     GeographyApplication = "PROVIDERS"
+	GABeneficiaries GeographyApplication = "BENEFICIARIES"
+	GAOther         GeographyApplication = "OTHER"
+)
+
+//AgreementTypeG is an array of AgreementType
+type AgreementTypeG []AgreementType
+
+//Scan is used by sql.scan to read the values from the DB
+func (a *AgreementTypeG) Scan(src interface{}) error {
+	return GenericScan(src, a)
+}
+
+// Value implements the driver.Valuer interface.
+func (a AgreementTypeG) Value() (driver.Value, error) {
+	return GenericValue(a)
+}
+
+// AgreementType represents the types of Agreement types.
+type AgreementType string
+
+//These are the options for AgreementType
+const (
+	AGTParticipation AgreementType = "PARTICIPATION"
+	AGTCooperative   AgreementType = "COOPERATIVE"
+	AGTOther         AgreementType = "OTHER"
+)
+
+//AuthorityAllowanceG is an array of AuthorityAllowance
+type AuthorityAllowanceG []AuthorityAllowance
+
+//Scan is used by sql.scan to read the values from the DB
+func (a *AuthorityAllowanceG) Scan(src interface{}) error {
+	return GenericScan(src, a)
+}
+
+// Value implements the driver.Valuer interface.
+func (a AuthorityAllowanceG) Value() (driver.Value, error) {
+	return GenericValue(a)
+}
+
+// AuthorityAllowance represents the types of AuthorityAllowance types.
+type AuthorityAllowance string
+
+//These are the options for AuthorityAllowance
+const (
+	AATAca                     AuthorityAllowance = "ACA"
+	AATCongressionallyMandated AuthorityAllowance = "CONGRESSIONALLY_MANDATED"
+	AATSsaPartB                AuthorityAllowance = "SSA_PART_B"
+	AATOther                   AuthorityAllowance = "OTHER"
+)
+
+//WaiverTypeG is an array of WaiverType
+type WaiverTypeG []WaiverType
+
+//Scan is used by sql.scan to read the values from the DB
+func (a *WaiverTypeG) Scan(src interface{}) error {
+	return GenericScan(src, a)
+}
+
+// Value implements the driver.Valuer interface.
+func (a WaiverTypeG) Value() (driver.Value, error) {
+	return GenericValue(a)
+}
+
+// WaiverType represents the types of Waiver types.
+type WaiverType string
+
+//These are the options for WaiverType
+const (
+	WATFraudAbuse     WaiverType = "FRAUD_ABUSE"
+	WATProgramPayment WaiverType = "PROGRAM_PAYMENT"
+	WATMedicaid       WaiverType = "MEDICAID"
 )

@@ -296,24 +296,20 @@ func (r *planGeneralCharacteristicsResolver) GeographiesTargetedTypes(ctx contex
 	return obj.GeographiesTargetedTypes, nil
 }
 
-func (r *planGeneralCharacteristicsResolver) GeographiesTargetedAppliedTo(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]model.GeographyApplication, error) {
-	geographyApplications := models.ConvertEnums[model.GeographyApplication](obj.GeographiesTargetedAppliedTo)
-	return geographyApplications, nil
+func (r *planGeneralCharacteristicsResolver) GeographiesTargetedAppliedTo(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]models.GeographyApplication, error) {
+	return obj.GeographiesTargetedAppliedTo, nil
 }
 
-func (r *planGeneralCharacteristicsResolver) AgreementTypes(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]model.AgreementType, error) {
-	agreementTypes := models.ConvertEnums[model.AgreementType](obj.AgreementTypes)
-	return agreementTypes, nil
+func (r *planGeneralCharacteristicsResolver) AgreementTypes(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]models.AgreementType, error) {
+	return obj.AgreementTypes, nil
 }
 
-func (r *planGeneralCharacteristicsResolver) AuthorityAllowances(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]model.AuthorityAllowance, error) {
-	authorityAllowances := models.ConvertEnums[model.AuthorityAllowance](obj.AuthorityAllowances)
-	return authorityAllowances, nil
+func (r *planGeneralCharacteristicsResolver) AuthorityAllowances(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]models.AuthorityAllowance, error) {
+	return obj.AuthorityAllowances, nil
 }
 
-func (r *planGeneralCharacteristicsResolver) WaiversRequiredTypes(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]model.WaiverType, error) {
-	waiverTypes := models.ConvertEnums[model.WaiverType](obj.WaiversRequiredTypes)
-	return waiverTypes, nil
+func (r *planGeneralCharacteristicsResolver) WaiversRequiredTypes(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]models.WaiverType, error) {
+	return obj.WaiversRequiredTypes, nil
 }
 
 func (r *planITToolsResolver) GcPartCd(ctx context.Context, obj *models.PlanITTools) ([]model.GcPartCDType, error) {
