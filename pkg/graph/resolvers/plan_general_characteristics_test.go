@@ -76,12 +76,12 @@ func (suite *ResolverSuite) TestUpdatePlanGeneralCharacteristics() {
 	suite.NoError(err)
 
 	changes := map[string]interface{}{
-		"hasComponentsOrTracks":       true,
-		"hasComponentsOrTracksDiffer": "One track does something one way, the other does it another way",
-		"hasComponentsOrTracksNote":   "Look at the tracks carefully",
-		"alternativePaymentModel":     true,
-		// "alternativePaymentModelTypes": []string{model.AlternativePaymentModelTypeMips.String(), model.AlternativePaymentModelTypeAdvanced.String()},
-		"AlternativePaymentModelNote": "Has 2 APM types!",
+		"hasComponentsOrTracks":        true,
+		"hasComponentsOrTracksDiffer":  "One track does something one way, the other does it another way",
+		"hasComponentsOrTracksNote":    "Look at the tracks carefully",
+		"alternativePaymentModel":      true,
+		"alternativePaymentModelTypes": []string{string(models.APMMips), string(models.APMAdvanced)},
+		"AlternativePaymentModelNote":  "Has 2 APM types!",
 	}
 	updater := "UPDT"
 	updatedGeneralCharacteristics, err := UpdatePlanGeneralCharacteristics(suite.testConfigs.Logger, gc.ID, changes, updater, suite.testConfigs.Store)
@@ -93,7 +93,7 @@ func (suite *ResolverSuite) TestUpdatePlanGeneralCharacteristics() {
 	suite.EqualValues("One track does something one way, the other does it another way", *updatedGeneralCharacteristics.HasComponentsOrTracksDiffer)
 	suite.EqualValues("Look at the tracks carefully", *updatedGeneralCharacteristics.HasComponentsOrTracksNote)
 	suite.True(*updatedGeneralCharacteristics.AlternativePaymentModel)
-	// suite.EqualValues([]string{model.AlternativePaymentModelTypeMips.String(), model.AlternativePaymentModelTypeAdvanced.String()}, updatedGeneralCharacteristics.AlternativePaymentModelTypes)
+	suite.EqualValues([]string{string(models.APMMips), string(models.APMAdvanced)}, updatedGeneralCharacteristics.AlternativePaymentModelTypes)
 	suite.EqualValues("Has 2 APM types!", *updatedGeneralCharacteristics.AlternativePaymentModelNote)
 	suite.EqualValues(models.TaskInProgress, updatedGeneralCharacteristics.Status)
 
