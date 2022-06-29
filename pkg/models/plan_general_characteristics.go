@@ -121,6 +121,16 @@ func (gc PlanGeneralCharacteristics) GetCreatedBy() string {
 //AlternativePaymentModelTypeG is an array of AlternativePaymentModelType
 type AlternativePaymentModelTypeG []AlternativePaymentModelType
 
+//Scan is used by sql.scan to read the values from the DB
+func (a *AlternativePaymentModelTypeG) Scan(src interface{}) error {
+	return GenericScan(src, a)
+}
+
+//Value implements the driver.Valuer interface.
+func (a AlternativePaymentModelTypeG) Value() (driver.Value, error) {
+	return GenericValue(a)
+}
+
 // AlternativePaymentModelType represents the types of AlternativePaymentModel types.
 type AlternativePaymentModelType string
 
@@ -133,6 +143,16 @@ const (
 
 //KeyCharacteristicG is an array of KeyCharacteristic
 type KeyCharacteristicG []KeyCharacteristic
+
+//Scan is used by sql.scan to read the values from the DB
+func (a *KeyCharacteristicG) Scan(src interface{}) error {
+	return GenericScan(src, a)
+}
+
+//Value implements the driver.Valuer interface.
+func (a KeyCharacteristicG) Value() (driver.Value, error) {
+	return GenericValue(a)
+}
 
 // KeyCharacteristic represents the types of KeyCharacteristic types.
 type KeyCharacteristic string

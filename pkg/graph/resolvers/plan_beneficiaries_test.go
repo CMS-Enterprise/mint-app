@@ -15,7 +15,7 @@ func (suite *ResolverSuite) TestPlanBeneficiariesUpdate() {
 	changes := map[string]interface{}{
 		"treatDualElligibleDifferent": "YES",
 		"beneficiariesOther":          "The Gumdrop Kids",
-		"beneficiarySelectionMethod":  []string{string(models.SMTOther), string(models.SMTHistorical)},
+		"beneficiarySelectionMethod":  models.SelectionMethodTypeG{models.SMTOther, models.SMTHistorical},
 		"beneficiarySelectionNote":    "Priority given to provider sign up",
 	}
 
@@ -28,7 +28,7 @@ func (suite *ResolverSuite) TestPlanBeneficiariesUpdate() {
 	// Assert that the updated fields are right
 	suite.EqualValues(*updatedBeneficiary.TreatDualElligibleDifferent, models.TriYes)
 	suite.EqualValues(*updatedBeneficiary.BeneficiariesOther, "The Gumdrop Kids")
-	suite.EqualValues(updatedBeneficiary.BeneficiarySelectionMethod, []string{string(models.SMTOther), string(models.SMTHistorical)})
+	suite.EqualValues(updatedBeneficiary.BeneficiarySelectionMethod, models.SelectionMethodTypeG{models.SMTOther, models.SMTHistorical})
 	suite.EqualValues(*updatedBeneficiary.BeneficiarySelectionNote, "Priority given to provider sign up")
 
 	// Assert that no other fields got updated

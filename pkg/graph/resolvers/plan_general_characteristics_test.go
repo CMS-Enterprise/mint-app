@@ -80,7 +80,7 @@ func (suite *ResolverSuite) TestUpdatePlanGeneralCharacteristics() {
 		"hasComponentsOrTracksDiffer":  "One track does something one way, the other does it another way",
 		"hasComponentsOrTracksNote":    "Look at the tracks carefully",
 		"alternativePaymentModel":      true,
-		"alternativePaymentModelTypes": []string{string(models.APMMips), string(models.APMAdvanced)},
+		"alternativePaymentModelTypes": models.AlternativePaymentModelTypeG{models.APMMips, models.APMAdvanced},
 		"AlternativePaymentModelNote":  "Has 2 APM types!",
 	}
 	updater := "UPDT"
@@ -93,7 +93,7 @@ func (suite *ResolverSuite) TestUpdatePlanGeneralCharacteristics() {
 	suite.EqualValues("One track does something one way, the other does it another way", *updatedGeneralCharacteristics.HasComponentsOrTracksDiffer)
 	suite.EqualValues("Look at the tracks carefully", *updatedGeneralCharacteristics.HasComponentsOrTracksNote)
 	suite.True(*updatedGeneralCharacteristics.AlternativePaymentModel)
-	suite.EqualValues([]string{string(models.APMMips), string(models.APMAdvanced)}, updatedGeneralCharacteristics.AlternativePaymentModelTypes)
+	suite.EqualValues(models.AlternativePaymentModelTypeG{models.APMMips, models.APMAdvanced}, updatedGeneralCharacteristics.AlternativePaymentModelTypes)
 	suite.EqualValues("Has 2 APM types!", *updatedGeneralCharacteristics.AlternativePaymentModelNote)
 	suite.EqualValues(models.TaskInProgress, updatedGeneralCharacteristics.Status)
 

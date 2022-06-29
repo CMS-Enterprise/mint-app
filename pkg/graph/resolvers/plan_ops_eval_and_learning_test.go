@@ -14,7 +14,6 @@ func (suite *ResolverSuite) TestPlanOpsEvalAndLearningUpdate() {
 
 	changes := map[string]interface{}{
 		"stakeholdersNote":                  "These stakeholders might change",
-		"helpdeskUseOther":                  "We will utilize existing CMS helpdesk",
 		"technicalContactsIdentified":       true,
 		"technicalContactsIdentifiedDetail": "Mrs. Robinson",
 	}
@@ -24,6 +23,12 @@ func (suite *ResolverSuite) TestPlanOpsEvalAndLearningUpdate() {
 	oel, err := PlanOpsEvalAndLearningUpdate(suite.testConfigs.Logger, oelExisting.ID, changes, updater, suite.testConfigs.Store)
 	suite.NoError(err)
 
+	// Assert that the updated fields are right
+	suite.EqualValues(*oel.StakeholdersNote, changes["stakeholdersNote"])
+	suite.EqualValues(*oel.TechnicalContactsIdentified, changes["technicalContactsIdentified"])
+	suite.EqualValues(*oel.TechnicalContactsIdentifiedDetail, changes["technicalContactsIdentifiedDetail"])
+
+	// Assert that no other fields are updated
 	suite.Nil(oel.AgencyOrStateHelp)
 	suite.Nil(oel.AgencyOrStateHelpOther)
 	suite.Nil(oel.AgencyOrStateHelpNote)
