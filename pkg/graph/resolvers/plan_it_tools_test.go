@@ -8,7 +8,7 @@ func (suite *ResolverSuite) TestPlanITToolsUpdate() {
 	itExisting, err := PlanITToolsGetByModelPlanID(suite.testConfigs.Logger, plan.ID, suite.testConfigs.Store)
 	suite.NoError(err)
 	changes := map[string]interface{}{
-		"gcPartCD":      []string{"OTHER", "MARX"},
+		"gcPartCD":      models.GcPartCDTypeG{"OTHER", "MARX"},
 		"gcPartCDOther": "My test tool",
 	}
 
@@ -17,7 +17,7 @@ func (suite *ResolverSuite) TestPlanITToolsUpdate() {
 	suite.NoError(err)
 
 	// Assert that the updated fields are right
-	suite.EqualValues([]string{"OTHER", "MARX"}, it.GcPartCD)
+	suite.EqualValues(models.GcPartCDTypeG{"OTHER", "MARX"}, it.GcPartCD)
 	suite.EqualValues("My test tool", *it.GcPartCDOther)
 
 	//Page 1
