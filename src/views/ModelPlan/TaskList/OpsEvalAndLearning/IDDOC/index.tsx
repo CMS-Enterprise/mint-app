@@ -113,7 +113,7 @@ const IDDOC = () => {
       } else {
         setDateInPast(false);
       }
-    }, 200);
+    }, 250);
   }, [draftIcdDueDate]);
 
   const initialValues: IDDOCFormType = {
