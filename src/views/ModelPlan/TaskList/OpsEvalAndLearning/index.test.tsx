@@ -5,8 +5,14 @@ import { render, screen, waitFor } from '@testing-library/react';
 
 import GetOpsEvalAndLearning from 'queries/OpsEvalAndLearning/GetOpsEvalAndLearning';
 import { GetOpsEvalAndLearning_modelPlan_opsEvalAndLearning as GetOpsEvalAndLearningType } from 'queries/OpsEvalAndLearning/types/GetOpsEvalAndLearning';
+import { CcmInvolvmentType } from 'types/graphql-global-types';
 
-import { OpsEvalAndLearningContent } from './index';
+import {
+  isCCWInvolvement,
+  OpsEvalAndLearningContent,
+  renderCurrentPage,
+  renderTotalPages
+} from './index';
 
 const opsEvalAndLearningMockData: GetOpsEvalAndLearningType = {
   __typename: 'PlanOpsEvalAndLearning',
@@ -47,6 +53,47 @@ const opsEvalAndLearningMock = [
 ];
 
 describe('Model Plan Ops Eval and Learning', () => {
+  it('computes total pages', () => {
+    const totalPages9 = renderTotalPages(
+      true,
+      isCCWInvolvement([CcmInvolvmentType.YES_EVALUATION])
+    );
+    expect(totalPages9).toEqual(9);
+
+    const totalPages6 = renderTotalPages(
+      false,
+      isCCWInvolvement([CcmInvolvmentType.YES_EVALUATION])
+    );
+    expect(totalPages6).toEqual(6);
+
+    const totalPages8 = renderTotalPages(true, isCCWInvolvement([]));
+    expect(totalPages8).toEqual(8);
+  });
+
+  it('computes current pages', () => {
+    const currentPage = renderCurrentPage(
+      1,
+      true,
+      isCCWInvolvement([CcmInvolvmentType.YES_EVALUATION])
+    );
+    expect(currentPage).toEqual(1);
+
+    const currentPage2 = renderCurrentPage(
+      5,
+      false,
+      isCCWInvolvement([CcmInvolvmentType.YES_EVALUATION])
+    );
+    expect(currentPage2).toEqual(2);
+  });
+
+  it('computes cmmi involvement', () => {
+    const cmmiInvolvment = isCCWInvolvement([CcmInvolvmentType.YES_EVALUATION]);
+    expect(cmmiInvolvment).toEqual(true);
+
+    const cmmiInvolvmentFalse = isCCWInvolvement([]);
+    expect(cmmiInvolvmentFalse).toEqual(false);
+  });
+
   it('renders without errors', async () => {
     render(
       <MemoryRouter
