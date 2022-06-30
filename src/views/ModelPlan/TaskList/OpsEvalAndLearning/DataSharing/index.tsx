@@ -300,7 +300,7 @@ const DataSharing = () => {
                   </FieldErrorMsg>
                   <Field
                     as={MultiSelect}
-                    id="ps-eval-and-learning-data-sharing-frequency"
+                    id="ops-eval-and-learning-data-sharing-frequency"
                     name="dataSharingFrequency"
                     options={mapMultiSelectOptions(
                       translateDataFrequencyType,

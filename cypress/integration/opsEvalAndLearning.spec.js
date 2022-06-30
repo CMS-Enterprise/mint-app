@@ -155,16 +155,203 @@ describe('The Model Plan Ops Eval and Learning Form', () => {
 
     // Page - /ops-eval-and-learning/performance
 
-    // cy.wait(500);
+    cy.wait(500);
+
+    cy.get('#ops-eval-and-learning-benchmark-performance-YES_RECONCILE')
+      .check({ force: true })
+      .should('be.checked');
+
+    cy.get('#ops-eval-and-learning-compute-performance-true')
+      .check({ force: true })
+      .should('be.checked');
+
+    cy.get('#ops-eval-and-learning-risk-adjustment-performance-true')
+      .check({ force: true })
+      .should('be.checked');
+
+    cy.get('#ops-eval-and-learning-risk-adjustment-feedback-true')
+      .check({ force: true })
+      .should('be.checked');
+
+    cy.get('#ops-eval-and-learning-risk-adjustment-payment-true')
+      .check({ force: true })
+      .should('be.checked');
+
+    cy.get('#ops-eval-and-learning-risk-adjustment-other-true')
+      .check({ force: true })
+      .should('be.checked');
+
+    cy.get('#ops-eval-and-learning-appeal-performance-true')
+      .check({ force: true })
+      .should('be.checked');
+
+    cy.get('#ops-eval-and-learning-appeal-feedback-true')
+      .check({ force: true })
+      .should('be.checked');
+
+    cy.get('#ops-eval-and-learning-appeal-payment-true')
+      .check({ force: true })
+      .should('be.checked');
+
+    cy.get('#ops-eval-and-learning-appeal-other-true')
+      .check({ force: true })
+      .should('be.checked');
 
     cy.contains('button', 'Next').click();
 
-    // cy.location().should(loc => {
-    //   expect(loc.pathname).to.match(/\/models\/.{36}\/task-list/);
-    // });
+    // Page - /ops-eval-and-learning/evaluation
 
-    // cy.get(
-    //   '[data-testid="task-list-intake-form-participants-and-providers"]'
-    // ).contains('Completed');
+    cy.wait(500);
+
+    cy.get('#ops-eval-and-learning-evaluation-approach-OTHER')
+      .check({ force: true })
+      .should('be.checked');
+
+    cy.get('#ops-eval-and-learning-evaluation-approach-other')
+      .type('A New algorithym')
+      .should('have.value', 'A New algorithym');
+
+    cy.get('#ops-eval-and-learning-cmmi-involvement-YES_EVALUATION')
+      .check({ force: true })
+      .should('be.checked');
+
+    cy.get('#ops-eval-and-learning-cmmi-involvement-OTHER')
+      .check({ force: true })
+      .should('be.checked');
+
+    cy.get('#ops-eval-and-learning-cmmi-involvement-other')
+      .type('yes for other advice as needed')
+      .should('have.value', 'yes for other advice as needed');
+
+    cy.get('#ops-eval-and-learning-data-needed').within(() => {
+      cy.get("input[type='search']").click();
+    });
+
+    cy.get('#easi-multiselect__option-OTHER')
+      .check({ force: true })
+      .should('be.checked');
+
+    cy.get('[data-testid="tag"]').first().contains('Other');
+
+    cy.get('#ops-eval-and-learning-data-to-send').within(() => {
+      cy.get("input[type='search']").click();
+    });
+
+    cy.get('#easi-multiselect__option-OTHER_MIPS_DATA')
+      .check({ force: true })
+      .should('be.checked');
+
+    cy.get('[data-testid="tag"]').first().contains('Other');
+
+    cy.get('#ops-eval-and-learning-share-cclf-data-true')
+      .check({ force: true })
+      .should('be.checked');
+
+    cy.contains('button', 'Next').click();
+
+    // Page - /ops-eval-and-learning/ccw-and-quality
+
+    cy.wait(500);
+
+    cy.get('#ops-eval-and-learning-send-files-true')
+      .check({ force: true })
+      .should('be.checked');
+
+    cy.get('#ops-eval-and-learning-app-to-send-files-true')
+      .check({ force: true })
+      .should('be.checked');
+
+    cy.get('#ops-eval-and-learning-app-to-send-files-which')
+      .type('SharePoint')
+      .should('have.value', 'SharePoint');
+
+    cy.get('#ops-eval-and-learning-send-files-true')
+      .check({ force: true })
+      .should('be.checked');
+
+    cy.get('#ops-eval-and-learning-develop-measures-true')
+      .check({ force: true })
+      .should('be.checked');
+
+    cy.get('#ops-eval-and-learning-performance-impact-true')
+      .check({ force: true })
+      .should('be.checked');
+
+    cy.contains('button', 'Next').click();
+
+    // Page - /ops-eval-and-learning/data-sharing
+
+    cy.wait(500);
+
+    cy.get('#ops-eval-and-learning-data-sharing-starts').select('Other');
+
+    cy.get('#ops-eval-and-learning-data-sharing-starts-other')
+      .type('the next leap year')
+      .should('have.value', 'the next leap year');
+
+    cy.get('#ops-eval-and-learning-data-sharing-frequency').within(() => {
+      cy.get("input[type='search']").click();
+    });
+
+    cy.get('#easi-multiselect__option-OTHER')
+      .check({ force: true })
+      .should('be.checked');
+
+    cy.get('[data-testid="tag"]').first().contains('Other');
+
+    cy.get('#ops-eval-and-learning-data-collection-starts').select('Other');
+
+    cy.get('#ops-eval-and-learning-data-collection-starts-other')
+      .type('the next leap year again')
+      .should('have.value', 'the next leap year again');
+
+    cy.get('#ops-eval-and-learning-data-collection-frequency').within(() => {
+      cy.get("input[type='search']").click();
+    });
+
+    cy.get('#easi-multiselect__option-OTHER')
+      .check({ force: true })
+      .should('be.checked');
+
+    cy.get('[data-testid="tag"]').first().contains('Other');
+
+    cy.get('#ops-eval-and-learning-data-reporting-starts').select('Other');
+
+    cy.get('#ops-eval-and-learning-data-reporting-starts-other')
+      .type('the third leap year from now')
+      .should('have.value', 'the third leap year from now');
+
+    cy.contains('button', 'Next').click();
+
+    // Page - /ops-eval-and-learning/learning
+
+    cy.wait(500);
+
+    cy.get('#ops-eval-and-learning-learning-systems-OTHER')
+      .check({ force: true })
+      .should('be.checked');
+
+    cy.get('#ops-eval-and-learning-learning-systems-other')
+      .type('We will make our own in house learning system')
+      .should('have.value', 'We will make our own in house learning system');
+
+    cy.get('#ops-eval-and-learning-learning-anticipated-challenges')
+      .type(
+        'We might not have complete staffing for this. We might need to use more contractors than previously anticipated.'
+      )
+      .should(
+        'have.value',
+        'We might not have complete staffing for this. We might need to use more contractors than previously anticipated.'
+      );
+
+    cy.contains('button', 'Save and start next Model Plan section').click();
+
+    cy.location().should(loc => {
+      expect(loc.pathname).to.match(/\/models\/.{36}\/task-list/);
+    });
+
+    cy.get(
+      '[data-testid="task-list-intake-form-ops-eval-and-learning"]'
+    ).contains('In progress');
   });
 });

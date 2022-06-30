@@ -179,7 +179,7 @@ exports[`Model Plan Ops Eval and Learning Data Sharing matches snapshot 1`] = `
       </label>
       <div
         class="easi-multiselect position-relative"
-        id="ps-eval-and-learning-data-sharing-frequency"
+        id="ops-eval-and-learning-data-sharing-frequency"
       >
         <div
           class="easi-multiselect__field"
