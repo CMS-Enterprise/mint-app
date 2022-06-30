@@ -60,7 +60,7 @@ const Milestones = () => {
   const [hasHighLevelNote, setHasHighLevelNote] = useState(false);
   const [hasAdditionalNote, setHasAdditionalNote] = useState(false);
 
-  const { data } = useQuery<GetModelPlanType, GetModelPlanVariables>(
+  const { data, loading } = useQuery<GetModelPlanType, GetModelPlanVariables>(
     GetModelPlan,
     {
       variables: {
@@ -158,61 +158,61 @@ const Milestones = () => {
       </p>
 
       <AskAQuestion modelID={modelID} />
+      {!loading && (
+        <Formik
+          initialValues={initialValues}
+          onSubmit={values => {
+            handleFormSubmit(values);
+          }}
+          enableReinitialize
+          validationSchema={planBasicsSchema.pageThreeSchema}
+          validateOnBlur={false}
+          validateOnChange={false}
+          validateOnMount={false}
+          innerRef={formikRef}
+        >
+          {(formikProps: FormikProps<PlanBasicsMilestoneTypes>) => {
+            const {
+              errors,
+              handleSubmit,
+              setErrors,
+              setFieldError,
+              setFieldValue,
+              validateForm,
+              values
+            } = formikProps;
+            const flatErrors = flattenErrors(errors);
+            const handleOnBlur = (e: any, field: string) => {
+              if (e === '') {
+                return;
+              }
+              try {
+                setFieldValue(field, new Date(e).toISOString());
+                delete errors[field as keyof PlanBasicsMilestoneTypes];
+              } catch (error) {
+                setFieldError(field, t('validDate'));
+              }
+            };
+            return (
+              <>
+                {Object.keys(errors).length > 0 && (
+                  <ErrorAlert
+                    testId="formik-validation-errors"
+                    classNames="margin-top-3"
+                    heading={h('checkAndFix')}
+                  >
+                    {Object.keys(flatErrors).map(key => {
+                      return (
+                        <ErrorAlertMessage
+                          key={`Error.${key}`}
+                          errorKey={key}
+                          message={flatErrors[key]}
+                        />
+                      );
+                    })}
+                  </ErrorAlert>
+                )}
 
-      <Formik
-        initialValues={initialValues}
-        onSubmit={values => {
-          handleFormSubmit(values);
-        }}
-        enableReinitialize
-        validationSchema={planBasicsSchema.pageThreeSchema}
-        validateOnBlur={false}
-        validateOnChange={false}
-        validateOnMount={false}
-        innerRef={formikRef}
-      >
-        {(formikProps: FormikProps<PlanBasicsMilestoneTypes>) => {
-          const {
-            errors,
-            handleSubmit,
-            setErrors,
-            setFieldError,
-            setFieldValue,
-            validateForm,
-            values
-          } = formikProps;
-          const flatErrors = flattenErrors(errors);
-          const handleOnBlur = (e: any, field: string) => {
-            if (e === '') {
-              return;
-            }
-            try {
-              setFieldValue(field, new Date(e).toISOString());
-              delete errors[field as keyof PlanBasicsMilestoneTypes];
-            } catch (error) {
-              setFieldError(field, t('validDate'));
-            }
-          };
-          return (
-            <>
-              {Object.keys(errors).length > 0 && (
-                <ErrorAlert
-                  testId="formik-validation-errors"
-                  classNames="margin-top-3"
-                  heading={h('checkAndFix')}
-                >
-                  {Object.keys(flatErrors).map(key => {
-                    return (
-                      <ErrorAlertMessage
-                        key={`Error.${key}`}
-                        errorKey={key}
-                        message={flatErrors[key]}
-                      />
-                    );
-                  })}
-                </ErrorAlert>
-              )}
-              {values.completeICIP && (
                 <Form
                   className="tablet:grid-col-6 milestone-form margin-top-6"
                   onSubmit={e => {
@@ -627,11 +627,11 @@ const Milestones = () => {
                     {h('saveAndReturn')}
                   </Button>
                 </Form>
-              )}
-            </>
-          );
-        }}
-      </Formik>
+              </>
+            );
+          }}
+        </Formik>
+      )}
       <PageNumber currentPage={3} totalPages={3} className="margin-bottom-10" />
     </div>
   );
