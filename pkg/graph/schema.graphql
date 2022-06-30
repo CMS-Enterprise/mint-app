@@ -1470,8 +1470,7 @@ enum GcCollectBidsType {
     HPMS
     OTHER
 }
-enum GcUpdateContractType {
-    
+enum GcUpdateContractType {    
     HPMS
     OTHER
 }
