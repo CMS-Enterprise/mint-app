@@ -141,7 +141,7 @@ exports[`Model Plan ParticipantsOptions matches snapshot 1`] = `
         Number of participants
       </label>
       <input
-        class="usa-input maxw-card"
+        class="usa-input width-card"
         data-testid="textInput"
         id="participants-and-providers-participants-other-input"
         name="expectedNumberOfParticipants"
