@@ -255,7 +255,7 @@ export const ParticipantsOptions = () => {
                   <Field
                     as={TextInput}
                     type="number"
-                    className="maxw-card"
+                    className="width-card"
                     error={flatErrors.expectedNumberOfParticipants}
                     id="participants-and-providers-participants-other-input"
                     name="expectedNumberOfParticipants"

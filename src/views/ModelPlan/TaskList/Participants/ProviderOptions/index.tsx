@@ -378,7 +378,7 @@ export const ProviderOptions = () => {
                               />
                               {type === ('OTHER' as ProviderLeaveType) &&
                                 values.providerLeaveMethod.includes(type) && (
-                                  <div className="margin-left-4 margin-top-neg-2">
+                                  <div className="margin-left-4 margin-top-neg-3">
                                     <Label
                                       htmlFor="participants-and-providers-leave-method-other"
                                       className="text-normal"
