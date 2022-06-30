@@ -10,3 +10,8 @@
 .usa-tooltip__trigger {
   cursor: initial !important;
 }
+
+.usa-tooltip__body {
+  white-space: pre-wrap !important;
+  width: 20rem !important;
+}

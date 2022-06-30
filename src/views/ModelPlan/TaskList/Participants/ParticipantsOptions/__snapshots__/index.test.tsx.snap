@@ -153,7 +153,7 @@ exports[`Model Plan ParticipantsOptions matches snapshot 1`] = `
         data-testid="label"
         for="participants-and-providers-current-participants"
       >
-        What is your level of confidence on this esitmate?
+        What is your level of confidence on this estimate?
       </label>
       <fieldset
         class="usa-fieldset"

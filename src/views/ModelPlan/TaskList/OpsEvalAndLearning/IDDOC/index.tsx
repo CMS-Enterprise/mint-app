@@ -1,4 +1,4 @@
-import React, { Fragment, useRef, useState } from 'react';
+import React, { Fragment, useEffect, useRef, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
@@ -43,6 +43,7 @@ const IDDOC = () => {
   const { t: h } = useTranslation('draftModelPlan');
   const { modelID } = useParams<{ modelID: string }>();
   const [dateInPast, setDateInPast] = useState(false);
+  const [dateLoaded, setDateLoaded] = useState(false);
 
   const formikRef = useRef<FormikProps<IDDOCFormType>>(null);
   const history = useHistory();
@@ -101,6 +102,19 @@ const IDDOC = () => {
         formikRef?.current?.setErrors(errors);
       });
   };
+
+  // TODO: Figure out why the form doesn't rerender once a date value is fetched - delay works for now
+  // Loading var passed from GQL does not seem to accurately identify a completed payload for date
+  useEffect(() => {
+    setTimeout(() => {
+      setDateLoaded(true);
+      if (draftIcdDueDate && new Date() > new Date(draftIcdDueDate)) {
+        setDateInPast(true);
+      } else {
+        setDateInPast(false);
+      }
+    }, 200);
+  }, [draftIcdDueDate]);
 
   const initialValues: IDDOCFormType = {
     __typename: 'PlanOpsEvalAndLearning',
@@ -175,6 +189,8 @@ const IDDOC = () => {
 
           const handleOnBlur = (e: any, field: string) => {
             if (e === '') {
+              setFieldValue(field, null);
+              setDateInPast(false);
               return;
             }
             try {
@@ -344,7 +360,7 @@ const IDDOC = () => {
                   />
                 </FieldGroup>
 
-                {!loading && (
+                {!loading && dateLoaded && (
                   <FieldGroup
                     scrollElement="draftIcdDueDate"
                     error={!!flatErrors.draftIcdDueDate}
@@ -373,7 +389,7 @@ const IDDOC = () => {
                         }
                       />
                       {dateInPast && (
-                        <DatePickerWarning label="This is a label" />
+                        <DatePickerWarning label={h('dateWarning')} />
                       )}
                     </div>
 
