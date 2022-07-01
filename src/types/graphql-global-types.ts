@@ -305,6 +305,30 @@ export interface PlanBasicsChanges {
   note?: string | null;
 }
 
+export interface PlanBeneficiariesChanges {
+  beneficiaries?: BeneficiariesType[] | null;
+  beneficiariesOther?: string | null;
+  beneficiariesNote?: string | null;
+  treatDualElligibleDifferent?: TriStateAnswer | null;
+  treatDualElligibleDifferentHow?: string | null;
+  treatDualElligibleDifferentNote?: string | null;
+  excludeCertainCharacteristics?: TriStateAnswer | null;
+  excludeCertainCharacteristicsCriteria?: string | null;
+  excludeCertainCharacteristicsNote?: string | null;
+  numberPeopleImpacted?: number | null;
+  estimateConfidence?: ConfidenceType | null;
+  confidenceNote?: string | null;
+  beneficiarySelectionMethod?: SelectionMethodType[] | null;
+  beneficiarySelectionOther?: string | null;
+  beneficiarySelectionNote?: string | null;
+  beneficiarySelectionFrequency?: FrequencyType | null;
+  beneficiarySelectionFrequencyOther?: string | null;
+  beneficiarySelectionFrequencyNote?: string | null;
+  beneficiaryOverlap?: OverlapType | null;
+  beneficiaryOverlapNote?: string | null;
+  precedenceRules?: string | null;
+}
+
 /**
  * PlanCollaboratorCreateInput represents the data required to create a collaborator on a plan
  */
