@@ -30,8 +30,8 @@ import {
   GetEvaluation as GetEvaluationType,
   GetEvaluation_modelPlan_opsEvalAndLearning as EvaluationFormType
 } from 'queries/OpsEvalAndLearning/types/GetEvaluation';
-import { UpdateModelPlanOpsEvalAndLearningVariables } from 'queries/types/UpdateModelPlanOpsEvalAndLearning';
-import UpdateModelPlanOpsEvalAndLearning from 'queries/UpdateModelPlanOpsEvalAndLearning';
+import { UpdatePlanOpsEvalAndLearningVariables } from 'queries/OpsEvalAndLearning/types/UpdatePlanOpsEvalAndLearning';
+import UpdatePlanOpsEvalAndLearning from 'queries/OpsEvalAndLearning/UpdatePlanOpsEvalAndLearning';
 import {
   CcmInvolvmentType,
   DataForMonitoringType,
@@ -86,8 +86,8 @@ const Evaluation = () => {
 
   const modelName = data?.modelPlan?.modelName || '';
 
-  const [update] = useMutation<UpdateModelPlanOpsEvalAndLearningVariables>(
-    UpdateModelPlanOpsEvalAndLearning
+  const [update] = useMutation<UpdatePlanOpsEvalAndLearningVariables>(
+    UpdatePlanOpsEvalAndLearning
   );
 
   const handleFormSubmit = (

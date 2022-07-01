@@ -27,8 +27,8 @@ import {
   GetPerformance as GetPerformanceType,
   GetPerformance_modelPlan_opsEvalAndLearning as PerformanceFormType
 } from 'queries/OpsEvalAndLearning/types/GetPerformance';
-import { UpdateModelPlanOpsEvalAndLearningVariables } from 'queries/types/UpdateModelPlanOpsEvalAndLearning';
-import UpdateModelPlanOpsEvalAndLearning from 'queries/UpdateModelPlanOpsEvalAndLearning';
+import { UpdatePlanOpsEvalAndLearningVariables } from 'queries/OpsEvalAndLearning/types/UpdatePlanOpsEvalAndLearning';
+import UpdatePlanOpsEvalAndLearning from 'queries/OpsEvalAndLearning/UpdatePlanOpsEvalAndLearning';
 import { BenchmarkForPerformanceType } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import {
@@ -78,8 +78,8 @@ const Performance = () => {
 
   const modelName = data?.modelPlan?.modelName || '';
 
-  const [update] = useMutation<UpdateModelPlanOpsEvalAndLearningVariables>(
-    UpdateModelPlanOpsEvalAndLearning
+  const [update] = useMutation<UpdatePlanOpsEvalAndLearningVariables>(
+    UpdatePlanOpsEvalAndLearning
   );
 
   const handleFormSubmit = (

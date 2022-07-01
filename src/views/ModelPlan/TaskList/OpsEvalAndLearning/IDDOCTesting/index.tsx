@@ -29,8 +29,8 @@ import {
   GetIDDOCTesting as GetIDDOCTestingType,
   GetIDDOCTesting_modelPlan_opsEvalAndLearning as IDDOCTestingFormType
 } from 'queries/OpsEvalAndLearning/types/GetIDDOCTesting';
-import { UpdateModelPlanOpsEvalAndLearningVariables } from 'queries/types/UpdateModelPlanOpsEvalAndLearning';
-import UpdateModelPlanOpsEvalAndLearning from 'queries/UpdateModelPlanOpsEvalAndLearning';
+import { UpdatePlanOpsEvalAndLearningVariables } from 'queries/OpsEvalAndLearning/types/UpdatePlanOpsEvalAndLearning';
+import UpdatePlanOpsEvalAndLearning from 'queries/OpsEvalAndLearning/UpdatePlanOpsEvalAndLearning';
 import { MonitoringFileType } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import { sortOtherEnum, translateMonitoringFileType } from 'utils/modelPlan';
@@ -71,8 +71,8 @@ const IDDOCTesting = () => {
 
   const modelName = data?.modelPlan?.modelName || '';
 
-  const [update] = useMutation<UpdateModelPlanOpsEvalAndLearningVariables>(
-    UpdateModelPlanOpsEvalAndLearning
+  const [update] = useMutation<UpdatePlanOpsEvalAndLearningVariables>(
+    UpdatePlanOpsEvalAndLearning
   );
 
   const handleFormSubmit = (
