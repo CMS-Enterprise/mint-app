@@ -13,7 +13,7 @@ import {
 } from 'types/graphql-global-types';
 
 import { charactersticMockData } from './Characteristics/mock';
-import { participantsAndProvidersData } from './Participants/mock';
+import { participantsAndProvidersData } from './ParticipantsAndProviders/mock';
 import TaskList from './index';
 
 describe('The Model Plan Task List', () => {

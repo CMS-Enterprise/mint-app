@@ -30,11 +30,11 @@ import MultiSelect from 'components/shared/MultiSelect';
 import TextAreaField from 'components/shared/TextAreaField';
 import GetModelPlanParticipantsAndProviders from 'queries/GetModelPlanParticipantsAndProviders';
 import {
-  GetModelPlanProvidersAndParticipants as GetModelPlanProvidersAndParticipantsType,
-  GetModelPlanProvidersAndParticipants_modelPlan_participantsAndProviders as ModelPlanParticipantsAndProvidersFormType
-} from 'queries/types/GetModelPlanProvidersAndParticipants';
-import { UpdateModelPlanProvidersAndParticipantsVariables } from 'queries/types/UpdateModelPlanProvidersAndParticipants';
-import UpdateModelPlanProvidersAndParticipants from 'queries/UpdateModelPlanProvidersAndParticipants';
+  GetParticipantsAndProviders as GetParticipantsAndProvidersType,
+  GetParticipantsAndProviders_modelPlan_participantsAndProviders as GetParticipantsAndProvidersFormType
+} from 'queries/ParticipantsAndProviders/types/GetParticipantsAndProviders';
+import { UpdatePlanParticipantsAndProvidersVariables } from 'queries/ParticipantsAndProviders/types/UpdatePlanParticipantsAndProviders';
+import UpdatePlanParticipantsAndProviders from 'queries/ParticipantsAndProviders/UpdatePlanParticipantsAndProviders';
 import { ParticipantsType } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import {
@@ -45,7 +45,7 @@ import { NotFoundPartial } from 'views/NotFound';
 
 import Communication from './Communication';
 import Coordination from './Coordination';
-import ParticipantsOptions from './ParticipantsOptions';
+import ParticipantsOptions from './ParticipantOptions';
 import ProviderOptions from './ProviderOptions';
 
 import './index.scss';
@@ -55,12 +55,12 @@ export const ParticipantsAndProvidersContent = () => {
   const { t: h } = useTranslation('draftModelPlan');
   const { modelID } = useParams<{ modelID: string }>();
 
-  const formikRef = useRef<
-    FormikProps<ModelPlanParticipantsAndProvidersFormType>
-  >(null);
+  const formikRef = useRef<FormikProps<GetParticipantsAndProvidersFormType>>(
+    null
+  );
   const history = useHistory();
 
-  const { data } = useQuery<GetModelPlanProvidersAndParticipantsType>(
+  const { data } = useQuery<GetParticipantsAndProvidersType>(
     GetModelPlanParticipantsAndProviders,
     {
       variables: {
@@ -81,18 +81,16 @@ export const ParticipantsAndProvidersContent = () => {
     modelApplicationLevel
   } =
     data?.modelPlan?.participantsAndProviders ||
-    ({} as ModelPlanParticipantsAndProvidersFormType);
+    ({} as GetParticipantsAndProvidersFormType);
 
   const modelName = data?.modelPlan?.modelName || '';
 
-  const [
-    update
-  ] = useMutation<UpdateModelPlanProvidersAndParticipantsVariables>(
-    UpdateModelPlanProvidersAndParticipants
+  const [update] = useMutation<UpdatePlanParticipantsAndProvidersVariables>(
+    UpdatePlanParticipantsAndProviders
   );
 
   const handleFormSubmit = (
-    formikValues: ModelPlanParticipantsAndProvidersFormType,
+    formikValues: GetParticipantsAndProvidersFormType,
     redirect?: 'next' | 'back'
   ) => {
     update({
@@ -117,7 +115,9 @@ export const ParticipantsAndProvidersContent = () => {
       });
   };
 
-  const initialValues = {
+  const initialValues: GetParticipantsAndProvidersFormType = {
+    __typename: 'PlanParticipantsAndProviders',
+    id: id ?? '',
     participants: participants ?? [],
     medicareProviderType: medicareProviderType ?? '',
     statesEngagement: statesEngagement ?? '',
@@ -126,7 +126,7 @@ export const ParticipantsAndProvidersContent = () => {
     participantsCurrentlyInModels: participantsCurrentlyInModels ?? null,
     participantsCurrentlyInModelsNote: participantsCurrentlyInModelsNote ?? '',
     modelApplicationLevel: modelApplicationLevel ?? ''
-  } as ModelPlanParticipantsAndProvidersFormType;
+  };
 
   return (
     <>
@@ -169,9 +169,7 @@ export const ParticipantsAndProvidersContent = () => {
         enableReinitialize
         innerRef={formikRef}
       >
-        {(
-          formikProps: FormikProps<ModelPlanParticipantsAndProvidersFormType>
-        ) => {
+        {(formikProps: FormikProps<GetParticipantsAndProvidersFormType>) => {
           const {
             errors,
             handleSubmit,

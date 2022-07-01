@@ -31,7 +31,7 @@ import Beneficiaries from 'views/ModelPlan/TaskList/Beneficiaries';
 import Characteristics from 'views/ModelPlan/TaskList/Characteristics';
 import CostEstimate from 'views/ModelPlan/TaskList/CostEstimate';
 import OpsEvalAndLearning from 'views/ModelPlan/TaskList/OpsEvalAndLearning';
-import Participants from 'views/ModelPlan/TaskList/Participants';
+import Participants from 'views/ModelPlan/TaskList/ParticipantsAndProviders';
 import Payment from 'views/ModelPlan/TaskList/Payment';
 import Population from 'views/ModelPlan/TaskList/Population';
 import SubmitRequest from 'views/ModelPlan/TaskList/SubmitRequest';
