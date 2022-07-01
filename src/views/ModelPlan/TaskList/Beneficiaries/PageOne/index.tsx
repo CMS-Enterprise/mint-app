@@ -21,7 +21,7 @@ import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import MultiSelect from 'components/shared/MultiSelect';
-import TextAreaField from 'components/shared/TextAreaField';
+import TextField from 'components/shared/TextField';
 import GetModelPlanBeneficiaries from 'queries/GetModelPlanBeneficiaries';
 import {
   GetModelPlanBeneficiaries as GetModelPlanBeneficiariesType,
@@ -29,7 +29,9 @@ import {
 } from 'queries/types/GetModelPlanBeneficiaries';
 import { UpdateModelPlanBeneficiariesVariables } from 'queries/types/UpdateModelPlanBeneficiaries';
 import UpdateModelPlanBeneficiaries from 'queries/UpdateModelPlanBeneficiaries';
+import { BeneficiariesType } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
+import { sortOtherEnum, translateBeneficiariesType } from 'utils/modelPlan';
 
 const BeneficiariesPageOne = () => {
   const { t } = useTranslation('beneficiaries');
@@ -80,7 +82,7 @@ const BeneficiariesPageOne = () => {
         if (!response?.errors) {
           if (redirect === 'next') {
             history.push(
-              `/models/${modelID}/task-list/participants-and-providers/participants-options`
+              `/models/${modelID}/task-list/beneficiaries/participants-options`
             );
           } else if (redirect === 'back') {
             history.push(`/models/${modelID}/task-list/`);
@@ -91,6 +93,13 @@ const BeneficiariesPageOne = () => {
         formikRef?.current?.setErrors(errors);
       });
   };
+
+  const mappedBeneficiariesType = Object.keys(BeneficiariesType)
+    .sort(sortOtherEnum)
+    .map(key => ({
+      value: key,
+      label: translateBeneficiariesType(key)
+    }));
 
   const initialValues = {
     beneficiaries: beneficiaries ?? '',
@@ -174,135 +183,69 @@ const BeneficiariesPageOne = () => {
                 </ErrorAlert>
               )}
               <GridContainer className="padding-left-0 padding-right-0">
-                <Grid row gap className="participants-and-providers__info">
+                <Grid row gap className="beneficiaries__info">
                   <Grid desktop={{ col: 6 }}>
                     <Form
                       className="margin-top-6"
-                      data-testid="participants-and-providers-form"
+                      data-testid="beneficiaries-form"
                       onSubmit={e => {
                         handleSubmit(e);
                       }}
                     >
                       <FieldGroup
-                        scrollElement="participants"
-                        error={!!flatErrors.participants}
+                        scrollElement="beneficiaries"
+                        error={!!flatErrors.beneficiaries}
                         className="margin-top-4"
                       >
-                        <Label htmlFor="participants-and-providers-participants">
-                          {t('whoAreParticipants')}
+                        <Label htmlFor="beneficiaries-beneficiaries">
+                          {t('beneficiaries')}
                         </Label>
-                        <FieldErrorMsg>{flatErrors.participants}</FieldErrorMsg>
+                        <FieldErrorMsg>
+                          {flatErrors.beneficiaries}
+                        </FieldErrorMsg>
 
                         <Field
                           as={MultiSelect}
-                          id="participants-and-providers-participants"
-                          name="participants"
-                          options={mappedParticipants}
-                          selectedLabel={t('selectedParticipants')}
+                          id="beneficiaries-beneficiaries"
+                          name="beneficiaries"
+                          options={mappedBeneficiariesType}
+                          selectedLabel={t('selectedGroup')}
                           onChange={(value: string[] | []) => {
-                            setFieldValue('participants', value);
+                            setFieldValue('beneficiaries', value);
                           }}
                           initialValues={initialValues.beneficiaries}
                         />
 
-                        {((values?.beneficiaries || []).includes(
-                          'MEDICARE_PROVIDERS' as ParticipantsType
-                        ) ||
-                          (values?.beneficiaries || []).includes(
-                            'STATES' as ParticipantsType
-                          ) ||
-                          (values?.beneficiaries || []).includes(
-                            'OTHER' as ParticipantsType
-                          )) && (
-                          <p className="margin-top-4 text-bold">
-                            {t('participantQuestions')}
-                          </p>
-                        )}
-
                         {(values?.beneficiaries || []).includes(
-                          'MEDICARE_PROVIDERS' as ParticipantsType
+                          'OTHER' as BeneficiariesType
                         ) && (
                           <FieldGroup
-                            scrollElement="medicareProviderType"
-                            error={!!flatErrors.medicareProviderType}
+                            scrollElement="beneficiariesOther"
+                            error={!!flatErrors.beneficiariesOther}
                           >
                             <Label
-                              htmlFor="participants-and-providers-medicare-type"
+                              htmlFor="beneficiaries-other"
                               className="text-normal"
                             >
-                              {t('typeMedicateProvider')}
+                              {t('beneficiariesOther')}
                             </Label>
                             <FieldErrorMsg>
-                              {flatErrors.medicareProviderType}
+                              {flatErrors.beneficiariesOther}
                             </FieldErrorMsg>
                             <Field
-                              as={TextAreaField}
+                              as={TextField}
                               className="height-15"
-                              error={flatErrors.medicareProviderType}
-                              id="participants-and-providers-medicare-type"
-                              data-testid="participants-and-providers-medicare-type"
-                              name="medicareProviderType"
-                            />
-                          </FieldGroup>
-                        )}
-
-                        {(values?.beneficiaries || []).includes(
-                          'STATES' as ParticipantsType
-                        ) && (
-                          <FieldGroup
-                            scrollElement="statesEngagement"
-                            error={!!flatErrors.statesEngagement}
-                          >
-                            <Label
-                              htmlFor="participants-and-providers-states-engagement"
-                              className="text-normal"
-                            >
-                              {t('describeStates')}
-                            </Label>
-                            <FieldErrorMsg>
-                              {flatErrors.statesEngagement}
-                            </FieldErrorMsg>
-                            <Field
-                              as={TextAreaField}
-                              className="height-15"
-                              error={flatErrors.statesEngagement}
-                              id="participants-and-providers-states-engagement"
-                              data-testid="participants-and-providers-states-engagement"
-                              name="statesEngagement"
-                            />
-                          </FieldGroup>
-                        )}
-
-                        {(values?.beneficiaries || []).includes(
-                          'OTHER' as ParticipantsType
-                        ) && (
-                          <FieldGroup
-                            scrollElement="participantsOther"
-                            error={!!flatErrors.participantsOther}
-                          >
-                            <Label
-                              htmlFor="participants-and-providers-participants-other"
-                              className="text-normal"
-                            >
-                              {t('describeOther')}
-                            </Label>
-                            <FieldErrorMsg>
-                              {flatErrors.participantsOther}
-                            </FieldErrorMsg>
-                            <Field
-                              as={TextAreaField}
-                              className="height-15"
-                              error={flatErrors.participantsOther}
-                              id="participants-and-providers-participants-other"
-                              data-testid="participants-and-providers-participants-other"
+                              error={flatErrors.beneficiariesOther}
+                              id="beneficiaries-other"
+                              data-testid="beneficiaries-other"
                               name="participantsOther"
                             />
                           </FieldGroup>
                         )}
 
                         <AddNote
-                          id="participants-and-providers-participants-note"
-                          field="participantsNote"
+                          id="beneficiaries-note"
+                          field="beneficiariesNote"
                         />
                       </FieldGroup>
                     </Form>
