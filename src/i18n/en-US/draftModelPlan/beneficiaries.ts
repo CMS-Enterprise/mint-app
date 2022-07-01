@@ -1,16 +1,20 @@
 const beneficiaries = {
   heading: 'Beneficiaries',
-  impact: 'Who are the beneficiaries of this model? Select all that apply.',
+  beneficiaries:
+    'Who are the beneficiaries of this model? Select all that apply.',
+  beneficiariesOther:
+    'Please describe the other groups this model will impact.',
   beneficiariesOptions: {
     diseaseSpecific: 'Disease-specific',
     duallyEligible: 'Dually-eligible beneficiaries',
     medicaid: 'Medicaid',
     medicareAdvantage: 'Medicare Advantage',
     medicareFfs: 'Medicare FFS beneficiaries',
-    medicarePart_d: 'Medicare Part D',
+    medicarePartD: 'Medicare Part D',
     na: 'Not applicable',
     other: 'Other'
   },
+  selectedGroup: 'Selected groups',
   dualEligibility:
     'Should dual-eligible beneficiaries be treated differently than non-dually eligibles?',
   excluded:
