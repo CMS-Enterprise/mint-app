@@ -21,6 +21,7 @@ const beneficiaries = {
     'Should dual-eligible beneficiaries be treated differently than non-dually eligibles?',
   excluded:
     'Should beneficiaries with certain characteristics or enrollments be excluded?',
+  excludedNestedQuestion: 'What are the exclusionary criteria?',
   howManyImpacted:
     'How many people do you think will be impacted by this model?',
   levelOfConfidence: 'What is your level of confidence on this estimate?',

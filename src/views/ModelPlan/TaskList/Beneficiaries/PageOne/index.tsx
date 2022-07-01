@@ -388,6 +388,41 @@ const BeneficiariesPageOne = () => {
                               );
                             }}
                           />
+
+                          {values?.excludeCertainCharacteristics!.includes(
+                            'YES' as TriStateAnswer
+                          ) && (
+                            <FieldGroup
+                              className="margin-left-4 margin-y-1"
+                              scrollElement="excludeCertainCharacteristicsCriteria"
+                              error={
+                                !!flatErrors.excludeCertainCharacteristicsCriteria
+                              }
+                            >
+                              <Label
+                                htmlFor="beneficiaries-exclude-criteria"
+                                className="text-normal"
+                              >
+                                {t('excludedNestedQuestion')}
+                              </Label>
+                              <FieldErrorMsg>
+                                {
+                                  flatErrors.excludeCertainCharacteristicsCriteria
+                                }
+                              </FieldErrorMsg>
+                              <Field
+                                as={TextAreaField}
+                                className="height-15"
+                                error={
+                                  flatErrors.excludeCertainCharacteristicsCriteria
+                                }
+                                id="beneficiaries-exclude-criteria"
+                                data-testid="beneficiaries-exclude-criteria"
+                                name="beneficiaries-exclude-criteria"
+                              />
+                            </FieldGroup>
+                          )}
+
                           <Field
                             as={Radio}
                             id="beneficiaries-exclude-no"
