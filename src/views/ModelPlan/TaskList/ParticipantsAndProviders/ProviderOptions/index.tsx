@@ -26,13 +26,13 @@ import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import MultiSelect from 'components/shared/MultiSelect';
 import TextAreaField from 'components/shared/TextAreaField';
-import GetModelPlanParticipantsAndProviders from 'queries/GetModelPlanParticipantsAndProviders';
+import GetProviderOptions from 'queries/ParticipantsAndProviders/GetProviderOptions';
 import {
-  GetModelPlanProvidersAndParticipants as GetModelPlanProvidersAndParticipantsType,
-  GetModelPlanProvidersAndParticipants_modelPlan_participantsAndProviders as ModelPlanParticipantsAndProvidersFormType
-} from 'queries/types/GetModelPlanProvidersAndParticipants';
-import { UpdateModelPlanProvidersAndParticipantsVariables } from 'queries/types/UpdateModelPlanProvidersAndParticipants';
-import UpdateModelPlanProvidersAndParticipants from 'queries/UpdateModelPlanProvidersAndParticipants';
+  GetProviderOptions as GetProviderOptionsType,
+  GetProviderOptions_modelPlan_participantsAndProviders as GetProviderOptionsFormType
+} from 'queries/ParticipantsAndProviders/types/GetProviderOptions';
+import { UpdatePlanParticipantsAndProvidersVariables } from 'queries/ParticipantsAndProviders/types/UpdatePlanParticipantsAndProviders';
+import UpdatePlanParticipantsAndProviders from 'queries/ParticipantsAndProviders/UpdatePlanParticipantsAndProviders';
 import {
   FrequencyType,
   OverlapType,
@@ -54,19 +54,14 @@ export const ProviderOptions = () => {
   const { t: h } = useTranslation('draftModelPlan');
   const { modelID } = useParams<{ modelID: string }>();
 
-  const formikRef = useRef<
-    FormikProps<ModelPlanParticipantsAndProvidersFormType>
-  >(null);
+  const formikRef = useRef<FormikProps<GetProviderOptionsFormType>>(null);
   const history = useHistory();
 
-  const { data } = useQuery<GetModelPlanProvidersAndParticipantsType>(
-    GetModelPlanParticipantsAndProviders,
-    {
-      variables: {
-        id: modelID
-      }
+  const { data } = useQuery<GetProviderOptionsType>(GetProviderOptions, {
+    variables: {
+      id: modelID
     }
-  );
+  });
 
   const {
     id,
@@ -84,18 +79,16 @@ export const ProviderOptions = () => {
     providerOverlapNote
   } =
     data?.modelPlan?.participantsAndProviders ||
-    ({} as ModelPlanParticipantsAndProvidersFormType);
+    ({} as GetProviderOptionsFormType);
 
   const modelName = data?.modelPlan?.modelName || '';
 
-  const [
-    update
-  ] = useMutation<UpdateModelPlanProvidersAndParticipantsVariables>(
-    UpdateModelPlanProvidersAndParticipants
+  const [update] = useMutation<UpdatePlanParticipantsAndProvidersVariables>(
+    UpdatePlanParticipantsAndProviders
   );
 
   const handleFormSubmit = (
-    formikValues: ModelPlanParticipantsAndProvidersFormType,
+    formikValues: GetProviderOptionsFormType,
     redirect?: 'back' | 'task-list'
   ) => {
     update({
@@ -120,7 +113,9 @@ export const ProviderOptions = () => {
       });
   };
 
-  const initialValues = {
+  const initialValues: GetProviderOptionsFormType = {
+    __typename: 'PlanParticipantsAndProviders',
+    id: id ?? '',
     providerAdditionFrequency: providerAdditionFrequency ?? null,
     providerAdditionFrequencyOther: providerAdditionFrequencyOther ?? '',
     providerAdditionFrequencyNote: providerAdditionFrequencyNote ?? '',
@@ -133,7 +128,7 @@ export const ProviderOptions = () => {
     providerOverlap: providerOverlap ?? null,
     providerOverlapHierarchy: providerOverlapHierarchy ?? '',
     providerOverlapNote: providerOverlapNote ?? ''
-  } as ModelPlanParticipantsAndProvidersFormType;
+  };
 
   return (
     <>
@@ -176,9 +171,7 @@ export const ProviderOptions = () => {
         enableReinitialize
         innerRef={formikRef}
       >
-        {(
-          formikProps: FormikProps<ModelPlanParticipantsAndProvidersFormType>
-        ) => {
+        {(formikProps: FormikProps<GetProviderOptionsFormType>) => {
           const {
             errors,
             handleSubmit,

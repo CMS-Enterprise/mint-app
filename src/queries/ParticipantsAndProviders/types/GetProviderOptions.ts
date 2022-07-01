@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { FrequencyType, ProviderAddType, ProviderLeaveType, OverlapType } from "../../../types/graphql-global-types";
+import { FrequencyType, ProviderAddType, ProviderLeaveType, OverlapType } from "./../../../types/graphql-global-types";
 
 // ====================================================
 // GraphQL query operation: GetProviderOptions

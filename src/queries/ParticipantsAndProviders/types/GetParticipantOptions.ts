@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { ConfidenceType, RecruitmentType, ParticipantSelectionType } from "../../../types/graphql-global-types";
+import { ConfidenceType, RecruitmentType, ParticipantSelectionType } from "./../../../types/graphql-global-types";
 
 // ====================================================
 // GraphQL query operation: GetParticipantOptions

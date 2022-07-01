@@ -24,13 +24,13 @@ import CheckboxField from 'components/shared/CheckboxField';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
-import GetModelPlanParticipantsAndProviders from 'queries/GetModelPlanParticipantsAndProviders';
+import GetCoordination from 'queries/ParticipantsAndProviders/GetCoordination';
 import {
-  GetModelPlanProvidersAndParticipants as GetModelPlanProvidersAndParticipantsType,
-  GetModelPlanProvidersAndParticipants_modelPlan_participantsAndProviders as ModelPlanParticipantsAndProvidersFormType
-} from 'queries/types/GetModelPlanProvidersAndParticipants';
-import { UpdateModelPlanProvidersAndParticipantsVariables } from 'queries/types/UpdateModelPlanProvidersAndParticipants';
-import UpdateModelPlanProvidersAndParticipants from 'queries/UpdateModelPlanProvidersAndParticipants';
+  GetCoordination as GetCoordinationType,
+  GetCoordination_modelPlan_participantsAndProviders as GetCoordinationFormType
+} from 'queries/ParticipantsAndProviders/types/GetCoordination';
+import { UpdatePlanParticipantsAndProvidersVariables } from 'queries/ParticipantsAndProviders/types/UpdatePlanParticipantsAndProviders';
+import UpdatePlanParticipantsAndProviders from 'queries/ParticipantsAndProviders/UpdatePlanParticipantsAndProviders';
 import { ParticipantsIDType } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import { sortOtherEnum, translateParticipantIDType } from 'utils/modelPlan';
@@ -40,19 +40,14 @@ export const Coordination = () => {
   const { t: h } = useTranslation('draftModelPlan');
   const { modelID } = useParams<{ modelID: string }>();
 
-  const formikRef = useRef<
-    FormikProps<ModelPlanParticipantsAndProvidersFormType>
-  >(null);
+  const formikRef = useRef<FormikProps<GetCoordinationFormType>>(null);
   const history = useHistory();
 
-  const { data } = useQuery<GetModelPlanProvidersAndParticipantsType>(
-    GetModelPlanParticipantsAndProviders,
-    {
-      variables: {
-        id: modelID
-      }
+  const { data } = useQuery<GetCoordinationType>(GetCoordination, {
+    variables: {
+      id: modelID
     }
-  );
+  });
 
   const {
     id,
@@ -66,18 +61,16 @@ export const Coordination = () => {
     participantsIDSNote
   } =
     data?.modelPlan?.participantsAndProviders ||
-    ({} as ModelPlanParticipantsAndProvidersFormType);
+    ({} as GetCoordinationFormType);
 
   const modelName = data?.modelPlan?.modelName || '';
 
-  const [
-    update
-  ] = useMutation<UpdateModelPlanProvidersAndParticipantsVariables>(
-    UpdateModelPlanProvidersAndParticipants
+  const [update] = useMutation<UpdatePlanParticipantsAndProvidersVariables>(
+    UpdatePlanParticipantsAndProviders
   );
 
   const handleFormSubmit = (
-    formikValues: ModelPlanParticipantsAndProvidersFormType,
+    formikValues: GetCoordinationFormType,
     redirect?: 'next' | 'back' | 'task-list'
   ) => {
     update({
@@ -106,7 +99,9 @@ export const Coordination = () => {
       });
   };
 
-  const initialValues = {
+  const initialValues: GetCoordinationFormType = {
+    __typename: 'PlanParticipantsAndProviders',
+    id: id ?? '',
     coordinateWork: coordinateWork ?? null,
     coordinateWorkNote: coordinateWorkNote ?? '',
     gainsharePayments: gainsharePayments ?? null,
@@ -115,7 +110,7 @@ export const Coordination = () => {
     participantsIds: participantsIds ?? [],
     participantsIdsOther: participantsIdsOther || '',
     participantsIDSNote: participantsIDSNote ?? ''
-  } as ModelPlanParticipantsAndProvidersFormType;
+  };
 
   return (
     <>
@@ -158,9 +153,7 @@ export const Coordination = () => {
         enableReinitialize
         innerRef={formikRef}
       >
-        {(
-          formikProps: FormikProps<ModelPlanParticipantsAndProvidersFormType>
-        ) => {
+        {(formikProps: FormikProps<GetCoordinationFormType>) => {
           const {
             errors,
             handleSubmit,

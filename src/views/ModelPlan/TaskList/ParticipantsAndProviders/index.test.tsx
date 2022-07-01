@@ -3,8 +3,47 @@ import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
 
+import GetParticipantsAndProviders from 'queries/ParticipantsAndProviders/GetParticipantsAndProviders';
+import { GetParticipantsAndProviders_modelPlan_participantsAndProviders as GetParticipantsAndProvidersType } from 'queries/ParticipantsAndProviders/types/GetParticipantsAndProviders';
+import { ParticipantsType } from 'types/graphql-global-types';
+
 import { ParticipantsAndProvidersContent } from './index';
-import participantsAndProvidersMock from './mock';
+
+const participantsAndProvidersMockData: GetParticipantsAndProvidersType = {
+  __typename: 'PlanParticipantsAndProviders',
+  id: '123',
+  participants: [
+    ParticipantsType.MEDICARE_PROVIDERS,
+    ParticipantsType.STATES,
+    ParticipantsType.OTHER
+  ],
+  medicareProviderType: 'Oncology Providers',
+  statesEngagement:
+    'States will determine administration specific to the state',
+  participantsOther: 'The candy people',
+  participantsNote: '',
+  participantsCurrentlyInModels: null,
+  participantsCurrentlyInModelsNote: '',
+  modelApplicationLevel: 'c92.00 and c92.01'
+};
+
+const participantsAndProvidersMock = [
+  {
+    request: {
+      query: GetParticipantsAndProviders,
+      variables: { id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905' }
+    },
+    result: {
+      data: {
+        modelPlan: {
+          id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905',
+          modelName: 'My excellent plan that I just initiated',
+          participantsAndProviders: participantsAndProvidersMockData
+        }
+      }
+    }
+  }
+];
 
 describe('Model Plan Participants and Providers', () => {
   it('renders without errors', async () => {

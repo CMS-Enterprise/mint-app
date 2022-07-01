@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { ParticipantsIDType } from "../../../types/graphql-global-types";
+import { ParticipantsIDType } from "./../../../types/graphql-global-types";
 
 // ====================================================
 // GraphQL query operation: GetCoordination

@@ -26,13 +26,13 @@ import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import MultiSelect from 'components/shared/MultiSelect';
 import TextAreaField from 'components/shared/TextAreaField';
-import GetModelPlanParticipantsAndProviders from 'queries/GetModelPlanParticipantsAndProviders';
+import GetParticipantOptions from 'queries/ParticipantsAndProviders/GetParticipantOptions';
 import {
-  GetModelPlanProvidersAndParticipants as GetModelPlanProvidersAndParticipantsType,
-  GetModelPlanProvidersAndParticipants_modelPlan_participantsAndProviders as ModelPlanParticipantsAndProvidersFormType
-} from 'queries/types/GetModelPlanProvidersAndParticipants';
-import { UpdateModelPlanProvidersAndParticipantsVariables } from 'queries/types/UpdateModelPlanProvidersAndParticipants';
-import UpdateModelPlanProvidersAndParticipants from 'queries/UpdateModelPlanProvidersAndParticipants';
+  GetParticipantOptions as GetParticipantOptionsType,
+  GetParticipantOptions_modelPlan_participantsAndProviders as GetParticipantOptionsFormType
+} from 'queries/ParticipantsAndProviders/types/GetParticipantOptions';
+import { UpdatePlanParticipantsAndProvidersVariables } from 'queries/ParticipantsAndProviders/types/UpdatePlanParticipantsAndProviders';
+import UpdatePlanParticipantsAndProviders from 'queries/ParticipantsAndProviders/UpdatePlanParticipantsAndProviders';
 import {
   ConfidenceType,
   ParticipantSelectionType,
@@ -47,24 +47,19 @@ import {
   translateRecruitmentType
 } from 'utils/modelPlan';
 
-export const ParticipantsOptions = () => {
+export const ParticipantOptions = () => {
   const { t } = useTranslation('participantsAndProviders');
   const { t: h } = useTranslation('draftModelPlan');
   const { modelID } = useParams<{ modelID: string }>();
 
-  const formikRef = useRef<
-    FormikProps<ModelPlanParticipantsAndProvidersFormType>
-  >(null);
+  const formikRef = useRef<FormikProps<GetParticipantOptionsFormType>>(null);
   const history = useHistory();
 
-  const { data } = useQuery<GetModelPlanProvidersAndParticipantsType>(
-    GetModelPlanParticipantsAndProviders,
-    {
-      variables: {
-        id: modelID
-      }
+  const { data } = useQuery<GetParticipantOptionsType>(GetParticipantOptions, {
+    variables: {
+      id: modelID
     }
-  );
+  });
 
   const {
     id,
@@ -79,18 +74,16 @@ export const ParticipantsOptions = () => {
     selectionNote
   } =
     data?.modelPlan?.participantsAndProviders ||
-    ({} as ModelPlanParticipantsAndProvidersFormType);
+    ({} as GetParticipantOptionsFormType);
 
   const modelName = data?.modelPlan?.modelName || '';
 
-  const [
-    update
-  ] = useMutation<UpdateModelPlanProvidersAndParticipantsVariables>(
-    UpdateModelPlanProvidersAndParticipants
+  const [update] = useMutation<UpdatePlanParticipantsAndProvidersVariables>(
+    UpdatePlanParticipantsAndProviders
   );
 
   const handleFormSubmit = (
-    formikValues: ModelPlanParticipantsAndProvidersFormType,
+    formikValues: GetParticipantOptionsFormType,
     redirect?: 'next' | 'back' | 'task-list'
   ) => {
     update({
@@ -119,7 +112,9 @@ export const ParticipantsOptions = () => {
       });
   };
 
-  const initialValues = {
+  const initialValues: GetParticipantOptionsFormType = {
+    __typename: 'PlanParticipantsAndProviders',
+    id: id ?? '',
     expectedNumberOfParticipants: expectedNumberOfParticipants ?? 0,
     estimateConfidence: estimateConfidence ?? null,
     confidenceNote: confidenceNote ?? '',
@@ -129,7 +124,7 @@ export const ParticipantsOptions = () => {
     selectionMethod: selectionMethod || [],
     selectionOther: selectionOther ?? '',
     selectionNote: selectionNote ?? ''
-  } as ModelPlanParticipantsAndProvidersFormType;
+  };
 
   return (
     <>
@@ -172,9 +167,7 @@ export const ParticipantsOptions = () => {
         enableReinitialize
         innerRef={formikRef}
       >
-        {(
-          formikProps: FormikProps<ModelPlanParticipantsAndProvidersFormType>
-        ) => {
+        {(formikProps: FormikProps<GetParticipantOptionsFormType>) => {
           const {
             errors,
             handleSubmit,
@@ -451,4 +444,4 @@ export const ParticipantsOptions = () => {
   );
 };
 
-export default ParticipantsOptions;
+export default ParticipantOptions;

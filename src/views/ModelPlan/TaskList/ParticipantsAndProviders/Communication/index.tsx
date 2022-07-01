@@ -24,13 +24,13 @@ import CheckboxField from 'components/shared/CheckboxField';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
-import GetModelPlanParticipantsAndProviders from 'queries/GetModelPlanParticipantsAndProviders';
+import GetCommunication from 'queries/ParticipantsAndProviders/GetCommunication';
 import {
-  GetModelPlanProvidersAndParticipants as GetModelPlanProvidersAndParticipantsType,
-  GetModelPlanProvidersAndParticipants_modelPlan_participantsAndProviders as ModelPlanParticipantsAndProvidersFormType
-} from 'queries/types/GetModelPlanProvidersAndParticipants';
-import { UpdateModelPlanProvidersAndParticipantsVariables } from 'queries/types/UpdateModelPlanProvidersAndParticipants';
-import UpdateModelPlanProvidersAndParticipants from 'queries/UpdateModelPlanProvidersAndParticipants';
+  GetCommunication as GetCommunicationType,
+  GetCommunication_modelPlan_participantsAndProviders as GetCommunicationFormType
+} from 'queries/ParticipantsAndProviders/types/GetCommunication';
+import { UpdatePlanParticipantsAndProvidersVariables } from 'queries/ParticipantsAndProviders/types/UpdatePlanParticipantsAndProviders';
+import UpdatePlanParticipantsAndProviders from 'queries/ParticipantsAndProviders/UpdatePlanParticipantsAndProviders';
 import {
   ParticipantCommunicationType,
   ParticipantRiskType
@@ -47,19 +47,14 @@ export const Communication = () => {
   const { t: h } = useTranslation('draftModelPlan');
   const { modelID } = useParams<{ modelID: string }>();
 
-  const formikRef = useRef<
-    FormikProps<ModelPlanParticipantsAndProvidersFormType>
-  >(null);
+  const formikRef = useRef<FormikProps<GetCommunicationFormType>>(null);
   const history = useHistory();
 
-  const { data } = useQuery<GetModelPlanProvidersAndParticipantsType>(
-    GetModelPlanParticipantsAndProviders,
-    {
-      variables: {
-        id: modelID
-      }
+  const { data } = useQuery<GetCommunicationType>(GetCommunication, {
+    variables: {
+      id: modelID
     }
-  );
+  });
 
   const {
     id,
@@ -74,18 +69,16 @@ export const Communication = () => {
     willRiskChangeNote
   } =
     data?.modelPlan?.participantsAndProviders ||
-    ({} as ModelPlanParticipantsAndProvidersFormType);
+    ({} as GetCommunicationFormType);
 
   const modelName = data?.modelPlan?.modelName || '';
 
-  const [
-    update
-  ] = useMutation<UpdateModelPlanProvidersAndParticipantsVariables>(
-    UpdateModelPlanProvidersAndParticipants
+  const [update] = useMutation<UpdatePlanParticipantsAndProvidersVariables>(
+    UpdatePlanParticipantsAndProviders
   );
 
   const handleFormSubmit = (
-    formikValues: ModelPlanParticipantsAndProvidersFormType,
+    formikValues: GetCommunicationFormType,
     redirect?: 'next' | 'back' | 'task-list'
   ) => {
     update({
@@ -114,7 +107,9 @@ export const Communication = () => {
       });
   };
 
-  const initialValues = {
+  const initialValues: GetCommunicationFormType = {
+    __typename: 'PlanParticipantsAndProviders',
+    id: id ?? '',
     communicationMethod: communicationMethod ?? [],
     communicationMethodOther: communicationMethodOther ?? '',
     communicationNote: communicationNote ?? '',
@@ -124,7 +119,7 @@ export const Communication = () => {
     riskNote: riskNote ?? '',
     willRiskChange: willRiskChange || null,
     willRiskChangeNote: willRiskChangeNote ?? ''
-  } as ModelPlanParticipantsAndProvidersFormType;
+  };
 
   return (
     <>
@@ -167,9 +162,7 @@ export const Communication = () => {
         enableReinitialize
         innerRef={formikRef}
       >
-        {(
-          formikProps: FormikProps<ModelPlanParticipantsAndProvidersFormType>
-        ) => {
+        {(formikProps: FormikProps<GetCommunicationFormType>) => {
           const {
             errors,
             handleSubmit,

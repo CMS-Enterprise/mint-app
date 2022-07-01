@@ -3,9 +3,42 @@ import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
 
-import participantsAndProvidersMock from '../mock';
+import GetCoordination from 'queries/ParticipantsAndProviders/GetCoordination';
+import { GetCoordination_modelPlan_participantsAndProviders as GetCoordinationType } from 'queries/ParticipantsAndProviders/types/GetCoordination';
+import { ParticipantsIDType } from 'types/graphql-global-types';
 
 import Coordination from './index';
+
+const coordinationMockData: GetCoordinationType = {
+  __typename: 'PlanParticipantsAndProviders',
+  id: '123',
+  coordinateWork: null,
+  coordinateWorkNote: '',
+  gainsharePayments: null,
+  gainsharePaymentsTrack: null,
+  gainsharePaymentsNote: '',
+  participantsIds: [ParticipantsIDType.OTHER],
+  participantsIdsOther: 'Candy Kingdom Operations Number',
+  participantsIDSNote: ''
+};
+
+const coordinationMock = [
+  {
+    request: {
+      query: GetCoordination,
+      variables: { id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905' }
+    },
+    result: {
+      data: {
+        modelPlan: {
+          id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905',
+          modelName: 'My excellent plan that I just initiated',
+          participantsAndProviders: coordinationMockData
+        }
+      }
+    }
+  }
+];
 
 describe('Model Plan Coordination', () => {
   it('renders without errors', async () => {
@@ -15,10 +48,7 @@ describe('Model Plan Coordination', () => {
           '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/participants-and-providers/coordination'
         ]}
       >
-        <MockedProvider
-          mocks={participantsAndProvidersMock}
-          addTypename={false}
-        >
+        <MockedProvider mocks={coordinationMock} addTypename={false}>
           <Route path="/models/:modelID/task-list/participants-and-providers/coordination">
             <Coordination />
           </Route>
@@ -46,10 +76,7 @@ describe('Model Plan Coordination', () => {
           '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/participants-and-providers/coordination'
         ]}
       >
-        <MockedProvider
-          mocks={participantsAndProvidersMock}
-          addTypename={false}
-        >
+        <MockedProvider mocks={coordinationMock} addTypename={false}>
           <Route path="/models/:modelID/task-list/participants-and-providers/coordination">
             <Coordination />
           </Route>

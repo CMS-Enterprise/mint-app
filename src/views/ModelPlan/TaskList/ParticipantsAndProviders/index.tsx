@@ -28,7 +28,7 @@ import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import MultiSelect from 'components/shared/MultiSelect';
 import TextAreaField from 'components/shared/TextAreaField';
-import GetModelPlanParticipantsAndProviders from 'queries/GetModelPlanParticipantsAndProviders';
+import GetParticipantsAndProviders from 'queries/ParticipantsAndProviders/GetParticipantsAndProviders';
 import {
   GetParticipantsAndProviders as GetParticipantsAndProvidersType,
   GetParticipantsAndProviders_modelPlan_participantsAndProviders as GetParticipantsAndProvidersFormType
@@ -45,7 +45,7 @@ import { NotFoundPartial } from 'views/NotFound';
 
 import Communication from './Communication';
 import Coordination from './Coordination';
-import ParticipantsOptions from './ParticipantOptions';
+import ParticipantOptions from './ParticipantOptions';
 import ProviderOptions from './ProviderOptions';
 
 import './index.scss';
@@ -61,7 +61,7 @@ export const ParticipantsAndProvidersContent = () => {
   const history = useHistory();
 
   const { data } = useQuery<GetParticipantsAndProvidersType>(
-    GetModelPlanParticipantsAndProviders,
+    GetParticipantsAndProviders,
     {
       variables: {
         id: modelID
@@ -473,7 +473,7 @@ export const ParticipantsAndProviders = () => {
             <Route
               path="/models/:modelID/task-list/participants-and-providers/participants-options"
               exact
-              render={() => <ParticipantsOptions />}
+              render={() => <ParticipantOptions />}
             />
             <Route
               path="/models/:modelID/task-list/participants-and-providers/communication"
