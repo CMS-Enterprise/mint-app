@@ -27,7 +27,7 @@ import FieldGroup from 'components/shared/FieldGroup';
 import GetCoordination from 'queries/ParticipantsAndProviders/GetCoordination';
 import {
   GetCoordination as GetCoordinationType,
-  GetCoordination_modelPlan_participantsAndProviders as GetCoordinationFormType
+  GetCoordination_modelPlan_participantsAndProviders as CoordinationFormType
 } from 'queries/ParticipantsAndProviders/types/GetCoordination';
 import { UpdatePlanParticipantsAndProvidersVariables } from 'queries/ParticipantsAndProviders/types/UpdatePlanParticipantsAndProviders';
 import UpdatePlanParticipantsAndProviders from 'queries/ParticipantsAndProviders/UpdatePlanParticipantsAndProviders';
@@ -40,7 +40,7 @@ export const Coordination = () => {
   const { t: h } = useTranslation('draftModelPlan');
   const { modelID } = useParams<{ modelID: string }>();
 
-  const formikRef = useRef<FormikProps<GetCoordinationFormType>>(null);
+  const formikRef = useRef<FormikProps<CoordinationFormType>>(null);
   const history = useHistory();
 
   const { data } = useQuery<GetCoordinationType>(GetCoordination, {
@@ -59,9 +59,7 @@ export const Coordination = () => {
     participantsIds,
     participantsIdsOther,
     participantsIDSNote
-  } =
-    data?.modelPlan?.participantsAndProviders ||
-    ({} as GetCoordinationFormType);
+  } = data?.modelPlan?.participantsAndProviders || ({} as CoordinationFormType);
 
   const modelName = data?.modelPlan?.modelName || '';
 
@@ -70,13 +68,14 @@ export const Coordination = () => {
   );
 
   const handleFormSubmit = (
-    formikValues: GetCoordinationFormType,
+    formikValues: CoordinationFormType,
     redirect?: 'next' | 'back' | 'task-list'
   ) => {
+    const { id: updateId, __typename, ...changeValues } = formikValues;
     update({
       variables: {
         id,
-        changes: formikValues
+        changes: changeValues
       }
     })
       .then(response => {
@@ -99,7 +98,7 @@ export const Coordination = () => {
       });
   };
 
-  const initialValues: GetCoordinationFormType = {
+  const initialValues: CoordinationFormType = {
     __typename: 'PlanParticipantsAndProviders',
     id: id ?? '',
     coordinateWork: coordinateWork ?? null,
@@ -153,7 +152,7 @@ export const Coordination = () => {
         enableReinitialize
         innerRef={formikRef}
       >
-        {(formikProps: FormikProps<GetCoordinationFormType>) => {
+        {(formikProps: FormikProps<CoordinationFormType>) => {
           const {
             errors,
             handleSubmit,

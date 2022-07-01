@@ -23,13 +23,13 @@ import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import TextAreaField from 'components/shared/TextAreaField';
-import GetModelPlanCharacteristics from 'queries/GetModelPlanCharacteristics';
+import GetInvolvements from 'queries/GeneralCharacteristics/GetInvolvements';
 import {
-  GetModelPlanCharacteristics as GetModelPlanCharacteristicsType,
-  GetModelPlanCharacteristics_modelPlan_generalCharacteristics as ModelPlanCharacteristicsFormType
-} from 'queries/types/GetModelPlanCharacteristics';
-import { UpdateModelPlanCharacteristicsVariables } from 'queries/types/UpdateModelPlanCharacteristics';
-import UpdateModelPlanCharacteristics from 'queries/UpdateModelPlanCharacteristics';
+  GetInvolvements as GetInvolvementsType,
+  GetInvolvements_modelPlan_generalCharacteristics as InvolvementsFormType
+} from 'queries/GeneralCharacteristics/types/GetInvolvements';
+import { UpdatePlanGeneralCharacteristicsVariables } from 'queries/GeneralCharacteristics/types/UpdatePlanGeneralCharacteristics';
+import UpdatePlanGeneralCharacteristics from 'queries/GeneralCharacteristics/UpdatePlanGeneralCharacteristics';
 import flattenErrors from 'utils/flattenErrors';
 
 const Involvements = () => {
@@ -37,17 +37,14 @@ const Involvements = () => {
   const { t: h } = useTranslation('draftModelPlan');
   const { modelID } = useParams<{ modelID: string }>();
 
-  const formikRef = useRef<FormikProps<ModelPlanCharacteristicsFormType>>(null);
+  const formikRef = useRef<FormikProps<InvolvementsFormType>>(null);
   const history = useHistory();
 
-  const { data } = useQuery<GetModelPlanCharacteristicsType>(
-    GetModelPlanCharacteristics,
-    {
-      variables: {
-        id: modelID
-      }
+  const { data } = useQuery<GetInvolvementsType>(GetInvolvements, {
+    variables: {
+      id: modelID
     }
-  );
+  });
 
   const modelName = data?.modelPlan?.modelName || '';
 
@@ -62,22 +59,21 @@ const Involvements = () => {
     communityPartnersInvolved,
     communityPartnersInvolvedDescription,
     communityPartnersInvolvedNote
-  } =
-    data?.modelPlan?.generalCharacteristics ||
-    ({} as ModelPlanCharacteristicsFormType);
+  } = data?.modelPlan?.generalCharacteristics || ({} as InvolvementsFormType);
 
-  const [update] = useMutation<UpdateModelPlanCharacteristicsVariables>(
-    UpdateModelPlanCharacteristics
+  const [update] = useMutation<UpdatePlanGeneralCharacteristicsVariables>(
+    UpdatePlanGeneralCharacteristics
   );
 
   const handleFormSubmit = (
-    formikValues: ModelPlanCharacteristicsFormType,
+    formikValues: InvolvementsFormType,
     redirect?: 'next' | 'back' | 'task-list'
   ) => {
+    const { id: updateId, __typename, ...changeValues } = formikValues;
     update({
       variables: {
         id,
-        changes: formikValues
+        changes: changeValues
       }
     })
       .then(response => {
@@ -100,7 +96,9 @@ const Involvements = () => {
       });
   };
 
-  const initialValues = {
+  const initialValues: InvolvementsFormType = {
+    __typename: 'PlanGeneralCharacteristics',
+    id: id ?? '',
     careCoordinationInvolved: careCoordinationInvolved ?? null,
     careCoordinationInvolvedDescription:
       careCoordinationInvolvedDescription ?? '',
@@ -113,7 +111,7 @@ const Involvements = () => {
     communityPartnersInvolvedDescription:
       communityPartnersInvolvedDescription ?? '',
     communityPartnersInvolvedNote: communityPartnersInvolvedNote ?? ''
-  } as ModelPlanCharacteristicsFormType;
+  };
 
   return (
     <>
@@ -156,7 +154,7 @@ const Involvements = () => {
         enableReinitialize
         innerRef={formikRef}
       >
-        {(formikProps: FormikProps<ModelPlanCharacteristicsFormType>) => {
+        {(formikProps: FormikProps<InvolvementsFormType>) => {
           const {
             errors,
             handleSubmit,

@@ -12,7 +12,7 @@ import {
   ModelStatus
 } from 'types/graphql-global-types';
 
-import { charactersticMockData } from './Characteristics/mock';
+import { charactersticMockData } from './GeneralCharacteristics/mock';
 import TaskList from './index';
 
 describe('The Model Plan Task List', () => {

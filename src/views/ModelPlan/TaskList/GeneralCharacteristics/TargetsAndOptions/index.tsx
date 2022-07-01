@@ -24,13 +24,13 @@ import CheckboxField from 'components/shared/CheckboxField';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
-import GetModelPlanCharacteristics from 'queries/GetModelPlanCharacteristics';
+import GetTargetsAndOptions from 'queries/GeneralCharacteristics/GetTargetsAndOptions';
 import {
-  GetModelPlanCharacteristics as GetModelPlanCharacteristicsType,
-  GetModelPlanCharacteristics_modelPlan_generalCharacteristics as ModelPlanCharacteristicsFormType
-} from 'queries/types/GetModelPlanCharacteristics';
-import { UpdateModelPlanCharacteristicsVariables } from 'queries/types/UpdateModelPlanCharacteristics';
-import UpdateModelPlanCharacteristics from 'queries/UpdateModelPlanCharacteristics';
+  GetTargetsAndOptions as GetTargetsAndOptionsType,
+  GetTargetsAndOptions_modelPlan_generalCharacteristics as TargetsAndOptionsFormType
+} from 'queries/GeneralCharacteristics/types/GetTargetsAndOptions';
+import { UpdatePlanGeneralCharacteristicsVariables } from 'queries/GeneralCharacteristics/types/UpdatePlanGeneralCharacteristics';
+import UpdatePlanGeneralCharacteristics from 'queries/GeneralCharacteristics/UpdatePlanGeneralCharacteristics';
 import {
   AgreementType,
   GeographyApplication,
@@ -49,17 +49,14 @@ const TargetsAndOptions = () => {
   const { t: h } = useTranslation('draftModelPlan');
   const { modelID } = useParams<{ modelID: string }>();
 
-  const formikRef = useRef<FormikProps<ModelPlanCharacteristicsFormType>>(null);
+  const formikRef = useRef<FormikProps<TargetsAndOptionsFormType>>(null);
   const history = useHistory();
 
-  const { data } = useQuery<GetModelPlanCharacteristicsType>(
-    GetModelPlanCharacteristics,
-    {
-      variables: {
-        id: modelID
-      }
+  const { data } = useQuery<GetTargetsAndOptionsType>(GetTargetsAndOptions, {
+    variables: {
+      id: modelID
     }
-  );
+  });
 
   const modelName = data?.modelPlan?.modelName || '';
 
@@ -79,20 +76,21 @@ const TargetsAndOptions = () => {
     multiplePatricipationAgreementsNeededNote
   } =
     data?.modelPlan?.generalCharacteristics ||
-    ({} as ModelPlanCharacteristicsFormType);
+    ({} as TargetsAndOptionsFormType);
 
-  const [update] = useMutation<UpdateModelPlanCharacteristicsVariables>(
-    UpdateModelPlanCharacteristics
+  const [update] = useMutation<UpdatePlanGeneralCharacteristicsVariables>(
+    UpdatePlanGeneralCharacteristics
   );
 
   const handleFormSubmit = (
-    formikValues: ModelPlanCharacteristicsFormType,
+    formikValues: TargetsAndOptionsFormType,
     redirect?: 'next' | 'back' | 'task-list'
   ) => {
+    const { id: updateId, __typename, ...changeValues } = formikValues;
     update({
       variables: {
         id,
-        changes: formikValues
+        changes: changeValues
       }
     })
       .then(response => {
@@ -115,7 +113,9 @@ const TargetsAndOptions = () => {
       });
   };
 
-  const initialValues = {
+  const initialValues: TargetsAndOptionsFormType = {
+    __typename: 'PlanGeneralCharacteristics',
+    id: id ?? '',
     geographiesTargeted: geographiesTargeted ?? null,
     geographiesTargetedTypes: geographiesTargetedTypes ?? [],
     geographiesTargetedTypesOther: geographiesTargetedTypesOther ?? '',
@@ -130,7 +130,7 @@ const TargetsAndOptions = () => {
       multiplePatricipationAgreementsNeeded ?? null,
     multiplePatricipationAgreementsNeededNote:
       multiplePatricipationAgreementsNeededNote ?? ''
-  } as ModelPlanCharacteristicsFormType;
+  };
 
   return (
     <>
@@ -173,7 +173,7 @@ const TargetsAndOptions = () => {
         enableReinitialize
         innerRef={formikRef}
       >
-        {(formikProps: FormikProps<ModelPlanCharacteristicsFormType>) => {
+        {(formikProps: FormikProps<TargetsAndOptionsFormType>) => {
           const {
             errors,
             handleSubmit,

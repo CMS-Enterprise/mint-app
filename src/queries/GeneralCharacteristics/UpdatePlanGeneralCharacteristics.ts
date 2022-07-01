@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client';
 
 export default gql`
-  mutation UpdateModelPlanCharacteristics(
+  mutation UpdatePlanGeneralCharacteristics(
     $id: UUID!
     $changes: PlanGeneralCharacteristicsChanges!
   ) {

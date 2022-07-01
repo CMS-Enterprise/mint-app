@@ -29,17 +29,17 @@ import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import MultiSelect from 'components/shared/MultiSelect';
 import TextAreaField from 'components/shared/TextAreaField';
+import GetGeneralCharacteristics from 'queries/GeneralCharacteristics/GetGeneralCharacteristics';
+import {
+  GetGeneralCharacteristics as GetGeneralCharacteristicsType,
+  GetGeneralCharacteristics_modelPlan_generalCharacteristics as GetGeneralCharacteristicsFormType
+} from 'queries/GeneralCharacteristics/types/GetGeneralCharacteristics';
+import { UpdatePlanGeneralCharacteristicsVariables } from 'queries/GeneralCharacteristics/types/UpdatePlanGeneralCharacteristics';
+import UpdatePlanGeneralCharacteristics from 'queries/GeneralCharacteristics/UpdatePlanGeneralCharacteristics';
 import GetExistingModelPlans from 'queries/GetExistingModelPlans';
-import GetModelPlanCharacteristics from 'queries/GetModelPlanCharacteristics';
 import GetDraftModelPlans from 'queries/GetModelPlans';
 import { GetExistingModelPlans as ExistingModelPlanType } from 'queries/types/GetExistingModelPlans';
-import {
-  GetModelPlanCharacteristics as GetModelPlanCharacteristicsType,
-  GetModelPlanCharacteristics_modelPlan_generalCharacteristics as ModelPlanCharacteristicsFormType
-} from 'queries/types/GetModelPlanCharacteristics';
 import { GetModelPlans as GetDraftModelPlansType } from 'queries/types/GetModelPlans';
-import { UpdateModelPlanCharacteristicsVariables } from 'queries/types/UpdateModelPlanCharacteristics';
-import UpdateModelPlanCharacteristics from 'queries/UpdateModelPlanCharacteristics';
 import flattenErrors from 'utils/flattenErrors';
 import { NotFoundPartial } from 'views/NotFound';
 
@@ -53,7 +53,9 @@ export const CharacteristicsContent = () => {
   const { t: h } = useTranslation('draftModelPlan');
   const { modelID } = useParams<{ modelID: string }>();
 
-  const formikRef = useRef<FormikProps<ModelPlanCharacteristicsFormType>>(null);
+  const formikRef = useRef<FormikProps<GetGeneralCharacteristicsFormType>>(
+    null
+  );
   const history = useHistory();
 
   const {
@@ -80,8 +82,8 @@ export const CharacteristicsContent = () => {
     });
   }, [modelData, existingModelData]);
 
-  const { data } = useQuery<GetModelPlanCharacteristicsType>(
-    GetModelPlanCharacteristics,
+  const { data } = useQuery<GetGeneralCharacteristicsType>(
+    GetGeneralCharacteristics,
     {
       variables: {
         id: modelID
@@ -102,22 +104,23 @@ export const CharacteristicsContent = () => {
     hasComponentsOrTracksNote
   } =
     data?.modelPlan?.generalCharacteristics ||
-    ({} as ModelPlanCharacteristicsFormType);
+    ({} as GetGeneralCharacteristicsFormType);
 
   const modelName = data?.modelPlan?.modelName || '';
 
-  const [update] = useMutation<UpdateModelPlanCharacteristicsVariables>(
-    UpdateModelPlanCharacteristics
+  const [update] = useMutation<UpdatePlanGeneralCharacteristicsVariables>(
+    UpdatePlanGeneralCharacteristics
   );
 
   const handleFormSubmit = (
-    formikValues: ModelPlanCharacteristicsFormType,
+    formikValues: GetGeneralCharacteristicsFormType,
     redirect?: 'next' | 'back'
   ) => {
+    const { id: updateId, __typename, ...changeValues } = formikValues;
     update({
       variables: {
         id,
-        changes: formikValues
+        changes: changeValues
       }
     })
       .then(response => {
@@ -136,7 +139,9 @@ export const CharacteristicsContent = () => {
       });
   };
 
-  const initialValues = {
+  const initialValues: GetGeneralCharacteristicsFormType = {
+    __typename: 'PlanGeneralCharacteristics',
+    id: id ?? '',
     isNewModel: isNewModel ?? null,
     existingModel: existingModel ?? null,
     resemblesExistingModel: resemblesExistingModel ?? null,
@@ -146,7 +151,7 @@ export const CharacteristicsContent = () => {
     hasComponentsOrTracks: hasComponentsOrTracks ?? null,
     hasComponentsOrTracksDiffer: hasComponentsOrTracksDiffer ?? '',
     hasComponentsOrTracksNote: hasComponentsOrTracksNote ?? ''
-  } as ModelPlanCharacteristicsFormType;
+  };
 
   return (
     <>
@@ -189,7 +194,7 @@ export const CharacteristicsContent = () => {
         enableReinitialize
         innerRef={formikRef}
       >
-        {(formikProps: FormikProps<ModelPlanCharacteristicsFormType>) => {
+        {(formikProps: FormikProps<GetGeneralCharacteristicsFormType>) => {
           const {
             errors,
             handleSubmit,

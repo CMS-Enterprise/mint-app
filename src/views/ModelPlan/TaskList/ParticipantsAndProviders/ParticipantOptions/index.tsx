@@ -29,7 +29,7 @@ import TextAreaField from 'components/shared/TextAreaField';
 import GetParticipantOptions from 'queries/ParticipantsAndProviders/GetParticipantOptions';
 import {
   GetParticipantOptions as GetParticipantOptionsType,
-  GetParticipantOptions_modelPlan_participantsAndProviders as GetParticipantOptionsFormType
+  GetParticipantOptions_modelPlan_participantsAndProviders as ParticipantOptionsFormType
 } from 'queries/ParticipantsAndProviders/types/GetParticipantOptions';
 import { UpdatePlanParticipantsAndProvidersVariables } from 'queries/ParticipantsAndProviders/types/UpdatePlanParticipantsAndProviders';
 import UpdatePlanParticipantsAndProviders from 'queries/ParticipantsAndProviders/UpdatePlanParticipantsAndProviders';
@@ -52,7 +52,7 @@ export const ParticipantOptions = () => {
   const { t: h } = useTranslation('draftModelPlan');
   const { modelID } = useParams<{ modelID: string }>();
 
-  const formikRef = useRef<FormikProps<GetParticipantOptionsFormType>>(null);
+  const formikRef = useRef<FormikProps<ParticipantOptionsFormType>>(null);
   const history = useHistory();
 
   const { data } = useQuery<GetParticipantOptionsType>(GetParticipantOptions, {
@@ -74,7 +74,7 @@ export const ParticipantOptions = () => {
     selectionNote
   } =
     data?.modelPlan?.participantsAndProviders ||
-    ({} as GetParticipantOptionsFormType);
+    ({} as ParticipantOptionsFormType);
 
   const modelName = data?.modelPlan?.modelName || '';
 
@@ -83,13 +83,14 @@ export const ParticipantOptions = () => {
   );
 
   const handleFormSubmit = (
-    formikValues: GetParticipantOptionsFormType,
+    formikValues: ParticipantOptionsFormType,
     redirect?: 'next' | 'back' | 'task-list'
   ) => {
+    const { id: updateId, __typename, ...changeValues } = formikValues;
     update({
       variables: {
         id,
-        changes: formikValues
+        changes: changeValues
       }
     })
       .then(response => {
@@ -112,7 +113,7 @@ export const ParticipantOptions = () => {
       });
   };
 
-  const initialValues: GetParticipantOptionsFormType = {
+  const initialValues: ParticipantOptionsFormType = {
     __typename: 'PlanParticipantsAndProviders',
     id: id ?? '',
     expectedNumberOfParticipants: expectedNumberOfParticipants ?? 0,
@@ -167,7 +168,7 @@ export const ParticipantOptions = () => {
         enableReinitialize
         innerRef={formikRef}
       >
-        {(formikProps: FormikProps<GetParticipantOptionsFormType>) => {
+        {(formikProps: FormikProps<ParticipantOptionsFormType>) => {
           const {
             errors,
             handleSubmit,

@@ -3,8 +3,42 @@ import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
 
+import GetGeneralCharacteristics from 'queries/GeneralCharacteristics/GetGeneralCharacteristics';
+import { GetGeneralCharacteristics_modelPlan_generalCharacteristics as GetGeneralCharacteristicsType } from 'queries/GeneralCharacteristics/types/GetGeneralCharacteristics';
+
 import { CharacteristicsContent } from './index';
-import charactersticMock from './mock';
+
+const generalCharacteristicsMockData: GetGeneralCharacteristicsType = {
+  __typename: 'PlanGeneralCharacteristics',
+  id: '123',
+  isNewModel: false,
+  existingModel: 'Second Plan',
+  resemblesExistingModel: false,
+  resemblesExistingModelWhich: [],
+  resemblesExistingModelHow: '',
+  resemblesExistingModelNote: '',
+  hasComponentsOrTracks: true,
+  hasComponentsOrTracksDiffer: 'Differ text',
+  hasComponentsOrTracksNote: 'Component note'
+};
+
+const generalCharacteristicsMock = [
+  {
+    request: {
+      query: GetGeneralCharacteristics,
+      variables: { id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905' }
+    },
+    result: {
+      data: {
+        modelPlan: {
+          id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905',
+          modelName: 'My excellent plan that I just initiated',
+          generalCharacteristics: generalCharacteristicsMockData
+        }
+      }
+    }
+  }
+];
 
 describe('Model Plan Characteristics', () => {
   it('renders without errors', async () => {
@@ -14,7 +48,7 @@ describe('Model Plan Characteristics', () => {
           '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/characteristics'
         ]}
       >
-        <MockedProvider mocks={charactersticMock} addTypename={false}>
+        <MockedProvider mocks={generalCharacteristicsMock} addTypename={false}>
           <Route path="/models/:modelID/task-list/characteristics">
             <CharacteristicsContent />
           </Route>
@@ -42,7 +76,7 @@ describe('Model Plan Characteristics', () => {
           '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/characteristics'
         ]}
       >
-        <MockedProvider mocks={charactersticMock} addTypename={false}>
+        <MockedProvider mocks={generalCharacteristicsMock} addTypename={false}>
           <Route path="/models/:modelID/task-list/characteristics">
             <CharacteristicsContent />
           </Route>

@@ -25,13 +25,13 @@ import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import TextAreaField from 'components/shared/TextAreaField';
-import GetModelPlanCharacteristics from 'queries/GetModelPlanCharacteristics';
+import GetAuthority from 'queries/GeneralCharacteristics/GetAuthority';
 import {
-  GetModelPlanCharacteristics as GetModelPlanCharacteristicsType,
-  GetModelPlanCharacteristics_modelPlan_generalCharacteristics as ModelPlanCharacteristicsFormType
-} from 'queries/types/GetModelPlanCharacteristics';
-import { UpdateModelPlanCharacteristicsVariables } from 'queries/types/UpdateModelPlanCharacteristics';
-import UpdateModelPlanCharacteristics from 'queries/UpdateModelPlanCharacteristics';
+  GetAuthority as GetAuthorityType,
+  GetAuthority_modelPlan_generalCharacteristics as AuthorityFormType
+} from 'queries/GeneralCharacteristics/types/GetAuthority';
+import { UpdatePlanGeneralCharacteristicsVariables } from 'queries/GeneralCharacteristics/types/UpdatePlanGeneralCharacteristics';
+import UpdatePlanGeneralCharacteristics from 'queries/GeneralCharacteristics/UpdatePlanGeneralCharacteristics';
 import { AuthorityAllowance, WaiverType } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import {
@@ -45,17 +45,16 @@ const Authority = () => {
   const { t: h } = useTranslation('draftModelPlan');
   const { modelID } = useParams<{ modelID: string }>();
 
-  const formikRef = useRef<FormikProps<ModelPlanCharacteristicsFormType>>(null);
+  const formikRef = useRef<FormikProps<GetAuthAuthorityFormTypeorityType>>(
+    null
+  );
   const history = useHistory();
 
-  const { data } = useQuery<GetModelPlanCharacteristicsType>(
-    GetModelPlanCharacteristics,
-    {
-      variables: {
-        id: modelID
-      }
+  const { data } = useQuery<GetAuthorityType>(GetAuthority, {
+    variables: {
+      id: modelID
     }
-  );
+  });
 
   const modelName = data?.modelPlan?.modelName || '';
 
@@ -70,22 +69,21 @@ const Authority = () => {
     waiversRequired,
     waiversRequiredTypes,
     waiversRequiredNote
-  } =
-    data?.modelPlan?.generalCharacteristics ||
-    ({} as ModelPlanCharacteristicsFormType);
+  } = data?.modelPlan?.generalCharacteristics || ({} as AuthorityFormType);
 
-  const [update] = useMutation<UpdateModelPlanCharacteristicsVariables>(
-    UpdateModelPlanCharacteristics
+  const [update] = useMutation<UpdatePlanGeneralCharacteristicsVariables>(
+    UpdatePlanGeneralCharacteristics
   );
 
   const handleFormSubmit = (
-    formikValues: ModelPlanCharacteristicsFormType,
+    formikValues: AuthorityFormType,
     redirect?: 'back' | 'task-list'
   ) => {
+    const { id: updateId, __typename, ...changeValues } = formikValues;
     update({
       variables: {
         id,
-        changes: formikValues
+        changes: changeValues
       }
     })
       .then(response => {
@@ -104,7 +102,9 @@ const Authority = () => {
       });
   };
 
-  const initialValues = {
+  const initialValues: AuthorityFormType = {
+    __typename: 'PlanGeneralCharacteristics',
+    id: id ?? '',
     rulemakingRequired: rulemakingRequired ?? null,
     rulemakingRequiredDescription: rulemakingRequiredDescription ?? '',
     rulemakingRequiredNote: rulemakingRequiredNote ?? '',
@@ -114,7 +114,7 @@ const Authority = () => {
     waiversRequired: waiversRequired ?? null,
     waiversRequiredTypes: waiversRequiredTypes ?? [],
     waiversRequiredNote: waiversRequiredNote ?? ''
-  } as ModelPlanCharacteristicsFormType;
+  };
 
   return (
     <>
@@ -157,7 +157,7 @@ const Authority = () => {
         enableReinitialize
         innerRef={formikRef}
       >
-        {(formikProps: FormikProps<ModelPlanCharacteristicsFormType>) => {
+        {(formikProps: FormikProps<AuthorityFormType>) => {
           const {
             errors,
             handleSubmit,

@@ -26,13 +26,13 @@ import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import MultiSelect from 'components/shared/MultiSelect';
-import GetModelPlanCharacteristics from 'queries/GetModelPlanCharacteristics';
+import GetKeyCharacteristics from 'queries/GeneralCharacteristics/GetKeyCharacteristics';
 import {
-  GetModelPlanCharacteristics as GetModelPlanCharacteristicsType,
-  GetModelPlanCharacteristics_modelPlan_generalCharacteristics as ModelPlanCharacteristicsFormType
-} from 'queries/types/GetModelPlanCharacteristics';
-import { UpdateModelPlanCharacteristicsVariables } from 'queries/types/UpdateModelPlanCharacteristics';
-import UpdateModelPlanCharacteristics from 'queries/UpdateModelPlanCharacteristics';
+  GetKeyCharacteristics as GetKeyCharacteristicsType,
+  GetKeyCharacteristics_modelPlan_generalCharacteristics as KeyCharacteristicsFormType
+} from 'queries/GeneralCharacteristics/types/GetKeyCharacteristics';
+import { UpdatePlanGeneralCharacteristicsVariables } from 'queries/GeneralCharacteristics/types/UpdatePlanGeneralCharacteristics';
+import UpdatePlanGeneralCharacteristics from 'queries/GeneralCharacteristics/UpdatePlanGeneralCharacteristics';
 import {
   AlternativePaymentModelType,
   KeyCharacteristic
@@ -49,17 +49,14 @@ const KeyCharacteristics = () => {
   const { t: h } = useTranslation('draftModelPlan');
   const { modelID } = useParams<{ modelID: string }>();
 
-  const formikRef = useRef<FormikProps<ModelPlanCharacteristicsFormType>>(null);
+  const formikRef = useRef<FormikProps<KeyCharacteristicsFormType>>(null);
   const history = useHistory();
 
-  const { data } = useQuery<GetModelPlanCharacteristicsType>(
-    GetModelPlanCharacteristics,
-    {
-      variables: {
-        id: modelID
-      }
+  const { data } = useQuery<GetKeyCharacteristicsType>(GetKeyCharacteristics, {
+    variables: {
+      id: modelID
     }
-  );
+  });
 
   const modelName = data?.modelPlan?.modelName || '';
 
@@ -79,20 +76,21 @@ const KeyCharacteristics = () => {
     planContactUpdatedNote
   } =
     data?.modelPlan?.generalCharacteristics ||
-    ({} as ModelPlanCharacteristicsFormType);
+    ({} as KeyCharacteristicsFormType);
 
-  const [update] = useMutation<UpdateModelPlanCharacteristicsVariables>(
-    UpdateModelPlanCharacteristics
+  const [update] = useMutation<UpdatePlanGeneralCharacteristicsVariables>(
+    UpdatePlanGeneralCharacteristics
   );
 
   const handleFormSubmit = (
-    formikValues: ModelPlanCharacteristicsFormType,
+    formikValues: KeyCharacteristicsFormType,
     redirect?: 'next' | 'back' | 'task-list'
   ) => {
+    const { id: updateId, __typename, ...changeValues } = formikValues;
     update({
       variables: {
         id,
-        changes: formikValues
+        changes: changeValues
       }
     })
       .then(response => {
@@ -113,7 +111,9 @@ const KeyCharacteristics = () => {
       });
   };
 
-  const initialValues = {
+  const initialValues: KeyCharacteristicsFormType = {
+    __typename: 'PlanGeneralCharacteristics',
+    id: id ?? '',
     alternativePaymentModel: alternativePaymentModel ?? null,
     alternativePaymentModelTypes: alternativePaymentModelTypes ?? [],
     alternativePaymentModelNote: alternativePaymentModelNote ?? '',
@@ -126,7 +126,7 @@ const KeyCharacteristics = () => {
     managePartCDEnrollmentNote: managePartCDEnrollmentNote ?? '',
     planContactUpdated: planContactUpdated ?? null,
     planContactUpdatedNote: planContactUpdatedNote ?? ''
-  } as ModelPlanCharacteristicsFormType;
+  };
 
   return (
     <>
@@ -169,7 +169,7 @@ const KeyCharacteristics = () => {
         enableReinitialize
         innerRef={formikRef}
       >
-        {(formikProps: FormikProps<ModelPlanCharacteristicsFormType>) => {
+        {(formikProps: FormikProps<KeyCharacteristicsFormType>) => {
           const {
             errors,
             handleSubmit,

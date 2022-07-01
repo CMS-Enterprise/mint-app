@@ -3,9 +3,42 @@ import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
 
-import charactersticMock from '../mock';
+import GetInvolvements from 'queries/GeneralCharacteristics/GetInvolvements';
+import { GetInvolvements_modelPlan_generalCharacteristics as GetInvolvementsType } from 'queries/GeneralCharacteristics/types/GetInvolvements';
 
 import Involvements from './index';
+
+const involvementsMockData: GetInvolvementsType = {
+  __typename: 'PlanGeneralCharacteristics',
+  id: '123',
+  careCoordinationInvolved: false,
+  careCoordinationInvolvedDescription: '',
+  careCoordinationInvolvedNote: '',
+  additionalServicesInvolved: true,
+  additionalServicesInvolvedDescription: 'Lots of additional services',
+  additionalServicesInvolvedNote: '',
+  communityPartnersInvolved: false,
+  communityPartnersInvolvedDescription: '',
+  communityPartnersInvolvedNote: ''
+};
+
+const involvementsMock = [
+  {
+    request: {
+      query: GetInvolvements,
+      variables: { id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905' }
+    },
+    result: {
+      data: {
+        modelPlan: {
+          id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905',
+          modelName: 'My excellent plan that I just initiated',
+          generalCharacteristics: involvementsMockData
+        }
+      }
+    }
+  }
+];
 
 describe('Model Plan Characteristics', () => {
   it('renders without errors', async () => {
@@ -15,7 +48,7 @@ describe('Model Plan Characteristics', () => {
           '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/characteristics/involvements'
         ]}
       >
-        <MockedProvider mocks={charactersticMock} addTypename={false}>
+        <MockedProvider mocks={involvementsMock} addTypename={false}>
           <Route path="/models/:modelID/task-list/characteristics/involvements">
             <Involvements />
           </Route>
@@ -45,7 +78,7 @@ describe('Model Plan Characteristics', () => {
           '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/characteristics/involvements'
         ]}
       >
-        <MockedProvider mocks={charactersticMock} addTypename={false}>
+        <MockedProvider mocks={involvementsMock} addTypename={false}>
           <Route path="/models/:modelID/task-list/characteristics/involvements">
             <Involvements />
           </Route>

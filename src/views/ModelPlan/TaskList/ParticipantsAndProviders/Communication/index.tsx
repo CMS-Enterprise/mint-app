@@ -27,7 +27,7 @@ import FieldGroup from 'components/shared/FieldGroup';
 import GetCommunication from 'queries/ParticipantsAndProviders/GetCommunication';
 import {
   GetCommunication as GetCommunicationType,
-  GetCommunication_modelPlan_participantsAndProviders as GetCommunicationFormType
+  GetCommunication_modelPlan_participantsAndProviders as CommunicationFormType
 } from 'queries/ParticipantsAndProviders/types/GetCommunication';
 import { UpdatePlanParticipantsAndProvidersVariables } from 'queries/ParticipantsAndProviders/types/UpdatePlanParticipantsAndProviders';
 import UpdatePlanParticipantsAndProviders from 'queries/ParticipantsAndProviders/UpdatePlanParticipantsAndProviders';
@@ -47,7 +47,7 @@ export const Communication = () => {
   const { t: h } = useTranslation('draftModelPlan');
   const { modelID } = useParams<{ modelID: string }>();
 
-  const formikRef = useRef<FormikProps<GetCommunicationFormType>>(null);
+  const formikRef = useRef<FormikProps<CommunicationFormType>>(null);
   const history = useHistory();
 
   const { data } = useQuery<GetCommunicationType>(GetCommunication, {
@@ -68,8 +68,7 @@ export const Communication = () => {
     willRiskChange,
     willRiskChangeNote
   } =
-    data?.modelPlan?.participantsAndProviders ||
-    ({} as GetCommunicationFormType);
+    data?.modelPlan?.participantsAndProviders || ({} as CommunicationFormType);
 
   const modelName = data?.modelPlan?.modelName || '';
 
@@ -78,13 +77,14 @@ export const Communication = () => {
   );
 
   const handleFormSubmit = (
-    formikValues: GetCommunicationFormType,
+    formikValues: CommunicationFormType,
     redirect?: 'next' | 'back' | 'task-list'
   ) => {
+    const { id: updateId, __typename, ...changeValues } = formikValues;
     update({
       variables: {
         id,
-        changes: formikValues
+        changes: changeValues
       }
     })
       .then(response => {
@@ -107,7 +107,7 @@ export const Communication = () => {
       });
   };
 
-  const initialValues: GetCommunicationFormType = {
+  const initialValues: CommunicationFormType = {
     __typename: 'PlanParticipantsAndProviders',
     id: id ?? '',
     communicationMethod: communicationMethod ?? [],
@@ -162,7 +162,7 @@ export const Communication = () => {
         enableReinitialize
         innerRef={formikRef}
       >
-        {(formikProps: FormikProps<GetCommunicationFormType>) => {
+        {(formikProps: FormikProps<CommunicationFormType>) => {
           const {
             errors,
             handleSubmit,

@@ -29,7 +29,7 @@ import TextAreaField from 'components/shared/TextAreaField';
 import GetProviderOptions from 'queries/ParticipantsAndProviders/GetProviderOptions';
 import {
   GetProviderOptions as GetProviderOptionsType,
-  GetProviderOptions_modelPlan_participantsAndProviders as GetProviderOptionsFormType
+  GetProviderOptions_modelPlan_participantsAndProviders as ProviderOptionsFormType
 } from 'queries/ParticipantsAndProviders/types/GetProviderOptions';
 import { UpdatePlanParticipantsAndProvidersVariables } from 'queries/ParticipantsAndProviders/types/UpdatePlanParticipantsAndProviders';
 import UpdatePlanParticipantsAndProviders from 'queries/ParticipantsAndProviders/UpdatePlanParticipantsAndProviders';
@@ -54,7 +54,7 @@ export const ProviderOptions = () => {
   const { t: h } = useTranslation('draftModelPlan');
   const { modelID } = useParams<{ modelID: string }>();
 
-  const formikRef = useRef<FormikProps<GetProviderOptionsFormType>>(null);
+  const formikRef = useRef<FormikProps<ProviderOptionsFormType>>(null);
   const history = useHistory();
 
   const { data } = useQuery<GetProviderOptionsType>(GetProviderOptions, {
@@ -79,7 +79,7 @@ export const ProviderOptions = () => {
     providerOverlapNote
   } =
     data?.modelPlan?.participantsAndProviders ||
-    ({} as GetProviderOptionsFormType);
+    ({} as ProviderOptionsFormType);
 
   const modelName = data?.modelPlan?.modelName || '';
 
@@ -88,13 +88,14 @@ export const ProviderOptions = () => {
   );
 
   const handleFormSubmit = (
-    formikValues: GetProviderOptionsFormType,
+    formikValues: ProviderOptionsFormType,
     redirect?: 'back' | 'task-list'
   ) => {
+    const { id: updateId, __typename, ...changeValues } = formikValues;
     update({
       variables: {
         id,
-        changes: formikValues
+        changes: changeValues
       }
     })
       .then(response => {
@@ -113,7 +114,7 @@ export const ProviderOptions = () => {
       });
   };
 
-  const initialValues: GetProviderOptionsFormType = {
+  const initialValues: ProviderOptionsFormType = {
     __typename: 'PlanParticipantsAndProviders',
     id: id ?? '',
     providerAdditionFrequency: providerAdditionFrequency ?? null,
@@ -171,7 +172,7 @@ export const ProviderOptions = () => {
         enableReinitialize
         innerRef={formikRef}
       >
-        {(formikProps: FormikProps<GetProviderOptionsFormType>) => {
+        {(formikProps: FormikProps<ProviderOptionsFormType>) => {
           const {
             errors,
             handleSubmit,
