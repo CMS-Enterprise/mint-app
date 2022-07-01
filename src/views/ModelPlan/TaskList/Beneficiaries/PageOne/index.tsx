@@ -24,6 +24,7 @@ import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import MultiSelect from 'components/shared/MultiSelect';
+import TextAreaField from 'components/shared/TextAreaField';
 import TextField from 'components/shared/TextField';
 import GetModelPlanBeneficiaries from 'queries/GetModelPlanBeneficiaries';
 import {
@@ -32,7 +33,7 @@ import {
 } from 'queries/types/GetModelPlanBeneficiaries';
 import { UpdateModelPlanBeneficiariesVariables } from 'queries/types/UpdateModelPlanBeneficiaries';
 import UpdateModelPlanBeneficiaries from 'queries/UpdateModelPlanBeneficiaries';
-import { BeneficiariesType } from 'types/graphql-global-types';
+import { BeneficiariesType, TriStateAnswer } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import { sortOtherEnum, translateBeneficiariesType } from 'utils/modelPlan';
 
@@ -58,6 +59,7 @@ const BeneficiariesPageOne = () => {
     beneficiaries,
     beneficiariesOther,
     beneficiariesNote,
+    treatDualElligibleDifferent,
     treatDualElligibleDifferentHow,
     treatDualElligibleDifferentNote,
     excludeCertainCharacteristics,
@@ -108,6 +110,7 @@ const BeneficiariesPageOne = () => {
     beneficiaries: beneficiaries ?? '',
     beneficiariesOther: beneficiariesOther ?? '',
     beneficiariesNote: beneficiariesNote ?? '',
+    treatDualElligibleDifferent: treatDualElligibleDifferent ?? '',
     treatDualElligibleDifferentHow: treatDualElligibleDifferentHow ?? '',
     treatDualElligibleDifferentNote: treatDualElligibleDifferentNote ?? '',
     excludeCertainCharacteristics: excludeCertainCharacteristics ?? '',
@@ -260,45 +263,76 @@ const BeneficiariesPageOne = () => {
                       </FieldGroup>
 
                       <FieldGroup
-                        scrollElement="treatDualElligibleDifferentHow"
-                        error={!!flatErrors.treatDualElligibleDifferentHow}
+                        scrollElement="treatDualElligibleDifferent"
+                        error={!!flatErrors.treatDualElligibleDifferent}
                         className="margin-y-4 margin-bottom-8"
                       >
                         <Label htmlFor="beneficiaries-dual-eligibility">
                           {t('dualEligibility')}
                         </Label>
                         <FieldErrorMsg>
-                          {flatErrors.treatDualElligibleDifferentHow}
+                          {flatErrors.treatDualElligibleDifferent}
                         </FieldErrorMsg>
                         <Fieldset>
                           <Field
                             as={Radio}
                             id="beneficiaries-dual-eligibility"
-                            name="treatDualElligibleDifferentHow"
+                            name="treatDualElligibleDifferent"
                             label={h('yes')}
                             value="TRUE"
                             checked={
-                              values.treatDualElligibleDifferentHow === 'YES'
+                              values.treatDualElligibleDifferent === 'YES'
                             }
                             onChange={() => {
                               setFieldValue(
-                                'treatDualElligibleDifferentHow',
+                                'treatDualElligibleDifferent',
                                 'YES'
                               );
                             }}
                           />
+                          {values?.treatDualElligibleDifferent!.includes(
+                            'YES' as TriStateAnswer
+                          ) && (
+                            <FieldGroup
+                              className="margin-left-4 margin-y-1"
+                              scrollElement="treatDualElligibleDifferentHow"
+                              error={
+                                !!flatErrors.treatDualElligibleDifferentHow
+                              }
+                            >
+                              <Label
+                                htmlFor="beneficiaries-dual-eligibility-how"
+                                className="text-normal"
+                              >
+                                {h('howSo')}
+                              </Label>
+                              <FieldErrorMsg>
+                                {flatErrors.treatDualElligibleDifferentHow}
+                              </FieldErrorMsg>
+                              <Field
+                                as={TextAreaField}
+                                className="height-15"
+                                error={
+                                  flatErrors.treatDualElligibleDifferentHow
+                                }
+                                id="beneficiaries-dual-eligibility-how"
+                                data-testid="beneficiaries-dual-eligibility-how"
+                                name="beneficiaries-dual-eligibility-how"
+                              />
+                            </FieldGroup>
+                          )}
                           <Field
                             as={Radio}
                             id="beneficiaries-dual-eligibility-no"
-                            name="treatDualElligibleDifferentHow"
+                            name="treatDualElligibleDifferent"
                             label={h('no')}
                             value="FALSE"
                             checked={
-                              values.treatDualElligibleDifferentHow === 'NO'
+                              values.treatDualElligibleDifferent === 'NO'
                             }
                             onChange={() => {
                               setFieldValue(
-                                'treatDualElligibleDifferentHow',
+                                'treatDualElligibleDifferent',
                                 'NO'
                               );
                             }}
@@ -306,15 +340,15 @@ const BeneficiariesPageOne = () => {
                           <Field
                             as={Radio}
                             id="beneficiaries-dual-eligibility-tbd"
-                            name="treatDualElligibleDifferentHow"
+                            name="treatDualElligibleDifferent"
                             label={t('beneficiariesOptions.na')}
                             value="TBD"
                             checked={
-                              values.treatDualElligibleDifferentHow === 'TBD'
+                              values.treatDualElligibleDifferent === 'TBD'
                             }
                             onChange={() => {
                               setFieldValue(
-                                'treatDualElligibleDifferentHow',
+                                'treatDualElligibleDifferent',
                                 'TBD'
                               );
                             }}
@@ -322,7 +356,74 @@ const BeneficiariesPageOne = () => {
                         </Fieldset>
                         <AddNote
                           id="beneficiaries-dual-eligibility-note"
-                          field="treatDualElligibleDifferentHowNote"
+                          field="treatDualElligibleDifferentNote"
+                        />
+                      </FieldGroup>
+
+                      <FieldGroup
+                        scrollElement="excludeCertainCharacteristics"
+                        error={!!flatErrors.excludeCertainCharacteristics}
+                        className="margin-y-4 margin-bottom-8"
+                      >
+                        <Label htmlFor="beneficiaries-exclude">
+                          {t('excluded')}
+                        </Label>
+                        <FieldErrorMsg>
+                          {flatErrors.excludeCertainCharacteristics}
+                        </FieldErrorMsg>
+                        <Fieldset>
+                          <Field
+                            as={Radio}
+                            id="beneficiaries-exclude"
+                            name="excludeCertainCharacteristics"
+                            label={h('yes')}
+                            value="TRUE"
+                            checked={
+                              values.excludeCertainCharacteristics === 'YES'
+                            }
+                            onChange={() => {
+                              setFieldValue(
+                                'excludeCertainCharacteristics',
+                                'YES'
+                              );
+                            }}
+                          />
+                          <Field
+                            as={Radio}
+                            id="beneficiaries-exclude-no"
+                            name="excludeCertainCharacteristics"
+                            label={h('no')}
+                            value="FALSE"
+                            checked={
+                              values.excludeCertainCharacteristics === 'NO'
+                            }
+                            onChange={() => {
+                              setFieldValue(
+                                'excludeCertainCharacteristics',
+                                'NO'
+                              );
+                            }}
+                          />
+                          <Field
+                            as={Radio}
+                            id="beneficiaries-exclude-tbd"
+                            name="excludeCertainCharacteristics"
+                            label={t('beneficiariesOptions.na')}
+                            value="TBD"
+                            checked={
+                              values.excludeCertainCharacteristics === 'TBD'
+                            }
+                            onChange={() => {
+                              setFieldValue(
+                                'excludeCertainCharacteristics',
+                                'TBD'
+                              );
+                            }}
+                          />
+                        </Fieldset>
+                        <AddNote
+                          id="beneficiaries-exclude-note"
+                          field="excludeCertainCharacteristicsNote"
                         />
                       </FieldGroup>
                     </Form>
