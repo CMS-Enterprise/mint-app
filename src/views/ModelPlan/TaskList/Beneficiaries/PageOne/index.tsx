@@ -6,9 +6,11 @@ import {
   Breadcrumb,
   BreadcrumbBar,
   BreadcrumbLink,
+  Button,
   Fieldset,
   Grid,
   GridContainer,
+  IconArrowBack,
   Label,
   Radio
 } from '@trussworks/react-uswds';
@@ -461,6 +463,20 @@ const BeneficiariesPageOne = () => {
                           field="excludeCertainCharacteristicsNote"
                         />
                       </FieldGroup>
+
+                      <div className="margin-top-6 margin-bottom-3">
+                        <Button type="submit" onClick={() => setErrors({})}>
+                          {h('next')}
+                        </Button>
+                      </div>
+                      <Button
+                        type="button"
+                        className="usa-button usa-button--unstyled"
+                        onClick={() => handleFormSubmit(values, 'back')}
+                      >
+                        <IconArrowBack className="margin-right-1" aria-hidden />
+                        {h('saveAndReturn')}
+                      </Button>
                     </Form>
                   </Grid>
                 </Grid>
