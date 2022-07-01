@@ -28,8 +28,8 @@ import {
   GetIDDOCMonitoring as GetIDDOCMonitoringType,
   GetIDDOCMonitoring_modelPlan_opsEvalAndLearning as IDDOCMonitoringFormType
 } from 'queries/OpsEvalAndLearning/types/GetIDDOCMonitoring';
-import { UpdateModelPlanOpsEvalAndLearningVariables } from 'queries/types/UpdateModelPlanOpsEvalAndLearning';
-import UpdateModelPlanOpsEvalAndLearning from 'queries/UpdateModelPlanOpsEvalAndLearning';
+import { UpdatePlanOpsEvalAndLearningVariables } from 'queries/OpsEvalAndLearning/types/UpdatePlanOpsEvalAndLearning';
+import UpdatePlanOpsEvalAndLearning from 'queries/OpsEvalAndLearning/UpdatePlanOpsEvalAndLearning';
 import { DataFullTimeOrIncrementalType } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import { translateDataFullTimeOrIncrementalType } from 'utils/modelPlan';
@@ -69,8 +69,8 @@ const IDDOCMonitoring = () => {
 
   const modelName = data?.modelPlan?.modelName || '';
 
-  const [update] = useMutation<UpdateModelPlanOpsEvalAndLearningVariables>(
-    UpdateModelPlanOpsEvalAndLearning
+  const [update] = useMutation<UpdatePlanOpsEvalAndLearningVariables>(
+    UpdatePlanOpsEvalAndLearning
   );
 
   const handleFormSubmit = (
