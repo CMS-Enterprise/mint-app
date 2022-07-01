@@ -6,9 +6,11 @@ import {
   Breadcrumb,
   BreadcrumbBar,
   BreadcrumbLink,
+  Fieldset,
   Grid,
   GridContainer,
-  Label
+  Label,
+  Radio
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
 
@@ -254,6 +256,73 @@ const BeneficiariesPageOne = () => {
                         <AddNote
                           id="beneficiaries-note"
                           field="beneficiariesNote"
+                        />
+                      </FieldGroup>
+
+                      <FieldGroup
+                        scrollElement="treatDualElligibleDifferentHow"
+                        error={!!flatErrors.treatDualElligibleDifferentHow}
+                        className="margin-y-4 margin-bottom-8"
+                      >
+                        <Label htmlFor="beneficiaries-dual-eligibility">
+                          {t('dualEligibility')}
+                        </Label>
+                        <FieldErrorMsg>
+                          {flatErrors.treatDualElligibleDifferentHow}
+                        </FieldErrorMsg>
+                        <Fieldset>
+                          <Field
+                            as={Radio}
+                            id="beneficiaries-dual-eligibility"
+                            name="treatDualElligibleDifferentHow"
+                            label={h('yes')}
+                            value="TRUE"
+                            checked={
+                              values.treatDualElligibleDifferentHow === 'YES'
+                            }
+                            onChange={() => {
+                              setFieldValue(
+                                'treatDualElligibleDifferentHow',
+                                'YES'
+                              );
+                            }}
+                          />
+                          <Field
+                            as={Radio}
+                            id="beneficiaries-dual-eligibility-no"
+                            name="treatDualElligibleDifferentHow"
+                            label={h('no')}
+                            value="FALSE"
+                            checked={
+                              values.treatDualElligibleDifferentHow === 'NO'
+                            }
+                            onChange={() => {
+                              setFieldValue(
+                                'treatDualElligibleDifferentHow',
+                                'NO'
+                              );
+                            }}
+                          />
+                          <Field
+                            as={Radio}
+                            id="beneficiaries-dual-eligibility-tbd"
+                            name="treatDualElligibleDifferentHow"
+                            label={t('beneficiariesOptions.na')}
+                            value="TBD"
+                            checked={
+                              values.treatDualElligibleDifferentHow === 'TBD'
+                            }
+                            onChange={() => {
+                              setFieldValue(
+                                'treatDualElligibleDifferentHow',
+                                'TBD'
+                              );
+                            }}
+                          />
+                        </Fieldset>
+                        <AddNote
+                          id="beneficiaries-dual-eligibility-note"
+                          field="treatDualElligibleDifferentHowNote"
                         />
                       </FieldGroup>
                     </Form>
