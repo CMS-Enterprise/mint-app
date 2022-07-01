@@ -16,6 +16,7 @@ import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
+import Alert from 'components/shared/Alert';
 import AutoSave from 'components/shared/AutoSave';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
@@ -240,6 +241,14 @@ const BeneficiariesPageOne = () => {
                               name="participantsOther"
                             />
                           </FieldGroup>
+                        )}
+
+                        {(values?.beneficiaries || []).includes(
+                          'NA' as BeneficiariesType
+                        ) && (
+                          <Alert type="info" slim>
+                            {t('beneficiariesNA')}
+                          </Alert>
                         )}
 
                         <AddNote

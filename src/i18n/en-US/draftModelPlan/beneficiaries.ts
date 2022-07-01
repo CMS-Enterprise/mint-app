@@ -15,6 +15,8 @@ const beneficiaries = {
     other: 'Other'
   },
   selectedGroup: 'Selected groups',
+  beneficiariesNA:
+    'If you will not have beneficiaries, you can skip the rest of the questions in this section. Feel free to add any additional notes or details that would be helpful to others.',
   dualEligibility:
     'Should dual-eligible beneficiaries be treated differently than non-dually eligibles?',
   excluded:
