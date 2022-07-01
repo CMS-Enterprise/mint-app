@@ -72,8 +72,8 @@ const TaskList = () => {
     documents,
     status,
     generalCharacteristics,
-    participantsAndProviders
-    // beneficiaries,
+    participantsAndProviders,
+    beneficiaries
     // operations,
     // payment,
     // finalizeModelPlan
@@ -105,7 +105,8 @@ const TaskList = () => {
         return generalCharacteristics?.status;
       case 'participants-and-providers':
         return participantsAndProviders.status;
-      // case 'beneficiaries':
+      case 'beneficiaries':
+        return beneficiaries.status;
       //   return;
       // case 'operations':
       //   return;
