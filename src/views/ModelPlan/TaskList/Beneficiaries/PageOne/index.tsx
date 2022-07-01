@@ -234,7 +234,6 @@ const BeneficiariesPageOne = () => {
                             </FieldErrorMsg>
                             <Field
                               as={TextField}
-                              className="height-15"
                               error={flatErrors.beneficiariesOther}
                               id="beneficiaries-other"
                               data-testid="beneficiaries-other"
@@ -252,7 +251,8 @@ const BeneficiariesPageOne = () => {
                   </Grid>
                 </Grid>
               </GridContainer>
-              {id && (
+              {/* TODO: Comment to stop obnoxious errors */}
+              {/* {id && (
                 <AutoSave
                   values={values}
                   onSave={() => {
@@ -260,7 +260,7 @@ const BeneficiariesPageOne = () => {
                   }}
                   debounceDelay={3000}
                 />
-              )}
+              )} */}
             </>
           );
         }}
