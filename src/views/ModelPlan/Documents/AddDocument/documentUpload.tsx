@@ -87,7 +87,6 @@ const DocumentUpload = () => {
           'Content-Type': file.type
         }
       };
-
       axios.put(s3URL, values.file, options).then(() => {
         createDocument({
           variables: {
@@ -126,7 +125,7 @@ const DocumentUpload = () => {
               history.push(`/models/${modelID}/documents`);
             }
           })
-          .catch(() => {
+          .catch(e => {
             setErrorGeneratingPresignedUrl(true);
           });
       });
@@ -178,8 +177,8 @@ const DocumentUpload = () => {
                 </ErrorAlert>
               )}
               {isErrorGeneratingPresignedUrl && (
-                <Alert type="error" heading={t('uploadError.body')}>
-                  {t('uploadDocument.presignedUrlErrorBody')}
+                <Alert type="error" heading={t('uploadError.heading')}>
+                  {t('uploadError.body')}
                 </Alert>
               )}
               {createDocumentStatus.error && (

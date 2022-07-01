@@ -36,6 +36,7 @@ const mocks = [
           archived: false,
           discussions: [],
           generalCharacteristics: [],
+          participantsAndProviders: [],
           basics: [],
           documents: [],
           milestones: [],

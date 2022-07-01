@@ -26,7 +26,7 @@ const documents = {
   uploadError: {
     heading: 'There is a problem',
     body:
-      'Something went wrong with EASi. Please try refreshing the page or try again later.'
+      'Something went wrong with MINT. Please try refreshing the page or try again later.'
   },
   removeDocumentModal: {
     header: 'Confirm you want to remove {{-documentName}}.',

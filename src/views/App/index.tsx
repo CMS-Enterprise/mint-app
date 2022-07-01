@@ -112,7 +112,7 @@ const AppRoutes = () => {
         component={Operations}
       />
       <SecureRoute
-        path="/models/:modelID/task-list/participants"
+        path="/models/:modelID/task-list/participants-and-providers"
         component={Participants}
       />
       <SecureRoute

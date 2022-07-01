@@ -73,6 +73,7 @@ export interface GetModelPlanCharacteristics_modelPlan_generalCharacteristics {
 
 export interface GetModelPlanCharacteristics_modelPlan {
   __typename: "ModelPlan";
+  id: UUID;
   modelName: string;
   generalCharacteristics: GetModelPlanCharacteristics_modelPlan_generalCharacteristics;
 }

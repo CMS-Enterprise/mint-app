@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import {
   Checkbox,
   IconClose,
@@ -22,7 +21,6 @@ type OptionsProps = {
 };
 
 const Options = ({ options, selected, optionClick }: OptionsProps) => {
-  const { t } = useTranslation();
   return (
     <ul className="easi-multiselect__options usa-list--unstyled padding-y-05 border-1px border-top-0 maxh-card overflow-scroll position-absolute right-0 left-0 z-top bg-white">
       {options.map(option => {
@@ -64,7 +62,6 @@ export default function MultiSelect({
   const [selected, setSelected] = useState<string[]>(initialValues);
   const [active, setActive] = useState(false);
 
-  const { t } = useTranslation();
   const selectRef = useRef<HTMLInputElement>(null);
 
   const optionClick = (option: string) => {
@@ -124,7 +121,7 @@ export default function MultiSelect({
             type="search"
             className="usa-input padding-1 height-full border-0"
             value={searchValue}
-            placeholder={t(`${selected.length} selected`)}
+            placeholder={`${selected.length} selected`}
             onClick={() => setActive(true)}
             onChange={e => setSearchValue(e.target.value)}
           />
@@ -158,13 +155,10 @@ export default function MultiSelect({
       </div>
       {selected.length > 0 && (
         <div className="easi-multiselect__selected-list margin-top-3">
-          {t(selectedLabel)}
-          <ul className="usa-list--unstyled margin-top-1">
+          {selectedLabel}
+          <ul className="usa-list--unstyled margin-top-1 display-flex flex-justify-start flex-wrap">
             {selected.map(option => (
-              <li
-                key={option}
-                className="display-flex flex-justify-start margin-y-05"
-              >
+              <li key={option} className="margin-right-05 margin-y-05">
                 <Tag
                   className="bg-primary-lighter text-ink text-no-uppercase padding-y-1 padding-x-105 display-flex flex-align-center"
                   id={`easi-multiselect__tag-${findOptions(option)?.value}`}

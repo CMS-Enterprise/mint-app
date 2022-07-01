@@ -915,51 +915,6 @@ func (e GeographyType) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
-type HelpdeskUseType string
-
-const (
-	HelpdeskUseTypeCbosc      HelpdeskUseType = "CBOSC"
-	HelpdeskUseTypeContractor HelpdeskUseType = "CONTRACTOR"
-	HelpdeskUseTypeOther      HelpdeskUseType = "OTHER"
-	HelpdeskUseTypeNo         HelpdeskUseType = "NO"
-)
-
-var AllHelpdeskUseType = []HelpdeskUseType{
-	HelpdeskUseTypeCbosc,
-	HelpdeskUseTypeContractor,
-	HelpdeskUseTypeOther,
-	HelpdeskUseTypeNo,
-}
-
-func (e HelpdeskUseType) IsValid() bool {
-	switch e {
-	case HelpdeskUseTypeCbosc, HelpdeskUseTypeContractor, HelpdeskUseTypeOther, HelpdeskUseTypeNo:
-		return true
-	}
-	return false
-}
-
-func (e HelpdeskUseType) String() string {
-	return string(e)
-}
-
-func (e *HelpdeskUseType) UnmarshalGQL(v interface{}) error {
-	str, ok := v.(string)
-	if !ok {
-		return fmt.Errorf("enums must be strings")
-	}
-
-	*e = HelpdeskUseType(str)
-	if !e.IsValid() {
-		return fmt.Errorf("%s is not a valid HelpdeskUseType", str)
-	}
-	return nil
-}
-
-func (e HelpdeskUseType) MarshalGQL(w io.Writer) {
-	fmt.Fprint(w, strconv.Quote(e.String()))
-}
-
 type KeyCharacteristic string
 
 const (

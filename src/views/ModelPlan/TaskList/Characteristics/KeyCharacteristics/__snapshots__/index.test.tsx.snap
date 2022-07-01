@@ -264,10 +264,10 @@ exports[`Model Plan Characteristics matches snapshot 1`] = `
         >
           Selected key characteristics
           <ul
-            class="usa-list--unstyled margin-top-1"
+            class="usa-list--unstyled margin-top-1 display-flex flex-justify-start flex-wrap"
           >
             <li
-              class="display-flex flex-justify-start margin-y-05"
+              class="margin-right-05 margin-y-05"
             >
               <span
                 class="usa-tag bg-primary-lighter text-ink text-no-uppercase padding-y-1 padding-x-105 display-flex flex-align-center"
