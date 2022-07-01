@@ -112,10 +112,10 @@ const BeneficiariesPageOne = () => {
     beneficiaries: beneficiaries ?? '',
     beneficiariesOther: beneficiariesOther ?? '',
     beneficiariesNote: beneficiariesNote ?? '',
-    treatDualElligibleDifferent: treatDualElligibleDifferent ?? '',
+    treatDualElligibleDifferent: treatDualElligibleDifferent ?? null,
     treatDualElligibleDifferentHow: treatDualElligibleDifferentHow ?? '',
     treatDualElligibleDifferentNote: treatDualElligibleDifferentNote ?? '',
-    excludeCertainCharacteristics: excludeCertainCharacteristics ?? '',
+    excludeCertainCharacteristics: excludeCertainCharacteristics ?? null,
     excludeCertainCharacteristicsCriteria:
       excludeCertainCharacteristicsCriteria ?? '',
     excludeCertainCharacteristicsNote: excludeCertainCharacteristicsNote ?? ''
@@ -292,7 +292,8 @@ const BeneficiariesPageOne = () => {
                               );
                             }}
                           />
-                          {values?.treatDualElligibleDifferent!.includes(
+
+                          {values?.treatDualElligibleDifferent?.includes(
                             'YES' as TriStateAnswer
                           ) && (
                             <FieldGroup
@@ -391,7 +392,7 @@ const BeneficiariesPageOne = () => {
                             }}
                           />
 
-                          {values?.excludeCertainCharacteristics!.includes(
+                          {values?.excludeCertainCharacteristics?.includes(
                             'YES' as TriStateAnswer
                           ) && (
                             <FieldGroup
