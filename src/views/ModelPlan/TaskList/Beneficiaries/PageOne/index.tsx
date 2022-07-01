@@ -88,9 +88,7 @@ const BeneficiariesPageOne = () => {
       .then(response => {
         if (!response?.errors) {
           if (redirect === 'next') {
-            history.push(
-              `/models/${modelID}/task-list/beneficiaries/participants-options`
-            );
+            history.push(`/models/${modelID}/task-list/beneficiaries/page-two`);
           } else if (redirect === 'back') {
             history.push(`/models/${modelID}/task-list/`);
           }
