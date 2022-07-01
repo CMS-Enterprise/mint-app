@@ -26,6 +26,17 @@ export enum AuthorityAllowance {
   SSA_PART_B = "SSA_PART_B",
 }
 
+export enum BeneficiariesType {
+  DISEASE_SPECIFIC = "DISEASE_SPECIFIC",
+  DUALLY_ELIGIBLE = "DUALLY_ELIGIBLE",
+  MEDICAID = "MEDICAID",
+  MEDICARE_ADVANTAGE = "MEDICARE_ADVANTAGE",
+  MEDICARE_FFS = "MEDICARE_FFS",
+  MEDICARE_PART_D = "MEDICARE_PART_D",
+  NA = "NA",
+  OTHER = "OTHER",
+}
+
 export enum CMMIGroup {
   PATIENT_CARE_MODELS_GROUP = "PATIENT_CARE_MODELS_GROUP",
   POLICY_AND_PROGRAMS_GROUP = "POLICY_AND_PROGRAMS_GROUP",
@@ -211,6 +222,16 @@ export enum RecruitmentType {
   RFA = "RFA",
 }
 
+export enum SelectionMethodType {
+  HISTORICAL = "HISTORICAL",
+  NA = "NA",
+  OTHER = "OTHER",
+  PROSPECTIVE = "PROSPECTIVE",
+  PROVIDER_SIGN_UP = "PROVIDER_SIGN_UP",
+  RETROSPECTIVE = "RETROSPECTIVE",
+  VOLUNTARY = "VOLUNTARY",
+}
+
 export enum TaskStatus {
   COMPLETE = "COMPLETE",
   IN_PROGRESS = "IN_PROGRESS",
@@ -223,6 +244,12 @@ export enum TeamRole {
   LEARNING = "LEARNING",
   MODEL_LEAD = "MODEL_LEAD",
   MODEL_TEAM = "MODEL_TEAM",
+}
+
+export enum TriStateAnswer {
+  NO = "NO",
+  TBD = "TBD",
+  YES = "YES",
 }
 
 export enum WaiverType {
