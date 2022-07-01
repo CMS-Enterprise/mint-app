@@ -24,6 +24,9 @@ const beneficiaries = {
   excludedNestedQuestion: 'What are the exclusionary criteria?',
   howManyImpacted:
     'How many people do you think will be impacted by this model?',
+  numberOfPeopleImpacted: 'Number of people',
+  zero: '0',
+  tenThousand: '10,000+',
   levelOfConfidence: 'What is your level of confidence on this estimate?',
   confidenceOptions: {
     not: 'Not at all confident',
