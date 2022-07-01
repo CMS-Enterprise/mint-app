@@ -187,15 +187,20 @@ const IDDOC = () => {
           } = formikProps;
           const flatErrors = flattenErrors(errors);
 
-          const handleOnBlur = (e: any, field: string) => {
-            if (e === '') {
+          const handleOnBlur = (
+            e: React.ChangeEvent<HTMLInputElement>,
+            field: string
+          ) => {
+            if (e.target.value === '') {
               setFieldValue(field, null);
-              setDateInPast(false);
+              if (e.target.id !== '') {
+                setDateInPast(false);
+              }
               return;
             }
             try {
-              setFieldValue(field, new Date(e).toISOString());
-              if (new Date() > new Date(e)) {
+              setFieldValue(field, new Date(e.target.value).toISOString());
+              if (new Date() > new Date(e.target.value)) {
                 setDateInPast(true);
               } else {
                 setDateInPast(false);
@@ -384,9 +389,9 @@ const IDDOC = () => {
                         maxLength={50}
                         name="draftIcdDueDate"
                         defaultValue={values.draftIcdDueDate}
-                        onBlur={(e: any) =>
-                          handleOnBlur(e.target.value, 'draftIcdDueDate')
-                        }
+                        onBlur={(e: React.ChangeEvent<HTMLInputElement>) => {
+                          handleOnBlur(e, 'draftIcdDueDate');
+                        }}
                       />
                       {dateInPast && (
                         <DatePickerWarning label={h('dateWarning')} />
