@@ -275,6 +275,28 @@ export const translateParticipantsType = (type: string) => {
   }
 };
 
+export const translateBeneficiariesType = (type: string) => {
+  switch (type) {
+    case 'DISEASE_SPECIFIC':
+      return i18next.t('beneficiaries:beneficiariesOptions.diseaseSpecific');
+    case 'DUALLY_ELIGIBLE':
+      return i18next.t('beneficiaries:beneficiariesOptions.duallyEligible');
+    case 'MEDICAID':
+      return i18next.t('beneficiaries:beneficiariesOptions.medicaid');
+    case 'MEDICARE_ADVANTAGE':
+      return i18next.t('beneficiaries:beneficiariesOptions.medicareAdvantage');
+    case 'MEDICARE_FFS':
+      return i18next.t('beneficiaries:beneficiariesOptions.medicareFfs');
+    case 'MEDICARE_PART_D':
+      return i18next.t('beneficiaries:beneficiariesOptions.medicarePartD');
+    case 'OTHER':
+      return i18next.t('beneficiaries:beneficiariesOptions.other');
+    case 'NA':
+      return i18next.t('beneficiaries:beneficiariesOptions.na');
+    default:
+      return '';
+  }
+};
 export const translateConfidenceType = (type: string) => {
   switch (type) {
     case 'NOT_AT_ALL':
