@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { ParticipantCommunicationType, ParticipantRiskType } from "./../../../types/graphql-global-types";
+import { ParticipantCommunicationType, ParticipantRiskType } from "../../../types/graphql-global-types";
 
 // ====================================================
 // GraphQL query operation: GetCommunication
