@@ -82,6 +82,7 @@ type PlanDocumentPayload struct {
 type TaskListSectionLockStatus struct {
 	Section  TaskListSection `json:"section"`
 	LockedBy string          `json:"lockedBy"`
+	RefCount rune			`json:"refCount"`
 }
 
 type TaskListSectionLockStatusChanged struct {

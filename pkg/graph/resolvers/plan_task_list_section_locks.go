@@ -83,23 +83,26 @@ func (p PlanTaskListSectionLocksResolverImplementation) LockTaskListSection(ps p
 	}
 
 	lockStatus, sectionIsLocked := modelLocks[section]
-	if sectionIsLocked {
+	if sectionIsLocked && lockStatus.LockedBy != principal {
 		return false, fmt.Errorf("failed to lock section [%v], already locked by [%v]", lockStatus.Section, lockStatus.LockedBy)
 	}
 
 	status := model.TaskListSectionLockStatus{
 		Section:  section,
 		LockedBy: principal,
+		RefCount: lockStatus.RefCount + 1,
 	}
 
 	planTaskListSessionLocks.Lock()
 	planTaskListSessionLocks.modelSections[modelPlanID][section] = status
 	planTaskListSessionLocks.Unlock()
 
-	ps.Publish(modelPlanID, pubsubevents.TaskListSectionLocksChanged, model.TaskListSectionLockStatusChanged{
-		ChangeType: model.ChangeTypeAdded,
-		LockStatus: &status,
-	})
+	if status.RefCount == 1 {
+		ps.Publish(modelPlanID, pubsubevents.TaskListSectionLocksChanged, model.TaskListSectionLockStatusChanged{
+			ChangeType: model.ChangeTypeAdded,
+			LockStatus: &status,
+		})
+	}
 
 	return true, nil
 }
@@ -112,15 +115,22 @@ func (p PlanTaskListSectionLocksResolverImplementation) UnlockTaskListSection(ps
 	}
 
 	status := planTaskListSessionLocks.modelSections[modelPlanID][section]
-	if !isUserAuthorized(status, principal) {
+	if !isUserAuthorizedToEditLock(status, principal) {
 		return false, fmt.Errorf("failed to unlock section [%v], user [%v] not authorized to unlock section locked by user [%v]", status.Section, principal, status.LockedBy)
 	}
 
-	internalUnlockTaskListSection(ps, modelPlanID, section, status)
+	status.RefCount -= 1
+
+	if status.RefCount > 0 {
+		planTaskListSessionLocks.modelSections[modelPlanID][section] = status
+	} else {
+		deleteTaskListLockSection(ps, modelPlanID, section, status)
+	}
+
 	return true, nil
 }
 
-func internalUnlockTaskListSection(ps pubsub.PubSub, modelPlanID uuid.UUID, section model.TaskListSection, status model.TaskListSectionLockStatus) {
+func deleteTaskListLockSection(ps pubsub.PubSub, modelPlanID uuid.UUID, section model.TaskListSection, status model.TaskListSectionLockStatus) {
 	planTaskListSessionLocks.Lock()
 	delete(planTaskListSessionLocks.modelSections[modelPlanID], section)
 	planTaskListSessionLocks.Unlock()
@@ -131,7 +141,7 @@ func internalUnlockTaskListSection(ps pubsub.PubSub, modelPlanID uuid.UUID, sect
 	})
 }
 
-func isUserAuthorized(status model.TaskListSectionLockStatus, principal string) bool {
+func isUserAuthorizedToEditLock(status model.TaskListSectionLockStatus, principal string) bool {
 	return principal == status.LockedBy
 }
 
@@ -141,7 +151,7 @@ func (p PlanTaskListSectionLocksResolverImplementation) UnlockAllTaskListSection
 	for section, status := range planTaskListSessionLocks.modelSections[modelPlanID] {
 		dupe := status
 		deletedSections = append(deletedSections, &dupe)
-		internalUnlockTaskListSection(ps, modelPlanID, section, status)
+		deleteTaskListLockSection(ps, modelPlanID, section, status)
 	}
 
 	delete(planTaskListSessionLocks.modelSections, modelPlanID)
