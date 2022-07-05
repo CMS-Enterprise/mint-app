@@ -39,7 +39,7 @@ import { BeneficiariesType, TriStateAnswer } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import { sortOtherEnum, translateBeneficiariesType } from 'utils/modelPlan';
 
-const BeneficiariesPageOne = () => {
+const BeneficiaryIdentification = () => {
   const { t } = useTranslation('beneficiaries');
   const { t: h } = useTranslation('draftModelPlan');
   const { modelID } = useParams<{ modelID: string }>();
@@ -498,4 +498,4 @@ const BeneficiariesPageOne = () => {
   );
 };
 
-export default BeneficiariesPageOne;
+export default BeneficiaryIdentification;

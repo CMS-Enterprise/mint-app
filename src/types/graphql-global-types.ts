@@ -55,10 +55,10 @@ export enum CMSCenter {
 }
 
 export enum ConfidenceType {
+  COMPLETELY = "COMPLETELY",
+  FAIRLY = "FAIRLY",
   NOT_AT_ALL = "NOT_AT_ALL",
   SLIGHTLY = "SLIGHTLY",
-  FAIRLY = "FAIRLY",
-  COMPLETELY = "COMPLETELY",
 }
 
 export enum DiscussionStatus {

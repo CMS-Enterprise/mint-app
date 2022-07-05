@@ -3,8 +3,9 @@ import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
 
-import { Beneficiaries } from '../index';
 import beneficiaryMock from '../mock';
+
+import BeneficiaryIdentification from './index';
 
 describe('Model Plan Beneficiaries', () => {
   it('renders without errors', async () => {
@@ -16,7 +17,7 @@ describe('Model Plan Beneficiaries', () => {
       >
         <MockedProvider mocks={beneficiaryMock} addTypename={false}>
           <Route path="/models/:modelID/task-list/beneficiaries">
-            <Beneficiaries />
+            <BeneficiaryIdentification />
           </Route>
         </MockedProvider>
       </MemoryRouter>
@@ -38,7 +39,7 @@ describe('Model Plan Beneficiaries', () => {
       >
         <MockedProvider mocks={beneficiaryMock} addTypename={false}>
           <Route path="/models/:modelID/task-list/beneficiaries">
-            <Beneficiaries />
+            <BeneficiaryIdentification />
           </Route>
         </MockedProvider>
       </MemoryRouter>
