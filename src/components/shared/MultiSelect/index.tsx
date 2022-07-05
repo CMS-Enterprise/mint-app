@@ -109,10 +109,7 @@ export default function MultiSelect({
 
   return (
     <div
-      className={classNames(
-        'easi-multiselect maxw-mobile-lg position-relative',
-        className
-      )}
+      className={classNames('easi-multiselect position-relative', className)}
       id={id}
     >
       <div className="easi-multiselect__field" role="listbox" ref={selectRef}>

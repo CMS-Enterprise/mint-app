@@ -117,7 +117,7 @@ exports[`Model Plan Participants and Providers matches snapshot 1`] = `
               Who are the particpants? Select all that apply.
             </label>
             <div
-              class="easi-multiselect maxw-mobile-lg position-relative"
+              class="easi-multiselect position-relative"
               id="participants-and-providers-participants"
             >
               <div

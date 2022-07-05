@@ -264,7 +264,7 @@ exports[`Model Plan ProviderOptions matches snapshot 1`] = `
         Please include details on decision points, timing, and implications of adding them to the model in an additional note.
       </p>
       <div
-        class="easi-multiselect maxw-mobile-lg position-relative"
+        class="easi-multiselect position-relative"
         id="participants-and-providers-provider-add-method"
       >
         <div

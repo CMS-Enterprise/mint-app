@@ -51,7 +51,7 @@ const modelPlanTaskList = {
       copy:
         'Start filling out as much of the beneficiary information as you know and reach out to the Model Assessment Team if you need help.'
     },
-    operations: {
+    'ops-eval-and-learning': {
       heading: 'Operations, evaluation, and learning',
       copy:
         'Start filling out as much of the model operation information as you know and reach out to the Model Assessment Team if you need help.'

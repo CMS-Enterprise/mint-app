@@ -40,6 +40,7 @@ import {
 } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import {
+  mapMultiSelectOptions,
   sortOtherEnum,
   translateConfidenceType,
   translateParticipantSelectiontType,
@@ -117,13 +118,6 @@ export const ParticipantsOptions = () => {
         formikRef?.current?.setErrors(errors);
       });
   };
-
-  const mappedSelectionMethods = Object.keys(ParticipantSelectionType)
-    .sort(sortOtherEnum)
-    .map(key => ({
-      value: key,
-      label: translateParticipantSelectiontType(key)
-    }));
 
   const initialValues = {
     expectedNumberOfParticipants: expectedNumberOfParticipants ?? 0,
@@ -261,7 +255,7 @@ export const ParticipantsOptions = () => {
                   <Field
                     as={TextInput}
                     type="number"
-                    className="maxw-card"
+                    className="width-card"
                     error={flatErrors.expectedNumberOfParticipants}
                     id="participants-and-providers-participants-other-input"
                     name="expectedNumberOfParticipants"
@@ -376,7 +370,10 @@ export const ParticipantsOptions = () => {
                     as={MultiSelect}
                     id="participants-and-providers-selection-method"
                     name="selectionMethod"
-                    options={mappedSelectionMethods}
+                    options={mapMultiSelectOptions(
+                      translateParticipantSelectiontType,
+                      ParticipantSelectionType
+                    )}
                     selectedLabel={t('selectedParticipants')}
                     onChange={(value: string[] | []) => {
                       setFieldValue('selectionMethod', value);
