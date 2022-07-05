@@ -3,8 +3,8 @@ import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
 
-import { Beneficiaries } from './index';
-import beneficiaryMock from './mock';
+import { Beneficiaries } from '../index';
+import beneficiaryMock from '../mock';
 
 describe('Model Plan Beneficiaries', () => {
   it('renders without errors', async () => {
