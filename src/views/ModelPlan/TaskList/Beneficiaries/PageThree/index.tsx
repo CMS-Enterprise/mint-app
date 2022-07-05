@@ -26,6 +26,7 @@ import AutoSave from 'components/shared/AutoSave';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
+import TextAreaField from 'components/shared/TextAreaField';
 import TextField from 'components/shared/TextField';
 import GetModelPlanBeneficiaries from 'queries/GetModelPlanBeneficiaries';
 import {
@@ -289,6 +290,32 @@ const BeneficiariesPageThree = () => {
                         />
                       </FieldGroup>
 
+                      <FieldGroup
+                        scrollElement="precedenceRules"
+                        error={!!flatErrors.precedenceRules}
+                      >
+                        <Label
+                          htmlFor="beneficiaries-precedenceRules"
+                          className="maxw-none"
+                        >
+                          {t('benficiaryPrecedence')}
+                        </Label>
+                        <p className="text-base margin-0 line-height-body-3">
+                          {t('benficiaryPrecedenceExtra')}
+                        </p>
+                        <FieldErrorMsg>
+                          {flatErrors.precedenceRules}
+                        </FieldErrorMsg>
+                        <Field
+                          as={TextAreaField}
+                          className="height-15"
+                          error={flatErrors.precedenceRules}
+                          id="beneficiaries-precedenceRules"
+                          data-testid="beneficiaries-precedenceRules"
+                          name="precedenceRules"
+                        />
+                      </FieldGroup>
+
                       <div className="margin-top-6 margin-bottom-3">
                         <Button
                           type="button"
@@ -300,7 +327,7 @@ const BeneficiariesPageThree = () => {
                           {h('back')}
                         </Button>
                         <Button type="submit" onClick={() => setErrors({})}>
-                          {h('next')}
+                          {h('saveAndStartNext')}
                         </Button>
                       </div>
                       <Button
