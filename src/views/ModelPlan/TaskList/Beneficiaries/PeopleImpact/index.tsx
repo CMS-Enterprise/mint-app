@@ -46,7 +46,7 @@ import {
   translateSelectionMethodType
 } from 'utils/modelPlan';
 
-const BeneficiariesPageTwo = () => {
+const PeopleImpact = () => {
   const { t } = useTranslation('beneficiaries');
   const { t: h } = useTranslation('draftModelPlan');
   const { modelID } = useParams<{ modelID: string }>();
@@ -393,4 +393,4 @@ const BeneficiariesPageTwo = () => {
   );
 };
 
-export default BeneficiariesPageTwo;
+export default PeopleImpact;

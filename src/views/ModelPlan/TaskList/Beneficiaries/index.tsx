@@ -7,7 +7,7 @@ import { NotFoundPartial } from 'views/NotFound';
 
 import BeneficiaryIdentification from './BeneficiaryIdentification';
 import BeneficiariesPageThree from './PageThree';
-import BeneficiariesPageTwo from './PageTwo';
+import PeopleImpact from './PeopleImpact';
 
 export const Beneficiaries = () => {
   return (
@@ -23,7 +23,7 @@ export const Beneficiaries = () => {
             <Route
               path="/models/:modelID/task-list/beneficiaries/page-two"
               exact
-              render={() => <BeneficiariesPageTwo />}
+              render={() => <PeopleImpact />}
             />
             <Route
               path="/models/:modelID/task-list/beneficiaries/page-three"
