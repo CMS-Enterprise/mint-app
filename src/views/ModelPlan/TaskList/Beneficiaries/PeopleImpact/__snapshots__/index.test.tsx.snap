@@ -103,7 +103,7 @@ exports[`Model Plan Beneficiaries matches snapshot 1`] = `
         <form
           action="#"
           class="margin-top-6"
-          data-testid="beneficiaries-page-two-form"
+          data-testid="beneficiaries-people-impact-form"
         >
           <div
             class="usa-form-group"
@@ -172,6 +172,42 @@ exports[`Model Plan Beneficiaries matches snapshot 1`] = `
               >
                 <input
                   class="usa-radio__input"
+                  id="beneficiaries-impact-confidence-COMPLETELY"
+                  name="beneficiaries-impact-estimateConfidence"
+                  type="radio"
+                  value="COMPLETELY"
+                />
+                <label
+                  class="usa-radio__label"
+                  for="beneficiaries-impact-confidence-COMPLETELY"
+                >
+                  Compeletely confident
+                </label>
+              </div>
+              <div
+                class="usa-radio"
+                data-testid="radio"
+              >
+                <input
+                  class="usa-radio__input"
+                  id="beneficiaries-impact-confidence-FAIRLY"
+                  name="beneficiaries-impact-estimateConfidence"
+                  type="radio"
+                  value="FAIRLY"
+                />
+                <label
+                  class="usa-radio__label"
+                  for="beneficiaries-impact-confidence-FAIRLY"
+                >
+                  Fairly confident
+                </label>
+              </div>
+              <div
+                class="usa-radio"
+                data-testid="radio"
+              >
+                <input
+                  class="usa-radio__input"
                   id="beneficiaries-impact-confidence-NOT_AT_ALL"
                   name="beneficiaries-impact-estimateConfidence"
                   type="radio"
@@ -200,42 +236,6 @@ exports[`Model Plan Beneficiaries matches snapshot 1`] = `
                   for="beneficiaries-impact-confidence-SLIGHTLY"
                 >
                   Slightly confident
-                </label>
-              </div>
-              <div
-                class="usa-radio"
-                data-testid="radio"
-              >
-                <input
-                  class="usa-radio__input"
-                  id="beneficiaries-impact-confidence-FAIRLY"
-                  name="beneficiaries-impact-estimateConfidence"
-                  type="radio"
-                  value="FAIRLY"
-                />
-                <label
-                  class="usa-radio__label"
-                  for="beneficiaries-impact-confidence-FAIRLY"
-                >
-                  Fairly confident
-                </label>
-              </div>
-              <div
-                class="usa-radio"
-                data-testid="radio"
-              >
-                <input
-                  class="usa-radio__input"
-                  id="beneficiaries-impact-confidence-COMPLETELY"
-                  name="beneficiaries-impact-estimateConfidence"
-                  type="radio"
-                  value="COMPLETELY"
-                />
-                <label
-                  class="usa-radio__label"
-                  for="beneficiaries-impact-confidence-COMPLETELY"
-                >
-                  Compeletely confident
                 </label>
               </div>
             </fieldset>

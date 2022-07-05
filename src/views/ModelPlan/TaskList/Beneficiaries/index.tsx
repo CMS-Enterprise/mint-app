@@ -21,12 +21,12 @@ export const Beneficiaries = () => {
               render={() => <BeneficiaryIdentification />}
             />
             <Route
-              path="/models/:modelID/task-list/beneficiaries/page-two"
+              path="/models/:modelID/task-list/beneficiaries/people-impact"
               exact
               render={() => <PeopleImpact />}
             />
             <Route
-              path="/models/:modelID/task-list/beneficiaries/page-three"
+              path="/models/:modelID/task-list/beneficiaries/beneficiary-frequency"
               exact
               render={() => <Frequency />}
             />

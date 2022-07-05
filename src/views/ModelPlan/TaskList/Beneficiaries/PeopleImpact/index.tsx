@@ -84,17 +84,18 @@ const PeopleImpact = () => {
     formikValues: PeopleImpactedFormType,
     redirect?: 'next' | 'back' | 'task-list'
   ) => {
+    const { id: updateId, __typename, ...changeValues } = formikValues;
     update({
       variables: {
-        id,
-        changes: formikValues
+        id: updateId,
+        changes: changeValues
       }
     })
       .then(response => {
         if (!response?.errors) {
           if (redirect === 'next') {
             history.push(
-              `/models/${modelID}/task-list/beneficiaries/page-three`
+              `/models/${modelID}/task-list/beneficiaries/people-impact`
             );
           } else if (redirect === 'back') {
             history.push(`/models/${modelID}/task-list/beneficiaries`);
@@ -204,7 +205,7 @@ const PeopleImpact = () => {
                   <Grid desktop={{ col: 6 }}>
                     <Form
                       className="margin-top-6"
-                      data-testid="beneficiaries-page-two-form"
+                      data-testid="beneficiaries-people-impact-form"
                       onSubmit={e => {
                         handleSubmit(e);
                       }}

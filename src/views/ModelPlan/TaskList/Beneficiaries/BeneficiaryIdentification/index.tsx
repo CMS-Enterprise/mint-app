@@ -83,16 +83,17 @@ const BeneficiaryIdentification = () => {
     formikValues: BeneficiaryIdentificationFormType,
     redirect?: 'next' | 'back'
   ) => {
+    const { id: updateId, __typename, ...changeValues } = formikValues;
     update({
       variables: {
-        id,
-        changes: formikValues
+        id: updateId,
+        changes: changeValues
       }
     })
       .then(response => {
         if (!response?.errors) {
           if (redirect === 'next') {
-            history.push(`/models/${modelID}/task-list/beneficiaries/page-two`);
+            history.push(`/models/${modelID}/task-list/beneficiaries/people-impact`);
           } else if (redirect === 'back') {
             history.push(`/models/${modelID}/task-list/`);
           }

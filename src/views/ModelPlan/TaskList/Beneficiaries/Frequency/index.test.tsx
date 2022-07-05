@@ -12,11 +12,11 @@ describe('Model Plan Beneficiaries', () => {
     render(
       <MemoryRouter
         initialEntries={[
-          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/beneficiaries/page-three'
+          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/beneficiaries/beneficiary-frequency'
         ]}
       >
         <MockedProvider mocks={beneficiaryMock} addTypename={false}>
-          <Route path="/models/:modelID/task-list/beneficiaries/page-three">
+          <Route path="/models/:modelID/task-list/beneficiaries/beneficiary-frequency">
             <Frequency />
           </Route>
         </MockedProvider>
@@ -25,7 +25,7 @@ describe('Model Plan Beneficiaries', () => {
 
     await waitFor(() => {
       expect(
-        screen.getByTestId('beneficiaries-page-three-form')
+        screen.getByTestId('beneficiaries-frequency-form')
       ).toBeInTheDocument();
     });
   });
@@ -34,11 +34,11 @@ describe('Model Plan Beneficiaries', () => {
     const { asFragment } = render(
       <MemoryRouter
         initialEntries={[
-          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/beneficiaries/page-three'
+          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/beneficiaries/beneficiary-frequency'
         ]}
       >
         <MockedProvider mocks={beneficiaryMock} addTypename={false}>
-          <Route path="/models/:modelID/task-list/beneficiaries/page-three">
+          <Route path="/models/:modelID/task-list/beneficiaries/beneficiary-frequency">
             <Frequency />
           </Route>
         </MockedProvider>

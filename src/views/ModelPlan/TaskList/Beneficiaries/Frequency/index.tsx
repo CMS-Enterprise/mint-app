@@ -79,16 +79,17 @@ const Frequency = () => {
     formikValues: FrequencyFormType,
     redirect?: 'task-list' | 'back'
   ) => {
+    const { id: updateId, __typename, ...changeValues } = formikValues;
     update({
       variables: {
-        id,
-        changes: formikValues
+        id: updateId,
+        changes: changeValues
       }
     })
       .then(response => {
         if (!response?.errors) {
           if (redirect === 'back') {
-            history.push(`/models/${modelID}/task-list/beneficiaries/page-two`);
+            history.push(`/models/${modelID}/task-list/beneficiaries/people-impact`);
           } else if (redirect === 'task-list') {
             history.push(`/models/${modelID}/task-list/`);
           }
@@ -189,7 +190,7 @@ const Frequency = () => {
                   <Grid desktop={{ col: 6 }}>
                     <Form
                       className="margin-top-6"
-                      data-testid="beneficiaries-page-three-form"
+                      data-testid="beneficiaries-frequency-form"
                       onSubmit={e => {
                         handleSubmit(e);
                       }}
