@@ -23,7 +23,9 @@ describe('Model Plan Beneficiaries', () => {
     );
 
     await waitFor(() => {
-      expect(screen.getByTestId('beneficiaries-form')).toBeInTheDocument();
+      expect(
+        screen.getByTestId('beneficiaries-page-one-form')
+      ).toBeInTheDocument();
     });
   });
 
