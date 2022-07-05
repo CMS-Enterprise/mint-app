@@ -7,8 +7,6 @@ export default gql`
       fullName
       euaUserID
       teamRole
-      modelPlanID
-      createdDts
     }
   }
 `;

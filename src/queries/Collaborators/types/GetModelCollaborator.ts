@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { TeamRole } from "./../../types/graphql-global-types";
+import { TeamRole } from "./../../../types/graphql-global-types";
 
 // ====================================================
 // GraphQL query operation: GetModelCollaborator
@@ -15,8 +15,6 @@ export interface GetModelCollaborator_planCollaboratorByID {
   fullName: string;
   euaUserID: string;
   teamRole: TeamRole;
-  modelPlanID: UUID;
-  createdDts: Time;
 }
 
 export interface GetModelCollaborator {

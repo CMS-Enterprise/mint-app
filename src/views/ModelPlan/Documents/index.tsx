@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Trans, useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { Link, Route, Switch, useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import {

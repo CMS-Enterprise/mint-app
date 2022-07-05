@@ -8,11 +8,11 @@ import UswdsReactLink from 'components/LinkWrapper';
 import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
 import IconInitial from 'components/shared/IconInitial';
-import GetModelPlanCollaborators from 'queries/GetModelCollaborators';
+import GetModelPlanCollaborators from 'queries/Collaborators/GetModelCollaborators';
 import {
   GetModelCollaborators,
   GetModelCollaborators_modelPlan_collaborators as GetCollaboratorsType
-} from 'queries/types/GetModelCollaborators';
+} from 'queries/Collaborators/types/GetModelCollaborators';
 import { GetModelPlan_modelPlan as GetModelPlanType } from 'queries/types/GetModelPlan';
 import { UpdateModelPlan as UpdateModelPlanType } from 'queries/types/UpdateModelPlan';
 import UpdateModelPlan from 'queries/UpdateModelPlan';
