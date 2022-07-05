@@ -300,7 +300,7 @@ const CCWAndQuality = () => {
                   </Fieldset>
 
                   <AddNote
-                    id="ops-eval-and-learning-app-to-send-files-note"
+                    id="ops-eval-and-learning-app-to-distribute-files-note"
                     field="appToSendFilesToNote"
                   />
                 </FieldGroup>
@@ -310,7 +310,7 @@ const CCWAndQuality = () => {
                   error={!!flatErrors.useCcwForFileDistribiutionToParticipants}
                 >
                   <Label
-                    htmlFor="ops-eval-and-learning-send-files"
+                    htmlFor="ops-eval-and-learning-distribute-files"
                     className="maxw-none"
                   >
                     {t('distributeFiles')}
@@ -323,7 +323,7 @@ const CCWAndQuality = () => {
                       <Field
                         as={Radio}
                         key={key}
-                        id={`ops-eval-and-learning-send-files-${key}`}
+                        id={`ops-eval-and-learning-distribute-files-${key}`}
                         name="useCcwForFileDistribiutionToParticipants"
                         label={key ? h('yes') : h('no')}
                         value={key ? 'YES' : 'NO'}
@@ -342,7 +342,7 @@ const CCWAndQuality = () => {
                   </Fieldset>
 
                   <AddNote
-                    id="ops-eval-and-learning-send-files-note"
+                    id="ops-eval-and-learning-distribute-files-note"
                     field="useCcwForFileDistribiutionToParticipantsNote"
                   />
                 </FieldGroup>

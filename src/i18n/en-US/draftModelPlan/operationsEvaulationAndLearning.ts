@@ -212,7 +212,7 @@ const operationsEvaluationAndLearning = {
     quarterly: 'Quarterly',
     monthly: 'Monthly',
     semiMonthly: 'Semi-monthly',
-    weekly: 'Weelly',
+    weekly: 'Weekly',
     daily: 'Daily',
     other: 'Other',
     notPlanning: 'Not planning to do this'
