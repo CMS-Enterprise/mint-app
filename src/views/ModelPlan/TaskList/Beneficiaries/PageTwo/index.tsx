@@ -22,13 +22,11 @@ import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
-import Alert from 'components/shared/Alert';
 import AutoSave from 'components/shared/AutoSave';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import MultiSelect from 'components/shared/MultiSelect';
-import TextAreaField from 'components/shared/TextAreaField';
 import TextField from 'components/shared/TextField';
 import GetModelPlanBeneficiaries from 'queries/GetModelPlanBeneficiaries';
 import {
@@ -38,15 +36,12 @@ import {
 import { UpdateModelPlanBeneficiariesVariables } from 'queries/types/UpdateModelPlanBeneficiaries';
 import UpdateModelPlanBeneficiaries from 'queries/UpdateModelPlanBeneficiaries';
 import {
-  BeneficiariesType,
   ConfidenceType,
-  SelectionMethodType,
-  TriStateAnswer
+  SelectionMethodType
 } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import {
   sortOtherEnum,
-  translateBeneficiariesType,
   translateConfidenceType,
   translateSelectionMethodType
 } from 'utils/modelPlan';
