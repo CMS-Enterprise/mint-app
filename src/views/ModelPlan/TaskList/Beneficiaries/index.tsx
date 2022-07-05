@@ -6,6 +6,7 @@ import MainContent from 'components/MainContent';
 import { NotFoundPartial } from 'views/NotFound';
 
 import BeneficiariesPageOne from './PageOne';
+import BeneficiariesPageThree from './PageThree';
 import BeneficiariesPageTwo from './PageTwo';
 
 export const Beneficiaries = () => {
@@ -23,6 +24,11 @@ export const Beneficiaries = () => {
               path="/models/:modelID/task-list/beneficiaries/page-two"
               exact
               render={() => <BeneficiariesPageTwo />}
+            />
+            <Route
+              path="/models/:modelID/task-list/beneficiaries/page-three"
+              exact
+              render={() => <BeneficiariesPageThree />}
             />
             <Route path="*" render={() => <NotFoundPartial />} />
           </Switch>
