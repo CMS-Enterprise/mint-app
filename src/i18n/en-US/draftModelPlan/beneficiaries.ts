@@ -49,13 +49,14 @@ const beneficiaries = {
   selectionMethodOther:
     'Please describe the other method for choosing beneficiaries.',
   beneficiaryFrequency: 'How frequently are beneficiaries chosen?',
-  beneficiaryFrequencyOptions: {
-    annually: 'Annually',
-    biannually: 'Biannually',
-    quarterly: 'Quarterly',
-    monthly: 'Monthly',
-    rolling: 'Rolling'
-  }
+  beneficiaryOverlap: 'Will the beneficiaries overlap with other models?',
+  benficiaryPrecedence:
+    'Are there precedence rules between this model and other model(s)?',
+  benficiaryPrecedenceExtra:
+    'i.e. other models have precedence over you (e.g. mandatory or statutory models running at the same time as yours)',
+  modelPlanStatus: 'Model Plan status',
+  readyForReview:
+    'This section of the Model Plan (Beneficiaries) is ready for review.'
 };
 
 export default beneficiaries;
