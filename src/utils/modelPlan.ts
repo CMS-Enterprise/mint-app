@@ -312,6 +312,8 @@ export const translateSelectionMethodType = (type: string) => {
       return i18next.t('beneficiaries:selectionMethod.providerSignUp');
     case 'OTHER':
       return i18next.t('beneficiaries:selectionMethod.other');
+    case 'NA':
+      return i18next.t('beneficiaries:selectionMethod.na');
     default:
       return '';
   }
