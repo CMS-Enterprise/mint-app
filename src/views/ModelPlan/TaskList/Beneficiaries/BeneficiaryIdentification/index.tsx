@@ -28,11 +28,11 @@ import FieldGroup from 'components/shared/FieldGroup';
 import MultiSelect from 'components/shared/MultiSelect';
 import TextAreaField from 'components/shared/TextAreaField';
 import TextField from 'components/shared/TextField';
-import GetModelPlanBeneficiaries from 'queries/GetModelPlanBeneficiaries';
+import GetBeneficiaryIdentification from 'queries/Beneficiaries/getBeneficiaryIndentification';
 import {
-  GetModelPlanBeneficiaries as GetModelPlanBeneficiariesType,
-  GetModelPlanBeneficiaries_modelPlan_beneficiaries as ModelPlanBeneficiariesFormType
-} from 'queries/types/GetModelPlanBeneficiaries';
+  GetBeneficiaryIdentification as BeneficiaryIdentificationType,
+  GetBeneficiaryIdentification_modelPlan_beneficiaries as BeneficiaryIdentificationFormType
+} from 'queries/Beneficiaries/types/GetBeneficiaryIdentification';
 import { UpdateModelPlanBeneficiariesVariables } from 'queries/types/UpdateModelPlanBeneficiaries';
 import UpdateModelPlanBeneficiaries from 'queries/UpdateModelPlanBeneficiaries';
 import { BeneficiariesType, TriStateAnswer } from 'types/graphql-global-types';
@@ -44,11 +44,13 @@ const BeneficiaryIdentification = () => {
   const { t: h } = useTranslation('draftModelPlan');
   const { modelID } = useParams<{ modelID: string }>();
 
-  const formikRef = useRef<FormikProps<ModelPlanBeneficiariesFormType>>(null);
+  const formikRef = useRef<FormikProps<BeneficiaryIdentificationFormType>>(
+    null
+  );
   const history = useHistory();
 
-  const { data } = useQuery<GetModelPlanBeneficiariesType>(
-    GetModelPlanBeneficiaries,
+  const { data } = useQuery<BeneficiaryIdentificationType>(
+    GetBeneficiaryIdentification,
     {
       variables: {
         id: modelID
@@ -67,7 +69,8 @@ const BeneficiaryIdentification = () => {
     excludeCertainCharacteristics,
     excludeCertainCharacteristicsCriteria,
     excludeCertainCharacteristicsNote
-  } = data?.modelPlan?.beneficiaries || ({} as ModelPlanBeneficiariesFormType);
+  } =
+    data?.modelPlan?.beneficiaries || ({} as BeneficiaryIdentificationFormType);
 
   const modelName = data?.modelPlan?.modelName || '';
 
@@ -76,7 +79,7 @@ const BeneficiaryIdentification = () => {
   );
 
   const handleFormSubmit = (
-    formikValues: ModelPlanBeneficiariesFormType,
+    formikValues: BeneficiaryIdentificationFormType,
     redirect?: 'next' | 'back'
   ) => {
     update({
@@ -106,7 +109,9 @@ const BeneficiaryIdentification = () => {
       label: translateBeneficiariesType(key)
     }));
 
-  const initialValues = {
+  const initialValues: BeneficiaryIdentificationFormType = {
+    __typename: 'PlanBeneficiaries',
+    id: id ?? '',
     beneficiaries: beneficiaries ?? '',
     beneficiariesOther: beneficiariesOther ?? '',
     beneficiariesNote: beneficiariesNote ?? '',
@@ -117,7 +122,7 @@ const BeneficiaryIdentification = () => {
     excludeCertainCharacteristicsCriteria:
       excludeCertainCharacteristicsCriteria ?? '',
     excludeCertainCharacteristicsNote: excludeCertainCharacteristicsNote ?? ''
-  } as ModelPlanBeneficiariesFormType;
+  };
 
   return (
     <>
@@ -160,7 +165,7 @@ const BeneficiaryIdentification = () => {
         enableReinitialize
         innerRef={formikRef}
       >
-        {(formikProps: FormikProps<ModelPlanBeneficiariesFormType>) => {
+        {(formikProps: FormikProps<BeneficiaryIdentificationFormType>) => {
           const {
             errors,
             handleSubmit,
