@@ -34,9 +34,13 @@ import {
 } from 'queries/types/GetModelPlanBeneficiaries';
 import { UpdateModelPlanBeneficiariesVariables } from 'queries/types/UpdateModelPlanBeneficiaries';
 import UpdateModelPlanBeneficiaries from 'queries/UpdateModelPlanBeneficiaries';
-import { FrequencyType } from 'types/graphql-global-types';
+import { FrequencyType, OverlapType } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
-import { sortOtherEnum, translateFrequencyType } from 'utils/modelPlan';
+import {
+  sortOtherEnum,
+  translateFrequencyType,
+  translateOverlapType
+} from 'utils/modelPlan';
 
 const BeneficiariesPageThree = () => {
   const { t } = useTranslation('beneficiaries');
@@ -247,6 +251,41 @@ const BeneficiariesPageThree = () => {
                         <AddNote
                           id="beneficiaries-beneficiarySelectionFrequency-note"
                           field="beneficiarySelectionFrequencyNote"
+                        />
+                      </FieldGroup>
+
+                      <FieldGroup
+                        scrollElement="beneficiaryOverlap"
+                        error={!!flatErrors.beneficiaryOverlap}
+                      >
+                        <Label htmlFor="beneficiaries-overlap">
+                          {t('levelOfConfidence')}
+                        </Label>
+                        <FieldErrorMsg>
+                          {flatErrors.beneficiaryOverlap}
+                        </FieldErrorMsg>
+                        <Fieldset>
+                          {Object.keys(OverlapType)
+                            .sort(sortOtherEnum)
+                            .map(key => (
+                              <Fragment key={key}>
+                                <Field
+                                  as={Radio}
+                                  id={`beneficiaries-overlap-${key}`}
+                                  name="beneficiaries-overlap"
+                                  label={translateOverlapType(key)}
+                                  value={key}
+                                  checked={values.beneficiaryOverlap === key}
+                                  onChange={() => {
+                                    setFieldValue('beneficiaryOverlap', key);
+                                  }}
+                                />
+                              </Fragment>
+                            ))}
+                        </Fieldset>
+                        <AddNote
+                          id="beneficiaries-overlap-note"
+                          field="beneficiaryOverlapNote"
                         />
                       </FieldGroup>
 
