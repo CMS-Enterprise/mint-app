@@ -418,7 +418,7 @@ const IDDOCTesting = () => {
       {data && (
         <PageNumber
           currentPage={renderCurrentPage(
-            4,
+            3,
             iddocSupport,
             isCCWInvolvement(ccmInvolvment)
           )}

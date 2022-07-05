@@ -267,7 +267,7 @@ exports[`Model Plan Ops Eval and Learning CCW and Qualtiy matches snapshot 1`] =
       <label
         class="usa-label maxw-none"
         data-testid="label"
-        for="ops-eval-and-learning-send-files"
+        for="ops-eval-and-learning-distribute-files"
       >
         Will you use the CCW to distribute files to and from model participants?
       </label>
@@ -281,14 +281,14 @@ exports[`Model Plan Ops Eval and Learning CCW and Qualtiy matches snapshot 1`] =
         >
           <input
             class="usa-radio__input"
-            id="ops-eval-and-learning-send-files-true"
+            id="ops-eval-and-learning-distribute-files-true"
             name="useCcwForFileDistribiutionToParticipants"
             type="radio"
             value="YES"
           />
           <label
             class="usa-radio__label"
-            for="ops-eval-and-learning-send-files-true"
+            for="ops-eval-and-learning-distribute-files-true"
           >
             Yes
           </label>
@@ -299,14 +299,14 @@ exports[`Model Plan Ops Eval and Learning CCW and Qualtiy matches snapshot 1`] =
         >
           <input
             class="usa-radio__input"
-            id="ops-eval-and-learning-send-files-false"
+            id="ops-eval-and-learning-distribute-files-false"
             name="useCcwForFileDistribiutionToParticipants"
             type="radio"
             value="NO"
           />
           <label
             class="usa-radio__label"
-            for="ops-eval-and-learning-send-files-false"
+            for="ops-eval-and-learning-distribute-files-false"
           >
             No
           </label>
