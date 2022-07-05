@@ -26,11 +26,11 @@ import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import TextAreaField from 'components/shared/TextAreaField';
-import GetBeneficiaryIdentification from 'queries/Beneficiaries/getBeneficiaryIndentification';
+import getFrequency from 'queries/Beneficiaries/getFrequency';
 import {
-  GetBeneficiaryIdentification as BeneficiaryIdentificationType,
-  GetBeneficiaryIdentification_modelPlan_beneficiaries as BeneficiaryIdentificationFormType
-} from 'queries/Beneficiaries/types/GetBeneficiaryIdentification';
+  GetFrequency as BeneficiaryFrequencyType,
+  GetFrequency_modelPlan_beneficiaries as FrequencyFormType
+} from 'queries/Beneficiaries/types/GetFrequency';
 import { UpdateModelPlanBeneficiariesVariables } from 'queries/types/UpdateModelPlanBeneficiaries';
 import UpdateModelPlanBeneficiaries from 'queries/UpdateModelPlanBeneficiaries';
 import { FrequencyType, OverlapType } from 'types/graphql-global-types';
@@ -47,11 +47,11 @@ const Frequency = () => {
   const { t: h } = useTranslation('draftModelPlan');
   const { modelID } = useParams<{ modelID: string }>();
 
-  const formikRef = useRef<FormikProps<BeneficiaryIdentificationType>>(null);
+  const formikRef = useRef<FormikProps<FrequencyFormType>>(null);
   const history = useHistory();
 
-  const { data, loading, error } = useQuery<BeneficiaryIdentificationFormType>(
-    GetBeneficiaryIdentification,
+  const { data, loading, error } = useQuery<BeneficiaryFrequencyType>(
+    getFrequency,
     {
       variables: {
         id: modelID
@@ -67,7 +67,7 @@ const Frequency = () => {
     beneficiaryOverlap,
     beneficiaryOverlapNote,
     precedenceRules
-  } = data?.modelPlan?.beneficiaries || ({} as BeneficiaryIdentificationType);
+  } = data?.modelPlan?.beneficiaries || ({} as FrequencyFormType);
 
   const modelName = data?.modelPlan?.modelName || '';
 
@@ -76,7 +76,7 @@ const Frequency = () => {
   );
 
   const handleFormSubmit = (
-    formikValues: BeneficiaryIdentificationType,
+    formikValues: FrequencyFormType,
     redirect?: 'task-list' | 'back'
   ) => {
     update({
@@ -99,7 +99,9 @@ const Frequency = () => {
       });
   };
 
-  const initialValues = {
+  const initialValues: FrequencyFormType = {
+    __typename: 'PlanBeneficiaries',
+    id: id ?? '',
     beneficiarySelectionFrequency: beneficiarySelectionFrequency ?? null,
     beneficiarySelectionFrequencyNote: beneficiarySelectionFrequencyNote ?? '',
     beneficiarySelectionFrequencyOther:
@@ -107,7 +109,7 @@ const Frequency = () => {
     beneficiaryOverlap: beneficiaryOverlap ?? null,
     beneficiaryOverlapNote: beneficiaryOverlapNote ?? '',
     precedenceRules: precedenceRules ?? ''
-  } as BeneficiaryIdentificationType;
+  };
 
   if ((!loading && error) || (!loading && !data?.modelPlan)) {
     return <NotFoundPartial />;
@@ -154,7 +156,7 @@ const Frequency = () => {
         enableReinitialize
         innerRef={formikRef}
       >
-        {(formikProps: FormikProps<BeneficiaryIdentificationType>) => {
+        {(formikProps: FormikProps<FrequencyFormType>) => {
           const {
             errors,
             handleSubmit,
