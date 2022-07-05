@@ -40,6 +40,7 @@ import {
   translateFrequencyType,
   translateOverlapType
 } from 'utils/modelPlan';
+import { NotFoundPartial } from 'views/NotFound';
 
 const Frequency = () => {
   const { t } = useTranslation('beneficiaries');
@@ -49,7 +50,7 @@ const Frequency = () => {
   const formikRef = useRef<FormikProps<ModelPlanBeneficiariesFormType>>(null);
   const history = useHistory();
 
-  const { data } = useQuery<GetModelPlanBeneficiariesType>(
+  const { data, loading, error } = useQuery<GetModelPlanBeneficiariesType>(
     GetModelPlanBeneficiaries,
     {
       variables: {
@@ -107,6 +108,10 @@ const Frequency = () => {
     beneficiaryOverlapNote: beneficiaryOverlapNote ?? '',
     precedenceRules: precedenceRules ?? ''
   } as ModelPlanBeneficiariesFormType;
+
+  if ((!loading && error) || (!loading && !data?.modelPlan)) {
+    return <NotFoundPartial />;
+  }
 
   return (
     <>
