@@ -1,5 +1,5 @@
 import React, { Fragment, useRef } from 'react';
-import { Trans, useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
 import {
@@ -28,7 +28,8 @@ import TextAreaField from 'components/shared/TextAreaField';
 import GetAuthority from 'queries/GeneralCharacteristics/GetAuthority';
 import {
   GetAuthority as GetAuthorityType,
-  GetAuthority_modelPlan_generalCharacteristics as AuthorityFormType
+  GetAuthority_modelPlan_generalCharacteristics as AuthorityFormType,
+  GetAuthorityVariables
 } from 'queries/GeneralCharacteristics/types/GetAuthority';
 import { UpdatePlanGeneralCharacteristicsVariables } from 'queries/GeneralCharacteristics/types/UpdatePlanGeneralCharacteristics';
 import UpdatePlanGeneralCharacteristics from 'queries/GeneralCharacteristics/UpdatePlanGeneralCharacteristics';
@@ -39,18 +40,20 @@ import {
   translateAuthorityAllowance,
   translateWaiverTypes
 } from 'utils/modelPlan';
+import { NotFoundPartial } from 'views/NotFound';
 
 const Authority = () => {
   const { t } = useTranslation('generalCharacteristics');
   const { t: h } = useTranslation('draftModelPlan');
   const { modelID } = useParams<{ modelID: string }>();
 
-  const formikRef = useRef<FormikProps<GetAuthAuthorityFormTypeorityType>>(
-    null
-  );
+  const formikRef = useRef<FormikProps<AuthorityFormType>>(null);
   const history = useHistory();
 
-  const { data } = useQuery<GetAuthorityType>(GetAuthority, {
+  const { data, loading, error } = useQuery<
+    GetAuthorityType,
+    GetAuthorityVariables
+  >(GetAuthority, {
     variables: {
       id: modelID
     }
@@ -116,6 +119,10 @@ const Authority = () => {
     waiversRequiredNote: waiversRequiredNote ?? ''
   };
 
+  if ((!loading && error) || (!loading && !data?.modelPlan)) {
+    return <NotFoundPartial />;
+  }
+
   return (
     <>
       <BreadcrumbBar variant="wrap">
@@ -139,9 +146,7 @@ const Authority = () => {
         className="margin-top-0 margin-bottom-1 font-body-lg"
         data-testid="model-plan-name"
       >
-        <Trans i18nKey="modelPlanTaskList:subheading">
-          indexZero {modelName} indexTwo
-        </Trans>
+        {h('for')} {modelName}
       </p>
       <p className="margin-bottom-2 font-body-md line-height-sans-4">
         {h('helpText')}

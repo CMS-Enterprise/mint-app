@@ -1,5 +1,5 @@
 import React, { Fragment, useRef } from 'react';
-import { Trans, useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
 import {
@@ -29,7 +29,8 @@ import TextAreaField from 'components/shared/TextAreaField';
 import GetProviderOptions from 'queries/ParticipantsAndProviders/GetProviderOptions';
 import {
   GetProviderOptions as GetProviderOptionsType,
-  GetProviderOptions_modelPlan_participantsAndProviders as ProviderOptionsFormType
+  GetProviderOptions_modelPlan_participantsAndProviders as ProviderOptionsFormType,
+  GetProviderOptionsVariables
 } from 'queries/ParticipantsAndProviders/types/GetProviderOptions';
 import { UpdatePlanParticipantsAndProvidersVariables } from 'queries/ParticipantsAndProviders/types/UpdatePlanParticipantsAndProviders';
 import UpdatePlanParticipantsAndProviders from 'queries/ParticipantsAndProviders/UpdatePlanParticipantsAndProviders';
@@ -48,6 +49,7 @@ import {
   translateProviderAddType,
   translateProviderLeaveType
 } from 'utils/modelPlan';
+import { NotFoundPartial } from 'views/NotFound';
 
 export const ProviderOptions = () => {
   const { t } = useTranslation('participantsAndProviders');
@@ -57,7 +59,10 @@ export const ProviderOptions = () => {
   const formikRef = useRef<FormikProps<ProviderOptionsFormType>>(null);
   const history = useHistory();
 
-  const { data } = useQuery<GetProviderOptionsType>(GetProviderOptions, {
+  const { data, loading, error } = useQuery<
+    GetProviderOptionsType,
+    GetProviderOptionsVariables
+  >(GetProviderOptions, {
     variables: {
       id: modelID
     }
@@ -131,6 +136,10 @@ export const ProviderOptions = () => {
     providerOverlapNote: providerOverlapNote ?? ''
   };
 
+  if ((!loading && error) || (!loading && !data?.modelPlan)) {
+    return <NotFoundPartial />;
+  }
+
   return (
     <>
       <BreadcrumbBar variant="wrap">
@@ -154,9 +163,7 @@ export const ProviderOptions = () => {
         className="margin-top-0 margin-bottom-1 font-body-lg"
         data-testid="model-plan-name"
       >
-        <Trans i18nKey="modelPlanTaskList:subheading">
-          indexZero {modelName} indexTwo
-        </Trans>
+        {h('for')} {modelName}
       </p>
       <p className="margin-bottom-2 font-body-md line-height-sans-4">
         {h('helpText')}

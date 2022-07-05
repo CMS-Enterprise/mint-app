@@ -247,7 +247,7 @@ const Collaborators = () => {
                         id="collaborator-role"
                         name="role"
                         value={values.teamRole || ''}
-                        onChange={(e: any) => {
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                           setFieldValue('teamRole', e.target.value);
                         }}
                       >

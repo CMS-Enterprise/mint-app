@@ -1,5 +1,5 @@
 import React, { Fragment, useRef } from 'react';
-import { Trans, useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
 import {
@@ -29,7 +29,8 @@ import TextAreaField from 'components/shared/TextAreaField';
 import GetParticipantOptions from 'queries/ParticipantsAndProviders/GetParticipantOptions';
 import {
   GetParticipantOptions as GetParticipantOptionsType,
-  GetParticipantOptions_modelPlan_participantsAndProviders as ParticipantOptionsFormType
+  GetParticipantOptions_modelPlan_participantsAndProviders as ParticipantOptionsFormType,
+  GetParticipantOptionsVariables
 } from 'queries/ParticipantsAndProviders/types/GetParticipantOptions';
 import { UpdatePlanParticipantsAndProvidersVariables } from 'queries/ParticipantsAndProviders/types/UpdatePlanParticipantsAndProviders';
 import UpdatePlanParticipantsAndProviders from 'queries/ParticipantsAndProviders/UpdatePlanParticipantsAndProviders';
@@ -46,6 +47,7 @@ import {
   translateParticipantSelectiontType,
   translateRecruitmentType
 } from 'utils/modelPlan';
+import { NotFoundPartial } from 'views/NotFound';
 
 export const ParticipantOptions = () => {
   const { t } = useTranslation('participantsAndProviders');
@@ -55,7 +57,10 @@ export const ParticipantOptions = () => {
   const formikRef = useRef<FormikProps<ParticipantOptionsFormType>>(null);
   const history = useHistory();
 
-  const { data } = useQuery<GetParticipantOptionsType>(GetParticipantOptions, {
+  const { data, loading, error } = useQuery<
+    GetParticipantOptionsType,
+    GetParticipantOptionsVariables
+  >(GetParticipantOptions, {
     variables: {
       id: modelID
     }
@@ -127,6 +132,10 @@ export const ParticipantOptions = () => {
     selectionNote: selectionNote ?? ''
   };
 
+  if ((!loading && error) || (!loading && !data?.modelPlan)) {
+    return <NotFoundPartial />;
+  }
+
   return (
     <>
       <BreadcrumbBar variant="wrap">
@@ -150,9 +159,7 @@ export const ParticipantOptions = () => {
         className="margin-top-0 margin-bottom-1 font-body-lg"
         data-testid="model-plan-name"
       >
-        <Trans i18nKey="modelPlanTaskList:subheading">
-          indexZero {modelName} indexTwo
-        </Trans>
+        {h('for')} {modelName}
       </p>
       <p className="margin-bottom-2 font-body-md line-height-sans-4">
         {h('helpText')}

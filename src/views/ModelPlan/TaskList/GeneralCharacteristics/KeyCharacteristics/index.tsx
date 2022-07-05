@@ -1,5 +1,5 @@
 import React, { Fragment, useRef } from 'react';
-import { Trans, useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
 import {
@@ -29,7 +29,8 @@ import MultiSelect from 'components/shared/MultiSelect';
 import GetKeyCharacteristics from 'queries/GeneralCharacteristics/GetKeyCharacteristics';
 import {
   GetKeyCharacteristics as GetKeyCharacteristicsType,
-  GetKeyCharacteristics_modelPlan_generalCharacteristics as KeyCharacteristicsFormType
+  GetKeyCharacteristics_modelPlan_generalCharacteristics as KeyCharacteristicsFormType,
+  GetKeyCharacteristicsVariables
 } from 'queries/GeneralCharacteristics/types/GetKeyCharacteristics';
 import { UpdatePlanGeneralCharacteristicsVariables } from 'queries/GeneralCharacteristics/types/UpdatePlanGeneralCharacteristics';
 import UpdatePlanGeneralCharacteristics from 'queries/GeneralCharacteristics/UpdatePlanGeneralCharacteristics';
@@ -43,6 +44,7 @@ import {
   translateAlternativePaymentTypes,
   translateKeyCharacteristics
 } from 'utils/modelPlan';
+import { NotFoundPartial } from 'views/NotFound';
 
 const KeyCharacteristics = () => {
   const { t } = useTranslation('generalCharacteristics');
@@ -52,7 +54,10 @@ const KeyCharacteristics = () => {
   const formikRef = useRef<FormikProps<KeyCharacteristicsFormType>>(null);
   const history = useHistory();
 
-  const { data } = useQuery<GetKeyCharacteristicsType>(GetKeyCharacteristics, {
+  const { data, loading, error } = useQuery<
+    GetKeyCharacteristicsType,
+    GetKeyCharacteristicsVariables
+  >(GetKeyCharacteristics, {
     variables: {
       id: modelID
     }
@@ -128,6 +133,10 @@ const KeyCharacteristics = () => {
     planContactUpdatedNote: planContactUpdatedNote ?? ''
   };
 
+  if ((!loading && error) || (!loading && !data?.modelPlan)) {
+    return <NotFoundPartial />;
+  }
+
   return (
     <>
       <BreadcrumbBar variant="wrap">
@@ -151,9 +160,7 @@ const KeyCharacteristics = () => {
         className="margin-top-0 margin-bottom-1 font-body-lg"
         data-testid="model-plan-name"
       >
-        <Trans i18nKey="modelPlanTaskList:subheading">
-          indexZero {modelName} indexTwo
-        </Trans>
+        {h('for')} {modelName}
       </p>
       <p className="margin-bottom-2 font-body-md line-height-sans-4">
         {h('helpText')}

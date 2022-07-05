@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { Trans, useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
 import {
@@ -26,7 +26,8 @@ import MultiSelect from 'components/shared/MultiSelect';
 import GetDataSharing from 'queries/OpsEvalAndLearning/GetDataSharing';
 import {
   GetDataSharing as GetDataSharingType,
-  GetDataSharing_modelPlan_opsEvalAndLearning as GetDataSharingFormType
+  GetDataSharing_modelPlan_opsEvalAndLearning as GetDataSharingFormType,
+  GetDataSharingVariables
 } from 'queries/OpsEvalAndLearning/types/GetDataSharing';
 import { UpdatePlanOpsEvalAndLearningVariables } from 'queries/OpsEvalAndLearning/types/UpdatePlanOpsEvalAndLearning';
 import UpdatePlanOpsEvalAndLearning from 'queries/OpsEvalAndLearning/UpdatePlanOpsEvalAndLearning';
@@ -50,14 +51,14 @@ const DataSharing = () => {
   const formikRef = useRef<FormikProps<GetDataSharingFormType>>(null);
   const history = useHistory();
 
-  const { data, loading, error } = useQuery<GetDataSharingType>(
-    GetDataSharing,
-    {
-      variables: {
-        id: modelID
-      }
+  const { data, loading, error } = useQuery<
+    GetDataSharingType,
+    GetDataSharingVariables
+  >(GetDataSharing, {
+    variables: {
+      id: modelID
     }
-  );
+  });
 
   const {
     id,
@@ -168,9 +169,7 @@ const DataSharing = () => {
         className="margin-top-0 margin-bottom-1 font-body-lg"
         data-testid="model-plan-name"
       >
-        <Trans i18nKey="modelPlanTaskList:subheading">
-          indexZero {modelName} indexTwo
-        </Trans>
+        {h('for')} {modelName}
       </p>
       <p className="margin-bottom-2 font-body-md line-height-sans-4">
         {h('helpText')}
@@ -243,7 +242,7 @@ const DataSharing = () => {
                     id="ops-eval-and-learning-data-sharing-starts"
                     name="dataSharingStarts"
                     value={values.dataSharingStarts || ''}
-                    onChange={(e: any) => {
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                       setFieldValue('dataSharingStarts', e.target.value);
                     }}
                   >
@@ -360,7 +359,7 @@ const DataSharing = () => {
                     id="ops-eval-and-learning-data-collection-starts"
                     name="dataCollectionStarts"
                     value={values.dataCollectionStarts || ''}
-                    onChange={(e: any) => {
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                       setFieldValue('dataCollectionStarts', e.target.value);
                     }}
                   >
@@ -476,7 +475,7 @@ const DataSharing = () => {
                     id="ops-eval-and-learning-data-reporting-starts"
                     name="qualityReportingStarts"
                     value={values.qualityReportingStarts || ''}
-                    onChange={(e: any) => {
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                       setFieldValue('qualityReportingStarts', e.target.value);
                     }}
                   >

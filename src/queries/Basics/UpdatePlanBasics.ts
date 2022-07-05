@@ -4,12 +4,6 @@ export default gql`
   mutation UpdatePlanBasics($id: UUID!, $changes: PlanBasicsChanges!) {
     updatePlanBasics(id: $id, changes: $changes) {
       id
-      modelPlanID
-      modelType
-      problem
-      goal
-      testInterventions
-      note
     }
   }
 `;

@@ -46,6 +46,7 @@ type TaskListItemProps = {
 
 const TaskList = () => {
   const { t } = useTranslation('modelPlanTaskList');
+  const { t: h } = useTranslation('draftModelPlan');
   const { t: d } = useTranslation('discussions');
   const { modelID } = useParams<{ modelID: string }>();
   const [isDiscussionOpen, setIsDiscussionOpen] = useState(false);
@@ -213,9 +214,7 @@ const TaskList = () => {
                     className="margin-top-0 margin-bottom-2 font-body-lg"
                     data-testid="model-plan-name"
                   >
-                    <Trans i18nKey="modelPlanTaskList:subheading">
-                      indexZero {modelName} indexTwo
-                    </Trans>
+                    {h('for')} {modelName}
                   </p>
 
                   {isDiscussionOpen && (

@@ -1,5 +1,5 @@
 import React, { Fragment, useRef } from 'react';
-import { Trans, useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
 import {
@@ -27,7 +27,8 @@ import FieldGroup from 'components/shared/FieldGroup';
 import GetTargetsAndOptions from 'queries/GeneralCharacteristics/GetTargetsAndOptions';
 import {
   GetTargetsAndOptions as GetTargetsAndOptionsType,
-  GetTargetsAndOptions_modelPlan_generalCharacteristics as TargetsAndOptionsFormType
+  GetTargetsAndOptions_modelPlan_generalCharacteristics as TargetsAndOptionsFormType,
+  GetTargetsAndOptionsVariables
 } from 'queries/GeneralCharacteristics/types/GetTargetsAndOptions';
 import { UpdatePlanGeneralCharacteristicsVariables } from 'queries/GeneralCharacteristics/types/UpdatePlanGeneralCharacteristics';
 import UpdatePlanGeneralCharacteristics from 'queries/GeneralCharacteristics/UpdatePlanGeneralCharacteristics';
@@ -43,6 +44,7 @@ import {
   translateGeographyApplication,
   translateGeographyTypes
 } from 'utils/modelPlan';
+import { NotFoundPartial } from 'views/NotFound';
 
 const TargetsAndOptions = () => {
   const { t } = useTranslation('generalCharacteristics');
@@ -52,7 +54,10 @@ const TargetsAndOptions = () => {
   const formikRef = useRef<FormikProps<TargetsAndOptionsFormType>>(null);
   const history = useHistory();
 
-  const { data } = useQuery<GetTargetsAndOptionsType>(GetTargetsAndOptions, {
+  const { data, loading, error } = useQuery<
+    GetTargetsAndOptionsType,
+    GetTargetsAndOptionsVariables
+  >(GetTargetsAndOptions, {
     variables: {
       id: modelID
     }
@@ -132,6 +137,10 @@ const TargetsAndOptions = () => {
       multiplePatricipationAgreementsNeededNote ?? ''
   };
 
+  if ((!loading && error) || (!loading && !data?.modelPlan)) {
+    return <NotFoundPartial />;
+  }
+
   return (
     <>
       <BreadcrumbBar variant="wrap">
@@ -155,9 +164,7 @@ const TargetsAndOptions = () => {
         className="margin-top-0 margin-bottom-1 font-body-lg"
         data-testid="model-plan-name"
       >
-        <Trans i18nKey="modelPlanTaskList:subheading">
-          indexZero {modelName} indexTwo
-        </Trans>
+        {h('for')} {modelName}
       </p>
       <p className="margin-bottom-2 font-body-md line-height-sans-4">
         {h('helpText')}

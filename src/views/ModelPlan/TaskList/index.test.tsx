@@ -12,7 +12,6 @@ import {
   ModelStatus
 } from 'types/graphql-global-types';
 
-import { charactersticMockData } from './GeneralCharacteristics/mock';
 import TaskList from './index';
 
 describe('The Model Plan Task List', () => {
@@ -58,7 +57,7 @@ describe('The Model Plan Task List', () => {
       status: 'READY'
     },
     opsEvalAndLearning: [] as any,
-    generalCharacteristics: charactersticMockData as any,
+    generalCharacteristics: [] as any,
     participantsAndProviders: [] as any,
     documents: [
       {

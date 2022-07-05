@@ -31,7 +31,8 @@ import TextAreaField from 'components/shared/TextAreaField';
 import GetParticipantsAndProviders from 'queries/ParticipantsAndProviders/GetParticipantsAndProviders';
 import {
   GetParticipantsAndProviders as GetParticipantsAndProvidersType,
-  GetParticipantsAndProviders_modelPlan_participantsAndProviders as ParticipantsAndProvidersFormType
+  GetParticipantsAndProviders_modelPlan_participantsAndProviders as ParticipantsAndProvidersFormType,
+  GetParticipantsAndProvidersVariables
 } from 'queries/ParticipantsAndProviders/types/GetParticipantsAndProviders';
 import { UpdatePlanParticipantsAndProvidersVariables } from 'queries/ParticipantsAndProviders/types/UpdatePlanParticipantsAndProviders';
 import UpdatePlanParticipantsAndProviders from 'queries/ParticipantsAndProviders/UpdatePlanParticipantsAndProviders';
@@ -58,14 +59,14 @@ export const ParticipantsAndProvidersContent = () => {
   const formikRef = useRef<FormikProps<ParticipantsAndProvidersFormType>>(null);
   const history = useHistory();
 
-  const { data } = useQuery<GetParticipantsAndProvidersType>(
-    GetParticipantsAndProviders,
-    {
-      variables: {
-        id: modelID
-      }
+  const { data, loading, error } = useQuery<
+    GetParticipantsAndProvidersType,
+    GetParticipantsAndProvidersVariables
+  >(GetParticipantsAndProviders, {
+    variables: {
+      id: modelID
     }
-  );
+  });
 
   const {
     id,
@@ -127,6 +128,10 @@ export const ParticipantsAndProvidersContent = () => {
     modelApplicationLevel: modelApplicationLevel ?? ''
   };
 
+  if ((!loading && error) || (!loading && !data?.modelPlan)) {
+    return <NotFoundPartial />;
+  }
+
   return (
     <>
       <BreadcrumbBar variant="wrap">
@@ -150,9 +155,7 @@ export const ParticipantsAndProvidersContent = () => {
         className="margin-top-0 margin-bottom-1 font-body-lg"
         data-testid="model-plan-name"
       >
-        <Trans i18nKey="modelPlanTaskList:subheading">
-          indexZero {modelName} indexTwo
-        </Trans>
+        {h('for')} {modelName}
       </p>
       <p className="margin-bottom-2 font-body-md line-height-sans-4">
         {h('helpText')}
