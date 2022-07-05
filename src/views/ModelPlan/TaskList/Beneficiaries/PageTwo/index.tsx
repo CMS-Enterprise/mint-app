@@ -40,13 +40,15 @@ import UpdateModelPlanBeneficiaries from 'queries/UpdateModelPlanBeneficiaries';
 import {
   BeneficiariesType,
   ConfidenceType,
+  SelectionMethodType,
   TriStateAnswer
 } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import {
   sortOtherEnum,
   translateBeneficiariesType,
-  translateConfidenceType
+  translateConfidenceType,
+  translateSelectionMethodType
 } from 'utils/modelPlan';
 
 const BeneficiariesPageTwo = () => {
@@ -108,18 +110,18 @@ const BeneficiariesPageTwo = () => {
       });
   };
 
-  // const mappedBeneficiariesType = Object.keys(BeneficiariesType)
-  //   .sort(sortOtherEnum)
-  //   .map(key => ({
-  //     value: key,
-  //     label: translateBeneficiariesType(key)
-  //   }));
+  const mappedSelectionMethodType = Object.keys(SelectionMethodType)
+    .sort(sortOtherEnum)
+    .map(key => ({
+      value: key,
+      label: translateSelectionMethodType(key)
+    }));
 
   const initialValues = {
     numberPeopleImpacted: numberPeopleImpacted ?? 0,
     estimateConfidence: estimateConfidence ?? null,
     confidenceNote: confidenceNote ?? '',
-    beneficiarySelectionMethod: beneficiarySelectionMethod ?? null,
+    beneficiarySelectionMethod: beneficiarySelectionMethod ?? '',
     beneficiarySelectionNote: beneficiarySelectionNote ?? '',
     beneficiarySelectionOther: beneficiarySelectionOther ?? ''
   } as ModelPlanBeneficiariesFormType;
@@ -235,7 +237,7 @@ const BeneficiariesPageTwo = () => {
                           <span>{t('tenThousand')}</span>
                         </div>
                         <Label
-                          htmlFor="participants-and-providers-participants-other-input"
+                          htmlFor="expected-people-impacted"
                           className="text-normal"
                         >
                           {t('numberOfPeopleImpacted')}
@@ -248,7 +250,7 @@ const BeneficiariesPageTwo = () => {
                           type="number"
                           className="maxw-card"
                           error={flatErrors.numberPeopleImpacted}
-                          id="participants-and-providers-participants-other-input"
+                          id="expected-people-impacted"
                           name="expectedNumberOfParticipants"
                           onChange={(
                             e: React.ChangeEvent<HTMLInputElement>
@@ -292,7 +294,74 @@ const BeneficiariesPageTwo = () => {
                         />
                       </FieldGroup>
 
+                      <FieldGroup
+                        scrollElement="beneficiaries-chooseBeneficiaries"
+                        error={!!flatErrors.beneficiarySelectionMethod}
+                        className="margin-top-4"
+                      >
+                        <Label htmlFor="beneficiaries-chooseBeneficiaries">
+                          {t('chooseBeneficiaries')}
+                        </Label>
+                        <FieldErrorMsg>
+                          {flatErrors.beneficiarySelectionMethod}
+                        </FieldErrorMsg>
+
+                        <Field
+                          as={MultiSelect}
+                          id="beneficiaries-chooseBeneficiaries"
+                          name="beneficiaries-chooseBeneficiaries"
+                          options={mappedSelectionMethodType}
+                          selectedLabel={t('selectedMethods')}
+                          onChange={(value: string[] | []) => {
+                            setFieldValue('beneficiarySelectionMethod', value);
+                          }}
+                          initialValues={
+                            initialValues.beneficiarySelectionMethod
+                          }
+                        />
+
+                        {(values?.beneficiarySelectionMethod || []).includes(
+                          'OTHER' as SelectionMethodType
+                        ) && (
+                          <FieldGroup
+                            scrollElement="beneficiaries-chooseBeneficiarie-other"
+                            error={!!flatErrors.beneficiarySelectionOther}
+                          >
+                            <Label
+                              htmlFor="beneficiaries-chooseBeneficiaries-other"
+                              className="text-normal"
+                            >
+                              {t('selectionMethodOther')}
+                            </Label>
+                            <FieldErrorMsg>
+                              {flatErrors.beneficiarySelectionOther}
+                            </FieldErrorMsg>
+                            <Field
+                              as={TextField}
+                              error={flatErrors.beneficiarySelectionOther}
+                              id="beneficiaries-chooseBeneficiaries-other"
+                              data-testid="beneficiaries-chooseBeneficiaries-other"
+                              name="beneficiaries-chooseBeneficiaries-other"
+                            />
+                          </FieldGroup>
+                        )}
+
+                        <AddNote
+                          id="beneficiaries-note"
+                          field="beneficiariesNote"
+                        />
+                      </FieldGroup>
+
                       <div className="margin-top-6 margin-bottom-3">
+                        <Button
+                          type="button"
+                          className="usa-button usa-button--outline margin-bottom-1"
+                          onClick={() => {
+                            handleFormSubmit(values, 'back');
+                          }}
+                        >
+                          {h('back')}
+                        </Button>
                         <Button type="submit" onClick={() => setErrors({})}>
                           {h('next')}
                         </Button>
@@ -323,7 +392,7 @@ const BeneficiariesPageTwo = () => {
           );
         }}
       </Formik>
-      <PageNumber currentPage={1} totalPages={3} className="margin-y-6" />
+      <PageNumber currentPage={2} totalPages={3} className="margin-y-6" />
     </>
   );
 };
