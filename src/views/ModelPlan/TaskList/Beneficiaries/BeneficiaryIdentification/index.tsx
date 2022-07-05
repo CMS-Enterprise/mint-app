@@ -38,6 +38,7 @@ import UpdateModelPlanBeneficiaries from 'queries/UpdateModelPlanBeneficiaries';
 import { BeneficiariesType, TriStateAnswer } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import { sortOtherEnum, translateBeneficiariesType } from 'utils/modelPlan';
+import { NotFoundPartial } from 'views/NotFound';
 
 const BeneficiaryIdentification = () => {
   const { t } = useTranslation('beneficiaries');
@@ -49,7 +50,7 @@ const BeneficiaryIdentification = () => {
   );
   const history = useHistory();
 
-  const { data } = useQuery<BeneficiaryIdentificationType>(
+  const { data, loading, error } = useQuery<BeneficiaryIdentificationType>(
     GetBeneficiaryIdentification,
     {
       variables: {
@@ -123,6 +124,10 @@ const BeneficiaryIdentification = () => {
       excludeCertainCharacteristicsCriteria ?? '',
     excludeCertainCharacteristicsNote: excludeCertainCharacteristicsNote ?? ''
   };
+
+  if ((!loading && error) || (!loading && !data?.modelPlan)) {
+    return <NotFoundPartial />;
+  }
 
   return (
     <>
