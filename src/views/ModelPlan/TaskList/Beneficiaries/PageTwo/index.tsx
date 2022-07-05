@@ -96,7 +96,7 @@ const BeneficiariesPageTwo = () => {
               `/models/${modelID}/task-list/beneficiaries/page-three`
             );
           } else if (redirect === 'back') {
-            history.push(`/models/${modelID}/task-list/beneficiaries/page-one`);
+            history.push(`/models/${modelID}/task-list/beneficiaries`);
           } else if (redirect === 'task-list') {
             history.push(`/models/${modelID}/task-list/`);
           }
