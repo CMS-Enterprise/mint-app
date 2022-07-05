@@ -28,11 +28,11 @@ import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import MultiSelect from 'components/shared/MultiSelect';
 import TextField from 'components/shared/TextField';
-import GetModelPlanBeneficiaries from 'queries/GetModelPlanBeneficiaries';
+import getPeopleImpacted from 'queries/Beneficiaries/getPeopleImpacted';
 import {
-  GetModelPlanBeneficiaries as GetModelPlanBeneficiariesType,
-  GetModelPlanBeneficiaries_modelPlan_beneficiaries as ModelPlanBeneficiariesFormType
-} from 'queries/types/GetModelPlanBeneficiaries';
+  GetPeopleImpacted as PeopleImpactedType,
+  GetPeopleImpacted_modelPlan_beneficiaries as PeopleImpactedFormType
+} from 'queries/Beneficiaries/types/GetPeopleImpacted';
 import { UpdateModelPlanBeneficiariesVariables } from 'queries/types/UpdateModelPlanBeneficiaries';
 import UpdateModelPlanBeneficiaries from 'queries/UpdateModelPlanBeneficiaries';
 import {
@@ -45,17 +45,18 @@ import {
   translateConfidenceType,
   translateSelectionMethodType
 } from 'utils/modelPlan';
+import { NotFoundPartial } from 'views/NotFound';
 
 const PeopleImpact = () => {
   const { t } = useTranslation('beneficiaries');
   const { t: h } = useTranslation('draftModelPlan');
   const { modelID } = useParams<{ modelID: string }>();
 
-  const formikRef = useRef<FormikProps<ModelPlanBeneficiariesFormType>>(null);
+  const formikRef = useRef<FormikProps<PeopleImpactedFormType>>(null);
   const history = useHistory();
 
-  const { data } = useQuery<GetModelPlanBeneficiariesType>(
-    GetModelPlanBeneficiaries,
+  const { data, loading, error } = useQuery<PeopleImpactedType>(
+    getPeopleImpacted,
     {
       variables: {
         id: modelID
@@ -71,7 +72,7 @@ const PeopleImpact = () => {
     beneficiarySelectionMethod,
     beneficiarySelectionNote,
     beneficiarySelectionOther
-  } = data?.modelPlan?.beneficiaries || ({} as ModelPlanBeneficiariesFormType);
+  } = data?.modelPlan?.beneficiaries || ({} as PeopleImpactedFormType);
 
   const modelName = data?.modelPlan?.modelName || '';
 
@@ -80,7 +81,7 @@ const PeopleImpact = () => {
   );
 
   const handleFormSubmit = (
-    formikValues: ModelPlanBeneficiariesFormType,
+    formikValues: PeopleImpactedFormType,
     redirect?: 'next' | 'back' | 'task-list'
   ) => {
     update({
@@ -114,14 +115,20 @@ const PeopleImpact = () => {
       label: translateSelectionMethodType(key)
     }));
 
-  const initialValues = {
+  const initialValues: PeopleImpactedFormType = {
+    __typename: 'PlanBeneficiaries',
+    id: id ?? '',
     numberPeopleImpacted: numberPeopleImpacted ?? 0,
     estimateConfidence: estimateConfidence ?? null,
     confidenceNote: confidenceNote ?? '',
     beneficiarySelectionMethod: beneficiarySelectionMethod ?? '',
     beneficiarySelectionNote: beneficiarySelectionNote ?? '',
     beneficiarySelectionOther: beneficiarySelectionOther ?? ''
-  } as ModelPlanBeneficiariesFormType;
+  };
+
+  if ((!loading && error) || (!loading && !data?.modelPlan)) {
+    return <NotFoundPartial />;
+  }
 
   return (
     <>
@@ -164,7 +171,7 @@ const PeopleImpact = () => {
         enableReinitialize
         innerRef={formikRef}
       >
-        {(formikProps: FormikProps<ModelPlanBeneficiariesFormType>) => {
+        {(formikProps: FormikProps<PeopleImpactedFormType>) => {
           const {
             errors,
             handleSubmit,
