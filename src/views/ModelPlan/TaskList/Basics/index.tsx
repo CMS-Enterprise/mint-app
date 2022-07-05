@@ -107,7 +107,7 @@ const BasicsContent = () => {
   const initialValues: ModelPlanInfoFormType = {
     __typename: 'ModelPlan',
     id: id ?? '',
-    modelName: modelName as string,
+    modelName: modelName ?? '',
     modelCategory: modelCategory ?? null,
     cmsCenters: cmsCenters ?? [],
     cmmiGroups: cmmiGroups ?? [],
@@ -228,7 +228,6 @@ const BasicsContent = () => {
                     id="plan-basics-model-name"
                     maxLength={50}
                     name="modelName"
-                    defaultValue={modelName}
                   />
                 </FieldGroup>
 
