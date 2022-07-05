@@ -1,8 +1,9 @@
 package models
 
 import (
-	"github.com/lib/pq"
 	"time"
+
+	"github.com/lib/pq"
 
 	"github.com/google/uuid"
 )
@@ -241,7 +242,7 @@ func (p PlanPayments) GetModifiedBy() *string {
 }
 
 // CalcStatus calculates the status of the Plan Payments and sets the Status field
-func (p PlanPayments) CalcStatus() error {
+func (p *PlanPayments) CalcStatus() error {
 	status, err := GenericallyCalculateStatus(p)
 	if err != nil {
 		return err
