@@ -25,12 +25,6 @@ describe('Model Plan Beneficiaries', () => {
     await waitFor(() => {
       expect(screen.getByTestId('beneficiaries-form')).toBeInTheDocument();
     });
-
-    // await waitFor(() => {
-    //   expect(screen.getByTestId('beneficiaries-other')).toHaveValue(
-    //     'Other Note'
-    //   );
-    // });
   });
 
   it('matches snapshot', async () => {
@@ -48,11 +42,6 @@ describe('Model Plan Beneficiaries', () => {
       </MemoryRouter>
     );
 
-    // await waitFor(() => {
-    //   expect(screen.getByTestId('beneficiaries-other')).toHaveValue(
-    //     'Other Note'
-    //   );
-    // });
     expect(asFragment()).toMatchSnapshot();
   });
 });

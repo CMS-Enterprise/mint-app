@@ -243,7 +243,7 @@ const BeneficiariesPageOne = () => {
                               error={flatErrors.beneficiariesOther}
                               id="beneficiaries-other"
                               data-testid="beneficiaries-other"
-                              name="participantsOther"
+                              name="beneficiariesOther"
                             />
                           </FieldGroup>
                         )}
