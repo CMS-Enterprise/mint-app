@@ -1,10 +1,10 @@
-CREATE TYPE FUNDING_SOURCE AS ENUM (
+CREATE TYPE PP_FUNDING_SOURCE AS ENUM (
     'PATIENT_PROTECTION_AFFORDABLE_CARE_ACT',
     'TRUST_FUND',
     'OTHER'
 );
 
-CREATE TYPE PAY_RECIPIENT AS ENUM (
+CREATE TYPE PP_PAY_RECIPIENT AS ENUM (
     'PROVIDERS',
     'BENEFICIARIES',
     'PARTICIPANTS',
@@ -12,20 +12,20 @@ CREATE TYPE PAY_RECIPIENT AS ENUM (
     'OTHER'
 );
 
-CREATE TYPE PAY_TYPE AS ENUM (
+CREATE TYPE PP_PAY_TYPE AS ENUM (
     'CLAIMS_BASED_PAYMENTS',
     'NON_CLAIMS_BASED_PAYMENTS',
     'GRANTS'
 );
 
-CREATE TYPE CLAIMS_BASED_PAY_TYPE AS ENUM (
+CREATE TYPE PP_CLAIMS_BASED_PAY_TYPE AS ENUM (
     'ADJUSTMENTS_TO_FFS_PAYMENTS',
     'CARE_MANAGEMENT_HOME_VISITS',
     'SNF_CLAIMS_WITHOUT_3DAY_HOSPITAL_ADMISSIONS',
     'TELEHEALTH_SERVICES_NOT_TRADITIONAL_MEDICARE'
 );
 
-CREATE TYPE NON_CLAIM_BASED_PAYMENT_TYPE AS ENUM (
+CREATE TYPE PP_NON_CLAIM_BASED_PAYMENT_TYPE AS ENUM (
     'ADVANCED_PAYMENT',
     'BUNDLED_EPISODE_OF_CARE',
     'CAPITATION_POPULATION_BASED_FULL',
@@ -39,13 +39,13 @@ CREATE TYPE NON_CLAIM_BASED_PAYMENT_TYPE AS ENUM (
     'OTHER'
 );
 
-CREATE TYPE COMPLEXITY_CALCULATION_LEVEL_TYPE AS ENUM (
+CREATE TYPE PP_COMPLEXITY_CALCULATION_LEVEL_TYPE AS ENUM (
     'LOW',
     'MIDDLE',
     'HIGH'
 );
 
-CREATE TYPE ANTICIPATED_PAYMENT_FREQUENCY_TYPE AS ENUM (
+CREATE TYPE PP_ANTICIPATED_PAYMENT_FREQUENCY_TYPE AS ENUM (
     'ANNUALLY',
     'BIANNUALLY',
     'QUARTERLY',
@@ -61,22 +61,22 @@ CREATE TABLE plan_payments (
     model_plan_id UUID NOT NULL UNIQUE, --foreign key to model plan
 
     --page 1
-    funding_source FUNDING_SOURCE[],
+    funding_source PP_FUNDING_SOURCE[],
     funding_source_trust_fund_description ZERO_STRING,
     funding_source_other_description ZERO_STRING,
     funding_source_note ZERO_STRING,
-    funding_source_r FUNDING_SOURCE[],
+    funding_source_r PP_FUNDING_SOURCE[],
     funding_source_r_trust_fund_description ZERO_STRING,
     funding_source_r_other_description ZERO_STRING,
     funding_source_r_note ZERO_STRING,
-    pay_recipients PAY_RECIPIENT[],
+    pay_recipients PP_PAY_RECIPIENT[],
     pay_recipients_other_specification ZERO_STRING,
     pay_recipients_note ZERO_STRING,
-    pay_type PAY_TYPE,
+    pay_type PP_PAY_TYPE,
     pay_type_note ZERO_STRING,
 
     --page 2
-    pay_claims CLAIMS_BASED_PAY_TYPE[],
+    pay_claims PP_CLAIMS_BASED_PAY_TYPE[],
     pay_claims_other_description ZERO_STRING,
     should_any_providers_excluded_ffs_systems BOOLEAN,
     should_any_providers_excluded_ffs_systems_note ZERO_STRING,
@@ -103,7 +103,7 @@ CREATE TABLE plan_payments (
     waive_beneficiary_cost_sharing_note ZERO_STRING,
 
     --page 5
-    non_claims_payments NON_CLAIM_BASED_PAYMENT_TYPE[],
+    non_claims_payments PP_NON_CLAIM_BASED_PAYMENT_TYPE[],
     non_claims_payments_other_description ZERO_STRING,
     payment_calculation_owner ZERO_STRING,
     number_payments_per_pay_cycle ZERO_STRING,
@@ -115,12 +115,12 @@ CREATE TABLE plan_payments (
     funding_structure_description ZERO_STRING,
 
     --page 6
-    expected_calculation_complexity_level COMPLEXITY_CALCULATION_LEVEL_TYPE,
+    expected_calculation_complexity_level PP_COMPLEXITY_CALCULATION_LEVEL_TYPE,
     expected_calculation_complexity_level_note ZERO_STRING,
     can_participants_select_between_payment_mechanisms BOOL,
     can_participants_select_between_payment_mechanisms_description ZERO_STRING,
     can_participants_select_between_payment_mechanisms_note ZERO_STRING,
-    anticipated_payment_frequency ANTICIPATED_PAYMENT_FREQUENCY_TYPE,
+    anticipated_payment_frequency PP_ANTICIPATED_PAYMENT_FREQUENCY_TYPE,
     anticipated_payment_frequency_other_description ZERO_STRING,
     anticipated_payment_frequency_notes ZERO_STRING,
 
