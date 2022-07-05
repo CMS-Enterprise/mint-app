@@ -18,7 +18,7 @@ export const beneficiaryMockData: ModelPlanBeneficiariesType = {
   beneficiariesOther: 'Other Note',
   beneficiariesNote: '',
   treatDualElligibleDifferent: 'YES' as TriStateAnswer,
-  treatDualElligibleDifferentHow: '',
+  treatDualElligibleDifferentHow: 'Differ text',
   treatDualElligibleDifferentNote: '',
   excludeCertainCharacteristics: 'YES' as TriStateAnswer,
   excludeCertainCharacteristicsCriteria: '',
