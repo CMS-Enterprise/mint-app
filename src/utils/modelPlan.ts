@@ -297,6 +297,26 @@ export const translateBeneficiariesType = (type: string) => {
       return '';
   }
 };
+
+export const translateSelectionMethodType = (type: string) => {
+  switch (type) {
+    case 'HISTORICAL':
+      return i18next.t('beneficiaries:selectionMethod.historical');
+    case 'PROSPECTIVE':
+      return i18next.t('beneficiaries:selectionMethod.prospective');
+    case 'PROVIDER_SIGN_UP':
+      return i18next.t('beneficiaries:selectionMethod.retrospective');
+    case 'RETROSPECTIVE':
+      return i18next.t('beneficiaries:selectionMethod.voluntary');
+    case 'VOLUNTARY':
+      return i18next.t('beneficiaries:selectionMethod.providerSignUp');
+    case 'OTHER':
+      return i18next.t('beneficiaries:selectionMethod.other');
+    default:
+      return '';
+  }
+};
+
 export const translateConfidenceType = (type: string) => {
   switch (type) {
     case 'NOT_AT_ALL':

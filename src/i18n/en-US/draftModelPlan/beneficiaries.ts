@@ -36,6 +36,14 @@ const beneficiaries = {
   },
   chooseBeneficiaries:
     'How will you choose beneficiaries? Select all that apply.',
+  selectionMethod: {
+    historical: 'Historical claims',
+    prospective: 'Assign/capture - prospective',
+    retrospective: 'Assign/capture - retrospective',
+    voluntary: 'Voluntary alignment',
+    providerSignUp: 'Beneficiary will sign up through their provider',
+    other: 'Other'
+  },
   beneficiaryFrequency: 'How frequently are beneficiaries chosen?',
   beneficiaryFrequencyOptions: {
     annually: 'Annually',
