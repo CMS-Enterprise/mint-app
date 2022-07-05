@@ -15,6 +15,7 @@ const beneficiaries = {
     other: 'Other'
   },
   selectedGroup: 'Selected groups',
+  selectedMethods: 'Selected methods',
   beneficiariesNA:
     'If you will not have beneficiaries, you can skip the rest of the questions in this section. Feel free to add any additional notes or details that would be helpful to others.',
   dualEligibility:
@@ -42,8 +43,11 @@ const beneficiaries = {
     retrospective: 'Assign/capture - retrospective',
     voluntary: 'Voluntary alignment',
     providerSignUp: 'Beneficiary will sign up through their provider',
-    other: 'Other'
+    other: 'Other',
+    na: 'Not applicable'
   },
+  selectionMethodOther:
+    'Please describe the other method for choosing beneficiaries.',
   beneficiaryFrequency: 'How frequently are beneficiaries chosen?',
   beneficiaryFrequencyOptions: {
     annually: 'Annually',
