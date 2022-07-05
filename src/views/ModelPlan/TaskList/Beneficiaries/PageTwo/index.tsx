@@ -81,7 +81,7 @@ const BeneficiariesPageTwo = () => {
 
   const handleFormSubmit = (
     formikValues: ModelPlanBeneficiariesFormType,
-    redirect?: 'next' | 'back'
+    redirect?: 'next' | 'back' | 'task-list'
   ) => {
     update({
       variables: {
@@ -96,6 +96,8 @@ const BeneficiariesPageTwo = () => {
               `/models/${modelID}/task-list/beneficiaries/page-three`
             );
           } else if (redirect === 'back') {
+            history.push(`/models/${modelID}/task-list/beneficiaries/page-one`);
+          } else if (redirect === 'task-list') {
             history.push(`/models/${modelID}/task-list/`);
           }
         }
@@ -364,7 +366,7 @@ const BeneficiariesPageTwo = () => {
                       <Button
                         type="button"
                         className="usa-button usa-button--unstyled"
-                        onClick={() => handleFormSubmit(values, 'back')}
+                        onClick={() => handleFormSubmit(values, 'task-list')}
                       >
                         <IconArrowBack className="margin-right-1" aria-hidden />
                         {h('saveAndReturn')}

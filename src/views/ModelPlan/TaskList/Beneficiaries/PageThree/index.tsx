@@ -76,7 +76,7 @@ const BeneficiariesPageThree = () => {
 
   const handleFormSubmit = (
     formikValues: ModelPlanBeneficiariesFormType,
-    redirect?: 'next' | 'back'
+    redirect?: 'task-list' | 'back'
   ) => {
     update({
       variables: {
@@ -86,11 +86,9 @@ const BeneficiariesPageThree = () => {
     })
       .then(response => {
         if (!response?.errors) {
-          if (redirect === 'next') {
-            history.push(
-              `/models/${modelID}/task-list/beneficiaries/page-three`
-            );
-          } else if (redirect === 'back') {
+          if (redirect === 'back') {
+            history.push(`/models/${modelID}/task-list/beneficiaries/page-two`);
+          } else if (redirect === 'task-list') {
             history.push(`/models/${modelID}/task-list/`);
           }
         }
@@ -146,7 +144,7 @@ const BeneficiariesPageThree = () => {
       <Formik
         initialValues={initialValues}
         onSubmit={values => {
-          handleFormSubmit(values, 'next');
+          handleFormSubmit(values, 'task-list');
         }}
         enableReinitialize
         innerRef={formikRef}
