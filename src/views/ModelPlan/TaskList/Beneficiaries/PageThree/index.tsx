@@ -342,8 +342,7 @@ const BeneficiariesPageThree = () => {
                   </Grid>
                 </Grid>
               </GridContainer>
-              {/* TODO: Comment to stop obnoxious errors */}
-              {/* {id && (
+              {id && (
                 <AutoSave
                   values={values}
                   onSave={() => {
@@ -351,7 +350,7 @@ const BeneficiariesPageThree = () => {
                   }}
                   debounceDelay={3000}
                 />
-              )} */}
+              )}
             </>
           );
         }}
