@@ -234,7 +234,7 @@ const Frequency = () => {
                                     key && (
                                     <div className="margin-left-4 margin-top-1">
                                       <Label
-                                        htmlFor="beneficiaries-beneficiarySelectionFrequency-other"
+                                        htmlFor="beneficiaries-beneficiary-selection-frequency-other"
                                         className="text-normal"
                                       >
                                         {h('pleaseSpecify')}
@@ -247,7 +247,7 @@ const Frequency = () => {
                                       <Field
                                         as={TextInput}
                                         className="maxw-none"
-                                        id="beneficiaries-beneficiarySelectionFrequency-other"
+                                        id="beneficiaries-beneficiary-selection-frequency-other"
                                         maxLength={50}
                                         name="beneficiarySelectionFrequencyOther"
                                       />
