@@ -382,6 +382,19 @@ export interface ModelPlanChanges {
 }
 
 /**
+ * PlanBasicsChanges represents the possible changes you can make to a Plan Basics object when updating it.
+ * Fields explicitly set with NULL will be unset, and omitted fields will be left unchanged.
+ * https: // gqlgen.com/reference/changesets/
+ */
+export interface PlanBasicsChanges {
+  modelType?: ModelType | null;
+  problem?: string | null;
+  goal?: string | null;
+  testInterventions?: string | null;
+  note?: string | null;
+}
+
+/**
  * PlanCollaboratorCreateInput represents the data required to create a collaborator on a plan
  */
 export interface PlanCollaboratorCreateInput {
@@ -492,105 +505,23 @@ export interface PlanGeneralCharacteristicsChanges {
 }
 
 /**
- * PlanOpsEvalAndLearningChanges represents the possible changes you can make to a
- * ops, eval and learning object when updating it.
+ * PlanMilestoneChanges represents the possible changes you can make to a Plan Milestones object when updating it.
  * Fields explicitly set with NULL will be unset, and omitted fields will be left unchanged.
  * https: // gqlgen.com/reference/changesets/
  */
-export interface PlanOpsEvalAndLearningChanges {
-  agencyOrStateHelp?: AgencyOrStateHelpType[] | null;
-  agencyOrStateHelpOther?: string | null;
-  agencyOrStateHelpNote?: string | null;
-  stakeholders?: StakeholdersType[] | null;
-  stakeholdersOther?: string | null;
-  stakeholdersNote?: string | null;
-  helpdeskUse?: boolean | null;
-  helpdeskUseNote?: string | null;
-  contractorSupport?: ContractorSupportType[] | null;
-  contractorSupportOther?: string | null;
-  contractorSupportHow?: string | null;
-  contractorSupportNote?: string | null;
-  iddocSupport?: boolean | null;
-  iddocSupportNote?: string | null;
-  technicalContactsIdentified?: boolean | null;
-  technicalContactsIdentifiedDetail?: string | null;
-  technicalContactsIdentifiedNote?: string | null;
-  captureParticipantInfo?: boolean | null;
-  captureParticipantInfoNote?: string | null;
-  icdOwner?: string | null;
-  draftIcdDueDate?: Time | null;
-  icdNote?: string | null;
-  uatNeeds?: string | null;
-  stcNeeds?: string | null;
-  testingTimelines?: string | null;
-  testingNote?: string | null;
-  dataMonitoringFileTypes?: MonitoringFileType[] | null;
-  dataMonitoringFileOther?: string | null;
-  dataResponseType?: string | null;
-  dataResponseFileFrequency?: string | null;
-  dataFullTimeOrIncremental?: DataFullTimeOrIncrementalType | null;
-  eftSetUp?: boolean | null;
-  unsolicitedAdjustmentsIncluded?: boolean | null;
-  dataFlowDiagramsNeeded?: boolean | null;
-  produceBenefitEnhancementFiles?: boolean | null;
-  fileNamingConventions?: string | null;
-  dataMonitoringNote?: string | null;
-  benchmarkForPerformance?: BenchmarkForPerformanceType | null;
-  benchmarkForPerformanceNote?: string | null;
-  computePerformanceScores?: boolean | null;
-  computePerformanceScoresNote?: string | null;
-  riskAdjustPerformance?: boolean | null;
-  riskAdjustFeedback?: boolean | null;
-  riskAdjustPayments?: boolean | null;
-  riskAdjustOther?: boolean | null;
-  riskAdjustNote?: string | null;
-  appealPerformance?: boolean | null;
-  appealFeedback?: boolean | null;
-  appealPayments?: boolean | null;
-  appealOther?: boolean | null;
-  appealNote?: string | null;
-  evaluationApproaches?: EvaluationApproachType[] | null;
-  evaluationApproachOther?: string | null;
-  evalutaionApproachNote?: string | null;
-  ccmInvolvment?: CcmInvolvmentType[] | null;
-  ccmInvolvmentOther?: string | null;
-  ccmInvolvmentNote?: string | null;
-  dataNeededForMonitoring?: DataForMonitoringType[] | null;
-  dataNeededForMonitoringOther?: string | null;
-  dataNeededForMonitoringNote?: string | null;
-  dataToSendParticicipants?: DataToSendParticipantsType[] | null;
-  dataToSendParticicipantsOther?: string | null;
-  dataToSendParticicipantsNote?: string | null;
-  shareCclfData?: boolean | null;
-  shareCclfDataNote?: string | null;
-  sendFilesBetweenCcw?: boolean | null;
-  sendFilesBetweenCcwNote?: string | null;
-  appToSendFilesToKnown?: boolean | null;
-  appToSendFilesToWhich?: string | null;
-  appToSendFilesToNote?: string | null;
-  useCcwForFileDistribiutionToParticipants?: boolean | null;
-  useCcwForFileDistribiutionToParticipantsNote?: string | null;
-  developNewQualityMeasures?: boolean | null;
-  developNewQualityMeasuresNote?: string | null;
-  qualityPerformanceImpactsPayment?: boolean | null;
-  qualityPerformanceImpactsPaymentNote?: string | null;
-  dataSharingStarts?: DataStartsType | null;
-  dataSharingStartsOther?: string | null;
-  dataSharingFrequency?: DataFrequencyType[] | null;
-  dataSharingFrequencyOther?: string | null;
-  dataSharingStartsNote?: string | null;
-  dataCollectionStarts?: DataStartsType | null;
-  dataCollectionStartsOther?: string | null;
-  dataCollectionFrequency?: DataFrequencyType[] | null;
-  dataCollectionFrequencyOther?: string | null;
-  dataCollectionFrequencyNote?: string | null;
-  qualityReportingStarts?: DataStartsType | null;
-  qualityReportingStartsOther?: string | null;
-  qualityReportingStartsNote?: string | null;
-  modelLearningSystems?: ModelLearningSystemType[] | null;
-  modelLearningSystemsOther?: string | null;
-  modelLearningSystemsNote?: string | null;
-  anticipatedChallenges?: string | null;
+export interface PlanMilestoneChanges {
+  completeICIP?: Time | null;
+  clearanceStarts?: Time | null;
+  clearanceEnds?: Time | null;
+  announced?: Time | null;
+  applicationsStart?: Time | null;
+  applicationsEnd?: Time | null;
+  performancePeriodStarts?: Time | null;
+  performancePeriodEnds?: Time | null;
+  wrapUpEnds?: Time | null;
+  highLevelNote?: string | null;
+  phasedIn?: boolean | null;
+  phasedInNote?: string | null;
 }
 
 /**

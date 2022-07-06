@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { PlanDiscussionChanges, DiscussionStatus } from "./../../types/graphql-global-types";
+import { PlanDiscussionChanges, DiscussionStatus } from "./../../../types/graphql-global-types";
 
 // ====================================================
 // GraphQL mutation operation: UpdateModelPlanDiscussion

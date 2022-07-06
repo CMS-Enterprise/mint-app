@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { DiscussionStatus } from "./../../types/graphql-global-types";
+import { DiscussionStatus } from "./../../../types/graphql-global-types";
 
 // ====================================================
 // GraphQL query operation: GetModelPlanDiscussions
