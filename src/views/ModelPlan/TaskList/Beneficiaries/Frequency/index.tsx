@@ -188,7 +188,7 @@ const Frequency = () => {
                 </ErrorAlert>
               )}
               <GridContainer className="padding-left-0 padding-right-0">
-                <Grid row gap className="beneficiaries__info">
+                <Grid row gap>
                   <Grid desktop={{ col: 6 }}>
                     <Form
                       className="margin-top-6"
@@ -301,7 +301,7 @@ const Frequency = () => {
                         error={!!flatErrors.precedenceRules}
                       >
                         <Label
-                          htmlFor="beneficiaries-precedenceRules"
+                          htmlFor="beneficiaries-precedence-rules"
                           className="maxw-none"
                         >
                           {t('benficiaryPrecedence')}
@@ -316,8 +316,8 @@ const Frequency = () => {
                           as={TextAreaField}
                           className="height-15"
                           error={flatErrors.precedenceRules}
-                          id="beneficiaries-precedenceRules"
-                          data-testid="beneficiaries-precedenceRules"
+                          id="beneficiaries-precedence-rules"
+                          data-testid="beneficiaries-precedence-rules"
                           name="precedenceRules"
                         />
                       </FieldGroup>
