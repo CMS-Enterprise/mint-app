@@ -31,7 +31,8 @@ import TextField from 'components/shared/TextField';
 import GetBeneficiaryIdentification from 'queries/Beneficiaries/getBeneficiaryIndentification';
 import {
   GetBeneficiaryIdentification as BeneficiaryIdentificationType,
-  GetBeneficiaryIdentification_modelPlan_beneficiaries as BeneficiaryIdentificationFormType
+  GetBeneficiaryIdentification_modelPlan_beneficiaries as BeneficiaryIdentificationFormType,
+  GetBeneficiaryIdentificationVariables
 } from 'queries/Beneficiaries/types/GetBeneficiaryIdentification';
 import { UpdateModelPlanBeneficiariesVariables } from 'queries/Beneficiaries/types/UpdateModelPlanBeneficiaries';
 import UpdateModelPlanBeneficiaries from 'queries/Beneficiaries/UpdateModelPlanBeneficiaries';
@@ -50,14 +51,14 @@ const BeneficiaryIdentification = () => {
   );
   const history = useHistory();
 
-  const { data, loading, error } = useQuery<BeneficiaryIdentificationType>(
-    GetBeneficiaryIdentification,
-    {
-      variables: {
-        id: modelID
-      }
+  const { data, loading, error } = useQuery<
+    BeneficiaryIdentificationType,
+    GetBeneficiaryIdentificationVariables
+  >(GetBeneficiaryIdentification, {
+    variables: {
+      id: modelID
     }
-  );
+  });
 
   const {
     id,

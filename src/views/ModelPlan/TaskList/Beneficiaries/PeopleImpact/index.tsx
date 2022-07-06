@@ -31,7 +31,8 @@ import TextField from 'components/shared/TextField';
 import getPeopleImpacted from 'queries/Beneficiaries/getPeopleImpacted';
 import {
   GetPeopleImpacted as PeopleImpactedType,
-  GetPeopleImpacted_modelPlan_beneficiaries as PeopleImpactedFormType
+  GetPeopleImpacted_modelPlan_beneficiaries as PeopleImpactedFormType,
+  GetPeopleImpactedVariables
 } from 'queries/Beneficiaries/types/GetPeopleImpacted';
 import { UpdateModelPlanBeneficiariesVariables } from 'queries/Beneficiaries/types/UpdateModelPlanBeneficiaries';
 import UpdateModelPlanBeneficiaries from 'queries/Beneficiaries/UpdateModelPlanBeneficiaries';
@@ -55,14 +56,14 @@ const PeopleImpact = () => {
   const formikRef = useRef<FormikProps<PeopleImpactedFormType>>(null);
   const history = useHistory();
 
-  const { data, loading, error } = useQuery<PeopleImpactedType>(
-    getPeopleImpacted,
-    {
-      variables: {
-        id: modelID
-      }
+  const { data, loading, error } = useQuery<
+    PeopleImpactedType,
+    GetPeopleImpactedVariables
+  >(getPeopleImpacted, {
+    variables: {
+      id: modelID
     }
-  );
+  });
 
   const {
     id,

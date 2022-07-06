@@ -29,7 +29,8 @@ import TextAreaField from 'components/shared/TextAreaField';
 import getFrequency from 'queries/Beneficiaries/getFrequency';
 import {
   GetFrequency as BeneficiaryFrequencyType,
-  GetFrequency_modelPlan_beneficiaries as FrequencyFormType
+  GetFrequency_modelPlan_beneficiaries as FrequencyFormType,
+  GetFrequencyVariables
 } from 'queries/Beneficiaries/types/GetFrequency';
 import { UpdateModelPlanBeneficiariesVariables } from 'queries/Beneficiaries/types/UpdateModelPlanBeneficiaries';
 import UpdateModelPlanBeneficiaries from 'queries/Beneficiaries/UpdateModelPlanBeneficiaries';
@@ -50,14 +51,14 @@ const Frequency = () => {
   const formikRef = useRef<FormikProps<FrequencyFormType>>(null);
   const history = useHistory();
 
-  const { data, loading, error } = useQuery<BeneficiaryFrequencyType>(
-    getFrequency,
-    {
-      variables: {
-        id: modelID
-      }
+  const { data, loading, error } = useQuery<
+    BeneficiaryFrequencyType,
+    GetFrequencyVariables
+  >(getFrequency, {
+    variables: {
+      id: modelID
     }
-  );
+  });
 
   const {
     id,
