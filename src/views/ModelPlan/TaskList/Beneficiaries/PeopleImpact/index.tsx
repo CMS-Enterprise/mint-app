@@ -96,7 +96,7 @@ const PeopleImpact = () => {
         if (!response?.errors) {
           if (redirect === 'next') {
             history.push(
-              `/models/${modelID}/task-list/beneficiaries/people-impact`
+              `/models/${modelID}/task-list/beneficiaries/beneficiary-frequency`
             );
           } else if (redirect === 'back') {
             history.push(`/models/${modelID}/task-list/beneficiaries`);
@@ -334,7 +334,7 @@ const PeopleImpact = () => {
                             error={!!flatErrors.beneficiarySelectionOther}
                           >
                             <Label
-                              htmlFor="beneficiaries-chooseBeneficiaries-other"
+                              htmlFor="beneficiaries-choose-beneficiaries-other"
                               className="text-normal"
                             >
                               {t('selectionMethodOther')}
@@ -345,9 +345,9 @@ const PeopleImpact = () => {
                             <Field
                               as={TextField}
                               error={flatErrors.beneficiarySelectionOther}
-                              id="beneficiaries-chooseBeneficiaries-other"
-                              data-testid="beneficiaries-chooseBeneficiaries-other"
-                              name="beneficiaries-chooseBeneficiaries-other"
+                              id="beneficiaries-choose-beneficiaries-other"
+                              data-testid="beneficiaries-choose-beneficiaries-other"
+                              name="beneficiaries-choose-beneficiaries-other"
                             />
                           </FieldGroup>
                         )}

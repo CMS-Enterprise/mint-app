@@ -12,10 +12,10 @@ import Frequency from './index';
 const mockData: BeneficiaryFrequencyType = {
   __typename: 'PlanBeneficiaries',
   id: '123',
-  beneficiarySelectionFrequency: 'ANNUALLY' as FrequencyType,
-  beneficiarySelectionFrequencyNote: '',
+  beneficiarySelectionFrequency: FrequencyType.ANNUALLY,
+  beneficiarySelectionFrequencyNote: 'Very often',
   beneficiarySelectionFrequencyOther: '',
-  beneficiaryOverlap: 'YES_NO_ISSUES' as OverlapType,
+  beneficiaryOverlap: OverlapType.YES_NO_ISSUES,
   beneficiaryOverlapNote: '',
   precedenceRules: ''
 };
@@ -58,6 +58,14 @@ describe('Model Plan Beneficiaries', () => {
       expect(
         screen.getByTestId('beneficiaries-frequency-form')
       ).toBeInTheDocument();
+    });
+
+    await waitFor(() => {
+      expect(
+        screen.getByTestId(
+          'beneficiaries-beneficiary-selection-frequency-other'
+        )
+      ).toHaveValue('Very often');
     });
   });
 

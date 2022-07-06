@@ -16,11 +16,14 @@ const mockData: PeopleImpactType = {
   __typename: 'PlanBeneficiaries',
   id: '123',
   numberPeopleImpacted: 100,
-  estimateConfidence: 'COMPLETELY' as ConfidenceType,
+  estimateConfidence: ConfidenceType.COMPLETELY,
   confidenceNote: 'String',
   beneficiarySelectionNote: 'String',
-  beneficiarySelectionOther: 'String',
-  beneficiarySelectionMethod: ['HISTORICAL' as SelectionMethodType]
+  beneficiarySelectionOther: 'Selection Method Other',
+  beneficiarySelectionMethod: [
+    SelectionMethodType.HISTORICAL,
+    SelectionMethodType.OTHER
+  ]
 };
 
 const beneficiaryMock = [
@@ -61,6 +64,12 @@ describe('Model Plan Beneficiaries', () => {
       expect(
         screen.getByTestId('beneficiaries-people-impact-form')
       ).toBeInTheDocument();
+    });
+
+    await waitFor(() => {
+      expect(
+        screen.getByTestId('beneficiaries-choose-beneficiaries-other')
+      ).toHaveValue('Selection Method Other');
     });
   });
 
