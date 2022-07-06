@@ -533,6 +533,391 @@ export const translateOverlapType = (type: string) => {
   }
 };
 
+export const translateAgencyOrStateHelpType = (type: string) => {
+  switch (type) {
+    case 'YES_STATE':
+      return i18next.t(
+        'operationsEvaluationAndLearning:anotherAgencyOptions.withState'
+      );
+    case 'YES_AGENCY_IDEAS':
+      return i18next.t(
+        'operationsEvaluationAndLearning:anotherAgencyOptions.getIdeas'
+      );
+    case 'YES_AGENCY_IAA':
+      return i18next.t(
+        'operationsEvaluationAndLearning:anotherAgencyOptions.getSupport'
+      );
+    case 'NO':
+      return i18next.t(
+        'operationsEvaluationAndLearning:anotherAgencyOptions.no'
+      );
+    case 'OTHER':
+      return i18next.t(
+        'operationsEvaluationAndLearning:anotherAgencyOptions.other'
+      );
+    default:
+      return '';
+  }
+};
+
+export const translateStakeholdersType = (type: string) => {
+  switch (type) {
+    case 'BENEFICIARIES':
+      return i18next.t(
+        'operationsEvaluationAndLearning:stakeholdersOptions.beneficiaries'
+      );
+    case 'COMMUNITY_ORGANIZATIONS':
+      return i18next.t(
+        'operationsEvaluationAndLearning:stakeholdersOptions.communityOrganizations'
+      );
+    case 'PARTICIPANTS':
+      return i18next.t(
+        'operationsEvaluationAndLearning:stakeholdersOptions.participants'
+      );
+    case 'PROFESSIONAL_ORGANIZATIONS':
+      return i18next.t(
+        'operationsEvaluationAndLearning:stakeholdersOptions.professionalOrganizations'
+      );
+    case 'PROVIDERS':
+      return i18next.t(
+        'operationsEvaluationAndLearning:stakeholdersOptions.providers'
+      );
+    case 'STATES':
+      return i18next.t(
+        'operationsEvaluationAndLearning:stakeholdersOptions.states'
+      );
+    case 'OTHER':
+      return i18next.t(
+        'operationsEvaluationAndLearning:stakeholdersOptions.other'
+      );
+    default:
+      return '';
+  }
+};
+
+export const translateContractorSupportType = (type: string) => {
+  switch (type) {
+    case 'ONE':
+      return i18next.t(
+        'operationsEvaluationAndLearning:whatContractorsOptions.one'
+      );
+    case 'MULTIPLE':
+      return i18next.t(
+        'operationsEvaluationAndLearning:whatContractorsOptions.separate'
+      );
+    case 'NONE':
+      return i18next.t(
+        'operationsEvaluationAndLearning:whatContractorsOptions.noContractor'
+      );
+    case 'OTHER':
+      return i18next.t(
+        'operationsEvaluationAndLearning:whatContractorsOptions.other'
+      );
+    default:
+      return '';
+  }
+};
+
+export const translateMonitoringFileType = (type: string) => {
+  switch (type) {
+    case 'BENEFICIARY':
+      return i18next.t(
+        'operationsEvaluationAndLearning:fileTypesOptions.beneficiary'
+      );
+    case 'PROVIDER':
+      return i18next.t(
+        'operationsEvaluationAndLearning:fileTypesOptions.provider'
+      );
+    case 'PART_A':
+      return i18next.t(
+        'operationsEvaluationAndLearning:fileTypesOptions.partA'
+      );
+    case 'PART_B':
+      return i18next.t(
+        'operationsEvaluationAndLearning:fileTypesOptions.partB'
+      );
+    case 'OTHER':
+      return i18next.t(
+        'operationsEvaluationAndLearning:fileTypesOptions.other'
+      );
+    default:
+      return '';
+  }
+};
+
+export const translateDataFullTimeOrIncrementalType = (type: string) => {
+  switch (type) {
+    case 'FULL_TIME':
+      return i18next.t('operationsEvaluationAndLearning:fullTime');
+    case 'INCREMENTAL':
+      return i18next.t('operationsEvaluationAndLearning:incremental');
+    default:
+      return '';
+  }
+};
+
+export const translateBenchmarkForPerformanceType = (type: string) => {
+  switch (type) {
+    case 'YES_RECONCILE':
+      return i18next.t(
+        'operationsEvaluationAndLearning:establishBenchmarkOptions.reconcile'
+      );
+    case 'YES_NO_RECONCILE':
+      return i18next.t(
+        'operationsEvaluationAndLearning:establishBenchmarkOptions.notReconcile'
+      );
+    case 'NO':
+      return i18next.t(
+        'operationsEvaluationAndLearning:establishBenchmarkOptions.no'
+      );
+    default:
+      return '';
+  }
+};
+
+export const translateEvaluationApproachType = (type: string) => {
+  switch (type) {
+    case 'CONTROL_INTERVENTION':
+      return i18next.t(
+        'operationsEvaluationAndLearning:approachOptions.establish'
+      );
+    case 'COMPARISON_MATCH':
+      return i18next.t(
+        'operationsEvaluationAndLearning:approachOptions.identify'
+      );
+    case 'INTERRUPTED_TIME':
+      return i18next.t(
+        'operationsEvaluationAndLearning:approachOptions.interrupted'
+      );
+    case 'NON_MEDICARE_DATA':
+      return i18next.t(
+        'operationsEvaluationAndLearning:approachOptions.leverage'
+      );
+    case 'OTHER':
+      return i18next.t('operationsEvaluationAndLearning:approachOptions.other');
+    default:
+      return '';
+  }
+};
+
+export const translateCcmInvolvmentType = (type: string) => {
+  switch (type) {
+    case 'YES_EVALUATION':
+      return i18next.t('operationsEvaluationAndLearning:ccwOptions.yesEval');
+    case 'YES__IMPLEMENTATION':
+      return i18next.t('operationsEvaluationAndLearning:ccwOptions.yesImpl');
+    case 'NO':
+      return i18next.t('operationsEvaluationAndLearning:ccwOptions.no');
+    case 'OTHER':
+      return i18next.t('operationsEvaluationAndLearning:ccwOptions.other');
+    default:
+      return '';
+  }
+};
+
+export const translateDataForMonitoringType = (type: string) => {
+  switch (type) {
+    case 'SITE_VISITS':
+      return i18next.t(
+        'operationsEvaluationAndLearning:dataNeededOptions.siteVisits'
+      );
+    case 'MEDICARE_CLAIMS':
+      return i18next.t(
+        'operationsEvaluationAndLearning:dataNeededOptions.medicareClaims'
+      );
+    case 'MEDICAID_CLAIMS':
+      return i18next.t(
+        'operationsEvaluationAndLearning:dataNeededOptions.medicaidClaims'
+      );
+    case 'ENCOUNTER_DATA':
+      return i18next.t(
+        'operationsEvaluationAndLearning:dataNeededOptions.encounterData'
+      );
+    case 'NO_PAY_CLAIMS':
+      return i18next.t(
+        'operationsEvaluationAndLearning:dataNeededOptions.noPayClaims'
+      );
+    case 'QUALITY_CLAIMS_BASED_MEASURES':
+      return i18next.t(
+        'operationsEvaluationAndLearning:dataNeededOptions.qualityClaims'
+      );
+    case 'QUALITY_REPORTED_MEASURES':
+      return i18next.t(
+        'operationsEvaluationAndLearning:dataNeededOptions.qualityReported'
+      );
+    case 'CLINICAL_DATA':
+      return i18next.t(
+        'operationsEvaluationAndLearning:dataNeededOptions.clinicalData'
+      );
+    case 'NON_CLINICAL_DATA':
+      return i18next.t(
+        'operationsEvaluationAndLearning:dataNeededOptions.nonClinical'
+      );
+    case 'NON_MEDICAL_DATA':
+      return i18next.t(
+        'operationsEvaluationAndLearning:dataNeededOptions.nonMedical'
+      );
+    case 'OTHER':
+      return i18next.t(
+        'operationsEvaluationAndLearning:dataNeededOptions.other'
+      );
+    case 'NOT_PLANNING_TO_COLLECT_DATA':
+      return i18next.t(
+        'operationsEvaluationAndLearning:dataNeededOptions.notPlanningToCollect'
+      );
+    default:
+      return '';
+  }
+};
+
+export const translateDataToSendParticipantsType = (type: string) => {
+  switch (type) {
+    case 'BASELINE_HISTORICAL_DATA':
+      return i18next.t(
+        'operationsEvaluationAndLearning:dataToSendOptions.baseline'
+      );
+    case 'CLAIMS_LEVEL_DATA':
+      return i18next.t(
+        'operationsEvaluationAndLearning:dataToSendOptions.claims'
+      );
+    case 'BENEFICIARY_LEVEL_DATA':
+      return i18next.t(
+        'operationsEvaluationAndLearning:dataToSendOptions.beneficiary'
+      );
+    case 'PARTICIPANT_LEVEL_DATA':
+      return i18next.t(
+        'operationsEvaluationAndLearning:dataToSendOptions.participant'
+      );
+    case 'PROVIDER_LEVEL_DATA':
+      return i18next.t(
+        'operationsEvaluationAndLearning:dataToSendOptions.provider'
+      );
+    case 'OTHER_MIPS_DATA':
+      return i18next.t(
+        'operationsEvaluationAndLearning:dataToSendOptions.other'
+      );
+    case 'NOT_PLANNING_TO_SEND_DATA':
+      return i18next.t(
+        'operationsEvaluationAndLearning:dataToSendOptions.notPlanning'
+      );
+    default:
+      return '';
+  }
+};
+
+export const translateDataStartsType = (type: string) => {
+  switch (type) {
+    case 'DURING_APPLICATION_PERIOD':
+      return i18next.t(
+        'operationsEvaluationAndLearning:dataSharingOptions.during'
+      );
+    case 'SHORTLY_BEFORE_THE_START_DATE':
+      return i18next.t(
+        'operationsEvaluationAndLearning:dataSharingOptions.shortlyBefore'
+      );
+    case 'EARLY_IN_THE_FIRST_PERFORMANCE_YEAR':
+      return i18next.t(
+        'operationsEvaluationAndLearning:dataSharingOptions.early'
+      );
+    case 'LATER_IN_THE_FIRST_PERFORMANCE_YEAR':
+      return i18next.t(
+        'operationsEvaluationAndLearning:dataSharingOptions.later'
+      );
+    case 'IN_THE_SUBSEQUENT_PERFORMANCE_YEAR':
+      return i18next.t(
+        'operationsEvaluationAndLearning:dataSharingOptions.subsequent'
+      );
+    case 'AT_SOME_OTHER_POINT_IN_TIME':
+      return i18next.t(
+        'operationsEvaluationAndLearning:dataSharingOptions.somePoint'
+      );
+    case 'NOT_PLANNING_TO_DO_THIS':
+      return i18next.t(
+        'operationsEvaluationAndLearning:dataSharingOptions.notPlanning'
+      );
+    case 'OTHER':
+      return i18next.t(
+        'operationsEvaluationAndLearning:dataSharingOptions.other'
+      );
+    default:
+      return '';
+  }
+};
+
+export const translateDataFrequencyType = (type: string) => {
+  switch (type) {
+    case 'ANNUALLY':
+      return i18next.t(
+        'operationsEvaluationAndLearning:dataSharingHowOftenOptions.annually'
+      );
+    case 'BIANNUALLY':
+      return i18next.t(
+        'operationsEvaluationAndLearning:dataSharingHowOftenOptions.bianually'
+      );
+    case 'QUARTERLY':
+      return i18next.t(
+        'operationsEvaluationAndLearning:dataSharingHowOftenOptions.quarterly'
+      );
+    case 'MONTHLY':
+      return i18next.t(
+        'operationsEvaluationAndLearning:dataSharingHowOftenOptions.monthly'
+      );
+    case 'SEMI_MONTHLY':
+      return i18next.t(
+        'operationsEvaluationAndLearning:dataSharingHowOftenOptions.semiMonthly'
+      );
+    case 'WEEKLY':
+      return i18next.t(
+        'operationsEvaluationAndLearning:dataSharingHowOftenOptions.weekly'
+      );
+    case 'DAILY':
+      return i18next.t(
+        'operationsEvaluationAndLearning:dataSharingHowOftenOptions.daily'
+      );
+    case 'OTHER':
+      return i18next.t(
+        'operationsEvaluationAndLearning:dataSharingHowOftenOptions.other'
+      );
+    case 'NOT_PLANNING_TO_DO_THIS':
+      return i18next.t(
+        'operationsEvaluationAndLearning:dataSharingHowOftenOptions.notPlanning'
+      );
+    default:
+      return '';
+  }
+};
+
+export const translateModelLearningSystemType = (type: string) => {
+  switch (type) {
+    case 'LEARNING_CONTRACTOR':
+      return i18next.t(
+        'operationsEvaluationAndLearning:learningSystemOptions.connector'
+      );
+    case 'IT_PLATFORM_CONNECT':
+      return i18next.t(
+        'operationsEvaluationAndLearning:learningSystemOptions.itConnect'
+      );
+    case 'PARTICIPANT_COLLABORATION':
+      return i18next.t(
+        'operationsEvaluationAndLearning:learningSystemOptions.collaboration'
+      );
+    case 'EDUCATE_BENEFICIARIES':
+      return i18next.t(
+        'operationsEvaluationAndLearning:learningSystemOptions.educate'
+      );
+    case 'OTHER':
+      return i18next.t(
+        'operationsEvaluationAndLearning:learningSystemOptions.other'
+      );
+    case 'NO_LEARNING_SYSTEM':
+      return i18next.t(
+        'operationsEvaluationAndLearning:learningSystemOptions.no'
+      );
+    default:
+      return '';
+  }
+};
+
 /**
  * Translate the document type API enum to a human readable string
  */
@@ -588,6 +973,18 @@ export const sortRepliesByDate = (
   return 0;
 };
 
+// Used to map MultiSelect options from Enums
+export const mapMultiSelectOptions = (
+  translationMethod: (key: string) => string,
+  type: { [s: number]: string }
+) =>
+  Object.keys(type)
+    .sort(sortOtherEnum)
+    .map(key => ({
+      value: key,
+      label: translationMethod(key)
+    }));
+
 // Sort mapped enums to be alphabetical and have 'OTHER' come last
 export const sortOtherEnum = (a: string, b: string) => {
   if (
@@ -596,7 +993,10 @@ export const sortOtherEnum = (a: string, b: string) => {
     b === 'NO_SELECTING_PARTICIPANTS' ||
     b === 'NO_COMMUNICATION' ||
     b === 'NO_IDENTIFIERS' ||
-    b === 'NOT_APPLICABLE'
+    b === 'NOT_APPLICABLE' ||
+    b === 'NOT_PLANNING_TO_COLLECT_DATA' ||
+    b === 'NOT_PLANNING_TO_SEND_DATA' ||
+    b === 'NO_LEARNING_SYSTEM'
   )
     return -1;
   if (a < b || b === 'OTHER') {

@@ -58,6 +58,7 @@ describe('The Model Plan Task List', () => {
       phasedInNote: null,
       status: 'READY'
     },
+    opsEvalAndLearning: [] as any,
     generalCharacteristics: charactersticMockData as any,
     participantsAndProviders: participantsAndProvidersData as any,
     beneficiaries: [] as any,

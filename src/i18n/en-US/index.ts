@@ -5,6 +5,7 @@ import documents from './draftModelPlan/documents';
 import draftModelPlan from './draftModelPlan/draftModelPlan';
 import generalCharacteristics from './draftModelPlan/generalCharacteristics';
 import newModel from './draftModelPlan/newModel';
+import operationsEvaluationAndLearning from './draftModelPlan/operationsEvaulationAndLearning';
 import participantsAndProviders from './draftModelPlan/participantsAndProviders';
 import accessibilityStatement from './accessibilityStatement';
 import auth from './auth';
@@ -38,6 +39,7 @@ const enUS = {
   modelPlan,
   modelPlanTaskList,
   newModel,
+  operationsEvaluationAndLearning,
   participantsAndProviders,
   privacyPolicy,
   tableAndPagination,

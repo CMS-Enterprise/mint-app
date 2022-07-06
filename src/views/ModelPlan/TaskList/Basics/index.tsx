@@ -137,332 +137,322 @@ const BasicsContent = () => {
   }
 
   return (
-    <MainContent className="margin-bottom-5" data-testid="model-plan-basics">
-      <GridContainer>
-        <Grid desktop={{ col: 12 }}>
-          <BreadcrumbBar variant="wrap">
-            <Breadcrumb>
-              <BreadcrumbLink asCustom={Link} to="/">
-                <span>{h('home')}</span>
-              </BreadcrumbLink>
-            </Breadcrumb>
-            <Breadcrumb>
-              <BreadcrumbLink
-                asCustom={Link}
-                to={`/models/${modelID}/task-list/`}
+    <>
+      <BreadcrumbBar variant="wrap">
+        <Breadcrumb>
+          <BreadcrumbLink asCustom={Link} to="/">
+            <span>{h('home')}</span>
+          </BreadcrumbLink>
+        </Breadcrumb>
+        <Breadcrumb>
+          <BreadcrumbLink asCustom={Link} to={`/models/${modelID}/task-list/`}>
+            <span>{h('tasklistBreadcrumb')}</span>
+          </BreadcrumbLink>
+        </Breadcrumb>
+        <Breadcrumb current>{t('breadcrumb')}</Breadcrumb>
+      </BreadcrumbBar>
+      <PageHeading className="margin-top-4">{t('heading')}</PageHeading>
+
+      <AskAQuestion modelID={modelID} />
+
+      <Alert
+        type="info"
+        slim
+        data-testid="mandatory-fields-alert"
+        className="margin-bottom-4"
+      >
+        <span className="mandatory-fields-alert__text">
+          {h('mandatoryFields')}
+        </span>
+      </Alert>
+
+      <Formik
+        initialValues={initialValues}
+        onSubmit={values => {
+          handleFormSubmit(values, 'next');
+        }}
+        enableReinitialize
+        validationSchema={validationSchema}
+        validateOnBlur={false}
+        validateOnChange={false}
+        validateOnMount={false}
+        innerRef={formikRef}
+      >
+        {(formikProps: FormikProps<PlanBasicModelPlanFormType>) => {
+          const {
+            dirty,
+            errors,
+            handleSubmit,
+            setErrors,
+            setFieldValue,
+            isValid,
+            values
+          } = formikProps;
+          const flatErrors = flattenErrors(errors);
+          return (
+            <>
+              {Object.keys(errors).length > 0 && (
+                <ErrorAlert
+                  testId="formik-validation-errors"
+                  classNames="margin-top-3"
+                  heading={h('checkAndFix')}
+                >
+                  {Object.keys(flatErrors).map(key => {
+                    return (
+                      <ErrorAlertMessage
+                        key={`Error.${key}`}
+                        errorKey={key}
+                        message={flatErrors[key]}
+                      />
+                    );
+                  })}
+                </ErrorAlert>
+              )}
+              <Form
+                className="tablet:grid-col-6 margin-top-6"
+                onSubmit={e => {
+                  handleSubmit(e);
+                  window.scrollTo(0, 0);
+                }}
               >
-                <span>{h('tasklistBreadcrumb')}</span>
-              </BreadcrumbLink>
-            </Breadcrumb>
-            <Breadcrumb current>{t('breadcrumb')}</Breadcrumb>
-          </BreadcrumbBar>
-          <PageHeading className="margin-top-4">{t('heading')}</PageHeading>
+                <FieldGroup
+                  scrollElement="modelName"
+                  error={!!flatErrors.modelName}
+                  className="margin-top-4"
+                >
+                  <Label htmlFor="plan-basics-model-name">
+                    {t('modelName')}
+                  </Label>
+                  <FieldErrorMsg>{flatErrors.modelName}</FieldErrorMsg>
+                  <Field
+                    as={TextInput}
+                    error={!!flatErrors.modelName}
+                    id="plan-basics-model-name"
+                    maxLength={50}
+                    name="modelName"
+                    defaultValue={modelName}
+                  />
+                </FieldGroup>
 
-          <AskAQuestion modelID={modelID} />
-
-          <Alert
-            type="info"
-            slim
-            data-testid="mandatory-fields-alert"
-            className="margin-bottom-4"
-          >
-            <span className="mandatory-fields-alert__text">
-              {h('mandatoryFields')}
-            </span>
-          </Alert>
-
-          <Formik
-            initialValues={initialValues}
-            onSubmit={values => {
-              handleFormSubmit(values, 'next');
-            }}
-            enableReinitialize
-            validationSchema={validationSchema}
-            validateOnBlur={false}
-            validateOnChange={false}
-            validateOnMount={false}
-            innerRef={formikRef}
-          >
-            {(formikProps: FormikProps<PlanBasicModelPlanFormType>) => {
-              const {
-                dirty,
-                errors,
-                handleSubmit,
-                setErrors,
-                setFieldValue,
-                isValid,
-                values
-              } = formikProps;
-              const flatErrors = flattenErrors(errors);
-              return (
-                <>
-                  {Object.keys(errors).length > 0 && (
-                    <ErrorAlert
-                      testId="formik-validation-errors"
-                      classNames="margin-top-3"
-                      heading={h('checkAndFix')}
-                    >
-                      {Object.keys(flatErrors).map(key => {
-                        return (
-                          <ErrorAlertMessage
-                            key={`Error.${key}`}
-                            errorKey={key}
-                            message={flatErrors[key]}
-                          />
-                        );
-                      })}
-                    </ErrorAlert>
-                  )}
-                  <Form
-                    onSubmit={e => {
-                      handleSubmit(e);
-                      window.scrollTo(0, 0);
+                <FieldGroup
+                  scrollElement="modelCategory"
+                  error={!!flatErrors.modelCategory}
+                  className="margin-top-4"
+                >
+                  <Label htmlFor="plan-basics-model-category">
+                    {t('modelCategory')}
+                  </Label>
+                  <FieldErrorMsg>{flatErrors.modelCategory}</FieldErrorMsg>
+                  <Field
+                    as={Dropdown}
+                    id="plan-basics-model-category"
+                    name="modelCategory"
+                    value={values.modelCategory || ''}
+                    onChange={(e: any) => {
+                      setFieldValue('modelCategory', e.target.value);
                     }}
                   >
-                    <FieldGroup
-                      scrollElement="modelName"
-                      error={!!flatErrors.modelName}
-                      className="margin-top-4"
-                    >
-                      <Label htmlFor="plan-basics-model-name">
-                        {t('modelName')}
-                      </Label>
-                      <FieldErrorMsg>{flatErrors.modelName}</FieldErrorMsg>
-                      <Field
-                        as={TextInput}
-                        error={!!flatErrors.modelName}
-                        id="plan-basics-model-name"
-                        maxLength={50}
-                        name="modelName"
-                        defaultValue={modelName}
-                      />
-                    </FieldGroup>
-
-                    <FieldGroup
-                      scrollElement="modelCategory"
-                      error={!!flatErrors.modelCategory}
-                      className="margin-top-4"
-                    >
-                      <Label htmlFor="plan-basics-model-category">
-                        {t('modelCategory')}
-                      </Label>
-                      <FieldErrorMsg>{flatErrors.modelCategory}</FieldErrorMsg>
-                      <Field
-                        as={Dropdown}
-                        id="plan-basics-model-category"
-                        name="modelCategory"
-                        value={values.modelCategory || ''}
-                        onChange={(e: any) => {
-                          setFieldValue('modelCategory', e.target.value);
-                        }}
-                      >
-                        <option key="default-select" disabled value="">
-                          {`-${h('select')}-`}
+                    <option key="default-select" disabled value="">
+                      {`-${h('select')}-`}
+                    </option>
+                    {Object.keys(modelCategoryEnum).map(role => {
+                      return (
+                        <option
+                          key={`Model-Category-${translateModelCategory(
+                            modelCategoryEnum[role]
+                          )}`}
+                          value={role || ''}
+                        >
+                          {translateModelCategory(modelCategoryEnum[role])}
                         </option>
-                        {Object.keys(modelCategoryEnum).map(role => {
+                      );
+                    })}
+                  </Field>
+                </FieldGroup>
+
+                <FieldGroup
+                  scrollElement="cmsCenters"
+                  error={!!flatErrors.cmsCenters}
+                  className="margin-top-4"
+                >
+                  <FieldArray
+                    name="cmsCenters"
+                    render={arrayHelpers => (
+                      <>
+                        <legend className="usa-label">
+                          {t('cmsComponent')}
+                        </legend>
+                        <FieldErrorMsg>{flatErrors.cmsCenters}</FieldErrorMsg>
+
+                        {(t('cmsComponents', {
+                          returnObjects: true
+                        }) as string[]).map((item, key) => {
                           return (
-                            <option
-                              key={`Model-Category-${translateModelCategory(
-                                modelCategoryEnum[role]
-                              )}`}
-                              value={role || ''}
-                            >
-                              {translateModelCategory(modelCategoryEnum[role])}
-                            </option>
+                            <Fragment key={item}>
+                              <Field
+                                as={CheckboxField}
+                                id={`new-plan-cmsCenters--${key}`}
+                                name="cmsCenters"
+                                label={item}
+                                value={translateCmsCenter(item)}
+                                checked={values.cmsCenters.includes(
+                                  translateCmsCenter(item)
+                                )}
+                                onChange={(
+                                  e: React.ChangeEvent<HTMLInputElement>
+                                ) => {
+                                  if (e.target.checked) {
+                                    arrayHelpers.push(e.target.value);
+                                  } else {
+                                    const idx = values.cmsCenters.indexOf(
+                                      e.target.value
+                                    );
+                                    arrayHelpers.remove(idx);
+                                  }
+                                  if (e.target.value === 'CMMI') {
+                                    setAreCmmiGroupsShown(true);
+                                  }
+                                  if (e.target.value === 'OTHER') {
+                                    setShowOther(!showOther);
+                                  }
+                                }}
+                              />
+                            </Fragment>
                           );
                         })}
-                      </Field>
-                    </FieldGroup>
 
-                    <FieldGroup
-                      scrollElement="cmsCenters"
-                      error={!!flatErrors.cmsCenters}
-                      className="margin-top-4"
-                    >
-                      <FieldArray
-                        name="cmsCenters"
-                        render={arrayHelpers => (
-                          <>
-                            <legend className="usa-label">
-                              {t('cmsComponent')}
-                            </legend>
-                            <FieldErrorMsg>
-                              {flatErrors.cmsCenters}
-                            </FieldErrorMsg>
-
-                            {(t('cmsComponents', {
-                              returnObjects: true
-                            }) as string[]).map((item, key) => {
-                              return (
-                                <Fragment key={item}>
-                                  <Field
-                                    as={CheckboxField}
-                                    id={`new-plan-cmsCenters--${key}`}
-                                    name="cmsCenters"
-                                    label={item}
-                                    value={translateCmsCenter(item)}
-                                    checked={values.cmsCenters.includes(
-                                      translateCmsCenter(item)
-                                    )}
-                                    onChange={(
-                                      e: React.ChangeEvent<HTMLInputElement>
-                                    ) => {
-                                      if (e.target.checked) {
-                                        arrayHelpers.push(e.target.value);
-                                      } else {
-                                        const idx = values.cmsCenters.indexOf(
-                                          e.target.value
-                                        );
-                                        arrayHelpers.remove(idx);
-                                      }
-                                      if (e.target.value === 'CMMI') {
-                                        setAreCmmiGroupsShown(true);
-                                      }
-                                      if (e.target.value === 'OTHER') {
-                                        setShowOther(!showOther);
-                                      }
-                                    }}
-                                  />
-                                </Fragment>
-                              );
-                            })}
-
-                            {values.cmsCenters.includes('OTHER') && (
-                              <FieldGroup
-                                className="margin-top-4"
-                                error={!!flatErrors.cmsOther}
-                              >
-                                <Label htmlFor="plan-basics-cmsCategory--Other">
-                                  {h('pleaseSpecify')}
-                                </Label>
-                                <FieldErrorMsg>
-                                  {flatErrors.cmsOther}
-                                </FieldErrorMsg>
-                                <Field
-                                  as={TextInput}
-                                  id="plan-basics-cmsCategory--Other"
-                                  maxLength={50}
-                                  name="cmsOther"
-                                />
-                              </FieldGroup>
-                            )}
-                          </>
+                        {values.cmsCenters.includes('OTHER') && (
+                          <FieldGroup
+                            className="margin-top-4"
+                            error={!!flatErrors.cmsOther}
+                          >
+                            <Label htmlFor="plan-basics-cmsCategory--Other">
+                              {h('pleaseSpecify')}
+                            </Label>
+                            <FieldErrorMsg>{flatErrors.cmsOther}</FieldErrorMsg>
+                            <Field
+                              as={TextInput}
+                              id="plan-basics-cmsCategory--Other"
+                              maxLength={50}
+                              name="cmsOther"
+                            />
+                          </FieldGroup>
                         )}
-                      />
-                    </FieldGroup>
-                    {values.cmsCenters.includes('CMMI') && (
-                      <FieldGroup
-                        error={!!flatErrors.cmmiGroup}
-                        className="margin-top-4"
-                      >
-                        <FieldArray
-                          name="cmmiGroups"
-                          render={arrayHelpers => (
-                            <>
-                              <legend className="usa-label text-normal">
-                                {t('cmmiGroup')}
-                              </legend>
-                              <FieldErrorMsg>
-                                {flatErrors.cmmiGroups}
-                              </FieldErrorMsg>
-
-                              {(t('cmmiGroups', {
-                                returnObjects: true
-                              }) as string[]).map((item, key) => {
-                                return (
-                                  <Fragment key={item}>
-                                    <Field
-                                      as={CheckboxField}
-                                      id={`new-plan-cmmiGroup--${key}`}
-                                      name="cmmiGroup"
-                                      label={item}
-                                      value={translateCmmiGroups(item)}
-                                      checked={values.cmmiGroups.includes(
-                                        translateCmmiGroups(item)
-                                      )}
-                                      onChange={(
-                                        e: React.ChangeEvent<HTMLInputElement>
-                                      ) => {
-                                        if (e.target.checked) {
-                                          arrayHelpers.push(e.target.value);
-                                        } else {
-                                          const idx = values.cmmiGroups.indexOf(
-                                            e.target.value
-                                          );
-                                          arrayHelpers.remove(idx);
-                                        }
-                                      }}
-                                    />
-                                  </Fragment>
-                                );
-                              })}
-                            </>
-                          )}
-                        />
-                      </FieldGroup>
+                      </>
                     )}
-
-                    <div className="margin-top-6 margin-bottom-3">
-                      <Button
-                        type="submit"
-                        disabled={!(dirty || isValid)}
-                        onClick={() => setErrors({})}
-                      >
-                        {h('next')}
-                      </Button>
-                    </div>
-                    <Button
-                      type="button"
-                      className="usa-button usa-button--unstyled"
-                      onClick={() => handleFormSubmit(values, 'back')}
-                    >
-                      <IconArrowBack className="margin-right-1" aria-hidden />
-                      {h('saveAndReturn')}
-                    </Button>
-                  </Form>
-                  <AutoSave
-                    values={values}
-                    onSave={() => {
-                      if (formikRef.current!.values.modelName)
-                        handleFormSubmit(formikRef.current!.values);
-                    }}
-                    debounceDelay={3000}
                   />
-                </>
-              );
-            }}
-          </Formik>
-        </Grid>
-        <PageNumber
-          currentPage={1}
-          totalPages={3}
-          className="margin-bottom-10"
-        />
-      </GridContainer>
-    </MainContent>
+                </FieldGroup>
+                {values.cmsCenters.includes('CMMI') && (
+                  <FieldGroup
+                    error={!!flatErrors.cmmiGroup}
+                    className="margin-top-4"
+                  >
+                    <FieldArray
+                      name="cmmiGroups"
+                      render={arrayHelpers => (
+                        <>
+                          <legend className="usa-label text-normal">
+                            {t('cmmiGroup')}
+                          </legend>
+                          <FieldErrorMsg>{flatErrors.cmmiGroups}</FieldErrorMsg>
+
+                          {(t('cmmiGroups', {
+                            returnObjects: true
+                          }) as string[]).map((item, key) => {
+                            return (
+                              <Fragment key={item}>
+                                <Field
+                                  as={CheckboxField}
+                                  id={`new-plan-cmmiGroup--${key}`}
+                                  name="cmmiGroup"
+                                  label={item}
+                                  value={translateCmmiGroups(item)}
+                                  checked={values.cmmiGroups.includes(
+                                    translateCmmiGroups(item)
+                                  )}
+                                  onChange={(
+                                    e: React.ChangeEvent<HTMLInputElement>
+                                  ) => {
+                                    if (e.target.checked) {
+                                      arrayHelpers.push(e.target.value);
+                                    } else {
+                                      const idx = values.cmmiGroups.indexOf(
+                                        e.target.value
+                                      );
+                                      arrayHelpers.remove(idx);
+                                    }
+                                  }}
+                                />
+                              </Fragment>
+                            );
+                          })}
+                        </>
+                      )}
+                    />
+                  </FieldGroup>
+                )}
+
+                <div className="margin-top-6 margin-bottom-3">
+                  <Button
+                    type="submit"
+                    disabled={!(dirty || isValid)}
+                    onClick={() => setErrors({})}
+                  >
+                    {h('next')}
+                  </Button>
+                </div>
+                <Button
+                  type="button"
+                  className="usa-button usa-button--unstyled"
+                  onClick={() => handleFormSubmit(values, 'back')}
+                >
+                  <IconArrowBack className="margin-right-1" aria-hidden />
+                  {h('saveAndReturn')}
+                </Button>
+              </Form>
+              <AutoSave
+                values={values}
+                onSave={() => {
+                  if (formikRef.current!.values.modelName)
+                    handleFormSubmit(formikRef.current!.values);
+                }}
+                debounceDelay={3000}
+              />
+            </>
+          );
+        }}
+      </Formik>
+      <PageNumber currentPage={1} totalPages={3} className="margin-bottom-10" />
+    </>
   );
 };
 
 export const Basics = () => {
   return (
-    <Switch>
-      <Route
-        path="/models/:modelID/task-list/basics"
-        exact
-        render={() => <BasicsContent />}
-      />
-      <Route
-        path="/models/:modelID/task-list/basics/overview"
-        exact
-        render={() => <Overview />}
-      />
-      <Route
-        path="/models/:modelID/task-list/basics/milestones"
-        exact
-        render={() => <Milestones />}
-      />
-      <Route path="*" render={() => <NotFoundPartial />} />
-    </Switch>
+    <MainContent data-testid="model-plan-basics">
+      <GridContainer>
+        <Grid desktop={{ col: 12 }}>
+          <Switch>
+            <Route
+              path="/models/:modelID/task-list/basics"
+              exact
+              render={() => <BasicsContent />}
+            />
+            <Route
+              path="/models/:modelID/task-list/basics/overview"
+              exact
+              render={() => <Overview />}
+            />
+            <Route
+              path="/models/:modelID/task-list/basics/milestones"
+              exact
+              render={() => <Milestones />}
+            />
+            <Route path="*" render={() => <NotFoundPartial />} />
+          </Switch>
+        </Grid>
+      </GridContainer>
+    </MainContent>
   );
 };
 

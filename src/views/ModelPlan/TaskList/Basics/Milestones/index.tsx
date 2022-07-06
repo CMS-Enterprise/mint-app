@@ -9,8 +9,6 @@ import {
   Button,
   DatePicker,
   Fieldset,
-  Grid,
-  GridContainer,
   IconAdd,
   IconArrowBack,
   Label,
@@ -19,7 +17,6 @@ import {
 import { Field, Form, Formik, FormikProps } from 'formik';
 
 import AskAQuestion from 'components/AskAQuestion';
-import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
@@ -63,7 +60,7 @@ const Milestones = () => {
   const [hasHighLevelNote, setHasHighLevelNote] = useState(false);
   const [hasAdditionalNote, setHasAdditionalNote] = useState(false);
 
-  const { data } = useQuery<GetModelPlanType, GetModelPlanVariables>(
+  const { data, loading } = useQuery<GetModelPlanType, GetModelPlanVariables>(
     GetModelPlan,
     {
       variables: {
@@ -131,499 +128,460 @@ const Milestones = () => {
   };
 
   return (
-    <MainContent
-      className="margin-bottom-5"
-      data-testid="model-plan-milestones"
-    >
-      <GridContainer>
-        <Grid desktop={{ col: 12 }}>
-          <BreadcrumbBar variant="wrap">
-            <Breadcrumb>
-              <BreadcrumbLink asCustom={Link} to="/">
-                <span>{h('home')}</span>
-              </BreadcrumbLink>
-            </Breadcrumb>
-            <Breadcrumb>
-              <BreadcrumbLink
-                asCustom={Link}
-                to={`/models/${modelID}/task-list/`}
-              >
-                <span>{h('tasklistBreadcrumb')}</span>
-              </BreadcrumbLink>
-            </Breadcrumb>
-            <Breadcrumb current>{t('breadcrumb')}</Breadcrumb>
-          </BreadcrumbBar>
-          <PageHeading className="margin-top-4 margin-bottom-1">
-            {t('heading')}
-          </PageHeading>
-          <p
-            className="margin-top-0 margin-bottom-1 font-body-lg"
-            data-testid="model-plan-name"
-          >
-            <Trans i18nKey="modelPlanTaskList:subheading">
-              indexZero {modelName} indexTwo
-            </Trans>
-          </p>
-          <p className="margin-bottom-2 font-body-md line-height-sans-4">
-            {h('helpText')}
-          </p>
+    <div data-testid="model-plan-milestones">
+      <BreadcrumbBar variant="wrap">
+        <Breadcrumb>
+          <BreadcrumbLink asCustom={Link} to="/">
+            <span>{h('home')}</span>
+          </BreadcrumbLink>
+        </Breadcrumb>
+        <Breadcrumb>
+          <BreadcrumbLink asCustom={Link} to={`/models/${modelID}/task-list/`}>
+            <span>{h('tasklistBreadcrumb')}</span>
+          </BreadcrumbLink>
+        </Breadcrumb>
+        <Breadcrumb current>{t('breadcrumb')}</Breadcrumb>
+      </BreadcrumbBar>
+      <PageHeading className="margin-top-4 margin-bottom-1">
+        {t('heading')}
+      </PageHeading>
+      <p
+        className="margin-top-0 margin-bottom-1 font-body-lg"
+        data-testid="model-plan-name"
+      >
+        <Trans i18nKey="modelPlanTaskList:subheading">
+          indexZero {modelName} indexTwo
+        </Trans>
+      </p>
+      <p className="margin-bottom-2 font-body-md line-height-sans-4">
+        {h('helpText')}
+      </p>
 
-          <AskAQuestion modelID={modelID} />
-
-          <Formik
-            initialValues={initialValues}
-            onSubmit={values => {
-              handleFormSubmit(values);
-            }}
-            enableReinitialize
-            validationSchema={planBasicsSchema.pageThreeSchema}
-            validateOnBlur={false}
-            validateOnChange={false}
-            validateOnMount={false}
-            innerRef={formikRef}
-          >
-            {(formikProps: FormikProps<PlanBasicsMilestoneTypes>) => {
-              const {
-                errors,
-                handleSubmit,
-                setErrors,
-                setFieldError,
-                setFieldValue,
-                validateForm,
-                values
-              } = formikProps;
-              const flatErrors = flattenErrors(errors);
-              const handleOnBlur = (e: any, field: string) => {
-                if (e === '') {
-                  return;
-                }
-                try {
-                  setFieldValue(field, new Date(e).toISOString());
-                  delete errors[field as keyof PlanBasicsMilestoneTypes];
-                } catch (error) {
-                  setFieldError(field, t('validDate'));
-                }
-              };
-              return (
-                <>
-                  {Object.keys(errors).length > 0 && (
-                    <ErrorAlert
-                      testId="formik-validation-errors"
-                      classNames="margin-top-3"
-                      heading={h('checkAndFix')}
-                    >
-                      {Object.keys(flatErrors).map(key => {
-                        return (
-                          <ErrorAlertMessage
-                            key={`Error.${key}`}
-                            errorKey={key}
-                            message={flatErrors[key]}
-                          />
-                        );
-                      })}
-                    </ErrorAlert>
-                  )}
-                  <Form
-                    className="tablet:grid-col-6 milestone-form"
-                    onSubmit={e => {
-                      handleSubmit(e);
-                      window.scrollTo(0, 0);
-                    }}
+      <AskAQuestion modelID={modelID} />
+      {!loading && (
+        <Formik
+          initialValues={initialValues}
+          onSubmit={values => {
+            handleFormSubmit(values);
+          }}
+          enableReinitialize
+          validationSchema={planBasicsSchema.pageThreeSchema}
+          validateOnBlur={false}
+          validateOnChange={false}
+          validateOnMount={false}
+          innerRef={formikRef}
+        >
+          {(formikProps: FormikProps<PlanBasicsMilestoneTypes>) => {
+            const {
+              errors,
+              handleSubmit,
+              setErrors,
+              setFieldError,
+              setFieldValue,
+              validateForm,
+              values
+            } = formikProps;
+            const flatErrors = flattenErrors(errors);
+            const handleOnBlur = (e: any, field: string) => {
+              if (e === '') {
+                return;
+              }
+              try {
+                setFieldValue(field, new Date(e).toISOString());
+                delete errors[field as keyof PlanBasicsMilestoneTypes];
+              } catch (error) {
+                setFieldError(field, t('validDate'));
+              }
+            };
+            return (
+              <>
+                {Object.keys(errors).length > 0 && (
+                  <ErrorAlert
+                    testId="formik-validation-errors"
+                    classNames="margin-top-3"
+                    heading={h('checkAndFix')}
                   >
-                    <PageHeading headingLevel="h3" className="margin-bottom-4">
-                      {t('highLevelTimeline')}
-                    </PageHeading>
+                    {Object.keys(flatErrors).map(key => {
+                      return (
+                        <ErrorAlertMessage
+                          key={`Error.${key}`}
+                          errorKey={key}
+                          message={flatErrors[key]}
+                        />
+                      );
+                    })}
+                  </ErrorAlert>
+                )}
+
+                <Form
+                  className="tablet:grid-col-6 milestone-form margin-top-6"
+                  onSubmit={e => {
+                    handleSubmit(e);
+                    window.scrollTo(0, 0);
+                  }}
+                >
+                  <PageHeading headingLevel="h3" className="margin-bottom-4">
+                    {t('highLevelTimeline')}
+                  </PageHeading>
+                  <FieldGroup
+                    scrollElement="completeICIP"
+                    error={!!flatErrors.completeICIP}
+                    className="margin-top-0 width-card-lg"
+                  >
+                    <Label htmlFor="Milestone-completeICIP">
+                      {t('completeICIP')}
+                    </Label>
+                    <div className="usa-hint" id="appointment-date-hint">
+                      {h('datePlaceholder')}
+                    </div>
+                    <FieldErrorMsg>{flatErrors.completeICIP}</FieldErrorMsg>
+                    <Field
+                      as={DatePicker}
+                      error={+!!flatErrors.completeICIP}
+                      id="Milestone-completeICIP"
+                      maxLength={50}
+                      name="completeICIP"
+                      defaultValue={values.completeICIP}
+                      onBlur={(e: any) =>
+                        handleOnBlur(e.target.value, 'completeICIP')
+                      }
+                    />
+                  </FieldGroup>
+
+                  <legend className="usa-label margin-bottom-1">
+                    {t('clearance')}
+                  </legend>
+
+                  <div className="fieldGroup__wrapper">
                     <FieldGroup
-                      scrollElement="completeICIP"
-                      error={!!flatErrors.completeICIP}
+                      scrollElement="clearanceStarts"
+                      error={!!flatErrors.clearanceStarts}
                       className="margin-top-0 width-card-lg"
                     >
-                      <Label htmlFor="Milestone-completeICIP">
-                        {t('completeICIP')}
-                      </Label>
+                      <label
+                        htmlFor="Milestone-clearanceStarts"
+                        className="usa-legend margin-top-0"
+                      >
+                        {t('clearanceStartDate')}
+                      </label>
                       <div className="usa-hint" id="appointment-date-hint">
                         {h('datePlaceholder')}
                       </div>
-                      <FieldErrorMsg>{flatErrors.completeICIP}</FieldErrorMsg>
+                      <FieldErrorMsg>
+                        {flatErrors.clearanceStarts}
+                      </FieldErrorMsg>
                       <Field
                         as={DatePicker}
-                        error={+!!flatErrors.completeICIP}
-                        id="Milestone-completeICIP"
+                        error={+!!flatErrors.clearanceStarts}
+                        id="Milestone-clearanceStarts"
                         maxLength={50}
-                        name="completeICIP"
-                        defaultValue={values.completeICIP}
+                        name="clearanceStarts"
+                        defaultValue={values.clearanceStarts}
                         onBlur={(e: any) =>
-                          handleOnBlur(e.target.value, 'completeICIP')
+                          handleOnBlur(e.target.value, 'clearanceStarts')
                         }
                       />
                     </FieldGroup>
 
-                    <legend className="usa-label margin-bottom-1">
-                      {t('clearance')}
-                    </legend>
-
-                    <div className="fieldGroup__wrapper">
-                      <FieldGroup
-                        scrollElement="clearanceStarts"
-                        error={!!flatErrors.clearanceStarts}
-                        className="margin-top-0 width-card-lg"
-                      >
-                        <label
-                          htmlFor="Milestone-clearanceStarts"
-                          className="usa-legend margin-top-0"
-                        >
-                          {t('clearanceStartDate')}
-                        </label>
-                        <div className="usa-hint" id="appointment-date-hint">
-                          {h('datePlaceholder')}
-                        </div>
-                        <FieldErrorMsg>
-                          {flatErrors.clearanceStarts}
-                        </FieldErrorMsg>
-                        <Field
-                          as={DatePicker}
-                          error={+!!flatErrors.clearanceStarts}
-                          id="Milestone-clearanceStarts"
-                          maxLength={50}
-                          name="clearanceStarts"
-                          defaultValue={values.clearanceStarts}
-                          onBlur={(e: any) =>
-                            handleOnBlur(e.target.value, 'clearanceStarts')
-                          }
-                        />
-                      </FieldGroup>
-
-                      <FieldGroup
-                        scrollElement="clearanceEnds"
-                        error={!!flatErrors.clearanceEnds}
-                        className="margin-top-0 width-card-lg"
-                      >
-                        <label
-                          htmlFor="Milestone-clearanceEnds"
-                          className="usa-legend margin-top-0"
-                        >
-                          {t('clearanceEndDate')}
-                        </label>
-                        <div className="usa-hint" id="appointment-date-hint">
-                          {h('datePlaceholder')}
-                        </div>
-                        <FieldErrorMsg>
-                          {flatErrors.clearanceEnds}
-                        </FieldErrorMsg>
-                        <Field
-                          as={DatePicker}
-                          error={+!!flatErrors.clearanceEnds}
-                          id="Milestone-clearanceEnds"
-                          maxLength={50}
-                          name="clearanceEnds"
-                          defaultValue={values.clearanceEnds}
-                          onBlur={(e: any) =>
-                            handleOnBlur(e.target.value, 'clearanceEnds')
-                          }
-                        />
-                      </FieldGroup>
-                    </div>
-
                     <FieldGroup
-                      scrollElement="announced"
-                      error={!!flatErrors.announced}
-                      className="margin-top-4 width-card-lg"
+                      scrollElement="clearanceEnds"
+                      error={!!flatErrors.clearanceEnds}
+                      className="margin-top-0 width-card-lg"
                     >
-                      <Label htmlFor="Milestone-announced">
-                        {t('annouceModel')}
-                      </Label>
+                      <label
+                        htmlFor="Milestone-clearanceEnds"
+                        className="usa-legend margin-top-0"
+                      >
+                        {t('clearanceEndDate')}
+                      </label>
                       <div className="usa-hint" id="appointment-date-hint">
                         {h('datePlaceholder')}
                       </div>
-                      <FieldErrorMsg>{flatErrors.announced}</FieldErrorMsg>
+                      <FieldErrorMsg>{flatErrors.clearanceEnds}</FieldErrorMsg>
                       <Field
                         as={DatePicker}
-                        error={+!!flatErrors.announced}
-                        id="Milestone-announced"
+                        error={+!!flatErrors.clearanceEnds}
+                        id="Milestone-clearanceEnds"
                         maxLength={50}
-                        name="announced"
-                        defaultValue={values.announced}
+                        name="clearanceEnds"
+                        defaultValue={values.clearanceEnds}
                         onBlur={(e: any) =>
-                          handleOnBlur(e.target.value, 'announced')
+                          handleOnBlur(e.target.value, 'clearanceEnds')
+                        }
+                      />
+                    </FieldGroup>
+                  </div>
+
+                  <FieldGroup
+                    scrollElement="announced"
+                    error={!!flatErrors.announced}
+                    className="margin-top-4 width-card-lg"
+                  >
+                    <Label htmlFor="Milestone-announced">
+                      {t('annouceModel')}
+                    </Label>
+                    <div className="usa-hint" id="appointment-date-hint">
+                      {h('datePlaceholder')}
+                    </div>
+                    <FieldErrorMsg>{flatErrors.announced}</FieldErrorMsg>
+                    <Field
+                      as={DatePicker}
+                      error={+!!flatErrors.announced}
+                      id="Milestone-announced"
+                      maxLength={50}
+                      name="announced"
+                      defaultValue={values.announced}
+                      onBlur={(e: any) =>
+                        handleOnBlur(e.target.value, 'announced')
+                      }
+                    />
+                  </FieldGroup>
+
+                  <legend className="usa-label margin-bottom-1">
+                    {t('applicationPeriod')}
+                  </legend>
+
+                  <div className="fieldGroup__wrapper">
+                    <FieldGroup
+                      scrollElement="applicationsStart"
+                      error={!!flatErrors.applicationsStart}
+                      className="margin-top-0 width-card-lg"
+                    >
+                      <label
+                        htmlFor="Milestone-applicationsStart"
+                        className="usa-legend margin-top-0"
+                      >
+                        {t('applicationStartDate')}
+                      </label>
+                      <div className="usa-hint" id="appointment-date-hint">
+                        {h('datePlaceholder')}
+                      </div>
+                      <FieldErrorMsg>
+                        {flatErrors.applicationsStart}
+                      </FieldErrorMsg>
+                      <Field
+                        as={DatePicker}
+                        error={+!!flatErrors.applicationsStart}
+                        id="Milestone-applicationsStart"
+                        maxLength={50}
+                        name="applicationsStart"
+                        defaultValue={values.applicationsStart}
+                        onBlur={(e: any) =>
+                          handleOnBlur(e.target.value, 'applicationsStart')
                         }
                       />
                     </FieldGroup>
 
-                    <legend className="usa-label margin-bottom-1">
-                      {t('applicationPeriod')}
-                    </legend>
-
-                    <div className="fieldGroup__wrapper">
-                      <FieldGroup
-                        scrollElement="applicationsStart"
-                        error={!!flatErrors.applicationsStart}
-                        className="margin-top-0 width-card-lg"
-                      >
-                        <label
-                          htmlFor="Milestone-applicationsStart"
-                          className="usa-legend margin-top-0"
-                        >
-                          {t('applicationStartDate')}
-                        </label>
-                        <div className="usa-hint" id="appointment-date-hint">
-                          {h('datePlaceholder')}
-                        </div>
-                        <FieldErrorMsg>
-                          {flatErrors.applicationsStart}
-                        </FieldErrorMsg>
-                        <Field
-                          as={DatePicker}
-                          error={+!!flatErrors.applicationsStart}
-                          id="Milestone-applicationsStart"
-                          maxLength={50}
-                          name="applicationsStart"
-                          defaultValue={values.applicationsStart}
-                          onBlur={(e: any) =>
-                            handleOnBlur(e.target.value, 'applicationsStart')
-                          }
-                        />
-                      </FieldGroup>
-
-                      <FieldGroup
-                        scrollElement="applicationsEnd"
-                        error={!!flatErrors.applicationsEnd}
-                        className="margin-top-0 width-card-lg"
-                      >
-                        <label
-                          htmlFor="Milestone-applicationsEnd"
-                          className="usa-legend margin-top-0"
-                        >
-                          {t('applicationEndDate')}
-                        </label>
-                        <div className="usa-hint" id="appointment-date-hint">
-                          {h('datePlaceholder')}
-                        </div>
-                        <FieldErrorMsg>
-                          {flatErrors.applicationsEnd}
-                        </FieldErrorMsg>
-                        <Field
-                          as={DatePicker}
-                          error={+!!flatErrors.applicationsEnd}
-                          id="Milestone-applicationsEnd"
-                          maxLength={50}
-                          name="applicationsEnd"
-                          defaultValue={values.applicationsEnd}
-                          onBlur={(e: any) =>
-                            handleOnBlur(e.target.value, 'applicationsEnd')
-                          }
-                        />
-                      </FieldGroup>
-                    </div>
-
-                    <legend className="usa-label margin-bottom-1">
-                      {t('demonstrationPerformance')}
-                    </legend>
-
-                    <div className="fieldGroup__wrapper">
-                      <FieldGroup
-                        scrollElement="performancePeriodStarts"
-                        error={!!flatErrors.performancePeriodStarts}
-                        className="margin-top-0 width-card-lg"
-                      >
-                        <label
-                          htmlFor="Milestone-performancePeriodStarts"
-                          className="usa-legend margin-top-0"
-                        >
-                          {t('performanceStartDate')}
-                        </label>
-                        <div className="usa-hint" id="appointment-date-hint">
-                          {h('datePlaceholder')}
-                        </div>
-                        <FieldErrorMsg>
-                          {flatErrors.performancePeriodStarts}
-                        </FieldErrorMsg>
-                        <Field
-                          as={DatePicker}
-                          error={+!!flatErrors.performancePeriodStarts}
-                          id="Milestone-performancePeriodStarts"
-                          maxLength={50}
-                          name="performancePeriodStarts"
-                          defaultValue={values.performancePeriodStarts}
-                          onBlur={(e: any) =>
-                            handleOnBlur(
-                              e.target.value,
-                              'performancePeriodStarts'
-                            )
-                          }
-                        />
-                      </FieldGroup>
-                      <FieldGroup
-                        scrollElement="performancePeriodEnds"
-                        error={!!flatErrors.performancePeriodEnds}
-                        className="margin-top-0 width-card-lg"
-                      >
-                        <label
-                          htmlFor="Milestone-performancePeriodEnds"
-                          className="usa-legend margin-top-0"
-                        >
-                          {t('performanceEndDate')}
-                        </label>
-                        <div className="usa-hint" id="appointment-date-hint">
-                          {h('datePlaceholder')}
-                        </div>
-                        <FieldErrorMsg>
-                          {flatErrors.performancePeriodEnds}
-                        </FieldErrorMsg>
-                        <Field
-                          as={DatePicker}
-                          error={+!!flatErrors.performancePeriodEnds}
-                          id="Milestone-performancePeriodEnds"
-                          maxLength={50}
-                          name="performancePeriodEnds"
-                          defaultValue={values.performancePeriodEnds}
-                          onBlur={(e: any) =>
-                            handleOnBlur(
-                              e.target.value,
-                              'performancePeriodEnds'
-                            )
-                          }
-                        />
-                      </FieldGroup>
-                    </div>
-
                     <FieldGroup
-                      scrollElement="wrapUpEnds"
-                      error={!!flatErrors.wrapUpEnds}
-                      className="margin-top-4  width-card-lg"
+                      scrollElement="applicationsEnd"
+                      error={!!flatErrors.applicationsEnd}
+                      className="margin-top-0 width-card-lg"
                     >
-                      <Label htmlFor="Milestone-wrapUpEnds">
-                        {t('modelWrapUp')}
-                      </Label>
+                      <label
+                        htmlFor="Milestone-applicationsEnd"
+                        className="usa-legend margin-top-0"
+                      >
+                        {t('applicationEndDate')}
+                      </label>
                       <div className="usa-hint" id="appointment-date-hint">
                         {h('datePlaceholder')}
                       </div>
-                      <FieldErrorMsg>{flatErrors.wrapUpEnds}</FieldErrorMsg>
+                      <FieldErrorMsg>
+                        {flatErrors.applicationsEnd}
+                      </FieldErrorMsg>
                       <Field
                         as={DatePicker}
-                        error={+!!flatErrors.wrapUpEnds}
-                        id="Milestone-wrapUpEnds"
+                        error={+!!flatErrors.applicationsEnd}
+                        id="Milestone-applicationsEnd"
                         maxLength={50}
-                        name="wrapUpEnds"
-                        defaultValue={values.wrapUpEnds}
+                        name="applicationsEnd"
+                        defaultValue={values.applicationsEnd}
                         onBlur={(e: any) =>
-                          handleOnBlur(e.target.value, 'wrapUpEnds')
+                          handleOnBlur(e.target.value, 'applicationsEnd')
                         }
                       />
                     </FieldGroup>
+                  </div>
 
-                    <div className="grid-col-12">
-                      <Button
-                        type="button"
-                        className="usa-button usa-button--unstyled margin-top-4"
-                        onClick={() => setHasHighLevelNote(!hasHighLevelNote)}
-                      >
-                        <IconAdd className="margin-right-1" aria-hidden />
-                        {h('additionalNote')}
-                      </Button>
-                    </div>
+                  <legend className="usa-label margin-bottom-1">
+                    {t('demonstrationPerformance')}
+                  </legend>
 
-                    {hasHighLevelNote && (
-                      <FieldGroup className="margin-top-4 grid-col-12">
-                        <Field
-                          as={TextAreaField}
-                          className="height-15"
-                          id="ModelType-HighLevelNote"
-                          name="highLevelNote"
-                          label={t('Notes')}
-                        />
-                      </FieldGroup>
-                    )}
-
+                  <div className="fieldGroup__wrapper">
                     <FieldGroup
-                      scrollElement="phasedIn"
-                      error={!!flatErrors.phasedIn}
-                      className="margin-top-4"
+                      scrollElement="performancePeriodStarts"
+                      error={!!flatErrors.performancePeriodStarts}
+                      className="margin-top-0 width-card-lg"
                     >
-                      <Label htmlFor="phasedIn">{t('tightTimeline')}</Label>
-                      <span className="usa-hint display-block text-normal margin-top-1">
-                        {t('tightTimelineInfo')}
-                      </span>
-                      <FieldErrorMsg>{flatErrors.phasedIn}</FieldErrorMsg>
-                      <Fieldset>
-                        <Field
-                          as={Radio}
-                          id="phasedIn-Yes"
-                          name="phasedIn"
-                          label={h('yes')}
-                          value="YES"
-                          checked={values.phasedIn === true}
-                          onChange={() => {
-                            setFieldValue('phasedIn', true);
-                          }}
-                        />
-                        <Field
-                          as={Radio}
-                          id="phasedIn-No"
-                          name="phasedIn"
-                          label={h('no')}
-                          value="FALSE"
-                          checked={values.phasedIn === false}
-                          onChange={() => {
-                            setFieldValue('phasedIn', false);
-                          }}
-                        />
-                      </Fieldset>
+                      <label
+                        htmlFor="Milestone-performancePeriodStarts"
+                        className="usa-legend margin-top-0"
+                      >
+                        {t('performanceStartDate')}
+                      </label>
+                      <div className="usa-hint" id="appointment-date-hint">
+                        {h('datePlaceholder')}
+                      </div>
+                      <FieldErrorMsg>
+                        {flatErrors.performancePeriodStarts}
+                      </FieldErrorMsg>
+                      <Field
+                        as={DatePicker}
+                        error={+!!flatErrors.performancePeriodStarts}
+                        id="Milestone-performancePeriodStarts"
+                        maxLength={50}
+                        name="performancePeriodStarts"
+                        defaultValue={values.performancePeriodStarts}
+                        onBlur={(e: any) =>
+                          handleOnBlur(
+                            e.target.value,
+                            'performancePeriodStarts'
+                          )
+                        }
+                      />
                     </FieldGroup>
-
-                    <div className="grid-col-12">
-                      <Button
-                        type="button"
-                        className="usa-button usa-button--unstyled margin-top-4"
-                        onClick={() => setHasAdditionalNote(!hasAdditionalNote)}
+                    <FieldGroup
+                      scrollElement="performancePeriodEnds"
+                      error={!!flatErrors.performancePeriodEnds}
+                      className="margin-top-0 width-card-lg"
+                    >
+                      <label
+                        htmlFor="Milestone-performancePeriodEnds"
+                        className="usa-legend margin-top-0"
                       >
-                        <IconAdd className="margin-right-1" aria-hidden />
-                        {h('additionalNote')}
-                      </Button>
+                        {t('performanceEndDate')}
+                      </label>
+                      <div className="usa-hint" id="appointment-date-hint">
+                        {h('datePlaceholder')}
+                      </div>
+                      <FieldErrorMsg>
+                        {flatErrors.performancePeriodEnds}
+                      </FieldErrorMsg>
+                      <Field
+                        as={DatePicker}
+                        error={+!!flatErrors.performancePeriodEnds}
+                        id="Milestone-performancePeriodEnds"
+                        maxLength={50}
+                        name="performancePeriodEnds"
+                        defaultValue={values.performancePeriodEnds}
+                        onBlur={(e: any) =>
+                          handleOnBlur(e.target.value, 'performancePeriodEnds')
+                        }
+                      />
+                    </FieldGroup>
+                  </div>
+
+                  <FieldGroup
+                    scrollElement="wrapUpEnds"
+                    error={!!flatErrors.wrapUpEnds}
+                    className="margin-top-4  width-card-lg"
+                  >
+                    <Label htmlFor="Milestone-wrapUpEnds">
+                      {t('modelWrapUp')}
+                    </Label>
+                    <div className="usa-hint" id="appointment-date-hint">
+                      {h('datePlaceholder')}
                     </div>
+                    <FieldErrorMsg>{flatErrors.wrapUpEnds}</FieldErrorMsg>
+                    <Field
+                      as={DatePicker}
+                      error={+!!flatErrors.wrapUpEnds}
+                      id="Milestone-wrapUpEnds"
+                      maxLength={50}
+                      name="wrapUpEnds"
+                      defaultValue={values.wrapUpEnds}
+                      onBlur={(e: any) =>
+                        handleOnBlur(e.target.value, 'wrapUpEnds')
+                      }
+                    />
+                  </FieldGroup>
 
-                    {hasAdditionalNote && (
-                      <FieldGroup className="margin-top-4 grid-col-12">
-                        <Field
-                          as={TextAreaField}
-                          className="height-15"
-                          id="ModelType-phasedInNote"
-                          name="phasedInNote"
-                          label={t('notes')}
-                        />
-                      </FieldGroup>
-                    )}
-
-                    <div className="margin-top-6 margin-bottom-3">
-                      <Button
-                        type="button"
-                        className="usa-button usa-button--outline margin-bottom-1"
-                        onClick={() => {
-                          if (Object.keys(errors).length > 0) {
-                            window.scrollTo(0, 0);
-                          } else {
-                            validateForm().then(err => {
-                              if (Object.keys(err).length > 0) {
-                                window.scrollTo(0, 0);
-                              } else {
-                                handleFormSubmit(values, 'task-list');
-                              }
-                            });
-                          }
-                        }}
-                      >
-                        {h('back')}
-                      </Button>
-                      <Button
-                        type="submit"
-                        className=""
-                        onClick={() => setErrors({})}
-                      >
-                        {h('saveAndStartNext')}
-                      </Button>
-                    </div>
+                  <div className="grid-col-12">
                     <Button
                       type="button"
-                      className="usa-button usa-button--unstyled"
+                      className="usa-button usa-button--unstyled margin-top-4"
+                      onClick={() => setHasHighLevelNote(!hasHighLevelNote)}
+                    >
+                      <IconAdd className="margin-right-1" aria-hidden />
+                      {h('additionalNote')}
+                    </Button>
+                  </div>
+
+                  {hasHighLevelNote && (
+                    <FieldGroup className="margin-top-4 grid-col-12">
+                      <Field
+                        as={TextAreaField}
+                        className="height-15"
+                        id="ModelType-HighLevelNote"
+                        name="highLevelNote"
+                        label={t('Notes')}
+                      />
+                    </FieldGroup>
+                  )}
+
+                  <FieldGroup
+                    scrollElement="phasedIn"
+                    error={!!flatErrors.phasedIn}
+                    className="margin-top-4"
+                  >
+                    <Label htmlFor="phasedIn">{t('tightTimeline')}</Label>
+                    <span className="usa-hint display-block text-normal margin-top-1">
+                      {t('tightTimelineInfo')}
+                    </span>
+                    <FieldErrorMsg>{flatErrors.phasedIn}</FieldErrorMsg>
+                    <Fieldset>
+                      <Field
+                        as={Radio}
+                        id="phasedIn-Yes"
+                        name="phasedIn"
+                        label={h('yes')}
+                        value="YES"
+                        checked={values.phasedIn === true}
+                        onChange={() => {
+                          setFieldValue('phasedIn', true);
+                        }}
+                      />
+                      <Field
+                        as={Radio}
+                        id="phasedIn-No"
+                        name="phasedIn"
+                        label={h('no')}
+                        value="FALSE"
+                        checked={values.phasedIn === false}
+                        onChange={() => {
+                          setFieldValue('phasedIn', false);
+                        }}
+                      />
+                    </Fieldset>
+                  </FieldGroup>
+
+                  <div className="grid-col-12">
+                    <Button
+                      type="button"
+                      className="usa-button usa-button--unstyled margin-top-4"
+                      onClick={() => setHasAdditionalNote(!hasAdditionalNote)}
+                    >
+                      <IconAdd className="margin-right-1" aria-hidden />
+                      {h('additionalNote')}
+                    </Button>
+                  </div>
+
+                  {hasAdditionalNote && (
+                    <FieldGroup className="margin-top-4 grid-col-12">
+                      <Field
+                        as={TextAreaField}
+                        className="height-15"
+                        id="ModelType-phasedInNote"
+                        name="phasedInNote"
+                        label={t('notes')}
+                      />
+                    </FieldGroup>
+                  )}
+
+                  <div className="margin-top-6 margin-bottom-3">
+                    <Button
+                      type="button"
+                      className="usa-button usa-button--outline margin-bottom-1"
                       onClick={() => {
                         if (Object.keys(errors).length > 0) {
                           window.scrollTo(0, 0);
@@ -638,22 +596,44 @@ const Milestones = () => {
                         }
                       }}
                     >
-                      <IconArrowBack className="margin-right-1" aria-hidden />
-                      {h('saveAndReturn')}
+                      {h('back')}
                     </Button>
-                  </Form>
-                </>
-              );
-            }}
-          </Formik>
-        </Grid>
-        <PageNumber
-          currentPage={3}
-          totalPages={3}
-          className="margin-bottom-10"
-        />
-      </GridContainer>
-    </MainContent>
+                    <Button
+                      type="submit"
+                      className=""
+                      onClick={() => setErrors({})}
+                    >
+                      {h('saveAndStartNext')}
+                    </Button>
+                  </div>
+                  <Button
+                    type="button"
+                    className="usa-button usa-button--unstyled"
+                    onClick={() => {
+                      if (Object.keys(errors).length > 0) {
+                        window.scrollTo(0, 0);
+                      } else {
+                        validateForm().then(err => {
+                          if (Object.keys(err).length > 0) {
+                            window.scrollTo(0, 0);
+                          } else {
+                            handleFormSubmit(values, 'task-list');
+                          }
+                        });
+                      }
+                    }}
+                  >
+                    <IconArrowBack className="margin-right-1" aria-hidden />
+                    {h('saveAndReturn')}
+                  </Button>
+                </Form>
+              </>
+            );
+          }}
+        </Formik>
+      )}
+      <PageNumber currentPage={3} totalPages={3} className="margin-bottom-10" />
+    </div>
   );
 };
 
