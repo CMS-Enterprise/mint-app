@@ -11,7 +11,7 @@ import (
 )
 
 // HandleModelCreationError handles errors from creating a model
-func HandleModelCreationError(logger *zap.Logger, err error, model models.BaseModel) error {
+func HandleModelCreationError(logger *zap.Logger, err error, model models.IBaseModel) error {
 	logger.Error(
 		fmt.Sprintf("Failed to create model [%v] with error: %v", model.GetModelTypeName(), err),
 		zap.String("user", model.GetCreatedBy()),
@@ -20,7 +20,7 @@ func HandleModelCreationError(logger *zap.Logger, err error, model models.BaseMo
 	return err
 }
 
-func logModelUpdateError(logger *zap.Logger, err error, model models.BaseModel) {
+func logModelUpdateError(logger *zap.Logger, err error, model models.IBaseModel) {
 	logger.Error(
 		fmt.Sprintf("Failed to update %v due to error: %v", model.GetModelTypeName(), err),
 		zap.String("id", model.GetPlanID().String()),
@@ -29,18 +29,18 @@ func logModelUpdateError(logger *zap.Logger, err error, model models.BaseModel) 
 }
 
 // HandleModelUpdateError handles errors from updating a model
-func HandleModelUpdateError(logger *zap.Logger, err error, model models.BaseModel) error {
+func HandleModelUpdateError(logger *zap.Logger, err error, model models.IBaseModel) error {
 	logModelUpdateError(logger, err, model)
 	return err
 }
 
 // HandleModelQueryError handles errors from querying a model
-func HandleModelQueryError(logger *zap.Logger, err error, model models.BaseModel) error {
+func HandleModelQueryError(logger *zap.Logger, err error, model models.IBaseModel) error {
 	logModelUpdateError(logger, err, model)
 	return createQueryError(err, model)
 }
 
-func createQueryError(err error, model models.BaseModel) error {
+func createQueryError(err error, model models.IBaseModel) error {
 	return &apperrors.QueryError{
 		Err:       err,
 		Model:     model,

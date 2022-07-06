@@ -5598,6 +5598,7 @@ deleteDiscussionReply(id: UUID!): DiscussionReply!
 enum TaskStatus {
   READY
   IN_PROGRESS
+  READY_FOR_REVIEW
   COMPLETE
 }
 

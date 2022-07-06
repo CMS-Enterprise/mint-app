@@ -1,15 +1,14 @@
 package models
 
 import (
-	"time"
-
 	"github.com/google/uuid"
 )
 
 // PlanBasics represents the "plan basics" section of a plan
 type PlanBasics struct {
-	ID          uuid.UUID `json:"id" db:"id"`
-	ModelPlanID uuid.UUID `json:"modelPlanID" db:"model_plan_id"`
+	// ID          uuid.UUID `json:"id" db:"id"`
+	// ModelPlanID uuid.UUID `json:"modelPlanID" db:"model_plan_id"`
+	BaseTaskListSection
 
 	ModelType *ModelType `json:"modelType" db:"model_type" statusWeight:"1"`
 
@@ -18,11 +17,11 @@ type PlanBasics struct {
 	TestInterventions *string `json:"testInterventions" db:"test_interventions" statusWeight:"1"`
 	Note              *string `json:"note" db:"note"`
 
-	CreatedBy   string     `json:"createdBy" db:"created_by"`
-	CreatedDts  time.Time  `json:"createdDts" db:"created_dts"`
-	ModifiedBy  *string    `json:"modifiedBy" db:"modified_by"`
-	ModifiedDts *time.Time `json:"modifiedDts" db:"modified_dts"`
-	Status      TaskStatus `json:"status" db:"status"`
+	// CreatedBy   string     `json:"createdBy" db:"created_by"`
+	// CreatedDts  time.Time  `json:"createdDts" db:"created_dts"`
+	// ModifiedBy  *string    `json:"modifiedBy" db:"modified_by"`
+	// ModifiedDts *time.Time `json:"modifiedDts" db:"modified_dts"`
+	// Status      TaskStatus `json:"status" db:"status"`
 }
 
 // CalcStatus calculates the status of the Plan Basics and sets the Status field
