@@ -67,9 +67,7 @@ describe('Model Plan Beneficiaries', () => {
     });
 
     await waitFor(() => {
-      expect(
-        screen.getByTestId('beneficiaries-choose-beneficiaries-other')
-      ).toHaveValue('Selection Method Other');
+      expect(screen.getByTestId('expected-people-impacted')).toHaveValue('100');
     });
   });
 

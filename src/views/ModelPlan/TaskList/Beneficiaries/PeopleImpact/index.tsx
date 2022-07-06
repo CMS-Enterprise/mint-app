@@ -257,13 +257,14 @@ const PeopleImpact = () => {
                           className="maxw-card"
                           error={flatErrors.numberPeopleImpacted}
                           id="expected-people-impacted"
-                          name="expectedNumberOfParticipants"
+                          data-testid="expected-people-impacted"
+                          name="numberPeopleImpacted"
                           onChange={(
                             e: React.ChangeEvent<HTMLInputElement>
                           ) => {
                             if (Number.isNaN(e.target.value)) return;
                             setFieldValue(
-                              'expectedNumberOfParticipants',
+                              'numberPeopleImpacted',
                               Number(e.target.value)
                             );
                           }}

@@ -149,11 +149,11 @@ exports[`Model Plan Beneficiaries matches snapshot 1`] = `
             </label>
             <input
               class="usa-input maxw-card"
-              data-testid="textInput"
+              data-testid="expected-people-impacted"
               id="expected-people-impacted"
-              name="expectedNumberOfParticipants"
+              name="numberPeopleImpacted"
               type="number"
-              value=""
+              value="0"
             />
             <label
               class="usa-label text-normal"
