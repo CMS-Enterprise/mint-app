@@ -326,7 +326,7 @@ const PeopleImpact = () => {
                         />
 
                         {(values?.beneficiarySelectionMethod || []).includes(
-                          'OTHER' as SelectionMethodType
+                          SelectionMethodType.OTHER
                         ) && (
                           <FieldGroup
                             scrollElement="beneficiaries-chooseBeneficiarie-other"
