@@ -12,7 +12,7 @@ import BeneficiaryIdentification from './index';
 const mockData: GetBeneficiaryIdentificationType = {
   __typename: 'PlanBeneficiaries',
   id: '123',
-  beneficiaries: [BeneficiariesType.NA],
+  beneficiaries: [BeneficiariesType.MEDICAID, BeneficiariesType.OTHER],
   beneficiariesOther: 'other',
   beneficiariesNote: 'note',
   treatDualElligibleDifferent: TriStateAnswer.YES,
@@ -34,7 +34,7 @@ const beneficiaryMock = [
         modelPlan: {
           id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905',
           modelName: 'My excellent plan that I just initiated',
-          opsEvalAndLearning: mockData
+          beneficiaries: mockData
         }
       }
     }
@@ -61,6 +61,10 @@ describe('Model Plan Beneficiaries', () => {
       expect(
         screen.getByTestId('beneficiaries-identification-form')
       ).toBeInTheDocument();
+    });
+
+    await waitFor(() => {
+      expect(screen.getByTestId('beneficiaries-other')).toHaveValue('other');
     });
   });
 
