@@ -93,7 +93,7 @@ exports[`Model Plan Beneficiaries matches snapshot 1`] = `
     data-testid="gridContainer"
   >
     <div
-      class="grid-row grid-gap beneficiaries__info"
+      class="grid-row grid-gap"
       data-testid="grid"
     >
       <div
@@ -366,7 +366,7 @@ exports[`Model Plan Beneficiaries matches snapshot 1`] = `
             <label
               class="usa-label maxw-none"
               data-testid="label"
-              for="beneficiaries-precedenceRules"
+              for="beneficiaries-precedence-rules"
             >
               Are there precedence rules between this model and other model(s)?
             </label>
@@ -377,8 +377,8 @@ exports[`Model Plan Beneficiaries matches snapshot 1`] = `
             </p>
             <textarea
               class="usa-textarea height-15"
-              data-testid="beneficiaries-precedenceRules"
-              id="beneficiaries-precedenceRules"
+              data-testid="beneficiaries-precedence-rules"
+              id="beneficiaries-precedence-rules"
               name="precedenceRules"
             />
           </div>
