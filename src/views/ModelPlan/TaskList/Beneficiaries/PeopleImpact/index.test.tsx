@@ -67,7 +67,7 @@ describe('Model Plan Beneficiaries', () => {
     });
 
     await waitFor(() => {
-      expect(screen.getByTestId('expected-people-impacted')).toHaveValue('100');
+      expect(screen.getByTestId('expected-people-impacted')).toHaveValue(100);
     });
   });
 

@@ -226,7 +226,6 @@ const PeopleImpact = () => {
                           className="maxw-none"
                           error={flatErrors.numberPeopleImpacted}
                           id="expected-people-impacted"
-                          data-testid="expected-people-impacted"
                           name="numberPeopleImpacted"
                           min={0}
                           max={10000}
