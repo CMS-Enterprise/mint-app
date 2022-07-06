@@ -236,7 +236,7 @@ const BeneficiaryIdentification = () => {
                         />
 
                         {(values?.beneficiaries || []).includes(
-                          'OTHER' as BeneficiariesType
+                          BeneficiariesType.OTHER
                         ) && (
                           <FieldGroup
                             scrollElement="beneficiariesOther"
@@ -262,7 +262,7 @@ const BeneficiaryIdentification = () => {
                         )}
 
                         {(values?.beneficiaries || []).includes(
-                          'NA' as BeneficiariesType
+                          BeneficiariesType.NA
                         ) && (
                           <Alert type="info" slim>
                             {t('beneficiariesNA')}
@@ -294,7 +294,8 @@ const BeneficiaryIdentification = () => {
                             label={h('yes')}
                             value="TRUE"
                             checked={
-                              values.treatDualElligibleDifferent === 'YES'
+                              values.treatDualElligibleDifferent ===
+                              TriStateAnswer.YES
                             }
                             onChange={() => {
                               setFieldValue(
@@ -304,9 +305,8 @@ const BeneficiaryIdentification = () => {
                             }}
                           />
 
-                          {values?.treatDualElligibleDifferent?.includes(
-                            'YES' as TriStateAnswer
-                          ) && (
+                          {values?.treatDualElligibleDifferent ===
+                            TriStateAnswer.YES && (
                             <FieldGroup
                               className="margin-left-4 margin-y-1"
                               scrollElement="treatDualElligibleDifferentHow"
@@ -342,7 +342,8 @@ const BeneficiaryIdentification = () => {
                             label={h('no')}
                             value="FALSE"
                             checked={
-                              values.treatDualElligibleDifferent === 'NO'
+                              values.treatDualElligibleDifferent ===
+                              TriStateAnswer.NO
                             }
                             onChange={() => {
                               setFieldValue(
@@ -358,7 +359,8 @@ const BeneficiaryIdentification = () => {
                             label={t('beneficiariesOptions.na')}
                             value="TBD"
                             checked={
-                              values.treatDualElligibleDifferent === 'TBD'
+                              values.treatDualElligibleDifferent ===
+                              TriStateAnswer.TBD
                             }
                             onChange={() => {
                               setFieldValue(
@@ -393,7 +395,8 @@ const BeneficiaryIdentification = () => {
                             label={h('yes')}
                             value="TRUE"
                             checked={
-                              values.excludeCertainCharacteristics === 'YES'
+                              values.excludeCertainCharacteristics ===
+                              TriStateAnswer.YES
                             }
                             onChange={() => {
                               setFieldValue(
@@ -403,9 +406,8 @@ const BeneficiaryIdentification = () => {
                             }}
                           />
 
-                          {values?.excludeCertainCharacteristics?.includes(
-                            'YES' as TriStateAnswer
-                          ) && (
+                          {values?.excludeCertainCharacteristics ===
+                            TriStateAnswer.YES && (
                             <FieldGroup
                               className="margin-left-4 margin-y-1"
                               scrollElement="excludeCertainCharacteristicsCriteria"
@@ -444,7 +446,8 @@ const BeneficiaryIdentification = () => {
                             label={h('no')}
                             value="FALSE"
                             checked={
-                              values.excludeCertainCharacteristics === 'NO'
+                              values.excludeCertainCharacteristics ===
+                              TriStateAnswer.NO
                             }
                             onChange={() => {
                               setFieldValue(
@@ -460,7 +463,8 @@ const BeneficiaryIdentification = () => {
                             label={t('beneficiariesOptions.na')}
                             value="TBD"
                             checked={
-                              values.excludeCertainCharacteristics === 'TBD'
+                              values.excludeCertainCharacteristics ===
+                              TriStateAnswer.TBD
                             }
                             onChange={() => {
                               setFieldValue(
