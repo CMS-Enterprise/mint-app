@@ -206,7 +206,7 @@ const BeneficiaryIdentification = () => {
                   <Grid desktop={{ col: 6 }}>
                     <Form
                       className="margin-top-6"
-                      data-testid="beneficiaries-page-one-form"
+                      data-testid="beneficiaries-identification-form"
                       onSubmit={e => {
                         handleSubmit(e);
                       }}

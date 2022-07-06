@@ -103,7 +103,7 @@ exports[`Model Plan Beneficiaries matches snapshot 1`] = `
         <form
           action="#"
           class="margin-top-6"
-          data-testid="beneficiaries-page-one-form"
+          data-testid="beneficiaries-identification-form"
         >
           <div
             class="usa-form-group margin-top-4"
