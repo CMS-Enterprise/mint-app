@@ -33,8 +33,8 @@ import {
   GetBeneficiaryIdentification as BeneficiaryIdentificationType,
   GetBeneficiaryIdentification_modelPlan_beneficiaries as BeneficiaryIdentificationFormType
 } from 'queries/Beneficiaries/types/GetBeneficiaryIdentification';
-import { UpdateModelPlanBeneficiariesVariables } from 'queries/types/UpdateModelPlanBeneficiaries';
-import UpdateModelPlanBeneficiaries from 'queries/UpdateModelPlanBeneficiaries';
+import { UpdateModelPlanBeneficiariesVariables } from 'queries/Beneficiaries/types/UpdateModelPlanBeneficiaries';
+import UpdateModelPlanBeneficiaries from 'queries/Beneficiaries/UpdateModelPlanBeneficiaries';
 import { BeneficiariesType, TriStateAnswer } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import { sortOtherEnum, translateBeneficiariesType } from 'utils/modelPlan';
@@ -93,7 +93,9 @@ const BeneficiaryIdentification = () => {
       .then(response => {
         if (!response?.errors) {
           if (redirect === 'next') {
-            history.push(`/models/${modelID}/task-list/beneficiaries/people-impact`);
+            history.push(
+              `/models/${modelID}/task-list/beneficiaries/people-impact`
+            );
           } else if (redirect === 'back') {
             history.push(`/models/${modelID}/task-list/`);
           }

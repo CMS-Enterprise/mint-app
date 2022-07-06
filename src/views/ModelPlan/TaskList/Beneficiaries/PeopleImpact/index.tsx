@@ -33,8 +33,8 @@ import {
   GetPeopleImpacted as PeopleImpactedType,
   GetPeopleImpacted_modelPlan_beneficiaries as PeopleImpactedFormType
 } from 'queries/Beneficiaries/types/GetPeopleImpacted';
-import { UpdateModelPlanBeneficiariesVariables } from 'queries/types/UpdateModelPlanBeneficiaries';
-import UpdateModelPlanBeneficiaries from 'queries/UpdateModelPlanBeneficiaries';
+import { UpdateModelPlanBeneficiariesVariables } from 'queries/Beneficiaries/types/UpdateModelPlanBeneficiaries';
+import UpdateModelPlanBeneficiaries from 'queries/Beneficiaries/UpdateModelPlanBeneficiaries';
 import {
   ConfidenceType,
   SelectionMethodType

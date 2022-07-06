@@ -31,8 +31,8 @@ import {
   GetFrequency as BeneficiaryFrequencyType,
   GetFrequency_modelPlan_beneficiaries as FrequencyFormType
 } from 'queries/Beneficiaries/types/GetFrequency';
-import { UpdateModelPlanBeneficiariesVariables } from 'queries/types/UpdateModelPlanBeneficiaries';
-import UpdateModelPlanBeneficiaries from 'queries/UpdateModelPlanBeneficiaries';
+import { UpdateModelPlanBeneficiariesVariables } from 'queries/Beneficiaries/types/UpdateModelPlanBeneficiaries';
+import UpdateModelPlanBeneficiaries from 'queries/Beneficiaries/UpdateModelPlanBeneficiaries';
 import { FrequencyType, OverlapType } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import {
@@ -89,7 +89,9 @@ const Frequency = () => {
       .then(response => {
         if (!response?.errors) {
           if (redirect === 'back') {
-            history.push(`/models/${modelID}/task-list/beneficiaries/people-impact`);
+            history.push(
+              `/models/${modelID}/task-list/beneficiaries/people-impact`
+            );
           } else if (redirect === 'task-list') {
             history.push(`/models/${modelID}/task-list/`);
           }
