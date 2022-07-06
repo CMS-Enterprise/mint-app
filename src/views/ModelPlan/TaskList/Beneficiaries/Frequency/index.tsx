@@ -248,7 +248,6 @@ const Frequency = () => {
                                         as={TextInput}
                                         className="maxw-none"
                                         id="beneficiaries-beneficiary-selection-frequency-other"
-                                        data-testid="beneficiaries-beneficiary-selection-frequency-other"
                                         maxLength={50}
                                         name="beneficiarySelectionFrequencyOther"
                                       />

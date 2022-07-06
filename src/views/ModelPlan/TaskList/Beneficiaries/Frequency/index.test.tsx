@@ -12,12 +12,12 @@ import Frequency from './index';
 const mockData: BeneficiaryFrequencyType = {
   __typename: 'PlanBeneficiaries',
   id: '123',
-  beneficiarySelectionFrequency: FrequencyType.ANNUALLY,
-  beneficiarySelectionFrequencyNote: 'Very often',
-  beneficiarySelectionFrequencyOther: '',
+  beneficiarySelectionFrequency: FrequencyType.OTHER,
+  beneficiarySelectionFrequencyNote: '',
+  beneficiarySelectionFrequencyOther: 'Very often',
   beneficiaryOverlap: OverlapType.YES_NO_ISSUES,
   beneficiaryOverlapNote: '',
-  precedenceRules: ''
+  precedenceRules: 'lorem ipsum'
 };
 
 const beneficiaryMock = [
@@ -61,11 +61,9 @@ describe('Model Plan Beneficiaries', () => {
     });
 
     await waitFor(() => {
-      expect(
-        screen.getByTestId(
-          'beneficiaries-beneficiary-selection-frequency-other'
-        )
-      ).toHaveValue('Very often');
+      expect(screen.getByTestId('beneficiaries-precedence-rules')).toHaveValue(
+        'lorem ipsum'
+      );
     });
   });
 
