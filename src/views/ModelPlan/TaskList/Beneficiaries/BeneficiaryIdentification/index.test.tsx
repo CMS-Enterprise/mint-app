@@ -12,13 +12,13 @@ import BeneficiaryIdentification from './index';
 const mockData: GetBeneficiaryIdentificationType = {
   __typename: 'PlanBeneficiaries',
   id: '123',
-  beneficiaries: ['OTHER' as BeneficiariesType],
+  beneficiaries: [BeneficiariesType.NA],
   beneficiariesOther: 'other',
   beneficiariesNote: 'note',
-  treatDualElligibleDifferent: 'YES' as TriStateAnswer,
+  treatDualElligibleDifferent: TriStateAnswer.YES,
   treatDualElligibleDifferentHow: 'This is how',
   treatDualElligibleDifferentNote: 'This is note',
-  excludeCertainCharacteristics: 'YES' as TriStateAnswer,
+  excludeCertainCharacteristics: TriStateAnswer.YES,
   excludeCertainCharacteristicsCriteria: 'Exclude',
   excludeCertainCharacteristicsNote: 'Note'
 };
