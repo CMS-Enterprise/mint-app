@@ -16,13 +16,7 @@ func UpdatePlanBasics(logger *zap.Logger, id uuid.UUID, changes map[string]inter
 		return nil, err
 	}
 
-	err = ApplyChanges(changes, existingBasics)
-	if err != nil {
-		return nil, err
-	}
-
-	existingBasics.ModifiedBy = &principal
-	err = existingBasics.CalcStatus()
+	err = BaseTaskListSectionPreUpdate(existingBasics, changes, principal)
 	if err != nil {
 		return nil, err
 	}

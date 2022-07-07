@@ -8,7 +8,7 @@ import (
 
 // IBaseTaskListSection returns the embedded BaseTaskListSection
 type IBaseTaskListSection interface {
-	Get() BaseTaskListSection
+	GetBaseTaskListSection() *BaseTaskListSection
 }
 
 // BaseTaskListSection represents all the shared fields in common to a task list section
@@ -18,12 +18,6 @@ type BaseTaskListSection struct {
 	ReadyForReviewBy  *string    `json:"readyForReviewBy" db:"ready_for_review_by"`
 	ReadyForReviewDts *time.Time `json:"readyForReviewDts" db:"ready_for_review_dts"`
 	Status            TaskStatus `json:"status" db:"status"`
-	oldStatus         TaskStatus `db:"status"`
-}
-
-//SetOldStatus sets oldStatus to the value of Status
-func (b *BaseTaskListSection) SetOldStatus() {
-	b.oldStatus = b.Status
 }
 
 // NewBaseTaskListSection makes a task list section by a modelPlanID and euaid
@@ -31,6 +25,7 @@ func NewBaseTaskListSection(modelPlanID uuid.UUID, euaid string) BaseTaskListSec
 
 	return BaseTaskListSection{
 		ModelPlanID: modelPlanID,
+		Status:      TaskReady,
 		BaseModel: BaseModel{
 			CreatedBy: euaid,
 		},
@@ -38,8 +33,13 @@ func NewBaseTaskListSection(modelPlanID uuid.UUID, euaid string) BaseTaskListSec
 
 }
 
+//GetBaseTaskListSection returns the BaseTaskListSection Object embedded in the struct
+func (b *BaseTaskListSection) GetBaseTaskListSection() *BaseTaskListSection {
+	return b
+}
+
 // CalcStatus updates the TaskStatus if it is in ready, but it has been modified.
-func (b *BaseTaskListSection) CalcStatus() error {
+func (b *BaseTaskListSection) CalcStatus(oldStatus TaskStatus) error {
 
 	switch b.Status {
 	case TaskReady:
@@ -49,7 +49,7 @@ func (b *BaseTaskListSection) CalcStatus() error {
 	case TaskInProgress:
 	case TaskComplete:
 	case TaskReadyForReview:
-		if b.oldStatus != TaskReadyForReview {
+		if oldStatus != TaskReadyForReview {
 			now := time.Now()
 			b.ReadyForReviewBy = b.ModifiedBy
 			b.ReadyForReviewDts = &now

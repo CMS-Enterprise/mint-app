@@ -73,7 +73,6 @@ func (s *Store) PlanBasicsGetByID(logger *zap.Logger, id uuid.UUID) (*models.Pla
 	if err != nil {
 		return nil, err
 	}
-	plan.SetOldStatus()
 	return &plan, nil
 }
 
