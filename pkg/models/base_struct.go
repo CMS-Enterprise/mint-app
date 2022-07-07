@@ -6,8 +6,8 @@ import (
 	"github.com/google/uuid"
 )
 
-// IBaseModel is an interface that all models must implement
-type IBaseModel interface {
+// IBaseStruct is an interface that all models must implement
+type IBaseStruct interface {
 	// Get() BaseModel
 	GetModelTypeName() string
 	GetID() uuid.UUID
@@ -16,8 +16,8 @@ type IBaseModel interface {
 	GetModifiedBy() *string
 }
 
-// BaseModel represents the shared data in common betwen all models
-type BaseModel struct {
+// BaseStruct represents the shared data in common betwen all models
+type BaseStruct struct {
 	ID          uuid.UUID  `json:"id" db:"id"`
 	CreatedBy   string     `json:"createdBy" db:"created_by"`
 	CreatedDts  time.Time  `json:"createdDts" db:"created_dts"`
@@ -25,7 +25,7 @@ type BaseModel struct {
 	ModifiedDts *time.Time `json:"modifiedDts" db:"modified_dts"`
 }
 
-// Get returns the Base Model struct
-func (b *BaseModel) Get() BaseModel {
+// Get returns the Base Struct
+func (b *BaseStruct) Get() BaseStruct {
 	return *b
 }
