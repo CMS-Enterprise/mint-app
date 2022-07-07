@@ -34,6 +34,8 @@ VALUES (
     :phased_in_note,
     :created_by,
     :modified_by,
+    :ready_for_review_by,
+    :ready_for_review_dts,
     :status
 )
 RETURNING
@@ -55,4 +57,6 @@ created_by,
 created_dts,
 modified_by,
 modified_dts,
+ready_for_review_by,
+ready_for_review_dts,
 status;
