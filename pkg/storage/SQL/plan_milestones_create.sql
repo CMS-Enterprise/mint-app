@@ -15,6 +15,8 @@ INSERT INTO plan_milestones (
     phased_in_note,
     created_by,
     modified_by,
+    ready_for_review_by,
+    ready_for_review_dts,
     status
 )
 VALUES (
