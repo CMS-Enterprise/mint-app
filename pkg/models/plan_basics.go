@@ -16,17 +16,6 @@ type PlanBasics struct {
 	Note              *string `json:"note" db:"note"`
 }
 
-// CalcStatus calculates the status of the Plan Basics and sets the Status field
-// func (p *PlanBasics) CalcStatus() error {
-// 	status, err := GenericallyCalculateStatus(*p)
-// 	if err != nil {
-// 		return err
-// 	}
-
-// 	p.Status = status
-// 	return nil
-// }
-
 // GetModelTypeName returns a string name that represents the PlanBasics struct
 func (p PlanBasics) GetModelTypeName() string {
 	return "Plan_Basics"
