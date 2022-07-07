@@ -201,6 +201,8 @@ type PlanBasics {
   createdDts: Time!
   modifiedBy: String
   modifiedDts: Time
+  readyForReviewBy: String
+  readyForReviewDts: Time
   status: TaskStatus!
 }
 
@@ -215,6 +217,7 @@ input PlanBasicsChanges @goModel(model: "map[string]interface{}") {
   goal: String
   testInterventions: String
   note: String
+  status: TaskStatus #TODO, restrict these values
 }
 
 """

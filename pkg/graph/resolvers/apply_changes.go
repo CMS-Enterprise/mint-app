@@ -49,6 +49,7 @@ func ApplyChanges(changes map[string]interface{}, to interface{}) error {
 		TagName:     "json",
 		Result:      to,
 		ZeroFields:  true,
+		Squash:      true,
 		// This is needed to get mapstructure to call the gqlgen unmarshaler func for custom scalars (eg Date)
 		DecodeHook: func(a reflect.Type, b reflect.Type, v interface{}) (interface{}, error) {
 			// If the destination is a time.Time and we need to parse it from a string

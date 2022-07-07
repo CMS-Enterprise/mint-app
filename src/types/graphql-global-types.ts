@@ -393,6 +393,7 @@ export interface PlanBasicsChanges {
   goal?: string | null;
   testInterventions?: string | null;
   note?: string | null;
+  status?: TaskStatus | null;
 }
 
 /**

@@ -164,6 +164,8 @@ type ComplexityRoot struct {
 		ModifiedDts       func(childComplexity int) int
 		Note              func(childComplexity int) int
 		Problem           func(childComplexity int) int
+		ReadyForReviewBy  func(childComplexity int) int
+		ReadyForReviewDts func(childComplexity int) int
 		Status            func(childComplexity int) int
 		TestInterventions func(childComplexity int) int
 	}
@@ -1493,6 +1495,20 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.PlanBasics.Problem(childComplexity), true
+
+	case "PlanBasics.readyForReviewBy":
+		if e.complexity.PlanBasics.ReadyForReviewBy == nil {
+			break
+		}
+
+		return e.complexity.PlanBasics.ReadyForReviewBy(childComplexity), true
+
+	case "PlanBasics.readyForReviewDts":
+		if e.complexity.PlanBasics.ReadyForReviewDts == nil {
+			break
+		}
+
+		return e.complexity.PlanBasics.ReadyForReviewDts(childComplexity), true
 
 	case "PlanBasics.status":
 		if e.complexity.PlanBasics.Status == nil {
@@ -4580,6 +4596,8 @@ type PlanBasics {
   createdDts: Time!
   modifiedBy: String
   modifiedDts: Time
+  readyForReviewBy: String
+  readyForReviewDts: Time
   status: TaskStatus!
 }
 
@@ -4594,6 +4612,7 @@ input PlanBasicsChanges @goModel(model: "map[string]interface{}") {
   goal: String
   testInterventions: String
   note: String
+  status: TaskStatus #TODO, restrict these values
 }
 
 """
@@ -8561,6 +8580,10 @@ func (ec *executionContext) fieldContext_ModelPlan_basics(ctx context.Context, f
 				return ec.fieldContext_PlanBasics_modifiedBy(ctx, field)
 			case "modifiedDts":
 				return ec.fieldContext_PlanBasics_modifiedDts(ctx, field)
+			case "readyForReviewBy":
+				return ec.fieldContext_PlanBasics_readyForReviewBy(ctx, field)
+			case "readyForReviewDts":
+				return ec.fieldContext_PlanBasics_readyForReviewDts(ctx, field)
 			case "status":
 				return ec.fieldContext_PlanBasics_status(ctx, field)
 			}
@@ -10422,6 +10445,10 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanBasics(ctx context.C
 				return ec.fieldContext_PlanBasics_modifiedBy(ctx, field)
 			case "modifiedDts":
 				return ec.fieldContext_PlanBasics_modifiedDts(ctx, field)
+			case "readyForReviewBy":
+				return ec.fieldContext_PlanBasics_readyForReviewBy(ctx, field)
+			case "readyForReviewDts":
+				return ec.fieldContext_PlanBasics_readyForReviewDts(ctx, field)
 			case "status":
 				return ec.fieldContext_PlanBasics_status(ctx, field)
 			}
@@ -12991,6 +13018,88 @@ func (ec *executionContext) _PlanBasics_modifiedDts(ctx context.Context, field g
 }
 
 func (ec *executionContext) fieldContext_PlanBasics_modifiedDts(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanBasics",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Time does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanBasics_readyForReviewBy(ctx context.Context, field graphql.CollectedField, obj *models.PlanBasics) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanBasics_readyForReviewBy(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ReadyForReviewBy, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanBasics_readyForReviewBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanBasics",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanBasics_readyForReviewDts(ctx context.Context, field graphql.CollectedField, obj *models.PlanBasics) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanBasics_readyForReviewDts(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ReadyForReviewDts, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*time.Time)
+	fc.Result = res
+	return ec.marshalOTime2ᚖtimeᚐTime(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanBasics_readyForReviewDts(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "PlanBasics",
 		Field:      field,
@@ -33019,6 +33128,14 @@ func (ec *executionContext) _PlanBasics(ctx context.Context, sel ast.SelectionSe
 
 			out.Values[i] = ec._PlanBasics_modifiedDts(ctx, field, obj)
 
+		case "readyForReviewBy":
+
+			out.Values[i] = ec._PlanBasics_readyForReviewBy(ctx, field, obj)
+
+		case "readyForReviewDts":
+
+			out.Values[i] = ec._PlanBasics_readyForReviewDts(ctx, field, obj)
+
 		case "status":
 
 			out.Values[i] = ec._PlanBasics_status(ctx, field, obj)
@@ -45284,6 +45401,23 @@ func (ec *executionContext) marshalOString2ᚖstring(ctx context.Context, sel as
 		return graphql.Null
 	}
 	res := graphql.MarshalString(*v)
+	return res
+}
+
+func (ec *executionContext) unmarshalOTaskStatus2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTaskStatus(ctx context.Context, v interface{}) (*models.TaskStatus, error) {
+	if v == nil {
+		return nil, nil
+	}
+	tmp, err := graphql.UnmarshalString(v)
+	res := models.TaskStatus(tmp)
+	return &res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalOTaskStatus2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTaskStatus(ctx context.Context, sel ast.SelectionSet, v *models.TaskStatus) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	res := graphql.MarshalString(string(*v))
 	return res
 }
 

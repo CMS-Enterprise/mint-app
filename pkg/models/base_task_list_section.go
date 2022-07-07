@@ -18,6 +18,12 @@ type BaseTaskListSection struct {
 	ReadyForReviewBy  *string    `json:"readyForReviewBy" db:"ready_for_review_by"`
 	ReadyForReviewDts *time.Time `json:"readyForReviewDts" db:"ready_for_review_dts"`
 	Status            TaskStatus `json:"status" db:"status"`
+	oldStatus         TaskStatus `db:"status"`
+}
+
+//SetOldStatus sets oldStatus to the value of Status
+func (b *BaseTaskListSection) SetOldStatus() {
+	b.oldStatus = b.Status
 }
 
 // NewBaseTaskListSection makes a task list section by a modelPlanID and euaid
@@ -37,11 +43,23 @@ func (b *BaseTaskListSection) CalcStatus() error {
 
 	switch b.Status {
 	case TaskReady:
-		if b.ModifiedDts != nil {
+		if b.ModifiedBy != nil {
 			b.Status = TaskInProgress
 		}
 	case TaskInProgress:
 	case TaskComplete:
+	case TaskReadyForReview:
+		if b.oldStatus != TaskReadyForReview {
+			now := time.Now()
+			b.ReadyForReviewBy = b.ModifiedBy
+			b.ReadyForReviewDts = &now
+		}
+	case "": //TODO think about restructuring this, do we just want to default to a status when made?
+		if b.ModifiedBy != nil {
+			b.Status = TaskInProgress
+		} else {
+			b.Status = TaskReady
+		}
 	default:
 	}
 

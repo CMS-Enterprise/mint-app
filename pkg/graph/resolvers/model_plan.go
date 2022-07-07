@@ -38,15 +38,19 @@ func ModelPlanCreate(logger *zap.Logger, modelName string, store *storage.Store,
 	}
 
 	baseTaskList := models.NewBaseTaskListSection(createdPlan.ID, principalInfo.EuaUserID)
+	err = baseTaskList.CalcStatus()
+	if err != nil {
+		return nil, err
+	}
 
 	// Create a default plan basics object
 	basics := &models.PlanBasics{
 		BaseTaskListSection: baseTaskList,
 	}
-	err = basics.CalcStatus()
-	if err != nil {
-		return nil, err
-	}
+	// err = basics.CalcStatus()
+	// if err != nil {
+	// 	return nil, err
+	// }
 	_, err = store.PlanBasicsCreate(logger, basics)
 	if err != nil {
 		return nil, err
