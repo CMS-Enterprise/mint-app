@@ -56,7 +56,7 @@ SELECT
     anticipated_payment_frequency_notes,
     will_recover_payments,
     will_recover_payments_notes
-    anticipate_reconciling_payments_retrospectively,
+    AS anticipate_reconciling_payments_retrospectively,
     anticipate_reconciling_payments_retrospectively_notes,
     payment_start_date,
     payment_start_date_notes,

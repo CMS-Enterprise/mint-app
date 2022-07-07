@@ -121,7 +121,7 @@ CREATE TABLE plan_payments (
     can_participants_select_between_payment_mechanisms BOOL,
     can_participants_select_between_payment_mechanisms_how ZERO_STRING,
     can_participants_select_between_payment_mechanisms_note ZERO_STRING,
-    anticipated_payment_frequency PP_ANTICIPATED_PAYMENT_FREQUENCY_TYPE,
+    anticipated_payment_frequency PP_ANTICIPATED_PAYMENT_FREQUENCY_TYPE[],
     anticipated_payment_frequency_other ZERO_STRING,
     anticipated_payment_frequency_notes ZERO_STRING,
 

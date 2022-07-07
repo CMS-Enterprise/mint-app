@@ -762,7 +762,7 @@ type PlanPayments {
   canParticipantsSelectBetweenPaymentMechanisms:     Boolean!
   canParticipantsSelectBetweenPaymentMechanismsHow:  String!
   canParticipantsSelectBetweenPaymentMechanismsNote: String!
-  anticipatedPaymentFrequency:                       AnticipatedPaymentFrequencyType!
+  anticipatedPaymentFrequency:                       [AnticipatedPaymentFrequencyType!]
   anticipatedPaymentFrequencyOther:                  String!
   anticipatedPaymentFrequencyNotes:                  String!
 
