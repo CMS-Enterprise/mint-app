@@ -82,6 +82,14 @@ export default gql`
         modifiedDts
         status
       }
+      itTools {
+        id
+        createdBy
+        createdDts
+        modifiedBy
+        modifiedDts
+        status
+      }
     }
   }
 `;

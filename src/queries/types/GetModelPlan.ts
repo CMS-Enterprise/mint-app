@@ -96,6 +96,16 @@ export interface GetModelPlan_modelPlan_opsEvalAndLearning {
   status: TaskStatus;
 }
 
+export interface GetModelPlan_modelPlan_itTools {
+  __typename: "PlanITTools";
+  id: UUID;
+  createdBy: string;
+  createdDts: Time;
+  modifiedBy: string | null;
+  modifiedDts: Time | null;
+  status: TaskStatus;
+}
+
 export interface GetModelPlan_modelPlan {
   __typename: "ModelPlan";
   id: UUID;
@@ -114,6 +124,7 @@ export interface GetModelPlan_modelPlan {
   generalCharacteristics: GetModelPlan_modelPlan_generalCharacteristics;
   participantsAndProviders: GetModelPlan_modelPlan_participantsAndProviders;
   opsEvalAndLearning: GetModelPlan_modelPlan_opsEvalAndLearning;
+  itTools: GetModelPlan_modelPlan_itTools;
 }
 
 export interface GetModelPlan {

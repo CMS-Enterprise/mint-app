@@ -61,6 +61,11 @@ const modelPlanTaskList = {
       copy:
         'Start filling out as much of the payment information as you know and reach out to the Model Assessment Team if you need help.'
     },
+    'it-tools': {
+      heading: 'IT tools',
+      copy:
+        'Choose the IT solutions your model will utilize. Many questions in this section are populated based on responses to questions answered in previous sections. '
+    },
     finalizeModelPlan: {
       heading: 'Finalize Model Plan',
       copy:
