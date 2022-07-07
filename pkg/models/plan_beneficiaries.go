@@ -1,16 +1,13 @@
 package models
 
 import (
-	"time"
-
 	"github.com/google/uuid"
 	"github.com/lib/pq"
 )
 
 //PlanBeneficiaries represents the beneficiaries section of the model plan task list
 type PlanBeneficiaries struct {
-	ID          uuid.UUID `json:"id" db:"id"`
-	ModelPlanID uuid.UUID `json:"modelPlanID" db:"model_plan_id"`
+	BaseTaskListSection
 
 	//page 1
 	Beneficiaries                         pq.StringArray  `json:"beneficiaries" db:"beneficiaries"`
@@ -38,13 +35,6 @@ type PlanBeneficiaries struct {
 	BeneficiaryOverlap                 *OverlapType   `json:"beneficiaryOverlap" db:"beneficiary_overlap" statusWeight:"1"`
 	BeneficiaryOverlapNote             *string        `json:"beneficiaryOverlapNote" db:"beneficiary_overlap_note"`
 	PrecedenceRules                    *string        `json:"precedenceRules" db:"precedence_rules"`
-
-	// Meta
-	CreatedBy   string     `json:"createdBy" db:"created_by"`
-	CreatedDts  time.Time  `json:"createdDts" db:"created_dts"`
-	ModifiedBy  *string    `json:"modifiedBy" db:"modified_by"`
-	ModifiedDts *time.Time `json:"modifiedDts" db:"modified_dts"`
-	Status      TaskStatus `json:"status" db:"status"`
 }
 
 // CalcStatus returns a TaskStatus based on how many fields have been entered in the PlanBeneficiaries struct

@@ -8,8 +8,7 @@ import (
 
 // PlanMilestones represents the "plan milestones" section of a plan
 type PlanMilestones struct {
-	ID          uuid.UUID `json:"id" db:"id"`
-	ModelPlanID uuid.UUID `json:"modelPlanID" db:"model_plan_id"`
+	BaseTaskListSection
 
 	CompleteICIP    *time.Time `json:"completeICIP" db:"complete_icip" statusWeight:"1"`
 	ClearanceStarts *time.Time `json:"clearanceStarts" db:"clearance_starts" statusWeight:"1"`
@@ -27,13 +26,6 @@ type PlanMilestones struct {
 
 	PhasedIn     *bool   `json:"phasedIn" db:"phased_in" statusWeight:"1"` //default to false
 	PhasedInNote *string `json:"phasedInNote" db:"phased_in_note"`
-
-	CreatedBy   string     `json:"createdBy" db:"created_by"`
-	CreatedDts  time.Time  `json:"createdDts" db:"created_dts"`
-	ModifiedBy  *string    `json:"modifiedBy" db:"modified_by"`
-	ModifiedDts *time.Time `json:"modifiedDts" db:"modified_dts"`
-
-	Status TaskStatus `json:"status" db:"status"`
 }
 
 // CalcStatus calculates the status of the Plan Milestones and sets the Status field

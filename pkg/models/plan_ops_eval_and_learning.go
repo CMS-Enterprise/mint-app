@@ -9,8 +9,7 @@ import (
 
 //PlanOpsEvalAndLearning represents the tasks list section that handles information around operations, evaluation, and learning
 type PlanOpsEvalAndLearning struct {
-	ID          uuid.UUID `json:"id" db:"id"`
-	ModelPlanID uuid.UUID `json:"modelPlanID" db:"model_plan_id"`
+	BaseTaskListSection
 
 	//Page 1
 	AgencyOrStateHelp      pq.StringArray `json:"agencyOrStateHelp" db:"agency_or_state_help"`
@@ -122,13 +121,6 @@ type PlanOpsEvalAndLearning struct {
 	ModelLearningSystemsOther *string        `json:"modelLearningSystemsOther" db:"model_learning_systems_other"`
 	ModelLearningSystemsNote  *string        `json:"modelLearningSystemsNote" db:"model_learning_systems_note"`
 	AnticipatedChallenges     *string        `json:"anticipatedChallenges" db:"anticipated_challenges" statusWeight:"1"`
-
-	// Meta
-	CreatedBy   string     `json:"createdBy" db:"created_by"`
-	CreatedDts  time.Time  `json:"createdDts" db:"created_dts"`
-	ModifiedBy  *string    `json:"modifiedBy" db:"modified_by"`
-	ModifiedDts *time.Time `json:"modifiedDts" db:"modified_dts"`
-	Status      TaskStatus `json:"status" db:"status"`
 }
 
 //DataStartsType represents the possible DATASTARTSTYPE options

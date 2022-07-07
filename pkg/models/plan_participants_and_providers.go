@@ -1,16 +1,13 @@
 package models
 
 import (
-	"time"
-
 	"github.com/google/uuid"
 	"github.com/lib/pq"
 )
 
 //PlanParticipantsAndProviders represents the tasks list section that handles information around participants and providers
 type PlanParticipantsAndProviders struct {
-	ID          uuid.UUID `json:"id" db:"id"`
-	ModelPlanID uuid.UUID `json:"modelPlanID" db:"model_plan_id"`
+	BaseTaskListSection
 
 	//page 1
 	Participants                      pq.StringArray `json:"participants" db:"participants"`
@@ -67,13 +64,6 @@ type PlanParticipantsAndProviders struct {
 	ProviderOverlap                *OverlapType   `json:"providerOverlap" db:"provider_overlap" statusWeight:"1"`
 	ProviderOverlapHierarchy       *string        `json:"providerOverlapHierarchy" db:"provider_overlap_hierarchy"`
 	ProviderOverlapNote            *string        `json:"providerOverlapNote" db:"provider_overlap_note"`
-
-	// Meta
-	CreatedBy   string     `json:"createdBy" db:"created_by"`
-	CreatedDts  time.Time  `json:"createdDts" db:"created_dts"`
-	ModifiedBy  *string    `json:"modifiedBy" db:"modified_by"`
-	ModifiedDts *time.Time `json:"modifiedDts" db:"modified_dts"`
-	Status      TaskStatus `json:"status" db:"status"`
 }
 
 //RecruitmentType represents the possible RecruitmentType options

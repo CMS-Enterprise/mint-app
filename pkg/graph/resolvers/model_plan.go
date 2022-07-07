@@ -12,6 +12,7 @@ import (
 // TODO Revist this function, as we probably want to add all of these DB entries inthe scope of a single SQL transaction
 // so that we can roll back if there is an error with any of these calls.
 func ModelPlanCreate(logger *zap.Logger, modelName string, store *storage.Store, principalInfo *models.UserInfo) (*models.ModelPlan, error) {
+	//TODO add base Struct here
 	plan := &models.ModelPlan{
 		ModelName: modelName,
 		Status:    models.ModelStatusPlanDraft,
@@ -38,19 +39,13 @@ func ModelPlanCreate(logger *zap.Logger, modelName string, store *storage.Store,
 	}
 
 	baseTaskList := models.NewBaseTaskListSection(createdPlan.ID, principalInfo.EuaUserID) //make a taskList status, with status Ready
-	// err = baseTaskList.CalcStatus("")
-	// if err != nil {
-	// 	return nil, err
-	// }
+	//TODO, should we make a BASE STRUCT FIRST? Then we can pass that to every sub struct
 
 	// Create a default plan basics object
 	basics := &models.PlanBasics{
 		BaseTaskListSection: baseTaskList,
 	}
-	// err = basics.CalcStatus()
-	// if err != nil {
-	// 	return nil, err
-	// }
+
 	_, err = store.PlanBasicsCreate(logger, basics)
 	if err != nil {
 		return nil, err
@@ -58,12 +53,7 @@ func ModelPlanCreate(logger *zap.Logger, modelName string, store *storage.Store,
 
 	// Create a default plan milestones object
 	milestones := &models.PlanMilestones{
-		ModelPlanID: createdPlan.ID,
-		CreatedBy:   principalInfo.EuaUserID,
-	}
-	err = milestones.CalcStatus()
-	if err != nil {
-		return nil, err
+		BaseTaskListSection: baseTaskList,
 	}
 	_, err = store.PlanMilestonesCreate(logger, milestones)
 	if err != nil {
@@ -72,67 +62,41 @@ func ModelPlanCreate(logger *zap.Logger, modelName string, store *storage.Store,
 
 	// Create a default plan general characteristics object
 	generalCharacteristics := &models.PlanGeneralCharacteristics{
-		ModelPlanID: createdPlan.ID,
-		CreatedBy:   principalInfo.EuaUserID,
-		ModifiedBy:  &principalInfo.EuaUserID,
-	}
-	err = generalCharacteristics.CalcStatus()
-	if err != nil {
-		return nil, err
+		BaseTaskListSection: baseTaskList,
 	}
 	_, err = store.PlanGeneralCharacteristicsCreate(logger, generalCharacteristics)
 	if err != nil {
 		return nil, err
 	}
+	// Create a default Plan Beneficiares object
 	beneficiaries := &models.PlanBeneficiaries{
-		ModelPlanID: createdPlan.ID,
-		CreatedBy:   principalInfo.EuaUserID,
+		BaseTaskListSection: baseTaskList,
 	}
-	err = beneficiaries.CalcStatus()
-	if err != nil {
-		return nil, err
-	}
-
 	_, err = store.PlanBeneficiariesCreate(logger, beneficiaries)
 	if err != nil {
 		return nil, err
 	}
+	//Create a default Plan Participants and Providers object
 	participantsAndProviders := &models.PlanParticipantsAndProviders{
-		ModelPlanID: createdPlan.ID,
-		CreatedBy:   principalInfo.EuaUserID,
-		ModifiedBy:  &principalInfo.EuaUserID,
-	}
-	err = participantsAndProviders.CalcStatus()
-	if err != nil {
-		return nil, err
+		BaseTaskListSection: baseTaskList,
 	}
 	_, err = store.PlanParticipantsAndProvidersCreate(logger, participantsAndProviders)
 	if err != nil {
 		return nil, err
 	}
 
+	//Create default Plan OpsEvalAndLearning object
 	opsEvalAndLearning := &models.PlanOpsEvalAndLearning{
-		ModelPlanID: createdPlan.ID,
-		CreatedBy:   principalInfo.EuaUserID,
-		ModifiedBy:  &principalInfo.EuaUserID,
-	}
-	err = opsEvalAndLearning.CalcStatus()
-	if err != nil {
-		return nil, err
+		BaseTaskListSection: baseTaskList,
 	}
 	_, err = store.PlanOpsEvalAndLearningCreate(logger, opsEvalAndLearning)
 	if err != nil {
 		return nil, err
 	}
 
+	//Create default PlanITTools object
 	itTools := &models.PlanITTools{
-		ModelPlanID: createdPlan.ID,
-		CreatedBy:   principalInfo.EuaUserID,
-		ModifiedBy:  &principalInfo.EuaUserID,
-	}
-	err = itTools.CalcStatus()
-	if err != nil {
-		return nil, err
+		BaseTaskListSection: baseTaskList,
 	}
 	_, err = store.PlanITToolsCreate(logger, itTools)
 	if err != nil {
