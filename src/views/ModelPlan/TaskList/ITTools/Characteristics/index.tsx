@@ -34,7 +34,7 @@ import flattenErrors from 'utils/flattenErrors';
 import { NotFoundPartial } from 'views/NotFound';
 
 const ITCharacteristics = () => {
-  const { t } = useTranslation('operationsEvaluationAndLearning');
+  const { t } = useTranslation('itTools');
   const { t: h } = useTranslation('draftModelPlan');
   const { modelID } = useParams<{ modelID: string }>();
 
@@ -62,6 +62,8 @@ const ITCharacteristics = () => {
     gcUpdateContractOther,
     gcUpdateContractNote
   } = data?.modelPlan?.itTools || ({} as ITCharacteristicsFormType);
+
+  console.log(data);
 
   const modelName = data?.modelPlan?.modelName || '';
 
@@ -140,7 +142,7 @@ const ITCharacteristics = () => {
         </Trans>
       </p>
       <p className="margin-bottom-2 font-body-md line-height-sans-4">
-        {h('helpText')}
+        {t('subheading')}
       </p>
 
       <AskAQuestion modelID={modelID} />
