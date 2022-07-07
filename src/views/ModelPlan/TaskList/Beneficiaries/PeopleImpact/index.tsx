@@ -253,7 +253,7 @@ const PeopleImpact = () => {
                         <Field
                           as={TextInput}
                           type="number"
-                          className="maxw-card"
+                          className="width-card"
                           error={flatErrors.numberPeopleImpacted}
                           id="expected-people-impacted"
                           data-testid="expected-people-impacted"
@@ -347,7 +347,7 @@ const PeopleImpact = () => {
                               error={flatErrors.beneficiarySelectionOther}
                               id="beneficiaries-choose-beneficiaries-other"
                               data-testid="beneficiaries-choose-beneficiaries-other"
-                              name="beneficiaries-choose-beneficiaries-other"
+                              name="beneficiarySelectionOther"
                             />
                           </FieldGroup>
                         )}

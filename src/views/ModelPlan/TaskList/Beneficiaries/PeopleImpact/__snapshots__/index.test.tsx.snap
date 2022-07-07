@@ -148,7 +148,7 @@ exports[`Model Plan Beneficiaries matches snapshot 1`] = `
               Number of people
             </label>
             <input
-              class="usa-input maxw-card"
+              class="usa-input width-card"
               data-testid="expected-people-impacted"
               id="expected-people-impacted"
               name="numberPeopleImpacted"
