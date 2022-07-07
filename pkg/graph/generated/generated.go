@@ -585,68 +585,68 @@ type ComplexityRoot struct {
 	}
 
 	PlanPayments struct {
-		AffectsMedicareSecondaryPayerClaims                      func(childComplexity int) int
-		AffectsMedicareSecondaryPayerClaimsExplanation           func(childComplexity int) int
-		AffectsMedicareSecondaryPayerClaimsNote                  func(childComplexity int) int
-		AnticipateReconcilingPaymentsRetrospectively             func(childComplexity int) int
-		AnticipateReconcilingPaymentsRetrospectivelyNotes        func(childComplexity int) int
-		AnticipatedPaymentFrequency                              func(childComplexity int) int
-		AnticipatedPaymentFrequencyNotes                         func(childComplexity int) int
-		AnticipatedPaymentFrequencyOtherDescription              func(childComplexity int) int
-		BeneficiaryCostSharingLevelAndHandling                   func(childComplexity int) int
-		CanParticipantsSelectBetweenPaymentMechanisms            func(childComplexity int) int
-		CanParticipantsSelectBetweenPaymentMechanismsDescription func(childComplexity int) int
-		CanParticipantsSelectBetweenPaymentMechanismsNote        func(childComplexity int) int
-		ChangesMedicarePhysicianFeeSchedule                      func(childComplexity int) int
-		ChangesMedicarePhysicianFeeScheduleNote                  func(childComplexity int) int
-		CreatedBy                                                func(childComplexity int) int
-		CreatedDts                                               func(childComplexity int) int
-		CreatingDependenciesBetweenServices                      func(childComplexity int) int
-		CreatingDependenciesBetweenServicesNote                  func(childComplexity int) int
-		ExpectedCalculationComplexityLevel                       func(childComplexity int) int
-		ExpectedCalculationComplexityLevelNote                   func(childComplexity int) int
-		FundingSourceNote                                        func(childComplexity int) int
-		FundingSourceR                                           func(childComplexity int) int
-		FundingSourceRNote                                       func(childComplexity int) int
-		FundingSourceROtherDescription                           func(childComplexity int) int
-		FundingSourceRTrustFundDescription                       func(childComplexity int) int
-		FundingStructureDescription                              func(childComplexity int) int
-		ID                                                       func(childComplexity int) int
-		IsContractorAwareTestDataRequirements                    func(childComplexity int) int
-		ModelPlanID                                              func(childComplexity int) int
-		ModifiedBy                                               func(childComplexity int) int
-		ModifiedDts                                              func(childComplexity int) int
-		NeedsClaimsDataCollection                                func(childComplexity int) int
-		NeedsClaimsDataCollectionNote                            func(childComplexity int) int
-		NonClaimsPaymentOtherDescription                         func(childComplexity int) int
-		NonClaimsPayments                                        func(childComplexity int) int
-		NumberPaymentsPerPayCycle                                func(childComplexity int) int
-		NumberPaymentsPerPayCycleNotes                           func(childComplexity int) int
-		PayClaims                                                func(childComplexity int) int
-		PayClaimsOtherDescription                                func(childComplexity int) int
-		PayModelDifferentiation                                  func(childComplexity int) int
-		PayRecipientNote                                         func(childComplexity int) int
-		PayRecipientOtherSpecification                           func(childComplexity int) int
-		PayRecipients                                            func(childComplexity int) int
-		PayType                                                  func(childComplexity int) int
-		PayTypeNote                                              func(childComplexity int) int
-		PaymentCalculationOwner                                  func(childComplexity int) int
-		PaymentStartDate                                         func(childComplexity int) int
-		PaymentStartDateNotes                                    func(childComplexity int) int
-		PlanningToUseInnovationPaymentContractor                 func(childComplexity int) int
-		PlanningToUseInnovationPaymentContractorNote             func(childComplexity int) int
-		ProvidingThirdPartyFile                                  func(childComplexity int) int
-		SharedSystemsInvolvedAdditionalClaimPayment              func(childComplexity int) int
-		SharedSystemsInvolvedAdditionalClaimPaymentNote          func(childComplexity int) int
-		ShouldAnyProviderExcludedFFSSystemsNote                  func(childComplexity int) int
-		ShouldAnyProvidersExcludedFFSSystems                     func(childComplexity int) int
-		Status                                                   func(childComplexity int) int
-		WaiveBeneficiaryCostSharingForAnyServices                func(childComplexity int) int
-		WaiveBeneficiaryCostSharingNote                          func(childComplexity int) int
-		WaiveBeneficiaryCostSharingServiceSpecification          func(childComplexity int) int
-		WaiverOnlyAppliesPartOfPayment                           func(childComplexity int) int
-		WillRecoverPayments                                      func(childComplexity int) int
-		WillRecoverPaymentsNotes                                 func(childComplexity int) int
+		AffectsMedicareSecondaryPayerClaims               func(childComplexity int) int
+		AffectsMedicareSecondaryPayerClaimsHow            func(childComplexity int) int
+		AffectsMedicareSecondaryPayerClaimsNote           func(childComplexity int) int
+		AnticipateReconcilingPaymentsRetrospectively      func(childComplexity int) int
+		AnticipateReconcilingPaymentsRetrospectivelyNotes func(childComplexity int) int
+		AnticipatedPaymentFrequency                       func(childComplexity int) int
+		AnticipatedPaymentFrequencyNotes                  func(childComplexity int) int
+		AnticipatedPaymentFrequencyOther                  func(childComplexity int) int
+		BeneficiaryCostSharingLevelAndHandling            func(childComplexity int) int
+		CanParticipantsSelectBetweenPaymentMechanisms     func(childComplexity int) int
+		CanParticipantsSelectBetweenPaymentMechanismsHow  func(childComplexity int) int
+		CanParticipantsSelectBetweenPaymentMechanismsNote func(childComplexity int) int
+		ChangesMedicarePhysicianFeeSchedule               func(childComplexity int) int
+		ChangesMedicarePhysicianFeeScheduleNote           func(childComplexity int) int
+		CreatedBy                                         func(childComplexity int) int
+		CreatedDts                                        func(childComplexity int) int
+		CreatingDependenciesBetweenServices               func(childComplexity int) int
+		CreatingDependenciesBetweenServicesNote           func(childComplexity int) int
+		ExpectedCalculationComplexityLevel                func(childComplexity int) int
+		ExpectedCalculationComplexityLevelNote            func(childComplexity int) int
+		FundingSourceNote                                 func(childComplexity int) int
+		FundingSourceR                                    func(childComplexity int) int
+		FundingSourceRNote                                func(childComplexity int) int
+		FundingSourceROther                               func(childComplexity int) int
+		FundingSourceRTrustFund                           func(childComplexity int) int
+		FundingStructure                                  func(childComplexity int) int
+		ID                                                func(childComplexity int) int
+		IsContractorAwareTestDataRequirements             func(childComplexity int) int
+		ModelPlanID                                       func(childComplexity int) int
+		ModifiedBy                                        func(childComplexity int) int
+		ModifiedDts                                       func(childComplexity int) int
+		NeedsClaimsDataCollection                         func(childComplexity int) int
+		NeedsClaimsDataCollectionNote                     func(childComplexity int) int
+		NonClaimsPaymentOther                             func(childComplexity int) int
+		NonClaimsPayments                                 func(childComplexity int) int
+		NumberPaymentsPerPayCycle                         func(childComplexity int) int
+		NumberPaymentsPerPayCycleNotes                    func(childComplexity int) int
+		PayClaims                                         func(childComplexity int) int
+		PayClaimsOther                                    func(childComplexity int) int
+		PayModelDifferentiation                           func(childComplexity int) int
+		PayRecipientNote                                  func(childComplexity int) int
+		PayRecipientOtherSpecification                    func(childComplexity int) int
+		PayRecipients                                     func(childComplexity int) int
+		PayType                                           func(childComplexity int) int
+		PayTypeNote                                       func(childComplexity int) int
+		PaymentCalculationOwner                           func(childComplexity int) int
+		PaymentStartDate                                  func(childComplexity int) int
+		PaymentStartDateNotes                             func(childComplexity int) int
+		PlanningToUseInnovationPaymentContractor          func(childComplexity int) int
+		PlanningToUseInnovationPaymentContractorNote      func(childComplexity int) int
+		ProvidingThirdPartyFile                           func(childComplexity int) int
+		SharedSystemsInvolvedAdditionalClaimPayment       func(childComplexity int) int
+		SharedSystemsInvolvedAdditionalClaimPaymentNote   func(childComplexity int) int
+		ShouldAnyProviderExcludedFFSSystemsNote           func(childComplexity int) int
+		ShouldAnyProvidersExcludedFFSSystems              func(childComplexity int) int
+		Status                                            func(childComplexity int) int
+		WaiveBeneficiaryCostSharingForAnyServices         func(childComplexity int) int
+		WaiveBeneficiaryCostSharingNote                   func(childComplexity int) int
+		WaiveBeneficiaryCostSharingServiceSpecification   func(childComplexity int) int
+		WaiverOnlyAppliesPartOfPayment                    func(childComplexity int) int
+		WillRecoverPayments                               func(childComplexity int) int
+		WillRecoverPaymentsNotes                          func(childComplexity int) int
 	}
 
 	Query struct {
@@ -836,11 +836,12 @@ type PlanPaymentsResolver interface {
 	PayRecipients(ctx context.Context, obj *models.PlanPayments) ([]models.PayRecipient, error)
 
 	PayRecipientNote(ctx context.Context, obj *models.PlanPayments) (string, error)
+	PayType(ctx context.Context, obj *models.PlanPayments) ([]models.PayType, error)
 
 	PayClaims(ctx context.Context, obj *models.PlanPayments) ([]models.ClaimsBasedPayType, error)
 
 	NonClaimsPayments(ctx context.Context, obj *models.PlanPayments) ([]model.NonClaimsBasedPayType, error)
-	NonClaimsPaymentOtherDescription(ctx context.Context, obj *models.PlanPayments) (string, error)
+	NonClaimsPaymentOther(ctx context.Context, obj *models.PlanPayments) (string, error)
 }
 type QueryResolver interface {
 	CurrentUser(ctx context.Context) (*model.CurrentUser, error)
@@ -4299,12 +4300,12 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.PlanPayments.AffectsMedicareSecondaryPayerClaims(childComplexity), true
 
-	case "PlanPayments.affectsMedicareSecondaryPayerClaimsExplanation":
-		if e.complexity.PlanPayments.AffectsMedicareSecondaryPayerClaimsExplanation == nil {
+	case "PlanPayments.affectsMedicareSecondaryPayerClaimsHow":
+		if e.complexity.PlanPayments.AffectsMedicareSecondaryPayerClaimsHow == nil {
 			break
 		}
 
-		return e.complexity.PlanPayments.AffectsMedicareSecondaryPayerClaimsExplanation(childComplexity), true
+		return e.complexity.PlanPayments.AffectsMedicareSecondaryPayerClaimsHow(childComplexity), true
 
 	case "PlanPayments.affectsMedicareSecondaryPayerClaimsNote":
 		if e.complexity.PlanPayments.AffectsMedicareSecondaryPayerClaimsNote == nil {
@@ -4341,12 +4342,12 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.PlanPayments.AnticipatedPaymentFrequencyNotes(childComplexity), true
 
-	case "PlanPayments.anticipatedPaymentFrequencyOtherDescription":
-		if e.complexity.PlanPayments.AnticipatedPaymentFrequencyOtherDescription == nil {
+	case "PlanPayments.anticipatedPaymentFrequencyOther":
+		if e.complexity.PlanPayments.AnticipatedPaymentFrequencyOther == nil {
 			break
 		}
 
-		return e.complexity.PlanPayments.AnticipatedPaymentFrequencyOtherDescription(childComplexity), true
+		return e.complexity.PlanPayments.AnticipatedPaymentFrequencyOther(childComplexity), true
 
 	case "PlanPayments.beneficiaryCostSharingLevelAndHandling":
 		if e.complexity.PlanPayments.BeneficiaryCostSharingLevelAndHandling == nil {
@@ -4362,12 +4363,12 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.PlanPayments.CanParticipantsSelectBetweenPaymentMechanisms(childComplexity), true
 
-	case "PlanPayments.canParticipantsSelectBetweenPaymentMechanismsDescription":
-		if e.complexity.PlanPayments.CanParticipantsSelectBetweenPaymentMechanismsDescription == nil {
+	case "PlanPayments.canParticipantsSelectBetweenPaymentMechanismsHow":
+		if e.complexity.PlanPayments.CanParticipantsSelectBetweenPaymentMechanismsHow == nil {
 			break
 		}
 
-		return e.complexity.PlanPayments.CanParticipantsSelectBetweenPaymentMechanismsDescription(childComplexity), true
+		return e.complexity.PlanPayments.CanParticipantsSelectBetweenPaymentMechanismsHow(childComplexity), true
 
 	case "PlanPayments.canParticipantsSelectBetweenPaymentMechanismsNote":
 		if e.complexity.PlanPayments.CanParticipantsSelectBetweenPaymentMechanismsNote == nil {
@@ -4453,26 +4454,26 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.PlanPayments.FundingSourceRNote(childComplexity), true
 
-	case "PlanPayments.fundingSourceROtherDescription":
-		if e.complexity.PlanPayments.FundingSourceROtherDescription == nil {
+	case "PlanPayments.fundingSourceROther":
+		if e.complexity.PlanPayments.FundingSourceROther == nil {
 			break
 		}
 
-		return e.complexity.PlanPayments.FundingSourceROtherDescription(childComplexity), true
+		return e.complexity.PlanPayments.FundingSourceROther(childComplexity), true
 
-	case "PlanPayments.fundingSourceRTrustFundDescription":
-		if e.complexity.PlanPayments.FundingSourceRTrustFundDescription == nil {
+	case "PlanPayments.fundingSourceRTrustFund":
+		if e.complexity.PlanPayments.FundingSourceRTrustFund == nil {
 			break
 		}
 
-		return e.complexity.PlanPayments.FundingSourceRTrustFundDescription(childComplexity), true
+		return e.complexity.PlanPayments.FundingSourceRTrustFund(childComplexity), true
 
-	case "PlanPayments.fundingStructureDescription":
-		if e.complexity.PlanPayments.FundingStructureDescription == nil {
+	case "PlanPayments.fundingStructure":
+		if e.complexity.PlanPayments.FundingStructure == nil {
 			break
 		}
 
-		return e.complexity.PlanPayments.FundingStructureDescription(childComplexity), true
+		return e.complexity.PlanPayments.FundingStructure(childComplexity), true
 
 	case "PlanPayments.id":
 		if e.complexity.PlanPayments.ID == nil {
@@ -4523,12 +4524,12 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.PlanPayments.NeedsClaimsDataCollectionNote(childComplexity), true
 
-	case "PlanPayments.nonClaimsPaymentOtherDescription":
-		if e.complexity.PlanPayments.NonClaimsPaymentOtherDescription == nil {
+	case "PlanPayments.nonClaimsPaymentOther":
+		if e.complexity.PlanPayments.NonClaimsPaymentOther == nil {
 			break
 		}
 
-		return e.complexity.PlanPayments.NonClaimsPaymentOtherDescription(childComplexity), true
+		return e.complexity.PlanPayments.NonClaimsPaymentOther(childComplexity), true
 
 	case "PlanPayments.nonClaimsPayments":
 		if e.complexity.PlanPayments.NonClaimsPayments == nil {
@@ -4558,12 +4559,12 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.PlanPayments.PayClaims(childComplexity), true
 
-	case "PlanPayments.payClaimsOtherDescription":
-		if e.complexity.PlanPayments.PayClaimsOtherDescription == nil {
+	case "PlanPayments.payClaimsOther":
+		if e.complexity.PlanPayments.PayClaimsOther == nil {
 			break
 		}
 
-		return e.complexity.PlanPayments.PayClaimsOtherDescription(childComplexity), true
+		return e.complexity.PlanPayments.PayClaimsOther(childComplexity), true
 
 	case "PlanPayments.payModelDifferentiation":
 		if e.complexity.PlanPayments.PayModelDifferentiation == nil {
@@ -5636,24 +5637,24 @@ type PlanPayments {
   # Page 1
   fundingSourceNote:                  String!
   fundingSourceR:                     [FundingSource!]
-  fundingSourceRTrustFundDescription: String!
-  fundingSourceROtherDescription:     String!
+  fundingSourceRTrustFund:            String!
+  fundingSourceROther:                String!
   fundingSourceRNote:                 String!
   payRecipients:                      [PayRecipient!]
   payRecipientOtherSpecification:     String!
   payRecipientNote:                   String!
-  payType:                            PayType!
+  payType:                            [PayType!]
   payTypeNote:                        String!
 
   # Page 2
   payClaims:                                      [ClaimsBasedPayType!]
-  payClaimsOtherDescription:                      String!
+  payClaimsOther:                                 String!
   shouldAnyProvidersExcludedFFSSystems:           Boolean!
   shouldAnyProviderExcludedFFSSystemsNote:        String!
   changesMedicarePhysicianFeeSchedule:            Boolean!
   changesMedicarePhysicianFeeScheduleNote:        String!
   affectsMedicareSecondaryPayerClaims:            Boolean!
-  affectsMedicareSecondaryPayerClaimsExplanation: String!
+  affectsMedicareSecondaryPayerClaimsHow: String!
   affectsMedicareSecondaryPayerClaimsNote:        String!
   payModelDifferentiation:                        String!
 
@@ -5674,7 +5675,7 @@ type PlanPayments {
 
   # Page 5
   nonClaimsPayments:                               [NonClaimsBasedPayType!]
-  nonClaimsPaymentOtherDescription:                String!
+  nonClaimsPaymentOther:                           String!
   paymentCalculationOwner:                         String!
   numberPaymentsPerPayCycle:                       String!
   numberPaymentsPerPayCycleNotes:                  String!
@@ -5682,17 +5683,17 @@ type PlanPayments {
   sharedSystemsInvolvedAdditionalClaimPaymentNote: String!
   planningToUseInnovationPaymentContractor:        Boolean!
   planningToUseInnovationPaymentContractorNote:    String!
-  fundingStructureDescription:                     String!
+  fundingStructure:                                String!
 
   # Page 6
-  expectedCalculationComplexityLevel:                       ComplexityCalculationLevelType!
-  expectedCalculationComplexityLevelNote:                   String!
-  canParticipantsSelectBetweenPaymentMechanisms:            Boolean!
-  canParticipantsSelectBetweenPaymentMechanismsDescription: String!
-  canParticipantsSelectBetweenPaymentMechanismsNote:        String!
-  anticipatedPaymentFrequency:                              AnticipatedPaymentFrequencyType!
-  anticipatedPaymentFrequencyOtherDescription:              String!
-  anticipatedPaymentFrequencyNotes:                         String!
+  expectedCalculationComplexityLevel:                ComplexityCalculationLevelType!
+  expectedCalculationComplexityLevelNote:            String!
+  canParticipantsSelectBetweenPaymentMechanisms:     Boolean!
+  canParticipantsSelectBetweenPaymentMechanismsHow:  String!
+  canParticipantsSelectBetweenPaymentMechanismsNote: String!
+  anticipatedPaymentFrequency:                       AnticipatedPaymentFrequencyType!
+  anticipatedPaymentFrequencyOther:                  String!
+  anticipatedPaymentFrequencyNotes:                  String!
 
   # Page 7
   willRecoverPayments:                               Boolean!
@@ -5714,8 +5715,8 @@ input PlanPaymentsChanges @goModel(model: "map[string]interface{}") {
   # Page 1
   fundingSourceNote:                  String
   fundingSourceR:                     [FundingSource!]
-  fundingSourceRTrustFundDescription: String
-  fundingSourceROtherDescription:     String
+  fundingSourceRTrustFund: String
+  fundingSourceROther:     String
   fundingSourceRNote:                 String
   payRecipients:                      [PayRecipient!]
   payRecipientOtherSpecification:     String
@@ -5725,13 +5726,13 @@ input PlanPaymentsChanges @goModel(model: "map[string]interface{}") {
 
   # Page 2
   payClaims:                                      [ClaimsBasedPayType!]
-  payClaimsOtherDescription:                      String
+  payClaimsOther:                      String
   shouldAnyProvidersExcludedFFSSystems:           Boolean
   shouldAnyProviderExcludedFFSSystemsNote:        String
   changesMedicarePhysicianFeeSchedule:            Boolean
   changesMedicarePhysicianFeeScheduleNote:        String
   affectsMedicareSecondaryPayerClaims:            Boolean
-  affectsMedicareSecondaryPayerClaimsExplanation: String
+  affectsMedicareSecondaryPayerClaimsHow: String
   affectsMedicareSecondaryPayerClaimsNote:        String
   payModelDifferentiation:                        String
 
@@ -5752,7 +5753,7 @@ input PlanPaymentsChanges @goModel(model: "map[string]interface{}") {
 
   # Page 5
   nonClaimsPayments:                               [NonClaimsBasedPayType!]
-  nonClaimsPaymentOtherDescription:                String
+  nonClaimsPaymentOther:                String
   paymentCalculationOwner:                         String
   numberPaymentsPerPayCycle:                       String
   numberPaymentsPerPayCycleNotes:                  String
@@ -5760,16 +5761,16 @@ input PlanPaymentsChanges @goModel(model: "map[string]interface{}") {
   sharedSystemsInvolvedAdditionalClaimPaymentNote: String
   planningToUseInnovationPaymentContractor:        Boolean
   planningToUseInnovationPaymentContractorNote:    String
-  fundingStructureDescription:                     String
+  fundingStructure:                     String
 
   # Page 6
   expectedCalculationComplexityLevel:                       ComplexityCalculationLevelType
   expectedCalculationComplexityLevelNote:                   String
   canParticipantsSelectBetweenPaymentMechanisms:            Boolean
-  canParticipantsSelectBetweenPaymentMechanismsDescription: String
+  canParticipantsSelectBetweenPaymentMechanismsHow: String
   canParticipantsSelectBetweenPaymentMechanismsNote:        String
   anticipatedPaymentFrequency:                              AnticipatedPaymentFrequencyType
-  anticipatedPaymentFrequencyOtherDescription:              String
+  anticipatedPaymentFrequencyOther:              String
   anticipatedPaymentFrequencyNotes:                         String
 
   # Page 7
@@ -10375,10 +10376,10 @@ func (ec *executionContext) fieldContext_ModelPlan_payments(ctx context.Context,
 				return ec.fieldContext_PlanPayments_fundingSourceNote(ctx, field)
 			case "fundingSourceR":
 				return ec.fieldContext_PlanPayments_fundingSourceR(ctx, field)
-			case "fundingSourceRTrustFundDescription":
-				return ec.fieldContext_PlanPayments_fundingSourceRTrustFundDescription(ctx, field)
-			case "fundingSourceROtherDescription":
-				return ec.fieldContext_PlanPayments_fundingSourceROtherDescription(ctx, field)
+			case "fundingSourceRTrustFund":
+				return ec.fieldContext_PlanPayments_fundingSourceRTrustFund(ctx, field)
+			case "fundingSourceROther":
+				return ec.fieldContext_PlanPayments_fundingSourceROther(ctx, field)
 			case "fundingSourceRNote":
 				return ec.fieldContext_PlanPayments_fundingSourceRNote(ctx, field)
 			case "payRecipients":
@@ -10393,8 +10394,8 @@ func (ec *executionContext) fieldContext_ModelPlan_payments(ctx context.Context,
 				return ec.fieldContext_PlanPayments_payTypeNote(ctx, field)
 			case "payClaims":
 				return ec.fieldContext_PlanPayments_payClaims(ctx, field)
-			case "payClaimsOtherDescription":
-				return ec.fieldContext_PlanPayments_payClaimsOtherDescription(ctx, field)
+			case "payClaimsOther":
+				return ec.fieldContext_PlanPayments_payClaimsOther(ctx, field)
 			case "shouldAnyProvidersExcludedFFSSystems":
 				return ec.fieldContext_PlanPayments_shouldAnyProvidersExcludedFFSSystems(ctx, field)
 			case "shouldAnyProviderExcludedFFSSystemsNote":
@@ -10405,8 +10406,8 @@ func (ec *executionContext) fieldContext_ModelPlan_payments(ctx context.Context,
 				return ec.fieldContext_PlanPayments_changesMedicarePhysicianFeeScheduleNote(ctx, field)
 			case "affectsMedicareSecondaryPayerClaims":
 				return ec.fieldContext_PlanPayments_affectsMedicareSecondaryPayerClaims(ctx, field)
-			case "affectsMedicareSecondaryPayerClaimsExplanation":
-				return ec.fieldContext_PlanPayments_affectsMedicareSecondaryPayerClaimsExplanation(ctx, field)
+			case "affectsMedicareSecondaryPayerClaimsHow":
+				return ec.fieldContext_PlanPayments_affectsMedicareSecondaryPayerClaimsHow(ctx, field)
 			case "affectsMedicareSecondaryPayerClaimsNote":
 				return ec.fieldContext_PlanPayments_affectsMedicareSecondaryPayerClaimsNote(ctx, field)
 			case "payModelDifferentiation":
@@ -10435,8 +10436,8 @@ func (ec *executionContext) fieldContext_ModelPlan_payments(ctx context.Context,
 				return ec.fieldContext_PlanPayments_waiveBeneficiaryCostSharingNote(ctx, field)
 			case "nonClaimsPayments":
 				return ec.fieldContext_PlanPayments_nonClaimsPayments(ctx, field)
-			case "nonClaimsPaymentOtherDescription":
-				return ec.fieldContext_PlanPayments_nonClaimsPaymentOtherDescription(ctx, field)
+			case "nonClaimsPaymentOther":
+				return ec.fieldContext_PlanPayments_nonClaimsPaymentOther(ctx, field)
 			case "paymentCalculationOwner":
 				return ec.fieldContext_PlanPayments_paymentCalculationOwner(ctx, field)
 			case "numberPaymentsPerPayCycle":
@@ -10451,22 +10452,22 @@ func (ec *executionContext) fieldContext_ModelPlan_payments(ctx context.Context,
 				return ec.fieldContext_PlanPayments_planningToUseInnovationPaymentContractor(ctx, field)
 			case "planningToUseInnovationPaymentContractorNote":
 				return ec.fieldContext_PlanPayments_planningToUseInnovationPaymentContractorNote(ctx, field)
-			case "fundingStructureDescription":
-				return ec.fieldContext_PlanPayments_fundingStructureDescription(ctx, field)
+			case "fundingStructure":
+				return ec.fieldContext_PlanPayments_fundingStructure(ctx, field)
 			case "expectedCalculationComplexityLevel":
 				return ec.fieldContext_PlanPayments_expectedCalculationComplexityLevel(ctx, field)
 			case "expectedCalculationComplexityLevelNote":
 				return ec.fieldContext_PlanPayments_expectedCalculationComplexityLevelNote(ctx, field)
 			case "canParticipantsSelectBetweenPaymentMechanisms":
 				return ec.fieldContext_PlanPayments_canParticipantsSelectBetweenPaymentMechanisms(ctx, field)
-			case "canParticipantsSelectBetweenPaymentMechanismsDescription":
-				return ec.fieldContext_PlanPayments_canParticipantsSelectBetweenPaymentMechanismsDescription(ctx, field)
+			case "canParticipantsSelectBetweenPaymentMechanismsHow":
+				return ec.fieldContext_PlanPayments_canParticipantsSelectBetweenPaymentMechanismsHow(ctx, field)
 			case "canParticipantsSelectBetweenPaymentMechanismsNote":
 				return ec.fieldContext_PlanPayments_canParticipantsSelectBetweenPaymentMechanismsNote(ctx, field)
 			case "anticipatedPaymentFrequency":
 				return ec.fieldContext_PlanPayments_anticipatedPaymentFrequency(ctx, field)
-			case "anticipatedPaymentFrequencyOtherDescription":
-				return ec.fieldContext_PlanPayments_anticipatedPaymentFrequencyOtherDescription(ctx, field)
+			case "anticipatedPaymentFrequencyOther":
+				return ec.fieldContext_PlanPayments_anticipatedPaymentFrequencyOther(ctx, field)
 			case "anticipatedPaymentFrequencyNotes":
 				return ec.fieldContext_PlanPayments_anticipatedPaymentFrequencyNotes(ctx, field)
 			case "willRecoverPayments":
@@ -13589,10 +13590,10 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanPayments(ctx context
 				return ec.fieldContext_PlanPayments_fundingSourceNote(ctx, field)
 			case "fundingSourceR":
 				return ec.fieldContext_PlanPayments_fundingSourceR(ctx, field)
-			case "fundingSourceRTrustFundDescription":
-				return ec.fieldContext_PlanPayments_fundingSourceRTrustFundDescription(ctx, field)
-			case "fundingSourceROtherDescription":
-				return ec.fieldContext_PlanPayments_fundingSourceROtherDescription(ctx, field)
+			case "fundingSourceRTrustFund":
+				return ec.fieldContext_PlanPayments_fundingSourceRTrustFund(ctx, field)
+			case "fundingSourceROther":
+				return ec.fieldContext_PlanPayments_fundingSourceROther(ctx, field)
 			case "fundingSourceRNote":
 				return ec.fieldContext_PlanPayments_fundingSourceRNote(ctx, field)
 			case "payRecipients":
@@ -13607,8 +13608,8 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanPayments(ctx context
 				return ec.fieldContext_PlanPayments_payTypeNote(ctx, field)
 			case "payClaims":
 				return ec.fieldContext_PlanPayments_payClaims(ctx, field)
-			case "payClaimsOtherDescription":
-				return ec.fieldContext_PlanPayments_payClaimsOtherDescription(ctx, field)
+			case "payClaimsOther":
+				return ec.fieldContext_PlanPayments_payClaimsOther(ctx, field)
 			case "shouldAnyProvidersExcludedFFSSystems":
 				return ec.fieldContext_PlanPayments_shouldAnyProvidersExcludedFFSSystems(ctx, field)
 			case "shouldAnyProviderExcludedFFSSystemsNote":
@@ -13619,8 +13620,8 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanPayments(ctx context
 				return ec.fieldContext_PlanPayments_changesMedicarePhysicianFeeScheduleNote(ctx, field)
 			case "affectsMedicareSecondaryPayerClaims":
 				return ec.fieldContext_PlanPayments_affectsMedicareSecondaryPayerClaims(ctx, field)
-			case "affectsMedicareSecondaryPayerClaimsExplanation":
-				return ec.fieldContext_PlanPayments_affectsMedicareSecondaryPayerClaimsExplanation(ctx, field)
+			case "affectsMedicareSecondaryPayerClaimsHow":
+				return ec.fieldContext_PlanPayments_affectsMedicareSecondaryPayerClaimsHow(ctx, field)
 			case "affectsMedicareSecondaryPayerClaimsNote":
 				return ec.fieldContext_PlanPayments_affectsMedicareSecondaryPayerClaimsNote(ctx, field)
 			case "payModelDifferentiation":
@@ -13649,8 +13650,8 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanPayments(ctx context
 				return ec.fieldContext_PlanPayments_waiveBeneficiaryCostSharingNote(ctx, field)
 			case "nonClaimsPayments":
 				return ec.fieldContext_PlanPayments_nonClaimsPayments(ctx, field)
-			case "nonClaimsPaymentOtherDescription":
-				return ec.fieldContext_PlanPayments_nonClaimsPaymentOtherDescription(ctx, field)
+			case "nonClaimsPaymentOther":
+				return ec.fieldContext_PlanPayments_nonClaimsPaymentOther(ctx, field)
 			case "paymentCalculationOwner":
 				return ec.fieldContext_PlanPayments_paymentCalculationOwner(ctx, field)
 			case "numberPaymentsPerPayCycle":
@@ -13665,22 +13666,22 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanPayments(ctx context
 				return ec.fieldContext_PlanPayments_planningToUseInnovationPaymentContractor(ctx, field)
 			case "planningToUseInnovationPaymentContractorNote":
 				return ec.fieldContext_PlanPayments_planningToUseInnovationPaymentContractorNote(ctx, field)
-			case "fundingStructureDescription":
-				return ec.fieldContext_PlanPayments_fundingStructureDescription(ctx, field)
+			case "fundingStructure":
+				return ec.fieldContext_PlanPayments_fundingStructure(ctx, field)
 			case "expectedCalculationComplexityLevel":
 				return ec.fieldContext_PlanPayments_expectedCalculationComplexityLevel(ctx, field)
 			case "expectedCalculationComplexityLevelNote":
 				return ec.fieldContext_PlanPayments_expectedCalculationComplexityLevelNote(ctx, field)
 			case "canParticipantsSelectBetweenPaymentMechanisms":
 				return ec.fieldContext_PlanPayments_canParticipantsSelectBetweenPaymentMechanisms(ctx, field)
-			case "canParticipantsSelectBetweenPaymentMechanismsDescription":
-				return ec.fieldContext_PlanPayments_canParticipantsSelectBetweenPaymentMechanismsDescription(ctx, field)
+			case "canParticipantsSelectBetweenPaymentMechanismsHow":
+				return ec.fieldContext_PlanPayments_canParticipantsSelectBetweenPaymentMechanismsHow(ctx, field)
 			case "canParticipantsSelectBetweenPaymentMechanismsNote":
 				return ec.fieldContext_PlanPayments_canParticipantsSelectBetweenPaymentMechanismsNote(ctx, field)
 			case "anticipatedPaymentFrequency":
 				return ec.fieldContext_PlanPayments_anticipatedPaymentFrequency(ctx, field)
-			case "anticipatedPaymentFrequencyOtherDescription":
-				return ec.fieldContext_PlanPayments_anticipatedPaymentFrequencyOtherDescription(ctx, field)
+			case "anticipatedPaymentFrequencyOther":
+				return ec.fieldContext_PlanPayments_anticipatedPaymentFrequencyOther(ctx, field)
 			case "anticipatedPaymentFrequencyNotes":
 				return ec.fieldContext_PlanPayments_anticipatedPaymentFrequencyNotes(ctx, field)
 			case "willRecoverPayments":
@@ -30487,8 +30488,8 @@ func (ec *executionContext) fieldContext_PlanPayments_fundingSourceR(ctx context
 	return fc, nil
 }
 
-func (ec *executionContext) _PlanPayments_fundingSourceRTrustFundDescription(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanPayments_fundingSourceRTrustFundDescription(ctx, field)
+func (ec *executionContext) _PlanPayments_fundingSourceRTrustFund(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_fundingSourceRTrustFund(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -30501,7 +30502,7 @@ func (ec *executionContext) _PlanPayments_fundingSourceRTrustFundDescription(ctx
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.FundingSourceRTrustFundDescription, nil
+		return obj.FundingSourceRTrustFund, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -30518,7 +30519,7 @@ func (ec *executionContext) _PlanPayments_fundingSourceRTrustFundDescription(ctx
 	return ec.marshalNString2ᚖstring(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_PlanPayments_fundingSourceRTrustFundDescription(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_PlanPayments_fundingSourceRTrustFund(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "PlanPayments",
 		Field:      field,
@@ -30531,8 +30532,8 @@ func (ec *executionContext) fieldContext_PlanPayments_fundingSourceRTrustFundDes
 	return fc, nil
 }
 
-func (ec *executionContext) _PlanPayments_fundingSourceROtherDescription(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanPayments_fundingSourceROtherDescription(ctx, field)
+func (ec *executionContext) _PlanPayments_fundingSourceROther(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_fundingSourceROther(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -30545,7 +30546,7 @@ func (ec *executionContext) _PlanPayments_fundingSourceROtherDescription(ctx con
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.FundingSourceROtherDescription, nil
+		return obj.FundingSourceROther, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -30562,7 +30563,7 @@ func (ec *executionContext) _PlanPayments_fundingSourceROtherDescription(ctx con
 	return ec.marshalNString2ᚖstring(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_PlanPayments_fundingSourceROtherDescription(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_PlanPayments_fundingSourceROther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "PlanPayments",
 		Field:      field,
@@ -30762,29 +30763,26 @@ func (ec *executionContext) _PlanPayments_payType(ctx context.Context, field gra
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.PayType, nil
+		return ec.resolvers.PlanPayments().PayType(rctx, obj)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
 		return graphql.Null
 	}
 	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
 		return graphql.Null
 	}
-	res := resTmp.(models.PayType)
+	res := resTmp.([]models.PayType)
 	fc.Result = res
-	return ec.marshalNPayType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPayType(ctx, field.Selections, res)
+	return ec.marshalOPayType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPayTypeᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanPayments_payType(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "PlanPayments",
 		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
+		IsMethod:   true,
+		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type PayType does not have child fields")
 		},
@@ -30877,8 +30875,8 @@ func (ec *executionContext) fieldContext_PlanPayments_payClaims(ctx context.Cont
 	return fc, nil
 }
 
-func (ec *executionContext) _PlanPayments_payClaimsOtherDescription(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanPayments_payClaimsOtherDescription(ctx, field)
+func (ec *executionContext) _PlanPayments_payClaimsOther(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_payClaimsOther(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -30891,7 +30889,7 @@ func (ec *executionContext) _PlanPayments_payClaimsOtherDescription(ctx context.
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.PayClaimsOtherDescription, nil
+		return obj.PayClaimsOther, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -30908,7 +30906,7 @@ func (ec *executionContext) _PlanPayments_payClaimsOtherDescription(ctx context.
 	return ec.marshalNString2ᚖstring(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_PlanPayments_payClaimsOtherDescription(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_PlanPayments_payClaimsOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "PlanPayments",
 		Field:      field,
@@ -31141,8 +31139,8 @@ func (ec *executionContext) fieldContext_PlanPayments_affectsMedicareSecondaryPa
 	return fc, nil
 }
 
-func (ec *executionContext) _PlanPayments_affectsMedicareSecondaryPayerClaimsExplanation(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanPayments_affectsMedicareSecondaryPayerClaimsExplanation(ctx, field)
+func (ec *executionContext) _PlanPayments_affectsMedicareSecondaryPayerClaimsHow(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_affectsMedicareSecondaryPayerClaimsHow(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -31155,7 +31153,7 @@ func (ec *executionContext) _PlanPayments_affectsMedicareSecondaryPayerClaimsExp
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.AffectsMedicareSecondaryPayerClaimsExplanation, nil
+		return obj.AffectsMedicareSecondaryPayerClaimsHow, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -31172,7 +31170,7 @@ func (ec *executionContext) _PlanPayments_affectsMedicareSecondaryPayerClaimsExp
 	return ec.marshalNString2ᚖstring(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_PlanPayments_affectsMedicareSecondaryPayerClaimsExplanation(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_PlanPayments_affectsMedicareSecondaryPayerClaimsHow(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "PlanPayments",
 		Field:      field,
@@ -31795,8 +31793,8 @@ func (ec *executionContext) fieldContext_PlanPayments_nonClaimsPayments(ctx cont
 	return fc, nil
 }
 
-func (ec *executionContext) _PlanPayments_nonClaimsPaymentOtherDescription(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanPayments_nonClaimsPaymentOtherDescription(ctx, field)
+func (ec *executionContext) _PlanPayments_nonClaimsPaymentOther(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_nonClaimsPaymentOther(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -31809,7 +31807,7 @@ func (ec *executionContext) _PlanPayments_nonClaimsPaymentOtherDescription(ctx c
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.PlanPayments().NonClaimsPaymentOtherDescription(rctx, obj)
+		return ec.resolvers.PlanPayments().NonClaimsPaymentOther(rctx, obj)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -31826,7 +31824,7 @@ func (ec *executionContext) _PlanPayments_nonClaimsPaymentOtherDescription(ctx c
 	return ec.marshalNString2string(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_PlanPayments_nonClaimsPaymentOtherDescription(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_PlanPayments_nonClaimsPaymentOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "PlanPayments",
 		Field:      field,
@@ -32147,8 +32145,8 @@ func (ec *executionContext) fieldContext_PlanPayments_planningToUseInnovationPay
 	return fc, nil
 }
 
-func (ec *executionContext) _PlanPayments_fundingStructureDescription(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanPayments_fundingStructureDescription(ctx, field)
+func (ec *executionContext) _PlanPayments_fundingStructure(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_fundingStructure(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -32161,7 +32159,7 @@ func (ec *executionContext) _PlanPayments_fundingStructureDescription(ctx contex
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.FundingStructureDescription, nil
+		return obj.FundingStructure, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -32178,7 +32176,7 @@ func (ec *executionContext) _PlanPayments_fundingStructureDescription(ctx contex
 	return ec.marshalNString2ᚖstring(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_PlanPayments_fundingStructureDescription(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_PlanPayments_fundingStructure(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "PlanPayments",
 		Field:      field,
@@ -32323,8 +32321,8 @@ func (ec *executionContext) fieldContext_PlanPayments_canParticipantsSelectBetwe
 	return fc, nil
 }
 
-func (ec *executionContext) _PlanPayments_canParticipantsSelectBetweenPaymentMechanismsDescription(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanPayments_canParticipantsSelectBetweenPaymentMechanismsDescription(ctx, field)
+func (ec *executionContext) _PlanPayments_canParticipantsSelectBetweenPaymentMechanismsHow(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_canParticipantsSelectBetweenPaymentMechanismsHow(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -32337,7 +32335,7 @@ func (ec *executionContext) _PlanPayments_canParticipantsSelectBetweenPaymentMec
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.CanParticipantsSelectBetweenPaymentMechanismsDescription, nil
+		return obj.CanParticipantsSelectBetweenPaymentMechanismsHow, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -32354,7 +32352,7 @@ func (ec *executionContext) _PlanPayments_canParticipantsSelectBetweenPaymentMec
 	return ec.marshalNString2ᚖstring(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_PlanPayments_canParticipantsSelectBetweenPaymentMechanismsDescription(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_PlanPayments_canParticipantsSelectBetweenPaymentMechanismsHow(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "PlanPayments",
 		Field:      field,
@@ -32455,8 +32453,8 @@ func (ec *executionContext) fieldContext_PlanPayments_anticipatedPaymentFrequenc
 	return fc, nil
 }
 
-func (ec *executionContext) _PlanPayments_anticipatedPaymentFrequencyOtherDescription(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanPayments_anticipatedPaymentFrequencyOtherDescription(ctx, field)
+func (ec *executionContext) _PlanPayments_anticipatedPaymentFrequencyOther(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_anticipatedPaymentFrequencyOther(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -32469,7 +32467,7 @@ func (ec *executionContext) _PlanPayments_anticipatedPaymentFrequencyOtherDescri
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.AnticipatedPaymentFrequencyOtherDescription, nil
+		return obj.AnticipatedPaymentFrequencyOther, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -32486,7 +32484,7 @@ func (ec *executionContext) _PlanPayments_anticipatedPaymentFrequencyOtherDescri
 	return ec.marshalNString2ᚖstring(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_PlanPayments_anticipatedPaymentFrequencyOtherDescription(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_PlanPayments_anticipatedPaymentFrequencyOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "PlanPayments",
 		Field:      field,
@@ -33776,10 +33774,10 @@ func (ec *executionContext) fieldContext_Query_planPayments(ctx context.Context,
 				return ec.fieldContext_PlanPayments_fundingSourceNote(ctx, field)
 			case "fundingSourceR":
 				return ec.fieldContext_PlanPayments_fundingSourceR(ctx, field)
-			case "fundingSourceRTrustFundDescription":
-				return ec.fieldContext_PlanPayments_fundingSourceRTrustFundDescription(ctx, field)
-			case "fundingSourceROtherDescription":
-				return ec.fieldContext_PlanPayments_fundingSourceROtherDescription(ctx, field)
+			case "fundingSourceRTrustFund":
+				return ec.fieldContext_PlanPayments_fundingSourceRTrustFund(ctx, field)
+			case "fundingSourceROther":
+				return ec.fieldContext_PlanPayments_fundingSourceROther(ctx, field)
 			case "fundingSourceRNote":
 				return ec.fieldContext_PlanPayments_fundingSourceRNote(ctx, field)
 			case "payRecipients":
@@ -33794,8 +33792,8 @@ func (ec *executionContext) fieldContext_Query_planPayments(ctx context.Context,
 				return ec.fieldContext_PlanPayments_payTypeNote(ctx, field)
 			case "payClaims":
 				return ec.fieldContext_PlanPayments_payClaims(ctx, field)
-			case "payClaimsOtherDescription":
-				return ec.fieldContext_PlanPayments_payClaimsOtherDescription(ctx, field)
+			case "payClaimsOther":
+				return ec.fieldContext_PlanPayments_payClaimsOther(ctx, field)
 			case "shouldAnyProvidersExcludedFFSSystems":
 				return ec.fieldContext_PlanPayments_shouldAnyProvidersExcludedFFSSystems(ctx, field)
 			case "shouldAnyProviderExcludedFFSSystemsNote":
@@ -33806,8 +33804,8 @@ func (ec *executionContext) fieldContext_Query_planPayments(ctx context.Context,
 				return ec.fieldContext_PlanPayments_changesMedicarePhysicianFeeScheduleNote(ctx, field)
 			case "affectsMedicareSecondaryPayerClaims":
 				return ec.fieldContext_PlanPayments_affectsMedicareSecondaryPayerClaims(ctx, field)
-			case "affectsMedicareSecondaryPayerClaimsExplanation":
-				return ec.fieldContext_PlanPayments_affectsMedicareSecondaryPayerClaimsExplanation(ctx, field)
+			case "affectsMedicareSecondaryPayerClaimsHow":
+				return ec.fieldContext_PlanPayments_affectsMedicareSecondaryPayerClaimsHow(ctx, field)
 			case "affectsMedicareSecondaryPayerClaimsNote":
 				return ec.fieldContext_PlanPayments_affectsMedicareSecondaryPayerClaimsNote(ctx, field)
 			case "payModelDifferentiation":
@@ -33836,8 +33834,8 @@ func (ec *executionContext) fieldContext_Query_planPayments(ctx context.Context,
 				return ec.fieldContext_PlanPayments_waiveBeneficiaryCostSharingNote(ctx, field)
 			case "nonClaimsPayments":
 				return ec.fieldContext_PlanPayments_nonClaimsPayments(ctx, field)
-			case "nonClaimsPaymentOtherDescription":
-				return ec.fieldContext_PlanPayments_nonClaimsPaymentOtherDescription(ctx, field)
+			case "nonClaimsPaymentOther":
+				return ec.fieldContext_PlanPayments_nonClaimsPaymentOther(ctx, field)
 			case "paymentCalculationOwner":
 				return ec.fieldContext_PlanPayments_paymentCalculationOwner(ctx, field)
 			case "numberPaymentsPerPayCycle":
@@ -33852,22 +33850,22 @@ func (ec *executionContext) fieldContext_Query_planPayments(ctx context.Context,
 				return ec.fieldContext_PlanPayments_planningToUseInnovationPaymentContractor(ctx, field)
 			case "planningToUseInnovationPaymentContractorNote":
 				return ec.fieldContext_PlanPayments_planningToUseInnovationPaymentContractorNote(ctx, field)
-			case "fundingStructureDescription":
-				return ec.fieldContext_PlanPayments_fundingStructureDescription(ctx, field)
+			case "fundingStructure":
+				return ec.fieldContext_PlanPayments_fundingStructure(ctx, field)
 			case "expectedCalculationComplexityLevel":
 				return ec.fieldContext_PlanPayments_expectedCalculationComplexityLevel(ctx, field)
 			case "expectedCalculationComplexityLevelNote":
 				return ec.fieldContext_PlanPayments_expectedCalculationComplexityLevelNote(ctx, field)
 			case "canParticipantsSelectBetweenPaymentMechanisms":
 				return ec.fieldContext_PlanPayments_canParticipantsSelectBetweenPaymentMechanisms(ctx, field)
-			case "canParticipantsSelectBetweenPaymentMechanismsDescription":
-				return ec.fieldContext_PlanPayments_canParticipantsSelectBetweenPaymentMechanismsDescription(ctx, field)
+			case "canParticipantsSelectBetweenPaymentMechanismsHow":
+				return ec.fieldContext_PlanPayments_canParticipantsSelectBetweenPaymentMechanismsHow(ctx, field)
 			case "canParticipantsSelectBetweenPaymentMechanismsNote":
 				return ec.fieldContext_PlanPayments_canParticipantsSelectBetweenPaymentMechanismsNote(ctx, field)
 			case "anticipatedPaymentFrequency":
 				return ec.fieldContext_PlanPayments_anticipatedPaymentFrequency(ctx, field)
-			case "anticipatedPaymentFrequencyOtherDescription":
-				return ec.fieldContext_PlanPayments_anticipatedPaymentFrequencyOtherDescription(ctx, field)
+			case "anticipatedPaymentFrequencyOther":
+				return ec.fieldContext_PlanPayments_anticipatedPaymentFrequencyOther(ctx, field)
 			case "anticipatedPaymentFrequencyNotes":
 				return ec.fieldContext_PlanPayments_anticipatedPaymentFrequencyNotes(ctx, field)
 			case "willRecoverPayments":
@@ -39986,16 +39984,16 @@ func (ec *executionContext) _PlanPayments(ctx context.Context, sel ast.Selection
 				return innerFunc(ctx)
 
 			})
-		case "fundingSourceRTrustFundDescription":
+		case "fundingSourceRTrustFund":
 
-			out.Values[i] = ec._PlanPayments_fundingSourceRTrustFundDescription(ctx, field, obj)
+			out.Values[i] = ec._PlanPayments_fundingSourceRTrustFund(ctx, field, obj)
 
 			if out.Values[i] == graphql.Null {
 				atomic.AddUint32(&invalids, 1)
 			}
-		case "fundingSourceROtherDescription":
+		case "fundingSourceROther":
 
-			out.Values[i] = ec._PlanPayments_fundingSourceROtherDescription(ctx, field, obj)
+			out.Values[i] = ec._PlanPayments_fundingSourceROther(ctx, field, obj)
 
 			if out.Values[i] == graphql.Null {
 				atomic.AddUint32(&invalids, 1)
@@ -40052,12 +40050,22 @@ func (ec *executionContext) _PlanPayments(ctx context.Context, sel ast.Selection
 
 			})
 		case "payType":
+			field := field
 
-			out.Values[i] = ec._PlanPayments_payType(ctx, field, obj)
-
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&invalids, 1)
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._PlanPayments_payType(ctx, field, obj)
+				return res
 			}
+
+			out.Concurrently(i, func() graphql.Marshaler {
+				return innerFunc(ctx)
+
+			})
 		case "payTypeNote":
 
 			out.Values[i] = ec._PlanPayments_payTypeNote(ctx, field, obj)
@@ -40082,9 +40090,9 @@ func (ec *executionContext) _PlanPayments(ctx context.Context, sel ast.Selection
 				return innerFunc(ctx)
 
 			})
-		case "payClaimsOtherDescription":
+		case "payClaimsOther":
 
-			out.Values[i] = ec._PlanPayments_payClaimsOtherDescription(ctx, field, obj)
+			out.Values[i] = ec._PlanPayments_payClaimsOther(ctx, field, obj)
 
 			if out.Values[i] == graphql.Null {
 				atomic.AddUint32(&invalids, 1)
@@ -40124,9 +40132,9 @@ func (ec *executionContext) _PlanPayments(ctx context.Context, sel ast.Selection
 			if out.Values[i] == graphql.Null {
 				atomic.AddUint32(&invalids, 1)
 			}
-		case "affectsMedicareSecondaryPayerClaimsExplanation":
+		case "affectsMedicareSecondaryPayerClaimsHow":
 
-			out.Values[i] = ec._PlanPayments_affectsMedicareSecondaryPayerClaimsExplanation(ctx, field, obj)
+			out.Values[i] = ec._PlanPayments_affectsMedicareSecondaryPayerClaimsHow(ctx, field, obj)
 
 			if out.Values[i] == graphql.Null {
 				atomic.AddUint32(&invalids, 1)
@@ -40236,7 +40244,7 @@ func (ec *executionContext) _PlanPayments(ctx context.Context, sel ast.Selection
 				return innerFunc(ctx)
 
 			})
-		case "nonClaimsPaymentOtherDescription":
+		case "nonClaimsPaymentOther":
 			field := field
 
 			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
@@ -40245,7 +40253,7 @@ func (ec *executionContext) _PlanPayments(ctx context.Context, sel ast.Selection
 						ec.Error(ctx, ec.Recover(ctx, r))
 					}
 				}()
-				res = ec._PlanPayments_nonClaimsPaymentOtherDescription(ctx, field, obj)
+				res = ec._PlanPayments_nonClaimsPaymentOther(ctx, field, obj)
 				if res == graphql.Null {
 					atomic.AddUint32(&invalids, 1)
 				}
@@ -40305,9 +40313,9 @@ func (ec *executionContext) _PlanPayments(ctx context.Context, sel ast.Selection
 			if out.Values[i] == graphql.Null {
 				atomic.AddUint32(&invalids, 1)
 			}
-		case "fundingStructureDescription":
+		case "fundingStructure":
 
-			out.Values[i] = ec._PlanPayments_fundingStructureDescription(ctx, field, obj)
+			out.Values[i] = ec._PlanPayments_fundingStructure(ctx, field, obj)
 
 			if out.Values[i] == graphql.Null {
 				atomic.AddUint32(&invalids, 1)
@@ -40333,9 +40341,9 @@ func (ec *executionContext) _PlanPayments(ctx context.Context, sel ast.Selection
 			if out.Values[i] == graphql.Null {
 				atomic.AddUint32(&invalids, 1)
 			}
-		case "canParticipantsSelectBetweenPaymentMechanismsDescription":
+		case "canParticipantsSelectBetweenPaymentMechanismsHow":
 
-			out.Values[i] = ec._PlanPayments_canParticipantsSelectBetweenPaymentMechanismsDescription(ctx, field, obj)
+			out.Values[i] = ec._PlanPayments_canParticipantsSelectBetweenPaymentMechanismsHow(ctx, field, obj)
 
 			if out.Values[i] == graphql.Null {
 				atomic.AddUint32(&invalids, 1)
@@ -40354,9 +40362,9 @@ func (ec *executionContext) _PlanPayments(ctx context.Context, sel ast.Selection
 			if out.Values[i] == graphql.Null {
 				atomic.AddUint32(&invalids, 1)
 			}
-		case "anticipatedPaymentFrequencyOtherDescription":
+		case "anticipatedPaymentFrequencyOther":
 
-			out.Values[i] = ec._PlanPayments_anticipatedPaymentFrequencyOtherDescription(ctx, field, obj)
+			out.Values[i] = ec._PlanPayments_anticipatedPaymentFrequencyOther(ctx, field, obj)
 
 			if out.Values[i] == graphql.Null {
 				atomic.AddUint32(&invalids, 1)
@@ -49705,6 +49713,73 @@ func (ec *executionContext) marshalOPayRecipient2ᚕgithubᚗcomᚋcmsgovᚋmint
 				defer wg.Done()
 			}
 			ret[i] = ec.marshalNPayRecipient2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPayRecipient(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
+}
+
+func (ec *executionContext) unmarshalOPayType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPayTypeᚄ(ctx context.Context, v interface{}) ([]models.PayType, error) {
+	if v == nil {
+		return nil, nil
+	}
+	var vSlice []interface{}
+	if v != nil {
+		vSlice = graphql.CoerceList(v)
+	}
+	var err error
+	res := make([]models.PayType, len(vSlice))
+	for i := range vSlice {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
+		res[i], err = ec.unmarshalNPayType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPayType(ctx, vSlice[i])
+		if err != nil {
+			return nil, err
+		}
+	}
+	return res, nil
+}
+
+func (ec *executionContext) marshalOPayType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPayTypeᚄ(ctx context.Context, sel ast.SelectionSet, v []models.PayType) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalNPayType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPayType(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)

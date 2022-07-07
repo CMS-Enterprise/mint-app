@@ -708,24 +708,24 @@ type PlanPayments {
   # Page 1
   fundingSourceNote:                  String!
   fundingSourceR:                     [FundingSource!]
-  fundingSourceRTrustFundDescription: String!
-  fundingSourceROtherDescription:     String!
+  fundingSourceRTrustFund:            String!
+  fundingSourceROther:                String!
   fundingSourceRNote:                 String!
   payRecipients:                      [PayRecipient!]
   payRecipientOtherSpecification:     String!
   payRecipientNote:                   String!
-  payType:                            PayType!
+  payType:                            [PayType!]
   payTypeNote:                        String!
 
   # Page 2
   payClaims:                                      [ClaimsBasedPayType!]
-  payClaimsOtherDescription:                      String!
+  payClaimsOther:                                 String!
   shouldAnyProvidersExcludedFFSSystems:           Boolean!
   shouldAnyProviderExcludedFFSSystemsNote:        String!
   changesMedicarePhysicianFeeSchedule:            Boolean!
   changesMedicarePhysicianFeeScheduleNote:        String!
   affectsMedicareSecondaryPayerClaims:            Boolean!
-  affectsMedicareSecondaryPayerClaimsExplanation: String!
+  affectsMedicareSecondaryPayerClaimsHow: String!
   affectsMedicareSecondaryPayerClaimsNote:        String!
   payModelDifferentiation:                        String!
 
@@ -746,7 +746,7 @@ type PlanPayments {
 
   # Page 5
   nonClaimsPayments:                               [NonClaimsBasedPayType!]
-  nonClaimsPaymentOtherDescription:                String!
+  nonClaimsPaymentOther:                           String!
   paymentCalculationOwner:                         String!
   numberPaymentsPerPayCycle:                       String!
   numberPaymentsPerPayCycleNotes:                  String!
@@ -754,17 +754,17 @@ type PlanPayments {
   sharedSystemsInvolvedAdditionalClaimPaymentNote: String!
   planningToUseInnovationPaymentContractor:        Boolean!
   planningToUseInnovationPaymentContractorNote:    String!
-  fundingStructureDescription:                     String!
+  fundingStructure:                                String!
 
   # Page 6
-  expectedCalculationComplexityLevel:                       ComplexityCalculationLevelType!
-  expectedCalculationComplexityLevelNote:                   String!
-  canParticipantsSelectBetweenPaymentMechanisms:            Boolean!
-  canParticipantsSelectBetweenPaymentMechanismsDescription: String!
-  canParticipantsSelectBetweenPaymentMechanismsNote:        String!
-  anticipatedPaymentFrequency:                              AnticipatedPaymentFrequencyType!
-  anticipatedPaymentFrequencyOtherDescription:              String!
-  anticipatedPaymentFrequencyNotes:                         String!
+  expectedCalculationComplexityLevel:                ComplexityCalculationLevelType!
+  expectedCalculationComplexityLevelNote:            String!
+  canParticipantsSelectBetweenPaymentMechanisms:     Boolean!
+  canParticipantsSelectBetweenPaymentMechanismsHow:  String!
+  canParticipantsSelectBetweenPaymentMechanismsNote: String!
+  anticipatedPaymentFrequency:                       AnticipatedPaymentFrequencyType!
+  anticipatedPaymentFrequencyOther:                  String!
+  anticipatedPaymentFrequencyNotes:                  String!
 
   # Page 7
   willRecoverPayments:                               Boolean!
@@ -786,8 +786,8 @@ input PlanPaymentsChanges @goModel(model: "map[string]interface{}") {
   # Page 1
   fundingSourceNote:                  String
   fundingSourceR:                     [FundingSource!]
-  fundingSourceRTrustFundDescription: String
-  fundingSourceROtherDescription:     String
+  fundingSourceRTrustFund: String
+  fundingSourceROther:     String
   fundingSourceRNote:                 String
   payRecipients:                      [PayRecipient!]
   payRecipientOtherSpecification:     String
@@ -797,13 +797,13 @@ input PlanPaymentsChanges @goModel(model: "map[string]interface{}") {
 
   # Page 2
   payClaims:                                      [ClaimsBasedPayType!]
-  payClaimsOtherDescription:                      String
+  payClaimsOther:                      String
   shouldAnyProvidersExcludedFFSSystems:           Boolean
   shouldAnyProviderExcludedFFSSystemsNote:        String
   changesMedicarePhysicianFeeSchedule:            Boolean
   changesMedicarePhysicianFeeScheduleNote:        String
   affectsMedicareSecondaryPayerClaims:            Boolean
-  affectsMedicareSecondaryPayerClaimsExplanation: String
+  affectsMedicareSecondaryPayerClaimsHow: String
   affectsMedicareSecondaryPayerClaimsNote:        String
   payModelDifferentiation:                        String
 
@@ -824,7 +824,7 @@ input PlanPaymentsChanges @goModel(model: "map[string]interface{}") {
 
   # Page 5
   nonClaimsPayments:                               [NonClaimsBasedPayType!]
-  nonClaimsPaymentOtherDescription:                String
+  nonClaimsPaymentOther:                String
   paymentCalculationOwner:                         String
   numberPaymentsPerPayCycle:                       String
   numberPaymentsPerPayCycleNotes:                  String
@@ -832,16 +832,16 @@ input PlanPaymentsChanges @goModel(model: "map[string]interface{}") {
   sharedSystemsInvolvedAdditionalClaimPaymentNote: String
   planningToUseInnovationPaymentContractor:        Boolean
   planningToUseInnovationPaymentContractorNote:    String
-  fundingStructureDescription:                     String
+  fundingStructure:                     String
 
   # Page 6
   expectedCalculationComplexityLevel:                       ComplexityCalculationLevelType
   expectedCalculationComplexityLevelNote:                   String
   canParticipantsSelectBetweenPaymentMechanisms:            Boolean
-  canParticipantsSelectBetweenPaymentMechanismsDescription: String
+  canParticipantsSelectBetweenPaymentMechanismsHow: String
   canParticipantsSelectBetweenPaymentMechanismsNote:        String
   anticipatedPaymentFrequency:                              AnticipatedPaymentFrequencyType
-  anticipatedPaymentFrequencyOtherDescription:              String
+  anticipatedPaymentFrequencyOther:              String
   anticipatedPaymentFrequencyNotes:                         String
 
   # Page 7

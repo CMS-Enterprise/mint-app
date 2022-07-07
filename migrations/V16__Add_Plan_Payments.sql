@@ -62,28 +62,29 @@ CREATE TABLE plan_payments (
 
     --page 1
     funding_source PP_FUNDING_SOURCE[],
-    funding_source_trust_fund_description ZERO_STRING,
-    funding_source_other_description ZERO_STRING,
+    funding_source_trust_fund ZERO_STRING,
+    funding_source_other ZERO_STRING,
     funding_source_note ZERO_STRING,
     funding_source_r PP_FUNDING_SOURCE[],
-    funding_source_r_trust_fund_description ZERO_STRING,
-    funding_source_r_other_description ZERO_STRING,
+    funding_source_r_trust_fund ZERO_STRING,
+    funding_source_r_other ZERO_STRING,
     funding_source_r_note ZERO_STRING,
     pay_recipients PP_PAY_RECIPIENT[],
     pay_recipients_other_specification ZERO_STRING,
     pay_recipients_note ZERO_STRING,
-    pay_type PP_PAY_TYPE,
+    pay_type PP_PAY_TYPE[],
     pay_type_note ZERO_STRING,
 
     --page 2
     pay_claims PP_CLAIMS_BASED_PAY_TYPE[],
-    pay_claims_other_description ZERO_STRING,
+    pay_claims_other ZERO_STRING,
+    pay_claims_note ZERO_STRING,
     should_any_providers_excluded_ffs_systems BOOLEAN,
     should_any_providers_excluded_ffs_systems_note ZERO_STRING,
     changes_medicare_physician_fee_schedule BOOLEAN,
     changes_medicare_physician_fee_schedule_note ZERO_STRING,
     affects_medicare_secondary_payer_claims BOOLEAN,
-    affects_medicare_secondary_payer_claims_explanation ZERO_STRING,
+    affects_medicare_secondary_payer_claims_how ZERO_STRING,
     affects_medicare_secondary_payer_claims_note ZERO_STRING,
     pay_model_differentiation ZERO_STRING,
 
@@ -104,7 +105,7 @@ CREATE TABLE plan_payments (
 
     --page 5
     non_claims_payments PP_NON_CLAIM_BASED_PAYMENT_TYPE[],
-    non_claims_payments_other_description ZERO_STRING,
+    non_claims_payments_other ZERO_STRING,
     payment_calculation_owner ZERO_STRING,
     number_payments_per_pay_cycle ZERO_STRING,
     number_payments_per_pay_cycle_notes ZERO_STRING,
@@ -112,16 +113,16 @@ CREATE TABLE plan_payments (
     shared_systems_involved_additional_claim_payment_note ZERO_STRING,
     planning_to_use_innovation_payment_contractor BOOLEAN,
     planning_to_use_innovation_payment_contractor_note ZERO_STRING,
-    funding_structure_description ZERO_STRING,
+    funding_structure ZERO_STRING,
 
     --page 6
     expected_calculation_complexity_level PP_COMPLEXITY_CALCULATION_LEVEL_TYPE,
     expected_calculation_complexity_level_note ZERO_STRING,
     can_participants_select_between_payment_mechanisms BOOL,
-    can_participants_select_between_payment_mechanisms_description ZERO_STRING,
+    can_participants_select_between_payment_mechanisms_how ZERO_STRING,
     can_participants_select_between_payment_mechanisms_note ZERO_STRING,
     anticipated_payment_frequency PP_ANTICIPATED_PAYMENT_FREQUENCY_TYPE,
-    anticipated_payment_frequency_other_description ZERO_STRING,
+    anticipated_payment_frequency_other ZERO_STRING,
     anticipated_payment_frequency_notes ZERO_STRING,
 
     --page 7

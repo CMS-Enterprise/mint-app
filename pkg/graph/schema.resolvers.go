@@ -5,6 +5,7 @@ package graph
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/google/uuid"
 
@@ -566,6 +567,10 @@ func (r *planPaymentsResolver) PayRecipientNote(ctx context.Context, obj *models
 	return *obj.PayRecipientsNote, nil
 }
 
+func (r *planPaymentsResolver) PayType(ctx context.Context, obj *models.PlanPayments) ([]models.PayType, error) {
+	panic(fmt.Errorf("not implemented"))
+}
+
 func (r *planPaymentsResolver) PayClaims(ctx context.Context, obj *models.PlanPayments) ([]models.ClaimsBasedPayType, error) {
 	return models.ConvertEnums[models.ClaimsBasedPayType](obj.PayClaims), nil
 }
@@ -574,8 +579,8 @@ func (r *planPaymentsResolver) NonClaimsPayments(ctx context.Context, obj *model
 	return models.ConvertEnums[model.NonClaimsBasedPayType](obj.NonClaimsPayments), nil
 }
 
-func (r *planPaymentsResolver) NonClaimsPaymentOtherDescription(ctx context.Context, obj *models.PlanPayments) (string, error) {
-	return *obj.NonClaimsPaymentsOtherDescription, nil
+func (r *planPaymentsResolver) NonClaimsPaymentOther(ctx context.Context, obj *models.PlanPayments) (string, error) {
+	panic(fmt.Errorf("not implemented"))
 }
 
 func (r *queryResolver) CurrentUser(ctx context.Context) (*model.CurrentUser, error) {
@@ -723,3 +728,31 @@ type planParticipantsAndProvidersResolver struct{ *Resolver }
 type planPaymentsResolver struct{ *Resolver }
 type queryResolver struct{ *Resolver }
 type userInfoResolver struct{ *Resolver }
+
+// !!! WARNING !!!
+// The code below was going to be deleted when updating resolvers. It has been copied here so you have
+// one last chance to move it out of harms way if you want. There are two reasons this happens:
+//  - When renaming or deleting a resolver the old code will be put in here. You can safely delete
+//    it when you're done.
+//  - You have helper methods in this file. Move them out to keep these resolver files clean.
+func (r *planPaymentsResolver) FundingSourceRTrustFundDescription(ctx context.Context, obj *models.PlanPayments) (string, error) {
+	panic(fmt.Errorf("not implemented"))
+}
+func (r *planPaymentsResolver) FundingSourceROtherDescription(ctx context.Context, obj *models.PlanPayments) (string, error) {
+	panic(fmt.Errorf("not implemented"))
+}
+func (r *planPaymentsResolver) PayClaimsOtherDescription(ctx context.Context, obj *models.PlanPayments) (string, error) {
+	panic(fmt.Errorf("not implemented"))
+}
+func (r *planPaymentsResolver) NonClaimsPaymentOtherDescription(ctx context.Context, obj *models.PlanPayments) (string, error) {
+	return *obj.NonClaimsPaymentsOther, nil
+}
+func (r *planPaymentsResolver) FundingStructureDescription(ctx context.Context, obj *models.PlanPayments) (string, error) {
+	panic(fmt.Errorf("not implemented"))
+}
+func (r *planPaymentsResolver) CanParticipantsSelectBetweenPaymentMechanismsDescription(ctx context.Context, obj *models.PlanPayments) (string, error) {
+	panic(fmt.Errorf("not implemented"))
+}
+func (r *planPaymentsResolver) AnticipatedPaymentFrequencyOtherDescription(ctx context.Context, obj *models.PlanPayments) (string, error) {
+	panic(fmt.Errorf("not implemented"))
+}
