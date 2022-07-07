@@ -6,17 +6,17 @@
 import { GcPartCDType, GcCollectBidsType, GcUpdateContractType } from "./../../../types/graphql-global-types";
 
 // ====================================================
-// GraphQL query operation: GetITCharacteristics
+// GraphQL query operation: GetITToolPageOne
 // ====================================================
 
-export interface GetITCharacteristics_modelPlan_generalCharacteristics {
+export interface GetITToolPageOne_modelPlan_generalCharacteristics {
   __typename: "PlanGeneralCharacteristics";
   managePartCDEnrollment: boolean | null;
   collectPlanBids: boolean | null;
   planContactUpdated: boolean | null;
 }
 
-export interface GetITCharacteristics_modelPlan_itTools {
+export interface GetITToolPageOne_modelPlan_itTools {
   __typename: "PlanITTools";
   id: UUID;
   gcPartCD: GcPartCDType[];
@@ -30,18 +30,18 @@ export interface GetITCharacteristics_modelPlan_itTools {
   gcUpdateContractNote: string | null;
 }
 
-export interface GetITCharacteristics_modelPlan {
+export interface GetITToolPageOne_modelPlan {
   __typename: "ModelPlan";
   id: UUID;
   modelName: string;
-  generalCharacteristics: GetITCharacteristics_modelPlan_generalCharacteristics;
-  itTools: GetITCharacteristics_modelPlan_itTools;
+  generalCharacteristics: GetITToolPageOne_modelPlan_generalCharacteristics;
+  itTools: GetITToolPageOne_modelPlan_itTools;
 }
 
-export interface GetITCharacteristics {
-  modelPlan: GetITCharacteristics_modelPlan;
+export interface GetITToolPageOne {
+  modelPlan: GetITToolPageOne_modelPlan;
 }
 
-export interface GetITCharacteristicsVariables {
+export interface GetITToolPageOneVariables {
   id: UUID;
 }

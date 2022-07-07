@@ -304,7 +304,7 @@ export const ParticipantsOptions = () => {
                   error={!!flatErrors.recruitmentMethod}
                 >
                   <Label htmlFor="participants-and-providers-recruitment-method">
-                    {t('recruitPartifipants')}
+                    {t('recruitParticipants')}
                   </Label>
                   <FieldErrorMsg>{flatErrors.recruitmentMethod}</FieldErrorMsg>
                   <Fieldset>
@@ -363,7 +363,7 @@ export const ParticipantsOptions = () => {
                   className="margin-top-4"
                 >
                   <Label htmlFor="participants-and-providers-selection-method">
-                    {t('whoAreParticipants')}
+                    {t('howWillYouSelect')}
                   </Label>
                   <FieldErrorMsg>{flatErrors.participants}</FieldErrorMsg>
                   <Field

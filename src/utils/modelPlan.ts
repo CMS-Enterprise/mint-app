@@ -6,6 +6,18 @@ import { DocumentType } from 'types/graphql-global-types';
 /**
  * Translate the API enum to a human readable string
  */
+
+export const translateBoolean = (type: boolean) => {
+  switch (type) {
+    case true:
+      return i18next.t('draftModelPlan:yes');
+    case false:
+      return i18next.t('draftModelPlan:no');
+    default:
+      return '';
+  }
+};
+
 export const translateTeamRole = (teamRole: string) => {
   switch (teamRole) {
     case 'EVALUATION':
@@ -869,6 +881,52 @@ export const translateModelLearningSystemType = (type: string) => {
       return i18next.t(
         'operationsEvaluationAndLearning:learningSystemOptions.no'
       );
+    default:
+      return '';
+  }
+};
+
+export const translateGcPartCDType = (type: string) => {
+  switch (type) {
+    case 'MARX':
+      return i18next.t('itTools:partCDTypes.marx');
+    case 'OTHER':
+      return i18next.t('itTools:partCDTypes.other');
+    default:
+      return '';
+  }
+};
+
+export const translateGcCollectBidsType = (type: string) => {
+  switch (type) {
+    case 'HPMS':
+      return i18next.t('itTools:collectBidsTypes.hpms');
+    case 'OTHER':
+      return i18next.t('itTools:collectBidsTypes.other');
+    default:
+      return '';
+  }
+};
+
+export const translateGcUpdateContractType = (type: string) => {
+  switch (type) {
+    case 'HPMS':
+      return i18next.t('itTools:updateContractTypes.hpms');
+    case 'OTHER':
+      return i18next.t('itTools:updateContractTypes.other');
+    default:
+      return '';
+  }
+};
+
+export const translatePpToAdvertiseType = (type: string) => {
+  switch (type) {
+    case 'SALESFORCE':
+      return i18next.t('itTools:ppToAdvertiseOptions.salesforce');
+    case 'GRANT_SOLUTIONS':
+      return i18next.t('itTools:ppToAdvertiseOptions.grantSolutions');
+    case 'OTHER':
+      return i18next.t('itTools:ppToAdvertiseOptions.other');
     default:
       return '';
   }

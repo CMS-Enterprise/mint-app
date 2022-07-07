@@ -5,7 +5,8 @@ import { Grid, GridContainer } from '@trussworks/react-uswds';
 import MainContent from 'components/MainContent';
 import { NotFoundPartial } from 'views/NotFound';
 
-import ITCharacteristics from './Characteristics';
+import ITToolsPageOne from './PageOne';
+import ITToolsPageTwo from './PageTwo';
 
 export const ITTools = () => {
   return (
@@ -16,12 +17,17 @@ export const ITTools = () => {
             <Redirect
               exact
               from="/models/:modelID/task-list/it-tools"
-              to="/models/:modelID/task-list/it-tools/characteristics"
+              to="/models/:modelID/task-list/it-tools/page-one"
             />
             <Route
-              path="/models/:modelID/task-list/it-tools/characteristics"
+              path="/models/:modelID/task-list/it-tools/page-one"
               exact
-              render={() => <ITCharacteristics />}
+              render={() => <ITToolsPageOne />}
+            />
+            <Route
+              path="/models/:modelID/task-list/it-tools/page-two"
+              exact
+              render={() => <ITToolsPageTwo />}
             />
             <Route path="*" render={() => <NotFoundPartial />} />
           </Switch>

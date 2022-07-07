@@ -53,7 +53,7 @@ const participantsAndProviders = {
     fairly: 'Fairly confident',
     completely: 'Compeletely confident'
   },
-  recruitPartifipants: 'How will you recruit the participants?',
+  recruitParticipants: 'How will you recruit the participants?',
   recruitOptions: {
     loi: 'LOI (Letter of interest)',
     rfa: 'RFA (Request for applications)',

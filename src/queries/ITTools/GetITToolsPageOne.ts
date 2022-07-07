@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client';
 
 export default gql`
-  query GetITCharacteristics($id: UUID!) {
+  query GetITToolPageOne($id: UUID!) {
     modelPlan(id: $id) {
       id
       modelName
