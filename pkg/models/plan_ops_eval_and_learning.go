@@ -157,18 +157,6 @@ const (
 	DataIncremental DataFullTimeOrIncrementalType = "INCREMENTAL"
 )
 
-// CalcStatus returns a TaskStatus based on how many fields have been entered in the PlanOpsEvalAndLearning struct
-func (oel *PlanOpsEvalAndLearning) CalcStatus() error {
-
-	status, err := GenericallyCalculateStatus(*oel)
-	if err != nil {
-		return err
-	}
-
-	oel.Status = status
-	return nil
-}
-
 // GetModelTypeName returns the name of the model
 func (oel PlanOpsEvalAndLearning) GetModelTypeName() string {
 	return "Plan_Ops_Eval_And_Learning"

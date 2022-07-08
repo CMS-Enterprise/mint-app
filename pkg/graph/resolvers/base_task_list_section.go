@@ -5,19 +5,19 @@ import (
 )
 
 // BaseTaskListSectionPreUpdate applies incoming changes from to a TaskList Section, and validates it's status
-func BaseTaskListSectionPreUpdate(btls models.IBaseTaskListSection, changes map[string]interface{}, principal string) error {
-	section := btls.GetBaseTaskListSection()
+func BaseTaskListSectionPreUpdate(tls models.IBaseTaskListSection, changes map[string]interface{}, principal string) error {
+	section := tls.GetBaseTaskListSection()
 
 	section.ModifiedBy = &principal
 
 	oldStatus := section.Status
 
-	err := ApplyChanges(changes, btls)
+	err := ApplyChanges(changes, tls)
 	if err != nil {
 		return err
 	}
 
-	err = section.CalcStatus(oldStatus)
+	err = tls.CalcStatus(oldStatus)
 	if err != nil {
 		return err
 	}

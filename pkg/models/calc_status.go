@@ -10,7 +10,7 @@ import (
 // being calculated for the overall status of the struct.
 const tagName = "statusWeight"
 
-// GenericallyCalculateStatus calculates the overall status of a struct based on the `statusWeight` tags.
+// GenericallyCalculateStatus (Deprecated:) calculates the overall status of a struct based on the `statusWeight` tags.
 // The function has the following restrictions, and will throw an error if any of the conditions are not met:
 // - The only parameter to this function must be a struct. If it is not, an error will be returned.
 // - If the struct has `statusWeight` tags, they MUST be placed on pointer types only

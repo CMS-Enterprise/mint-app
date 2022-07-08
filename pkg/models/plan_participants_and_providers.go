@@ -89,18 +89,6 @@ const (
 	RiskOTHER      ParticipantRiskType = "OTHER"
 )
 
-// CalcStatus returns a TaskStatus based on how many fields have been entered in the PlanParticipantsAndProviders struct
-func (pp *PlanParticipantsAndProviders) CalcStatus() error {
-
-	status, err := GenericallyCalculateStatus(*pp)
-	if err != nil {
-		return err
-	}
-
-	pp.Status = status
-	return nil
-}
-
 // GetModelTypeName returns the name of the model
 func (pp PlanParticipantsAndProviders) GetModelTypeName() string {
 	return "Plan_Participants_And_Providers"

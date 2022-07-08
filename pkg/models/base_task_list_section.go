@@ -9,6 +9,7 @@ import (
 // IBaseTaskListSection returns the embedded BaseTaskListSection
 type IBaseTaskListSection interface {
 	GetBaseTaskListSection() *BaseTaskListSection
+	CalcStatus(TaskStatus) error
 }
 
 // BaseTaskListSection represents all the shared fields in common to a task list section

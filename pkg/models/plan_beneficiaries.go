@@ -37,18 +37,6 @@ type PlanBeneficiaries struct {
 	PrecedenceRules                    *string        `json:"precedenceRules" db:"precedence_rules"`
 }
 
-// CalcStatus returns a TaskStatus based on how many fields have been entered in the PlanBeneficiaries struct
-func (b *PlanBeneficiaries) CalcStatus() error {
-	status, err := GenericallyCalculateStatus(*b)
-	if err != nil {
-		return err
-	}
-
-	b.Status = status
-	return nil
-
-}
-
 // GetModelTypeName returns the name of the model
 func (b PlanBeneficiaries) GetModelTypeName() string {
 	return "Plan_Beneficiaries"

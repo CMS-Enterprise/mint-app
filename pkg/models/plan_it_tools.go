@@ -102,23 +102,6 @@ type PlanITTools struct {
 	PRecoverPaymentsNote  *string        `json:"pRecoverPaymentsNote" db:"p_recover_payments_note"`
 }
 
-// CalcStatus returns a TaskStatus based on how many fields have been entered in the PlanITTools struct
-func (it *PlanITTools) CalcStatus() error {
-	//TODO: this section is largely conditional, it might be necessary to override the generic functionality in favor of a more specific one
-	/*
-		if desired, we can provide get other task list questions to determine if a question is required or not
-	*/
-
-	status, err := GenericallyCalculateStatus(*it)
-	if err != nil {
-		return err
-	}
-
-	// it.Status = TaskReady
-	it.Status = status
-	return nil
-}
-
 // GetModelTypeName returns the name of the model
 func (it PlanITTools) GetModelTypeName() string {
 	return "Plan_IT_Tools"

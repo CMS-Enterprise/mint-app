@@ -71,17 +71,6 @@ type PlanGeneralCharacteristics struct {
 	WaiversRequiredNote           *string        `json:"waiversRequiredNote" db:"waivers_required_note"`
 }
 
-// CalcStatus calculates the status of the Plan General Characteristics and sets the Status field
-func (gc *PlanGeneralCharacteristics) CalcStatus() error {
-	status, err := GenericallyCalculateStatus(*gc)
-	if err != nil {
-		return err
-	}
-
-	gc.Status = status
-	return nil
-}
-
 // GetModelTypeName returns a string name that represents the PlanBasics struct
 func (gc PlanGeneralCharacteristics) GetModelTypeName() string {
 	return "Plan_General_Characteristics"

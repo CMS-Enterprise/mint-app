@@ -28,17 +28,6 @@ type PlanMilestones struct {
 	PhasedInNote *string `json:"phasedInNote" db:"phased_in_note"`
 }
 
-// CalcStatus calculates the status of the Plan Milestones and sets the Status field
-func (pm *PlanMilestones) CalcStatus() error {
-	status, err := GenericallyCalculateStatus(*pm)
-	if err != nil {
-		return err
-	}
-
-	pm.Status = status
-	return nil
-}
-
 // GetModelTypeName returns a string name that represents the PlanMilestones struct
 func (pm PlanMilestones) GetModelTypeName() string {
 	return "Plan_Milestones"
