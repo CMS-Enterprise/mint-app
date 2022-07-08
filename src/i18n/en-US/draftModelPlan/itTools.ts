@@ -36,7 +36,9 @@ const itTools = {
     grantSolutions: 'Grant Solutions',
     other: 'Other'
   },
-  ppToAdvertiseInfo: 'If cooperative agreement, please select Grant Solutions.'
+  ppToAdvertiseInfo: 'If cooperative agreement, please select Grant Solutions.',
+  collectTools:
+    'What IT tools will you use to collect, review, and score applications?'
 };
 
 export default itTools;

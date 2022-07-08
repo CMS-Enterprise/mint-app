@@ -231,10 +231,7 @@ const ITToolsPageOne = () => {
                                     false
                                 )
                               ]}
-                              options={[
-                                translateBoolean(true),
-                                translateBoolean(false)
-                              ]}
+                              options={[translateBoolean(true)]}
                               redirect={`/models/${modelID}/task-list/characteristics/key-characteristics`}
                               answered={
                                 characteristics.managePartCDEnrollment !== null
@@ -338,10 +335,7 @@ const ITToolsPageOne = () => {
                                   characteristics.collectPlanBids || false
                                 )
                               ]}
-                              options={[
-                                translateBoolean(true),
-                                translateBoolean(false)
-                              ]}
+                              options={[translateBoolean(true)]}
                               redirect={`/models/${modelID}/task-list/characteristics/key-characteristics`}
                               answered={
                                 characteristics.collectPlanBids !== null
@@ -445,10 +439,7 @@ const ITToolsPageOne = () => {
                                   characteristics.planContactUpdated || false
                                 )
                               ]}
-                              options={[
-                                translateBoolean(true),
-                                translateBoolean(false)
-                              ]}
+                              options={[translateBoolean(true)]}
                               redirect={`/models/${modelID}/task-list/characteristics/key-characteristics`}
                               answered={
                                 characteristics.planContactUpdated !== null

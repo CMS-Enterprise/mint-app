@@ -80,7 +80,7 @@ const ITToolsPageTwo = () => {
     ppAppSupportContractorNote
   } = data?.modelPlan?.itTools || ({} as ITToolsPageTwoFormType);
 
-  const participantsAndProviders =
+  const { recruitmentMethod, selectionMethod = [] } =
     data?.modelPlan?.participantsAndProviders ||
     ({} as ParticipantsAndProvidersFormType);
 
@@ -232,23 +232,18 @@ const ITToolsPageTwo = () => {
                               question={p('recruitParticipants')}
                               answers={[
                                 translateRecruitmentType(
-                                  participantsAndProviders.recruitmentMethod ||
-                                    ''
+                                  recruitmentMethod || ''
                                 )
                               ]}
-                              options={Object.keys(RecruitmentType).map(key =>
-                                translateRecruitmentType(key)
-                              )}
+                              options={[
+                                translateRecruitmentType(RecruitmentType.LOI),
+                                translateRecruitmentType(RecruitmentType.NOFO)
+                              ]}
                               redirect={`/models/${modelID}/task-list/participants-and-providers/participants-options`}
-                              answered={
-                                participantsAndProviders.recruitmentMethod !==
-                                null
-                              }
+                              answered={recruitmentMethod !== null}
                               needsTool={
-                                participantsAndProviders.recruitmentMethod ===
-                                  RecruitmentType.LOI ||
-                                participantsAndProviders.recruitmentMethod ===
-                                  RecruitmentType.NOFO
+                                recruitmentMethod === RecruitmentType.LOI ||
+                                recruitmentMethod === RecruitmentType.NOFO
                               }
                             />
 
@@ -266,9 +261,9 @@ const ITToolsPageTwo = () => {
                                     <Field
                                       as={CheckboxField}
                                       disabled={
-                                        participantsAndProviders.recruitmentMethod !==
+                                        recruitmentMethod !==
                                           RecruitmentType.NOFO &&
-                                        participantsAndProviders.recruitmentMethod !==
+                                        recruitmentMethod !==
                                           RecruitmentType.LOI
                                       }
                                       id={`it-tools-gc-pp-to-advertise-${type}`}
@@ -306,9 +301,9 @@ const ITToolsPageTwo = () => {
                                           <Field
                                             as={TextInput}
                                             disabled={
-                                              participantsAndProviders.recruitmentMethod !==
+                                              recruitmentMethod !==
                                                 RecruitmentType.NOFO &&
-                                              participantsAndProviders.recruitmentMethod !==
+                                              recruitmentMethod !==
                                                 RecruitmentType.LOI
                                             }
                                             className="maxw-none"
@@ -323,7 +318,122 @@ const ITToolsPageTwo = () => {
                               })}
                             <AddNote
                               id="it-tools-gc-pp-to-advertise-note"
-                              field="ppToAdvertiseDNote"
+                              field="ppToAdvertiseNote"
+                            />
+                          </>
+                        )}
+                      />
+                    </FieldGroup>
+
+                    <FieldGroup
+                      scrollElement="ppCollectScoreReview"
+                      error={!!flatErrors.ppCollectScoreReview}
+                      className="margin-y-4"
+                    >
+                      <FieldArray
+                        name="ppCollectScoreReview"
+                        render={arrayHelpers => (
+                          <>
+                            <legend className="usa-label maxw-none">
+                              {t('collectTools')}
+                            </legend>
+
+                            <FieldErrorMsg>
+                              {flatErrors.ppCollectScoreReview}
+                            </FieldErrorMsg>
+
+                            <ITToolsSummary
+                              question={p('howWillYouSelect')}
+                              answers={selectionMethod
+                                .sort(sortOtherEnum)
+                                .map(selection =>
+                                  translateParticipantSelectiontType(selection)
+                                )}
+                              options={[
+                                translateParticipantSelectiontType(
+                                  ParticipantSelectionType.APPLICATION_REVIEW_AND_SCORING_TOOL
+                                )
+                              ]}
+                              redirect={`/models/${modelID}/task-list/participants-and-providers/participants-options`}
+                              answered={selectionMethod.length > 0}
+                              needsTool={selectionMethod.includes(
+                                ParticipantSelectionType.APPLICATION_REVIEW_AND_SCORING_TOOL
+                              )}
+                            />
+
+                            <p className="margin-top-4">{t('tools')}</p>
+
+                            {Object.keys(PpCollectScoreReviewType)
+                              .sort(sortOtherEnum)
+                              .map(type => {
+                                return (
+                                  <Fragment key={type}>
+                                    <Field
+                                      as={CheckboxField}
+                                      disabled={
+                                        !selectionMethod.includes(
+                                          ParticipantSelectionType.APPLICATION_REVIEW_AND_SCORING_TOOL
+                                        )
+                                      }
+                                      id={`it-tools-gc-pp-collect-score-review-${type}`}
+                                      name="ppCollectScoreReview"
+                                      label={translateParticipantSelectiontType(
+                                        type
+                                      )}
+                                      value={type}
+                                      checked={values?.ppCollectScoreReview.includes(
+                                        type as PpCollectScoreReviewType
+                                      )}
+                                      onChange={(
+                                        e: React.ChangeEvent<HTMLInputElement>
+                                      ) => {
+                                        if (e.target.checked) {
+                                          arrayHelpers.push(e.target.value);
+                                        } else {
+                                          const idx = values.ppCollectScoreReview.indexOf(
+                                            e.target
+                                              .value as PpCollectScoreReviewType
+                                          );
+                                          arrayHelpers.remove(idx);
+                                        }
+                                      }}
+                                    />
+                                    {type === PpCollectScoreReviewType.OTHER &&
+                                      values.ppCollectScoreReview.includes(
+                                        type
+                                      ) && (
+                                        <div className="margin-left-4 margin-top-1">
+                                          <Label
+                                            htmlFor="it-tools-gc-pp-collect-score-review-other"
+                                            className="text-normal"
+                                          >
+                                            {h('pleaseSpecify')}
+                                          </Label>
+                                          <FieldErrorMsg>
+                                            {
+                                              flatErrors.ppCollectScoreReviewOther
+                                            }
+                                          </FieldErrorMsg>
+                                          <Field
+                                            as={TextInput}
+                                            disabled={
+                                              !selectionMethod.includes(
+                                                ParticipantSelectionType.APPLICATION_REVIEW_AND_SCORING_TOOL
+                                              )
+                                            }
+                                            className="maxw-none"
+                                            id="it-tools-gc-pp-collect-score-review-other"
+                                            maxLength={50}
+                                            name="ppCollectScoreReviewOther"
+                                          />
+                                        </div>
+                                      )}
+                                  </Fragment>
+                                );
+                              })}
+                            <AddNote
+                              id="it-tools-gc-pp-collect-score-review-note"
+                              field="ppCollectScoreReviewNote"
                             />
                           </>
                         )}
