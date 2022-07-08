@@ -11,21 +11,17 @@ import (
 //PlanParticipantsAndProvidersUpdate updates a plan ProvidersAndParticipants buisness object
 func PlanParticipantsAndProvidersUpdate(logger *zap.Logger, id uuid.UUID, changes map[string]interface{}, principal string, store *storage.Store) (*models.PlanParticipantsAndProviders, error) {
 	//Get existing plan ProvidersAndParticipants
-	existingProvidersAndParticipants, err := store.PlanParticipantsAndProvidersGetByID(logger, id)
-	if err != nil {
-		return nil, err
-	}
-	err = ApplyChanges(changes, existingProvidersAndParticipants)
-	if err != nil {
-		return nil, err
-	}
-	existingProvidersAndParticipants.ModifiedBy = &principal
-	err = existingProvidersAndParticipants.CalcStatus()
+	existing, err := store.PlanParticipantsAndProvidersGetByID(logger, id)
 	if err != nil {
 		return nil, err
 	}
 
-	retProvidersAndParticipants, err := store.PlanParticipantsAndProvidersUpdate(logger, existingProvidersAndParticipants)
+	err = BaseTaskListSectionPreUpdate(existing, changes, principal)
+	if err != nil {
+		return nil, err
+	}
+
+	retProvidersAndParticipants, err := store.PlanParticipantsAndProvidersUpdate(logger, existing)
 	return retProvidersAndParticipants, err
 
 }

@@ -11,17 +11,17 @@ import (
 // UpdatePlanBasics implements resolver logic to update a plan basics object
 func UpdatePlanBasics(logger *zap.Logger, id uuid.UUID, changes map[string]interface{}, principal string, store *storage.Store) (*models.PlanBasics, error) {
 	// Get existing basics
-	existingBasics, err := store.PlanBasicsGetByID(logger, id)
+	existing, err := store.PlanBasicsGetByID(logger, id)
 	if err != nil {
 		return nil, err
 	}
 
-	err = BaseTaskListSectionPreUpdate(existingBasics, changes, principal)
+	err = BaseTaskListSectionPreUpdate(existing, changes, principal)
 	if err != nil {
 		return nil, err
 	}
 
-	retBasics, err := store.PlanBasicsUpdate(logger, existingBasics)
+	retBasics, err := store.PlanBasicsUpdate(logger, existing)
 	return retBasics, err
 }
 
