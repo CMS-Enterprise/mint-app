@@ -504,6 +504,7 @@ export interface PlanGeneralCharacteristicsChanges {
   waiversRequired?: boolean | null;
   waiversRequiredTypes?: WaiverType[] | null;
   waiversRequiredNote?: string | null;
+  status?: TaskStatus | null;
 }
 
 /**
@@ -524,6 +525,7 @@ export interface PlanMilestoneChanges {
   highLevelNote?: string | null;
   phasedIn?: boolean | null;
   phasedInNote?: string | null;
+  status?: TaskStatus | null;
 }
 
 /**
@@ -626,6 +628,7 @@ export interface PlanOpsEvalAndLearningChanges {
   modelLearningSystemsOther?: string | null;
   modelLearningSystemsNote?: string | null;
   anticipatedChallenges?: string | null;
+  status?: TaskStatus | null;
 }
 
 /**
@@ -681,6 +684,7 @@ export interface PlanParticipantsAndProvidersChanges {
   providerOverlap?: OverlapType | null;
   providerOverlapHierarchy?: string | null;
   providerOverlapNote?: string | null;
+  status?: TaskStatus | null;
 }
 
 //==============================================================

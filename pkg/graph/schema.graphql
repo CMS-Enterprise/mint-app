@@ -217,7 +217,7 @@ input PlanBasicsChanges @goModel(model: "map[string]interface{}") {
   goal: String
   testInterventions: String
   note: String
-  status: TaskStatus #TODO, restrict these values
+  status: TaskStatus 
 }
 
 """
@@ -257,6 +257,8 @@ type PlanMilestones {
   createdDts: Time!
   modifiedBy: String
   modifiedDts: Time
+  readyForReviewBy: String
+  readyForReviewDts: Time
   status: TaskStatus!
 }
 
@@ -282,6 +284,7 @@ input PlanMilestoneChanges @goModel(model: "map[string]interface{}") {
 
   phasedIn: Boolean
   phasedInNote: String
+  status: TaskStatus
 }
 
 """
@@ -424,6 +427,8 @@ type PlanGeneralCharacteristics {
   createdDts: Time!
   modifiedBy: String
   modifiedDts: Time
+  readyForReviewBy: String
+  readyForReviewDts: Time
   status: TaskStatus!
 }
 
@@ -494,6 +499,8 @@ input PlanGeneralCharacteristicsChanges @goModel(model: "map[string]interface{}"
   waiversRequired: Boolean
   waiversRequiredTypes: [WaiverType!]
   waiversRequiredNote: String
+
+  status: TaskStatus
 }
 
 """
@@ -532,6 +539,8 @@ type PlanBeneficiaries {
   createdDts: Time!
   modifiedBy: String
   modifiedDts: Time
+  readyForReviewBy: String
+  readyForReviewDts: Time
   status: TaskStatus!
 }
 
@@ -561,6 +570,7 @@ input PlanBeneficiariesChanges @goModel(model: "map[string]interface{}") {
   beneficiaryOverlapNote: String
   precedenceRules: String
 
+  status: TaskStatus
 }
 
 """
@@ -631,6 +641,8 @@ type PlanParticipantsAndProviders {
   createdDts: Time!
   modifiedBy: String
   modifiedDts: Time
+  readyForReviewBy: String
+  readyForReviewDts: Time
   status: TaskStatus!
 
 }
@@ -698,6 +710,7 @@ input PlanParticipantsAndProvidersChanges @goModel(model: "map[string]interface{
   providerOverlapHierarchy:       String       
   providerOverlapNote:            String     
 
+  status: TaskStatus
 }
 
 """"
@@ -803,6 +816,8 @@ type PlanITTools {
   createdDts: Time!
   modifiedBy: String
   modifiedDts: Time
+  readyForReviewBy: String
+  readyForReviewDts: Time
   status: TaskStatus!
 }
 
@@ -901,6 +916,7 @@ input PlanITToolsChanges @goModel(model: "map[string]interface{}") {
   pRecoverPaymentsOther: String
   pRecoverPaymentsNote: String
   
+  status: TaskStatus
 }
 """
 PlanOpsEvalAndLearning represents the task list section that deals with information regarding the Ops Eval and Learning
@@ -1018,6 +1034,8 @@ type PlanOpsEvalAndLearning {
     createdDts: Time!
     modifiedBy: String
     modifiedDts: Time
+    readyForReviewBy: String
+    readyForReviewDts: Time
     status: TaskStatus!
 }
 
@@ -1131,6 +1149,8 @@ input PlanOpsEvalAndLearningChanges @goModel(model: "map[string]interface{}") {
     modelLearningSystemsOther: String
     modelLearningSystemsNote: String
     anticipatedChallenges: String
+
+    status: TaskStatus
 }
 """
 Query definition for the schema
