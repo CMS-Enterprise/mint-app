@@ -192,14 +192,14 @@ type PlanPayments struct {
 	FundingStructure                                *string        `json:"fundingStructure" db:"funding_structure" statusWeight:"1"`
 
 	// Page 6
-	ExpectedCalculationComplexityLevel                ComplexityCalculationLevelType `json:"expectedCalculationComplexityLevel" db:"expected_calculation_complexity_level" statusWeight:"1"`
-	ExpectedCalculationComplexityLevelNote            *string                        `json:"expectedCalculationComplexityLevelNote" db:"expected_calculation_complexity_level_note"`
-	CanParticipantsSelectBetweenPaymentMechanisms     *bool                          `json:"canParticipantsSelectBetweenPaymentMechanisms" db:"can_participants_select_between_payment_mechanisms" statusWeight:"1"`
-	CanParticipantsSelectBetweenPaymentMechanismsHow  *string                        `json:"canParticipantsSelectBetweenPaymentMechanismsHow" db:"can_participants_select_between_payment_mechanisms_how"`
-	CanParticipantsSelectBetweenPaymentMechanismsNote *string                        `json:"canParticipantsSelectBetweenPaymentMechanismsNote" db:"can_participants_select_between_payment_mechanisms_note"`
-	AnticipatedPaymentFrequency                       pq.StringArray                 `json:"anticipatedPaymentFrequency" db:"anticipated_payment_frequency" statusWeight:"1"`
-	AnticipatedPaymentFrequencyOther                  *string                        `json:"anticipatedPaymentFrequencyOther" db:"anticipated_payment_frequency_other"`
-	AnticipatedPaymentFrequencyNotes                  *string                        `json:"anticipatedPaymentFrequencyNotes" db:"anticipated_payment_frequency_notes"`
+	ExpectedCalculationComplexityLevel                *ComplexityCalculationLevelType `json:"expectedCalculationComplexityLevel" db:"expected_calculation_complexity_level" statusWeight:"1"`
+	ExpectedCalculationComplexityLevelNote            *string                         `json:"expectedCalculationComplexityLevelNote" db:"expected_calculation_complexity_level_note"`
+	CanParticipantsSelectBetweenPaymentMechanisms     *bool                           `json:"canParticipantsSelectBetweenPaymentMechanisms" db:"can_participants_select_between_payment_mechanisms" statusWeight:"1"`
+	CanParticipantsSelectBetweenPaymentMechanismsHow  *string                         `json:"canParticipantsSelectBetweenPaymentMechanismsHow" db:"can_participants_select_between_payment_mechanisms_how"`
+	CanParticipantsSelectBetweenPaymentMechanismsNote *string                         `json:"canParticipantsSelectBetweenPaymentMechanismsNote" db:"can_participants_select_between_payment_mechanisms_note"`
+	AnticipatedPaymentFrequency                       pq.StringArray                  `json:"anticipatedPaymentFrequency" db:"anticipated_payment_frequency" statusWeight:"1"`
+	AnticipatedPaymentFrequencyOther                  *string                         `json:"anticipatedPaymentFrequencyOther" db:"anticipated_payment_frequency_other"`
+	AnticipatedPaymentFrequencyNotes                  *string                         `json:"anticipatedPaymentFrequencyNotes" db:"anticipated_payment_frequency_notes"`
 
 	// Page 7
 	WillRecoverPayments                               *bool      `json:"willRecoverPayments" db:"will_recover_payments" statusWeight:"1"`

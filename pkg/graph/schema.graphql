@@ -706,73 +706,73 @@ type PlanPayments {
   modelPlanID: UUID!
 
   # Page 1
-  fundingSourceNote:                  String!
+  fundingSourceNote:                  String
   fundingSourceR:                     [FundingSource!]
-  fundingSourceRTrustFund:            String!
-  fundingSourceROther:                String!
-  fundingSourceRNote:                 String!
+  fundingSourceRTrustFund:            String
+  fundingSourceROther:                String
+  fundingSourceRNote:                 String
   payRecipients:                      [PayRecipient!]
-  payRecipientOtherSpecification:     String!
-  payRecipientNote:                   String!
+  payRecipientOtherSpecification:     String
+  payRecipientNote:                   String
   payType:                            [PayType!]
-  payTypeNote:                        String!
+  payTypeNote:                        String
 
   # Page 2
   payClaims:                                      [ClaimsBasedPayType!]
-  payClaimsOther:                                 String!
+  payClaimsOther:                                 String
   shouldAnyProvidersExcludedFFSSystems:           Boolean!
-  shouldAnyProviderExcludedFFSSystemsNote:        String!
+  shouldAnyProviderExcludedFFSSystemsNote:        String
   changesMedicarePhysicianFeeSchedule:            Boolean!
-  changesMedicarePhysicianFeeScheduleNote:        String!
+  changesMedicarePhysicianFeeScheduleNote:        String
   affectsMedicareSecondaryPayerClaims:            Boolean!
-  affectsMedicareSecondaryPayerClaimsHow: String!
-  affectsMedicareSecondaryPayerClaimsNote:        String!
-  payModelDifferentiation:                        String!
+  affectsMedicareSecondaryPayerClaimsHow: String
+  affectsMedicareSecondaryPayerClaimsNote:        String
+  payModelDifferentiation:                        String
 
   # Page 3
   creatingDependenciesBetweenServices:     Boolean!
-  creatingDependenciesBetweenServicesNote: String!
+  creatingDependenciesBetweenServicesNote: String
   needsClaimsDataCollection:               Boolean
-  needsClaimsDataCollectionNote:           String!
+  needsClaimsDataCollectionNote:           String
   providingThirdPartyFile:                 Boolean!
   isContractorAwareTestDataRequirements:   Boolean!
 
   # Page 4
-  beneficiaryCostSharingLevelAndHandling:          String!
+  beneficiaryCostSharingLevelAndHandling:          String
   waiveBeneficiaryCostSharingForAnyServices:       Boolean!
-  waiveBeneficiaryCostSharingServiceSpecification: String!
+  waiveBeneficiaryCostSharingServiceSpecification: String
   waiverOnlyAppliesPartOfPayment:                  Boolean!
-  waiveBeneficiaryCostSharingNote:                 String!
+  waiveBeneficiaryCostSharingNote:                 String
 
   # Page 5
   nonClaimsPayments:                               [NonClaimsBasedPayType!]
-  nonClaimsPaymentOther:                           String!
-  paymentCalculationOwner:                         String!
-  numberPaymentsPerPayCycle:                       String!
-  numberPaymentsPerPayCycleNotes:                  String!
+  nonClaimsPaymentOther:                           String
+  paymentCalculationOwner:                         String
+  numberPaymentsPerPayCycle:                       String
+  numberPaymentsPerPayCycleNotes:                  String
   sharedSystemsInvolvedAdditionalClaimPayment:     Boolean!
-  sharedSystemsInvolvedAdditionalClaimPaymentNote: String!
+  sharedSystemsInvolvedAdditionalClaimPaymentNote: String
   planningToUseInnovationPaymentContractor:        Boolean!
-  planningToUseInnovationPaymentContractorNote:    String!
-  fundingStructure:                                String!
+  planningToUseInnovationPaymentContractorNote:    String
+  fundingStructure:                                String
 
   # Page 6
   expectedCalculationComplexityLevel:                ComplexityCalculationLevelType!
-  expectedCalculationComplexityLevelNote:            String!
+  expectedCalculationComplexityLevelNote:            String
   canParticipantsSelectBetweenPaymentMechanisms:     Boolean!
-  canParticipantsSelectBetweenPaymentMechanismsHow:  String!
-  canParticipantsSelectBetweenPaymentMechanismsNote: String!
+  canParticipantsSelectBetweenPaymentMechanismsHow:  String
+  canParticipantsSelectBetweenPaymentMechanismsNote: String
   anticipatedPaymentFrequency:                       [AnticipatedPaymentFrequencyType!]
-  anticipatedPaymentFrequencyOther:                  String!
-  anticipatedPaymentFrequencyNotes:                  String!
+  anticipatedPaymentFrequencyOther:                  String
+  anticipatedPaymentFrequencyNotes:                  String
 
   # Page 7
   willRecoverPayments:                               Boolean!
-  willRecoverPaymentsNotes:                          String!
+  willRecoverPaymentsNotes:                          String
   anticipateReconcilingPaymentsRetrospectively:      Boolean!
-  anticipateReconcilingPaymentsRetrospectivelyNotes: String!
+  anticipateReconcilingPaymentsRetrospectivelyNotes: String
   paymentStartDate:                                  Time!
-  paymentStartDateNotes:                             String!
+  paymentStartDateNotes:                             String
 
   # Meta
   createdBy: String!
@@ -792,7 +792,7 @@ input PlanPaymentsChanges @goModel(model: "map[string]interface{}") {
   payRecipients:                      [PayRecipient!]
   payRecipientOtherSpecification:     String
   payRecipientNote:                   String
-  payType:                            PayType
+  payType:                            PayType!
   payTypeNote:                        String
 
   # Page 2
@@ -840,7 +840,7 @@ input PlanPaymentsChanges @goModel(model: "map[string]interface{}") {
   canParticipantsSelectBetweenPaymentMechanisms:            Boolean
   canParticipantsSelectBetweenPaymentMechanismsHow: String
   canParticipantsSelectBetweenPaymentMechanismsNote:        String
-  anticipatedPaymentFrequency:                              AnticipatedPaymentFrequencyType
+  anticipatedPaymentFrequency:                              AnticipatedPaymentFrequencyType!
   anticipatedPaymentFrequencyOther:              String
   anticipatedPaymentFrequencyNotes:                         String
 
