@@ -16,7 +16,9 @@ func ModelPlanCreate(logger *zap.Logger, modelName string, store *storage.Store,
 	plan := &models.ModelPlan{
 		ModelName: modelName,
 		Status:    models.ModelStatusPlanDraft,
-		CreatedBy: principalInfo.EuaUserID,
+		BaseStruct: models.BaseStruct{
+			CreatedBy: principalInfo.EuaUserID,
+		},
 	}
 
 	// Create the model plan itself
@@ -31,7 +33,9 @@ func ModelPlanCreate(logger *zap.Logger, modelName string, store *storage.Store,
 		EUAUserID:   principalInfo.EuaUserID,
 		FullName:    principalInfo.CommonName,
 		TeamRole:    models.TeamRoleModelLead,
-		CreatedBy:   principalInfo.EuaUserID,
+		BaseStruct: models.BaseStruct{
+			CreatedBy: principalInfo.EuaUserID,
+		},
 	}
 	_, err = store.PlanCollaboratorCreate(logger, collab)
 	if err != nil {

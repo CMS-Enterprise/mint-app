@@ -18,7 +18,9 @@ func CreatePlanDiscussion(logger *zap.Logger, input *model.PlanDiscussionCreateI
 		ModelPlanID: input.ModelPlanID,
 		Content:     input.Content,
 		Status:      models.DiscussionUnAnswered,
-		CreatedBy:   principal,
+		BaseStruct: models.BaseStruct{
+			CreatedBy: principal,
+		},
 	}
 
 	result, err := store.PlanDiscussionCreate(logger, planDiscussion)
@@ -58,7 +60,9 @@ func CreateDiscussionReply(logger *zap.Logger, input *model.DiscussionReplyCreat
 		DiscussionID: input.DiscussionID,
 		Content:      input.Content,
 		Resolution:   input.Resolution,
-		CreatedBy:    principal,
+		BaseStruct: models.BaseStruct{
+			CreatedBy: principal,
+		},
 	}
 
 	result, err := store.DiscussionReplyCreate(logger, discussionReply)

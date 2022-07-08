@@ -52,7 +52,7 @@ func (s *Store) PlanDocumentCreate(
 	}
 
 	document := models.PlanDocument{
-		ID:                   utilityUUID.ValueOrNewUUID(inputDocument.ID),
+
 		ModelPlanID:          inputDocument.ModelPlanID,
 		FileType:             inputDocument.FileType,
 		Bucket:               *s3Client.GetBucket(),
@@ -65,7 +65,10 @@ func (s *Store) PlanDocumentCreate(
 		OtherTypeDescription: inputDocument.OtherTypeDescription,
 		OptionalNotes:        inputDocument.OptionalNotes,
 		DeletedAt:            nil,
-		CreatedBy:            principal,
+		BaseStruct: models.BaseStruct{
+			ID:        utilityUUID.ValueOrNewUUID(inputDocument.ID),
+			CreatedBy: principal,
+		},
 	}
 
 	statement, err := s.db.PrepareNamed(planDocumentCreateSQL)
