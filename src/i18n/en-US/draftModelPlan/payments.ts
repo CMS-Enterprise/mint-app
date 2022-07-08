@@ -4,16 +4,15 @@ const payments = {
     'If there’s a question or field that is not applicable to your model or you don’t currently know the answer, you may leave it blank. If you need help, ask a question below.',
   fundingSource:
     'What is the funding source for payments? Select all that apply.',
-  fundingSourceOptions: {
-    three021: '3021',
-    trustFund: 'Trust fund'
+  sourceOptions: {
+    ppaca: 'Patient Protection Affordable Care Act (Sec 3021)',
+    trustFund: 'Trust Fund',
+    other: 'Other'
   },
+  whichType: 'Which type?',
+  otherSourceOption: 'Please describe the funding source.',
   reconciliation:
     'What is the funding source for reconciliation or other expenditures? Select all that apply.',
-  reconciliationOptions: {
-    ppaca: 'PPACA Sec 3021',
-    partB: 'Part B Trust Fund'
-  },
   fundingStructure:
     'What is the funding structure? (If possible, attach a copy of the allotment and allowance)',
   attachments: 'Attachments',
@@ -35,8 +34,10 @@ const payments = {
     providers: 'Providers',
     beneficiaries: 'Beneficiaries',
     participants: 'Participants',
-    states: 'States'
+    states: 'States',
+    other: 'Other'
   },
+  otherPayOption: 'Please specify who you will pay.',
   modelAffect: 'Does the model affect Medicare Secondary Payer claims?',
   whatWillYouPay: 'What will you pay?',
   whatWillYouPayOptions: {
