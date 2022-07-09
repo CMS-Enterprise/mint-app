@@ -706,14 +706,16 @@ type PlanPayments {
   modelPlanID: UUID!
 
   # Page 1
+  fundingSource:                      [FundingSource!]
+  fundingSourceTrustFund:             String
   fundingSourceNote:                  String
   fundingSourceR:                     [FundingSource!]
   fundingSourceRTrustFund:            String
   fundingSourceROther:                String
   fundingSourceRNote:                 String
   payRecipients:                      [PayRecipient!]
-  payRecipientOtherSpecification:     String
-  payRecipientNote:                   String
+  payRecipientsOtherSpecification:    String
+  payRecipientsNote:                  String
   payType:                            [PayType!]
   payTypeNote:                        String
 
@@ -750,9 +752,9 @@ type PlanPayments {
   paymentCalculationOwner:                         String
   numberPaymentsPerPayCycle:                       String
   numberPaymentsPerPayCycleNotes:                  String
-  sharedSystemsInvolvedAdditionalClaimPayment:     Boolean!
+  sharedSystemsInvolvedAdditionalClaimPayment:     Boolean
   sharedSystemsInvolvedAdditionalClaimPaymentNote: String
-  planningToUseInnovationPaymentContractor:        Boolean!
+  planningToUseInnovationPaymentContractor:        Boolean
   planningToUseInnovationPaymentContractorNote:    String
   fundingStructure:                                String
 
@@ -784,26 +786,28 @@ type PlanPayments {
 
 input PlanPaymentsChanges @goModel(model: "map[string]interface{}") {
   # Page 1
+  fundingSource:                      [FundingSource!]
+  fundingSourceTrustFund:             String
   fundingSourceNote:                  String
   fundingSourceR:                     [FundingSource!]
-  fundingSourceRTrustFund: String
-  fundingSourceROther:     String
+  fundingSourceRTrustFund:            String
+  fundingSourceROther:                String
   fundingSourceRNote:                 String
   payRecipients:                      [PayRecipient!]
-  payRecipientOtherSpecification:     String
-  payRecipientNote:                   String
-  payType:                            PayType!
+  payRecipientsOtherSpecification:    String
+  payRecipientsNote:                  String
+  payType:                            [PayType!]
   payTypeNote:                        String
 
   # Page 2
   payClaims:                                      [ClaimsBasedPayType!]
-  payClaimsOther:                      String
+  payClaimsOther:                                 String
   shouldAnyProvidersExcludedFFSSystems:           Boolean
   shouldAnyProviderExcludedFFSSystemsNote:        String
   changesMedicarePhysicianFeeSchedule:            Boolean
   changesMedicarePhysicianFeeScheduleNote:        String
   affectsMedicareSecondaryPayerClaims:            Boolean
-  affectsMedicareSecondaryPayerClaimsHow: String
+  affectsMedicareSecondaryPayerClaimsHow:         String
   affectsMedicareSecondaryPayerClaimsNote:        String
   payModelDifferentiation:                        String
 
@@ -824,24 +828,24 @@ input PlanPaymentsChanges @goModel(model: "map[string]interface{}") {
 
   # Page 5
   nonClaimsPayments:                               [NonClaimsBasedPayType!]
-  nonClaimsPaymentOther:                String
+  nonClaimsPaymentOther:                           String
   paymentCalculationOwner:                         String
   numberPaymentsPerPayCycle:                       String
   numberPaymentsPerPayCycleNotes:                  String
-  sharedSystemsInvolvedAdditionalClaimPayment:     String
+  sharedSystemsInvolvedAdditionalClaimPayment:     Boolean
   sharedSystemsInvolvedAdditionalClaimPaymentNote: String
   planningToUseInnovationPaymentContractor:        Boolean
   planningToUseInnovationPaymentContractorNote:    String
-  fundingStructure:                     String
+  fundingStructure:                                String
 
   # Page 6
   expectedCalculationComplexityLevel:                       ComplexityCalculationLevelType
   expectedCalculationComplexityLevelNote:                   String
   canParticipantsSelectBetweenPaymentMechanisms:            Boolean
-  canParticipantsSelectBetweenPaymentMechanismsHow: String
+  canParticipantsSelectBetweenPaymentMechanismsHow:         String
   canParticipantsSelectBetweenPaymentMechanismsNote:        String
-  anticipatedPaymentFrequency:                              AnticipatedPaymentFrequencyType!
-  anticipatedPaymentFrequencyOther:              String
+  anticipatedPaymentFrequency:                              [AnticipatedPaymentFrequencyType!]
+  anticipatedPaymentFrequencyOther:                         String
   anticipatedPaymentFrequencyNotes:                         String
 
   # Page 7

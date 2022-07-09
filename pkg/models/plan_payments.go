@@ -137,19 +137,19 @@ type PlanPayments struct {
 	ModelPlanID uuid.UUID `json:"modelPlanID" db:"model_plan_id"`
 
 	// Page 1
-	FundingSource                  pq.StringArray `json:"fundingSource" db:"funding_source" statusWeight:"1"`
-	FundingSourceTrustFund         *string        `json:"fundingSourceTrustFund" db:"funding_source_trust_fund"`
-	FundingSourceOther             *string        `json:"fundingSourceOther" db:"funding_source_other"`
-	FundingSourceNote              *string        `json:"fundingSourceNote" db:"funding_source_note"`
-	FundingSourceR                 pq.StringArray `json:"fundingSourceR" db:"funding_source_r" statusWeight:"1"`
-	FundingSourceRTrustFund        *string        `json:"fundingSourceRTrustFund" db:"funding_source_r_trust_fund"`
-	FundingSourceROther            *string        `json:"fundingSourceROther" db:"funding_source_r_other"`
-	FundingSourceRNote             *string        `json:"fundingSourceRNote" db:"funding_source_r_note"`
-	PayRecipients                  pq.StringArray `json:"payRecipients" db:"pay_recipients" statusWeight:"1"`
-	PayRecipientOtherSpecification *string        `json:"payRecipientsOtherSpecification" db:"pay_recipients_other_specification"`
-	PayRecipientsNote              *string        `json:"payRecipientsNote" db:"pay_recipients_note"`
-	PayType                        pq.StringArray `json:"payType" db:"pay_type" statusWeight:"1"`
-	PayTypeNote                    *string        `json:"payTypeNote" db:"pay_type_note"`
+	FundingSource                   pq.StringArray `json:"fundingSource" db:"funding_source" statusWeight:"1"`
+	FundingSourceTrustFund          *string        `json:"fundingSourceTrustFund" db:"funding_source_trust_fund"`
+	FundingSourceOther              *string        `json:"fundingSourceOther" db:"funding_source_other"`
+	FundingSourceNote               *string        `json:"fundingSourceNote" db:"funding_source_note"`
+	FundingSourceR                  pq.StringArray `json:"fundingSourceR" db:"funding_source_r" statusWeight:"1"`
+	FundingSourceRTrustFund         *string        `json:"fundingSourceRTrustFund" db:"funding_source_r_trust_fund"`
+	FundingSourceROther             *string        `json:"fundingSourceROther" db:"funding_source_r_other"`
+	FundingSourceRNote              *string        `json:"fundingSourceRNote" db:"funding_source_r_note"`
+	PayRecipients                   pq.StringArray `json:"payRecipients" db:"pay_recipients" statusWeight:"1"`
+	PayRecipientsOtherSpecification *string        `json:"payRecipientsOtherSpecification" db:"pay_recipients_other_specification"`
+	PayRecipientsNote               *string        `json:"payRecipientsNote" db:"pay_recipients_note"`
+	PayType                         pq.StringArray `json:"payType" db:"pay_type" statusWeight:"1"`
+	PayTypeNote                     *string        `json:"payTypeNote" db:"pay_type_note"`
 
 	// Page 2
 	PayClaims                               pq.StringArray `json:"payClaims" db:"pay_claims" statusWeight:"1"`

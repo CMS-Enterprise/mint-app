@@ -554,16 +554,16 @@ func (r *planParticipantsAndProvidersResolver) ProviderLeaveMethod(ctx context.C
 	return providerLeaveTypes, nil
 }
 
+func (r *planPaymentsResolver) FundingSource(ctx context.Context, obj *models.PlanPayments) ([]models.FundingSource, error) {
+	return models.ConvertEnums[models.FundingSource](obj.FundingSource), nil
+}
+
 func (r *planPaymentsResolver) FundingSourceR(ctx context.Context, obj *models.PlanPayments) ([]models.FundingSource, error) {
 	return models.ConvertEnums[models.FundingSource](obj.FundingSourceR), nil
 }
 
 func (r *planPaymentsResolver) PayRecipients(ctx context.Context, obj *models.PlanPayments) ([]models.PayRecipient, error) {
 	return models.ConvertEnums[models.PayRecipient](obj.PayRecipients), nil
-}
-
-func (r *planPaymentsResolver) PayRecipientNote(ctx context.Context, obj *models.PlanPayments) (*string, error) {
-	return obj.PayRecipientsNote, nil
 }
 
 func (r *planPaymentsResolver) PayType(ctx context.Context, obj *models.PlanPayments) ([]models.PayType, error) {
@@ -731,3 +731,13 @@ type planParticipantsAndProvidersResolver struct{ *Resolver }
 type planPaymentsResolver struct{ *Resolver }
 type queryResolver struct{ *Resolver }
 type userInfoResolver struct{ *Resolver }
+
+// !!! WARNING !!!
+// The code below was going to be deleted when updating resolvers. It has been copied here so you have
+// one last chance to move it out of harms way if you want. There are two reasons this happens:
+//  - When renaming or deleting a resolver the old code will be put in here. You can safely delete
+//    it when you're done.
+//  - You have helper methods in this file. Move them out to keep these resolver files clean.
+func (r *planPaymentsResolver) PayRecipientsOtherSpecification(ctx context.Context, obj *models.PlanPayments) (*string, error) {
+	return obj.PayRecipientsOtherSpecification, nil
+}
