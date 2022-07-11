@@ -24,45 +24,44 @@ import CheckboxField from 'components/shared/CheckboxField';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
-import GetITToolsPageThree from 'queries/ITTools/GetITToolsPageThree';
+import GetITToolsPageFour from 'queries/ITTools/GetITToolsPageFour';
 import {
-  GetITToolPageThree as GetITToolPageThreeType,
-  GetITToolPageThree_modelPlan_itTools as ITToolsPageThreeFormType,
-  GetITToolPageThree_modelPlan_participantsAndProviders as ParticipantsAndProvidersFormType,
-  GetITToolPageThreeVariables
-} from 'queries/ITTools/types/GetITToolPageThree';
+  GetITToolPageFour as GetITToolPageFourType,
+  GetITToolPageFour_modelPlan_itTools as ITToolsPageFourFormType,
+  GetITToolPageFour_modelPlan_opsEvalAndLearning as OpsEvalAndLearnignFormType,
+  GetITToolPageFourVariables
+} from 'queries/ITTools/types/GetITToolPageFour';
 import { UpdatePlanItToolsVariables } from 'queries/ITTools/types/UpdatePlanItTools';
 import UpdatePlanITTools from 'queries/ITTools/UpdatePlanItTools';
 import {
-  BManageBeneficiaryOverlapType,
-  ParticipantCommunicationType,
-  PpCommunicateWithParticipantType,
-  PpManageProviderOverlapType
+  OelHelpdeskSupportType,
+  OelManageAcoType,
+  OelPerformanceBenchmarkType
 } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import {
   sortOtherEnum,
-  translateBManageBeneficiaryOverlapType,
-  translateCommunicationType,
-  translatePpCommunicateWithParticipantType,
-  translatePpManageProviderOverlapType
+  translateBoolean,
+  translateOelHelpdeskSupportType,
+  translateOelManageAcoSubinfoType,
+  translateOelManageAcoType,
+  translateOelPerformanceBenchmarkType
 } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
 
-const ITToolsPageThree = () => {
+const ITToolsPageFour = () => {
   const { t } = useTranslation('itTools');
-  const { t: p } = useTranslation('participantsAndProviders');
-  const { t: b } = useTranslation('beneficiaries');
+  const { t: o } = useTranslation('operationsEvaluationAndLearning');
   const { t: h } = useTranslation('draftModelPlan');
   const { modelID } = useParams<{ modelID: string }>();
 
-  const formikRef = useRef<FormikProps<ITToolsPageThreeFormType>>(null);
+  const formikRef = useRef<FormikProps<ITToolsPageFourFormType>>(null);
   const history = useHistory();
 
   const { data, loading, error } = useQuery<
-    GetITToolPageThreeType,
-    GetITToolPageThreeVariables
-  >(GetITToolsPageThree, {
+    GetITToolPageFourType,
+    GetITToolPageFourVariables
+  >(GetITToolsPageFour, {
     variables: {
       id: modelID
     }
@@ -70,27 +69,26 @@ const ITToolsPageThree = () => {
 
   const {
     id,
-    ppCommunicateWithParticipant,
-    ppCommunicateWithParticipantOther,
-    ppCommunicateWithParticipantNote,
-    ppManageProviderOverlap,
-    ppManageProviderOverlapOther,
-    ppManageProviderOverlapNote,
-    bManageBeneficiaryOverlap,
-    bManageBeneficiaryOverlapOther,
-    bManageBeneficiaryOverlapNote
-  } = data?.modelPlan?.itTools || ({} as ITToolsPageThreeFormType);
+    oelHelpdeskSupport,
+    oelHelpdeskSupportOther,
+    oelHelpdeskSupportNote,
+    oelManageAco,
+    oelManageAcoOther,
+    oelManageAcoNote,
+    oelPerformanceBenchmark,
+    oelPerformanceBenchmarkOther,
+    oelPerformanceBenchmarkNote
+  } = data?.modelPlan?.itTools || ({} as ITToolsPageFourFormType);
 
-  const { communicationMethod = [] } =
-    data?.modelPlan?.participantsAndProviders ||
-    ({} as ParticipantsAndProvidersFormType);
+  const { helpdeskUse, iddocSupport, benchmarkForPerformance } =
+    data?.modelPlan?.opsEvalAndLearning || ({} as OpsEvalAndLearnignFormType);
 
   const modelName = data?.modelPlan?.modelName || '';
 
   const [update] = useMutation<UpdatePlanItToolsVariables>(UpdatePlanITTools);
 
   const handleFormSubmit = (
-    formikValues: ITToolsPageThreeFormType,
+    formikValues: ITToolsPageFourFormType,
     redirect?: 'next' | 'back' | 'task-list'
   ) => {
     const { id: updateId, __typename, ...changeValues } = formikValues;
@@ -103,9 +101,9 @@ const ITToolsPageThree = () => {
       .then(response => {
         if (!response?.errors) {
           if (redirect === 'next') {
-            history.push(`/models/${modelID}/task-list/it-tools/page-four`);
+            history.push(`/models/${modelID}/task-list/it-tools/page-five`);
           } else if (redirect === 'back') {
-            history.push(`/models/${modelID}/task-list/it-tools/page-two`);
+            history.push(`/models/${modelID}/task-list/it-tools/page-three`);
           } else if (redirect === 'task-list') {
             history.push(`/models/${modelID}/task-list`);
           }
@@ -116,18 +114,18 @@ const ITToolsPageThree = () => {
       });
   };
 
-  const initialValues: ITToolsPageThreeFormType = {
+  const initialValues: ITToolsPageFourFormType = {
     __typename: 'PlanITTools',
     id: id ?? '',
-    ppCommunicateWithParticipant: ppCommunicateWithParticipant ?? [],
-    ppCommunicateWithParticipantOther: ppCommunicateWithParticipantOther ?? '',
-    ppCommunicateWithParticipantNote: ppCommunicateWithParticipantNote ?? '',
-    ppManageProviderOverlap: ppManageProviderOverlap ?? [],
-    ppManageProviderOverlapOther: ppManageProviderOverlapOther ?? '',
-    ppManageProviderOverlapNote: ppManageProviderOverlapNote ?? '',
-    bManageBeneficiaryOverlap: bManageBeneficiaryOverlap ?? [],
-    bManageBeneficiaryOverlapOther: bManageBeneficiaryOverlapOther ?? '',
-    bManageBeneficiaryOverlapNote: bManageBeneficiaryOverlapNote ?? ''
+    oelHelpdeskSupport: oelHelpdeskSupport ?? [],
+    oelHelpdeskSupportOther: oelHelpdeskSupportOther ?? '',
+    oelHelpdeskSupportNote: oelHelpdeskSupportNote ?? '',
+    oelManageAco: oelManageAco ?? [],
+    oelManageAcoOther: oelManageAcoOther ?? '',
+    oelManageAcoNote: oelManageAcoNote ?? '',
+    oelPerformanceBenchmark: oelPerformanceBenchmark ?? [],
+    oelPerformanceBenchmarkOther: oelPerformanceBenchmarkOther ?? '',
+    oelPerformanceBenchmarkNote: oelPerformanceBenchmarkNote ?? ''
   };
 
   if ((!loading && error) || (!loading && !data?.modelPlan)) {
@@ -175,7 +173,7 @@ const ITToolsPageThree = () => {
         enableReinitialize
         innerRef={formikRef}
       >
-        {(formikProps: FormikProps<ITToolsPageThreeFormType>) => {
+        {(formikProps: FormikProps<ITToolsPageFourFormType>) => {
           const { errors, handleSubmit, setErrors, values } = formikProps;
           const flatErrors = flattenErrors(errors);
 
@@ -208,77 +206,52 @@ const ITToolsPageThree = () => {
                       handleSubmit(e);
                     }}
                   >
-                    <h2>{p('heading')}</h2>
+                    <h2>{o('heading')}</h2>
 
                     <FieldGroup
-                      scrollElement="ppCommunicateWithParticipant"
-                      error={!!flatErrors.ppCommunicateWithParticipant}
+                      scrollElement="oelHelpdeskSupport"
+                      error={!!flatErrors.oelHelpdeskSupport}
                       className="margin-y-4"
                     >
                       <FieldArray
-                        name="ppCommunicateWithParticipant"
+                        name="oelHelpdeskSupport"
                         render={arrayHelpers => (
                           <>
                             <legend className="usa-label maxw-none">
-                              {t('communicateTools')}
+                              {t('helpDeskTools')}
                             </legend>
 
                             <FieldErrorMsg>
-                              {flatErrors.ppCommunicateWithParticipant}
+                              {flatErrors.oelHelpdeskSupport}
                             </FieldErrorMsg>
 
                             <ITToolsSummary
-                              question={p('howWillYouSelect')}
-                              answers={[...communicationMethod]
-                                .sort(sortOtherEnum)
-                                .map(selection =>
-                                  translateCommunicationType(selection)
-                                )}
-                              options={[
-                                translateCommunicationType(
-                                  ParticipantCommunicationType.MASS_EMAIL
-                                ),
-                                translateCommunicationType(
-                                  ParticipantCommunicationType.IT_TOOL
-                                )
-                              ]}
-                              redirect={`/models/${modelID}/task-list/participants-and-providers/communication`}
-                              answered={communicationMethod.length > 0}
-                              needsTool={
-                                communicationMethod.includes(
-                                  ParticipantCommunicationType.MASS_EMAIL
-                                ) ||
-                                communicationMethod.includes(
-                                  ParticipantCommunicationType.IT_TOOL
-                                )
-                              }
+                              question={o('helpDesk')}
+                              answers={[translateBoolean(helpdeskUse || false)]}
+                              options={[translateBoolean(true)]}
+                              redirect={`/models/${modelID}/task-list/ops-eval-and-learning`}
+                              answered={helpdeskUse !== null}
+                              needsTool={helpdeskUse || false}
                             />
 
                             <p className="margin-top-4">{t('tools')}</p>
 
-                            {Object.keys(PpCommunicateWithParticipantType)
+                            {Object.keys(OelHelpdeskSupportType)
                               .sort(sortOtherEnum)
                               .map(type => {
                                 return (
                                   <Fragment key={type}>
                                     <Field
                                       as={CheckboxField}
-                                      disabled={
-                                        !communicationMethod.includes(
-                                          ParticipantCommunicationType.MASS_EMAIL
-                                        ) &&
-                                        !communicationMethod.includes(
-                                          ParticipantCommunicationType.IT_TOOL
-                                        )
-                                      }
-                                      id={`it-tools-pp-communicate-with-participant-${type}`}
-                                      name="ppCommunicateWithParticipant"
-                                      label={translatePpCommunicateWithParticipantType(
+                                      disabled={!helpdeskUse}
+                                      id={`it-tools-oel-help-desk-${type}`}
+                                      name="oelHelpdeskSupport"
+                                      label={translateOelHelpdeskSupportType(
                                         type
                                       )}
                                       value={type}
-                                      checked={values?.ppCommunicateWithParticipant.includes(
-                                        type as PpCommunicateWithParticipantType
+                                      checked={values?.oelHelpdeskSupport.includes(
+                                        type as OelHelpdeskSupportType
                                       )}
                                       onChange={(
                                         e: React.ChangeEvent<HTMLInputElement>
@@ -286,45 +259,35 @@ const ITToolsPageThree = () => {
                                         if (e.target.checked) {
                                           arrayHelpers.push(e.target.value);
                                         } else {
-                                          const idx = values.ppCommunicateWithParticipant.indexOf(
+                                          const idx = values.oelHelpdeskSupport.indexOf(
                                             e.target
-                                              .value as PpCommunicateWithParticipantType
+                                              .value as OelHelpdeskSupportType
                                           );
                                           arrayHelpers.remove(idx);
                                         }
                                       }}
                                     />
-                                    {type ===
-                                      PpCommunicateWithParticipantType.OTHER &&
-                                      values.ppCommunicateWithParticipant.includes(
+                                    {type === OelHelpdeskSupportType.OTHER &&
+                                      values.oelHelpdeskSupport.includes(
                                         type
                                       ) && (
                                         <div className="margin-left-4 margin-top-1">
                                           <Label
-                                            htmlFor="it-tools-pp-communicate-with-participant-other"
+                                            htmlFor="it-tools-oel-help-desk-other"
                                             className="text-normal"
                                           >
                                             {h('pleaseSpecify')}
                                           </Label>
                                           <FieldErrorMsg>
-                                            {
-                                              flatErrors.ppCommunicateWithParticipantOther
-                                            }
+                                            {flatErrors.oelHelpdeskSupportOther}
                                           </FieldErrorMsg>
                                           <Field
                                             as={TextInput}
-                                            disabled={
-                                              !communicationMethod.includes(
-                                                ParticipantCommunicationType.MASS_EMAIL
-                                              ) &&
-                                              !communicationMethod.includes(
-                                                ParticipantCommunicationType.IT_TOOL
-                                              )
-                                            }
+                                            disabled={!helpdeskUse}
                                             className="maxw-none"
-                                            id="it-tools-pp-communicate-with-participant-other"
+                                            id="it-tools-oel-help-desk-other"
                                             maxLength={50}
-                                            name="ppCommunicateWithParticipantOther"
+                                            name="oelHelpdeskSupportOther"
                                           />
                                         </div>
                                       )}
@@ -332,8 +295,8 @@ const ITToolsPageThree = () => {
                                 );
                               })}
                             <AddNote
-                              id="it-tools-pp-communicate-with-participant-note"
-                              field="ppCommunicateWithParticipantNote"
+                              id="it-tools-oel-help-desk-note"
+                              field="oelHelpdeskSupportNote"
                             />
                           </>
                         )}
@@ -341,136 +304,52 @@ const ITToolsPageThree = () => {
                     </FieldGroup>
 
                     <FieldGroup
-                      scrollElement="ppManageProviderOverlap"
-                      error={!!flatErrors.ppManageProviderOverlap}
+                      scrollElement="oelManageAco"
+                      error={!!flatErrors.oelManageAco}
                       className="margin-y-4"
                     >
                       <FieldArray
-                        name="ppManageProviderOverlap"
+                        name="oelManageAco"
                         render={arrayHelpers => (
                           <>
                             <legend className="usa-label maxw-none">
-                              {t('manageOverlap')}
+                              {t('iddocTools')}
                             </legend>
 
                             <FieldErrorMsg>
-                              {flatErrors.ppManageProviderOverlap}
+                              {flatErrors.oelManageAco}
                             </FieldErrorMsg>
 
-                            <p className="text-base margin-top-1 margin-bottom-3 line-height-body-3">
-                              {t('manageOverlapInfo')}
-                            </p>
-
-                            <p className="margin-top-2">{t('tools')}</p>
-
-                            {Object.keys(PpManageProviderOverlapType)
-                              .sort(sortOtherEnum)
-                              .map(type => {
-                                return (
-                                  <Fragment key={type}>
-                                    <Field
-                                      as={CheckboxField}
-                                      id={`it-tools-pp-provider-overlap-${type}`}
-                                      name="ppManageProviderOverlap"
-                                      label={translatePpManageProviderOverlapType(
-                                        type
-                                      )}
-                                      value={type}
-                                      checked={values?.ppManageProviderOverlap.includes(
-                                        type as PpManageProviderOverlapType
-                                      )}
-                                      onChange={(
-                                        e: React.ChangeEvent<HTMLInputElement>
-                                      ) => {
-                                        if (e.target.checked) {
-                                          arrayHelpers.push(e.target.value);
-                                        } else {
-                                          const idx = values.ppManageProviderOverlap.indexOf(
-                                            e.target
-                                              .value as PpManageProviderOverlapType
-                                          );
-                                          arrayHelpers.remove(idx);
-                                        }
-                                      }}
-                                    />
-                                    {type ===
-                                      PpManageProviderOverlapType.OTHER &&
-                                      values.ppManageProviderOverlap.includes(
-                                        type
-                                      ) && (
-                                        <div className="margin-left-4 margin-top-1">
-                                          <Label
-                                            htmlFor="it-tools-pp-provider-overlap-other"
-                                            className="text-normal"
-                                          >
-                                            {h('pleaseSpecify')}
-                                          </Label>
-                                          <FieldErrorMsg>
-                                            {
-                                              flatErrors.ppManageProviderOverlapOther
-                                            }
-                                          </FieldErrorMsg>
-                                          <Field
-                                            as={TextInput}
-                                            className="maxw-none"
-                                            id="it-tools-pp-provider-overlap-other"
-                                            maxLength={50}
-                                            name="ppManageProviderOverlapOther"
-                                          />
-                                        </div>
-                                      )}
-                                  </Fragment>
-                                );
-                              })}
-                            <AddNote
-                              id="it-tools-pp-provider-overlap-note"
-                              field="ppManageProviderOverlapNote"
+                            <ITToolsSummary
+                              question={o('iddocSupport')}
+                              answers={[
+                                translateBoolean(iddocSupport || false)
+                              ]}
+                              options={[translateBoolean(true)]}
+                              redirect={`/models/${modelID}/task-list/ops-eval-and-learning`}
+                              answered={iddocSupport !== null}
+                              needsTool={iddocSupport || false}
                             />
-                          </>
-                        )}
-                      />
-                    </FieldGroup>
 
-                    <h2>{b('heading')}</h2>
+                            <p className="margin-top-4">{t('tools')}</p>
 
-                    <FieldGroup
-                      scrollElement="bManageBeneficiaryOverlap"
-                      error={!!flatErrors.bManageBeneficiaryOverlap}
-                      className="margin-y-4"
-                    >
-                      <FieldArray
-                        name="bManageBeneficiaryOverlap"
-                        render={arrayHelpers => (
-                          <>
-                            <legend className="usa-label maxw-none">
-                              {t('beneficiaryOverlaps')}
-                            </legend>
-
-                            <FieldErrorMsg>
-                              {flatErrors.bManageBeneficiaryOverlap}
-                            </FieldErrorMsg>
-
-                            <p className="text-base margin-top-1 margin-bottom-3 line-height-body-3">
-                              {t('beneficiaryOverlapsInfo')}
-                            </p>
-
-                            <p className="margin-top-2">{t('tools')}</p>
-
-                            {Object.keys(BManageBeneficiaryOverlapType)
+                            {Object.keys(OelManageAcoType)
                               .sort(sortOtherEnum)
                               .map(type => {
                                 return (
                                   <Fragment key={type}>
                                     <Field
                                       as={CheckboxField}
-                                      id={`it-tools-b-beneficiary-overlap-${type}`}
-                                      name="bManageBeneficiaryOverlap"
-                                      label={translateBManageBeneficiaryOverlapType(
+                                      disabled={!iddocSupport}
+                                      id={`it-tools-oel-manage-aco-${type}`}
+                                      name="oelManageAco"
+                                      label={translateOelManageAcoType(type)}
+                                      subLabel={translateOelManageAcoSubinfoType(
                                         type
                                       )}
                                       value={type}
-                                      checked={values?.bManageBeneficiaryOverlap.includes(
-                                        type as BManageBeneficiaryOverlapType
+                                      checked={values?.oelManageAco.includes(
+                                        type as OelManageAcoType
                                       )}
                                       onChange={(
                                         e: React.ChangeEvent<HTMLInputElement>
@@ -478,37 +357,32 @@ const ITToolsPageThree = () => {
                                         if (e.target.checked) {
                                           arrayHelpers.push(e.target.value);
                                         } else {
-                                          const idx = values.bManageBeneficiaryOverlap.indexOf(
-                                            e.target
-                                              .value as BManageBeneficiaryOverlapType
+                                          const idx = values.oelManageAco.indexOf(
+                                            e.target.value as OelManageAcoType
                                           );
                                           arrayHelpers.remove(idx);
                                         }
                                       }}
                                     />
-                                    {type ===
-                                      BManageBeneficiaryOverlapType.OTHER &&
-                                      values.bManageBeneficiaryOverlap.includes(
-                                        type
-                                      ) && (
+                                    {type === OelManageAcoType.OTHER &&
+                                      values.oelManageAco.includes(type) && (
                                         <div className="margin-left-4 margin-top-1">
                                           <Label
-                                            htmlFor="it-tools-b-beneficiary-overlap-other"
+                                            htmlFor="it-tools-oel-manage-aco-other"
                                             className="text-normal"
                                           >
                                             {h('pleaseSpecify')}
                                           </Label>
                                           <FieldErrorMsg>
-                                            {
-                                              flatErrors.bManageBeneficiaryOverlapOther
-                                            }
+                                            {flatErrors.oelManageAcoOther}
                                           </FieldErrorMsg>
                                           <Field
                                             as={TextInput}
+                                            disabled={!iddocSupport}
                                             className="maxw-none"
-                                            id="it-tools-b-beneficiary-overlap-other"
+                                            id="it-tools-oel-manage-aco-other"
                                             maxLength={50}
-                                            name="bManageBeneficiaryOverlapOther"
+                                            name="oelManageAcoOther"
                                           />
                                         </div>
                                       )}
@@ -516,8 +390,8 @@ const ITToolsPageThree = () => {
                                 );
                               })}
                             <AddNote
-                              id="it-tools-b-beneficiary-overlap-note"
-                              field="bManageBeneficiaryOverlapNote"
+                              id="it-tools-oel-manage-aco-note"
+                              field="oelManageAcoNote"
                             />
                           </>
                         )}
@@ -568,4 +442,4 @@ const ITToolsPageThree = () => {
   );
 };
 
-export default ITToolsPageThree;
+export default ITToolsPageFour;

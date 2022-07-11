@@ -65,7 +65,35 @@ const itTools = {
   beneficiaryOverlaps:
     'What tools will you use to manage beneficiary overlaps?',
   beneficiaryOverlapsInfo:
-    'This might be needed if your model has policies around beneficiary overlaps, or if another model has policies about beneficiaries overlaps with your model.'
+    'This might be needed if your model has policies around beneficiary overlaps, or if another model has policies about beneficiaries overlaps with your model.',
+  oelHelpdeskSupportOptions: {
+    cbosc: 'Consolidated Business Operations Support Center (CBOSC)',
+    contractor: 'Through a contractor',
+    other: 'Other'
+  },
+  oelManageAcoOptions: {
+    acoOS: 'Accountable Care Organization Operating System (ACO-OS)',
+    acoOSInfo: 'supports design, development, and operations and maintenance',
+    acoUI: 'Accountable Care Organization User Interface (ACO-UI)',
+    innovation: '4innovation (4i)',
+    other: 'Other'
+  },
+  oelManageAcoSubinfoOptions: {
+    acoOS: 'supports design, development, and operations and maintenance',
+    acoUI: 'supports operations and maintenance',
+    innovation:
+      'supports design, development, operations and maintenance in cloud environments (AWS)',
+    other: ''
+  },
+  oelPerformanceBenchmarkOptions: {
+    idr: 'Integrated Data Repository (IDR)',
+    ccw: 'Chronic Conditions Warehouse (CCW)',
+    other: 'Other'
+  },
+  helpDeskTools: 'What tools will you use for helpdesk support?',
+  iddocTools: 'Which IDDOC tools will you use?',
+  benchmarkTools:
+    'What tools will you use to establish a benchmark with participants?'
 };
 
 export default itTools;

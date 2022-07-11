@@ -5,6 +5,7 @@ import { Grid, GridContainer } from '@trussworks/react-uswds';
 import MainContent from 'components/MainContent';
 import { NotFoundPartial } from 'views/NotFound';
 
+import ITToolsPageFour from './PageFour';
 import ITToolsPageOne from './PageOne';
 import ITToolsPageThree from './PageThree';
 import ITToolsPageTwo from './PageTwo';
@@ -34,6 +35,11 @@ export const ITTools = () => {
               path="/models/:modelID/task-list/it-tools/page-three"
               exact
               render={() => <ITToolsPageThree />}
+            />
+            <Route
+              path="/models/:modelID/task-list/it-tools/page-four"
+              exact
+              render={() => <ITToolsPageFour />}
             />
             <Route path="*" render={() => <NotFoundPartial />} />
           </Switch>

@@ -228,7 +228,7 @@ const ITToolsPageThree = () => {
                             </FieldErrorMsg>
 
                             <ITToolsSummary
-                              question={p('howWillYouSelect')}
+                              question={p('participantCommunication')}
                               answers={[...communicationMethod]
                                 .sort(sortOtherEnum)
                                 .map(selection =>

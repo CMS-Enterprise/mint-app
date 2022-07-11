@@ -977,6 +977,62 @@ export const translateBManageBeneficiaryOverlapType = (type: string) => {
   }
 };
 
+export const translateOelHelpdeskSupportType = (type: string) => {
+  switch (type) {
+    case 'CBOSC':
+      return i18next.t('itTools:oelHelpdeskSupportOptions.cbosc');
+    case 'CONTRACTOR':
+      return i18next.t('itTools:oelHelpdeskSupportOptions.contractor');
+    case 'OTHER':
+      return i18next.t('itTools:oelHelpdeskSupportOptions.other');
+    default:
+      return '';
+  }
+};
+
+export const translateOelManageAcoType = (type: string) => {
+  switch (type) {
+    case 'ACO_OS':
+      return i18next.t('itTools:oelManageAcoOptions.acoOS');
+    case 'ACO_UI':
+      return i18next.t('itTools:oelManageAcoOptions.acoUI');
+    case 'INNOVATION':
+      return i18next.t('itTools:oelManageAcoOptions.innovation');
+    case 'OTHER':
+      return i18next.t('itTools:oelManageAcoOptions.other');
+    default:
+      return '';
+  }
+};
+
+export const translateOelManageAcoSubinfoType = (type: string) => {
+  switch (type) {
+    case 'ACO_OS':
+      return i18next.t('itTools:oelManageAcoSubinfoOptions.acoOS');
+    case 'ACO_UI':
+      return i18next.t('itTools:oelManageAcoSubinfoOptions.acoUI');
+    case 'INNOVATION':
+      return i18next.t('itTools:oelManageAcoSubinfoOptions.innovation');
+    case 'OTHER ':
+      return i18next.t('itTools:oelManageAcoSubinfoOptions.other');
+    default:
+      return '';
+  }
+};
+
+export const translateOelPerformanceBenchmarkType = (type: string) => {
+  switch (type) {
+    case 'IDR':
+      return i18next.t('itTools:oelPerformanceBenchmarkOptions.idr');
+    case 'CCW':
+      return i18next.t('itTools:oelPerformanceBenchmarkOptions.ccw');
+    case 'OTHER ':
+      return i18next.t('itTools:oelPerformanceBenchmarkOptions.other');
+    default:
+      return '';
+  }
+};
+
 /**
  * Translate the document type API enum to a human readable string
  */

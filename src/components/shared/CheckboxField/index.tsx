@@ -6,6 +6,7 @@ type CheckboxFieldProps = {
   disabled?: boolean;
   id: string;
   label: string;
+  subLabel?: string;
   name: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onBlur: () => void;
@@ -18,6 +19,7 @@ const CheckboxField = ({
   disabled,
   id,
   label,
+  subLabel,
   name,
   onChange,
   onBlur,
@@ -48,6 +50,9 @@ const CheckboxField = ({
       >
         {label}
       </label>
+      <p className="text-base margin-y-1 margin-left-4 line-height-body-3">
+        {subLabel}
+      </p>
     </div>
   );
 };
