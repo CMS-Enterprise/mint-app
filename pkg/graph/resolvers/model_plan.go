@@ -12,7 +12,6 @@ import (
 // TODO Revist this function, as we probably want to add all of these DB entries inthe scope of a single SQL transaction
 // so that we can roll back if there is an error with any of these calls.
 func ModelPlanCreate(logger *zap.Logger, modelName string, store *storage.Store, principalInfo *models.UserInfo) (*models.ModelPlan, error) {
-	//TODO add base Struct here
 	plan := &models.ModelPlan{
 		ModelName: modelName,
 		Status:    models.ModelStatusPlanDraft,
