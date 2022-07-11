@@ -1,7 +1,6 @@
 package models
 
 import (
-	"github.com/google/uuid"
 	"github.com/lib/pq"
 )
 
@@ -88,28 +87,3 @@ const (
 	RiskCAPITATION ParticipantRiskType = "CAPITATION"
 	RiskOTHER      ParticipantRiskType = "OTHER"
 )
-
-// GetModelTypeName returns the name of the model
-func (pp PlanParticipantsAndProviders) GetModelTypeName() string {
-	return "Plan_Participants_And_Providers"
-}
-
-// GetID returns the ID property for a PlanParticipantsAndProviders struct
-func (pp PlanParticipantsAndProviders) GetID() uuid.UUID {
-	return pp.ID
-}
-
-// GetPlanID returns the ModelPlanID property for a PlanParticipantsAndProviders struct
-func (pp PlanParticipantsAndProviders) GetPlanID() uuid.UUID {
-	return pp.ModelPlanID
-}
-
-// GetModifiedBy returns the ModifiedBy property for a PlanParticipantsAndProviders struct
-func (pp PlanParticipantsAndProviders) GetModifiedBy() *string {
-	return pp.ModifiedBy
-}
-
-// GetCreatedBy returns the ModifiedBy property for a PlanParticipantsAndProviders struct
-func (pp PlanParticipantsAndProviders) GetCreatedBy() string {
-	return pp.CreatedBy
-}

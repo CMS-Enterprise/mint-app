@@ -2,8 +2,6 @@ package models
 
 import (
 	"time"
-
-	"github.com/google/uuid"
 )
 
 // PlanMilestones represents the "plan milestones" section of a plan
@@ -26,29 +24,4 @@ type PlanMilestones struct {
 
 	PhasedIn     *bool   `json:"phasedIn" db:"phased_in" statusWeight:"1"` //default to false
 	PhasedInNote *string `json:"phasedInNote" db:"phased_in_note"`
-}
-
-// GetModelTypeName returns a string name that represents the PlanMilestones struct
-func (pm PlanMilestones) GetModelTypeName() string {
-	return "Plan_Milestones"
-}
-
-// GetID returns the GetID property for a PlanMilestones struct
-func (pm PlanMilestones) GetID() uuid.UUID {
-	return pm.ID
-}
-
-// GetPlanID returns the ModelPlanID property for a PlanMilestones struct
-func (pm PlanMilestones) GetPlanID() uuid.UUID {
-	return pm.ModelPlanID
-}
-
-// GetModifiedBy returns the ModifiedBy property for a PlanMilestones struct
-func (pm PlanMilestones) GetModifiedBy() *string {
-	return pm.ModifiedBy
-}
-
-// GetCreatedBy returns the CreatedBy property for a PlanMilestones struct
-func (pm PlanMilestones) GetCreatedBy() string {
-	return pm.CreatedBy
 }

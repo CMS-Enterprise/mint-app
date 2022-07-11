@@ -1,7 +1,6 @@
 package models
 
 import (
-	"github.com/google/uuid"
 	"github.com/lib/pq"
 )
 
@@ -69,29 +68,4 @@ type PlanGeneralCharacteristics struct {
 	WaiversRequired               *bool          `json:"waiversRequired" db:"waivers_required" statusWeight:"1"`
 	WaiversRequiredTypes          pq.StringArray `json:"waiversRequiredTypes" db:"waivers_required_types"`
 	WaiversRequiredNote           *string        `json:"waiversRequiredNote" db:"waivers_required_note"`
-}
-
-// GetModelTypeName returns a string name that represents the PlanBasics struct
-func (gc PlanGeneralCharacteristics) GetModelTypeName() string {
-	return "Plan_General_Characteristics"
-}
-
-// GetID returns the ID property for a PlanBasics struct
-func (gc PlanGeneralCharacteristics) GetID() uuid.UUID {
-	return gc.ID
-}
-
-// GetPlanID returns the ModelPlanID property for a PlanBasics struct
-func (gc PlanGeneralCharacteristics) GetPlanID() uuid.UUID {
-	return gc.ModelPlanID
-}
-
-// GetModifiedBy returns the ModifiedBy property for a PlanBasics struct
-func (gc PlanGeneralCharacteristics) GetModifiedBy() *string {
-	return gc.ModifiedBy
-}
-
-// GetCreatedBy returns the ModifiedBy property for a PlanBasics struct
-func (gc PlanGeneralCharacteristics) GetCreatedBy() string {
-	return gc.CreatedBy
 }

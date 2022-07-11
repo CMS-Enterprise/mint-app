@@ -206,39 +206,3 @@ type PlanPayments struct {
 	PaymentStartDate                                 *time.Time `json:"paymentStartDate" db:"payment_start_date" statusWeight:"1"`
 	PaymentStartDateNote                             *string    `json:"paymentStartDateNote" db:"payment_start_date_note"`
 }
-
-// // GetModelTypeName provides the PlanPayments model type name
-// func (p PlanPayments) GetModelTypeName() string {
-// 	return "Plan_Payments"
-// }
-
-// // GetID provides the PlanPayments ID
-// func (p PlanPayments) GetID() uuid.UUID {
-// 	return p.ID
-// }
-
-// // GetPlanID provides the PlanPayments associated model plan ID
-// func (p PlanPayments) GetPlanID() uuid.UUID {
-// 	return p.ModelPlanID
-// }
-
-// // GetCreatedBy provides the CreatedBy field
-// func (p PlanPayments) GetCreatedBy() string {
-// 	return p.CreatedBy
-// }
-
-// // GetModifiedBy provides the ModifiedBy field
-// func (p PlanPayments) GetModifiedBy() *string {
-// 	return p.ModifiedBy
-// }
-
-// // CalcStatus calculates the status of the Plan Payments and sets the Status field
-// func (p *PlanPayments) CalcStatus() error {
-// 	status, err := GenericallyCalculateStatus(*p)
-// 	if err != nil {
-// 		return err
-// 	}
-
-// 	p.Status = status
-// 	return nil
-// }

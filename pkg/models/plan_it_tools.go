@@ -1,7 +1,6 @@
 package models
 
 import (
-	"github.com/google/uuid"
 	"github.com/lib/pq"
 )
 
@@ -100,29 +99,4 @@ type PlanITTools struct {
 	PRecoverPayments      pq.StringArray `json:"pRecoverPayments" db:"p_recover_payments"`
 	PRecoverPaymentsOther *string        `json:"pRecoverPaymentsOther" db:"p_recover_payments_other"`
 	PRecoverPaymentsNote  *string        `json:"pRecoverPaymentsNote" db:"p_recover_payments_note"`
-}
-
-// GetModelTypeName returns the name of the model
-func (it PlanITTools) GetModelTypeName() string {
-	return "Plan_IT_Tools"
-}
-
-// GetID returns the ID property for a PlanITTools struct
-func (it PlanITTools) GetID() uuid.UUID {
-	return it.ID
-}
-
-// GetPlanID returns the ModelPlanID property for a PlanITTools struct
-func (it PlanITTools) GetPlanID() uuid.UUID {
-	return it.ModelPlanID
-}
-
-// GetModifiedBy returns the ModifiedBy property for a PlanITTools struct
-func (it PlanITTools) GetModifiedBy() *string {
-	return it.ModifiedBy
-}
-
-// GetCreatedBy returns the ModifiedBy property for a PlanITTools struct
-func (it PlanITTools) GetCreatedBy() string {
-	return it.CreatedBy
 }

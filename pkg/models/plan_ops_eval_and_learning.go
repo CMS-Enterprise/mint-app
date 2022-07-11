@@ -3,7 +3,6 @@ package models
 import (
 	"time"
 
-	"github.com/google/uuid"
 	"github.com/lib/pq"
 )
 
@@ -156,28 +155,3 @@ const (
 	DataFullTime    DataFullTimeOrIncrementalType = "FULL_TIME"
 	DataIncremental DataFullTimeOrIncrementalType = "INCREMENTAL"
 )
-
-// GetModelTypeName returns the name of the model
-func (oel PlanOpsEvalAndLearning) GetModelTypeName() string {
-	return "Plan_Ops_Eval_And_Learning"
-}
-
-// GetID returns the ID property for a PlanOpsEvalAndLearning struct
-func (oel PlanOpsEvalAndLearning) GetID() uuid.UUID {
-	return oel.ID
-}
-
-// GetPlanID returns the ModelPlanID property for a PlanOpsEvalAndLearning struct
-func (oel PlanOpsEvalAndLearning) GetPlanID() uuid.UUID {
-	return oel.ModelPlanID
-}
-
-// GetModifiedBy returns the ModifiedBy property for a PlanOpsEvalAndLearning struct
-func (oel PlanOpsEvalAndLearning) GetModifiedBy() *string {
-	return oel.ModifiedBy
-}
-
-// GetCreatedBy returns the ModifiedBy property for a PlanOpsEvalAndLearning struct
-func (oel PlanOpsEvalAndLearning) GetCreatedBy() string {
-	return oel.CreatedBy
-}

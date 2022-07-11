@@ -1,7 +1,6 @@
 package models
 
 import (
-	"github.com/google/uuid"
 	"github.com/lib/pq"
 )
 
@@ -35,29 +34,4 @@ type PlanBeneficiaries struct {
 	BeneficiaryOverlap                 *OverlapType   `json:"beneficiaryOverlap" db:"beneficiary_overlap" statusWeight:"1"`
 	BeneficiaryOverlapNote             *string        `json:"beneficiaryOverlapNote" db:"beneficiary_overlap_note"`
 	PrecedenceRules                    *string        `json:"precedenceRules" db:"precedence_rules"`
-}
-
-// GetModelTypeName returns the name of the model
-func (b PlanBeneficiaries) GetModelTypeName() string {
-	return "Plan_Beneficiaries"
-}
-
-// GetID returns the ID property for a PlanBeneficiaries struct
-func (b PlanBeneficiaries) GetID() uuid.UUID {
-	return b.ID
-}
-
-// GetPlanID returns the ModelPlanID property for a PlanBeneficiaries struct
-func (b PlanBeneficiaries) GetPlanID() uuid.UUID {
-	return b.ModelPlanID
-}
-
-// GetModifiedBy returns the ModifiedBy property for a PlanBeneficiaries struct
-func (b PlanBeneficiaries) GetModifiedBy() *string {
-	return b.ModifiedBy
-}
-
-// GetCreatedBy returns the ModifiedBy property for a PlanBeneficiaries struct
-func (b PlanBeneficiaries) GetCreatedBy() string {
-	return b.CreatedBy
 }
