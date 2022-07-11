@@ -108,7 +108,7 @@ CREATE TABLE plan_payments (
     non_claims_payments_other ZERO_STRING,
     payment_calculation_owner ZERO_STRING,
     number_payments_per_pay_cycle ZERO_STRING,
-    number_payments_per_pay_cycle_notes ZERO_STRING,
+    number_payments_per_pay_cycle_note ZERO_STRING,
     shared_systems_involved_additional_claim_payment BOOLEAN,
     shared_systems_involved_additional_claim_payment_note ZERO_STRING,
     planning_to_use_innovation_payment_contractor BOOLEAN,
@@ -123,15 +123,15 @@ CREATE TABLE plan_payments (
     can_participants_select_between_payment_mechanisms_note ZERO_STRING,
     anticipated_payment_frequency PP_ANTICIPATED_PAYMENT_FREQUENCY_TYPE[],
     anticipated_payment_frequency_other ZERO_STRING,
-    anticipated_payment_frequency_notes ZERO_STRING,
+    anticipated_payment_frequency_note ZERO_STRING,
 
     --page 7
     will_recover_payments BOOLEAN,
-    will_recover_payments_notes ZERO_STRING,
+    will_recover_payments_note ZERO_STRING,
     anticipate_reconciling_payments_retrospectively BOOLEAN,
-    anticipate_reconciling_payments_retrospectively_notes ZERO_STRING,
+    anticipate_reconciling_payments_retrospectively_note ZERO_STRING,
     payment_start_date TIMESTAMP WITH TIME ZONE,
-    payment_start_date_notes ZERO_STRING,
+    payment_start_date_note ZERO_STRING,
 
     --META
     created_by EUA_ID NOT NULL,

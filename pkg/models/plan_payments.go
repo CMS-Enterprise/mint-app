@@ -184,7 +184,7 @@ type PlanPayments struct {
 	NonClaimsPaymentsOther                          *string        `json:"nonClaimsPaymentOther" db:"non_claims_payments_other"`
 	PaymentCalculationOwner                         *string        `json:"paymentCalculationOwner" db:"payment_calculation_owner" statusWeight:"1"`
 	NumberPaymentsPerPayCycle                       *string        `json:"numberPaymentsPerPayCycle" db:"number_payments_per_pay_cycle" statusWeight:"1"`
-	NumberPaymentsPerPayCycleNotes                  *string        `json:"numberPaymentsPerPayCycleNotes" db:"number_payments_per_pay_cycle_notes"`
+	NumberPaymentsPerPayCycleNote                   *string        `json:"numberPaymentsPerPayCycleNote" db:"number_payments_per_pay_cycle_note"`
 	SharedSystemsInvolvedAdditionalClaimPayment     *bool          `json:"sharedSystemsInvolvedAdditionalClaimPayment" db:"shared_systems_involved_additional_claim_payment" statusWeight:"1"`
 	SharedSystemsInvolvedAdditionalClaimPaymentNote *string        `json:"sharedSystemsInvolvedAdditionalClaimPaymentNote" db:"shared_systems_involved_additional_claim_payment_note"`
 	PlanningToUseInnovationPaymentContractor        *bool          `json:"planningToUseInnovationPaymentContractor" db:"planning_to_use_innovation_payment_contractor" statusWeight:"1"`
@@ -199,15 +199,15 @@ type PlanPayments struct {
 	CanParticipantsSelectBetweenPaymentMechanismsNote *string                         `json:"canParticipantsSelectBetweenPaymentMechanismsNote" db:"can_participants_select_between_payment_mechanisms_note"`
 	AnticipatedPaymentFrequency                       pq.StringArray                  `json:"anticipatedPaymentFrequency" db:"anticipated_payment_frequency" statusWeight:"1"`
 	AnticipatedPaymentFrequencyOther                  *string                         `json:"anticipatedPaymentFrequencyOther" db:"anticipated_payment_frequency_other"`
-	AnticipatedPaymentFrequencyNotes                  *string                         `json:"anticipatedPaymentFrequencyNotes" db:"anticipated_payment_frequency_notes"`
+	AnticipatedPaymentFrequencyNote                   *string                         `json:"anticipatedPaymentFrequencyNote" db:"anticipated_payment_frequency_note"`
 
 	// Page 7
-	WillRecoverPayments                               *bool      `json:"willRecoverPayments" db:"will_recover_payments" statusWeight:"1"`
-	WillRecoverPaymentsNotes                          *string    `json:"willRecoverPaymentsNotes" db:"will_recover_payments_notes"`
-	AnticipateReconcilingPaymentsRetrospectively      *bool      `json:"anticipateReconcilingPaymentsRetrospectively" db:"anticipate_reconciling_payments_retrospectively" statusWeight:"1"`
-	AnticipateReconcilingPaymentsRetrospectivelyNotes *string    `json:"anticipateReconcilingPaymentsRetrospectivelyNotes" db:"anticipate_reconciling_payments_retrospectively_notes"`
-	PaymentStartDate                                  *time.Time `json:"paymentStartDate" db:"payment_start_date" statusWeight:"1"`
-	PaymentStartDateNotes                             *string    `json:"paymentStartDateNotes" db:"payment_start_date_notes"`
+	WillRecoverPayments                              *bool      `json:"willRecoverPayments" db:"will_recover_payments" statusWeight:"1"`
+	WillRecoverPaymentsNote                          *string    `json:"willRecoverPaymentsNote" db:"will_recover_payments_note"`
+	AnticipateReconcilingPaymentsRetrospectively     *bool      `json:"anticipateReconcilingPaymentsRetrospectively" db:"anticipate_reconciling_payments_retrospectively" statusWeight:"1"`
+	AnticipateReconcilingPaymentsRetrospectivelyNote *string    `json:"anticipateReconcilingPaymentsRetrospectivelyNote" db:"anticipate_reconciling_payments_retrospectively_note"`
+	PaymentStartDate                                 *time.Time `json:"paymentStartDate" db:"payment_start_date" statusWeight:"1"`
+	PaymentStartDateNote                             *string    `json:"paymentStartDateNote" db:"payment_start_date_note"`
 
 	// Meta
 	CreatedBy   string     `json:"createdBy" db:"created_by"`

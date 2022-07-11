@@ -846,17 +846,7 @@ type PlanPaymentsResolver interface {
 	NonClaimsPayments(ctx context.Context, obj *models.PlanPayments) ([]model.NonClaimsBasedPayType, error)
 	NonClaimsPaymentOther(ctx context.Context, obj *models.PlanPayments) (*string, error)
 
-	NumberPaymentsPerPayCycleNote(ctx context.Context, obj *models.PlanPayments) (*string, error)
-
 	AnticipatedPaymentFrequency(ctx context.Context, obj *models.PlanPayments) ([]models.AnticipatedPaymentFrequencyType, error)
-
-	AnticipatedPaymentFrequencyNote(ctx context.Context, obj *models.PlanPayments) (*string, error)
-
-	WillRecoverPaymentsNote(ctx context.Context, obj *models.PlanPayments) (*string, error)
-
-	AnticipateReconcilingPaymentsRetrospectivelyNote(ctx context.Context, obj *models.PlanPayments) (*string, error)
-
-	PaymentStartDateNote(ctx context.Context, obj *models.PlanPayments) (*string, error)
 }
 type QueryResolver interface {
 	CurrentUser(ctx context.Context) (*model.CurrentUser, error)
@@ -31975,7 +31965,7 @@ func (ec *executionContext) _PlanPayments_numberPaymentsPerPayCycleNote(ctx cont
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.PlanPayments().NumberPaymentsPerPayCycleNote(rctx, obj)
+		return obj.NumberPaymentsPerPayCycleNote, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -31993,8 +31983,8 @@ func (ec *executionContext) fieldContext_PlanPayments_numberPaymentsPerPayCycleN
 	fc = &graphql.FieldContext{
 		Object:     "PlanPayments",
 		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
+		IsMethod:   false,
+		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type String does not have child fields")
 		},
@@ -32508,7 +32498,7 @@ func (ec *executionContext) _PlanPayments_anticipatedPaymentFrequencyNote(ctx co
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.PlanPayments().AnticipatedPaymentFrequencyNote(rctx, obj)
+		return obj.AnticipatedPaymentFrequencyNote, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -32526,8 +32516,8 @@ func (ec *executionContext) fieldContext_PlanPayments_anticipatedPaymentFrequenc
 	fc = &graphql.FieldContext{
 		Object:     "PlanPayments",
 		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
+		IsMethod:   false,
+		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type String does not have child fields")
 		},
@@ -32590,7 +32580,7 @@ func (ec *executionContext) _PlanPayments_willRecoverPaymentsNote(ctx context.Co
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.PlanPayments().WillRecoverPaymentsNote(rctx, obj)
+		return obj.WillRecoverPaymentsNote, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -32608,8 +32598,8 @@ func (ec *executionContext) fieldContext_PlanPayments_willRecoverPaymentsNote(ct
 	fc = &graphql.FieldContext{
 		Object:     "PlanPayments",
 		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
+		IsMethod:   false,
+		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type String does not have child fields")
 		},
@@ -32672,7 +32662,7 @@ func (ec *executionContext) _PlanPayments_anticipateReconcilingPaymentsRetrospec
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.PlanPayments().AnticipateReconcilingPaymentsRetrospectivelyNote(rctx, obj)
+		return obj.AnticipateReconcilingPaymentsRetrospectivelyNote, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -32690,8 +32680,8 @@ func (ec *executionContext) fieldContext_PlanPayments_anticipateReconcilingPayme
 	fc = &graphql.FieldContext{
 		Object:     "PlanPayments",
 		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
+		IsMethod:   false,
+		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type String does not have child fields")
 		},
@@ -32754,7 +32744,7 @@ func (ec *executionContext) _PlanPayments_paymentStartDateNote(ctx context.Conte
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.PlanPayments().PaymentStartDateNote(rctx, obj)
+		return obj.PaymentStartDateNote, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -32772,8 +32762,8 @@ func (ec *executionContext) fieldContext_PlanPayments_paymentStartDateNote(ctx c
 	fc = &graphql.FieldContext{
 		Object:     "PlanPayments",
 		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
+		IsMethod:   false,
+		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type String does not have child fields")
 		},
@@ -40180,22 +40170,9 @@ func (ec *executionContext) _PlanPayments(ctx context.Context, sel ast.Selection
 			out.Values[i] = ec._PlanPayments_numberPaymentsPerPayCycle(ctx, field, obj)
 
 		case "numberPaymentsPerPayCycleNote":
-			field := field
 
-			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._PlanPayments_numberPaymentsPerPayCycleNote(ctx, field, obj)
-				return res
-			}
+			out.Values[i] = ec._PlanPayments_numberPaymentsPerPayCycleNote(ctx, field, obj)
 
-			out.Concurrently(i, func() graphql.Marshaler {
-				return innerFunc(ctx)
-
-			})
 		case "sharedSystemsInvolvedAdditionalClaimPayment":
 
 			out.Values[i] = ec._PlanPayments_sharedSystemsInvolvedAdditionalClaimPayment(ctx, field, obj)
@@ -40258,85 +40235,33 @@ func (ec *executionContext) _PlanPayments(ctx context.Context, sel ast.Selection
 			out.Values[i] = ec._PlanPayments_anticipatedPaymentFrequencyOther(ctx, field, obj)
 
 		case "anticipatedPaymentFrequencyNote":
-			field := field
 
-			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._PlanPayments_anticipatedPaymentFrequencyNote(ctx, field, obj)
-				return res
-			}
+			out.Values[i] = ec._PlanPayments_anticipatedPaymentFrequencyNote(ctx, field, obj)
 
-			out.Concurrently(i, func() graphql.Marshaler {
-				return innerFunc(ctx)
-
-			})
 		case "willRecoverPayments":
 
 			out.Values[i] = ec._PlanPayments_willRecoverPayments(ctx, field, obj)
 
 		case "willRecoverPaymentsNote":
-			field := field
 
-			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._PlanPayments_willRecoverPaymentsNote(ctx, field, obj)
-				return res
-			}
+			out.Values[i] = ec._PlanPayments_willRecoverPaymentsNote(ctx, field, obj)
 
-			out.Concurrently(i, func() graphql.Marshaler {
-				return innerFunc(ctx)
-
-			})
 		case "anticipateReconcilingPaymentsRetrospectively":
 
 			out.Values[i] = ec._PlanPayments_anticipateReconcilingPaymentsRetrospectively(ctx, field, obj)
 
 		case "anticipateReconcilingPaymentsRetrospectivelyNote":
-			field := field
 
-			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._PlanPayments_anticipateReconcilingPaymentsRetrospectivelyNote(ctx, field, obj)
-				return res
-			}
+			out.Values[i] = ec._PlanPayments_anticipateReconcilingPaymentsRetrospectivelyNote(ctx, field, obj)
 
-			out.Concurrently(i, func() graphql.Marshaler {
-				return innerFunc(ctx)
-
-			})
 		case "paymentStartDate":
 
 			out.Values[i] = ec._PlanPayments_paymentStartDate(ctx, field, obj)
 
 		case "paymentStartDateNote":
-			field := field
 
-			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._PlanPayments_paymentStartDateNote(ctx, field, obj)
-				return res
-			}
+			out.Values[i] = ec._PlanPayments_paymentStartDateNote(ctx, field, obj)
 
-			out.Concurrently(i, func() graphql.Marshaler {
-				return innerFunc(ctx)
-
-			})
 		case "createdBy":
 
 			out.Values[i] = ec._PlanPayments_createdBy(ctx, field, obj)
