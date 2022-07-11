@@ -275,6 +275,50 @@ export const translateParticipantsType = (type: string) => {
   }
 };
 
+export const translateBeneficiariesType = (type: string) => {
+  switch (type) {
+    case 'DISEASE_SPECIFIC':
+      return i18next.t('beneficiaries:beneficiariesOptions.diseaseSpecific');
+    case 'DUALLY_ELIGIBLE':
+      return i18next.t('beneficiaries:beneficiariesOptions.duallyEligible');
+    case 'MEDICAID':
+      return i18next.t('beneficiaries:beneficiariesOptions.medicaid');
+    case 'MEDICARE_ADVANTAGE':
+      return i18next.t('beneficiaries:beneficiariesOptions.medicareAdvantage');
+    case 'MEDICARE_FFS':
+      return i18next.t('beneficiaries:beneficiariesOptions.medicareFfs');
+    case 'MEDICARE_PART_D':
+      return i18next.t('beneficiaries:beneficiariesOptions.medicarePartD');
+    case 'OTHER':
+      return i18next.t('beneficiaries:beneficiariesOptions.other');
+    case 'NA':
+      return i18next.t('beneficiaries:beneficiariesOptions.na');
+    default:
+      return '';
+  }
+};
+
+export const translateSelectionMethodType = (type: string) => {
+  switch (type) {
+    case 'HISTORICAL':
+      return i18next.t('beneficiaries:selectionMethod.historical');
+    case 'PROSPECTIVE':
+      return i18next.t('beneficiaries:selectionMethod.prospective');
+    case 'PROVIDER_SIGN_UP':
+      return i18next.t('beneficiaries:selectionMethod.retrospective');
+    case 'RETROSPECTIVE':
+      return i18next.t('beneficiaries:selectionMethod.voluntary');
+    case 'VOLUNTARY':
+      return i18next.t('beneficiaries:selectionMethod.providerSignUp');
+    case 'OTHER':
+      return i18next.t('beneficiaries:selectionMethod.other');
+    case 'NA':
+      return i18next.t('beneficiaries:selectionMethod.na');
+    default:
+      return '';
+  }
+};
+
 export const translateConfidenceType = (type: string) => {
   switch (type) {
     case 'NOT_AT_ALL':

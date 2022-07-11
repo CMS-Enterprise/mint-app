@@ -4,7 +4,7 @@ go 1.18
 
 require (
 	github.com/99designs/gqlgen v0.17.10
-	github.com/aws/aws-sdk-go v1.44.37
+	github.com/aws/aws-sdk-go v1.44.47
 	github.com/facebookgo/clock v0.0.0-20150410010913-600d898af40a
 	github.com/go-openapi/errors v0.20.2
 	github.com/go-openapi/runtime v0.23.2

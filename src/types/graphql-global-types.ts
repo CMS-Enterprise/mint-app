@@ -40,6 +40,17 @@ export enum BenchmarkForPerformanceType {
   YES_RECONCILE = "YES_RECONCILE",
 }
 
+export enum BeneficiariesType {
+  DISEASE_SPECIFIC = "DISEASE_SPECIFIC",
+  DUALLY_ELIGIBLE = "DUALLY_ELIGIBLE",
+  MEDICAID = "MEDICAID",
+  MEDICARE_ADVANTAGE = "MEDICARE_ADVANTAGE",
+  MEDICARE_FFS = "MEDICARE_FFS",
+  MEDICARE_PART_D = "MEDICARE_PART_D",
+  NA = "NA",
+  OTHER = "OTHER",
+}
+
 export enum CMMIGroup {
   PATIENT_CARE_MODELS_GROUP = "PATIENT_CARE_MODELS_GROUP",
   POLICY_AND_PROGRAMS_GROUP = "POLICY_AND_PROGRAMS_GROUP",
@@ -317,6 +328,16 @@ export enum RecruitmentType {
   RFA = "RFA",
 }
 
+export enum SelectionMethodType {
+  HISTORICAL = "HISTORICAL",
+  NA = "NA",
+  OTHER = "OTHER",
+  PROSPECTIVE = "PROSPECTIVE",
+  PROVIDER_SIGN_UP = "PROVIDER_SIGN_UP",
+  RETROSPECTIVE = "RETROSPECTIVE",
+  VOLUNTARY = "VOLUNTARY",
+}
+
 export enum StakeholdersType {
   BENEFICIARIES = "BENEFICIARIES",
   COMMUNITY_ORGANIZATIONS = "COMMUNITY_ORGANIZATIONS",
@@ -340,6 +361,12 @@ export enum TeamRole {
   LEARNING = "LEARNING",
   MODEL_LEAD = "MODEL_LEAD",
   MODEL_TEAM = "MODEL_TEAM",
+}
+
+export enum TriStateAnswer {
+  NO = "NO",
+  TBD = "TBD",
+  YES = "YES",
 }
 
 export enum WaiverType {
@@ -393,6 +420,31 @@ export interface PlanBasicsChanges {
   goal?: string | null;
   testInterventions?: string | null;
   note?: string | null;
+  status?: TaskStatus | null;
+}
+
+export interface PlanBeneficiariesChanges {
+  beneficiaries?: BeneficiariesType[] | null;
+  beneficiariesOther?: string | null;
+  beneficiariesNote?: string | null;
+  treatDualElligibleDifferent?: TriStateAnswer | null;
+  treatDualElligibleDifferentHow?: string | null;
+  treatDualElligibleDifferentNote?: string | null;
+  excludeCertainCharacteristics?: TriStateAnswer | null;
+  excludeCertainCharacteristicsCriteria?: string | null;
+  excludeCertainCharacteristicsNote?: string | null;
+  numberPeopleImpacted?: number | null;
+  estimateConfidence?: ConfidenceType | null;
+  confidenceNote?: string | null;
+  beneficiarySelectionMethod?: SelectionMethodType[] | null;
+  beneficiarySelectionOther?: string | null;
+  beneficiarySelectionNote?: string | null;
+  beneficiarySelectionFrequency?: FrequencyType | null;
+  beneficiarySelectionFrequencyOther?: string | null;
+  beneficiarySelectionFrequencyNote?: string | null;
+  beneficiaryOverlap?: OverlapType | null;
+  beneficiaryOverlapNote?: string | null;
+  precedenceRules?: string | null;
   status?: TaskStatus | null;
 }
 
