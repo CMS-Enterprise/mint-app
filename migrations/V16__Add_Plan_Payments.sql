@@ -138,6 +138,8 @@ CREATE TABLE plan_payments (
     created_dts TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
     modified_by EUA_ID,
     modified_dts TIMESTAMP WITH TIME ZONE,
+    ready_for_review_by EUA_ID,
+    ready_for_review_dts TIMESTAMP WITH TIME ZONE,
     status TASK_STATUS NOT NULL DEFAULT 'READY'
 );
 
