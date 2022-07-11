@@ -34,6 +34,7 @@ import {
 import { UpdatePlanItToolsVariables } from 'queries/ITTools/types/UpdatePlanItTools';
 import UpdatePlanITTools from 'queries/ITTools/UpdatePlanItTools';
 import {
+  BenchmarkForPerformanceType,
   OelHelpdeskSupportType,
   OelManageAcoType,
   OelPerformanceBenchmarkType
@@ -41,6 +42,7 @@ import {
 import flattenErrors from 'utils/flattenErrors';
 import {
   sortOtherEnum,
+  translateBenchmarkForPerformanceType,
   translateBoolean,
   translateOelHelpdeskSupportType,
   translateOelManageAcoSubinfoType,
@@ -392,6 +394,130 @@ const ITToolsPageFour = () => {
                             <AddNote
                               id="it-tools-oel-manage-aco-note"
                               field="oelManageAcoNote"
+                            />
+                          </>
+                        )}
+                      />
+                    </FieldGroup>
+
+                    <FieldGroup
+                      scrollElement="oelPerformanceBenchmark"
+                      error={!!flatErrors.oelPerformanceBenchmark}
+                      className="margin-y-4"
+                    >
+                      <FieldArray
+                        name="oelPerformanceBenchmark"
+                        render={arrayHelpers => (
+                          <>
+                            <legend className="usa-label maxw-none">
+                              {t('benchmarkTools')}
+                            </legend>
+
+                            <FieldErrorMsg>
+                              {flatErrors.oelPerformanceBenchmark}
+                            </FieldErrorMsg>
+
+                            <ITToolsSummary
+                              question={o('establishBenchmark')}
+                              answers={[
+                                benchmarkForPerformance
+                              ].map(benchmark =>
+                                translateBenchmarkForPerformanceType(
+                                  benchmark || ''
+                                )
+                              )}
+                              options={[
+                                translateBenchmarkForPerformanceType(
+                                  BenchmarkForPerformanceType.YES_RECONCILE
+                                ),
+                                translateBenchmarkForPerformanceType(
+                                  BenchmarkForPerformanceType.YES_NO_RECONCILE
+                                )
+                              ]}
+                              redirect={`/models/${modelID}/task-list/participants-and-providers/communication`}
+                              answered={benchmarkForPerformance !== null}
+                              needsTool={
+                                benchmarkForPerformance ===
+                                  BenchmarkForPerformanceType.YES_RECONCILE ||
+                                benchmarkForPerformance ===
+                                  BenchmarkForPerformanceType.YES_NO_RECONCILE
+                              }
+                            />
+
+                            <p className="margin-top-4">{t('tools')}</p>
+
+                            {Object.keys(OelPerformanceBenchmarkType)
+                              .sort(sortOtherEnum)
+                              .map(type => {
+                                return (
+                                  <Fragment key={type}>
+                                    <Field
+                                      as={CheckboxField}
+                                      disabled={
+                                        benchmarkForPerformance ===
+                                          BenchmarkForPerformanceType.NO ||
+                                        benchmarkForPerformance === null
+                                      }
+                                      id={`it-tools-oel-performance-benchmark-${type}`}
+                                      name="oelPerformanceBenchmark"
+                                      label={translateOelPerformanceBenchmarkType(
+                                        type
+                                      )}
+                                      value={type}
+                                      checked={values?.oelPerformanceBenchmark.includes(
+                                        type as OelPerformanceBenchmarkType
+                                      )}
+                                      onChange={(
+                                        e: React.ChangeEvent<HTMLInputElement>
+                                      ) => {
+                                        if (e.target.checked) {
+                                          arrayHelpers.push(e.target.value);
+                                        } else {
+                                          const idx = values.oelPerformanceBenchmark.indexOf(
+                                            e.target
+                                              .value as OelPerformanceBenchmarkType
+                                          );
+                                          arrayHelpers.remove(idx);
+                                        }
+                                      }}
+                                    />
+                                    {type ===
+                                      OelPerformanceBenchmarkType.OTHER &&
+                                      values.oelPerformanceBenchmark.includes(
+                                        type
+                                      ) && (
+                                        <div className="margin-left-4 margin-top-1">
+                                          <Label
+                                            htmlFor="it-tools-oel-performance-benchmark-other"
+                                            className="text-normal"
+                                          >
+                                            {h('pleaseSpecify')}
+                                          </Label>
+                                          <FieldErrorMsg>
+                                            {
+                                              flatErrors.oelPerformanceBenchmarkOther
+                                            }
+                                          </FieldErrorMsg>
+                                          <Field
+                                            as={TextInput}
+                                            disabled={
+                                              benchmarkForPerformance ===
+                                                BenchmarkForPerformanceType.NO ||
+                                              benchmarkForPerformance === null
+                                            }
+                                            className="maxw-none"
+                                            id="it-tools-oel-performance-benchmark-other"
+                                            maxLength={50}
+                                            name="oelPerformanceBenchmarkOther"
+                                          />
+                                        </div>
+                                      )}
+                                  </Fragment>
+                                );
+                              })}
+                            <AddNote
+                              id="it-tools-oel-performance-benchmark-note"
+                              field="oelPerformanceBenchmarkNote"
                             />
                           </>
                         )}
