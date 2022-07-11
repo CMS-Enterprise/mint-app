@@ -38,7 +38,34 @@ const itTools = {
   },
   ppToAdvertiseInfo: 'If cooperative agreement, please select Grant Solutions.',
   collectTools:
-    'What IT tools will you use to collect, review, and score applications?'
+    'What IT tools will you use to collect, review, and score applications?',
+  appSupport:
+    'What tools will you use to obtain an application support contractor?',
+  appSupportInfo: '(work with BSG Acquisition Team for more)',
+  ppCommunicateWithParticipantOptions: {
+    outlook: 'Outlook Mailbox',
+    govDelivery: 'GovDelivery',
+    salesforce: 'Salesforce Portal',
+    other: 'Other'
+  },
+  ppManageProviderOverlapOptions: {
+    mdm: 'Master Data Management (MDM)',
+    other: 'Other',
+    na: 'Not applicable'
+  },
+  bManageBeneficiaryOverlapOptions: {
+    mdm: 'Master Data Management (MDM)',
+    other: 'Other',
+    na: 'Not applicable'
+  },
+  communicateTools: 'What tools will you use to communicate with participants?',
+  manageOverlap: 'What tools will you use to manage provider overlaps?',
+  manageOverlapInfo:
+    'This might be needed if your model has policies around provider overlaps, or if another model has policies about providers overlaps with your model.',
+  beneficiaryOverlaps:
+    'What tools will you use to manage beneficiary overlaps?',
+  beneficiaryOverlapsInfo:
+    'This might be needed if your model has policies around beneficiary overlaps, or if another model has policies about beneficiaries overlaps with your model.'
 };
 
 export default itTools;

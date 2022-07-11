@@ -932,6 +932,51 @@ export const translatePpToAdvertiseType = (type: string) => {
   }
 };
 
+export const translatePpCommunicateWithParticipantType = (type: string) => {
+  switch (type) {
+    case 'OUTLOOK_MAILBOX':
+      return i18next.t('itTools:ppCommunicateWithParticipantOptions.outlook');
+    case 'GOV_DELIVERY':
+      return i18next.t(
+        'itTools:ppCommunicateWithParticipantOptions.govDelivery'
+      );
+    case 'SALESFORCE_PORTAL':
+      return i18next.t(
+        'itTools:ppCommunicateWithParticipantOptions.salesforce'
+      );
+    case 'OTHER':
+      return i18next.t('itTools:ppCommunicateWithParticipantOptions.other');
+    default:
+      return '';
+  }
+};
+
+export const translatePpManageProviderOverlapType = (type: string) => {
+  switch (type) {
+    case 'MDM':
+      return i18next.t('itTools:ppManageProviderOverlapOptions.mdm');
+    case 'OTHER':
+      return i18next.t('itTools:ppManageProviderOverlapOptions.other');
+    case 'NA':
+      return i18next.t('itTools:ppManageProviderOverlapOptions.na');
+    default:
+      return '';
+  }
+};
+
+export const translateBManageBeneficiaryOverlapType = (type: string) => {
+  switch (type) {
+    case 'MDM':
+      return i18next.t('itTools:bManageBeneficiaryOverlapOptions.mdm');
+    case 'OTHER':
+      return i18next.t('itTools:bManageBeneficiaryOverlapOptions.other');
+    case 'NA':
+      return i18next.t('itTools:bManageBeneficiaryOverlapOptions.na');
+    default:
+      return '';
+  }
+};
+
 /**
  * Translate the document type API enum to a human readable string
  */

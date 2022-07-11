@@ -37,7 +37,7 @@ const ITToolsSummary = ({
           : t('summaryBox.havenNotAnswered')}
       </p>
       <p>{question}</p>
-      {answered && (
+      {answered && answers.length && (
         <ul>
           {answers.map(answer => (
             <li key={answer}>{answer}</li>
