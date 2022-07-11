@@ -28,12 +28,6 @@ func (b *BaseStruct) GetBaseStruct() *BaseStruct {
 	return b
 }
 
-// GetModelTypeName returns a string name that represents the PlanBasics struct
-func (b BaseStruct) GetModelTypeName() string {
-	//TODO HAVe THIS USE REFLECTION OR DEPRECATE, not really needed.
-	return "Plan_Basics"
-}
-
 // GetID returns the ID property for a PlanBasics struct
 func (b BaseStruct) GetID() uuid.UUID {
 	return b.ID

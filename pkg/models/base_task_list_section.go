@@ -48,7 +48,6 @@ func (b *BaseTaskListSection) CalcStatus(oldStatus TaskStatus) error {
 			b.Status = TaskInProgress
 		}
 	case TaskInProgress:
-	case TaskComplete:
 	case TaskReadyForReview:
 		if oldStatus != TaskReadyForReview {
 			now := time.Now()

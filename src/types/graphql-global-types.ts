@@ -349,7 +349,6 @@ export enum StakeholdersType {
 }
 
 export enum TaskStatus {
-  COMPLETE = "COMPLETE",
   IN_PROGRESS = "IN_PROGRESS",
   READY = "READY",
   READY_FOR_REVIEW = "READY_FOR_REVIEW",

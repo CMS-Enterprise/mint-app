@@ -117,7 +117,6 @@ const (
 	TaskReady          TaskStatus = "READY"
 	TaskInProgress     TaskStatus = "IN_PROGRESS"
 	TaskReadyForReview TaskStatus = "READY_FOR_REVIEW"
-	TaskComplete       TaskStatus = "COMPLETE"
 )
 
 //DiscussionStatus is an enum that represents the status of a Discussion

@@ -75,7 +75,9 @@ func GenericallyCalculateStatus(obj interface{}) (TaskStatus, error) {
 	status := TaskReady
 
 	if currentWeight == totalWeight {
-		status = TaskComplete
+		//TODO, if this is meant to still be used, it should be changed to return percentage, or numerator / denominator.
+		// We no longer mark a status as complete, that status no longer exists
+		status = TaskInProgress
 	} else if currentWeight > 0 {
 		status = TaskInProgress
 	}
