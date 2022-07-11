@@ -1,16 +1,5 @@
 {
   "baseUrl": "http://localhost:3005",
   "viewportHeight": 800,
-  "viewportWidth": 1280,
-  "testFiles": [
-    "login.spec.js",
-    "modelPlan.spec.js",
-    "collaborator.spec.js",
-    "discussions.spec.js",
-    "documents.spec.js",
-    "characteristics.spec.js",
-    "participantsAndProviders.spec.js",
-    "opsEvalAndLearning.spec.js",
-    "archive.spec.js"
-  ]
+  "viewportWidth": 1280
 }
