@@ -2580,6 +2580,47 @@ func (e StakeholdersType) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
+type TaskStatusInput string
+
+const (
+	TaskStatusInputInProgress     TaskStatusInput = "IN_PROGRESS"
+	TaskStatusInputReadyForReview TaskStatusInput = "READY_FOR_REVIEW"
+)
+
+var AllTaskStatusInput = []TaskStatusInput{
+	TaskStatusInputInProgress,
+	TaskStatusInputReadyForReview,
+}
+
+func (e TaskStatusInput) IsValid() bool {
+	switch e {
+	case TaskStatusInputInProgress, TaskStatusInputReadyForReview:
+		return true
+	}
+	return false
+}
+
+func (e TaskStatusInput) String() string {
+	return string(e)
+}
+
+func (e *TaskStatusInput) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = TaskStatusInput(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid TaskStatusInput", str)
+	}
+	return nil
+}
+
+func (e TaskStatusInput) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
 type WaiverType string
 
 const (

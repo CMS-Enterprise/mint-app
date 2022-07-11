@@ -5278,7 +5278,7 @@ input PlanBasicsChanges @goModel(model: "map[string]interface{}") {
   goal: String
   testInterventions: String
   note: String
-  status: TaskStatus 
+  status: TaskStatusInput 
 }
 
 """
@@ -5345,7 +5345,7 @@ input PlanMilestoneChanges @goModel(model: "map[string]interface{}") {
 
   phasedIn: Boolean
   phasedInNote: String
-  status: TaskStatus
+  status: TaskStatusInput
 }
 
 """
@@ -5561,7 +5561,7 @@ input PlanGeneralCharacteristicsChanges @goModel(model: "map[string]interface{}"
   waiversRequiredTypes: [WaiverType!]
   waiversRequiredNote: String
 
-  status: TaskStatus
+  status: TaskStatusInput
 }
 
 """
@@ -5631,7 +5631,7 @@ input PlanBeneficiariesChanges @goModel(model: "map[string]interface{}") {
   beneficiaryOverlapNote: String
   precedenceRules: String
 
-  status: TaskStatus
+  status: TaskStatusInput
 }
 
 """
@@ -5771,7 +5771,7 @@ input PlanParticipantsAndProvidersChanges @goModel(model: "map[string]interface{
   providerOverlapHierarchy:       String
   providerOverlapNote:            String
 
-  status: TaskStatus
+  status: TaskStatusInput
 }
 
 """
@@ -5931,6 +5931,8 @@ input PlanPaymentsChanges @goModel(model: "map[string]interface{}") {
   anticipateReconcilingPaymentsRetrospectivelyNote: String
   paymentStartDate:                                  Time
   paymentStartDateNote:                             String
+
+  status: TaskStatusInput
 }
 
 """"
@@ -6136,7 +6138,7 @@ input PlanITToolsChanges @goModel(model: "map[string]interface{}") {
   pRecoverPaymentsOther: String
   pRecoverPaymentsNote: String
   
-  status: TaskStatus
+  status: TaskStatusInput
 
 }
 """
@@ -6371,7 +6373,7 @@ input PlanOpsEvalAndLearningChanges @goModel(model: "map[string]interface{}") {
     modelLearningSystemsNote: String
     anticipatedChallenges: String
 
-    status: TaskStatus
+    status: TaskStatusInput
 }
 """
 Query definition for the schema
@@ -6465,6 +6467,10 @@ updatePlanPayments(id: UUID!, changes: PlanPaymentsChanges!): PlanPayments!
 
 enum TaskStatus {
   READY
+  IN_PROGRESS
+  READY_FOR_REVIEW
+}
+enum TaskStatusInput {
   IN_PROGRESS
   READY_FOR_REVIEW
 }
@@ -51127,21 +51133,20 @@ func (ec *executionContext) marshalOString2ᚖstring(ctx context.Context, sel as
 	return res
 }
 
-func (ec *executionContext) unmarshalOTaskStatus2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTaskStatus(ctx context.Context, v interface{}) (*models.TaskStatus, error) {
+func (ec *executionContext) unmarshalOTaskStatusInput2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTaskStatusInput(ctx context.Context, v interface{}) (*model.TaskStatusInput, error) {
 	if v == nil {
 		return nil, nil
 	}
-	tmp, err := graphql.UnmarshalString(v)
-	res := models.TaskStatus(tmp)
-	return &res, graphql.ErrorOnPath(ctx, err)
+	var res = new(model.TaskStatusInput)
+	err := res.UnmarshalGQL(v)
+	return res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) marshalOTaskStatus2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTaskStatus(ctx context.Context, sel ast.SelectionSet, v *models.TaskStatus) graphql.Marshaler {
+func (ec *executionContext) marshalOTaskStatusInput2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTaskStatusInput(ctx context.Context, sel ast.SelectionSet, v *model.TaskStatusInput) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
-	res := graphql.MarshalString(string(*v))
-	return res
+	return v
 }
 
 func (ec *executionContext) unmarshalOTime2ᚖtimeᚐTime(ctx context.Context, v interface{}) (*time.Time, error) {

@@ -54,7 +54,7 @@ func (b *BaseTaskListSection) CalcStatus(oldStatus TaskStatus) error {
 			b.ReadyForReviewBy = b.ModifiedBy
 			b.ReadyForReviewDts = &now
 		}
-	case "": //TODO think about restructuring this, do we just want to default to a status when made?
+	case "": //If Task status was not initialized
 		if b.ModifiedBy != nil {
 			b.Status = TaskInProgress
 		} else {

@@ -33,9 +33,7 @@ func (s *Store) PlanPaymentsCreate(
 
 	statement, err := s.db.PrepareNamed(planPaymentsCreateSQL)
 	if err != nil {
-		//TODO, implment struct
-		return nil, err
-		// return nil, genericmodel.HandleModelCreationError(logger, err, payments)
+		return nil, genericmodel.HandleModelCreationError(logger, err, payments)
 	}
 
 	payments.ModifiedBy = nil
@@ -43,9 +41,7 @@ func (s *Store) PlanPaymentsCreate(
 
 	err = statement.Get(payments, payments)
 	if err != nil {
-		//TODO, implment struct
-		return nil, err
-		// return nil, genericmodel.HandleModelCreationError(logger, err, payments)
+		return nil, genericmodel.HandleModelCreationError(logger, err, payments)
 	}
 
 	return payments, nil
