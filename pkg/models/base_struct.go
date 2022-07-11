@@ -9,9 +9,7 @@ import (
 // IBaseStruct is an interface that all models must implement
 type IBaseStruct interface {
 	GetBaseStruct() *BaseStruct
-	GetModelTypeName() string
 	GetID() uuid.UUID
-	// GetPlanID() uuid.UUID
 	GetCreatedBy() string
 	GetModifiedBy() *string
 }
@@ -40,12 +38,6 @@ func (b BaseStruct) GetModelTypeName() string {
 func (b BaseStruct) GetID() uuid.UUID {
 	return b.ID
 }
-
-// GetPlanID returns the ModelPlanID property for a PlanBasics struct
-// func (b BaseStruct) GetPlanID() uuid.UUID {
-// 	//THIS SHOULD BE IN ANOTHER OBJECT...
-// 	return b.ModelPlanID
-// }
 
 // GetModifiedBy returns the ModifiedBy property for a PlanBasics struct
 func (b BaseStruct) GetModifiedBy() *string {

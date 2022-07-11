@@ -13,7 +13,7 @@ import (
 // HandleModelCreationError handles errors from creating a model
 func HandleModelCreationError(logger *zap.Logger, err error, model models.IBaseStruct) error {
 	logger.Error(
-		fmt.Sprintf("Failed to create model [%v] with error: %v", model.GetModelTypeName(), err),
+		fmt.Sprintf("Failed to create model [%T] with error: %T", model, err),
 		zap.String("user", model.GetCreatedBy()),
 	)
 
@@ -22,7 +22,7 @@ func HandleModelCreationError(logger *zap.Logger, err error, model models.IBaseS
 
 func logModelUpdateError(logger *zap.Logger, err error, model models.IBaseStruct) {
 	logger.Error(
-		fmt.Sprintf("Failed to update %v due to error: %v", model.GetModelTypeName(), err),
+		fmt.Sprintf("Failed to update %T due to error: %T", model, err),
 		zap.String("id", model.GetID().String()),
 		zap.String("user", models.ValueOrEmpty(model.GetModifiedBy())),
 	)
