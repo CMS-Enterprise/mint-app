@@ -8,10 +8,10 @@ import (
 
 // IBaseStruct is an interface that all models must implement
 type IBaseStruct interface {
-	// Get() BaseModel
+	GetBaseStruct() *BaseStruct
 	GetModelTypeName() string
 	GetID() uuid.UUID
-	GetPlanID() uuid.UUID
+	// GetPlanID() uuid.UUID
 	GetCreatedBy() string
 	GetModifiedBy() *string
 }
@@ -25,7 +25,34 @@ type BaseStruct struct {
 	ModifiedDts *time.Time `json:"modifiedDts" db:"modified_dts"`
 }
 
-// Get returns the Base Struct
-func (b *BaseStruct) Get() BaseStruct {
-	return *b
+// GetBaseStruct returns the Base Struct
+func (b *BaseStruct) GetBaseStruct() *BaseStruct {
+	return b
+}
+
+// GetModelTypeName returns a string name that represents the PlanBasics struct
+func (b BaseStruct) GetModelTypeName() string {
+	//TODO HAVe THIS USE REFLECTION OR DEPRECATE, not really needed.
+	return "Plan_Basics"
+}
+
+// GetID returns the ID property for a PlanBasics struct
+func (b BaseStruct) GetID() uuid.UUID {
+	return b.ID
+}
+
+// GetPlanID returns the ModelPlanID property for a PlanBasics struct
+// func (b BaseStruct) GetPlanID() uuid.UUID {
+// 	//THIS SHOULD BE IN ANOTHER OBJECT...
+// 	return b.ModelPlanID
+// }
+
+// GetModifiedBy returns the ModifiedBy property for a PlanBasics struct
+func (b BaseStruct) GetModifiedBy() *string {
+	return b.ModifiedBy
+}
+
+// GetCreatedBy implements the CreatedBy property
+func (b BaseStruct) GetCreatedBy() string {
+	return b.CreatedBy
 }

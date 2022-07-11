@@ -73,7 +73,7 @@ func (s *Store) PlanDocumentCreate(
 
 	statement, err := s.db.PrepareNamed(planDocumentCreateSQL)
 	if err != nil {
-		return nil, genericmodel.HandleModelCreationError(logger, err, document)
+		return nil, genericmodel.HandleModelCreationError(logger, err, &document)
 	}
 
 	document.ModifiedBy = nil
@@ -81,7 +81,7 @@ func (s *Store) PlanDocumentCreate(
 
 	err = statement.Get(&document, &document)
 	if err != nil {
-		return nil, genericmodel.HandleModelCreationError(logger, err, document)
+		return nil, genericmodel.HandleModelCreationError(logger, err, &document)
 	}
 
 	return &document, nil
