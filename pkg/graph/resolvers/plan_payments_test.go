@@ -10,9 +10,9 @@ func (suite *ResolverSuite) TestPlanPaymentsUpdate() {
 	suite.NoError(err)
 
 	changes := map[string]interface{}{
-		"fundingSource":     "TRUST_FUND",
+		"fundingSource":     []string{"TRUST_FUND"},
 		"fundingSourceNote": "Ello gov'na",
-		"payType":           "CLAIMS_BASED_PAYMENTS",
+		"payType":           []string{"CLAIMS_BASED_PAYMENTS"},
 	}
 
 	updater := "UPDT"
@@ -25,8 +25,8 @@ func (suite *ResolverSuite) TestPlanPaymentsUpdate() {
 	suite.EqualValues(suite.testConfigs.UserInfo.EuaUserID, pp.CreatedBy)
 	suite.Nil(pp.ModifiedBy)
 
-	suite.Nil(updatedPP.FundingSource)
-	//suite.Nil(updatedPP.FundingSourceTrustFund)
+	//suite.Nil(updatedPP.FundingSource)
+	suite.Nil(updatedPP.FundingSourceTrustFund)
 	suite.Nil(updatedPP.FundingSourceOther)
 	//suite.Nil(updatedPP.FundingSourceNote)
 	suite.Nil(updatedPP.FundingSourceR)
@@ -64,7 +64,7 @@ func (suite *ResolverSuite) TestPlanPaymentsUpdate() {
 	suite.Nil(updatedPP.NonClaimsPaymentsOther)
 	suite.Nil(updatedPP.PaymentCalculationOwner)
 	suite.Nil(updatedPP.NumberPaymentsPerPayCycle)
-	suite.Nil(updatedPP.NumberPaymentsPerPayCycleNotes)
+	suite.Nil(updatedPP.NumberPaymentsPerPayCycleNote)
 	suite.Nil(updatedPP.SharedSystemsInvolvedAdditionalClaimPayment)
 	suite.Nil(updatedPP.SharedSystemsInvolvedAdditionalClaimPaymentNote)
 	suite.Nil(updatedPP.PlanningToUseInnovationPaymentContractor)
@@ -77,13 +77,13 @@ func (suite *ResolverSuite) TestPlanPaymentsUpdate() {
 	suite.Nil(updatedPP.CanParticipantsSelectBetweenPaymentMechanismsNote)
 	suite.Nil(updatedPP.AnticipatedPaymentFrequency)
 	suite.Nil(updatedPP.AnticipatedPaymentFrequencyOther)
-	suite.Nil(updatedPP.AnticipatedPaymentFrequencyNotes)
+	suite.Nil(updatedPP.AnticipatedPaymentFrequencyNote)
 	suite.Nil(updatedPP.WillRecoverPayments)
-	suite.Nil(updatedPP.WillRecoverPaymentsNotes)
+	suite.Nil(updatedPP.WillRecoverPaymentsNote)
 	suite.Nil(updatedPP.AnticipateReconcilingPaymentsRetrospectively)
-	suite.Nil(updatedPP.AnticipateReconcilingPaymentsRetrospectivelyNotes)
+	suite.Nil(updatedPP.AnticipateReconcilingPaymentsRetrospectivelyNote)
 	suite.Nil(updatedPP.PaymentStartDate)
-	suite.Nil(updatedPP.PaymentStartDateNotes)
+	suite.Nil(updatedPP.PaymentStartDateNote)
 }
 
 // TestPlanPaymentsReadByModelPlan tests PlanPaymentsReadByModelPlan
@@ -144,7 +144,7 @@ func (suite *ResolverSuite) TestPlanPaymentsReadByModelPlan() {
 	suite.Nil(pp.NonClaimsPaymentsOther)
 	suite.Nil(pp.PaymentCalculationOwner)
 	suite.Nil(pp.NumberPaymentsPerPayCycle)
-	suite.Nil(pp.NumberPaymentsPerPayCycleNotes)
+	suite.Nil(pp.NumberPaymentsPerPayCycleNote)
 	suite.Nil(pp.SharedSystemsInvolvedAdditionalClaimPayment)
 	suite.Nil(pp.SharedSystemsInvolvedAdditionalClaimPaymentNote)
 	suite.Nil(pp.PlanningToUseInnovationPaymentContractor)
@@ -157,11 +157,11 @@ func (suite *ResolverSuite) TestPlanPaymentsReadByModelPlan() {
 	suite.Nil(pp.CanParticipantsSelectBetweenPaymentMechanismsNote)
 	suite.Nil(pp.AnticipatedPaymentFrequency)
 	suite.Nil(pp.AnticipatedPaymentFrequencyOther)
-	suite.Nil(pp.AnticipatedPaymentFrequencyNotes)
+	suite.Nil(pp.AnticipatedPaymentFrequencyNote)
 	suite.Nil(pp.WillRecoverPayments)
-	suite.Nil(pp.WillRecoverPaymentsNotes)
+	suite.Nil(pp.WillRecoverPaymentsNote)
 	suite.Nil(pp.AnticipateReconcilingPaymentsRetrospectively)
-	suite.Nil(pp.AnticipateReconcilingPaymentsRetrospectivelyNotes)
+	suite.Nil(pp.AnticipateReconcilingPaymentsRetrospectivelyNote)
 	suite.Nil(pp.PaymentStartDate)
-	suite.Nil(pp.PaymentStartDateNotes)
+	suite.Nil(pp.PaymentStartDateNote)
 }
