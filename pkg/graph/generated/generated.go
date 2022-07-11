@@ -5670,28 +5670,28 @@ type PlanPayments {
   # Page 2
   payClaims:                                      [ClaimsBasedPayType!]
   payClaimsOther:                                 String
-  shouldAnyProvidersExcludedFFSSystems:           Boolean!
+  shouldAnyProvidersExcludedFFSSystems:           Boolean
   shouldAnyProviderExcludedFFSSystemsNote:        String
-  changesMedicarePhysicianFeeSchedule:            Boolean!
+  changesMedicarePhysicianFeeSchedule:            Boolean
   changesMedicarePhysicianFeeScheduleNote:        String
-  affectsMedicareSecondaryPayerClaims:            Boolean!
+  affectsMedicareSecondaryPayerClaims:            Boolean
   affectsMedicareSecondaryPayerClaimsHow: String
   affectsMedicareSecondaryPayerClaimsNote:        String
   payModelDifferentiation:                        String
 
   # Page 3
-  creatingDependenciesBetweenServices:     Boolean!
+  creatingDependenciesBetweenServices:     Boolean
   creatingDependenciesBetweenServicesNote: String
   needsClaimsDataCollection:               Boolean
   needsClaimsDataCollectionNote:           String
-  providingThirdPartyFile:                 Boolean!
-  isContractorAwareTestDataRequirements:   Boolean!
+  providingThirdPartyFile:                 Boolean
+  isContractorAwareTestDataRequirements:   Boolean
 
   # Page 4
   beneficiaryCostSharingLevelAndHandling:          String
-  waiveBeneficiaryCostSharingForAnyServices:       Boolean!
+  waiveBeneficiaryCostSharingForAnyServices:       Boolean
   waiveBeneficiaryCostSharingServiceSpecification: String
-  waiverOnlyAppliesPartOfPayment:                  Boolean!
+  waiverOnlyAppliesPartOfPayment:                  Boolean
   waiveBeneficiaryCostSharingNote:                 String
 
   # Page 5
@@ -5707,9 +5707,9 @@ type PlanPayments {
   fundingStructure:                                String
 
   # Page 6
-  expectedCalculationComplexityLevel:                ComplexityCalculationLevelType!
+  expectedCalculationComplexityLevel:                ComplexityCalculationLevelType
   expectedCalculationComplexityLevelNote:            String
-  canParticipantsSelectBetweenPaymentMechanisms:     Boolean!
+  canParticipantsSelectBetweenPaymentMechanisms:     Boolean
   canParticipantsSelectBetweenPaymentMechanismsHow:  String
   canParticipantsSelectBetweenPaymentMechanismsNote: String
   anticipatedPaymentFrequency:                       [AnticipatedPaymentFrequencyType!]
@@ -5717,11 +5717,11 @@ type PlanPayments {
   anticipatedPaymentFrequencyNotes:                  String
 
   # Page 7
-  willRecoverPayments:                               Boolean!
+  willRecoverPayments:                               Boolean
   willRecoverPaymentsNotes:                          String
-  anticipateReconcilingPaymentsRetrospectively:      Boolean!
+  anticipateReconcilingPaymentsRetrospectively:      Boolean
   anticipateReconcilingPaymentsRetrospectivelyNotes: String
-  paymentStartDate:                                  Time!
+  paymentStartDate:                                  Time
   paymentStartDateNotes:                             String
 
   # Meta
@@ -31029,14 +31029,11 @@ func (ec *executionContext) _PlanPayments_shouldAnyProvidersExcludedFFSSystems(c
 		return graphql.Null
 	}
 	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
 		return graphql.Null
 	}
 	res := resTmp.(*bool)
 	fc.Result = res
-	return ec.marshalNBoolean2ᚖbool(ctx, field.Selections, res)
+	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanPayments_shouldAnyProvidersExcludedFFSSystems(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -31114,14 +31111,11 @@ func (ec *executionContext) _PlanPayments_changesMedicarePhysicianFeeSchedule(ct
 		return graphql.Null
 	}
 	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
 		return graphql.Null
 	}
 	res := resTmp.(*bool)
 	fc.Result = res
-	return ec.marshalNBoolean2ᚖbool(ctx, field.Selections, res)
+	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanPayments_changesMedicarePhysicianFeeSchedule(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -31199,14 +31193,11 @@ func (ec *executionContext) _PlanPayments_affectsMedicareSecondaryPayerClaims(ct
 		return graphql.Null
 	}
 	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
 		return graphql.Null
 	}
 	res := resTmp.(*bool)
 	fc.Result = res
-	return ec.marshalNBoolean2ᚖbool(ctx, field.Selections, res)
+	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanPayments_affectsMedicareSecondaryPayerClaims(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -31366,14 +31357,11 @@ func (ec *executionContext) _PlanPayments_creatingDependenciesBetweenServices(ct
 		return graphql.Null
 	}
 	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
 		return graphql.Null
 	}
 	res := resTmp.(*bool)
 	fc.Result = res
-	return ec.marshalNBoolean2ᚖbool(ctx, field.Selections, res)
+	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanPayments_creatingDependenciesBetweenServices(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -31533,14 +31521,11 @@ func (ec *executionContext) _PlanPayments_providingThirdPartyFile(ctx context.Co
 		return graphql.Null
 	}
 	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
 		return graphql.Null
 	}
 	res := resTmp.(*bool)
 	fc.Result = res
-	return ec.marshalNBoolean2ᚖbool(ctx, field.Selections, res)
+	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanPayments_providingThirdPartyFile(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -31577,14 +31562,11 @@ func (ec *executionContext) _PlanPayments_isContractorAwareTestDataRequirements(
 		return graphql.Null
 	}
 	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
 		return graphql.Null
 	}
 	res := resTmp.(*bool)
 	fc.Result = res
-	return ec.marshalNBoolean2ᚖbool(ctx, field.Selections, res)
+	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanPayments_isContractorAwareTestDataRequirements(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -31662,14 +31644,11 @@ func (ec *executionContext) _PlanPayments_waiveBeneficiaryCostSharingForAnyServi
 		return graphql.Null
 	}
 	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
 		return graphql.Null
 	}
 	res := resTmp.(*bool)
 	fc.Result = res
-	return ec.marshalNBoolean2ᚖbool(ctx, field.Selections, res)
+	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanPayments_waiveBeneficiaryCostSharingForAnyServices(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -31747,14 +31726,11 @@ func (ec *executionContext) _PlanPayments_waiverOnlyAppliesPartOfPayment(ctx con
 		return graphql.Null
 	}
 	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
 		return graphql.Null
 	}
 	res := resTmp.(*bool)
 	fc.Result = res
-	return ec.marshalNBoolean2ᚖbool(ctx, field.Selections, res)
+	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanPayments_waiverOnlyAppliesPartOfPayment(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -32242,14 +32218,11 @@ func (ec *executionContext) _PlanPayments_expectedCalculationComplexityLevel(ctx
 		return graphql.Null
 	}
 	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
 		return graphql.Null
 	}
 	res := resTmp.(*models.ComplexityCalculationLevelType)
 	fc.Result = res
-	return ec.marshalNComplexityCalculationLevelType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐComplexityCalculationLevelType(ctx, field.Selections, res)
+	return ec.marshalOComplexityCalculationLevelType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐComplexityCalculationLevelType(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanPayments_expectedCalculationComplexityLevel(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -32327,14 +32300,11 @@ func (ec *executionContext) _PlanPayments_canParticipantsSelectBetweenPaymentMec
 		return graphql.Null
 	}
 	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
 		return graphql.Null
 	}
 	res := resTmp.(*bool)
 	fc.Result = res
-	return ec.marshalNBoolean2ᚖbool(ctx, field.Selections, res)
+	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanPayments_canParticipantsSelectBetweenPaymentMechanisms(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -32576,14 +32546,11 @@ func (ec *executionContext) _PlanPayments_willRecoverPayments(ctx context.Contex
 		return graphql.Null
 	}
 	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
 		return graphql.Null
 	}
 	res := resTmp.(*bool)
 	fc.Result = res
-	return ec.marshalNBoolean2ᚖbool(ctx, field.Selections, res)
+	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanPayments_willRecoverPayments(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -32661,14 +32628,11 @@ func (ec *executionContext) _PlanPayments_anticipateReconcilingPaymentsRetrospec
 		return graphql.Null
 	}
 	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
 		return graphql.Null
 	}
 	res := resTmp.(*bool)
 	fc.Result = res
-	return ec.marshalNBoolean2ᚖbool(ctx, field.Selections, res)
+	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanPayments_anticipateReconcilingPaymentsRetrospectively(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -32746,14 +32710,11 @@ func (ec *executionContext) _PlanPayments_paymentStartDate(ctx context.Context, 
 		return graphql.Null
 	}
 	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
 		return graphql.Null
 	}
 	res := resTmp.(*time.Time)
 	fc.Result = res
-	return ec.marshalNTime2ᚖtimeᚐTime(ctx, field.Selections, res)
+	return ec.marshalOTime2ᚖtimeᚐTime(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanPayments_paymentStartDate(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -40094,9 +40055,6 @@ func (ec *executionContext) _PlanPayments(ctx context.Context, sel ast.Selection
 
 			out.Values[i] = ec._PlanPayments_shouldAnyProvidersExcludedFFSSystems(ctx, field, obj)
 
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&invalids, 1)
-			}
 		case "shouldAnyProviderExcludedFFSSystemsNote":
 
 			out.Values[i] = ec._PlanPayments_shouldAnyProviderExcludedFFSSystemsNote(ctx, field, obj)
@@ -40105,9 +40063,6 @@ func (ec *executionContext) _PlanPayments(ctx context.Context, sel ast.Selection
 
 			out.Values[i] = ec._PlanPayments_changesMedicarePhysicianFeeSchedule(ctx, field, obj)
 
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&invalids, 1)
-			}
 		case "changesMedicarePhysicianFeeScheduleNote":
 
 			out.Values[i] = ec._PlanPayments_changesMedicarePhysicianFeeScheduleNote(ctx, field, obj)
@@ -40116,9 +40071,6 @@ func (ec *executionContext) _PlanPayments(ctx context.Context, sel ast.Selection
 
 			out.Values[i] = ec._PlanPayments_affectsMedicareSecondaryPayerClaims(ctx, field, obj)
 
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&invalids, 1)
-			}
 		case "affectsMedicareSecondaryPayerClaimsHow":
 
 			out.Values[i] = ec._PlanPayments_affectsMedicareSecondaryPayerClaimsHow(ctx, field, obj)
@@ -40135,9 +40087,6 @@ func (ec *executionContext) _PlanPayments(ctx context.Context, sel ast.Selection
 
 			out.Values[i] = ec._PlanPayments_creatingDependenciesBetweenServices(ctx, field, obj)
 
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&invalids, 1)
-			}
 		case "creatingDependenciesBetweenServicesNote":
 
 			out.Values[i] = ec._PlanPayments_creatingDependenciesBetweenServicesNote(ctx, field, obj)
@@ -40154,16 +40103,10 @@ func (ec *executionContext) _PlanPayments(ctx context.Context, sel ast.Selection
 
 			out.Values[i] = ec._PlanPayments_providingThirdPartyFile(ctx, field, obj)
 
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&invalids, 1)
-			}
 		case "isContractorAwareTestDataRequirements":
 
 			out.Values[i] = ec._PlanPayments_isContractorAwareTestDataRequirements(ctx, field, obj)
 
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&invalids, 1)
-			}
 		case "beneficiaryCostSharingLevelAndHandling":
 
 			out.Values[i] = ec._PlanPayments_beneficiaryCostSharingLevelAndHandling(ctx, field, obj)
@@ -40172,9 +40115,6 @@ func (ec *executionContext) _PlanPayments(ctx context.Context, sel ast.Selection
 
 			out.Values[i] = ec._PlanPayments_waiveBeneficiaryCostSharingForAnyServices(ctx, field, obj)
 
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&invalids, 1)
-			}
 		case "waiveBeneficiaryCostSharingServiceSpecification":
 
 			out.Values[i] = ec._PlanPayments_waiveBeneficiaryCostSharingServiceSpecification(ctx, field, obj)
@@ -40183,9 +40123,6 @@ func (ec *executionContext) _PlanPayments(ctx context.Context, sel ast.Selection
 
 			out.Values[i] = ec._PlanPayments_waiverOnlyAppliesPartOfPayment(ctx, field, obj)
 
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&invalids, 1)
-			}
 		case "waiveBeneficiaryCostSharingNote":
 
 			out.Values[i] = ec._PlanPayments_waiveBeneficiaryCostSharingNote(ctx, field, obj)
@@ -40260,9 +40197,6 @@ func (ec *executionContext) _PlanPayments(ctx context.Context, sel ast.Selection
 
 			out.Values[i] = ec._PlanPayments_expectedCalculationComplexityLevel(ctx, field, obj)
 
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&invalids, 1)
-			}
 		case "expectedCalculationComplexityLevelNote":
 
 			out.Values[i] = ec._PlanPayments_expectedCalculationComplexityLevelNote(ctx, field, obj)
@@ -40271,9 +40205,6 @@ func (ec *executionContext) _PlanPayments(ctx context.Context, sel ast.Selection
 
 			out.Values[i] = ec._PlanPayments_canParticipantsSelectBetweenPaymentMechanisms(ctx, field, obj)
 
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&invalids, 1)
-			}
 		case "canParticipantsSelectBetweenPaymentMechanismsHow":
 
 			out.Values[i] = ec._PlanPayments_canParticipantsSelectBetweenPaymentMechanismsHow(ctx, field, obj)
@@ -40311,9 +40242,6 @@ func (ec *executionContext) _PlanPayments(ctx context.Context, sel ast.Selection
 
 			out.Values[i] = ec._PlanPayments_willRecoverPayments(ctx, field, obj)
 
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&invalids, 1)
-			}
 		case "willRecoverPaymentsNotes":
 
 			out.Values[i] = ec._PlanPayments_willRecoverPaymentsNotes(ctx, field, obj)
@@ -40322,9 +40250,6 @@ func (ec *executionContext) _PlanPayments(ctx context.Context, sel ast.Selection
 
 			out.Values[i] = ec._PlanPayments_anticipateReconcilingPaymentsRetrospectively(ctx, field, obj)
 
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&invalids, 1)
-			}
 		case "anticipateReconcilingPaymentsRetrospectivelyNotes":
 
 			out.Values[i] = ec._PlanPayments_anticipateReconcilingPaymentsRetrospectivelyNotes(ctx, field, obj)
@@ -40333,9 +40258,6 @@ func (ec *executionContext) _PlanPayments(ctx context.Context, sel ast.Selection
 
 			out.Values[i] = ec._PlanPayments_paymentStartDate(ctx, field, obj)
 
-			if out.Values[i] == graphql.Null {
-				atomic.AddUint32(&invalids, 1)
-			}
 		case "paymentStartDateNotes":
 
 			out.Values[i] = ec._PlanPayments_paymentStartDateNotes(ctx, field, obj)
@@ -41482,27 +41404,6 @@ func (ec *executionContext) marshalNBoolean2bool(ctx context.Context, sel ast.Se
 	return res
 }
 
-func (ec *executionContext) unmarshalNBoolean2ᚖbool(ctx context.Context, v interface{}) (*bool, error) {
-	res, err := graphql.UnmarshalBoolean(v)
-	return &res, graphql.ErrorOnPath(ctx, err)
-}
-
-func (ec *executionContext) marshalNBoolean2ᚖbool(ctx context.Context, sel ast.SelectionSet, v *bool) graphql.Marshaler {
-	if v == nil {
-		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
-			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
-		}
-		return graphql.Null
-	}
-	res := graphql.MarshalBoolean(*v)
-	if res == graphql.Null {
-		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
-			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
-		}
-	}
-	return res
-}
-
 func (ec *executionContext) unmarshalNCMMIGroup2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCMMIGroup(ctx context.Context, v interface{}) (model.CMMIGroup, error) {
 	var res model.CMMIGroup
 	err := res.UnmarshalGQL(v)
@@ -41730,28 +41631,6 @@ func (ec *executionContext) unmarshalNClaimsBasedPayType2githubᚗcomᚋcmsgov�
 
 func (ec *executionContext) marshalNClaimsBasedPayType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐClaimsBasedPayType(ctx context.Context, sel ast.SelectionSet, v models.ClaimsBasedPayType) graphql.Marshaler {
 	res := graphql.MarshalString(string(v))
-	if res == graphql.Null {
-		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
-			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
-		}
-	}
-	return res
-}
-
-func (ec *executionContext) unmarshalNComplexityCalculationLevelType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐComplexityCalculationLevelType(ctx context.Context, v interface{}) (*models.ComplexityCalculationLevelType, error) {
-	tmp, err := graphql.UnmarshalString(v)
-	res := models.ComplexityCalculationLevelType(tmp)
-	return &res, graphql.ErrorOnPath(ctx, err)
-}
-
-func (ec *executionContext) marshalNComplexityCalculationLevelType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐComplexityCalculationLevelType(ctx context.Context, sel ast.SelectionSet, v *models.ComplexityCalculationLevelType) graphql.Marshaler {
-	if v == nil {
-		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
-			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
-		}
-		return graphql.Null
-	}
-	res := graphql.MarshalString(string(*v))
 	if res == graphql.Null {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
 			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
@@ -45683,27 +45562,6 @@ func (ec *executionContext) unmarshalNTime2timeᚐTime(ctx context.Context, v in
 
 func (ec *executionContext) marshalNTime2timeᚐTime(ctx context.Context, sel ast.SelectionSet, v time.Time) graphql.Marshaler {
 	res := graphql.MarshalTime(v)
-	if res == graphql.Null {
-		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
-			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
-		}
-	}
-	return res
-}
-
-func (ec *executionContext) unmarshalNTime2ᚖtimeᚐTime(ctx context.Context, v interface{}) (*time.Time, error) {
-	res, err := graphql.UnmarshalTime(v)
-	return &res, graphql.ErrorOnPath(ctx, err)
-}
-
-func (ec *executionContext) marshalNTime2ᚖtimeᚐTime(ctx context.Context, sel ast.SelectionSet, v *time.Time) graphql.Marshaler {
-	if v == nil {
-		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
-			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
-		}
-		return graphql.Null
-	}
-	res := graphql.MarshalTime(*v)
 	if res == graphql.Null {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
 			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
