@@ -52,14 +52,9 @@ func PlanPaymentsUpdate(
 		return nil, err
 	}
 
-	err = ApplyChanges(changes, payments)
+	err = BaseTaskListSectionPreUpdate(payments, changes, principal)
 	if err != nil {
 		return nil, err
 	}
-
-	payments.ModifiedBy = &principal
-
-	// TODO: Plan Payments - Calc Status here?
-
 	return store.PlanPaymentsUpdate(logger, payments)
 }

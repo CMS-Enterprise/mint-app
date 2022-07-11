@@ -5,6 +5,7 @@ import (
 
 	"github.com/cmsgov/mint-app/pkg/shared/utilitySQL"
 	"github.com/cmsgov/mint-app/pkg/shared/utilityUUID"
+	"github.com/cmsgov/mint-app/pkg/storage/genericmodel"
 
 	"github.com/google/uuid"
 	"go.uber.org/zap"
@@ -96,16 +97,12 @@ func (s *Store) PlanPaymentsUpdate(
 	payments *models.PlanPayments) (*models.PlanPayments, error) {
 	statement, err := s.db.PrepareNamed(planPaymentsUpdateSQL)
 	if err != nil {
-		//TODO, implment struct
-		return nil, err
-		// return nil, genericmodel.HandleModelUpdateError(logger, err, payments)
+		return nil, genericmodel.HandleModelUpdateError(logger, err, payments)
 	}
 
 	err = statement.Get(payments, payments)
 	if err != nil {
-		//TODO, implment struct
-		return nil, err
-		// return nil, genericmodel.HandleModelQueryError(logger, err, payments)
+		return nil, genericmodel.HandleModelQueryError(logger, err, payments)
 	}
 
 	return payments, nil

@@ -100,12 +100,7 @@ func ModelPlanCreate(logger *zap.Logger, modelName string, store *storage.Store,
 
 	//Create default PlanPayments object
 	planPayments := &models.PlanPayments{
-		ModelPlanID: createdPlan.ID,
-		CreatedBy:   principalInfo.EuaUserID,
-	}
-	err = planPayments.CalcStatus()
-	if err != nil {
-		return nil, err
+		BaseTaskListSection: baseTaskList,
 	}
 	_, err = store.PlanPaymentsCreate(logger, planPayments)
 	if err != nil {

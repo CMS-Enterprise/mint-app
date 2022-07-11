@@ -4,8 +4,6 @@ import (
 	"time"
 
 	"github.com/lib/pq"
-
-	"github.com/google/uuid"
 )
 
 // AnticipatedPaymentFrequencyType is the enumeration of options for this category
@@ -133,8 +131,7 @@ const (
 
 // PlanPayments defines the data associated with a plan payments model
 type PlanPayments struct {
-	ID          uuid.UUID `json:"id" db:"id"`
-	ModelPlanID uuid.UUID `json:"modelPlanID" db:"model_plan_id"`
+	BaseTaskListSection
 
 	// Page 1
 	FundingSource                   pq.StringArray `json:"fundingSource" db:"funding_source" statusWeight:"1"`
@@ -208,47 +205,40 @@ type PlanPayments struct {
 	AnticipateReconcilingPaymentsRetrospectivelyNote *string    `json:"anticipateReconcilingPaymentsRetrospectivelyNote" db:"anticipate_reconciling_payments_retrospectively_note"`
 	PaymentStartDate                                 *time.Time `json:"paymentStartDate" db:"payment_start_date" statusWeight:"1"`
 	PaymentStartDateNote                             *string    `json:"paymentStartDateNote" db:"payment_start_date_note"`
-
-	// Meta
-	CreatedBy   string     `json:"createdBy" db:"created_by"`
-	CreatedDts  time.Time  `json:"createdDts" db:"created_dts"`
-	ModifiedBy  *string    `json:"modifiedBy" db:"modified_by"`
-	ModifiedDts *time.Time `json:"modifiedDts" db:"modified_dts"`
-	Status      TaskStatus `json:"status" db:"status"`
 }
 
-// GetModelTypeName provides the PlanPayments model type name
-func (p PlanPayments) GetModelTypeName() string {
-	return "Plan_Payments"
-}
+// // GetModelTypeName provides the PlanPayments model type name
+// func (p PlanPayments) GetModelTypeName() string {
+// 	return "Plan_Payments"
+// }
 
-// GetID provides the PlanPayments ID
-func (p PlanPayments) GetID() uuid.UUID {
-	return p.ID
-}
+// // GetID provides the PlanPayments ID
+// func (p PlanPayments) GetID() uuid.UUID {
+// 	return p.ID
+// }
 
-// GetPlanID provides the PlanPayments associated model plan ID
-func (p PlanPayments) GetPlanID() uuid.UUID {
-	return p.ModelPlanID
-}
+// // GetPlanID provides the PlanPayments associated model plan ID
+// func (p PlanPayments) GetPlanID() uuid.UUID {
+// 	return p.ModelPlanID
+// }
 
-// GetCreatedBy provides the CreatedBy field
-func (p PlanPayments) GetCreatedBy() string {
-	return p.CreatedBy
-}
+// // GetCreatedBy provides the CreatedBy field
+// func (p PlanPayments) GetCreatedBy() string {
+// 	return p.CreatedBy
+// }
 
-// GetModifiedBy provides the ModifiedBy field
-func (p PlanPayments) GetModifiedBy() *string {
-	return p.ModifiedBy
-}
+// // GetModifiedBy provides the ModifiedBy field
+// func (p PlanPayments) GetModifiedBy() *string {
+// 	return p.ModifiedBy
+// }
 
-// CalcStatus calculates the status of the Plan Payments and sets the Status field
-func (p *PlanPayments) CalcStatus() error {
-	status, err := GenericallyCalculateStatus(*p)
-	if err != nil {
-		return err
-	}
+// // CalcStatus calculates the status of the Plan Payments and sets the Status field
+// func (p *PlanPayments) CalcStatus() error {
+// 	status, err := GenericallyCalculateStatus(*p)
+// 	if err != nil {
+// 		return err
+// 	}
 
-	p.Status = status
-	return nil
-}
+// 	p.Status = status
+// 	return nil
+// }
