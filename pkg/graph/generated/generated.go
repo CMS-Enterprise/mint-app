@@ -589,9 +589,9 @@ type ComplexityRoot struct {
 		AffectsMedicareSecondaryPayerClaimsHow            func(childComplexity int) int
 		AffectsMedicareSecondaryPayerClaimsNote           func(childComplexity int) int
 		AnticipateReconcilingPaymentsRetrospectively      func(childComplexity int) int
-		AnticipateReconcilingPaymentsRetrospectivelyNotes func(childComplexity int) int
+		AnticipateReconcilingPaymentsRetrospectivelyNote  func(childComplexity int) int
 		AnticipatedPaymentFrequency                       func(childComplexity int) int
-		AnticipatedPaymentFrequencyNotes                  func(childComplexity int) int
+		AnticipatedPaymentFrequencyNote                   func(childComplexity int) int
 		AnticipatedPaymentFrequencyOther                  func(childComplexity int) int
 		BeneficiaryCostSharingLevelAndHandling            func(childComplexity int) int
 		CanParticipantsSelectBetweenPaymentMechanisms     func(childComplexity int) int
@@ -623,7 +623,7 @@ type ComplexityRoot struct {
 		NonClaimsPaymentOther                             func(childComplexity int) int
 		NonClaimsPayments                                 func(childComplexity int) int
 		NumberPaymentsPerPayCycle                         func(childComplexity int) int
-		NumberPaymentsPerPayCycleNotes                    func(childComplexity int) int
+		NumberPaymentsPerPayCycleNote                     func(childComplexity int) int
 		PayClaims                                         func(childComplexity int) int
 		PayClaimsOther                                    func(childComplexity int) int
 		PayModelDifferentiation                           func(childComplexity int) int
@@ -634,7 +634,7 @@ type ComplexityRoot struct {
 		PayTypeNote                                       func(childComplexity int) int
 		PaymentCalculationOwner                           func(childComplexity int) int
 		PaymentStartDate                                  func(childComplexity int) int
-		PaymentStartDateNotes                             func(childComplexity int) int
+		PaymentStartDateNote                              func(childComplexity int) int
 		PlanningToUseInnovationPaymentContractor          func(childComplexity int) int
 		PlanningToUseInnovationPaymentContractorNote      func(childComplexity int) int
 		ProvidingThirdPartyFile                           func(childComplexity int) int
@@ -648,7 +648,7 @@ type ComplexityRoot struct {
 		WaiveBeneficiaryCostSharingServiceSpecification   func(childComplexity int) int
 		WaiverOnlyAppliesPartOfPayment                    func(childComplexity int) int
 		WillRecoverPayments                               func(childComplexity int) int
-		WillRecoverPaymentsNotes                          func(childComplexity int) int
+		WillRecoverPaymentsNote                           func(childComplexity int) int
 	}
 
 	Query struct {
@@ -846,7 +846,17 @@ type PlanPaymentsResolver interface {
 	NonClaimsPayments(ctx context.Context, obj *models.PlanPayments) ([]model.NonClaimsBasedPayType, error)
 	NonClaimsPaymentOther(ctx context.Context, obj *models.PlanPayments) (*string, error)
 
+	NumberPaymentsPerPayCycleNote(ctx context.Context, obj *models.PlanPayments) (*string, error)
+
 	AnticipatedPaymentFrequency(ctx context.Context, obj *models.PlanPayments) ([]models.AnticipatedPaymentFrequencyType, error)
+
+	AnticipatedPaymentFrequencyNote(ctx context.Context, obj *models.PlanPayments) (*string, error)
+
+	WillRecoverPaymentsNote(ctx context.Context, obj *models.PlanPayments) (*string, error)
+
+	AnticipateReconcilingPaymentsRetrospectivelyNote(ctx context.Context, obj *models.PlanPayments) (*string, error)
+
+	PaymentStartDateNote(ctx context.Context, obj *models.PlanPayments) (*string, error)
 }
 type QueryResolver interface {
 	CurrentUser(ctx context.Context) (*model.CurrentUser, error)
@@ -4326,12 +4336,12 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.PlanPayments.AnticipateReconcilingPaymentsRetrospectively(childComplexity), true
 
-	case "PlanPayments.anticipateReconcilingPaymentsRetrospectivelyNotes":
-		if e.complexity.PlanPayments.AnticipateReconcilingPaymentsRetrospectivelyNotes == nil {
+	case "PlanPayments.anticipateReconcilingPaymentsRetrospectivelyNote":
+		if e.complexity.PlanPayments.AnticipateReconcilingPaymentsRetrospectivelyNote == nil {
 			break
 		}
 
-		return e.complexity.PlanPayments.AnticipateReconcilingPaymentsRetrospectivelyNotes(childComplexity), true
+		return e.complexity.PlanPayments.AnticipateReconcilingPaymentsRetrospectivelyNote(childComplexity), true
 
 	case "PlanPayments.anticipatedPaymentFrequency":
 		if e.complexity.PlanPayments.AnticipatedPaymentFrequency == nil {
@@ -4340,12 +4350,12 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.PlanPayments.AnticipatedPaymentFrequency(childComplexity), true
 
-	case "PlanPayments.anticipatedPaymentFrequencyNotes":
-		if e.complexity.PlanPayments.AnticipatedPaymentFrequencyNotes == nil {
+	case "PlanPayments.anticipatedPaymentFrequencyNote":
+		if e.complexity.PlanPayments.AnticipatedPaymentFrequencyNote == nil {
 			break
 		}
 
-		return e.complexity.PlanPayments.AnticipatedPaymentFrequencyNotes(childComplexity), true
+		return e.complexity.PlanPayments.AnticipatedPaymentFrequencyNote(childComplexity), true
 
 	case "PlanPayments.anticipatedPaymentFrequencyOther":
 		if e.complexity.PlanPayments.AnticipatedPaymentFrequencyOther == nil {
@@ -4564,12 +4574,12 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.PlanPayments.NumberPaymentsPerPayCycle(childComplexity), true
 
-	case "PlanPayments.numberPaymentsPerPayCycleNotes":
-		if e.complexity.PlanPayments.NumberPaymentsPerPayCycleNotes == nil {
+	case "PlanPayments.numberPaymentsPerPayCycleNote":
+		if e.complexity.PlanPayments.NumberPaymentsPerPayCycleNote == nil {
 			break
 		}
 
-		return e.complexity.PlanPayments.NumberPaymentsPerPayCycleNotes(childComplexity), true
+		return e.complexity.PlanPayments.NumberPaymentsPerPayCycleNote(childComplexity), true
 
 	case "PlanPayments.payClaims":
 		if e.complexity.PlanPayments.PayClaims == nil {
@@ -4641,12 +4651,12 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.PlanPayments.PaymentStartDate(childComplexity), true
 
-	case "PlanPayments.paymentStartDateNotes":
-		if e.complexity.PlanPayments.PaymentStartDateNotes == nil {
+	case "PlanPayments.paymentStartDateNote":
+		if e.complexity.PlanPayments.PaymentStartDateNote == nil {
 			break
 		}
 
-		return e.complexity.PlanPayments.PaymentStartDateNotes(childComplexity), true
+		return e.complexity.PlanPayments.PaymentStartDateNote(childComplexity), true
 
 	case "PlanPayments.planningToUseInnovationPaymentContractor":
 		if e.complexity.PlanPayments.PlanningToUseInnovationPaymentContractor == nil {
@@ -4739,12 +4749,12 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.PlanPayments.WillRecoverPayments(childComplexity), true
 
-	case "PlanPayments.willRecoverPaymentsNotes":
-		if e.complexity.PlanPayments.WillRecoverPaymentsNotes == nil {
+	case "PlanPayments.willRecoverPaymentsNote":
+		if e.complexity.PlanPayments.WillRecoverPaymentsNote == nil {
 			break
 		}
 
-		return e.complexity.PlanPayments.WillRecoverPaymentsNotes(childComplexity), true
+		return e.complexity.PlanPayments.WillRecoverPaymentsNote(childComplexity), true
 
 	case "Query.cedarPersonsByCommonName":
 		if e.complexity.Query.CedarPersonsByCommonName == nil {
@@ -5699,7 +5709,7 @@ type PlanPayments {
   nonClaimsPaymentOther:                           String
   paymentCalculationOwner:                         String
   numberPaymentsPerPayCycle:                       String
-  numberPaymentsPerPayCycleNotes:                  String
+  numberPaymentsPerPayCycleNote:                  String
   sharedSystemsInvolvedAdditionalClaimPayment:     Boolean
   sharedSystemsInvolvedAdditionalClaimPaymentNote: String
   planningToUseInnovationPaymentContractor:        Boolean
@@ -5714,15 +5724,15 @@ type PlanPayments {
   canParticipantsSelectBetweenPaymentMechanismsNote: String
   anticipatedPaymentFrequency:                       [AnticipatedPaymentFrequencyType!]
   anticipatedPaymentFrequencyOther:                  String
-  anticipatedPaymentFrequencyNotes:                  String
+  anticipatedPaymentFrequencyNote:                  String
 
   # Page 7
   willRecoverPayments:                               Boolean
-  willRecoverPaymentsNotes:                          String
+  willRecoverPaymentsNote:                          String
   anticipateReconcilingPaymentsRetrospectively:      Boolean
-  anticipateReconcilingPaymentsRetrospectivelyNotes: String
+  anticipateReconcilingPaymentsRetrospectivelyNote: String
   paymentStartDate:                                  Time
-  paymentStartDateNotes:                             String
+  paymentStartDateNote:                             String
 
   # Meta
   createdBy: String!
@@ -5779,7 +5789,7 @@ input PlanPaymentsChanges @goModel(model: "map[string]interface{}") {
   nonClaimsPaymentOther:                           String
   paymentCalculationOwner:                         String
   numberPaymentsPerPayCycle:                       String
-  numberPaymentsPerPayCycleNotes:                  String
+  numberPaymentsPerPayCycleNote:                  String
   sharedSystemsInvolvedAdditionalClaimPayment:     Boolean
   sharedSystemsInvolvedAdditionalClaimPaymentNote: String
   planningToUseInnovationPaymentContractor:        Boolean
@@ -5794,15 +5804,15 @@ input PlanPaymentsChanges @goModel(model: "map[string]interface{}") {
   canParticipantsSelectBetweenPaymentMechanismsNote:        String
   anticipatedPaymentFrequency:                              [AnticipatedPaymentFrequencyType!]
   anticipatedPaymentFrequencyOther:                         String
-  anticipatedPaymentFrequencyNotes:                         String
+  anticipatedPaymentFrequencyNote:                         String
 
   # Page 7
   willRecoverPayments:                               Boolean
-  willRecoverPaymentsNotes:                          String
+  willRecoverPaymentsNote:                          String
   anticipateReconcilingPaymentsRetrospectively:      Boolean
-  anticipateReconcilingPaymentsRetrospectivelyNotes: String
+  anticipateReconcilingPaymentsRetrospectivelyNote: String
   paymentStartDate:                                  Time
-  paymentStartDateNotes:                             String
+  paymentStartDateNote:                             String
 }
 
 """"
@@ -10469,8 +10479,8 @@ func (ec *executionContext) fieldContext_ModelPlan_payments(ctx context.Context,
 				return ec.fieldContext_PlanPayments_paymentCalculationOwner(ctx, field)
 			case "numberPaymentsPerPayCycle":
 				return ec.fieldContext_PlanPayments_numberPaymentsPerPayCycle(ctx, field)
-			case "numberPaymentsPerPayCycleNotes":
-				return ec.fieldContext_PlanPayments_numberPaymentsPerPayCycleNotes(ctx, field)
+			case "numberPaymentsPerPayCycleNote":
+				return ec.fieldContext_PlanPayments_numberPaymentsPerPayCycleNote(ctx, field)
 			case "sharedSystemsInvolvedAdditionalClaimPayment":
 				return ec.fieldContext_PlanPayments_sharedSystemsInvolvedAdditionalClaimPayment(ctx, field)
 			case "sharedSystemsInvolvedAdditionalClaimPaymentNote":
@@ -10495,20 +10505,20 @@ func (ec *executionContext) fieldContext_ModelPlan_payments(ctx context.Context,
 				return ec.fieldContext_PlanPayments_anticipatedPaymentFrequency(ctx, field)
 			case "anticipatedPaymentFrequencyOther":
 				return ec.fieldContext_PlanPayments_anticipatedPaymentFrequencyOther(ctx, field)
-			case "anticipatedPaymentFrequencyNotes":
-				return ec.fieldContext_PlanPayments_anticipatedPaymentFrequencyNotes(ctx, field)
+			case "anticipatedPaymentFrequencyNote":
+				return ec.fieldContext_PlanPayments_anticipatedPaymentFrequencyNote(ctx, field)
 			case "willRecoverPayments":
 				return ec.fieldContext_PlanPayments_willRecoverPayments(ctx, field)
-			case "willRecoverPaymentsNotes":
-				return ec.fieldContext_PlanPayments_willRecoverPaymentsNotes(ctx, field)
+			case "willRecoverPaymentsNote":
+				return ec.fieldContext_PlanPayments_willRecoverPaymentsNote(ctx, field)
 			case "anticipateReconcilingPaymentsRetrospectively":
 				return ec.fieldContext_PlanPayments_anticipateReconcilingPaymentsRetrospectively(ctx, field)
-			case "anticipateReconcilingPaymentsRetrospectivelyNotes":
-				return ec.fieldContext_PlanPayments_anticipateReconcilingPaymentsRetrospectivelyNotes(ctx, field)
+			case "anticipateReconcilingPaymentsRetrospectivelyNote":
+				return ec.fieldContext_PlanPayments_anticipateReconcilingPaymentsRetrospectivelyNote(ctx, field)
 			case "paymentStartDate":
 				return ec.fieldContext_PlanPayments_paymentStartDate(ctx, field)
-			case "paymentStartDateNotes":
-				return ec.fieldContext_PlanPayments_paymentStartDateNotes(ctx, field)
+			case "paymentStartDateNote":
+				return ec.fieldContext_PlanPayments_paymentStartDateNote(ctx, field)
 			case "createdBy":
 				return ec.fieldContext_PlanPayments_createdBy(ctx, field)
 			case "createdDts":
@@ -13687,8 +13697,8 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanPayments(ctx context
 				return ec.fieldContext_PlanPayments_paymentCalculationOwner(ctx, field)
 			case "numberPaymentsPerPayCycle":
 				return ec.fieldContext_PlanPayments_numberPaymentsPerPayCycle(ctx, field)
-			case "numberPaymentsPerPayCycleNotes":
-				return ec.fieldContext_PlanPayments_numberPaymentsPerPayCycleNotes(ctx, field)
+			case "numberPaymentsPerPayCycleNote":
+				return ec.fieldContext_PlanPayments_numberPaymentsPerPayCycleNote(ctx, field)
 			case "sharedSystemsInvolvedAdditionalClaimPayment":
 				return ec.fieldContext_PlanPayments_sharedSystemsInvolvedAdditionalClaimPayment(ctx, field)
 			case "sharedSystemsInvolvedAdditionalClaimPaymentNote":
@@ -13713,20 +13723,20 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanPayments(ctx context
 				return ec.fieldContext_PlanPayments_anticipatedPaymentFrequency(ctx, field)
 			case "anticipatedPaymentFrequencyOther":
 				return ec.fieldContext_PlanPayments_anticipatedPaymentFrequencyOther(ctx, field)
-			case "anticipatedPaymentFrequencyNotes":
-				return ec.fieldContext_PlanPayments_anticipatedPaymentFrequencyNotes(ctx, field)
+			case "anticipatedPaymentFrequencyNote":
+				return ec.fieldContext_PlanPayments_anticipatedPaymentFrequencyNote(ctx, field)
 			case "willRecoverPayments":
 				return ec.fieldContext_PlanPayments_willRecoverPayments(ctx, field)
-			case "willRecoverPaymentsNotes":
-				return ec.fieldContext_PlanPayments_willRecoverPaymentsNotes(ctx, field)
+			case "willRecoverPaymentsNote":
+				return ec.fieldContext_PlanPayments_willRecoverPaymentsNote(ctx, field)
 			case "anticipateReconcilingPaymentsRetrospectively":
 				return ec.fieldContext_PlanPayments_anticipateReconcilingPaymentsRetrospectively(ctx, field)
-			case "anticipateReconcilingPaymentsRetrospectivelyNotes":
-				return ec.fieldContext_PlanPayments_anticipateReconcilingPaymentsRetrospectivelyNotes(ctx, field)
+			case "anticipateReconcilingPaymentsRetrospectivelyNote":
+				return ec.fieldContext_PlanPayments_anticipateReconcilingPaymentsRetrospectivelyNote(ctx, field)
 			case "paymentStartDate":
 				return ec.fieldContext_PlanPayments_paymentStartDate(ctx, field)
-			case "paymentStartDateNotes":
-				return ec.fieldContext_PlanPayments_paymentStartDateNotes(ctx, field)
+			case "paymentStartDateNote":
+				return ec.fieldContext_PlanPayments_paymentStartDateNote(ctx, field)
 			case "createdBy":
 				return ec.fieldContext_PlanPayments_createdBy(ctx, field)
 			case "createdDts":
@@ -31951,8 +31961,8 @@ func (ec *executionContext) fieldContext_PlanPayments_numberPaymentsPerPayCycle(
 	return fc, nil
 }
 
-func (ec *executionContext) _PlanPayments_numberPaymentsPerPayCycleNotes(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanPayments_numberPaymentsPerPayCycleNotes(ctx, field)
+func (ec *executionContext) _PlanPayments_numberPaymentsPerPayCycleNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_numberPaymentsPerPayCycleNote(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -31965,7 +31975,7 @@ func (ec *executionContext) _PlanPayments_numberPaymentsPerPayCycleNotes(ctx con
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.NumberPaymentsPerPayCycleNotes, nil
+		return ec.resolvers.PlanPayments().NumberPaymentsPerPayCycleNote(rctx, obj)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -31979,12 +31989,12 @@ func (ec *executionContext) _PlanPayments_numberPaymentsPerPayCycleNotes(ctx con
 	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_PlanPayments_numberPaymentsPerPayCycleNotes(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_PlanPayments_numberPaymentsPerPayCycleNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "PlanPayments",
 		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
+		IsMethod:   true,
+		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type String does not have child fields")
 		},
@@ -32484,8 +32494,8 @@ func (ec *executionContext) fieldContext_PlanPayments_anticipatedPaymentFrequenc
 	return fc, nil
 }
 
-func (ec *executionContext) _PlanPayments_anticipatedPaymentFrequencyNotes(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanPayments_anticipatedPaymentFrequencyNotes(ctx, field)
+func (ec *executionContext) _PlanPayments_anticipatedPaymentFrequencyNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_anticipatedPaymentFrequencyNote(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -32498,7 +32508,7 @@ func (ec *executionContext) _PlanPayments_anticipatedPaymentFrequencyNotes(ctx c
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.AnticipatedPaymentFrequencyNotes, nil
+		return ec.resolvers.PlanPayments().AnticipatedPaymentFrequencyNote(rctx, obj)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -32512,12 +32522,12 @@ func (ec *executionContext) _PlanPayments_anticipatedPaymentFrequencyNotes(ctx c
 	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_PlanPayments_anticipatedPaymentFrequencyNotes(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_PlanPayments_anticipatedPaymentFrequencyNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "PlanPayments",
 		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
+		IsMethod:   true,
+		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type String does not have child fields")
 		},
@@ -32566,8 +32576,8 @@ func (ec *executionContext) fieldContext_PlanPayments_willRecoverPayments(ctx co
 	return fc, nil
 }
 
-func (ec *executionContext) _PlanPayments_willRecoverPaymentsNotes(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanPayments_willRecoverPaymentsNotes(ctx, field)
+func (ec *executionContext) _PlanPayments_willRecoverPaymentsNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_willRecoverPaymentsNote(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -32580,7 +32590,7 @@ func (ec *executionContext) _PlanPayments_willRecoverPaymentsNotes(ctx context.C
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.WillRecoverPaymentsNotes, nil
+		return ec.resolvers.PlanPayments().WillRecoverPaymentsNote(rctx, obj)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -32594,12 +32604,12 @@ func (ec *executionContext) _PlanPayments_willRecoverPaymentsNotes(ctx context.C
 	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_PlanPayments_willRecoverPaymentsNotes(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_PlanPayments_willRecoverPaymentsNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "PlanPayments",
 		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
+		IsMethod:   true,
+		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type String does not have child fields")
 		},
@@ -32648,8 +32658,8 @@ func (ec *executionContext) fieldContext_PlanPayments_anticipateReconcilingPayme
 	return fc, nil
 }
 
-func (ec *executionContext) _PlanPayments_anticipateReconcilingPaymentsRetrospectivelyNotes(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanPayments_anticipateReconcilingPaymentsRetrospectivelyNotes(ctx, field)
+func (ec *executionContext) _PlanPayments_anticipateReconcilingPaymentsRetrospectivelyNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_anticipateReconcilingPaymentsRetrospectivelyNote(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -32662,7 +32672,7 @@ func (ec *executionContext) _PlanPayments_anticipateReconcilingPaymentsRetrospec
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.AnticipateReconcilingPaymentsRetrospectivelyNotes, nil
+		return ec.resolvers.PlanPayments().AnticipateReconcilingPaymentsRetrospectivelyNote(rctx, obj)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -32676,12 +32686,12 @@ func (ec *executionContext) _PlanPayments_anticipateReconcilingPaymentsRetrospec
 	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_PlanPayments_anticipateReconcilingPaymentsRetrospectivelyNotes(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_PlanPayments_anticipateReconcilingPaymentsRetrospectivelyNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "PlanPayments",
 		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
+		IsMethod:   true,
+		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type String does not have child fields")
 		},
@@ -32730,8 +32740,8 @@ func (ec *executionContext) fieldContext_PlanPayments_paymentStartDate(ctx conte
 	return fc, nil
 }
 
-func (ec *executionContext) _PlanPayments_paymentStartDateNotes(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanPayments_paymentStartDateNotes(ctx, field)
+func (ec *executionContext) _PlanPayments_paymentStartDateNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_paymentStartDateNote(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -32744,7 +32754,7 @@ func (ec *executionContext) _PlanPayments_paymentStartDateNotes(ctx context.Cont
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.PaymentStartDateNotes, nil
+		return ec.resolvers.PlanPayments().PaymentStartDateNote(rctx, obj)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -32758,12 +32768,12 @@ func (ec *executionContext) _PlanPayments_paymentStartDateNotes(ctx context.Cont
 	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_PlanPayments_paymentStartDateNotes(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_PlanPayments_paymentStartDateNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "PlanPayments",
 		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
+		IsMethod:   true,
+		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type String does not have child fields")
 		},
@@ -33810,8 +33820,8 @@ func (ec *executionContext) fieldContext_Query_planPayments(ctx context.Context,
 				return ec.fieldContext_PlanPayments_paymentCalculationOwner(ctx, field)
 			case "numberPaymentsPerPayCycle":
 				return ec.fieldContext_PlanPayments_numberPaymentsPerPayCycle(ctx, field)
-			case "numberPaymentsPerPayCycleNotes":
-				return ec.fieldContext_PlanPayments_numberPaymentsPerPayCycleNotes(ctx, field)
+			case "numberPaymentsPerPayCycleNote":
+				return ec.fieldContext_PlanPayments_numberPaymentsPerPayCycleNote(ctx, field)
 			case "sharedSystemsInvolvedAdditionalClaimPayment":
 				return ec.fieldContext_PlanPayments_sharedSystemsInvolvedAdditionalClaimPayment(ctx, field)
 			case "sharedSystemsInvolvedAdditionalClaimPaymentNote":
@@ -33836,20 +33846,20 @@ func (ec *executionContext) fieldContext_Query_planPayments(ctx context.Context,
 				return ec.fieldContext_PlanPayments_anticipatedPaymentFrequency(ctx, field)
 			case "anticipatedPaymentFrequencyOther":
 				return ec.fieldContext_PlanPayments_anticipatedPaymentFrequencyOther(ctx, field)
-			case "anticipatedPaymentFrequencyNotes":
-				return ec.fieldContext_PlanPayments_anticipatedPaymentFrequencyNotes(ctx, field)
+			case "anticipatedPaymentFrequencyNote":
+				return ec.fieldContext_PlanPayments_anticipatedPaymentFrequencyNote(ctx, field)
 			case "willRecoverPayments":
 				return ec.fieldContext_PlanPayments_willRecoverPayments(ctx, field)
-			case "willRecoverPaymentsNotes":
-				return ec.fieldContext_PlanPayments_willRecoverPaymentsNotes(ctx, field)
+			case "willRecoverPaymentsNote":
+				return ec.fieldContext_PlanPayments_willRecoverPaymentsNote(ctx, field)
 			case "anticipateReconcilingPaymentsRetrospectively":
 				return ec.fieldContext_PlanPayments_anticipateReconcilingPaymentsRetrospectively(ctx, field)
-			case "anticipateReconcilingPaymentsRetrospectivelyNotes":
-				return ec.fieldContext_PlanPayments_anticipateReconcilingPaymentsRetrospectivelyNotes(ctx, field)
+			case "anticipateReconcilingPaymentsRetrospectivelyNote":
+				return ec.fieldContext_PlanPayments_anticipateReconcilingPaymentsRetrospectivelyNote(ctx, field)
 			case "paymentStartDate":
 				return ec.fieldContext_PlanPayments_paymentStartDate(ctx, field)
-			case "paymentStartDateNotes":
-				return ec.fieldContext_PlanPayments_paymentStartDateNotes(ctx, field)
+			case "paymentStartDateNote":
+				return ec.fieldContext_PlanPayments_paymentStartDateNote(ctx, field)
 			case "createdBy":
 				return ec.fieldContext_PlanPayments_createdBy(ctx, field)
 			case "createdDts":
@@ -40169,10 +40179,23 @@ func (ec *executionContext) _PlanPayments(ctx context.Context, sel ast.Selection
 
 			out.Values[i] = ec._PlanPayments_numberPaymentsPerPayCycle(ctx, field, obj)
 
-		case "numberPaymentsPerPayCycleNotes":
+		case "numberPaymentsPerPayCycleNote":
+			field := field
 
-			out.Values[i] = ec._PlanPayments_numberPaymentsPerPayCycleNotes(ctx, field, obj)
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._PlanPayments_numberPaymentsPerPayCycleNote(ctx, field, obj)
+				return res
+			}
 
+			out.Concurrently(i, func() graphql.Marshaler {
+				return innerFunc(ctx)
+
+			})
 		case "sharedSystemsInvolvedAdditionalClaimPayment":
 
 			out.Values[i] = ec._PlanPayments_sharedSystemsInvolvedAdditionalClaimPayment(ctx, field, obj)
@@ -40234,34 +40257,86 @@ func (ec *executionContext) _PlanPayments(ctx context.Context, sel ast.Selection
 
 			out.Values[i] = ec._PlanPayments_anticipatedPaymentFrequencyOther(ctx, field, obj)
 
-		case "anticipatedPaymentFrequencyNotes":
+		case "anticipatedPaymentFrequencyNote":
+			field := field
 
-			out.Values[i] = ec._PlanPayments_anticipatedPaymentFrequencyNotes(ctx, field, obj)
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._PlanPayments_anticipatedPaymentFrequencyNote(ctx, field, obj)
+				return res
+			}
 
+			out.Concurrently(i, func() graphql.Marshaler {
+				return innerFunc(ctx)
+
+			})
 		case "willRecoverPayments":
 
 			out.Values[i] = ec._PlanPayments_willRecoverPayments(ctx, field, obj)
 
-		case "willRecoverPaymentsNotes":
+		case "willRecoverPaymentsNote":
+			field := field
 
-			out.Values[i] = ec._PlanPayments_willRecoverPaymentsNotes(ctx, field, obj)
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._PlanPayments_willRecoverPaymentsNote(ctx, field, obj)
+				return res
+			}
 
+			out.Concurrently(i, func() graphql.Marshaler {
+				return innerFunc(ctx)
+
+			})
 		case "anticipateReconcilingPaymentsRetrospectively":
 
 			out.Values[i] = ec._PlanPayments_anticipateReconcilingPaymentsRetrospectively(ctx, field, obj)
 
-		case "anticipateReconcilingPaymentsRetrospectivelyNotes":
+		case "anticipateReconcilingPaymentsRetrospectivelyNote":
+			field := field
 
-			out.Values[i] = ec._PlanPayments_anticipateReconcilingPaymentsRetrospectivelyNotes(ctx, field, obj)
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._PlanPayments_anticipateReconcilingPaymentsRetrospectivelyNote(ctx, field, obj)
+				return res
+			}
 
+			out.Concurrently(i, func() graphql.Marshaler {
+				return innerFunc(ctx)
+
+			})
 		case "paymentStartDate":
 
 			out.Values[i] = ec._PlanPayments_paymentStartDate(ctx, field, obj)
 
-		case "paymentStartDateNotes":
+		case "paymentStartDateNote":
+			field := field
 
-			out.Values[i] = ec._PlanPayments_paymentStartDateNotes(ctx, field, obj)
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._PlanPayments_paymentStartDateNote(ctx, field, obj)
+				return res
+			}
 
+			out.Concurrently(i, func() graphql.Marshaler {
+				return innerFunc(ctx)
+
+			})
 		case "createdBy":
 
 			out.Values[i] = ec._PlanPayments_createdBy(ctx, field, obj)

@@ -5,6 +5,7 @@ package graph
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/google/uuid"
 
@@ -582,8 +583,28 @@ func (r *planPaymentsResolver) NonClaimsPaymentOther(ctx context.Context, obj *m
 	return obj.NonClaimsPaymentsOther, nil
 }
 
+func (r *planPaymentsResolver) NumberPaymentsPerPayCycleNote(ctx context.Context, obj *models.PlanPayments) (*string, error) {
+	panic(fmt.Errorf("not implemented"))
+}
+
 func (r *planPaymentsResolver) AnticipatedPaymentFrequency(ctx context.Context, obj *models.PlanPayments) ([]models.AnticipatedPaymentFrequencyType, error) {
 	return models.ConvertEnums[models.AnticipatedPaymentFrequencyType](obj.AnticipatedPaymentFrequency), nil
+}
+
+func (r *planPaymentsResolver) AnticipatedPaymentFrequencyNote(ctx context.Context, obj *models.PlanPayments) (*string, error) {
+	panic(fmt.Errorf("not implemented"))
+}
+
+func (r *planPaymentsResolver) WillRecoverPaymentsNote(ctx context.Context, obj *models.PlanPayments) (*string, error) {
+	panic(fmt.Errorf("not implemented"))
+}
+
+func (r *planPaymentsResolver) AnticipateReconcilingPaymentsRetrospectivelyNote(ctx context.Context, obj *models.PlanPayments) (*string, error) {
+	panic(fmt.Errorf("not implemented"))
+}
+
+func (r *planPaymentsResolver) PaymentStartDateNote(ctx context.Context, obj *models.PlanPayments) (*string, error) {
+	panic(fmt.Errorf("not implemented"))
 }
 
 func (r *queryResolver) CurrentUser(ctx context.Context) (*model.CurrentUser, error) {
