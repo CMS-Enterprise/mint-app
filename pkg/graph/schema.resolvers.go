@@ -121,7 +121,7 @@ func (r *mutationResolver) UpdateModelPlan(ctx context.Context, id uuid.UUID, ch
 	principal := appcontext.Principal(ctx).ID()
 	logger := appcontext.ZLogger(ctx)
 
-	return resolvers.ModelPlanUpdate(logger, id, changes, &principal, r.store)
+	return resolvers.ModelPlanUpdate(logger, id, changes, principal, r.store)
 }
 
 func (r *mutationResolver) CreatePlanCollaborator(ctx context.Context, input model.PlanCollaboratorCreateInput) (*models.PlanCollaborator, error) {

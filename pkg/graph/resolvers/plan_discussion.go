@@ -1,8 +1,6 @@
 package resolvers
 
 import (
-	"time"
-
 	"go.uber.org/zap"
 
 	"github.com/google/uuid"
@@ -35,14 +33,10 @@ func UpdatePlanDiscussion(logger *zap.Logger, id uuid.UUID, changes map[string]i
 		return nil, err
 	}
 
-	err = ApplyChanges(changes, existingDiscussion)
+	err = BaseStructPreUpdate(existingDiscussion, changes, principal)
 	if err != nil {
 		return nil, err
 	}
-
-	existingDiscussion.ModifiedBy = &principal
-	modifiedTime := time.Now()
-	existingDiscussion.ModifiedDts = &modifiedTime
 
 	result, err := store.PlanDiscussionUpdate(logger, existingDiscussion)
 	return result, err
@@ -77,12 +71,10 @@ func UpdateDiscussionReply(logger *zap.Logger, id uuid.UUID, changes map[string]
 		return nil, err
 	}
 
-	err = ApplyChanges(changes, existingReply)
+	err = BaseStructPreUpdate(existingReply, changes, principal)
 	if err != nil {
 		return nil, err
 	}
-
-	existingReply.ModifiedBy = &principal
 
 	result, err := store.DiscussionReplyUpdate(logger, existingReply)
 	return result, err

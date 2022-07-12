@@ -119,19 +119,17 @@ func ModelPlanCreate(logger *zap.Logger, modelName string, store *storage.Store,
 }
 
 // ModelPlanUpdate implements resolver logic to update a model plan
-func ModelPlanUpdate(logger *zap.Logger, id uuid.UUID, changes map[string]interface{}, principal *string, store *storage.Store) (*models.ModelPlan, error) {
+func ModelPlanUpdate(logger *zap.Logger, id uuid.UUID, changes map[string]interface{}, principal string, store *storage.Store) (*models.ModelPlan, error) {
 	// Get existing plan
 	existingPlan, err := store.ModelPlanGetByID(logger, id)
 	if err != nil {
 		return nil, err
 	}
 
-	err = ApplyChanges(changes, existingPlan)
+	err = BaseStructPreUpdate(existingPlan, changes, principal)
 	if err != nil {
 		return nil, err
 	}
-
-	existingPlan.ModifiedBy = principal
 
 	retPlan, err := store.ModelPlanUpdate(logger, existingPlan)
 	if err != nil {
