@@ -1074,6 +1074,49 @@ export const translateOelCollectDataType = (type: string) => {
   }
 };
 
+export const translateOelObtainDataType = (type: string) => {
+  switch (type) {
+    case 'CCW':
+      return i18next.t('itTools:oelObtainDataOptions.ccw');
+    case 'IDOS':
+      return i18next.t('itTools:oelObtainDataOptions.idos');
+    case 'ISP':
+      return i18next.t('itTools:oelObtainDataOptions.isp');
+    case 'OTHER':
+      return i18next.t('itTools:oelObtainDataOptions.other');
+    default:
+      return '';
+  }
+};
+
+export const translateOelClaimsBasedMeasuresType = (type: string) => {
+  switch (type) {
+    case 'IDR':
+      return i18next.t('itTools:oelClaimsBasedMeasuresOptions.idr');
+    case 'CCW':
+      return i18next.t('itTools:oelClaimsBasedMeasuresOptions.ccw');
+    case 'OTHER':
+      return i18next.t('itTools:oelClaimsBasedMeasuresOptions.other');
+    default:
+      return '';
+  }
+};
+
+export const translateOelQualityScoresType = (type: string) => {
+  switch (type) {
+    case 'EXISTING_DATA_AND_PROCESS':
+      return i18next.t('itTools:oelQualityScoresOptions.existing');
+    case 'NEW_DATA_AND_CMMI_PROCESS':
+      return i18next.t('itTools:oelQualityScoresOptions.new');
+    case 'OTHER':
+      return i18next.t('itTools:oelQualityScoresOptions.other');
+    case 'NONE':
+      return i18next.t('itTools:oelQualityScoresOptions.none');
+    default:
+      return '';
+  }
+};
+
 /**
  * Translate the document type API enum to a human readable string
  */

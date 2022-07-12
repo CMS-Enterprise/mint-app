@@ -8,6 +8,7 @@ import { NotFoundPartial } from 'views/NotFound';
 import ITToolsPageFive from './PageFive';
 import ITToolsPageFour from './PageFour';
 import ITToolsPageOne from './PageOne';
+import ITToolsPageSix from './PageSix';
 import ITToolsPageThree from './PageThree';
 import ITToolsPageTwo from './PageTwo';
 
@@ -46,6 +47,11 @@ export const ITTools = () => {
               path="/models/:modelID/task-list/it-tools/page-five"
               exact
               render={() => <ITToolsPageFive />}
+            />
+            <Route
+              path="/models/:modelID/task-list/it-tools/page-six"
+              exact
+              render={() => <ITToolsPageSix />}
             />
             <Route path="*" render={() => <NotFoundPartial />} />
           </Switch>

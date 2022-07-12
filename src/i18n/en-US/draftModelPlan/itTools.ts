@@ -119,7 +119,32 @@ const itTools = {
   contractorTool: 'How will you acquire an evaluation contractor?',
   monitorTools: 'What tools will you use to get data to monitor the model?',
   monitorNeedsAnswer:
-    'If your answer is any option except not planning to collect data, you will need to select tools from the list below.'
+    'If your answer is any option except not planning to collect data, you will need to select tools from the list below.',
+  oelObtainDataOptions: {
+    ccw: 'Chronic Conditions Warehouse (CCW)',
+    idos: 'Innovation Development and Operation Services (IDOS)',
+    isp: 'Innovation Support Platform (ISP)',
+    other: 'Other'
+  },
+  oelClaimsBasedMeasuresOptions: {
+    idr: 'Integrated Data Repository (IDR)',
+    ccw: 'Chronic Conditions Warehouse (CCW)',
+    other: 'Other'
+  },
+  oelQualityScoresOptions: {
+    existing: 'Existing CMS data and process',
+    new: 'Health Data Reporting (new CMMI process)',
+    other: 'Other new process',
+    none: 'None'
+  },
+  supportTools: 'What tools will you use for data to support model evaluation?',
+  claimsBasedTools: 'What tools will you use for claims-based measures?',
+  claimsNeedsAnswer:
+    'If your answer includes “Quality claims-based measures”, you can select tools from the list below.',
+  qualityTools:
+    'What tools will you use for scores related to quality performance, if any?',
+  qualityNeedsAnswer:
+    'If you change your answer to quality reported measures, you will need to select tools from the list below.'
 };
 
 export default itTools;
