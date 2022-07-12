@@ -10,6 +10,11 @@ import (
 type IBaseTaskListSection interface {
 	GetBaseTaskListSection() *BaseTaskListSection
 	CalcStatus(TaskStatus) error
+	//methods from BaseStruct
+	GetBaseStruct() *BaseStruct
+	GetID() uuid.UUID
+	GetCreatedBy() string
+	GetModifiedBy() *string
 }
 
 // BaseTaskListSection represents all the shared fields in common to a task list section
