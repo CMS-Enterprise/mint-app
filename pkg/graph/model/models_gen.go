@@ -1066,65 +1066,6 @@ func (e MonitoringFileType) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
-type NonClaimsBasedPayType string
-
-const (
-	NonClaimsBasedPayTypeAdvancedPayment                  NonClaimsBasedPayType = "ADVANCED_PAYMENT"
-	NonClaimsBasedPayTypeBundledEpisodeOfCare             NonClaimsBasedPayType = "BUNDLED_EPISODE_OF_CARE"
-	NonClaimsBasedPayTypeCapitationPopulationBasedFull    NonClaimsBasedPayType = "CAPITATION_POPULATION_BASED_FULL"
-	NonClaimsBasedPayTypeCapitationPopulationBasedPartial NonClaimsBasedPayType = "CAPITATION_POPULATION_BASED_PARTIAL"
-	NonClaimsBasedPayTypeCareCoordinationManagementFee    NonClaimsBasedPayType = "CARE_COORDINATION_MANAGEMENT_FEE"
-	NonClaimsBasedPayTypeGlobalBudget                     NonClaimsBasedPayType = "GLOBAL_BUDGET"
-	NonClaimsBasedPayTypeGrants                           NonClaimsBasedPayType = "GRANTS"
-	NonClaimsBasedPayTypeIncentivePayment                 NonClaimsBasedPayType = "INCENTIVE_PAYMENT"
-	NonClaimsBasedPayTypeMapdSharedSavings                NonClaimsBasedPayType = "MAPD_SHARED_SAVINGS"
-	NonClaimsBasedPayTypeSharedSavings                    NonClaimsBasedPayType = "SHARED_SAVINGS"
-	NonClaimsBasedPayTypeOther                            NonClaimsBasedPayType = "OTHER"
-)
-
-var AllNonClaimsBasedPayType = []NonClaimsBasedPayType{
-	NonClaimsBasedPayTypeAdvancedPayment,
-	NonClaimsBasedPayTypeBundledEpisodeOfCare,
-	NonClaimsBasedPayTypeCapitationPopulationBasedFull,
-	NonClaimsBasedPayTypeCapitationPopulationBasedPartial,
-	NonClaimsBasedPayTypeCareCoordinationManagementFee,
-	NonClaimsBasedPayTypeGlobalBudget,
-	NonClaimsBasedPayTypeGrants,
-	NonClaimsBasedPayTypeIncentivePayment,
-	NonClaimsBasedPayTypeMapdSharedSavings,
-	NonClaimsBasedPayTypeSharedSavings,
-	NonClaimsBasedPayTypeOther,
-}
-
-func (e NonClaimsBasedPayType) IsValid() bool {
-	switch e {
-	case NonClaimsBasedPayTypeAdvancedPayment, NonClaimsBasedPayTypeBundledEpisodeOfCare, NonClaimsBasedPayTypeCapitationPopulationBasedFull, NonClaimsBasedPayTypeCapitationPopulationBasedPartial, NonClaimsBasedPayTypeCareCoordinationManagementFee, NonClaimsBasedPayTypeGlobalBudget, NonClaimsBasedPayTypeGrants, NonClaimsBasedPayTypeIncentivePayment, NonClaimsBasedPayTypeMapdSharedSavings, NonClaimsBasedPayTypeSharedSavings, NonClaimsBasedPayTypeOther:
-		return true
-	}
-	return false
-}
-
-func (e NonClaimsBasedPayType) String() string {
-	return string(e)
-}
-
-func (e *NonClaimsBasedPayType) UnmarshalGQL(v interface{}) error {
-	str, ok := v.(string)
-	if !ok {
-		return fmt.Errorf("enums must be strings")
-	}
-
-	*e = NonClaimsBasedPayType(str)
-	if !e.IsValid() {
-		return fmt.Errorf("%s is not a valid NonClaimsBasedPayType", str)
-	}
-	return nil
-}
-
-func (e NonClaimsBasedPayType) MarshalGQL(w io.Writer) {
-	fmt.Fprint(w, strconv.Quote(e.String()))
-}
-
 type OelClaimsBasedMeasuresType string
 
 const (
