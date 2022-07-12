@@ -3,6 +3,9 @@ package server
 
 import (
 	"crypto/tls"
+	"github.com/lileio/pubsub"
+	"github.com/lileio/pubsub/middleware/defaults"
+	"github.com/lileio/pubsub/providers/nats"
 	"log"
 	"net/http"
 
@@ -51,6 +54,17 @@ func NewServer(config *viper.Viper) *Server {
 		logger:      zapLogger,
 		environment: environment,
 	}
+
+	natsProvider, err := nats.NewNats("test-cluster")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	pubsub.SetClient(&pubsub.Client{
+		ServiceName: "mint-pubsub-service",
+		Provider:    natsProvider,
+		Middleware:  defaults.Middleware,
+	})
 
 	// set up routes
 	s.routes(
