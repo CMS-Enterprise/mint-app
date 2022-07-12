@@ -1117,6 +1117,48 @@ export const translateOelQualityScoresType = (type: string) => {
   }
 };
 
+export const translateOelSendReportsType = (type: string) => {
+  switch (type) {
+    case 'IDOS':
+      return i18next.t('itTools:oelSendReportsOptions.idos');
+    case 'RMADA':
+      return i18next.t('itTools:oelSendReportsOptions.rmda');
+    case 'INTERNAL_STAFF':
+      return i18next.t('itTools:oelSendReportsOptions.internal');
+    case 'OTHER':
+      return i18next.t('itTools:oelSendReportsOptions.other');
+
+    default:
+      return '';
+  }
+};
+
+export const translateOelLearningContractorType = (type: string) => {
+  switch (type) {
+    case 'RMADA':
+      return i18next.t('itTools:oelLearningContractorOptions.rmda');
+    case 'CROSS_MODEL_CONTRACT':
+      return i18next.t('itTools:oelLearningContractorOptions.crossModel');
+    case 'OTHER':
+      return i18next.t('itTools:oelLearningContractorOptions.other');
+
+    default:
+      return '';
+  }
+};
+
+export const translateOelParticipantCollaborationType = (type: string) => {
+  switch (type) {
+    case 'CONNECT':
+      return i18next.t('itTools:oelParticipantCollaborationOptions.connect');
+    case 'OTHER':
+      return i18next.t('itTools:oelParticipantCollaborationOptions.other');
+
+    default:
+      return '';
+  }
+};
+
 /**
  * Translate the document type API enum to a human readable string
  */

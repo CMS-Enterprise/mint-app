@@ -437,7 +437,7 @@ const Evaluation = () => {
                     htmlFor="ops-eval-and-learning-data-to-send"
                     className="maxw-none"
                   >
-                    {t('dataNeeded')}
+                    {t('dataToSend')}
                   </Label>
 
                   <FieldErrorMsg>
@@ -465,7 +465,7 @@ const Evaluation = () => {
                         htmlFor="ops-eval-and-learning-data-to-send-other"
                         className="text-normal"
                       >
-                        {t('dataNeededOther')}
+                        {t('dataToSendOther')}
                       </Label>
                       <FieldErrorMsg>
                         {flatErrors.dataToSendParticicipantsgOther}

@@ -144,7 +144,30 @@ const itTools = {
   qualityTools:
     'What tools will you use for scores related to quality performance, if any?',
   qualityNeedsAnswer:
-    'If you change your answer to quality reported measures, you will need to select tools from the list below.'
+    'If you change your answer to quality reported measures, you will need to select tools from the list below.',
+  oelSendReportsOptions: {
+    idos: 'Innovation Development and Operation Services (IDOS)',
+    rmda: 'Research, Measurement, Assessment, Design, and Analysis (RMADA)',
+    internal: 'Internal staff',
+    other: 'Other'
+  },
+  oelLearningContractorOptions: {
+    rmda: 'Research, Measurement, Assessment, Design, and Analysis (RMADA)',
+    crossModel: 'A cross-model contract',
+    other: 'Other'
+  },
+  oelParticipantCollaborationOptions: {
+    connect: 'Connect (a Salesforce tool)',
+    other: 'Other'
+  },
+  sendReportTools:
+    'What tools will you use to send reports/data to participants?',
+  sendDataNeedsAnswer:
+    'If your answer is any option except not planning to send data, you will need to select tools from the list below.',
+  learningNeedsAnswer:
+    'If you change your answer to include “We plan to have a learning contractor”, you can select tools from the list below.',
+  participantNeedsAnswer:
+    'If you change your answer to include “We plan to enable participant-to-participant collaboration”, you can select tools from the list below.'
 };
 
 export default itTools;
