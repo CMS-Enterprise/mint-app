@@ -45,8 +45,30 @@ const payments = {
     nonClaims: 'Non-Claims-Based Payments',
     grants: 'Grants'
   },
-  claimSpecificQuestions: 'Claims-based payment specific questions',
+  claimSpecificQuestions: 'Claims-based payment questions',
   selectClaims: 'Select which claims-based payments will you pay.',
+  selectClaimsSubcopy:
+    'If you select reductions to beneficiary cost-sharing or other, there will be additional questions to answer.',
+  selectClaimsOptions: {
+    ffsPayments: 'Adjustments to FFS payments',
+    homeVisits: 'Payments for care management home visits',
+    snfClaims: 'Payments for SNF claims without 3-day hospital admissions',
+    telehealth:
+      'Payments for telehealth services not covered through Traditional Medicare'
+  },
+  excludedFromPayment:
+    'Should any model providers be excluded from existing Fee-for-Service payment systems?',
+  yesNoOptions: {
+    yes: 'Yes',
+    no: 'No'
+  },
+  howSo: 'How so?',
+  chageMedicareFeeSchedule:
+    'Will the model change the Medicare Physician Fee Schedule?',
+  affectMedicareSecondaryPayerClaim:
+    'Does the model affect Medicare Secondary Payer claims?',
+  affectCurrentPolicy:
+    'How does the model differ from current policy, especially in terms of payment rates and periodicity of payment?',
   willYouInform:
     'Will you inform Fee-for-Service about participants that this should be waived from a rule?',
   costSharing: 'Are these payments subject to cost-sharing?',
