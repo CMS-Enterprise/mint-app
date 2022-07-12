@@ -1013,7 +1013,7 @@ export const translateOelManageAcoSubinfoType = (type: string) => {
       return i18next.t('itTools:oelManageAcoSubinfoOptions.acoUI');
     case 'INNOVATION':
       return i18next.t('itTools:oelManageAcoSubinfoOptions.innovation');
-    case 'OTHER ':
+    case 'OTHER':
       return i18next.t('itTools:oelManageAcoSubinfoOptions.other');
     default:
       return '';
@@ -1026,8 +1026,49 @@ export const translateOelPerformanceBenchmarkType = (type: string) => {
       return i18next.t('itTools:oelPerformanceBenchmarkOptions.idr');
     case 'CCW':
       return i18next.t('itTools:oelPerformanceBenchmarkOptions.ccw');
-    case 'OTHER ':
+    case 'OTHER':
       return i18next.t('itTools:oelPerformanceBenchmarkOptions.other');
+    default:
+      return '';
+  }
+};
+
+export const translateOelProcessAppealsType = (type: string) => {
+  switch (type) {
+    case 'MEDICARE_APPEAL_SYSTEM':
+      return i18next.t('itTools:oelProcessAppealsOptions.medicare');
+    case 'OTHER':
+      return i18next.t('itTools:oelProcessAppealsOptions.other');
+    default:
+      return '';
+  }
+};
+
+export const translateOelEvaluationContractorType = (type: string) => {
+  switch (type) {
+    case 'RMDA':
+      return i18next.t('itTools:oelEvaluationContractorOptions.rmda');
+    case 'OTHER':
+      return i18next.t('itTools:oelEvaluationContractorOptions.other');
+    default:
+      return '';
+  }
+};
+
+export const translateOelCollectDataType = (type: string) => {
+  switch (type) {
+    case 'IDR':
+      return i18next.t('itTools:oelCollectDataOptions.idr');
+    case 'CCW':
+      return i18next.t('itTools:oelCollectDataOptions.ccw');
+    case 'IDOS':
+      return i18next.t('itTools:oelCollectDataOptions.idos');
+    case 'ISP':
+      return i18next.t('itTools:oelCollectDataOptions.isp');
+    case 'CONTRACTOR':
+      return i18next.t('itTools:oelCollectDataOptions.contractor');
+    case 'OTHER':
+      return i18next.t('itTools:oelCollectDataOptions.other');
     default:
       return '';
   }

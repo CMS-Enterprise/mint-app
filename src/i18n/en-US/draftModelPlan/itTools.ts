@@ -93,7 +93,33 @@ const itTools = {
   helpDeskTools: 'What tools will you use for helpdesk support?',
   iddocTools: 'Which IDDOC tools will you use?',
   benchmarkTools:
-    'What tools will you use to establish a benchmark with participants?'
+    'What tools will you use to establish a benchmark with participants?',
+  participantAppeal: 'Participants will be able to appeal the following',
+  appealTools: 'What tools will you use to process appeals from participants?',
+  appealToolsInfo:
+    'If you are using different tools for different use cases, please explain by adding a note or by checking Other and explaining further.',
+  oelProcessAppealsOptions: {
+    medicare: 'Medicare Appeal System',
+    other: 'Other'
+  },
+  oelEvaluationContractorOptions: {
+    rmda: 'Research, Measurement, Assessment, Design, and Analysis (RMADA)',
+    other: 'Other'
+  },
+  oelCollectDataOptions: {
+    idr: 'Integrated Data Repository (IDR)',
+    ccw: 'Chronic Conditions Warehouse (CCW)',
+    idos: 'Innovation Development and Operation Services (IDOS)',
+    isp: 'Innovation Support Platform (ISP)',
+    contractor: 'Another contractor',
+    other: 'Other'
+  },
+  appealsNeedsAnswer:
+    'If your answer includes “Yes” for any type of appeal, you can select tools from the list below.',
+  contractorTool: 'How will you acquire an evaluation contractor?',
+  monitorTools: 'What tools will you use to get data to monitor the model?',
+  monitorNeedsAnswer:
+    'If your answer is any option except not planning to collect data, you will need to select tools from the list below.'
 };
 
 export default itTools;

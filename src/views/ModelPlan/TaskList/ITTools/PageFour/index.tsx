@@ -434,7 +434,7 @@ const ITToolsPageFour = () => {
                                   BenchmarkForPerformanceType.YES_NO_RECONCILE
                                 )
                               ]}
-                              redirect={`/models/${modelID}/task-list/participants-and-providers/communication`}
+                              redirect={`/models/${modelID}/task-list/ops-eval-and-learning/performance`}
                               answered={benchmarkForPerformance !== null}
                               needsTool={
                                 benchmarkForPerformance ===

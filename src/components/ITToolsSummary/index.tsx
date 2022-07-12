@@ -13,6 +13,7 @@ type ITToolsSummaryPropType = {
   answers: string[];
   options: string[];
   redirect: string;
+  subtext?: string;
 };
 
 const ITToolsSummary = ({
@@ -22,7 +23,8 @@ const ITToolsSummary = ({
   question,
   answers,
   options,
-  redirect
+  redirect,
+  subtext
 }: ITToolsSummaryPropType) => {
   const { t } = useTranslation('itTools');
 
@@ -46,12 +48,14 @@ const ITToolsSummary = ({
       )}
       {!needsTool && (
         <div className="text-base">
-          <p>{t('changeAnswer')}</p>
-          <ul>
-            {options.map(option => (
-              <li key={option}>{option}</li>
-            ))}
-          </ul>
+          <p>{subtext || t('changeAnswer')}</p>
+          {!subtext && (
+            <ul>
+              {options.map(option => (
+                <li key={option}>{option}</li>
+              ))}
+            </ul>
+          )}
         </div>
       )}
       <p>
