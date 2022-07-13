@@ -12,6 +12,7 @@ import {
   Label,
   TextInput
 } from '@trussworks/react-uswds';
+import classNames from 'classnames';
 import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
 
 import AddNote from 'components/AddNote';
@@ -245,6 +246,7 @@ const ITToolsPageTwo = () => {
                                 recruitmentMethod === RecruitmentType.LOI ||
                                 recruitmentMethod === RecruitmentType.NOFO
                               }
+                              subtext={t('loiNeedsAnswer')}
                             />
 
                             <p className="margin-top-4">{t('tools')}</p>
@@ -291,7 +293,16 @@ const ITToolsPageTwo = () => {
                                         <div className="margin-left-4 margin-top-1">
                                           <Label
                                             htmlFor="it-tools-pp-to-advertise-other"
-                                            className="text-normal"
+                                            className={classNames(
+                                              {
+                                                'text-gray-30':
+                                                  recruitmentMethod !==
+                                                    RecruitmentType.NOFO &&
+                                                  recruitmentMethod !==
+                                                    RecruitmentType.LOI
+                                              },
+                                              'text-normal'
+                                            )}
                                           >
                                             {h('pleaseSpecify')}
                                           </Label>
@@ -300,6 +311,7 @@ const ITToolsPageTwo = () => {
                                           </FieldErrorMsg>
                                           <Field
                                             as={TextInput}
+                                            type="text"
                                             disabled={
                                               recruitmentMethod !==
                                                 RecruitmentType.NOFO &&
@@ -359,6 +371,7 @@ const ITToolsPageTwo = () => {
                               needsTool={selectionMethod.includes(
                                 ParticipantSelectionType.APPLICATION_REVIEW_AND_SCORING_TOOL
                               )}
+                              subtext={t('scoringToolNeedsAnswer')}
                             />
 
                             <p className="margin-top-4">{t('tools')}</p>
@@ -405,7 +418,14 @@ const ITToolsPageTwo = () => {
                                         <div className="margin-left-4 margin-top-1">
                                           <Label
                                             htmlFor="it-tools-pp-collect-score-review-other"
-                                            className="text-normal"
+                                            className={classNames(
+                                              {
+                                                'text-gray-30': !selectionMethod.includes(
+                                                  ParticipantSelectionType.APPLICATION_REVIEW_AND_SCORING_TOOL
+                                                )
+                                              },
+                                              'text-normal'
+                                            )}
                                           >
                                             {h('pleaseSpecify')}
                                           </Label>
@@ -416,6 +436,7 @@ const ITToolsPageTwo = () => {
                                           </FieldErrorMsg>
                                           <Field
                                             as={TextInput}
+                                            type="text"
                                             disabled={
                                               !selectionMethod.includes(
                                                 ParticipantSelectionType.APPLICATION_REVIEW_AND_SCORING_TOOL
@@ -478,6 +499,7 @@ const ITToolsPageTwo = () => {
                               needsTool={selectionMethod.includes(
                                 ParticipantSelectionType.APPLICATION_SUPPORT_CONTRACTOR
                               )}
+                              subtext={t('contractorNeedsAnswer')}
                             />
 
                             <p className="margin-top-4">{t('tools')}</p>
@@ -525,7 +547,14 @@ const ITToolsPageTwo = () => {
                                         <div className="margin-left-4 margin-top-1">
                                           <Label
                                             htmlFor="it-tools-pp-app-support-contractor-other"
-                                            className="text-normal"
+                                            className={classNames(
+                                              {
+                                                'text-gray-30': !selectionMethod.includes(
+                                                  ParticipantSelectionType.APPLICATION_SUPPORT_CONTRACTOR
+                                                )
+                                              },
+                                              'text-normal'
+                                            )}
                                           >
                                             {h('pleaseSpecify')}
                                           </Label>
@@ -536,6 +565,7 @@ const ITToolsPageTwo = () => {
                                           </FieldErrorMsg>
                                           <Field
                                             as={TextInput}
+                                            type="text"
                                             disabled={
                                               !selectionMethod.includes(
                                                 ParticipantSelectionType.APPLICATION_SUPPORT_CONTRACTOR

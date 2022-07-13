@@ -12,6 +12,7 @@ import {
   Label,
   TextInput
 } from '@trussworks/react-uswds';
+import classNames from 'classnames';
 import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
 
 import AddNote from 'components/AddNote';
@@ -310,7 +311,16 @@ const ITToolsPageFive = () => {
                                         <div className="margin-left-4 margin-top-1">
                                           <Label
                                             htmlFor="it-tools-oel-process-appeals-other"
-                                            className="text-normal"
+                                            className={classNames(
+                                              {
+                                                'text-gray-30':
+                                                  !appealPerformance &&
+                                                  !appealFeedback &&
+                                                  !appealPayments &&
+                                                  !appealOther
+                                              },
+                                              'text-normal'
+                                            )}
                                           >
                                             {h('pleaseSpecify')}
                                           </Label>
@@ -319,6 +329,7 @@ const ITToolsPageFive = () => {
                                           </FieldErrorMsg>
                                           <Field
                                             as={TextInput}
+                                            type="text"
                                             disabled={
                                               !appealPerformance &&
                                               !appealFeedback &&
@@ -448,7 +459,24 @@ const ITToolsPageFive = () => {
                                         <div className="margin-left-4 margin-top-1">
                                           <Label
                                             htmlFor="it-tools-oel-evaluation-contractor-other"
-                                            className="text-normal"
+                                            className={classNames(
+                                              {
+                                                'text-gray-30':
+                                                  !evaluationApproaches.includes(
+                                                    EvaluationApproachType.CONTROL_INTERVENTION
+                                                  ) &&
+                                                  !evaluationApproaches.includes(
+                                                    EvaluationApproachType.COMPARISON_MATCH
+                                                  ) &&
+                                                  !evaluationApproaches.includes(
+                                                    EvaluationApproachType.INTERRUPTED_TIME
+                                                  ) &&
+                                                  !evaluationApproaches.includes(
+                                                    EvaluationApproachType.NON_MEDICARE_DATA
+                                                  )
+                                              },
+                                              'text-normal'
+                                            )}
                                           >
                                             {h('pleaseSpecify')}
                                           </Label>
@@ -459,6 +487,7 @@ const ITToolsPageFive = () => {
                                           </FieldErrorMsg>
                                           <Field
                                             as={TextInput}
+                                            type="text"
                                             disabled={
                                               !evaluationApproaches.includes(
                                                 EvaluationApproachType.CONTROL_INTERVENTION
@@ -571,7 +600,14 @@ const ITToolsPageFive = () => {
                                         <div className="margin-left-4 margin-top-1">
                                           <Label
                                             htmlFor="it-tools-oel-collect-data-other"
-                                            className="text-normal"
+                                            className={classNames(
+                                              {
+                                                'text-gray-30': dataNeededForMonitoring.includes(
+                                                  DataForMonitoringType.NOT_PLANNING_TO_COLLECT_DATA
+                                                )
+                                              },
+                                              'text-normal'
+                                            )}
                                           >
                                             {h('pleaseSpecify')}
                                           </Label>
@@ -580,6 +616,7 @@ const ITToolsPageFive = () => {
                                           </FieldErrorMsg>
                                           <Field
                                             as={TextInput}
+                                            type="text"
                                             disabled={dataNeededForMonitoring.includes(
                                               DataForMonitoringType.NOT_PLANNING_TO_COLLECT_DATA
                                             )}

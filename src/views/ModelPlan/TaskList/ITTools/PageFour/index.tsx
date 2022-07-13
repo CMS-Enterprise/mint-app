@@ -12,6 +12,7 @@ import {
   Label,
   TextInput
 } from '@trussworks/react-uswds';
+import classNames from 'classnames';
 import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
 
 import AddNote from 'components/AddNote';
@@ -234,6 +235,7 @@ const ITToolsPageFour = () => {
                               redirect={`/models/${modelID}/task-list/ops-eval-and-learning`}
                               answered={helpdeskUse !== null}
                               needsTool={helpdeskUse || false}
+                              subtext={t('yesNeedsAnswer')}
                             />
 
                             <p className="margin-top-4">{t('tools')}</p>
@@ -276,7 +278,12 @@ const ITToolsPageFour = () => {
                                         <div className="margin-left-4 margin-top-1">
                                           <Label
                                             htmlFor="it-tools-oel-help-desk-other"
-                                            className="text-normal"
+                                            className={classNames(
+                                              {
+                                                'text-gray-30': !helpdeskUse
+                                              },
+                                              'text-normal'
+                                            )}
                                           >
                                             {h('pleaseSpecify')}
                                           </Label>
@@ -285,6 +292,7 @@ const ITToolsPageFour = () => {
                                           </FieldErrorMsg>
                                           <Field
                                             as={TextInput}
+                                            type="text"
                                             disabled={!helpdeskUse}
                                             className="maxw-none"
                                             id="it-tools-oel-help-desk-other"
@@ -331,6 +339,7 @@ const ITToolsPageFour = () => {
                               redirect={`/models/${modelID}/task-list/ops-eval-and-learning`}
                               answered={iddocSupport !== null}
                               needsTool={iddocSupport || false}
+                              subtext={t('yesNeedsAnswer')}
                             />
 
                             <p className="margin-top-4">{t('tools')}</p>
@@ -371,7 +380,12 @@ const ITToolsPageFour = () => {
                                         <div className="margin-left-4 margin-top-1">
                                           <Label
                                             htmlFor="it-tools-oel-manage-aco-other"
-                                            className="text-normal"
+                                            className={classNames(
+                                              {
+                                                'text-gray-30': !iddocSupport
+                                              },
+                                              'text-normal'
+                                            )}
                                           >
                                             {h('pleaseSpecify')}
                                           </Label>
@@ -380,6 +394,7 @@ const ITToolsPageFour = () => {
                                           </FieldErrorMsg>
                                           <Field
                                             as={TextInput}
+                                            type="text"
                                             disabled={!iddocSupport}
                                             className="maxw-none"
                                             id="it-tools-oel-manage-aco-other"
@@ -442,6 +457,7 @@ const ITToolsPageFour = () => {
                                 benchmarkForPerformance ===
                                   BenchmarkForPerformanceType.YES_NO_RECONCILE
                               }
+                              subtext={t('eitherYesNeedsAnswer')}
                             />
 
                             <p className="margin-top-4">{t('tools')}</p>
@@ -489,7 +505,16 @@ const ITToolsPageFour = () => {
                                         <div className="margin-left-4 margin-top-1">
                                           <Label
                                             htmlFor="it-tools-oel-performance-benchmark-other"
-                                            className="text-normal"
+                                            className={classNames(
+                                              {
+                                                'text-gray-30':
+                                                  benchmarkForPerformance ===
+                                                    BenchmarkForPerformanceType.NO ||
+                                                  benchmarkForPerformance ===
+                                                    null
+                                              },
+                                              'text-normal'
+                                            )}
                                           >
                                             {h('pleaseSpecify')}
                                           </Label>
@@ -500,6 +525,7 @@ const ITToolsPageFour = () => {
                                           </FieldErrorMsg>
                                           <Field
                                             as={TextInput}
+                                            type="text"
                                             disabled={
                                               benchmarkForPerformance ===
                                                 BenchmarkForPerformanceType.NO ||

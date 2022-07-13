@@ -74,7 +74,7 @@ const TaskList = () => {
     generalCharacteristics,
     participantsAndProviders,
     opsEvalAndLearning,
-    beneficiaries
+    beneficiaries,
     // operations,
     // payment,
     itTools

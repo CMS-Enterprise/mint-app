@@ -167,7 +167,17 @@ const itTools = {
   learningNeedsAnswer:
     'If you change your answer to include “We plan to have a learning contractor”, you can select tools from the list below.',
   participantNeedsAnswer:
-    'If you change your answer to include “We plan to enable participant-to-participant collaboration”, you can select tools from the list below.'
+    'If you change your answer to include “We plan to enable participant-to-participant collaboration”, you can select tools from the list below.',
+  yesNeedsAnswer:
+    'If you change your answer to “Yes”, you can select tools from the list below.',
+  eitherYesNeedsAnswer:
+    'If your answer is either yes option, you will need to select tools from the list below.',
+  loiNeedsAnswer:
+    'If your answer is “LOI” or “NOFO”, you can select tools from the list below.',
+  scoringToolNeedsAnswer:
+    'If your answer includes “Use an application review and scoring tool”, you can select tools from the list below.',
+  contractorNeedsAnswer:
+    'If your answer includes “Get an application support contractor”, you can select tools from the list below.'
 };
 
 export default itTools;

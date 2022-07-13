@@ -12,6 +12,7 @@ import {
   Label,
   TextInput
 } from '@trussworks/react-uswds';
+import classNames from 'classnames';
 import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
 
 import AddNote from 'components/AddNote';
@@ -302,7 +303,18 @@ const ITToolsPageThree = () => {
                                         <div className="margin-left-4 margin-top-1">
                                           <Label
                                             htmlFor="it-tools-pp-communicate-with-participant-other"
-                                            className="text-normal"
+                                            className={classNames(
+                                              {
+                                                'text-gray-30':
+                                                  !communicationMethod.includes(
+                                                    ParticipantCommunicationType.MASS_EMAIL
+                                                  ) &&
+                                                  !communicationMethod.includes(
+                                                    ParticipantCommunicationType.IT_TOOL
+                                                  )
+                                              },
+                                              'text-normal'
+                                            )}
                                           >
                                             {h('pleaseSpecify')}
                                           </Label>
@@ -313,6 +325,7 @@ const ITToolsPageThree = () => {
                                           </FieldErrorMsg>
                                           <Field
                                             as={TextInput}
+                                            type="text"
                                             disabled={
                                               !communicationMethod.includes(
                                                 ParticipantCommunicationType.MASS_EMAIL

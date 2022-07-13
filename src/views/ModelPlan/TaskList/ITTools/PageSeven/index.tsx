@@ -12,6 +12,7 @@ import {
   Label,
   TextInput
 } from '@trussworks/react-uswds';
+import classNames from 'classnames';
 import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
 
 import AddNote from 'components/AddNote';
@@ -292,7 +293,14 @@ const ITToolsPageSeven = () => {
                                         <div className="margin-left-4 margin-top-1">
                                           <Label
                                             htmlFor="it-tools-oel-send-reports-other"
-                                            className="text-normal"
+                                            className={classNames(
+                                              {
+                                                'text-gray-30': dataToSendParticicipants.includes(
+                                                  DataToSendParticipantsType.NOT_PLANNING_TO_SEND_DATA
+                                                )
+                                              },
+                                              'text-normal'
+                                            )}
                                           >
                                             {h('pleaseSpecify')}
                                           </Label>
@@ -301,6 +309,7 @@ const ITToolsPageSeven = () => {
                                           </FieldErrorMsg>
                                           <Field
                                             as={TextInput}
+                                            type="text"
                                             disabled={dataToSendParticicipants.includes(
                                               DataToSendParticipantsType.NOT_PLANNING_TO_SEND_DATA
                                             )}
@@ -402,7 +411,14 @@ const ITToolsPageSeven = () => {
                                         <div className="margin-left-4 margin-top-1">
                                           <Label
                                             htmlFor="it-tools-oel-learning-contractor-other"
-                                            className="text-normal"
+                                            className={classNames(
+                                              {
+                                                'text-gray-30': !modelLearningSystems.includes(
+                                                  ModelLearningSystemType.LEARNING_CONTRACTOR
+                                                )
+                                              },
+                                              'text-normal'
+                                            )}
                                           >
                                             {h('pleaseSpecify')}
                                           </Label>
@@ -413,6 +429,7 @@ const ITToolsPageSeven = () => {
                                           </FieldErrorMsg>
                                           <Field
                                             as={TextInput}
+                                            type="text"
                                             disabled={
                                               !modelLearningSystems.includes(
                                                 ModelLearningSystemType.LEARNING_CONTRACTOR
@@ -517,7 +534,14 @@ const ITToolsPageSeven = () => {
                                         <div className="margin-left-4 margin-top-1">
                                           <Label
                                             htmlFor="it-tools-oel-participant-collaboration-other"
-                                            className="text-normal"
+                                            className={classNames(
+                                              {
+                                                'text-gray-30': !modelLearningSystems.includes(
+                                                  ModelLearningSystemType.PARTICIPANT_COLLABORATION
+                                                )
+                                              },
+                                              'text-normal'
+                                            )}
                                           >
                                             {h('pleaseSpecify')}
                                           </Label>
@@ -528,6 +552,7 @@ const ITToolsPageSeven = () => {
                                           </FieldErrorMsg>
                                           <Field
                                             as={TextInput}
+                                            type="text"
                                             disabled={
                                               !modelLearningSystems.includes(
                                                 ModelLearningSystemType.PARTICIPANT_COLLABORATION

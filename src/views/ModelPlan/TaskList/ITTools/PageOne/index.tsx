@@ -12,6 +12,7 @@ import {
   Label,
   TextInput
 } from '@trussworks/react-uswds';
+import classNames from 'classnames';
 import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
 
 import AddNote from 'components/AddNote';
@@ -239,6 +240,7 @@ const ITToolsPageOne = () => {
                               needsTool={
                                 characteristics.managePartCDEnrollment === true
                               }
+                              subtext={t('yesNeedsAnswer')}
                             />
 
                             <p className="margin-top-4">{t('tools')}</p>
@@ -278,7 +280,12 @@ const ITToolsPageOne = () => {
                                         <div className="margin-left-4 margin-top-1">
                                           <Label
                                             htmlFor="it-tools-gc-partc-other"
-                                            className="text-normal"
+                                            className={classNames(
+                                              {
+                                                'text-gray-30': !characteristics.managePartCDEnrollment
+                                              },
+                                              'text-normal'
+                                            )}
                                           >
                                             {h('pleaseSpecify')}
                                           </Label>
@@ -287,6 +294,7 @@ const ITToolsPageOne = () => {
                                           </FieldErrorMsg>
                                           <Field
                                             as={TextInput}
+                                            type="text"
                                             disabled={
                                               !characteristics.managePartCDEnrollment
                                             }
@@ -343,6 +351,7 @@ const ITToolsPageOne = () => {
                               needsTool={
                                 characteristics.collectPlanBids === true
                               }
+                              subtext={t('yesNeedsAnswer')}
                             />
 
                             <p className="margin-top-4">{t('tools')}</p>
@@ -382,7 +391,12 @@ const ITToolsPageOne = () => {
                                         <div className="margin-left-4 margin-top-1">
                                           <Label
                                             htmlFor="it-tools-gc-collect-bids-other"
-                                            className="text-normal"
+                                            className={classNames(
+                                              {
+                                                'text-gray-30': !characteristics.collectPlanBids
+                                              },
+                                              'text-normal'
+                                            )}
                                           >
                                             {h('pleaseSpecify')}
                                           </Label>
@@ -391,6 +405,7 @@ const ITToolsPageOne = () => {
                                           </FieldErrorMsg>
                                           <Field
                                             as={TextInput}
+                                            type="text"
                                             disabled={
                                               !characteristics.collectPlanBids
                                             }
@@ -447,6 +462,7 @@ const ITToolsPageOne = () => {
                               needsTool={
                                 characteristics.planContactUpdated === true
                               }
+                              subtext={t('yesNeedsAnswer')}
                             />
 
                             <p className="margin-top-4">{t('tools')}</p>
@@ -491,7 +507,12 @@ const ITToolsPageOne = () => {
                                         <div className="margin-left-4 margin-top-1">
                                           <Label
                                             htmlFor="it-tools-gc-update-contract-other"
-                                            className="text-normal"
+                                            className={classNames(
+                                              {
+                                                'text-gray-30': !characteristics.planContactUpdated
+                                              },
+                                              'text-normal'
+                                            )}
                                           >
                                             {h('pleaseSpecify')}
                                           </Label>
@@ -500,6 +521,7 @@ const ITToolsPageOne = () => {
                                           </FieldErrorMsg>
                                           <Field
                                             as={TextInput}
+                                            type="text"
                                             disabled={
                                               !characteristics.planContactUpdated
                                             }

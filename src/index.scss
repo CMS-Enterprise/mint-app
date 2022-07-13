@@ -127,3 +127,8 @@ h5 {
 .usa-input, .usa-select {
   max-width: none !important;
 }
+
+input[type="text"]:disabled {
+  color: color('disabled-dark');
+  border-color: color('disabled-dark');
+}

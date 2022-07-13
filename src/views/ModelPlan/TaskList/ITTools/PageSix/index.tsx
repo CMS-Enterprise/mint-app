@@ -12,6 +12,7 @@ import {
   Label,
   TextInput
 } from '@trussworks/react-uswds';
+import classNames from 'classnames';
 import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
 
 import AddNote from 'components/AddNote';
@@ -287,7 +288,14 @@ const ITToolsPageSix = () => {
                                         <div className="margin-left-4 margin-top-1">
                                           <Label
                                             htmlFor="it-tools-oel-obtain-data-other"
-                                            className="text-normal"
+                                            className={classNames(
+                                              {
+                                                'text-gray-30': dataNeededForMonitoring.includes(
+                                                  DataForMonitoringType.NOT_PLANNING_TO_COLLECT_DATA
+                                                )
+                                              },
+                                              'text-normal'
+                                            )}
                                           >
                                             {h('pleaseSpecify')}
                                           </Label>
@@ -296,6 +304,7 @@ const ITToolsPageSix = () => {
                                           </FieldErrorMsg>
                                           <Field
                                             as={TextInput}
+                                            type="text"
                                             disabled={dataNeededForMonitoring.includes(
                                               DataForMonitoringType.NOT_PLANNING_TO_COLLECT_DATA
                                             )}
@@ -398,7 +407,14 @@ const ITToolsPageSix = () => {
                                         <div className="margin-left-4 margin-top-1">
                                           <Label
                                             htmlFor="it-tools-oel-claims-based-measure-other"
-                                            className="text-normal"
+                                            className={classNames(
+                                              {
+                                                'text-gray-30': !dataNeededForMonitoring.includes(
+                                                  DataForMonitoringType.QUALITY_CLAIMS_BASED_MEASURES
+                                                )
+                                              },
+                                              'text-normal'
+                                            )}
                                           >
                                             {h('pleaseSpecify')}
                                           </Label>
@@ -409,6 +425,7 @@ const ITToolsPageSix = () => {
                                           </FieldErrorMsg>
                                           <Field
                                             as={TextInput}
+                                            type="text"
                                             disabled={
                                               !dataNeededForMonitoring.includes(
                                                 DataForMonitoringType.QUALITY_CLAIMS_BASED_MEASURES
@@ -512,7 +529,14 @@ const ITToolsPageSix = () => {
                                         <div className="margin-left-4 margin-top-1">
                                           <Label
                                             htmlFor="it-tools-oel-quality-scores-other"
-                                            className="text-normal"
+                                            className={classNames(
+                                              {
+                                                'text-gray-30': !dataNeededForMonitoring.includes(
+                                                  DataForMonitoringType.QUALITY_REPORTED_MEASURES
+                                                )
+                                              },
+                                              'text-normal'
+                                            )}
                                           >
                                             {h('pleaseSpecify')}
                                           </Label>
@@ -521,6 +545,7 @@ const ITToolsPageSix = () => {
                                           </FieldErrorMsg>
                                           <Field
                                             as={TextInput}
+                                            type="text"
                                             disabled={
                                               !dataNeededForMonitoring.includes(
                                                 DataForMonitoringType.QUALITY_REPORTED_MEASURES
