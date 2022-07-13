@@ -1,5 +1,5 @@
 const payments = {
-  heading: 'Payments',
+  heading: 'Payment',
   description:
     'If there’s a question or field that is not applicable to your model or you don’t currently know the answer, you may leave it blank. If you need help, ask a question below.',
   fundingSource:
