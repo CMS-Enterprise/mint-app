@@ -3,7 +3,7 @@ const payments = {
   description:
     'If there’s a question or field that is not applicable to your model or you don’t currently know the answer, you may leave it blank. If you need help, ask a question below.',
   fundingSource:
-    'What is the funding source for payments? Select all that apply.',
+    'What will be the funding source for payments? Select all that apply.',
   sourceOptions: {
     ppaca: 'Patient Protection Affordable Care Act (Sec 3021)',
     trustFund: 'Trust Fund',
