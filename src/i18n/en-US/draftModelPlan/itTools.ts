@@ -177,7 +177,31 @@ const itTools = {
   scoringToolNeedsAnswer:
     'If your answer includes “Use an application review and scoring tool”, you can select tools from the list below.',
   contractorNeedsAnswer:
-    'If your answer includes “Get an application support contractor”, you can select tools from the list below.'
+    'If your answer includes “Get an application support contractor”, you can select tools from the list below.',
+  oelEducateBeneficiariesOptions: {
+    oc: 'Office of Communications (OC)',
+    other: 'Other'
+  },
+  pMakeClaimsPaymentsOptions: {
+    sharedSystems: 'Shared Systems',
+    higlas: 'Healthcare Integrated General Ledger Accounting System (HIGLAS)',
+    other: 'Other'
+  },
+  pInformFfsOptions: {
+    ffsCompetencyCenter: 'FFS Competency Center',
+    other: 'Other'
+  },
+  educateTools: 'What tool will you use to educate beneficiaries?',
+  educateBeneficiariesNeedsAnswer:
+    'If your answer includes “We plan to educate beneficiaries”, you can select tools from the list below.',
+  ffsTools:
+    'What tools will you use to adjust how Fee-for-Service (FFS) claims are paid?',
+  ffsNeedsAnswer:
+    'If your answer includes “Claims-based payments”, you can select tools from the list below.',
+  waiveParticipantsTools:
+    'What tools will you use to inform Fee-for-Service (FFS) about participants who should be waived from a rule?',
+  yesFFSNeedsAnswer:
+    'If your answer is yes, you will need to select tools from the list below.'
 };
 
 export default itTools;

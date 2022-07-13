@@ -8,7 +8,10 @@ export default gql`
       opsEvalAndLearning {
         modelLearningSystems
       }
-      payment
+      payments {
+        payType
+        shouldAnyProvidersExcludedFFSSystems
+      }
       itTools {
         id
         oelEducateBeneficiaries

@@ -46,6 +46,8 @@ const payments = {
   },
   claimSpecificQuestions: 'Claims-based payment specific questions',
   selectClaims: 'Select which claims-based payments will you pay.',
+  participantsExcluded:
+    'Should model participants be excluded from existing Fee-for-Service payment systems?',
   willYouInform:
     'Will you inform Fee-for-Service about participants that this should be waived from a rule?',
   costSharing: 'Are these payments subject to cost-sharing?',

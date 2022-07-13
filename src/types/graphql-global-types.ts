@@ -434,6 +434,12 @@ export enum ParticipantsType {
   STATE_MEDICAID_AGENCIES = "STATE_MEDICAID_AGENCIES",
 }
 
+export enum PayType {
+  CLAIMS_BASED_PAYMENTS = "CLAIMS_BASED_PAYMENTS",
+  GRANTS = "GRANTS",
+  NON_CLAIMS_BASED_PAYMENTS = "NON_CLAIMS_BASED_PAYMENTS",
+}
+
 export enum PpAppSupportContractorType {
   OTHER = "OTHER",
   RMDA = "RMDA",

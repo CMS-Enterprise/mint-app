@@ -1203,6 +1203,57 @@ export const translateOelParticipantCollaborationType = (type: string) => {
   }
 };
 
+export const translateOelEducateBeneficiariesType = (type: string) => {
+  switch (type) {
+    case 'OC':
+      return i18next.t('itTools:oelEducateBeneficiariesOptions.oc');
+    case 'OTHER':
+      return i18next.t('itTools:oelEducateBeneficiariesOptions.other');
+
+    default:
+      return '';
+  }
+};
+
+export const translatePMakeClaimsPaymentsType = (type: string) => {
+  switch (type) {
+    case 'SHARED_SYSTEMS':
+      return i18next.t('itTools:pMakeClaimsPaymentsOptions.sharedSystems');
+    case 'HIGLAS':
+      return i18next.t('itTools:pMakeClaimsPaymentsOptions.higlas');
+    case 'OTHER':
+      return i18next.t('itTools:pMakeClaimsPaymentsOptions.other');
+
+    default:
+      return '';
+  }
+};
+
+export const translatePInformFfsType = (type: string) => {
+  switch (type) {
+    case 'FFS_COMPETENCY_CENTER':
+      return i18next.t('itTools:pInformFfsOptions.ffsCompetencyCenter');
+    case 'OTHER':
+      return i18next.t('itTools:pInformFfsOptions.other');
+
+    default:
+      return '';
+  }
+};
+
+export const translatePayType = (type: string) => {
+  switch (type) {
+    case 'CLAIMS_BASED_PAYMENTS':
+      return i18next.t('payments:whatWillYouPayOptions.claims');
+    case 'NON_CLAIMS_BASED_PAYMENTS':
+      return i18next.t('payments:whatWillYouPayOptions.nonClaims');
+    case 'GRANTS':
+      return i18next.t('payments:whatWillYouPayOptions.grants');
+    default:
+      return '';
+  }
+};
+
 /**
  * Translate the document type API enum to a human readable string
  */

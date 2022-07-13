@@ -12,6 +12,7 @@ import {
   Label,
   TextInput
 } from '@trussworks/react-uswds';
+import classNames from 'classnames';
 import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
 
 import AddNote from 'components/AddNote';
@@ -29,31 +30,34 @@ import {
   GetITToolPageEight as GetITToolPageEightType,
   GetITToolPageEight_modelPlan_itTools as ITToolsPageEightFormType,
   GetITToolPageEight_modelPlan_opsEvalAndLearning as OpsEvalAndLearnignFormType,
+  GetITToolPageEight_modelPlan_payments as PaymentsFormType,
   GetITToolPageEightVariables
 } from 'queries/ITTools/types/GetITToolPageEight';
 import { UpdatePlanItToolsVariables } from 'queries/ITTools/types/UpdatePlanItTools';
 import UpdatePlanITTools from 'queries/ITTools/UpdatePlanItTools';
 import {
-  DataToSendParticipantsType,
   ModelLearningSystemType,
-  OelLearningContractorType,
-  OelParticipantCollaborationType,
-  OelSendReportsType
+  OelEducateBeneficiariesType,
+  PayType,
+  PInformFfsType,
+  PMakeClaimsPaymentsType
 } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import {
   sortOtherEnum,
-  translateDataToSendParticipantsType,
+  translateBoolean,
   translateModelLearningSystemType,
-  translateOelLearningContractorType,
-  translateOelParticipantCollaborationType,
-  translateOelSendReportsType
+  translateOelEducateBeneficiariesType,
+  translatePayType,
+  translatePInformFfsType,
+  translatePMakeClaimsPaymentsType
 } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
 
 const ITToolsPageEight = () => {
   const { t } = useTranslation('itTools');
   const { t: o } = useTranslation('operationsEvaluationAndLearning');
+  const { t: p } = useTranslation('payments');
   const { t: h } = useTranslation('draftModelPlan');
   const { modelID } = useParams<{ modelID: string }>();
 
@@ -71,19 +75,22 @@ const ITToolsPageEight = () => {
 
   const {
     id,
-    oelSendReports,
-    oelSendReportsOther,
-    oelSendReportsNote,
-    oelLearningContractor,
-    oelLearningContractorOther,
-    oelLearningContractorNote,
-    oelParticipantCollaboration,
-    oelParticipantCollaborationOther,
-    oelParticipantCollaborationNote
+    oelEducateBeneficiaries,
+    oelEducateBeneficiariesOther,
+    oelEducateBeneficiariesNote,
+    pMakeClaimsPayments,
+    pMakeClaimsPaymentsOther,
+    pMakeClaimsPaymentsNote,
+    pInformFfs,
+    pInformFfsOther,
+    pInformFfsNote
   } = data?.modelPlan?.itTools || ({} as ITToolsPageEightFormType);
 
-  const { dataToSendParticicipants = [], modelLearningSystems = [] } =
+  const { modelLearningSystems = [] } =
     data?.modelPlan?.opsEvalAndLearning || ({} as OpsEvalAndLearnignFormType);
+
+  const { payType = [], shouldAnyProvidersExcludedFFSSystems } =
+    data?.modelPlan?.payments || ({} as PaymentsFormType);
 
   const modelName = data?.modelPlan?.modelName || '';
 
@@ -103,9 +110,9 @@ const ITToolsPageEight = () => {
       .then(response => {
         if (!response?.errors) {
           if (redirect === 'next') {
-            history.push(`/models/${modelID}/task-list/it-tools/page-eight`);
+            history.push(`/models/${modelID}/task-list/it-tools/page-nine`);
           } else if (redirect === 'back') {
-            history.push(`/models/${modelID}/task-list/it-tools/page-six`);
+            history.push(`/models/${modelID}/task-list/it-tools/page-seven`);
           } else if (redirect === 'task-list') {
             history.push(`/models/${modelID}/task-list`);
           }
@@ -119,15 +126,15 @@ const ITToolsPageEight = () => {
   const initialValues: ITToolsPageEightFormType = {
     __typename: 'PlanITTools',
     id: id ?? '',
-    oelSendReports: oelSendReports ?? [],
-    oelSendReportsOther: oelSendReportsOther ?? '',
-    oelSendReportsNote: oelSendReportsNote ?? '',
-    oelLearningContractor: oelLearningContractor ?? [],
-    oelLearningContractorOther: oelLearningContractorOther ?? '',
-    oelLearningContractorNote: oelLearningContractorNote ?? '',
-    oelParticipantCollaboration: oelParticipantCollaboration ?? [],
-    oelParticipantCollaborationOther: oelParticipantCollaborationOther ?? '',
-    oelParticipantCollaborationNote: oelParticipantCollaborationNote ?? ''
+    oelEducateBeneficiaries: oelEducateBeneficiaries ?? [],
+    oelEducateBeneficiariesOther: oelEducateBeneficiariesOther ?? '',
+    oelEducateBeneficiariesNote: oelEducateBeneficiariesNote ?? '',
+    pMakeClaimsPayments: pMakeClaimsPayments ?? [],
+    pMakeClaimsPaymentsOther: pMakeClaimsPaymentsOther ?? '',
+    pMakeClaimsPaymentsNote: pMakeClaimsPaymentsNote ?? '',
+    pInformFfs: pInformFfs ?? [],
+    pInformFfsOther: pInformFfsOther ?? '',
+    pInformFfsNote: pInformFfsNote ?? ''
   };
 
   if ((!loading && error) || (!loading && !data?.modelPlan)) {
@@ -211,133 +218,20 @@ const ITToolsPageEight = () => {
                     <h2>{o('heading')}</h2>
 
                     <FieldGroup
-                      scrollElement="oelSendReports"
-                      error={!!flatErrors.oelSendReports}
+                      scrollElement="oelEducateBeneficiaries"
+                      error={!!flatErrors.oelEducateBeneficiaries}
                       className="margin-y-4"
                     >
                       <FieldArray
-                        name="oelSendReports"
+                        name="oelEducateBeneficiaries"
                         render={arrayHelpers => (
                           <>
                             <legend className="usa-label maxw-none">
-                              {t('sendReportTools')}
+                              {t('educateTools')}
                             </legend>
 
                             <FieldErrorMsg>
-                              {flatErrors.oelSendReports}
-                            </FieldErrorMsg>
-
-                            <ITToolsSummary
-                              question={o('dataToSend')}
-                              answers={dataToSendParticicipants.map(
-                                dataToSend =>
-                                  translateDataToSendParticipantsType(
-                                    dataToSend || ''
-                                  )
-                              )}
-                              options={Object.keys(DataToSendParticipantsType)
-                                .map(dataType =>
-                                  translateDataToSendParticipantsType(dataType)
-                                )
-                                .filter(
-                                  dataType =>
-                                    dataType !==
-                                    DataToSendParticipantsType.NOT_PLANNING_TO_SEND_DATA
-                                )}
-                              redirect={`/models/${modelID}/task-list/ops-eval-and-learning/evaluation`}
-                              answered={dataToSendParticicipants.length > 0}
-                              needsTool={
-                                dataToSendParticicipants.length > 0 &&
-                                !dataToSendParticicipants.includes(
-                                  DataToSendParticipantsType.NOT_PLANNING_TO_SEND_DATA
-                                )
-                              }
-                              subtext={t('sendDataNeedsAnswer')}
-                            />
-
-                            <p className="margin-top-4">{t('tools')}</p>
-
-                            {Object.keys(OelSendReportsType)
-                              .sort(sortOtherEnum)
-                              .map(type => {
-                                return (
-                                  <Fragment key={type}>
-                                    <Field
-                                      as={CheckboxField}
-                                      disabled={dataToSendParticicipants.includes(
-                                        DataToSendParticipantsType.NOT_PLANNING_TO_SEND_DATA
-                                      )}
-                                      id={`it-tools-oel-send-reports-${type}`}
-                                      name="oelSendReports"
-                                      label={translateOelSendReportsType(type)}
-                                      value={type}
-                                      checked={values?.oelSendReports.includes(
-                                        type as OelSendReportsType
-                                      )}
-                                      onChange={(
-                                        e: React.ChangeEvent<HTMLInputElement>
-                                      ) => {
-                                        if (e.target.checked) {
-                                          arrayHelpers.push(e.target.value);
-                                        } else {
-                                          const idx = values.oelSendReports.indexOf(
-                                            e.target.value as OelSendReportsType
-                                          );
-                                          arrayHelpers.remove(idx);
-                                        }
-                                      }}
-                                    />
-                                    {type === OelSendReportsType.OTHER &&
-                                      values.oelSendReports.includes(type) && (
-                                        <div className="margin-left-4 margin-top-1">
-                                          <Label
-                                            htmlFor="it-tools-oel-send-reports-other"
-                                            className="text-normal"
-                                          >
-                                            {h('pleaseSpecify')}
-                                          </Label>
-                                          <FieldErrorMsg>
-                                            {flatErrors.oelSendReportsOther}
-                                          </FieldErrorMsg>
-                                          <Field
-                                            as={TextInput}
-                                            disabled={dataToSendParticicipants.includes(
-                                              DataToSendParticipantsType.NOT_PLANNING_TO_SEND_DATA
-                                            )}
-                                            className="maxw-none"
-                                            id="it-tools-oel-send-reports-other"
-                                            maxLength={50}
-                                            name="oelSendReportsOther"
-                                          />
-                                        </div>
-                                      )}
-                                  </Fragment>
-                                );
-                              })}
-                            <AddNote
-                              id="it-tools-oel-send-reports-note"
-                              field="oelSendReportsNote"
-                            />
-                          </>
-                        )}
-                      />
-                    </FieldGroup>
-
-                    <FieldGroup
-                      scrollElement="oelLearningContractor"
-                      error={!!flatErrors.oelLearningContractor}
-                      className="margin-y-4"
-                    >
-                      <FieldArray
-                        name="oelLearningContractor"
-                        render={arrayHelpers => (
-                          <>
-                            <legend className="usa-label maxw-none">
-                              {t('sendReportTools')}
-                            </legend>
-
-                            <FieldErrorMsg>
-                              {flatErrors.oelLearningContractor}
+                              {flatErrors.oelEducateBeneficiaries}
                             </FieldErrorMsg>
 
                             <ITToolsSummary
@@ -347,20 +241,20 @@ const ITToolsPageEight = () => {
                               )}
                               options={[
                                 translateModelLearningSystemType(
-                                  ModelLearningSystemType.LEARNING_CONTRACTOR
+                                  ModelLearningSystemType.EDUCATE_BENEFICIARIES
                                 )
                               ]}
                               redirect={`/models/${modelID}/task-list/ops-eval-and-learning/learning`}
                               answered={modelLearningSystems.length > 0}
                               needsTool={modelLearningSystems.includes(
-                                ModelLearningSystemType.LEARNING_CONTRACTOR
+                                ModelLearningSystemType.EDUCATE_BENEFICIARIES
                               )}
-                              subtext={t('learningNeedsAnswer')}
+                              subtext={t('educateBeneficiariesNeedsAnswer')}
                             />
 
                             <p className="margin-top-4">{t('tools')}</p>
 
-                            {Object.keys(OelLearningContractorType)
+                            {Object.keys(OelEducateBeneficiariesType)
                               .sort(sortOtherEnum)
                               .map(type => {
                                 return (
@@ -369,17 +263,17 @@ const ITToolsPageEight = () => {
                                       as={CheckboxField}
                                       disabled={
                                         !modelLearningSystems.includes(
-                                          ModelLearningSystemType.LEARNING_CONTRACTOR
+                                          ModelLearningSystemType.EDUCATE_BENEFICIARIES
                                         )
                                       }
-                                      id={`it-tools-oel-learning-contractor-${type}`}
-                                      name="oelLearningContractor"
-                                      label={translateOelLearningContractorType(
+                                      id={`it-tools-oel-educate-beneficiaries-${type}`}
+                                      name="oelEducateBeneficiaries"
+                                      label={translateOelEducateBeneficiariesType(
                                         type
                                       )}
                                       value={type}
-                                      checked={values?.oelLearningContractor.includes(
-                                        type as OelLearningContractorType
+                                      checked={values?.oelEducateBeneficiaries.includes(
+                                        type as OelEducateBeneficiariesType
                                       )}
                                       onChange={(
                                         e: React.ChangeEvent<HTMLInputElement>
@@ -387,156 +281,50 @@ const ITToolsPageEight = () => {
                                         if (e.target.checked) {
                                           arrayHelpers.push(e.target.value);
                                         } else {
-                                          const idx = values.oelLearningContractor.indexOf(
+                                          const idx = values.oelEducateBeneficiaries.indexOf(
                                             e.target
-                                              .value as OelLearningContractorType
-                                          );
-                                          arrayHelpers.remove(idx);
-                                        }
-                                      }}
-                                    />
-                                    {type === OelLearningContractorType.OTHER &&
-                                      values.oelLearningContractor.includes(
-                                        type
-                                      ) && (
-                                        <div className="margin-left-4 margin-top-1">
-                                          <Label
-                                            htmlFor="it-tools-oel-learning-contractor-other"
-                                            className="text-normal"
-                                          >
-                                            {h('pleaseSpecify')}
-                                          </Label>
-                                          <FieldErrorMsg>
-                                            {
-                                              flatErrors.oelLearningContractorOther
-                                            }
-                                          </FieldErrorMsg>
-                                          <Field
-                                            as={TextInput}
-                                            disabled={
-                                              !modelLearningSystems.includes(
-                                                ModelLearningSystemType.LEARNING_CONTRACTOR
-                                              )
-                                            }
-                                            className="maxw-none"
-                                            id="it-tools-oel-learning-contractor-other"
-                                            maxLength={50}
-                                            name="oelLearningContractorOther"
-                                          />
-                                        </div>
-                                      )}
-                                  </Fragment>
-                                );
-                              })}
-                            <AddNote
-                              id="it-tools-oel-learning-contractor-note"
-                              field="oelLearningContractorNote"
-                            />
-                          </>
-                        )}
-                      />
-                    </FieldGroup>
-
-                    <FieldGroup
-                      scrollElement="oelParticipantCollaboration"
-                      error={!!flatErrors.oelParticipantCollaboration}
-                      className="margin-y-4"
-                    >
-                      <FieldArray
-                        name="oelParticipantCollaboration"
-                        render={arrayHelpers => (
-                          <>
-                            <legend className="usa-label maxw-none">
-                              {t('sendReportTools')}
-                            </legend>
-
-                            <FieldErrorMsg>
-                              {flatErrors.oelParticipantCollaboration}
-                            </FieldErrorMsg>
-
-                            <ITToolsSummary
-                              question={o('dataToSend')}
-                              answers={modelLearningSystems.map(system =>
-                                translateModelLearningSystemType(system || '')
-                              )}
-                              options={[
-                                translateModelLearningSystemType(
-                                  ModelLearningSystemType.PARTICIPANT_COLLABORATION
-                                )
-                              ]}
-                              redirect={`/models/${modelID}/task-list/ops-eval-and-learning/learning`}
-                              answered={modelLearningSystems.length > 0}
-                              needsTool={modelLearningSystems.includes(
-                                ModelLearningSystemType.PARTICIPANT_COLLABORATION
-                              )}
-                              subtext={t('participantNeedsAnswer')}
-                            />
-
-                            <p className="margin-top-4">{t('tools')}</p>
-
-                            {Object.keys(OelParticipantCollaborationType)
-                              .sort(sortOtherEnum)
-                              .map(type => {
-                                return (
-                                  <Fragment key={type}>
-                                    <Field
-                                      as={CheckboxField}
-                                      disabled={
-                                        !modelLearningSystems.includes(
-                                          ModelLearningSystemType.PARTICIPANT_COLLABORATION
-                                        )
-                                      }
-                                      id={`it-tools-oel-participant-collaboration-${type}`}
-                                      name="oelParticipantCollaboration"
-                                      label={translateOelParticipantCollaborationType(
-                                        type
-                                      )}
-                                      value={type}
-                                      checked={values?.oelParticipantCollaboration.includes(
-                                        type as OelParticipantCollaborationType
-                                      )}
-                                      onChange={(
-                                        e: React.ChangeEvent<HTMLInputElement>
-                                      ) => {
-                                        if (e.target.checked) {
-                                          arrayHelpers.push(e.target.value);
-                                        } else {
-                                          const idx = values.oelParticipantCollaboration.indexOf(
-                                            e.target
-                                              .value as OelParticipantCollaborationType
+                                              .value as OelEducateBeneficiariesType
                                           );
                                           arrayHelpers.remove(idx);
                                         }
                                       }}
                                     />
                                     {type ===
-                                      OelParticipantCollaborationType.OTHER &&
-                                      values.oelParticipantCollaboration.includes(
+                                      OelEducateBeneficiariesType.OTHER &&
+                                      values.oelEducateBeneficiaries.includes(
                                         type
                                       ) && (
                                         <div className="margin-left-4 margin-top-1">
                                           <Label
-                                            htmlFor="it-tools-oel-participant-collaboration-other"
-                                            className="text-normal"
+                                            htmlFor="it-tools-oel-educate-beneficiaries-other"
+                                            className={classNames(
+                                              {
+                                                'text-gray-30': !modelLearningSystems.includes(
+                                                  ModelLearningSystemType.EDUCATE_BENEFICIARIES
+                                                )
+                                              },
+                                              'text-normal'
+                                            )}
                                           >
                                             {h('pleaseSpecify')}
                                           </Label>
                                           <FieldErrorMsg>
                                             {
-                                              flatErrors.oelParticipantCollaborationOther
+                                              flatErrors.oelEducateBeneficiariesOther
                                             }
                                           </FieldErrorMsg>
                                           <Field
                                             as={TextInput}
+                                            type="text"
                                             disabled={
                                               !modelLearningSystems.includes(
-                                                ModelLearningSystemType.PARTICIPANT_COLLABORATION
+                                                ModelLearningSystemType.EDUCATE_BENEFICIARIES
                                               )
                                             }
                                             className="maxw-none"
-                                            id="it-tools-oel-participant-collaboration-other"
+                                            id="it-tools-oel-educate-beneficiaries-other"
                                             maxLength={50}
-                                            name="oelParticipantCollaborationOther"
+                                            name="oelEducateBeneficiariesOther"
                                           />
                                         </div>
                                       )}
@@ -544,8 +332,248 @@ const ITToolsPageEight = () => {
                                 );
                               })}
                             <AddNote
-                              id="it-tools-oel-participant-collaboration-note"
-                              field="oelParticipantCollaborationNote"
+                              id="it-tools-oel-educate-beneficiaries-note"
+                              field="oelEducateBeneficiariesNote"
+                            />
+                          </>
+                        )}
+                      />
+                    </FieldGroup>
+
+                    <h2>{p('heading')}</h2>
+
+                    <FieldGroup
+                      scrollElement="pMakeClaimsPayments"
+                      error={!!flatErrors.pMakeClaimsPayments}
+                      className="margin-y-4"
+                    >
+                      <FieldArray
+                        name="pMakeClaimsPayments"
+                        render={arrayHelpers => (
+                          <>
+                            <legend className="usa-label maxw-none">
+                              {t('ffsTools')}
+                            </legend>
+
+                            <FieldErrorMsg>
+                              {flatErrors.pMakeClaimsPayments}
+                            </FieldErrorMsg>
+
+                            <ITToolsSummary
+                              question={p('whatWillYouPay')}
+                              answers={payType!.map(type =>
+                                translatePayType(type || '')
+                              )}
+                              options={[
+                                translatePayType(PayType.CLAIMS_BASED_PAYMENTS)
+                              ]}
+                              redirect={`/models/${modelID}/task-list/payments`}
+                              answered={payType!.length > 0}
+                              needsTool={payType!.includes(
+                                PayType.CLAIMS_BASED_PAYMENTS
+                              )}
+                              subtext={t('ffsNeedsAnswer')}
+                            />
+
+                            <p className="margin-top-4">{t('tools')}</p>
+
+                            {Object.keys(PMakeClaimsPaymentsType)
+                              .sort(sortOtherEnum)
+                              .map(type => {
+                                return (
+                                  <Fragment key={type}>
+                                    <Field
+                                      as={CheckboxField}
+                                      disabled={
+                                        !payType!.includes(
+                                          PayType.CLAIMS_BASED_PAYMENTS
+                                        )
+                                      }
+                                      id={`it-tools-p-claims-payments-${type}`}
+                                      name="pMakeClaimsPayments"
+                                      label={translatePMakeClaimsPaymentsType(
+                                        type
+                                      )}
+                                      value={type}
+                                      checked={values?.pMakeClaimsPayments.includes(
+                                        type as PMakeClaimsPaymentsType
+                                      )}
+                                      onChange={(
+                                        e: React.ChangeEvent<HTMLInputElement>
+                                      ) => {
+                                        if (e.target.checked) {
+                                          arrayHelpers.push(e.target.value);
+                                        } else {
+                                          const idx = values.pMakeClaimsPayments.indexOf(
+                                            e.target
+                                              .value as PMakeClaimsPaymentsType
+                                          );
+                                          arrayHelpers.remove(idx);
+                                        }
+                                      }}
+                                    />
+                                    {type === PMakeClaimsPaymentsType.OTHER &&
+                                      values.pMakeClaimsPayments.includes(
+                                        type
+                                      ) && (
+                                        <div className="margin-left-4 margin-top-1">
+                                          <Label
+                                            htmlFor="it-tools-p-claims-payments-other"
+                                            className={classNames(
+                                              {
+                                                'text-gray-30': !payType!.includes(
+                                                  PayType.CLAIMS_BASED_PAYMENTS
+                                                )
+                                              },
+                                              'text-normal'
+                                            )}
+                                          >
+                                            {h('pleaseSpecify')}
+                                          </Label>
+                                          <FieldErrorMsg>
+                                            {
+                                              flatErrors.pMakeClaimsPaymentsOther
+                                            }
+                                          </FieldErrorMsg>
+                                          <Field
+                                            as={TextInput}
+                                            type="text"
+                                            disabled={
+                                              !payType!.includes(
+                                                PayType.CLAIMS_BASED_PAYMENTS
+                                              )
+                                            }
+                                            className="maxw-none"
+                                            id="it-tools-p-claims-payments-other"
+                                            maxLength={50}
+                                            name="pMakeClaimsPaymentsOther"
+                                          />
+                                        </div>
+                                      )}
+                                  </Fragment>
+                                );
+                              })}
+                            <AddNote
+                              id="it-tools-p-claims-payments-note"
+                              field="pMakeClaimsPaymentsNote"
+                            />
+                          </>
+                        )}
+                      />
+                    </FieldGroup>
+
+                    <FieldGroup
+                      scrollElement="pInformFfs"
+                      error={!!flatErrors.pInformFfs}
+                      className="margin-y-4"
+                    >
+                      <FieldArray
+                        name="pInformFfs"
+                        render={arrayHelpers => (
+                          <>
+                            <legend className="usa-label maxw-none">
+                              {t('waiveParticipantsTools')}
+                            </legend>
+
+                            <FieldErrorMsg>
+                              {flatErrors.pInformFfs}
+                            </FieldErrorMsg>
+
+                            <ITToolsSummary
+                              question={p('participantsExcluded')}
+                              answers={[
+                                translateBoolean(
+                                  shouldAnyProvidersExcludedFFSSystems || false
+                                )
+                              ]}
+                              options={[
+                                translateBoolean(true),
+                                translateBoolean(false)
+                              ]}
+                              redirect={`/models/${modelID}/task-list/payments`}
+                              answered={
+                                shouldAnyProvidersExcludedFFSSystems !== null
+                              }
+                              needsTool={
+                                shouldAnyProvidersExcludedFFSSystems === true
+                              }
+                              subtext={t('yesFFSNeedsAnswer')}
+                            />
+
+                            <p className="margin-top-4">{t('tools')}</p>
+
+                            {Object.keys(PInformFfsType)
+                              .sort(sortOtherEnum)
+                              .map(type => {
+                                return (
+                                  <Fragment key={type}>
+                                    <Field
+                                      as={CheckboxField}
+                                      disabled={
+                                        !payType!.includes(
+                                          PayType.CLAIMS_BASED_PAYMENTS
+                                        )
+                                      }
+                                      id={`it-tools-p-inform-ffs-${type}`}
+                                      name="pInformFfs"
+                                      label={translatePInformFfsType(type)}
+                                      value={type}
+                                      checked={values?.pInformFfs.includes(
+                                        type as PInformFfsType
+                                      )}
+                                      onChange={(
+                                        e: React.ChangeEvent<HTMLInputElement>
+                                      ) => {
+                                        if (e.target.checked) {
+                                          arrayHelpers.push(e.target.value);
+                                        } else {
+                                          const idx = values.pInformFfs.indexOf(
+                                            e.target.value as PInformFfsType
+                                          );
+                                          arrayHelpers.remove(idx);
+                                        }
+                                      }}
+                                    />
+                                    {type === PInformFfsType.OTHER &&
+                                      values.pInformFfs.includes(type) && (
+                                        <div className="margin-left-4 margin-top-1">
+                                          <Label
+                                            htmlFor="it-tools-p-inform-ffs-other"
+                                            className={classNames(
+                                              {
+                                                'text-gray-30': !payType!.includes(
+                                                  PayType.CLAIMS_BASED_PAYMENTS
+                                                )
+                                              },
+                                              'text-normal'
+                                            )}
+                                          >
+                                            {h('pleaseSpecify')}
+                                          </Label>
+                                          <FieldErrorMsg>
+                                            {flatErrors.pInformFfsOther}
+                                          </FieldErrorMsg>
+                                          <Field
+                                            as={TextInput}
+                                            type="text"
+                                            disabled={
+                                              !payType!.includes(
+                                                PayType.CLAIMS_BASED_PAYMENTS
+                                              )
+                                            }
+                                            className="maxw-none"
+                                            id="it-tools-p-inform-ffs-other"
+                                            maxLength={50}
+                                            name="pInformFfsOther"
+                                          />
+                                        </div>
+                                      )}
+                                  </Fragment>
+                                );
+                              })}
+                            <AddNote
+                              id="it-tools-p-inform-ffs-note"
+                              field="pInformFfsNote"
                             />
                           </>
                         )}
