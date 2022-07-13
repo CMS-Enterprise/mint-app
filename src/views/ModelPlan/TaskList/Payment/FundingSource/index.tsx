@@ -15,6 +15,7 @@ import {
 } from '@trussworks/react-uswds';
 import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
 
+import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
@@ -309,6 +310,11 @@ const FundingSource = () => {
                         )}
                       />
 
+                      <AddNote
+                        id="payment-funding-source-note"
+                        field="fundingSourceNote"
+                      />
+
                       <FieldArray
                         name="fundingSourceR"
                         render={arrayHelpers => (
@@ -408,6 +414,11 @@ const FundingSource = () => {
                         )}
                       />
 
+                      <AddNote
+                        id="payment-funding-source-reconciliation-note"
+                        field="fundingSourceRNote"
+                      />
+
                       <FieldArray
                         name="payRecipients"
                         render={arrayHelpers => (
@@ -480,6 +491,11 @@ const FundingSource = () => {
                               })}
                           </>
                         )}
+                      />
+
+                      <AddNote
+                        id="payment-pay-recipients-note"
+                        field="payRecipientsNote"
                       />
 
                       <div className="margin-top-6 margin-bottom-3">
