@@ -319,6 +319,19 @@ export const translateSelectionMethodType = (type: string) => {
   }
 };
 
+export const translateSourceOptions = (type: string) => {
+  switch (type) {
+    case 'PATIENT_PROTECTION_AFFORDABLE_CARE_ACT':
+      return i18next.t('payments:sourceOptions.ppaca');
+    case 'TRUST_FUND':
+      return i18next.t('payments:sourceOptions.trustFund');
+    case 'OTHER':
+      return i18next.t('payments:sourceOptions.other');
+    default:
+      return '';
+  }
+};
+
 export const translateConfidenceType = (type: string) => {
   switch (type) {
     case 'NOT_AT_ALL':
