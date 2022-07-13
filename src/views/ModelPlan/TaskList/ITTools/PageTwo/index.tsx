@@ -236,10 +236,6 @@ const ITToolsPageTwo = () => {
                                   recruitmentMethod || ''
                                 )
                               ]}
-                              options={[
-                                translateRecruitmentType(RecruitmentType.LOI),
-                                translateRecruitmentType(RecruitmentType.NOFO)
-                              ]}
                               redirect={`/models/${modelID}/task-list/participants-and-providers/participants-options`}
                               answered={recruitmentMethod !== null}
                               needsTool={
@@ -361,11 +357,6 @@ const ITToolsPageTwo = () => {
                                 .map(selection =>
                                   translateParticipantSelectiontType(selection)
                                 )}
-                              options={[
-                                translateParticipantSelectiontType(
-                                  ParticipantSelectionType.APPLICATION_REVIEW_AND_SCORING_TOOL
-                                )
-                              ]}
                               redirect={`/models/${modelID}/task-list/participants-and-providers/participants-options`}
                               answered={selectionMethod.length > 0}
                               needsTool={selectionMethod.includes(
@@ -386,7 +377,7 @@ const ITToolsPageTwo = () => {
                                       disabled={
                                         !selectionMethod.includes(
                                           ParticipantSelectionType.APPLICATION_REVIEW_AND_SCORING_TOOL
-                                        )
+                                        ) || selectionMethod.length === 0
                                       }
                                       id={`it-tools-pp-collect-score-review-${type}`}
                                       name="ppCollectScoreReview"
@@ -420,9 +411,11 @@ const ITToolsPageTwo = () => {
                                             htmlFor="it-tools-pp-collect-score-review-other"
                                             className={classNames(
                                               {
-                                                'text-gray-30': !selectionMethod.includes(
-                                                  ParticipantSelectionType.APPLICATION_REVIEW_AND_SCORING_TOOL
-                                                )
+                                                'text-gray-30':
+                                                  !selectionMethod.includes(
+                                                    ParticipantSelectionType.APPLICATION_REVIEW_AND_SCORING_TOOL
+                                                  ) ||
+                                                  selectionMethod.length === 0
                                               },
                                               'text-normal'
                                             )}
@@ -440,7 +433,7 @@ const ITToolsPageTwo = () => {
                                             disabled={
                                               !selectionMethod.includes(
                                                 ParticipantSelectionType.APPLICATION_REVIEW_AND_SCORING_TOOL
-                                              )
+                                              ) || selectionMethod.length === 0
                                             }
                                             className="maxw-none"
                                             id="it-tools-pp-collect-score-review-other"
@@ -489,11 +482,6 @@ const ITToolsPageTwo = () => {
                                 .map(selection =>
                                   translateParticipantSelectiontType(selection)
                                 )}
-                              options={[
-                                translateParticipantSelectiontType(
-                                  ParticipantSelectionType.APPLICATION_SUPPORT_CONTRACTOR
-                                )
-                              ]}
                               redirect={`/models/${modelID}/task-list/participants-and-providers/participants-options`}
                               answered={selectionMethod.length > 0}
                               needsTool={selectionMethod.includes(

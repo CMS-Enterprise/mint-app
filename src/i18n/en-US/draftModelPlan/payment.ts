@@ -44,6 +44,20 @@ const payments = {
     nonClaims: 'Non-Claims-Based Payments',
     grants: 'Grants'
   },
+  nonClaimsPaymentsOptions: {
+    advancedPayment: 'Advanced Payment',
+    bundled: 'Bundled/Episode of Care',
+    capitationFull: 'Capitation/Population Based - Full',
+    capitationPart: 'Capitation/Population Based - Partial',
+    careCoordination: 'Care Coordination/Management Fee',
+    globalBudget: 'Global Budget',
+    grants: 'Grants',
+    incentivePayment: 'Incentive Payment',
+    mapSharedSavings:
+      'Medicare Advantage Prescription Drug (MAPD) Shared Savings',
+    sharedSavings: 'Shared Savings',
+    other: 'Other'
+  },
   claimSpecificQuestions: 'Claims-based payment specific questions',
   selectClaims: 'Select which claims-based payments will you pay.',
   participantsExcluded:
@@ -67,7 +81,7 @@ const payments = {
     c: 'c. Ideally an epsiode level dataset (SAS, CSV, Excel,...)'
   },
   nonClaimSpecificQuestions: 'Non-claims-based payment specific questions',
-  slectNonClaims: 'Select which non-claims-based payments will you pay.',
+  selectNonClaims: 'Select which non-claims-based payments will you pay.',
   sharedSystemInvolved:
     'Will the shared systesm be involved for additional payments of claims?',
   reasonableRange:

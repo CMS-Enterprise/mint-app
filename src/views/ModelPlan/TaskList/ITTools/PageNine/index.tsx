@@ -25,43 +25,48 @@ import CheckboxField from 'components/shared/CheckboxField';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
-import GetITToolsPageOne from 'queries/ITTools/GetITToolsPageOne';
+import GetITToolsPageNine from 'queries/ITTools/GetITToolsPageNine';
 import {
-  GetITToolPageOne as GetITToolsPageOneType,
-  GetITToolPageOne_modelPlan_generalCharacteristics as GeneralCharacteristicsFormType,
-  GetITToolPageOne_modelPlan_itTools as ITToolsPageOneFormType,
-  GetITToolPageOneVariables
-} from 'queries/ITTools/types/GetITToolPageOne';
+  GetITToolPageNine as GetITToolPageNineType,
+  GetITToolPageNine_modelPlan_itTools as ITToolsPageNineFormType,
+  GetITToolPageNine_modelPlan_payments as PaymentsFormType,
+  GetITToolPageNineVariables
+} from 'queries/ITTools/types/GetITToolPageNine';
 import { UpdatePlanItToolsVariables } from 'queries/ITTools/types/UpdatePlanItTools';
 import UpdatePlanITTools from 'queries/ITTools/UpdatePlanItTools';
 import {
-  GcCollectBidsType,
-  GcPartCDType,
-  GcUpdateContractType
+  NonClaimsBasedPayType,
+  PayType,
+  PNonClaimsBasedPaymentsType,
+  PRecoverPaymentsType,
+  PSharedSavingsPlanType
 } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import {
   sortOtherEnum,
   translateBoolean,
-  translateGcCollectBidsType,
-  translateGcPartCDType,
-  translateGcUpdateContractType
+  translateNonClaimsBasedPayType,
+  translatePayType,
+  translatePNonClaimsBasedPaymentsType,
+  translatePRecoverPaymentsType,
+  translatePSharedSavingsPlanType
 } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
 
-const ITToolsPageOne = () => {
+const ITToolsPageNine = () => {
   const { t } = useTranslation('itTools');
-  const { t: c } = useTranslation('generalCharacteristics');
+  const { t: o } = useTranslation('operationsEvaluationAndLearning');
+  const { t: p } = useTranslation('payments');
   const { t: h } = useTranslation('draftModelPlan');
   const { modelID } = useParams<{ modelID: string }>();
 
-  const formikRef = useRef<FormikProps<ITToolsPageOneFormType>>(null);
+  const formikRef = useRef<FormikProps<ITToolsPageNineFormType>>(null);
   const history = useHistory();
 
   const { data, loading, error } = useQuery<
-    GetITToolsPageOneType,
-    GetITToolPageOneVariables
-  >(GetITToolsPageOne, {
+    GetITToolPageNineType,
+    GetITToolPageNineVariables
+  >(GetITToolsPageNine, {
     variables: {
       id: modelID
     }
@@ -69,27 +74,26 @@ const ITToolsPageOne = () => {
 
   const {
     id,
-    gcPartCD,
-    gcPartCDOther,
-    gcPartCDNote,
-    gcCollectBids,
-    gcCollectBidsOther,
-    gcCollectBidsNote,
-    gcUpdateContract,
-    gcUpdateContractOther,
-    gcUpdateContractNote
-  } = data?.modelPlan?.itTools || ({} as ITToolsPageOneFormType);
+    pNonClaimsBasedPayments,
+    pNonClaimsBasedPaymentsOther,
+    pNonClaimsBasedPaymentsNote,
+    pSharedSavingsPlan,
+    pSharedSavingsPlanOther,
+    pSharedSavingsPlanNote,
+    pRecoverPayments,
+    pRecoverPaymentsOther,
+    pRecoverPaymentsNote
+  } = data?.modelPlan?.itTools || ({} as ITToolsPageNineFormType);
 
-  const characteristics =
-    data?.modelPlan?.generalCharacteristics ||
-    ({} as GeneralCharacteristicsFormType);
+  const { payType = [], nonClaimsPayments = [], willRecoverPayments } =
+    data?.modelPlan?.payments || ({} as PaymentsFormType);
 
   const modelName = data?.modelPlan?.modelName || '';
 
   const [update] = useMutation<UpdatePlanItToolsVariables>(UpdatePlanITTools);
 
   const handleFormSubmit = (
-    formikValues: ITToolsPageOneFormType,
+    formikValues: ITToolsPageNineFormType,
     redirect?: 'next' | 'back' | 'task-list'
   ) => {
     const { id: updateId, __typename, ...changeValues } = formikValues;
@@ -102,7 +106,9 @@ const ITToolsPageOne = () => {
       .then(response => {
         if (!response?.errors) {
           if (redirect === 'next') {
-            history.push(`/models/${modelID}/task-list/it-tools/page-two`);
+            history.push(`/models/${modelID}/task-list`);
+          } else if (redirect === 'back') {
+            history.push(`/models/${modelID}/task-list/it-tools/page-eight`);
           } else if (redirect === 'task-list') {
             history.push(`/models/${modelID}/task-list`);
           }
@@ -113,18 +119,18 @@ const ITToolsPageOne = () => {
       });
   };
 
-  const initialValues: ITToolsPageOneFormType = {
+  const initialValues: ITToolsPageNineFormType = {
     __typename: 'PlanITTools',
     id: id ?? '',
-    gcPartCD: gcPartCD ?? [],
-    gcPartCDOther: gcPartCDOther ?? '',
-    gcPartCDNote: gcPartCDNote ?? '',
-    gcCollectBids: gcCollectBids ?? [],
-    gcCollectBidsOther: gcCollectBidsOther ?? '',
-    gcCollectBidsNote: gcCollectBidsNote ?? '',
-    gcUpdateContract: gcUpdateContract ?? [],
-    gcUpdateContractOther: gcUpdateContractOther ?? '',
-    gcUpdateContractNote: gcUpdateContractNote ?? ''
+    pNonClaimsBasedPayments: pNonClaimsBasedPayments ?? [],
+    pNonClaimsBasedPaymentsOther: pNonClaimsBasedPaymentsOther ?? '',
+    pNonClaimsBasedPaymentsNote: pNonClaimsBasedPaymentsNote ?? '',
+    pSharedSavingsPlan: pSharedSavingsPlan ?? [],
+    pSharedSavingsPlanOther: pSharedSavingsPlanOther ?? '',
+    pSharedSavingsPlanNote: pSharedSavingsPlanNote ?? '',
+    pRecoverPayments: pRecoverPayments ?? [],
+    pRecoverPaymentsOther: pRecoverPaymentsOther ?? '',
+    pRecoverPaymentsNote: pRecoverPaymentsNote ?? ''
   };
 
   if ((!loading && error) || (!loading && !data?.modelPlan)) {
@@ -158,7 +164,7 @@ const ITToolsPageOne = () => {
           indexZero {modelName} indexTwo
         </Trans>
       </p>
-      <p className="margin-bottom-2 font-body-md line-height-sans-4">
+      <p className="margin-bottom-2 font-body-md line-hNine-sans-4">
         {t('subheading')}
       </p>
 
@@ -172,7 +178,7 @@ const ITToolsPageOne = () => {
         enableReinitialize
         innerRef={formikRef}
       >
-        {(formikProps: FormikProps<ITToolsPageOneFormType>) => {
+        {(formikProps: FormikProps<ITToolsPageNineFormType>) => {
           const { errors, handleSubmit, setErrors, values } = formikProps;
           const flatErrors = flattenErrors(errors);
 
@@ -200,161 +206,48 @@ const ITToolsPageOne = () => {
                 <Grid desktop={{ col: 6 }}>
                   <Form
                     className="margin-top-6"
-                    data-testid="it-tools-page-one-form"
+                    data-testid="oit-tools-page-nine-form"
                     onSubmit={e => {
                       handleSubmit(e);
                     }}
                   >
-                    <h2>{c('heading')}</h2>
-
                     <FieldGroup
-                      scrollElement="gcPartCD"
-                      error={!!flatErrors.gcPartCD}
+                      scrollElement="pNonClaimsBasedPayments"
+                      error={!!flatErrors.pNonClaimsBasedPayments}
                       className="margin-y-4"
                     >
                       <FieldArray
-                        name="gcPartCD"
+                        name="pNonClaimsBasedPayments"
                         render={arrayHelpers => (
                           <>
-                            <legend className="usa-label">
-                              {t('partCDTools')}
+                            <legend className="usa-label maxw-none">
+                              {t('nonClaimsTools')}
                             </legend>
+
                             <p className="text-base margin-top-1 margin-bottom-3 line-height-body-3">
-                              {t('partCDToolsInfo')}
+                              {t('nonClaimsToolsInfo')}
                             </p>
-                            <FieldErrorMsg>{flatErrors.gcPartCD}</FieldErrorMsg>
 
-                            <ITToolsSummary
-                              question={c('manageEnrollment')}
-                              answers={[
-                                translateBoolean(
-                                  characteristics.managePartCDEnrollment ||
-                                    false
-                                )
-                              ]}
-                              redirect={`/models/${modelID}/task-list/characteristics/key-characteristics`}
-                              answered={
-                                characteristics.managePartCDEnrollment !== null
-                              }
-                              needsTool={
-                                characteristics.managePartCDEnrollment === true
-                              }
-                              subtext={t('yesNeedsAnswer')}
-                            />
-
-                            <p className="margin-top-4">{t('tools')}</p>
-
-                            {Object.keys(GcPartCDType)
-                              .sort(sortOtherEnum)
-                              .map(type => {
-                                return (
-                                  <Fragment key={type}>
-                                    <Field
-                                      as={CheckboxField}
-                                      disabled={
-                                        !characteristics.managePartCDEnrollment
-                                      }
-                                      id={`it-tools-gc-partc-${type}`}
-                                      name="gcPartCD"
-                                      label={translateGcPartCDType(type)}
-                                      value={type}
-                                      checked={values?.gcPartCD.includes(
-                                        type as GcPartCDType
-                                      )}
-                                      onChange={(
-                                        e: React.ChangeEvent<HTMLInputElement>
-                                      ) => {
-                                        if (e.target.checked) {
-                                          arrayHelpers.push(e.target.value);
-                                        } else {
-                                          const idx = values.gcPartCD.indexOf(
-                                            e.target.value as GcPartCDType
-                                          );
-                                          arrayHelpers.remove(idx);
-                                        }
-                                      }}
-                                    />
-                                    {type === GcPartCDType.OTHER &&
-                                      values.gcPartCD.includes(type) && (
-                                        <div className="margin-left-4 margin-top-1">
-                                          <Label
-                                            htmlFor="it-tools-gc-partc-other"
-                                            className={classNames(
-                                              {
-                                                'text-gray-30': !characteristics.managePartCDEnrollment
-                                              },
-                                              'text-normal'
-                                            )}
-                                          >
-                                            {h('pleaseSpecify')}
-                                          </Label>
-                                          <FieldErrorMsg>
-                                            {flatErrors.gcPartCDOther}
-                                          </FieldErrorMsg>
-                                          <Field
-                                            as={TextInput}
-                                            type="text"
-                                            disabled={
-                                              !characteristics.managePartCDEnrollment
-                                            }
-                                            className="maxw-none"
-                                            id="it-tools-gc-partcd-other"
-                                            maxLength={50}
-                                            name="gcPartCDOther"
-                                          />
-                                        </div>
-                                      )}
-                                  </Fragment>
-                                );
-                              })}
-                            <AddNote
-                              id="it-tools-gc-partcd-note"
-                              field="gcPartCDNote"
-                            />
-                          </>
-                        )}
-                      />
-                    </FieldGroup>
-
-                    <FieldGroup
-                      scrollElement="gcCollectBids"
-                      error={!!flatErrors.gcCollectBids}
-                      className="margin-y-4"
-                    >
-                      <FieldArray
-                        name="gcCollectBids"
-                        render={arrayHelpers => (
-                          <>
-                            <legend className="usa-label">
-                              {t('collectBidsTools')}
-                            </legend>
-                            <p className="text-base margin-top-1 margin-bottom-3 line-height-body-3">
-                              {t('partCDToolsInfo')}
-                            </p>
                             <FieldErrorMsg>
-                              {flatErrors.gcCollectBids}
+                              {flatErrors.pNonClaimsBasedPayments}
                             </FieldErrorMsg>
 
                             <ITToolsSummary
-                              question={c('reviewPlanBids')}
-                              answers={[
-                                translateBoolean(
-                                  characteristics.collectPlanBids || false
-                                )
-                              ]}
-                              redirect={`/models/${modelID}/task-list/characteristics/key-characteristics`}
-                              answered={
-                                characteristics.collectPlanBids !== null
-                              }
-                              needsTool={
-                                characteristics.collectPlanBids === true
-                              }
-                              subtext={t('yesNeedsAnswer')}
+                              question={p('whatWillYouPay')}
+                              answers={payType!.map(type =>
+                                translatePayType(type || '')
+                              )}
+                              redirect={`/models/${modelID}/task-list/payments`}
+                              answered={payType!.length > 0}
+                              needsTool={payType!.includes(
+                                PayType.NON_CLAIMS_BASED_PAYMENTS
+                              )}
+                              subtext={t('nonClaimsNeedsAnswer')}
                             />
 
                             <p className="margin-top-4">{t('tools')}</p>
 
-                            {Object.keys(GcCollectBidsType)
+                            {Object.keys(PNonClaimsBasedPaymentsType)
                               .sort(sortOtherEnum)
                               .map(type => {
                                 return (
@@ -362,126 +255,18 @@ const ITToolsPageOne = () => {
                                     <Field
                                       as={CheckboxField}
                                       disabled={
-                                        !characteristics.collectPlanBids
+                                        !payType!.includes(
+                                          PayType.NON_CLAIMS_BASED_PAYMENTS
+                                        )
                                       }
-                                      id={`it-tools-gc-collect-bids-${type}`}
-                                      name="gcCollectBids"
-                                      label={translateGcCollectBidsType(type)}
-                                      value={type}
-                                      checked={values?.gcCollectBids.includes(
-                                        type as GcCollectBidsType
-                                      )}
-                                      onChange={(
-                                        e: React.ChangeEvent<HTMLInputElement>
-                                      ) => {
-                                        if (e.target.checked) {
-                                          arrayHelpers.push(e.target.value);
-                                        } else {
-                                          const idx = values.gcCollectBids.indexOf(
-                                            e.target.value as GcCollectBidsType
-                                          );
-                                          arrayHelpers.remove(idx);
-                                        }
-                                      }}
-                                    />
-                                    {type === GcCollectBidsType.OTHER &&
-                                      values.gcCollectBids.includes(type) && (
-                                        <div className="margin-left-4 margin-top-1">
-                                          <Label
-                                            htmlFor="it-tools-gc-collect-bids-other"
-                                            className={classNames(
-                                              {
-                                                'text-gray-30': !characteristics.collectPlanBids
-                                              },
-                                              'text-normal'
-                                            )}
-                                          >
-                                            {h('pleaseSpecify')}
-                                          </Label>
-                                          <FieldErrorMsg>
-                                            {flatErrors.gcCollectBidsOther}
-                                          </FieldErrorMsg>
-                                          <Field
-                                            as={TextInput}
-                                            type="text"
-                                            disabled={
-                                              !characteristics.collectPlanBids
-                                            }
-                                            className="maxw-none"
-                                            id="it-tools-gc-collect-bids-other"
-                                            maxLength={50}
-                                            name="gcCollectBidsOther"
-                                          />
-                                        </div>
-                                      )}
-                                  </Fragment>
-                                );
-                              })}
-                            <AddNote
-                              id="it-tools-gc-collect-bids-note"
-                              field="gcCollectBidsNote"
-                            />
-                          </>
-                        )}
-                      />
-                    </FieldGroup>
-
-                    <FieldGroup
-                      scrollElement="gcUpdateContract"
-                      error={!!flatErrors.gcUpdateContract}
-                      className="margin-y-4"
-                    >
-                      <FieldArray
-                        name="gcUpdateContract"
-                        render={arrayHelpers => (
-                          <>
-                            <legend className="usa-label">
-                              {t('updateContract')}
-                            </legend>
-                            <p className="text-base margin-top-1 margin-bottom-3 line-height-body-3">
-                              {t('partCDToolsInfo')}
-                            </p>
-                            <FieldErrorMsg>
-                              {flatErrors.planContactUpdated}
-                            </FieldErrorMsg>
-
-                            <ITToolsSummary
-                              question={c('updatedContact')}
-                              answers={[
-                                translateBoolean(
-                                  characteristics.planContactUpdated || false
-                                )
-                              ]}
-                              redirect={`/models/${modelID}/task-list/characteristics/key-characteristics`}
-                              answered={
-                                characteristics.planContactUpdated !== null
-                              }
-                              needsTool={
-                                characteristics.planContactUpdated === true
-                              }
-                              subtext={t('yesNeedsAnswer')}
-                            />
-
-                            <p className="margin-top-4">{t('tools')}</p>
-
-                            {Object.keys(GcUpdateContractType)
-                              .sort(sortOtherEnum)
-                              .map(type => {
-                                return (
-                                  <Fragment key={type}>
-                                    <Field
-                                      as={CheckboxField}
-                                      disabled={
-                                        !characteristics.planContactUpdated
-                                      }
-                                      id={`it-tools-gc-update-contract-${type}`}
-                                      name="gcUpdateContract"
-                                      label={translateGcUpdateContractType(
+                                      id={`it-tools-p-non-claims-payments-${type}`}
+                                      name="pNonClaimsBasedPayments"
+                                      label={translatePNonClaimsBasedPaymentsType(
                                         type
                                       )}
                                       value={type}
-                                      checked={values?.gcUpdateContract.includes(
-                                        type as GcUpdateContractType
+                                      checked={values?.pNonClaimsBasedPayments.includes(
+                                        type as PNonClaimsBasedPaymentsType
                                       )}
                                       onChange={(
                                         e: React.ChangeEvent<HTMLInputElement>
@@ -489,24 +274,27 @@ const ITToolsPageOne = () => {
                                         if (e.target.checked) {
                                           arrayHelpers.push(e.target.value);
                                         } else {
-                                          const idx = values.gcUpdateContract.indexOf(
+                                          const idx = values.pNonClaimsBasedPayments.indexOf(
                                             e.target
-                                              .value as GcUpdateContractType
+                                              .value as PNonClaimsBasedPaymentsType
                                           );
                                           arrayHelpers.remove(idx);
                                         }
                                       }}
                                     />
-                                    {type === GcUpdateContractType.OTHER &&
-                                      values.gcUpdateContract.includes(
+                                    {type ===
+                                      PNonClaimsBasedPaymentsType.OTHER &&
+                                      values.pNonClaimsBasedPayments.includes(
                                         type
                                       ) && (
                                         <div className="margin-left-4 margin-top-1">
                                           <Label
-                                            htmlFor="it-tools-gc-update-contract-other"
+                                            htmlFor="it-tools-p-non-claims-payments-other"
                                             className={classNames(
                                               {
-                                                'text-gray-30': !characteristics.planContactUpdated
+                                                'text-gray-30': !payType!.includes(
+                                                  PayType.NON_CLAIMS_BASED_PAYMENTS
+                                                )
                                               },
                                               'text-normal'
                                             )}
@@ -514,18 +302,22 @@ const ITToolsPageOne = () => {
                                             {h('pleaseSpecify')}
                                           </Label>
                                           <FieldErrorMsg>
-                                            {flatErrors.gcUpdateContractOther}
+                                            {
+                                              flatErrors.pNonClaimsBasedPaymentsOther
+                                            }
                                           </FieldErrorMsg>
                                           <Field
                                             as={TextInput}
                                             type="text"
                                             disabled={
-                                              !characteristics.planContactUpdated
+                                              !payType!.includes(
+                                                PayType.NON_CLAIMS_BASED_PAYMENTS
+                                              )
                                             }
                                             className="maxw-none"
-                                            id="it-tools-gc-update-contract-other"
+                                            id="it-tools-p-non-claims-payments-other"
                                             maxLength={50}
-                                            name="gcUpdateContractOther"
+                                            name="pNonClaimsBasedPaymentsOther"
                                           />
                                         </div>
                                       )}
@@ -533,8 +325,226 @@ const ITToolsPageOne = () => {
                                 );
                               })}
                             <AddNote
-                              id="it-tools-gc-update-contract-note"
-                              field="gcUpdateContractNote"
+                              id="it-tools-p-non-claims-payments-note"
+                              field="pNonClaimsBasedPaymentsNote"
+                            />
+                          </>
+                        )}
+                      />
+                    </FieldGroup>
+
+                    <FieldGroup
+                      scrollElement="pSharedSavingsPlan"
+                      error={!!flatErrors.pSharedSavingsPlan}
+                      className="margin-y-4"
+                    >
+                      <FieldArray
+                        name="pSharedSavingsPlan"
+                        render={arrayHelpers => (
+                          <>
+                            <legend className="usa-label maxw-none">
+                              {t('sharedSavingsTools')}
+                            </legend>
+
+                            <FieldErrorMsg>
+                              {flatErrors.pSharedSavingsPlan}
+                            </FieldErrorMsg>
+
+                            <ITToolsSummary
+                              question={p('selectNonClaims')}
+                              answers={nonClaimsPayments!.map(type =>
+                                translateNonClaimsBasedPayType(type || '')
+                              )}
+                              redirect={`/models/${modelID}/task-list/payments`}
+                              answered={nonClaimsPayments!.length > 0}
+                              needsTool={nonClaimsPayments!.includes(
+                                NonClaimsBasedPayType.SHARED_SAVINGS
+                              )}
+                              subtext={t('sharedSavingsNeedsAnswer')}
+                            />
+
+                            <p className="margin-top-4">{t('tools')}</p>
+
+                            {Object.keys(PSharedSavingsPlanType)
+                              .sort(sortOtherEnum)
+                              .map(type => {
+                                return (
+                                  <Fragment key={type}>
+                                    <Field
+                                      as={CheckboxField}
+                                      disabled={
+                                        !nonClaimsPayments!.includes(
+                                          NonClaimsBasedPayType.SHARED_SAVINGS
+                                        )
+                                      }
+                                      id={`it-tools-p-shared-savings-${type}`}
+                                      name="pSharedSavingsPlan"
+                                      label={translatePSharedSavingsPlanType(
+                                        type
+                                      )}
+                                      value={type}
+                                      checked={values?.pSharedSavingsPlan.includes(
+                                        type as PSharedSavingsPlanType
+                                      )}
+                                      onChange={(
+                                        e: React.ChangeEvent<HTMLInputElement>
+                                      ) => {
+                                        if (e.target.checked) {
+                                          arrayHelpers.push(e.target.value);
+                                        } else {
+                                          const idx = values.pSharedSavingsPlan.indexOf(
+                                            e.target
+                                              .value as PSharedSavingsPlanType
+                                          );
+                                          arrayHelpers.remove(idx);
+                                        }
+                                      }}
+                                    />
+                                    {type === PSharedSavingsPlanType.OTHER &&
+                                      values.pSharedSavingsPlan.includes(
+                                        type
+                                      ) && (
+                                        <div className="margin-left-4 margin-top-1">
+                                          <Label
+                                            htmlFor="it-tools-p-shared-savings-other"
+                                            className={classNames(
+                                              {
+                                                'text-gray-30': !nonClaimsPayments!.includes(
+                                                  NonClaimsBasedPayType.SHARED_SAVINGS
+                                                )
+                                              },
+                                              'text-normal'
+                                            )}
+                                          >
+                                            {h('pleaseSpecify')}
+                                          </Label>
+                                          <FieldErrorMsg>
+                                            {flatErrors.pSharedSavingsPlanOther}
+                                          </FieldErrorMsg>
+                                          <Field
+                                            as={TextInput}
+                                            type="text"
+                                            disabled={
+                                              !nonClaimsPayments!.includes(
+                                                NonClaimsBasedPayType.SHARED_SAVINGS
+                                              )
+                                            }
+                                            className="maxw-none"
+                                            id="it-tools-p-shared-savings-other"
+                                            maxLength={50}
+                                            name="pSharedSavingsPlanOther"
+                                          />
+                                        </div>
+                                      )}
+                                  </Fragment>
+                                );
+                              })}
+                            <AddNote
+                              id="it-tools-p-shared-savings-note"
+                              field="pSharedSavingsPlanNote"
+                            />
+                          </>
+                        )}
+                      />
+                    </FieldGroup>
+
+                    <FieldGroup
+                      scrollElement="pRecoverPayments"
+                      error={!!flatErrors.pRecoverPayments}
+                      className="margin-y-4"
+                    >
+                      <FieldArray
+                        name="pRecoverPayments"
+                        render={arrayHelpers => (
+                          <>
+                            <legend className="usa-label maxw-none">
+                              {t('recoverTools')}
+                            </legend>
+
+                            <FieldErrorMsg>
+                              {flatErrors.pRecoverPayments}
+                            </FieldErrorMsg>
+
+                            <ITToolsSummary
+                              question={p('reoverPayments')}
+                              answers={[
+                                translateBoolean(willRecoverPayments || false)
+                              ]}
+                              redirect={`/models/${modelID}/task-list/payments`}
+                              answered={willRecoverPayments !== null}
+                              needsTool={willRecoverPayments === true}
+                              subtext={t('yesFFSNeedsAnswer')}
+                            />
+
+                            <p className="margin-top-4">{t('tools')}</p>
+
+                            {Object.keys(PRecoverPaymentsType)
+                              .sort(sortOtherEnum)
+                              .map(type => {
+                                return (
+                                  <Fragment key={type}>
+                                    <Field
+                                      as={CheckboxField}
+                                      disabled={!willRecoverPayments}
+                                      id={`it-tools-p-recover-payments-${type}`}
+                                      name="pRecoverPayments"
+                                      label={translatePRecoverPaymentsType(
+                                        type
+                                      )}
+                                      value={type}
+                                      checked={values?.pRecoverPayments.includes(
+                                        type as PRecoverPaymentsType
+                                      )}
+                                      onChange={(
+                                        e: React.ChangeEvent<HTMLInputElement>
+                                      ) => {
+                                        if (e.target.checked) {
+                                          arrayHelpers.push(e.target.value);
+                                        } else {
+                                          const idx = values.pRecoverPayments.indexOf(
+                                            e.target
+                                              .value as PRecoverPaymentsType
+                                          );
+                                          arrayHelpers.remove(idx);
+                                        }
+                                      }}
+                                    />
+                                    {type === PRecoverPaymentsType.OTHER &&
+                                      values.pRecoverPayments.includes(
+                                        type
+                                      ) && (
+                                        <div className="margin-left-4 margin-top-1">
+                                          <Label
+                                            htmlFor="it-tools-p-recover-payments-other"
+                                            className={classNames(
+                                              {
+                                                'text-gray-30': !willRecoverPayments
+                                              },
+                                              'text-normal'
+                                            )}
+                                          >
+                                            {h('pleaseSpecify')}
+                                          </Label>
+                                          <FieldErrorMsg>
+                                            {flatErrors.pRecoverPaymentsOther}
+                                          </FieldErrorMsg>
+                                          <Field
+                                            as={TextInput}
+                                            type="text"
+                                            disabled={!willRecoverPayments}
+                                            className="maxw-none"
+                                            id="it-tools-p-recover-payments-other"
+                                            maxLength={50}
+                                            name="pRecoverPaymentsOther"
+                                          />
+                                        </div>
+                                      )}
+                                  </Fragment>
+                                );
+                              })}
+                            <AddNote
+                              id="it-tools-p-recover-payments-note"
+                              field="pRecoverPaymentsNote"
                             />
                           </>
                         )}
@@ -542,6 +552,15 @@ const ITToolsPageOne = () => {
                     </FieldGroup>
 
                     <div className="margin-top-6 margin-bottom-3">
+                      <Button
+                        type="button"
+                        className="usa-button usa-button--outline margin-bottom-1"
+                        onClick={() => {
+                          handleFormSubmit(values, 'back');
+                        }}
+                      >
+                        {h('back')}
+                      </Button>
                       <Button type="submit" onClick={() => setErrors({})}>
                         {h('next')}
                       </Button>
@@ -571,9 +590,9 @@ const ITToolsPageOne = () => {
           );
         }}
       </Formik>
-      <PageNumber currentPage={1} totalPages={9} className="margin-y-6" />
+      <PageNumber currentPage={9} totalPages={9} className="margin-y-6" />
     </>
   );
 };
 
-export default ITToolsPageOne;
+export default ITToolsPageNine;

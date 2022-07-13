@@ -216,8 +216,6 @@ const ITToolsPageFive = () => {
                       handleSubmit(e);
                     }}
                   >
-                    <h2>{o('heading')}</h2>
-
                     <FieldGroup
                       scrollElement="oelProcessAppeals"
                       error={!!flatErrors.oelProcessAppeals}
@@ -249,7 +247,6 @@ const ITToolsPageFive = () => {
                                 appealPayments !== null ? o('payments') : '',
                                 appealOther !== null ? o('Others') : ''
                               ].filter(appeal => appeal !== '')}
-                              options={[translateBoolean(true)]}
                               redirect={`/models/${modelID}/task-list/ops-eval-and-learning/performance`}
                               answered={
                                 appealPerformance !== null ||
@@ -415,18 +412,19 @@ const ITToolsPageFive = () => {
                                     <Field
                                       as={CheckboxField}
                                       disabled={
-                                        !evaluationApproaches.includes(
+                                        (!evaluationApproaches.includes(
                                           EvaluationApproachType.CONTROL_INTERVENTION
                                         ) &&
-                                        !evaluationApproaches.includes(
-                                          EvaluationApproachType.COMPARISON_MATCH
-                                        ) &&
-                                        !evaluationApproaches.includes(
-                                          EvaluationApproachType.INTERRUPTED_TIME
-                                        ) &&
-                                        !evaluationApproaches.includes(
-                                          EvaluationApproachType.NON_MEDICARE_DATA
-                                        )
+                                          !evaluationApproaches.includes(
+                                            EvaluationApproachType.COMPARISON_MATCH
+                                          ) &&
+                                          !evaluationApproaches.includes(
+                                            EvaluationApproachType.INTERRUPTED_TIME
+                                          ) &&
+                                          !evaluationApproaches.includes(
+                                            EvaluationApproachType.NON_MEDICARE_DATA
+                                          )) ||
+                                        evaluationApproaches.length === 0
                                       }
                                       id={`it-tools-oel-evaluation-contractor-${type}`}
                                       name="oelEvaluationContractor"
@@ -462,18 +460,20 @@ const ITToolsPageFive = () => {
                                             className={classNames(
                                               {
                                                 'text-gray-30':
-                                                  !evaluationApproaches.includes(
+                                                  (!evaluationApproaches.includes(
                                                     EvaluationApproachType.CONTROL_INTERVENTION
                                                   ) &&
-                                                  !evaluationApproaches.includes(
-                                                    EvaluationApproachType.COMPARISON_MATCH
-                                                  ) &&
-                                                  !evaluationApproaches.includes(
-                                                    EvaluationApproachType.INTERRUPTED_TIME
-                                                  ) &&
-                                                  !evaluationApproaches.includes(
-                                                    EvaluationApproachType.NON_MEDICARE_DATA
-                                                  )
+                                                    !evaluationApproaches.includes(
+                                                      EvaluationApproachType.COMPARISON_MATCH
+                                                    ) &&
+                                                    !evaluationApproaches.includes(
+                                                      EvaluationApproachType.INTERRUPTED_TIME
+                                                    ) &&
+                                                    !evaluationApproaches.includes(
+                                                      EvaluationApproachType.NON_MEDICARE_DATA
+                                                    )) ||
+                                                  evaluationApproaches.length ===
+                                                    0
                                               },
                                               'text-normal'
                                             )}
@@ -489,18 +489,19 @@ const ITToolsPageFive = () => {
                                             as={TextInput}
                                             type="text"
                                             disabled={
-                                              !evaluationApproaches.includes(
+                                              (!evaluationApproaches.includes(
                                                 EvaluationApproachType.CONTROL_INTERVENTION
                                               ) &&
-                                              !evaluationApproaches.includes(
-                                                EvaluationApproachType.COMPARISON_MATCH
-                                              ) &&
-                                              !evaluationApproaches.includes(
-                                                EvaluationApproachType.INTERRUPTED_TIME
-                                              ) &&
-                                              !evaluationApproaches.includes(
-                                                EvaluationApproachType.NON_MEDICARE_DATA
-                                              )
+                                                !evaluationApproaches.includes(
+                                                  EvaluationApproachType.COMPARISON_MATCH
+                                                ) &&
+                                                !evaluationApproaches.includes(
+                                                  EvaluationApproachType.INTERRUPTED_TIME
+                                                ) &&
+                                                !evaluationApproaches.includes(
+                                                  EvaluationApproachType.NON_MEDICARE_DATA
+                                                )) ||
+                                              evaluationApproaches.length === 0
                                             }
                                             className="maxw-none"
                                             id="it-tools-oel-evaluation-contractor-other"
@@ -543,15 +544,6 @@ const ITToolsPageFive = () => {
                               answers={dataNeededForMonitoring.map(dataNeeded =>
                                 translateDataForMonitoringType(dataNeeded || '')
                               )}
-                              options={Object.keys(DataForMonitoringType)
-                                .map(dataType =>
-                                  translateDataForMonitoringType(dataType)
-                                )
-                                .filter(
-                                  dataType =>
-                                    dataType !==
-                                    DataForMonitoringType.NOT_PLANNING_TO_COLLECT_DATA
-                                )}
                               redirect={`/models/${modelID}/task-list/ops-eval-and-learning/evaluation`}
                               answered={dataNeededForMonitoring.length > 0}
                               needsTool={
@@ -572,9 +564,12 @@ const ITToolsPageFive = () => {
                                   <Fragment key={type}>
                                     <Field
                                       as={CheckboxField}
-                                      disabled={dataNeededForMonitoring.includes(
-                                        DataForMonitoringType.NOT_PLANNING_TO_COLLECT_DATA
-                                      )}
+                                      disabled={
+                                        dataNeededForMonitoring.includes(
+                                          DataForMonitoringType.NOT_PLANNING_TO_COLLECT_DATA
+                                        ) ||
+                                        dataNeededForMonitoring.length === 0
+                                      }
                                       id={`it-tools-oel-collect-data-${type}`}
                                       name="oelCollectData"
                                       label={translateOelCollectDataType(type)}
@@ -602,9 +597,12 @@ const ITToolsPageFive = () => {
                                             htmlFor="it-tools-oel-collect-data-other"
                                             className={classNames(
                                               {
-                                                'text-gray-30': dataNeededForMonitoring.includes(
-                                                  DataForMonitoringType.NOT_PLANNING_TO_COLLECT_DATA
-                                                )
+                                                'text-gray-30':
+                                                  dataNeededForMonitoring.includes(
+                                                    DataForMonitoringType.NOT_PLANNING_TO_COLLECT_DATA
+                                                  ) ||
+                                                  dataNeededForMonitoring.length ===
+                                                    0
                                               },
                                               'text-normal'
                                             )}
@@ -617,9 +615,13 @@ const ITToolsPageFive = () => {
                                           <Field
                                             as={TextInput}
                                             type="text"
-                                            disabled={dataNeededForMonitoring.includes(
-                                              DataForMonitoringType.NOT_PLANNING_TO_COLLECT_DATA
-                                            )}
+                                            disabled={
+                                              dataNeededForMonitoring.includes(
+                                                DataForMonitoringType.NOT_PLANNING_TO_COLLECT_DATA
+                                              ) ||
+                                              dataNeededForMonitoring.length ===
+                                                0
+                                            }
                                             className="maxw-none"
                                             id="it-tools-oel-collect-data-other"
                                             maxLength={50}

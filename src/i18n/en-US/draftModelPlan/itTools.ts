@@ -201,7 +201,35 @@ const itTools = {
   waiveParticipantsTools:
     'What tools will you use to inform Fee-for-Service (FFS) about participants who should be waived from a rule?',
   yesFFSNeedsAnswer:
-    'If your answer is yes, you will need to select tools from the list below.'
+    'If your answer is yes, you will need to select tools from the list below.',
+  pNonClaimsBasedPaymentsOptions: {
+    apps: 'Automated Plan Payment System (APPS)',
+    higlas: 'Healthcare Integrated General Ledger Accounting System (HIGLAS)',
+    ipc: 'Innovation Payment Contractor (IPC)',
+    mac: 'Medicare Administrative Contractor (MAC)',
+    other: 'Other'
+  },
+  pSharedSavingsPlanOptions: {
+    rmada:
+      'Research, Measurement, Assessment, Design, and Analysis (RMADA) contractor',
+    other: 'Other'
+  },
+  pRecoverPaymentsOptions: {
+    apps: 'Automated Plan Payment System (APPS)',
+    ipc: 'Innovation Payment Contractor (IPC)',
+    mac: 'Medicare Administrative Contractor (MAC)',
+    other: 'Other'
+  },
+  nonClaimsTools: 'What tools will you use to make non-claims based payments?',
+  nonClaimsToolsInfo:
+    'If you are using different tools for different non-claims-based payment types, please explain by adding a note or by checking Other and explaining further.',
+  nonClaimsNeedsAnswer:
+    'If you change your answer to include “Non-claims-based payments” you can select tools from the list below.',
+  sharedSavingsTools:
+    'What tools will you use to compute the shared savings payment?',
+  sharedSavingsNeedsAnswer:
+    'If you change your answer to include “Shared Savings”, you can select tools from the list below.',
+  recoverTools: 'What tools will you use to recover payments?'
 };
 
 export default itTools;

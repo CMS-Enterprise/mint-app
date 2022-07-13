@@ -209,8 +209,6 @@ const ITToolsPageThree = () => {
                       handleSubmit(e);
                     }}
                   >
-                    <h2>{p('heading')}</h2>
-
                     <FieldGroup
                       scrollElement="ppCommunicateWithParticipant"
                       error={!!flatErrors.ppCommunicateWithParticipant}
@@ -265,12 +263,13 @@ const ITToolsPageThree = () => {
                                     <Field
                                       as={CheckboxField}
                                       disabled={
-                                        !communicationMethod.includes(
+                                        (!communicationMethod.includes(
                                           ParticipantCommunicationType.MASS_EMAIL
                                         ) &&
-                                        !communicationMethod.includes(
-                                          ParticipantCommunicationType.IT_TOOL
-                                        )
+                                          !communicationMethod.includes(
+                                            ParticipantCommunicationType.IT_TOOL
+                                          )) ||
+                                        communicationMethod.length === 0
                                       }
                                       id={`it-tools-pp-communicate-with-participant-${type}`}
                                       name="ppCommunicateWithParticipant"
@@ -306,12 +305,14 @@ const ITToolsPageThree = () => {
                                             className={classNames(
                                               {
                                                 'text-gray-30':
-                                                  !communicationMethod.includes(
+                                                  (!communicationMethod.includes(
                                                     ParticipantCommunicationType.MASS_EMAIL
                                                   ) &&
-                                                  !communicationMethod.includes(
-                                                    ParticipantCommunicationType.IT_TOOL
-                                                  )
+                                                    !communicationMethod.includes(
+                                                      ParticipantCommunicationType.IT_TOOL
+                                                    )) ||
+                                                  communicationMethod.length ===
+                                                    0
                                               },
                                               'text-normal'
                                             )}
@@ -327,12 +328,13 @@ const ITToolsPageThree = () => {
                                             as={TextInput}
                                             type="text"
                                             disabled={
-                                              !communicationMethod.includes(
+                                              (!communicationMethod.includes(
                                                 ParticipantCommunicationType.MASS_EMAIL
                                               ) &&
-                                              !communicationMethod.includes(
-                                                ParticipantCommunicationType.IT_TOOL
-                                              )
+                                                !communicationMethod.includes(
+                                                  ParticipantCommunicationType.IT_TOOL
+                                                )) ||
+                                              communicationMethod.length === 0
                                             }
                                             className="maxw-none"
                                             id="it-tools-pp-communicate-with-participant-other"

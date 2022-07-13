@@ -215,8 +215,6 @@ const ITToolsPageEight = () => {
                       handleSubmit(e);
                     }}
                   >
-                    <h2>{o('heading')}</h2>
-
                     <FieldGroup
                       scrollElement="oelEducateBeneficiaries"
                       error={!!flatErrors.oelEducateBeneficiaries}
@@ -239,11 +237,6 @@ const ITToolsPageEight = () => {
                               answers={modelLearningSystems.map(system =>
                                 translateModelLearningSystemType(system || '')
                               )}
-                              options={[
-                                translateModelLearningSystemType(
-                                  ModelLearningSystemType.EDUCATE_BENEFICIARIES
-                                )
-                              ]}
                               redirect={`/models/${modelID}/task-list/ops-eval-and-learning/learning`}
                               answered={modelLearningSystems.length > 0}
                               needsTool={modelLearningSystems.includes(
@@ -264,7 +257,7 @@ const ITToolsPageEight = () => {
                                       disabled={
                                         !modelLearningSystems.includes(
                                           ModelLearningSystemType.EDUCATE_BENEFICIARIES
-                                        )
+                                        ) || modelLearningSystems.length === 0
                                       }
                                       id={`it-tools-oel-educate-beneficiaries-${type}`}
                                       name="oelEducateBeneficiaries"
@@ -299,9 +292,12 @@ const ITToolsPageEight = () => {
                                             htmlFor="it-tools-oel-educate-beneficiaries-other"
                                             className={classNames(
                                               {
-                                                'text-gray-30': !modelLearningSystems.includes(
-                                                  ModelLearningSystemType.EDUCATE_BENEFICIARIES
-                                                )
+                                                'text-gray-30':
+                                                  !modelLearningSystems.includes(
+                                                    ModelLearningSystemType.EDUCATE_BENEFICIARIES
+                                                  ) ||
+                                                  modelLearningSystems.length ===
+                                                    0
                                               },
                                               'text-normal'
                                             )}
@@ -319,7 +315,8 @@ const ITToolsPageEight = () => {
                                             disabled={
                                               !modelLearningSystems.includes(
                                                 ModelLearningSystemType.EDUCATE_BENEFICIARIES
-                                              )
+                                              ) ||
+                                              modelLearningSystems.length === 0
                                             }
                                             className="maxw-none"
                                             id="it-tools-oel-educate-beneficiaries-other"
@@ -364,9 +361,6 @@ const ITToolsPageEight = () => {
                               answers={payType!.map(type =>
                                 translatePayType(type || '')
                               )}
-                              options={[
-                                translatePayType(PayType.CLAIMS_BASED_PAYMENTS)
-                              ]}
                               redirect={`/models/${modelID}/task-list/payments`}
                               answered={payType!.length > 0}
                               needsTool={payType!.includes(
@@ -387,7 +381,7 @@ const ITToolsPageEight = () => {
                                       disabled={
                                         !payType!.includes(
                                           PayType.CLAIMS_BASED_PAYMENTS
-                                        )
+                                        ) || payType!.length === 0
                                       }
                                       id={`it-tools-p-claims-payments-${type}`}
                                       name="pMakeClaimsPayments"
@@ -421,9 +415,10 @@ const ITToolsPageEight = () => {
                                             htmlFor="it-tools-p-claims-payments-other"
                                             className={classNames(
                                               {
-                                                'text-gray-30': !payType!.includes(
-                                                  PayType.CLAIMS_BASED_PAYMENTS
-                                                )
+                                                'text-gray-30':
+                                                  !payType!.includes(
+                                                    PayType.CLAIMS_BASED_PAYMENTS
+                                                  ) || payType!.length === 0
                                               },
                                               'text-normal'
                                             )}
@@ -441,7 +436,7 @@ const ITToolsPageEight = () => {
                                             disabled={
                                               !payType!.includes(
                                                 PayType.CLAIMS_BASED_PAYMENTS
-                                              )
+                                              ) || payType!.length === 0
                                             }
                                             className="maxw-none"
                                             id="it-tools-p-claims-payments-other"
@@ -486,10 +481,6 @@ const ITToolsPageEight = () => {
                                   shouldAnyProvidersExcludedFFSSystems || false
                                 )
                               ]}
-                              options={[
-                                translateBoolean(true),
-                                translateBoolean(false)
-                              ]}
                               redirect={`/models/${modelID}/task-list/payments`}
                               answered={
                                 shouldAnyProvidersExcludedFFSSystems !== null
@@ -512,7 +503,7 @@ const ITToolsPageEight = () => {
                                       disabled={
                                         !payType!.includes(
                                           PayType.CLAIMS_BASED_PAYMENTS
-                                        )
+                                        ) || payType!.length === 0
                                       }
                                       id={`it-tools-p-inform-ffs-${type}`}
                                       name="pInformFfs"
@@ -541,9 +532,10 @@ const ITToolsPageEight = () => {
                                             htmlFor="it-tools-p-inform-ffs-other"
                                             className={classNames(
                                               {
-                                                'text-gray-30': !payType!.includes(
-                                                  PayType.CLAIMS_BASED_PAYMENTS
-                                                )
+                                                'text-gray-30':
+                                                  !payType!.includes(
+                                                    PayType.CLAIMS_BASED_PAYMENTS
+                                                  ) || payType!.length === 0
                                               },
                                               'text-normal'
                                             )}
@@ -559,7 +551,7 @@ const ITToolsPageEight = () => {
                                             disabled={
                                               !payType!.includes(
                                                 PayType.CLAIMS_BASED_PAYMENTS
-                                              )
+                                              ) || payType!.length === 0
                                             }
                                             className="maxw-none"
                                             id="it-tools-p-inform-ffs-other"

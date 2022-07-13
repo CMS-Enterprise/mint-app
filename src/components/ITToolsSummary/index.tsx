@@ -11,7 +11,7 @@ type ITToolsSummaryPropType = {
   needsTool: boolean;
   question: string;
   answers: string[];
-  options: string[];
+  options?: string[];
   redirect: string;
   subtext?: string;
 };
@@ -49,7 +49,7 @@ const ITToolsSummary = ({
       {!needsTool && (
         <div className="text-base">
           <p>{subtext || t('changeAnswer')}</p>
-          {!subtext && (
+          {!subtext && options && (
             <ul>
               {options.map(option => (
                 <li key={option}>{option}</li>

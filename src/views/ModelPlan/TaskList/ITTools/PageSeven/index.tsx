@@ -209,8 +209,6 @@ const ITToolsPageSeven = () => {
                       handleSubmit(e);
                     }}
                   >
-                    <h2>{o('heading')}</h2>
-
                     <FieldGroup
                       scrollElement="oelSendReports"
                       error={!!flatErrors.oelSendReports}
@@ -265,9 +263,12 @@ const ITToolsPageSeven = () => {
                                   <Fragment key={type}>
                                     <Field
                                       as={CheckboxField}
-                                      disabled={dataToSendParticicipants.includes(
-                                        DataToSendParticipantsType.NOT_PLANNING_TO_SEND_DATA
-                                      )}
+                                      disabled={
+                                        dataToSendParticicipants.includes(
+                                          DataToSendParticipantsType.NOT_PLANNING_TO_SEND_DATA
+                                        ) ||
+                                        dataToSendParticicipants.length === 0
+                                      }
                                       id={`it-tools-oel-send-reports-${type}`}
                                       name="oelSendReports"
                                       label={translateOelSendReportsType(type)}
@@ -295,9 +296,12 @@ const ITToolsPageSeven = () => {
                                             htmlFor="it-tools-oel-send-reports-other"
                                             className={classNames(
                                               {
-                                                'text-gray-30': dataToSendParticicipants.includes(
-                                                  DataToSendParticipantsType.NOT_PLANNING_TO_SEND_DATA
-                                                )
+                                                'text-gray-30':
+                                                  dataToSendParticicipants.includes(
+                                                    DataToSendParticipantsType.NOT_PLANNING_TO_SEND_DATA
+                                                  ) ||
+                                                  dataToSendParticicipants.length ===
+                                                    0
                                               },
                                               'text-normal'
                                             )}
@@ -310,9 +314,13 @@ const ITToolsPageSeven = () => {
                                           <Field
                                             as={TextInput}
                                             type="text"
-                                            disabled={dataToSendParticicipants.includes(
-                                              DataToSendParticipantsType.NOT_PLANNING_TO_SEND_DATA
-                                            )}
+                                            disabled={
+                                              dataToSendParticicipants.includes(
+                                                DataToSendParticipantsType.NOT_PLANNING_TO_SEND_DATA
+                                              ) ||
+                                              dataToSendParticicipants.length ===
+                                                0
+                                            }
                                             className="maxw-none"
                                             id="it-tools-oel-send-reports-other"
                                             maxLength={50}
@@ -354,11 +362,6 @@ const ITToolsPageSeven = () => {
                               answers={modelLearningSystems.map(system =>
                                 translateModelLearningSystemType(system || '')
                               )}
-                              options={[
-                                translateModelLearningSystemType(
-                                  ModelLearningSystemType.LEARNING_CONTRACTOR
-                                )
-                              ]}
                               redirect={`/models/${modelID}/task-list/ops-eval-and-learning/learning`}
                               answered={modelLearningSystems.length > 0}
                               needsTool={modelLearningSystems.includes(
@@ -379,7 +382,7 @@ const ITToolsPageSeven = () => {
                                       disabled={
                                         !modelLearningSystems.includes(
                                           ModelLearningSystemType.LEARNING_CONTRACTOR
-                                        )
+                                        ) || modelLearningSystems.length === 0
                                       }
                                       id={`it-tools-oel-learning-contractor-${type}`}
                                       name="oelLearningContractor"
@@ -413,9 +416,12 @@ const ITToolsPageSeven = () => {
                                             htmlFor="it-tools-oel-learning-contractor-other"
                                             className={classNames(
                                               {
-                                                'text-gray-30': !modelLearningSystems.includes(
-                                                  ModelLearningSystemType.LEARNING_CONTRACTOR
-                                                )
+                                                'text-gray-30':
+                                                  !modelLearningSystems.includes(
+                                                    ModelLearningSystemType.LEARNING_CONTRACTOR
+                                                  ) ||
+                                                  modelLearningSystems.length ===
+                                                    0
                                               },
                                               'text-normal'
                                             )}
@@ -433,7 +439,8 @@ const ITToolsPageSeven = () => {
                                             disabled={
                                               !modelLearningSystems.includes(
                                                 ModelLearningSystemType.LEARNING_CONTRACTOR
-                                              )
+                                              ) ||
+                                              modelLearningSystems.length === 0
                                             }
                                             className="maxw-none"
                                             id="it-tools-oel-learning-contractor-other"
@@ -476,11 +483,6 @@ const ITToolsPageSeven = () => {
                               answers={modelLearningSystems.map(system =>
                                 translateModelLearningSystemType(system || '')
                               )}
-                              options={[
-                                translateModelLearningSystemType(
-                                  ModelLearningSystemType.PARTICIPANT_COLLABORATION
-                                )
-                              ]}
                               redirect={`/models/${modelID}/task-list/ops-eval-and-learning/learning`}
                               answered={modelLearningSystems.length > 0}
                               needsTool={modelLearningSystems.includes(
@@ -501,7 +503,7 @@ const ITToolsPageSeven = () => {
                                       disabled={
                                         !modelLearningSystems.includes(
                                           ModelLearningSystemType.PARTICIPANT_COLLABORATION
-                                        )
+                                        ) || modelLearningSystems.length === 0
                                       }
                                       id={`it-tools-oel-participant-collaboration-${type}`}
                                       name="oelParticipantCollaboration"
@@ -536,9 +538,12 @@ const ITToolsPageSeven = () => {
                                             htmlFor="it-tools-oel-participant-collaboration-other"
                                             className={classNames(
                                               {
-                                                'text-gray-30': !modelLearningSystems.includes(
-                                                  ModelLearningSystemType.PARTICIPANT_COLLABORATION
-                                                )
+                                                'text-gray-30':
+                                                  !modelLearningSystems.includes(
+                                                    ModelLearningSystemType.PARTICIPANT_COLLABORATION
+                                                  ) ||
+                                                  modelLearningSystems.length ===
+                                                    0
                                               },
                                               'text-normal'
                                             )}
@@ -556,7 +561,8 @@ const ITToolsPageSeven = () => {
                                             disabled={
                                               !modelLearningSystems.includes(
                                                 ModelLearningSystemType.PARTICIPANT_COLLABORATION
-                                              )
+                                              ) ||
+                                              modelLearningSystems.length === 0
                                             }
                                             className="maxw-none"
                                             id="it-tools-oel-participant-collaboration-other"

@@ -207,8 +207,6 @@ const ITToolsPageSix = () => {
                       handleSubmit(e);
                     }}
                   >
-                    <h2>{o('heading')}</h2>
-
                     <FieldGroup
                       scrollElement="oelObtainData"
                       error={!!flatErrors.oelObtainData}
@@ -260,9 +258,12 @@ const ITToolsPageSix = () => {
                                   <Fragment key={type}>
                                     <Field
                                       as={CheckboxField}
-                                      disabled={dataNeededForMonitoring.includes(
-                                        DataForMonitoringType.NOT_PLANNING_TO_COLLECT_DATA
-                                      )}
+                                      disabled={
+                                        dataNeededForMonitoring.includes(
+                                          DataForMonitoringType.NOT_PLANNING_TO_COLLECT_DATA
+                                        ) ||
+                                        dataNeededForMonitoring.length === 0
+                                      }
                                       id={`it-tools-oel-obtain-data-${type}`}
                                       name="oelObtainData"
                                       label={translateOelObtainDataType(type)}
@@ -290,9 +291,12 @@ const ITToolsPageSix = () => {
                                             htmlFor="it-tools-oel-obtain-data-other"
                                             className={classNames(
                                               {
-                                                'text-gray-30': dataNeededForMonitoring.includes(
-                                                  DataForMonitoringType.NOT_PLANNING_TO_COLLECT_DATA
-                                                )
+                                                'text-gray-30':
+                                                  dataNeededForMonitoring.includes(
+                                                    DataForMonitoringType.NOT_PLANNING_TO_COLLECT_DATA
+                                                  ) ||
+                                                  dataNeededForMonitoring.length ===
+                                                    0
                                               },
                                               'text-normal'
                                             )}
@@ -305,9 +309,13 @@ const ITToolsPageSix = () => {
                                           <Field
                                             as={TextInput}
                                             type="text"
-                                            disabled={dataNeededForMonitoring.includes(
-                                              DataForMonitoringType.NOT_PLANNING_TO_COLLECT_DATA
-                                            )}
+                                            disabled={
+                                              dataNeededForMonitoring.includes(
+                                                DataForMonitoringType.NOT_PLANNING_TO_COLLECT_DATA
+                                              ) ||
+                                              dataNeededForMonitoring.length ===
+                                                0
+                                            }
                                             className="maxw-none"
                                             id="it-tools-oel-obtain-data-other"
                                             maxLength={50}
@@ -349,11 +357,6 @@ const ITToolsPageSix = () => {
                               answers={dataNeededForMonitoring.map(dataNeeded =>
                                 translateDataForMonitoringType(dataNeeded || '')
                               )}
-                              options={[
-                                translateDataForMonitoringType(
-                                  DataForMonitoringType.QUALITY_CLAIMS_BASED_MEASURES
-                                )
-                              ]}
                               redirect={`/models/${modelID}/task-list/ops-eval-and-learning/evaluation`}
                               answered={dataNeededForMonitoring.length > 0}
                               needsTool={dataNeededForMonitoring.includes(
@@ -374,7 +377,8 @@ const ITToolsPageSix = () => {
                                       disabled={
                                         !dataNeededForMonitoring.includes(
                                           DataForMonitoringType.QUALITY_CLAIMS_BASED_MEASURES
-                                        )
+                                        ) ||
+                                        dataNeededForMonitoring.length === 0
                                       }
                                       id={`it-tools-oel-claims-based-measure-${type}`}
                                       name="oelClaimsBasedMeasures"
@@ -409,9 +413,12 @@ const ITToolsPageSix = () => {
                                             htmlFor="it-tools-oel-claims-based-measure-other"
                                             className={classNames(
                                               {
-                                                'text-gray-30': !dataNeededForMonitoring.includes(
-                                                  DataForMonitoringType.QUALITY_CLAIMS_BASED_MEASURES
-                                                )
+                                                'text-gray-30':
+                                                  !dataNeededForMonitoring.includes(
+                                                    DataForMonitoringType.QUALITY_CLAIMS_BASED_MEASURES
+                                                  ) ||
+                                                  dataNeededForMonitoring.length ===
+                                                    0
                                               },
                                               'text-normal'
                                             )}
@@ -429,7 +436,9 @@ const ITToolsPageSix = () => {
                                             disabled={
                                               !dataNeededForMonitoring.includes(
                                                 DataForMonitoringType.QUALITY_CLAIMS_BASED_MEASURES
-                                              )
+                                              ) ||
+                                              dataNeededForMonitoring.length ===
+                                                0
                                             }
                                             className="maxw-none"
                                             id="it-tools-oel-claims-based-measure-other"
@@ -472,11 +481,6 @@ const ITToolsPageSix = () => {
                               answers={dataNeededForMonitoring.map(dataNeeded =>
                                 translateDataForMonitoringType(dataNeeded || '')
                               )}
-                              options={[
-                                translateDataForMonitoringType(
-                                  DataForMonitoringType.QUALITY_REPORTED_MEASURES
-                                )
-                              ]}
                               redirect={`/models/${modelID}/task-list/ops-eval-and-learning/evaluation`}
                               answered={dataNeededForMonitoring.length > 0}
                               needsTool={dataNeededForMonitoring.includes(
@@ -497,7 +501,8 @@ const ITToolsPageSix = () => {
                                       disabled={
                                         !dataNeededForMonitoring.includes(
                                           DataForMonitoringType.QUALITY_REPORTED_MEASURES
-                                        )
+                                        ) ||
+                                        dataNeededForMonitoring.length === 0
                                       }
                                       id={`it-tools-oel-quality-scores-${type}`}
                                       name="oelQualityScores"
@@ -531,9 +536,12 @@ const ITToolsPageSix = () => {
                                             htmlFor="it-tools-oel-quality-scores-other"
                                             className={classNames(
                                               {
-                                                'text-gray-30': !dataNeededForMonitoring.includes(
-                                                  DataForMonitoringType.QUALITY_REPORTED_MEASURES
-                                                )
+                                                'text-gray-30':
+                                                  !dataNeededForMonitoring.includes(
+                                                    DataForMonitoringType.QUALITY_REPORTED_MEASURES
+                                                  ) ||
+                                                  dataNeededForMonitoring.length ===
+                                                    0
                                               },
                                               'text-normal'
                                             )}
@@ -549,7 +557,9 @@ const ITToolsPageSix = () => {
                                             disabled={
                                               !dataNeededForMonitoring.includes(
                                                 DataForMonitoringType.QUALITY_REPORTED_MEASURES
-                                              )
+                                              ) ||
+                                              dataNeededForMonitoring.length ===
+                                                0
                                             }
                                             className="maxw-none"
                                             id="it-tools-oel-quality-scores-other"

@@ -1254,6 +1254,78 @@ export const translatePayType = (type: string) => {
   }
 };
 
+export const translateNonClaimsBasedPayType = (type: string) => {
+  switch (type) {
+    case 'ADVANCED_PAYMENT':
+      return i18next.t('payments:nonClaimsPaymentsOptions.advancedPayment');
+    case 'BUNDLED_EPISODE_OF_CARE':
+      return i18next.t('payments:nonClaimsPaymentsOptions.bundled');
+    case 'CAPITATION_POPULATION_BASED_FULL':
+      return i18next.t('payments:nonClaimsPaymentsOptions.capitationFull');
+    case 'CAPITATION_POPULATION_BASED_PARTIAL':
+      return i18next.t('payments:nonClaimsPaymentsOptions.capitationPart');
+    case 'CARE_COORDINATION_MANAGEMENT_FEE':
+      return i18next.t('payments:nonClaimsPaymentsOptions.careCoordination');
+    case 'GLOBAL_BUDGET':
+      return i18next.t('payments:nonClaimsPaymentsOptions.globalBudget');
+    case 'GRANTS':
+      return i18next.t('payments:nonClaimsPaymentsOptions.grants');
+    case 'INCENTIVE_PAYMENT':
+      return i18next.t('payments:nonClaimsPaymentsOptions.incentivePayment');
+    case 'MAPD_SHARED_SAVINGS':
+      return i18next.t('payments:nonClaimsPaymentsOptions.mapSharedSavings');
+    case 'SHARED_SAVINGS':
+      return i18next.t('payments:nonClaimsPaymentsOptions.sharedSavings');
+    case 'OTHER':
+      return i18next.t('payments:nonClaimsPaymentsOptions.other');
+    default:
+      return '';
+  }
+};
+
+export const translatePNonClaimsBasedPaymentsType = (type: string) => {
+  switch (type) {
+    case 'APPS':
+      return i18next.t('itTools:pNonClaimsBasedPaymentsOptions.apps');
+    case 'HIGLAS':
+      return i18next.t('itTools:pNonClaimsBasedPaymentsOptions.higlas');
+    case 'IPC':
+      return i18next.t('itTools:pNonClaimsBasedPaymentsOptions.ipc');
+    case 'MAC':
+      return i18next.t('itTools:pNonClaimsBasedPaymentsOptions.mac');
+    case 'OTHER':
+      return i18next.t('itTools:pNonClaimsBasedPaymentsOptions.other');
+    default:
+      return '';
+  }
+};
+
+export const translatePSharedSavingsPlanType = (type: string) => {
+  switch (type) {
+    case 'RMADA':
+      return i18next.t('itTools:pSharedSavingsPlanOptions.rmada');
+    case 'OTHER':
+      return i18next.t('itTools:pSharedSavingsPlanOptions.other');
+    default:
+      return '';
+  }
+};
+
+export const translatePRecoverPaymentsType = (type: string) => {
+  switch (type) {
+    case 'APPS':
+      return i18next.t('itTools:pRecoverPaymentsOptions.apps');
+    case 'IPC':
+      return i18next.t('itTools:pRecoverPaymentsOptions.ipc');
+    case 'MAC':
+      return i18next.t('itTools:pRecoverPaymentsOptions.mac');
+    case 'OTHER':
+      return i18next.t('itTools:pRecoverPaymentsOptions.other');
+    default:
+      return '';
+  }
+};
+
 /**
  * Translate the document type API enum to a human readable string
  */

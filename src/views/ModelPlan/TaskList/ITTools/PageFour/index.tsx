@@ -231,7 +231,6 @@ const ITToolsPageFour = () => {
                             <ITToolsSummary
                               question={o('helpDesk')}
                               answers={[translateBoolean(helpdeskUse || false)]}
-                              options={[translateBoolean(true)]}
                               redirect={`/models/${modelID}/task-list/ops-eval-and-learning`}
                               answered={helpdeskUse !== null}
                               needsTool={helpdeskUse || false}
@@ -335,7 +334,6 @@ const ITToolsPageFour = () => {
                               answers={[
                                 translateBoolean(iddocSupport || false)
                               ]}
-                              options={[translateBoolean(true)]}
                               redirect={`/models/${modelID}/task-list/ops-eval-and-learning`}
                               answered={iddocSupport !== null}
                               needsTool={iddocSupport || false}
@@ -441,14 +439,6 @@ const ITToolsPageFour = () => {
                                   benchmark || ''
                                 )
                               )}
-                              options={[
-                                translateBenchmarkForPerformanceType(
-                                  BenchmarkForPerformanceType.YES_RECONCILE
-                                ),
-                                translateBenchmarkForPerformanceType(
-                                  BenchmarkForPerformanceType.YES_NO_RECONCILE
-                                )
-                              ]}
                               redirect={`/models/${modelID}/task-list/ops-eval-and-learning/performance`}
                               answered={benchmarkForPerformance !== null}
                               needsTool={
