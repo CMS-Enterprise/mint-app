@@ -150,6 +150,23 @@ export const translateGeographyApplication = (type: string) => {
   }
 };
 
+export const translatePayRecipient = (type: string) => {
+  switch (type) {
+    case 'PARTICIPANTS':
+      return i18next.t('payments:whoWillYouPayOptions.participants');
+    case 'PROVIDERS':
+      return i18next.t('payments:whoWillYouPayOptions.providers');
+    case 'BENEFICIARIES':
+      return i18next.t('payments:whoWillYouPayOptions.beneficiaries');
+    case 'STATES':
+      return i18next.t('payments:whoWillYouPayOptions.states');
+    case 'OTHER':
+      return i18next.t('payments:whoWillYouPayOptions.other');
+    default:
+      return '';
+  }
+};
+
 export const translateAgreementTypes = (type: string) => {
   switch (type) {
     case 'PARTICIPATION':

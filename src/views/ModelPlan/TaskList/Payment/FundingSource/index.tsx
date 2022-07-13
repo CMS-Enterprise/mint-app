@@ -31,9 +31,16 @@ import {
 } from 'queries/Payments/types/GetFunding';
 import { UpdatePaymentsVariables } from 'queries/Payments/types/UpdatePayments';
 import UpdatePayments from 'queries/Payments/UpdatePayments';
-import { FundingSource as FundingSourceEnum } from 'types/graphql-global-types';
+import {
+  FundingSource as FundingSourceEnum,
+  PayRecipient
+} from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
-import { sortOtherEnum, translateSourceOptions } from 'utils/modelPlan';
+import {
+  sortOtherEnum,
+  translatePayRecipient,
+  translateSourceOptions
+} from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
 
 const FundingSource = () => {
@@ -391,6 +398,80 @@ const FundingSource = () => {
                                             id="payment-funding-source-reconciliation-other"
                                             maxLength={50}
                                             name="fundingSourceROther"
+                                          />
+                                        </FieldGroup>
+                                      )}
+                                  </Fragment>
+                                );
+                              })}
+                          </>
+                        )}
+                      />
+
+                      <FieldArray
+                        name="payRecipients"
+                        render={arrayHelpers => (
+                          <>
+                            <legend className="usa-label maxw-none">
+                              {t('whoWillYouPay')}
+                            </legend>
+                            <FieldErrorMsg>
+                              {flatErrors.payRecipients}
+                            </FieldErrorMsg>
+
+                            {Object.keys(PayRecipient)
+                              .sort(sortOtherEnum)
+                              .map(type => {
+                                return (
+                                  <Fragment key={type}>
+                                    <Field
+                                      as={CheckboxField}
+                                      id={`payment-pay-recipients-${type}`}
+                                      name="payRecipients"
+                                      label={translatePayRecipient(type)}
+                                      value={type}
+                                      checked={values.payRecipients.includes(
+                                        type as PayRecipient
+                                      )}
+                                      onChange={(
+                                        e: React.ChangeEvent<HTMLInputElement>
+                                      ) => {
+                                        if (e.target.checked) {
+                                          arrayHelpers.push(e.target.value);
+                                        } else {
+                                          const idx = values.payRecipients.indexOf(
+                                            e.target.value as PayRecipient
+                                          );
+                                          arrayHelpers.remove(idx);
+                                        }
+                                      }}
+                                    />
+                                    {type === 'OTHER' &&
+                                      values.payRecipients.includes(
+                                        type as PayRecipient
+                                      ) && (
+                                        <FieldGroup
+                                          className="margin-left-4 margin-top-2 margin-bottom-4"
+                                          error={
+                                            !!flatErrors.payRecipientsOtherSpecification
+                                          }
+                                        >
+                                          <Label
+                                            htmlFor="payment-pay-recipients-other"
+                                            className="text-normal"
+                                          >
+                                            {t('otherPayOption')}
+                                          </Label>
+                                          <FieldErrorMsg>
+                                            {
+                                              flatErrors.payRecipientsOtherSpecification
+                                            }
+                                          </FieldErrorMsg>
+                                          <Field
+                                            as={TextInput}
+                                            id="payment-pay-recipients-other"
+                                            maxLength={50}
+                                            name="payRecipientsOtherSpecification"
                                           />
                                         </FieldGroup>
                                       )}
