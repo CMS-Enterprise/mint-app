@@ -47,6 +47,7 @@ type ModelPlan {
   collaborators: [PlanCollaborator!]!
   documents: [PlanDocument!]!
   discussions: [PlanDiscussion!]!
+  payments: PlanPayments!
   itTools: PlanITTools!
   status: ModelStatus!
 }
@@ -569,59 +570,59 @@ type PlanParticipantsAndProviders {
 
   #Page 1
   participants:                      [ParticipantsType!]!
-  medicareProviderType:              String       
-  statesEngagement:                  String       
-  participantsOther:                 String       
-  participantsNote:                  String       
-  participantsCurrentlyInModels:     Boolean       
-  participantsCurrentlyInModelsNote: String       
-  modelApplicationLevel:             String       
+  medicareProviderType:              String
+  statesEngagement:                  String
+  participantsOther:                 String
+  participantsNote:                  String
+  participantsCurrentlyInModels:     Boolean
+  participantsCurrentlyInModelsNote: String
+  modelApplicationLevel:             String
 
   #Page 2
-  expectedNumberOfParticipants: Int             
-  estimateConfidence:           ConfidenceType 
-  confidenceNote:               String         
+  expectedNumberOfParticipants: Int
+  estimateConfidence:           ConfidenceType
+  confidenceNote:               String
   recruitmentMethod:            RecruitmentType
-  recruitmentOther:             String         
-  recruitmentNote:              String         
+  recruitmentOther:             String
+  recruitmentNote:              String
   selectionMethod:              [ParticipantSelectionType!]!
-  selectionOther:               String         
-  selectionNote:                String         
+  selectionOther:               String
+  selectionNote:                String
 
   #Page 3
   communicationMethod:   [ParticipantCommunicationType!]!
   communicationMethodOther:   String
-  communicationNote:     String             
-  participantAssumeRisk: Boolean             
+  communicationNote:     String
+  participantAssumeRisk: Boolean
   riskType:              ParticipantRiskType
-  riskOther:             String             
-  riskNote:              String             
-  willRiskChange:        Boolean             
-  willRiskChangeNote:    String             
+  riskOther:             String
+  riskNote:              String
+  willRiskChange:        Boolean
+  willRiskChangeNote:    String
 
   #Page 4
-  coordinateWork:          Boolean       
-  coordinateWorkNote:      String       
-  gainsharePayments:       Boolean       
-  gainsharePaymentsTrack: Boolean       
-  gainsharePaymentsNote:   String       
+  coordinateWork:          Boolean
+  coordinateWorkNote:      String
+  gainsharePayments:       Boolean
+  gainsharePaymentsTrack: Boolean
+  gainsharePaymentsNote:   String
   participantsIds:         [ParticipantsIDType!]!
-  participantsIdsOther:    String       
-  participantsIDSNote:     String       
+  participantsIdsOther:    String
+  participantsIDSNote:     String
 
   #Page 5
   providerAdditionFrequency:      FrequencyType
-  providerAdditionFrequencyOther: String       
-  providerAdditionFrequencyNote:  String       
+  providerAdditionFrequencyOther: String
+  providerAdditionFrequencyNote:  String
   providerAddMethod:              [ProviderAddType!]!
-  providerAddMethodOther:         String       
-  providerAddMethodNote:          String       
+  providerAddMethodOther:         String
+  providerAddMethodNote:          String
   providerLeaveMethod:            [ProviderLeaveType!]!
-  providerLeaveMethodOther:       String       
-  providerLeaveMethodNote:        String       
-  providerOverlap:                OverlapType  
-  providerOverlapHierarchy:       String       
-  providerOverlapNote:            String       
+  providerLeaveMethodOther:       String
+  providerLeaveMethodNote:        String
+  providerOverlap:                OverlapType
+  providerOverlapHierarchy:       String
+  providerOverlapNote:            String
 
 
   createdBy: String!
@@ -641,60 +642,219 @@ https://gqlgen.com/reference/changesets/
 input PlanParticipantsAndProvidersChanges @goModel(model: "map[string]interface{}") {
   #Page 1
   participants:                      [ParticipantsType!]
-  medicareProviderType:              String       
-  statesEngagement:                  String       
-  participantsOther:                 String       
-  participantsNote:                  String       
-  participantsCurrentlyInModels:     Boolean       
-  participantsCurrentlyInModelsNote: String       
-  modelApplicationLevel:             String       
+  medicareProviderType:              String
+  statesEngagement:                  String
+  participantsOther:                 String
+  participantsNote:                  String
+  participantsCurrentlyInModels:     Boolean
+  participantsCurrentlyInModelsNote: String
+  modelApplicationLevel:             String
 
   #Page 2
-  expectedNumberOfParticipants: Int             
-  estimateConfidence:           ConfidenceType 
-  confidenceNote:               String         
+  expectedNumberOfParticipants: Int
+  estimateConfidence:           ConfidenceType
+  confidenceNote:               String
   recruitmentMethod:            RecruitmentType
-  recruitmentOther:             String         
-  recruitmentNote:              String         
+  recruitmentOther:             String
+  recruitmentNote:              String
   selectionMethod:              [ParticipantSelectionType!]
-  selectionOther:               String         
-  selectionNote:                String         
+  selectionOther:               String
+  selectionNote:                String
 
   #Page 3
   communicationMethod:   [ParticipantCommunicationType!]
   communicationMethodOther:   String
-  communicationNote:     String             
-  participantAssumeRisk: Boolean             
+  communicationNote:     String
+  participantAssumeRisk: Boolean
   riskType:              ParticipantRiskType
-  riskOther:             String             
-  riskNote:              String             
-  willRiskChange:        Boolean             
-  willRiskChangeNote:    String             
+  riskOther:             String
+  riskNote:              String
+  willRiskChange:        Boolean
+  willRiskChangeNote:    String
 
   #Page 4
-  coordinateWork:          Boolean       
-  coordinateWorkNote:      String       
-  gainsharePayments:       Boolean       
-  gainsharePaymentsTrack: Boolean       
-  gainsharePaymentsNote:   String       
+  coordinateWork:          Boolean
+  coordinateWorkNote:      String
+  gainsharePayments:       Boolean
+  gainsharePaymentsTrack: Boolean
+  gainsharePaymentsNote:   String
   participantsIds:         [ParticipantsIDType!]
-  participantsIdsOther:    String       
-  participantsIDSNote:     String       
+  participantsIdsOther:    String
+  participantsIDSNote:     String
 
   #Page 5
   providerAdditionFrequency:      FrequencyType
-  providerAdditionFrequencyOther: String       
-  providerAdditionFrequencyNote:  String       
+  providerAdditionFrequencyOther: String
+  providerAdditionFrequencyNote:  String
   providerAddMethod:              [ProviderAddType!]
-  providerAddMethodOther:         String       
-  providerAddMethodNote:          String       
+  providerAddMethodOther:         String
+  providerAddMethodNote:          String
   providerLeaveMethod:            [ProviderLeaveType!]
-  providerLeaveMethodOther:       String       
-  providerLeaveMethodNote:        String       
-  providerOverlap:                OverlapType  
-  providerOverlapHierarchy:       String       
-  providerOverlapNote:            String     
+  providerLeaveMethodOther:       String
+  providerLeaveMethodNote:        String
+  providerOverlap:                OverlapType
+  providerOverlapHierarchy:       String
+  providerOverlapNote:            String
 
+}
+
+"""
+PlanPayments is the task list section that deals with information regarding Payments
+"""
+type PlanPayments {
+  id: UUID!
+  modelPlanID: UUID!
+
+  # Page 1
+  fundingSource:                      [FundingSource!]
+  fundingSourceTrustFund:             String
+  fundingSourceNote:                  String
+  fundingSourceR:                     [FundingSource!]
+  fundingSourceRTrustFund:            String
+  fundingSourceROther:                String
+  fundingSourceRNote:                 String
+  payRecipients:                      [PayRecipient!]
+  payRecipientsOtherSpecification:    String
+  payRecipientsNote:                  String
+  payType:                            [PayType!]
+  payTypeNote:                        String
+
+  # Page 2
+  payClaims:                                      [ClaimsBasedPayType!]
+  payClaimsOther:                                 String
+  shouldAnyProvidersExcludedFFSSystems:           Boolean
+  shouldAnyProviderExcludedFFSSystemsNote:        String
+  changesMedicarePhysicianFeeSchedule:            Boolean
+  changesMedicarePhysicianFeeScheduleNote:        String
+  affectsMedicareSecondaryPayerClaims:            Boolean
+  affectsMedicareSecondaryPayerClaimsHow: String
+  affectsMedicareSecondaryPayerClaimsNote:        String
+  payModelDifferentiation:                        String
+
+  # Page 3
+  creatingDependenciesBetweenServices:     Boolean
+  creatingDependenciesBetweenServicesNote: String
+  needsClaimsDataCollection:               Boolean
+  needsClaimsDataCollectionNote:           String
+  providingThirdPartyFile:                 Boolean
+  isContractorAwareTestDataRequirements:   Boolean
+
+  # Page 4
+  beneficiaryCostSharingLevelAndHandling:          String
+  waiveBeneficiaryCostSharingForAnyServices:       Boolean
+  waiveBeneficiaryCostSharingServiceSpecification: String
+  waiverOnlyAppliesPartOfPayment:                  Boolean
+  waiveBeneficiaryCostSharingNote:                 String
+
+  # Page 5
+  nonClaimsPayments:                               [NonClaimsBasedPayType!]
+  nonClaimsPaymentOther:                           String
+  paymentCalculationOwner:                         String
+  numberPaymentsPerPayCycle:                       String
+  numberPaymentsPerPayCycleNote:                  String
+  sharedSystemsInvolvedAdditionalClaimPayment:     Boolean
+  sharedSystemsInvolvedAdditionalClaimPaymentNote: String
+  planningToUseInnovationPaymentContractor:        Boolean
+  planningToUseInnovationPaymentContractorNote:    String
+  fundingStructure:                                String
+
+  # Page 6
+  expectedCalculationComplexityLevel:                ComplexityCalculationLevelType
+  expectedCalculationComplexityLevelNote:            String
+  canParticipantsSelectBetweenPaymentMechanisms:     Boolean
+  canParticipantsSelectBetweenPaymentMechanismsHow:  String
+  canParticipantsSelectBetweenPaymentMechanismsNote: String
+  anticipatedPaymentFrequency:                       [AnticipatedPaymentFrequencyType!]
+  anticipatedPaymentFrequencyOther:                  String
+  anticipatedPaymentFrequencyNote:                  String
+
+  # Page 7
+  willRecoverPayments:                               Boolean
+  willRecoverPaymentsNote:                          String
+  anticipateReconcilingPaymentsRetrospectively:      Boolean
+  anticipateReconcilingPaymentsRetrospectivelyNote: String
+  paymentStartDate:                                  Time
+  paymentStartDateNote:                             String
+
+  # Meta
+  createdBy: String!
+  createdDts: Time!
+  modifiedBy: String
+  modifiedDts: Time
+  status: TaskStatus!
+}
+
+input PlanPaymentsChanges @goModel(model: "map[string]interface{}") {
+  # Page 1
+  fundingSource:                      [FundingSource!]
+  fundingSourceTrustFund:             String
+  fundingSourceNote:                  String
+  fundingSourceR:                     [FundingSource!]
+  fundingSourceRTrustFund:            String
+  fundingSourceROther:                String
+  fundingSourceRNote:                 String
+  payRecipients:                      [PayRecipient!]
+  payRecipientsOtherSpecification:    String
+  payRecipientsNote:                  String
+  payType:                            [PayType!]
+  payTypeNote:                        String
+
+  # Page 2
+  payClaims:                                      [ClaimsBasedPayType!]
+  payClaimsOther:                                 String
+  shouldAnyProvidersExcludedFFSSystems:           Boolean
+  shouldAnyProviderExcludedFFSSystemsNote:        String
+  changesMedicarePhysicianFeeSchedule:            Boolean
+  changesMedicarePhysicianFeeScheduleNote:        String
+  affectsMedicareSecondaryPayerClaims:            Boolean
+  affectsMedicareSecondaryPayerClaimsHow:         String
+  affectsMedicareSecondaryPayerClaimsNote:        String
+  payModelDifferentiation:                        String
+
+  # Page 3
+  creatingDependenciesBetweenServices:     Boolean
+  creatingDependenciesBetweenServicesNote: String
+  needsClaimsDataCollection:               Boolean
+  needsClaimsDataCollectionNote:           String
+  providingThirdPartyFile:                 Boolean
+  isContractorAwareTestDataRequirements:   Boolean
+
+  # Page 4
+  beneficiaryCostSharingLevelAndHandling:          String
+  waiveBeneficiaryCostSharingForAnyServices:       Boolean
+  waiveBeneficiaryCostSharingServiceSpecification: String
+  waiverOnlyAppliesPartOfPayment:                  Boolean
+  waiveBeneficiaryCostSharingNote:                 String
+
+  # Page 5
+  nonClaimsPayments:                               [NonClaimsBasedPayType!]
+  nonClaimsPaymentOther:                           String
+  paymentCalculationOwner:                         String
+  numberPaymentsPerPayCycle:                       String
+  numberPaymentsPerPayCycleNote:                  String
+  sharedSystemsInvolvedAdditionalClaimPayment:     Boolean
+  sharedSystemsInvolvedAdditionalClaimPaymentNote: String
+  planningToUseInnovationPaymentContractor:        Boolean
+  planningToUseInnovationPaymentContractorNote:    String
+  fundingStructure:                                String
+
+  # Page 6
+  expectedCalculationComplexityLevel:                       ComplexityCalculationLevelType
+  expectedCalculationComplexityLevelNote:                   String
+  canParticipantsSelectBetweenPaymentMechanisms:            Boolean
+  canParticipantsSelectBetweenPaymentMechanismsHow:         String
+  canParticipantsSelectBetweenPaymentMechanismsNote:        String
+  anticipatedPaymentFrequency:                              [AnticipatedPaymentFrequencyType!]
+  anticipatedPaymentFrequencyOther:                         String
+  anticipatedPaymentFrequencyNote:                         String
+
+  # Page 7
+  willRecoverPayments:                               Boolean
+  willRecoverPaymentsNote:                          String
+  anticipateReconcilingPaymentsRetrospectively:      Boolean
+  anticipateReconcilingPaymentsRetrospectivelyNote: String
+  paymentStartDate:                                  Time
+  paymentStartDateNote:                             String
 }
 
 """"
@@ -771,7 +931,7 @@ type PlanITTools {
   oelLearningContractor: [OelLearningContractorType!]!
   oelLearningContractorOther: String
   oelLearningContractorNote: String
-  #Page 8 
+  #Page 8
   oelParticipantCollaboration: [OelParticipantCollaborationType!]!
   oelParticipantCollaborationOther: String
   oelParticipantCollaborationNote: String
@@ -830,17 +990,17 @@ input PlanITToolsChanges @goModel(model: "map[string]interface{}") {
   ppCommunicateWithParticipant: [PpCommunicateWithParticipantType!]
   ppCommunicateWithParticipantOther: String
   ppCommunicateWithParticipantNote: String
-  ppManageProviderOverlap: [PpManageProviderOverlapType!] 
+  ppManageProviderOverlap: [PpManageProviderOverlapType!]
   ppManageProviderOverlapOther: String
   ppManageProviderOverlapNote: String
-  bManageBeneficiaryOverlap: [BManageBeneficiaryOverlapType!] 
+  bManageBeneficiaryOverlap: [BManageBeneficiaryOverlapType!]
   bManageBeneficiaryOverlapOther: String
   bManageBeneficiaryOverlapNote: String
   #Page 4
   oelHelpdeskSupport: [OelHelpdeskSupportType!]
   oelHelpdeskSupportOther: String
   oelHelpdeskSupportNote: String
-  oelManageAco: [OelManageAcoType!] 
+  oelManageAco: [OelManageAcoType!]
   oelManageAcoOther: String
   oelManageAcoNote: String
   #Page 5
@@ -873,7 +1033,7 @@ input PlanITToolsChanges @goModel(model: "map[string]interface{}") {
   oelLearningContractor: [OelLearningContractorType!]
   oelLearningContractorOther: String
   oelLearningContractorNote: String
-  #Page 8 
+  #Page 8
   oelParticipantCollaboration: [OelParticipantCollaborationType!]
   oelParticipantCollaborationOther: String
   oelParticipantCollaborationNote: String
@@ -897,7 +1057,7 @@ input PlanITToolsChanges @goModel(model: "map[string]interface{}") {
   pRecoverPayments: [PRecoverPaymentsType!]
   pRecoverPaymentsOther: String
   pRecoverPaymentsNote: String
-  
+
 }
 """
 PlanOpsEvalAndLearning represents the task list section that deals with information regarding the Ops Eval and Learning
@@ -1142,6 +1302,7 @@ type Query {
   existingModelCollection: [ExistingModel!]!
   cedarPersonsByCommonName(commonName: String!): [UserInfo!]!
   planCollaboratorByID(id: UUID!): PlanCollaborator!
+  planPayments(id: UUID!): PlanPayments!
 }
 
 """
@@ -1184,7 +1345,6 @@ updatePlanItTools(id: UUID!, changes:PlanITToolsChanges!): PlanITTools!
 updatePlanOpsEvalAndLearning(id: UUID!, changes: PlanOpsEvalAndLearningChanges!): PlanOpsEvalAndLearning!
 @hasRole(role: MINT_BASE_USER)
 
-
 generatePresignedUploadURL(input: GeneratePresignedUploadURLInput!): GeneratePresignedUploadURLPayload!
 @hasRole(role: MINT_BASE_USER)
 
@@ -1213,6 +1373,9 @@ updateDiscussionReply(id: UUID!, changes: DiscussionReplyChanges!): DiscussionRe
 @hasRole(role: MINT_BASE_USER)
 
 deleteDiscussionReply(id: UUID!): DiscussionReply!
+@hasRole(role: MINT_BASE_USER)
+
+updatePlanPayments(id: UUID!, changes: PlanPaymentsChanges!): PlanPayments!
 @hasRole(role: MINT_BASE_USER)
 }
 
@@ -1370,7 +1533,7 @@ enum ConfidenceType {
   NOT_AT_ALL
   SLIGHTLY
   FAIRLY
-  COMPLETELY  
+  COMPLETELY
 }
 enum FrequencyType {
   ANNUALLY
@@ -1471,7 +1634,7 @@ enum GcCollectBidsType {
     OTHER
 }
 enum GcUpdateContractType {
-    
+
     HPMS
     OTHER
 }
@@ -1501,7 +1664,7 @@ enum PpManageProviderOverlapType {
     OTHER
     NA
 }
-enum BManageBeneficiaryOverlapType { 
+enum BManageBeneficiaryOverlapType {
     MDM
     OTHER
     NA
@@ -1511,13 +1674,13 @@ enum OelHelpdeskSupportType {
     CONTRACTOR
     OTHER
 }
-enum OelManageAcoType { 
+enum OelManageAcoType {
     ACO_OS
     ACO_UI
     INNOVATION
     OTHER
 }
-enum OelPerformanceBenchmarkType { 
+enum OelPerformanceBenchmarkType {
     IDR
     CCW
     OTHER
@@ -1526,11 +1689,11 @@ enum OelProcessAppealsType {
     MEDICARE_APPEAL_SYSTEM
     OTHER
 }
-enum OelEvaluationContractorType { 
+enum OelEvaluationContractorType {
     RMDA
     OTHER
 }
-enum OelCollectDataType { 
+enum OelCollectDataType {
     IDR
     CCW
     IDOS
@@ -1538,7 +1701,7 @@ enum OelCollectDataType {
     CONTRACTOR
     OTHER
 }
-enum OelObtainDataType { 
+enum OelObtainDataType {
     CCW
     IDOS
     ISP
@@ -1723,6 +1886,64 @@ enum DataStartsType {
     OTHER
 }
 #Ops Eval and Learning types end
+
+enum FundingSource {
+  PATIENT_PROTECTION_AFFORDABLE_CARE_ACT
+  TRUST_FUND
+  OTHER
+}
+
+enum PayRecipient {
+  PROVIDERS
+  BENEFICIARIES
+  PARTICIPANTS
+  STATES
+  OTHER
+}
+
+enum PayType {
+  CLAIMS_BASED_PAYMENTS
+  NON_CLAIMS_BASED_PAYMENTS
+  GRANTS
+}
+
+enum ClaimsBasedPayType {
+  ADJUSTMENTS_TO_FFS_PAYMENTS
+  PAYMENTS_CARE_MANAGEMENT_HOME_VISITS
+  PAYMENTS_SNF_CLAIMS_WITHOUT_3DAY_HOSPITAL_ADMISSIONS
+  PAYMENTS_TELEHEALTH_SERVICES_NOT_TRADITIONAL_MEDICARE
+}
+
+enum NonClaimsBasedPayType {
+  ADVANCED_PAYMENT
+  BUNDLED_EPISODE_OF_CARE
+  CAPITATION_POPULATION_BASED_FULL
+  CAPITATION_POPULATION_BASED_PARTIAL
+  CARE_COORDINATION_MANAGEMENT_FEE
+  GLOBAL_BUDGET
+  GRANTS
+  INCENTIVE_PAYMENT
+  MAPD_SHARED_SAVINGS
+  SHARED_SAVINGS
+  OTHER
+}
+
+enum ComplexityCalculationLevelType {
+  LOW
+  MIDDLE
+  HIGH
+}
+
+enum AnticipatedPaymentFrequencyType {
+  ANNUALLY
+  BIANNUALLY
+  QUARTERLY
+  MONTHLY
+  SEMIMONTHLY
+  WEEKLY
+  DAILY
+  OTHER
+}
 
 directive @hasRole(role: Role!) on FIELD_DEFINITION
 
