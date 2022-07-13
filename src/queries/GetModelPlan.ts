@@ -90,6 +90,14 @@ export default gql`
         modifiedDts
         status
       }
+      payments {
+        id
+        createdBy
+        createdDts
+        modifiedBy
+        modifiedDts
+        status
+      }
     }
   }
 `;
