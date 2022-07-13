@@ -51,7 +51,7 @@ const participantsAndProviders = {
     notAtAll: 'Not at all confident',
     slightly: 'Slightly confident',
     fairly: 'Fairly confident',
-    completely: 'Compeletely confident'
+    completely: 'Completely confident'
   },
   recruitParticipants: 'How will you recruit the participants?',
   recruitOptions: {
