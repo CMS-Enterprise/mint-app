@@ -93,8 +93,7 @@ export default gql`
       payments {
         id
         createdBy
-        # * temporary removed
-        # createdDts
+        createdDts
         modifiedBy
         modifiedDts
         status
