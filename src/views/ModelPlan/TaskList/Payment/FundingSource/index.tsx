@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { Fragment, useRef } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
@@ -10,14 +10,16 @@ import {
   Grid,
   GridContainer,
   IconArrowBack,
-  Label
+  Label,
+  TextInput
 } from '@trussworks/react-uswds';
-import { Form, Formik, FormikProps } from 'formik';
+import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
 
 import AskAQuestion from 'components/AskAQuestion';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import AutoSave from 'components/shared/AutoSave';
+import CheckboxField from 'components/shared/CheckboxField';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
@@ -29,7 +31,9 @@ import {
 } from 'queries/Payments/types/GetFunding';
 import { UpdatePaymentsVariables } from 'queries/Payments/types/UpdatePayments';
 import UpdatePayments from 'queries/Payments/UpdatePayments';
+import { FundingSource as FundingSourceEnum } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
+import { sortOtherEnum, translateSourceOptions } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
 
 const FundingSource = () => {
@@ -100,7 +104,7 @@ const FundingSource = () => {
   const initialValues: FundingFormType = {
     __typename: 'PlanPayments',
     id: id ?? '',
-    fundingSource: fundingSource ?? null,
+    fundingSource: fundingSource ?? [],
     fundingSourceTrustFund: fundingSourceTrustFund ?? '',
     fundingSourceNote: fundingSourceNote ?? '',
     fundingSourceR: fundingSourceR ?? null,
@@ -188,27 +192,113 @@ const FundingSource = () => {
                 </ErrorAlert>
               )}
               <GridContainer className="padding-left-0 padding-right-0">
-                <Grid row gap className="beneficiaries__info">
+                <Grid row gap>
                   <Grid desktop={{ col: 6 }}>
                     <Form
                       className="margin-top-6"
-                      data-testid="beneficiaries-identification-form"
+                      data-testid="payment-funding-source-form"
                       onSubmit={e => {
                         handleSubmit(e);
                       }}
                     >
-                      <FieldGroup
-                        scrollElement="beneficiaries"
-                        error={!!flatErrors.beneficiaries}
-                        className="margin-top-4"
-                      >
-                        <Label htmlFor="beneficiaries-beneficiaries">
-                          {t('beneficiaries')}
-                        </Label>
-                        <FieldErrorMsg>
-                          {flatErrors.beneficiaries}
-                        </FieldErrorMsg>
-                      </FieldGroup>
+                      <FieldArray
+                        name="fundingSource"
+                        render={arrayHelpers => (
+                          <>
+                            <legend className="usa-label maxw-none">
+                              {t('fundingSource')}
+                            </legend>
+                            <FieldErrorMsg>
+                              {flatErrors.fundingSource}
+                            </FieldErrorMsg>
+
+                            {Object.keys(FundingSourceEnum)
+                              .sort(sortOtherEnum)
+                              .map(type => {
+                                return (
+                                  <Fragment key={type}>
+                                    <Field
+                                      as={CheckboxField}
+                                      id={`payment-funding-source-${type}`}
+                                      name="fundingSource"
+                                      label={translateSourceOptions(type)}
+                                      value={type}
+                                      checked={values.fundingSource?.includes(
+                                        type as FundingSourceEnum
+                                      )}
+                                      onChange={(
+                                        e: React.ChangeEvent<HTMLInputElement>
+                                      ) => {
+                                        if (e.target.checked) {
+                                          arrayHelpers.push(e.target.value);
+                                        } else {
+                                          const idx = values.fundingSource!.indexOf(
+                                            e.target.value as FundingSourceEnum
+                                          );
+                                          arrayHelpers.remove(idx);
+                                        }
+                                      }}
+                                    />
+                                    {type === 'TRUST_FUND' &&
+                                      values.fundingSource?.includes(
+                                        type as FundingSourceEnum
+                                      ) && (
+                                        <FieldGroup
+                                          className="margin-left-4 margin-top-2 margin-bottom-4"
+                                          error={
+                                            !!flatErrors.fundingSourceTrustFund
+                                          }
+                                        >
+                                          <Label
+                                            htmlFor="payment-funding-source-other"
+                                            className="text-normal"
+                                          >
+                                            {t('whichType')}
+                                          </Label>
+                                          <FieldErrorMsg>
+                                            {flatErrors.fundingSourceTrustFund}
+                                          </FieldErrorMsg>
+                                          <Field
+                                            as={TextInput}
+                                            id="payment-funding-source-other"
+                                            maxLength={50}
+                                            name="fundingSourceTrustFund"
+                                          />
+                                        </FieldGroup>
+                                      )}
+                                    {type === 'OTHER' &&
+                                      values.fundingSource?.includes(
+                                        type as FundingSourceEnum
+                                      ) && (
+                                        <FieldGroup
+                                          className="margin-left-4 margin-top-2 margin-bottom-4"
+                                          error={
+                                            !!flatErrors.fundingSourceOther
+                                          }
+                                        >
+                                          <Label
+                                            htmlFor="payment-funding-source-other"
+                                            className="text-normal"
+                                          >
+                                            {t('otherSourceOption')}
+                                          </Label>
+                                          <FieldErrorMsg>
+                                            {flatErrors.fundingSourceOther}
+                                          </FieldErrorMsg>
+                                          <Field
+                                            as={TextInput}
+                                            id="payment-funding-source-other"
+                                            maxLength={50}
+                                            name="fundingSourceOther"
+                                          />
+                                        </FieldGroup>
+                                      )}
+                                  </Fragment>
+                                );
+                              })}
+                          </>
+                        )}
+                      />
 
                       <div className="margin-top-6 margin-bottom-3">
                         <Button type="submit" onClick={() => setErrors({})}>
