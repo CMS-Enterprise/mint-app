@@ -5,6 +5,7 @@ package graph
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/google/uuid"
 
@@ -98,6 +99,13 @@ func (r *modelPlanResolver) Discussions(ctx context.Context, obj *models.ModelPl
 	logger := appcontext.ZLogger(ctx)
 
 	return resolvers.PlanDiscussionCollectionByModelPlanID(logger, obj.ID, r.store)
+}
+
+// Payments is the resolver for the payments field.
+func (r *modelPlanResolver) Payments(ctx context.Context, obj *models.ModelPlan) (*models.PlanPayments, error) {
+	logger := appcontext.ZLogger(ctx)
+
+	return resolvers.PlanPaymentsReadByModelPlan(logger, r.store, obj.ID)
 }
 
 // ItTools is the resolver for the itTools field.
@@ -294,6 +302,14 @@ func (r *mutationResolver) DeleteDiscussionReply(ctx context.Context, id uuid.UU
 	logger := appcontext.ZLogger(ctx)
 
 	return resolvers.DeleteDiscussionReply(logger, id, principal, r.store)
+}
+
+// UpdatePlanPayments is the resolver for the updatePlanPayments field.
+func (r *mutationResolver) UpdatePlanPayments(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanPayments, error) {
+	logger := appcontext.ZLogger(ctx)
+	principal := appcontext.Principal(ctx).ID()
+
+	return resolvers.PlanPaymentsUpdate(logger, r.store, id, changes, principal)
 }
 
 // Beneficiaries is the resolver for the beneficiaries field.
@@ -631,6 +647,46 @@ func (r *planParticipantsAndProvidersResolver) ProviderLeaveMethod(ctx context.C
 	return providerLeaveTypes, nil
 }
 
+// FundingSource is the resolver for the fundingSource field.
+func (r *planPaymentsResolver) FundingSource(ctx context.Context, obj *models.PlanPayments) ([]models.FundingSource, error) {
+	return models.ConvertEnums[models.FundingSource](obj.FundingSource), nil
+}
+
+// FundingSourceR is the resolver for the fundingSourceR field.
+func (r *planPaymentsResolver) FundingSourceR(ctx context.Context, obj *models.PlanPayments) ([]models.FundingSource, error) {
+	return models.ConvertEnums[models.FundingSource](obj.FundingSourceR), nil
+}
+
+// PayRecipients is the resolver for the payRecipients field.
+func (r *planPaymentsResolver) PayRecipients(ctx context.Context, obj *models.PlanPayments) ([]models.PayRecipient, error) {
+	return models.ConvertEnums[models.PayRecipient](obj.PayRecipients), nil
+}
+
+// PayType is the resolver for the payType field.
+func (r *planPaymentsResolver) PayType(ctx context.Context, obj *models.PlanPayments) ([]models.PayType, error) {
+	return models.ConvertEnums[models.PayType](obj.PayType), nil
+}
+
+// PayClaims is the resolver for the payClaims field.
+func (r *planPaymentsResolver) PayClaims(ctx context.Context, obj *models.PlanPayments) ([]models.ClaimsBasedPayType, error) {
+	return models.ConvertEnums[models.ClaimsBasedPayType](obj.PayClaims), nil
+}
+
+// NonClaimsPayments is the resolver for the nonClaimsPayments field.
+func (r *planPaymentsResolver) NonClaimsPayments(ctx context.Context, obj *models.PlanPayments) ([]model.NonClaimsBasedPayType, error) {
+	return models.ConvertEnums[model.NonClaimsBasedPayType](obj.NonClaimsPayments), nil
+}
+
+// NonClaimsPaymentOther is the resolver for the nonClaimsPaymentOther field.
+func (r *planPaymentsResolver) NonClaimsPaymentOther(ctx context.Context, obj *models.PlanPayments) (*string, error) {
+	return obj.NonClaimsPaymentsOther, nil
+}
+
+// AnticipatedPaymentFrequency is the resolver for the anticipatedPaymentFrequency field.
+func (r *planPaymentsResolver) AnticipatedPaymentFrequency(ctx context.Context, obj *models.PlanPayments) ([]models.AnticipatedPaymentFrequencyType, error) {
+	return models.ConvertEnums[models.AnticipatedPaymentFrequencyType](obj.AnticipatedPaymentFrequency), nil
+}
+
 // CurrentUser is the resolver for the currentUser field.
 func (r *queryResolver) CurrentUser(ctx context.Context) (*model.CurrentUser, error) {
 	ldUser := flags.Principal(ctx)
@@ -717,6 +773,13 @@ func (r *queryResolver) PlanCollaboratorByID(ctx context.Context, id uuid.UUID) 
 	return resolvers.FetchCollaboratorByID(logger, id, r.store)
 }
 
+// PlanPayments is the resolver for the planPayments field.
+func (r *queryResolver) PlanPayments(ctx context.Context, id uuid.UUID) (*models.PlanPayments, error) {
+	logger := appcontext.ZLogger(ctx)
+
+	return resolvers.PlanPaymentsRead(logger, r.store, id)
+}
+
 // Email is the resolver for the email field.
 func (r *userInfoResolver) Email(ctx context.Context, obj *models.UserInfo) (string, error) {
 	return string(obj.Email), nil
@@ -759,6 +822,9 @@ func (r *Resolver) PlanParticipantsAndProviders() generated.PlanParticipantsAndP
 	return &planParticipantsAndProvidersResolver{r}
 }
 
+// PlanPayments returns generated.PlanPaymentsResolver implementation.
+func (r *Resolver) PlanPayments() generated.PlanPaymentsResolver { return &planPaymentsResolver{r} }
+
 // Query returns generated.QueryResolver implementation.
 func (r *Resolver) Query() generated.QueryResolver { return &queryResolver{r} }
 
@@ -774,5 +840,31 @@ type planGeneralCharacteristicsResolver struct{ *Resolver }
 type planITToolsResolver struct{ *Resolver }
 type planOpsEvalAndLearningResolver struct{ *Resolver }
 type planParticipantsAndProvidersResolver struct{ *Resolver }
+type planPaymentsResolver struct{ *Resolver }
 type queryResolver struct{ *Resolver }
 type userInfoResolver struct{ *Resolver }
+
+// !!! WARNING !!!
+// The code below was going to be deleted when updating resolvers. It has been copied here so you have
+// one last chance to move it out of harms way if you want. There are two reasons this happens:
+//  - When renaming or deleting a resolver the old code will be put in here. You can safely delete
+//    it when you're done.
+//  - You have helper methods in this file. Move them out to keep these resolver files clean.
+func (r *planPaymentsResolver) NumberPaymentsPerPayCycleNote(ctx context.Context, obj *models.PlanPayments) (*string, error) {
+	panic(fmt.Errorf("not implemented"))
+}
+func (r *planPaymentsResolver) AnticipatedPaymentFrequencyNote(ctx context.Context, obj *models.PlanPayments) (*string, error) {
+	panic(fmt.Errorf("not implemented"))
+}
+func (r *planPaymentsResolver) WillRecoverPaymentsNote(ctx context.Context, obj *models.PlanPayments) (*string, error) {
+	panic(fmt.Errorf("not implemented"))
+}
+func (r *planPaymentsResolver) AnticipateReconcilingPaymentsRetrospectivelyNote(ctx context.Context, obj *models.PlanPayments) (*string, error) {
+	panic(fmt.Errorf("not implemented"))
+}
+func (r *planPaymentsResolver) PaymentStartDateNote(ctx context.Context, obj *models.PlanPayments) (*string, error) {
+	panic(fmt.Errorf("not implemented"))
+}
+func (r *planPaymentsResolver) PayRecipientsOtherSpecification(ctx context.Context, obj *models.PlanPayments) (*string, error) {
+	return obj.PayRecipientsOtherSpecification, nil
+}
