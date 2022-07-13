@@ -708,6 +708,7 @@ type PlanPayments {
   # Page 1
   fundingSource:                      [FundingSource!]!
   fundingSourceTrustFund:             String
+  fundingSourceOther:                 String
   fundingSourceNote:                  String
   fundingSourceR:                     [FundingSource!]!
   fundingSourceRTrustFund:            String
@@ -788,6 +789,7 @@ input PlanPaymentsChanges @goModel(model: "map[string]interface{}") {
   # Page 1
   fundingSource:                      [FundingSource!]
   fundingSourceTrustFund:             String
+  fundingSourceOther:                 String
   fundingSourceNote:                  String
   fundingSourceR:                     [FundingSource!]
   fundingSourceRTrustFund:            String

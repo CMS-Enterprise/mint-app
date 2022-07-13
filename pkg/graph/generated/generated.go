@@ -607,6 +607,7 @@ type ComplexityRoot struct {
 		ExpectedCalculationComplexityLevelNote            func(childComplexity int) int
 		FundingSource                                     func(childComplexity int) int
 		FundingSourceNote                                 func(childComplexity int) int
+		FundingSourceOther                                func(childComplexity int) int
 		FundingSourceR                                    func(childComplexity int) int
 		FundingSourceRNote                                func(childComplexity int) int
 		FundingSourceROther                               func(childComplexity int) int
@@ -4452,6 +4453,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.PlanPayments.FundingSourceNote(childComplexity), true
 
+	case "PlanPayments.fundingSourceOther":
+		if e.complexity.PlanPayments.FundingSourceOther == nil {
+			break
+		}
+
+		return e.complexity.PlanPayments.FundingSourceOther(childComplexity), true
+
 	case "PlanPayments.fundingSourceR":
 		if e.complexity.PlanPayments.FundingSourceR == nil {
 			break
@@ -5656,6 +5664,7 @@ type PlanPayments {
   # Page 1
   fundingSource:                      [FundingSource!]!
   fundingSourceTrustFund:             String
+  fundingSourceOther:                 String
   fundingSourceNote:                  String
   fundingSourceR:                     [FundingSource!]!
   fundingSourceRTrustFund:            String
@@ -5736,6 +5745,7 @@ input PlanPaymentsChanges @goModel(model: "map[string]interface{}") {
   # Page 1
   fundingSource:                      [FundingSource!]
   fundingSourceTrustFund:             String
+  fundingSourceOther:                 String
   fundingSourceNote:                  String
   fundingSourceR:                     [FundingSource!]
   fundingSourceRTrustFund:            String
@@ -10399,6 +10409,8 @@ func (ec *executionContext) fieldContext_ModelPlan_payments(ctx context.Context,
 				return ec.fieldContext_PlanPayments_fundingSource(ctx, field)
 			case "fundingSourceTrustFund":
 				return ec.fieldContext_PlanPayments_fundingSourceTrustFund(ctx, field)
+			case "fundingSourceOther":
+				return ec.fieldContext_PlanPayments_fundingSourceOther(ctx, field)
 			case "fundingSourceNote":
 				return ec.fieldContext_PlanPayments_fundingSourceNote(ctx, field)
 			case "fundingSourceR":
@@ -13617,6 +13629,8 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanPayments(ctx context
 				return ec.fieldContext_PlanPayments_fundingSource(ctx, field)
 			case "fundingSourceTrustFund":
 				return ec.fieldContext_PlanPayments_fundingSourceTrustFund(ctx, field)
+			case "fundingSourceOther":
+				return ec.fieldContext_PlanPayments_fundingSourceOther(ctx, field)
 			case "fundingSourceNote":
 				return ec.fieldContext_PlanPayments_fundingSourceNote(ctx, field)
 			case "fundingSourceR":
@@ -30519,6 +30533,47 @@ func (ec *executionContext) fieldContext_PlanPayments_fundingSourceTrustFund(ctx
 	return fc, nil
 }
 
+func (ec *executionContext) _PlanPayments_fundingSourceOther(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_fundingSourceOther(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.FundingSourceOther, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanPayments_fundingSourceOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanPayments",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _PlanPayments_fundingSourceNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_PlanPayments_fundingSourceNote(ctx, field)
 	if err != nil {
@@ -33761,6 +33816,8 @@ func (ec *executionContext) fieldContext_Query_planPayments(ctx context.Context,
 				return ec.fieldContext_PlanPayments_fundingSource(ctx, field)
 			case "fundingSourceTrustFund":
 				return ec.fieldContext_PlanPayments_fundingSourceTrustFund(ctx, field)
+			case "fundingSourceOther":
+				return ec.fieldContext_PlanPayments_fundingSourceOther(ctx, field)
 			case "fundingSourceNote":
 				return ec.fieldContext_PlanPayments_fundingSourceNote(ctx, field)
 			case "fundingSourceR":
@@ -40004,6 +40061,10 @@ func (ec *executionContext) _PlanPayments(ctx context.Context, sel ast.Selection
 		case "fundingSourceTrustFund":
 
 			out.Values[i] = ec._PlanPayments_fundingSourceTrustFund(ctx, field, obj)
+
+		case "fundingSourceOther":
+
+			out.Values[i] = ec._PlanPayments_fundingSourceOther(ctx, field, obj)
 
 		case "fundingSourceNote":
 
