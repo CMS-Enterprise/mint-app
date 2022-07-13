@@ -21,6 +21,14 @@ import AutoSave from 'components/shared/AutoSave';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
+import getFunding from 'queries/Payments/getFunding';
+import {
+  GetFunding as GetFundingType,
+  GetFunding_modelPlan_payments as FundingFormType,
+  GetFundingVariables
+} from 'queries/Payments/types/GetFunding';
+import { UpdatePaymentsVariables } from 'queries/Payments/types/UpdatePayments';
+import UpdatePayments from 'queries/Payments/UpdatePayments';
 import flattenErrors from 'utils/flattenErrors';
 import { NotFoundPartial } from 'views/NotFound';
 
@@ -29,29 +37,29 @@ const FundingSource = () => {
   const { t: h } = useTranslation('draftModelPlan');
   const { modelID } = useParams<{ modelID: string }>();
 
-  const formikRef = useRef<FormikProps<PaymentsFormType>>(null);
+  const formikRef = useRef<FormikProps<FundingFormType>>(null);
   const history = useHistory();
 
-  const { data, loading, error } = useQuery<GetPerformanceType>(
-    GetPerformance,
-    {
-      variables: {
-        id: modelID
-      }
+  const { data, loading, error } = useQuery<
+    GetFundingType,
+    GetFundingVariables
+  >(getFunding, {
+    variables: {
+      id: modelID
     }
-  );
+  });
 
   const {
     id
     // ...
-  } = data?.modelPlan?.opsEvalAndLearning || ({} as PaymentsFormType);
+  } = data?.modelPlan?.payments || ({} as FundingFormType);
 
   const modelName = data?.modelPlan?.modelName || '';
 
   const [update] = useMutation<UpdatePaymentsVariables>(UpdatePayments);
 
   const handleFormSubmit = (
-    formikValues: PaymentsFormType,
+    formikValues: FundingFormType,
     redirect?: 'next' | 'back'
   ) => {
     const { id: updateId, __typename, ...changeValues } = formikValues;
@@ -78,7 +86,7 @@ const FundingSource = () => {
       });
   };
 
-  // const intialValues: PaymentsFormType = {
+  // const intialValues: FundingFormType = {
   //   __typename: 'PlanPayments',
   //   id: id ?? '',
   //   tbc
@@ -129,7 +137,7 @@ const FundingSource = () => {
         enableReinitialize
         innerRef={formikRef}
       >
-        {(formikProps: FormikProps<PaymentsFormType>) => {
+        {(formikProps: FormikProps<FundingFormType>) => {
           const {
             errors,
             handleSubmit,
