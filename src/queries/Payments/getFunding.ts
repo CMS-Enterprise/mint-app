@@ -9,6 +9,7 @@ export default gql`
         id
         fundingSource
         fundingSourceTrustFund
+        fundingSourceOther
         fundingSourceNote
         fundingSourceR
         fundingSourceRTrustFund

@@ -14,6 +14,7 @@ export interface GetFunding_modelPlan_payments {
   id: UUID;
   fundingSource: FundingSource[];
   fundingSourceTrustFund: string | null;
+  fundingSourceOther: string | null;
   fundingSourceNote: string | null;
   fundingSourceR: FundingSource[];
   fundingSourceRTrustFund: string | null;
