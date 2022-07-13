@@ -50,8 +50,19 @@ const FundingSource = () => {
   });
 
   const {
-    id
-    // ...
+    id,
+    fundingSource,
+    fundingSourceTrustFund,
+    fundingSourceNote,
+    fundingSourceR,
+    fundingSourceRTrustFund,
+    fundingSourceROther,
+    fundingSourceRNote,
+    payRecipients,
+    payRecipientsOtherSpecification,
+    payRecipientsNote,
+    payType,
+    payTypeNote
   } = data?.modelPlan?.payments || ({} as FundingFormType);
 
   const modelName = data?.modelPlan?.modelName || '';
@@ -86,11 +97,22 @@ const FundingSource = () => {
       });
   };
 
-  // const intialValues: FundingFormType = {
-  //   __typename: 'PlanPayments',
-  //   id: id ?? '',
-  //   tbc
-  // };
+  const initialValues: FundingFormType = {
+    __typename: 'PlanPayments',
+    id: id ?? '',
+    fundingSource: fundingSource ?? null,
+    fundingSourceTrustFund: fundingSourceTrustFund ?? '',
+    fundingSourceNote: fundingSourceNote ?? '',
+    fundingSourceR: fundingSourceR ?? null,
+    fundingSourceRTrustFund: fundingSourceRTrustFund ?? '',
+    fundingSourceROther: fundingSourceROther ?? '',
+    fundingSourceRNote: fundingSourceRNote ?? '',
+    payRecipients: payRecipients ?? null,
+    payRecipientsOtherSpecification: payRecipientsOtherSpecification ?? '',
+    payRecipientsNote: payRecipientsNote ?? '',
+    payType: payType ?? null,
+    payTypeNote: payTypeNote ?? ''
+  };
 
   if ((!loading && error) || (!loading && !data?.modelPlan)) {
     return <NotFoundPartial />;
