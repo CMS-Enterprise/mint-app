@@ -109,7 +109,7 @@ const TaskList = () => {
         return beneficiaries.status;
       case 'ops-eval-and-learning':
         return opsEvalAndLearning.status;
-      case 'payments':
+      case 'payment':
         return payments.status;
       // case 'finalizeModelPlan':
       //   return;
