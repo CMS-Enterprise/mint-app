@@ -12,17 +12,17 @@ import { FundingSource, PayRecipient, PayType } from "./../../../types/graphql-g
 export interface GetFunding_modelPlan_payments {
   __typename: "PlanPayments";
   id: UUID;
-  fundingSource: FundingSource[] | null;
+  fundingSource: FundingSource[];
   fundingSourceTrustFund: string | null;
   fundingSourceNote: string | null;
-  fundingSourceR: FundingSource[] | null;
+  fundingSourceR: FundingSource[];
   fundingSourceRTrustFund: string | null;
   fundingSourceROther: string | null;
   fundingSourceRNote: string | null;
-  payRecipients: PayRecipient[] | null;
+  payRecipients: PayRecipient[];
   payRecipientsOtherSpecification: string | null;
   payRecipientsNote: string | null;
-  payType: PayType[] | null;
+  payType: PayType[];
   payTypeNote: string | null;
 }
 

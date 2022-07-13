@@ -793,6 +793,7 @@ export interface PlanParticipantsAndProvidersChanges {
 export interface PlanPaymentsChanges {
   fundingSource?: FundingSource[] | null;
   fundingSourceTrustFund?: string | null;
+  fundingSourceOther?: string | null;
   fundingSourceNote?: string | null;
   fundingSourceR?: FundingSource[] | null;
   fundingSourceRTrustFund?: string | null;
