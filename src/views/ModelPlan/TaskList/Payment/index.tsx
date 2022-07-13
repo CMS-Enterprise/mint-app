@@ -11,7 +11,7 @@ export const Payment = () => {
     <MainContent className="grid-container" data-testid="model-payment">
       <Switch>
         <Route
-          path="/models/:modelID/task-list/payment"
+          path="/models/:modelID/task-list/payments"
           render={() => <FundingSource />}
         />
         <Route path="*" render={() => <NotFoundPartial />} />
