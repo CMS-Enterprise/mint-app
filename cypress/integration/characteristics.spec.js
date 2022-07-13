@@ -58,6 +58,8 @@ describe('The Model Plan General Characteristics Form', () => {
 
     // Page - /characteristics/key-charactertics
 
+    cy.wait(500);
+
     cy.get('#plan-characteristics-alternative-payment')
       .check({ force: true })
       .should('be.checked');
@@ -85,6 +87,8 @@ describe('The Model Plan General Characteristics Form', () => {
     cy.contains('button', 'Next').click();
 
     // Page - /characteristics/involvements
+
+    cy.wait(500);
 
     cy.get('#plan-characteristics-care-coordination-involved')
       .check({ force: true })
@@ -119,6 +123,8 @@ describe('The Model Plan General Characteristics Form', () => {
     cy.contains('button', 'Next').click();
 
     // Page - /characteristics/targets-and-options
+
+    cy.wait(500);
 
     cy.get('#plan-characteristics-geographies-targeted')
       .check({ force: true })
@@ -155,6 +161,8 @@ describe('The Model Plan General Characteristics Form', () => {
     cy.contains('button', 'Next').click();
 
     // Page - /characteristics/authority
+
+    cy.wait(500);
 
     cy.get('#plan-characteristics-rulemaking-required')
       .check({ force: true })
