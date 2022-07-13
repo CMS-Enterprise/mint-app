@@ -48,6 +48,7 @@ type ResolverRoot interface {
 	PlanITTools() PlanITToolsResolver
 	PlanOpsEvalAndLearning() PlanOpsEvalAndLearningResolver
 	PlanParticipantsAndProviders() PlanParticipantsAndProvidersResolver
+	PlanPayments() PlanPaymentsResolver
 	Query() QueryResolver
 	UserInfo() UserInfoResolver
 }
@@ -125,6 +126,7 @@ type ComplexityRoot struct {
 		ModifiedDts              func(childComplexity int) int
 		OpsEvalAndLearning       func(childComplexity int) int
 		ParticipantsAndProviders func(childComplexity int) int
+		Payments                 func(childComplexity int) int
 		Status                   func(childComplexity int) int
 	}
 
@@ -151,6 +153,7 @@ type ComplexityRoot struct {
 		UpdatePlanMilestones               func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
 		UpdatePlanOpsEvalAndLearning       func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
 		UpdatePlanParticipantsAndProviders func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
+		UpdatePlanPayments                 func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
 	}
 
 	PlanBasics struct {
@@ -581,6 +584,73 @@ type ComplexityRoot struct {
 		WillRiskChangeNote                func(childComplexity int) int
 	}
 
+	PlanPayments struct {
+		AffectsMedicareSecondaryPayerClaims               func(childComplexity int) int
+		AffectsMedicareSecondaryPayerClaimsHow            func(childComplexity int) int
+		AffectsMedicareSecondaryPayerClaimsNote           func(childComplexity int) int
+		AnticipateReconcilingPaymentsRetrospectively      func(childComplexity int) int
+		AnticipateReconcilingPaymentsRetrospectivelyNote  func(childComplexity int) int
+		AnticipatedPaymentFrequency                       func(childComplexity int) int
+		AnticipatedPaymentFrequencyNote                   func(childComplexity int) int
+		AnticipatedPaymentFrequencyOther                  func(childComplexity int) int
+		BeneficiaryCostSharingLevelAndHandling            func(childComplexity int) int
+		CanParticipantsSelectBetweenPaymentMechanisms     func(childComplexity int) int
+		CanParticipantsSelectBetweenPaymentMechanismsHow  func(childComplexity int) int
+		CanParticipantsSelectBetweenPaymentMechanismsNote func(childComplexity int) int
+		ChangesMedicarePhysicianFeeSchedule               func(childComplexity int) int
+		ChangesMedicarePhysicianFeeScheduleNote           func(childComplexity int) int
+		CreatedBy                                         func(childComplexity int) int
+		CreatedDts                                        func(childComplexity int) int
+		CreatingDependenciesBetweenServices               func(childComplexity int) int
+		CreatingDependenciesBetweenServicesNote           func(childComplexity int) int
+		ExpectedCalculationComplexityLevel                func(childComplexity int) int
+		ExpectedCalculationComplexityLevelNote            func(childComplexity int) int
+		FundingSource                                     func(childComplexity int) int
+		FundingSourceNote                                 func(childComplexity int) int
+		FundingSourceR                                    func(childComplexity int) int
+		FundingSourceRNote                                func(childComplexity int) int
+		FundingSourceROther                               func(childComplexity int) int
+		FundingSourceRTrustFund                           func(childComplexity int) int
+		FundingSourceTrustFund                            func(childComplexity int) int
+		FundingStructure                                  func(childComplexity int) int
+		ID                                                func(childComplexity int) int
+		IsContractorAwareTestDataRequirements             func(childComplexity int) int
+		ModelPlanID                                       func(childComplexity int) int
+		ModifiedBy                                        func(childComplexity int) int
+		ModifiedDts                                       func(childComplexity int) int
+		NeedsClaimsDataCollection                         func(childComplexity int) int
+		NeedsClaimsDataCollectionNote                     func(childComplexity int) int
+		NonClaimsPaymentOther                             func(childComplexity int) int
+		NonClaimsPayments                                 func(childComplexity int) int
+		NumberPaymentsPerPayCycle                         func(childComplexity int) int
+		NumberPaymentsPerPayCycleNote                     func(childComplexity int) int
+		PayClaims                                         func(childComplexity int) int
+		PayClaimsOther                                    func(childComplexity int) int
+		PayModelDifferentiation                           func(childComplexity int) int
+		PayRecipients                                     func(childComplexity int) int
+		PayRecipientsNote                                 func(childComplexity int) int
+		PayRecipientsOtherSpecification                   func(childComplexity int) int
+		PayType                                           func(childComplexity int) int
+		PayTypeNote                                       func(childComplexity int) int
+		PaymentCalculationOwner                           func(childComplexity int) int
+		PaymentStartDate                                  func(childComplexity int) int
+		PaymentStartDateNote                              func(childComplexity int) int
+		PlanningToUseInnovationPaymentContractor          func(childComplexity int) int
+		PlanningToUseInnovationPaymentContractorNote      func(childComplexity int) int
+		ProvidingThirdPartyFile                           func(childComplexity int) int
+		SharedSystemsInvolvedAdditionalClaimPayment       func(childComplexity int) int
+		SharedSystemsInvolvedAdditionalClaimPaymentNote   func(childComplexity int) int
+		ShouldAnyProviderExcludedFFSSystemsNote           func(childComplexity int) int
+		ShouldAnyProvidersExcludedFFSSystems              func(childComplexity int) int
+		Status                                            func(childComplexity int) int
+		WaiveBeneficiaryCostSharingForAnyServices         func(childComplexity int) int
+		WaiveBeneficiaryCostSharingNote                   func(childComplexity int) int
+		WaiveBeneficiaryCostSharingServiceSpecification   func(childComplexity int) int
+		WaiverOnlyAppliesPartOfPayment                    func(childComplexity int) int
+		WillRecoverPayments                               func(childComplexity int) int
+		WillRecoverPaymentsNote                           func(childComplexity int) int
+	}
+
 	Query struct {
 		CedarPersonsByCommonName  func(childComplexity int, commonName string) int
 		CurrentUser               func(childComplexity int) int
@@ -590,6 +660,7 @@ type ComplexityRoot struct {
 		PlanCollaboratorByID      func(childComplexity int, id uuid.UUID) int
 		PlanDocument              func(childComplexity int, id uuid.UUID) int
 		PlanDocumentDownloadURL   func(childComplexity int, id uuid.UUID) int
+		PlanPayments              func(childComplexity int, id uuid.UUID) int
 		ReadPlanDocumentByModelID func(childComplexity int, id uuid.UUID) int
 	}
 
@@ -614,6 +685,7 @@ type ModelPlanResolver interface {
 	Collaborators(ctx context.Context, obj *models.ModelPlan) ([]*models.PlanCollaborator, error)
 	Documents(ctx context.Context, obj *models.ModelPlan) ([]*models.PlanDocument, error)
 	Discussions(ctx context.Context, obj *models.ModelPlan) ([]*models.PlanDiscussion, error)
+	Payments(ctx context.Context, obj *models.ModelPlan) (*models.PlanPayments, error)
 	ItTools(ctx context.Context, obj *models.ModelPlan) (*models.PlanITTools, error)
 }
 type MutationResolver interface {
@@ -639,6 +711,7 @@ type MutationResolver interface {
 	CreateDiscussionReply(ctx context.Context, input model.DiscussionReplyCreateInput) (*models.DiscussionReply, error)
 	UpdateDiscussionReply(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.DiscussionReply, error)
 	DeleteDiscussionReply(ctx context.Context, id uuid.UUID) (*models.DiscussionReply, error)
+	UpdatePlanPayments(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanPayments, error)
 }
 type PlanBeneficiariesResolver interface {
 	Beneficiaries(ctx context.Context, obj *models.PlanBeneficiaries) ([]model.BeneficiariesType, error)
@@ -759,6 +832,22 @@ type PlanParticipantsAndProvidersResolver interface {
 
 	ProviderLeaveMethod(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.ProviderLeaveType, error)
 }
+type PlanPaymentsResolver interface {
+	FundingSource(ctx context.Context, obj *models.PlanPayments) ([]models.FundingSource, error)
+
+	FundingSourceR(ctx context.Context, obj *models.PlanPayments) ([]models.FundingSource, error)
+
+	PayRecipients(ctx context.Context, obj *models.PlanPayments) ([]models.PayRecipient, error)
+
+	PayType(ctx context.Context, obj *models.PlanPayments) ([]models.PayType, error)
+
+	PayClaims(ctx context.Context, obj *models.PlanPayments) ([]models.ClaimsBasedPayType, error)
+
+	NonClaimsPayments(ctx context.Context, obj *models.PlanPayments) ([]model.NonClaimsBasedPayType, error)
+	NonClaimsPaymentOther(ctx context.Context, obj *models.PlanPayments) (*string, error)
+
+	AnticipatedPaymentFrequency(ctx context.Context, obj *models.PlanPayments) ([]models.AnticipatedPaymentFrequencyType, error)
+}
 type QueryResolver interface {
 	CurrentUser(ctx context.Context) (*model.CurrentUser, error)
 	ModelPlan(ctx context.Context, id uuid.UUID) (*models.ModelPlan, error)
@@ -769,6 +858,7 @@ type QueryResolver interface {
 	ExistingModelCollection(ctx context.Context) ([]*models.ExistingModel, error)
 	CedarPersonsByCommonName(ctx context.Context, commonName string) ([]*models.UserInfo, error)
 	PlanCollaboratorByID(ctx context.Context, id uuid.UUID) (*models.PlanCollaborator, error)
+	PlanPayments(ctx context.Context, id uuid.UUID) (*models.PlanPayments, error)
 }
 type UserInfoResolver interface {
 	Email(ctx context.Context, obj *models.UserInfo) (string, error)
@@ -1153,6 +1243,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.ModelPlan.ParticipantsAndProviders(childComplexity), true
 
+	case "ModelPlan.payments":
+		if e.complexity.ModelPlan.Payments == nil {
+			break
+		}
+
+		return e.complexity.ModelPlan.Payments(childComplexity), true
+
 	case "ModelPlan.status":
 		if e.complexity.ModelPlan.Status == nil {
 			break
@@ -1423,6 +1520,18 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Mutation.UpdatePlanParticipantsAndProviders(childComplexity, args["id"].(uuid.UUID), args["changes"].(map[string]interface{})), true
+
+	case "Mutation.updatePlanPayments":
+		if e.complexity.Mutation.UpdatePlanPayments == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_updatePlanPayments_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Mutation.UpdatePlanPayments(childComplexity, args["id"].(uuid.UUID), args["changes"].(map[string]interface{})), true
 
 	case "PlanBasics.createdBy":
 		if e.complexity.PlanBasics.CreatedBy == nil {
@@ -4189,6 +4298,454 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.PlanParticipantsAndProviders.WillRiskChangeNote(childComplexity), true
 
+	case "PlanPayments.affectsMedicareSecondaryPayerClaims":
+		if e.complexity.PlanPayments.AffectsMedicareSecondaryPayerClaims == nil {
+			break
+		}
+
+		return e.complexity.PlanPayments.AffectsMedicareSecondaryPayerClaims(childComplexity), true
+
+	case "PlanPayments.affectsMedicareSecondaryPayerClaimsHow":
+		if e.complexity.PlanPayments.AffectsMedicareSecondaryPayerClaimsHow == nil {
+			break
+		}
+
+		return e.complexity.PlanPayments.AffectsMedicareSecondaryPayerClaimsHow(childComplexity), true
+
+	case "PlanPayments.affectsMedicareSecondaryPayerClaimsNote":
+		if e.complexity.PlanPayments.AffectsMedicareSecondaryPayerClaimsNote == nil {
+			break
+		}
+
+		return e.complexity.PlanPayments.AffectsMedicareSecondaryPayerClaimsNote(childComplexity), true
+
+	case "PlanPayments.anticipateReconcilingPaymentsRetrospectively":
+		if e.complexity.PlanPayments.AnticipateReconcilingPaymentsRetrospectively == nil {
+			break
+		}
+
+		return e.complexity.PlanPayments.AnticipateReconcilingPaymentsRetrospectively(childComplexity), true
+
+	case "PlanPayments.anticipateReconcilingPaymentsRetrospectivelyNote":
+		if e.complexity.PlanPayments.AnticipateReconcilingPaymentsRetrospectivelyNote == nil {
+			break
+		}
+
+		return e.complexity.PlanPayments.AnticipateReconcilingPaymentsRetrospectivelyNote(childComplexity), true
+
+	case "PlanPayments.anticipatedPaymentFrequency":
+		if e.complexity.PlanPayments.AnticipatedPaymentFrequency == nil {
+			break
+		}
+
+		return e.complexity.PlanPayments.AnticipatedPaymentFrequency(childComplexity), true
+
+	case "PlanPayments.anticipatedPaymentFrequencyNote":
+		if e.complexity.PlanPayments.AnticipatedPaymentFrequencyNote == nil {
+			break
+		}
+
+		return e.complexity.PlanPayments.AnticipatedPaymentFrequencyNote(childComplexity), true
+
+	case "PlanPayments.anticipatedPaymentFrequencyOther":
+		if e.complexity.PlanPayments.AnticipatedPaymentFrequencyOther == nil {
+			break
+		}
+
+		return e.complexity.PlanPayments.AnticipatedPaymentFrequencyOther(childComplexity), true
+
+	case "PlanPayments.beneficiaryCostSharingLevelAndHandling":
+		if e.complexity.PlanPayments.BeneficiaryCostSharingLevelAndHandling == nil {
+			break
+		}
+
+		return e.complexity.PlanPayments.BeneficiaryCostSharingLevelAndHandling(childComplexity), true
+
+	case "PlanPayments.canParticipantsSelectBetweenPaymentMechanisms":
+		if e.complexity.PlanPayments.CanParticipantsSelectBetweenPaymentMechanisms == nil {
+			break
+		}
+
+		return e.complexity.PlanPayments.CanParticipantsSelectBetweenPaymentMechanisms(childComplexity), true
+
+	case "PlanPayments.canParticipantsSelectBetweenPaymentMechanismsHow":
+		if e.complexity.PlanPayments.CanParticipantsSelectBetweenPaymentMechanismsHow == nil {
+			break
+		}
+
+		return e.complexity.PlanPayments.CanParticipantsSelectBetweenPaymentMechanismsHow(childComplexity), true
+
+	case "PlanPayments.canParticipantsSelectBetweenPaymentMechanismsNote":
+		if e.complexity.PlanPayments.CanParticipantsSelectBetweenPaymentMechanismsNote == nil {
+			break
+		}
+
+		return e.complexity.PlanPayments.CanParticipantsSelectBetweenPaymentMechanismsNote(childComplexity), true
+
+	case "PlanPayments.changesMedicarePhysicianFeeSchedule":
+		if e.complexity.PlanPayments.ChangesMedicarePhysicianFeeSchedule == nil {
+			break
+		}
+
+		return e.complexity.PlanPayments.ChangesMedicarePhysicianFeeSchedule(childComplexity), true
+
+	case "PlanPayments.changesMedicarePhysicianFeeScheduleNote":
+		if e.complexity.PlanPayments.ChangesMedicarePhysicianFeeScheduleNote == nil {
+			break
+		}
+
+		return e.complexity.PlanPayments.ChangesMedicarePhysicianFeeScheduleNote(childComplexity), true
+
+	case "PlanPayments.createdBy":
+		if e.complexity.PlanPayments.CreatedBy == nil {
+			break
+		}
+
+		return e.complexity.PlanPayments.CreatedBy(childComplexity), true
+
+	case "PlanPayments.createdDts":
+		if e.complexity.PlanPayments.CreatedDts == nil {
+			break
+		}
+
+		return e.complexity.PlanPayments.CreatedDts(childComplexity), true
+
+	case "PlanPayments.creatingDependenciesBetweenServices":
+		if e.complexity.PlanPayments.CreatingDependenciesBetweenServices == nil {
+			break
+		}
+
+		return e.complexity.PlanPayments.CreatingDependenciesBetweenServices(childComplexity), true
+
+	case "PlanPayments.creatingDependenciesBetweenServicesNote":
+		if e.complexity.PlanPayments.CreatingDependenciesBetweenServicesNote == nil {
+			break
+		}
+
+		return e.complexity.PlanPayments.CreatingDependenciesBetweenServicesNote(childComplexity), true
+
+	case "PlanPayments.expectedCalculationComplexityLevel":
+		if e.complexity.PlanPayments.ExpectedCalculationComplexityLevel == nil {
+			break
+		}
+
+		return e.complexity.PlanPayments.ExpectedCalculationComplexityLevel(childComplexity), true
+
+	case "PlanPayments.expectedCalculationComplexityLevelNote":
+		if e.complexity.PlanPayments.ExpectedCalculationComplexityLevelNote == nil {
+			break
+		}
+
+		return e.complexity.PlanPayments.ExpectedCalculationComplexityLevelNote(childComplexity), true
+
+	case "PlanPayments.fundingSource":
+		if e.complexity.PlanPayments.FundingSource == nil {
+			break
+		}
+
+		return e.complexity.PlanPayments.FundingSource(childComplexity), true
+
+	case "PlanPayments.fundingSourceNote":
+		if e.complexity.PlanPayments.FundingSourceNote == nil {
+			break
+		}
+
+		return e.complexity.PlanPayments.FundingSourceNote(childComplexity), true
+
+	case "PlanPayments.fundingSourceR":
+		if e.complexity.PlanPayments.FundingSourceR == nil {
+			break
+		}
+
+		return e.complexity.PlanPayments.FundingSourceR(childComplexity), true
+
+	case "PlanPayments.fundingSourceRNote":
+		if e.complexity.PlanPayments.FundingSourceRNote == nil {
+			break
+		}
+
+		return e.complexity.PlanPayments.FundingSourceRNote(childComplexity), true
+
+	case "PlanPayments.fundingSourceROther":
+		if e.complexity.PlanPayments.FundingSourceROther == nil {
+			break
+		}
+
+		return e.complexity.PlanPayments.FundingSourceROther(childComplexity), true
+
+	case "PlanPayments.fundingSourceRTrustFund":
+		if e.complexity.PlanPayments.FundingSourceRTrustFund == nil {
+			break
+		}
+
+		return e.complexity.PlanPayments.FundingSourceRTrustFund(childComplexity), true
+
+	case "PlanPayments.fundingSourceTrustFund":
+		if e.complexity.PlanPayments.FundingSourceTrustFund == nil {
+			break
+		}
+
+		return e.complexity.PlanPayments.FundingSourceTrustFund(childComplexity), true
+
+	case "PlanPayments.fundingStructure":
+		if e.complexity.PlanPayments.FundingStructure == nil {
+			break
+		}
+
+		return e.complexity.PlanPayments.FundingStructure(childComplexity), true
+
+	case "PlanPayments.id":
+		if e.complexity.PlanPayments.ID == nil {
+			break
+		}
+
+		return e.complexity.PlanPayments.ID(childComplexity), true
+
+	case "PlanPayments.isContractorAwareTestDataRequirements":
+		if e.complexity.PlanPayments.IsContractorAwareTestDataRequirements == nil {
+			break
+		}
+
+		return e.complexity.PlanPayments.IsContractorAwareTestDataRequirements(childComplexity), true
+
+	case "PlanPayments.modelPlanID":
+		if e.complexity.PlanPayments.ModelPlanID == nil {
+			break
+		}
+
+		return e.complexity.PlanPayments.ModelPlanID(childComplexity), true
+
+	case "PlanPayments.modifiedBy":
+		if e.complexity.PlanPayments.ModifiedBy == nil {
+			break
+		}
+
+		return e.complexity.PlanPayments.ModifiedBy(childComplexity), true
+
+	case "PlanPayments.modifiedDts":
+		if e.complexity.PlanPayments.ModifiedDts == nil {
+			break
+		}
+
+		return e.complexity.PlanPayments.ModifiedDts(childComplexity), true
+
+	case "PlanPayments.needsClaimsDataCollection":
+		if e.complexity.PlanPayments.NeedsClaimsDataCollection == nil {
+			break
+		}
+
+		return e.complexity.PlanPayments.NeedsClaimsDataCollection(childComplexity), true
+
+	case "PlanPayments.needsClaimsDataCollectionNote":
+		if e.complexity.PlanPayments.NeedsClaimsDataCollectionNote == nil {
+			break
+		}
+
+		return e.complexity.PlanPayments.NeedsClaimsDataCollectionNote(childComplexity), true
+
+	case "PlanPayments.nonClaimsPaymentOther":
+		if e.complexity.PlanPayments.NonClaimsPaymentOther == nil {
+			break
+		}
+
+		return e.complexity.PlanPayments.NonClaimsPaymentOther(childComplexity), true
+
+	case "PlanPayments.nonClaimsPayments":
+		if e.complexity.PlanPayments.NonClaimsPayments == nil {
+			break
+		}
+
+		return e.complexity.PlanPayments.NonClaimsPayments(childComplexity), true
+
+	case "PlanPayments.numberPaymentsPerPayCycle":
+		if e.complexity.PlanPayments.NumberPaymentsPerPayCycle == nil {
+			break
+		}
+
+		return e.complexity.PlanPayments.NumberPaymentsPerPayCycle(childComplexity), true
+
+	case "PlanPayments.numberPaymentsPerPayCycleNote":
+		if e.complexity.PlanPayments.NumberPaymentsPerPayCycleNote == nil {
+			break
+		}
+
+		return e.complexity.PlanPayments.NumberPaymentsPerPayCycleNote(childComplexity), true
+
+	case "PlanPayments.payClaims":
+		if e.complexity.PlanPayments.PayClaims == nil {
+			break
+		}
+
+		return e.complexity.PlanPayments.PayClaims(childComplexity), true
+
+	case "PlanPayments.payClaimsOther":
+		if e.complexity.PlanPayments.PayClaimsOther == nil {
+			break
+		}
+
+		return e.complexity.PlanPayments.PayClaimsOther(childComplexity), true
+
+	case "PlanPayments.payModelDifferentiation":
+		if e.complexity.PlanPayments.PayModelDifferentiation == nil {
+			break
+		}
+
+		return e.complexity.PlanPayments.PayModelDifferentiation(childComplexity), true
+
+	case "PlanPayments.payRecipients":
+		if e.complexity.PlanPayments.PayRecipients == nil {
+			break
+		}
+
+		return e.complexity.PlanPayments.PayRecipients(childComplexity), true
+
+	case "PlanPayments.payRecipientsNote":
+		if e.complexity.PlanPayments.PayRecipientsNote == nil {
+			break
+		}
+
+		return e.complexity.PlanPayments.PayRecipientsNote(childComplexity), true
+
+	case "PlanPayments.payRecipientsOtherSpecification":
+		if e.complexity.PlanPayments.PayRecipientsOtherSpecification == nil {
+			break
+		}
+
+		return e.complexity.PlanPayments.PayRecipientsOtherSpecification(childComplexity), true
+
+	case "PlanPayments.payType":
+		if e.complexity.PlanPayments.PayType == nil {
+			break
+		}
+
+		return e.complexity.PlanPayments.PayType(childComplexity), true
+
+	case "PlanPayments.payTypeNote":
+		if e.complexity.PlanPayments.PayTypeNote == nil {
+			break
+		}
+
+		return e.complexity.PlanPayments.PayTypeNote(childComplexity), true
+
+	case "PlanPayments.paymentCalculationOwner":
+		if e.complexity.PlanPayments.PaymentCalculationOwner == nil {
+			break
+		}
+
+		return e.complexity.PlanPayments.PaymentCalculationOwner(childComplexity), true
+
+	case "PlanPayments.paymentStartDate":
+		if e.complexity.PlanPayments.PaymentStartDate == nil {
+			break
+		}
+
+		return e.complexity.PlanPayments.PaymentStartDate(childComplexity), true
+
+	case "PlanPayments.paymentStartDateNote":
+		if e.complexity.PlanPayments.PaymentStartDateNote == nil {
+			break
+		}
+
+		return e.complexity.PlanPayments.PaymentStartDateNote(childComplexity), true
+
+	case "PlanPayments.planningToUseInnovationPaymentContractor":
+		if e.complexity.PlanPayments.PlanningToUseInnovationPaymentContractor == nil {
+			break
+		}
+
+		return e.complexity.PlanPayments.PlanningToUseInnovationPaymentContractor(childComplexity), true
+
+	case "PlanPayments.planningToUseInnovationPaymentContractorNote":
+		if e.complexity.PlanPayments.PlanningToUseInnovationPaymentContractorNote == nil {
+			break
+		}
+
+		return e.complexity.PlanPayments.PlanningToUseInnovationPaymentContractorNote(childComplexity), true
+
+	case "PlanPayments.providingThirdPartyFile":
+		if e.complexity.PlanPayments.ProvidingThirdPartyFile == nil {
+			break
+		}
+
+		return e.complexity.PlanPayments.ProvidingThirdPartyFile(childComplexity), true
+
+	case "PlanPayments.sharedSystemsInvolvedAdditionalClaimPayment":
+		if e.complexity.PlanPayments.SharedSystemsInvolvedAdditionalClaimPayment == nil {
+			break
+		}
+
+		return e.complexity.PlanPayments.SharedSystemsInvolvedAdditionalClaimPayment(childComplexity), true
+
+	case "PlanPayments.sharedSystemsInvolvedAdditionalClaimPaymentNote":
+		if e.complexity.PlanPayments.SharedSystemsInvolvedAdditionalClaimPaymentNote == nil {
+			break
+		}
+
+		return e.complexity.PlanPayments.SharedSystemsInvolvedAdditionalClaimPaymentNote(childComplexity), true
+
+	case "PlanPayments.shouldAnyProviderExcludedFFSSystemsNote":
+		if e.complexity.PlanPayments.ShouldAnyProviderExcludedFFSSystemsNote == nil {
+			break
+		}
+
+		return e.complexity.PlanPayments.ShouldAnyProviderExcludedFFSSystemsNote(childComplexity), true
+
+	case "PlanPayments.shouldAnyProvidersExcludedFFSSystems":
+		if e.complexity.PlanPayments.ShouldAnyProvidersExcludedFFSSystems == nil {
+			break
+		}
+
+		return e.complexity.PlanPayments.ShouldAnyProvidersExcludedFFSSystems(childComplexity), true
+
+	case "PlanPayments.status":
+		if e.complexity.PlanPayments.Status == nil {
+			break
+		}
+
+		return e.complexity.PlanPayments.Status(childComplexity), true
+
+	case "PlanPayments.waiveBeneficiaryCostSharingForAnyServices":
+		if e.complexity.PlanPayments.WaiveBeneficiaryCostSharingForAnyServices == nil {
+			break
+		}
+
+		return e.complexity.PlanPayments.WaiveBeneficiaryCostSharingForAnyServices(childComplexity), true
+
+	case "PlanPayments.waiveBeneficiaryCostSharingNote":
+		if e.complexity.PlanPayments.WaiveBeneficiaryCostSharingNote == nil {
+			break
+		}
+
+		return e.complexity.PlanPayments.WaiveBeneficiaryCostSharingNote(childComplexity), true
+
+	case "PlanPayments.waiveBeneficiaryCostSharingServiceSpecification":
+		if e.complexity.PlanPayments.WaiveBeneficiaryCostSharingServiceSpecification == nil {
+			break
+		}
+
+		return e.complexity.PlanPayments.WaiveBeneficiaryCostSharingServiceSpecification(childComplexity), true
+
+	case "PlanPayments.waiverOnlyAppliesPartOfPayment":
+		if e.complexity.PlanPayments.WaiverOnlyAppliesPartOfPayment == nil {
+			break
+		}
+
+		return e.complexity.PlanPayments.WaiverOnlyAppliesPartOfPayment(childComplexity), true
+
+	case "PlanPayments.willRecoverPayments":
+		if e.complexity.PlanPayments.WillRecoverPayments == nil {
+			break
+		}
+
+		return e.complexity.PlanPayments.WillRecoverPayments(childComplexity), true
+
+	case "PlanPayments.willRecoverPaymentsNote":
+		if e.complexity.PlanPayments.WillRecoverPaymentsNote == nil {
+			break
+		}
+
+		return e.complexity.PlanPayments.WillRecoverPaymentsNote(childComplexity), true
+
 	case "Query.cedarPersonsByCommonName":
 		if e.complexity.Query.CedarPersonsByCommonName == nil {
 			break
@@ -4269,6 +4826,18 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Query.PlanDocumentDownloadURL(childComplexity, args["id"].(uuid.UUID)), true
+
+	case "Query.planPayments":
+		if e.complexity.Query.PlanPayments == nil {
+			break
+		}
+
+		args, err := ec.field_Query_planPayments_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Query.PlanPayments(childComplexity, args["id"].(uuid.UUID)), true
 
 	case "Query.readPlanDocumentByModelID":
 		if e.complexity.Query.ReadPlanDocumentByModelID == nil {
@@ -4426,6 +4995,7 @@ type ModelPlan {
   collaborators: [PlanCollaborator!]!
   documents: [PlanDocument!]!
   discussions: [PlanDiscussion!]!
+  payments: PlanPayments!
   itTools: PlanITTools!
   status: ModelStatus!
 }
@@ -4948,59 +5518,59 @@ type PlanParticipantsAndProviders {
 
   #Page 1
   participants:                      [ParticipantsType!]!
-  medicareProviderType:              String       
-  statesEngagement:                  String       
-  participantsOther:                 String       
-  participantsNote:                  String       
-  participantsCurrentlyInModels:     Boolean       
-  participantsCurrentlyInModelsNote: String       
-  modelApplicationLevel:             String       
+  medicareProviderType:              String
+  statesEngagement:                  String
+  participantsOther:                 String
+  participantsNote:                  String
+  participantsCurrentlyInModels:     Boolean
+  participantsCurrentlyInModelsNote: String
+  modelApplicationLevel:             String
 
   #Page 2
-  expectedNumberOfParticipants: Int             
-  estimateConfidence:           ConfidenceType 
-  confidenceNote:               String         
+  expectedNumberOfParticipants: Int
+  estimateConfidence:           ConfidenceType
+  confidenceNote:               String
   recruitmentMethod:            RecruitmentType
-  recruitmentOther:             String         
-  recruitmentNote:              String         
+  recruitmentOther:             String
+  recruitmentNote:              String
   selectionMethod:              [ParticipantSelectionType!]!
-  selectionOther:               String         
-  selectionNote:                String         
+  selectionOther:               String
+  selectionNote:                String
 
   #Page 3
   communicationMethod:   [ParticipantCommunicationType!]!
   communicationMethodOther:   String
-  communicationNote:     String             
-  participantAssumeRisk: Boolean             
+  communicationNote:     String
+  participantAssumeRisk: Boolean
   riskType:              ParticipantRiskType
-  riskOther:             String             
-  riskNote:              String             
-  willRiskChange:        Boolean             
-  willRiskChangeNote:    String             
+  riskOther:             String
+  riskNote:              String
+  willRiskChange:        Boolean
+  willRiskChangeNote:    String
 
   #Page 4
-  coordinateWork:          Boolean       
-  coordinateWorkNote:      String       
-  gainsharePayments:       Boolean       
-  gainsharePaymentsTrack: Boolean       
-  gainsharePaymentsNote:   String       
+  coordinateWork:          Boolean
+  coordinateWorkNote:      String
+  gainsharePayments:       Boolean
+  gainsharePaymentsTrack: Boolean
+  gainsharePaymentsNote:   String
   participantsIds:         [ParticipantsIDType!]!
-  participantsIdsOther:    String       
-  participantsIDSNote:     String       
+  participantsIdsOther:    String
+  participantsIDSNote:     String
 
   #Page 5
   providerAdditionFrequency:      FrequencyType
-  providerAdditionFrequencyOther: String       
-  providerAdditionFrequencyNote:  String       
+  providerAdditionFrequencyOther: String
+  providerAdditionFrequencyNote:  String
   providerAddMethod:              [ProviderAddType!]!
-  providerAddMethodOther:         String       
-  providerAddMethodNote:          String       
+  providerAddMethodOther:         String
+  providerAddMethodNote:          String
   providerLeaveMethod:            [ProviderLeaveType!]!
-  providerLeaveMethodOther:       String       
-  providerLeaveMethodNote:        String       
-  providerOverlap:                OverlapType  
-  providerOverlapHierarchy:       String       
-  providerOverlapNote:            String       
+  providerLeaveMethodOther:       String
+  providerLeaveMethodNote:        String
+  providerOverlap:                OverlapType
+  providerOverlapHierarchy:       String
+  providerOverlapNote:            String
 
 
   createdBy: String!
@@ -5020,60 +5590,219 @@ https://gqlgen.com/reference/changesets/
 input PlanParticipantsAndProvidersChanges @goModel(model: "map[string]interface{}") {
   #Page 1
   participants:                      [ParticipantsType!]
-  medicareProviderType:              String       
-  statesEngagement:                  String       
-  participantsOther:                 String       
-  participantsNote:                  String       
-  participantsCurrentlyInModels:     Boolean       
-  participantsCurrentlyInModelsNote: String       
-  modelApplicationLevel:             String       
+  medicareProviderType:              String
+  statesEngagement:                  String
+  participantsOther:                 String
+  participantsNote:                  String
+  participantsCurrentlyInModels:     Boolean
+  participantsCurrentlyInModelsNote: String
+  modelApplicationLevel:             String
 
   #Page 2
-  expectedNumberOfParticipants: Int             
-  estimateConfidence:           ConfidenceType 
-  confidenceNote:               String         
+  expectedNumberOfParticipants: Int
+  estimateConfidence:           ConfidenceType
+  confidenceNote:               String
   recruitmentMethod:            RecruitmentType
-  recruitmentOther:             String         
-  recruitmentNote:              String         
+  recruitmentOther:             String
+  recruitmentNote:              String
   selectionMethod:              [ParticipantSelectionType!]
-  selectionOther:               String         
-  selectionNote:                String         
+  selectionOther:               String
+  selectionNote:                String
 
   #Page 3
   communicationMethod:   [ParticipantCommunicationType!]
   communicationMethodOther:   String
-  communicationNote:     String             
-  participantAssumeRisk: Boolean             
+  communicationNote:     String
+  participantAssumeRisk: Boolean
   riskType:              ParticipantRiskType
-  riskOther:             String             
-  riskNote:              String             
-  willRiskChange:        Boolean             
-  willRiskChangeNote:    String             
+  riskOther:             String
+  riskNote:              String
+  willRiskChange:        Boolean
+  willRiskChangeNote:    String
 
   #Page 4
-  coordinateWork:          Boolean       
-  coordinateWorkNote:      String       
-  gainsharePayments:       Boolean       
-  gainsharePaymentsTrack: Boolean       
-  gainsharePaymentsNote:   String       
+  coordinateWork:          Boolean
+  coordinateWorkNote:      String
+  gainsharePayments:       Boolean
+  gainsharePaymentsTrack: Boolean
+  gainsharePaymentsNote:   String
   participantsIds:         [ParticipantsIDType!]
-  participantsIdsOther:    String       
-  participantsIDSNote:     String       
+  participantsIdsOther:    String
+  participantsIDSNote:     String
 
   #Page 5
   providerAdditionFrequency:      FrequencyType
-  providerAdditionFrequencyOther: String       
-  providerAdditionFrequencyNote:  String       
+  providerAdditionFrequencyOther: String
+  providerAdditionFrequencyNote:  String
   providerAddMethod:              [ProviderAddType!]
-  providerAddMethodOther:         String       
-  providerAddMethodNote:          String       
+  providerAddMethodOther:         String
+  providerAddMethodNote:          String
   providerLeaveMethod:            [ProviderLeaveType!]
-  providerLeaveMethodOther:       String       
-  providerLeaveMethodNote:        String       
-  providerOverlap:                OverlapType  
-  providerOverlapHierarchy:       String       
-  providerOverlapNote:            String     
+  providerLeaveMethodOther:       String
+  providerLeaveMethodNote:        String
+  providerOverlap:                OverlapType
+  providerOverlapHierarchy:       String
+  providerOverlapNote:            String
 
+}
+
+"""
+PlanPayments is the task list section that deals with information regarding Payments
+"""
+type PlanPayments {
+  id: UUID!
+  modelPlanID: UUID!
+
+  # Page 1
+  fundingSource:                      [FundingSource!]
+  fundingSourceTrustFund:             String
+  fundingSourceNote:                  String
+  fundingSourceR:                     [FundingSource!]
+  fundingSourceRTrustFund:            String
+  fundingSourceROther:                String
+  fundingSourceRNote:                 String
+  payRecipients:                      [PayRecipient!]
+  payRecipientsOtherSpecification:    String
+  payRecipientsNote:                  String
+  payType:                            [PayType!]
+  payTypeNote:                        String
+
+  # Page 2
+  payClaims:                                      [ClaimsBasedPayType!]
+  payClaimsOther:                                 String
+  shouldAnyProvidersExcludedFFSSystems:           Boolean
+  shouldAnyProviderExcludedFFSSystemsNote:        String
+  changesMedicarePhysicianFeeSchedule:            Boolean
+  changesMedicarePhysicianFeeScheduleNote:        String
+  affectsMedicareSecondaryPayerClaims:            Boolean
+  affectsMedicareSecondaryPayerClaimsHow: String
+  affectsMedicareSecondaryPayerClaimsNote:        String
+  payModelDifferentiation:                        String
+
+  # Page 3
+  creatingDependenciesBetweenServices:     Boolean
+  creatingDependenciesBetweenServicesNote: String
+  needsClaimsDataCollection:               Boolean
+  needsClaimsDataCollectionNote:           String
+  providingThirdPartyFile:                 Boolean
+  isContractorAwareTestDataRequirements:   Boolean
+
+  # Page 4
+  beneficiaryCostSharingLevelAndHandling:          String
+  waiveBeneficiaryCostSharingForAnyServices:       Boolean
+  waiveBeneficiaryCostSharingServiceSpecification: String
+  waiverOnlyAppliesPartOfPayment:                  Boolean
+  waiveBeneficiaryCostSharingNote:                 String
+
+  # Page 5
+  nonClaimsPayments:                               [NonClaimsBasedPayType!]
+  nonClaimsPaymentOther:                           String
+  paymentCalculationOwner:                         String
+  numberPaymentsPerPayCycle:                       String
+  numberPaymentsPerPayCycleNote:                  String
+  sharedSystemsInvolvedAdditionalClaimPayment:     Boolean
+  sharedSystemsInvolvedAdditionalClaimPaymentNote: String
+  planningToUseInnovationPaymentContractor:        Boolean
+  planningToUseInnovationPaymentContractorNote:    String
+  fundingStructure:                                String
+
+  # Page 6
+  expectedCalculationComplexityLevel:                ComplexityCalculationLevelType
+  expectedCalculationComplexityLevelNote:            String
+  canParticipantsSelectBetweenPaymentMechanisms:     Boolean
+  canParticipantsSelectBetweenPaymentMechanismsHow:  String
+  canParticipantsSelectBetweenPaymentMechanismsNote: String
+  anticipatedPaymentFrequency:                       [AnticipatedPaymentFrequencyType!]
+  anticipatedPaymentFrequencyOther:                  String
+  anticipatedPaymentFrequencyNote:                  String
+
+  # Page 7
+  willRecoverPayments:                               Boolean
+  willRecoverPaymentsNote:                          String
+  anticipateReconcilingPaymentsRetrospectively:      Boolean
+  anticipateReconcilingPaymentsRetrospectivelyNote: String
+  paymentStartDate:                                  Time
+  paymentStartDateNote:                             String
+
+  # Meta
+  createdBy: String!
+  createdDts: Time!
+  modifiedBy: String
+  modifiedDts: Time
+  status: TaskStatus!
+}
+
+input PlanPaymentsChanges @goModel(model: "map[string]interface{}") {
+  # Page 1
+  fundingSource:                      [FundingSource!]
+  fundingSourceTrustFund:             String
+  fundingSourceNote:                  String
+  fundingSourceR:                     [FundingSource!]
+  fundingSourceRTrustFund:            String
+  fundingSourceROther:                String
+  fundingSourceRNote:                 String
+  payRecipients:                      [PayRecipient!]
+  payRecipientsOtherSpecification:    String
+  payRecipientsNote:                  String
+  payType:                            [PayType!]
+  payTypeNote:                        String
+
+  # Page 2
+  payClaims:                                      [ClaimsBasedPayType!]
+  payClaimsOther:                                 String
+  shouldAnyProvidersExcludedFFSSystems:           Boolean
+  shouldAnyProviderExcludedFFSSystemsNote:        String
+  changesMedicarePhysicianFeeSchedule:            Boolean
+  changesMedicarePhysicianFeeScheduleNote:        String
+  affectsMedicareSecondaryPayerClaims:            Boolean
+  affectsMedicareSecondaryPayerClaimsHow:         String
+  affectsMedicareSecondaryPayerClaimsNote:        String
+  payModelDifferentiation:                        String
+
+  # Page 3
+  creatingDependenciesBetweenServices:     Boolean
+  creatingDependenciesBetweenServicesNote: String
+  needsClaimsDataCollection:               Boolean
+  needsClaimsDataCollectionNote:           String
+  providingThirdPartyFile:                 Boolean
+  isContractorAwareTestDataRequirements:   Boolean
+
+  # Page 4
+  beneficiaryCostSharingLevelAndHandling:          String
+  waiveBeneficiaryCostSharingForAnyServices:       Boolean
+  waiveBeneficiaryCostSharingServiceSpecification: String
+  waiverOnlyAppliesPartOfPayment:                  Boolean
+  waiveBeneficiaryCostSharingNote:                 String
+
+  # Page 5
+  nonClaimsPayments:                               [NonClaimsBasedPayType!]
+  nonClaimsPaymentOther:                           String
+  paymentCalculationOwner:                         String
+  numberPaymentsPerPayCycle:                       String
+  numberPaymentsPerPayCycleNote:                  String
+  sharedSystemsInvolvedAdditionalClaimPayment:     Boolean
+  sharedSystemsInvolvedAdditionalClaimPaymentNote: String
+  planningToUseInnovationPaymentContractor:        Boolean
+  planningToUseInnovationPaymentContractorNote:    String
+  fundingStructure:                                String
+
+  # Page 6
+  expectedCalculationComplexityLevel:                       ComplexityCalculationLevelType
+  expectedCalculationComplexityLevelNote:                   String
+  canParticipantsSelectBetweenPaymentMechanisms:            Boolean
+  canParticipantsSelectBetweenPaymentMechanismsHow:         String
+  canParticipantsSelectBetweenPaymentMechanismsNote:        String
+  anticipatedPaymentFrequency:                              [AnticipatedPaymentFrequencyType!]
+  anticipatedPaymentFrequencyOther:                         String
+  anticipatedPaymentFrequencyNote:                         String
+
+  # Page 7
+  willRecoverPayments:                               Boolean
+  willRecoverPaymentsNote:                          String
+  anticipateReconcilingPaymentsRetrospectively:      Boolean
+  anticipateReconcilingPaymentsRetrospectivelyNote: String
+  paymentStartDate:                                  Time
+  paymentStartDateNote:                             String
 }
 
 """"
@@ -5150,7 +5879,7 @@ type PlanITTools {
   oelLearningContractor: [OelLearningContractorType!]!
   oelLearningContractorOther: String
   oelLearningContractorNote: String
-  #Page 8 
+  #Page 8
   oelParticipantCollaboration: [OelParticipantCollaborationType!]!
   oelParticipantCollaborationOther: String
   oelParticipantCollaborationNote: String
@@ -5209,17 +5938,17 @@ input PlanITToolsChanges @goModel(model: "map[string]interface{}") {
   ppCommunicateWithParticipant: [PpCommunicateWithParticipantType!]
   ppCommunicateWithParticipantOther: String
   ppCommunicateWithParticipantNote: String
-  ppManageProviderOverlap: [PpManageProviderOverlapType!] 
+  ppManageProviderOverlap: [PpManageProviderOverlapType!]
   ppManageProviderOverlapOther: String
   ppManageProviderOverlapNote: String
-  bManageBeneficiaryOverlap: [BManageBeneficiaryOverlapType!] 
+  bManageBeneficiaryOverlap: [BManageBeneficiaryOverlapType!]
   bManageBeneficiaryOverlapOther: String
   bManageBeneficiaryOverlapNote: String
   #Page 4
   oelHelpdeskSupport: [OelHelpdeskSupportType!]
   oelHelpdeskSupportOther: String
   oelHelpdeskSupportNote: String
-  oelManageAco: [OelManageAcoType!] 
+  oelManageAco: [OelManageAcoType!]
   oelManageAcoOther: String
   oelManageAcoNote: String
   #Page 5
@@ -5252,7 +5981,7 @@ input PlanITToolsChanges @goModel(model: "map[string]interface{}") {
   oelLearningContractor: [OelLearningContractorType!]
   oelLearningContractorOther: String
   oelLearningContractorNote: String
-  #Page 8 
+  #Page 8
   oelParticipantCollaboration: [OelParticipantCollaborationType!]
   oelParticipantCollaborationOther: String
   oelParticipantCollaborationNote: String
@@ -5276,7 +6005,7 @@ input PlanITToolsChanges @goModel(model: "map[string]interface{}") {
   pRecoverPayments: [PRecoverPaymentsType!]
   pRecoverPaymentsOther: String
   pRecoverPaymentsNote: String
-  
+
 }
 """
 PlanOpsEvalAndLearning represents the task list section that deals with information regarding the Ops Eval and Learning
@@ -5521,6 +6250,7 @@ type Query {
   existingModelCollection: [ExistingModel!]!
   cedarPersonsByCommonName(commonName: String!): [UserInfo!]!
   planCollaboratorByID(id: UUID!): PlanCollaborator!
+  planPayments(id: UUID!): PlanPayments!
 }
 
 """
@@ -5563,7 +6293,6 @@ updatePlanItTools(id: UUID!, changes:PlanITToolsChanges!): PlanITTools!
 updatePlanOpsEvalAndLearning(id: UUID!, changes: PlanOpsEvalAndLearningChanges!): PlanOpsEvalAndLearning!
 @hasRole(role: MINT_BASE_USER)
 
-
 generatePresignedUploadURL(input: GeneratePresignedUploadURLInput!): GeneratePresignedUploadURLPayload!
 @hasRole(role: MINT_BASE_USER)
 
@@ -5592,6 +6321,9 @@ updateDiscussionReply(id: UUID!, changes: DiscussionReplyChanges!): DiscussionRe
 @hasRole(role: MINT_BASE_USER)
 
 deleteDiscussionReply(id: UUID!): DiscussionReply!
+@hasRole(role: MINT_BASE_USER)
+
+updatePlanPayments(id: UUID!, changes: PlanPaymentsChanges!): PlanPayments!
 @hasRole(role: MINT_BASE_USER)
 }
 
@@ -5749,7 +6481,7 @@ enum ConfidenceType {
   NOT_AT_ALL
   SLIGHTLY
   FAIRLY
-  COMPLETELY  
+  COMPLETELY
 }
 enum FrequencyType {
   ANNUALLY
@@ -5850,7 +6582,7 @@ enum GcCollectBidsType {
     OTHER
 }
 enum GcUpdateContractType {
-    
+
     HPMS
     OTHER
 }
@@ -5880,7 +6612,7 @@ enum PpManageProviderOverlapType {
     OTHER
     NA
 }
-enum BManageBeneficiaryOverlapType { 
+enum BManageBeneficiaryOverlapType {
     MDM
     OTHER
     NA
@@ -5890,13 +6622,13 @@ enum OelHelpdeskSupportType {
     CONTRACTOR
     OTHER
 }
-enum OelManageAcoType { 
+enum OelManageAcoType {
     ACO_OS
     ACO_UI
     INNOVATION
     OTHER
 }
-enum OelPerformanceBenchmarkType { 
+enum OelPerformanceBenchmarkType {
     IDR
     CCW
     OTHER
@@ -5905,11 +6637,11 @@ enum OelProcessAppealsType {
     MEDICARE_APPEAL_SYSTEM
     OTHER
 }
-enum OelEvaluationContractorType { 
+enum OelEvaluationContractorType {
     RMDA
     OTHER
 }
-enum OelCollectDataType { 
+enum OelCollectDataType {
     IDR
     CCW
     IDOS
@@ -5917,7 +6649,7 @@ enum OelCollectDataType {
     CONTRACTOR
     OTHER
 }
-enum OelObtainDataType { 
+enum OelObtainDataType {
     CCW
     IDOS
     ISP
@@ -6102,6 +6834,64 @@ enum DataStartsType {
     OTHER
 }
 #Ops Eval and Learning types end
+
+enum FundingSource {
+  PATIENT_PROTECTION_AFFORDABLE_CARE_ACT
+  TRUST_FUND
+  OTHER
+}
+
+enum PayRecipient {
+  PROVIDERS
+  BENEFICIARIES
+  PARTICIPANTS
+  STATES
+  OTHER
+}
+
+enum PayType {
+  CLAIMS_BASED_PAYMENTS
+  NON_CLAIMS_BASED_PAYMENTS
+  GRANTS
+}
+
+enum ClaimsBasedPayType {
+  ADJUSTMENTS_TO_FFS_PAYMENTS
+  PAYMENTS_CARE_MANAGEMENT_HOME_VISITS
+  PAYMENTS_SNF_CLAIMS_WITHOUT_3DAY_HOSPITAL_ADMISSIONS
+  PAYMENTS_TELEHEALTH_SERVICES_NOT_TRADITIONAL_MEDICARE
+}
+
+enum NonClaimsBasedPayType {
+  ADVANCED_PAYMENT
+  BUNDLED_EPISODE_OF_CARE
+  CAPITATION_POPULATION_BASED_FULL
+  CAPITATION_POPULATION_BASED_PARTIAL
+  CARE_COORDINATION_MANAGEMENT_FEE
+  GLOBAL_BUDGET
+  GRANTS
+  INCENTIVE_PAYMENT
+  MAPD_SHARED_SAVINGS
+  SHARED_SAVINGS
+  OTHER
+}
+
+enum ComplexityCalculationLevelType {
+  LOW
+  MIDDLE
+  HIGH
+}
+
+enum AnticipatedPaymentFrequencyType {
+  ANNUALLY
+  BIANNUALLY
+  QUARTERLY
+  MONTHLY
+  SEMIMONTHLY
+  WEEKLY
+  DAILY
+  OTHER
+}
 
 directive @hasRole(role: Role!) on FIELD_DEFINITION
 
@@ -6577,6 +7367,30 @@ func (ec *executionContext) field_Mutation_updatePlanParticipantsAndProviders_ar
 	return args, nil
 }
 
+func (ec *executionContext) field_Mutation_updatePlanPayments_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 uuid.UUID
+	if tmp, ok := rawArgs["id"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("id"))
+		arg0, err = ec.unmarshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["id"] = arg0
+	var arg1 map[string]interface{}
+	if tmp, ok := rawArgs["changes"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("changes"))
+		arg1, err = ec.unmarshalNPlanPaymentsChanges2map(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["changes"] = arg1
+	return args, nil
+}
+
 func (ec *executionContext) field_Query___type_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
@@ -6653,6 +7467,21 @@ func (ec *executionContext) field_Query_planDocumentDownloadURL_args(ctx context
 }
 
 func (ec *executionContext) field_Query_planDocument_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 uuid.UUID
+	if tmp, ok := rawArgs["id"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("id"))
+		arg0, err = ec.unmarshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["id"] = arg0
+	return args, nil
+}
+
+func (ec *executionContext) field_Query_planPayments_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
 	var arg0 uuid.UUID
@@ -9523,6 +10352,180 @@ func (ec *executionContext) fieldContext_ModelPlan_discussions(ctx context.Conte
 	return fc, nil
 }
 
+func (ec *executionContext) _ModelPlan_payments(ctx context.Context, field graphql.CollectedField, obj *models.ModelPlan) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_ModelPlan_payments(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.ModelPlan().Payments(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*models.PlanPayments)
+	fc.Result = res
+	return ec.marshalNPlanPayments2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanPayments(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_ModelPlan_payments(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "ModelPlan",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_PlanPayments_id(ctx, field)
+			case "modelPlanID":
+				return ec.fieldContext_PlanPayments_modelPlanID(ctx, field)
+			case "fundingSource":
+				return ec.fieldContext_PlanPayments_fundingSource(ctx, field)
+			case "fundingSourceTrustFund":
+				return ec.fieldContext_PlanPayments_fundingSourceTrustFund(ctx, field)
+			case "fundingSourceNote":
+				return ec.fieldContext_PlanPayments_fundingSourceNote(ctx, field)
+			case "fundingSourceR":
+				return ec.fieldContext_PlanPayments_fundingSourceR(ctx, field)
+			case "fundingSourceRTrustFund":
+				return ec.fieldContext_PlanPayments_fundingSourceRTrustFund(ctx, field)
+			case "fundingSourceROther":
+				return ec.fieldContext_PlanPayments_fundingSourceROther(ctx, field)
+			case "fundingSourceRNote":
+				return ec.fieldContext_PlanPayments_fundingSourceRNote(ctx, field)
+			case "payRecipients":
+				return ec.fieldContext_PlanPayments_payRecipients(ctx, field)
+			case "payRecipientsOtherSpecification":
+				return ec.fieldContext_PlanPayments_payRecipientsOtherSpecification(ctx, field)
+			case "payRecipientsNote":
+				return ec.fieldContext_PlanPayments_payRecipientsNote(ctx, field)
+			case "payType":
+				return ec.fieldContext_PlanPayments_payType(ctx, field)
+			case "payTypeNote":
+				return ec.fieldContext_PlanPayments_payTypeNote(ctx, field)
+			case "payClaims":
+				return ec.fieldContext_PlanPayments_payClaims(ctx, field)
+			case "payClaimsOther":
+				return ec.fieldContext_PlanPayments_payClaimsOther(ctx, field)
+			case "shouldAnyProvidersExcludedFFSSystems":
+				return ec.fieldContext_PlanPayments_shouldAnyProvidersExcludedFFSSystems(ctx, field)
+			case "shouldAnyProviderExcludedFFSSystemsNote":
+				return ec.fieldContext_PlanPayments_shouldAnyProviderExcludedFFSSystemsNote(ctx, field)
+			case "changesMedicarePhysicianFeeSchedule":
+				return ec.fieldContext_PlanPayments_changesMedicarePhysicianFeeSchedule(ctx, field)
+			case "changesMedicarePhysicianFeeScheduleNote":
+				return ec.fieldContext_PlanPayments_changesMedicarePhysicianFeeScheduleNote(ctx, field)
+			case "affectsMedicareSecondaryPayerClaims":
+				return ec.fieldContext_PlanPayments_affectsMedicareSecondaryPayerClaims(ctx, field)
+			case "affectsMedicareSecondaryPayerClaimsHow":
+				return ec.fieldContext_PlanPayments_affectsMedicareSecondaryPayerClaimsHow(ctx, field)
+			case "affectsMedicareSecondaryPayerClaimsNote":
+				return ec.fieldContext_PlanPayments_affectsMedicareSecondaryPayerClaimsNote(ctx, field)
+			case "payModelDifferentiation":
+				return ec.fieldContext_PlanPayments_payModelDifferentiation(ctx, field)
+			case "creatingDependenciesBetweenServices":
+				return ec.fieldContext_PlanPayments_creatingDependenciesBetweenServices(ctx, field)
+			case "creatingDependenciesBetweenServicesNote":
+				return ec.fieldContext_PlanPayments_creatingDependenciesBetweenServicesNote(ctx, field)
+			case "needsClaimsDataCollection":
+				return ec.fieldContext_PlanPayments_needsClaimsDataCollection(ctx, field)
+			case "needsClaimsDataCollectionNote":
+				return ec.fieldContext_PlanPayments_needsClaimsDataCollectionNote(ctx, field)
+			case "providingThirdPartyFile":
+				return ec.fieldContext_PlanPayments_providingThirdPartyFile(ctx, field)
+			case "isContractorAwareTestDataRequirements":
+				return ec.fieldContext_PlanPayments_isContractorAwareTestDataRequirements(ctx, field)
+			case "beneficiaryCostSharingLevelAndHandling":
+				return ec.fieldContext_PlanPayments_beneficiaryCostSharingLevelAndHandling(ctx, field)
+			case "waiveBeneficiaryCostSharingForAnyServices":
+				return ec.fieldContext_PlanPayments_waiveBeneficiaryCostSharingForAnyServices(ctx, field)
+			case "waiveBeneficiaryCostSharingServiceSpecification":
+				return ec.fieldContext_PlanPayments_waiveBeneficiaryCostSharingServiceSpecification(ctx, field)
+			case "waiverOnlyAppliesPartOfPayment":
+				return ec.fieldContext_PlanPayments_waiverOnlyAppliesPartOfPayment(ctx, field)
+			case "waiveBeneficiaryCostSharingNote":
+				return ec.fieldContext_PlanPayments_waiveBeneficiaryCostSharingNote(ctx, field)
+			case "nonClaimsPayments":
+				return ec.fieldContext_PlanPayments_nonClaimsPayments(ctx, field)
+			case "nonClaimsPaymentOther":
+				return ec.fieldContext_PlanPayments_nonClaimsPaymentOther(ctx, field)
+			case "paymentCalculationOwner":
+				return ec.fieldContext_PlanPayments_paymentCalculationOwner(ctx, field)
+			case "numberPaymentsPerPayCycle":
+				return ec.fieldContext_PlanPayments_numberPaymentsPerPayCycle(ctx, field)
+			case "numberPaymentsPerPayCycleNote":
+				return ec.fieldContext_PlanPayments_numberPaymentsPerPayCycleNote(ctx, field)
+			case "sharedSystemsInvolvedAdditionalClaimPayment":
+				return ec.fieldContext_PlanPayments_sharedSystemsInvolvedAdditionalClaimPayment(ctx, field)
+			case "sharedSystemsInvolvedAdditionalClaimPaymentNote":
+				return ec.fieldContext_PlanPayments_sharedSystemsInvolvedAdditionalClaimPaymentNote(ctx, field)
+			case "planningToUseInnovationPaymentContractor":
+				return ec.fieldContext_PlanPayments_planningToUseInnovationPaymentContractor(ctx, field)
+			case "planningToUseInnovationPaymentContractorNote":
+				return ec.fieldContext_PlanPayments_planningToUseInnovationPaymentContractorNote(ctx, field)
+			case "fundingStructure":
+				return ec.fieldContext_PlanPayments_fundingStructure(ctx, field)
+			case "expectedCalculationComplexityLevel":
+				return ec.fieldContext_PlanPayments_expectedCalculationComplexityLevel(ctx, field)
+			case "expectedCalculationComplexityLevelNote":
+				return ec.fieldContext_PlanPayments_expectedCalculationComplexityLevelNote(ctx, field)
+			case "canParticipantsSelectBetweenPaymentMechanisms":
+				return ec.fieldContext_PlanPayments_canParticipantsSelectBetweenPaymentMechanisms(ctx, field)
+			case "canParticipantsSelectBetweenPaymentMechanismsHow":
+				return ec.fieldContext_PlanPayments_canParticipantsSelectBetweenPaymentMechanismsHow(ctx, field)
+			case "canParticipantsSelectBetweenPaymentMechanismsNote":
+				return ec.fieldContext_PlanPayments_canParticipantsSelectBetweenPaymentMechanismsNote(ctx, field)
+			case "anticipatedPaymentFrequency":
+				return ec.fieldContext_PlanPayments_anticipatedPaymentFrequency(ctx, field)
+			case "anticipatedPaymentFrequencyOther":
+				return ec.fieldContext_PlanPayments_anticipatedPaymentFrequencyOther(ctx, field)
+			case "anticipatedPaymentFrequencyNote":
+				return ec.fieldContext_PlanPayments_anticipatedPaymentFrequencyNote(ctx, field)
+			case "willRecoverPayments":
+				return ec.fieldContext_PlanPayments_willRecoverPayments(ctx, field)
+			case "willRecoverPaymentsNote":
+				return ec.fieldContext_PlanPayments_willRecoverPaymentsNote(ctx, field)
+			case "anticipateReconcilingPaymentsRetrospectively":
+				return ec.fieldContext_PlanPayments_anticipateReconcilingPaymentsRetrospectively(ctx, field)
+			case "anticipateReconcilingPaymentsRetrospectivelyNote":
+				return ec.fieldContext_PlanPayments_anticipateReconcilingPaymentsRetrospectivelyNote(ctx, field)
+			case "paymentStartDate":
+				return ec.fieldContext_PlanPayments_paymentStartDate(ctx, field)
+			case "paymentStartDateNote":
+				return ec.fieldContext_PlanPayments_paymentStartDateNote(ctx, field)
+			case "createdBy":
+				return ec.fieldContext_PlanPayments_createdBy(ctx, field)
+			case "createdDts":
+				return ec.fieldContext_PlanPayments_createdDts(ctx, field)
+			case "modifiedBy":
+				return ec.fieldContext_PlanPayments_modifiedBy(ctx, field)
+			case "modifiedDts":
+				return ec.fieldContext_PlanPayments_modifiedDts(ctx, field)
+			case "status":
+				return ec.fieldContext_PlanPayments_status(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type PlanPayments", field.Name)
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _ModelPlan_itTools(ctx context.Context, field graphql.CollectedField, obj *models.ModelPlan) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_ModelPlan_itTools(ctx, field)
 	if err != nil {
@@ -9892,6 +10895,8 @@ func (ec *executionContext) fieldContext_Mutation_createModelPlan(ctx context.Co
 				return ec.fieldContext_ModelPlan_documents(ctx, field)
 			case "discussions":
 				return ec.fieldContext_ModelPlan_discussions(ctx, field)
+			case "payments":
+				return ec.fieldContext_ModelPlan_payments(ctx, field)
 			case "itTools":
 				return ec.fieldContext_ModelPlan_itTools(ctx, field)
 			case "status":
@@ -10017,6 +11022,8 @@ func (ec *executionContext) fieldContext_Mutation_updateModelPlan(ctx context.Co
 				return ec.fieldContext_ModelPlan_documents(ctx, field)
 			case "discussions":
 				return ec.fieldContext_ModelPlan_discussions(ctx, field)
+			case "payments":
+				return ec.fieldContext_ModelPlan_payments(ctx, field)
 			case "itTools":
 				return ec.fieldContext_ModelPlan_itTools(ctx, field)
 			case "status":
@@ -12533,6 +13540,215 @@ func (ec *executionContext) fieldContext_Mutation_deleteDiscussionReply(ctx cont
 	}()
 	ctx = graphql.WithFieldContext(ctx, fc)
 	if fc.Args, err = ec.field_Mutation_deleteDiscussionReply_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Mutation_updatePlanPayments(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Mutation_updatePlanPayments(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		directive0 := func(rctx context.Context) (interface{}, error) {
+			ctx = rctx // use context from middleware stack in children
+			return ec.resolvers.Mutation().UpdatePlanPayments(rctx, fc.Args["id"].(uuid.UUID), fc.Args["changes"].(map[string]interface{}))
+		}
+		directive1 := func(ctx context.Context) (interface{}, error) {
+			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_BASE_USER")
+			if err != nil {
+				return nil, err
+			}
+			if ec.directives.HasRole == nil {
+				return nil, errors.New("directive hasRole is not implemented")
+			}
+			return ec.directives.HasRole(ctx, nil, directive0, role)
+		}
+
+		tmp, err := directive1(rctx)
+		if err != nil {
+			return nil, graphql.ErrorOnPath(ctx, err)
+		}
+		if tmp == nil {
+			return nil, nil
+		}
+		if data, ok := tmp.(*models.PlanPayments); ok {
+			return data, nil
+		}
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.PlanPayments`, tmp)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*models.PlanPayments)
+	fc.Result = res
+	return ec.marshalNPlanPayments2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanPayments(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Mutation_updatePlanPayments(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_PlanPayments_id(ctx, field)
+			case "modelPlanID":
+				return ec.fieldContext_PlanPayments_modelPlanID(ctx, field)
+			case "fundingSource":
+				return ec.fieldContext_PlanPayments_fundingSource(ctx, field)
+			case "fundingSourceTrustFund":
+				return ec.fieldContext_PlanPayments_fundingSourceTrustFund(ctx, field)
+			case "fundingSourceNote":
+				return ec.fieldContext_PlanPayments_fundingSourceNote(ctx, field)
+			case "fundingSourceR":
+				return ec.fieldContext_PlanPayments_fundingSourceR(ctx, field)
+			case "fundingSourceRTrustFund":
+				return ec.fieldContext_PlanPayments_fundingSourceRTrustFund(ctx, field)
+			case "fundingSourceROther":
+				return ec.fieldContext_PlanPayments_fundingSourceROther(ctx, field)
+			case "fundingSourceRNote":
+				return ec.fieldContext_PlanPayments_fundingSourceRNote(ctx, field)
+			case "payRecipients":
+				return ec.fieldContext_PlanPayments_payRecipients(ctx, field)
+			case "payRecipientsOtherSpecification":
+				return ec.fieldContext_PlanPayments_payRecipientsOtherSpecification(ctx, field)
+			case "payRecipientsNote":
+				return ec.fieldContext_PlanPayments_payRecipientsNote(ctx, field)
+			case "payType":
+				return ec.fieldContext_PlanPayments_payType(ctx, field)
+			case "payTypeNote":
+				return ec.fieldContext_PlanPayments_payTypeNote(ctx, field)
+			case "payClaims":
+				return ec.fieldContext_PlanPayments_payClaims(ctx, field)
+			case "payClaimsOther":
+				return ec.fieldContext_PlanPayments_payClaimsOther(ctx, field)
+			case "shouldAnyProvidersExcludedFFSSystems":
+				return ec.fieldContext_PlanPayments_shouldAnyProvidersExcludedFFSSystems(ctx, field)
+			case "shouldAnyProviderExcludedFFSSystemsNote":
+				return ec.fieldContext_PlanPayments_shouldAnyProviderExcludedFFSSystemsNote(ctx, field)
+			case "changesMedicarePhysicianFeeSchedule":
+				return ec.fieldContext_PlanPayments_changesMedicarePhysicianFeeSchedule(ctx, field)
+			case "changesMedicarePhysicianFeeScheduleNote":
+				return ec.fieldContext_PlanPayments_changesMedicarePhysicianFeeScheduleNote(ctx, field)
+			case "affectsMedicareSecondaryPayerClaims":
+				return ec.fieldContext_PlanPayments_affectsMedicareSecondaryPayerClaims(ctx, field)
+			case "affectsMedicareSecondaryPayerClaimsHow":
+				return ec.fieldContext_PlanPayments_affectsMedicareSecondaryPayerClaimsHow(ctx, field)
+			case "affectsMedicareSecondaryPayerClaimsNote":
+				return ec.fieldContext_PlanPayments_affectsMedicareSecondaryPayerClaimsNote(ctx, field)
+			case "payModelDifferentiation":
+				return ec.fieldContext_PlanPayments_payModelDifferentiation(ctx, field)
+			case "creatingDependenciesBetweenServices":
+				return ec.fieldContext_PlanPayments_creatingDependenciesBetweenServices(ctx, field)
+			case "creatingDependenciesBetweenServicesNote":
+				return ec.fieldContext_PlanPayments_creatingDependenciesBetweenServicesNote(ctx, field)
+			case "needsClaimsDataCollection":
+				return ec.fieldContext_PlanPayments_needsClaimsDataCollection(ctx, field)
+			case "needsClaimsDataCollectionNote":
+				return ec.fieldContext_PlanPayments_needsClaimsDataCollectionNote(ctx, field)
+			case "providingThirdPartyFile":
+				return ec.fieldContext_PlanPayments_providingThirdPartyFile(ctx, field)
+			case "isContractorAwareTestDataRequirements":
+				return ec.fieldContext_PlanPayments_isContractorAwareTestDataRequirements(ctx, field)
+			case "beneficiaryCostSharingLevelAndHandling":
+				return ec.fieldContext_PlanPayments_beneficiaryCostSharingLevelAndHandling(ctx, field)
+			case "waiveBeneficiaryCostSharingForAnyServices":
+				return ec.fieldContext_PlanPayments_waiveBeneficiaryCostSharingForAnyServices(ctx, field)
+			case "waiveBeneficiaryCostSharingServiceSpecification":
+				return ec.fieldContext_PlanPayments_waiveBeneficiaryCostSharingServiceSpecification(ctx, field)
+			case "waiverOnlyAppliesPartOfPayment":
+				return ec.fieldContext_PlanPayments_waiverOnlyAppliesPartOfPayment(ctx, field)
+			case "waiveBeneficiaryCostSharingNote":
+				return ec.fieldContext_PlanPayments_waiveBeneficiaryCostSharingNote(ctx, field)
+			case "nonClaimsPayments":
+				return ec.fieldContext_PlanPayments_nonClaimsPayments(ctx, field)
+			case "nonClaimsPaymentOther":
+				return ec.fieldContext_PlanPayments_nonClaimsPaymentOther(ctx, field)
+			case "paymentCalculationOwner":
+				return ec.fieldContext_PlanPayments_paymentCalculationOwner(ctx, field)
+			case "numberPaymentsPerPayCycle":
+				return ec.fieldContext_PlanPayments_numberPaymentsPerPayCycle(ctx, field)
+			case "numberPaymentsPerPayCycleNote":
+				return ec.fieldContext_PlanPayments_numberPaymentsPerPayCycleNote(ctx, field)
+			case "sharedSystemsInvolvedAdditionalClaimPayment":
+				return ec.fieldContext_PlanPayments_sharedSystemsInvolvedAdditionalClaimPayment(ctx, field)
+			case "sharedSystemsInvolvedAdditionalClaimPaymentNote":
+				return ec.fieldContext_PlanPayments_sharedSystemsInvolvedAdditionalClaimPaymentNote(ctx, field)
+			case "planningToUseInnovationPaymentContractor":
+				return ec.fieldContext_PlanPayments_planningToUseInnovationPaymentContractor(ctx, field)
+			case "planningToUseInnovationPaymentContractorNote":
+				return ec.fieldContext_PlanPayments_planningToUseInnovationPaymentContractorNote(ctx, field)
+			case "fundingStructure":
+				return ec.fieldContext_PlanPayments_fundingStructure(ctx, field)
+			case "expectedCalculationComplexityLevel":
+				return ec.fieldContext_PlanPayments_expectedCalculationComplexityLevel(ctx, field)
+			case "expectedCalculationComplexityLevelNote":
+				return ec.fieldContext_PlanPayments_expectedCalculationComplexityLevelNote(ctx, field)
+			case "canParticipantsSelectBetweenPaymentMechanisms":
+				return ec.fieldContext_PlanPayments_canParticipantsSelectBetweenPaymentMechanisms(ctx, field)
+			case "canParticipantsSelectBetweenPaymentMechanismsHow":
+				return ec.fieldContext_PlanPayments_canParticipantsSelectBetweenPaymentMechanismsHow(ctx, field)
+			case "canParticipantsSelectBetweenPaymentMechanismsNote":
+				return ec.fieldContext_PlanPayments_canParticipantsSelectBetweenPaymentMechanismsNote(ctx, field)
+			case "anticipatedPaymentFrequency":
+				return ec.fieldContext_PlanPayments_anticipatedPaymentFrequency(ctx, field)
+			case "anticipatedPaymentFrequencyOther":
+				return ec.fieldContext_PlanPayments_anticipatedPaymentFrequencyOther(ctx, field)
+			case "anticipatedPaymentFrequencyNote":
+				return ec.fieldContext_PlanPayments_anticipatedPaymentFrequencyNote(ctx, field)
+			case "willRecoverPayments":
+				return ec.fieldContext_PlanPayments_willRecoverPayments(ctx, field)
+			case "willRecoverPaymentsNote":
+				return ec.fieldContext_PlanPayments_willRecoverPaymentsNote(ctx, field)
+			case "anticipateReconcilingPaymentsRetrospectively":
+				return ec.fieldContext_PlanPayments_anticipateReconcilingPaymentsRetrospectively(ctx, field)
+			case "anticipateReconcilingPaymentsRetrospectivelyNote":
+				return ec.fieldContext_PlanPayments_anticipateReconcilingPaymentsRetrospectivelyNote(ctx, field)
+			case "paymentStartDate":
+				return ec.fieldContext_PlanPayments_paymentStartDate(ctx, field)
+			case "paymentStartDateNote":
+				return ec.fieldContext_PlanPayments_paymentStartDateNote(ctx, field)
+			case "createdBy":
+				return ec.fieldContext_PlanPayments_createdBy(ctx, field)
+			case "createdDts":
+				return ec.fieldContext_PlanPayments_createdDts(ctx, field)
+			case "modifiedBy":
+				return ec.fieldContext_PlanPayments_modifiedBy(ctx, field)
+			case "modifiedDts":
+				return ec.fieldContext_PlanPayments_modifiedDts(ctx, field)
+			case "status":
+				return ec.fieldContext_PlanPayments_status(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type PlanPayments", field.Name)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_updatePlanPayments_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return
 	}
@@ -29130,6 +30346,2645 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_status(ctx
 	return fc, nil
 }
 
+func (ec *executionContext) _PlanPayments_id(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_id(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ID, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(uuid.UUID)
+	fc.Result = res
+	return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanPayments_id(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanPayments",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type UUID does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanPayments_modelPlanID(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_modelPlanID(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ModelPlanID, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(uuid.UUID)
+	fc.Result = res
+	return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanPayments_modelPlanID(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanPayments",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type UUID does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanPayments_fundingSource(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_fundingSource(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.PlanPayments().FundingSource(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.([]models.FundingSource)
+	fc.Result = res
+	return ec.marshalOFundingSource2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFundingSourceᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanPayments_fundingSource(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanPayments",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type FundingSource does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanPayments_fundingSourceTrustFund(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_fundingSourceTrustFund(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.FundingSourceTrustFund, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanPayments_fundingSourceTrustFund(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanPayments",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanPayments_fundingSourceNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_fundingSourceNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.FundingSourceNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanPayments_fundingSourceNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanPayments",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanPayments_fundingSourceR(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_fundingSourceR(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.PlanPayments().FundingSourceR(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.([]models.FundingSource)
+	fc.Result = res
+	return ec.marshalOFundingSource2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFundingSourceᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanPayments_fundingSourceR(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanPayments",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type FundingSource does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanPayments_fundingSourceRTrustFund(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_fundingSourceRTrustFund(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.FundingSourceRTrustFund, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanPayments_fundingSourceRTrustFund(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanPayments",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanPayments_fundingSourceROther(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_fundingSourceROther(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.FundingSourceROther, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanPayments_fundingSourceROther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanPayments",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanPayments_fundingSourceRNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_fundingSourceRNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.FundingSourceRNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanPayments_fundingSourceRNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanPayments",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanPayments_payRecipients(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_payRecipients(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.PlanPayments().PayRecipients(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.([]models.PayRecipient)
+	fc.Result = res
+	return ec.marshalOPayRecipient2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPayRecipientᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanPayments_payRecipients(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanPayments",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type PayRecipient does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanPayments_payRecipientsOtherSpecification(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_payRecipientsOtherSpecification(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.PayRecipientsOtherSpecification, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanPayments_payRecipientsOtherSpecification(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanPayments",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanPayments_payRecipientsNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_payRecipientsNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.PayRecipientsNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanPayments_payRecipientsNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanPayments",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanPayments_payType(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_payType(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.PlanPayments().PayType(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.([]models.PayType)
+	fc.Result = res
+	return ec.marshalOPayType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPayTypeᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanPayments_payType(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanPayments",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type PayType does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanPayments_payTypeNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_payTypeNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.PayTypeNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanPayments_payTypeNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanPayments",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanPayments_payClaims(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_payClaims(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.PlanPayments().PayClaims(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.([]models.ClaimsBasedPayType)
+	fc.Result = res
+	return ec.marshalOClaimsBasedPayType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐClaimsBasedPayTypeᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanPayments_payClaims(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanPayments",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type ClaimsBasedPayType does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanPayments_payClaimsOther(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_payClaimsOther(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.PayClaimsOther, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanPayments_payClaimsOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanPayments",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanPayments_shouldAnyProvidersExcludedFFSSystems(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_shouldAnyProvidersExcludedFFSSystems(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ShouldAnyProvidersExcludedFFSSystems, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*bool)
+	fc.Result = res
+	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanPayments_shouldAnyProvidersExcludedFFSSystems(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanPayments",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanPayments_shouldAnyProviderExcludedFFSSystemsNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_shouldAnyProviderExcludedFFSSystemsNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ShouldAnyProviderExcludedFFSSystemsNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanPayments_shouldAnyProviderExcludedFFSSystemsNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanPayments",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanPayments_changesMedicarePhysicianFeeSchedule(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_changesMedicarePhysicianFeeSchedule(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ChangesMedicarePhysicianFeeSchedule, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*bool)
+	fc.Result = res
+	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanPayments_changesMedicarePhysicianFeeSchedule(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanPayments",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanPayments_changesMedicarePhysicianFeeScheduleNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_changesMedicarePhysicianFeeScheduleNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ChangesMedicarePhysicianFeeScheduleNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanPayments_changesMedicarePhysicianFeeScheduleNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanPayments",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanPayments_affectsMedicareSecondaryPayerClaims(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_affectsMedicareSecondaryPayerClaims(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.AffectsMedicareSecondaryPayerClaims, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*bool)
+	fc.Result = res
+	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanPayments_affectsMedicareSecondaryPayerClaims(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanPayments",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanPayments_affectsMedicareSecondaryPayerClaimsHow(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_affectsMedicareSecondaryPayerClaimsHow(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.AffectsMedicareSecondaryPayerClaimsHow, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanPayments_affectsMedicareSecondaryPayerClaimsHow(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanPayments",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanPayments_affectsMedicareSecondaryPayerClaimsNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_affectsMedicareSecondaryPayerClaimsNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.AffectsMedicareSecondaryPayerClaimsNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanPayments_affectsMedicareSecondaryPayerClaimsNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanPayments",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanPayments_payModelDifferentiation(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_payModelDifferentiation(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.PayModelDifferentiation, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanPayments_payModelDifferentiation(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanPayments",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanPayments_creatingDependenciesBetweenServices(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_creatingDependenciesBetweenServices(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.CreatingDependenciesBetweenServices, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*bool)
+	fc.Result = res
+	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanPayments_creatingDependenciesBetweenServices(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanPayments",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanPayments_creatingDependenciesBetweenServicesNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_creatingDependenciesBetweenServicesNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.CreatingDependenciesBetweenServicesNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanPayments_creatingDependenciesBetweenServicesNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanPayments",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanPayments_needsClaimsDataCollection(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_needsClaimsDataCollection(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.NeedsClaimsDataCollection, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*bool)
+	fc.Result = res
+	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanPayments_needsClaimsDataCollection(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanPayments",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanPayments_needsClaimsDataCollectionNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_needsClaimsDataCollectionNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.NeedsClaimsDataCollectionNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanPayments_needsClaimsDataCollectionNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanPayments",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanPayments_providingThirdPartyFile(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_providingThirdPartyFile(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ProvidingThirdPartyFile, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*bool)
+	fc.Result = res
+	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanPayments_providingThirdPartyFile(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanPayments",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanPayments_isContractorAwareTestDataRequirements(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_isContractorAwareTestDataRequirements(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.IsContractorAwareTestDataRequirements, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*bool)
+	fc.Result = res
+	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanPayments_isContractorAwareTestDataRequirements(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanPayments",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanPayments_beneficiaryCostSharingLevelAndHandling(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_beneficiaryCostSharingLevelAndHandling(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.BeneficiaryCostSharingLevelAndHandling, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanPayments_beneficiaryCostSharingLevelAndHandling(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanPayments",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanPayments_waiveBeneficiaryCostSharingForAnyServices(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_waiveBeneficiaryCostSharingForAnyServices(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.WaiveBeneficiaryCostSharingForAnyServices, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*bool)
+	fc.Result = res
+	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanPayments_waiveBeneficiaryCostSharingForAnyServices(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanPayments",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanPayments_waiveBeneficiaryCostSharingServiceSpecification(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_waiveBeneficiaryCostSharingServiceSpecification(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.WaiveBeneficiaryCostSharingServiceSpecification, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanPayments_waiveBeneficiaryCostSharingServiceSpecification(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanPayments",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanPayments_waiverOnlyAppliesPartOfPayment(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_waiverOnlyAppliesPartOfPayment(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.WaiverOnlyAppliesPartOfPayment, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*bool)
+	fc.Result = res
+	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanPayments_waiverOnlyAppliesPartOfPayment(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanPayments",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanPayments_waiveBeneficiaryCostSharingNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_waiveBeneficiaryCostSharingNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.WaiveBeneficiaryCostSharingNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanPayments_waiveBeneficiaryCostSharingNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanPayments",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanPayments_nonClaimsPayments(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_nonClaimsPayments(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.PlanPayments().NonClaimsPayments(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.([]model.NonClaimsBasedPayType)
+	fc.Result = res
+	return ec.marshalONonClaimsBasedPayType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐNonClaimsBasedPayTypeᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanPayments_nonClaimsPayments(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanPayments",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type NonClaimsBasedPayType does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanPayments_nonClaimsPaymentOther(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_nonClaimsPaymentOther(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.PlanPayments().NonClaimsPaymentOther(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanPayments_nonClaimsPaymentOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanPayments",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanPayments_paymentCalculationOwner(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_paymentCalculationOwner(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.PaymentCalculationOwner, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanPayments_paymentCalculationOwner(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanPayments",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanPayments_numberPaymentsPerPayCycle(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_numberPaymentsPerPayCycle(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.NumberPaymentsPerPayCycle, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanPayments_numberPaymentsPerPayCycle(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanPayments",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanPayments_numberPaymentsPerPayCycleNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_numberPaymentsPerPayCycleNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.NumberPaymentsPerPayCycleNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanPayments_numberPaymentsPerPayCycleNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanPayments",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanPayments_sharedSystemsInvolvedAdditionalClaimPayment(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_sharedSystemsInvolvedAdditionalClaimPayment(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.SharedSystemsInvolvedAdditionalClaimPayment, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*bool)
+	fc.Result = res
+	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanPayments_sharedSystemsInvolvedAdditionalClaimPayment(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanPayments",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanPayments_sharedSystemsInvolvedAdditionalClaimPaymentNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_sharedSystemsInvolvedAdditionalClaimPaymentNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.SharedSystemsInvolvedAdditionalClaimPaymentNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanPayments_sharedSystemsInvolvedAdditionalClaimPaymentNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanPayments",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanPayments_planningToUseInnovationPaymentContractor(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_planningToUseInnovationPaymentContractor(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.PlanningToUseInnovationPaymentContractor, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*bool)
+	fc.Result = res
+	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanPayments_planningToUseInnovationPaymentContractor(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanPayments",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanPayments_planningToUseInnovationPaymentContractorNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_planningToUseInnovationPaymentContractorNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.PlanningToUseInnovationPaymentContractorNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanPayments_planningToUseInnovationPaymentContractorNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanPayments",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanPayments_fundingStructure(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_fundingStructure(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.FundingStructure, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanPayments_fundingStructure(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanPayments",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanPayments_expectedCalculationComplexityLevel(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_expectedCalculationComplexityLevel(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ExpectedCalculationComplexityLevel, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*models.ComplexityCalculationLevelType)
+	fc.Result = res
+	return ec.marshalOComplexityCalculationLevelType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐComplexityCalculationLevelType(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanPayments_expectedCalculationComplexityLevel(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanPayments",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type ComplexityCalculationLevelType does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanPayments_expectedCalculationComplexityLevelNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_expectedCalculationComplexityLevelNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ExpectedCalculationComplexityLevelNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanPayments_expectedCalculationComplexityLevelNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanPayments",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanPayments_canParticipantsSelectBetweenPaymentMechanisms(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_canParticipantsSelectBetweenPaymentMechanisms(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.CanParticipantsSelectBetweenPaymentMechanisms, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*bool)
+	fc.Result = res
+	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanPayments_canParticipantsSelectBetweenPaymentMechanisms(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanPayments",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanPayments_canParticipantsSelectBetweenPaymentMechanismsHow(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_canParticipantsSelectBetweenPaymentMechanismsHow(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.CanParticipantsSelectBetweenPaymentMechanismsHow, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanPayments_canParticipantsSelectBetweenPaymentMechanismsHow(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanPayments",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanPayments_canParticipantsSelectBetweenPaymentMechanismsNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_canParticipantsSelectBetweenPaymentMechanismsNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.CanParticipantsSelectBetweenPaymentMechanismsNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanPayments_canParticipantsSelectBetweenPaymentMechanismsNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanPayments",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanPayments_anticipatedPaymentFrequency(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_anticipatedPaymentFrequency(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.PlanPayments().AnticipatedPaymentFrequency(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.([]models.AnticipatedPaymentFrequencyType)
+	fc.Result = res
+	return ec.marshalOAnticipatedPaymentFrequencyType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐAnticipatedPaymentFrequencyTypeᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanPayments_anticipatedPaymentFrequency(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanPayments",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type AnticipatedPaymentFrequencyType does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanPayments_anticipatedPaymentFrequencyOther(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_anticipatedPaymentFrequencyOther(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.AnticipatedPaymentFrequencyOther, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanPayments_anticipatedPaymentFrequencyOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanPayments",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanPayments_anticipatedPaymentFrequencyNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_anticipatedPaymentFrequencyNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.AnticipatedPaymentFrequencyNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanPayments_anticipatedPaymentFrequencyNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanPayments",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanPayments_willRecoverPayments(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_willRecoverPayments(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.WillRecoverPayments, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*bool)
+	fc.Result = res
+	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanPayments_willRecoverPayments(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanPayments",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanPayments_willRecoverPaymentsNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_willRecoverPaymentsNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.WillRecoverPaymentsNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanPayments_willRecoverPaymentsNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanPayments",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanPayments_anticipateReconcilingPaymentsRetrospectively(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_anticipateReconcilingPaymentsRetrospectively(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.AnticipateReconcilingPaymentsRetrospectively, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*bool)
+	fc.Result = res
+	return ec.marshalOBoolean2ᚖbool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanPayments_anticipateReconcilingPaymentsRetrospectively(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanPayments",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanPayments_anticipateReconcilingPaymentsRetrospectivelyNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_anticipateReconcilingPaymentsRetrospectivelyNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.AnticipateReconcilingPaymentsRetrospectivelyNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanPayments_anticipateReconcilingPaymentsRetrospectivelyNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanPayments",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanPayments_paymentStartDate(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_paymentStartDate(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.PaymentStartDate, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*time.Time)
+	fc.Result = res
+	return ec.marshalOTime2ᚖtimeᚐTime(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanPayments_paymentStartDate(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanPayments",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Time does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanPayments_paymentStartDateNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_paymentStartDateNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.PaymentStartDateNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanPayments_paymentStartDateNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanPayments",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanPayments_createdBy(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_createdBy(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.CreatedBy, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalNString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanPayments_createdBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanPayments",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanPayments_createdDts(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_createdDts(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.CreatedDts, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(time.Time)
+	fc.Result = res
+	return ec.marshalNTime2timeᚐTime(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanPayments_createdDts(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanPayments",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Time does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanPayments_modifiedBy(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_modifiedBy(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ModifiedBy, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanPayments_modifiedBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanPayments",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanPayments_modifiedDts(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_modifiedDts(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ModifiedDts, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*time.Time)
+	fc.Result = res
+	return ec.marshalOTime2ᚖtimeᚐTime(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanPayments_modifiedDts(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanPayments",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Time does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanPayments_status(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_status(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Status, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(models.TaskStatus)
+	fc.Result = res
+	return ec.marshalNTaskStatus2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTaskStatus(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanPayments_status(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanPayments",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type TaskStatus does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _Query_currentUser(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_Query_currentUser(ctx, field)
 	if err != nil {
@@ -29257,6 +33112,8 @@ func (ec *executionContext) fieldContext_Query_modelPlan(ctx context.Context, fi
 				return ec.fieldContext_ModelPlan_documents(ctx, field)
 			case "discussions":
 				return ec.fieldContext_ModelPlan_discussions(ctx, field)
+			case "payments":
+				return ec.fieldContext_ModelPlan_payments(ctx, field)
 			case "itTools":
 				return ec.fieldContext_ModelPlan_itTools(ctx, field)
 			case "status":
@@ -29601,6 +33458,8 @@ func (ec *executionContext) fieldContext_Query_modelPlanCollection(ctx context.C
 				return ec.fieldContext_ModelPlan_documents(ctx, field)
 			case "discussions":
 				return ec.fieldContext_ModelPlan_discussions(ctx, field)
+			case "payments":
+				return ec.fieldContext_ModelPlan_payments(ctx, field)
 			case "itTools":
 				return ec.fieldContext_ModelPlan_itTools(ctx, field)
 			case "status":
@@ -29828,6 +33687,191 @@ func (ec *executionContext) fieldContext_Query_planCollaboratorByID(ctx context.
 	}()
 	ctx = graphql.WithFieldContext(ctx, fc)
 	if fc.Args, err = ec.field_Query_planCollaboratorByID_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Query_planPayments(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Query_planPayments(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Query().PlanPayments(rctx, fc.Args["id"].(uuid.UUID))
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*models.PlanPayments)
+	fc.Result = res
+	return ec.marshalNPlanPayments2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanPayments(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Query_planPayments(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_PlanPayments_id(ctx, field)
+			case "modelPlanID":
+				return ec.fieldContext_PlanPayments_modelPlanID(ctx, field)
+			case "fundingSource":
+				return ec.fieldContext_PlanPayments_fundingSource(ctx, field)
+			case "fundingSourceTrustFund":
+				return ec.fieldContext_PlanPayments_fundingSourceTrustFund(ctx, field)
+			case "fundingSourceNote":
+				return ec.fieldContext_PlanPayments_fundingSourceNote(ctx, field)
+			case "fundingSourceR":
+				return ec.fieldContext_PlanPayments_fundingSourceR(ctx, field)
+			case "fundingSourceRTrustFund":
+				return ec.fieldContext_PlanPayments_fundingSourceRTrustFund(ctx, field)
+			case "fundingSourceROther":
+				return ec.fieldContext_PlanPayments_fundingSourceROther(ctx, field)
+			case "fundingSourceRNote":
+				return ec.fieldContext_PlanPayments_fundingSourceRNote(ctx, field)
+			case "payRecipients":
+				return ec.fieldContext_PlanPayments_payRecipients(ctx, field)
+			case "payRecipientsOtherSpecification":
+				return ec.fieldContext_PlanPayments_payRecipientsOtherSpecification(ctx, field)
+			case "payRecipientsNote":
+				return ec.fieldContext_PlanPayments_payRecipientsNote(ctx, field)
+			case "payType":
+				return ec.fieldContext_PlanPayments_payType(ctx, field)
+			case "payTypeNote":
+				return ec.fieldContext_PlanPayments_payTypeNote(ctx, field)
+			case "payClaims":
+				return ec.fieldContext_PlanPayments_payClaims(ctx, field)
+			case "payClaimsOther":
+				return ec.fieldContext_PlanPayments_payClaimsOther(ctx, field)
+			case "shouldAnyProvidersExcludedFFSSystems":
+				return ec.fieldContext_PlanPayments_shouldAnyProvidersExcludedFFSSystems(ctx, field)
+			case "shouldAnyProviderExcludedFFSSystemsNote":
+				return ec.fieldContext_PlanPayments_shouldAnyProviderExcludedFFSSystemsNote(ctx, field)
+			case "changesMedicarePhysicianFeeSchedule":
+				return ec.fieldContext_PlanPayments_changesMedicarePhysicianFeeSchedule(ctx, field)
+			case "changesMedicarePhysicianFeeScheduleNote":
+				return ec.fieldContext_PlanPayments_changesMedicarePhysicianFeeScheduleNote(ctx, field)
+			case "affectsMedicareSecondaryPayerClaims":
+				return ec.fieldContext_PlanPayments_affectsMedicareSecondaryPayerClaims(ctx, field)
+			case "affectsMedicareSecondaryPayerClaimsHow":
+				return ec.fieldContext_PlanPayments_affectsMedicareSecondaryPayerClaimsHow(ctx, field)
+			case "affectsMedicareSecondaryPayerClaimsNote":
+				return ec.fieldContext_PlanPayments_affectsMedicareSecondaryPayerClaimsNote(ctx, field)
+			case "payModelDifferentiation":
+				return ec.fieldContext_PlanPayments_payModelDifferentiation(ctx, field)
+			case "creatingDependenciesBetweenServices":
+				return ec.fieldContext_PlanPayments_creatingDependenciesBetweenServices(ctx, field)
+			case "creatingDependenciesBetweenServicesNote":
+				return ec.fieldContext_PlanPayments_creatingDependenciesBetweenServicesNote(ctx, field)
+			case "needsClaimsDataCollection":
+				return ec.fieldContext_PlanPayments_needsClaimsDataCollection(ctx, field)
+			case "needsClaimsDataCollectionNote":
+				return ec.fieldContext_PlanPayments_needsClaimsDataCollectionNote(ctx, field)
+			case "providingThirdPartyFile":
+				return ec.fieldContext_PlanPayments_providingThirdPartyFile(ctx, field)
+			case "isContractorAwareTestDataRequirements":
+				return ec.fieldContext_PlanPayments_isContractorAwareTestDataRequirements(ctx, field)
+			case "beneficiaryCostSharingLevelAndHandling":
+				return ec.fieldContext_PlanPayments_beneficiaryCostSharingLevelAndHandling(ctx, field)
+			case "waiveBeneficiaryCostSharingForAnyServices":
+				return ec.fieldContext_PlanPayments_waiveBeneficiaryCostSharingForAnyServices(ctx, field)
+			case "waiveBeneficiaryCostSharingServiceSpecification":
+				return ec.fieldContext_PlanPayments_waiveBeneficiaryCostSharingServiceSpecification(ctx, field)
+			case "waiverOnlyAppliesPartOfPayment":
+				return ec.fieldContext_PlanPayments_waiverOnlyAppliesPartOfPayment(ctx, field)
+			case "waiveBeneficiaryCostSharingNote":
+				return ec.fieldContext_PlanPayments_waiveBeneficiaryCostSharingNote(ctx, field)
+			case "nonClaimsPayments":
+				return ec.fieldContext_PlanPayments_nonClaimsPayments(ctx, field)
+			case "nonClaimsPaymentOther":
+				return ec.fieldContext_PlanPayments_nonClaimsPaymentOther(ctx, field)
+			case "paymentCalculationOwner":
+				return ec.fieldContext_PlanPayments_paymentCalculationOwner(ctx, field)
+			case "numberPaymentsPerPayCycle":
+				return ec.fieldContext_PlanPayments_numberPaymentsPerPayCycle(ctx, field)
+			case "numberPaymentsPerPayCycleNote":
+				return ec.fieldContext_PlanPayments_numberPaymentsPerPayCycleNote(ctx, field)
+			case "sharedSystemsInvolvedAdditionalClaimPayment":
+				return ec.fieldContext_PlanPayments_sharedSystemsInvolvedAdditionalClaimPayment(ctx, field)
+			case "sharedSystemsInvolvedAdditionalClaimPaymentNote":
+				return ec.fieldContext_PlanPayments_sharedSystemsInvolvedAdditionalClaimPaymentNote(ctx, field)
+			case "planningToUseInnovationPaymentContractor":
+				return ec.fieldContext_PlanPayments_planningToUseInnovationPaymentContractor(ctx, field)
+			case "planningToUseInnovationPaymentContractorNote":
+				return ec.fieldContext_PlanPayments_planningToUseInnovationPaymentContractorNote(ctx, field)
+			case "fundingStructure":
+				return ec.fieldContext_PlanPayments_fundingStructure(ctx, field)
+			case "expectedCalculationComplexityLevel":
+				return ec.fieldContext_PlanPayments_expectedCalculationComplexityLevel(ctx, field)
+			case "expectedCalculationComplexityLevelNote":
+				return ec.fieldContext_PlanPayments_expectedCalculationComplexityLevelNote(ctx, field)
+			case "canParticipantsSelectBetweenPaymentMechanisms":
+				return ec.fieldContext_PlanPayments_canParticipantsSelectBetweenPaymentMechanisms(ctx, field)
+			case "canParticipantsSelectBetweenPaymentMechanismsHow":
+				return ec.fieldContext_PlanPayments_canParticipantsSelectBetweenPaymentMechanismsHow(ctx, field)
+			case "canParticipantsSelectBetweenPaymentMechanismsNote":
+				return ec.fieldContext_PlanPayments_canParticipantsSelectBetweenPaymentMechanismsNote(ctx, field)
+			case "anticipatedPaymentFrequency":
+				return ec.fieldContext_PlanPayments_anticipatedPaymentFrequency(ctx, field)
+			case "anticipatedPaymentFrequencyOther":
+				return ec.fieldContext_PlanPayments_anticipatedPaymentFrequencyOther(ctx, field)
+			case "anticipatedPaymentFrequencyNote":
+				return ec.fieldContext_PlanPayments_anticipatedPaymentFrequencyNote(ctx, field)
+			case "willRecoverPayments":
+				return ec.fieldContext_PlanPayments_willRecoverPayments(ctx, field)
+			case "willRecoverPaymentsNote":
+				return ec.fieldContext_PlanPayments_willRecoverPaymentsNote(ctx, field)
+			case "anticipateReconcilingPaymentsRetrospectively":
+				return ec.fieldContext_PlanPayments_anticipateReconcilingPaymentsRetrospectively(ctx, field)
+			case "anticipateReconcilingPaymentsRetrospectivelyNote":
+				return ec.fieldContext_PlanPayments_anticipateReconcilingPaymentsRetrospectivelyNote(ctx, field)
+			case "paymentStartDate":
+				return ec.fieldContext_PlanPayments_paymentStartDate(ctx, field)
+			case "paymentStartDateNote":
+				return ec.fieldContext_PlanPayments_paymentStartDateNote(ctx, field)
+			case "createdBy":
+				return ec.fieldContext_PlanPayments_createdBy(ctx, field)
+			case "createdDts":
+				return ec.fieldContext_PlanPayments_createdDts(ctx, field)
+			case "modifiedBy":
+				return ec.fieldContext_PlanPayments_modifiedBy(ctx, field)
+			case "modifiedDts":
+				return ec.fieldContext_PlanPayments_modifiedDts(ctx, field)
+			case "status":
+				return ec.fieldContext_PlanPayments_status(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type PlanPayments", field.Name)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Query_planPayments_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return
 	}
@@ -31879,12 +35923,7 @@ func (ec *executionContext) unmarshalInputDiscussionReplyCreateInput(ctx context
 		asMap["resolution"] = false
 	}
 
-	fieldsInOrder := [...]string{"discussionID", "content", "resolution"}
-	for _, k := range fieldsInOrder {
-		v, ok := asMap[k]
-		if !ok {
-			continue
-		}
+	for k, v := range asMap {
 		switch k {
 		case "discussionID":
 			var err error
@@ -31923,12 +35962,7 @@ func (ec *executionContext) unmarshalInputGeneratePresignedUploadURLInput(ctx co
 		asMap[k] = v
 	}
 
-	fieldsInOrder := [...]string{"fileName", "mimeType", "size"}
-	for _, k := range fieldsInOrder {
-		v, ok := asMap[k]
-		if !ok {
-			continue
-		}
+	for k, v := range asMap {
 		switch k {
 		case "fileName":
 			var err error
@@ -31967,12 +36001,7 @@ func (ec *executionContext) unmarshalInputPlanCollaboratorCreateInput(ctx contex
 		asMap[k] = v
 	}
 
-	fieldsInOrder := [...]string{"modelPlanID", "euaUserID", "fullName", "teamRole"}
-	for _, k := range fieldsInOrder {
-		v, ok := asMap[k]
-		if !ok {
-			continue
-		}
+	for k, v := range asMap {
 		switch k {
 		case "modelPlanID":
 			var err error
@@ -32019,12 +36048,7 @@ func (ec *executionContext) unmarshalInputPlanDiscussionCreateInput(ctx context.
 		asMap[k] = v
 	}
 
-	fieldsInOrder := [...]string{"modelPlanID", "content"}
-	for _, k := range fieldsInOrder {
-		v, ok := asMap[k]
-		if !ok {
-			continue
-		}
+	for k, v := range asMap {
 		switch k {
 		case "modelPlanID":
 			var err error
@@ -32055,12 +36079,7 @@ func (ec *executionContext) unmarshalInputPlanDocumentInput(ctx context.Context,
 		asMap[k] = v
 	}
 
-	fieldsInOrder := [...]string{"id", "modelPlanID", "documentParameters", "url"}
-	for _, k := range fieldsInOrder {
-		v, ok := asMap[k]
-		if !ok {
-			continue
-		}
+	for k, v := range asMap {
 		switch k {
 		case "id":
 			var err error
@@ -32107,12 +36126,7 @@ func (ec *executionContext) unmarshalInputPlanDocumentParameters(ctx context.Con
 		asMap[k] = v
 	}
 
-	fieldsInOrder := [...]string{"fileName", "fileSize", "fileType", "documentType", "otherTypeDescription", "optionalNotes"}
-	for _, k := range fieldsInOrder {
-		v, ok := asMap[k]
-		if !ok {
-			continue
-		}
+	for k, v := range asMap {
 		switch k {
 		case "fileName":
 			var err error
@@ -32716,6 +36730,26 @@ func (ec *executionContext) _ModelPlan(ctx context.Context, sel ast.SelectionSet
 				return innerFunc(ctx)
 
 			})
+		case "payments":
+			field := field
+
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._ModelPlan_payments(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&invalids, 1)
+				}
+				return res
+			}
+
+			out.Concurrently(i, func() graphql.Marshaler {
+				return innerFunc(ctx)
+
+			})
 		case "itTools":
 			field := field
 
@@ -32966,6 +37000,15 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._Mutation_deleteDiscussionReply(ctx, field)
+			})
+
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		case "updatePlanPayments":
+
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_updatePlanPayments(ctx, field)
 			})
 
 			if out.Values[i] == graphql.Null {
@@ -35863,6 +39906,402 @@ func (ec *executionContext) _PlanParticipantsAndProviders(ctx context.Context, s
 	return out
 }
 
+var planPaymentsImplementors = []string{"PlanPayments"}
+
+func (ec *executionContext) _PlanPayments(ctx context.Context, sel ast.SelectionSet, obj *models.PlanPayments) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, planPaymentsImplementors)
+	out := graphql.NewFieldSet(fields)
+	var invalids uint32
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("PlanPayments")
+		case "id":
+
+			out.Values[i] = ec._PlanPayments_id(ctx, field, obj)
+
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&invalids, 1)
+			}
+		case "modelPlanID":
+
+			out.Values[i] = ec._PlanPayments_modelPlanID(ctx, field, obj)
+
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&invalids, 1)
+			}
+		case "fundingSource":
+			field := field
+
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._PlanPayments_fundingSource(ctx, field, obj)
+				return res
+			}
+
+			out.Concurrently(i, func() graphql.Marshaler {
+				return innerFunc(ctx)
+
+			})
+		case "fundingSourceTrustFund":
+
+			out.Values[i] = ec._PlanPayments_fundingSourceTrustFund(ctx, field, obj)
+
+		case "fundingSourceNote":
+
+			out.Values[i] = ec._PlanPayments_fundingSourceNote(ctx, field, obj)
+
+		case "fundingSourceR":
+			field := field
+
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._PlanPayments_fundingSourceR(ctx, field, obj)
+				return res
+			}
+
+			out.Concurrently(i, func() graphql.Marshaler {
+				return innerFunc(ctx)
+
+			})
+		case "fundingSourceRTrustFund":
+
+			out.Values[i] = ec._PlanPayments_fundingSourceRTrustFund(ctx, field, obj)
+
+		case "fundingSourceROther":
+
+			out.Values[i] = ec._PlanPayments_fundingSourceROther(ctx, field, obj)
+
+		case "fundingSourceRNote":
+
+			out.Values[i] = ec._PlanPayments_fundingSourceRNote(ctx, field, obj)
+
+		case "payRecipients":
+			field := field
+
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._PlanPayments_payRecipients(ctx, field, obj)
+				return res
+			}
+
+			out.Concurrently(i, func() graphql.Marshaler {
+				return innerFunc(ctx)
+
+			})
+		case "payRecipientsOtherSpecification":
+
+			out.Values[i] = ec._PlanPayments_payRecipientsOtherSpecification(ctx, field, obj)
+
+		case "payRecipientsNote":
+
+			out.Values[i] = ec._PlanPayments_payRecipientsNote(ctx, field, obj)
+
+		case "payType":
+			field := field
+
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._PlanPayments_payType(ctx, field, obj)
+				return res
+			}
+
+			out.Concurrently(i, func() graphql.Marshaler {
+				return innerFunc(ctx)
+
+			})
+		case "payTypeNote":
+
+			out.Values[i] = ec._PlanPayments_payTypeNote(ctx, field, obj)
+
+		case "payClaims":
+			field := field
+
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._PlanPayments_payClaims(ctx, field, obj)
+				return res
+			}
+
+			out.Concurrently(i, func() graphql.Marshaler {
+				return innerFunc(ctx)
+
+			})
+		case "payClaimsOther":
+
+			out.Values[i] = ec._PlanPayments_payClaimsOther(ctx, field, obj)
+
+		case "shouldAnyProvidersExcludedFFSSystems":
+
+			out.Values[i] = ec._PlanPayments_shouldAnyProvidersExcludedFFSSystems(ctx, field, obj)
+
+		case "shouldAnyProviderExcludedFFSSystemsNote":
+
+			out.Values[i] = ec._PlanPayments_shouldAnyProviderExcludedFFSSystemsNote(ctx, field, obj)
+
+		case "changesMedicarePhysicianFeeSchedule":
+
+			out.Values[i] = ec._PlanPayments_changesMedicarePhysicianFeeSchedule(ctx, field, obj)
+
+		case "changesMedicarePhysicianFeeScheduleNote":
+
+			out.Values[i] = ec._PlanPayments_changesMedicarePhysicianFeeScheduleNote(ctx, field, obj)
+
+		case "affectsMedicareSecondaryPayerClaims":
+
+			out.Values[i] = ec._PlanPayments_affectsMedicareSecondaryPayerClaims(ctx, field, obj)
+
+		case "affectsMedicareSecondaryPayerClaimsHow":
+
+			out.Values[i] = ec._PlanPayments_affectsMedicareSecondaryPayerClaimsHow(ctx, field, obj)
+
+		case "affectsMedicareSecondaryPayerClaimsNote":
+
+			out.Values[i] = ec._PlanPayments_affectsMedicareSecondaryPayerClaimsNote(ctx, field, obj)
+
+		case "payModelDifferentiation":
+
+			out.Values[i] = ec._PlanPayments_payModelDifferentiation(ctx, field, obj)
+
+		case "creatingDependenciesBetweenServices":
+
+			out.Values[i] = ec._PlanPayments_creatingDependenciesBetweenServices(ctx, field, obj)
+
+		case "creatingDependenciesBetweenServicesNote":
+
+			out.Values[i] = ec._PlanPayments_creatingDependenciesBetweenServicesNote(ctx, field, obj)
+
+		case "needsClaimsDataCollection":
+
+			out.Values[i] = ec._PlanPayments_needsClaimsDataCollection(ctx, field, obj)
+
+		case "needsClaimsDataCollectionNote":
+
+			out.Values[i] = ec._PlanPayments_needsClaimsDataCollectionNote(ctx, field, obj)
+
+		case "providingThirdPartyFile":
+
+			out.Values[i] = ec._PlanPayments_providingThirdPartyFile(ctx, field, obj)
+
+		case "isContractorAwareTestDataRequirements":
+
+			out.Values[i] = ec._PlanPayments_isContractorAwareTestDataRequirements(ctx, field, obj)
+
+		case "beneficiaryCostSharingLevelAndHandling":
+
+			out.Values[i] = ec._PlanPayments_beneficiaryCostSharingLevelAndHandling(ctx, field, obj)
+
+		case "waiveBeneficiaryCostSharingForAnyServices":
+
+			out.Values[i] = ec._PlanPayments_waiveBeneficiaryCostSharingForAnyServices(ctx, field, obj)
+
+		case "waiveBeneficiaryCostSharingServiceSpecification":
+
+			out.Values[i] = ec._PlanPayments_waiveBeneficiaryCostSharingServiceSpecification(ctx, field, obj)
+
+		case "waiverOnlyAppliesPartOfPayment":
+
+			out.Values[i] = ec._PlanPayments_waiverOnlyAppliesPartOfPayment(ctx, field, obj)
+
+		case "waiveBeneficiaryCostSharingNote":
+
+			out.Values[i] = ec._PlanPayments_waiveBeneficiaryCostSharingNote(ctx, field, obj)
+
+		case "nonClaimsPayments":
+			field := field
+
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._PlanPayments_nonClaimsPayments(ctx, field, obj)
+				return res
+			}
+
+			out.Concurrently(i, func() graphql.Marshaler {
+				return innerFunc(ctx)
+
+			})
+		case "nonClaimsPaymentOther":
+			field := field
+
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._PlanPayments_nonClaimsPaymentOther(ctx, field, obj)
+				return res
+			}
+
+			out.Concurrently(i, func() graphql.Marshaler {
+				return innerFunc(ctx)
+
+			})
+		case "paymentCalculationOwner":
+
+			out.Values[i] = ec._PlanPayments_paymentCalculationOwner(ctx, field, obj)
+
+		case "numberPaymentsPerPayCycle":
+
+			out.Values[i] = ec._PlanPayments_numberPaymentsPerPayCycle(ctx, field, obj)
+
+		case "numberPaymentsPerPayCycleNote":
+
+			out.Values[i] = ec._PlanPayments_numberPaymentsPerPayCycleNote(ctx, field, obj)
+
+		case "sharedSystemsInvolvedAdditionalClaimPayment":
+
+			out.Values[i] = ec._PlanPayments_sharedSystemsInvolvedAdditionalClaimPayment(ctx, field, obj)
+
+		case "sharedSystemsInvolvedAdditionalClaimPaymentNote":
+
+			out.Values[i] = ec._PlanPayments_sharedSystemsInvolvedAdditionalClaimPaymentNote(ctx, field, obj)
+
+		case "planningToUseInnovationPaymentContractor":
+
+			out.Values[i] = ec._PlanPayments_planningToUseInnovationPaymentContractor(ctx, field, obj)
+
+		case "planningToUseInnovationPaymentContractorNote":
+
+			out.Values[i] = ec._PlanPayments_planningToUseInnovationPaymentContractorNote(ctx, field, obj)
+
+		case "fundingStructure":
+
+			out.Values[i] = ec._PlanPayments_fundingStructure(ctx, field, obj)
+
+		case "expectedCalculationComplexityLevel":
+
+			out.Values[i] = ec._PlanPayments_expectedCalculationComplexityLevel(ctx, field, obj)
+
+		case "expectedCalculationComplexityLevelNote":
+
+			out.Values[i] = ec._PlanPayments_expectedCalculationComplexityLevelNote(ctx, field, obj)
+
+		case "canParticipantsSelectBetweenPaymentMechanisms":
+
+			out.Values[i] = ec._PlanPayments_canParticipantsSelectBetweenPaymentMechanisms(ctx, field, obj)
+
+		case "canParticipantsSelectBetweenPaymentMechanismsHow":
+
+			out.Values[i] = ec._PlanPayments_canParticipantsSelectBetweenPaymentMechanismsHow(ctx, field, obj)
+
+		case "canParticipantsSelectBetweenPaymentMechanismsNote":
+
+			out.Values[i] = ec._PlanPayments_canParticipantsSelectBetweenPaymentMechanismsNote(ctx, field, obj)
+
+		case "anticipatedPaymentFrequency":
+			field := field
+
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._PlanPayments_anticipatedPaymentFrequency(ctx, field, obj)
+				return res
+			}
+
+			out.Concurrently(i, func() graphql.Marshaler {
+				return innerFunc(ctx)
+
+			})
+		case "anticipatedPaymentFrequencyOther":
+
+			out.Values[i] = ec._PlanPayments_anticipatedPaymentFrequencyOther(ctx, field, obj)
+
+		case "anticipatedPaymentFrequencyNote":
+
+			out.Values[i] = ec._PlanPayments_anticipatedPaymentFrequencyNote(ctx, field, obj)
+
+		case "willRecoverPayments":
+
+			out.Values[i] = ec._PlanPayments_willRecoverPayments(ctx, field, obj)
+
+		case "willRecoverPaymentsNote":
+
+			out.Values[i] = ec._PlanPayments_willRecoverPaymentsNote(ctx, field, obj)
+
+		case "anticipateReconcilingPaymentsRetrospectively":
+
+			out.Values[i] = ec._PlanPayments_anticipateReconcilingPaymentsRetrospectively(ctx, field, obj)
+
+		case "anticipateReconcilingPaymentsRetrospectivelyNote":
+
+			out.Values[i] = ec._PlanPayments_anticipateReconcilingPaymentsRetrospectivelyNote(ctx, field, obj)
+
+		case "paymentStartDate":
+
+			out.Values[i] = ec._PlanPayments_paymentStartDate(ctx, field, obj)
+
+		case "paymentStartDateNote":
+
+			out.Values[i] = ec._PlanPayments_paymentStartDateNote(ctx, field, obj)
+
+		case "createdBy":
+
+			out.Values[i] = ec._PlanPayments_createdBy(ctx, field, obj)
+
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&invalids, 1)
+			}
+		case "createdDts":
+
+			out.Values[i] = ec._PlanPayments_createdDts(ctx, field, obj)
+
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&invalids, 1)
+			}
+		case "modifiedBy":
+
+			out.Values[i] = ec._PlanPayments_modifiedBy(ctx, field, obj)
+
+		case "modifiedDts":
+
+			out.Values[i] = ec._PlanPayments_modifiedDts(ctx, field, obj)
+
+		case "status":
+
+			out.Values[i] = ec._PlanPayments_status(ctx, field, obj)
+
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&invalids, 1)
+			}
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch()
+	if invalids > 0 {
+		return graphql.Null
+	}
+	return out
+}
+
 var queryImplementors = []string{"Query"}
 
 func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) graphql.Marshaler {
@@ -36076,6 +40515,29 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 					}
 				}()
 				res = ec._Query_planCollaboratorByID(ctx, field)
+				if res == graphql.Null {
+					atomic.AddUint32(&invalids, 1)
+				}
+				return res
+			}
+
+			rrm := func(ctx context.Context) graphql.Marshaler {
+				return ec.OperationContext.RootResolverMiddleware(ctx, innerFunc)
+			}
+
+			out.Concurrently(i, func() graphql.Marshaler {
+				return rrm(innerCtx)
+			})
+		case "planPayments":
+			field := field
+
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Query_planPayments(ctx, field)
 				if res == graphql.Null {
 					atomic.AddUint32(&invalids, 1)
 				}
@@ -36698,6 +41160,22 @@ func (ec *executionContext) marshalNAlternativePaymentModelType2ᚕgithubᚗcom�
 	return ret
 }
 
+func (ec *executionContext) unmarshalNAnticipatedPaymentFrequencyType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐAnticipatedPaymentFrequencyType(ctx context.Context, v interface{}) (models.AnticipatedPaymentFrequencyType, error) {
+	tmp, err := graphql.UnmarshalString(v)
+	res := models.AnticipatedPaymentFrequencyType(tmp)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalNAnticipatedPaymentFrequencyType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐAnticipatedPaymentFrequencyType(ctx context.Context, sel ast.SelectionSet, v models.AnticipatedPaymentFrequencyType) graphql.Marshaler {
+	res := graphql.MarshalString(string(v))
+	if res == graphql.Null {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
+	}
+	return res
+}
+
 func (ec *executionContext) unmarshalNAuthorityAllowance2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐAuthorityAllowance(ctx context.Context, v interface{}) (model.AuthorityAllowance, error) {
 	var res model.AuthorityAllowance
 	err := res.UnmarshalGQL(v)
@@ -37143,6 +41621,22 @@ func (ec *executionContext) marshalNCcmInvolvmentType2ᚕgithubᚗcomᚋcmsgov�
 	}
 
 	return ret
+}
+
+func (ec *executionContext) unmarshalNClaimsBasedPayType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐClaimsBasedPayType(ctx context.Context, v interface{}) (models.ClaimsBasedPayType, error) {
+	tmp, err := graphql.UnmarshalString(v)
+	res := models.ClaimsBasedPayType(tmp)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalNClaimsBasedPayType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐClaimsBasedPayType(ctx context.Context, sel ast.SelectionSet, v models.ClaimsBasedPayType) graphql.Marshaler {
+	res := graphql.MarshalString(string(v))
+	if res == graphql.Null {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
+	}
+	return res
 }
 
 func (ec *executionContext) unmarshalNContractorSupportType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐContractorSupportType(ctx context.Context, v interface{}) (model.ContractorSupportType, error) {
@@ -37665,6 +42159,22 @@ func (ec *executionContext) marshalNExistingModel2ᚖgithubᚗcomᚋcmsgovᚋmin
 		return graphql.Null
 	}
 	return ec._ExistingModel(ctx, sel, v)
+}
+
+func (ec *executionContext) unmarshalNFundingSource2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFundingSource(ctx context.Context, v interface{}) (models.FundingSource, error) {
+	tmp, err := graphql.UnmarshalString(v)
+	res := models.FundingSource(tmp)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalNFundingSource2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFundingSource(ctx context.Context, sel ast.SelectionSet, v models.FundingSource) graphql.Marshaler {
+	res := graphql.MarshalString(string(v))
+	if res == graphql.Null {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
+	}
+	return res
 }
 
 func (ec *executionContext) unmarshalNGcCollectBidsType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐGcCollectBidsType(ctx context.Context, v interface{}) (model.GcCollectBidsType, error) {
@@ -38355,6 +42865,16 @@ func (ec *executionContext) marshalNMonitoringFileType2ᚕgithubᚗcomᚋcmsgov�
 	}
 
 	return ret
+}
+
+func (ec *executionContext) unmarshalNNonClaimsBasedPayType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐNonClaimsBasedPayType(ctx context.Context, v interface{}) (model.NonClaimsBasedPayType, error) {
+	var res model.NonClaimsBasedPayType
+	err := res.UnmarshalGQL(v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalNNonClaimsBasedPayType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐNonClaimsBasedPayType(ctx context.Context, sel ast.SelectionSet, v model.NonClaimsBasedPayType) graphql.Marshaler {
+	return v
 }
 
 func (ec *executionContext) unmarshalNOelClaimsBasedMeasuresType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐOelClaimsBasedMeasuresType(ctx context.Context, v interface{}) (model.OelClaimsBasedMeasuresType, error) {
@@ -39919,6 +44439,38 @@ func (ec *executionContext) marshalNParticipantsType2ᚕgithubᚗcomᚋcmsgovᚋ
 	return ret
 }
 
+func (ec *executionContext) unmarshalNPayRecipient2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPayRecipient(ctx context.Context, v interface{}) (models.PayRecipient, error) {
+	tmp, err := graphql.UnmarshalString(v)
+	res := models.PayRecipient(tmp)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalNPayRecipient2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPayRecipient(ctx context.Context, sel ast.SelectionSet, v models.PayRecipient) graphql.Marshaler {
+	res := graphql.MarshalString(string(v))
+	if res == graphql.Null {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
+	}
+	return res
+}
+
+func (ec *executionContext) unmarshalNPayType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPayType(ctx context.Context, v interface{}) (models.PayType, error) {
+	tmp, err := graphql.UnmarshalString(v)
+	res := models.PayType(tmp)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalNPayType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPayType(ctx context.Context, sel ast.SelectionSet, v models.PayType) graphql.Marshaler {
+	res := graphql.MarshalString(string(v))
+	if res == graphql.Null {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
+	}
+	return res
+}
+
 func (ec *executionContext) marshalNPlanBasics2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanBasics(ctx context.Context, sel ast.SelectionSet, v models.PlanBasics) graphql.Marshaler {
 	return ec._PlanBasics(ctx, sel, &v)
 }
@@ -40254,6 +44806,24 @@ func (ec *executionContext) marshalNPlanParticipantsAndProviders2ᚖgithubᚗcom
 }
 
 func (ec *executionContext) unmarshalNPlanParticipantsAndProvidersChanges2map(ctx context.Context, v interface{}) (map[string]interface{}, error) {
+	return v.(map[string]interface{}), nil
+}
+
+func (ec *executionContext) marshalNPlanPayments2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanPayments(ctx context.Context, sel ast.SelectionSet, v models.PlanPayments) graphql.Marshaler {
+	return ec._PlanPayments(ctx, sel, &v)
+}
+
+func (ec *executionContext) marshalNPlanPayments2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanPayments(ctx context.Context, sel ast.SelectionSet, v *models.PlanPayments) graphql.Marshaler {
+	if v == nil {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
+		return graphql.Null
+	}
+	return ec._PlanPayments(ctx, sel, v)
+}
+
+func (ec *executionContext) unmarshalNPlanPaymentsChanges2map(ctx context.Context, v interface{}) (map[string]interface{}, error) {
 	return v.(map[string]interface{}), nil
 }
 
@@ -41594,6 +46164,73 @@ func (ec *executionContext) marshalOAlternativePaymentModelType2ᚕgithubᚗcom�
 	return ret
 }
 
+func (ec *executionContext) unmarshalOAnticipatedPaymentFrequencyType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐAnticipatedPaymentFrequencyTypeᚄ(ctx context.Context, v interface{}) ([]models.AnticipatedPaymentFrequencyType, error) {
+	if v == nil {
+		return nil, nil
+	}
+	var vSlice []interface{}
+	if v != nil {
+		vSlice = graphql.CoerceList(v)
+	}
+	var err error
+	res := make([]models.AnticipatedPaymentFrequencyType, len(vSlice))
+	for i := range vSlice {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
+		res[i], err = ec.unmarshalNAnticipatedPaymentFrequencyType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐAnticipatedPaymentFrequencyType(ctx, vSlice[i])
+		if err != nil {
+			return nil, err
+		}
+	}
+	return res, nil
+}
+
+func (ec *executionContext) marshalOAnticipatedPaymentFrequencyType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐAnticipatedPaymentFrequencyTypeᚄ(ctx context.Context, sel ast.SelectionSet, v []models.AnticipatedPaymentFrequencyType) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalNAnticipatedPaymentFrequencyType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐAnticipatedPaymentFrequencyType(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
+}
+
 func (ec *executionContext) unmarshalOAuthorityAllowance2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐAuthorityAllowanceᚄ(ctx context.Context, v interface{}) ([]model.AuthorityAllowance, error) {
 	if v == nil {
 		return nil, nil
@@ -42039,6 +46676,90 @@ func (ec *executionContext) marshalOCcmInvolvmentType2ᚕgithubᚗcomᚋcmsgov�
 	return ret
 }
 
+func (ec *executionContext) unmarshalOClaimsBasedPayType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐClaimsBasedPayTypeᚄ(ctx context.Context, v interface{}) ([]models.ClaimsBasedPayType, error) {
+	if v == nil {
+		return nil, nil
+	}
+	var vSlice []interface{}
+	if v != nil {
+		vSlice = graphql.CoerceList(v)
+	}
+	var err error
+	res := make([]models.ClaimsBasedPayType, len(vSlice))
+	for i := range vSlice {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
+		res[i], err = ec.unmarshalNClaimsBasedPayType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐClaimsBasedPayType(ctx, vSlice[i])
+		if err != nil {
+			return nil, err
+		}
+	}
+	return res, nil
+}
+
+func (ec *executionContext) marshalOClaimsBasedPayType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐClaimsBasedPayTypeᚄ(ctx context.Context, sel ast.SelectionSet, v []models.ClaimsBasedPayType) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalNClaimsBasedPayType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐClaimsBasedPayType(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
+}
+
+func (ec *executionContext) unmarshalOComplexityCalculationLevelType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐComplexityCalculationLevelType(ctx context.Context, v interface{}) (*models.ComplexityCalculationLevelType, error) {
+	if v == nil {
+		return nil, nil
+	}
+	tmp, err := graphql.UnmarshalString(v)
+	res := models.ComplexityCalculationLevelType(tmp)
+	return &res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalOComplexityCalculationLevelType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐComplexityCalculationLevelType(ctx context.Context, sel ast.SelectionSet, v *models.ComplexityCalculationLevelType) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	res := graphql.MarshalString(string(*v))
+	return res
+}
+
 func (ec *executionContext) unmarshalOConfidenceType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐConfidenceType(ctx context.Context, v interface{}) (*models.ConfidenceType, error) {
 	if v == nil {
 		return nil, nil
@@ -42474,6 +47195,73 @@ func (ec *executionContext) marshalOFrequencyType2ᚖgithubᚗcomᚋcmsgovᚋmin
 	}
 	res := graphql.MarshalString(string(*v))
 	return res
+}
+
+func (ec *executionContext) unmarshalOFundingSource2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFundingSourceᚄ(ctx context.Context, v interface{}) ([]models.FundingSource, error) {
+	if v == nil {
+		return nil, nil
+	}
+	var vSlice []interface{}
+	if v != nil {
+		vSlice = graphql.CoerceList(v)
+	}
+	var err error
+	res := make([]models.FundingSource, len(vSlice))
+	for i := range vSlice {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
+		res[i], err = ec.unmarshalNFundingSource2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFundingSource(ctx, vSlice[i])
+		if err != nil {
+			return nil, err
+		}
+	}
+	return res, nil
+}
+
+func (ec *executionContext) marshalOFundingSource2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFundingSourceᚄ(ctx context.Context, sel ast.SelectionSet, v []models.FundingSource) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalNFundingSource2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFundingSource(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
 }
 
 func (ec *executionContext) unmarshalOGcCollectBidsType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐGcCollectBidsTypeᚄ(ctx context.Context, v interface{}) ([]model.GcCollectBidsType, error) {
@@ -43098,6 +47886,73 @@ func (ec *executionContext) marshalOMonitoringFileType2ᚕgithubᚗcomᚋcmsgov�
 				defer wg.Done()
 			}
 			ret[i] = ec.marshalNMonitoringFileType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐMonitoringFileType(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
+}
+
+func (ec *executionContext) unmarshalONonClaimsBasedPayType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐNonClaimsBasedPayTypeᚄ(ctx context.Context, v interface{}) ([]model.NonClaimsBasedPayType, error) {
+	if v == nil {
+		return nil, nil
+	}
+	var vSlice []interface{}
+	if v != nil {
+		vSlice = graphql.CoerceList(v)
+	}
+	var err error
+	res := make([]model.NonClaimsBasedPayType, len(vSlice))
+	for i := range vSlice {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
+		res[i], err = ec.unmarshalNNonClaimsBasedPayType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐNonClaimsBasedPayType(ctx, vSlice[i])
+		if err != nil {
+			return nil, err
+		}
+	}
+	return res, nil
+}
+
+func (ec *executionContext) marshalONonClaimsBasedPayType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐNonClaimsBasedPayTypeᚄ(ctx context.Context, sel ast.SelectionSet, v []model.NonClaimsBasedPayType) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalNNonClaimsBasedPayType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐNonClaimsBasedPayType(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -44606,6 +49461,140 @@ func (ec *executionContext) marshalOParticipantsType2ᚕgithubᚗcomᚋcmsgovᚋ
 				defer wg.Done()
 			}
 			ret[i] = ec.marshalNParticipantsType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐParticipantsType(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
+}
+
+func (ec *executionContext) unmarshalOPayRecipient2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPayRecipientᚄ(ctx context.Context, v interface{}) ([]models.PayRecipient, error) {
+	if v == nil {
+		return nil, nil
+	}
+	var vSlice []interface{}
+	if v != nil {
+		vSlice = graphql.CoerceList(v)
+	}
+	var err error
+	res := make([]models.PayRecipient, len(vSlice))
+	for i := range vSlice {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
+		res[i], err = ec.unmarshalNPayRecipient2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPayRecipient(ctx, vSlice[i])
+		if err != nil {
+			return nil, err
+		}
+	}
+	return res, nil
+}
+
+func (ec *executionContext) marshalOPayRecipient2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPayRecipientᚄ(ctx context.Context, sel ast.SelectionSet, v []models.PayRecipient) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalNPayRecipient2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPayRecipient(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
+}
+
+func (ec *executionContext) unmarshalOPayType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPayTypeᚄ(ctx context.Context, v interface{}) ([]models.PayType, error) {
+	if v == nil {
+		return nil, nil
+	}
+	var vSlice []interface{}
+	if v != nil {
+		vSlice = graphql.CoerceList(v)
+	}
+	var err error
+	res := make([]models.PayType, len(vSlice))
+	for i := range vSlice {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
+		res[i], err = ec.unmarshalNPayType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPayType(ctx, vSlice[i])
+		if err != nil {
+			return nil, err
+		}
+	}
+	return res, nil
+}
+
+func (ec *executionContext) marshalOPayType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPayTypeᚄ(ctx context.Context, sel ast.SelectionSet, v []models.PayType) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalNPayType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPayType(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
