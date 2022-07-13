@@ -109,14 +109,14 @@ const FundingSource = () => {
     fundingSourceTrustFund: fundingSourceTrustFund ?? '',
     fundingSourceOther: fundingSourceOther ?? '',
     fundingSourceNote: fundingSourceNote ?? '',
-    fundingSourceR: fundingSourceR ?? null,
+    fundingSourceR: fundingSourceR ?? [],
     fundingSourceRTrustFund: fundingSourceRTrustFund ?? '',
     fundingSourceROther: fundingSourceROther ?? '',
     fundingSourceRNote: fundingSourceRNote ?? '',
-    payRecipients: payRecipients ?? null,
+    payRecipients: payRecipients ?? [],
     payRecipientsOtherSpecification: payRecipientsOtherSpecification ?? '',
     payRecipientsNote: payRecipientsNote ?? '',
-    payType: payType ?? null,
+    payType: payType ?? [],
     payTypeNote: payTypeNote ?? ''
   };
 
@@ -292,6 +292,105 @@ const FundingSource = () => {
                                             id="payment-funding-source-other"
                                             maxLength={50}
                                             name="fundingSourceOther"
+                                          />
+                                        </FieldGroup>
+                                      )}
+                                  </Fragment>
+                                );
+                              })}
+                          </>
+                        )}
+                      />
+
+                      <FieldArray
+                        name="fundingSourceR"
+                        render={arrayHelpers => (
+                          <>
+                            <legend className="usa-label maxw-none">
+                              {t('reconciliation')}
+                            </legend>
+                            <FieldErrorMsg>
+                              {flatErrors.fundingSourceR}
+                            </FieldErrorMsg>
+
+                            {Object.keys(FundingSourceEnum)
+                              .sort(sortOtherEnum)
+                              .map(type => {
+                                return (
+                                  <Fragment key={type}>
+                                    <Field
+                                      as={CheckboxField}
+                                      id={`payment-funding-source-reconciliation-${type}`}
+                                      name="fundingSourceR"
+                                      label={translateSourceOptions(type)}
+                                      value={type}
+                                      checked={values.fundingSourceR?.includes(
+                                        type as FundingSourceEnum
+                                      )}
+                                      onChange={(
+                                        e: React.ChangeEvent<HTMLInputElement>
+                                      ) => {
+                                        if (e.target.checked) {
+                                          arrayHelpers.push(e.target.value);
+                                        } else {
+                                          const idx = values.fundingSourceR!.indexOf(
+                                            e.target.value as FundingSourceEnum
+                                          );
+                                          arrayHelpers.remove(idx);
+                                        }
+                                      }}
+                                    />
+                                    {type === 'TRUST_FUND' &&
+                                      values.fundingSourceR.includes(
+                                        type as FundingSourceEnum
+                                      ) && (
+                                        <FieldGroup
+                                          className="margin-left-4 margin-top-2 margin-bottom-4"
+                                          error={
+                                            !!flatErrors.fundingSourceRTrustFund
+                                          }
+                                        >
+                                          <Label
+                                            htmlFor="payment-funding-source-reconciliation-trust-fund"
+                                            className="text-normal"
+                                          >
+                                            {t('whichType')}
+                                          </Label>
+                                          <FieldErrorMsg>
+                                            {flatErrors.fundingSourceRTrustFund}
+                                          </FieldErrorMsg>
+                                          <Field
+                                            as={TextInput}
+                                            id="payment-funding-source-reconciliation-trust-fund"
+                                            maxLength={50}
+                                            name="fundingSourceRTrustFund"
+                                          />
+                                        </FieldGroup>
+                                      )}
+                                    {type === 'OTHER' &&
+                                      values.fundingSourceR?.includes(
+                                        type as FundingSourceEnum
+                                      ) && (
+                                        <FieldGroup
+                                          className="margin-left-4 margin-top-2 margin-bottom-4"
+                                          error={
+                                            !!flatErrors.fundingSourceROther
+                                          }
+                                        >
+                                          <Label
+                                            htmlFor="payment-funding-source-reconciliation-other"
+                                            className="text-normal"
+                                          >
+                                            {t('otherSourceOption')}
+                                          </Label>
+                                          <FieldErrorMsg>
+                                            {flatErrors.fundingSourceROther}
+                                          </FieldErrorMsg>
+                                          <Field
+                                            as={TextInput}
+                                            id="payment-funding-source-reconciliation-other"
+                                            maxLength={50}
+                                            name="fundingSourceROther"
                                           />
                                         </FieldGroup>
                                       )}
