@@ -110,7 +110,6 @@ export interface GetModelPlan_modelPlan_payments {
   __typename: "PlanPayments";
   id: UUID;
   createdBy: string;
-  createdDts: Time;
   modifiedBy: string | null;
   modifiedDts: Time | null;
   status: TaskStatus;
