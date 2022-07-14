@@ -40,6 +40,8 @@ const payments = {
   otherPayOption: 'Please specify who you will pay.',
   modelAffect: 'Does the model affect Medicare Secondary Payer claims?',
   whatWillYouPay: 'What will you pay?',
+  whatWillYouPaySubCopy:
+    'If you select claims-based payments or non-claims-based payments, there will be additional questions to answer.',
   whatWillYouPayOptions: {
     claims: 'Claims-Based Payments',
     nonClaims: 'Non-Claims-Based Payments',

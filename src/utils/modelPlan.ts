@@ -1050,3 +1050,13 @@ export const sortOtherEnum = (a: string, b: string) => {
   }
   return 0;
 };
+
+export const sortPayTypeEnums = (a: string, b: string) => {
+  if (a < b || b === 'GRANTS') {
+    return -1;
+  }
+  if (a > b) {
+    return 1;
+  }
+  return 0;
+};

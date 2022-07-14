@@ -34,12 +34,15 @@ import { UpdatePaymentsVariables } from 'queries/Payments/types/UpdatePayments';
 import UpdatePayments from 'queries/Payments/UpdatePayments';
 import {
   FundingSource as FundingSourceEnum,
-  PayRecipient
+  PayRecipient,
+  PayType
 } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import {
   sortOtherEnum,
+  sortPayTypeEnums,
   translatePayRecipient,
+  translatePayType,
   translateSourceOptions
 } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
@@ -424,7 +427,7 @@ const FundingSource = () => {
                         render={arrayHelpers => (
                           <>
                             <legend className="usa-label maxw-none">
-                              {t('whoWillYouPay')}
+                              {t('whatWillYouPay')}
                             </legend>
                             <FieldErrorMsg>
                               {flatErrors.payRecipients}
@@ -497,6 +500,54 @@ const FundingSource = () => {
                         id="payment-pay-recipients-note"
                         field="payRecipientsNote"
                       />
+
+                      <FieldArray
+                        name="payType"
+                        render={arrayHelpers => (
+                          <>
+                            <legend className="usa-label maxw-none">
+                              {t('whatWillYouPay')}
+                            </legend>
+                            <p className="text-base margin-y-1 margin-top-2">
+                              {t('whatWillYouPaySubCopy')}
+                            </p>
+                            <FieldErrorMsg>{flatErrors.payType}</FieldErrorMsg>
+
+                            {Object.keys(PayType)
+                              .sort(sortPayTypeEnums)
+                              .map(type => {
+                                return (
+                                  <Fragment key={type}>
+                                    <Field
+                                      as={CheckboxField}
+                                      id={`payment-pay-type-${type}`}
+                                      name="payType"
+                                      label={translatePayType(type)}
+                                      value={type}
+                                      checked={values.payType.includes(
+                                        type as PayType
+                                      )}
+                                      onChange={(
+                                        e: React.ChangeEvent<HTMLInputElement>
+                                      ) => {
+                                        if (e.target.checked) {
+                                          arrayHelpers.push(e.target.value);
+                                        } else {
+                                          const idx = values.payType.indexOf(
+                                            e.target.value as PayType
+                                          );
+                                          arrayHelpers.remove(idx);
+                                        }
+                                      }}
+                                    />
+                                  </Fragment>
+                                );
+                              })}
+                          </>
+                        )}
+                      />
+
+                      <AddNote id="payment-pay-type-note" field="payTypeNote" />
 
                       <div className="margin-top-6 margin-bottom-3">
                         <Button type="submit" onClick={() => setErrors({})}>
