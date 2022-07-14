@@ -7,17 +7,23 @@ import {
   BreadcrumbBar,
   BreadcrumbLink,
   Button,
+  Fieldset,
   Grid,
   GridContainer,
-  IconArrowBack
+  IconArrowBack,
+  Label,
+  Radio
 } from '@trussworks/react-uswds';
-import { Form, Formik, FormikProps } from 'formik';
+import { Field, Form, Formik, FormikProps } from 'formik';
 
+import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import AutoSave from 'components/shared/AutoSave';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
+import FieldErrorMsg from 'components/shared/FieldErrorMsg';
+import FieldGroup from 'components/shared/FieldGroup';
 import GetClaimsBasedPayment from 'queries/Payments/GetClaimsBasedPayment';
 import {
   GetClaimsBasedPayment as GetClaimsBasedPaymentType,
@@ -159,7 +165,13 @@ const ClaimsBasedPayment = () => {
         innerRef={formikRef}
       >
         {(formikProps: FormikProps<ClaimsBasedPaymentFormType>) => {
-          const { errors, handleSubmit, setErrors, values } = formikProps;
+          const {
+            errors,
+            handleSubmit,
+            setFieldValue,
+            setErrors,
+            values
+          } = formikProps;
           const flatErrors = flattenErrors(errors);
           return (
             <>
@@ -190,6 +202,72 @@ const ClaimsBasedPayment = () => {
                         handleSubmit(e);
                       }}
                     >
+                      <PageHeading
+                        headingLevel="h3"
+                        className="margin-bottom-3"
+                      >
+                        {t('claimSpecificQuestions')}
+                      </PageHeading>
+
+                      <FieldGroup
+                        scrollElement="payment-provider-exclusion-ffs-system"
+                        error={
+                          !!flatErrors.shouldAnyProvidersExcludedFFSSystems
+                        }
+                        className="margin-top-4"
+                      >
+                        <Label
+                          htmlFor="payment-provider-exclusion-ffs-system"
+                          className="maxw-none"
+                        >
+                          {t('excludedFromPayment')}
+                        </Label>
+                        <FieldErrorMsg>
+                          {flatErrors.shouldAnyProvidersExcludedFFSSystems}
+                        </FieldErrorMsg>
+                        <Fieldset>
+                          <Field
+                            as={Radio}
+                            id="payment-provider-exclusion-ffs-system-Yes"
+                            name="payment-provider-exclusion-ffs-system"
+                            label={h('yes')}
+                            value="YES"
+                            checked={
+                              values.shouldAnyProvidersExcludedFFSSystems ===
+                              true
+                            }
+                            onChange={() => {
+                              setFieldValue(
+                                'shouldAnyProvidersExcludedFFSSystems',
+                                true
+                              );
+                            }}
+                          />
+                          <Field
+                            as={Radio}
+                            id="payment-provider-exclusion-ffs-system-No"
+                            name="payment-provider-exclusion-ffs-system"
+                            label={h('no')}
+                            value="FALSE"
+                            checked={
+                              values.shouldAnyProvidersExcludedFFSSystems ===
+                              false
+                            }
+                            onChange={() => {
+                              setFieldValue(
+                                'shouldAnyProvidersExcludedFFSSystems',
+                                false
+                              );
+                            }}
+                          />
+                        </Fieldset>
+                      </FieldGroup>
+
+                      <AddNote
+                        id="payment-provider-exclusion-ffs-system-note"
+                        field="shouldAnyProviderExcludedFFSSystemsNote"
+                      />
+
                       <div className="margin-top-6 margin-bottom-3">
                         <Button type="submit" onClick={() => setErrors({})}>
                           {h('next')}
