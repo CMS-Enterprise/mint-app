@@ -1,4 +1,4 @@
-import React, { Fragment, useRef } from 'react';
+import React, { Fragment, useRef, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
@@ -52,6 +52,7 @@ const FundingSource = () => {
   const { t: h } = useTranslation('draftModelPlan');
   const { modelID } = useParams<{ modelID: string }>();
 
+  const [totalPages, setTotalPages] = useState(3);
   const formikRef = useRef<FormikProps<FundingFormType>>(null);
   const history = useHistory();
 
@@ -111,6 +112,31 @@ const FundingSource = () => {
       .catch(errors => {
         formikRef?.current?.setErrors(errors);
       });
+  };
+
+  const handleCheckingPayType = (key: string) => {
+    switch (key) {
+      case 'CLAIMS_BASED_PAYMENTS':
+        setTotalPages(totalPages + 2);
+        break;
+      case 'NON_CLAIMS_BASED_PAYMENTS':
+        setTotalPages(totalPages + 1);
+        break;
+      default:
+        setTotalPages(3);
+    }
+  };
+  const handleUncheckingPayType = (key: string) => {
+    switch (key) {
+      case 'CLAIMS_BASED_PAYMENTS':
+        setTotalPages(totalPages - 2);
+        break;
+      case 'NON_CLAIMS_BASED_PAYMENTS':
+        setTotalPages(totalPages - 1);
+        break;
+      default:
+        setTotalPages(3);
+    }
   };
 
   const initialValues: FundingFormType = {
@@ -526,11 +552,18 @@ const FundingSource = () => {
                                       ) => {
                                         if (e.target.checked) {
                                           arrayHelpers.push(e.target.value);
+                                          console.log(
+                                            `value: ${e.target.value}`
+                                          );
+                                          handleCheckingPayType(e.target.value);
                                         } else {
                                           const idx = values.payType.indexOf(
                                             e.target.value as PayType
                                           );
                                           arrayHelpers.remove(idx);
+                                          handleUncheckingPayType(
+                                            e.target.value
+                                          );
                                         }
                                       }}
                                     />
@@ -573,7 +606,11 @@ const FundingSource = () => {
           );
         }}
       </Formik>
-      <PageNumber currentPage={1} totalPages={3} className="margin-y-6" />
+      <PageNumber
+        currentPage={1}
+        totalPages={totalPages}
+        className="margin-y-6"
+      />
     </>
   );
 };
