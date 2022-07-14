@@ -62,6 +62,9 @@ describe('The Model Plan Participants and Providers Form', () => {
     cy.contains('button', 'Next').click();
 
     // Page - /participants-and-providers/participant-options
+
+    cy.wait(500);
+
     cy.get('#participants-and-providers-expected-participants')
       .invoke('val', 2345)
       .trigger('change')
@@ -96,6 +99,9 @@ describe('The Model Plan Participants and Providers Form', () => {
     cy.contains('button', 'Next').click();
 
     // Page - /participants-and-providers/communication
+
+    cy.wait(500);
+
     cy.get('#participants-and-providers-communication-method-IT_TOOL')
       .check({ force: true })
       .should('be.checked');
@@ -119,6 +125,9 @@ describe('The Model Plan Participants and Providers Form', () => {
     cy.contains('button', 'Next').click();
 
     // Page - /participants-and-providers/coordination
+
+    cy.wait(500);
+
     cy.get('#participants-and-providers-coordniate-work')
       .check({ force: true })
       .should('be.checked');
@@ -142,6 +151,9 @@ describe('The Model Plan Participants and Providers Form', () => {
     cy.contains('button', 'Next').click();
 
     // Page - /participants-and-providers/provider-options
+
+    cy.wait(500);
+
     cy.get('#participants-and-providers-additional-frequency-OTHER')
       .check({ force: true })
       .should('be.checked');

@@ -1,5 +1,5 @@
 import React, { Fragment, useRef } from 'react';
-import { Trans, useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
 import {
@@ -26,7 +26,8 @@ import TextAreaField from 'components/shared/TextAreaField';
 import GetLearning from 'queries/OpsEvalAndLearning/GetLearning';
 import {
   GetLearning as GetLearningType,
-  GetLearning_modelPlan_opsEvalAndLearning as GetLearningFormType
+  GetLearning_modelPlan_opsEvalAndLearning as GetLearningFormType,
+  GetLearningVariables
 } from 'queries/OpsEvalAndLearning/types/GetLearning';
 import { UpdatePlanOpsEvalAndLearningVariables } from 'queries/OpsEvalAndLearning/types/UpdatePlanOpsEvalAndLearning';
 import UpdatePlanOpsEvalAndLearning from 'queries/OpsEvalAndLearning/UpdatePlanOpsEvalAndLearning';
@@ -48,7 +49,10 @@ const Learning = () => {
   const formikRef = useRef<FormikProps<GetLearningFormType>>(null);
   const history = useHistory();
 
-  const { data, loading, error } = useQuery<GetLearningType>(GetLearning, {
+  const { data, loading, error } = useQuery<
+    GetLearningType,
+    GetLearningVariables
+  >(GetLearning, {
     variables: {
       id: modelID
     }
@@ -135,9 +139,7 @@ const Learning = () => {
         className="margin-top-0 margin-bottom-1 font-body-lg"
         data-testid="model-plan-name"
       >
-        <Trans i18nKey="modelPlanTaskList:subheading">
-          indexZero {modelName} indexTwo
-        </Trans>
+        {h('for')} {modelName}
       </p>
       <p className="margin-bottom-2 font-body-md line-height-sans-4">
         {h('helpText')}

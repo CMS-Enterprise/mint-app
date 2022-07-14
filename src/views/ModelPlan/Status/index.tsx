@@ -134,7 +134,7 @@ const Status = () => {
                         id="Status-Dropdown"
                         name="role"
                         value={values.status}
-                        onChange={(e: any) => {
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                           setFieldValue('status', e.target.value);
                         }}
                       >
