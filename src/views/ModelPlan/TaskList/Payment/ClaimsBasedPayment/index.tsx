@@ -25,6 +25,7 @@ import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import MultiSelect from 'components/shared/MultiSelect';
+import TextAreaField from 'components/shared/TextAreaField';
 import TextField from 'components/shared/TextField';
 import GetClaimsBasedPayment from 'queries/Payments/GetClaimsBasedPayment';
 import {
@@ -389,6 +390,93 @@ const ClaimsBasedPayment = () => {
                         <AddNote
                           id="payment-change-medicare-phyisican-fee-schedule-note"
                           field="changesMedicarePhysicianFeeScheduleNote"
+                        />
+                      </FieldGroup>
+
+                      <FieldGroup
+                        scrollElement="payment-affects-medicare-secondary-payer-claims"
+                        error={!!flatErrors.affectsMedicareSecondaryPayerClaims}
+                        className="margin-top-4"
+                      >
+                        <Label
+                          htmlFor="payment-affects-medicare-secondary-payer-claims"
+                          className="maxw-none"
+                        >
+                          {t('affectMedicareSecondaryPayerClaim')}
+                        </Label>
+                        <FieldErrorMsg>
+                          {flatErrors.affectsMedicareSecondaryPayerClaims}
+                        </FieldErrorMsg>
+                        <Fieldset>
+                          <Field
+                            as={Radio}
+                            id="payment-affects-medicare-secondary-payer-claims-Yes"
+                            name="payment-affects-medicare-secondary-payer-claims"
+                            label={h('yes')}
+                            value="YES"
+                            checked={
+                              values.affectsMedicareSecondaryPayerClaims ===
+                              true
+                            }
+                            onChange={() => {
+                              setFieldValue(
+                                'affectsMedicareSecondaryPayerClaims',
+                                true
+                              );
+                            }}
+                          />
+                          {values.affectsMedicareSecondaryPayerClaims && (
+                            <FieldGroup
+                              className="margin-left-4 margin-y-1"
+                              scrollElement="affectsMedicareSecondaryPayerClaimsHow"
+                              error={
+                                !!flatErrors.affectsMedicareSecondaryPayerClaimsHow
+                              }
+                            >
+                              <Label
+                                htmlFor="payment-affects-medicare-secondary-payer-claims-how"
+                                className="text-normal"
+                              >
+                                {h('howSo')}
+                              </Label>
+                              <FieldErrorMsg>
+                                {
+                                  flatErrors.affectsMedicareSecondaryPayerClaimsHow
+                                }
+                              </FieldErrorMsg>
+                              <Field
+                                as={TextAreaField}
+                                className="height-15"
+                                error={
+                                  flatErrors.affectsMedicareSecondaryPayerClaimsHow
+                                }
+                                id="payment-affects-medicare-secondary-payer-claims-how"
+                                data-testid="payment-affects-medicare-secondary-payer-claims-how"
+                                name="payment-affects-medicare-secondary-payer-claims-how"
+                              />
+                            </FieldGroup>
+                          )}
+                          <Field
+                            as={Radio}
+                            id="payment-affects-medicare-secondary-payer-claims-No"
+                            name="payment-affects-medicare-secondary-payer-claims"
+                            label={h('no')}
+                            value="FALSE"
+                            checked={
+                              values.affectsMedicareSecondaryPayerClaims ===
+                              false
+                            }
+                            onChange={() => {
+                              setFieldValue(
+                                'affectsMedicareSecondaryPayerClaims',
+                                false
+                              );
+                            }}
+                          />
+                        </Fieldset>
+                        <AddNote
+                          id="payment-affects-medicare-secondary-payer-claims-note"
+                          field="affectsMedicareSecondaryPayerClaimsNote"
                         />
                       </FieldGroup>
 
