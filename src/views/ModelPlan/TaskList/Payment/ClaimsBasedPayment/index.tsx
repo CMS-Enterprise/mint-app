@@ -93,7 +93,9 @@ const ClaimsBasedPayment = () => {
       .then(response => {
         if (!response?.errors) {
           if (redirect === 'next') {
-            history.push(`/models/${modelID}/task-list/payment/page-2`);
+            history.push(
+              `/models/${modelID}/task-list/payment/anticipating-dependencies`
+            );
           } else if (redirect === 'back') {
             history.push(`/models/${modelID}/task-list/payment`);
           } else if (redirect === 'task-list') {
