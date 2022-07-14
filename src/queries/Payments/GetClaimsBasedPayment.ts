@@ -7,7 +7,9 @@ export default gql`
       modelName
       payments {
         id
+        payType
         payClaims
+        payClaimsNote
         payClaimsOther
         shouldAnyProvidersExcludedFFSSystems
         shouldAnyProviderExcludedFFSSystemsNote
