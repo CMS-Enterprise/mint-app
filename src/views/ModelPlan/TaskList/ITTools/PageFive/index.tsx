@@ -29,7 +29,7 @@ import GetITToolsPageFive from 'queries/ITTools/GetITToolsPageFive';
 import {
   GetITToolPageFive as GetITToolPageFiveType,
   GetITToolPageFive_modelPlan_itTools as ITToolsPageFiveFormType,
-  GetITToolPageFive_modelPlan_opsEvalAndLearning as OpsEvalAndLearningFormType,
+  GetITToolPageFive_modelPlan_opsEvalAndLearning as OpsEvalAndLearningType,
   GetITToolPageFiveVariables
 } from 'queries/ITTools/types/GetITToolPageFive';
 import { UpdatePlanItToolsVariables } from 'queries/ITTools/types/UpdatePlanItTools';
@@ -66,7 +66,7 @@ const initialFormValues: ITToolsPageFiveFormType = {
   oelCollectDataNote: ''
 };
 
-const initialOpsEvalAndLearningValues: OpsEvalAndLearningFormType = {
+const initialOpsEvalAndLearningValues: OpsEvalAndLearningType = {
   __typename: 'PlanOpsEvalAndLearning',
   appealPerformance: null,
   appealFeedback: null,
@@ -81,7 +81,6 @@ const ITToolsPageFive = () => {
   const { t: o } = useTranslation('operationsEvaluationAndLearning');
   const { t: h } = useTranslation('draftModelPlan');
   const { modelID } = useParams<{ modelID: string }>();
-
   const formikRef = useRef<FormikProps<ITToolsPageFiveFormType>>(null);
   const history = useHistory();
 
@@ -94,11 +93,11 @@ const ITToolsPageFive = () => {
     }
   });
 
-  const modelName = data?.modelPlan?.modelName || '';
+  const modelPlan = data?.modelPlan;
+  const modelName = modelPlan?.modelName;
+  const id = modelPlan?.itTools?.id;
 
-  const id = data?.modelPlan?.itTools?.id || '';
-
-  const itToolsData = data?.modelPlan?.itTools || initialFormValues;
+  const itToolsData = modelPlan?.itTools || initialFormValues;
 
   const {
     appealPerformance,
@@ -107,7 +106,7 @@ const ITToolsPageFive = () => {
     appealOther,
     evaluationApproaches,
     dataNeededForMonitoring
-  } = data?.modelPlan?.opsEvalAndLearning || initialOpsEvalAndLearningValues;
+  } = modelPlan?.opsEvalAndLearning || initialOpsEvalAndLearningValues;
 
   const [update] = useMutation<UpdatePlanItToolsVariables>(UpdatePlanITTools);
 
@@ -138,7 +137,7 @@ const ITToolsPageFive = () => {
       });
   };
 
-  if ((!loading && error) || (!loading && !data?.modelPlan)) {
+  if ((!loading && error) || (!loading && !modelPlan)) {
     return <NotFoundPartial />;
   }
 

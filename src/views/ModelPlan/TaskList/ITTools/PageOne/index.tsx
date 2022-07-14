@@ -28,7 +28,7 @@ import FieldGroup from 'components/shared/FieldGroup';
 import GetITToolsPageOne from 'queries/ITTools/GetITToolsPageOne';
 import {
   GetITToolPageOne as GetITToolsPageOneType,
-  GetITToolPageOne_modelPlan_generalCharacteristics as GeneralCharacteristicsFormType,
+  GetITToolPageOne_modelPlan_generalCharacteristics as GeneralCharacteristicsType,
   GetITToolPageOne_modelPlan_itTools as ITToolsPageOneFormType,
   GetITToolPageOneVariables
 } from 'queries/ITTools/types/GetITToolPageOne';
@@ -63,7 +63,7 @@ const initialFormValues: ITToolsPageOneFormType = {
   gcUpdateContractNote: ''
 };
 
-const initialCharacteristicValues: GeneralCharacteristicsFormType = {
+const initialCharacteristicValues: GeneralCharacteristicsType = {
   __typename: 'PlanGeneralCharacteristics',
   managePartCDEnrollment: null,
   collectPlanBids: null,
@@ -75,7 +75,6 @@ const ITToolsPageOne = () => {
   const { t: c } = useTranslation('generalCharacteristics');
   const { t: h } = useTranslation('draftModelPlan');
   const { modelID } = useParams<{ modelID: string }>();
-
   const formikRef = useRef<FormikProps<ITToolsPageOneFormType>>(null);
   const history = useHistory();
 
@@ -88,14 +87,14 @@ const ITToolsPageOne = () => {
     }
   });
 
-  const modelName = data?.modelPlan?.modelName || '';
+  const modelPlan = data?.modelPlan;
+  const modelName = modelPlan?.modelName;
+  const id = modelPlan?.itTools?.id;
 
-  const id = data?.modelPlan?.itTools?.id || '';
-
-  const itToolsData = data?.modelPlan?.itTools || initialFormValues;
+  const itToolsData = modelPlan?.itTools || initialFormValues;
 
   const { managePartCDEnrollment, collectPlanBids, planContactUpdated } =
-    data?.modelPlan?.generalCharacteristics || initialCharacteristicValues;
+    modelPlan?.generalCharacteristics || initialCharacteristicValues;
 
   const [update] = useMutation<UpdatePlanItToolsVariables>(UpdatePlanITTools);
 
@@ -124,7 +123,7 @@ const ITToolsPageOne = () => {
       });
   };
 
-  if ((!loading && error) || (!loading && !data?.modelPlan)) {
+  if ((!loading && error) || (!loading && !modelPlan)) {
     return <NotFoundPartial />;
   }
 

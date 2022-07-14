@@ -29,7 +29,7 @@ import GetITToolsPageThree from 'queries/ITTools/GetITToolsPageThree';
 import {
   GetITToolPageThree as GetITToolPageThreeType,
   GetITToolPageThree_modelPlan_itTools as ITToolsPageThreeFormType,
-  GetITToolPageThree_modelPlan_participantsAndProviders as ParticipantsAndProvidersFormType,
+  GetITToolPageThree_modelPlan_participantsAndProviders as ParticipantsAndProvidersType,
   GetITToolPageThreeVariables
 } from 'queries/ITTools/types/GetITToolPageThree';
 import { UpdatePlanItToolsVariables } from 'queries/ITTools/types/UpdatePlanItTools';
@@ -64,7 +64,7 @@ const initialFormValues: ITToolsPageThreeFormType = {
   bManageBeneficiaryOverlapNote: ''
 };
 
-const initialParticipantsAndProvidersValues: ParticipantsAndProvidersFormType = {
+const initialParticipantsAndProvidersValues: ParticipantsAndProvidersType = {
   __typename: 'PlanParticipantsAndProviders',
   communicationMethod: []
 };
@@ -75,7 +75,6 @@ const ITToolsPageThree = () => {
   const { t: b } = useTranslation('beneficiaries');
   const { t: h } = useTranslation('draftModelPlan');
   const { modelID } = useParams<{ modelID: string }>();
-
   const formikRef = useRef<FormikProps<ITToolsPageThreeFormType>>(null);
   const history = useHistory();
 
@@ -88,14 +87,14 @@ const ITToolsPageThree = () => {
     }
   });
 
-  const modelName = data?.modelPlan?.modelName || '';
+  const modelPlan = data?.modelPlan;
+  const modelName = modelPlan?.modelName;
+  const id = modelPlan?.itTools?.id;
 
-  const id = data?.modelPlan?.itTools?.id || '';
-
-  const itToolsData = data?.modelPlan?.itTools || initialFormValues;
+  const itToolsData = modelPlan?.itTools || initialFormValues;
 
   const { communicationMethod } =
-    data?.modelPlan?.participantsAndProviders ||
+    modelPlan?.participantsAndProviders ||
     initialParticipantsAndProvidersValues;
 
   const [update] = useMutation<UpdatePlanItToolsVariables>(UpdatePlanITTools);
@@ -127,7 +126,7 @@ const ITToolsPageThree = () => {
       });
   };
 
-  if ((!loading && error) || (!loading && !data?.modelPlan)) {
+  if ((!loading && error) || (!loading && !modelPlan)) {
     return <NotFoundPartial />;
   }
 

@@ -29,7 +29,7 @@ import GetITToolsPageSeven from 'queries/ITTools/GetITToolsPageSeven';
 import {
   GetITToolPageSeven as GetITToolPageSevenType,
   GetITToolPageSeven_modelPlan_itTools as ITToolsPageSevenFormType,
-  GetITToolPageSeven_modelPlan_opsEvalAndLearning as OpsEvalAndLearningFormType,
+  GetITToolPageSeven_modelPlan_opsEvalAndLearning as OpsEvalAndLearningType,
   GetITToolPageSevenVariables
 } from 'queries/ITTools/types/GetITToolPageSeven';
 import { UpdatePlanItToolsVariables } from 'queries/ITTools/types/UpdatePlanItTools';
@@ -66,7 +66,7 @@ const initialFormValues: ITToolsPageSevenFormType = {
   oelParticipantCollaborationNote: ''
 };
 
-const initialOpsEvalAndLearningValues: OpsEvalAndLearningFormType = {
+const initialOpsEvalAndLearningValues: OpsEvalAndLearningType = {
   __typename: 'PlanOpsEvalAndLearning',
   dataToSendParticicipants: [],
   modelLearningSystems: []
@@ -77,7 +77,6 @@ const ITToolsPageSeven = () => {
   const { t: o } = useTranslation('operationsEvaluationAndLearning');
   const { t: h } = useTranslation('draftModelPlan');
   const { modelID } = useParams<{ modelID: string }>();
-
   const formikRef = useRef<FormikProps<ITToolsPageSevenFormType>>(null);
   const history = useHistory();
 
@@ -90,14 +89,14 @@ const ITToolsPageSeven = () => {
     }
   });
 
-  const modelName = data?.modelPlan?.modelName || '';
+  const modelPlan = data?.modelPlan;
+  const modelName = modelPlan?.modelName;
+  const id = modelPlan?.itTools?.id;
 
-  const id = data?.modelPlan?.itTools?.id || '';
-
-  const itToolsData = data?.modelPlan?.itTools || initialFormValues;
+  const itToolsData = modelPlan?.itTools || initialFormValues;
 
   const { dataToSendParticicipants, modelLearningSystems } =
-    data?.modelPlan?.opsEvalAndLearning || initialOpsEvalAndLearningValues;
+    modelPlan?.opsEvalAndLearning || initialOpsEvalAndLearningValues;
 
   const [update] = useMutation<UpdatePlanItToolsVariables>(UpdatePlanITTools);
 
@@ -128,7 +127,7 @@ const ITToolsPageSeven = () => {
       });
   };
 
-  if ((!loading && error) || (!loading && !data?.modelPlan)) {
+  if ((!loading && error) || (!loading && !modelPlan)) {
     return <NotFoundPartial />;
   }
 

@@ -29,7 +29,7 @@ import GetITToolsPageNine from 'queries/ITTools/GetITToolsPageNine';
 import {
   GetITToolPageNine as GetITToolPageNineType,
   GetITToolPageNine_modelPlan_itTools as ITToolsPageNineFormType,
-  GetITToolPageNine_modelPlan_payments as PaymentsFormType,
+  GetITToolPageNine_modelPlan_payments as PaymentsType,
   GetITToolPageNineVariables
 } from 'queries/ITTools/types/GetITToolPageNine';
 import { UpdatePlanItToolsVariables } from 'queries/ITTools/types/UpdatePlanItTools';
@@ -67,7 +67,7 @@ const initialFormValues: ITToolsPageNineFormType = {
   pRecoverPaymentsNote: ''
 };
 
-const initialPaymentValues: PaymentsFormType = {
+const initialPaymentValues: PaymentsType = {
   __typename: 'PlanPayments',
   payType: [],
   nonClaimsPayments: [],
@@ -79,7 +79,6 @@ const ITToolsPageNine = () => {
   const { t: p } = useTranslation('payments');
   const { t: h } = useTranslation('draftModelPlan');
   const { modelID } = useParams<{ modelID: string }>();
-
   const formikRef = useRef<FormikProps<ITToolsPageNineFormType>>(null);
   const history = useHistory();
 
@@ -92,14 +91,14 @@ const ITToolsPageNine = () => {
     }
   });
 
-  const modelName = data?.modelPlan?.modelName || '';
+  const modelPlan = data?.modelPlan;
+  const modelName = modelPlan?.modelName;
+  const id = modelPlan?.itTools?.id;
 
-  const id = data?.modelPlan?.itTools?.id || '';
-
-  const itToolsData = data?.modelPlan?.itTools || initialFormValues;
+  const itToolsData = modelPlan?.itTools || initialFormValues;
 
   const { payType, nonClaimsPayments, willRecoverPayments } =
-    data?.modelPlan?.payments || initialPaymentValues;
+    modelPlan?.payments || initialPaymentValues;
 
   const [update] = useMutation<UpdatePlanItToolsVariables>(UpdatePlanITTools);
 
@@ -130,7 +129,7 @@ const ITToolsPageNine = () => {
       });
   };
 
-  if ((!loading && error) || (!loading && !data?.modelPlan)) {
+  if ((!loading && error) || (!loading && !modelPlan)) {
     return <NotFoundPartial />;
   }
 

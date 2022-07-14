@@ -29,8 +29,8 @@ import GetITToolsPageEight from 'queries/ITTools/GetITToolsPageEight';
 import {
   GetITToolPageEight as GetITToolPageEightType,
   GetITToolPageEight_modelPlan_itTools as ITToolsPageEightFormType,
-  GetITToolPageEight_modelPlan_opsEvalAndLearning as OpsEvalAndLearningFormType,
-  GetITToolPageEight_modelPlan_payments as PaymentsFormType,
+  GetITToolPageEight_modelPlan_opsEvalAndLearning as OpsEvalAndLearningType,
+  GetITToolPageEight_modelPlan_payments as PaymentsType,
   GetITToolPageEightVariables
 } from 'queries/ITTools/types/GetITToolPageEight';
 import { UpdatePlanItToolsVariables } from 'queries/ITTools/types/UpdatePlanItTools';
@@ -68,12 +68,12 @@ const initialFormValues: ITToolsPageEightFormType = {
   pInformFfsNote: ''
 };
 
-const initialOpsEvalAndLearningValues: OpsEvalAndLearningFormType = {
+const initialOpsEvalAndLearningValues: OpsEvalAndLearningType = {
   __typename: 'PlanOpsEvalAndLearning',
   modelLearningSystems: []
 };
 
-const initialPaymentValues: PaymentsFormType = {
+const initialPaymentValues: PaymentsType = {
   __typename: 'PlanPayments',
   payType: [],
   shouldAnyProvidersExcludedFFSSystems: null
@@ -85,7 +85,6 @@ const ITToolsPageEight = () => {
   const { t: p } = useTranslation('payments');
   const { t: h } = useTranslation('draftModelPlan');
   const { modelID } = useParams<{ modelID: string }>();
-
   const formikRef = useRef<FormikProps<ITToolsPageEightFormType>>(null);
   const history = useHistory();
 
@@ -98,17 +97,17 @@ const ITToolsPageEight = () => {
     }
   });
 
-  const modelName = data?.modelPlan?.modelName || '';
+  const modelPlan = data?.modelPlan;
+  const modelName = modelPlan?.modelName;
+  const id = modelPlan?.itTools?.id;
 
-  const id = data?.modelPlan?.itTools?.id || '';
-
-  const itToolsData = data?.modelPlan?.itTools || initialFormValues;
+  const itToolsData = modelPlan?.itTools || initialFormValues;
 
   const { modelLearningSystems } =
-    data?.modelPlan?.opsEvalAndLearning || initialOpsEvalAndLearningValues;
+    modelPlan?.opsEvalAndLearning || initialOpsEvalAndLearningValues;
 
   const { payType, shouldAnyProvidersExcludedFFSSystems } =
-    data?.modelPlan?.payments || initialPaymentValues;
+    modelPlan?.payments || initialPaymentValues;
 
   const [update] = useMutation<UpdatePlanItToolsVariables>(UpdatePlanITTools);
 
@@ -139,7 +138,7 @@ const ITToolsPageEight = () => {
       });
   };
 
-  if ((!loading && error) || (!loading && !data?.modelPlan)) {
+  if ((!loading && error) || (!loading && !modelPlan)) {
     return <NotFoundPartial />;
   }
 
