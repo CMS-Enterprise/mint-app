@@ -29,7 +29,7 @@ import GetITToolsPageEight from 'queries/ITTools/GetITToolsPageEight';
 import {
   GetITToolPageEight as GetITToolPageEightType,
   GetITToolPageEight_modelPlan_itTools as ITToolsPageEightFormType,
-  GetITToolPageEight_modelPlan_opsEvalAndLearning as OpsEvalAndLearnignFormType,
+  GetITToolPageEight_modelPlan_opsEvalAndLearning as OpsEvalAndLearningFormType,
   GetITToolPageEight_modelPlan_payments as PaymentsFormType,
   GetITToolPageEightVariables
 } from 'queries/ITTools/types/GetITToolPageEight';
@@ -54,6 +54,31 @@ import {
 } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
 
+const defaultFormValues: ITToolsPageEightFormType = {
+  __typename: 'PlanITTools',
+  id: '',
+  oelEducateBeneficiaries: [],
+  oelEducateBeneficiariesOther: '',
+  oelEducateBeneficiariesNote: '',
+  pMakeClaimsPayments: [],
+  pMakeClaimsPaymentsOther: '',
+  pMakeClaimsPaymentsNote: '',
+  pInformFfs: [],
+  pInformFfsOther: '',
+  pInformFfsNote: ''
+};
+
+const defaultOpsEvalAndLearningValues: OpsEvalAndLearningFormType = {
+  __typename: 'PlanOpsEvalAndLearning',
+  modelLearningSystems: []
+};
+
+const defaultPaymentValues: PaymentsFormType = {
+  __typename: 'PlanPayments',
+  payType: [],
+  shouldAnyProvidersExcludedFFSSystems: null
+};
+
 const ITToolsPageEight = () => {
   const { t } = useTranslation('itTools');
   const { t: o } = useTranslation('operationsEvaluationAndLearning');
@@ -73,26 +98,17 @@ const ITToolsPageEight = () => {
     }
   });
 
-  const {
-    id,
-    oelEducateBeneficiaries,
-    oelEducateBeneficiariesOther,
-    oelEducateBeneficiariesNote,
-    pMakeClaimsPayments,
-    pMakeClaimsPaymentsOther,
-    pMakeClaimsPaymentsNote,
-    pInformFfs,
-    pInformFfsOther,
-    pInformFfsNote
-  } = data?.modelPlan?.itTools || ({} as ITToolsPageEightFormType);
-
-  const { modelLearningSystems = [] } =
-    data?.modelPlan?.opsEvalAndLearning || ({} as OpsEvalAndLearnignFormType);
-
-  const { payType = [], shouldAnyProvidersExcludedFFSSystems } =
-    data?.modelPlan?.payments || ({} as PaymentsFormType);
-
   const modelName = data?.modelPlan?.modelName || '';
+
+  const id = data?.modelPlan?.itTools?.id || '';
+
+  const itToolsData = data?.modelPlan?.itTools || defaultFormValues;
+
+  const { modelLearningSystems } =
+    data?.modelPlan?.opsEvalAndLearning || defaultOpsEvalAndLearningValues;
+
+  const { payType, shouldAnyProvidersExcludedFFSSystems } =
+    data?.modelPlan?.payments || defaultPaymentValues;
 
   const [update] = useMutation<UpdatePlanItToolsVariables>(UpdatePlanITTools);
 
@@ -121,20 +137,6 @@ const ITToolsPageEight = () => {
       .catch(errors => {
         formikRef?.current?.setErrors(errors);
       });
-  };
-
-  const initialValues: ITToolsPageEightFormType = {
-    __typename: 'PlanITTools',
-    id: id ?? '',
-    oelEducateBeneficiaries: oelEducateBeneficiaries ?? [],
-    oelEducateBeneficiariesOther: oelEducateBeneficiariesOther ?? '',
-    oelEducateBeneficiariesNote: oelEducateBeneficiariesNote ?? '',
-    pMakeClaimsPayments: pMakeClaimsPayments ?? [],
-    pMakeClaimsPaymentsOther: pMakeClaimsPaymentsOther ?? '',
-    pMakeClaimsPaymentsNote: pMakeClaimsPaymentsNote ?? '',
-    pInformFfs: pInformFfs ?? [],
-    pInformFfsOther: pInformFfsOther ?? '',
-    pInformFfsNote: pInformFfsNote ?? ''
   };
 
   if ((!loading && error) || (!loading && !data?.modelPlan)) {
@@ -175,7 +177,7 @@ const ITToolsPageEight = () => {
       <AskAQuestion modelID={modelID} />
 
       <Formik
-        initialValues={initialValues}
+        initialValues={itToolsData}
         onSubmit={values => {
           handleFormSubmit(values, 'next');
         }}

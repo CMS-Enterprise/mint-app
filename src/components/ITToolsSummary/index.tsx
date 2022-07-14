@@ -5,7 +5,7 @@ import classNames from 'classnames';
 
 import UswdsReactLink from 'components/LinkWrapper';
 
-type ITToolsSummaryPropType = {
+interface ITToolsSummaryPropType {
   className?: string;
   answered: boolean;
   needsTool: boolean;
@@ -14,7 +14,7 @@ type ITToolsSummaryPropType = {
   options?: string[];
   redirect: string;
   subtext?: string;
-};
+}
 
 const ITToolsSummary = ({
   className,

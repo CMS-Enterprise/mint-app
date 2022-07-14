@@ -16,7 +16,7 @@ export interface GetITToolPageEight_modelPlan_opsEvalAndLearning {
 
 export interface GetITToolPageEight_modelPlan_payments {
   __typename: "PlanPayments";
-  payType: PayType[] | null;
+  payType: PayType[];
   shouldAnyProvidersExcludedFFSSystems: boolean | null;
 }
 

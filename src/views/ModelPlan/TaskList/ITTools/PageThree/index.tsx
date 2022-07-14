@@ -50,6 +50,25 @@ import {
 } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
 
+const defaultFormValues: ITToolsPageThreeFormType = {
+  __typename: 'PlanITTools',
+  id: '',
+  ppCommunicateWithParticipant: [],
+  ppCommunicateWithParticipantOther: '',
+  ppCommunicateWithParticipantNote: '',
+  ppManageProviderOverlap: [],
+  ppManageProviderOverlapOther: '',
+  ppManageProviderOverlapNote: '',
+  bManageBeneficiaryOverlap: [],
+  bManageBeneficiaryOverlapOther: '',
+  bManageBeneficiaryOverlapNote: ''
+};
+
+const defaultParticipantsAndProvidersValues: ParticipantsAndProvidersFormType = {
+  __typename: 'PlanParticipantsAndProviders',
+  communicationMethod: []
+};
+
 const ITToolsPageThree = () => {
   const { t } = useTranslation('itTools');
   const { t: p } = useTranslation('participantsAndProviders');
@@ -69,24 +88,15 @@ const ITToolsPageThree = () => {
     }
   });
 
-  const {
-    id,
-    ppCommunicateWithParticipant,
-    ppCommunicateWithParticipantOther,
-    ppCommunicateWithParticipantNote,
-    ppManageProviderOverlap,
-    ppManageProviderOverlapOther,
-    ppManageProviderOverlapNote,
-    bManageBeneficiaryOverlap,
-    bManageBeneficiaryOverlapOther,
-    bManageBeneficiaryOverlapNote
-  } = data?.modelPlan?.itTools || ({} as ITToolsPageThreeFormType);
-
-  const { communicationMethod = [] } =
-    data?.modelPlan?.participantsAndProviders ||
-    ({} as ParticipantsAndProvidersFormType);
-
   const modelName = data?.modelPlan?.modelName || '';
+
+  const id = data?.modelPlan?.itTools?.id || '';
+
+  const itToolsData = data?.modelPlan?.itTools || defaultFormValues;
+
+  const { communicationMethod } =
+    data?.modelPlan?.participantsAndProviders ||
+    defaultParticipantsAndProvidersValues;
 
   const [update] = useMutation<UpdatePlanItToolsVariables>(UpdatePlanITTools);
 
@@ -115,20 +125,6 @@ const ITToolsPageThree = () => {
       .catch(errors => {
         formikRef?.current?.setErrors(errors);
       });
-  };
-
-  const initialValues: ITToolsPageThreeFormType = {
-    __typename: 'PlanITTools',
-    id: id ?? '',
-    ppCommunicateWithParticipant: ppCommunicateWithParticipant ?? [],
-    ppCommunicateWithParticipantOther: ppCommunicateWithParticipantOther ?? '',
-    ppCommunicateWithParticipantNote: ppCommunicateWithParticipantNote ?? '',
-    ppManageProviderOverlap: ppManageProviderOverlap ?? [],
-    ppManageProviderOverlapOther: ppManageProviderOverlapOther ?? '',
-    ppManageProviderOverlapNote: ppManageProviderOverlapNote ?? '',
-    bManageBeneficiaryOverlap: bManageBeneficiaryOverlap ?? [],
-    bManageBeneficiaryOverlapOther: bManageBeneficiaryOverlapOther ?? '',
-    bManageBeneficiaryOverlapNote: bManageBeneficiaryOverlapNote ?? ''
   };
 
   if ((!loading && error) || (!loading && !data?.modelPlan)) {
@@ -169,7 +165,7 @@ const ITToolsPageThree = () => {
       <AskAQuestion modelID={modelID} />
 
       <Formik
-        initialValues={initialValues}
+        initialValues={itToolsData}
         onSubmit={values => {
           handleFormSubmit(values, 'next');
         }}

@@ -29,7 +29,7 @@ import GetITToolsPageFive from 'queries/ITTools/GetITToolsPageFive';
 import {
   GetITToolPageFive as GetITToolPageFiveType,
   GetITToolPageFive_modelPlan_itTools as ITToolsPageFiveFormType,
-  GetITToolPageFive_modelPlan_opsEvalAndLearning as OpsEvalAndLearnignFormType,
+  GetITToolPageFive_modelPlan_opsEvalAndLearning as OpsEvalAndLearningFormType,
   GetITToolPageFiveVariables
 } from 'queries/ITTools/types/GetITToolPageFive';
 import { UpdatePlanItToolsVariables } from 'queries/ITTools/types/UpdatePlanItTools';
@@ -44,7 +44,6 @@ import {
 import flattenErrors from 'utils/flattenErrors';
 import {
   sortOtherEnum,
-  translateBoolean,
   translateDataForMonitoringType,
   translateEvaluationApproachType,
   translateOelCollectDataType,
@@ -52,6 +51,30 @@ import {
   translateOelProcessAppealsType
 } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
+
+const defaultFormValues: ITToolsPageFiveFormType = {
+  __typename: 'PlanITTools',
+  id: '',
+  oelProcessAppeals: [],
+  oelProcessAppealsOther: '',
+  oelProcessAppealsNote: '',
+  oelEvaluationContractor: [],
+  oelEvaluationContractorOther: '',
+  oelEvaluationContractorNote: '',
+  oelCollectData: [],
+  oelCollectDataOther: '',
+  oelCollectDataNote: ''
+};
+
+const defaultOpsEvalAndLearningValues: OpsEvalAndLearningFormType = {
+  __typename: 'PlanOpsEvalAndLearning',
+  appealPerformance: null,
+  appealFeedback: null,
+  appealPayments: null,
+  appealOther: null,
+  evaluationApproaches: [],
+  dataNeededForMonitoring: []
+};
 
 const ITToolsPageFive = () => {
   const { t } = useTranslation('itTools');
@@ -71,29 +94,20 @@ const ITToolsPageFive = () => {
     }
   });
 
-  const {
-    id,
-    oelProcessAppeals,
-    oelProcessAppealsOther,
-    oelProcessAppealsNote,
-    oelEvaluationContractor,
-    oelEvaluationContractorOther,
-    oelEvaluationContractorNote,
-    oelCollectData,
-    oelCollectDataOther,
-    oelCollectDataNote
-  } = data?.modelPlan?.itTools || ({} as ITToolsPageFiveFormType);
+  const modelName = data?.modelPlan?.modelName || '';
+
+  const id = data?.modelPlan?.itTools?.id || '';
+
+  const itToolsData = data?.modelPlan?.itTools || defaultFormValues;
 
   const {
     appealPerformance,
     appealFeedback,
     appealPayments,
     appealOther,
-    evaluationApproaches = [],
-    dataNeededForMonitoring = []
-  } = data?.modelPlan?.opsEvalAndLearning || ({} as OpsEvalAndLearnignFormType);
-
-  const modelName = data?.modelPlan?.modelName || '';
+    evaluationApproaches,
+    dataNeededForMonitoring
+  } = data?.modelPlan?.opsEvalAndLearning || defaultOpsEvalAndLearningValues;
 
   const [update] = useMutation<UpdatePlanItToolsVariables>(UpdatePlanITTools);
 
@@ -122,20 +136,6 @@ const ITToolsPageFive = () => {
       .catch(errors => {
         formikRef?.current?.setErrors(errors);
       });
-  };
-
-  const initialValues: ITToolsPageFiveFormType = {
-    __typename: 'PlanITTools',
-    id: id ?? '',
-    oelProcessAppeals: oelProcessAppeals ?? [],
-    oelProcessAppealsOther: oelProcessAppealsOther ?? '',
-    oelProcessAppealsNote: oelProcessAppealsNote ?? '',
-    oelEvaluationContractor: oelEvaluationContractor ?? [],
-    oelEvaluationContractorOther: oelEvaluationContractorOther ?? '',
-    oelEvaluationContractorNote: oelEvaluationContractorNote ?? '',
-    oelCollectData: oelCollectData ?? [],
-    oelCollectDataOther: oelCollectDataOther ?? '',
-    oelCollectDataNote: oelCollectDataNote ?? ''
   };
 
   if ((!loading && error) || (!loading && !data?.modelPlan)) {
@@ -176,7 +176,7 @@ const ITToolsPageFive = () => {
       <AskAQuestion modelID={modelID} />
 
       <Formik
-        initialValues={initialValues}
+        initialValues={itToolsData}
         onSubmit={values => {
           handleFormSubmit(values, 'next');
         }}

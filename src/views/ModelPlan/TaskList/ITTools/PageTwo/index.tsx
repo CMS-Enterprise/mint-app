@@ -50,6 +50,26 @@ import {
 } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
 
+const defaultFormValues: ITToolsPageTwoFormType = {
+  __typename: 'PlanITTools',
+  id: '',
+  ppToAdvertise: [],
+  ppToAdvertiseOther: '',
+  ppToAdvertiseNote: '',
+  ppCollectScoreReview: [],
+  ppCollectScoreReviewOther: '',
+  ppCollectScoreReviewNote: '',
+  ppAppSupportContractor: [],
+  ppAppSupportContractorOther: '',
+  ppAppSupportContractorNote: ''
+};
+
+const defaultParticipantsAndProvidersValues: ParticipantsAndProvidersFormType = {
+  __typename: 'PlanParticipantsAndProviders',
+  selectionMethod: [],
+  recruitmentMethod: null
+};
+
 const ITToolsPageTwo = () => {
   const { t } = useTranslation('itTools');
   const { t: p } = useTranslation('participantsAndProviders');
@@ -68,24 +88,15 @@ const ITToolsPageTwo = () => {
     }
   });
 
-  const {
-    id,
-    ppToAdvertise,
-    ppToAdvertiseOther,
-    ppToAdvertiseNote,
-    ppCollectScoreReview,
-    ppCollectScoreReviewOther,
-    ppCollectScoreReviewNote,
-    ppAppSupportContractor,
-    ppAppSupportContractorOther,
-    ppAppSupportContractorNote
-  } = data?.modelPlan?.itTools || ({} as ITToolsPageTwoFormType);
-
-  const { recruitmentMethod, selectionMethod = [] } =
-    data?.modelPlan?.participantsAndProviders ||
-    ({} as ParticipantsAndProvidersFormType);
-
   const modelName = data?.modelPlan?.modelName || '';
+
+  const id = data?.modelPlan?.itTools?.id || '';
+
+  const itToolsData = data?.modelPlan?.itTools || defaultFormValues;
+
+  const { recruitmentMethod, selectionMethod } =
+    data?.modelPlan?.participantsAndProviders ||
+    defaultParticipantsAndProvidersValues;
 
   const [update] = useMutation<UpdatePlanItToolsVariables>(UpdatePlanITTools);
 
@@ -114,20 +125,6 @@ const ITToolsPageTwo = () => {
       .catch(errors => {
         formikRef?.current?.setErrors(errors);
       });
-  };
-
-  const initialValues: ITToolsPageTwoFormType = {
-    __typename: 'PlanITTools',
-    id: id ?? '',
-    ppToAdvertise: ppToAdvertise ?? [],
-    ppToAdvertiseOther: ppToAdvertiseOther ?? '',
-    ppToAdvertiseNote: ppToAdvertiseNote ?? '',
-    ppCollectScoreReview: ppCollectScoreReview ?? [],
-    ppCollectScoreReviewOther: ppCollectScoreReviewOther ?? '',
-    ppCollectScoreReviewNote: ppCollectScoreReviewNote ?? '',
-    ppAppSupportContractor: ppAppSupportContractor ?? [],
-    ppAppSupportContractorOther: ppAppSupportContractorOther ?? '',
-    ppAppSupportContractorNote: ppAppSupportContractorNote ?? ''
   };
 
   if ((!loading && error) || (!loading && !data?.modelPlan)) {
@@ -168,7 +165,7 @@ const ITToolsPageTwo = () => {
       <AskAQuestion modelID={modelID} />
 
       <Formik
-        initialValues={initialValues}
+        initialValues={itToolsData}
         onSubmit={values => {
           handleFormSubmit(values, 'next');
         }}

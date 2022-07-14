@@ -29,7 +29,7 @@ import GetITToolsPageSeven from 'queries/ITTools/GetITToolsPageSeven';
 import {
   GetITToolPageSeven as GetITToolPageSevenType,
   GetITToolPageSeven_modelPlan_itTools as ITToolsPageSevenFormType,
-  GetITToolPageSeven_modelPlan_opsEvalAndLearning as OpsEvalAndLearnignFormType,
+  GetITToolPageSeven_modelPlan_opsEvalAndLearning as OpsEvalAndLearningFormType,
   GetITToolPageSevenVariables
 } from 'queries/ITTools/types/GetITToolPageSeven';
 import { UpdatePlanItToolsVariables } from 'queries/ITTools/types/UpdatePlanItTools';
@@ -52,6 +52,26 @@ import {
 } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
 
+const defaultFormValues: ITToolsPageSevenFormType = {
+  __typename: 'PlanITTools',
+  id: '',
+  oelSendReports: [],
+  oelSendReportsOther: '',
+  oelSendReportsNote: '',
+  oelLearningContractor: [],
+  oelLearningContractorOther: '',
+  oelLearningContractorNote: '',
+  oelParticipantCollaboration: [],
+  oelParticipantCollaborationOther: '',
+  oelParticipantCollaborationNote: ''
+};
+
+const defaultOpsEvalAndLearningValues: OpsEvalAndLearningFormType = {
+  __typename: 'PlanOpsEvalAndLearning',
+  dataToSendParticicipants: [],
+  modelLearningSystems: []
+};
+
 const ITToolsPageSeven = () => {
   const { t } = useTranslation('itTools');
   const { t: o } = useTranslation('operationsEvaluationAndLearning');
@@ -70,23 +90,14 @@ const ITToolsPageSeven = () => {
     }
   });
 
-  const {
-    id,
-    oelSendReports,
-    oelSendReportsOther,
-    oelSendReportsNote,
-    oelLearningContractor,
-    oelLearningContractorOther,
-    oelLearningContractorNote,
-    oelParticipantCollaboration,
-    oelParticipantCollaborationOther,
-    oelParticipantCollaborationNote
-  } = data?.modelPlan?.itTools || ({} as ITToolsPageSevenFormType);
-
-  const { dataToSendParticicipants = [], modelLearningSystems = [] } =
-    data?.modelPlan?.opsEvalAndLearning || ({} as OpsEvalAndLearnignFormType);
-
   const modelName = data?.modelPlan?.modelName || '';
+
+  const id = data?.modelPlan?.itTools?.id || '';
+
+  const itToolsData = data?.modelPlan?.itTools || defaultFormValues;
+
+  const { dataToSendParticicipants, modelLearningSystems } =
+    data?.modelPlan?.opsEvalAndLearning || defaultOpsEvalAndLearningValues;
 
   const [update] = useMutation<UpdatePlanItToolsVariables>(UpdatePlanITTools);
 
@@ -115,20 +126,6 @@ const ITToolsPageSeven = () => {
       .catch(errors => {
         formikRef?.current?.setErrors(errors);
       });
-  };
-
-  const initialValues: ITToolsPageSevenFormType = {
-    __typename: 'PlanITTools',
-    id: id ?? '',
-    oelSendReports: oelSendReports ?? [],
-    oelSendReportsOther: oelSendReportsOther ?? '',
-    oelSendReportsNote: oelSendReportsNote ?? '',
-    oelLearningContractor: oelLearningContractor ?? [],
-    oelLearningContractorOther: oelLearningContractorOther ?? '',
-    oelLearningContractorNote: oelLearningContractorNote ?? '',
-    oelParticipantCollaboration: oelParticipantCollaboration ?? [],
-    oelParticipantCollaborationOther: oelParticipantCollaborationOther ?? '',
-    oelParticipantCollaborationNote: oelParticipantCollaborationNote ?? ''
   };
 
   if ((!loading && error) || (!loading && !data?.modelPlan)) {
@@ -169,7 +166,7 @@ const ITToolsPageSeven = () => {
       <AskAQuestion modelID={modelID} />
 
       <Formik
-        initialValues={initialValues}
+        initialValues={itToolsData}
         onSubmit={values => {
           handleFormSubmit(values, 'next');
         }}

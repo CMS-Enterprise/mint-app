@@ -29,7 +29,7 @@ import GetITToolsPageFour from 'queries/ITTools/GetITToolsPageFour';
 import {
   GetITToolPageFour as GetITToolPageFourType,
   GetITToolPageFour_modelPlan_itTools as ITToolsPageFourFormType,
-  GetITToolPageFour_modelPlan_opsEvalAndLearning as OpsEvalAndLearnignFormType,
+  GetITToolPageFour_modelPlan_opsEvalAndLearning as OpsEvalAndLearningFormType,
   GetITToolPageFourVariables
 } from 'queries/ITTools/types/GetITToolPageFour';
 import { UpdatePlanItToolsVariables } from 'queries/ITTools/types/UpdatePlanItTools';
@@ -52,6 +52,27 @@ import {
 } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
 
+const defaultFormValues: ITToolsPageFourFormType = {
+  __typename: 'PlanITTools',
+  id: '',
+  oelHelpdeskSupport: [],
+  oelHelpdeskSupportOther: '',
+  oelHelpdeskSupportNote: '',
+  oelManageAco: [],
+  oelManageAcoOther: '',
+  oelManageAcoNote: '',
+  oelPerformanceBenchmark: [],
+  oelPerformanceBenchmarkOther: '',
+  oelPerformanceBenchmarkNote: ''
+};
+
+const defaultOpsEvalAndLearningValues: OpsEvalAndLearningFormType = {
+  __typename: 'PlanOpsEvalAndLearning',
+  helpdeskUse: null,
+  iddocSupport: null,
+  benchmarkForPerformance: null
+};
+
 const ITToolsPageFour = () => {
   const { t } = useTranslation('itTools');
   const { t: o } = useTranslation('operationsEvaluationAndLearning');
@@ -70,23 +91,14 @@ const ITToolsPageFour = () => {
     }
   });
 
-  const {
-    id,
-    oelHelpdeskSupport,
-    oelHelpdeskSupportOther,
-    oelHelpdeskSupportNote,
-    oelManageAco,
-    oelManageAcoOther,
-    oelManageAcoNote,
-    oelPerformanceBenchmark,
-    oelPerformanceBenchmarkOther,
-    oelPerformanceBenchmarkNote
-  } = data?.modelPlan?.itTools || ({} as ITToolsPageFourFormType);
+  const modelName = data?.modelPlan?.modelName || '';
+
+  const id = data?.modelPlan?.itTools?.id || '';
+
+  const itToolsData = data?.modelPlan?.itTools || defaultFormValues;
 
   const { helpdeskUse, iddocSupport, benchmarkForPerformance } =
-    data?.modelPlan?.opsEvalAndLearning || ({} as OpsEvalAndLearnignFormType);
-
-  const modelName = data?.modelPlan?.modelName || '';
+    data?.modelPlan?.opsEvalAndLearning || defaultOpsEvalAndLearningValues;
 
   const [update] = useMutation<UpdatePlanItToolsVariables>(UpdatePlanITTools);
 
@@ -115,20 +127,6 @@ const ITToolsPageFour = () => {
       .catch(errors => {
         formikRef?.current?.setErrors(errors);
       });
-  };
-
-  const initialValues: ITToolsPageFourFormType = {
-    __typename: 'PlanITTools',
-    id: id ?? '',
-    oelHelpdeskSupport: oelHelpdeskSupport ?? [],
-    oelHelpdeskSupportOther: oelHelpdeskSupportOther ?? '',
-    oelHelpdeskSupportNote: oelHelpdeskSupportNote ?? '',
-    oelManageAco: oelManageAco ?? [],
-    oelManageAcoOther: oelManageAcoOther ?? '',
-    oelManageAcoNote: oelManageAcoNote ?? '',
-    oelPerformanceBenchmark: oelPerformanceBenchmark ?? [],
-    oelPerformanceBenchmarkOther: oelPerformanceBenchmarkOther ?? '',
-    oelPerformanceBenchmarkNote: oelPerformanceBenchmarkNote ?? ''
   };
 
   if ((!loading && error) || (!loading && !data?.modelPlan)) {
@@ -169,7 +167,7 @@ const ITToolsPageFour = () => {
       <AskAQuestion modelID={modelID} />
 
       <Formik
-        initialValues={initialValues}
+        initialValues={itToolsData}
         onSubmit={values => {
           handleFormSubmit(values, 'next');
         }}

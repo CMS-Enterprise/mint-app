@@ -49,6 +49,27 @@ import {
 } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
 
+const defaultFormValues: ITToolsPageOneFormType = {
+  __typename: 'PlanITTools',
+  id: '',
+  gcPartCD: [],
+  gcPartCDOther: '',
+  gcPartCDNote: '',
+  gcCollectBids: [],
+  gcCollectBidsOther: '',
+  gcCollectBidsNote: '',
+  gcUpdateContract: [],
+  gcUpdateContractOther: '',
+  gcUpdateContractNote: ''
+};
+
+const defaultCharacteristicValues: GeneralCharacteristicsFormType = {
+  __typename: 'PlanGeneralCharacteristics',
+  managePartCDEnrollment: null,
+  collectPlanBids: null,
+  planContactUpdated: null
+};
+
 const ITToolsPageOne = () => {
   const { t } = useTranslation('itTools');
   const { t: c } = useTranslation('generalCharacteristics');
@@ -67,24 +88,14 @@ const ITToolsPageOne = () => {
     }
   });
 
-  const {
-    id,
-    gcPartCD,
-    gcPartCDOther,
-    gcPartCDNote,
-    gcCollectBids,
-    gcCollectBidsOther,
-    gcCollectBidsNote,
-    gcUpdateContract,
-    gcUpdateContractOther,
-    gcUpdateContractNote
-  } = data?.modelPlan?.itTools || ({} as ITToolsPageOneFormType);
-
-  const characteristics =
-    data?.modelPlan?.generalCharacteristics ||
-    ({} as GeneralCharacteristicsFormType);
-
   const modelName = data?.modelPlan?.modelName || '';
+
+  const id = data?.modelPlan?.itTools?.id || '';
+
+  const itToolsData = data?.modelPlan?.itTools || defaultFormValues;
+
+  const { managePartCDEnrollment, collectPlanBids, planContactUpdated } =
+    data?.modelPlan?.generalCharacteristics || defaultCharacteristicValues;
 
   const [update] = useMutation<UpdatePlanItToolsVariables>(UpdatePlanITTools);
 
@@ -111,20 +122,6 @@ const ITToolsPageOne = () => {
       .catch(errors => {
         formikRef?.current?.setErrors(errors);
       });
-  };
-
-  const initialValues: ITToolsPageOneFormType = {
-    __typename: 'PlanITTools',
-    id: id ?? '',
-    gcPartCD: gcPartCD ?? [],
-    gcPartCDOther: gcPartCDOther ?? '',
-    gcPartCDNote: gcPartCDNote ?? '',
-    gcCollectBids: gcCollectBids ?? [],
-    gcCollectBidsOther: gcCollectBidsOther ?? '',
-    gcCollectBidsNote: gcCollectBidsNote ?? '',
-    gcUpdateContract: gcUpdateContract ?? [],
-    gcUpdateContractOther: gcUpdateContractOther ?? '',
-    gcUpdateContractNote: gcUpdateContractNote ?? ''
   };
 
   if ((!loading && error) || (!loading && !data?.modelPlan)) {
@@ -165,7 +162,7 @@ const ITToolsPageOne = () => {
       <AskAQuestion modelID={modelID} />
 
       <Formik
-        initialValues={initialValues}
+        initialValues={itToolsData}
         onSubmit={values => {
           handleFormSubmit(values, 'next');
         }}
@@ -228,17 +225,12 @@ const ITToolsPageOne = () => {
                               question={c('manageEnrollment')}
                               answers={[
                                 translateBoolean(
-                                  characteristics.managePartCDEnrollment ||
-                                    false
+                                  managePartCDEnrollment || false
                                 )
                               ]}
                               redirect={`/models/${modelID}/task-list/characteristics/key-characteristics`}
-                              answered={
-                                characteristics.managePartCDEnrollment !== null
-                              }
-                              needsTool={
-                                characteristics.managePartCDEnrollment === true
-                              }
+                              answered={managePartCDEnrollment !== null}
+                              needsTool={managePartCDEnrollment === true}
                               subtext={t('yesNeedsAnswer')}
                             />
 
@@ -251,9 +243,7 @@ const ITToolsPageOne = () => {
                                   <Fragment key={type}>
                                     <Field
                                       as={CheckboxField}
-                                      disabled={
-                                        !characteristics.managePartCDEnrollment
-                                      }
+                                      disabled={!managePartCDEnrollment}
                                       id={`it-tools-gc-partc-${type}`}
                                       name="gcPartCD"
                                       label={translateGcPartCDType(type)}
@@ -281,7 +271,7 @@ const ITToolsPageOne = () => {
                                             htmlFor="it-tools-gc-partc-other"
                                             className={classNames(
                                               {
-                                                'text-gray-30': !characteristics.managePartCDEnrollment
+                                                'text-gray-30': !managePartCDEnrollment
                                               },
                                               'text-normal'
                                             )}
@@ -294,9 +284,7 @@ const ITToolsPageOne = () => {
                                           <Field
                                             as={TextInput}
                                             type="text"
-                                            disabled={
-                                              !characteristics.managePartCDEnrollment
-                                            }
+                                            disabled={!managePartCDEnrollment}
                                             className="maxw-none"
                                             id="it-tools-gc-partcd-other"
                                             maxLength={50}
@@ -338,17 +326,11 @@ const ITToolsPageOne = () => {
                             <ITToolsSummary
                               question={c('reviewPlanBids')}
                               answers={[
-                                translateBoolean(
-                                  characteristics.collectPlanBids || false
-                                )
+                                translateBoolean(collectPlanBids || false)
                               ]}
                               redirect={`/models/${modelID}/task-list/characteristics/key-characteristics`}
-                              answered={
-                                characteristics.collectPlanBids !== null
-                              }
-                              needsTool={
-                                characteristics.collectPlanBids === true
-                              }
+                              answered={collectPlanBids !== null}
+                              needsTool={collectPlanBids === true}
                               subtext={t('yesNeedsAnswer')}
                             />
 
@@ -361,9 +343,7 @@ const ITToolsPageOne = () => {
                                   <Fragment key={type}>
                                     <Field
                                       as={CheckboxField}
-                                      disabled={
-                                        !characteristics.collectPlanBids
-                                      }
+                                      disabled={!collectPlanBids}
                                       id={`it-tools-gc-collect-bids-${type}`}
                                       name="gcCollectBids"
                                       label={translateGcCollectBidsType(type)}
@@ -391,7 +371,7 @@ const ITToolsPageOne = () => {
                                             htmlFor="it-tools-gc-collect-bids-other"
                                             className={classNames(
                                               {
-                                                'text-gray-30': !characteristics.collectPlanBids
+                                                'text-gray-30': !collectPlanBids
                                               },
                                               'text-normal'
                                             )}
@@ -404,9 +384,7 @@ const ITToolsPageOne = () => {
                                           <Field
                                             as={TextInput}
                                             type="text"
-                                            disabled={
-                                              !characteristics.collectPlanBids
-                                            }
+                                            disabled={!collectPlanBids}
                                             className="maxw-none"
                                             id="it-tools-gc-collect-bids-other"
                                             maxLength={50}
@@ -448,17 +426,11 @@ const ITToolsPageOne = () => {
                             <ITToolsSummary
                               question={c('updatedContact')}
                               answers={[
-                                translateBoolean(
-                                  characteristics.planContactUpdated || false
-                                )
+                                translateBoolean(planContactUpdated || false)
                               ]}
                               redirect={`/models/${modelID}/task-list/characteristics/key-characteristics`}
-                              answered={
-                                characteristics.planContactUpdated !== null
-                              }
-                              needsTool={
-                                characteristics.planContactUpdated === true
-                              }
+                              answered={planContactUpdated !== null}
+                              needsTool={planContactUpdated === true}
                               subtext={t('yesNeedsAnswer')}
                             />
 
@@ -471,9 +443,7 @@ const ITToolsPageOne = () => {
                                   <Fragment key={type}>
                                     <Field
                                       as={CheckboxField}
-                                      disabled={
-                                        !characteristics.planContactUpdated
-                                      }
+                                      disabled={!planContactUpdated}
                                       id={`it-tools-gc-update-contract-${type}`}
                                       name="gcUpdateContract"
                                       label={translateGcUpdateContractType(
@@ -506,7 +476,7 @@ const ITToolsPageOne = () => {
                                             htmlFor="it-tools-gc-update-contract-other"
                                             className={classNames(
                                               {
-                                                'text-gray-30': !characteristics.planContactUpdated
+                                                'text-gray-30': !planContactUpdated
                                               },
                                               'text-normal'
                                             )}
@@ -519,9 +489,7 @@ const ITToolsPageOne = () => {
                                           <Field
                                             as={TextInput}
                                             type="text"
-                                            disabled={
-                                              !characteristics.planContactUpdated
-                                            }
+                                            disabled={!planContactUpdated}
                                             className="maxw-none"
                                             id="it-tools-gc-update-contract-other"
                                             maxLength={50}

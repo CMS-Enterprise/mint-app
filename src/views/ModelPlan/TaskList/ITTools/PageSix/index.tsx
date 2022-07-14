@@ -29,7 +29,7 @@ import GetITToolsPageSix from 'queries/ITTools/GetITToolsPageSix';
 import {
   GetITToolPageSix as GetITToolPageSixType,
   GetITToolPageSix_modelPlan_itTools as ITToolsPageSixFormType,
-  GetITToolPageSix_modelPlan_opsEvalAndLearning as OpsEvalAndLearnignFormType,
+  GetITToolPageSix_modelPlan_opsEvalAndLearning as OpsEvalAndLearningFormType,
   GetITToolPageSixVariables
 } from 'queries/ITTools/types/GetITToolPageSix';
 import { UpdatePlanItToolsVariables } from 'queries/ITTools/types/UpdatePlanItTools';
@@ -50,6 +50,25 @@ import {
 } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
 
+const defaultFormValues: ITToolsPageSixFormType = {
+  __typename: 'PlanITTools',
+  id: '',
+  oelObtainData: [],
+  oelObtainDataOther: '',
+  oelObtainDataNote: '',
+  oelClaimsBasedMeasures: [],
+  oelClaimsBasedMeasuresOther: '',
+  oelClaimsBasedMeasuresNote: '',
+  oelQualityScores: [],
+  oelQualityScoresOther: '',
+  oelQualityScoresNote: ''
+};
+
+const defaultOpsEvalAndLearningValues: OpsEvalAndLearningFormType = {
+  __typename: 'PlanOpsEvalAndLearning',
+  dataNeededForMonitoring: []
+};
+
 const ITToolsPageSix = () => {
   const { t } = useTranslation('itTools');
   const { t: o } = useTranslation('operationsEvaluationAndLearning');
@@ -68,23 +87,14 @@ const ITToolsPageSix = () => {
     }
   });
 
-  const {
-    id,
-    oelObtainData,
-    oelObtainDataOther,
-    oelObtainDataNote,
-    oelClaimsBasedMeasures,
-    oelClaimsBasedMeasuresOther,
-    oelClaimsBasedMeasuresNote,
-    oelQualityScores,
-    oelQualityScoresOther,
-    oelQualityScoresNote
-  } = data?.modelPlan?.itTools || ({} as ITToolsPageSixFormType);
-
-  const { dataNeededForMonitoring = [] } =
-    data?.modelPlan?.opsEvalAndLearning || ({} as OpsEvalAndLearnignFormType);
-
   const modelName = data?.modelPlan?.modelName || '';
+
+  const id = data?.modelPlan?.itTools?.id || '';
+
+  const itToolsData = data?.modelPlan?.itTools || defaultFormValues;
+
+  const { dataNeededForMonitoring } =
+    data?.modelPlan?.opsEvalAndLearning || defaultOpsEvalAndLearningValues;
 
   const [update] = useMutation<UpdatePlanItToolsVariables>(UpdatePlanITTools);
 
@@ -113,20 +123,6 @@ const ITToolsPageSix = () => {
       .catch(errors => {
         formikRef?.current?.setErrors(errors);
       });
-  };
-
-  const initialValues: ITToolsPageSixFormType = {
-    __typename: 'PlanITTools',
-    id: id ?? '',
-    oelObtainData: oelObtainData ?? [],
-    oelObtainDataOther: oelObtainDataOther ?? '',
-    oelObtainDataNote: oelObtainDataNote ?? '',
-    oelClaimsBasedMeasures: oelClaimsBasedMeasures ?? [],
-    oelClaimsBasedMeasuresOther: oelClaimsBasedMeasuresOther ?? '',
-    oelClaimsBasedMeasuresNote: oelClaimsBasedMeasuresNote ?? '',
-    oelQualityScores: oelQualityScores ?? [],
-    oelQualityScoresOther: oelQualityScoresOther ?? '',
-    oelQualityScoresNote: oelQualityScoresNote ?? ''
   };
 
   if ((!loading && error) || (!loading && !data?.modelPlan)) {
@@ -167,7 +163,7 @@ const ITToolsPageSix = () => {
       <AskAQuestion modelID={modelID} />
 
       <Formik
-        initialValues={initialValues}
+        initialValues={itToolsData}
         onSubmit={values => {
           handleFormSubmit(values, 'next');
         }}

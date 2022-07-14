@@ -53,9 +53,29 @@ import {
 } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
 
+const defaultFormValues: ITToolsPageNineFormType = {
+  __typename: 'PlanITTools',
+  id: '',
+  pNonClaimsBasedPayments: [],
+  pNonClaimsBasedPaymentsOther: '',
+  pNonClaimsBasedPaymentsNote: '',
+  pSharedSavingsPlan: [],
+  pSharedSavingsPlanOther: '',
+  pSharedSavingsPlanNote: '',
+  pRecoverPayments: [],
+  pRecoverPaymentsOther: '',
+  pRecoverPaymentsNote: ''
+};
+
+const defaultPaymentValues: PaymentsFormType = {
+  __typename: 'PlanPayments',
+  payType: [],
+  nonClaimsPayments: [],
+  willRecoverPayments: null
+};
+
 const ITToolsPageNine = () => {
   const { t } = useTranslation('itTools');
-  const { t: o } = useTranslation('operationsEvaluationAndLearning');
   const { t: p } = useTranslation('payments');
   const { t: h } = useTranslation('draftModelPlan');
   const { modelID } = useParams<{ modelID: string }>();
@@ -72,23 +92,14 @@ const ITToolsPageNine = () => {
     }
   });
 
-  const {
-    id,
-    pNonClaimsBasedPayments,
-    pNonClaimsBasedPaymentsOther,
-    pNonClaimsBasedPaymentsNote,
-    pSharedSavingsPlan,
-    pSharedSavingsPlanOther,
-    pSharedSavingsPlanNote,
-    pRecoverPayments,
-    pRecoverPaymentsOther,
-    pRecoverPaymentsNote
-  } = data?.modelPlan?.itTools || ({} as ITToolsPageNineFormType);
-
-  const { payType = [], nonClaimsPayments = [], willRecoverPayments } =
-    data?.modelPlan?.payments || ({} as PaymentsFormType);
-
   const modelName = data?.modelPlan?.modelName || '';
+
+  const id = data?.modelPlan?.itTools?.id || '';
+
+  const itToolsData = data?.modelPlan?.itTools || defaultFormValues;
+
+  const { payType, nonClaimsPayments, willRecoverPayments } =
+    data?.modelPlan?.payments || defaultPaymentValues;
 
   const [update] = useMutation<UpdatePlanItToolsVariables>(UpdatePlanITTools);
 
@@ -117,20 +128,6 @@ const ITToolsPageNine = () => {
       .catch(errors => {
         formikRef?.current?.setErrors(errors);
       });
-  };
-
-  const initialValues: ITToolsPageNineFormType = {
-    __typename: 'PlanITTools',
-    id: id ?? '',
-    pNonClaimsBasedPayments: pNonClaimsBasedPayments ?? [],
-    pNonClaimsBasedPaymentsOther: pNonClaimsBasedPaymentsOther ?? '',
-    pNonClaimsBasedPaymentsNote: pNonClaimsBasedPaymentsNote ?? '',
-    pSharedSavingsPlan: pSharedSavingsPlan ?? [],
-    pSharedSavingsPlanOther: pSharedSavingsPlanOther ?? '',
-    pSharedSavingsPlanNote: pSharedSavingsPlanNote ?? '',
-    pRecoverPayments: pRecoverPayments ?? [],
-    pRecoverPaymentsOther: pRecoverPaymentsOther ?? '',
-    pRecoverPaymentsNote: pRecoverPaymentsNote ?? ''
   };
 
   if ((!loading && error) || (!loading && !data?.modelPlan)) {
@@ -171,7 +168,7 @@ const ITToolsPageNine = () => {
       <AskAQuestion modelID={modelID} />
 
       <Formik
-        initialValues={initialValues}
+        initialValues={itToolsData}
         onSubmit={values => {
           handleFormSubmit(values, 'next');
         }}
@@ -234,12 +231,12 @@ const ITToolsPageNine = () => {
 
                             <ITToolsSummary
                               question={p('whatWillYouPay')}
-                              answers={payType!.map(type =>
+                              answers={payType.map(type =>
                                 translatePayType(type || '')
                               )}
                               redirect={`/models/${modelID}/task-list/payments`}
-                              answered={payType!.length > 0}
-                              needsTool={payType!.includes(
+                              answered={payType.length > 0}
+                              needsTool={payType.includes(
                                 PayType.NON_CLAIMS_BASED_PAYMENTS
                               )}
                               subtext={t('nonClaimsNeedsAnswer')}
@@ -255,7 +252,7 @@ const ITToolsPageNine = () => {
                                     <Field
                                       as={CheckboxField}
                                       disabled={
-                                        !payType!.includes(
+                                        !payType.includes(
                                           PayType.NON_CLAIMS_BASED_PAYMENTS
                                         )
                                       }
@@ -292,7 +289,7 @@ const ITToolsPageNine = () => {
                                             htmlFor="it-tools-p-non-claims-payments-other"
                                             className={classNames(
                                               {
-                                                'text-gray-30': !payType!.includes(
+                                                'text-gray-30': !payType.includes(
                                                   PayType.NON_CLAIMS_BASED_PAYMENTS
                                                 )
                                               },
@@ -310,7 +307,7 @@ const ITToolsPageNine = () => {
                                             as={TextInput}
                                             type="text"
                                             disabled={
-                                              !payType!.includes(
+                                              !payType.includes(
                                                 PayType.NON_CLAIMS_BASED_PAYMENTS
                                               )
                                             }
@@ -352,12 +349,12 @@ const ITToolsPageNine = () => {
 
                             <ITToolsSummary
                               question={p('selectNonClaims')}
-                              answers={nonClaimsPayments!.map(type =>
+                              answers={nonClaimsPayments.map(type =>
                                 translateNonClaimsBasedPayType(type || '')
                               )}
                               redirect={`/models/${modelID}/task-list/payments`}
-                              answered={nonClaimsPayments!.length > 0}
-                              needsTool={nonClaimsPayments!.includes(
+                              answered={nonClaimsPayments.length > 0}
+                              needsTool={nonClaimsPayments.includes(
                                 NonClaimsBasedPayType.SHARED_SAVINGS
                               )}
                               subtext={t('sharedSavingsNeedsAnswer')}
@@ -373,7 +370,7 @@ const ITToolsPageNine = () => {
                                     <Field
                                       as={CheckboxField}
                                       disabled={
-                                        !nonClaimsPayments!.includes(
+                                        !nonClaimsPayments.includes(
                                           NonClaimsBasedPayType.SHARED_SAVINGS
                                         )
                                       }
@@ -409,7 +406,7 @@ const ITToolsPageNine = () => {
                                             htmlFor="it-tools-p-shared-savings-other"
                                             className={classNames(
                                               {
-                                                'text-gray-30': !nonClaimsPayments!.includes(
+                                                'text-gray-30': !nonClaimsPayments.includes(
                                                   NonClaimsBasedPayType.SHARED_SAVINGS
                                                 )
                                               },
@@ -425,7 +422,7 @@ const ITToolsPageNine = () => {
                                             as={TextInput}
                                             type="text"
                                             disabled={
-                                              !nonClaimsPayments!.includes(
+                                              !nonClaimsPayments.includes(
                                                 NonClaimsBasedPayType.SHARED_SAVINGS
                                               )
                                             }
