@@ -24,7 +24,7 @@ import CheckboxField from 'components/shared/CheckboxField';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
-import getFunding from 'queries/Payments/getFunding';
+import GetFunding from 'queries/Payments/GetFunding';
 import {
   GetFunding as GetFundingType,
   GetFunding_modelPlan_payments as FundingFormType,
@@ -60,7 +60,7 @@ const FundingSource = () => {
   const { data, loading, error } = useQuery<
     GetFundingType,
     GetFundingVariables
-  >(getFunding, {
+  >(GetFunding, {
     variables: {
       id: modelID
     }
