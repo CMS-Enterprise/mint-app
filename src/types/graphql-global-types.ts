@@ -88,6 +88,7 @@ export enum CcmInvolvmentType {
 
 export enum ClaimsBasedPayType {
   ADJUSTMENTS_TO_FFS_PAYMENTS = "ADJUSTMENTS_TO_FFS_PAYMENTS",
+  OTHER = "OTHER",
   PAYMENTS_CARE_MANAGEMENT_HOME_VISITS = "PAYMENTS_CARE_MANAGEMENT_HOME_VISITS",
   PAYMENTS_SNF_CLAIMS_WITHOUT_3DAY_HOSPITAL_ADMISSIONS = "PAYMENTS_SNF_CLAIMS_WITHOUT_3DAY_HOSPITAL_ADMISSIONS",
   PAYMENTS_TELEHEALTH_SERVICES_NOT_TRADITIONAL_MEDICARE = "PAYMENTS_TELEHEALTH_SERVICES_NOT_TRADITIONAL_MEDICARE",
@@ -806,6 +807,7 @@ export interface PlanPaymentsChanges {
   payTypeNote?: string | null;
   payClaims?: ClaimsBasedPayType[] | null;
   payClaimsOther?: string | null;
+  payClaimsNote?: string | null;
   shouldAnyProvidersExcludedFFSSystems?: boolean | null;
   shouldAnyProviderExcludedFFSSystemsNote?: string | null;
   changesMedicarePhysicianFeeSchedule?: boolean | null;
