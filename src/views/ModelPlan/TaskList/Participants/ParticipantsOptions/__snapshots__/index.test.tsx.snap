@@ -141,7 +141,7 @@ exports[`Model Plan ParticipantsOptions matches snapshot 1`] = `
         Number of participants
       </label>
       <input
-        class="usa-input maxw-card"
+        class="usa-input width-card"
         data-testid="textInput"
         id="participants-and-providers-participants-other-input"
         name="expectedNumberOfParticipants"
@@ -153,7 +153,7 @@ exports[`Model Plan ParticipantsOptions matches snapshot 1`] = `
         data-testid="label"
         for="participants-and-providers-current-participants"
       >
-        What is your level of confidence on this esitmate?
+        What is your level of confidence on this estimate?
       </label>
       <fieldset
         class="usa-fieldset"
@@ -174,7 +174,7 @@ exports[`Model Plan ParticipantsOptions matches snapshot 1`] = `
             class="usa-radio__label"
             for="participants-and-providers-confidence-COMPLETELY"
           >
-            Compeletely confident
+            Completely confident
           </label>
         </div>
         <div
@@ -415,7 +415,7 @@ exports[`Model Plan ParticipantsOptions matches snapshot 1`] = `
         Who are the particpants? Select all that apply.
       </label>
       <div
-        class="easi-multiselect maxw-mobile-lg position-relative"
+        class="easi-multiselect position-relative"
         id="participants-and-providers-selection-method"
       >
         <div

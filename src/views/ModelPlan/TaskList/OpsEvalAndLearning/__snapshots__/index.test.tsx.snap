@@ -1,0 +1,649 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Model Plan Ops Eval and Learning matches snapshot 1`] = `
+<DocumentFragment>
+  <nav
+    aria-label="Breadcrumbs"
+    class="usa-breadcrumb usa-breadcrumb--wrap"
+  >
+    <ol
+      class="usa-breadcrumb__list"
+    >
+      <li
+        class="usa-breadcrumb__list-item"
+      >
+        <a
+          class="usa-breadcrumb__link"
+          href="/"
+        >
+          <span>
+            Home
+          </span>
+        </a>
+      </li>
+      <li
+        class="usa-breadcrumb__list-item"
+      >
+        <a
+          class="usa-breadcrumb__link"
+          href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/"
+        >
+          <span>
+            Model Plan task list
+          </span>
+        </a>
+      </li>
+      <li
+        aria-current="page"
+        class="usa-breadcrumb__list-item usa-current"
+      >
+        Operations, evaluation, and learning
+      </li>
+    </ol>
+  </nav>
+  <h1
+    aria-live="polite"
+    class="mint-h1 margin-top-4 margin-bottom-2"
+    tabindex="-1"
+  >
+    Operations, evaluation, and learning
+  </h1>
+  <p
+    class="margin-top-0 margin-bottom-1 font-body-lg"
+    data-testid="model-plan-name"
+  >
+    for My excellent plan that I just initiated
+  </p>
+  <p
+    class="margin-bottom-2 font-body-md line-height-sans-4"
+  >
+    If there's a question or field that is not applicable to your model or you don't currently know the answer, you may leave it blank. If you need help, ask a question using the link below.
+  </p>
+  <div
+    class="padding-2 bg-primary-lighter display-flex"
+    data-testid="ask-a-question"
+  >
+    <svg
+      class="usa-icon text-primary margin-right-1"
+      focusable="false"
+      height="1em"
+      role="img"
+      viewBox="0 0 24 24"
+      width="1em"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M0 0h24v24H0z"
+        fill="none"
+      />
+      <path
+        d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-7 9h-2V5h2v6zm0 4h-2v-2h2v2z"
+      />
+    </svg>
+    <button
+      class="usa-button usa-button--unstyled"
+      data-testid="ask-a-question-button"
+      type="button"
+    >
+      Ask a question
+    </button>
+  </div>
+  <form
+    action="#"
+    class="tablet:grid-col-6 margin-top-6"
+    data-testid="ops-eval-and-learning-form"
+  >
+    <legend
+      class="usa-label maxw-none"
+    >
+      Will another Agency or State help design/operate the model? Select all that apply.
+    </legend>
+    <div
+      class="mint-checkbox usa-checkbox"
+    >
+      <input
+        class="usa-checkbox__input"
+        id="ops-eval-and-learning-agency-or-state-help-YES_AGENCY_IAA"
+        name="agencyOrStateHelp"
+        type="checkbox"
+        value="YES_AGENCY_IAA"
+      />
+      <label
+        class="usa-checkbox__label"
+        for="ops-eval-and-learning-agency-or-state-help-YES_AGENCY_IAA"
+      >
+        Yes, we will get support from another agenct through IAA
+      </label>
+    </div>
+    <div
+      class="mint-checkbox usa-checkbox"
+    >
+      <input
+        class="usa-checkbox__input"
+        id="ops-eval-and-learning-agency-or-state-help-YES_AGENCY_IDEAS"
+        name="agencyOrStateHelp"
+        type="checkbox"
+        value="YES_AGENCY_IDEAS"
+      />
+      <label
+        class="usa-checkbox__label"
+        for="ops-eval-and-learning-agency-or-state-help-YES_AGENCY_IDEAS"
+      >
+        Yes, we will get ideas from another agency
+      </label>
+    </div>
+    <div
+      class="mint-checkbox usa-checkbox"
+    >
+      <input
+        class="usa-checkbox__input"
+        id="ops-eval-and-learning-agency-or-state-help-YES_STATE"
+        name="agencyOrStateHelp"
+        type="checkbox"
+        value="YES_STATE"
+      />
+      <label
+        class="usa-checkbox__label"
+        for="ops-eval-and-learning-agency-or-state-help-YES_STATE"
+      >
+        Yes, we will partner with states
+      </label>
+    </div>
+    <div
+      class="mint-checkbox usa-checkbox"
+    >
+      <input
+        class="usa-checkbox__input"
+        id="ops-eval-and-learning-agency-or-state-help-OTHER"
+        name="agencyOrStateHelp"
+        type="checkbox"
+        value="OTHER"
+      />
+      <label
+        class="usa-checkbox__label"
+        for="ops-eval-and-learning-agency-or-state-help-OTHER"
+      >
+        Other
+      </label>
+    </div>
+    <div
+      class="mint-checkbox usa-checkbox"
+    >
+      <input
+        class="usa-checkbox__input"
+        id="ops-eval-and-learning-agency-or-state-help-NO"
+        name="agencyOrStateHelp"
+        type="checkbox"
+        value="NO"
+      />
+      <label
+        class="usa-checkbox__label"
+        for="ops-eval-and-learning-agency-or-state-help-NO"
+      >
+        No
+      </label>
+    </div>
+    <div
+      class="margin-top-4 margin-bottom-8"
+    >
+      <button
+        class="usa-button usa-button usa-button--unstyled"
+        data-testid="add-note-toggle"
+        type="button"
+      >
+        <svg
+          aria-hidden="true"
+          class="usa-icon margin-right-1"
+          focusable="false"
+          height="1em"
+          role="img"
+          viewBox="0 0 24 24"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M0 0h24v24H0z"
+            fill="none"
+          />
+          <path
+            d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+          />
+        </svg>
+        Add an additional note
+      </button>
+    </div>
+    <div
+      class="usa-form-group margin-top-4"
+      data-scroll="stakeholders"
+    >
+      <label
+        class="usa-label"
+        data-testid="label"
+        for="ops-eval-and-learning-stakeholders"
+      >
+        What stakeholders do you plan to communicate with?
+      </label>
+      <div
+        class="easi-multiselect position-relative"
+        id="ops-eval-and-learning-stakeholders"
+      >
+        <div
+          class="easi-multiselect__field"
+          role="listbox"
+        >
+          <div
+            class="usa-select maxw-none padding-0"
+          >
+            <input
+              class="usa-input padding-1 height-full border-0"
+              placeholder="0 selected"
+              type="search"
+              value=""
+            />
+            <div
+              class="easi-multiselect__controls"
+            >
+              <div
+                class="easi-multiselect__controls-button easi-multiselect__controls-close"
+              >
+                <svg
+                  class="usa-icon usa-icon--size-4"
+                  focusable="false"
+                  height="1em"
+                  role="button"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M0 0h24v24H0z"
+                    fill="none"
+                  />
+                  <path
+                    d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="margin-top-4 margin-bottom-8"
+      >
+        <button
+          class="usa-button usa-button usa-button--unstyled"
+          data-testid="add-note-toggle"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="usa-icon margin-right-1"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M0 0h24v24H0z"
+              fill="none"
+            />
+            <path
+              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+            />
+          </svg>
+          Add an additional note
+        </button>
+      </div>
+    </div>
+    <div
+      class="usa-form-group margin-y-4 margin-bottom-8"
+      data-scroll="helpdeskUse"
+    >
+      <label
+        class="usa-label"
+        data-testid="label"
+        for="ops-eval-and-learning-help-desk-use"
+      >
+        Do you plan to use a helpdesk?
+      </label>
+      <fieldset
+        class="usa-fieldset"
+        data-testid="fieldset"
+      >
+        <div
+          class="usa-radio"
+          data-testid="radio"
+        >
+          <input
+            class="usa-radio__input"
+            id="ops-eval-and-learning-help-desk-use-true"
+            name="helpdeskUse"
+            type="radio"
+            value="YES"
+          />
+          <label
+            class="usa-radio__label"
+            for="ops-eval-and-learning-help-desk-use-true"
+          >
+            Yes
+          </label>
+        </div>
+        <div
+          class="usa-radio"
+          data-testid="radio"
+        >
+          <input
+            class="usa-radio__input"
+            id="ops-eval-and-learning-help-desk-use-false"
+            name="helpdeskUse"
+            type="radio"
+            value="NO"
+          />
+          <label
+            class="usa-radio__label"
+            for="ops-eval-and-learning-help-desk-use-false"
+          >
+            No
+          </label>
+        </div>
+      </fieldset>
+      <div
+        class="margin-top-4 margin-bottom-8"
+      >
+        <button
+          class="usa-button usa-button usa-button--unstyled"
+          data-testid="add-note-toggle"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="usa-icon margin-right-1"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M0 0h24v24H0z"
+              fill="none"
+            />
+            <path
+              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+            />
+          </svg>
+          Add an additional note
+        </button>
+      </div>
+    </div>
+    <legend
+      class="usa-label maxw-none"
+    >
+      What contractors will support your model?
+    </legend>
+    <div
+      class="mint-checkbox usa-checkbox"
+    >
+      <input
+        class="usa-checkbox__input"
+        id="ops-eval-and-learning-contractor-support-MULTIPLE"
+        name="contractorSupport"
+        type="checkbox"
+        value="MULTIPLE"
+      />
+      <label
+        class="usa-checkbox__label"
+        for="ops-eval-and-learning-contractor-support-MULTIPLE"
+      >
+        May have separate contractors for different implementation functions
+      </label>
+    </div>
+    <div
+      class="mint-checkbox usa-checkbox"
+    >
+      <input
+        class="usa-checkbox__input"
+        id="ops-eval-and-learning-contractor-support-NONE"
+        name="contractorSupport"
+        type="checkbox"
+        value="NONE"
+      />
+      <label
+        class="usa-checkbox__label"
+        for="ops-eval-and-learning-contractor-support-NONE"
+      >
+        Do not plan to use an implemenation contractor
+      </label>
+    </div>
+    <div
+      class="mint-checkbox usa-checkbox"
+    >
+      <input
+        class="usa-checkbox__input"
+        id="ops-eval-and-learning-contractor-support-ONE"
+        name="contractorSupport"
+        type="checkbox"
+        value="ONE"
+      />
+      <label
+        class="usa-checkbox__label"
+        for="ops-eval-and-learning-contractor-support-ONE"
+      >
+        One contractor to support implementation
+      </label>
+    </div>
+    <div
+      class="mint-checkbox usa-checkbox"
+    >
+      <input
+        class="usa-checkbox__input"
+        id="ops-eval-and-learning-contractor-support-OTHER"
+        name="contractorSupport"
+        type="checkbox"
+        value="OTHER"
+      />
+      <label
+        class="usa-checkbox__label"
+        for="ops-eval-and-learning-contractor-support-OTHER"
+      >
+        Other
+      </label>
+    </div>
+    <div
+      class="usa-form-group"
+      data-scroll="contractorSupportHow"
+    >
+      <label
+        class="usa-label text-normal margin-top-4"
+        data-testid="label"
+        for="ops-eval-and-learning-contractor-support-how"
+      >
+        In what capacity will they support your model?
+      </label>
+      <p
+        class="text-base margin-y-1"
+      >
+        (implementation, data analysis, quality, etc.)
+      </p>
+      <textarea
+        class="usa-textarea height-card"
+        data-testid="ops-eval-and-learning-contractor-support-how"
+        id="ops-eval-and-learning-contractor-support-how"
+        name="contractorSupportHow"
+      >
+        Differ text
+      </textarea>
+    </div>
+    <div
+      class="margin-top-4 margin-bottom-8"
+    >
+      <button
+        class="usa-button usa-button usa-button--unstyled"
+        data-testid="add-note-toggle"
+        type="button"
+      >
+        <svg
+          aria-hidden="true"
+          class="usa-icon margin-right-1"
+          focusable="false"
+          height="1em"
+          role="img"
+          viewBox="0 0 24 24"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M0 0h24v24H0z"
+            fill="none"
+          />
+          <path
+            d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+          />
+        </svg>
+        Add an additional note
+      </button>
+    </div>
+    <div
+      class="usa-form-group margin-y-4 margin-bottom-8"
+      data-scroll="iddocSupport"
+    >
+      <label
+        class="usa-label"
+        data-testid="label"
+        for="ops-eval-and-learning-iddoc-support"
+      >
+        Are you planning to use IDDOC support?
+      </label>
+      <p
+        class="text-base margin-y-1"
+      >
+        IDDOC is commonly known as ACO-OS (Accountable Care Organization Operating System). They can provide support for design, development, operations, and maintenance.
+      </p>
+      <p
+        class="text-base margin-y-1 margin-top-2"
+      >
+        If you select yes, there will be additional questions to answer.
+      </p>
+      <fieldset
+        class="usa-fieldset"
+        data-testid="fieldset"
+      >
+        <div
+          class="usa-radio"
+          data-testid="radio"
+        >
+          <input
+            class="usa-radio__input"
+            id="ops-eval-and-learning-iddoc-support"
+            name="iddocSupport"
+            type="radio"
+            value="TRUE"
+          />
+          <label
+            class="usa-radio__label"
+            for="ops-eval-and-learning-iddoc-support"
+          >
+            Yes
+          </label>
+        </div>
+        <div
+          class="usa-radio"
+          data-testid="radio"
+        >
+          <input
+            class="usa-radio__input"
+            id="ops-eval-and-learning-iddoc-support-no"
+            name="iddocSupport"
+            type="radio"
+            value="FALSE"
+          />
+          <label
+            class="usa-radio__label"
+            for="ops-eval-and-learning-iddoc-support-no"
+          >
+            No
+          </label>
+        </div>
+      </fieldset>
+      <div
+        class="margin-top-4 margin-bottom-8"
+      >
+        <button
+          class="usa-button usa-button usa-button--unstyled"
+          data-testid="add-note-toggle"
+          type="button"
+        >
+          <svg
+            aria-hidden="true"
+            class="usa-icon margin-right-1"
+            focusable="false"
+            height="1em"
+            role="img"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M0 0h24v24H0z"
+              fill="none"
+            />
+            <path
+              d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+            />
+          </svg>
+          Add an additional note
+        </button>
+      </div>
+    </div>
+    <div
+      class="margin-top-6 margin-bottom-3"
+    >
+      <button
+        class="usa-button"
+        data-testid="button"
+        type="submit"
+      >
+        Next
+      </button>
+    </div>
+    <button
+      class="usa-button usa-button usa-button--unstyled"
+      data-testid="button"
+      type="button"
+    >
+      <svg
+        aria-hidden="true"
+        class="usa-icon margin-right-1"
+        focusable="false"
+        height="1em"
+        role="img"
+        viewBox="0 0 24 24"
+        width="1em"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M0 0h24v24H0z"
+          fill="none"
+        />
+        <path
+          d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
+        />
+      </svg>
+      Save and return to task list
+    </button>
+  </form>
+  <div
+    class="mint-page-number margin-y-6"
+  >
+    <span
+      class="mint-page-number__page-num"
+    >
+      Page 1 of 5
+    </span>
+  </div>
+</DocumentFragment>
+`;

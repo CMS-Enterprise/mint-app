@@ -74,6 +74,22 @@ export default gql`
         modifiedDts
         status
       }
+      beneficiaries {
+        id
+        createdBy
+        createdDts
+        modifiedBy
+        modifiedDts
+        status
+      }
+      opsEvalAndLearning {
+        id
+        createdBy
+        createdDts
+        modifiedBy
+        modifiedDts
+        status
+      }
     }
   }
 `;

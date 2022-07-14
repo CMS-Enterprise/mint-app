@@ -37,7 +37,10 @@ import { UpdateModelPlanProvidersAndParticipantsVariables } from 'queries/types/
 import UpdateModelPlanProvidersAndParticipants from 'queries/UpdateModelPlanProvidersAndParticipants';
 import { ParticipantsType } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
-import { sortOtherEnum, translateParticipantsType } from 'utils/modelPlan';
+import {
+  mapMultiSelectOptions,
+  translateParticipantsType
+} from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
 
 import Communication from './Communication';
@@ -113,13 +116,6 @@ export const ParticipantsAndProvidersContent = () => {
         formikRef?.current?.setErrors(errors);
       });
   };
-
-  const mappedParticipants = Object.keys(ParticipantsType)
-    .sort(sortOtherEnum)
-    .map(key => ({
-      value: key,
-      label: translateParticipantsType(key)
-    }));
 
   const initialValues = {
     participants: participants ?? [],
@@ -227,7 +223,10 @@ export const ParticipantsAndProvidersContent = () => {
                           as={MultiSelect}
                           id="participants-and-providers-participants"
                           name="participants"
-                          options={mappedParticipants}
+                          options={mapMultiSelectOptions(
+                            translateParticipantsType,
+                            ParticipantsType
+                          )}
                           selectedLabel={t('selectedParticipants')}
                           onChange={(value: string[] | []) => {
                             setFieldValue('participants', value);

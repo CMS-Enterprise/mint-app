@@ -46,12 +46,12 @@ const participantsAndProviders = {
   numberOfParticipants: 'Number of participants',
   zero: '0',
   tenThousand: '10,000+',
-  estimateConfidence: 'What is your level of confidence on this esitmate?',
+  estimateConfidence: 'What is your level of confidence on this estimate?',
   estimateOptions: {
     notAtAll: 'Not at all confident',
     slightly: 'Slightly confident',
     fairly: 'Fairly confident',
-    completely: 'Compeletely confident'
+    completely: 'Completely confident'
   },
   recruitPartifipants: 'How will you recruit the participants?',
   recruitOptions: {

@@ -123,3 +123,7 @@ h5 {
 .usa-summary-box__heading {
   margin-bottom: 0rem;
 }
+
+.usa-input, .usa-select {
+  max-width: none !important;
+}

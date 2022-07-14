@@ -72,8 +72,9 @@ const TaskList = () => {
     documents,
     status,
     generalCharacteristics,
-    participantsAndProviders
-    // beneficiaries,
+    participantsAndProviders,
+    opsEvalAndLearning,
+    beneficiaries
     // operations,
     // payment,
     // finalizeModelPlan
@@ -100,15 +101,14 @@ const TaskList = () => {
           return 'READY';
         }
         return 'IN_PROGRESS';
-      // TODO: Add these model plans when BE integrates it
       case 'characteristics':
         return generalCharacteristics?.status;
       case 'participants-and-providers':
         return participantsAndProviders.status;
-      // case 'beneficiaries':
-      //   return;
-      // case 'operations':
-      //   return;
+      case 'beneficiaries':
+        return beneficiaries.status;
+      case 'ops-eval-and-learning':
+        return opsEvalAndLearning.status;
       // case 'payment':
       //   return;
       // case 'finalizeModelPlan':
