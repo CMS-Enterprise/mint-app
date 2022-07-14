@@ -349,6 +349,19 @@ export const translateSourceOptions = (type: string) => {
   }
 };
 
+export const translatePayType = (type: string) => {
+  switch (type) {
+    case 'CLAIMS_BASED_PAYMENTS':
+      return i18next.t('payments:whatWillYouPayOptions.claims');
+    case 'GRANTS':
+      return i18next.t('payments:whatWillYouPayOptions.grants');
+    case 'NON_CLAIMS_BASED_PAYMENTS':
+      return i18next.t('payments:whatWillYouPayOptions.nonClaims');
+    default:
+      return '';
+  }
+};
+
 export const translateConfidenceType = (type: string) => {
   switch (type) {
     case 'NOT_AT_ALL':
