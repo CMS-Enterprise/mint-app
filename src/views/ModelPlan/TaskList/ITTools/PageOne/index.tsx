@@ -7,6 +7,7 @@ import {
   BreadcrumbBar,
   BreadcrumbLink,
   Button,
+  Fieldset,
   Grid,
   IconArrowBack,
   Label,
@@ -28,6 +29,7 @@ import FieldGroup from 'components/shared/FieldGroup';
 import GetITToolsPageOne from 'queries/ITTools/GetITToolsPageOne';
 import {
   GetITToolPageOne as GetITToolsPageOneType,
+  GetITToolPageOne_modelPlan as ModelPlanType,
   GetITToolPageOne_modelPlan_generalCharacteristics as GeneralCharacteristicsType,
   GetITToolPageOne_modelPlan_itTools as ITToolsPageOneFormType,
   GetITToolPageOneVariables
@@ -65,9 +67,18 @@ const initialFormValues: ITToolsPageOneFormType = {
 
 const initialCharacteristicValues: GeneralCharacteristicsType = {
   __typename: 'PlanGeneralCharacteristics',
+  id: '',
   managePartCDEnrollment: null,
   collectPlanBids: null,
   planContactUpdated: null
+};
+
+const initialModelPlanValues: ModelPlanType = {
+  __typename: 'ModelPlan',
+  id: '',
+  modelName: '',
+  generalCharacteristics: initialCharacteristicValues,
+  itTools: initialFormValues
 };
 
 const ITToolsPageOne = () => {
@@ -87,14 +98,17 @@ const ITToolsPageOne = () => {
     }
   });
 
-  const modelPlan = data?.modelPlan;
-  const modelName = modelPlan?.modelName;
-  const id = modelPlan?.itTools?.id;
+  const modelPlan = data?.modelPlan || initialModelPlanValues;
 
-  const itToolsData = modelPlan?.itTools || initialFormValues;
-
-  const { managePartCDEnrollment, collectPlanBids, planContactUpdated } =
-    modelPlan?.generalCharacteristics || initialCharacteristicValues;
+  const {
+    modelName,
+    itTools,
+    generalCharacteristics: {
+      managePartCDEnrollment,
+      collectPlanBids,
+      planContactUpdated
+    }
+  } = modelPlan;
 
   const [update] = useMutation<UpdatePlanItToolsVariables>(UpdatePlanITTools);
 
@@ -102,11 +116,11 @@ const ITToolsPageOne = () => {
     formikValues: ITToolsPageOneFormType,
     redirect?: 'next' | 'back' | 'task-list'
   ) => {
-    const { id: updateId, __typename, ...changeValues } = formikValues;
+    const { id, __typename, ...changes } = formikValues;
     update({
       variables: {
-        id: updateId,
-        changes: changeValues
+        id,
+        changes
       }
     })
       .then(response => {
@@ -161,7 +175,7 @@ const ITToolsPageOne = () => {
       <AskAQuestion modelID={modelID} />
 
       <Formik
-        initialValues={itToolsData}
+        initialValues={itTools}
         onSubmit={values => {
           handleFormSubmit(values, 'next');
         }}
@@ -203,329 +217,334 @@ const ITToolsPageOne = () => {
                   >
                     <h2>{c('heading')}</h2>
 
-                    <FieldGroup
-                      scrollElement="gcPartCD"
-                      error={!!flatErrors.gcPartCD}
-                      className="margin-y-4"
-                    >
-                      <FieldArray
-                        name="gcPartCD"
-                        render={arrayHelpers => (
-                          <>
-                            <legend className="usa-label">
-                              {t('partCDTools')}
-                            </legend>
-                            <p className="text-base margin-top-1 margin-bottom-3 line-height-body-3">
-                              {t('partCDToolsInfo')}
-                            </p>
-                            <FieldErrorMsg>{flatErrors.gcPartCD}</FieldErrorMsg>
+                    <Fieldset disabled={loading}>
+                      <FieldGroup
+                        scrollElement="gcPartCD"
+                        error={!!flatErrors.gcPartCD}
+                        className="margin-y-4"
+                      >
+                        <FieldArray
+                          name="gcPartCD"
+                          render={arrayHelpers => (
+                            <>
+                              <legend className="usa-label">
+                                {t('partCDTools')}
+                              </legend>
+                              <p className="text-base margin-top-1 margin-bottom-3 line-height-body-3">
+                                {t('partCDToolsInfo')}
+                              </p>
+                              <FieldErrorMsg>
+                                {flatErrors.gcPartCD}
+                              </FieldErrorMsg>
 
-                            <ITToolsSummary
-                              question={c('manageEnrollment')}
-                              answers={[
-                                translateBoolean(
-                                  managePartCDEnrollment || false
-                                )
-                              ]}
-                              redirect={`/models/${modelID}/task-list/characteristics/key-characteristics`}
-                              answered={managePartCDEnrollment !== null}
-                              needsTool={managePartCDEnrollment === true}
-                              subtext={t('yesNeedsAnswer')}
-                            />
+                              <ITToolsSummary
+                                question={c('manageEnrollment')}
+                                answers={[
+                                  translateBoolean(
+                                    managePartCDEnrollment || false
+                                  )
+                                ]}
+                                redirect={`/models/${modelID}/task-list/characteristics/key-characteristics`}
+                                answered={managePartCDEnrollment !== null}
+                                needsTool={managePartCDEnrollment === true}
+                                subtext={t('yesNeedsAnswer')}
+                              />
 
-                            <p className="margin-top-4">{t('tools')}</p>
+                              <p className="margin-top-4">{t('tools')}</p>
 
-                            {Object.keys(GcPartCDType)
-                              .sort(sortOtherEnum)
-                              .map(type => {
-                                return (
-                                  <Fragment key={type}>
-                                    <Field
-                                      as={CheckboxField}
-                                      disabled={!managePartCDEnrollment}
-                                      id={`it-tools-gc-partc-${type}`}
-                                      name="gcPartCD"
-                                      label={translateGcPartCDType(type)}
-                                      value={type}
-                                      checked={values?.gcPartCD.includes(
-                                        type as GcPartCDType
-                                      )}
-                                      onChange={(
-                                        e: React.ChangeEvent<HTMLInputElement>
-                                      ) => {
-                                        if (e.target.checked) {
-                                          arrayHelpers.push(e.target.value);
-                                        } else {
-                                          const idx = values.gcPartCD.indexOf(
-                                            e.target.value as GcPartCDType
-                                          );
-                                          arrayHelpers.remove(idx);
-                                        }
-                                      }}
-                                    />
-                                    {type === GcPartCDType.OTHER &&
-                                      values.gcPartCD.includes(type) && (
-                                        <div className="margin-left-4 margin-top-1">
-                                          <Label
-                                            htmlFor="it-tools-gc-partc-other"
-                                            className={classNames(
-                                              {
-                                                'text-gray-30': !managePartCDEnrollment
-                                              },
-                                              'text-normal'
-                                            )}
-                                          >
-                                            {h('pleaseSpecify')}
-                                          </Label>
-                                          <FieldErrorMsg>
-                                            {flatErrors.gcPartCDOther}
-                                          </FieldErrorMsg>
-                                          <Field
-                                            as={TextInput}
-                                            type="text"
-                                            disabled={!managePartCDEnrollment}
-                                            className="maxw-none"
-                                            id="it-tools-gc-partcd-other"
-                                            maxLength={50}
-                                            name="gcPartCDOther"
-                                          />
-                                        </div>
-                                      )}
-                                  </Fragment>
-                                );
-                              })}
-                            <AddNote
-                              id="it-tools-gc-partcd-note"
-                              field="gcPartCDNote"
-                            />
-                          </>
-                        )}
-                      />
-                    </FieldGroup>
+                              {Object.keys(GcPartCDType)
+                                .sort(sortOtherEnum)
+                                .map(type => {
+                                  return (
+                                    <Fragment key={type}>
+                                      <Field
+                                        as={CheckboxField}
+                                        disabled={!managePartCDEnrollment}
+                                        id={`it-tools-gc-partc-${type}`}
+                                        name="gcPartCD"
+                                        label={translateGcPartCDType(type)}
+                                        value={type}
+                                        checked={values?.gcPartCD.includes(
+                                          type as GcPartCDType
+                                        )}
+                                        onChange={(
+                                          e: React.ChangeEvent<HTMLInputElement>
+                                        ) => {
+                                          if (e.target.checked) {
+                                            arrayHelpers.push(e.target.value);
+                                          } else {
+                                            const idx = values.gcPartCD.indexOf(
+                                              e.target.value as GcPartCDType
+                                            );
+                                            arrayHelpers.remove(idx);
+                                          }
+                                        }}
+                                      />
+                                      {type === GcPartCDType.OTHER &&
+                                        values.gcPartCD.includes(type) && (
+                                          <div className="margin-left-4 margin-top-1">
+                                            <Label
+                                              htmlFor="it-tools-gc-partc-other"
+                                              className={classNames(
+                                                {
+                                                  'text-gray-30': !managePartCDEnrollment
+                                                },
+                                                'text-normal'
+                                              )}
+                                            >
+                                              {h('pleaseSpecify')}
+                                            </Label>
+                                            <FieldErrorMsg>
+                                              {flatErrors.gcPartCDOther}
+                                            </FieldErrorMsg>
+                                            <Field
+                                              as={TextInput}
+                                              type="text"
+                                              disabled={!managePartCDEnrollment}
+                                              className="maxw-none"
+                                              id="it-tools-gc-partcd-other"
+                                              maxLength={50}
+                                              name="gcPartCDOther"
+                                            />
+                                          </div>
+                                        )}
+                                    </Fragment>
+                                  );
+                                })}
+                              <AddNote
+                                id="it-tools-gc-partcd-note"
+                                field="gcPartCDNote"
+                              />
+                            </>
+                          )}
+                        />
+                      </FieldGroup>
 
-                    <FieldGroup
-                      scrollElement="gcCollectBids"
-                      error={!!flatErrors.gcCollectBids}
-                      className="margin-y-4"
-                    >
-                      <FieldArray
-                        name="gcCollectBids"
-                        render={arrayHelpers => (
-                          <>
-                            <legend className="usa-label">
-                              {t('collectBidsTools')}
-                            </legend>
-                            <p className="text-base margin-top-1 margin-bottom-3 line-height-body-3">
-                              {t('partCDToolsInfo')}
-                            </p>
-                            <FieldErrorMsg>
-                              {flatErrors.gcCollectBids}
-                            </FieldErrorMsg>
+                      <FieldGroup
+                        scrollElement="gcCollectBids"
+                        error={!!flatErrors.gcCollectBids}
+                        className="margin-y-4"
+                      >
+                        <FieldArray
+                          name="gcCollectBids"
+                          render={arrayHelpers => (
+                            <>
+                              <legend className="usa-label">
+                                {t('collectBidsTools')}
+                              </legend>
+                              <p className="text-base margin-top-1 margin-bottom-3 line-height-body-3">
+                                {t('partCDToolsInfo')}
+                              </p>
+                              <FieldErrorMsg>
+                                {flatErrors.gcCollectBids}
+                              </FieldErrorMsg>
 
-                            <ITToolsSummary
-                              question={c('reviewPlanBids')}
-                              answers={[
-                                translateBoolean(collectPlanBids || false)
-                              ]}
-                              redirect={`/models/${modelID}/task-list/characteristics/key-characteristics`}
-                              answered={collectPlanBids !== null}
-                              needsTool={collectPlanBids === true}
-                              subtext={t('yesNeedsAnswer')}
-                            />
+                              <ITToolsSummary
+                                question={c('reviewPlanBids')}
+                                answers={[
+                                  translateBoolean(collectPlanBids || false)
+                                ]}
+                                redirect={`/models/${modelID}/task-list/characteristics/key-characteristics`}
+                                answered={collectPlanBids !== null}
+                                needsTool={collectPlanBids === true}
+                                subtext={t('yesNeedsAnswer')}
+                              />
 
-                            <p className="margin-top-4">{t('tools')}</p>
+                              <p className="margin-top-4">{t('tools')}</p>
 
-                            {Object.keys(GcCollectBidsType)
-                              .sort(sortOtherEnum)
-                              .map(type => {
-                                return (
-                                  <Fragment key={type}>
-                                    <Field
-                                      as={CheckboxField}
-                                      disabled={!collectPlanBids}
-                                      id={`it-tools-gc-collect-bids-${type}`}
-                                      name="gcCollectBids"
-                                      label={translateGcCollectBidsType(type)}
-                                      value={type}
-                                      checked={values?.gcCollectBids.includes(
-                                        type as GcCollectBidsType
-                                      )}
-                                      onChange={(
-                                        e: React.ChangeEvent<HTMLInputElement>
-                                      ) => {
-                                        if (e.target.checked) {
-                                          arrayHelpers.push(e.target.value);
-                                        } else {
-                                          const idx = values.gcCollectBids.indexOf(
-                                            e.target.value as GcCollectBidsType
-                                          );
-                                          arrayHelpers.remove(idx);
-                                        }
-                                      }}
-                                    />
-                                    {type === GcCollectBidsType.OTHER &&
-                                      values.gcCollectBids.includes(type) && (
-                                        <div className="margin-left-4 margin-top-1">
-                                          <Label
-                                            htmlFor="it-tools-gc-collect-bids-other"
-                                            className={classNames(
-                                              {
-                                                'text-gray-30': !collectPlanBids
-                                              },
-                                              'text-normal'
-                                            )}
-                                          >
-                                            {h('pleaseSpecify')}
-                                          </Label>
-                                          <FieldErrorMsg>
-                                            {flatErrors.gcCollectBidsOther}
-                                          </FieldErrorMsg>
-                                          <Field
-                                            as={TextInput}
-                                            type="text"
-                                            disabled={!collectPlanBids}
-                                            className="maxw-none"
-                                            id="it-tools-gc-collect-bids-other"
-                                            maxLength={50}
-                                            name="gcCollectBidsOther"
-                                          />
-                                        </div>
-                                      )}
-                                  </Fragment>
-                                );
-                              })}
-                            <AddNote
-                              id="it-tools-gc-collect-bids-note"
-                              field="gcCollectBidsNote"
-                            />
-                          </>
-                        )}
-                      />
-                    </FieldGroup>
+                              {Object.keys(GcCollectBidsType)
+                                .sort(sortOtherEnum)
+                                .map(type => {
+                                  return (
+                                    <Fragment key={type}>
+                                      <Field
+                                        as={CheckboxField}
+                                        disabled={!collectPlanBids}
+                                        id={`it-tools-gc-collect-bids-${type}`}
+                                        name="gcCollectBids"
+                                        label={translateGcCollectBidsType(type)}
+                                        value={type}
+                                        checked={values?.gcCollectBids.includes(
+                                          type as GcCollectBidsType
+                                        )}
+                                        onChange={(
+                                          e: React.ChangeEvent<HTMLInputElement>
+                                        ) => {
+                                          if (e.target.checked) {
+                                            arrayHelpers.push(e.target.value);
+                                          } else {
+                                            const idx = values.gcCollectBids.indexOf(
+                                              e.target
+                                                .value as GcCollectBidsType
+                                            );
+                                            arrayHelpers.remove(idx);
+                                          }
+                                        }}
+                                      />
+                                      {type === GcCollectBidsType.OTHER &&
+                                        values.gcCollectBids.includes(type) && (
+                                          <div className="margin-left-4 margin-top-1">
+                                            <Label
+                                              htmlFor="it-tools-gc-collect-bids-other"
+                                              className={classNames(
+                                                {
+                                                  'text-gray-30': !collectPlanBids
+                                                },
+                                                'text-normal'
+                                              )}
+                                            >
+                                              {h('pleaseSpecify')}
+                                            </Label>
+                                            <FieldErrorMsg>
+                                              {flatErrors.gcCollectBidsOther}
+                                            </FieldErrorMsg>
+                                            <Field
+                                              as={TextInput}
+                                              type="text"
+                                              disabled={!collectPlanBids}
+                                              className="maxw-none"
+                                              id="it-tools-gc-collect-bids-other"
+                                              maxLength={50}
+                                              name="gcCollectBidsOther"
+                                            />
+                                          </div>
+                                        )}
+                                    </Fragment>
+                                  );
+                                })}
+                              <AddNote
+                                id="it-tools-gc-collect-bids-note"
+                                field="gcCollectBidsNote"
+                              />
+                            </>
+                          )}
+                        />
+                      </FieldGroup>
 
-                    <FieldGroup
-                      scrollElement="gcUpdateContract"
-                      error={!!flatErrors.gcUpdateContract}
-                      className="margin-y-4"
-                    >
-                      <FieldArray
-                        name="gcUpdateContract"
-                        render={arrayHelpers => (
-                          <>
-                            <legend className="usa-label">
-                              {t('updateContract')}
-                            </legend>
-                            <p className="text-base margin-top-1 margin-bottom-3 line-height-body-3">
-                              {t('partCDToolsInfo')}
-                            </p>
-                            <FieldErrorMsg>
-                              {flatErrors.planContactUpdated}
-                            </FieldErrorMsg>
+                      <FieldGroup
+                        scrollElement="gcUpdateContract"
+                        error={!!flatErrors.gcUpdateContract}
+                        className="margin-y-4"
+                      >
+                        <FieldArray
+                          name="gcUpdateContract"
+                          render={arrayHelpers => (
+                            <>
+                              <legend className="usa-label">
+                                {t('updateContract')}
+                              </legend>
+                              <p className="text-base margin-top-1 margin-bottom-3 line-height-body-3">
+                                {t('partCDToolsInfo')}
+                              </p>
+                              <FieldErrorMsg>
+                                {flatErrors.planContactUpdated}
+                              </FieldErrorMsg>
 
-                            <ITToolsSummary
-                              question={c('updatedContact')}
-                              answers={[
-                                translateBoolean(planContactUpdated || false)
-                              ]}
-                              redirect={`/models/${modelID}/task-list/characteristics/key-characteristics`}
-                              answered={planContactUpdated !== null}
-                              needsTool={planContactUpdated === true}
-                              subtext={t('yesNeedsAnswer')}
-                            />
+                              <ITToolsSummary
+                                question={c('updatedContact')}
+                                answers={[
+                                  translateBoolean(planContactUpdated || false)
+                                ]}
+                                redirect={`/models/${modelID}/task-list/characteristics/key-characteristics`}
+                                answered={planContactUpdated !== null}
+                                needsTool={planContactUpdated === true}
+                                subtext={t('yesNeedsAnswer')}
+                              />
 
-                            <p className="margin-top-4">{t('tools')}</p>
+                              <p className="margin-top-4">{t('tools')}</p>
 
-                            {Object.keys(GcUpdateContractType)
-                              .sort(sortOtherEnum)
-                              .map(type => {
-                                return (
-                                  <Fragment key={type}>
-                                    <Field
-                                      as={CheckboxField}
-                                      disabled={!planContactUpdated}
-                                      id={`it-tools-gc-update-contract-${type}`}
-                                      name="gcUpdateContract"
-                                      label={translateGcUpdateContractType(
-                                        type
-                                      )}
-                                      value={type}
-                                      checked={values?.gcUpdateContract.includes(
-                                        type as GcUpdateContractType
-                                      )}
-                                      onChange={(
-                                        e: React.ChangeEvent<HTMLInputElement>
-                                      ) => {
-                                        if (e.target.checked) {
-                                          arrayHelpers.push(e.target.value);
-                                        } else {
-                                          const idx = values.gcUpdateContract.indexOf(
-                                            e.target
-                                              .value as GcUpdateContractType
-                                          );
-                                          arrayHelpers.remove(idx);
-                                        }
-                                      }}
-                                    />
-                                    {type === GcUpdateContractType.OTHER &&
-                                      values.gcUpdateContract.includes(
-                                        type
-                                      ) && (
-                                        <div className="margin-left-4 margin-top-1">
-                                          <Label
-                                            htmlFor="it-tools-gc-update-contract-other"
-                                            className={classNames(
-                                              {
-                                                'text-gray-30': !planContactUpdated
-                                              },
-                                              'text-normal'
-                                            )}
-                                          >
-                                            {h('pleaseSpecify')}
-                                          </Label>
-                                          <FieldErrorMsg>
-                                            {flatErrors.gcUpdateContractOther}
-                                          </FieldErrorMsg>
-                                          <Field
-                                            as={TextInput}
-                                            type="text"
-                                            disabled={!planContactUpdated}
-                                            className="maxw-none"
-                                            id="it-tools-gc-update-contract-other"
-                                            maxLength={50}
-                                            name="gcUpdateContractOther"
-                                          />
-                                        </div>
-                                      )}
-                                  </Fragment>
-                                );
-                              })}
-                            <AddNote
-                              id="it-tools-gc-update-contract-note"
-                              field="gcUpdateContractNote"
-                            />
-                          </>
-                        )}
-                      />
-                    </FieldGroup>
+                              {Object.keys(GcUpdateContractType)
+                                .sort(sortOtherEnum)
+                                .map(type => {
+                                  return (
+                                    <Fragment key={type}>
+                                      <Field
+                                        as={CheckboxField}
+                                        disabled={!planContactUpdated}
+                                        id={`it-tools-gc-update-contract-${type}`}
+                                        name="gcUpdateContract"
+                                        label={translateGcUpdateContractType(
+                                          type
+                                        )}
+                                        value={type}
+                                        checked={values?.gcUpdateContract.includes(
+                                          type as GcUpdateContractType
+                                        )}
+                                        onChange={(
+                                          e: React.ChangeEvent<HTMLInputElement>
+                                        ) => {
+                                          if (e.target.checked) {
+                                            arrayHelpers.push(e.target.value);
+                                          } else {
+                                            const idx = values.gcUpdateContract.indexOf(
+                                              e.target
+                                                .value as GcUpdateContractType
+                                            );
+                                            arrayHelpers.remove(idx);
+                                          }
+                                        }}
+                                      />
+                                      {type === GcUpdateContractType.OTHER &&
+                                        values.gcUpdateContract.includes(
+                                          type
+                                        ) && (
+                                          <div className="margin-left-4 margin-top-1">
+                                            <Label
+                                              htmlFor="it-tools-gc-update-contract-other"
+                                              className={classNames(
+                                                {
+                                                  'text-gray-30': !planContactUpdated
+                                                },
+                                                'text-normal'
+                                              )}
+                                            >
+                                              {h('pleaseSpecify')}
+                                            </Label>
+                                            <FieldErrorMsg>
+                                              {flatErrors.gcUpdateContractOther}
+                                            </FieldErrorMsg>
+                                            <Field
+                                              as={TextInput}
+                                              type="text"
+                                              disabled={!planContactUpdated}
+                                              className="maxw-none"
+                                              id="it-tools-gc-update-contract-other"
+                                              maxLength={50}
+                                              name="gcUpdateContractOther"
+                                            />
+                                          </div>
+                                        )}
+                                    </Fragment>
+                                  );
+                                })}
+                              <AddNote
+                                id="it-tools-gc-update-contract-note"
+                                field="gcUpdateContractNote"
+                              />
+                            </>
+                          )}
+                        />
+                      </FieldGroup>
 
-                    <div className="margin-top-6 margin-bottom-3">
-                      <Button type="submit" onClick={() => setErrors({})}>
-                        {h('next')}
+                      <div className="margin-top-6 margin-bottom-3">
+                        <Button type="submit" onClick={() => setErrors({})}>
+                          {h('next')}
+                        </Button>
+                      </div>
+                      <Button
+                        type="button"
+                        className="usa-button usa-button--unstyled"
+                        onClick={() => handleFormSubmit(values, 'task-list')}
+                      >
+                        <IconArrowBack className="margin-right-1" aria-hidden />
+                        {h('saveAndReturn')}
                       </Button>
-                    </div>
-                    <Button
-                      type="button"
-                      className="usa-button usa-button--unstyled"
-                      onClick={() => handleFormSubmit(values, 'task-list')}
-                    >
-                      <IconArrowBack className="margin-right-1" aria-hidden />
-                      {h('saveAndReturn')}
-                    </Button>
+                    </Fieldset>
                   </Form>
                 </Grid>
               </Grid>
 
-              {id && (
+              {itTools.id && !loading && (
                 <AutoSave
                   values={values}
                   onSave={() => {

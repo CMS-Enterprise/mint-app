@@ -11,6 +11,7 @@ import { DataForMonitoringType, OelObtainDataType, OelClaimsBasedMeasuresType, O
 
 export interface GetITToolPageSix_modelPlan_opsEvalAndLearning {
   __typename: "PlanOpsEvalAndLearning";
+  id: UUID;
   dataNeededForMonitoring: DataForMonitoringType[];
 }
 

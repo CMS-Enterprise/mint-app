@@ -6,9 +6,11 @@ export default gql`
       id
       modelName
       opsEvalAndLearning {
+        id
         modelLearningSystems
       }
       payments {
+        id
         payType
         shouldAnyProvidersExcludedFFSSystems
       }

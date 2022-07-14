@@ -6,6 +6,7 @@ export default gql`
       id
       modelName
       opsEvalAndLearning {
+        id
         dataToSendParticicipants
         modelLearningSystems
       }

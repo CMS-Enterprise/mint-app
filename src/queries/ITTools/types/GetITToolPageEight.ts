@@ -11,11 +11,13 @@ import { ModelLearningSystemType, PayType, OelEducateBeneficiariesType, PMakeCla
 
 export interface GetITToolPageEight_modelPlan_opsEvalAndLearning {
   __typename: "PlanOpsEvalAndLearning";
+  id: UUID;
   modelLearningSystems: ModelLearningSystemType[];
 }
 
 export interface GetITToolPageEight_modelPlan_payments {
   __typename: "PlanPayments";
+  id: UUID;
   payType: PayType[];
   shouldAnyProvidersExcludedFFSSystems: boolean | null;
 }

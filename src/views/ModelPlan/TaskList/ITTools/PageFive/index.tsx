@@ -7,6 +7,7 @@ import {
   BreadcrumbBar,
   BreadcrumbLink,
   Button,
+  Fieldset,
   Grid,
   IconArrowBack,
   Label,
@@ -28,6 +29,7 @@ import FieldGroup from 'components/shared/FieldGroup';
 import GetITToolsPageFive from 'queries/ITTools/GetITToolsPageFive';
 import {
   GetITToolPageFive as GetITToolPageFiveType,
+  GetITToolPageFive_modelPlan as ModelPlanType,
   GetITToolPageFive_modelPlan_itTools as ITToolsPageFiveFormType,
   GetITToolPageFive_modelPlan_opsEvalAndLearning as OpsEvalAndLearningType,
   GetITToolPageFiveVariables
@@ -68,12 +70,21 @@ const initialFormValues: ITToolsPageFiveFormType = {
 
 const initialOpsEvalAndLearningValues: OpsEvalAndLearningType = {
   __typename: 'PlanOpsEvalAndLearning',
+  id: '',
   appealPerformance: null,
   appealFeedback: null,
   appealPayments: null,
   appealOther: null,
   evaluationApproaches: [],
   dataNeededForMonitoring: []
+};
+
+const initialModelPlanValues: ModelPlanType = {
+  __typename: 'ModelPlan',
+  id: '',
+  modelName: '',
+  opsEvalAndLearning: initialOpsEvalAndLearningValues,
+  itTools: initialFormValues
 };
 
 const ITToolsPageFive = () => {
@@ -93,20 +104,20 @@ const ITToolsPageFive = () => {
     }
   });
 
-  const modelPlan = data?.modelPlan;
-  const modelName = modelPlan?.modelName;
-  const id = modelPlan?.itTools?.id;
-
-  const itToolsData = modelPlan?.itTools || initialFormValues;
+  const modelPlan = data?.modelPlan || initialModelPlanValues;
 
   const {
-    appealPerformance,
-    appealFeedback,
-    appealPayments,
-    appealOther,
-    evaluationApproaches,
-    dataNeededForMonitoring
-  } = modelPlan?.opsEvalAndLearning || initialOpsEvalAndLearningValues;
+    modelName,
+    itTools,
+    opsEvalAndLearning: {
+      appealPerformance,
+      appealFeedback,
+      appealPayments,
+      appealOther,
+      evaluationApproaches,
+      dataNeededForMonitoring
+    }
+  } = modelPlan;
 
   const [update] = useMutation<UpdatePlanItToolsVariables>(UpdatePlanITTools);
 
@@ -114,11 +125,11 @@ const ITToolsPageFive = () => {
     formikValues: ITToolsPageFiveFormType,
     redirect?: 'next' | 'back' | 'task-list'
   ) => {
-    const { id: updateId, __typename, ...changeValues } = formikValues;
+    const { id, __typename, ...changes } = formikValues;
     update({
       variables: {
-        id: updateId,
-        changes: changeValues
+        id,
+        changes
       }
     })
       .then(response => {
@@ -175,7 +186,7 @@ const ITToolsPageFive = () => {
       <AskAQuestion modelID={modelID} />
 
       <Formik
-        initialValues={itToolsData}
+        initialValues={itTools}
         onSubmit={values => {
           handleFormSubmit(values, 'next');
         }}
@@ -215,458 +226,475 @@ const ITToolsPageFive = () => {
                       handleSubmit(e);
                     }}
                   >
-                    <FieldGroup
-                      scrollElement="oelProcessAppeals"
-                      error={!!flatErrors.oelProcessAppeals}
-                      className="margin-y-4"
-                    >
-                      <FieldArray
-                        name="oelProcessAppeals"
-                        render={arrayHelpers => (
-                          <>
-                            <legend className="usa-label">
-                              {t('appealTools')}
-                            </legend>
-                            <p className="text-base margin-top-1 margin-bottom-3 line-height-body-3">
-                              {t('appealToolsInfo')}
-                            </p>
-                            <FieldErrorMsg>
-                              {flatErrors.oelProcessAppeals}
-                            </FieldErrorMsg>
+                    <Fieldset disabled={loading}>
+                      <FieldGroup
+                        scrollElement="oelProcessAppeals"
+                        error={!!flatErrors.oelProcessAppeals}
+                        className="margin-y-4"
+                      >
+                        <FieldArray
+                          name="oelProcessAppeals"
+                          render={arrayHelpers => (
+                            <>
+                              <legend className="usa-label">
+                                {t('appealTools')}
+                              </legend>
+                              <p className="text-base margin-top-1 margin-bottom-3 line-height-body-3">
+                                {t('appealToolsInfo')}
+                              </p>
+                              <FieldErrorMsg>
+                                {flatErrors.oelProcessAppeals}
+                              </FieldErrorMsg>
 
-                            <ITToolsSummary
-                              question={t('participantAppeal')}
-                              answers={[
-                                appealPerformance !== null
-                                  ? o('performanceScores')
-                                  : '',
-                                appealFeedback !== null
-                                  ? o('feedbackResults')
-                                  : '',
-                                appealPayments !== null ? o('payments') : '',
-                                appealOther !== null ? o('Others') : ''
-                              ].filter(appeal => appeal !== '')}
-                              redirect={`/models/${modelID}/task-list/ops-eval-and-learning/performance`}
-                              answered={
-                                appealPerformance !== null ||
-                                appealFeedback !== null ||
-                                appealPayments !== null ||
-                                appealOther !== null
-                              }
-                              needsTool={
-                                appealPerformance! ||
-                                appealFeedback! ||
-                                appealPayments! ||
-                                appealOther!
-                              }
-                              subtext={t('appealsNeedsAnswer')}
-                            />
+                              <ITToolsSummary
+                                question={t('participantAppeal')}
+                                answers={[
+                                  appealPerformance !== null
+                                    ? o('performanceScores')
+                                    : '',
+                                  appealFeedback !== null
+                                    ? o('feedbackResults')
+                                    : '',
+                                  appealPayments !== null ? o('payments') : '',
+                                  appealOther !== null ? o('Others') : ''
+                                ].filter(appeal => appeal !== '')}
+                                redirect={`/models/${modelID}/task-list/ops-eval-and-learning/performance`}
+                                answered={
+                                  appealPerformance !== null ||
+                                  appealFeedback !== null ||
+                                  appealPayments !== null ||
+                                  appealOther !== null
+                                }
+                                needsTool={
+                                  appealPerformance! ||
+                                  appealFeedback! ||
+                                  appealPayments! ||
+                                  appealOther!
+                                }
+                                subtext={t('appealsNeedsAnswer')}
+                              />
 
-                            <p className="margin-top-4">{t('tools')}</p>
+                              <p className="margin-top-4">{t('tools')}</p>
 
-                            {Object.keys(OelProcessAppealsType)
-                              .sort(sortOtherEnum)
-                              .map(type => {
-                                return (
-                                  <Fragment key={type}>
-                                    <Field
-                                      as={CheckboxField}
-                                      disabled={
-                                        !appealPerformance &&
-                                        !appealFeedback &&
-                                        !appealPayments &&
-                                        !appealOther
-                                      }
-                                      id={`it-tools-oel-process-appeals-${type}`}
-                                      name="oelProcessAppeals"
-                                      label={translateOelProcessAppealsType(
-                                        type
-                                      )}
-                                      value={type}
-                                      checked={values?.oelProcessAppeals.includes(
-                                        type as OelProcessAppealsType
-                                      )}
-                                      onChange={(
-                                        e: React.ChangeEvent<HTMLInputElement>
-                                      ) => {
-                                        if (e.target.checked) {
-                                          arrayHelpers.push(e.target.value);
-                                        } else {
-                                          const idx = values.oelProcessAppeals.indexOf(
-                                            e.target
-                                              .value as OelProcessAppealsType
-                                          );
-                                          arrayHelpers.remove(idx);
+                              {Object.keys(OelProcessAppealsType)
+                                .sort(sortOtherEnum)
+                                .map(type => {
+                                  return (
+                                    <Fragment key={type}>
+                                      <Field
+                                        as={CheckboxField}
+                                        disabled={
+                                          !appealPerformance &&
+                                          !appealFeedback &&
+                                          !appealPayments &&
+                                          !appealOther
                                         }
-                                      }}
-                                    />
-                                    {type === OelProcessAppealsType.OTHER &&
-                                      values.oelProcessAppeals.includes(
-                                        type
-                                      ) && (
-                                        <div className="margin-left-4 margin-top-1">
-                                          <Label
-                                            htmlFor="it-tools-oel-process-appeals-other"
-                                            className={classNames(
+                                        id={`it-tools-oel-process-appeals-${type}`}
+                                        name="oelProcessAppeals"
+                                        label={translateOelProcessAppealsType(
+                                          type
+                                        )}
+                                        value={type}
+                                        checked={values?.oelProcessAppeals.includes(
+                                          type as OelProcessAppealsType
+                                        )}
+                                        onChange={(
+                                          e: React.ChangeEvent<HTMLInputElement>
+                                        ) => {
+                                          if (e.target.checked) {
+                                            arrayHelpers.push(e.target.value);
+                                          } else {
+                                            const idx = values.oelProcessAppeals.indexOf(
+                                              e.target
+                                                .value as OelProcessAppealsType
+                                            );
+                                            arrayHelpers.remove(idx);
+                                          }
+                                        }}
+                                      />
+                                      {type === OelProcessAppealsType.OTHER &&
+                                        values.oelProcessAppeals.includes(
+                                          type
+                                        ) && (
+                                          <div className="margin-left-4 margin-top-1">
+                                            <Label
+                                              htmlFor="it-tools-oel-process-appeals-other"
+                                              className={classNames(
+                                                {
+                                                  'text-gray-30':
+                                                    !appealPerformance &&
+                                                    !appealFeedback &&
+                                                    !appealPayments &&
+                                                    !appealOther
+                                                },
+                                                'text-normal'
+                                              )}
+                                            >
+                                              {h('pleaseSpecify')}
+                                            </Label>
+                                            <FieldErrorMsg>
                                               {
-                                                'text-gray-30':
-                                                  !appealPerformance &&
-                                                  !appealFeedback &&
-                                                  !appealPayments &&
-                                                  !appealOther
-                                              },
-                                              'text-normal'
-                                            )}
-                                          >
-                                            {h('pleaseSpecify')}
-                                          </Label>
-                                          <FieldErrorMsg>
-                                            {flatErrors.oelProcessAppealsOther}
-                                          </FieldErrorMsg>
-                                          <Field
-                                            as={TextInput}
-                                            type="text"
-                                            disabled={
-                                              !appealPerformance &&
-                                              !appealFeedback &&
-                                              !appealPayments &&
-                                              !appealOther
-                                            }
-                                            className="maxw-none"
-                                            id="it-tools-oel-process-appeals-other"
-                                            maxLength={50}
-                                            name="oelProcessAppealsOther"
-                                          />
-                                        </div>
-                                      )}
-                                  </Fragment>
-                                );
-                              })}
-                            <AddNote
-                              id="it-tools-oel-process-appeals-note"
-                              field="oelProcessAppealsNote"
-                            />
-                          </>
-                        )}
-                      />
-                    </FieldGroup>
+                                                flatErrors.oelProcessAppealsOther
+                                              }
+                                            </FieldErrorMsg>
+                                            <Field
+                                              as={TextInput}
+                                              type="text"
+                                              disabled={
+                                                !appealPerformance &&
+                                                !appealFeedback &&
+                                                !appealPayments &&
+                                                !appealOther
+                                              }
+                                              className="maxw-none"
+                                              id="it-tools-oel-process-appeals-other"
+                                              maxLength={50}
+                                              name="oelProcessAppealsOther"
+                                            />
+                                          </div>
+                                        )}
+                                    </Fragment>
+                                  );
+                                })}
+                              <AddNote
+                                id="it-tools-oel-process-appeals-note"
+                                field="oelProcessAppealsNote"
+                              />
+                            </>
+                          )}
+                        />
+                      </FieldGroup>
 
-                    <FieldGroup
-                      scrollElement="oelEvaluationContractor"
-                      error={!!flatErrors.oelEvaluationContractor}
-                      className="margin-y-4"
-                    >
-                      <FieldArray
-                        name="oelEvaluationContractor"
-                        render={arrayHelpers => (
-                          <>
-                            <legend className="usa-label">
-                              {t('contractorTool')}
-                            </legend>
+                      <FieldGroup
+                        scrollElement="oelEvaluationContractor"
+                        error={!!flatErrors.oelEvaluationContractor}
+                        className="margin-y-4"
+                      >
+                        <FieldArray
+                          name="oelEvaluationContractor"
+                          render={arrayHelpers => (
+                            <>
+                              <legend className="usa-label">
+                                {t('contractorTool')}
+                              </legend>
 
-                            <FieldErrorMsg>
-                              {flatErrors.oelEvaluationContractor}
-                            </FieldErrorMsg>
+                              <FieldErrorMsg>
+                                {flatErrors.oelEvaluationContractor}
+                              </FieldErrorMsg>
 
-                            <ITToolsSummary
-                              question={o('evaluationApproach')}
-                              answers={evaluationApproaches.map(approach =>
-                                translateEvaluationApproachType(approach || '')
-                              )}
-                              options={Object.keys(EvaluationApproachType)
-                                .map(approachType =>
-                                  translateEvaluationApproachType(approachType)
-                                )
-                                .filter(
-                                  approachType =>
-                                    approachType !==
-                                    EvaluationApproachType.OTHER
+                              <ITToolsSummary
+                                question={o('evaluationApproach')}
+                                answers={evaluationApproaches.map(approach =>
+                                  translateEvaluationApproachType(
+                                    approach || ''
+                                  )
                                 )}
-                              redirect={`/models/${modelID}/task-list/ops-eval-and-learning/evaluation`}
-                              answered={evaluationApproaches.length > 0}
-                              needsTool={
-                                evaluationApproaches.includes(
-                                  EvaluationApproachType.CONTROL_INTERVENTION
-                                ) ||
-                                evaluationApproaches.includes(
-                                  EvaluationApproachType.COMPARISON_MATCH
-                                ) ||
-                                evaluationApproaches.includes(
-                                  EvaluationApproachType.INTERRUPTED_TIME
-                                ) ||
-                                evaluationApproaches.includes(
-                                  EvaluationApproachType.NON_MEDICARE_DATA
-                                )
-                              }
-                              subtext={t('appealsNeedsAnswer')}
-                            />
+                                options={Object.keys(EvaluationApproachType)
+                                  .map(approachType =>
+                                    translateEvaluationApproachType(
+                                      approachType
+                                    )
+                                  )
+                                  .filter(
+                                    approachType =>
+                                      approachType !==
+                                      EvaluationApproachType.OTHER
+                                  )}
+                                redirect={`/models/${modelID}/task-list/ops-eval-and-learning/evaluation`}
+                                answered={evaluationApproaches.length > 0}
+                                needsTool={
+                                  evaluationApproaches.includes(
+                                    EvaluationApproachType.CONTROL_INTERVENTION
+                                  ) ||
+                                  evaluationApproaches.includes(
+                                    EvaluationApproachType.COMPARISON_MATCH
+                                  ) ||
+                                  evaluationApproaches.includes(
+                                    EvaluationApproachType.INTERRUPTED_TIME
+                                  ) ||
+                                  evaluationApproaches.includes(
+                                    EvaluationApproachType.NON_MEDICARE_DATA
+                                  )
+                                }
+                                subtext={t('appealsNeedsAnswer')}
+                              />
 
-                            <p className="margin-top-4">{t('tools')}</p>
+                              <p className="margin-top-4">{t('tools')}</p>
 
-                            {Object.keys(OelEvaluationContractorType)
-                              .sort(sortOtherEnum)
-                              .map(type => {
-                                return (
-                                  <Fragment key={type}>
-                                    <Field
-                                      as={CheckboxField}
-                                      disabled={
-                                        (!evaluationApproaches.includes(
-                                          EvaluationApproachType.CONTROL_INTERVENTION
-                                        ) &&
-                                          !evaluationApproaches.includes(
-                                            EvaluationApproachType.COMPARISON_MATCH
+                              {Object.keys(OelEvaluationContractorType)
+                                .sort(sortOtherEnum)
+                                .map(type => {
+                                  return (
+                                    <Fragment key={type}>
+                                      <Field
+                                        as={CheckboxField}
+                                        disabled={
+                                          (!evaluationApproaches.includes(
+                                            EvaluationApproachType.CONTROL_INTERVENTION
                                           ) &&
-                                          !evaluationApproaches.includes(
-                                            EvaluationApproachType.INTERRUPTED_TIME
-                                          ) &&
-                                          !evaluationApproaches.includes(
-                                            EvaluationApproachType.NON_MEDICARE_DATA
-                                          )) ||
-                                        evaluationApproaches.length === 0
-                                      }
-                                      id={`it-tools-oel-evaluation-contractor-${type}`}
-                                      name="oelEvaluationContractor"
-                                      label={translateOelEvaluationContractorType(
-                                        type
-                                      )}
-                                      value={type}
-                                      checked={values?.oelEvaluationContractor.includes(
-                                        type as OelEvaluationContractorType
-                                      )}
-                                      onChange={(
-                                        e: React.ChangeEvent<HTMLInputElement>
-                                      ) => {
-                                        if (e.target.checked) {
-                                          arrayHelpers.push(e.target.value);
-                                        } else {
-                                          const idx = values.oelEvaluationContractor.indexOf(
-                                            e.target
-                                              .value as OelEvaluationContractorType
-                                          );
-                                          arrayHelpers.remove(idx);
+                                            !evaluationApproaches.includes(
+                                              EvaluationApproachType.COMPARISON_MATCH
+                                            ) &&
+                                            !evaluationApproaches.includes(
+                                              EvaluationApproachType.INTERRUPTED_TIME
+                                            ) &&
+                                            !evaluationApproaches.includes(
+                                              EvaluationApproachType.NON_MEDICARE_DATA
+                                            )) ||
+                                          evaluationApproaches.length === 0
                                         }
-                                      }}
-                                    />
-                                    {type ===
-                                      OelEvaluationContractorType.OTHER &&
-                                      values.oelEvaluationContractor.includes(
-                                        type
-                                      ) && (
-                                        <div className="margin-left-4 margin-top-1">
-                                          <Label
-                                            htmlFor="it-tools-oel-evaluation-contractor-other"
-                                            className={classNames(
+                                        id={`it-tools-oel-evaluation-contractor-${type}`}
+                                        name="oelEvaluationContractor"
+                                        label={translateOelEvaluationContractorType(
+                                          type
+                                        )}
+                                        value={type}
+                                        checked={values?.oelEvaluationContractor.includes(
+                                          type as OelEvaluationContractorType
+                                        )}
+                                        onChange={(
+                                          e: React.ChangeEvent<HTMLInputElement>
+                                        ) => {
+                                          if (e.target.checked) {
+                                            arrayHelpers.push(e.target.value);
+                                          } else {
+                                            const idx = values.oelEvaluationContractor.indexOf(
+                                              e.target
+                                                .value as OelEvaluationContractorType
+                                            );
+                                            arrayHelpers.remove(idx);
+                                          }
+                                        }}
+                                      />
+                                      {type ===
+                                        OelEvaluationContractorType.OTHER &&
+                                        values.oelEvaluationContractor.includes(
+                                          type
+                                        ) && (
+                                          <div className="margin-left-4 margin-top-1">
+                                            <Label
+                                              htmlFor="it-tools-oel-evaluation-contractor-other"
+                                              className={classNames(
+                                                {
+                                                  'text-gray-30':
+                                                    (!evaluationApproaches.includes(
+                                                      EvaluationApproachType.CONTROL_INTERVENTION
+                                                    ) &&
+                                                      !evaluationApproaches.includes(
+                                                        EvaluationApproachType.COMPARISON_MATCH
+                                                      ) &&
+                                                      !evaluationApproaches.includes(
+                                                        EvaluationApproachType.INTERRUPTED_TIME
+                                                      ) &&
+                                                      !evaluationApproaches.includes(
+                                                        EvaluationApproachType.NON_MEDICARE_DATA
+                                                      )) ||
+                                                    evaluationApproaches.length ===
+                                                      0
+                                                },
+                                                'text-normal'
+                                              )}
+                                            >
+                                              {h('pleaseSpecify')}
+                                            </Label>
+                                            <FieldErrorMsg>
                                               {
-                                                'text-gray-30':
-                                                  (!evaluationApproaches.includes(
-                                                    EvaluationApproachType.CONTROL_INTERVENTION
+                                                flatErrors.oelEvaluationContractorOther
+                                              }
+                                            </FieldErrorMsg>
+                                            <Field
+                                              as={TextInput}
+                                              type="text"
+                                              disabled={
+                                                (!evaluationApproaches.includes(
+                                                  EvaluationApproachType.CONTROL_INTERVENTION
+                                                ) &&
+                                                  !evaluationApproaches.includes(
+                                                    EvaluationApproachType.COMPARISON_MATCH
                                                   ) &&
-                                                    !evaluationApproaches.includes(
-                                                      EvaluationApproachType.COMPARISON_MATCH
-                                                    ) &&
-                                                    !evaluationApproaches.includes(
-                                                      EvaluationApproachType.INTERRUPTED_TIME
-                                                    ) &&
-                                                    !evaluationApproaches.includes(
-                                                      EvaluationApproachType.NON_MEDICARE_DATA
-                                                    )) ||
-                                                  evaluationApproaches.length ===
-                                                    0
-                                              },
-                                              'text-normal'
-                                            )}
-                                          >
-                                            {h('pleaseSpecify')}
-                                          </Label>
-                                          <FieldErrorMsg>
-                                            {
-                                              flatErrors.oelEvaluationContractorOther
-                                            }
-                                          </FieldErrorMsg>
-                                          <Field
-                                            as={TextInput}
-                                            type="text"
-                                            disabled={
-                                              (!evaluationApproaches.includes(
-                                                EvaluationApproachType.CONTROL_INTERVENTION
-                                              ) &&
-                                                !evaluationApproaches.includes(
-                                                  EvaluationApproachType.COMPARISON_MATCH
-                                                ) &&
-                                                !evaluationApproaches.includes(
-                                                  EvaluationApproachType.INTERRUPTED_TIME
-                                                ) &&
-                                                !evaluationApproaches.includes(
-                                                  EvaluationApproachType.NON_MEDICARE_DATA
-                                                )) ||
-                                              evaluationApproaches.length === 0
-                                            }
-                                            className="maxw-none"
-                                            id="it-tools-oel-evaluation-contractor-other"
-                                            maxLength={50}
-                                            name="oelEvaluationContractorOther"
-                                          />
-                                        </div>
-                                      )}
-                                  </Fragment>
-                                );
-                              })}
-                            <AddNote
-                              id="it-tools-oel-evaluation-contractor-note"
-                              field="oelEvaluationContractorNote"
-                            />
-                          </>
-                        )}
-                      />
-                    </FieldGroup>
+                                                  !evaluationApproaches.includes(
+                                                    EvaluationApproachType.INTERRUPTED_TIME
+                                                  ) &&
+                                                  !evaluationApproaches.includes(
+                                                    EvaluationApproachType.NON_MEDICARE_DATA
+                                                  )) ||
+                                                evaluationApproaches.length ===
+                                                  0
+                                              }
+                                              className="maxw-none"
+                                              id="it-tools-oel-evaluation-contractor-other"
+                                              maxLength={50}
+                                              name="oelEvaluationContractorOther"
+                                            />
+                                          </div>
+                                        )}
+                                    </Fragment>
+                                  );
+                                })}
+                              <AddNote
+                                id="it-tools-oel-evaluation-contractor-note"
+                                field="oelEvaluationContractorNote"
+                              />
+                            </>
+                          )}
+                        />
+                      </FieldGroup>
 
-                    <FieldGroup
-                      scrollElement="oelCollectData"
-                      error={!!flatErrors.oelCollectData}
-                      className="margin-y-4"
-                    >
-                      <FieldArray
-                        name="oelCollectData"
-                        render={arrayHelpers => (
-                          <>
-                            <legend className="usa-label">
-                              {t('monitorTools')}
-                            </legend>
+                      <FieldGroup
+                        scrollElement="oelCollectData"
+                        error={!!flatErrors.oelCollectData}
+                        className="margin-y-4"
+                      >
+                        <FieldArray
+                          name="oelCollectData"
+                          render={arrayHelpers => (
+                            <>
+                              <legend className="usa-label">
+                                {t('monitorTools')}
+                              </legend>
 
-                            <FieldErrorMsg>
-                              {flatErrors.oelCollectData}
-                            </FieldErrorMsg>
+                              <FieldErrorMsg>
+                                {flatErrors.oelCollectData}
+                              </FieldErrorMsg>
 
-                            <ITToolsSummary
-                              question={o('dataNeeded')}
-                              answers={dataNeededForMonitoring.map(dataNeeded =>
-                                translateDataForMonitoringType(dataNeeded || '')
-                              )}
-                              redirect={`/models/${modelID}/task-list/ops-eval-and-learning/evaluation`}
-                              answered={dataNeededForMonitoring.length > 0}
-                              needsTool={
-                                dataNeededForMonitoring.length > 0 &&
-                                !dataNeededForMonitoring.includes(
-                                  DataForMonitoringType.NOT_PLANNING_TO_COLLECT_DATA
-                                )
-                              }
-                              subtext={t('monitorNeedsAnswer')}
-                            />
+                              <ITToolsSummary
+                                question={o('dataNeeded')}
+                                answers={dataNeededForMonitoring.map(
+                                  dataNeeded =>
+                                    translateDataForMonitoringType(
+                                      dataNeeded || ''
+                                    )
+                                )}
+                                redirect={`/models/${modelID}/task-list/ops-eval-and-learning/evaluation`}
+                                answered={dataNeededForMonitoring.length > 0}
+                                needsTool={
+                                  dataNeededForMonitoring.length > 0 &&
+                                  !dataNeededForMonitoring.includes(
+                                    DataForMonitoringType.NOT_PLANNING_TO_COLLECT_DATA
+                                  )
+                                }
+                                subtext={t('monitorNeedsAnswer')}
+                              />
 
-                            <p className="margin-top-4">{t('tools')}</p>
+                              <p className="margin-top-4">{t('tools')}</p>
 
-                            {Object.keys(OelCollectDataType)
-                              .sort(sortOtherEnum)
-                              .map(type => {
-                                return (
-                                  <Fragment key={type}>
-                                    <Field
-                                      as={CheckboxField}
-                                      disabled={
-                                        dataNeededForMonitoring.includes(
-                                          DataForMonitoringType.NOT_PLANNING_TO_COLLECT_DATA
-                                        ) ||
-                                        dataNeededForMonitoring.length === 0
-                                      }
-                                      id={`it-tools-oel-collect-data-${type}`}
-                                      name="oelCollectData"
-                                      label={translateOelCollectDataType(type)}
-                                      value={type}
-                                      checked={values?.oelCollectData.includes(
-                                        type as OelCollectDataType
-                                      )}
-                                      onChange={(
-                                        e: React.ChangeEvent<HTMLInputElement>
-                                      ) => {
-                                        if (e.target.checked) {
-                                          arrayHelpers.push(e.target.value);
-                                        } else {
-                                          const idx = values.oelCollectData.indexOf(
-                                            e.target.value as OelCollectDataType
-                                          );
-                                          arrayHelpers.remove(idx);
+                              {Object.keys(OelCollectDataType)
+                                .sort(sortOtherEnum)
+                                .map(type => {
+                                  return (
+                                    <Fragment key={type}>
+                                      <Field
+                                        as={CheckboxField}
+                                        disabled={
+                                          dataNeededForMonitoring.includes(
+                                            DataForMonitoringType.NOT_PLANNING_TO_COLLECT_DATA
+                                          ) ||
+                                          dataNeededForMonitoring.length === 0
                                         }
-                                      }}
-                                    />
-                                    {type === OelCollectDataType.OTHER &&
-                                      values.oelCollectData.includes(type) && (
-                                        <div className="margin-left-4 margin-top-1">
-                                          <Label
-                                            htmlFor="it-tools-oel-collect-data-other"
-                                            className={classNames(
-                                              {
-                                                'text-gray-30':
-                                                  dataNeededForMonitoring.includes(
-                                                    DataForMonitoringType.NOT_PLANNING_TO_COLLECT_DATA
-                                                  ) ||
-                                                  dataNeededForMonitoring.length ===
-                                                    0
-                                              },
-                                              'text-normal'
-                                            )}
-                                          >
-                                            {h('pleaseSpecify')}
-                                          </Label>
-                                          <FieldErrorMsg>
-                                            {flatErrors.oelCollectDataOther}
-                                          </FieldErrorMsg>
-                                          <Field
-                                            as={TextInput}
-                                            type="text"
-                                            disabled={
-                                              dataNeededForMonitoring.includes(
-                                                DataForMonitoringType.NOT_PLANNING_TO_COLLECT_DATA
-                                              ) ||
-                                              dataNeededForMonitoring.length ===
-                                                0
-                                            }
-                                            className="maxw-none"
-                                            id="it-tools-oel-collect-data-other"
-                                            maxLength={50}
-                                            name="oelCollectDataOther"
-                                          />
-                                        </div>
-                                      )}
-                                  </Fragment>
-                                );
-                              })}
-                            <AddNote
-                              id="it-tools-oel-collect-data-note"
-                              field="oelCollectDataNote"
-                            />
-                          </>
-                        )}
-                      />
-                    </FieldGroup>
+                                        id={`it-tools-oel-collect-data-${type}`}
+                                        name="oelCollectData"
+                                        label={translateOelCollectDataType(
+                                          type
+                                        )}
+                                        value={type}
+                                        checked={values?.oelCollectData.includes(
+                                          type as OelCollectDataType
+                                        )}
+                                        onChange={(
+                                          e: React.ChangeEvent<HTMLInputElement>
+                                        ) => {
+                                          if (e.target.checked) {
+                                            arrayHelpers.push(e.target.value);
+                                          } else {
+                                            const idx = values.oelCollectData.indexOf(
+                                              e.target
+                                                .value as OelCollectDataType
+                                            );
+                                            arrayHelpers.remove(idx);
+                                          }
+                                        }}
+                                      />
+                                      {type === OelCollectDataType.OTHER &&
+                                        values.oelCollectData.includes(
+                                          type
+                                        ) && (
+                                          <div className="margin-left-4 margin-top-1">
+                                            <Label
+                                              htmlFor="it-tools-oel-collect-data-other"
+                                              className={classNames(
+                                                {
+                                                  'text-gray-30':
+                                                    dataNeededForMonitoring.includes(
+                                                      DataForMonitoringType.NOT_PLANNING_TO_COLLECT_DATA
+                                                    ) ||
+                                                    dataNeededForMonitoring.length ===
+                                                      0
+                                                },
+                                                'text-normal'
+                                              )}
+                                            >
+                                              {h('pleaseSpecify')}
+                                            </Label>
+                                            <FieldErrorMsg>
+                                              {flatErrors.oelCollectDataOther}
+                                            </FieldErrorMsg>
+                                            <Field
+                                              as={TextInput}
+                                              type="text"
+                                              disabled={
+                                                dataNeededForMonitoring.includes(
+                                                  DataForMonitoringType.NOT_PLANNING_TO_COLLECT_DATA
+                                                ) ||
+                                                dataNeededForMonitoring.length ===
+                                                  0
+                                              }
+                                              className="maxw-none"
+                                              id="it-tools-oel-collect-data-other"
+                                              maxLength={50}
+                                              name="oelCollectDataOther"
+                                            />
+                                          </div>
+                                        )}
+                                    </Fragment>
+                                  );
+                                })}
+                              <AddNote
+                                id="it-tools-oel-collect-data-note"
+                                field="oelCollectDataNote"
+                              />
+                            </>
+                          )}
+                        />
+                      </FieldGroup>
 
-                    <div className="margin-top-6 margin-bottom-3">
+                      <div className="margin-top-6 margin-bottom-3">
+                        <Button
+                          type="button"
+                          className="usa-button usa-button--outline margin-bottom-1"
+                          onClick={() => {
+                            handleFormSubmit(values, 'back');
+                          }}
+                        >
+                          {h('back')}
+                        </Button>
+                        <Button type="submit" onClick={() => setErrors({})}>
+                          {h('next')}
+                        </Button>
+                      </div>
                       <Button
                         type="button"
-                        className="usa-button usa-button--outline margin-bottom-1"
-                        onClick={() => {
-                          handleFormSubmit(values, 'back');
-                        }}
+                        className="usa-button usa-button--unstyled"
+                        onClick={() => handleFormSubmit(values, 'task-list')}
                       >
-                        {h('back')}
+                        <IconArrowBack className="margin-right-1" aria-hidden />
+                        {h('saveAndReturn')}
                       </Button>
-                      <Button type="submit" onClick={() => setErrors({})}>
-                        {h('next')}
-                      </Button>
-                    </div>
-                    <Button
-                      type="button"
-                      className="usa-button usa-button--unstyled"
-                      onClick={() => handleFormSubmit(values, 'task-list')}
-                    >
-                      <IconArrowBack className="margin-right-1" aria-hidden />
-                      {h('saveAndReturn')}
-                    </Button>
+                    </Fieldset>
                   </Form>
                 </Grid>
               </Grid>
 
-              {id && (
+              {itTools.id && !loading && (
                 <AutoSave
                   values={values}
                   onSave={() => {

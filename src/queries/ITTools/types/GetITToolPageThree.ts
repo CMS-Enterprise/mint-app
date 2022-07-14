@@ -11,6 +11,7 @@ import { ParticipantCommunicationType, PpCommunicateWithParticipantType, PpManag
 
 export interface GetITToolPageThree_modelPlan_participantsAndProviders {
   __typename: "PlanParticipantsAndProviders";
+  id: UUID;
   communicationMethod: ParticipantCommunicationType[];
 }
 

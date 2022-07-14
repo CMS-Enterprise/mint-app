@@ -7,6 +7,7 @@ import {
   BreadcrumbBar,
   BreadcrumbLink,
   Button,
+  Fieldset,
   Grid,
   IconArrowBack,
   Label,
@@ -28,6 +29,7 @@ import FieldGroup from 'components/shared/FieldGroup';
 import GetITToolsPageThree from 'queries/ITTools/GetITToolsPageThree';
 import {
   GetITToolPageThree as GetITToolPageThreeType,
+  GetITToolPageThree_modelPlan as ModelPlanType,
   GetITToolPageThree_modelPlan_itTools as ITToolsPageThreeFormType,
   GetITToolPageThree_modelPlan_participantsAndProviders as ParticipantsAndProvidersType,
   GetITToolPageThreeVariables
@@ -66,7 +68,16 @@ const initialFormValues: ITToolsPageThreeFormType = {
 
 const initialParticipantsAndProvidersValues: ParticipantsAndProvidersType = {
   __typename: 'PlanParticipantsAndProviders',
+  id: '',
   communicationMethod: []
+};
+
+const initialModelPlanValues: ModelPlanType = {
+  __typename: 'ModelPlan',
+  id: '',
+  modelName: '',
+  participantsAndProviders: initialParticipantsAndProvidersValues,
+  itTools: initialFormValues
 };
 
 const ITToolsPageThree = () => {
@@ -87,15 +98,13 @@ const ITToolsPageThree = () => {
     }
   });
 
-  const modelPlan = data?.modelPlan;
-  const modelName = modelPlan?.modelName;
-  const id = modelPlan?.itTools?.id;
+  const modelPlan = data?.modelPlan || initialModelPlanValues;
 
-  const itToolsData = modelPlan?.itTools || initialFormValues;
-
-  const { communicationMethod } =
-    modelPlan?.participantsAndProviders ||
-    initialParticipantsAndProvidersValues;
+  const {
+    modelName,
+    itTools,
+    participantsAndProviders: { communicationMethod }
+  } = modelPlan;
 
   const [update] = useMutation<UpdatePlanItToolsVariables>(UpdatePlanITTools);
 
@@ -103,11 +112,11 @@ const ITToolsPageThree = () => {
     formikValues: ITToolsPageThreeFormType,
     redirect?: 'next' | 'back' | 'task-list'
   ) => {
-    const { id: updateId, __typename, ...changeValues } = formikValues;
+    const { id, __typename, ...changes } = formikValues;
     update({
       variables: {
-        id: updateId,
-        changes: changeValues
+        id,
+        changes
       }
     })
       .then(response => {
@@ -164,7 +173,7 @@ const ITToolsPageThree = () => {
       <AskAQuestion modelID={modelID} />
 
       <Formik
-        initialValues={itToolsData}
+        initialValues={itTools}
         onSubmit={values => {
           handleFormSubmit(values, 'next');
         }}
@@ -204,363 +213,365 @@ const ITToolsPageThree = () => {
                       handleSubmit(e);
                     }}
                   >
-                    <FieldGroup
-                      scrollElement="ppCommunicateWithParticipant"
-                      error={!!flatErrors.ppCommunicateWithParticipant}
-                      className="margin-y-4"
-                    >
-                      <FieldArray
-                        name="ppCommunicateWithParticipant"
-                        render={arrayHelpers => (
-                          <>
-                            <legend className="usa-label maxw-none">
-                              {t('communicateTools')}
-                            </legend>
+                    <Fieldset disabled={loading}>
+                      <FieldGroup
+                        scrollElement="ppCommunicateWithParticipant"
+                        error={!!flatErrors.ppCommunicateWithParticipant}
+                        className="margin-y-4"
+                      >
+                        <FieldArray
+                          name="ppCommunicateWithParticipant"
+                          render={arrayHelpers => (
+                            <>
+                              <legend className="usa-label maxw-none">
+                                {t('communicateTools')}
+                              </legend>
 
-                            <FieldErrorMsg>
-                              {flatErrors.ppCommunicateWithParticipant}
-                            </FieldErrorMsg>
+                              <FieldErrorMsg>
+                                {flatErrors.ppCommunicateWithParticipant}
+                              </FieldErrorMsg>
 
-                            <ITToolsSummary
-                              question={p('participantCommunication')}
-                              answers={[...communicationMethod]
+                              <ITToolsSummary
+                                question={p('participantCommunication')}
+                                answers={[...communicationMethod]
+                                  .sort(sortOtherEnum)
+                                  .map(selection =>
+                                    translateCommunicationType(selection)
+                                  )}
+                                options={[
+                                  translateCommunicationType(
+                                    ParticipantCommunicationType.MASS_EMAIL
+                                  ),
+                                  translateCommunicationType(
+                                    ParticipantCommunicationType.IT_TOOL
+                                  )
+                                ]}
+                                redirect={`/models/${modelID}/task-list/participants-and-providers/communication`}
+                                answered={communicationMethod.length > 0}
+                                needsTool={
+                                  communicationMethod.includes(
+                                    ParticipantCommunicationType.MASS_EMAIL
+                                  ) ||
+                                  communicationMethod.includes(
+                                    ParticipantCommunicationType.IT_TOOL
+                                  )
+                                }
+                              />
+
+                              <p className="margin-top-4">{t('tools')}</p>
+
+                              {Object.keys(PpCommunicateWithParticipantType)
                                 .sort(sortOtherEnum)
-                                .map(selection =>
-                                  translateCommunicationType(selection)
-                                )}
-                              options={[
-                                translateCommunicationType(
-                                  ParticipantCommunicationType.MASS_EMAIL
-                                ),
-                                translateCommunicationType(
-                                  ParticipantCommunicationType.IT_TOOL
-                                )
-                              ]}
-                              redirect={`/models/${modelID}/task-list/participants-and-providers/communication`}
-                              answered={communicationMethod.length > 0}
-                              needsTool={
-                                communicationMethod.includes(
-                                  ParticipantCommunicationType.MASS_EMAIL
-                                ) ||
-                                communicationMethod.includes(
-                                  ParticipantCommunicationType.IT_TOOL
-                                )
-                              }
-                            />
-
-                            <p className="margin-top-4">{t('tools')}</p>
-
-                            {Object.keys(PpCommunicateWithParticipantType)
-                              .sort(sortOtherEnum)
-                              .map(type => {
-                                return (
-                                  <Fragment key={type}>
-                                    <Field
-                                      as={CheckboxField}
-                                      disabled={
-                                        (!communicationMethod.includes(
-                                          ParticipantCommunicationType.MASS_EMAIL
-                                        ) &&
-                                          !communicationMethod.includes(
-                                            ParticipantCommunicationType.IT_TOOL
-                                          )) ||
-                                        communicationMethod.length === 0
-                                      }
-                                      id={`it-tools-pp-communicate-with-participant-${type}`}
-                                      name="ppCommunicateWithParticipant"
-                                      label={translatePpCommunicateWithParticipantType(
-                                        type
-                                      )}
-                                      value={type}
-                                      checked={values?.ppCommunicateWithParticipant.includes(
-                                        type as PpCommunicateWithParticipantType
-                                      )}
-                                      onChange={(
-                                        e: React.ChangeEvent<HTMLInputElement>
-                                      ) => {
-                                        if (e.target.checked) {
-                                          arrayHelpers.push(e.target.value);
-                                        } else {
-                                          const idx = values.ppCommunicateWithParticipant.indexOf(
-                                            e.target
-                                              .value as PpCommunicateWithParticipantType
-                                          );
-                                          arrayHelpers.remove(idx);
+                                .map(type => {
+                                  return (
+                                    <Fragment key={type}>
+                                      <Field
+                                        as={CheckboxField}
+                                        disabled={
+                                          (!communicationMethod.includes(
+                                            ParticipantCommunicationType.MASS_EMAIL
+                                          ) &&
+                                            !communicationMethod.includes(
+                                              ParticipantCommunicationType.IT_TOOL
+                                            )) ||
+                                          communicationMethod.length === 0
                                         }
-                                      }}
-                                    />
-                                    {type ===
-                                      PpCommunicateWithParticipantType.OTHER &&
-                                      values.ppCommunicateWithParticipant.includes(
-                                        type
-                                      ) && (
-                                        <div className="margin-left-4 margin-top-1">
-                                          <Label
-                                            htmlFor="it-tools-pp-communicate-with-participant-other"
-                                            className={classNames(
+                                        id={`it-tools-pp-communicate-with-participant-${type}`}
+                                        name="ppCommunicateWithParticipant"
+                                        label={translatePpCommunicateWithParticipantType(
+                                          type
+                                        )}
+                                        value={type}
+                                        checked={values?.ppCommunicateWithParticipant.includes(
+                                          type as PpCommunicateWithParticipantType
+                                        )}
+                                        onChange={(
+                                          e: React.ChangeEvent<HTMLInputElement>
+                                        ) => {
+                                          if (e.target.checked) {
+                                            arrayHelpers.push(e.target.value);
+                                          } else {
+                                            const idx = values.ppCommunicateWithParticipant.indexOf(
+                                              e.target
+                                                .value as PpCommunicateWithParticipantType
+                                            );
+                                            arrayHelpers.remove(idx);
+                                          }
+                                        }}
+                                      />
+                                      {type ===
+                                        PpCommunicateWithParticipantType.OTHER &&
+                                        values.ppCommunicateWithParticipant.includes(
+                                          type
+                                        ) && (
+                                          <div className="margin-left-4 margin-top-1">
+                                            <Label
+                                              htmlFor="it-tools-pp-communicate-with-participant-other"
+                                              className={classNames(
+                                                {
+                                                  'text-gray-30':
+                                                    (!communicationMethod.includes(
+                                                      ParticipantCommunicationType.MASS_EMAIL
+                                                    ) &&
+                                                      !communicationMethod.includes(
+                                                        ParticipantCommunicationType.IT_TOOL
+                                                      )) ||
+                                                    communicationMethod.length ===
+                                                      0
+                                                },
+                                                'text-normal'
+                                              )}
+                                            >
+                                              {h('pleaseSpecify')}
+                                            </Label>
+                                            <FieldErrorMsg>
                                               {
-                                                'text-gray-30':
-                                                  (!communicationMethod.includes(
-                                                    ParticipantCommunicationType.MASS_EMAIL
-                                                  ) &&
-                                                    !communicationMethod.includes(
-                                                      ParticipantCommunicationType.IT_TOOL
-                                                    )) ||
-                                                  communicationMethod.length ===
-                                                    0
-                                              },
-                                              'text-normal'
-                                            )}
-                                          >
-                                            {h('pleaseSpecify')}
-                                          </Label>
-                                          <FieldErrorMsg>
-                                            {
-                                              flatErrors.ppCommunicateWithParticipantOther
-                                            }
-                                          </FieldErrorMsg>
-                                          <Field
-                                            as={TextInput}
-                                            type="text"
-                                            disabled={
-                                              (!communicationMethod.includes(
-                                                ParticipantCommunicationType.MASS_EMAIL
-                                              ) &&
-                                                !communicationMethod.includes(
-                                                  ParticipantCommunicationType.IT_TOOL
-                                                )) ||
-                                              communicationMethod.length === 0
-                                            }
-                                            className="maxw-none"
-                                            id="it-tools-pp-communicate-with-participant-other"
-                                            maxLength={50}
-                                            name="ppCommunicateWithParticipantOther"
-                                          />
-                                        </div>
-                                      )}
-                                  </Fragment>
-                                );
-                              })}
-                            <AddNote
-                              id="it-tools-pp-communicate-with-participant-note"
-                              field="ppCommunicateWithParticipantNote"
-                            />
-                          </>
-                        )}
-                      />
-                    </FieldGroup>
+                                                flatErrors.ppCommunicateWithParticipantOther
+                                              }
+                                            </FieldErrorMsg>
+                                            <Field
+                                              as={TextInput}
+                                              type="text"
+                                              disabled={
+                                                (!communicationMethod.includes(
+                                                  ParticipantCommunicationType.MASS_EMAIL
+                                                ) &&
+                                                  !communicationMethod.includes(
+                                                    ParticipantCommunicationType.IT_TOOL
+                                                  )) ||
+                                                communicationMethod.length === 0
+                                              }
+                                              className="maxw-none"
+                                              id="it-tools-pp-communicate-with-participant-other"
+                                              maxLength={50}
+                                              name="ppCommunicateWithParticipantOther"
+                                            />
+                                          </div>
+                                        )}
+                                    </Fragment>
+                                  );
+                                })}
+                              <AddNote
+                                id="it-tools-pp-communicate-with-participant-note"
+                                field="ppCommunicateWithParticipantNote"
+                              />
+                            </>
+                          )}
+                        />
+                      </FieldGroup>
 
-                    <FieldGroup
-                      scrollElement="ppManageProviderOverlap"
-                      error={!!flatErrors.ppManageProviderOverlap}
-                      className="margin-y-4"
-                    >
-                      <FieldArray
-                        name="ppManageProviderOverlap"
-                        render={arrayHelpers => (
-                          <>
-                            <legend className="usa-label maxw-none">
-                              {t('manageOverlap')}
-                            </legend>
+                      <FieldGroup
+                        scrollElement="ppManageProviderOverlap"
+                        error={!!flatErrors.ppManageProviderOverlap}
+                        className="margin-y-4"
+                      >
+                        <FieldArray
+                          name="ppManageProviderOverlap"
+                          render={arrayHelpers => (
+                            <>
+                              <legend className="usa-label maxw-none">
+                                {t('manageOverlap')}
+                              </legend>
 
-                            <FieldErrorMsg>
-                              {flatErrors.ppManageProviderOverlap}
-                            </FieldErrorMsg>
+                              <FieldErrorMsg>
+                                {flatErrors.ppManageProviderOverlap}
+                              </FieldErrorMsg>
 
-                            <p className="text-base margin-top-1 margin-bottom-3 line-height-body-3">
-                              {t('manageOverlapInfo')}
-                            </p>
+                              <p className="text-base margin-top-1 margin-bottom-3 line-height-body-3">
+                                {t('manageOverlapInfo')}
+                              </p>
 
-                            <p className="margin-top-2">{t('tools')}</p>
+                              <p className="margin-top-2">{t('tools')}</p>
 
-                            {Object.keys(PpManageProviderOverlapType)
-                              .sort(sortOtherEnum)
-                              .map(type => {
-                                return (
-                                  <Fragment key={type}>
-                                    <Field
-                                      as={CheckboxField}
-                                      id={`it-tools-pp-provider-overlap-${type}`}
-                                      name="ppManageProviderOverlap"
-                                      label={translatePpManageProviderOverlapType(
-                                        type
-                                      )}
-                                      value={type}
-                                      checked={values?.ppManageProviderOverlap.includes(
-                                        type as PpManageProviderOverlapType
-                                      )}
-                                      onChange={(
-                                        e: React.ChangeEvent<HTMLInputElement>
-                                      ) => {
-                                        if (e.target.checked) {
-                                          arrayHelpers.push(e.target.value);
-                                        } else {
-                                          const idx = values.ppManageProviderOverlap.indexOf(
-                                            e.target
-                                              .value as PpManageProviderOverlapType
-                                          );
-                                          arrayHelpers.remove(idx);
-                                        }
-                                      }}
-                                    />
-                                    {type ===
-                                      PpManageProviderOverlapType.OTHER &&
-                                      values.ppManageProviderOverlap.includes(
-                                        type
-                                      ) && (
-                                        <div className="margin-left-4 margin-top-1">
-                                          <Label
-                                            htmlFor="it-tools-pp-provider-overlap-other"
-                                            className="text-normal"
-                                          >
-                                            {h('pleaseSpecify')}
-                                          </Label>
-                                          <FieldErrorMsg>
-                                            {
-                                              flatErrors.ppManageProviderOverlapOther
-                                            }
-                                          </FieldErrorMsg>
-                                          <Field
-                                            as={TextInput}
-                                            className="maxw-none"
-                                            id="it-tools-pp-provider-overlap-other"
-                                            maxLength={50}
-                                            name="ppManageProviderOverlapOther"
-                                          />
-                                        </div>
-                                      )}
-                                  </Fragment>
-                                );
-                              })}
-                            <AddNote
-                              id="it-tools-pp-provider-overlap-note"
-                              field="ppManageProviderOverlapNote"
-                            />
-                          </>
-                        )}
-                      />
-                    </FieldGroup>
+                              {Object.keys(PpManageProviderOverlapType)
+                                .sort(sortOtherEnum)
+                                .map(type => {
+                                  return (
+                                    <Fragment key={type}>
+                                      <Field
+                                        as={CheckboxField}
+                                        id={`it-tools-pp-provider-overlap-${type}`}
+                                        name="ppManageProviderOverlap"
+                                        label={translatePpManageProviderOverlapType(
+                                          type
+                                        )}
+                                        value={type}
+                                        checked={values?.ppManageProviderOverlap.includes(
+                                          type as PpManageProviderOverlapType
+                                        )}
+                                        onChange={(
+                                          e: React.ChangeEvent<HTMLInputElement>
+                                        ) => {
+                                          if (e.target.checked) {
+                                            arrayHelpers.push(e.target.value);
+                                          } else {
+                                            const idx = values.ppManageProviderOverlap.indexOf(
+                                              e.target
+                                                .value as PpManageProviderOverlapType
+                                            );
+                                            arrayHelpers.remove(idx);
+                                          }
+                                        }}
+                                      />
+                                      {type ===
+                                        PpManageProviderOverlapType.OTHER &&
+                                        values.ppManageProviderOverlap.includes(
+                                          type
+                                        ) && (
+                                          <div className="margin-left-4 margin-top-1">
+                                            <Label
+                                              htmlFor="it-tools-pp-provider-overlap-other"
+                                              className="text-normal"
+                                            >
+                                              {h('pleaseSpecify')}
+                                            </Label>
+                                            <FieldErrorMsg>
+                                              {
+                                                flatErrors.ppManageProviderOverlapOther
+                                              }
+                                            </FieldErrorMsg>
+                                            <Field
+                                              as={TextInput}
+                                              className="maxw-none"
+                                              id="it-tools-pp-provider-overlap-other"
+                                              maxLength={50}
+                                              name="ppManageProviderOverlapOther"
+                                            />
+                                          </div>
+                                        )}
+                                    </Fragment>
+                                  );
+                                })}
+                              <AddNote
+                                id="it-tools-pp-provider-overlap-note"
+                                field="ppManageProviderOverlapNote"
+                              />
+                            </>
+                          )}
+                        />
+                      </FieldGroup>
 
-                    <h2>{b('heading')}</h2>
+                      <h2>{b('heading')}</h2>
 
-                    <FieldGroup
-                      scrollElement="bManageBeneficiaryOverlap"
-                      error={!!flatErrors.bManageBeneficiaryOverlap}
-                      className="margin-y-4"
-                    >
-                      <FieldArray
-                        name="bManageBeneficiaryOverlap"
-                        render={arrayHelpers => (
-                          <>
-                            <legend className="usa-label maxw-none">
-                              {t('beneficiaryOverlaps')}
-                            </legend>
+                      <FieldGroup
+                        scrollElement="bManageBeneficiaryOverlap"
+                        error={!!flatErrors.bManageBeneficiaryOverlap}
+                        className="margin-y-4"
+                      >
+                        <FieldArray
+                          name="bManageBeneficiaryOverlap"
+                          render={arrayHelpers => (
+                            <>
+                              <legend className="usa-label maxw-none">
+                                {t('beneficiaryOverlaps')}
+                              </legend>
 
-                            <FieldErrorMsg>
-                              {flatErrors.bManageBeneficiaryOverlap}
-                            </FieldErrorMsg>
+                              <FieldErrorMsg>
+                                {flatErrors.bManageBeneficiaryOverlap}
+                              </FieldErrorMsg>
 
-                            <p className="text-base margin-top-1 margin-bottom-3 line-height-body-3">
-                              {t('beneficiaryOverlapsInfo')}
-                            </p>
+                              <p className="text-base margin-top-1 margin-bottom-3 line-height-body-3">
+                                {t('beneficiaryOverlapsInfo')}
+                              </p>
 
-                            <p className="margin-top-2">{t('tools')}</p>
+                              <p className="margin-top-2">{t('tools')}</p>
 
-                            {Object.keys(BManageBeneficiaryOverlapType)
-                              .sort(sortOtherEnum)
-                              .map(type => {
-                                return (
-                                  <Fragment key={type}>
-                                    <Field
-                                      as={CheckboxField}
-                                      id={`it-tools-b-beneficiary-overlap-${type}`}
-                                      name="bManageBeneficiaryOverlap"
-                                      label={translateBManageBeneficiaryOverlapType(
-                                        type
-                                      )}
-                                      value={type}
-                                      checked={values?.bManageBeneficiaryOverlap.includes(
-                                        type as BManageBeneficiaryOverlapType
-                                      )}
-                                      onChange={(
-                                        e: React.ChangeEvent<HTMLInputElement>
-                                      ) => {
-                                        if (e.target.checked) {
-                                          arrayHelpers.push(e.target.value);
-                                        } else {
-                                          const idx = values.bManageBeneficiaryOverlap.indexOf(
-                                            e.target
-                                              .value as BManageBeneficiaryOverlapType
-                                          );
-                                          arrayHelpers.remove(idx);
-                                        }
-                                      }}
-                                    />
-                                    {type ===
-                                      BManageBeneficiaryOverlapType.OTHER &&
-                                      values.bManageBeneficiaryOverlap.includes(
-                                        type
-                                      ) && (
-                                        <div className="margin-left-4 margin-top-1">
-                                          <Label
-                                            htmlFor="it-tools-b-beneficiary-overlap-other"
-                                            className="text-normal"
-                                          >
-                                            {h('pleaseSpecify')}
-                                          </Label>
-                                          <FieldErrorMsg>
-                                            {
-                                              flatErrors.bManageBeneficiaryOverlapOther
-                                            }
-                                          </FieldErrorMsg>
-                                          <Field
-                                            as={TextInput}
-                                            className="maxw-none"
-                                            id="it-tools-b-beneficiary-overlap-other"
-                                            maxLength={50}
-                                            name="bManageBeneficiaryOverlapOther"
-                                          />
-                                        </div>
-                                      )}
-                                  </Fragment>
-                                );
-                              })}
-                            <AddNote
-                              id="it-tools-b-beneficiary-overlap-note"
-                              field="bManageBeneficiaryOverlapNote"
-                            />
-                          </>
-                        )}
-                      />
-                    </FieldGroup>
+                              {Object.keys(BManageBeneficiaryOverlapType)
+                                .sort(sortOtherEnum)
+                                .map(type => {
+                                  return (
+                                    <Fragment key={type}>
+                                      <Field
+                                        as={CheckboxField}
+                                        id={`it-tools-b-beneficiary-overlap-${type}`}
+                                        name="bManageBeneficiaryOverlap"
+                                        label={translateBManageBeneficiaryOverlapType(
+                                          type
+                                        )}
+                                        value={type}
+                                        checked={values?.bManageBeneficiaryOverlap.includes(
+                                          type as BManageBeneficiaryOverlapType
+                                        )}
+                                        onChange={(
+                                          e: React.ChangeEvent<HTMLInputElement>
+                                        ) => {
+                                          if (e.target.checked) {
+                                            arrayHelpers.push(e.target.value);
+                                          } else {
+                                            const idx = values.bManageBeneficiaryOverlap.indexOf(
+                                              e.target
+                                                .value as BManageBeneficiaryOverlapType
+                                            );
+                                            arrayHelpers.remove(idx);
+                                          }
+                                        }}
+                                      />
+                                      {type ===
+                                        BManageBeneficiaryOverlapType.OTHER &&
+                                        values.bManageBeneficiaryOverlap.includes(
+                                          type
+                                        ) && (
+                                          <div className="margin-left-4 margin-top-1">
+                                            <Label
+                                              htmlFor="it-tools-b-beneficiary-overlap-other"
+                                              className="text-normal"
+                                            >
+                                              {h('pleaseSpecify')}
+                                            </Label>
+                                            <FieldErrorMsg>
+                                              {
+                                                flatErrors.bManageBeneficiaryOverlapOther
+                                              }
+                                            </FieldErrorMsg>
+                                            <Field
+                                              as={TextInput}
+                                              className="maxw-none"
+                                              id="it-tools-b-beneficiary-overlap-other"
+                                              maxLength={50}
+                                              name="bManageBeneficiaryOverlapOther"
+                                            />
+                                          </div>
+                                        )}
+                                    </Fragment>
+                                  );
+                                })}
+                              <AddNote
+                                id="it-tools-b-beneficiary-overlap-note"
+                                field="bManageBeneficiaryOverlapNote"
+                              />
+                            </>
+                          )}
+                        />
+                      </FieldGroup>
 
-                    <div className="margin-top-6 margin-bottom-3">
+                      <div className="margin-top-6 margin-bottom-3">
+                        <Button
+                          type="button"
+                          className="usa-button usa-button--outline margin-bottom-1"
+                          onClick={() => {
+                            handleFormSubmit(values, 'back');
+                          }}
+                        >
+                          {h('back')}
+                        </Button>
+                        <Button type="submit" onClick={() => setErrors({})}>
+                          {h('next')}
+                        </Button>
+                      </div>
                       <Button
                         type="button"
-                        className="usa-button usa-button--outline margin-bottom-1"
-                        onClick={() => {
-                          handleFormSubmit(values, 'back');
-                        }}
+                        className="usa-button usa-button--unstyled"
+                        onClick={() => handleFormSubmit(values, 'task-list')}
                       >
-                        {h('back')}
+                        <IconArrowBack className="margin-right-1" aria-hidden />
+                        {h('saveAndReturn')}
                       </Button>
-                      <Button type="submit" onClick={() => setErrors({})}>
-                        {h('next')}
-                      </Button>
-                    </div>
-                    <Button
-                      type="button"
-                      className="usa-button usa-button--unstyled"
-                      onClick={() => handleFormSubmit(values, 'task-list')}
-                    >
-                      <IconArrowBack className="margin-right-1" aria-hidden />
-                      {h('saveAndReturn')}
-                    </Button>
+                    </Fieldset>
                   </Form>
                 </Grid>
               </Grid>
 
-              {id && (
+              {itTools.id && !loading && (
                 <AutoSave
                   values={values}
                   onSave={() => {

@@ -7,6 +7,7 @@ import {
   BreadcrumbBar,
   BreadcrumbLink,
   Button,
+  Fieldset,
   Grid,
   IconArrowBack,
   Label,
@@ -28,6 +29,7 @@ import FieldGroup from 'components/shared/FieldGroup';
 import GetITToolsPageEight from 'queries/ITTools/GetITToolsPageEight';
 import {
   GetITToolPageEight as GetITToolPageEightType,
+  GetITToolPageEight_modelPlan as ModelPlanType,
   GetITToolPageEight_modelPlan_itTools as ITToolsPageEightFormType,
   GetITToolPageEight_modelPlan_opsEvalAndLearning as OpsEvalAndLearningType,
   GetITToolPageEight_modelPlan_payments as PaymentsType,
@@ -70,13 +72,24 @@ const initialFormValues: ITToolsPageEightFormType = {
 
 const initialOpsEvalAndLearningValues: OpsEvalAndLearningType = {
   __typename: 'PlanOpsEvalAndLearning',
+  id: '',
   modelLearningSystems: []
 };
 
 const initialPaymentValues: PaymentsType = {
   __typename: 'PlanPayments',
+  id: '',
   payType: [],
   shouldAnyProvidersExcludedFFSSystems: null
+};
+
+const initialModelPlanValues: ModelPlanType = {
+  __typename: 'ModelPlan',
+  id: '',
+  modelName: '',
+  opsEvalAndLearning: initialOpsEvalAndLearningValues,
+  payments: initialPaymentValues,
+  itTools: initialFormValues
 };
 
 const ITToolsPageEight = () => {
@@ -97,17 +110,14 @@ const ITToolsPageEight = () => {
     }
   });
 
-  const modelPlan = data?.modelPlan;
-  const modelName = modelPlan?.modelName;
-  const id = modelPlan?.itTools?.id;
+  const modelPlan = data?.modelPlan || initialModelPlanValues;
 
-  const itToolsData = modelPlan?.itTools || initialFormValues;
-
-  const { modelLearningSystems } =
-    modelPlan?.opsEvalAndLearning || initialOpsEvalAndLearningValues;
-
-  const { payType, shouldAnyProvidersExcludedFFSSystems } =
-    modelPlan?.payments || initialPaymentValues;
+  const {
+    modelName,
+    itTools,
+    opsEvalAndLearning: { modelLearningSystems },
+    payments: { payType, shouldAnyProvidersExcludedFFSSystems }
+  } = modelPlan;
 
   const [update] = useMutation<UpdatePlanItToolsVariables>(UpdatePlanITTools);
 
@@ -115,11 +125,11 @@ const ITToolsPageEight = () => {
     formikValues: ITToolsPageEightFormType,
     redirect?: 'next' | 'back' | 'task-list'
   ) => {
-    const { id: updateId, __typename, ...changeValues } = formikValues;
+    const { id, __typename, ...changes } = formikValues;
     update({
       variables: {
-        id: updateId,
-        changes: changeValues
+        id,
+        changes
       }
     })
       .then(response => {
@@ -176,7 +186,7 @@ const ITToolsPageEight = () => {
       <AskAQuestion modelID={modelID} />
 
       <Formik
-        initialValues={itToolsData}
+        initialValues={itTools}
         onSubmit={values => {
           handleFormSubmit(values, 'next');
         }}
@@ -216,390 +226,394 @@ const ITToolsPageEight = () => {
                       handleSubmit(e);
                     }}
                   >
-                    <FieldGroup
-                      scrollElement="oelEducateBeneficiaries"
-                      error={!!flatErrors.oelEducateBeneficiaries}
-                      className="margin-y-4"
-                    >
-                      <FieldArray
-                        name="oelEducateBeneficiaries"
-                        render={arrayHelpers => (
-                          <>
-                            <legend className="usa-label maxw-none">
-                              {t('educateTools')}
-                            </legend>
+                    <Fieldset disabled={loading}>
+                      <FieldGroup
+                        scrollElement="oelEducateBeneficiaries"
+                        error={!!flatErrors.oelEducateBeneficiaries}
+                        className="margin-y-4"
+                      >
+                        <FieldArray
+                          name="oelEducateBeneficiaries"
+                          render={arrayHelpers => (
+                            <>
+                              <legend className="usa-label maxw-none">
+                                {t('educateTools')}
+                              </legend>
 
-                            <FieldErrorMsg>
-                              {flatErrors.oelEducateBeneficiaries}
-                            </FieldErrorMsg>
+                              <FieldErrorMsg>
+                                {flatErrors.oelEducateBeneficiaries}
+                              </FieldErrorMsg>
 
-                            <ITToolsSummary
-                              question={o('dataToSend')}
-                              answers={modelLearningSystems.map(system =>
-                                translateModelLearningSystemType(system || '')
-                              )}
-                              redirect={`/models/${modelID}/task-list/ops-eval-and-learning/learning`}
-                              answered={modelLearningSystems.length > 0}
-                              needsTool={modelLearningSystems.includes(
-                                ModelLearningSystemType.EDUCATE_BENEFICIARIES
-                              )}
-                              subtext={t('educateBeneficiariesNeedsAnswer')}
-                            />
+                              <ITToolsSummary
+                                question={o('dataToSend')}
+                                answers={modelLearningSystems.map(system =>
+                                  translateModelLearningSystemType(system || '')
+                                )}
+                                redirect={`/models/${modelID}/task-list/ops-eval-and-learning/learning`}
+                                answered={modelLearningSystems.length > 0}
+                                needsTool={modelLearningSystems.includes(
+                                  ModelLearningSystemType.EDUCATE_BENEFICIARIES
+                                )}
+                                subtext={t('educateBeneficiariesNeedsAnswer')}
+                              />
 
-                            <p className="margin-top-4">{t('tools')}</p>
+                              <p className="margin-top-4">{t('tools')}</p>
 
-                            {Object.keys(OelEducateBeneficiariesType)
-                              .sort(sortOtherEnum)
-                              .map(type => {
-                                return (
-                                  <Fragment key={type}>
-                                    <Field
-                                      as={CheckboxField}
-                                      disabled={
-                                        !modelLearningSystems.includes(
-                                          ModelLearningSystemType.EDUCATE_BENEFICIARIES
-                                        ) || modelLearningSystems.length === 0
-                                      }
-                                      id={`it-tools-oel-educate-beneficiaries-${type}`}
-                                      name="oelEducateBeneficiaries"
-                                      label={translateOelEducateBeneficiariesType(
-                                        type
-                                      )}
-                                      value={type}
-                                      checked={values?.oelEducateBeneficiaries.includes(
-                                        type as OelEducateBeneficiariesType
-                                      )}
-                                      onChange={(
-                                        e: React.ChangeEvent<HTMLInputElement>
-                                      ) => {
-                                        if (e.target.checked) {
-                                          arrayHelpers.push(e.target.value);
-                                        } else {
-                                          const idx = values.oelEducateBeneficiaries.indexOf(
-                                            e.target
-                                              .value as OelEducateBeneficiariesType
-                                          );
-                                          arrayHelpers.remove(idx);
+                              {Object.keys(OelEducateBeneficiariesType)
+                                .sort(sortOtherEnum)
+                                .map(type => {
+                                  return (
+                                    <Fragment key={type}>
+                                      <Field
+                                        as={CheckboxField}
+                                        disabled={
+                                          !modelLearningSystems.includes(
+                                            ModelLearningSystemType.EDUCATE_BENEFICIARIES
+                                          ) || modelLearningSystems.length === 0
                                         }
-                                      }}
-                                    />
-                                    {type ===
-                                      OelEducateBeneficiariesType.OTHER &&
-                                      values.oelEducateBeneficiaries.includes(
-                                        type
-                                      ) && (
-                                        <div className="margin-left-4 margin-top-1">
-                                          <Label
-                                            htmlFor="it-tools-oel-educate-beneficiaries-other"
-                                            className={classNames(
+                                        id={`it-tools-oel-educate-beneficiaries-${type}`}
+                                        name="oelEducateBeneficiaries"
+                                        label={translateOelEducateBeneficiariesType(
+                                          type
+                                        )}
+                                        value={type}
+                                        checked={values?.oelEducateBeneficiaries.includes(
+                                          type as OelEducateBeneficiariesType
+                                        )}
+                                        onChange={(
+                                          e: React.ChangeEvent<HTMLInputElement>
+                                        ) => {
+                                          if (e.target.checked) {
+                                            arrayHelpers.push(e.target.value);
+                                          } else {
+                                            const idx = values.oelEducateBeneficiaries.indexOf(
+                                              e.target
+                                                .value as OelEducateBeneficiariesType
+                                            );
+                                            arrayHelpers.remove(idx);
+                                          }
+                                        }}
+                                      />
+                                      {type ===
+                                        OelEducateBeneficiariesType.OTHER &&
+                                        values.oelEducateBeneficiaries.includes(
+                                          type
+                                        ) && (
+                                          <div className="margin-left-4 margin-top-1">
+                                            <Label
+                                              htmlFor="it-tools-oel-educate-beneficiaries-other"
+                                              className={classNames(
+                                                {
+                                                  'text-gray-30':
+                                                    !modelLearningSystems.includes(
+                                                      ModelLearningSystemType.EDUCATE_BENEFICIARIES
+                                                    ) ||
+                                                    modelLearningSystems.length ===
+                                                      0
+                                                },
+                                                'text-normal'
+                                              )}
+                                            >
+                                              {h('pleaseSpecify')}
+                                            </Label>
+                                            <FieldErrorMsg>
                                               {
-                                                'text-gray-30':
-                                                  !modelLearningSystems.includes(
-                                                    ModelLearningSystemType.EDUCATE_BENEFICIARIES
-                                                  ) ||
-                                                  modelLearningSystems.length ===
-                                                    0
-                                              },
-                                              'text-normal'
-                                            )}
-                                          >
-                                            {h('pleaseSpecify')}
-                                          </Label>
-                                          <FieldErrorMsg>
-                                            {
-                                              flatErrors.oelEducateBeneficiariesOther
-                                            }
-                                          </FieldErrorMsg>
-                                          <Field
-                                            as={TextInput}
-                                            type="text"
-                                            disabled={
-                                              !modelLearningSystems.includes(
-                                                ModelLearningSystemType.EDUCATE_BENEFICIARIES
-                                              ) ||
-                                              modelLearningSystems.length === 0
-                                            }
-                                            className="maxw-none"
-                                            id="it-tools-oel-educate-beneficiaries-other"
-                                            maxLength={50}
-                                            name="oelEducateBeneficiariesOther"
-                                          />
-                                        </div>
-                                      )}
-                                  </Fragment>
-                                );
-                              })}
-                            <AddNote
-                              id="it-tools-oel-educate-beneficiaries-note"
-                              field="oelEducateBeneficiariesNote"
-                            />
-                          </>
-                        )}
-                      />
-                    </FieldGroup>
+                                                flatErrors.oelEducateBeneficiariesOther
+                                              }
+                                            </FieldErrorMsg>
+                                            <Field
+                                              as={TextInput}
+                                              type="text"
+                                              disabled={
+                                                !modelLearningSystems.includes(
+                                                  ModelLearningSystemType.EDUCATE_BENEFICIARIES
+                                                ) ||
+                                                modelLearningSystems.length ===
+                                                  0
+                                              }
+                                              className="maxw-none"
+                                              id="it-tools-oel-educate-beneficiaries-other"
+                                              maxLength={50}
+                                              name="oelEducateBeneficiariesOther"
+                                            />
+                                          </div>
+                                        )}
+                                    </Fragment>
+                                  );
+                                })}
+                              <AddNote
+                                id="it-tools-oel-educate-beneficiaries-note"
+                                field="oelEducateBeneficiariesNote"
+                              />
+                            </>
+                          )}
+                        />
+                      </FieldGroup>
 
-                    <h2>{p('heading')}</h2>
+                      <h2>{p('heading')}</h2>
 
-                    <FieldGroup
-                      scrollElement="pMakeClaimsPayments"
-                      error={!!flatErrors.pMakeClaimsPayments}
-                      className="margin-y-4"
-                    >
-                      <FieldArray
-                        name="pMakeClaimsPayments"
-                        render={arrayHelpers => (
-                          <>
-                            <legend className="usa-label maxw-none">
-                              {t('ffsTools')}
-                            </legend>
+                      <FieldGroup
+                        scrollElement="pMakeClaimsPayments"
+                        error={!!flatErrors.pMakeClaimsPayments}
+                        className="margin-y-4"
+                      >
+                        <FieldArray
+                          name="pMakeClaimsPayments"
+                          render={arrayHelpers => (
+                            <>
+                              <legend className="usa-label maxw-none">
+                                {t('ffsTools')}
+                              </legend>
 
-                            <FieldErrorMsg>
-                              {flatErrors.pMakeClaimsPayments}
-                            </FieldErrorMsg>
+                              <FieldErrorMsg>
+                                {flatErrors.pMakeClaimsPayments}
+                              </FieldErrorMsg>
 
-                            <ITToolsSummary
-                              question={p('whatWillYouPay')}
-                              answers={payType!.map(type =>
-                                translatePayType(type || '')
-                              )}
-                              redirect={`/models/${modelID}/task-list/payments`}
-                              answered={payType!.length > 0}
-                              needsTool={payType!.includes(
-                                PayType.CLAIMS_BASED_PAYMENTS
-                              )}
-                              subtext={t('ffsNeedsAnswer')}
-                            />
+                              <ITToolsSummary
+                                question={p('whatWillYouPay')}
+                                answers={payType!.map(type =>
+                                  translatePayType(type || '')
+                                )}
+                                redirect={`/models/${modelID}/task-list/payments`}
+                                answered={payType!.length > 0}
+                                needsTool={payType!.includes(
+                                  PayType.CLAIMS_BASED_PAYMENTS
+                                )}
+                                subtext={t('ffsNeedsAnswer')}
+                              />
 
-                            <p className="margin-top-4">{t('tools')}</p>
+                              <p className="margin-top-4">{t('tools')}</p>
 
-                            {Object.keys(PMakeClaimsPaymentsType)
-                              .sort(sortOtherEnum)
-                              .map(type => {
-                                return (
-                                  <Fragment key={type}>
-                                    <Field
-                                      as={CheckboxField}
-                                      disabled={
-                                        !payType!.includes(
-                                          PayType.CLAIMS_BASED_PAYMENTS
-                                        ) || payType!.length === 0
-                                      }
-                                      id={`it-tools-p-claims-payments-${type}`}
-                                      name="pMakeClaimsPayments"
-                                      label={translatePMakeClaimsPaymentsType(
-                                        type
-                                      )}
-                                      value={type}
-                                      checked={values?.pMakeClaimsPayments.includes(
-                                        type as PMakeClaimsPaymentsType
-                                      )}
-                                      onChange={(
-                                        e: React.ChangeEvent<HTMLInputElement>
-                                      ) => {
-                                        if (e.target.checked) {
-                                          arrayHelpers.push(e.target.value);
-                                        } else {
-                                          const idx = values.pMakeClaimsPayments.indexOf(
-                                            e.target
-                                              .value as PMakeClaimsPaymentsType
-                                          );
-                                          arrayHelpers.remove(idx);
+                              {Object.keys(PMakeClaimsPaymentsType)
+                                .sort(sortOtherEnum)
+                                .map(type => {
+                                  return (
+                                    <Fragment key={type}>
+                                      <Field
+                                        as={CheckboxField}
+                                        disabled={
+                                          !payType!.includes(
+                                            PayType.CLAIMS_BASED_PAYMENTS
+                                          ) || payType!.length === 0
                                         }
-                                      }}
-                                    />
-                                    {type === PMakeClaimsPaymentsType.OTHER &&
-                                      values.pMakeClaimsPayments.includes(
-                                        type
-                                      ) && (
-                                        <div className="margin-left-4 margin-top-1">
-                                          <Label
-                                            htmlFor="it-tools-p-claims-payments-other"
-                                            className={classNames(
+                                        id={`it-tools-p-claims-payments-${type}`}
+                                        name="pMakeClaimsPayments"
+                                        label={translatePMakeClaimsPaymentsType(
+                                          type
+                                        )}
+                                        value={type}
+                                        checked={values?.pMakeClaimsPayments.includes(
+                                          type as PMakeClaimsPaymentsType
+                                        )}
+                                        onChange={(
+                                          e: React.ChangeEvent<HTMLInputElement>
+                                        ) => {
+                                          if (e.target.checked) {
+                                            arrayHelpers.push(e.target.value);
+                                          } else {
+                                            const idx = values.pMakeClaimsPayments.indexOf(
+                                              e.target
+                                                .value as PMakeClaimsPaymentsType
+                                            );
+                                            arrayHelpers.remove(idx);
+                                          }
+                                        }}
+                                      />
+                                      {type === PMakeClaimsPaymentsType.OTHER &&
+                                        values.pMakeClaimsPayments.includes(
+                                          type
+                                        ) && (
+                                          <div className="margin-left-4 margin-top-1">
+                                            <Label
+                                              htmlFor="it-tools-p-claims-payments-other"
+                                              className={classNames(
+                                                {
+                                                  'text-gray-30':
+                                                    !payType!.includes(
+                                                      PayType.CLAIMS_BASED_PAYMENTS
+                                                    ) || payType!.length === 0
+                                                },
+                                                'text-normal'
+                                              )}
+                                            >
+                                              {h('pleaseSpecify')}
+                                            </Label>
+                                            <FieldErrorMsg>
                                               {
-                                                'text-gray-30':
-                                                  !payType!.includes(
-                                                    PayType.CLAIMS_BASED_PAYMENTS
-                                                  ) || payType!.length === 0
-                                              },
-                                              'text-normal'
-                                            )}
-                                          >
-                                            {h('pleaseSpecify')}
-                                          </Label>
-                                          <FieldErrorMsg>
-                                            {
-                                              flatErrors.pMakeClaimsPaymentsOther
-                                            }
-                                          </FieldErrorMsg>
-                                          <Field
-                                            as={TextInput}
-                                            type="text"
-                                            disabled={
-                                              !payType!.includes(
-                                                PayType.CLAIMS_BASED_PAYMENTS
-                                              ) || payType!.length === 0
-                                            }
-                                            className="maxw-none"
-                                            id="it-tools-p-claims-payments-other"
-                                            maxLength={50}
-                                            name="pMakeClaimsPaymentsOther"
-                                          />
-                                        </div>
-                                      )}
-                                  </Fragment>
-                                );
-                              })}
-                            <AddNote
-                              id="it-tools-p-claims-payments-note"
-                              field="pMakeClaimsPaymentsNote"
-                            />
-                          </>
-                        )}
-                      />
-                    </FieldGroup>
+                                                flatErrors.pMakeClaimsPaymentsOther
+                                              }
+                                            </FieldErrorMsg>
+                                            <Field
+                                              as={TextInput}
+                                              type="text"
+                                              disabled={
+                                                !payType!.includes(
+                                                  PayType.CLAIMS_BASED_PAYMENTS
+                                                ) || payType!.length === 0
+                                              }
+                                              className="maxw-none"
+                                              id="it-tools-p-claims-payments-other"
+                                              maxLength={50}
+                                              name="pMakeClaimsPaymentsOther"
+                                            />
+                                          </div>
+                                        )}
+                                    </Fragment>
+                                  );
+                                })}
+                              <AddNote
+                                id="it-tools-p-claims-payments-note"
+                                field="pMakeClaimsPaymentsNote"
+                              />
+                            </>
+                          )}
+                        />
+                      </FieldGroup>
 
-                    <FieldGroup
-                      scrollElement="pInformFfs"
-                      error={!!flatErrors.pInformFfs}
-                      className="margin-y-4"
-                    >
-                      <FieldArray
-                        name="pInformFfs"
-                        render={arrayHelpers => (
-                          <>
-                            <legend className="usa-label maxw-none">
-                              {t('waiveParticipantsTools')}
-                            </legend>
+                      <FieldGroup
+                        scrollElement="pInformFfs"
+                        error={!!flatErrors.pInformFfs}
+                        className="margin-y-4"
+                      >
+                        <FieldArray
+                          name="pInformFfs"
+                          render={arrayHelpers => (
+                            <>
+                              <legend className="usa-label maxw-none">
+                                {t('waiveParticipantsTools')}
+                              </legend>
 
-                            <FieldErrorMsg>
-                              {flatErrors.pInformFfs}
-                            </FieldErrorMsg>
+                              <FieldErrorMsg>
+                                {flatErrors.pInformFfs}
+                              </FieldErrorMsg>
 
-                            <ITToolsSummary
-                              question={p('participantsExcluded')}
-                              answers={[
-                                translateBoolean(
-                                  shouldAnyProvidersExcludedFFSSystems || false
-                                )
-                              ]}
-                              redirect={`/models/${modelID}/task-list/payments`}
-                              answered={
-                                shouldAnyProvidersExcludedFFSSystems !== null
-                              }
-                              needsTool={
-                                shouldAnyProvidersExcludedFFSSystems === true
-                              }
-                              subtext={t('yesFFSNeedsAnswer')}
-                            />
+                              <ITToolsSummary
+                                question={p('participantsExcluded')}
+                                answers={[
+                                  translateBoolean(
+                                    shouldAnyProvidersExcludedFFSSystems ||
+                                      false
+                                  )
+                                ]}
+                                redirect={`/models/${modelID}/task-list/payments`}
+                                answered={
+                                  shouldAnyProvidersExcludedFFSSystems !== null
+                                }
+                                needsTool={
+                                  shouldAnyProvidersExcludedFFSSystems === true
+                                }
+                                subtext={t('yesFFSNeedsAnswer')}
+                              />
 
-                            <p className="margin-top-4">{t('tools')}</p>
+                              <p className="margin-top-4">{t('tools')}</p>
 
-                            {Object.keys(PInformFfsType)
-                              .sort(sortOtherEnum)
-                              .map(type => {
-                                return (
-                                  <Fragment key={type}>
-                                    <Field
-                                      as={CheckboxField}
-                                      disabled={
-                                        !payType!.includes(
-                                          PayType.CLAIMS_BASED_PAYMENTS
-                                        ) || payType!.length === 0
-                                      }
-                                      id={`it-tools-p-inform-ffs-${type}`}
-                                      name="pInformFfs"
-                                      label={translatePInformFfsType(type)}
-                                      value={type}
-                                      checked={values?.pInformFfs.includes(
-                                        type as PInformFfsType
-                                      )}
-                                      onChange={(
-                                        e: React.ChangeEvent<HTMLInputElement>
-                                      ) => {
-                                        if (e.target.checked) {
-                                          arrayHelpers.push(e.target.value);
-                                        } else {
-                                          const idx = values.pInformFfs.indexOf(
-                                            e.target.value as PInformFfsType
-                                          );
-                                          arrayHelpers.remove(idx);
+                              {Object.keys(PInformFfsType)
+                                .sort(sortOtherEnum)
+                                .map(type => {
+                                  return (
+                                    <Fragment key={type}>
+                                      <Field
+                                        as={CheckboxField}
+                                        disabled={
+                                          !payType!.includes(
+                                            PayType.CLAIMS_BASED_PAYMENTS
+                                          ) || payType!.length === 0
                                         }
-                                      }}
-                                    />
-                                    {type === PInformFfsType.OTHER &&
-                                      values.pInformFfs.includes(type) && (
-                                        <div className="margin-left-4 margin-top-1">
-                                          <Label
-                                            htmlFor="it-tools-p-inform-ffs-other"
-                                            className={classNames(
-                                              {
-                                                'text-gray-30':
-                                                  !payType!.includes(
-                                                    PayType.CLAIMS_BASED_PAYMENTS
-                                                  ) || payType!.length === 0
-                                              },
-                                              'text-normal'
-                                            )}
-                                          >
-                                            {h('pleaseSpecify')}
-                                          </Label>
-                                          <FieldErrorMsg>
-                                            {flatErrors.pInformFfsOther}
-                                          </FieldErrorMsg>
-                                          <Field
-                                            as={TextInput}
-                                            type="text"
-                                            disabled={
-                                              !payType!.includes(
-                                                PayType.CLAIMS_BASED_PAYMENTS
-                                              ) || payType!.length === 0
-                                            }
-                                            className="maxw-none"
-                                            id="it-tools-p-inform-ffs-other"
-                                            maxLength={50}
-                                            name="pInformFfsOther"
-                                          />
-                                        </div>
-                                      )}
-                                  </Fragment>
-                                );
-                              })}
-                            <AddNote
-                              id="it-tools-p-inform-ffs-note"
-                              field="pInformFfsNote"
-                            />
-                          </>
-                        )}
-                      />
-                    </FieldGroup>
+                                        id={`it-tools-p-inform-ffs-${type}`}
+                                        name="pInformFfs"
+                                        label={translatePInformFfsType(type)}
+                                        value={type}
+                                        checked={values?.pInformFfs.includes(
+                                          type as PInformFfsType
+                                        )}
+                                        onChange={(
+                                          e: React.ChangeEvent<HTMLInputElement>
+                                        ) => {
+                                          if (e.target.checked) {
+                                            arrayHelpers.push(e.target.value);
+                                          } else {
+                                            const idx = values.pInformFfs.indexOf(
+                                              e.target.value as PInformFfsType
+                                            );
+                                            arrayHelpers.remove(idx);
+                                          }
+                                        }}
+                                      />
+                                      {type === PInformFfsType.OTHER &&
+                                        values.pInformFfs.includes(type) && (
+                                          <div className="margin-left-4 margin-top-1">
+                                            <Label
+                                              htmlFor="it-tools-p-inform-ffs-other"
+                                              className={classNames(
+                                                {
+                                                  'text-gray-30':
+                                                    !payType!.includes(
+                                                      PayType.CLAIMS_BASED_PAYMENTS
+                                                    ) || payType!.length === 0
+                                                },
+                                                'text-normal'
+                                              )}
+                                            >
+                                              {h('pleaseSpecify')}
+                                            </Label>
+                                            <FieldErrorMsg>
+                                              {flatErrors.pInformFfsOther}
+                                            </FieldErrorMsg>
+                                            <Field
+                                              as={TextInput}
+                                              type="text"
+                                              disabled={
+                                                !payType!.includes(
+                                                  PayType.CLAIMS_BASED_PAYMENTS
+                                                ) || payType!.length === 0
+                                              }
+                                              className="maxw-none"
+                                              id="it-tools-p-inform-ffs-other"
+                                              maxLength={50}
+                                              name="pInformFfsOther"
+                                            />
+                                          </div>
+                                        )}
+                                    </Fragment>
+                                  );
+                                })}
+                              <AddNote
+                                id="it-tools-p-inform-ffs-note"
+                                field="pInformFfsNote"
+                              />
+                            </>
+                          )}
+                        />
+                      </FieldGroup>
 
-                    <div className="margin-top-6 margin-bottom-3">
+                      <div className="margin-top-6 margin-bottom-3">
+                        <Button
+                          type="button"
+                          className="usa-button usa-button--outline margin-bottom-1"
+                          onClick={() => {
+                            handleFormSubmit(values, 'back');
+                          }}
+                        >
+                          {h('back')}
+                        </Button>
+                        <Button type="submit" onClick={() => setErrors({})}>
+                          {h('next')}
+                        </Button>
+                      </div>
                       <Button
                         type="button"
-                        className="usa-button usa-button--outline margin-bottom-1"
-                        onClick={() => {
-                          handleFormSubmit(values, 'back');
-                        }}
+                        className="usa-button usa-button--unstyled"
+                        onClick={() => handleFormSubmit(values, 'task-list')}
                       >
-                        {h('back')}
+                        <IconArrowBack className="margin-right-1" aria-hidden />
+                        {h('saveAndReturn')}
                       </Button>
-                      <Button type="submit" onClick={() => setErrors({})}>
-                        {h('next')}
-                      </Button>
-                    </div>
-                    <Button
-                      type="button"
-                      className="usa-button usa-button--unstyled"
-                      onClick={() => handleFormSubmit(values, 'task-list')}
-                    >
-                      <IconArrowBack className="margin-right-1" aria-hidden />
-                      {h('saveAndReturn')}
-                    </Button>
+                    </Fieldset>
                   </Form>
                 </Grid>
               </Grid>
 
-              {id && (
+              {itTools.id && !loading && (
                 <AutoSave
                   values={values}
                   onSave={() => {

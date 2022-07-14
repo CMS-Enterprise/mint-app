@@ -11,6 +11,7 @@ import { BenchmarkForPerformanceType, OelHelpdeskSupportType, OelManageAcoType, 
 
 export interface GetITToolPageFour_modelPlan_opsEvalAndLearning {
   __typename: "PlanOpsEvalAndLearning";
+  id: UUID;
   helpdeskUse: boolean | null;
   iddocSupport: boolean | null;
   benchmarkForPerformance: BenchmarkForPerformanceType | null;

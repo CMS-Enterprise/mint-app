@@ -6,6 +6,7 @@ export default gql`
       id
       modelName
       generalCharacteristics {
+        id
         managePartCDEnrollment
         collectPlanBids
         planContactUpdated

@@ -11,6 +11,7 @@ import { EvaluationApproachType, DataForMonitoringType, OelProcessAppealsType, O
 
 export interface GetITToolPageFive_modelPlan_opsEvalAndLearning {
   __typename: "PlanOpsEvalAndLearning";
+  id: UUID;
   appealPerformance: boolean | null;
   appealFeedback: boolean | null;
   appealPayments: boolean | null;

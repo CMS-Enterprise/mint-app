@@ -11,6 +11,7 @@ import { DataToSendParticipantsType, ModelLearningSystemType, OelSendReportsType
 
 export interface GetITToolPageSeven_modelPlan_opsEvalAndLearning {
   __typename: "PlanOpsEvalAndLearning";
+  id: UUID;
   dataToSendParticicipants: DataToSendParticipantsType[];
   modelLearningSystems: ModelLearningSystemType[];
 }

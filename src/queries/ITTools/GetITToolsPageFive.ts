@@ -6,6 +6,7 @@ export default gql`
       id
       modelName
       opsEvalAndLearning {
+        id
         appealPerformance
         appealFeedback
         appealPayments

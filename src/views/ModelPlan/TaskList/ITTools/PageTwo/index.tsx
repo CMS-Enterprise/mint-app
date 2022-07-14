@@ -7,6 +7,7 @@ import {
   BreadcrumbBar,
   BreadcrumbLink,
   Button,
+  Fieldset,
   Grid,
   IconArrowBack,
   Label,
@@ -28,6 +29,7 @@ import FieldGroup from 'components/shared/FieldGroup';
 import GetITToolsPageTwo from 'queries/ITTools/GetITToolsPageTwo';
 import {
   GetITToolPageTwo as GetITToolPageTwoType,
+  GetITToolPageTwo_modelPlan as ModelPlanType,
   GetITToolPageTwo_modelPlan_itTools as ITToolsPageTwoFormType,
   GetITToolPageTwo_modelPlan_participantsAndProviders as ParticipantsAndProvidersType,
   GetITToolPageTwoVariables
@@ -66,8 +68,17 @@ const initialFormValues: ITToolsPageTwoFormType = {
 
 const initialParticipantsAndProvidersValues: ParticipantsAndProvidersType = {
   __typename: 'PlanParticipantsAndProviders',
+  id: '',
   selectionMethod: [],
   recruitmentMethod: null
+};
+
+const initialModelPlanValues: ModelPlanType = {
+  __typename: 'ModelPlan',
+  id: '',
+  modelName: '',
+  participantsAndProviders: initialParticipantsAndProvidersValues,
+  itTools: initialFormValues
 };
 
 const ITToolsPageTwo = () => {
@@ -87,15 +98,13 @@ const ITToolsPageTwo = () => {
     }
   });
 
-  const modelPlan = data?.modelPlan;
-  const modelName = modelPlan?.modelName;
-  const id = modelPlan?.itTools?.id;
+  const modelPlan = data?.modelPlan || initialModelPlanValues;
 
-  const itToolsData = modelPlan?.itTools || initialFormValues;
-
-  const { recruitmentMethod, selectionMethod } =
-    modelPlan?.participantsAndProviders ||
-    initialParticipantsAndProvidersValues;
+  const {
+    modelName,
+    itTools,
+    participantsAndProviders: { recruitmentMethod, selectionMethod }
+  } = modelPlan;
 
   const [update] = useMutation<UpdatePlanItToolsVariables>(UpdatePlanITTools);
 
@@ -103,11 +112,11 @@ const ITToolsPageTwo = () => {
     formikValues: ITToolsPageTwoFormType,
     redirect?: 'next' | 'back' | 'task-list'
   ) => {
-    const { id: updateId, __typename, ...changeValues } = formikValues;
+    const { id, __typename, ...changes } = formikValues;
     update({
       variables: {
-        id: updateId,
-        changes: changeValues
+        id,
+        changes
       }
     })
       .then(response => {
@@ -164,7 +173,7 @@ const ITToolsPageTwo = () => {
       <AskAQuestion modelID={modelID} />
 
       <Formik
-        initialValues={itToolsData}
+        initialValues={itTools}
         onSubmit={values => {
           handleFormSubmit(values, 'next');
         }}
@@ -205,402 +214,410 @@ const ITToolsPageTwo = () => {
                     }}
                   >
                     <h2>{p('heading')}</h2>
+                    <Fieldset disabled={loading}>
+                      <FieldGroup
+                        scrollElement="ppToAdvertise"
+                        error={!!flatErrors.ppToAdvertise}
+                        className="margin-y-4"
+                      >
+                        <FieldArray
+                          name="ppToAdvertise"
+                          render={arrayHelpers => (
+                            <>
+                              <legend className="usa-label">
+                                {t('advertiseModel')}
+                              </legend>
+                              <p className="text-base margin-top-1 margin-bottom-3 line-height-body-3">
+                                {t('advertiseModelInfo')}
+                              </p>
+                              <FieldErrorMsg>
+                                {flatErrors.ppToAdvertise}
+                              </FieldErrorMsg>
 
-                    <FieldGroup
-                      scrollElement="ppToAdvertise"
-                      error={!!flatErrors.ppToAdvertise}
-                      className="margin-y-4"
-                    >
-                      <FieldArray
-                        name="ppToAdvertise"
-                        render={arrayHelpers => (
-                          <>
-                            <legend className="usa-label">
-                              {t('advertiseModel')}
-                            </legend>
-                            <p className="text-base margin-top-1 margin-bottom-3 line-height-body-3">
-                              {t('advertiseModelInfo')}
-                            </p>
-                            <FieldErrorMsg>
-                              {flatErrors.ppToAdvertise}
-                            </FieldErrorMsg>
+                              <ITToolsSummary
+                                question={p('recruitParticipants')}
+                                answers={[
+                                  translateRecruitmentType(
+                                    recruitmentMethod || ''
+                                  )
+                                ]}
+                                redirect={`/models/${modelID}/task-list/participants-and-providers/participants-options`}
+                                answered={recruitmentMethod !== null}
+                                needsTool={
+                                  recruitmentMethod === RecruitmentType.LOI ||
+                                  recruitmentMethod === RecruitmentType.NOFO
+                                }
+                                subtext={t('loiNeedsAnswer')}
+                              />
 
-                            <ITToolsSummary
-                              question={p('recruitParticipants')}
-                              answers={[
-                                translateRecruitmentType(
-                                  recruitmentMethod || ''
-                                )
-                              ]}
-                              redirect={`/models/${modelID}/task-list/participants-and-providers/participants-options`}
-                              answered={recruitmentMethod !== null}
-                              needsTool={
-                                recruitmentMethod === RecruitmentType.LOI ||
-                                recruitmentMethod === RecruitmentType.NOFO
-                              }
-                              subtext={t('loiNeedsAnswer')}
-                            />
+                              <p className="margin-top-4">{t('tools')}</p>
 
-                            <p className="margin-top-4">{t('tools')}</p>
+                              <p className="text-base">
+                                {t('ppToAdvertiseInfo')}
+                              </p>
 
-                            <p className="text-base">
-                              {t('ppToAdvertiseInfo')}
-                            </p>
-
-                            {Object.keys(PpToAdvertiseType)
-                              .sort(sortOtherEnum)
-                              .map(type => {
-                                return (
-                                  <Fragment key={type}>
-                                    <Field
-                                      as={CheckboxField}
-                                      disabled={
-                                        recruitmentMethod !==
-                                          RecruitmentType.NOFO &&
-                                        recruitmentMethod !==
-                                          RecruitmentType.LOI
-                                      }
-                                      id={`it-tools-pp-to-advertise-${type}`}
-                                      name="ppToAdvertise"
-                                      label={translatePpToAdvertiseType(type)}
-                                      value={type}
-                                      checked={values?.ppToAdvertise.includes(
-                                        type as PpToAdvertiseType
-                                      )}
-                                      onChange={(
-                                        e: React.ChangeEvent<HTMLInputElement>
-                                      ) => {
-                                        if (e.target.checked) {
-                                          arrayHelpers.push(e.target.value);
-                                        } else {
-                                          const idx = values.ppToAdvertise.indexOf(
-                                            e.target.value as PpToAdvertiseType
-                                          );
-                                          arrayHelpers.remove(idx);
-                                        }
-                                      }}
-                                    />
-                                    {type === PpToAdvertiseType.OTHER &&
-                                      values.ppToAdvertise.includes(type) && (
-                                        <div className="margin-left-4 margin-top-1">
-                                          <Label
-                                            htmlFor="it-tools-pp-to-advertise-other"
-                                            className={classNames(
-                                              {
-                                                'text-gray-30':
-                                                  recruitmentMethod !==
-                                                    RecruitmentType.NOFO &&
-                                                  recruitmentMethod !==
-                                                    RecruitmentType.LOI
-                                              },
-                                              'text-normal'
-                                            )}
-                                          >
-                                            {h('pleaseSpecify')}
-                                          </Label>
-                                          <FieldErrorMsg>
-                                            {flatErrors.ppToAdvertiseOther}
-                                          </FieldErrorMsg>
-                                          <Field
-                                            as={TextInput}
-                                            type="text"
-                                            disabled={
-                                              recruitmentMethod !==
-                                                RecruitmentType.NOFO &&
-                                              recruitmentMethod !==
-                                                RecruitmentType.LOI
-                                            }
-                                            className="maxw-none"
-                                            id="it-tools-pp-to-advertise-other"
-                                            maxLength={50}
-                                            name="ppToAdvertiseOther"
-                                          />
-                                        </div>
-                                      )}
-                                  </Fragment>
-                                );
-                              })}
-                            <AddNote
-                              id="it-tools-pp-to-advertise-note"
-                              field="ppToAdvertiseNote"
-                            />
-                          </>
-                        )}
-                      />
-                    </FieldGroup>
-
-                    <FieldGroup
-                      scrollElement="ppCollectScoreReview"
-                      error={!!flatErrors.ppCollectScoreReview}
-                      className="margin-y-4"
-                    >
-                      <FieldArray
-                        name="ppCollectScoreReview"
-                        render={arrayHelpers => (
-                          <>
-                            <legend className="usa-label maxw-none">
-                              {t('collectTools')}
-                            </legend>
-
-                            <FieldErrorMsg>
-                              {flatErrors.ppCollectScoreReview}
-                            </FieldErrorMsg>
-
-                            <ITToolsSummary
-                              question={p('howWillYouSelect')}
-                              answers={[...selectionMethod]
+                              {Object.keys(PpToAdvertiseType)
                                 .sort(sortOtherEnum)
-                                .map(selection =>
-                                  translateParticipantSelectiontType(selection)
-                                )}
-                              redirect={`/models/${modelID}/task-list/participants-and-providers/participants-options`}
-                              answered={selectionMethod.length > 0}
-                              needsTool={selectionMethod.includes(
-                                ParticipantSelectionType.APPLICATION_REVIEW_AND_SCORING_TOOL
-                              )}
-                              subtext={t('scoringToolNeedsAnswer')}
-                            />
-
-                            <p className="margin-top-4">{t('tools')}</p>
-
-                            {Object.keys(PpCollectScoreReviewType)
-                              .sort(sortOtherEnum)
-                              .map(type => {
-                                return (
-                                  <Fragment key={type}>
-                                    <Field
-                                      as={CheckboxField}
-                                      disabled={
-                                        !selectionMethod.includes(
-                                          ParticipantSelectionType.APPLICATION_REVIEW_AND_SCORING_TOOL
-                                        ) || selectionMethod.length === 0
-                                      }
-                                      id={`it-tools-pp-collect-score-review-${type}`}
-                                      name="ppCollectScoreReview"
-                                      label={translateParticipantSelectiontType(
-                                        type
-                                      )}
-                                      value={type}
-                                      checked={values?.ppCollectScoreReview.includes(
-                                        type as PpCollectScoreReviewType
-                                      )}
-                                      onChange={(
-                                        e: React.ChangeEvent<HTMLInputElement>
-                                      ) => {
-                                        if (e.target.checked) {
-                                          arrayHelpers.push(e.target.value);
-                                        } else {
-                                          const idx = values.ppCollectScoreReview.indexOf(
-                                            e.target
-                                              .value as PpCollectScoreReviewType
-                                          );
-                                          arrayHelpers.remove(idx);
+                                .map(type => {
+                                  return (
+                                    <Fragment key={type}>
+                                      <Field
+                                        as={CheckboxField}
+                                        disabled={
+                                          recruitmentMethod !==
+                                            RecruitmentType.NOFO &&
+                                          recruitmentMethod !==
+                                            RecruitmentType.LOI
                                         }
-                                      }}
-                                    />
-                                    {type === PpCollectScoreReviewType.OTHER &&
-                                      values.ppCollectScoreReview.includes(
-                                        type
-                                      ) && (
-                                        <div className="margin-left-4 margin-top-1">
-                                          <Label
-                                            htmlFor="it-tools-pp-collect-score-review-other"
-                                            className={classNames(
-                                              {
-                                                'text-gray-30':
-                                                  !selectionMethod.includes(
-                                                    ParticipantSelectionType.APPLICATION_REVIEW_AND_SCORING_TOOL
-                                                  ) ||
-                                                  selectionMethod.length === 0
-                                              },
-                                              'text-normal'
-                                            )}
-                                          >
-                                            {h('pleaseSpecify')}
-                                          </Label>
-                                          <FieldErrorMsg>
-                                            {
-                                              flatErrors.ppCollectScoreReviewOther
-                                            }
-                                          </FieldErrorMsg>
-                                          <Field
-                                            as={TextInput}
-                                            type="text"
-                                            disabled={
-                                              !selectionMethod.includes(
-                                                ParticipantSelectionType.APPLICATION_REVIEW_AND_SCORING_TOOL
-                                              ) || selectionMethod.length === 0
-                                            }
-                                            className="maxw-none"
-                                            id="it-tools-pp-collect-score-review-other"
-                                            maxLength={50}
-                                            name="ppCollectScoreReviewOther"
-                                          />
-                                        </div>
-                                      )}
-                                  </Fragment>
-                                );
-                              })}
-                            <AddNote
-                              id="it-tools-pp-collect-score-review-note"
-                              field="ppCollectScoreReviewNote"
-                            />
-                          </>
-                        )}
-                      />
-                    </FieldGroup>
+                                        id={`it-tools-pp-to-advertise-${type}`}
+                                        name="ppToAdvertise"
+                                        label={translatePpToAdvertiseType(type)}
+                                        value={type}
+                                        checked={values?.ppToAdvertise.includes(
+                                          type as PpToAdvertiseType
+                                        )}
+                                        onChange={(
+                                          e: React.ChangeEvent<HTMLInputElement>
+                                        ) => {
+                                          if (e.target.checked) {
+                                            arrayHelpers.push(e.target.value);
+                                          } else {
+                                            const idx = values.ppToAdvertise.indexOf(
+                                              e.target
+                                                .value as PpToAdvertiseType
+                                            );
+                                            arrayHelpers.remove(idx);
+                                          }
+                                        }}
+                                      />
+                                      {type === PpToAdvertiseType.OTHER &&
+                                        values.ppToAdvertise.includes(type) && (
+                                          <div className="margin-left-4 margin-top-1">
+                                            <Label
+                                              htmlFor="it-tools-pp-to-advertise-other"
+                                              className={classNames(
+                                                {
+                                                  'text-gray-30':
+                                                    recruitmentMethod !==
+                                                      RecruitmentType.NOFO &&
+                                                    recruitmentMethod !==
+                                                      RecruitmentType.LOI
+                                                },
+                                                'text-normal'
+                                              )}
+                                            >
+                                              {h('pleaseSpecify')}
+                                            </Label>
+                                            <FieldErrorMsg>
+                                              {flatErrors.ppToAdvertiseOther}
+                                            </FieldErrorMsg>
+                                            <Field
+                                              as={TextInput}
+                                              type="text"
+                                              disabled={
+                                                recruitmentMethod !==
+                                                  RecruitmentType.NOFO &&
+                                                recruitmentMethod !==
+                                                  RecruitmentType.LOI
+                                              }
+                                              className="maxw-none"
+                                              id="it-tools-pp-to-advertise-other"
+                                              maxLength={50}
+                                              name="ppToAdvertiseOther"
+                                            />
+                                          </div>
+                                        )}
+                                    </Fragment>
+                                  );
+                                })}
+                              <AddNote
+                                id="it-tools-pp-to-advertise-note"
+                                field="ppToAdvertiseNote"
+                              />
+                            </>
+                          )}
+                        />
+                      </FieldGroup>
 
-                    <FieldGroup
-                      scrollElement="ppAppSupportContractor"
-                      error={!!flatErrors.ppAppSupportContractor}
-                      className="margin-y-4"
-                    >
-                      <FieldArray
-                        name="ppAppSupportContractor"
-                        render={arrayHelpers => (
-                          <>
-                            <legend className="usa-label maxw-none">
-                              {t('appSupport')}
-                            </legend>
+                      <FieldGroup
+                        scrollElement="ppCollectScoreReview"
+                        error={!!flatErrors.ppCollectScoreReview}
+                        className="margin-y-4"
+                      >
+                        <FieldArray
+                          name="ppCollectScoreReview"
+                          render={arrayHelpers => (
+                            <>
+                              <legend className="usa-label maxw-none">
+                                {t('collectTools')}
+                              </legend>
 
-                            <p className="text-base margin-top-1 margin-bottom-3 line-height-body-3">
-                              {t('appSupportInfo')}
-                            </p>
+                              <FieldErrorMsg>
+                                {flatErrors.ppCollectScoreReview}
+                              </FieldErrorMsg>
 
-                            <FieldErrorMsg>
-                              {flatErrors.ppAppSupportContractor}
-                            </FieldErrorMsg>
+                              <ITToolsSummary
+                                question={p('howWillYouSelect')}
+                                answers={[...selectionMethod]
+                                  .sort(sortOtherEnum)
+                                  .map(selection =>
+                                    translateParticipantSelectiontType(
+                                      selection
+                                    )
+                                  )}
+                                redirect={`/models/${modelID}/task-list/participants-and-providers/participants-options`}
+                                answered={selectionMethod.length > 0}
+                                needsTool={selectionMethod.includes(
+                                  ParticipantSelectionType.APPLICATION_REVIEW_AND_SCORING_TOOL
+                                )}
+                                subtext={t('scoringToolNeedsAnswer')}
+                              />
 
-                            <ITToolsSummary
-                              question={p('howWillYouSelect')}
-                              answers={[...selectionMethod]
+                              <p className="margin-top-4">{t('tools')}</p>
+
+                              {Object.keys(PpCollectScoreReviewType)
                                 .sort(sortOtherEnum)
-                                .map(selection =>
-                                  translateParticipantSelectiontType(selection)
-                                )}
-                              redirect={`/models/${modelID}/task-list/participants-and-providers/participants-options`}
-                              answered={selectionMethod.length > 0}
-                              needsTool={selectionMethod.includes(
-                                ParticipantSelectionType.APPLICATION_SUPPORT_CONTRACTOR
-                              )}
-                              subtext={t('contractorNeedsAnswer')}
-                            />
-
-                            <p className="margin-top-4">{t('tools')}</p>
-
-                            {Object.keys(PpAppSupportContractorType)
-                              .sort(sortOtherEnum)
-                              .map(type => {
-                                return (
-                                  <Fragment key={type}>
-                                    <Field
-                                      as={CheckboxField}
-                                      disabled={
-                                        !selectionMethod.includes(
-                                          ParticipantSelectionType.APPLICATION_SUPPORT_CONTRACTOR
-                                        )
-                                      }
-                                      id={`it-tools-pp-app-support-contractor-${type}`}
-                                      name="ppAppSupportContractor"
-                                      label={translateParticipantSelectiontType(
-                                        type
-                                      )}
-                                      value={type}
-                                      checked={values?.ppAppSupportContractor.includes(
-                                        type as PpAppSupportContractorType
-                                      )}
-                                      onChange={(
-                                        e: React.ChangeEvent<HTMLInputElement>
-                                      ) => {
-                                        if (e.target.checked) {
-                                          arrayHelpers.push(e.target.value);
-                                        } else {
-                                          const idx = values.ppAppSupportContractor.indexOf(
-                                            e.target
-                                              .value as PpAppSupportContractorType
-                                          );
-                                          arrayHelpers.remove(idx);
+                                .map(type => {
+                                  return (
+                                    <Fragment key={type}>
+                                      <Field
+                                        as={CheckboxField}
+                                        disabled={
+                                          !selectionMethod.includes(
+                                            ParticipantSelectionType.APPLICATION_REVIEW_AND_SCORING_TOOL
+                                          ) || selectionMethod.length === 0
                                         }
-                                      }}
-                                    />
-                                    {type ===
-                                      PpAppSupportContractorType.OTHER &&
-                                      values.ppAppSupportContractor.includes(
-                                        type
-                                      ) && (
-                                        <div className="margin-left-4 margin-top-1">
-                                          <Label
-                                            htmlFor="it-tools-pp-app-support-contractor-other"
-                                            className={classNames(
+                                        id={`it-tools-pp-collect-score-review-${type}`}
+                                        name="ppCollectScoreReview"
+                                        label={translateParticipantSelectiontType(
+                                          type
+                                        )}
+                                        value={type}
+                                        checked={values?.ppCollectScoreReview.includes(
+                                          type as PpCollectScoreReviewType
+                                        )}
+                                        onChange={(
+                                          e: React.ChangeEvent<HTMLInputElement>
+                                        ) => {
+                                          if (e.target.checked) {
+                                            arrayHelpers.push(e.target.value);
+                                          } else {
+                                            const idx = values.ppCollectScoreReview.indexOf(
+                                              e.target
+                                                .value as PpCollectScoreReviewType
+                                            );
+                                            arrayHelpers.remove(idx);
+                                          }
+                                        }}
+                                      />
+                                      {type ===
+                                        PpCollectScoreReviewType.OTHER &&
+                                        values.ppCollectScoreReview.includes(
+                                          type
+                                        ) && (
+                                          <div className="margin-left-4 margin-top-1">
+                                            <Label
+                                              htmlFor="it-tools-pp-collect-score-review-other"
+                                              className={classNames(
+                                                {
+                                                  'text-gray-30':
+                                                    !selectionMethod.includes(
+                                                      ParticipantSelectionType.APPLICATION_REVIEW_AND_SCORING_TOOL
+                                                    ) ||
+                                                    selectionMethod.length === 0
+                                                },
+                                                'text-normal'
+                                              )}
+                                            >
+                                              {h('pleaseSpecify')}
+                                            </Label>
+                                            <FieldErrorMsg>
                                               {
-                                                'text-gray-30': !selectionMethod.includes(
+                                                flatErrors.ppCollectScoreReviewOther
+                                              }
+                                            </FieldErrorMsg>
+                                            <Field
+                                              as={TextInput}
+                                              type="text"
+                                              disabled={
+                                                !selectionMethod.includes(
+                                                  ParticipantSelectionType.APPLICATION_REVIEW_AND_SCORING_TOOL
+                                                ) ||
+                                                selectionMethod.length === 0
+                                              }
+                                              className="maxw-none"
+                                              id="it-tools-pp-collect-score-review-other"
+                                              maxLength={50}
+                                              name="ppCollectScoreReviewOther"
+                                            />
+                                          </div>
+                                        )}
+                                    </Fragment>
+                                  );
+                                })}
+                              <AddNote
+                                id="it-tools-pp-collect-score-review-note"
+                                field="ppCollectScoreReviewNote"
+                              />
+                            </>
+                          )}
+                        />
+                      </FieldGroup>
+
+                      <FieldGroup
+                        scrollElement="ppAppSupportContractor"
+                        error={!!flatErrors.ppAppSupportContractor}
+                        className="margin-y-4"
+                      >
+                        <FieldArray
+                          name="ppAppSupportContractor"
+                          render={arrayHelpers => (
+                            <>
+                              <legend className="usa-label maxw-none">
+                                {t('appSupport')}
+                              </legend>
+
+                              <p className="text-base margin-top-1 margin-bottom-3 line-height-body-3">
+                                {t('appSupportInfo')}
+                              </p>
+
+                              <FieldErrorMsg>
+                                {flatErrors.ppAppSupportContractor}
+                              </FieldErrorMsg>
+
+                              <ITToolsSummary
+                                question={p('howWillYouSelect')}
+                                answers={[...selectionMethod]
+                                  .sort(sortOtherEnum)
+                                  .map(selection =>
+                                    translateParticipantSelectiontType(
+                                      selection
+                                    )
+                                  )}
+                                redirect={`/models/${modelID}/task-list/participants-and-providers/participants-options`}
+                                answered={selectionMethod.length > 0}
+                                needsTool={selectionMethod.includes(
+                                  ParticipantSelectionType.APPLICATION_SUPPORT_CONTRACTOR
+                                )}
+                                subtext={t('contractorNeedsAnswer')}
+                              />
+
+                              <p className="margin-top-4">{t('tools')}</p>
+
+                              {Object.keys(PpAppSupportContractorType)
+                                .sort(sortOtherEnum)
+                                .map(type => {
+                                  return (
+                                    <Fragment key={type}>
+                                      <Field
+                                        as={CheckboxField}
+                                        disabled={
+                                          !selectionMethod.includes(
+                                            ParticipantSelectionType.APPLICATION_SUPPORT_CONTRACTOR
+                                          )
+                                        }
+                                        id={`it-tools-pp-app-support-contractor-${type}`}
+                                        name="ppAppSupportContractor"
+                                        label={translateParticipantSelectiontType(
+                                          type
+                                        )}
+                                        value={type}
+                                        checked={values?.ppAppSupportContractor.includes(
+                                          type as PpAppSupportContractorType
+                                        )}
+                                        onChange={(
+                                          e: React.ChangeEvent<HTMLInputElement>
+                                        ) => {
+                                          if (e.target.checked) {
+                                            arrayHelpers.push(e.target.value);
+                                          } else {
+                                            const idx = values.ppAppSupportContractor.indexOf(
+                                              e.target
+                                                .value as PpAppSupportContractorType
+                                            );
+                                            arrayHelpers.remove(idx);
+                                          }
+                                        }}
+                                      />
+                                      {type ===
+                                        PpAppSupportContractorType.OTHER &&
+                                        values.ppAppSupportContractor.includes(
+                                          type
+                                        ) && (
+                                          <div className="margin-left-4 margin-top-1">
+                                            <Label
+                                              htmlFor="it-tools-pp-app-support-contractor-other"
+                                              className={classNames(
+                                                {
+                                                  'text-gray-30': !selectionMethod.includes(
+                                                    ParticipantSelectionType.APPLICATION_SUPPORT_CONTRACTOR
+                                                  )
+                                                },
+                                                'text-normal'
+                                              )}
+                                            >
+                                              {h('pleaseSpecify')}
+                                            </Label>
+                                            <FieldErrorMsg>
+                                              {
+                                                flatErrors.ppAppSupportContractorOther
+                                              }
+                                            </FieldErrorMsg>
+                                            <Field
+                                              as={TextInput}
+                                              type="text"
+                                              disabled={
+                                                !selectionMethod.includes(
                                                   ParticipantSelectionType.APPLICATION_SUPPORT_CONTRACTOR
                                                 )
-                                              },
-                                              'text-normal'
-                                            )}
-                                          >
-                                            {h('pleaseSpecify')}
-                                          </Label>
-                                          <FieldErrorMsg>
-                                            {
-                                              flatErrors.ppAppSupportContractorOther
-                                            }
-                                          </FieldErrorMsg>
-                                          <Field
-                                            as={TextInput}
-                                            type="text"
-                                            disabled={
-                                              !selectionMethod.includes(
-                                                ParticipantSelectionType.APPLICATION_SUPPORT_CONTRACTOR
-                                              )
-                                            }
-                                            className="maxw-none"
-                                            id="it-tools-pp-app-support-contractor-other"
-                                            maxLength={50}
-                                            name="ppAppSupportContractorOther"
-                                          />
-                                        </div>
-                                      )}
-                                  </Fragment>
-                                );
-                              })}
-                            <AddNote
-                              id="it-tools-pp-app-support-contractor-note"
-                              field="ppAppSupportContractorNote"
-                            />
-                          </>
-                        )}
-                      />
-                    </FieldGroup>
+                                              }
+                                              className="maxw-none"
+                                              id="it-tools-pp-app-support-contractor-other"
+                                              maxLength={50}
+                                              name="ppAppSupportContractorOther"
+                                            />
+                                          </div>
+                                        )}
+                                    </Fragment>
+                                  );
+                                })}
+                              <AddNote
+                                id="it-tools-pp-app-support-contractor-note"
+                                field="ppAppSupportContractorNote"
+                              />
+                            </>
+                          )}
+                        />
+                      </FieldGroup>
 
-                    <div className="margin-top-6 margin-bottom-3">
+                      <div className="margin-top-6 margin-bottom-3">
+                        <Button
+                          type="button"
+                          className="usa-button usa-button--outline margin-bottom-1"
+                          onClick={() => {
+                            handleFormSubmit(values, 'back');
+                          }}
+                        >
+                          {h('back')}
+                        </Button>
+                        <Button type="submit" onClick={() => setErrors({})}>
+                          {h('next')}
+                        </Button>
+                      </div>
                       <Button
                         type="button"
-                        className="usa-button usa-button--outline margin-bottom-1"
-                        onClick={() => {
-                          handleFormSubmit(values, 'back');
-                        }}
+                        className="usa-button usa-button--unstyled"
+                        onClick={() => handleFormSubmit(values, 'task-list')}
                       >
-                        {h('back')}
+                        <IconArrowBack className="margin-right-1" aria-hidden />
+                        {h('saveAndReturn')}
                       </Button>
-                      <Button type="submit" onClick={() => setErrors({})}>
-                        {h('next')}
-                      </Button>
-                    </div>
-                    <Button
-                      type="button"
-                      className="usa-button usa-button--unstyled"
-                      onClick={() => handleFormSubmit(values, 'task-list')}
-                    >
-                      <IconArrowBack className="margin-right-1" aria-hidden />
-                      {h('saveAndReturn')}
-                    </Button>
+                    </Fieldset>
                   </Form>
                 </Grid>
               </Grid>
 
-              {id && (
+              {itTools.id && !loading && (
                 <AutoSave
                   values={values}
                   onSave={() => {

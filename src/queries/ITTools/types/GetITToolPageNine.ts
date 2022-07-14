@@ -11,6 +11,7 @@ import { PayType, NonClaimsBasedPayType, PNonClaimsBasedPaymentsType, PSharedSav
 
 export interface GetITToolPageNine_modelPlan_payments {
   __typename: "PlanPayments";
+  id: UUID;
   payType: PayType[];
   nonClaimsPayments: NonClaimsBasedPayType[];
   willRecoverPayments: boolean | null;

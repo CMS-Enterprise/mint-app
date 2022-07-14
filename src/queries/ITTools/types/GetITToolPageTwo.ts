@@ -11,6 +11,7 @@ import { RecruitmentType, ParticipantSelectionType, PpToAdvertiseType, PpCollect
 
 export interface GetITToolPageTwo_modelPlan_participantsAndProviders {
   __typename: "PlanParticipantsAndProviders";
+  id: UUID;
   recruitmentMethod: RecruitmentType | null;
   selectionMethod: ParticipantSelectionType[];
 }

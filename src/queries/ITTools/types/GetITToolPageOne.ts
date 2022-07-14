@@ -11,6 +11,7 @@ import { GcPartCDType, GcCollectBidsType, GcUpdateContractType } from "./../../.
 
 export interface GetITToolPageOne_modelPlan_generalCharacteristics {
   __typename: "PlanGeneralCharacteristics";
+  id: UUID;
   managePartCDEnrollment: boolean | null;
   collectPlanBids: boolean | null;
   planContactUpdated: boolean | null;

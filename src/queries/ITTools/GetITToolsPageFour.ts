@@ -6,6 +6,7 @@ export default gql`
       id
       modelName
       opsEvalAndLearning {
+        id
         helpdeskUse
         iddocSupport
         benchmarkForPerformance

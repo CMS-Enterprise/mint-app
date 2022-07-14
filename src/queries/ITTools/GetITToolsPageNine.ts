@@ -6,6 +6,7 @@ export default gql`
       id
       modelName
       payments {
+        id
         payType
         nonClaimsPayments
         willRecoverPayments
