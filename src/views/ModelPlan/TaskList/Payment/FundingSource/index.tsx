@@ -1,4 +1,4 @@
-import React, { Fragment, useRef } from 'react';
+import React, { Fragment, useEffect, useRef, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
@@ -47,6 +47,8 @@ import {
 } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
 
+import { renderTotalPages } from '..';
+
 const FundingSource = () => {
   const { t } = useTranslation('payments');
   const { t: h } = useTranslation('draftModelPlan');
@@ -84,6 +86,30 @@ const FundingSource = () => {
   const modelName = data?.modelPlan?.modelName || '';
 
   const [update] = useMutation<UpdatePaymentsVariables>(UpdatePayments);
+  const [totalPages, setTotalPages] = useState(3);
+
+  useEffect(() => {
+    if (
+      data?.modelPlan?.payments.payType.includes(PayType.CLAIMS_BASED_PAYMENTS)
+    ) {
+      if (
+        data?.modelPlan?.payments.payType.includes(
+          PayType.NON_CLAIMS_BASED_PAYMENTS
+        )
+      ) {
+        setTotalPages(6);
+      } else {
+        setTotalPages(5);
+      }
+    }
+    if (
+      data?.modelPlan?.payments.payType.includes(
+        PayType.NON_CLAIMS_BASED_PAYMENTS
+      )
+    ) {
+      setTotalPages(4);
+    }
+  }, [data?.modelPlan?.payments.payType]);
 
   const handleFormSubmit = (
     formikValues: FundingFormType,
@@ -102,7 +128,7 @@ const FundingSource = () => {
             // *  Claims-based payments triggers 2 extra pages of questions. Non-claims-based payments triggers 1 extra page of questions.
             // todo: conditionally direct people if those options are selected
 
-            history.push(`/models/${modelID}/task-list/payments/page-TBD`);
+            history.push(`/models/${modelID}/task-list/payment/page-2`);
           } else if (redirect === 'back') {
             history.push(`/models/${modelID}/task-list/`);
           }
@@ -573,7 +599,17 @@ const FundingSource = () => {
           );
         }}
       </Formik>
-      <PageNumber currentPage={1} totalPages={3} className="margin-y-6" />
+      {/* {data && ( */}
+      <PageNumber
+        currentPage={1}
+        // totalPages={renderTotalPages(
+        //   payType.includes(PayType.CLAIMS_BASED_PAYMENTS),
+        //   payType.includes(PayType.NON_CLAIMS_BASED_PAYMENTS)
+        // )}
+        totalPages={totalPages}
+        className="margin-y-6"
+      />
+      {/* )} */}
     </>
   );
 };
