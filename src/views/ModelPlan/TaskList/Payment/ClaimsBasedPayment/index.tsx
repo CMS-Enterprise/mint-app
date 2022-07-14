@@ -61,8 +61,10 @@ const ClaimsBasedPayment = () => {
 
   const {
     id,
+    payType,
     payClaims,
     payClaimsOther,
+    payClaimsNote,
     shouldAnyProvidersExcludedFFSSystems,
     shouldAnyProviderExcludedFFSSystemsNote,
     changesMedicarePhysicianFeeSchedule,
@@ -114,8 +116,10 @@ const ClaimsBasedPayment = () => {
   const initialValues: ClaimsBasedPaymentFormType = {
     __typename: 'PlanPayments',
     id: id ?? '',
+    payType: payType ?? [],
     payClaims: payClaims ?? [],
     payClaimsOther: payClaimsOther ?? '',
+    payClaimsNote: payClaimsNote ?? '',
     shouldAnyProvidersExcludedFFSSystems:
       shouldAnyProvidersExcludedFFSSystems ?? null,
     shouldAnyProviderExcludedFFSSystemsNote:
@@ -249,7 +253,6 @@ const ClaimsBasedPayment = () => {
                         />
 
                         {(values?.payClaims || []).includes(
-                          // TODO: Pull in Tom's updates once its available
                           ClaimsBasedPayType.OTHER
                         ) && (
                           <FieldGroup
