@@ -706,28 +706,29 @@ type PlanPayments {
   modelPlanID: UUID!
 
   # Page 1
-  fundingSource:                      [FundingSource!]
+  fundingSource:                      [FundingSource!]!
   fundingSourceTrustFund:             String
+  fundingSourceOther:                 String
   fundingSourceNote:                  String
-  fundingSourceR:                     [FundingSource!]
+  fundingSourceR:                     [FundingSource!]!
   fundingSourceRTrustFund:            String
   fundingSourceROther:                String
   fundingSourceRNote:                 String
-  payRecipients:                      [PayRecipient!]
+  payRecipients:                      [PayRecipient!]!
   payRecipientsOtherSpecification:    String
   payRecipientsNote:                  String
-  payType:                            [PayType!]
+  payType:                            [PayType!]!
   payTypeNote:                        String
 
   # Page 2
-  payClaims:                                      [ClaimsBasedPayType!]
+  payClaims:                                      [ClaimsBasedPayType!]!
   payClaimsOther:                                 String
   shouldAnyProvidersExcludedFFSSystems:           Boolean
   shouldAnyProviderExcludedFFSSystemsNote:        String
   changesMedicarePhysicianFeeSchedule:            Boolean
   changesMedicarePhysicianFeeScheduleNote:        String
   affectsMedicareSecondaryPayerClaims:            Boolean
-  affectsMedicareSecondaryPayerClaimsHow: String
+  affectsMedicareSecondaryPayerClaimsHow:         String
   affectsMedicareSecondaryPayerClaimsNote:        String
   payModelDifferentiation:                        String
 
@@ -747,11 +748,11 @@ type PlanPayments {
   waiveBeneficiaryCostSharingNote:                 String
 
   # Page 5
-  nonClaimsPayments:                               [NonClaimsBasedPayType!]
+  nonClaimsPayments:                               [NonClaimsBasedPayType!]!
   nonClaimsPaymentOther:                           String
   paymentCalculationOwner:                         String
   numberPaymentsPerPayCycle:                       String
-  numberPaymentsPerPayCycleNote:                  String
+  numberPaymentsPerPayCycleNote:                   String
   sharedSystemsInvolvedAdditionalClaimPayment:     Boolean
   sharedSystemsInvolvedAdditionalClaimPaymentNote: String
   planningToUseInnovationPaymentContractor:        Boolean
@@ -764,30 +765,31 @@ type PlanPayments {
   canParticipantsSelectBetweenPaymentMechanisms:     Boolean
   canParticipantsSelectBetweenPaymentMechanismsHow:  String
   canParticipantsSelectBetweenPaymentMechanismsNote: String
-  anticipatedPaymentFrequency:                       [AnticipatedPaymentFrequencyType!]
+  anticipatedPaymentFrequency:                       [AnticipatedPaymentFrequencyType!]!
   anticipatedPaymentFrequencyOther:                  String
-  anticipatedPaymentFrequencyNote:                  String
+  anticipatedPaymentFrequencyNote:                   String
 
   # Page 7
   willRecoverPayments:                               Boolean
-  willRecoverPaymentsNote:                          String
+  willRecoverPaymentsNote:                           String
   anticipateReconcilingPaymentsRetrospectively:      Boolean
-  anticipateReconcilingPaymentsRetrospectivelyNote: String
+  anticipateReconcilingPaymentsRetrospectivelyNote:  String
   paymentStartDate:                                  Time
-  paymentStartDateNote:                             String
+  paymentStartDateNote:                              String
 
   # Meta
-  createdBy: String!
-  createdDts: Time!
-  modifiedBy: String
+  createdBy:   String!
+  createdDts:  Time!
+  modifiedBy:  String
   modifiedDts: Time
-  status: TaskStatus!
+  status:      TaskStatus!
 }
 
 input PlanPaymentsChanges @goModel(model: "map[string]interface{}") {
   # Page 1
   fundingSource:                      [FundingSource!]
   fundingSourceTrustFund:             String
+  fundingSourceOther:                 String
   fundingSourceNote:                  String
   fundingSourceR:                     [FundingSource!]
   fundingSourceRTrustFund:            String
