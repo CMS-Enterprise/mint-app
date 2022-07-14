@@ -3,46 +3,38 @@ import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
 
-import GetModelPlan from 'queries/GetModelPlan';
+import GetModelPlanInfo from 'queries/Basics/GetModelPlanInfo';
+import { GetModelPlanInfo_modelPlan as GetModelPlanInfoType } from 'queries/Basics/types/GetModelPlanInfo';
 import {
   CMMIGroup,
   CMSCenter,
-  ModelCategory,
-  ModelStatus
+  ModelCategory
 } from 'types/graphql-global-types';
 
 import Basics from './index';
 
+const basicMockData: GetModelPlanInfoType = {
+  __typename: 'ModelPlan',
+  id: 'f11eb129-2c80-4080-9440-439cbe1a286f',
+  modelName: 'My excellent plan that I just initiated',
+  modelCategory: ModelCategory.PRIMARY_CARE_TRANSFORMATION,
+  cmmiGroups: [
+    CMMIGroup.STATE_INNOVATIONS_GROUP,
+    CMMIGroup.POLICY_AND_PROGRAMS_GROUP
+  ],
+  cmsCenters: [CMSCenter.CENTER_FOR_MEDICARE, CMSCenter.OTHER],
+  cmsOther: 'The Center for Awesomeness '
+};
+
 const mocks = [
   {
     request: {
-      query: GetModelPlan,
+      query: GetModelPlanInfo,
       variables: { id: 'f11eb129-2c80-4080-9440-439cbe1a286f' }
     },
     result: {
       data: {
-        modelPlan: {
-          modelName: 'My excellent plan that I just initiated',
-          __typename: 'ModelPlan',
-          id: 'f11eb129-2c80-4080-9440-439cbe1a286f',
-          status: ModelStatus.PLAN_DRAFT,
-          modelCategory: ModelCategory.PRIMARY_CARE_TRANSFORMATION,
-          cmmiGroups: [
-            CMMIGroup.STATE_INNOVATIONS_GROUP,
-            CMMIGroup.POLICY_AND_PROGRAMS_GROUP
-          ],
-          cmsCenters: [CMSCenter.CENTER_FOR_MEDICARE, CMSCenter.OTHER],
-          cmsOther: 'The Center for Awesomeness ',
-          archived: false,
-          discussions: [],
-          generalCharacteristics: [],
-          participantsAndProviders: [],
-          opsEvalAndLearning: [],
-          basics: [],
-          documents: [],
-          milestones: [],
-          modifiedDts: ''
-        }
+        modelPlan: basicMockData
       }
     }
   }

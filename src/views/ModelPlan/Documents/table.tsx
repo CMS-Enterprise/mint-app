@@ -9,14 +9,14 @@ import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
-import DeleteModelPlanDocument from 'queries/DeleteModelPlanDocument';
-import GetPlanDocumentByModelID from 'queries/GetPlanDocumentByModelID';
-import GetPlanDocumentDownloadURL from 'queries/GetPlanDocumentDownloadURL';
-import { DeleteModelPlanDocumentVariables } from 'queries/types/DeleteModelPlanDocument';
+import DeleteModelPlanDocument from 'queries/Documents/DeleteModelPlanDocument';
+import GetPlanDocumentByModelID from 'queries/Documents/GetPlanDocumentByModelID';
+import GetPlanDocumentDownloadURL from 'queries/Documents/GetPlanDocumentDownloadURL';
+import { DeleteModelPlanDocumentVariables } from 'queries/Documents/types/DeleteModelPlanDocument';
 import {
   GetModelPlanDocumentByModelID as GetModelPlanDocumentByModelIDType,
   GetModelPlanDocumentByModelID_readPlanDocumentByModelID as PlanDocumentByModelIDType
-} from 'queries/types/GetModelPlanDocumentByModelID';
+} from 'queries/Documents/types/GetModelPlanDocumentByModelID';
 import downloadFile from 'utils/downloadFile';
 import globalTableFilter from 'utils/globalTableFilter';
 import { translateDocumentType } from 'utils/modelPlan';

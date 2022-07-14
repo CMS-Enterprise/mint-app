@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useRef, useState } from 'react';
-import { Trans, useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
 import {
@@ -29,7 +29,8 @@ import FieldGroup from 'components/shared/FieldGroup';
 import GetIDDOC from 'queries/OpsEvalAndLearning/GetIDDOC';
 import {
   GetIDDOC as GetIDDOCType,
-  GetIDDOC_modelPlan_opsEvalAndLearning as IDDOCFormType
+  GetIDDOC_modelPlan_opsEvalAndLearning as IDDOCFormType,
+  GetIDDOCVariables
 } from 'queries/OpsEvalAndLearning/types/GetIDDOC';
 import { UpdatePlanOpsEvalAndLearningVariables } from 'queries/OpsEvalAndLearning/types/UpdatePlanOpsEvalAndLearning';
 import UpdatePlanOpsEvalAndLearning from 'queries/OpsEvalAndLearning/UpdatePlanOpsEvalAndLearning';
@@ -48,11 +49,14 @@ const IDDOC = () => {
   const formikRef = useRef<FormikProps<IDDOCFormType>>(null);
   const history = useHistory();
 
-  const { data, loading, error } = useQuery<GetIDDOCType>(GetIDDOC, {
-    variables: {
-      id: modelID
+  const { data, loading, error } = useQuery<GetIDDOCType, GetIDDOCVariables>(
+    GetIDDOC,
+    {
+      variables: {
+        id: modelID
+      }
     }
-  });
+  );
 
   const {
     id,
@@ -158,9 +162,7 @@ const IDDOC = () => {
         className="margin-top-0 margin-bottom-1 font-body-lg"
         data-testid="model-plan-name"
       >
-        <Trans i18nKey="modelPlanTaskList:subheading">
-          indexZero {modelName} indexTwo
-        </Trans>
+        {h('for')} {modelName}
       </p>
       <p className="margin-bottom-2 font-body-md line-height-sans-4">
         {h('helpText')}

@@ -16,13 +16,13 @@ import { RadioField } from 'components/shared/RadioField';
 import TextAreaField from 'components/shared/TextAreaField';
 import TextField from 'components/shared/TextField';
 import useMessage from 'hooks/useMessage';
-import CreateModelPlanDocument from 'queries/CreateModelPlanDocument';
-import GetGeneratedPresignedUploadURL from 'queries/GetGeneratedPresignedUploadURL';
+import CreateModelPlanDocument from 'queries/Documents/CreateModelPlanDocument';
+import GetGeneratedPresignedUploadURL from 'queries/Documents/GetGeneratedPresignedUploadURL';
 import {
   CreateModelPlanDocument as CreateModelPlanDocumentType,
   CreateModelPlanDocumentVariables
-} from 'queries/types/CreateModelPlanDocument';
-import { GeneratePresignedUploadURL as GetGeneratedPresignedUploadURLType } from 'queries/types/GeneratePresignedUploadURL';
+} from 'queries/Documents/types/CreateModelPlanDocument';
+import { GeneratePresignedUploadURL as GetGeneratedPresignedUploadURLType } from 'queries/Documents/types/GeneratePresignedUploadURL';
 import { FileUploadForm } from 'types/files';
 import { DocumentType } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';

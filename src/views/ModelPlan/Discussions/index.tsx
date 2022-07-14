@@ -26,18 +26,21 @@ import Expire from 'components/shared/Expire';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import IconInitial from 'components/shared/IconInitial';
-import CreateModelPlanDiscussion from 'queries/CreateModelPlanDiscussion';
 import CreateModelPlanReply from 'queries/CreateModelPlanReply';
-import GetModelPlanDiscussions from 'queries/GetModelPlanDiscussions';
-import { CreateModelPlanDiscussion as CreateModelPlanDiscussionType } from 'queries/types/CreateModelPlanDiscussion';
+import CreateModelPlanDiscussion from 'queries/Discussions/CreateModelPlanDiscussion';
+import GetModelPlanDiscussions from 'queries/Discussions/GetModelPlanDiscussions';
+import { CreateModelPlanDiscussion as CreateModelPlanDiscussionType } from 'queries/Discussions/types/CreateModelPlanDiscussion';
+import {
+  GetModelPlanDiscussions as GetModelPlanDiscussionsType,
+  GetModelPlanDiscussionsVariables
+} from 'queries/Discussions/types/GetModelPlanDiscussions';
+import { UpdateModelPlanDiscussion as UpdateModelPlanDiscussionType } from 'queries/Discussions/types/UpdateModelPlanDiscussion';
+import UpdateModelPlanDiscussion from 'queries/Discussions/UpdateModelPlanDiscussion';
 import {
   CreateModelPlanReply as CreateModelPlanReplyType,
   CreateModelPlanReply_createDiscussionReply as ReplyType
 } from 'queries/types/CreateModelPlanReply';
 import { GetModelPlan_modelPlan_discussions as DiscussionType } from 'queries/types/GetModelPlan';
-import { GetModelPlanDiscussions as GetModelPlanDiscussionsType } from 'queries/types/GetModelPlanDiscussions';
-import { UpdateModelPlanDiscussion as UpdateModelPlanDiscussionType } from 'queries/types/UpdateModelPlanDiscussion';
-import UpdateModelPlanDiscussion from 'queries/UpdateModelPlanDiscussion';
 import { DiscussionStatus } from 'types/graphql-global-types';
 import { getTimeElapsed } from 'utils/date';
 import flattenErrors from 'utils/flattenErrors';
@@ -67,12 +70,10 @@ const Discussions = ({
   const { t } = useTranslation('discussions');
   const { t: h } = useTranslation('draftModelPlan');
 
-  const {
-    data,
-    loading,
-    error,
-    refetch
-  } = useQuery<GetModelPlanDiscussionsType>(GetModelPlanDiscussions, {
+  const { data, loading, error, refetch } = useQuery<
+    GetModelPlanDiscussionsType,
+    GetModelPlanDiscussionsVariables
+  >(GetModelPlanDiscussions, {
     variables: {
       id: modelID
     }

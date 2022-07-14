@@ -214,65 +214,14 @@ exports[`Model Plan Documents page matches snapshot 1`] = `
             >
               <input
                 class="usa-checkbox__input"
-                id="new-plan-cmsCenters--0"
-                name="cmsCenters"
-                type="checkbox"
-                value="CMMI"
-              />
-              <label
-                class="usa-checkbox__label"
-                for="new-plan-cmsCenters--0"
-              >
-                CMMI
-              </label>
-            </div>
-            <div
-              class="mint-checkbox usa-checkbox"
-            >
-              <input
-                class="usa-checkbox__input"
-                id="new-plan-cmsCenters--1"
-                name="cmsCenters"
-                type="checkbox"
-                value="CENTER_FOR_MEDICARE"
-              />
-              <label
-                class="usa-checkbox__label"
-                for="new-plan-cmsCenters--1"
-              >
-                Center for Medicare (CM)
-              </label>
-            </div>
-            <div
-              class="mint-checkbox usa-checkbox"
-            >
-              <input
-                class="usa-checkbox__input"
-                id="new-plan-cmsCenters--2"
-                name="cmsCenters"
-                type="checkbox"
-                value="FEDERAL_COORDINATED_HEALTH_CARE_OFFICE"
-              />
-              <label
-                class="usa-checkbox__label"
-                for="new-plan-cmsCenters--2"
-              >
-                Federal Coordinated Health Care
-              </label>
-            </div>
-            <div
-              class="mint-checkbox usa-checkbox"
-            >
-              <input
-                class="usa-checkbox__input"
-                id="new-plan-cmsCenters--3"
+                id="new-plan-cmsCenters-CENTER_FOR_CLINICAL_STANDARDS_AND_QUALITY"
                 name="cmsCenters"
                 type="checkbox"
                 value="CENTER_FOR_CLINICAL_STANDARDS_AND_QUALITY"
               />
               <label
                 class="usa-checkbox__label"
-                for="new-plan-cmsCenters--3"
+                for="new-plan-cmsCenters-CENTER_FOR_CLINICAL_STANDARDS_AND_QUALITY"
               >
                 Center for Clinical Standards and Quality (CCSQ)
               </label>
@@ -282,14 +231,31 @@ exports[`Model Plan Documents page matches snapshot 1`] = `
             >
               <input
                 class="usa-checkbox__input"
-                id="new-plan-cmsCenters--4"
+                id="new-plan-cmsCenters-CENTER_FOR_MEDICARE"
+                name="cmsCenters"
+                type="checkbox"
+                value="CENTER_FOR_MEDICARE"
+              />
+              <label
+                class="usa-checkbox__label"
+                for="new-plan-cmsCenters-CENTER_FOR_MEDICARE"
+              >
+                Center for Medicare (CM)
+              </label>
+            </div>
+            <div
+              class="mint-checkbox usa-checkbox"
+            >
+              <input
+                class="usa-checkbox__input"
+                id="new-plan-cmsCenters-CENTER_FOR_PROGRAM_INTEGRITY"
                 name="cmsCenters"
                 type="checkbox"
                 value="CENTER_FOR_PROGRAM_INTEGRITY"
               />
               <label
                 class="usa-checkbox__label"
-                for="new-plan-cmsCenters--4"
+                for="new-plan-cmsCenters-CENTER_FOR_PROGRAM_INTEGRITY"
               >
                 Center for Program Integrity (CPI)
               </label>
@@ -299,14 +265,48 @@ exports[`Model Plan Documents page matches snapshot 1`] = `
             >
               <input
                 class="usa-checkbox__input"
-                id="new-plan-cmsCenters--5"
+                id="new-plan-cmsCenters-CMMI"
+                name="cmsCenters"
+                type="checkbox"
+                value="CMMI"
+              />
+              <label
+                class="usa-checkbox__label"
+                for="new-plan-cmsCenters-CMMI"
+              >
+                CMMI
+              </label>
+            </div>
+            <div
+              class="mint-checkbox usa-checkbox"
+            >
+              <input
+                class="usa-checkbox__input"
+                id="new-plan-cmsCenters-FEDERAL_COORDINATED_HEALTH_CARE_OFFICE"
+                name="cmsCenters"
+                type="checkbox"
+                value="FEDERAL_COORDINATED_HEALTH_CARE_OFFICE"
+              />
+              <label
+                class="usa-checkbox__label"
+                for="new-plan-cmsCenters-FEDERAL_COORDINATED_HEALTH_CARE_OFFICE"
+              >
+                Federal Coordinated Health Care
+              </label>
+            </div>
+            <div
+              class="mint-checkbox usa-checkbox"
+            >
+              <input
+                class="usa-checkbox__input"
+                id="new-plan-cmsCenters-OTHER"
                 name="cmsCenters"
                 type="checkbox"
                 value="OTHER"
               />
               <label
                 class="usa-checkbox__label"
-                for="new-plan-cmsCenters--5"
+                for="new-plan-cmsCenters-OTHER"
               >
                 Other
               </label>

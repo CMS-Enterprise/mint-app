@@ -1,5 +1,5 @@
 import React, { Fragment, useRef } from 'react';
-import { Trans, useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
 import {
@@ -28,7 +28,8 @@ import MultiSelect from 'components/shared/MultiSelect';
 import GetEvaluation from 'queries/OpsEvalAndLearning/GetEvaluation';
 import {
   GetEvaluation as GetEvaluationType,
-  GetEvaluation_modelPlan_opsEvalAndLearning as EvaluationFormType
+  GetEvaluation_modelPlan_opsEvalAndLearning as EvaluationFormType,
+  GetEvaluationVariables
 } from 'queries/OpsEvalAndLearning/types/GetEvaluation';
 import { UpdatePlanOpsEvalAndLearningVariables } from 'queries/OpsEvalAndLearning/types/UpdatePlanOpsEvalAndLearning';
 import UpdatePlanOpsEvalAndLearning from 'queries/OpsEvalAndLearning/UpdatePlanOpsEvalAndLearning';
@@ -59,7 +60,10 @@ const Evaluation = () => {
   const formikRef = useRef<FormikProps<EvaluationFormType>>(null);
   const history = useHistory();
 
-  const { data, loading, error } = useQuery<GetEvaluationType>(GetEvaluation, {
+  const { data, loading, error } = useQuery<
+    GetEvaluationType,
+    GetEvaluationVariables
+  >(GetEvaluation, {
     variables: {
       id: modelID
     }
@@ -174,9 +178,7 @@ const Evaluation = () => {
         className="margin-top-0 margin-bottom-1 font-body-lg"
         data-testid="model-plan-name"
       >
-        <Trans i18nKey="modelPlanTaskList:subheading">
-          indexZero {modelName} indexTwo
-        </Trans>
+        {h('for')} {modelName}
       </p>
       <p className="margin-bottom-2 font-body-md line-height-sans-4">
         {h('helpText')}
