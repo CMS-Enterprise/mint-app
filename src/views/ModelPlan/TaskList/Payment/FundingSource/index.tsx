@@ -177,13 +177,7 @@ const FundingSource = () => {
         innerRef={formikRef}
       >
         {(formikProps: FormikProps<FundingFormType>) => {
-          const {
-            errors,
-            handleSubmit,
-            setErrors,
-            setFieldValue,
-            values
-          } = formikProps;
+          const { errors, handleSubmit, setErrors, values } = formikProps;
           const flatErrors = flattenErrors(errors);
           return (
             <>
