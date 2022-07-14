@@ -63,13 +63,11 @@ const payments = {
     'Please describe the other claims-based payments you will pay.',
   excludedFromPayment:
     'Should any model providers be excluded from existing Fee-for-Service payment systems?',
-  yesNoOptions: {
-    yes: 'Yes',
-    no: 'No'
-  },
   howSo: 'How so?',
   chageMedicareFeeSchedule:
     'Will the model change the Medicare Physician Fee Schedule?',
+  chageMedicareFeeScheduleSubcopy:
+    'If so, it might impact Critical Access Hospitals paid under Method II.',
   affectMedicareSecondaryPayerClaim:
     'Does the model affect Medicare Secondary Payer claims?',
   affectCurrentPolicy:

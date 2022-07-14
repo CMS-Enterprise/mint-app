@@ -228,7 +228,7 @@ const ClaimsBasedPayment = () => {
                         <Label htmlFor="payment-pay-claims">
                           {t('selectClaims')}
                         </Label>
-                        <p className="text-base margin-y-1 margin-top-2">
+                        <p className="text-base margin-bottom-1 margin-top-05">
                           {t('selectClaimsSubcopy')}
                         </p>
                         <FieldErrorMsg>{flatErrors.payClaims}</FieldErrorMsg>
@@ -327,12 +327,70 @@ const ClaimsBasedPayment = () => {
                             }}
                           />
                         </Fieldset>
+                        <AddNote
+                          id="payment-provider-exclusion-ffs-system-note"
+                          field="shouldAnyProviderExcludedFFSSystemsNote"
+                        />
                       </FieldGroup>
 
-                      <AddNote
-                        id="payment-provider-exclusion-ffs-system-note"
-                        field="shouldAnyProviderExcludedFFSSystemsNote"
-                      />
+                      <FieldGroup
+                        scrollElement="payment-change-medicare-phyisican-fee-schedule"
+                        error={!!flatErrors.changesMedicarePhysicianFeeSchedule}
+                        className="margin-top-4"
+                      >
+                        <Label
+                          htmlFor="payment-change-medicare-phyisican-fee-schedule"
+                          className="maxw-none"
+                        >
+                          {t('chageMedicareFeeSchedule')}
+                        </Label>
+                        <p className="text-base margin-y-1">
+                          {t('chageMedicareFeeScheduleSubcopy')}
+                        </p>
+                        <FieldErrorMsg>
+                          {flatErrors.changesMedicarePhysicianFeeSchedule}
+                        </FieldErrorMsg>
+                        <Fieldset>
+                          <Field
+                            as={Radio}
+                            id="payment-change-medicare-phyisican-fee-schedule-Yes"
+                            name="payment-change-medicare-phyisican-fee-schedule"
+                            label={h('yes')}
+                            value="YES"
+                            checked={
+                              values.changesMedicarePhysicianFeeSchedule ===
+                              true
+                            }
+                            onChange={() => {
+                              setFieldValue(
+                                'changesMedicarePhysicianFeeSchedule',
+                                true
+                              );
+                            }}
+                          />
+                          <Field
+                            as={Radio}
+                            id="payment-change-medicare-phyisican-fee-schedule-No"
+                            name="payment-change-medicare-phyisican-fee-schedule"
+                            label={h('no')}
+                            value="FALSE"
+                            checked={
+                              values.changesMedicarePhysicianFeeSchedule ===
+                              false
+                            }
+                            onChange={() => {
+                              setFieldValue(
+                                'changesMedicarePhysicianFeeSchedule',
+                                false
+                              );
+                            }}
+                          />
+                        </Fieldset>
+                        <AddNote
+                          id="payment-change-medicare-phyisican-fee-schedule-note"
+                          field="changesMedicarePhysicianFeeScheduleNote"
+                        />
+                      </FieldGroup>
 
                       <div className="margin-top-6 margin-bottom-3">
                         <Button type="submit" onClick={() => setErrors({})}>
