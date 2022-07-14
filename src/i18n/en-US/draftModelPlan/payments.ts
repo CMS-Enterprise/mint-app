@@ -56,8 +56,11 @@ const payments = {
     homeVisits: 'Payments for care management home visits',
     snfClaims: 'Payments for SNF claims without 3-day hospital admissions',
     telehealth:
-      'Payments for telehealth services not covered through Traditional Medicare'
+      'Payments for telehealth services not covered through Traditional Medicare',
+    other: 'Other'
   },
+  selectClaimsOther:
+    'Please describe the other claims-based payments you will pay.',
   excludedFromPayment:
     'Should any model providers be excluded from existing Fee-for-Service payment systems?',
   yesNoOptions: {

@@ -24,6 +24,8 @@ import AutoSave from 'components/shared/AutoSave';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
+import MultiSelect from 'components/shared/MultiSelect';
+import TextField from 'components/shared/TextField';
 import GetClaimsBasedPayment from 'queries/Payments/GetClaimsBasedPayment';
 import {
   GetClaimsBasedPayment as GetClaimsBasedPaymentType,
@@ -32,7 +34,9 @@ import {
 } from 'queries/Payments/types/GetClaimsBasedPayment';
 import { UpdatePaymentsVariables } from 'queries/Payments/types/UpdatePayments';
 import UpdatePayments from 'queries/Payments/UpdatePayments';
+import { ClaimsBasedPayType } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
+import { sortOtherEnum, translateClaimsBasedPayType } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
 
 import { renderCurrentPage, renderTotalPages } from '..';
@@ -96,6 +100,13 @@ const ClaimsBasedPayment = () => {
         formikRef?.current?.setErrors(errors);
       });
   };
+
+  const mappedClaimsBasedPayType = Object.keys(ClaimsBasedPayType)
+    .sort(sortOtherEnum)
+    .map(key => ({
+      value: key,
+      label: translateClaimsBasedPayType(key)
+    }));
 
   const initialValues: ClaimsBasedPaymentFormType = {
     __typename: 'PlanPayments',
@@ -208,6 +219,61 @@ const ClaimsBasedPayment = () => {
                       >
                         {t('claimSpecificQuestions')}
                       </PageHeading>
+
+                      <FieldGroup
+                        scrollElement="payClaims"
+                        error={!!flatErrors.payClaims}
+                        className="margin-top-4"
+                      >
+                        <Label htmlFor="payment-pay-claims">
+                          {t('selectClaims')}
+                        </Label>
+                        <p className="text-base margin-y-1 margin-top-2">
+                          {t('selectClaimsSubcopy')}
+                        </p>
+                        <FieldErrorMsg>{flatErrors.payClaims}</FieldErrorMsg>
+
+                        <Field
+                          as={MultiSelect}
+                          id="payment-pay-claims"
+                          name="beneficiaries"
+                          options={mappedClaimsBasedPayType}
+                          selectedLabel={t('selectedGroup')}
+                          onChange={(value: string[] | []) => {
+                            setFieldValue('payClaims', value);
+                          }}
+                          initialValues={initialValues.payClaims}
+                        />
+
+                        {(values?.payClaims || []).includes(
+                          // TODO: Pull in Tom's updates once its available
+                          ClaimsBasedPayType.OTHER
+                        ) && (
+                          <FieldGroup
+                            scrollElement="payment-pay-claims-other"
+                            error={!!flatErrors.payClaimsOther}
+                          >
+                            <Label
+                              htmlFor="payment-pay-claims-other"
+                              className="text-normal"
+                            >
+                              {t('selectClaimsOther')}
+                            </Label>
+                            <FieldErrorMsg>
+                              {flatErrors.payClaimsOther}
+                            </FieldErrorMsg>
+                            <Field
+                              as={TextField}
+                              error={flatErrors.payClaimsOther}
+                              id="payment-pay-claims-other"
+                              data-testid="payment-pay-claims-other"
+                              name="payment-pay-claims-other"
+                            />
+                          </FieldGroup>
+                        )}
+
+                        <AddNote id="pay-claims-note" field="payClaimsNotes" />
+                      </FieldGroup>
 
                       <FieldGroup
                         scrollElement="payment-provider-exclusion-ffs-system"

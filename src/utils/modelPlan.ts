@@ -362,6 +362,23 @@ export const translatePayType = (type: string) => {
   }
 };
 
+export const translateClaimsBasedPayType = (type: string) => {
+  switch (type) {
+    case 'ADJUSTMENTS_TO_FFS_PAYMENTS':
+      return i18next.t('payments:selectClaimsOptions.ffsPayments');
+    case 'PAYMENTS_CARE_MANAGEMENT_HOME_VISITS':
+      return i18next.t('payments:selectClaimsOptions.homeVisits');
+    case 'PAYMENTS_SNF_CLAIMS_WITHOUT_3DAY_HOSPITAL_ADMISSIONS':
+      return i18next.t('payments:selectClaimsOptions.snfClaims');
+    case 'PAYMENTS_TELEHEALTH_SERVICES_NOT_TRADITIONAL_MEDICARE':
+      return i18next.t('payments:selectClaimsOptions.telehealth');
+    case 'OTHER':
+      return i18next.t('payments:selectClaimsOptions.other');
+    default:
+      return '';
+  }
+};
+
 export const translateConfidenceType = (type: string) => {
   switch (type) {
     case 'NOT_AT_ALL':
