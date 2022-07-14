@@ -7,6 +7,18 @@ import { NotFoundPartial } from 'views/NotFound';
 import FundingSource from './FundingSource';
 import TempPage from './temp';
 
+// Used to render the current page based on certain answers populated within this task list item
+export const renderCurrentPage = (
+  currentPage: number,
+  hasClaims: boolean | null,
+  hasNonClaims: boolean | null
+) => {
+  let adjustedCurrentPage = currentPage;
+  if (currentPage > 2 && !hasClaims) adjustedCurrentPage -= 3;
+  if (currentPage > 6 && !hasNonClaims) adjustedCurrentPage -= 1;
+  return adjustedCurrentPage;
+};
+
 // Used to render the total pages based on certain answers populated within this task list item
 export const renderTotalPages = (
   hasClaims: boolean | null,

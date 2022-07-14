@@ -47,7 +47,7 @@ import {
 } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
 
-import { renderTotalPages } from '..';
+import { renderCurrentPage, renderTotalPages } from '..';
 
 const FundingSource = () => {
   const { t } = useTranslation('payments');
@@ -577,7 +577,11 @@ const FundingSource = () => {
       </Formik>
       {data && (
         <PageNumber
-          currentPage={1}
+          currentPage={renderCurrentPage(
+            1,
+            payType.includes(PayType.CLAIMS_BASED_PAYMENTS),
+            payType.includes(PayType.NON_CLAIMS_BASED_PAYMENTS)
+          )}
           totalPages={renderTotalPages(
             payType.includes(PayType.CLAIMS_BASED_PAYMENTS),
             payType.includes(PayType.NON_CLAIMS_BASED_PAYMENTS)
