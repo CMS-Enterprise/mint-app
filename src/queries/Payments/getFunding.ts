@@ -14,7 +14,6 @@ export default gql`
         fundingSourceR
         fundingSourceRTrustFund
         fundingSourceROther
-        fundingSourceRNote
         payRecipients
         payRecipientsOtherSpecification
         payRecipientsNote
