@@ -1,5 +1,5 @@
 import React, { Fragment, useRef } from 'react';
-import { Trans, useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
 import {
@@ -27,7 +27,8 @@ import TextAreaField from 'components/shared/TextAreaField';
 import GetIDDOCTesting from 'queries/OpsEvalAndLearning/GetIDDOCTesting';
 import {
   GetIDDOCTesting as GetIDDOCTestingType,
-  GetIDDOCTesting_modelPlan_opsEvalAndLearning as IDDOCTestingFormType
+  GetIDDOCTesting_modelPlan_opsEvalAndLearning as IDDOCTestingFormType,
+  GetIDDOCTestingVariables
 } from 'queries/OpsEvalAndLearning/types/GetIDDOCTesting';
 import { UpdatePlanOpsEvalAndLearningVariables } from 'queries/OpsEvalAndLearning/types/UpdatePlanOpsEvalAndLearning';
 import UpdatePlanOpsEvalAndLearning from 'queries/OpsEvalAndLearning/UpdatePlanOpsEvalAndLearning';
@@ -46,14 +47,14 @@ const IDDOCTesting = () => {
   const formikRef = useRef<FormikProps<IDDOCTestingFormType>>(null);
   const history = useHistory();
 
-  const { data, loading, error } = useQuery<GetIDDOCTestingType>(
-    GetIDDOCTesting,
-    {
-      variables: {
-        id: modelID
-      }
+  const { data, loading, error } = useQuery<
+    GetIDDOCTestingType,
+    GetIDDOCTestingVariables
+  >(GetIDDOCTesting, {
+    variables: {
+      id: modelID
     }
-  );
+  });
 
   const {
     id,
@@ -148,9 +149,7 @@ const IDDOCTesting = () => {
         className="margin-top-0 margin-bottom-1 font-body-lg"
         data-testid="model-plan-name"
       >
-        <Trans i18nKey="modelPlanTaskList:subheading">
-          indexZero {modelName} indexTwo
-        </Trans>
+        {h('for')} {modelName}
       </p>
       <p className="margin-bottom-2 font-body-md line-height-sans-4">
         {h('helpText')}
