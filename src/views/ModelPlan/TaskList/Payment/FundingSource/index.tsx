@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useRef, useState } from 'react';
+import React, { Fragment, useRef } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
@@ -103,8 +103,13 @@ const FundingSource = () => {
           if (redirect === 'next') {
             // *  Claims-based payments triggers 2 extra pages of questions. Non-claims-based payments triggers 1 extra page of questions.
             // todo: conditionally direct people if those options are selected
-
-            history.push(`/models/${modelID}/task-list/payment/page-2`);
+            if (formikValues.payType.includes(PayType.CLAIMS_BASED_PAYMENTS)) {
+              history.push(
+                `/models/${modelID}/task-list/payment/claims-based-payment`
+              );
+            } else {
+              history.push(`/models/${modelID}/task-list/payment/page-2`);
+            }
           } else if (redirect === 'back') {
             history.push(`/models/${modelID}/task-list/`);
           }

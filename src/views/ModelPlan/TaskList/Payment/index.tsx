@@ -4,6 +4,7 @@ import { Route, Switch } from 'react-router-dom';
 import MainContent from 'components/MainContent';
 import { NotFoundPartial } from 'views/NotFound';
 
+import ClaimsBasedPayment from './ClaimsBasedPayment';
 import FundingSource from './FundingSource';
 import TempPage from './temp';
 
@@ -38,6 +39,11 @@ export const Payment = () => {
           path="/models/:modelID/task-list/payment"
           exact
           render={() => <FundingSource />}
+        />
+        <Route
+          path="/models/:modelID/task-list/payment/claims-based-payment"
+          exact
+          render={() => <ClaimsBasedPayment />}
         />
         <Route
           path="/models/:modelID/task-list/payment/page-2"
