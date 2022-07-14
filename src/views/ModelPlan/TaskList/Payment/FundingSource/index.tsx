@@ -24,7 +24,7 @@ import CheckboxField from 'components/shared/CheckboxField';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
-import GetFunding from 'queries/Payments/GetFunding';
+import GetFunding from 'queries/Payments/GetFundingadsfasdf';
 import {
   GetFunding as GetFundingType,
   GetFunding_modelPlan_payments as FundingFormType,
