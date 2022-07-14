@@ -54,7 +54,7 @@ import {
 } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
 
-const defaultFormValues: ITToolsPageEightFormType = {
+const initialFormValues: ITToolsPageEightFormType = {
   __typename: 'PlanITTools',
   id: '',
   oelEducateBeneficiaries: [],
@@ -68,12 +68,12 @@ const defaultFormValues: ITToolsPageEightFormType = {
   pInformFfsNote: ''
 };
 
-const defaultOpsEvalAndLearningValues: OpsEvalAndLearningFormType = {
+const initialOpsEvalAndLearningValues: OpsEvalAndLearningFormType = {
   __typename: 'PlanOpsEvalAndLearning',
   modelLearningSystems: []
 };
 
-const defaultPaymentValues: PaymentsFormType = {
+const initialPaymentValues: PaymentsFormType = {
   __typename: 'PlanPayments',
   payType: [],
   shouldAnyProvidersExcludedFFSSystems: null
@@ -102,13 +102,13 @@ const ITToolsPageEight = () => {
 
   const id = data?.modelPlan?.itTools?.id || '';
 
-  const itToolsData = data?.modelPlan?.itTools || defaultFormValues;
+  const itToolsData = data?.modelPlan?.itTools || initialFormValues;
 
   const { modelLearningSystems } =
-    data?.modelPlan?.opsEvalAndLearning || defaultOpsEvalAndLearningValues;
+    data?.modelPlan?.opsEvalAndLearning || initialOpsEvalAndLearningValues;
 
   const { payType, shouldAnyProvidersExcludedFFSSystems } =
-    data?.modelPlan?.payments || defaultPaymentValues;
+    data?.modelPlan?.payments || initialPaymentValues;
 
   const [update] = useMutation<UpdatePlanItToolsVariables>(UpdatePlanITTools);
 

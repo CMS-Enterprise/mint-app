@@ -52,7 +52,7 @@ import {
 } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
 
-const defaultFormValues: ITToolsPageFourFormType = {
+const initialFormValues: ITToolsPageFourFormType = {
   __typename: 'PlanITTools',
   id: '',
   oelHelpdeskSupport: [],
@@ -66,7 +66,7 @@ const defaultFormValues: ITToolsPageFourFormType = {
   oelPerformanceBenchmarkNote: ''
 };
 
-const defaultOpsEvalAndLearningValues: OpsEvalAndLearningFormType = {
+const initialOpsEvalAndLearningValues: OpsEvalAndLearningFormType = {
   __typename: 'PlanOpsEvalAndLearning',
   helpdeskUse: null,
   iddocSupport: null,
@@ -95,10 +95,10 @@ const ITToolsPageFour = () => {
 
   const id = data?.modelPlan?.itTools?.id || '';
 
-  const itToolsData = data?.modelPlan?.itTools || defaultFormValues;
+  const itToolsData = data?.modelPlan?.itTools || initialFormValues;
 
   const { helpdeskUse, iddocSupport, benchmarkForPerformance } =
-    data?.modelPlan?.opsEvalAndLearning || defaultOpsEvalAndLearningValues;
+    data?.modelPlan?.opsEvalAndLearning || initialOpsEvalAndLearningValues;
 
   const [update] = useMutation<UpdatePlanItToolsVariables>(UpdatePlanITTools);
 

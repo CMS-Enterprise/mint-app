@@ -49,7 +49,7 @@ import {
 } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
 
-const defaultFormValues: ITToolsPageOneFormType = {
+const initialFormValues: ITToolsPageOneFormType = {
   __typename: 'PlanITTools',
   id: '',
   gcPartCD: [],
@@ -63,7 +63,7 @@ const defaultFormValues: ITToolsPageOneFormType = {
   gcUpdateContractNote: ''
 };
 
-const defaultCharacteristicValues: GeneralCharacteristicsFormType = {
+const initialCharacteristicValues: GeneralCharacteristicsFormType = {
   __typename: 'PlanGeneralCharacteristics',
   managePartCDEnrollment: null,
   collectPlanBids: null,
@@ -92,10 +92,10 @@ const ITToolsPageOne = () => {
 
   const id = data?.modelPlan?.itTools?.id || '';
 
-  const itToolsData = data?.modelPlan?.itTools || defaultFormValues;
+  const itToolsData = data?.modelPlan?.itTools || initialFormValues;
 
   const { managePartCDEnrollment, collectPlanBids, planContactUpdated } =
-    data?.modelPlan?.generalCharacteristics || defaultCharacteristicValues;
+    data?.modelPlan?.generalCharacteristics || initialCharacteristicValues;
 
   const [update] = useMutation<UpdatePlanItToolsVariables>(UpdatePlanITTools);
 

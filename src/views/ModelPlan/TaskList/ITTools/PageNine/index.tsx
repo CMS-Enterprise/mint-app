@@ -53,7 +53,7 @@ import {
 } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
 
-const defaultFormValues: ITToolsPageNineFormType = {
+const initialFormValues: ITToolsPageNineFormType = {
   __typename: 'PlanITTools',
   id: '',
   pNonClaimsBasedPayments: [],
@@ -67,7 +67,7 @@ const defaultFormValues: ITToolsPageNineFormType = {
   pRecoverPaymentsNote: ''
 };
 
-const defaultPaymentValues: PaymentsFormType = {
+const initialPaymentValues: PaymentsFormType = {
   __typename: 'PlanPayments',
   payType: [],
   nonClaimsPayments: [],
@@ -96,10 +96,10 @@ const ITToolsPageNine = () => {
 
   const id = data?.modelPlan?.itTools?.id || '';
 
-  const itToolsData = data?.modelPlan?.itTools || defaultFormValues;
+  const itToolsData = data?.modelPlan?.itTools || initialFormValues;
 
   const { payType, nonClaimsPayments, willRecoverPayments } =
-    data?.modelPlan?.payments || defaultPaymentValues;
+    data?.modelPlan?.payments || initialPaymentValues;
 
   const [update] = useMutation<UpdatePlanItToolsVariables>(UpdatePlanITTools);
 
@@ -559,7 +559,7 @@ const ITToolsPageNine = () => {
                         {h('back')}
                       </Button>
                       <Button type="submit" onClick={() => setErrors({})}>
-                        {h('next')}
+                        {h('saveAndStartNext')}
                       </Button>
                     </div>
                     <Button

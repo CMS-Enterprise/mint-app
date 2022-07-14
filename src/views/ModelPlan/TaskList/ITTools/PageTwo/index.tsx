@@ -50,7 +50,7 @@ import {
 } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
 
-const defaultFormValues: ITToolsPageTwoFormType = {
+const initialFormValues: ITToolsPageTwoFormType = {
   __typename: 'PlanITTools',
   id: '',
   ppToAdvertise: [],
@@ -64,7 +64,7 @@ const defaultFormValues: ITToolsPageTwoFormType = {
   ppAppSupportContractorNote: ''
 };
 
-const defaultParticipantsAndProvidersValues: ParticipantsAndProvidersFormType = {
+const initialParticipantsAndProvidersValues: ParticipantsAndProvidersFormType = {
   __typename: 'PlanParticipantsAndProviders',
   selectionMethod: [],
   recruitmentMethod: null
@@ -92,11 +92,11 @@ const ITToolsPageTwo = () => {
 
   const id = data?.modelPlan?.itTools?.id || '';
 
-  const itToolsData = data?.modelPlan?.itTools || defaultFormValues;
+  const itToolsData = data?.modelPlan?.itTools || initialFormValues;
 
   const { recruitmentMethod, selectionMethod } =
     data?.modelPlan?.participantsAndProviders ||
-    defaultParticipantsAndProvidersValues;
+    initialParticipantsAndProvidersValues;
 
   const [update] = useMutation<UpdatePlanItToolsVariables>(UpdatePlanITTools);
 

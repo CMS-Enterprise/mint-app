@@ -50,7 +50,7 @@ import {
 } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
 
-const defaultFormValues: ITToolsPageThreeFormType = {
+const initialFormValues: ITToolsPageThreeFormType = {
   __typename: 'PlanITTools',
   id: '',
   ppCommunicateWithParticipant: [],
@@ -64,7 +64,7 @@ const defaultFormValues: ITToolsPageThreeFormType = {
   bManageBeneficiaryOverlapNote: ''
 };
 
-const defaultParticipantsAndProvidersValues: ParticipantsAndProvidersFormType = {
+const initialParticipantsAndProvidersValues: ParticipantsAndProvidersFormType = {
   __typename: 'PlanParticipantsAndProviders',
   communicationMethod: []
 };
@@ -92,11 +92,11 @@ const ITToolsPageThree = () => {
 
   const id = data?.modelPlan?.itTools?.id || '';
 
-  const itToolsData = data?.modelPlan?.itTools || defaultFormValues;
+  const itToolsData = data?.modelPlan?.itTools || initialFormValues;
 
   const { communicationMethod } =
     data?.modelPlan?.participantsAndProviders ||
-    defaultParticipantsAndProvidersValues;
+    initialParticipantsAndProvidersValues;
 
   const [update] = useMutation<UpdatePlanItToolsVariables>(UpdatePlanITTools);
 
