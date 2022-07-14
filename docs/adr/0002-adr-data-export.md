@@ -30,8 +30,8 @@ EASi currently has an export feature but it is a simplistic/not ideal approach t
       * This may be slightly overkill for MINTs current needs
     * Are we comfortable locking all exports to excel?
   * Raw CSV
-* There are potential performance concerns if we try to export a lot of data at once, we may want to look into approaches to help maximize performance
-  * The use of [dataloaders](https://gqlgen.com/reference/dataloaders/) may be a good solution
+* There are potential performance concerns if we try to export a lot of data at once, we should look into approaches to help maximize performance
+  * The use of [dataloaders](https://gqlgen.com/reference/dataloaders/) might be a good solution to explore
 * Do we export a hard coded set of fields or allow users to select what they want in real time (has major frontend and backend ramifications)?
 * Can we abstract out this functionality so that it can be reused across MINT and EASi?
   * This may be a good candidate for the new easi-shared repository
