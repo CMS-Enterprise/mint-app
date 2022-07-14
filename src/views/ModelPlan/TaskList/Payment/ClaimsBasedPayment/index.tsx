@@ -35,7 +35,7 @@ import {
 } from 'queries/Payments/types/GetClaimsBasedPayment';
 import { UpdatePaymentsVariables } from 'queries/Payments/types/UpdatePayments';
 import UpdatePayments from 'queries/Payments/UpdatePayments';
-import { ClaimsBasedPayType } from 'types/graphql-global-types';
+import { ClaimsBasedPayType, PayType } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import { sortOtherEnum, translateClaimsBasedPayType } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
@@ -550,17 +550,15 @@ const ClaimsBasedPayment = () => {
       </Formik>
       {data && (
         <PageNumber
-          currentPage={2}
-          totalPages={3}
-          // currentPage={renderCurrentPage(
-          //   2,
-          //   payType.includes(PayType.CLAIMS_BASED_PAYMENTS),
-          //   payType.includes(PayType.NON_CLAIMS_BASED_PAYMENTS)
-          // )}
-          // totalPages={renderTotalPages(
-          //   payType.includes(PayType.CLAIMS_BASED_PAYMENTS),
-          //   payType.includes(PayType.NON_CLAIMS_BASED_PAYMENTS)
-          // )}
+          currentPage={renderCurrentPage(
+            2,
+            payType.includes(PayType.CLAIMS_BASED_PAYMENTS),
+            payType.includes(PayType.NON_CLAIMS_BASED_PAYMENTS)
+          )}
+          totalPages={renderTotalPages(
+            payType.includes(PayType.CLAIMS_BASED_PAYMENTS),
+            payType.includes(PayType.NON_CLAIMS_BASED_PAYMENTS)
+          )}
           className="margin-y-6"
         />
       )}
