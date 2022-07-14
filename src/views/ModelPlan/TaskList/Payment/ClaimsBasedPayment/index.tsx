@@ -93,6 +93,8 @@ const ClaimsBasedPayment = () => {
           if (redirect === 'next') {
             history.push(`/models/${modelID}/task-list/payment/page-2`);
           } else if (redirect === 'back') {
+            history.push(`/models/${modelID}/task-list/payment`);
+          } else if (redirect === 'task-list') {
             history.push(`/models/${modelID}/task-list/`);
           }
         }
@@ -480,7 +482,40 @@ const ClaimsBasedPayment = () => {
                         />
                       </FieldGroup>
 
+                      <FieldGroup
+                        scrollElement="payment-affect-current-policy"
+                        error={!!flatErrors.payModelDifferentiation}
+                        className="margin-top-4"
+                      >
+                        <Label
+                          htmlFor="payment-affect-current-policy"
+                          className="maxw-none"
+                        >
+                          {t('affectCurrentPolicy')}
+                        </Label>
+                        <FieldErrorMsg>
+                          {flatErrors.payModelDifferentiation}
+                        </FieldErrorMsg>
+                        <Field
+                          as={TextAreaField}
+                          className="height-15"
+                          error={flatErrors.payModelDifferentiation}
+                          id="payment-affect-current-policy"
+                          data-testid="payment-affect-current-policy"
+                          name="payment-affect-current-policy"
+                        />
+                      </FieldGroup>
+
                       <div className="margin-top-6 margin-bottom-3">
+                        <Button
+                          type="button"
+                          className="usa-button usa-button--outline margin-bottom-1"
+                          onClick={() => {
+                            handleFormSubmit(values, 'back');
+                          }}
+                        >
+                          {h('back')}
+                        </Button>
                         <Button type="submit" onClick={() => setErrors({})}>
                           {h('next')}
                         </Button>
@@ -488,7 +523,7 @@ const ClaimsBasedPayment = () => {
                       <Button
                         type="button"
                         className="usa-button usa-button--unstyled"
-                        onClick={() => handleFormSubmit(values, 'back')}
+                        onClick={() => handleFormSubmit(values, 'task-list')}
                       >
                         <IconArrowBack className="margin-right-1" aria-hidden />
                         {h('saveAndReturn')}
