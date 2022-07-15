@@ -94,9 +94,23 @@ const NonClaimsBasedPayment = () => {
           if (redirect === 'next') {
             history.push(`/models/${modelID}/task-list/payment/complexity`);
           } else if (redirect === 'back') {
-            history.push(
-              `/models/${modelID}/task-list/payment/claims-based-payment`
-            );
+            if (
+              formikValues.ClaimsBasedPayType.includes(
+                REDUCTIONS_TO_BENEFICIARY_COST_SHARING
+              )
+            ) {
+              history.push(
+                `/models/${modelID}/task-list/payment/beneficiary-cost-sharing`
+              );
+            } else if (
+              formikValues.payType.includes(PayType.CLAIMS_BASED_PAYMENTS)
+            ) {
+              history.push(
+                `/models/${modelID}/task-list/payment/anticipating-dependencies`
+              );
+            } else {
+              history.push(`/models/${modelID}/task-list/payment`);
+            }
           } else if (redirect === 'task-list') {
             history.push(`/models/${modelID}/task-list/`);
           }
