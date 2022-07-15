@@ -101,14 +101,19 @@ const FundingSource = () => {
       .then(response => {
         if (!response?.errors) {
           if (redirect === 'next') {
-            // *  Claims-based payments triggers 2 extra pages of questions. Non-claims-based payments triggers 1 extra page of questions.
-            // todo: conditionally direct people if those options are selected
             if (formikValues.payType.includes(PayType.CLAIMS_BASED_PAYMENTS)) {
               history.push(
                 `/models/${modelID}/task-list/payment/claims-based-payment`
               );
+            } else if (
+              !formikValues.payType.includes(PayType.CLAIMS_BASED_PAYMENTS) &&
+              formikValues.payType.includes(PayType.NON_CLAIMS_BASED_PAYMENTS)
+            ) {
+              history.push(
+                `/models/${modelID}/task-list/payment/non-claims-based-payment`
+              );
             } else {
-              history.push(`/models/${modelID}/task-list/payment/page-2`);
+              history.push(`/models/${modelID}/task-list/payment/complexity`);
             }
           } else if (redirect === 'back') {
             history.push(`/models/${modelID}/task-list/`);
