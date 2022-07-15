@@ -12,8 +12,7 @@ import {
   GridContainer,
   IconArrowBack,
   Label,
-  Radio,
-  TextInput
+  Radio
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
 
@@ -26,6 +25,7 @@ import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import MultiSelect from 'components/shared/MultiSelect';
+import TextField from 'components/shared/TextField';
 import GetComplexity from 'queries/Payments/GetComplexity';
 import {
   GetComplexity as GetComplexityType,
@@ -355,7 +355,7 @@ const Complexity = () => {
                                 }
                               </FieldErrorMsg>
                               <Field
-                                as={TextInput}
+                                as={TextField}
                                 error={
                                   flatErrors.canParticipantsSelectBetweenPaymentMechanismsHow
                                 }
@@ -386,6 +386,69 @@ const Complexity = () => {
                         <AddNote
                           id="payment-multiple-payments-note"
                           field="canParticipantsSelectBetweenPaymentMechanismsNote"
+                        />
+                      </FieldGroup>
+
+                      <FieldGroup
+                        scrollElement="payment-frequency-payments"
+                        error={!!flatErrors.anticipatedPaymentFrequency}
+                        className="margin-top-4"
+                      >
+                        <Label htmlFor="payment-frequency-payments">
+                          {t('anticipatedPaymentFrequency')}
+                        </Label>
+                        <FieldErrorMsg>
+                          {flatErrors.anticipatedPaymentFrequency}
+                        </FieldErrorMsg>
+
+                        <Field
+                          as={MultiSelect}
+                          id="payment-frequency-payments"
+                          name="payment-frequency-payments"
+                          options={mappedAnticipatedPaymentFrequencyType}
+                          selectedLabel={t(
+                            'selectedAnticipatedPaymentFrequency'
+                          )}
+                          onChange={(value: string[] | []) => {
+                            setFieldValue('anticipatedPaymentFrequency', value);
+                          }}
+                          initialValues={
+                            initialValues.anticipatedPaymentFrequency
+                          }
+                        />
+
+                        {(values?.anticipatedPaymentFrequency || []).includes(
+                          AnticipatedPaymentFrequencyType.OTHER
+                        ) && (
+                          <FieldGroup
+                            scrollElement="payment-frequency-payments-other"
+                            error={
+                              !!flatErrors.anticipatedPaymentFrequencyOther
+                            }
+                          >
+                            <Label
+                              htmlFor="anticipatedPaymentFrequencyOther"
+                              className="text-normal"
+                            >
+                              {t('selectClaimsOther')}
+                            </Label>
+                            <FieldErrorMsg>
+                              {flatErrors.anticipatedPaymentFrequencyOther}
+                            </FieldErrorMsg>
+                            <Field
+                              as={TextField}
+                              error={
+                                flatErrors.anticipatedPaymentFrequencyOther
+                              }
+                              id="payment-frequency-payments-other"
+                              data-testid="payment-frequency-payments-other"
+                              name="nonClaimsPaymentOther"
+                            />
+                          </FieldGroup>
+                        )}
+                        <AddNote
+                          id="payment-frequency-payments-note"
+                          field="anticipatedPaymentFrequencyNote"
                         />
                       </FieldGroup>
 

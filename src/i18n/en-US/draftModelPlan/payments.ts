@@ -229,6 +229,7 @@ const payments = {
     'Will participants be allowed to select between multiple payment mechanisms?',
   canParticipantsSelectBetweenPaymentMechanismsHow: 'Please describe',
   anticipatedPaymentFrequency: 'How often do you anticipate making payments?',
+  selectedAnticipatedPaymentFrequency: 'Selected payment frequency',
   anticipatedPaymentFrequencyOptions: {
     annually: 'Annually',
     biannually: 'Biannually',
