@@ -5,6 +5,7 @@ import MainContent from 'components/MainContent';
 import { NotFoundPartial } from 'views/NotFound';
 
 import AnticipateDependencies from './AnticipateDependencies';
+import BeneficiaryCostSharing from './BeneficiaryCostSharing';
 import ClaimsBasedPayment from './ClaimsBasedPayment';
 import FundingSource from './FundingSource';
 import TempPage from './temp';
@@ -50,6 +51,11 @@ export const Payment = () => {
           path="/models/:modelID/task-list/payment/anticipating-dependencies"
           exact
           render={() => <AnticipateDependencies />}
+        />
+        <Route
+          path="/models/:modelID/task-list/payment/beneficiary-cost-sharing"
+          exact
+          render={() => <BeneficiaryCostSharing />}
         />
         <Route
           path="/models/:modelID/task-list/payment/page-2"

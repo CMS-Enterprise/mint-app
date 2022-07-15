@@ -176,7 +176,18 @@ const payments = {
   alert:
     'Make sure your contractor is aware of the Electronic File Transfer process if they’re connected to the Baltimore Data Center (BDC).',
   isContractorAwareTestDataRequirements:
-    'Is your contractor aware that test data will be needed, and when that test data must be available? '
+    'Is your contractor aware that test data will be needed, and when that test data must be available? ',
+  beneficaryCostSharingQuestions: 'Beneficiary cost-sharing questions',
+  beneficiaryCostSharingLevelAndHandling:
+    'What is the intended level of beneficiary cost-sharing and how will it be handled?',
+  waiveBeneficiaryCostSharingForAnyServices:
+    'Will you waive beneficiary cost-sharing (coinsurance and/or deductible) for any services in the model?',
+  waiveBeneficiaryCostSharingServiceSpecification:
+    'Please specify which services.',
+  waiverOnlyAppliesPartOfPayment:
+    'Would the waiver only apply for part of the payment?',
+  waiverOnlyAppliesPartOfPaymentSubcopy:
+    'For example, we would assess cost-sharing for the service itself, but not for an add-on payment'
 };
 
 export default payments;
