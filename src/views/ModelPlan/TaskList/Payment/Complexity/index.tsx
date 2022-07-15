@@ -97,7 +97,7 @@ const Complexity = () => {
         if (!response?.errors) {
           if (redirect === 'next') {
             history.push(
-              `/models/${modelID}/task-list/payment/anticipating-dependencies`
+              `/models/${modelID}/task-list/payment/recover-payment`
             );
           } else if (redirect === 'back') {
             history.push(

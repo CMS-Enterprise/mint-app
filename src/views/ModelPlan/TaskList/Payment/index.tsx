@@ -10,7 +10,7 @@ import ClaimsBasedPayment from './ClaimsBasedPayment';
 import Complexity from './Complexity';
 import FundingSource from './FundingSource';
 import NonClaimsBasedPayment from './NonClaimsBasedPayment';
-import TempPage from './temp';
+import Recover from './Recover';
 
 // Used to render the current page based on certain answers populated within this task list item
 export const renderCurrentPage = (
@@ -70,9 +70,9 @@ export const Payment = () => {
           render={() => <Complexity />}
         />
         <Route
-          path="/models/:modelID/task-list/payment/page-2"
+          path="/models/:modelID/task-list/payment/recover-payment"
           exact
-          render={() => <TempPage />}
+          render={() => <Recover />}
         />
         <Route path="*" render={() => <NotFoundPartial />} />
       </Switch>
