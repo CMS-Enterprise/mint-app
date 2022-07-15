@@ -85,7 +85,7 @@ const BeneficiaryCostSharing = () => {
         if (!response?.errors) {
           if (redirect === 'next') {
             history.push(
-              `/models/${modelID}/task-list/payment/anticipating-dependencies`
+              `/models/${modelID}/task-list/payment/non-claims-based-payment`
             );
           } else if (redirect === 'back') {
             history.push(

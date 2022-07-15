@@ -24,7 +24,9 @@ import AutoSave from 'components/shared/AutoSave';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
+import MultiSelect from 'components/shared/MultiSelect';
 import TextAreaField from 'components/shared/TextAreaField';
+import TextField from 'components/shared/TextField';
 import GetNonClaimsBasedPayment from 'queries/Payments/GetNonClaimsBasedPayment';
 import {
   GetNonClaimsBasedPayment as GetNonClaimsBasedPaymentType,
@@ -33,8 +35,9 @@ import {
 } from 'queries/Payments/types/GetNonClaimsBasedPayment';
 import { UpdatePaymentsVariables } from 'queries/Payments/types/UpdatePayments';
 import UpdatePayments from 'queries/Payments/UpdatePayments';
-import { PayType } from 'types/graphql-global-types';
+import { NonClaimsBasedPayType, PayType } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
+import { sortOtherEnum, translateNonClaimsBasedPayType } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
 
 import { renderCurrentPage, renderTotalPages } from '..';
@@ -105,6 +108,13 @@ const NonClaimsBasedPayment = () => {
         formikRef?.current?.setErrors(errors);
       });
   };
+
+  const mappedNonClaimsBasedPayType = Object.keys(NonClaimsBasedPayType)
+    .sort(sortOtherEnum)
+    .map(key => ({
+      value: key,
+      label: translateNonClaimsBasedPayType(key)
+    }));
 
   const initialValues: NonClaimsBasedPaymentFormType = {
     __typename: 'PlanPayments',
@@ -213,8 +223,60 @@ const NonClaimsBasedPayment = () => {
                         headingLevel="h3"
                         className="margin-bottom-3"
                       >
-                        {t('beneficaryCostSharingQuestions')}
+                        {t('nonClaimsBasedPaymentQuestion')}
                       </PageHeading>
+
+                      <FieldGroup
+                        scrollElement="payment-nonclaims-payments"
+                        error={!!flatErrors.nonClaimsPayments}
+                        className="margin-top-4"
+                      >
+                        <Label htmlFor="payment-nonclaims-payments">
+                          {t('nonClaimsPayments')}
+                        </Label>
+                        <FieldErrorMsg>
+                          {flatErrors.nonClaimsPayments}
+                        </FieldErrorMsg>
+
+                        <Field
+                          as={MultiSelect}
+                          id="payment-nonclaims-payments"
+                          name="payment-nonclaims-payments"
+                          options={mappedNonClaimsBasedPayType}
+                          selectedLabel={t('selectedNonClaimsPayments')}
+                          onChange={(value: string[] | []) => {
+                            setFieldValue('nonClaimsPayments', value);
+                          }}
+                          initialValues={initialValues.nonClaimsPayments}
+                        />
+
+                        {(values?.nonClaimsPayments || []).includes(
+                          NonClaimsBasedPayType.OTHER
+                        ) && (
+                          <FieldGroup
+                            scrollElement="payment-nonclaims-payments-other"
+                            error={!!flatErrors.nonClaimsPaymentOther}
+                          >
+                            <Label
+                              htmlFor="payment-nonclaims-payments-other"
+                              className="text-normal"
+                            >
+                              {t('selectClaimsOther')}
+                            </Label>
+                            <FieldErrorMsg>
+                              {flatErrors.nonClaimsPaymentOther}
+                            </FieldErrorMsg>
+                            <Field
+                              as={TextField}
+                              error={flatErrors.nonClaimsPaymentOther}
+                              id="payment-nonclaims-payments-other"
+                              data-testid="payment-nonclaims-payments-other"
+                              name="payment-nonclaims-payments-other"
+                            />
+                          </FieldGroup>
+                        )}
+                      </FieldGroup>
+
                       <div className="margin-top-6 margin-bottom-3">
                         <Button
                           type="button"

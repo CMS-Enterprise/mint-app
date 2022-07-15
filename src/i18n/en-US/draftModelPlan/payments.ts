@@ -13,8 +13,6 @@ const payments = {
   otherSourceOption: 'Please describe the funding source.',
   reconciliation:
     'What is the funding source for reconciliation or other expenditures? Select all that apply.',
-  fundingStructure:
-    'What is the funding structure? (If possible, attach a copy of the allotment and allowance)',
   attachments: 'Attachments',
   addADocument: 'Add a document',
   documentTable: {
@@ -187,7 +185,38 @@ const payments = {
   waiverOnlyAppliesPartOfPayment:
     'Would the waiver only apply for part of the payment?',
   waiverOnlyAppliesPartOfPaymentSubcopy:
-    'For example, we would assess cost-sharing for the service itself, but not for an add-on payment'
+    'For example, we would assess cost-sharing for the service itself, but not for an add-on payment',
+  nonClaimsBasedPaymentQuestion: 'Non-claims-based payment questions',
+  nonClaimsPayments: 'Select which non-claims-based payments will you pay.',
+  nonClaimsPaymentsOptions: {
+    advancedPayment: 'Advanced Payment',
+    bundledEpisodeOfCare: 'Bundled/Episode of Care',
+    capitationPopulationBasedFull: 'Capitation/Population Based - Full',
+    capitationPopulationBasedPartial: 'Capitation/Population Based - Partial',
+    careCoordinationManagementFee: 'Care Coordination/Management Fee',
+    globalBudget: 'Global Budget',
+    grants: 'Grants',
+    incentivePayment: 'Incentive Payment',
+    mapdSharedSavings:
+      'Medicare Advantage Prescription Drug (MAPD) Shared Savings',
+    sharedSavings: 'Shared Savings',
+    other: 'Other'
+  },
+  selectedNonClaimsPayments: 'Selected non-claims-based payments',
+  nonClaimsPaymentOther:
+    'Please describe the other non-claims-based payments you will pay.',
+  paymentCalculationOwner: 'Who will calculate the non-claims based payments?',
+  numberPaymentsPerPayCycle: 'Number of payments per payment cycle',
+  numberPaymentsPerPayCycleSubcopy:
+    'This only applies if you are making non-claims-based payments',
+  sharedSystemsInvolvedAdditionalClaimPayment:
+    'Will the shared systems be invovled for additional payment of claims?',
+  planningToUseInnovationPaymentContractor:
+    'Are you planning to use the Innovation Payment Contractor?',
+  planningToUseInnovationPaymentContractorNote: '',
+  fundingStructure: 'What is the funding structure?',
+  fundingStructureSubcopy:
+    'If possible, upload a copy of the allotment and allowance.'
 };
 
 export default payments;
