@@ -25,6 +25,7 @@ import AutoSave from 'components/shared/AutoSave';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
+import TextAreaField from 'components/shared/TextAreaField';
 import GetBeneficiaryCostSharing from 'queries/Payments/GetBeneficiaryCostSharing';
 import {
   GetBeneficiaryCostSharing as GetBeneficiaryCostSharingType,
@@ -193,7 +194,7 @@ const BeneficiaryCostSharing = () => {
                   <Grid desktop={{ col: 6 }}>
                     <Form
                       className="margin-top-6"
-                      data-testid="payment-anticipate-dependencies-form"
+                      data-testid="payment-beneficiary-cost-sharing-form"
                       onSubmit={e => {
                         handleSubmit(e);
                       }}
@@ -202,8 +203,92 @@ const BeneficiaryCostSharing = () => {
                         headingLevel="h3"
                         className="margin-bottom-3"
                       >
-                        {t('claimSpecificQuestionsContinued')}
+                        {t('beneficaryCostSharingQuestions')}
                       </PageHeading>
+
+                      <FieldGroup
+                        scrollElement="payment-beneficiary-cost-sharing"
+                        error={
+                          !!flatErrors.beneficiaryCostSharingLevelAndHandling
+                        }
+                      >
+                        <Label
+                          htmlFor="payment-beneficiary-cost-sharing"
+                          className="maxw-none"
+                        >
+                          {t('beneficiaryCostSharingLevelAndHandling')}
+                        </Label>
+                        <FieldErrorMsg>
+                          {flatErrors.beneficiaryCostSharingLevelAndHandling}
+                        </FieldErrorMsg>
+                        <Field
+                          as={TextAreaField}
+                          className="height-15"
+                          error={
+                            flatErrors.beneficiaryCostSharingLevelAndHandling
+                          }
+                          id="payment-beneficiary-cost-sharing"
+                          data-testid="payment-beneficiary-cost-sharing"
+                          name="beneficiaryCostSharingLevelAndHandling"
+                        />
+                      </FieldGroup>
+
+                      <FieldGroup
+                        scrollElement="payment-waive-part-of-payment"
+                        error={!!flatErrors.waiverOnlyAppliesPartOfPayment}
+                        className="margin-top-4"
+                      >
+                        <Label
+                          htmlFor="payment-waive-part-of-payment"
+                          className="maxw-none"
+                        >
+                          {t('waiverOnlyAppliesPartOfPayment')}
+                        </Label>
+                        <p className="text-base margin-y-1">
+                          {t('waiverOnlyAppliesPartOfPaymentSubcopy')}
+                        </p>
+                        <FieldErrorMsg>
+                          {flatErrors.waiverOnlyAppliesPartOfPayment}
+                        </FieldErrorMsg>
+                        <Fieldset>
+                          <Field
+                            as={Radio}
+                            id="payment-waive-part-of-payment-Yes"
+                            name="payment-waive-part-of-payment"
+                            label={h('yes')}
+                            value="YES"
+                            checked={
+                              values.waiverOnlyAppliesPartOfPayment === true
+                            }
+                            onChange={() => {
+                              setFieldValue(
+                                'waiverOnlyAppliesPartOfPayment',
+                                true
+                              );
+                            }}
+                          />
+                          <Field
+                            as={Radio}
+                            id="payment-waive-part-of-payment-No"
+                            name="payment-waive-part-of-payment"
+                            label={h('no')}
+                            value="FALSE"
+                            checked={
+                              values.waiverOnlyAppliesPartOfPayment === false
+                            }
+                            onChange={() => {
+                              setFieldValue(
+                                'waiverOnlyAppliesPartOfPayment',
+                                false
+                              );
+                            }}
+                          />
+                        </Fieldset>
+                        <AddNote
+                          id="payment-waive-part-of-payment-note"
+                          field="waiveBeneficiaryCostSharingNote"
+                        />
+                      </FieldGroup>
 
                       <div className="margin-top-6 margin-bottom-3">
                         <Button
