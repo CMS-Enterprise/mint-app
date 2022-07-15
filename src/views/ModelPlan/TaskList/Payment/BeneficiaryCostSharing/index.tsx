@@ -84,12 +84,18 @@ const BeneficiaryCostSharing = () => {
       .then(response => {
         if (!response?.errors) {
           if (redirect === 'next') {
-            history.push(
-              `/models/${modelID}/task-list/payment/non-claims-based-payment`
-            );
+            if (
+              formikValues.payType.includes(PayType.NON_CLAIMS_BASED_PAYMENTS)
+            ) {
+              history.push(
+                `/models/${modelID}/task-list/payment/non-claims-based-payment`
+              );
+            } else {
+              history.push(`/models/${modelID}/task-list/payment/complexity`);
+            }
           } else if (redirect === 'back') {
             history.push(
-              `/models/${modelID}/task-list/payment/claims-based-payment`
+              `/models/${modelID}/task-list/payment/anticipating-dependencies`
             );
           } else if (redirect === 'task-list') {
             history.push(`/models/${modelID}/task-list/`);
