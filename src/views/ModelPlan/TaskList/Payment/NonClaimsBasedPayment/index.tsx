@@ -322,6 +322,66 @@ const NonClaimsBasedPayment = () => {
                         />
                       </FieldGroup>
 
+                      <FieldGroup
+                        scrollElement="payment-nonclaims-shared-involvement"
+                        error={
+                          !!flatErrors.sharedSystemsInvolvedAdditionalClaimPayment
+                        }
+                        className="margin-top-4"
+                      >
+                        <Label
+                          htmlFor="payment-nonclaims-shared-involvement"
+                          className="maxw-none"
+                        >
+                          {t('sharedSystemsInvolvedAdditionalClaimPayment')}
+                        </Label>
+                        <FieldErrorMsg>
+                          {
+                            flatErrors.sharedSystemsInvolvedAdditionalClaimPayment
+                          }
+                        </FieldErrorMsg>
+                        <Fieldset>
+                          <Field
+                            as={Radio}
+                            id="payment-nonclaims-shared-involvement-Yes"
+                            name="payment-nonclaims-shared-involvement"
+                            label={h('yes')}
+                            value="YES"
+                            checked={
+                              values.sharedSystemsInvolvedAdditionalClaimPayment ===
+                              true
+                            }
+                            onChange={() => {
+                              setFieldValue(
+                                'sharedSystemsInvolvedAdditionalClaimPayment',
+                                true
+                              );
+                            }}
+                          />
+                          <Field
+                            as={Radio}
+                            id="payment-nonclaims-shared-involvement-No"
+                            name="payment-nonclaims-shared-involvement"
+                            label={h('no')}
+                            value="FALSE"
+                            checked={
+                              values.sharedSystemsInvolvedAdditionalClaimPayment ===
+                              false
+                            }
+                            onChange={() => {
+                              setFieldValue(
+                                'sharedSystemsInvolvedAdditionalClaimPayment',
+                                false
+                              );
+                            }}
+                          />
+                        </Fieldset>
+                        <AddNote
+                          id="payment-nonclaims-shared-involvement-note"
+                          field="sharedSystemsInvolvedAdditionalClaimPaymentNote"
+                        />
+                      </FieldGroup>
+
                       <div className="margin-top-6 margin-bottom-3">
                         <Button
                           type="button"
