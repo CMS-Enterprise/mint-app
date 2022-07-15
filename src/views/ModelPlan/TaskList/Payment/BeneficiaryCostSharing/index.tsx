@@ -327,7 +327,7 @@ const BeneficiaryCostSharing = () => {
                           >
                             <Label
                               htmlFor="payment-waive-part-of-payment"
-                              className="maxw-none"
+                              className="maxw-none text-normal"
                             >
                               {t('waiverOnlyAppliesPartOfPayment')}
                             </Label>
