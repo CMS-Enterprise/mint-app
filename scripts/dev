@@ -347,9 +347,20 @@ namespace :db do
   end
 
   desc "Load development dataset from file"
-  task :seed do
-    # Seed DB
-    `psql < scripts/data/local-db.sql > /dev/null`
+  task :seed, [:file] do |t, args|
+    file = args.to_a[0]
+
+    if file == nil
+      seed()    
+    else
+      if file.start_with?("/")
+      else
+      file = "scripts/data/"+file+".sql"
+      end
+      # p file
+     seed(file)
+    end
+    return
 
     # Seed data files with hardcoded IDs
     `cp -f scripts/data/sample.pdf tmp/minio/mint-app-file-uploads/b23d964c-3e44-426b-8dcb-aa979adc07a2.pdf`
@@ -359,6 +370,13 @@ namespace :db do
     # Set Statuses
     `docker-compose run --entrypoint="mc tag set 's3local/mint-app-file-uploads/b23d964c-3e44-426b-8dcb-aa979adc07a2.pdf' 'av-status=CLEAN'" minio_mc`
     `docker-compose run --entrypoint="mc tag set 's3local/mint-app-file-uploads/25c81e5a-4940-45fe-85c7-fcbe37a3c317.pdf' 'av-status=INFECTED'" minio_mc`
+  end
+  
+  def seed(db_file_path = "scripts/data/local-db.sql" )
+    command = "psql < " + db_file_path + " > /dev/null"
+    
+    resp = sh(command, verbose: false)
+
   end
 
   task :drop_connections do
