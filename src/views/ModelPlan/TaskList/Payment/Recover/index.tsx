@@ -7,6 +7,7 @@ import {
   BreadcrumbBar,
   BreadcrumbLink,
   Button,
+  DatePicker,
   Fieldset,
   Grid,
   GridContainer,
@@ -24,8 +25,6 @@ import AutoSave from 'components/shared/AutoSave';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
-import MultiSelect from 'components/shared/MultiSelect';
-import TextField from 'components/shared/TextField';
 import GetRecover from 'queries/Payments/GetRecover';
 import {
   GetRecover as GetRecoverType,
@@ -34,16 +33,8 @@ import {
 } from 'queries/Payments/types/GetRecover';
 import { UpdatePaymentsVariables } from 'queries/Payments/types/UpdatePayments';
 import UpdatePayments from 'queries/Payments/UpdatePayments';
-import {
-  AnticipatedPaymentFrequencyType,
-  ComplexityCalculationLevelType,
-  PayType
-} from 'types/graphql-global-types';
+import { PayType } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
-import {
-  sortOtherEnum,
-  translateAnticipatedPaymentFrequencyType
-} from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
 
 import { renderCurrentPage, renderTotalPages } from '..';
@@ -111,15 +102,6 @@ const Complexity = () => {
       });
   };
 
-  const mappedAnticipatedPaymentFrequencyType = Object.keys(
-    AnticipatedPaymentFrequencyType
-  )
-    .sort(sortOtherEnum)
-    .map(key => ({
-      value: key,
-      label: translateAnticipatedPaymentFrequencyType(key)
-    }));
-
   const initialValues: RecoverFormType = {
     __typename: 'PlanPayments',
     id: id ?? '',
@@ -184,10 +166,23 @@ const Complexity = () => {
             errors,
             handleSubmit,
             setFieldValue,
+            setFieldError,
             setErrors,
             values
           } = formikProps;
           const flatErrors = flattenErrors(errors);
+
+          const handleOnBlur = (e: string, field: string) => {
+            if (e === '') {
+              return;
+            }
+            try {
+              setFieldValue(field, new Date(e).toISOString());
+              delete errors[field as keyof RecoverFormType];
+            } catch (err) {
+              setFieldError(field, t('validDate'));
+            }
+          };
           return (
             <>
               {Object.keys(errors).length > 0 && (
@@ -318,6 +313,44 @@ const Complexity = () => {
                         <AddNote
                           id="payment-anticipate-reconciling-payment-retro-note"
                           field="anticipateReconcilingPaymentsRetrospectivelyNote"
+                        />
+                      </FieldGroup>
+
+                      <FieldGroup
+                        scrollElement="payment-payment-start-date"
+                        error={!!flatErrors.paymentStartDate}
+                        className="margin-top-4"
+                      >
+                        <Label
+                          htmlFor="payment-payment-start-date"
+                          className="maxw-none"
+                        >
+                          {t('paymentStartDate')}
+                        </Label>
+                        <p className="text-normal margin-bottom-1 margin-top-0">
+                          {t('paymentStartDateSubcopy')}
+                        </p>
+                        <div className="usa-hint" id="appointment-date-hint">
+                          {h('datePlaceholder')}
+                        </div>
+                        <FieldErrorMsg>
+                          {flatErrors.paymentStartDate}
+                        </FieldErrorMsg>
+                        <Field
+                          as={DatePicker}
+                          error={+!!flatErrors.paymentStartDate}
+                          className="width-card-lg"
+                          id="payment-payment-start-date"
+                          maxLength={50}
+                          name="paymentStartDate"
+                          defaultValue={values.paymentStartDate}
+                          onBlur={(e: any) =>
+                            handleOnBlur(e.target.value, 'paymentStartDate')
+                          }
+                        />
+                        <AddNote
+                          id="payment-payment-start-date-note"
+                          field="paymentStartDateNote"
                         />
                       </FieldGroup>
 
