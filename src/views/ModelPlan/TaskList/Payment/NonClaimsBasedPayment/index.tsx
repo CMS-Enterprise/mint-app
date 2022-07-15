@@ -383,14 +383,14 @@ const NonClaimsBasedPayment = () => {
                       </FieldGroup>
 
                       <FieldGroup
-                        scrollElement="payment-nonclaims-shared-involvement"
+                        scrollElement="payment-use-innovation-payment-contractor"
                         error={
                           !!flatErrors.planningToUseInnovationPaymentContractor
                         }
                         className="margin-top-4"
                       >
                         <Label
-                          htmlFor="payment-nonclaims-shared-involvement"
+                          htmlFor="payment-use-innovation-payment-contractor"
                           className="maxw-none"
                         >
                           {t('planningToUseInnovationPaymentContractor')}
@@ -404,8 +404,8 @@ const NonClaimsBasedPayment = () => {
                         <Fieldset>
                           <Field
                             as={Radio}
-                            id="payment-nonclaims-shared-involvement-Yes"
-                            name="payment-nonclaims-shared-involvement"
+                            id="payment-use-innovation-payment-contractor-Yes"
+                            name="payment-use-innovation-payment-contractor"
                             label={h('yes')}
                             value="YES"
                             checked={
@@ -421,8 +421,8 @@ const NonClaimsBasedPayment = () => {
                           />
                           <Field
                             as={Radio}
-                            id="payment-nonclaims-shared-involvement-No"
-                            name="payment-nonclaims-shared-involvement"
+                            id="payment-use-innovation-payment-contractor-No"
+                            name="payment-use-innovation-payment-contractor"
                             label={h('no')}
                             value="FALSE"
                             checked={
@@ -438,7 +438,7 @@ const NonClaimsBasedPayment = () => {
                           />
                         </Fieldset>
                         <AddNote
-                          id="payment-nonclaims-shared-involvement-note"
+                          id="payment-use-innovation-payment-contractor-note"
                           field="planningToUseInnovationPaymentContractorNote"
                         />
                       </FieldGroup>
