@@ -366,12 +366,16 @@ export const translateClaimsBasedPayType = (type: string) => {
   switch (type) {
     case 'ADJUSTMENTS_TO_FFS_PAYMENTS':
       return i18next.t('payments:selectClaimsOptions.ffsPayments');
+    case 'REDUCTIONS_TO_BENEFICIARY_COST_SHARING':
+      return i18next.t('payments:selectClaimsOptions.reduction');
     case 'PAYMENTS_CARE_MANAGEMENT_HOME_VISITS':
       return i18next.t('payments:selectClaimsOptions.homeVisits');
     case 'PAYMENTS_SNF_CLAIMS_WITHOUT_3DAY_HOSPITAL_ADMISSIONS':
       return i18next.t('payments:selectClaimsOptions.snfClaims');
     case 'PAYMENTS_TELEHEALTH_SERVICES_NOT_TRADITIONAL_MEDICARE':
       return i18next.t('payments:selectClaimsOptions.telehealth');
+    case 'SERVICES_NOT_COVERED_THROUGH_TRADITIONAL_MEDICARE':
+      return i18next.t('payments:selectClaimsOptions.servicesNotCovered');
     case 'OTHER':
       return i18next.t('payments:selectClaimsOptions.other');
     default:

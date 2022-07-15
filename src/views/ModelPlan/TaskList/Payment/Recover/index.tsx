@@ -39,7 +39,7 @@ import { NotFoundPartial } from 'views/NotFound';
 
 import { renderCurrentPage, renderTotalPages } from '..';
 
-const Complexity = () => {
+const Recover = () => {
   const { t } = useTranslation('payments');
   const { t: h } = useTranslation('draftModelPlan');
   const { modelID } = useParams<{ modelID: string }>();
@@ -85,9 +85,7 @@ const Complexity = () => {
       .then(response => {
         if (!response?.errors) {
           if (redirect === 'back') {
-            history.push(
-              `/models/${modelID}/task-list/payment/claims-based-payment`
-            );
+            history.push(`/models/${modelID}/task-list/payment/complexity`);
           } else if (redirect === 'task-list') {
             history.push(`/models/${modelID}/task-list/`);
           }
@@ -407,4 +405,4 @@ const Complexity = () => {
   );
 };
 
-export default Complexity;
+export default Recover;

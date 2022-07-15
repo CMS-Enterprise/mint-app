@@ -50,12 +50,16 @@ const payments = {
   selectClaims: 'Select which claims-based payments will you pay.',
   selectClaimsSubcopy:
     'If you select reductions to beneficiary cost-sharing or other, there will be additional questions to answer.',
+  selectedClaimsOptions: 'Selected claims-based payments',
   selectClaimsOptions: {
     ffsPayments: 'Adjustments to FFS payments',
     homeVisits: 'Payments for care management home visits',
     snfClaims: 'Payments for SNF claims without 3-day hospital admissions',
+    reduction: 'Reductions to beneficiary cost-sharing',
     telehealth:
       'Payments for telehealth services not covered through Traditional Medicare',
+    servicesNotCovered:
+      'Payments for services not covered through Traditional Medicare',
     other: 'Other'
   },
   selectClaimsOther:

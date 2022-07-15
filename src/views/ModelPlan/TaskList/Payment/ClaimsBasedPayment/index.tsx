@@ -247,7 +247,7 @@ const ClaimsBasedPayment = () => {
                           id="payment-pay-claims"
                           name="beneficiaries"
                           options={mappedClaimsBasedPayType}
-                          selectedLabel={t('selectedGroup')}
+                          selectedLabel={t('selectedClaimsOptions')}
                           onChange={(value: string[] | []) => {
                             setFieldValue('payClaims', value);
                           }}
