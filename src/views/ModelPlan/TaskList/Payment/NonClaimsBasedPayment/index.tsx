@@ -296,6 +296,32 @@ const NonClaimsBasedPayment = () => {
                         />
                       </FieldGroup>
 
+                      <FieldGroup
+                        scrollElement="payment-nonclaims-payments-paycycle"
+                        error={!!flatErrors.numberPaymentsPerPayCycle}
+                      >
+                        <Label htmlFor="numberPaymentsPerPayCycle">
+                          {t('numberPaymentsPerPayCycle')}
+                        </Label>
+                        <p className="text-base margin-y-1">
+                          {t('numberPaymentsPerPayCycleSubcopy')}
+                        </p>
+                        <FieldErrorMsg>
+                          {flatErrors.numberPaymentsPerPayCycle}
+                        </FieldErrorMsg>
+                        <Field
+                          as={TextField}
+                          error={flatErrors.numberPaymentsPerPayCycle}
+                          id="payment-nonclaims-payments-paycycle"
+                          data-testid="payment-nonclaims-payments-paycycle"
+                          name="numberPaymentsPerPayCycle"
+                        />
+                        <AddNote
+                          id="payment-nonclaims-payments-paycycle-note"
+                          field="numberPaymentsPerPayCycleNote"
+                        />
+                      </FieldGroup>
+
                       <div className="margin-top-6 margin-bottom-3">
                         <Button
                           type="button"
