@@ -217,7 +217,7 @@ const ClaimsBasedPayment = () => {
                   <Grid desktop={{ col: 6 }}>
                     <Form
                       className="margin-top-6"
-                      data-testid="payment-funding-source-form"
+                      data-testid="payment-claims-based-payment-form"
                       onSubmit={e => {
                         handleSubmit(e);
                       }}
