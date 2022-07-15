@@ -212,236 +212,112 @@ const Complexity = () => {
                   <Grid desktop={{ col: 6 }}>
                     <Form
                       className="margin-top-6"
-                      data-testid="payment-complexity-form"
+                      data-testid="payment-recover-form"
                       onSubmit={e => {
                         handleSubmit(e);
                       }}
                     >
                       <FieldGroup
-                        scrollElement="payment-complexity"
-                        error={!!flatErrors.expectedCalculationComplexityLevel}
+                        scrollElement="payment-recover-payment"
+                        error={!!flatErrors.willRecoverPayments}
                         className="margin-top-4"
                       >
                         <Label
-                          htmlFor="payment-complexity"
+                          htmlFor="payment-recover-payment"
                           className="maxw-none"
                         >
-                          {t('expectedCalculationComplexityLevel')}
+                          {t('willRecoverPayments')}
                         </Label>
                         <FieldErrorMsg>
-                          {flatErrors.expectedCalculationComplexityLevel}
+                          {flatErrors.willRecoverPayments}
                         </FieldErrorMsg>
                         <Fieldset>
                           <Field
                             as={Radio}
-                            id="payment-complexity-low"
-                            name="payment-complexity"
-                            label={t('complexityLevel.low')}
-                            value={ComplexityCalculationLevelType.LOW}
-                            checked={
-                              values.expectedCalculationComplexityLevel ===
-                              ComplexityCalculationLevelType.LOW
-                            }
+                            id="payment-recover-payment-Yes"
+                            name="payment-recover-payment"
+                            label={h('yes')}
+                            value="YES"
+                            checked={values.willRecoverPayments === true}
                             onChange={() => {
-                              setFieldValue(
-                                'expectedCalculationComplexityLevel',
-                                ComplexityCalculationLevelType.LOW
-                              );
+                              setFieldValue('willRecoverPayments', true);
                             }}
                           />
                           <Field
                             as={Radio}
-                            id="payment-complexity-middle"
-                            name="payment-complexity"
-                            label={t('complexityLevel.middle')}
-                            value={ComplexityCalculationLevelType.MIDDLE}
-                            checked={
-                              values.expectedCalculationComplexityLevel ===
-                              ComplexityCalculationLevelType.MIDDLE
-                            }
+                            id="payment-recover-payment-No"
+                            name="payment-recover-payment"
+                            label={h('no')}
+                            value="NO"
+                            checked={values.willRecoverPayments === false}
                             onChange={() => {
-                              setFieldValue(
-                                'expectedCalculationComplexityLevel',
-                                ComplexityCalculationLevelType.MIDDLE
-                              );
-                            }}
-                          />
-                          <Field
-                            as={Radio}
-                            id="payment-complexity-high"
-                            name="payment-complexity"
-                            label={t('complexityLevel.high')}
-                            value={ComplexityCalculationLevelType.HIGH}
-                            checked={
-                              values.expectedCalculationComplexityLevel ===
-                              ComplexityCalculationLevelType.HIGH
-                            }
-                            onChange={() => {
-                              setFieldValue(
-                                'expectedCalculationComplexityLevel',
-                                ComplexityCalculationLevelType.HIGH
-                              );
+                              setFieldValue('willRecoverPayments', false);
                             }}
                           />
                         </Fieldset>
                         <AddNote
-                          id="payment-complexity-note"
-                          field="expectedCalculationComplexityLevelNote"
+                          id="payment-recover-payment-note"
+                          field="willRecoverPaymentsNote"
                         />
                       </FieldGroup>
 
                       <FieldGroup
-                        scrollElement="payment-complexity"
+                        scrollElement="payment-anticipate-reconciling-payment-retro"
                         error={
-                          !!flatErrors.canParticipantsSelectBetweenPaymentMechanisms
+                          !!flatErrors.anticipateReconcilingPaymentsRetrospectively
                         }
                         className="margin-top-4"
                       >
                         <Label
-                          htmlFor="payment-multiple-payments"
+                          htmlFor="payment-anticipate-reconciling-payment-retro"
                           className="maxw-none"
                         >
-                          {t('canParticipantsSelectBetweenPaymentMechanisms')}
+                          {t('anticipateReconcilingPaymentsRetrospectively')}
                         </Label>
                         <FieldErrorMsg>
                           {
-                            flatErrors.canParticipantsSelectBetweenPaymentMechanisms
+                            flatErrors.anticipateReconcilingPaymentsRetrospectively
                           }
                         </FieldErrorMsg>
                         <Fieldset>
                           <Field
                             as={Radio}
-                            id="payment-multiple-payments-Yes"
-                            name="payment-multiple-payments"
+                            id="payment-anticipate-reconciling-payment-retro-Yes"
+                            name="payment-anticipate-reconciling-payment-retro"
                             label={h('yes')}
                             value="YES"
                             checked={
-                              values.canParticipantsSelectBetweenPaymentMechanisms ===
+                              values.anticipateReconcilingPaymentsRetrospectively ===
                               true
                             }
                             onChange={() => {
                               setFieldValue(
-                                'canParticipantsSelectBetweenPaymentMechanisms',
+                                'anticipateReconcilingPaymentsRetrospectively',
                                 true
                               );
                             }}
                           />
-                          {values.canParticipantsSelectBetweenPaymentMechanisms && (
-                            <FieldGroup
-                              className="margin-left-4 margin-y-1"
-                              scrollElement="canParticipantsSelectBetweenPaymentMechanismsHow"
-                              error={
-                                !!flatErrors.canParticipantsSelectBetweenPaymentMechanismsHow
-                              }
-                            >
-                              <Label
-                                htmlFor="payment-multiple-payments-how"
-                                className="text-normal"
-                              >
-                                {t(
-                                  'canParticipantsSelectBetweenPaymentMechanismsHow'
-                                )}
-                              </Label>
-                              <FieldErrorMsg>
-                                {
-                                  flatErrors.canParticipantsSelectBetweenPaymentMechanismsHow
-                                }
-                              </FieldErrorMsg>
-                              <Field
-                                as={TextField}
-                                error={
-                                  flatErrors.canParticipantsSelectBetweenPaymentMechanismsHow
-                                }
-                                id="payment-multiple-payments-how"
-                                data-testid="payment-multiple-payments-how"
-                                name="canParticipantsSelectBetweenPaymentMechanismsHow"
-                              />
-                            </FieldGroup>
-                          )}
                           <Field
                             as={Radio}
-                            id="payment-multiple-payments-No"
-                            name="payment-multiple-payments"
+                            id="payment-anticipate-reconciling-payment-retro-No"
+                            name="payment-anticipate-reconciling-payment-retro"
                             label={h('no')}
                             value="NO"
                             checked={
-                              values.canParticipantsSelectBetweenPaymentMechanisms ===
+                              values.anticipateReconcilingPaymentsRetrospectively ===
                               false
                             }
                             onChange={() => {
                               setFieldValue(
-                                'canParticipantsSelectBetweenPaymentMechanisms',
+                                'anticipateReconcilingPaymentsRetrospectively',
                                 false
                               );
                             }}
                           />
                         </Fieldset>
                         <AddNote
-                          id="payment-multiple-payments-note"
-                          field="canParticipantsSelectBetweenPaymentMechanismsNote"
-                        />
-                      </FieldGroup>
-
-                      <FieldGroup
-                        scrollElement="payment-frequency-payments"
-                        error={!!flatErrors.anticipatedPaymentFrequency}
-                        className="margin-top-4"
-                      >
-                        <Label htmlFor="payment-frequency-payments">
-                          {t('anticipatedPaymentFrequency')}
-                        </Label>
-                        <FieldErrorMsg>
-                          {flatErrors.anticipatedPaymentFrequency}
-                        </FieldErrorMsg>
-
-                        <Field
-                          as={MultiSelect}
-                          id="payment-frequency-payments"
-                          name="payment-frequency-payments"
-                          options={mappedAnticipatedPaymentFrequencyType}
-                          selectedLabel={t(
-                            'selectedAnticipatedPaymentFrequency'
-                          )}
-                          onChange={(value: string[] | []) => {
-                            setFieldValue('anticipatedPaymentFrequency', value);
-                          }}
-                          initialValues={
-                            initialValues.anticipatedPaymentFrequency
-                          }
-                        />
-
-                        {(values?.anticipatedPaymentFrequency || []).includes(
-                          AnticipatedPaymentFrequencyType.OTHER
-                        ) && (
-                          <FieldGroup
-                            scrollElement="payment-frequency-payments-other"
-                            error={
-                              !!flatErrors.anticipatedPaymentFrequencyOther
-                            }
-                          >
-                            <Label
-                              htmlFor="anticipatedPaymentFrequencyOther"
-                              className="text-normal"
-                            >
-                              {t('selectClaimsOther')}
-                            </Label>
-                            <FieldErrorMsg>
-                              {flatErrors.anticipatedPaymentFrequencyOther}
-                            </FieldErrorMsg>
-                            <Field
-                              as={TextField}
-                              error={
-                                flatErrors.anticipatedPaymentFrequencyOther
-                              }
-                              id="payment-frequency-payments-other"
-                              data-testid="payment-frequency-payments-other"
-                              name="nonClaimsPaymentOther"
-                            />
-                          </FieldGroup>
-                        )}
-                        <AddNote
-                          id="payment-frequency-payments-note"
-                          field="anticipatedPaymentFrequencyNote"
+                          id="payment-anticipate-reconciling-payment-retro-note"
+                          field="anticipateReconcilingPaymentsRetrospectivelyNote"
                         />
                       </FieldGroup>
 
