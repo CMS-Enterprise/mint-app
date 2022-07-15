@@ -443,6 +443,33 @@ const NonClaimsBasedPayment = () => {
                         />
                       </FieldGroup>
 
+                      <FieldGroup
+                        scrollElement="payment-funding-structure"
+                        error={!!flatErrors.fundingStructure}
+                        className="margin-top-4"
+                      >
+                        <Label
+                          htmlFor="payment-funding-structure"
+                          className="maxw-none"
+                        >
+                          {t('fundingStructure')}
+                        </Label>
+                        <p className="text-base margin-y-1">
+                          {t('fundingStructureSubcopy')}
+                        </p>
+                        <FieldErrorMsg>
+                          {flatErrors.fundingStructure}
+                        </FieldErrorMsg>
+                        <Field
+                          as={TextAreaField}
+                          className="height-15"
+                          error={flatErrors.fundingStructure}
+                          id="payment-funding-structure"
+                          data-testid="payment-funding-structure"
+                          name="fundingStructure"
+                        />
+                      </FieldGroup>
+
                       <div className="margin-top-6 margin-bottom-3">
                         <Button
                           type="button"
