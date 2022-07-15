@@ -258,7 +258,7 @@ const NonClaimsBasedPayment = () => {
                             error={!!flatErrors.nonClaimsPaymentOther}
                           >
                             <Label
-                              htmlFor="payment-nonclaims-payments-other"
+                              htmlFor="nonClaimsPaymentOther"
                               className="text-normal"
                             >
                               {t('selectClaimsOther')}
@@ -271,10 +271,29 @@ const NonClaimsBasedPayment = () => {
                               error={flatErrors.nonClaimsPaymentOther}
                               id="payment-nonclaims-payments-other"
                               data-testid="payment-nonclaims-payments-other"
-                              name="payment-nonclaims-payments-other"
+                              name="nonClaimsPaymentOther"
                             />
                           </FieldGroup>
                         )}
+                      </FieldGroup>
+
+                      <FieldGroup
+                        scrollElement="payment-nonclaims-payments-owner"
+                        error={!!flatErrors.paymentCalculationOwner}
+                      >
+                        <Label htmlFor="paymentCalculationOwner">
+                          {t('paymentCalculationOwner')}
+                        </Label>
+                        <FieldErrorMsg>
+                          {flatErrors.paymentCalculationOwner}
+                        </FieldErrorMsg>
+                        <Field
+                          as={TextField}
+                          error={flatErrors.paymentCalculationOwner}
+                          id="payment-nonclaims-payments-owner"
+                          data-testid="payment-nonclaims-payments-owner"
+                          name="paymentCalculationOwner"
+                        />
                       </FieldGroup>
 
                       <div className="margin-top-6 margin-bottom-3">
