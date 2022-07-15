@@ -213,7 +213,8 @@ const payments = {
     'Will the shared systems be invovled for additional payment of claims?',
   planningToUseInnovationPaymentContractor:
     'Are you planning to use the Innovation Payment Contractor?',
-  planningToUseInnovationPaymentContractorNote: '',
+  planningToUseInnovationPaymentContractorSubcopy:
+    'Note: If there will be 30+ payees we recommend a contractor. ',
   fundingStructure: 'What is the funding structure?',
   fundingStructureSubcopy:
     'If possible, upload a copy of the allotment and allowance.'

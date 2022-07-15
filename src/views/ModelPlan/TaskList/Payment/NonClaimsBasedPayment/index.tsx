@@ -382,6 +382,67 @@ const NonClaimsBasedPayment = () => {
                         />
                       </FieldGroup>
 
+                      <FieldGroup
+                        scrollElement="payment-nonclaims-shared-involvement"
+                        error={
+                          !!flatErrors.planningToUseInnovationPaymentContractor
+                        }
+                        className="margin-top-4"
+                      >
+                        <Label
+                          htmlFor="payment-nonclaims-shared-involvement"
+                          className="maxw-none"
+                        >
+                          {t('planningToUseInnovationPaymentContractor')}
+                        </Label>
+                        <p className="text-base margin-y-1">
+                          {t('planningToUseInnovationPaymentContractorSubcopy')}
+                        </p>
+                        <FieldErrorMsg>
+                          {flatErrors.planningToUseInnovationPaymentContractor}
+                        </FieldErrorMsg>
+                        <Fieldset>
+                          <Field
+                            as={Radio}
+                            id="payment-nonclaims-shared-involvement-Yes"
+                            name="payment-nonclaims-shared-involvement"
+                            label={h('yes')}
+                            value="YES"
+                            checked={
+                              values.planningToUseInnovationPaymentContractor ===
+                              true
+                            }
+                            onChange={() => {
+                              setFieldValue(
+                                'planningToUseInnovationPaymentContractor',
+                                true
+                              );
+                            }}
+                          />
+                          <Field
+                            as={Radio}
+                            id="payment-nonclaims-shared-involvement-No"
+                            name="payment-nonclaims-shared-involvement"
+                            label={h('no')}
+                            value="FALSE"
+                            checked={
+                              values.planningToUseInnovationPaymentContractor ===
+                              false
+                            }
+                            onChange={() => {
+                              setFieldValue(
+                                'planningToUseInnovationPaymentContractor',
+                                false
+                              );
+                            }}
+                          />
+                        </Fieldset>
+                        <AddNote
+                          id="payment-nonclaims-shared-involvement-note"
+                          field="planningToUseInnovationPaymentContractorNote"
+                        />
+                      </FieldGroup>
+
                       <div className="margin-top-6 margin-bottom-3">
                         <Button
                           type="button"
