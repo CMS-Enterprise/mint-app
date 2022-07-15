@@ -241,7 +241,14 @@ const payments = {
     weekly: 'Weekly'
   },
   anticipatedPaymentFrequencyOther:
-    'How often do you anticipate making payments?'
+    'How often do you anticipate making payments?',
+  willRecoverPayments: 'Will you recover the payments?',
+  anticipateReconcilingPaymentsRetrospectively:
+    'Do you anticipate reconciling payments retrospectively?',
+  anticipateReconcilingPaymentsRetrospectivelyNote: '',
+  paymentStartDate: 'When will payments start? (Enter an approximate date)',
+  paymentStartDateSubcopy:
+    'Note: If you are unsure of an approximate date, please select the first day of the approximate month.'
 };
 
 export default payments;
