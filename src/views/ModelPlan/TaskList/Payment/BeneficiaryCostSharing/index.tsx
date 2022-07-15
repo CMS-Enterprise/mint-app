@@ -3,7 +3,6 @@ import { Trans, useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
 import {
-  Alert,
   Breadcrumb,
   BreadcrumbBar,
   BreadcrumbLink,
