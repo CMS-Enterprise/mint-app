@@ -416,6 +416,33 @@ export const translateNonClaimsBasedPayType = (type: string) => {
   }
 };
 
+export const translateAnticipatedPaymentFrequencyType = (type: string) => {
+  switch (type) {
+    case 'ANNUALLY':
+      return i18next.t('payments:anticipatedPaymentFrequencyOptions.annually');
+    case 'BIANNUALLY':
+      return i18next.t(
+        'payments:anticipatedPaymentFrequencyOptions.biannually'
+      );
+    case 'DAILY':
+      return i18next.t('payments:anticipatedPaymentFrequencyOptions.daily');
+    case 'MONTHLY':
+      return i18next.t('payments:anticipatedPaymentFrequencyOptions.monthly');
+    case 'OTHER':
+      return i18next.t('payments:anticipatedPaymentFrequencyOptions.other');
+    case 'QUARTERLY':
+      return i18next.t('payments:anticipatedPaymentFrequencyOptions.quarterly');
+    case 'SEMIMONTHLY':
+      return i18next.t(
+        'payments:anticipatedPaymentFrequencyOptions.semimonthly'
+      );
+    case 'WEEKLY':
+      return i18next.t('payments:anticipatedPaymentFrequencyOptions.weekly');
+    default:
+      return '';
+  }
+};
+
 export const translateConfidenceType = (type: string) => {
   switch (type) {
     case 'NOT_AT_ALL':

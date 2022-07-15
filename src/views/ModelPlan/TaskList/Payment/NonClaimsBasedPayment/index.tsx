@@ -92,9 +92,7 @@ const NonClaimsBasedPayment = () => {
       .then(response => {
         if (!response?.errors) {
           if (redirect === 'next') {
-            history.push(
-              `/models/${modelID}/task-list/payment/anticipating-dependencies`
-            );
+            history.push(`/models/${modelID}/task-list/payment/complexity`);
           } else if (redirect === 'back') {
             history.push(
               `/models/${modelID}/task-list/payment/claims-based-payment`
