@@ -267,6 +267,40 @@ const BeneficiaryCostSharing = () => {
                               );
                             }}
                           />
+                          {values.waiveBeneficiaryCostSharingForAnyServices && (
+                            <FieldGroup
+                              className="margin-left-4 margin-y-1"
+                              scrollElement="payment-waive-any-service-specification"
+                              error={
+                                !!flatErrors.waiveBeneficiaryCostSharingServiceSpecification
+                              }
+                            >
+                              <Label
+                                htmlFor="payment-waive-any-service-specification"
+                                className="text-normal"
+                              >
+                                {t(
+                                  'waiveBeneficiaryCostSharingServiceSpecification'
+                                )}
+                              </Label>
+                              <FieldErrorMsg>
+                                {
+                                  flatErrors.waiveBeneficiaryCostSharingServiceSpecification
+                                }
+                              </FieldErrorMsg>
+                              <Field
+                                as={TextAreaField}
+                                className="height-15"
+                                error={
+                                  flatErrors.waiveBeneficiaryCostSharingServiceSpecification
+                                }
+                                id="payment-waive-any-service-specification"
+                                data-testid="payment-waive-any-service-specification"
+                                name="payment-waive-any-service-specification"
+                              />
+                            </FieldGroup>
+                          )}
+
                           <Field
                             as={Radio}
                             id="payment-waive-any-service-No"
@@ -285,63 +319,65 @@ const BeneficiaryCostSharing = () => {
                             }}
                           />
                         </Fieldset>
+                        {values.waiveBeneficiaryCostSharingForAnyServices && (
+                          <FieldGroup
+                            scrollElement="payment-waive-part-of-payment"
+                            error={!!flatErrors.waiverOnlyAppliesPartOfPayment}
+                            className="margin-top-4"
+                          >
+                            <Label
+                              htmlFor="payment-waive-part-of-payment"
+                              className="maxw-none"
+                            >
+                              {t('waiverOnlyAppliesPartOfPayment')}
+                            </Label>
+                            <p className="text-base margin-y-1">
+                              {t('waiverOnlyAppliesPartOfPaymentSubcopy')}
+                            </p>
+                            <FieldErrorMsg>
+                              {flatErrors.waiverOnlyAppliesPartOfPayment}
+                            </FieldErrorMsg>
+                            <Fieldset>
+                              <Field
+                                as={Radio}
+                                id="payment-waive-part-of-payment-Yes"
+                                name="payment-waive-part-of-payment"
+                                label={h('yes')}
+                                value="YES"
+                                checked={
+                                  values.waiverOnlyAppliesPartOfPayment === true
+                                }
+                                onChange={() => {
+                                  setFieldValue(
+                                    'waiverOnlyAppliesPartOfPayment',
+                                    true
+                                  );
+                                }}
+                              />
+                              <Field
+                                as={Radio}
+                                id="payment-waive-part-of-payment-No"
+                                name="payment-waive-part-of-payment"
+                                label={h('no')}
+                                value="FALSE"
+                                checked={
+                                  values.waiverOnlyAppliesPartOfPayment ===
+                                  false
+                                }
+                                onChange={() => {
+                                  setFieldValue(
+                                    'waiverOnlyAppliesPartOfPayment',
+                                    false
+                                  );
+                                }}
+                              />
+                            </Fieldset>
+                          </FieldGroup>
+                        )}
                         <AddNote
                           id="payment-waive-beneficiary-cost-sharing-note"
                           field="waiveBeneficiaryCostSharingNote"
                         />
-                      </FieldGroup>
-
-                      <FieldGroup
-                        scrollElement="payment-waive-part-of-payment"
-                        error={!!flatErrors.waiverOnlyAppliesPartOfPayment}
-                        className="margin-top-4"
-                      >
-                        <Label
-                          htmlFor="payment-waive-part-of-payment"
-                          className="maxw-none"
-                        >
-                          {t('waiverOnlyAppliesPartOfPayment')}
-                        </Label>
-                        <p className="text-base margin-y-1">
-                          {t('waiverOnlyAppliesPartOfPaymentSubcopy')}
-                        </p>
-                        <FieldErrorMsg>
-                          {flatErrors.waiverOnlyAppliesPartOfPayment}
-                        </FieldErrorMsg>
-                        <Fieldset>
-                          <Field
-                            as={Radio}
-                            id="payment-waive-part-of-payment-Yes"
-                            name="payment-waive-part-of-payment"
-                            label={h('yes')}
-                            value="YES"
-                            checked={
-                              values.waiverOnlyAppliesPartOfPayment === true
-                            }
-                            onChange={() => {
-                              setFieldValue(
-                                'waiverOnlyAppliesPartOfPayment',
-                                true
-                              );
-                            }}
-                          />
-                          <Field
-                            as={Radio}
-                            id="payment-waive-part-of-payment-No"
-                            name="payment-waive-part-of-payment"
-                            label={h('no')}
-                            value="FALSE"
-                            checked={
-                              values.waiverOnlyAppliesPartOfPayment === false
-                            }
-                            onChange={() => {
-                              setFieldValue(
-                                'waiverOnlyAppliesPartOfPayment',
-                                false
-                              );
-                            }}
-                          />
-                        </Fieldset>
                       </FieldGroup>
 
                       <div className="margin-top-6 margin-bottom-3">
