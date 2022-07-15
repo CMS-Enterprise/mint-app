@@ -39,41 +39,39 @@ export const Payment = () => {
   return (
     <MainContent className="grid-container" data-testid="model-payment">
       <Switch>
-        <Route
-          path="/models/:modelID/task-list/payment"
-          exact
-          render={() => <FundingSource />}
-        />
+        <Route path="/models/:modelID/task-list/payment" exact>
+          <FundingSource />
+        </Route>
         <Route
           path="/models/:modelID/task-list/payment/claims-based-payment"
           exact
-          render={() => <ClaimsBasedPayment />}
-        />
+        >
+          <ClaimsBasedPayment />
+        </Route>
         <Route
           path="/models/:modelID/task-list/payment/non-claims-based-payment"
           exact
-          render={() => <NonClaimsBasedPayment />}
-        />
+        >
+          <NonClaimsBasedPayment />
+        </Route>
         <Route
           path="/models/:modelID/task-list/payment/anticipating-dependencies"
           exact
-          render={() => <AnticipateDependencies />}
-        />
+        >
+          <AnticipateDependencies />
+        </Route>
         <Route
           path="/models/:modelID/task-list/payment/beneficiary-cost-sharing"
           exact
-          render={() => <BeneficiaryCostSharing />}
-        />
-        <Route
-          path="/models/:modelID/task-list/payment/complexity"
-          exact
-          render={() => <Complexity />}
-        />
-        <Route
-          path="/models/:modelID/task-list/payment/recover-payment"
-          exact
-          render={() => <Recover />}
-        />
+        >
+          <BeneficiaryCostSharing />
+        </Route>
+        <Route path="/models/:modelID/task-list/payment/complexity" exact>
+          <Complexity />
+        </Route>
+        <Route path="/models/:modelID/task-list/payment/recover-payment" exact>
+          <Recover />
+        </Route>
         <Route path="*" render={() => <NotFoundPartial />} />
       </Switch>
     </MainContent>
