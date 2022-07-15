@@ -3,6 +3,7 @@ import { Trans, useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
 import {
+  Alert,
   Breadcrumb,
   BreadcrumbBar,
   BreadcrumbLink,
@@ -311,6 +312,104 @@ const AnticipateDependencies = () => {
                           id="payment-needs-claims-data-collection-note"
                           field="needsClaimsDataCollectionNote"
                         />
+                      </FieldGroup>
+
+                      <FieldGroup
+                        scrollElement="payment-providing-third-party-file"
+                        error={!!flatErrors.providingThirdPartyFile}
+                        className="margin-top-4"
+                      >
+                        <Label
+                          htmlFor="payment-providing-third-party-file"
+                          className="maxw-none"
+                        >
+                          {t('thirdParty')}
+                        </Label>
+                        <FieldErrorMsg>
+                          {flatErrors.providingThirdPartyFile}
+                        </FieldErrorMsg>
+                        <Fieldset>
+                          <Field
+                            as={Radio}
+                            id="payment-providing-third-party-file-Yes"
+                            name="payment-providing-third-party-file"
+                            label={h('yes')}
+                            value="YES"
+                            checked={values.providingThirdPartyFile === true}
+                            onChange={() => {
+                              setFieldValue('providingThirdPartyFile', true);
+                            }}
+                          />
+                          <Field
+                            as={Radio}
+                            id="payment-providing-third-party-file-No"
+                            name="payment-providing-third-party-file"
+                            label={h('no')}
+                            value="FALSE"
+                            checked={values.providingThirdPartyFile === false}
+                            onChange={() => {
+                              setFieldValue('providingThirdPartyFile', false);
+                            }}
+                          />
+                        </Fieldset>
+                      </FieldGroup>
+
+                      <Alert type="info" slim className="margin-y-6">
+                        {t('alert')}
+                      </Alert>
+
+                      <FieldGroup
+                        scrollElement="payment-contractor-aware-test-data-requirements"
+                        error={
+                          !!flatErrors.isContractorAwareTestDataRequirements
+                        }
+                        className="margin-top-4"
+                      >
+                        <Label
+                          htmlFor="payment-contractor-aware-test-data-requirements"
+                          className="maxw-none"
+                        >
+                          {t('isContractorAwareTestDataRequirements')}
+                        </Label>
+                        <FieldErrorMsg>
+                          {flatErrors.isContractorAwareTestDataRequirements}
+                        </FieldErrorMsg>
+                        <Fieldset>
+                          <Field
+                            as={Radio}
+                            id="payment-contractor-aware-test-data-requirements-Yes"
+                            name="payment-contractor-aware-test-data-requirements"
+                            label={h('yes')}
+                            value="YES"
+                            checked={
+                              values.isContractorAwareTestDataRequirements ===
+                              true
+                            }
+                            onChange={() => {
+                              setFieldValue(
+                                'isContractorAwareTestDataRequirements',
+                                true
+                              );
+                            }}
+                          />
+                          <Field
+                            as={Radio}
+                            id="payment-contractor-aware-test-data-requirements-No"
+                            name="payment-contractor-aware-test-data-requirements"
+                            label={h('no')}
+                            value="FALSE"
+                            checked={
+                              values.isContractorAwareTestDataRequirements ===
+                              false
+                            }
+                            onChange={() => {
+                              setFieldValue(
+                                'isContractorAwareTestDataRequirements',
+                                false
+                              );
+                            }}
+                          />
+                        </Fieldset>
                       </FieldGroup>
 
                       <div className="margin-top-6 margin-bottom-3">
