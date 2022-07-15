@@ -25,9 +25,6 @@ import AutoSave from 'components/shared/AutoSave';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
-import MultiSelect from 'components/shared/MultiSelect';
-import TextAreaField from 'components/shared/TextAreaField';
-import TextField from 'components/shared/TextField';
 import GetAnticipateDependencies from 'queries/Payments/GetAnticipateDependencies';
 import {
   GetAnticipateDependencies as GetAnticipateDependenciesType,
@@ -92,7 +89,9 @@ const AnticipateDependencies = () => {
               `/models/${modelID}/task-list/payment/anticipating-dependencies`
             );
           } else if (redirect === 'back') {
-            history.push(`/models/${modelID}/task-list/payment`);
+            history.push(
+              `/models/${modelID}/task-list/payment/claims-based-payment`
+            );
           } else if (redirect === 'task-list') {
             history.push(`/models/${modelID}/task-list/`);
           }
