@@ -8,6 +8,7 @@ import AnticipateDependencies from './AnticipateDependencies';
 import BeneficiaryCostSharing from './BeneficiaryCostSharing';
 import ClaimsBasedPayment from './ClaimsBasedPayment';
 import FundingSource from './FundingSource';
+import NonClaimsBasedPayment from './NonClaimsBasedPayment';
 import TempPage from './temp';
 
 // Used to render the current page based on certain answers populated within this task list item
@@ -46,6 +47,11 @@ export const Payment = () => {
           path="/models/:modelID/task-list/payment/claims-based-payment"
           exact
           render={() => <ClaimsBasedPayment />}
+        />
+        <Route
+          path="/models/:modelID/task-list/payment/non-claims-based-payment"
+          exact
+          render={() => <NonClaimsBasedPayment />}
         />
         <Route
           path="/models/:modelID/task-list/payment/anticipating-dependencies"
