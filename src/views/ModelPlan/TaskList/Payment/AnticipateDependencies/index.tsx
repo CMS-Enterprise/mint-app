@@ -85,9 +85,23 @@ const AnticipateDependencies = () => {
       .then(response => {
         if (!response?.errors) {
           if (redirect === 'next') {
-            history.push(
-              `/models/${modelID}/task-list/payment/beneficiary-cost-sharing`
-            );
+            if (
+              formikValues.ClaimsBasedPayType.includes(
+                REDUCTIONS_TO_BENEFICIARY_COST_SHARING
+              )
+            ) {
+              history.push(
+                `/models/${modelID}/task-list/payment/beneficiary-cost-sharing`
+              );
+            } else if (
+              formikValues.payType.includes(PayType.NON_CLAIMS_BASED_PAYMENTS)
+            ) {
+              history.push(
+                `/models/${modelID}/task-list/payment/non-claims-based-payment`
+              );
+            } else {
+              history.push(`/models/${modelID}/task-list/payment/complexity`);
+            }
           } else if (redirect === 'back') {
             history.push(
               `/models/${modelID}/task-list/payment/claims-based-payment`
