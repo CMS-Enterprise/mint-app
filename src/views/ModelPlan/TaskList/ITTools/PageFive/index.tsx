@@ -13,7 +13,6 @@ import {
   Label,
   TextInput
 } from '@trussworks/react-uswds';
-import classNames from 'classnames';
 import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
 
 import AddNote from 'components/AddNote';
@@ -118,6 +117,26 @@ const ITToolsPageFive = () => {
       dataNeededForMonitoring
     }
   } = modelPlan;
+
+  /**
+   * Identifying if each question requires tooling as well as rending answers
+   * Checkbox answers will not be checked despite a store truthy boolean
+   * 'Specify other' answer will not be rendered even if OTHER value is true
+   */
+  const questionOneNeedsTools: boolean =
+    appealPerformance! || appealFeedback! || appealPayments! || appealOther!;
+  const questionTwoNeedsTools: boolean =
+    evaluationApproaches.includes(
+      EvaluationApproachType.CONTROL_INTERVENTION
+    ) ||
+    evaluationApproaches.includes(EvaluationApproachType.COMPARISON_MATCH) ||
+    evaluationApproaches.includes(EvaluationApproachType.INTERRUPTED_TIME) ||
+    evaluationApproaches.includes(EvaluationApproachType.NON_MEDICARE_DATA);
+  const questionThreeNeedsTools: boolean =
+    dataNeededForMonitoring.length > 0 &&
+    !dataNeededForMonitoring.includes(
+      DataForMonitoringType.NOT_PLANNING_TO_COLLECT_DATA
+    );
 
   const [update] = useMutation<UpdatePlanItToolsVariables>(UpdatePlanITTools);
 
@@ -265,12 +284,7 @@ const ITToolsPageFive = () => {
                                   appealPayments !== null ||
                                   appealOther !== null
                                 }
-                                needsTool={
-                                  appealPerformance! ||
-                                  appealFeedback! ||
-                                  appealPayments! ||
-                                  appealOther!
-                                }
+                                needsTool={questionOneNeedsTools}
                                 subtext={t('appealsNeedsAnswer')}
                               />
 
@@ -283,21 +297,18 @@ const ITToolsPageFive = () => {
                                     <Fragment key={type}>
                                       <Field
                                         as={CheckboxField}
-                                        disabled={
-                                          !appealPerformance &&
-                                          !appealFeedback &&
-                                          !appealPayments &&
-                                          !appealOther
-                                        }
+                                        disabled={!questionOneNeedsTools}
                                         id={`it-tools-oel-process-appeals-${type}`}
                                         name="oelProcessAppeals"
                                         label={translateOelProcessAppealsType(
                                           type
                                         )}
                                         value={type}
-                                        checked={values?.oelProcessAppeals.includes(
-                                          type as OelProcessAppealsType
-                                        )}
+                                        checked={
+                                          values?.oelProcessAppeals.includes(
+                                            type as OelProcessAppealsType
+                                          ) && questionOneNeedsTools
+                                        }
                                         onChange={(
                                           e: React.ChangeEvent<HTMLInputElement>
                                         ) => {
@@ -313,22 +324,14 @@ const ITToolsPageFive = () => {
                                         }}
                                       />
                                       {type === OelProcessAppealsType.OTHER &&
+                                        questionOneNeedsTools &&
                                         values.oelProcessAppeals.includes(
                                           type
                                         ) && (
                                           <div className="margin-left-4 margin-top-1">
                                             <Label
                                               htmlFor="it-tools-oel-process-appeals-other"
-                                              className={classNames(
-                                                {
-                                                  'text-gray-30':
-                                                    !appealPerformance &&
-                                                    !appealFeedback &&
-                                                    !appealPayments &&
-                                                    !appealOther
-                                                },
-                                                'text-normal'
-                                              )}
+                                              className="text-normal"
                                             >
                                               {h('pleaseSpecify')}
                                             </Label>
@@ -340,12 +343,6 @@ const ITToolsPageFive = () => {
                                             <Field
                                               as={TextInput}
                                               type="text"
-                                              disabled={
-                                                !appealPerformance &&
-                                                !appealFeedback &&
-                                                !appealPayments &&
-                                                !appealOther
-                                              }
                                               className="maxw-none"
                                               id="it-tools-oel-process-appeals-other"
                                               maxLength={50}
@@ -402,20 +399,7 @@ const ITToolsPageFive = () => {
                                   )}
                                 redirect={`/models/${modelID}/task-list/ops-eval-and-learning/evaluation`}
                                 answered={evaluationApproaches.length > 0}
-                                needsTool={
-                                  evaluationApproaches.includes(
-                                    EvaluationApproachType.CONTROL_INTERVENTION
-                                  ) ||
-                                  evaluationApproaches.includes(
-                                    EvaluationApproachType.COMPARISON_MATCH
-                                  ) ||
-                                  evaluationApproaches.includes(
-                                    EvaluationApproachType.INTERRUPTED_TIME
-                                  ) ||
-                                  evaluationApproaches.includes(
-                                    EvaluationApproachType.NON_MEDICARE_DATA
-                                  )
-                                }
+                                needsTool={questionTwoNeedsTools}
                                 subtext={t('appealsNeedsAnswer')}
                               />
 
@@ -428,30 +412,18 @@ const ITToolsPageFive = () => {
                                     <Fragment key={type}>
                                       <Field
                                         as={CheckboxField}
-                                        disabled={
-                                          (!evaluationApproaches.includes(
-                                            EvaluationApproachType.CONTROL_INTERVENTION
-                                          ) &&
-                                            !evaluationApproaches.includes(
-                                              EvaluationApproachType.COMPARISON_MATCH
-                                            ) &&
-                                            !evaluationApproaches.includes(
-                                              EvaluationApproachType.INTERRUPTED_TIME
-                                            ) &&
-                                            !evaluationApproaches.includes(
-                                              EvaluationApproachType.NON_MEDICARE_DATA
-                                            )) ||
-                                          evaluationApproaches.length === 0
-                                        }
+                                        disabled={!questionTwoNeedsTools}
                                         id={`it-tools-oel-evaluation-contractor-${type}`}
                                         name="oelEvaluationContractor"
                                         label={translateOelEvaluationContractorType(
                                           type
                                         )}
                                         value={type}
-                                        checked={values?.oelEvaluationContractor.includes(
-                                          type as OelEvaluationContractorType
-                                        )}
+                                        checked={
+                                          values?.oelEvaluationContractor.includes(
+                                            type as OelEvaluationContractorType
+                                          ) && questionTwoNeedsTools
+                                        }
                                         onChange={(
                                           e: React.ChangeEvent<HTMLInputElement>
                                         ) => {
@@ -468,32 +440,14 @@ const ITToolsPageFive = () => {
                                       />
                                       {type ===
                                         OelEvaluationContractorType.OTHER &&
+                                        questionTwoNeedsTools &&
                                         values.oelEvaluationContractor.includes(
                                           type
                                         ) && (
                                           <div className="margin-left-4 margin-top-1">
                                             <Label
                                               htmlFor="it-tools-oel-evaluation-contractor-other"
-                                              className={classNames(
-                                                {
-                                                  'text-gray-30':
-                                                    (!evaluationApproaches.includes(
-                                                      EvaluationApproachType.CONTROL_INTERVENTION
-                                                    ) &&
-                                                      !evaluationApproaches.includes(
-                                                        EvaluationApproachType.COMPARISON_MATCH
-                                                      ) &&
-                                                      !evaluationApproaches.includes(
-                                                        EvaluationApproachType.INTERRUPTED_TIME
-                                                      ) &&
-                                                      !evaluationApproaches.includes(
-                                                        EvaluationApproachType.NON_MEDICARE_DATA
-                                                      )) ||
-                                                    evaluationApproaches.length ===
-                                                      0
-                                                },
-                                                'text-normal'
-                                              )}
+                                              className="text-normal"
                                             >
                                               {h('pleaseSpecify')}
                                             </Label>
@@ -505,22 +459,6 @@ const ITToolsPageFive = () => {
                                             <Field
                                               as={TextInput}
                                               type="text"
-                                              disabled={
-                                                (!evaluationApproaches.includes(
-                                                  EvaluationApproachType.CONTROL_INTERVENTION
-                                                ) &&
-                                                  !evaluationApproaches.includes(
-                                                    EvaluationApproachType.COMPARISON_MATCH
-                                                  ) &&
-                                                  !evaluationApproaches.includes(
-                                                    EvaluationApproachType.INTERRUPTED_TIME
-                                                  ) &&
-                                                  !evaluationApproaches.includes(
-                                                    EvaluationApproachType.NON_MEDICARE_DATA
-                                                  )) ||
-                                                evaluationApproaches.length ===
-                                                  0
-                                              }
                                               className="maxw-none"
                                               id="it-tools-oel-evaluation-contractor-other"
                                               maxLength={50}
@@ -567,12 +505,7 @@ const ITToolsPageFive = () => {
                                 )}
                                 redirect={`/models/${modelID}/task-list/ops-eval-and-learning/evaluation`}
                                 answered={dataNeededForMonitoring.length > 0}
-                                needsTool={
-                                  dataNeededForMonitoring.length > 0 &&
-                                  !dataNeededForMonitoring.includes(
-                                    DataForMonitoringType.NOT_PLANNING_TO_COLLECT_DATA
-                                  )
-                                }
+                                needsTool={questionThreeNeedsTools}
                                 subtext={t('monitorNeedsAnswer')}
                               />
 
@@ -585,21 +518,18 @@ const ITToolsPageFive = () => {
                                     <Fragment key={type}>
                                       <Field
                                         as={CheckboxField}
-                                        disabled={
-                                          dataNeededForMonitoring.includes(
-                                            DataForMonitoringType.NOT_PLANNING_TO_COLLECT_DATA
-                                          ) ||
-                                          dataNeededForMonitoring.length === 0
-                                        }
+                                        disabled={!questionThreeNeedsTools}
                                         id={`it-tools-oel-collect-data-${type}`}
                                         name="oelCollectData"
                                         label={translateOelCollectDataType(
                                           type
                                         )}
                                         value={type}
-                                        checked={values?.oelCollectData.includes(
-                                          type as OelCollectDataType
-                                        )}
+                                        checked={
+                                          values?.oelCollectData.includes(
+                                            type as OelCollectDataType
+                                          ) && questionThreeNeedsTools
+                                        }
                                         onChange={(
                                           e: React.ChangeEvent<HTMLInputElement>
                                         ) => {
@@ -615,23 +545,14 @@ const ITToolsPageFive = () => {
                                         }}
                                       />
                                       {type === OelCollectDataType.OTHER &&
+                                        questionThreeNeedsTools &&
                                         values.oelCollectData.includes(
                                           type
                                         ) && (
                                           <div className="margin-left-4 margin-top-1">
                                             <Label
                                               htmlFor="it-tools-oel-collect-data-other"
-                                              className={classNames(
-                                                {
-                                                  'text-gray-30':
-                                                    dataNeededForMonitoring.includes(
-                                                      DataForMonitoringType.NOT_PLANNING_TO_COLLECT_DATA
-                                                    ) ||
-                                                    dataNeededForMonitoring.length ===
-                                                      0
-                                                },
-                                                'text-normal'
-                                              )}
+                                              className="text-normal"
                                             >
                                               {h('pleaseSpecify')}
                                             </Label>
@@ -641,13 +562,6 @@ const ITToolsPageFive = () => {
                                             <Field
                                               as={TextInput}
                                               type="text"
-                                              disabled={
-                                                dataNeededForMonitoring.includes(
-                                                  DataForMonitoringType.NOT_PLANNING_TO_COLLECT_DATA
-                                                ) ||
-                                                dataNeededForMonitoring.length ===
-                                                  0
-                                              }
                                               className="maxw-none"
                                               id="it-tools-oel-collect-data-other"
                                               maxLength={50}

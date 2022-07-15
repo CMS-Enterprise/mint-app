@@ -36,6 +36,16 @@ const itTools = {
     grantSolutions: 'Grant Solutions',
     other: 'Other'
   },
+  ppCollectScoreReviewOptions: {
+    rfa: 'Salesforce Request for Application (RFA)',
+    ars: 'Salesforce Application Review and Scoring (ARS)',
+    grant: 'Grant Solutions',
+    other: 'Other'
+  },
+  ppAppSupportContractorOptions: {
+    rmda: 'Research, Measurement, Assessment, Design, and Analysis (RMADA)',
+    other: 'Other'
+  },
   ppToAdvertiseInfo: 'If cooperative agreement, please select Grant Solutions.',
   collectTools:
     'What IT tools will you use to collect, review, and score applications?',

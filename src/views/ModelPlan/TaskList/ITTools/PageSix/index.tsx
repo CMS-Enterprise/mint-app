@@ -105,6 +105,23 @@ const ITToolsPageSix = () => {
     opsEvalAndLearning: { dataNeededForMonitoring }
   } = modelPlan;
 
+  /**
+   * Identifying if each question requires tooling as well as rending answers
+   * Checkbox answers will not be checked despite a store truthy boolean
+   * 'Specify other' answer will not be rendered even if OTHER value is true
+   */
+  const questionOneNeedsTools: boolean =
+    dataNeededForMonitoring.length > 0 &&
+    !dataNeededForMonitoring.includes(
+      DataForMonitoringType.NOT_PLANNING_TO_COLLECT_DATA
+    );
+  const questionTwoNeedsTools: boolean = dataNeededForMonitoring.includes(
+    DataForMonitoringType.QUALITY_CLAIMS_BASED_MEASURES
+  );
+  const questionThreeNeedsTools: boolean = dataNeededForMonitoring.includes(
+    DataForMonitoringType.QUALITY_REPORTED_MEASURES
+  );
+
   const [update] = useMutation<UpdatePlanItToolsVariables>(UpdatePlanITTools);
 
   const handleFormSubmit = (
@@ -249,12 +266,7 @@ const ITToolsPageSix = () => {
                                   )}
                                 redirect={`/models/${modelID}/task-list/ops-eval-and-learning/evaluation`}
                                 answered={dataNeededForMonitoring.length > 0}
-                                needsTool={
-                                  dataNeededForMonitoring.length > 0 &&
-                                  !dataNeededForMonitoring.includes(
-                                    DataForMonitoringType.NOT_PLANNING_TO_COLLECT_DATA
-                                  )
-                                }
+                                needsTool={questionOneNeedsTools}
                                 subtext={t('monitorNeedsAnswer')}
                               />
 
@@ -267,19 +279,16 @@ const ITToolsPageSix = () => {
                                     <Fragment key={type}>
                                       <Field
                                         as={CheckboxField}
-                                        disabled={
-                                          dataNeededForMonitoring.includes(
-                                            DataForMonitoringType.NOT_PLANNING_TO_COLLECT_DATA
-                                          ) ||
-                                          dataNeededForMonitoring.length === 0
-                                        }
+                                        disabled={!questionOneNeedsTools}
                                         id={`it-tools-oel-obtain-data-${type}`}
                                         name="oelObtainData"
                                         label={translateOelObtainDataType(type)}
                                         value={type}
-                                        checked={values?.oelObtainData.includes(
-                                          type as OelObtainDataType
-                                        )}
+                                        checked={
+                                          values?.oelObtainData.includes(
+                                            type as OelObtainDataType
+                                          ) && questionOneNeedsTools
+                                        }
                                         onChange={(
                                           e: React.ChangeEvent<HTMLInputElement>
                                         ) => {
@@ -295,21 +304,12 @@ const ITToolsPageSix = () => {
                                         }}
                                       />
                                       {type === OelObtainDataType.OTHER &&
+                                        questionOneNeedsTools &&
                                         values.oelObtainData.includes(type) && (
                                           <div className="margin-left-4 margin-top-1">
                                             <Label
                                               htmlFor="it-tools-oel-obtain-data-other"
-                                              className={classNames(
-                                                {
-                                                  'text-gray-30':
-                                                    dataNeededForMonitoring.includes(
-                                                      DataForMonitoringType.NOT_PLANNING_TO_COLLECT_DATA
-                                                    ) ||
-                                                    dataNeededForMonitoring.length ===
-                                                      0
-                                                },
-                                                'text-normal'
-                                              )}
+                                              className="text-normal"
                                             >
                                               {h('pleaseSpecify')}
                                             </Label>
@@ -319,13 +319,6 @@ const ITToolsPageSix = () => {
                                             <Field
                                               as={TextInput}
                                               type="text"
-                                              disabled={
-                                                dataNeededForMonitoring.includes(
-                                                  DataForMonitoringType.NOT_PLANNING_TO_COLLECT_DATA
-                                                ) ||
-                                                dataNeededForMonitoring.length ===
-                                                  0
-                                              }
                                               className="maxw-none"
                                               id="it-tools-oel-obtain-data-other"
                                               maxLength={50}
@@ -372,9 +365,7 @@ const ITToolsPageSix = () => {
                                 )}
                                 redirect={`/models/${modelID}/task-list/ops-eval-and-learning/evaluation`}
                                 answered={dataNeededForMonitoring.length > 0}
-                                needsTool={dataNeededForMonitoring.includes(
-                                  DataForMonitoringType.QUALITY_CLAIMS_BASED_MEASURES
-                                )}
+                                needsTool={questionTwoNeedsTools}
                                 subtext={t('claimsNeedsAnswer')}
                               />
 
@@ -387,21 +378,18 @@ const ITToolsPageSix = () => {
                                     <Fragment key={type}>
                                       <Field
                                         as={CheckboxField}
-                                        disabled={
-                                          !dataNeededForMonitoring.includes(
-                                            DataForMonitoringType.QUALITY_CLAIMS_BASED_MEASURES
-                                          ) ||
-                                          dataNeededForMonitoring.length === 0
-                                        }
+                                        disabled={!questionTwoNeedsTools}
                                         id={`it-tools-oel-claims-based-measure-${type}`}
                                         name="oelClaimsBasedMeasures"
                                         label={translateOelClaimsBasedMeasuresType(
                                           type
                                         )}
                                         value={type}
-                                        checked={values?.oelClaimsBasedMeasures.includes(
-                                          type as OelClaimsBasedMeasuresType
-                                        )}
+                                        checked={
+                                          values?.oelClaimsBasedMeasures.includes(
+                                            type as OelClaimsBasedMeasuresType
+                                          ) && questionTwoNeedsTools
+                                        }
                                         onChange={(
                                           e: React.ChangeEvent<HTMLInputElement>
                                         ) => {
@@ -418,23 +406,14 @@ const ITToolsPageSix = () => {
                                       />
                                       {type ===
                                         OelClaimsBasedMeasuresType.OTHER &&
+                                        questionTwoNeedsTools &&
                                         values.oelClaimsBasedMeasures.includes(
                                           type
                                         ) && (
                                           <div className="margin-left-4 margin-top-1">
                                             <Label
                                               htmlFor="it-tools-oel-claims-based-measure-other"
-                                              className={classNames(
-                                                {
-                                                  'text-gray-30':
-                                                    !dataNeededForMonitoring.includes(
-                                                      DataForMonitoringType.QUALITY_CLAIMS_BASED_MEASURES
-                                                    ) ||
-                                                    dataNeededForMonitoring.length ===
-                                                      0
-                                                },
-                                                'text-normal'
-                                              )}
+                                              className="text-normal"
                                             >
                                               {h('pleaseSpecify')}
                                             </Label>
@@ -446,13 +425,6 @@ const ITToolsPageSix = () => {
                                             <Field
                                               as={TextInput}
                                               type="text"
-                                              disabled={
-                                                !dataNeededForMonitoring.includes(
-                                                  DataForMonitoringType.QUALITY_CLAIMS_BASED_MEASURES
-                                                ) ||
-                                                dataNeededForMonitoring.length ===
-                                                  0
-                                              }
                                               className="maxw-none"
                                               id="it-tools-oel-claims-based-measure-other"
                                               maxLength={50}
@@ -499,9 +471,7 @@ const ITToolsPageSix = () => {
                                 )}
                                 redirect={`/models/${modelID}/task-list/ops-eval-and-learning/evaluation`}
                                 answered={dataNeededForMonitoring.length > 0}
-                                needsTool={dataNeededForMonitoring.includes(
-                                  DataForMonitoringType.QUALITY_REPORTED_MEASURES
-                                )}
+                                needsTool={questionThreeNeedsTools}
                                 subtext={t('qualityNeedsAnswer')}
                               />
 
@@ -514,21 +484,18 @@ const ITToolsPageSix = () => {
                                     <Fragment key={type}>
                                       <Field
                                         as={CheckboxField}
-                                        disabled={
-                                          !dataNeededForMonitoring.includes(
-                                            DataForMonitoringType.QUALITY_REPORTED_MEASURES
-                                          ) ||
-                                          dataNeededForMonitoring.length === 0
-                                        }
+                                        disabled={!questionThreeNeedsTools}
                                         id={`it-tools-oel-quality-scores-${type}`}
                                         name="oelQualityScores"
                                         label={translateOelQualityScoresType(
                                           type
                                         )}
                                         value={type}
-                                        checked={values?.oelQualityScores.includes(
-                                          type as OelQualityScoresType
-                                        )}
+                                        checked={
+                                          values?.oelQualityScores.includes(
+                                            type as OelQualityScoresType
+                                          ) && questionThreeNeedsTools
+                                        }
                                         onChange={(
                                           e: React.ChangeEvent<HTMLInputElement>
                                         ) => {
@@ -544,23 +511,14 @@ const ITToolsPageSix = () => {
                                         }}
                                       />
                                       {type === OelQualityScoresType.OTHER &&
+                                        questionThreeNeedsTools &&
                                         values.oelQualityScores.includes(
                                           type
                                         ) && (
                                           <div className="margin-left-4 margin-top-1">
                                             <Label
                                               htmlFor="it-tools-oel-quality-scores-other"
-                                              className={classNames(
-                                                {
-                                                  'text-gray-30':
-                                                    !dataNeededForMonitoring.includes(
-                                                      DataForMonitoringType.QUALITY_REPORTED_MEASURES
-                                                    ) ||
-                                                    dataNeededForMonitoring.length ===
-                                                      0
-                                                },
-                                                'text-normal'
-                                              )}
+                                              className="text-normal"
                                             >
                                               {h('pleaseSpecify')}
                                             </Label>
@@ -570,13 +528,6 @@ const ITToolsPageSix = () => {
                                             <Field
                                               as={TextInput}
                                               type="text"
-                                              disabled={
-                                                !dataNeededForMonitoring.includes(
-                                                  DataForMonitoringType.QUALITY_REPORTED_MEASURES
-                                                ) ||
-                                                dataNeededForMonitoring.length ===
-                                                  0
-                                              }
                                               className="maxw-none"
                                               id="it-tools-oel-quality-scores-other"
                                               maxLength={50}

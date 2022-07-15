@@ -976,6 +976,32 @@ export const translatePpToAdvertiseType = (type: string) => {
   }
 };
 
+export const translatePpCollectScoreReviewType = (type: string) => {
+  switch (type) {
+    case 'RFA':
+      return i18next.t('itTools:ppCollectScoreReviewOptions.rfa');
+    case 'ARS':
+      return i18next.t('itTools:ppCollectScoreReviewOptions.ars');
+    case 'GRANT_SOLUTIONS':
+      return i18next.t('itTools:ppCollectScoreReviewOptions.grant');
+    case 'OTHER':
+      return i18next.t('itTools:ppCollectScoreReviewOptions.other');
+    default:
+      return '';
+  }
+};
+
+export const translatePpAppSupportContractorType = (type: string) => {
+  switch (type) {
+    case 'RMDA':
+      return i18next.t('itTools:ppAppSupportContractorOptions.rmda');
+    case 'OTHER':
+      return i18next.t('itTools:ppAppSupportContractorOptions.other');
+    default:
+      return '';
+  }
+};
+
 export const translatePpCommunicateWithParticipantType = (type: string) => {
   switch (type) {
     case 'OUTLOOK_MAILBOX':

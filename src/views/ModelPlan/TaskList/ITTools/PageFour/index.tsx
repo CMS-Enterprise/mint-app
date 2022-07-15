@@ -13,7 +13,6 @@ import {
   Label,
   TextInput
 } from '@trussworks/react-uswds';
-import classNames from 'classnames';
 import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
 
 import AddNote from 'components/AddNote';
@@ -108,6 +107,17 @@ const ITToolsPageFour = () => {
     itTools,
     opsEvalAndLearning: { helpdeskUse, iddocSupport, benchmarkForPerformance }
   } = modelPlan;
+
+  /**
+   * Identifying if each question requires tooling as well as rending answers
+   * Checkbox answers will not be checked despite a store truthy boolean
+   * 'Specify other' answer will not be rendered even if OTHER value is true
+   */
+  const questionOneNeedsTools: boolean = helpdeskUse || false;
+  const questionTwoNeedsTools: boolean = iddocSupport || false;
+  const questionThreeNeedsTools: boolean =
+    benchmarkForPerformance === BenchmarkForPerformanceType.YES_RECONCILE ||
+    benchmarkForPerformance === BenchmarkForPerformanceType.YES_NO_RECONCILE;
 
   const [update] = useMutation<UpdatePlanItToolsVariables>(UpdatePlanITTools);
 
@@ -243,7 +253,7 @@ const ITToolsPageFour = () => {
                                 ]}
                                 redirect={`/models/${modelID}/task-list/ops-eval-and-learning`}
                                 answered={helpdeskUse !== null}
-                                needsTool={helpdeskUse || false}
+                                needsTool={questionOneNeedsTools}
                                 subtext={t('yesNeedsAnswer')}
                               />
 
@@ -256,16 +266,18 @@ const ITToolsPageFour = () => {
                                     <Fragment key={type}>
                                       <Field
                                         as={CheckboxField}
-                                        disabled={!helpdeskUse}
+                                        disabled={!questionOneNeedsTools}
                                         id={`it-tools-oel-help-desk-${type}`}
                                         name="oelHelpdeskSupport"
                                         label={translateOelHelpdeskSupportType(
                                           type
                                         )}
                                         value={type}
-                                        checked={values?.oelHelpdeskSupport.includes(
-                                          type as OelHelpdeskSupportType
-                                        )}
+                                        checked={
+                                          values?.oelHelpdeskSupport.includes(
+                                            type as OelHelpdeskSupportType
+                                          ) && questionOneNeedsTools
+                                        }
                                         onChange={(
                                           e: React.ChangeEvent<HTMLInputElement>
                                         ) => {
@@ -281,18 +293,14 @@ const ITToolsPageFour = () => {
                                         }}
                                       />
                                       {type === OelHelpdeskSupportType.OTHER &&
+                                        questionOneNeedsTools &&
                                         values.oelHelpdeskSupport.includes(
                                           type
                                         ) && (
                                           <div className="margin-left-4 margin-top-1">
                                             <Label
                                               htmlFor="it-tools-oel-help-desk-other"
-                                              className={classNames(
-                                                {
-                                                  'text-gray-30': !helpdeskUse
-                                                },
-                                                'text-normal'
-                                              )}
+                                              className="text-normal"
                                             >
                                               {h('pleaseSpecify')}
                                             </Label>
@@ -304,7 +312,6 @@ const ITToolsPageFour = () => {
                                             <Field
                                               as={TextInput}
                                               type="text"
-                                              disabled={!helpdeskUse}
                                               className="maxw-none"
                                               id="it-tools-oel-help-desk-other"
                                               maxLength={50}
@@ -348,7 +355,7 @@ const ITToolsPageFour = () => {
                                 ]}
                                 redirect={`/models/${modelID}/task-list/ops-eval-and-learning`}
                                 answered={iddocSupport !== null}
-                                needsTool={iddocSupport || false}
+                                needsTool={questionTwoNeedsTools}
                                 subtext={t('yesNeedsAnswer')}
                               />
 
@@ -361,7 +368,7 @@ const ITToolsPageFour = () => {
                                     <Fragment key={type}>
                                       <Field
                                         as={CheckboxField}
-                                        disabled={!iddocSupport}
+                                        disabled={!questionTwoNeedsTools}
                                         id={`it-tools-oel-manage-aco-${type}`}
                                         name="oelManageAco"
                                         label={translateOelManageAcoType(type)}
@@ -369,9 +376,11 @@ const ITToolsPageFour = () => {
                                           type
                                         )}
                                         value={type}
-                                        checked={values?.oelManageAco.includes(
-                                          type as OelManageAcoType
-                                        )}
+                                        checked={
+                                          values?.oelManageAco.includes(
+                                            type as OelManageAcoType
+                                          ) && questionTwoNeedsTools
+                                        }
                                         onChange={(
                                           e: React.ChangeEvent<HTMLInputElement>
                                         ) => {
@@ -386,16 +395,12 @@ const ITToolsPageFour = () => {
                                         }}
                                       />
                                       {type === OelManageAcoType.OTHER &&
+                                        questionTwoNeedsTools &&
                                         values.oelManageAco.includes(type) && (
                                           <div className="margin-left-4 margin-top-1">
                                             <Label
                                               htmlFor="it-tools-oel-manage-aco-other"
-                                              className={classNames(
-                                                {
-                                                  'text-gray-30': !iddocSupport
-                                                },
-                                                'text-normal'
-                                              )}
+                                              className="text-normal"
                                             >
                                               {h('pleaseSpecify')}
                                             </Label>
@@ -405,7 +410,6 @@ const ITToolsPageFour = () => {
                                             <Field
                                               as={TextInput}
                                               type="text"
-                                              disabled={!iddocSupport}
                                               className="maxw-none"
                                               id="it-tools-oel-manage-aco-other"
                                               maxLength={50}
@@ -453,12 +457,7 @@ const ITToolsPageFour = () => {
                                 )}
                                 redirect={`/models/${modelID}/task-list/ops-eval-and-learning/performance`}
                                 answered={benchmarkForPerformance !== null}
-                                needsTool={
-                                  benchmarkForPerformance ===
-                                    BenchmarkForPerformanceType.YES_RECONCILE ||
-                                  benchmarkForPerformance ===
-                                    BenchmarkForPerformanceType.YES_NO_RECONCILE
-                                }
+                                needsTool={questionThreeNeedsTools}
                                 subtext={t('eitherYesNeedsAnswer')}
                               />
 
@@ -471,20 +470,18 @@ const ITToolsPageFour = () => {
                                     <Fragment key={type}>
                                       <Field
                                         as={CheckboxField}
-                                        disabled={
-                                          benchmarkForPerformance ===
-                                            BenchmarkForPerformanceType.NO ||
-                                          benchmarkForPerformance === null
-                                        }
+                                        disabled={!questionThreeNeedsTools}
                                         id={`it-tools-oel-performance-benchmark-${type}`}
                                         name="oelPerformanceBenchmark"
                                         label={translateOelPerformanceBenchmarkType(
                                           type
                                         )}
                                         value={type}
-                                        checked={values?.oelPerformanceBenchmark.includes(
-                                          type as OelPerformanceBenchmarkType
-                                        )}
+                                        checked={
+                                          values?.oelPerformanceBenchmark.includes(
+                                            type as OelPerformanceBenchmarkType
+                                          ) && questionThreeNeedsTools
+                                        }
                                         onChange={(
                                           e: React.ChangeEvent<HTMLInputElement>
                                         ) => {
@@ -501,22 +498,14 @@ const ITToolsPageFour = () => {
                                       />
                                       {type ===
                                         OelPerformanceBenchmarkType.OTHER &&
+                                        questionThreeNeedsTools &&
                                         values.oelPerformanceBenchmark.includes(
                                           type
                                         ) && (
                                           <div className="margin-left-4 margin-top-1">
                                             <Label
                                               htmlFor="it-tools-oel-performance-benchmark-other"
-                                              className={classNames(
-                                                {
-                                                  'text-gray-30':
-                                                    benchmarkForPerformance ===
-                                                      BenchmarkForPerformanceType.NO ||
-                                                    benchmarkForPerformance ===
-                                                      null
-                                                },
-                                                'text-normal'
-                                              )}
+                                              className="text-normal"
                                             >
                                               {h('pleaseSpecify')}
                                             </Label>
@@ -528,11 +517,6 @@ const ITToolsPageFour = () => {
                                             <Field
                                               as={TextInput}
                                               type="text"
-                                              disabled={
-                                                benchmarkForPerformance ===
-                                                  BenchmarkForPerformanceType.NO ||
-                                                benchmarkForPerformance === null
-                                              }
                                               className="maxw-none"
                                               id="it-tools-oel-performance-benchmark-other"
                                               maxLength={50}

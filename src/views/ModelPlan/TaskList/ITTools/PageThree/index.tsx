@@ -13,7 +13,6 @@ import {
   Label,
   TextInput
 } from '@trussworks/react-uswds';
-import classNames from 'classnames';
 import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
 
 import AddNote from 'components/AddNote';
@@ -105,6 +104,15 @@ const ITToolsPageThree = () => {
     itTools,
     participantsAndProviders: { communicationMethod }
   } = modelPlan;
+
+  /**
+   * Identifying if each question requires tooling as well as rending answers
+   * Checkbox answers will not be checked despite a store truthy boolean
+   * 'Specify other' answer will not be rendered even if OTHER value is true
+   */
+  const questionOneNeedsTools: boolean =
+    communicationMethod.includes(ParticipantCommunicationType.MASS_EMAIL) ||
+    communicationMethod.includes(ParticipantCommunicationType.IT_TOOL);
 
   const [update] = useMutation<UpdatePlanItToolsVariables>(UpdatePlanITTools);
 
@@ -248,14 +256,7 @@ const ITToolsPageThree = () => {
                                 ]}
                                 redirect={`/models/${modelID}/task-list/participants-and-providers/communication`}
                                 answered={communicationMethod.length > 0}
-                                needsTool={
-                                  communicationMethod.includes(
-                                    ParticipantCommunicationType.MASS_EMAIL
-                                  ) ||
-                                  communicationMethod.includes(
-                                    ParticipantCommunicationType.IT_TOOL
-                                  )
-                                }
+                                needsTool={questionOneNeedsTools}
                               />
 
                               <p className="margin-top-4">{t('tools')}</p>
@@ -267,24 +268,18 @@ const ITToolsPageThree = () => {
                                     <Fragment key={type}>
                                       <Field
                                         as={CheckboxField}
-                                        disabled={
-                                          (!communicationMethod.includes(
-                                            ParticipantCommunicationType.MASS_EMAIL
-                                          ) &&
-                                            !communicationMethod.includes(
-                                              ParticipantCommunicationType.IT_TOOL
-                                            )) ||
-                                          communicationMethod.length === 0
-                                        }
+                                        disabled={!questionOneNeedsTools}
                                         id={`it-tools-pp-communicate-with-participant-${type}`}
                                         name="ppCommunicateWithParticipant"
                                         label={translatePpCommunicateWithParticipantType(
                                           type
                                         )}
                                         value={type}
-                                        checked={values?.ppCommunicateWithParticipant.includes(
-                                          type as PpCommunicateWithParticipantType
-                                        )}
+                                        checked={
+                                          values?.ppCommunicateWithParticipant.includes(
+                                            type as PpCommunicateWithParticipantType
+                                          ) && questionOneNeedsTools
+                                        }
                                         onChange={(
                                           e: React.ChangeEvent<HTMLInputElement>
                                         ) => {
@@ -301,26 +296,14 @@ const ITToolsPageThree = () => {
                                       />
                                       {type ===
                                         PpCommunicateWithParticipantType.OTHER &&
+                                        questionOneNeedsTools &&
                                         values.ppCommunicateWithParticipant.includes(
                                           type
                                         ) && (
                                           <div className="margin-left-4 margin-top-1">
                                             <Label
                                               htmlFor="it-tools-pp-communicate-with-participant-other"
-                                              className={classNames(
-                                                {
-                                                  'text-gray-30':
-                                                    (!communicationMethod.includes(
-                                                      ParticipantCommunicationType.MASS_EMAIL
-                                                    ) &&
-                                                      !communicationMethod.includes(
-                                                        ParticipantCommunicationType.IT_TOOL
-                                                      )) ||
-                                                    communicationMethod.length ===
-                                                      0
-                                                },
-                                                'text-normal'
-                                              )}
+                                              className="text-normal"
                                             >
                                               {h('pleaseSpecify')}
                                             </Label>
@@ -332,15 +315,6 @@ const ITToolsPageThree = () => {
                                             <Field
                                               as={TextInput}
                                               type="text"
-                                              disabled={
-                                                (!communicationMethod.includes(
-                                                  ParticipantCommunicationType.MASS_EMAIL
-                                                ) &&
-                                                  !communicationMethod.includes(
-                                                    ParticipantCommunicationType.IT_TOOL
-                                                  )) ||
-                                                communicationMethod.length === 0
-                                              }
                                               className="maxw-none"
                                               id="it-tools-pp-communicate-with-participant-other"
                                               maxLength={50}

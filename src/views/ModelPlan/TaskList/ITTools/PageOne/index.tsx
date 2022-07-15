@@ -1,4 +1,4 @@
-import React, { Fragment, useRef } from 'react';
+import React, { useRef } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
@@ -9,20 +9,15 @@ import {
   Button,
   Fieldset,
   Grid,
-  IconArrowBack,
-  Label,
-  TextInput
+  IconArrowBack
 } from '@trussworks/react-uswds';
-import classNames from 'classnames';
-import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
+import { Form, Formik, FormikProps } from 'formik';
 
-import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
 import ITToolsSummary from 'components/ITToolsSummary';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import AutoSave from 'components/shared/AutoSave';
-import CheckboxField from 'components/shared/CheckboxField';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
@@ -43,13 +38,14 @@ import {
 } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import {
-  sortOtherEnum,
   translateBoolean,
   translateGcCollectBidsType,
   translateGcPartCDType,
   translateGcUpdateContractType
 } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
+
+import { ITToolsFormComponent } from '..';
 
 const initialFormValues: ITToolsPageOneFormType = {
   __typename: 'PlanITTools',
@@ -109,6 +105,15 @@ const ITToolsPageOne = () => {
       planContactUpdated
     }
   } = modelPlan;
+
+  /**
+   * Identifying if each question requires tooling as well as rending answers
+   * Checkbox answers will not be checked despite a store truthy boolean
+   * 'Specify other' answer will not be rendered even if OTHER value is true
+   */
+  const questionOneNeedsTools: boolean = managePartCDEnrollment === true;
+  const questionTwoNeedsTools: boolean = collectPlanBids === true;
+  const questionThreeNeedsTools: boolean = planContactUpdated === true;
 
   const [update] = useMutation<UpdatePlanItToolsVariables>(UpdatePlanITTools);
 
@@ -218,311 +223,118 @@ const ITToolsPageOne = () => {
                     <h2>{c('heading')}</h2>
 
                     <Fieldset disabled={loading}>
+                      {/* Question: Will you manage Part C/D enrollment? */}
+
                       <FieldGroup
                         scrollElement="gcPartCD"
                         error={!!flatErrors.gcPartCD}
                         className="margin-y-4"
                       >
-                        <FieldArray
-                          name="gcPartCD"
-                          render={arrayHelpers => (
-                            <>
-                              <legend className="usa-label">
-                                {t('partCDTools')}
-                              </legend>
-                              <p className="text-base margin-top-1 margin-bottom-3 line-height-body-3">
-                                {t('partCDToolsInfo')}
-                              </p>
-                              <FieldErrorMsg>
-                                {flatErrors.gcPartCD}
-                              </FieldErrorMsg>
+                        <legend className="usa-label">
+                          {t('partCDTools')}
+                        </legend>
+                        <p className="text-base margin-top-1 margin-bottom-3 line-height-body-3">
+                          {t('partCDToolsInfo')}
+                        </p>
+                        <FieldErrorMsg>{flatErrors.gcPartCD}</FieldErrorMsg>
 
-                              <ITToolsSummary
-                                question={c('manageEnrollment')}
-                                answers={[
-                                  translateBoolean(
-                                    managePartCDEnrollment || false
-                                  )
-                                ]}
-                                redirect={`/models/${modelID}/task-list/characteristics/key-characteristics`}
-                                answered={managePartCDEnrollment !== null}
-                                needsTool={managePartCDEnrollment === true}
-                                subtext={t('yesNeedsAnswer')}
-                              />
+                        <ITToolsSummary
+                          question={c('manageEnrollment')}
+                          answers={[
+                            translateBoolean(managePartCDEnrollment || false)
+                          ]}
+                          redirect={`/models/${modelID}/task-list/characteristics/key-characteristics`}
+                          answered={managePartCDEnrollment !== null}
+                          needsTool={questionOneNeedsTools}
+                          subtext={t('yesNeedsAnswer')}
+                        />
 
-                              <p className="margin-top-4">{t('tools')}</p>
-
-                              {Object.keys(GcPartCDType)
-                                .sort(sortOtherEnum)
-                                .map(type => {
-                                  return (
-                                    <Fragment key={type}>
-                                      <Field
-                                        as={CheckboxField}
-                                        disabled={!managePartCDEnrollment}
-                                        id={`it-tools-gc-partc-${type}`}
-                                        name="gcPartCD"
-                                        label={translateGcPartCDType(type)}
-                                        value={type}
-                                        checked={values?.gcPartCD.includes(
-                                          type as GcPartCDType
-                                        )}
-                                        onChange={(
-                                          e: React.ChangeEvent<HTMLInputElement>
-                                        ) => {
-                                          if (e.target.checked) {
-                                            arrayHelpers.push(e.target.value);
-                                          } else {
-                                            const idx = values.gcPartCD.indexOf(
-                                              e.target.value as GcPartCDType
-                                            );
-                                            arrayHelpers.remove(idx);
-                                          }
-                                        }}
-                                      />
-                                      {type === GcPartCDType.OTHER &&
-                                        values.gcPartCD.includes(type) && (
-                                          <div className="margin-left-4 margin-top-1">
-                                            <Label
-                                              htmlFor="it-tools-gc-partc-other"
-                                              className={classNames(
-                                                {
-                                                  'text-gray-30': !managePartCDEnrollment
-                                                },
-                                                'text-normal'
-                                              )}
-                                            >
-                                              {h('pleaseSpecify')}
-                                            </Label>
-                                            <FieldErrorMsg>
-                                              {flatErrors.gcPartCDOther}
-                                            </FieldErrorMsg>
-                                            <Field
-                                              as={TextInput}
-                                              type="text"
-                                              disabled={!managePartCDEnrollment}
-                                              className="maxw-none"
-                                              id="it-tools-gc-partcd-other"
-                                              maxLength={50}
-                                              name="gcPartCDOther"
-                                            />
-                                          </div>
-                                        )}
-                                    </Fragment>
-                                  );
-                                })}
-                              <AddNote
-                                id="it-tools-gc-partcd-note"
-                                field="gcPartCDNote"
-                              />
-                            </>
-                          )}
+                        <ITToolsFormComponent
+                          flatErrors={flatErrors}
+                          formikValue={values.gcPartCD}
+                          fieldName="gcPartCD"
+                          needsTool={questionOneNeedsTools}
+                          htmlID="gc-partc"
+                          EnumType={GcPartCDType}
+                          translation={translateGcPartCDType}
                         />
                       </FieldGroup>
+
+                      {/* Question: Will you review and collect plan bids? */}
 
                       <FieldGroup
                         scrollElement="gcCollectBids"
                         error={!!flatErrors.gcCollectBids}
                         className="margin-y-4"
                       >
-                        <FieldArray
-                          name="gcCollectBids"
-                          render={arrayHelpers => (
-                            <>
-                              <legend className="usa-label">
-                                {t('collectBidsTools')}
-                              </legend>
-                              <p className="text-base margin-top-1 margin-bottom-3 line-height-body-3">
-                                {t('partCDToolsInfo')}
-                              </p>
-                              <FieldErrorMsg>
-                                {flatErrors.gcCollectBids}
-                              </FieldErrorMsg>
+                        <legend className="usa-label">
+                          {t('collectBidsTools')}
+                        </legend>
 
-                              <ITToolsSummary
-                                question={c('reviewPlanBids')}
-                                answers={[
-                                  translateBoolean(collectPlanBids || false)
-                                ]}
-                                redirect={`/models/${modelID}/task-list/characteristics/key-characteristics`}
-                                answered={collectPlanBids !== null}
-                                needsTool={collectPlanBids === true}
-                                subtext={t('yesNeedsAnswer')}
-                              />
+                        <p className="text-base margin-top-1 margin-bottom-3 line-height-body-3">
+                          {t('partCDToolsInfo')}
+                        </p>
 
-                              <p className="margin-top-4">{t('tools')}</p>
+                        <FieldErrorMsg>
+                          {flatErrors.gcCollectBids}
+                        </FieldErrorMsg>
 
-                              {Object.keys(GcCollectBidsType)
-                                .sort(sortOtherEnum)
-                                .map(type => {
-                                  return (
-                                    <Fragment key={type}>
-                                      <Field
-                                        as={CheckboxField}
-                                        disabled={!collectPlanBids}
-                                        id={`it-tools-gc-collect-bids-${type}`}
-                                        name="gcCollectBids"
-                                        label={translateGcCollectBidsType(type)}
-                                        value={type}
-                                        checked={values?.gcCollectBids.includes(
-                                          type as GcCollectBidsType
-                                        )}
-                                        onChange={(
-                                          e: React.ChangeEvent<HTMLInputElement>
-                                        ) => {
-                                          if (e.target.checked) {
-                                            arrayHelpers.push(e.target.value);
-                                          } else {
-                                            const idx = values.gcCollectBids.indexOf(
-                                              e.target
-                                                .value as GcCollectBidsType
-                                            );
-                                            arrayHelpers.remove(idx);
-                                          }
-                                        }}
-                                      />
-                                      {type === GcCollectBidsType.OTHER &&
-                                        values.gcCollectBids.includes(type) && (
-                                          <div className="margin-left-4 margin-top-1">
-                                            <Label
-                                              htmlFor="it-tools-gc-collect-bids-other"
-                                              className={classNames(
-                                                {
-                                                  'text-gray-30': !collectPlanBids
-                                                },
-                                                'text-normal'
-                                              )}
-                                            >
-                                              {h('pleaseSpecify')}
-                                            </Label>
-                                            <FieldErrorMsg>
-                                              {flatErrors.gcCollectBidsOther}
-                                            </FieldErrorMsg>
-                                            <Field
-                                              as={TextInput}
-                                              type="text"
-                                              disabled={!collectPlanBids}
-                                              className="maxw-none"
-                                              id="it-tools-gc-collect-bids-other"
-                                              maxLength={50}
-                                              name="gcCollectBidsOther"
-                                            />
-                                          </div>
-                                        )}
-                                    </Fragment>
-                                  );
-                                })}
-                              <AddNote
-                                id="it-tools-gc-collect-bids-note"
-                                field="gcCollectBidsNote"
-                              />
-                            </>
-                          )}
+                        <ITToolsSummary
+                          question={c('reviewPlanBids')}
+                          answers={[translateBoolean(collectPlanBids || false)]}
+                          redirect={`/models/${modelID}/task-list/characteristics/key-characteristics`}
+                          answered={collectPlanBids !== null}
+                          needsTool={questionTwoNeedsTools}
+                          subtext={t('yesNeedsAnswer')}
+                        />
+
+                        <ITToolsFormComponent
+                          flatErrors={flatErrors}
+                          formikValue={values.gcCollectBids}
+                          fieldName="gcCollectBids"
+                          needsTool={questionTwoNeedsTools}
+                          htmlID="gc-collect-bids"
+                          EnumType={GcCollectBidsType}
+                          translation={translateGcCollectBidsType}
                         />
                       </FieldGroup>
+
+                      {/* Question: Have you updated the plan’s contact? */}
 
                       <FieldGroup
                         scrollElement="gcUpdateContract"
                         error={!!flatErrors.gcUpdateContract}
                         className="margin-y-4"
                       >
-                        <FieldArray
-                          name="gcUpdateContract"
-                          render={arrayHelpers => (
-                            <>
-                              <legend className="usa-label">
-                                {t('updateContract')}
-                              </legend>
-                              <p className="text-base margin-top-1 margin-bottom-3 line-height-body-3">
-                                {t('partCDToolsInfo')}
-                              </p>
-                              <FieldErrorMsg>
-                                {flatErrors.planContactUpdated}
-                              </FieldErrorMsg>
+                        <legend className="usa-label">
+                          {t('updateContract')}
+                        </legend>
+                        <p className="text-base margin-top-1 margin-bottom-3 line-height-body-3">
+                          {t('partCDToolsInfo')}
+                        </p>
+                        <FieldErrorMsg>
+                          {flatErrors.planContactUpdated}
+                        </FieldErrorMsg>
 
-                              <ITToolsSummary
-                                question={c('updatedContact')}
-                                answers={[
-                                  translateBoolean(planContactUpdated || false)
-                                ]}
-                                redirect={`/models/${modelID}/task-list/characteristics/key-characteristics`}
-                                answered={planContactUpdated !== null}
-                                needsTool={planContactUpdated === true}
-                                subtext={t('yesNeedsAnswer')}
-                              />
+                        <ITToolsSummary
+                          question={c('updatedContact')}
+                          answers={[
+                            translateBoolean(planContactUpdated || false)
+                          ]}
+                          redirect={`/models/${modelID}/task-list/characteristics/key-characteristics`}
+                          answered={planContactUpdated !== null}
+                          needsTool={questionThreeNeedsTools}
+                          subtext={t('yesNeedsAnswer')}
+                        />
 
-                              <p className="margin-top-4">{t('tools')}</p>
-
-                              {Object.keys(GcUpdateContractType)
-                                .sort(sortOtherEnum)
-                                .map(type => {
-                                  return (
-                                    <Fragment key={type}>
-                                      <Field
-                                        as={CheckboxField}
-                                        disabled={!planContactUpdated}
-                                        id={`it-tools-gc-update-contract-${type}`}
-                                        name="gcUpdateContract"
-                                        label={translateGcUpdateContractType(
-                                          type
-                                        )}
-                                        value={type}
-                                        checked={values?.gcUpdateContract.includes(
-                                          type as GcUpdateContractType
-                                        )}
-                                        onChange={(
-                                          e: React.ChangeEvent<HTMLInputElement>
-                                        ) => {
-                                          if (e.target.checked) {
-                                            arrayHelpers.push(e.target.value);
-                                          } else {
-                                            const idx = values.gcUpdateContract.indexOf(
-                                              e.target
-                                                .value as GcUpdateContractType
-                                            );
-                                            arrayHelpers.remove(idx);
-                                          }
-                                        }}
-                                      />
-                                      {type === GcUpdateContractType.OTHER &&
-                                        values.gcUpdateContract.includes(
-                                          type
-                                        ) && (
-                                          <div className="margin-left-4 margin-top-1">
-                                            <Label
-                                              htmlFor="it-tools-gc-update-contract-other"
-                                              className={classNames(
-                                                {
-                                                  'text-gray-30': !planContactUpdated
-                                                },
-                                                'text-normal'
-                                              )}
-                                            >
-                                              {h('pleaseSpecify')}
-                                            </Label>
-                                            <FieldErrorMsg>
-                                              {flatErrors.gcUpdateContractOther}
-                                            </FieldErrorMsg>
-                                            <Field
-                                              as={TextInput}
-                                              type="text"
-                                              disabled={!planContactUpdated}
-                                              className="maxw-none"
-                                              id="it-tools-gc-update-contract-other"
-                                              maxLength={50}
-                                              name="gcUpdateContractOther"
-                                            />
-                                          </div>
-                                        )}
-                                    </Fragment>
-                                  );
-                                })}
-                              <AddNote
-                                id="it-tools-gc-update-contract-note"
-                                field="gcUpdateContractNote"
-                              />
-                            </>
-                          )}
+                        <ITToolsFormComponent
+                          flatErrors={flatErrors}
+                          formikValue={values.gcUpdateContract}
+                          fieldName="gcUpdateContract"
+                          needsTool={questionThreeNeedsTools}
+                          htmlID="gc-update-contract"
+                          EnumType={GcUpdateContractType}
+                          translation={translateGcUpdateContractType}
                         />
                       </FieldGroup>
 
