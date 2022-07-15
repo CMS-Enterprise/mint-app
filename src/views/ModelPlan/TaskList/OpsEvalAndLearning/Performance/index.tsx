@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { Trans, useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
 import {
@@ -25,7 +25,8 @@ import FieldGroup from 'components/shared/FieldGroup';
 import GetPerformance from 'queries/OpsEvalAndLearning/GetPerformance';
 import {
   GetPerformance as GetPerformanceType,
-  GetPerformance_modelPlan_opsEvalAndLearning as PerformanceFormType
+  GetPerformance_modelPlan_opsEvalAndLearning as PerformanceFormType,
+  GetPerformanceVariables
 } from 'queries/OpsEvalAndLearning/types/GetPerformance';
 import { UpdatePlanOpsEvalAndLearningVariables } from 'queries/OpsEvalAndLearning/types/UpdatePlanOpsEvalAndLearning';
 import UpdatePlanOpsEvalAndLearning from 'queries/OpsEvalAndLearning/UpdatePlanOpsEvalAndLearning';
@@ -47,14 +48,14 @@ const Performance = () => {
   const formikRef = useRef<FormikProps<PerformanceFormType>>(null);
   const history = useHistory();
 
-  const { data, loading, error } = useQuery<GetPerformanceType>(
-    GetPerformance,
-    {
-      variables: {
-        id: modelID
-      }
+  const { data, loading, error } = useQuery<
+    GetPerformanceType,
+    GetPerformanceVariables
+  >(GetPerformance, {
+    variables: {
+      id: modelID
     }
-  );
+  });
 
   const {
     id,
@@ -167,9 +168,7 @@ const Performance = () => {
         className="margin-top-0 margin-bottom-1 font-body-lg"
         data-testid="model-plan-name"
       >
-        <Trans i18nKey="modelPlanTaskList:subheading">
-          indexZero {modelName} indexTwo
-        </Trans>
+        {h('for')} {modelName}
       </p>
       <p className="margin-bottom-2 font-body-md line-height-sans-4">
         {h('helpText')}

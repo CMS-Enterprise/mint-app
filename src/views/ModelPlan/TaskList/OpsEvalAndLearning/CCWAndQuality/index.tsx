@@ -1,5 +1,5 @@
 import React, { Fragment, useRef } from 'react';
-import { Trans, useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
 import {
@@ -26,7 +26,8 @@ import FieldGroup from 'components/shared/FieldGroup';
 import GetCCWAndQuality from 'queries/OpsEvalAndLearning/GetCCWAndQuality';
 import {
   GetCCWAndQuality as GetCCWAndQualityType,
-  GetCCWAndQuality_modelPlan_opsEvalAndLearning as GetCCWAndQualityFormType
+  GetCCWAndQuality_modelPlan_opsEvalAndLearning as GetCCWAndQualityFormType,
+  GetCCWAndQualityVariables
 } from 'queries/OpsEvalAndLearning/types/GetCCWAndQuality';
 import { UpdatePlanOpsEvalAndLearningVariables } from 'queries/OpsEvalAndLearning/types/UpdatePlanOpsEvalAndLearning';
 import UpdatePlanOpsEvalAndLearning from 'queries/OpsEvalAndLearning/UpdatePlanOpsEvalAndLearning';
@@ -43,14 +44,14 @@ const CCWAndQuality = () => {
   const formikRef = useRef<FormikProps<GetCCWAndQualityFormType>>(null);
   const history = useHistory();
 
-  const { data, loading, error } = useQuery<GetCCWAndQualityType>(
-    GetCCWAndQuality,
-    {
-      variables: {
-        id: modelID
-      }
+  const { data, loading, error } = useQuery<
+    GetCCWAndQualityType,
+    GetCCWAndQualityVariables
+  >(GetCCWAndQuality, {
+    variables: {
+      id: modelID
     }
-  );
+  });
 
   const {
     id,
@@ -154,9 +155,7 @@ const CCWAndQuality = () => {
         className="margin-top-0 margin-bottom-1 font-body-lg"
         data-testid="model-plan-name"
       >
-        <Trans i18nKey="modelPlanTaskList:subheading">
-          indexZero {modelName} indexTwo
-        </Trans>
+        {h('for')} {modelName}
       </p>
       <p className="margin-bottom-2 font-body-md line-height-sans-4">
         {h('helpText')}

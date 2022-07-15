@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { Trans, useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
 import {
@@ -23,35 +23,32 @@ import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import TextAreaField from 'components/shared/TextAreaField';
-import GetModelPlan from 'queries/GetModelPlan';
+import GetBasics from 'queries/Basics/GetBasics';
 import {
-  GetModelPlan as GetModelPlanType,
-  GetModelPlanVariables
-} from 'queries/types/GetModelPlan';
-import { UpdatePlanBasics as UpdatePlanBasicsType } from 'queries/types/UpdatePlanBasics';
-import UpdatePlanBasics from 'queries/UpdatePlanBasics';
+  GetBasics as GetBasicsType,
+  GetBasics_modelPlan_basics as BasicsFormType,
+  GetBasicsVariables
+} from 'queries/Basics/types/GetBasics';
+import {
+  UpdatePlanBasics as UpdatePlanBasicsType,
+  UpdatePlanBasicsVariables
+} from 'queries/Basics/types/UpdatePlanBasics';
+import UpdatePlanBasics from 'queries/Basics/UpdatePlanBasics';
 import flattenErrors from 'utils/flattenErrors';
 import planBasicsSchema from 'validations/planBasics';
-
-interface PlanBasicsOverviewTypes {
-  modelType: string | null;
-  problem: string;
-  goal: string;
-  testInterventions: string;
-  note: string;
-}
+import { NotFoundPartial } from 'views/NotFound';
 
 const Overview = () => {
   const { t } = useTranslation('basics');
   const { t: h } = useTranslation('draftModelPlan');
   const { modelID } = useParams<{ modelID: string }>();
 
-  const formikRef = useRef<FormikProps<PlanBasicsOverviewTypes>>(null);
+  const formikRef = useRef<FormikProps<BasicsFormType>>(null);
   const history = useHistory();
   const [hasAdditionalNote, setHasAdditionalNote] = useState(false);
 
-  const { data } = useQuery<GetModelPlanType, GetModelPlanVariables>(
-    GetModelPlan,
+  const { data, loading, error } = useQuery<GetBasicsType, GetBasicsVariables>(
+    GetBasics,
     {
       variables: {
         id: modelID
@@ -60,33 +57,23 @@ const Overview = () => {
   );
 
   const { modelName } = data?.modelPlan || {};
+
   const { id, modelType, problem, goal, testInterventions, note } =
     data?.modelPlan?.basics || {};
 
-  const [update] = useMutation<UpdatePlanBasicsType>(UpdatePlanBasics);
-
-  const initialValues = {
-    modelType: modelType ?? null,
-    problem: problem ?? '',
-    goal: goal ?? '',
-    testInterventions: testInterventions ?? '',
-    note: note ?? ''
-  };
+  const [update] = useMutation<UpdatePlanBasicsType, UpdatePlanBasicsVariables>(
+    UpdatePlanBasics
+  );
 
   const handleFormSubmit = (
-    formikValues: PlanBasicsOverviewTypes,
+    formikValues: BasicsFormType,
     redirect?: 'next' | 'back' | 'task-list'
   ) => {
+    const { id: updateId, __typename, ...changeValues } = formikValues;
     update({
       variables: {
-        id,
-        changes: {
-          modelType: formikValues.modelType,
-          problem: formikValues.problem,
-          goal: formikValues.goal,
-          testInterventions: formikValues.testInterventions,
-          note: formikValues.note
-        }
+        id: updateId,
+        changes: changeValues
       }
     })
       .then(response => {
@@ -104,6 +91,20 @@ const Overview = () => {
         formikRef?.current?.setErrors(errors);
       });
   };
+
+  const initialValues: BasicsFormType = {
+    __typename: 'PlanBasics',
+    id: id ?? '',
+    modelType: modelType ?? null,
+    problem: problem ?? '',
+    goal: goal ?? '',
+    testInterventions: testInterventions ?? '',
+    note: note ?? ''
+  };
+
+  if ((!loading && error) || (!loading && !data?.modelPlan)) {
+    return <NotFoundPartial />;
+  }
 
   return (
     <div data-testid="model-plan-overview">
@@ -128,9 +129,7 @@ const Overview = () => {
         className="margin-top-0 margin-bottom-1 font-body-lg"
         data-testid="model-plan-name"
       >
-        <Trans i18nKey="modelPlanTaskList:subheading">
-          indexZero {modelName} indexTwo
-        </Trans>
+        {h('for')} {modelName}
       </p>
       <p className="margin-bottom-2 font-body-md line-height-sans-4">
         {h('helpText')}
@@ -150,7 +149,7 @@ const Overview = () => {
         validateOnMount={false}
         innerRef={formikRef}
       >
-        {(formikProps: FormikProps<PlanBasicsOverviewTypes>) => {
+        {(formikProps: FormikProps<BasicsFormType>) => {
           const {
             dirty,
             errors,

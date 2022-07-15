@@ -16,16 +16,16 @@ import MainContent from 'components/MainContent';
 import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
 import Alert from 'components/shared/Alert';
-import DeleteModelPlanCollaborator from 'queries/DeleteModelPlanCollaborator';
-import GetModelPlanCollaborators from 'queries/GetModelCollaborators';
+import DeleteModelPlanCollaborator from 'queries/Collaborators/DeleteModelPlanCollaborator';
+import GetModelPlanCollaborators from 'queries/Collaborators/GetModelCollaborators';
 import {
   DeleteModelPlanCollaborator as DeleteModelPlanCollaboratorType,
   DeleteModelPlanCollaborator_deletePlanCollaborator as ModelPlanCollaboratorType
-} from 'queries/types/DeleteModelPlanCollaborator';
+} from 'queries/Collaborators/types/DeleteModelPlanCollaborator';
 import {
   GetModelCollaborators,
   GetModelCollaborators_modelPlan_collaborators as GetCollaboratorsType
-} from 'queries/types/GetModelCollaborators';
+} from 'queries/Collaborators/types/GetModelCollaborators';
 
 import CollaboratorsTable from './table';
 

@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { Trans, useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
 import {
@@ -26,7 +26,8 @@ import FieldGroup from 'components/shared/FieldGroup';
 import GetIDDOCMonitoring from 'queries/OpsEvalAndLearning/GetIDDOCMonitoring';
 import {
   GetIDDOCMonitoring as GetIDDOCMonitoringType,
-  GetIDDOCMonitoring_modelPlan_opsEvalAndLearning as IDDOCMonitoringFormType
+  GetIDDOCMonitoring_modelPlan_opsEvalAndLearning as IDDOCMonitoringFormType,
+  GetIDDOCMonitoringVariables
 } from 'queries/OpsEvalAndLearning/types/GetIDDOCMonitoring';
 import { UpdatePlanOpsEvalAndLearningVariables } from 'queries/OpsEvalAndLearning/types/UpdatePlanOpsEvalAndLearning';
 import UpdatePlanOpsEvalAndLearning from 'queries/OpsEvalAndLearning/UpdatePlanOpsEvalAndLearning';
@@ -45,14 +46,14 @@ const IDDOCMonitoring = () => {
   const formikRef = useRef<FormikProps<IDDOCMonitoringFormType>>(null);
   const history = useHistory();
 
-  const { data, loading, error } = useQuery<GetIDDOCMonitoringType>(
-    GetIDDOCMonitoring,
-    {
-      variables: {
-        id: modelID
-      }
+  const { data, loading, error } = useQuery<
+    GetIDDOCMonitoringType,
+    GetIDDOCMonitoringVariables
+  >(GetIDDOCMonitoring, {
+    variables: {
+      id: modelID
     }
-  );
+  });
 
   const {
     id,
@@ -145,9 +146,7 @@ const IDDOCMonitoring = () => {
         className="margin-top-0 margin-bottom-1 font-body-lg"
         data-testid="model-plan-name"
       >
-        <Trans i18nKey="modelPlanTaskList:subheading">
-          indexZero {modelName} indexTwo
-        </Trans>
+        {h('for')} {modelName}
       </p>
       <p className="margin-bottom-2 font-body-md line-height-sans-4">
         {h('helpText')}
