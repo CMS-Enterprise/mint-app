@@ -73,7 +73,7 @@ const Complexity = () => {
 
   const handleFormSubmit = (
     formikValues: RecoverFormType,
-    redirect?: 'next' | 'back' | 'task-list'
+    redirect?: 'back' | 'task-list'
   ) => {
     const { id: updateId, __typename, ...changeValues } = formikValues;
     update({
@@ -84,11 +84,7 @@ const Complexity = () => {
     })
       .then(response => {
         if (!response?.errors) {
-          if (redirect === 'next') {
-            history.push(
-              `/models/${modelID}/task-list/payment/recover-payment`
-            );
-          } else if (redirect === 'back') {
+          if (redirect === 'back') {
             history.push(
               `/models/${modelID}/task-list/payment/claims-based-payment`
             );
@@ -156,7 +152,7 @@ const Complexity = () => {
       <Formik
         initialValues={initialValues}
         onSubmit={values => {
-          handleFormSubmit(values, 'next');
+          handleFormSubmit(values, 'task-list');
         }}
         enableReinitialize
         innerRef={formikRef}
@@ -365,7 +361,7 @@ const Complexity = () => {
                           {h('back')}
                         </Button>
                         <Button type="submit" onClick={() => setErrors({})}>
-                          {h('next')}
+                          {h('saveAndStartNext')}
                         </Button>
                       </div>
                       <Button
