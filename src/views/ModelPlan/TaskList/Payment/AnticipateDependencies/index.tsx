@@ -266,6 +266,53 @@ const AnticipateDependencies = () => {
                         />
                       </FieldGroup>
 
+                      <FieldGroup
+                        scrollElement="payment-needs-claims-data-collection"
+                        error={!!flatErrors.needsClaimsDataCollection}
+                        className="margin-top-4"
+                      >
+                        <Label
+                          htmlFor="payment-needs-claims-data-collection"
+                          className="maxw-none"
+                        >
+                          {t('needsClaimsDataCollection')}
+                        </Label>
+                        <p className="text-base margin-y-1">
+                          {t('needsClaimsDataCollectionSubcopy')}
+                        </p>
+                        <FieldErrorMsg>
+                          {flatErrors.needsClaimsDataCollection}
+                        </FieldErrorMsg>
+                        <Fieldset>
+                          <Field
+                            as={Radio}
+                            id="payment-needs-claims-data-collection-Yes"
+                            name="payment-needs-claims-data-collection"
+                            label={h('yes')}
+                            value="YES"
+                            checked={values.needsClaimsDataCollection === true}
+                            onChange={() => {
+                              setFieldValue('needsClaimsDataCollection', true);
+                            }}
+                          />
+                          <Field
+                            as={Radio}
+                            id="payment-needs-claims-data-collection-No"
+                            name="payment-needs-claims-data-collection"
+                            label={h('no')}
+                            value="FALSE"
+                            checked={values.needsClaimsDataCollection === false}
+                            onChange={() => {
+                              setFieldValue('needsClaimsDataCollection', false);
+                            }}
+                          />
+                        </Fieldset>
+                        <AddNote
+                          id="payment-needs-claims-data-collection-note"
+                          field="needsClaimsDataCollectionNote"
+                        />
+                      </FieldGroup>
+
                       <div className="margin-top-6 margin-bottom-3">
                         <Button
                           type="button"

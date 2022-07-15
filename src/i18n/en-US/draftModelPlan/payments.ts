@@ -167,9 +167,9 @@ const payments = {
     'Are you anticipating creating dependencies between services?',
   ancitipateCreatingDependenciesSubcopy:
     'Examples: Service B cannot be paid until Service A has been paid; Service A cannot be paid without Diagnosis 1; If a certain service or diagnosis exists in history, then Service A cannot be paid.',
-  additionalDataCollection:
+  needsClaimsDataCollection:
     'Will any additional data need to be collected for claims?',
-  additionalDataCollectionSubcopy:
+  needsClaimsDataCollectionSubcopy:
     'If you are not sure what current data is collected via provider billing, please ask Provider Billing Group (PBG)',
   thirdParty:
     'Will your contractor be providing data (a Third Party File) that will be used in claims processing?',
