@@ -217,7 +217,30 @@ const payments = {
     'Note: If there will be 30+ payees we recommend a contractor. ',
   fundingStructure: 'What is the funding structure?',
   fundingStructureSubcopy:
-    'If possible, upload a copy of the allotment and allowance.'
+    'If possible, upload a copy of the allotment and allowance.',
+  expectedCalculationComplexityLevel:
+    'What level of complexity do you expect calculations to be?',
+  complexityLevel: {
+    low: 'Low level',
+    middle: 'Middle level',
+    high: 'High level'
+  },
+  canParticipantsSelectBetweenPaymentMechanisms:
+    'Will participants be allowed to select between multiple payment mechanisms?',
+  canParticipantsSelectBetweenPaymentMechanismsHow: 'Please describe',
+  anticipatedPaymentFrequency: 'How often do you anticipate making payments?',
+  anticipatedPaymentFrequencyOptions: {
+    annually: 'Annually',
+    biannually: 'Biannually',
+    daily: 'Daily',
+    monthly: 'Monthly',
+    other: 'Other',
+    quarterly: 'Quarterly',
+    semimonthly: 'Semi-monthly',
+    weekly: 'Weekly'
+  },
+  anticipatedPaymentFrequencyOther:
+    'How often do you anticipate making payments?'
 };
 
 export default payments;
