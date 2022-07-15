@@ -162,7 +162,21 @@ const payments = {
   reconilingPayments: 'Do you anticipate reconciling payments retrospectively?',
   paymentsStart: 'When will payments start? (Enter approximate)',
   paymentStartInfo:
-    'Note: If you are unsure of an approximate date, please select the first day of the approximate month.'
+    'Note: If you are unsure of an approximate date, please select the first day of the approximate month.',
+  ancitipateCreatingDependencies:
+    'Are you anticipating creating dependencies between services?',
+  ancitipateCreatingDependenciesSubcopy:
+    'Examples: Service B cannot be paid until Service A has been paid; Service A cannot be paid without Diagnosis 1; If a certain service or diagnosis exists in history, then Service A cannot be paid.',
+  additionalDataCollection:
+    'Will any additional data need to be collected for claims?',
+  additionalDataCollectionSubcopy:
+    'If you are not sure what current data is collected via provider billing, please ask Provider Billing Group (PBG)',
+  thirdParty:
+    'Will your contractor be providing data (a Third Party File) that will be used in claims processing?',
+  alert:
+    'Make sure your contractor is aware of the Electronic File Transfer process if they’re connected to the Baltimore Data Center (BDC).',
+  isContractorAwareTestDataRequirements:
+    'Is your contractor aware that test data will be needed, and when that test data must be available? '
 };
 
 export default payments;
