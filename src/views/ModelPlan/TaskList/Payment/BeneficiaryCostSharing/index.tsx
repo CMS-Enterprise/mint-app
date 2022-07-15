@@ -234,6 +234,64 @@ const BeneficiaryCostSharing = () => {
                       </FieldGroup>
 
                       <FieldGroup
+                        scrollElement="payment-waive-any-service"
+                        error={
+                          !!flatErrors.waiveBeneficiaryCostSharingForAnyServices
+                        }
+                        className="margin-top-4"
+                      >
+                        <Label
+                          htmlFor="payment-waive-any-service"
+                          className="maxw-none"
+                        >
+                          {t('waiveBeneficiaryCostSharingForAnyServices')}
+                        </Label>
+                        <FieldErrorMsg>
+                          {flatErrors.waiveBeneficiaryCostSharingForAnyServices}
+                        </FieldErrorMsg>
+                        <Fieldset>
+                          <Field
+                            as={Radio}
+                            id="payment-waive-any-service-Yes"
+                            name="payment-waive-any-service"
+                            label={h('yes')}
+                            value="YES"
+                            checked={
+                              values.waiveBeneficiaryCostSharingForAnyServices ===
+                              true
+                            }
+                            onChange={() => {
+                              setFieldValue(
+                                'waiveBeneficiaryCostSharingForAnyServices',
+                                true
+                              );
+                            }}
+                          />
+                          <Field
+                            as={Radio}
+                            id="payment-waive-any-service-No"
+                            name="payment-waive-any-service"
+                            label={h('no')}
+                            value="FALSE"
+                            checked={
+                              values.waiveBeneficiaryCostSharingForAnyServices ===
+                              false
+                            }
+                            onChange={() => {
+                              setFieldValue(
+                                'waiveBeneficiaryCostSharingForAnyServices',
+                                false
+                              );
+                            }}
+                          />
+                        </Fieldset>
+                        <AddNote
+                          id="payment-waive-beneficiary-cost-sharing-note"
+                          field="waiveBeneficiaryCostSharingNote"
+                        />
+                      </FieldGroup>
+
+                      <FieldGroup
                         scrollElement="payment-waive-part-of-payment"
                         error={!!flatErrors.waiverOnlyAppliesPartOfPayment}
                         className="margin-top-4"
@@ -284,10 +342,6 @@ const BeneficiaryCostSharing = () => {
                             }}
                           />
                         </Fieldset>
-                        <AddNote
-                          id="payment-waive-part-of-payment-note"
-                          field="waiveBeneficiaryCostSharingNote"
-                        />
                       </FieldGroup>
 
                       <div className="margin-top-6 margin-bottom-3">
