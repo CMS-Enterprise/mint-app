@@ -92,6 +92,12 @@ const FundingSource = () => {
     redirect?: 'next' | 'back'
   ) => {
     const { id: updateId, __typename, ...changeValues } = formikValues;
+    const hasClaimsBasedPayment = formikValues.payType.includes(
+      PayType.CLAIMS_BASED_PAYMENTS
+    );
+    const hasNonClaimBasedPayment = formikValues.payType.includes(
+      PayType.NON_CLAIMS_BASED_PAYMENTS
+    );
     update({
       variables: {
         id: updateId,
@@ -101,14 +107,11 @@ const FundingSource = () => {
       .then(response => {
         if (!response?.errors) {
           if (redirect === 'next') {
-            if (formikValues.payType.includes(PayType.CLAIMS_BASED_PAYMENTS)) {
+            if (hasClaimsBasedPayment) {
               history.push(
                 `/models/${modelID}/task-list/payment/claims-based-payment`
               );
-            } else if (
-              !formikValues.payType.includes(PayType.CLAIMS_BASED_PAYMENTS) &&
-              formikValues.payType.includes(PayType.NON_CLAIMS_BASED_PAYMENTS)
-            ) {
+            } else if (hasNonClaimBasedPayment) {
               history.push(
                 `/models/${modelID}/task-list/payment/non-claims-based-payment`
               );
