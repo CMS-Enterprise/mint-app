@@ -48,6 +48,7 @@ const payments = {
     grants: 'Grants'
   },
   claimSpecificQuestions: 'Claims-based payment questions',
+  claimSpecificQuestionsContinued: 'Claims-based payment questions continued',
   selectClaims: 'Select which claims-based payments will you pay.',
   selectClaimsSubcopy:
     'If you select reductions to beneficiary cost-sharing or other, there will be additional questions to answer.',
