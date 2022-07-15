@@ -12,7 +12,8 @@ import {
   GridContainer,
   IconArrowBack,
   Label,
-  Radio
+  Radio,
+  TextInput
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
 
@@ -25,8 +26,6 @@ import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import MultiSelect from 'components/shared/MultiSelect';
-import TextAreaField from 'components/shared/TextAreaField';
-import TextField from 'components/shared/TextField';
 import GetComplexity from 'queries/Payments/GetComplexity';
 import {
   GetComplexity as GetComplexityType,
@@ -38,7 +37,6 @@ import UpdatePayments from 'queries/Payments/UpdatePayments';
 import {
   AnticipatedPaymentFrequencyType,
   ComplexityCalculationLevelType,
-  NonClaimsBasedPayType,
   PayType
 } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
@@ -296,6 +294,98 @@ const Complexity = () => {
                         <AddNote
                           id="payment-complexity-note"
                           field="expectedCalculationComplexityLevelNote"
+                        />
+                      </FieldGroup>
+
+                      <FieldGroup
+                        scrollElement="payment-complexity"
+                        error={
+                          !!flatErrors.canParticipantsSelectBetweenPaymentMechanisms
+                        }
+                        className="margin-top-4"
+                      >
+                        <Label
+                          htmlFor="payment-multiple-payments"
+                          className="maxw-none"
+                        >
+                          {t('canParticipantsSelectBetweenPaymentMechanisms')}
+                        </Label>
+                        <FieldErrorMsg>
+                          {
+                            flatErrors.canParticipantsSelectBetweenPaymentMechanisms
+                          }
+                        </FieldErrorMsg>
+                        <Fieldset>
+                          <Field
+                            as={Radio}
+                            id="payment-multiple-payments-Yes"
+                            name="payment-multiple-payments"
+                            label={h('yes')}
+                            value="YES"
+                            checked={
+                              values.canParticipantsSelectBetweenPaymentMechanisms ===
+                              true
+                            }
+                            onChange={() => {
+                              setFieldValue(
+                                'canParticipantsSelectBetweenPaymentMechanisms',
+                                true
+                              );
+                            }}
+                          />
+                          {values.canParticipantsSelectBetweenPaymentMechanisms && (
+                            <FieldGroup
+                              className="margin-left-4 margin-y-1"
+                              scrollElement="canParticipantsSelectBetweenPaymentMechanismsHow"
+                              error={
+                                !!flatErrors.canParticipantsSelectBetweenPaymentMechanismsHow
+                              }
+                            >
+                              <Label
+                                htmlFor="payment-multiple-payments-how"
+                                className="text-normal"
+                              >
+                                {t(
+                                  'canParticipantsSelectBetweenPaymentMechanismsHow'
+                                )}
+                              </Label>
+                              <FieldErrorMsg>
+                                {
+                                  flatErrors.canParticipantsSelectBetweenPaymentMechanismsHow
+                                }
+                              </FieldErrorMsg>
+                              <Field
+                                as={TextInput}
+                                error={
+                                  flatErrors.canParticipantsSelectBetweenPaymentMechanismsHow
+                                }
+                                id="payment-multiple-payments-how"
+                                data-testid="payment-multiple-payments-how"
+                                name="canParticipantsSelectBetweenPaymentMechanismsHow"
+                              />
+                            </FieldGroup>
+                          )}
+                          <Field
+                            as={Radio}
+                            id="payment-multiple-payments-No"
+                            name="payment-multiple-payments"
+                            label={h('no')}
+                            value="NO"
+                            checked={
+                              values.canParticipantsSelectBetweenPaymentMechanisms ===
+                              false
+                            }
+                            onChange={() => {
+                              setFieldValue(
+                                'canParticipantsSelectBetweenPaymentMechanisms',
+                                false
+                              );
+                            }}
+                          />
+                        </Fieldset>
+                        <AddNote
+                          id="payment-multiple-payments-note"
+                          field="canParticipantsSelectBetweenPaymentMechanismsNote"
                         />
                       </FieldGroup>
 
