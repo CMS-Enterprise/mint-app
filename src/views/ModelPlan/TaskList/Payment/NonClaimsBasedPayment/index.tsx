@@ -25,12 +25,12 @@ import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import TextAreaField from 'components/shared/TextAreaField';
-import GetBeneficiaryCostSharing from 'queries/Payments/GetBeneficiaryCostSharing';
+import GetNonClaimsBasedPayment from 'queries/Payments/GetNonClaimsBasedPayment';
 import {
-  GetBeneficiaryCostSharing as GetBeneficiaryCostSharingType,
-  GetBeneficiaryCostSharing_modelPlan_payments as BeneficiaryCostSharingFormType,
-  GetBeneficiaryCostSharingVariables
-} from 'queries/Payments/types/GetBeneficiaryCostSharing';
+  GetNonClaimsBasedPayment as GetNonClaimsBasedPaymentType,
+  GetNonClaimsBasedPayment_modelPlan_payments as NonClaimsBasedPaymentFormType,
+  GetNonClaimsBasedPaymentVariables
+} from 'queries/Payments/types/GetNonClaimsBasedPayment';
 import { UpdatePaymentsVariables } from 'queries/Payments/types/UpdatePayments';
 import UpdatePayments from 'queries/Payments/UpdatePayments';
 import { PayType } from 'types/graphql-global-types';
@@ -39,18 +39,18 @@ import { NotFoundPartial } from 'views/NotFound';
 
 import { renderCurrentPage, renderTotalPages } from '..';
 
-const BeneficiaryCostSharing = () => {
+const NonClaimsBasedPayment = () => {
   const { t } = useTranslation('payments');
   const { t: h } = useTranslation('draftModelPlan');
   const { modelID } = useParams<{ modelID: string }>();
 
-  const formikRef = useRef<FormikProps<BeneficiaryCostSharingFormType>>(null);
+  const formikRef = useRef<FormikProps<NonClaimsBasedPaymentFormType>>(null);
   const history = useHistory();
 
   const { data, loading, error } = useQuery<
-    GetBeneficiaryCostSharingType,
-    GetBeneficiaryCostSharingVariables
-  >(GetBeneficiaryCostSharing, {
+    GetNonClaimsBasedPaymentType,
+    GetNonClaimsBasedPaymentVariables
+  >(GetNonClaimsBasedPayment, {
     variables: {
       id: modelID
     }
@@ -59,19 +59,24 @@ const BeneficiaryCostSharing = () => {
   const {
     id,
     payType,
-    beneficiaryCostSharingLevelAndHandling,
-    waiveBeneficiaryCostSharingForAnyServices,
-    waiveBeneficiaryCostSharingServiceSpecification,
-    waiverOnlyAppliesPartOfPayment,
-    waiveBeneficiaryCostSharingNote
-  } = data?.modelPlan?.payments || ({} as BeneficiaryCostSharingFormType);
+    nonClaimsPayments,
+    nonClaimsPaymentOther,
+    paymentCalculationOwner,
+    numberPaymentsPerPayCycle,
+    numberPaymentsPerPayCycleNote,
+    sharedSystemsInvolvedAdditionalClaimPayment,
+    sharedSystemsInvolvedAdditionalClaimPaymentNote,
+    planningToUseInnovationPaymentContractor,
+    planningToUseInnovationPaymentContractorNote,
+    fundingStructure
+  } = data?.modelPlan?.payments || ({} as NonClaimsBasedPaymentFormType);
 
   const modelName = data?.modelPlan?.modelName || '';
 
   const [update] = useMutation<UpdatePaymentsVariables>(UpdatePayments);
 
   const handleFormSubmit = (
-    formikValues: BeneficiaryCostSharingFormType,
+    formikValues: NonClaimsBasedPaymentFormType,
     redirect?: 'next' | 'back' | 'task-list'
   ) => {
     const { id: updateId, __typename, ...changeValues } = formikValues;
@@ -101,18 +106,24 @@ const BeneficiaryCostSharing = () => {
       });
   };
 
-  const initialValues: BeneficiaryCostSharingFormType = {
+  const initialValues: NonClaimsBasedPaymentFormType = {
     __typename: 'PlanPayments',
     id: id ?? '',
     payType: payType ?? [],
-    beneficiaryCostSharingLevelAndHandling:
-      beneficiaryCostSharingLevelAndHandling ?? '',
-    waiveBeneficiaryCostSharingForAnyServices:
-      waiveBeneficiaryCostSharingForAnyServices ?? null,
-    waiveBeneficiaryCostSharingServiceSpecification:
-      waiveBeneficiaryCostSharingServiceSpecification ?? '',
-    waiverOnlyAppliesPartOfPayment: waiverOnlyAppliesPartOfPayment ?? null,
-    waiveBeneficiaryCostSharingNote: waiveBeneficiaryCostSharingNote ?? ''
+    nonClaimsPayments: nonClaimsPayments ?? [],
+    nonClaimsPaymentOther: nonClaimsPaymentOther ?? '',
+    paymentCalculationOwner: paymentCalculationOwner ?? '',
+    numberPaymentsPerPayCycle: numberPaymentsPerPayCycle ?? '',
+    numberPaymentsPerPayCycleNote: numberPaymentsPerPayCycleNote ?? '',
+    sharedSystemsInvolvedAdditionalClaimPayment:
+      sharedSystemsInvolvedAdditionalClaimPayment ?? null,
+    sharedSystemsInvolvedAdditionalClaimPaymentNote:
+      sharedSystemsInvolvedAdditionalClaimPaymentNote ?? '',
+    planningToUseInnovationPaymentContractor:
+      planningToUseInnovationPaymentContractor ?? null,
+    planningToUseInnovationPaymentContractorNote:
+      planningToUseInnovationPaymentContractorNote ?? '',
+    fundingStructure: fundingStructure ?? ''
   };
 
   if ((!loading && error) || (!loading && !data?.modelPlan)) {
@@ -160,7 +171,7 @@ const BeneficiaryCostSharing = () => {
         enableReinitialize
         innerRef={formikRef}
       >
-        {(formikProps: FormikProps<BeneficiaryCostSharingFormType>) => {
+        {(formikProps: FormikProps<NonClaimsBasedPaymentFormType>) => {
           const {
             errors,
             handleSubmit,
