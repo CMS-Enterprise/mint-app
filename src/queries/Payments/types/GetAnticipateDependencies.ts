@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { PayType } from "./../../../types/graphql-global-types";
+import { PayType, ClaimsBasedPayType } from "./../../../types/graphql-global-types";
 
 // ====================================================
 // GraphQL query operation: GetAnticipateDependencies
@@ -13,6 +13,7 @@ export interface GetAnticipateDependencies_modelPlan_payments {
   __typename: "PlanPayments";
   id: UUID;
   payType: PayType[];
+  payClaims: ClaimsBasedPayType[];
   creatingDependenciesBetweenServices: boolean | null;
   creatingDependenciesBetweenServicesNote: string | null;
   needsClaimsDataCollection: boolean | null;
