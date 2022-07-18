@@ -35,12 +35,14 @@ const ITToolsSummary = ({
       heading={t('summaryBox.heading')}
       className={classNames(className)}
     >
-      <p className="text-bold">
+      <p className="text-bold" data-testid="has-answered-tools-question">
         {answered
           ? t('summaryBox.previouslyAnswered')
           : t('summaryBox.havenNotAnswered')}
       </p>
-      <p className="margin-bottom-0">{question}</p>
+      <p className="margin-bottom-0" data-testid="tools-question">
+        {question}
+      </p>
       {answered && answers.length && (
         <ul className="margin-y-0">
           {answers.map(answer => (
@@ -50,7 +52,9 @@ const ITToolsSummary = ({
       )}
       {!needsTool && (
         <div className="text-base">
-          <p>{subtext || t('changeAnswer')}</p>
+          <p data-testid="tools-change-answer">
+            {subtext || t('changeAnswer')}
+          </p>
           {!subtext && options && (
             <ul className="margin-y-0">
               {options.map(option => (
