@@ -295,7 +295,7 @@ const ITToolsPageSeven = () => {
                         </FieldErrorMsg>
 
                         <ITToolsSummary
-                          question={o('dataToSend')}
+                          question={o('learningSystem')}
                           answers={modelLearningSystems.map(system =>
                             translateModelLearningSystemType(system || '')
                           )}
@@ -333,7 +333,7 @@ const ITToolsPageSeven = () => {
                         </FieldErrorMsg>
 
                         <ITToolsSummary
-                          question={o('dataToSend')}
+                          question={o('learningSystem')}
                           answers={modelLearningSystems.map(system =>
                             translateModelLearningSystemType(system || '')
                           )}
