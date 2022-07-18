@@ -33,7 +33,7 @@ import {
 } from 'queries/Payments/types/GetAnticipateDependencies';
 import { UpdatePaymentsVariables } from 'queries/Payments/types/UpdatePayments';
 import UpdatePayments from 'queries/Payments/UpdatePayments';
-import { PayType } from 'types/graphql-global-types';
+import { ClaimsBasedPayType, PayType } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import { NotFoundPartial } from 'views/NotFound';
 
@@ -59,6 +59,7 @@ const AnticipateDependencies = () => {
   const {
     id,
     payType,
+    payClaims,
     creatingDependenciesBetweenServices,
     creatingDependenciesBetweenServicesNote,
     needsClaimsDataCollection,
@@ -76,6 +77,12 @@ const AnticipateDependencies = () => {
     redirect?: 'next' | 'back' | 'task-list'
   ) => {
     const { id: updateId, __typename, ...changeValues } = formikValues;
+    const hasReductionToCostSharing = formikValues.payClaims.includes(
+      ClaimsBasedPayType.REDUCTIONS_TO_BENEFICIARY_COST_SHARING
+    );
+    const hasNonClaimBasedPayment = formikValues.payType.includes(
+      PayType.NON_CLAIMS_BASED_PAYMENTS
+    );
     update({
       variables: {
         id: updateId,
@@ -85,17 +92,11 @@ const AnticipateDependencies = () => {
       .then(response => {
         if (!response?.errors) {
           if (redirect === 'next') {
-            if (
-              formikValues.ClaimsBasedPayType.includes(
-                REDUCTIONS_TO_BENEFICIARY_COST_SHARING
-              )
-            ) {
+            if (hasReductionToCostSharing) {
               history.push(
                 `/models/${modelID}/task-list/payment/beneficiary-cost-sharing`
               );
-            } else if (
-              formikValues.payType.includes(PayType.NON_CLAIMS_BASED_PAYMENTS)
-            ) {
+            } else if (hasNonClaimBasedPayment) {
               history.push(
                 `/models/${modelID}/task-list/payment/non-claims-based-payment`
               );
@@ -120,6 +121,7 @@ const AnticipateDependencies = () => {
     __typename: 'PlanPayments',
     id: id ?? '',
     payType: payType ?? [],
+    payClaims: payClaims ?? [],
     creatingDependenciesBetweenServices:
       creatingDependenciesBetweenServices ?? null,
     creatingDependenciesBetweenServicesNote:
