@@ -124,7 +124,7 @@ const ITToolsPageEight = () => {
     ModelLearningSystemType.EDUCATE_BENEFICIARIES
   );
 
-  const questionTwoNeedsTools: boolean = payType!.includes(
+  const questionTwoNeedsTools: boolean = payType.includes(
     PayType.CLAIMS_BASED_PAYMENTS
   );
 
@@ -262,6 +262,7 @@ const ITToolsPageEight = () => {
                           answered={modelLearningSystems.length > 0}
                           needsTool={questionOneNeedsTools}
                           subtext={t('educateBeneficiariesNeedsAnswer')}
+                          scrollElememnt="modelLearningSystems"
                         />
 
                         <ITToolsFormComponent
@@ -294,13 +295,14 @@ const ITToolsPageEight = () => {
 
                         <ITToolsSummary
                           question={p('whatWillYouPay')}
-                          answers={payType!.map(type =>
+                          answers={payType.map(type =>
                             translatePayType(type || '')
                           )}
                           redirect={`/models/${modelID}/task-list/payments`}
-                          answered={payType!.length > 0}
+                          answered={payType.length > 0}
                           needsTool={questionTwoNeedsTools}
                           subtext={t('ffsNeedsAnswer')}
+                          scrollElememnt="payType"
                         />
 
                         <ITToolsFormComponent
@@ -340,6 +342,7 @@ const ITToolsPageEight = () => {
                           }
                           needsTool={questionThreeNeedsTools}
                           subtext={t('yesFFSNeedsAnswer')}
+                          scrollElememnt="shouldAnyProvidersExcludedFFSSystems"
                         />
 
                         <ITToolsFormComponent

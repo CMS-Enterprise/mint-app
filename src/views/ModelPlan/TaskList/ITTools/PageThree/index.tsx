@@ -252,6 +252,7 @@ const ITToolsPageThree = () => {
                           redirect={`/models/${modelID}/task-list/participants-and-providers/communication`}
                           answered={communicationMethod.length > 0}
                           needsTool={questionOneNeedsTools}
+                          scrollElememnt="communicationMethod"
                         />
 
                         <ITToolsFormComponent

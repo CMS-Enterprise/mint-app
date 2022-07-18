@@ -26,6 +26,7 @@ import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import MultiSelect from 'components/shared/MultiSelect';
 import TextAreaField from 'components/shared/TextAreaField';
+import useScrollElement from 'hooks/useScrollElement';
 import GetParticipantOptions from 'queries/ParticipantsAndProviders/GetParticipantOptions';
 import {
   GetParticipantOptions as GetParticipantOptionsType,
@@ -82,6 +83,9 @@ export const ParticipantOptions = () => {
     ({} as ParticipantOptionsFormType);
 
   const modelName = data?.modelPlan?.modelName || '';
+
+  // If redirected from IT Tools, scrolls to the relevant question
+  useScrollElement(!loading);
 
   const [update] = useMutation<UpdatePlanParticipantsAndProvidersVariables>(
     UpdatePlanParticipantsAndProviders

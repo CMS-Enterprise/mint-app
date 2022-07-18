@@ -278,6 +278,7 @@ const ITToolsPageFive = () => {
                           }
                           needsTool={questionOneNeedsTools}
                           subtext={t('appealsNeedsAnswer')}
+                          scrollElememnt="appealPerformance"
                         />
 
                         <ITToolsFormComponent
@@ -323,6 +324,7 @@ const ITToolsPageFive = () => {
                           answered={evaluationApproaches.length > 0}
                           needsTool={questionTwoNeedsTools}
                           subtext={t('appealsNeedsAnswer')}
+                          scrollElememnt="evaluationApproaches"
                         />
 
                         <ITToolsFormComponent
@@ -360,6 +362,7 @@ const ITToolsPageFive = () => {
                           answered={dataNeededForMonitoring.length > 0}
                           needsTool={questionThreeNeedsTools}
                           subtext={t('monitorNeedsAnswer')}
+                          scrollElememnt="dataNeededForMonitoring"
                         />
 
                         <ITToolsFormComponent

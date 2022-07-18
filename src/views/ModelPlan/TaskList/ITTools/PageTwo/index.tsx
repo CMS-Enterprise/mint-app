@@ -256,6 +256,7 @@ const ITToolsPageTwo = () => {
                           answered={recruitmentMethod !== null}
                           needsTool={questionOneNeedsTools}
                           subtext={t('loiNeedsAnswer')}
+                          scrollElememnt="recruitmentMethod"
                         />
 
                         <ITToolsFormComponent
@@ -296,6 +297,7 @@ const ITToolsPageTwo = () => {
                           answered={selectionMethod.length > 0}
                           needsTool={questionTwoNeedsTools}
                           subtext={t('scoringToolNeedsAnswer')}
+                          scrollElememnt="selectionMethod"
                         />
 
                         <ITToolsFormComponent
@@ -339,6 +341,7 @@ const ITToolsPageTwo = () => {
                           answered={selectionMethod.length > 0}
                           needsTool={questionThreeNeedsTools}
                           subtext={t('contractorNeedsAnswer')}
+                          scrollElememnt="selectionMethod"
                         />
 
                         <ITToolsFormComponent

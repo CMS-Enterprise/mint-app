@@ -247,6 +247,7 @@ const ITToolsPageOne = () => {
                           answered={managePartCDEnrollment !== null}
                           needsTool={questionOneNeedsTools}
                           subtext={t('yesNeedsAnswer')}
+                          scrollElememnt="managePartCDEnrollment"
                         />
 
                         <ITToolsFormComponent
@@ -286,6 +287,7 @@ const ITToolsPageOne = () => {
                           answered={collectPlanBids !== null}
                           needsTool={questionTwoNeedsTools}
                           subtext={t('yesNeedsAnswer')}
+                          scrollElememnt="collectPlanBids"
                         />
 
                         <ITToolsFormComponent
@@ -325,6 +327,7 @@ const ITToolsPageOne = () => {
                           answered={planContactUpdated !== null}
                           needsTool={questionThreeNeedsTools}
                           subtext={t('yesNeedsAnswer')}
+                          scrollElememnt="planContactUpdated"
                         />
 
                         <ITToolsFormComponent

@@ -14,6 +14,7 @@ interface ITToolsSummaryPropType {
   options?: string[];
   redirect: string;
   subtext?: string;
+  scrollElememnt?: string;
 }
 
 const ITToolsSummary = ({
@@ -24,7 +25,8 @@ const ITToolsSummary = ({
   answers,
   options,
   redirect,
-  subtext
+  subtext,
+  scrollElememnt = ''
 }: ITToolsSummaryPropType) => {
   const { t } = useTranslation('itTools');
 
@@ -60,7 +62,12 @@ const ITToolsSummary = ({
       )}
       <p>
         {t('summaryBox.changeAnswer')}{' '}
-        <UswdsReactLink to={redirect}>
+        <UswdsReactLink
+          to={{
+            pathname: redirect,
+            state: { scrollElement: scrollElememnt }
+          }}
+        >
           {t('summaryBox.goToQuestion')}
         </UswdsReactLink>
         .

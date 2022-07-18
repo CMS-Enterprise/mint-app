@@ -260,6 +260,7 @@ const ITToolsPageSix = () => {
                           answered={dataNeededForMonitoring.length > 0}
                           needsTool={questionOneNeedsTools}
                           subtext={t('monitorNeedsAnswer')}
+                          scrollElememnt="dataNeededForMonitoring"
                         />
 
                         <ITToolsFormComponent
@@ -297,6 +298,7 @@ const ITToolsPageSix = () => {
                           answered={dataNeededForMonitoring.length > 0}
                           needsTool={questionTwoNeedsTools}
                           subtext={t('claimsNeedsAnswer')}
+                          scrollElememnt="dataNeededForMonitoring"
                         />
 
                         <ITToolsFormComponent
@@ -334,6 +336,7 @@ const ITToolsPageSix = () => {
                           answered={dataNeededForMonitoring.length > 0}
                           needsTool={questionThreeNeedsTools}
                           subtext={t('qualityNeedsAnswer')}
+                          scrollElememnt="dataNeededForMonitoring"
                         />
 
                         <ITToolsFormComponent

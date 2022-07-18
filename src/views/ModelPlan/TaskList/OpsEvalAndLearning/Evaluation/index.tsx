@@ -25,6 +25,7 @@ import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import MultiSelect from 'components/shared/MultiSelect';
+import useScrollElement from 'hooks/useScrollElement';
 import GetEvaluation from 'queries/OpsEvalAndLearning/GetEvaluation';
 import {
   GetEvaluation as GetEvaluationType,
@@ -89,6 +90,9 @@ const Evaluation = () => {
   } = data?.modelPlan?.opsEvalAndLearning || ({} as EvaluationFormType);
 
   const modelName = data?.modelPlan?.modelName || '';
+
+  // If redirected from IT Tools, scrolls to the relevant question
+  useScrollElement(!loading);
 
   const [update] = useMutation<UpdatePlanOpsEvalAndLearningVariables>(
     UpdatePlanOpsEvalAndLearning

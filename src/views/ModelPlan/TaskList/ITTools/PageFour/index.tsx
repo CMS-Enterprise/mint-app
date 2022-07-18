@@ -249,6 +249,7 @@ const ITToolsPageFour = () => {
                           answered={helpdeskUse !== null}
                           needsTool={questionOneNeedsTools}
                           subtext={t('yesNeedsAnswer')}
+                          scrollElememnt="helpdeskUse"
                         />
 
                         <ITToolsFormComponent
@@ -282,6 +283,7 @@ const ITToolsPageFour = () => {
                           answered={iddocSupport !== null}
                           needsTool={questionTwoNeedsTools}
                           subtext={t('yesNeedsAnswer')}
+                          scrollElememnt="iddocSupport"
                         />
 
                         <ITToolsFormComponent
@@ -322,6 +324,7 @@ const ITToolsPageFour = () => {
                           answered={benchmarkForPerformance !== null}
                           needsTool={questionThreeNeedsTools}
                           subtext={t('eitherYesNeedsAnswer')}
+                          scrollElememnt="benchmarkForPerformance"
                         />
 
                         <ITToolsFormComponent

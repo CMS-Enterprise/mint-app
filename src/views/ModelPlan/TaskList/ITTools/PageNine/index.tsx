@@ -256,6 +256,7 @@ const ITToolsPageNine = () => {
                           answered={payType.length > 0}
                           needsTool={questionOneNeedsTools}
                           subtext={t('nonClaimsNeedsAnswer')}
+                          scrollElememnt="payType"
                         />
 
                         <ITToolsFormComponent
@@ -293,6 +294,7 @@ const ITToolsPageNine = () => {
                           answered={nonClaimsPayments.length > 0}
                           needsTool={questionTwoNeedsTools}
                           subtext={t('sharedSavingsNeedsAnswer')}
+                          scrollElememnt="nonClaimsPayments"
                         />
 
                         <ITToolsFormComponent
@@ -330,6 +332,7 @@ const ITToolsPageNine = () => {
                           answered={willRecoverPayments !== null}
                           needsTool={questionThreeNeedsTools}
                           subtext={t('yesFFSNeedsAnswer')}
+                          scrollElememnt="willRecoverPayments"
                         />
 
                         <ITToolsFormComponent

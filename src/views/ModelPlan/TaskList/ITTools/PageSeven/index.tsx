@@ -265,6 +265,7 @@ const ITToolsPageSeven = () => {
                           answered={dataToSendParticicipants.length > 0}
                           needsTool={questionOneNeedsTools}
                           subtext={t('sendDataNeedsAnswer')}
+                          scrollElememnt="dataToSendParticicipants"
                         />
 
                         <ITToolsFormComponent
@@ -302,6 +303,7 @@ const ITToolsPageSeven = () => {
                           answered={modelLearningSystems.length > 0}
                           needsTool={questionTwoNeedsTools}
                           subtext={t('learningNeedsAnswer')}
+                          scrollElememnt="modelLearningSystems"
                         />
 
                         <ITToolsFormComponent
@@ -339,6 +341,7 @@ const ITToolsPageSeven = () => {
                           answered={modelLearningSystems.length > 0}
                           needsTool={questionThreeNeedsTools}
                           subtext={t('participantNeedsAnswer')}
+                          scrollElememnt="modelLearningSystems"
                         />
 
                         <ITToolsFormComponent
