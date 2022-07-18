@@ -11,23 +11,17 @@ import (
 // UpdatePlanMilestones implements resolver logic to update a plan milestones object
 func UpdatePlanMilestones(logger *zap.Logger, id uuid.UUID, changes map[string]interface{}, principal string, store *storage.Store) (*models.PlanMilestones, error) {
 	// Get existing milestones
-	existingMilestones, err := store.FetchPlanMilestonesByID(logger, id)
+	existing, err := store.FetchPlanMilestonesByID(logger, id)
 	if err != nil {
 		return nil, err
 	}
 
-	err = ApplyChanges(changes, existingMilestones)
+	err = BaseTaskListSectionPreUpdate(existing, changes, principal)
 	if err != nil {
 		return nil, err
 	}
 
-	existingMilestones.ModifiedBy = &principal
-	err = existingMilestones.CalcStatus()
-	if err != nil {
-		return nil, err
-	}
-
-	result, err := store.PlanMilestonesUpdate(logger, existingMilestones)
+	result, err := store.PlanMilestonesUpdate(logger, existing)
 	return result, err
 }
 

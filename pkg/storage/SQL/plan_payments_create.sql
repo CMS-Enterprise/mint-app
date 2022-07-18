@@ -61,9 +61,9 @@ INSERT INTO plan_payments (
     payment_start_date,
     payment_start_date_note,
     created_by,
-    created_dts,
     modified_by,
-    modified_dts,
+    ready_for_review_by,
+    ready_for_review_dts,
     status
 )
 VALUES (
@@ -129,9 +129,9 @@ VALUES (
     :payment_start_date,
     :payment_start_date_note,
     :created_by,
-    :created_dts,
     :modified_by,
-    :modified_dts,
+    :ready_for_review_by,
+    :ready_for_review_dts,
     :status
 )
 RETURNING
@@ -200,4 +200,6 @@ created_by,
 created_dts,
 modified_by,
 modified_dts,
+ready_for_review_by,
+ready_for_review_dts,
 status

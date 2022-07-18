@@ -114,9 +114,9 @@ type TaskStatus string
 
 // These constants represent the different values of TaskStatus
 const (
-	TaskReady      TaskStatus = "READY"
-	TaskInProgress TaskStatus = "IN_PROGRESS"
-	TaskComplete   TaskStatus = "COMPLETE"
+	TaskReady          TaskStatus = "READY"
+	TaskInProgress     TaskStatus = "IN_PROGRESS"
+	TaskReadyForReview TaskStatus = "READY_FOR_REVIEW"
 )
 
 //DiscussionStatus is an enum that represents the status of a Discussion

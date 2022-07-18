@@ -3,14 +3,12 @@ package models
 import (
 	"time"
 
-	"github.com/google/uuid"
 	"github.com/lib/pq"
 )
 
 //PlanOpsEvalAndLearning represents the tasks list section that handles information around operations, evaluation, and learning
 type PlanOpsEvalAndLearning struct {
-	ID          uuid.UUID `json:"id" db:"id"`
-	ModelPlanID uuid.UUID `json:"modelPlanID" db:"model_plan_id"`
+	BaseTaskListSection
 
 	//Page 1
 	AgencyOrStateHelp      pq.StringArray `json:"agencyOrStateHelp" db:"agency_or_state_help"`
@@ -122,13 +120,6 @@ type PlanOpsEvalAndLearning struct {
 	ModelLearningSystemsOther *string        `json:"modelLearningSystemsOther" db:"model_learning_systems_other"`
 	ModelLearningSystemsNote  *string        `json:"modelLearningSystemsNote" db:"model_learning_systems_note"`
 	AnticipatedChallenges     *string        `json:"anticipatedChallenges" db:"anticipated_challenges" statusWeight:"1"`
-
-	// Meta
-	CreatedBy   string     `json:"createdBy" db:"created_by"`
-	CreatedDts  time.Time  `json:"createdDts" db:"created_dts"`
-	ModifiedBy  *string    `json:"modifiedBy" db:"modified_by"`
-	ModifiedDts *time.Time `json:"modifiedDts" db:"modified_dts"`
-	Status      TaskStatus `json:"status" db:"status"`
 }
 
 //DataStartsType represents the possible DATASTARTSTYPE options
@@ -164,40 +155,3 @@ const (
 	DataFullTime    DataFullTimeOrIncrementalType = "FULL_TIME"
 	DataIncremental DataFullTimeOrIncrementalType = "INCREMENTAL"
 )
-
-// CalcStatus returns a TaskStatus based on how many fields have been entered in the PlanOpsEvalAndLearning struct
-func (oel *PlanOpsEvalAndLearning) CalcStatus() error {
-
-	status, err := GenericallyCalculateStatus(*oel)
-	if err != nil {
-		return err
-	}
-
-	oel.Status = status
-	return nil
-}
-
-// GetModelTypeName returns the name of the model
-func (oel PlanOpsEvalAndLearning) GetModelTypeName() string {
-	return "Plan_Ops_Eval_And_Learning"
-}
-
-// GetID returns the ID property for a PlanOpsEvalAndLearning struct
-func (oel PlanOpsEvalAndLearning) GetID() uuid.UUID {
-	return oel.ID
-}
-
-// GetPlanID returns the ModelPlanID property for a PlanOpsEvalAndLearning struct
-func (oel PlanOpsEvalAndLearning) GetPlanID() uuid.UUID {
-	return oel.ModelPlanID
-}
-
-// GetModifiedBy returns the ModifiedBy property for a PlanOpsEvalAndLearning struct
-func (oel PlanOpsEvalAndLearning) GetModifiedBy() *string {
-	return oel.ModifiedBy
-}
-
-// GetCreatedBy returns the ModifiedBy property for a PlanOpsEvalAndLearning struct
-func (oel PlanOpsEvalAndLearning) GetCreatedBy() string {
-	return oel.CreatedBy
-}

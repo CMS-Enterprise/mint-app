@@ -8,6 +8,8 @@ SET
     note = :note,
     modified_by = :modified_by,
     modified_dts = CURRENT_TIMESTAMP,
+    ready_for_review_by = :ready_for_review_by,
+    ready_for_review_dts = :ready_for_review_dts,
     status = :status
 WHERE plan_basics.id = :id
 RETURNING
@@ -22,4 +24,6 @@ created_by,
 created_dts,
 modified_by,
 modified_dts,
+ready_for_review_by,
+ready_for_review_dts,
 status;

@@ -8,7 +8,7 @@ import (
 
 // PlanDocument represents a document attached to the plan
 type PlanDocument struct {
-	ID          uuid.UUID `json:"id" db:"id"`
+	BaseStruct
 	ModelPlanID uuid.UUID `json:"modelPlanID" db:"model_plan_id"`
 
 	FileType string `json:"fileType" db:"file_type"`
@@ -25,34 +25,4 @@ type PlanDocument struct {
 	OptionalNotes        *string      `json:"optionalNotes" db:"optional_notes"`
 
 	DeletedAt *time.Time `json:"deletedAt" db:"deleted_at"`
-
-	CreatedBy   string     `json:"createdBy" db:"created_by"`
-	CreatedDts  time.Time  `json:"createdDts" db:"created_dts"`
-	ModifiedBy  *string    `json:"modifiedBy" db:"modified_by"`
-	ModifiedDts *time.Time `json:"modifiedDts" db:"modified_dts"`
-}
-
-// GetModelTypeName returns a string name that represents the PlanMilestones struct
-func (p PlanDocument) GetModelTypeName() string {
-	return "Plan_Document"
-}
-
-// GetID returns the GetID property for a PlanMilestones struct
-func (p PlanDocument) GetID() uuid.UUID {
-	return p.ID
-}
-
-// GetPlanID returns the ModelPlanID property for a PlanMilestones struct
-func (p PlanDocument) GetPlanID() uuid.UUID {
-	return p.ModelPlanID
-}
-
-// GetModifiedBy returns the ModifiedBy property for a PlanMilestones struct
-func (p PlanDocument) GetModifiedBy() *string {
-	return p.ModifiedBy
-}
-
-// GetCreatedBy implements the CreatedBy property
-func (p PlanDocument) GetCreatedBy() string {
-	return p.CreatedBy
 }
