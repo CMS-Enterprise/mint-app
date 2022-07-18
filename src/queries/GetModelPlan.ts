@@ -18,7 +18,7 @@ export default gql`
         modelType
         problem
         goal
-        testInventions
+        testInterventions
         note
         status
       }
@@ -57,6 +57,38 @@ export default gql`
           createdDts
           resolution
         }
+      }
+      generalCharacteristics {
+        id
+        createdBy
+        createdDts
+        modifiedBy
+        modifiedDts
+        status
+      }
+      participantsAndProviders {
+        id
+        createdBy
+        createdDts
+        modifiedBy
+        modifiedDts
+        status
+      }
+      beneficiaries {
+        id
+        createdBy
+        createdDts
+        modifiedBy
+        modifiedDts
+        status
+      }
+      opsEvalAndLearning {
+        id
+        createdBy
+        createdDts
+        modifiedBy
+        modifiedDts
+        status
       }
     }
   }

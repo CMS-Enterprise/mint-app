@@ -18,7 +18,7 @@ const tagName = "statusWeight"
 func GenericallyCalculateStatus(obj interface{}) (TaskStatus, error) {
 	currentWeight := 0
 	totalWeight := 0
-
+	filledOut := false
 	// Get the type & value of the object
 	v := reflect.ValueOf(obj)
 	t := v.Type()
@@ -32,6 +32,7 @@ func GenericallyCalculateStatus(obj interface{}) (TaskStatus, error) {
 	for i := 0; i < t.NumField(); i++ {
 		// Get the field
 		field := t.Field(i)
+		value := v.Field(i)
 
 		// Get the field's tag value
 		tagValue := field.Tag.Get(tagName)
@@ -41,9 +42,14 @@ func GenericallyCalculateStatus(obj interface{}) (TaskStatus, error) {
 			continue
 		}
 
-		// If the field is not a pointer, throw an error (only pointer types can have the statusWeight tag)
-		if field.Type.Kind() != reflect.Ptr {
-			return TaskStatus(""), fmt.Errorf("field %v is not a pointer (found %v)", field.Name, field.Type)
+		// Check for valid field type, and if the data is filled
+		switch field.Type.Kind() {
+		case reflect.Ptr:
+			filledOut = !value.IsNil()
+		case reflect.Slice:
+			filledOut = value.Len() > 0
+		default:
+			return TaskStatus(""), fmt.Errorf("field %v is not a supported type for status calculation (found %v)", field.Name, field.Type)
 		}
 
 		// Convert the tag value to an int
@@ -52,16 +58,14 @@ func GenericallyCalculateStatus(obj interface{}) (TaskStatus, error) {
 			return TaskStatus(""), err
 		}
 
-		// Get the value of the field
-		value := v.Field(i)
-
 		// Always add weight to the total
 		totalWeight += int(weight)
 
-		// If the value is not nil, also add the weight to the current weight
-		if !value.IsNil() {
+		// If the value is filled out also add the weight to the current weight
+		if filledOut {
 			currentWeight += int(weight)
 		}
+
 	}
 
 	if totalWeight == 0 {

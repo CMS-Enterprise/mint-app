@@ -35,7 +35,7 @@ describe('The Model Plan Task List', () => {
       modelType: null,
       problem: null,
       goal: null,
-      testInventions: null,
+      testInterventions: null,
       note: null,
       status: 'READY'
     },
@@ -56,6 +56,10 @@ describe('The Model Plan Task List', () => {
       phasedInNote: null,
       status: 'READY'
     },
+    opsEvalAndLearning: [] as any,
+    generalCharacteristics: [] as any,
+    participantsAndProviders: [] as any,
+    beneficiaries: [] as any,
     documents: [
       {
         id: '6e224030-09d5-46f7-ad04-4bb851b36eab',

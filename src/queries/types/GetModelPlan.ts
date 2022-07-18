@@ -16,7 +16,7 @@ export interface GetModelPlan_modelPlan_basics {
   modelType: ModelType | null;
   problem: string | null;
   goal: string | null;
-  testInventions: string | null;
+  testInterventions: string | null;
   note: string | null;
   status: TaskStatus;
 }
@@ -66,6 +66,46 @@ export interface GetModelPlan_modelPlan_discussions {
   replies: GetModelPlan_modelPlan_discussions_replies[];
 }
 
+export interface GetModelPlan_modelPlan_generalCharacteristics {
+  __typename: "PlanGeneralCharacteristics";
+  id: UUID;
+  createdBy: string;
+  createdDts: Time;
+  modifiedBy: string | null;
+  modifiedDts: Time | null;
+  status: TaskStatus;
+}
+
+export interface GetModelPlan_modelPlan_participantsAndProviders {
+  __typename: "PlanParticipantsAndProviders";
+  id: UUID;
+  createdBy: string;
+  createdDts: Time;
+  modifiedBy: string | null;
+  modifiedDts: Time | null;
+  status: TaskStatus;
+}
+
+export interface GetModelPlan_modelPlan_beneficiaries {
+  __typename: "PlanBeneficiaries";
+  id: UUID;
+  createdBy: string;
+  createdDts: Time;
+  modifiedBy: string | null;
+  modifiedDts: Time | null;
+  status: TaskStatus;
+}
+
+export interface GetModelPlan_modelPlan_opsEvalAndLearning {
+  __typename: "PlanOpsEvalAndLearning";
+  id: UUID;
+  createdBy: string;
+  createdDts: Time;
+  modifiedBy: string | null;
+  modifiedDts: Time | null;
+  status: TaskStatus;
+}
+
 export interface GetModelPlan_modelPlan {
   __typename: "ModelPlan";
   id: UUID;
@@ -81,6 +121,10 @@ export interface GetModelPlan_modelPlan {
   milestones: GetModelPlan_modelPlan_milestones;
   documents: GetModelPlan_modelPlan_documents[];
   discussions: GetModelPlan_modelPlan_discussions[];
+  generalCharacteristics: GetModelPlan_modelPlan_generalCharacteristics;
+  participantsAndProviders: GetModelPlan_modelPlan_participantsAndProviders;
+  beneficiaries: GetModelPlan_modelPlan_beneficiaries;
+  opsEvalAndLearning: GetModelPlan_modelPlan_opsEvalAndLearning;
 }
 
 export interface GetModelPlan {

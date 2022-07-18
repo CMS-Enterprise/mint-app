@@ -3,7 +3,7 @@ import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
 
-import GetModelPlanCollaborators from 'queries/GetModelCollaborators';
+import GetModelPlanCollaborators from 'queries/Collaborators/GetModelCollaborators';
 
 import Collaborators from './index';
 

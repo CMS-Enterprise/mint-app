@@ -119,7 +119,7 @@ func (p PlanTaskListSectionLocksResolverImplementation) UnlockTaskListSection(ps
 		return false, fmt.Errorf("failed to unlock section [%v], user [%v] not authorized to unlock section locked by user [%v]", status.Section, principal, status.LockedBy)
 	}
 
-	status.RefCount -= 1
+	status.RefCount--
 
 	if status.RefCount > 0 {
 		planTaskListSessionLocks.modelSections[modelPlanID][section] = status

@@ -16,13 +16,13 @@ import { RadioField } from 'components/shared/RadioField';
 import TextAreaField from 'components/shared/TextAreaField';
 import TextField from 'components/shared/TextField';
 import useMessage from 'hooks/useMessage';
-import CreateModelPlanDocument from 'queries/CreateModelPlanDocument';
-import GetGeneratedPresignedUploadURL from 'queries/GetGeneratedPresignedUploadURL';
+import CreateModelPlanDocument from 'queries/Documents/CreateModelPlanDocument';
+import GetGeneratedPresignedUploadURL from 'queries/Documents/GetGeneratedPresignedUploadURL';
 import {
   CreateModelPlanDocument as CreateModelPlanDocumentType,
   CreateModelPlanDocumentVariables
-} from 'queries/types/CreateModelPlanDocument';
-import { GeneratePresignedUploadURL as GetGeneratedPresignedUploadURLType } from 'queries/types/GeneratePresignedUploadURL';
+} from 'queries/Documents/types/CreateModelPlanDocument';
+import { GeneratePresignedUploadURL as GetGeneratedPresignedUploadURLType } from 'queries/Documents/types/GeneratePresignedUploadURL';
 import { FileUploadForm } from 'types/files';
 import { DocumentType } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
@@ -87,7 +87,6 @@ const DocumentUpload = () => {
           'Content-Type': file.type
         }
       };
-
       axios.put(s3URL, values.file, options).then(() => {
         createDocument({
           variables: {
@@ -126,7 +125,7 @@ const DocumentUpload = () => {
               history.push(`/models/${modelID}/documents`);
             }
           })
-          .catch(() => {
+          .catch(e => {
             setErrorGeneratingPresignedUrl(true);
           });
       });
@@ -178,8 +177,8 @@ const DocumentUpload = () => {
                 </ErrorAlert>
               )}
               {isErrorGeneratingPresignedUrl && (
-                <Alert type="error" heading={t('uploadError.body')}>
-                  {t('uploadDocument.presignedUrlErrorBody')}
+                <Alert type="error" heading={t('uploadError.heading')}>
+                  {t('uploadError.body')}
                 </Alert>
               )}
               {createDocumentStatus.error && (

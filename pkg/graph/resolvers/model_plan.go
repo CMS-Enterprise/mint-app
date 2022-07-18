@@ -102,6 +102,50 @@ func ModelPlanCreate(logger *zap.Logger, modelName string, store *storage.Store,
 		return nil, err
 	}
 	_, err = store.PlanParticipantsAndProvidersCreate(logger, participantsAndProviders)
+	if err != nil {
+		return nil, err
+	}
+
+	opsEvalAndLearning := &models.PlanOpsEvalAndLearning{
+		ModelPlanID: createdPlan.ID,
+		CreatedBy:   principalInfo.EuaUserID,
+		ModifiedBy:  &principalInfo.EuaUserID,
+	}
+	err = opsEvalAndLearning.CalcStatus()
+	if err != nil {
+		return nil, err
+	}
+	_, err = store.PlanOpsEvalAndLearningCreate(logger, opsEvalAndLearning)
+	if err != nil {
+		return nil, err
+	}
+
+	planPayments := &models.PlanPayments{
+		ModelPlanID: createdPlan.ID,
+		CreatedBy:   principalInfo.EuaUserID,
+	}
+	err = planPayments.CalcStatus()
+	if err != nil {
+		return nil, err
+	}
+	_, err = store.PlanPaymentsCreate(logger, planPayments)
+	if err != nil {
+		return nil, err
+	}
+
+	itTools := &models.PlanITTools{
+		ModelPlanID: createdPlan.ID,
+		CreatedBy:   principalInfo.EuaUserID,
+		ModifiedBy:  &principalInfo.EuaUserID,
+	}
+	err = itTools.CalcStatus()
+	if err != nil {
+		return nil, err
+	}
+	_, err = store.PlanITToolsCreate(logger, itTools)
+	if err != nil {
+		return nil, err
+	}
 
 	return createdPlan, err
 }

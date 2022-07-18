@@ -34,14 +34,15 @@ type PlanParticipantsAndProviders struct {
 	SelectionNote                *string          `json:"selectionNote" db:"selection_note"`
 
 	//page 3
-	CommunicationMethod   pq.StringArray       `json:"communicationMethod" db:"communication_method"`
-	CommunicationNote     *string              `json:"communicationNote" db:"communication_note"`
-	ParticipantAssumeRisk *bool                `json:"participantAssumeRisk" db:"participant_assume_risk" statusWeight:"1"`
-	RiskType              *ParticipantRiskType `json:"riskType" db:"risk_type"`
-	RiskOther             *string              `json:"riskOther" db:"risk_other"`
-	RiskNote              *string              `json:"riskNote" db:"risk_note"`
-	WillRiskChange        *bool                `json:"willRiskChange" db:"will_risk_change" statusWeight:"1"`
-	WillRiskChangeNote    *string              `json:"willRiskChangeNote" db:"will_risk_change_note"`
+	CommunicationMethod      pq.StringArray       `json:"communicationMethod" db:"communication_method"`
+	CommunicationMethodOther *string              `json:"communicationMethodOther" db:"communication_method_other"`
+	CommunicationNote        *string              `json:"communicationNote" db:"communication_note"`
+	ParticipantAssumeRisk    *bool                `json:"participantAssumeRisk" db:"participant_assume_risk" statusWeight:"1"`
+	RiskType                 *ParticipantRiskType `json:"riskType" db:"risk_type"`
+	RiskOther                *string              `json:"riskOther" db:"risk_other"`
+	RiskNote                 *string              `json:"riskNote" db:"risk_note"`
+	WillRiskChange           *bool                `json:"willRiskChange" db:"will_risk_change" statusWeight:"1"`
+	WillRiskChangeNote       *string              `json:"willRiskChangeNote" db:"will_risk_change_note"`
 
 	//page 4
 	CoordinateWork         *bool          `json:"coordinateWork" db:"coordinate_work" statusWeight:"1"`
@@ -112,7 +113,7 @@ func (pp *PlanParticipantsAndProviders) CalcStatus() error {
 
 // GetModelTypeName returns the name of the model
 func (pp PlanParticipantsAndProviders) GetModelTypeName() string {
-	return "Plan_Beneficiaries"
+	return "Plan_Participants_And_Providers"
 }
 
 // GetID returns the ID property for a PlanParticipantsAndProviders struct

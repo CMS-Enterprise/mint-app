@@ -28,10 +28,10 @@ import StepsOverview from 'views/ModelPlan/StepsOverview';
 import TaskList from 'views/ModelPlan/TaskList';
 import Basics from 'views/ModelPlan/TaskList/Basics';
 import Beneficiaries from 'views/ModelPlan/TaskList/Beneficiaries';
-import Characteristics from 'views/ModelPlan/TaskList/Characteristics';
 import CostEstimate from 'views/ModelPlan/TaskList/CostEstimate';
-import Operations from 'views/ModelPlan/TaskList/Operations';
-import Participants from 'views/ModelPlan/TaskList/Participants';
+import Characteristics from 'views/ModelPlan/TaskList/GeneralCharacteristics';
+import OpsEvalAndLearning from 'views/ModelPlan/TaskList/OpsEvalAndLearning';
+import Participants from 'views/ModelPlan/TaskList/ParticipantsAndProviders';
 import Payment from 'views/ModelPlan/TaskList/Payment';
 import Population from 'views/ModelPlan/TaskList/Population';
 import SubmitRequest from 'views/ModelPlan/TaskList/SubmitRequest';
@@ -108,11 +108,11 @@ const AppRoutes = () => {
         component={CostEstimate}
       />
       <SecureRoute
-        path="/models/:modelID/task-list/operations"
-        component={Operations}
+        path="/models/:modelID/task-list/ops-eval-and-learning"
+        component={OpsEvalAndLearning}
       />
       <SecureRoute
-        path="/models/:modelID/task-list/participants"
+        path="/models/:modelID/task-list/participants-and-providers"
         component={Participants}
       />
       <SecureRoute

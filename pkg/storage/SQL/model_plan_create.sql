@@ -14,7 +14,7 @@ VALUES (
     :model_name,
     :model_category,
     :cms_centers,
-    NULLIF(:cms_other, ''),
+    :cms_other,
     :status,
     :cmmi_groups,
     :created_by,
