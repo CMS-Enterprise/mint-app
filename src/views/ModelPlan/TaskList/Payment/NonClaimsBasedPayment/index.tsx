@@ -35,7 +35,11 @@ import {
 } from 'queries/Payments/types/GetNonClaimsBasedPayment';
 import { UpdatePaymentsVariables } from 'queries/Payments/types/UpdatePayments';
 import UpdatePayments from 'queries/Payments/UpdatePayments';
-import { NonClaimsBasedPayType, PayType } from 'types/graphql-global-types';
+import {
+  ClaimsBasedPayType,
+  NonClaimsBasedPayType,
+  PayType
+} from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import { sortOtherEnum, translateNonClaimsBasedPayType } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
@@ -62,6 +66,7 @@ const NonClaimsBasedPayment = () => {
   const {
     id,
     payType,
+    payClaims,
     nonClaimsPayments,
     nonClaimsPaymentOther,
     paymentCalculationOwner,
@@ -83,6 +88,12 @@ const NonClaimsBasedPayment = () => {
     redirect?: 'next' | 'back' | 'task-list'
   ) => {
     const { id: updateId, __typename, ...changeValues } = formikValues;
+    const hasClaimsBasedPayment = formikValues.payType.includes(
+      PayType.CLAIMS_BASED_PAYMENTS
+    );
+    const hasReductionToCostSharing = formikValues.payClaims.includes(
+      ClaimsBasedPayType.REDUCTIONS_TO_BENEFICIARY_COST_SHARING
+    );
     update({
       variables: {
         id: updateId,
@@ -94,20 +105,16 @@ const NonClaimsBasedPayment = () => {
           if (redirect === 'next') {
             history.push(`/models/${modelID}/task-list/payment/complexity`);
           } else if (redirect === 'back') {
-            if (
-              formikValues.ClaimsBasedPayType.includes(
-                REDUCTIONS_TO_BENEFICIARY_COST_SHARING
-              )
-            ) {
-              history.push(
-                `/models/${modelID}/task-list/payment/beneficiary-cost-sharing`
-              );
-            } else if (
-              formikValues.payType.includes(PayType.CLAIMS_BASED_PAYMENTS)
-            ) {
-              history.push(
-                `/models/${modelID}/task-list/payment/anticipating-dependencies`
-              );
+            if (hasClaimsBasedPayment) {
+              if (hasReductionToCostSharing) {
+                history.push(
+                  `/models/${modelID}/task-list/payment/beneficiary-cost-sharing`
+                );
+              } else {
+                history.push(
+                  `/models/${modelID}/task-list/payment/anticipating-dependencies`
+                );
+              }
             } else {
               history.push(`/models/${modelID}/task-list/payment`);
             }
@@ -132,6 +139,7 @@ const NonClaimsBasedPayment = () => {
     __typename: 'PlanPayments',
     id: id ?? '',
     payType: payType ?? [],
+    payClaims: payClaims ?? [],
     nonClaimsPayments: nonClaimsPayments ?? [],
     nonClaimsPaymentOther: nonClaimsPaymentOther ?? '',
     paymentCalculationOwner: paymentCalculationOwner ?? '',
