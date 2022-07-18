@@ -342,8 +342,18 @@ namespace :db do
   end
 
   desc "Dump DB to file"
-  task :dump do
-    sh "pg_dump -T *.*flyway* -T *.*existing_model --data-only postgres > scripts/data/local-db.sql"
+  task :dump, [:file] do |t, args|
+    file = args.to_a[0]
+
+    if file == nil
+      dump()
+    else
+      if file.start_with?("/")
+      else
+      file = "scripts/data/"+file+".sql"
+      end
+     dump(file)
+    end
   end
 
   desc "Load development dataset from file"
@@ -357,10 +367,8 @@ namespace :db do
       else
       file = "scripts/data/"+file+".sql"
       end
-      # p file
      seed(file)
     end
-    return
 
     # Seed data files with hardcoded IDs
     `cp -f scripts/data/sample.pdf tmp/minio/mint-app-file-uploads/b23d964c-3e44-426b-8dcb-aa979adc07a2.pdf`
@@ -374,6 +382,13 @@ namespace :db do
   
   def seed(db_file_path = "scripts/data/local-db.sql" )
     command = "psql < " + db_file_path + " > /dev/null"
+    
+    resp = sh(command, verbose: false)
+
+  end
+  def dump(db_file_path = "scripts/data/local-db.sql" )
+    
+    command = "pg_dump -T *.*flyway* -T *.*existing_model --data-only postgres > " +db_file_path
     
     resp = sh(command, verbose: false)
 
