@@ -1,4 +1,4 @@
-import React, { Fragment, useRef } from 'react';
+import React, { useRef } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
@@ -9,20 +9,15 @@ import {
   Button,
   Fieldset,
   Grid,
-  IconArrowBack,
-  Label,
-  TextInput
+  IconArrowBack
 } from '@trussworks/react-uswds';
-import classNames from 'classnames';
-import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
+import { Form, Formik, FormikProps } from 'formik';
 
-import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
 import ITToolsSummary from 'components/ITToolsSummary';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import AutoSave from 'components/shared/AutoSave';
-import CheckboxField from 'components/shared/CheckboxField';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
@@ -44,13 +39,14 @@ import {
 } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import {
-  sortOtherEnum,
   translateDataForMonitoringType,
   translateOelClaimsBasedMeasuresType,
   translateOelObtainDataType,
   translateOelQualityScoresType
 } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
+
+import { ITToolsFormComponent } from '..';
 
 const initialFormValues: ITToolsPageSixFormType = {
   __typename: 'PlanITTools',
@@ -115,9 +111,11 @@ const ITToolsPageSix = () => {
     !dataNeededForMonitoring.includes(
       DataForMonitoringType.NOT_PLANNING_TO_COLLECT_DATA
     );
+
   const questionTwoNeedsTools: boolean = dataNeededForMonitoring.includes(
     DataForMonitoringType.QUALITY_CLAIMS_BASED_MEASURES
   );
+
   const questionThreeNeedsTools: boolean = dataNeededForMonitoring.includes(
     DataForMonitoringType.QUALITY_REPORTED_MEASURES
   );
@@ -230,320 +228,122 @@ const ITToolsPageSix = () => {
                     }}
                   >
                     <Fieldset disabled={loading}>
+                      {/* Question One: What data do you need to monitor the model? */}
                       <FieldGroup
                         scrollElement="oelObtainData"
                         error={!!flatErrors.oelObtainData}
                         className="margin-y-4"
                       >
-                        <FieldArray
-                          name="oelObtainData"
-                          render={arrayHelpers => (
-                            <>
-                              <legend className="usa-label">
-                                {t('supportTools')}
-                              </legend>
+                        <legend className="usa-label">
+                          {t('supportTools')}
+                        </legend>
 
-                              <FieldErrorMsg>
-                                {flatErrors.oelObtainData}
-                              </FieldErrorMsg>
+                        <FieldErrorMsg>
+                          {flatErrors.oelObtainData}
+                        </FieldErrorMsg>
 
-                              <ITToolsSummary
-                                question={o('dataNeeded')}
-                                answers={dataNeededForMonitoring.map(
-                                  dataNeeded =>
-                                    translateDataForMonitoringType(
-                                      dataNeeded || ''
-                                    )
-                                )}
-                                options={Object.keys(DataForMonitoringType)
-                                  .map(dataType =>
-                                    translateDataForMonitoringType(dataType)
-                                  )
-                                  .filter(
-                                    dataType =>
-                                      dataType !==
-                                      DataForMonitoringType.NOT_PLANNING_TO_COLLECT_DATA
-                                  )}
-                                redirect={`/models/${modelID}/task-list/ops-eval-and-learning/evaluation`}
-                                answered={dataNeededForMonitoring.length > 0}
-                                needsTool={questionOneNeedsTools}
-                                subtext={t('monitorNeedsAnswer')}
-                              />
-
-                              <p className="margin-top-4">{t('tools')}</p>
-
-                              {Object.keys(OelObtainDataType)
-                                .sort(sortOtherEnum)
-                                .map(type => {
-                                  return (
-                                    <Fragment key={type}>
-                                      <Field
-                                        as={CheckboxField}
-                                        disabled={!questionOneNeedsTools}
-                                        id={`it-tools-oel-obtain-data-${type}`}
-                                        name="oelObtainData"
-                                        label={translateOelObtainDataType(type)}
-                                        value={type}
-                                        checked={
-                                          values?.oelObtainData.includes(
-                                            type as OelObtainDataType
-                                          ) && questionOneNeedsTools
-                                        }
-                                        onChange={(
-                                          e: React.ChangeEvent<HTMLInputElement>
-                                        ) => {
-                                          if (e.target.checked) {
-                                            arrayHelpers.push(e.target.value);
-                                          } else {
-                                            const idx = values.oelObtainData.indexOf(
-                                              e.target
-                                                .value as OelObtainDataType
-                                            );
-                                            arrayHelpers.remove(idx);
-                                          }
-                                        }}
-                                      />
-                                      {type === OelObtainDataType.OTHER &&
-                                        questionOneNeedsTools &&
-                                        values.oelObtainData.includes(type) && (
-                                          <div className="margin-left-4 margin-top-1">
-                                            <Label
-                                              htmlFor="it-tools-oel-obtain-data-other"
-                                              className="text-normal"
-                                            >
-                                              {h('pleaseSpecify')}
-                                            </Label>
-                                            <FieldErrorMsg>
-                                              {flatErrors.oelObtainDataOther}
-                                            </FieldErrorMsg>
-                                            <Field
-                                              as={TextInput}
-                                              type="text"
-                                              className="maxw-none"
-                                              id="it-tools-oel-obtain-data-other"
-                                              maxLength={50}
-                                              name="oelObtainDataOther"
-                                            />
-                                          </div>
-                                        )}
-                                    </Fragment>
-                                  );
-                                })}
-                              <AddNote
-                                id="it-tools-oel-obtain-data-note"
-                                field="oelObtainDataNote"
-                              />
-                            </>
+                        <ITToolsSummary
+                          question={o('dataNeeded')}
+                          answers={dataNeededForMonitoring.map(dataNeeded =>
+                            translateDataForMonitoringType(dataNeeded || '')
                           )}
+                          options={Object.keys(DataForMonitoringType)
+                            .map(dataType =>
+                              translateDataForMonitoringType(dataType)
+                            )
+                            .filter(
+                              dataType =>
+                                dataType !==
+                                DataForMonitoringType.NOT_PLANNING_TO_COLLECT_DATA
+                            )}
+                          redirect={`/models/${modelID}/task-list/ops-eval-and-learning/evaluation`}
+                          answered={dataNeededForMonitoring.length > 0}
+                          needsTool={questionOneNeedsTools}
+                          subtext={t('monitorNeedsAnswer')}
+                        />
+
+                        <ITToolsFormComponent
+                          flatErrors={flatErrors}
+                          formikValue={values.oelObtainData}
+                          fieldName="oelObtainData"
+                          needsTool={questionOneNeedsTools}
+                          htmlID="oel-obtain-data"
+                          EnumType={OelObtainDataType}
+                          translation={translateOelObtainDataType}
                         />
                       </FieldGroup>
+
+                      {/* Question Two: What data do you need to monitor the model? */}
 
                       <FieldGroup
                         scrollElement="oelClaimsBasedMeasures"
                         error={!!flatErrors.oelClaimsBasedMeasures}
                         className="margin-y-4"
                       >
-                        <FieldArray
-                          name="oelClaimsBasedMeasures"
-                          render={arrayHelpers => (
-                            <>
-                              <legend className="usa-label">
-                                {t('claimsBasedTools')}
-                              </legend>
+                        <legend className="usa-label">
+                          {t('claimsBasedTools')}
+                        </legend>
 
-                              <FieldErrorMsg>
-                                {flatErrors.oelClaimsBasedMeasures}
-                              </FieldErrorMsg>
+                        <FieldErrorMsg>
+                          {flatErrors.oelClaimsBasedMeasures}
+                        </FieldErrorMsg>
 
-                              <ITToolsSummary
-                                question={o('dataNeeded')}
-                                answers={dataNeededForMonitoring.map(
-                                  dataNeeded =>
-                                    translateDataForMonitoringType(
-                                      dataNeeded || ''
-                                    )
-                                )}
-                                redirect={`/models/${modelID}/task-list/ops-eval-and-learning/evaluation`}
-                                answered={dataNeededForMonitoring.length > 0}
-                                needsTool={questionTwoNeedsTools}
-                                subtext={t('claimsNeedsAnswer')}
-                              />
-
-                              <p className="margin-top-4">{t('tools')}</p>
-
-                              {Object.keys(OelClaimsBasedMeasuresType)
-                                .sort(sortOtherEnum)
-                                .map(type => {
-                                  return (
-                                    <Fragment key={type}>
-                                      <Field
-                                        as={CheckboxField}
-                                        disabled={!questionTwoNeedsTools}
-                                        id={`it-tools-oel-claims-based-measure-${type}`}
-                                        name="oelClaimsBasedMeasures"
-                                        label={translateOelClaimsBasedMeasuresType(
-                                          type
-                                        )}
-                                        value={type}
-                                        checked={
-                                          values?.oelClaimsBasedMeasures.includes(
-                                            type as OelClaimsBasedMeasuresType
-                                          ) && questionTwoNeedsTools
-                                        }
-                                        onChange={(
-                                          e: React.ChangeEvent<HTMLInputElement>
-                                        ) => {
-                                          if (e.target.checked) {
-                                            arrayHelpers.push(e.target.value);
-                                          } else {
-                                            const idx = values.oelClaimsBasedMeasures.indexOf(
-                                              e.target
-                                                .value as OelClaimsBasedMeasuresType
-                                            );
-                                            arrayHelpers.remove(idx);
-                                          }
-                                        }}
-                                      />
-                                      {type ===
-                                        OelClaimsBasedMeasuresType.OTHER &&
-                                        questionTwoNeedsTools &&
-                                        values.oelClaimsBasedMeasures.includes(
-                                          type
-                                        ) && (
-                                          <div className="margin-left-4 margin-top-1">
-                                            <Label
-                                              htmlFor="it-tools-oel-claims-based-measure-other"
-                                              className="text-normal"
-                                            >
-                                              {h('pleaseSpecify')}
-                                            </Label>
-                                            <FieldErrorMsg>
-                                              {
-                                                flatErrors.oelClaimsBasedMeasuresOther
-                                              }
-                                            </FieldErrorMsg>
-                                            <Field
-                                              as={TextInput}
-                                              type="text"
-                                              className="maxw-none"
-                                              id="it-tools-oel-claims-based-measure-other"
-                                              maxLength={50}
-                                              name="oelClaimsBasedMeasuresOther"
-                                            />
-                                          </div>
-                                        )}
-                                    </Fragment>
-                                  );
-                                })}
-                              <AddNote
-                                id="it-tools-oel-claims-based-measure-note"
-                                field="oelClaimsBasedMeasuresNote"
-                              />
-                            </>
+                        <ITToolsSummary
+                          question={o('dataNeeded')}
+                          answers={dataNeededForMonitoring.map(dataNeeded =>
+                            translateDataForMonitoringType(dataNeeded || '')
                           )}
+                          redirect={`/models/${modelID}/task-list/ops-eval-and-learning/evaluation`}
+                          answered={dataNeededForMonitoring.length > 0}
+                          needsTool={questionTwoNeedsTools}
+                          subtext={t('claimsNeedsAnswer')}
+                        />
+
+                        <ITToolsFormComponent
+                          flatErrors={flatErrors}
+                          formikValue={values.oelClaimsBasedMeasures}
+                          fieldName="oelClaimsBasedMeasures"
+                          needsTool={questionTwoNeedsTools}
+                          htmlID="oel-claims-based-measure"
+                          EnumType={OelClaimsBasedMeasuresType}
+                          translation={translateOelClaimsBasedMeasuresType}
                         />
                       </FieldGroup>
+
+                      {/* Question Three: What data do you need to monitor the model? */}
 
                       <FieldGroup
                         scrollElement="oelQualityScores"
                         error={!!flatErrors.oelQualityScores}
                         className="margin-y-4"
                       >
-                        <FieldArray
-                          name="oelQualityScores"
-                          render={arrayHelpers => (
-                            <>
-                              <legend className="usa-label maxw-none">
-                                {t('qualityTools')}
-                              </legend>
+                        <legend className="usa-label maxw-none">
+                          {t('qualityTools')}
+                        </legend>
 
-                              <FieldErrorMsg>
-                                {flatErrors.oelQualityScores}
-                              </FieldErrorMsg>
+                        <FieldErrorMsg>
+                          {flatErrors.oelQualityScores}
+                        </FieldErrorMsg>
 
-                              <ITToolsSummary
-                                question={o('dataNeeded')}
-                                answers={dataNeededForMonitoring.map(
-                                  dataNeeded =>
-                                    translateDataForMonitoringType(
-                                      dataNeeded || ''
-                                    )
-                                )}
-                                redirect={`/models/${modelID}/task-list/ops-eval-and-learning/evaluation`}
-                                answered={dataNeededForMonitoring.length > 0}
-                                needsTool={questionThreeNeedsTools}
-                                subtext={t('qualityNeedsAnswer')}
-                              />
-
-                              <p className="margin-top-4">{t('tools')}</p>
-
-                              {Object.keys(OelQualityScoresType)
-                                .sort(sortOtherEnum)
-                                .map(type => {
-                                  return (
-                                    <Fragment key={type}>
-                                      <Field
-                                        as={CheckboxField}
-                                        disabled={!questionThreeNeedsTools}
-                                        id={`it-tools-oel-quality-scores-${type}`}
-                                        name="oelQualityScores"
-                                        label={translateOelQualityScoresType(
-                                          type
-                                        )}
-                                        value={type}
-                                        checked={
-                                          values?.oelQualityScores.includes(
-                                            type as OelQualityScoresType
-                                          ) && questionThreeNeedsTools
-                                        }
-                                        onChange={(
-                                          e: React.ChangeEvent<HTMLInputElement>
-                                        ) => {
-                                          if (e.target.checked) {
-                                            arrayHelpers.push(e.target.value);
-                                          } else {
-                                            const idx = values.oelQualityScores.indexOf(
-                                              e.target
-                                                .value as OelQualityScoresType
-                                            );
-                                            arrayHelpers.remove(idx);
-                                          }
-                                        }}
-                                      />
-                                      {type === OelQualityScoresType.OTHER &&
-                                        questionThreeNeedsTools &&
-                                        values.oelQualityScores.includes(
-                                          type
-                                        ) && (
-                                          <div className="margin-left-4 margin-top-1">
-                                            <Label
-                                              htmlFor="it-tools-oel-quality-scores-other"
-                                              className="text-normal"
-                                            >
-                                              {h('pleaseSpecify')}
-                                            </Label>
-                                            <FieldErrorMsg>
-                                              {flatErrors.oelQualityScoresOther}
-                                            </FieldErrorMsg>
-                                            <Field
-                                              as={TextInput}
-                                              type="text"
-                                              className="maxw-none"
-                                              id="it-tools-oel-quality-scores-other"
-                                              maxLength={50}
-                                              name="oelQualityScoresOther"
-                                            />
-                                          </div>
-                                        )}
-                                    </Fragment>
-                                  );
-                                })}
-                              <AddNote
-                                id="it-tools-oel-quality-scores-note"
-                                field="oelQualityScoresNote"
-                              />
-                            </>
+                        <ITToolsSummary
+                          question={o('dataNeeded')}
+                          answers={dataNeededForMonitoring.map(dataNeeded =>
+                            translateDataForMonitoringType(dataNeeded || '')
                           )}
+                          redirect={`/models/${modelID}/task-list/ops-eval-and-learning/evaluation`}
+                          answered={dataNeededForMonitoring.length > 0}
+                          needsTool={questionThreeNeedsTools}
+                          subtext={t('qualityNeedsAnswer')}
+                        />
+
+                        <ITToolsFormComponent
+                          flatErrors={flatErrors}
+                          formikValue={values.oelQualityScores}
+                          fieldName="oelQualityScores"
+                          needsTool={questionThreeNeedsTools}
+                          htmlID="oel-quality-scores"
+                          EnumType={OelQualityScoresType}
+                          translation={translateOelQualityScoresType}
                         />
                       </FieldGroup>
 

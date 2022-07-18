@@ -37,6 +37,7 @@ interface ITToolsFormComponentType {
   htmlID: string;
   EnumType: enumType;
   translation: (type: string) => string;
+  subTranslation?: (type: string) => string;
   formikValue: string[];
   flatErrors: flatErrorsType;
 }
@@ -48,6 +49,7 @@ export const ITToolsFormComponent = ({
   htmlID,
   EnumType,
   translation,
+  subTranslation,
   formikValue,
   flatErrors
 }: ITToolsFormComponentType) => {
@@ -68,6 +70,7 @@ export const ITToolsFormComponent = ({
                 id={`it-tools-${htmlID}-${type}`}
                 name={fieldName}
                 label={translation(type)}
+                sublabel={subTranslation ? subTranslation(type) : null}
                 value={type}
                 checked={formikValue.includes(type) && needsTool}
               />

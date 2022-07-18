@@ -223,7 +223,7 @@ const ITToolsPageOne = () => {
                     <h2>{c('heading')}</h2>
 
                     <Fieldset disabled={loading}>
-                      {/* Question: Will you manage Part C/D enrollment? */}
+                      {/* Question One: Will you manage Part C/D enrollment? */}
 
                       <FieldGroup
                         scrollElement="gcPartCD"
@@ -260,7 +260,7 @@ const ITToolsPageOne = () => {
                         />
                       </FieldGroup>
 
-                      {/* Question: Will you review and collect plan bids? */}
+                      {/* Question Two: Will you review and collect plan bids? */}
 
                       <FieldGroup
                         scrollElement="gcCollectBids"
@@ -299,7 +299,7 @@ const ITToolsPageOne = () => {
                         />
                       </FieldGroup>
 
-                      {/* Question: Have you updated the plan’s contact? */}
+                      {/* Question Three: Have you updated the plan’s contact? */}
 
                       <FieldGroup
                         scrollElement="gcUpdateContract"

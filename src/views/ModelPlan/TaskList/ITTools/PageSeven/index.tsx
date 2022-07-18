@@ -1,4 +1,4 @@
-import React, { Fragment, useRef } from 'react';
+import React, { useRef } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
@@ -9,20 +9,15 @@ import {
   Button,
   Fieldset,
   Grid,
-  IconArrowBack,
-  Label,
-  TextInput
+  IconArrowBack
 } from '@trussworks/react-uswds';
-import classNames from 'classnames';
-import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
+import { Form, Formik, FormikProps } from 'formik';
 
-import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
 import ITToolsSummary from 'components/ITToolsSummary';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import AutoSave from 'components/shared/AutoSave';
-import CheckboxField from 'components/shared/CheckboxField';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
@@ -45,7 +40,6 @@ import {
 } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import {
-  sortOtherEnum,
   translateDataToSendParticipantsType,
   translateModelLearningSystemType,
   translateOelLearningContractorType,
@@ -53,6 +47,8 @@ import {
   translateOelSendReportsType
 } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
+
+import { ITToolsFormComponent } from '..';
 
 const initialFormValues: ITToolsPageSevenFormType = {
   __typename: 'PlanITTools',
@@ -107,6 +103,25 @@ const ITToolsPageSeven = () => {
     itTools,
     opsEvalAndLearning: { dataToSendParticicipants, modelLearningSystems }
   } = modelPlan;
+
+  /**
+   * Identifying if each question requires tooling as well as rending answers
+   * Checkbox answers will not be checked despite a store truthy boolean
+   * 'Specify other' answer will not be rendered even if OTHER value is true
+   */
+  const questionOneNeedsTools: boolean =
+    dataToSendParticicipants.length > 0 &&
+    !dataToSendParticicipants.includes(
+      DataToSendParticipantsType.NOT_PLANNING_TO_SEND_DATA
+    );
+
+  const questionTwoNeedsTools: boolean = modelLearningSystems.includes(
+    ModelLearningSystemType.LEARNING_CONTRACTOR
+  );
+
+  const questionThreeNeedsTools: boolean = modelLearningSystems.includes(
+    ModelLearningSystemType.PARTICIPANT_COLLABORATION
+  );
 
   const [update] = useMutation<UpdatePlanItToolsVariables>(UpdatePlanITTools);
 
@@ -216,387 +231,124 @@ const ITToolsPageSeven = () => {
                     }}
                   >
                     <Fieldset disabled={loading}>
+                      {/* Question One: What data will you send to participants? */}
                       <FieldGroup
                         scrollElement="oelSendReports"
                         error={!!flatErrors.oelSendReports}
                         className="margin-y-4"
                       >
-                        <FieldArray
-                          name="oelSendReports"
-                          render={arrayHelpers => (
-                            <>
-                              <legend className="usa-label maxw-none">
-                                {t('sendReportTools')}
-                              </legend>
+                        <legend className="usa-label maxw-none">
+                          {t('sendReportTools')}
+                        </legend>
 
-                              <FieldErrorMsg>
-                                {flatErrors.oelSendReports}
-                              </FieldErrorMsg>
+                        <FieldErrorMsg>
+                          {flatErrors.oelSendReports}
+                        </FieldErrorMsg>
 
-                              <ITToolsSummary
-                                question={o('dataToSend')}
-                                answers={dataToSendParticicipants.map(
-                                  dataToSend =>
-                                    translateDataToSendParticipantsType(
-                                      dataToSend || ''
-                                    )
-                                )}
-                                options={Object.keys(DataToSendParticipantsType)
-                                  .map(dataType =>
-                                    translateDataToSendParticipantsType(
-                                      dataType
-                                    )
-                                  )
-                                  .filter(
-                                    dataType =>
-                                      dataType !==
-                                      DataToSendParticipantsType.NOT_PLANNING_TO_SEND_DATA
-                                  )}
-                                redirect={`/models/${modelID}/task-list/ops-eval-and-learning/evaluation`}
-                                answered={dataToSendParticicipants.length > 0}
-                                needsTool={
-                                  dataToSendParticicipants.length > 0 &&
-                                  !dataToSendParticicipants.includes(
-                                    DataToSendParticipantsType.NOT_PLANNING_TO_SEND_DATA
-                                  )
-                                }
-                                subtext={t('sendDataNeedsAnswer')}
-                              />
-
-                              <p className="margin-top-4">{t('tools')}</p>
-
-                              {Object.keys(OelSendReportsType)
-                                .sort(sortOtherEnum)
-                                .map(type => {
-                                  return (
-                                    <Fragment key={type}>
-                                      <Field
-                                        as={CheckboxField}
-                                        disabled={
-                                          dataToSendParticicipants.includes(
-                                            DataToSendParticipantsType.NOT_PLANNING_TO_SEND_DATA
-                                          ) ||
-                                          dataToSendParticicipants.length === 0
-                                        }
-                                        id={`it-tools-oel-send-reports-${type}`}
-                                        name="oelSendReports"
-                                        label={translateOelSendReportsType(
-                                          type
-                                        )}
-                                        value={type}
-                                        checked={values?.oelSendReports.includes(
-                                          type as OelSendReportsType
-                                        )}
-                                        onChange={(
-                                          e: React.ChangeEvent<HTMLInputElement>
-                                        ) => {
-                                          if (e.target.checked) {
-                                            arrayHelpers.push(e.target.value);
-                                          } else {
-                                            const idx = values.oelSendReports.indexOf(
-                                              e.target
-                                                .value as OelSendReportsType
-                                            );
-                                            arrayHelpers.remove(idx);
-                                          }
-                                        }}
-                                      />
-                                      {type === OelSendReportsType.OTHER &&
-                                        values.oelSendReports.includes(
-                                          type
-                                        ) && (
-                                          <div className="margin-left-4 margin-top-1">
-                                            <Label
-                                              htmlFor="it-tools-oel-send-reports-other"
-                                              className={classNames(
-                                                {
-                                                  'text-gray-30':
-                                                    dataToSendParticicipants.includes(
-                                                      DataToSendParticipantsType.NOT_PLANNING_TO_SEND_DATA
-                                                    ) ||
-                                                    dataToSendParticicipants.length ===
-                                                      0
-                                                },
-                                                'text-normal'
-                                              )}
-                                            >
-                                              {h('pleaseSpecify')}
-                                            </Label>
-                                            <FieldErrorMsg>
-                                              {flatErrors.oelSendReportsOther}
-                                            </FieldErrorMsg>
-                                            <Field
-                                              as={TextInput}
-                                              type="text"
-                                              disabled={
-                                                dataToSendParticicipants.includes(
-                                                  DataToSendParticipantsType.NOT_PLANNING_TO_SEND_DATA
-                                                ) ||
-                                                dataToSendParticicipants.length ===
-                                                  0
-                                              }
-                                              className="maxw-none"
-                                              id="it-tools-oel-send-reports-other"
-                                              maxLength={50}
-                                              name="oelSendReportsOther"
-                                            />
-                                          </div>
-                                        )}
-                                    </Fragment>
-                                  );
-                                })}
-                              <AddNote
-                                id="it-tools-oel-send-reports-note"
-                                field="oelSendReportsNote"
-                              />
-                            </>
+                        <ITToolsSummary
+                          question={o('dataToSend')}
+                          answers={dataToSendParticicipants.map(dataToSend =>
+                            translateDataToSendParticipantsType(
+                              dataToSend || ''
+                            )
                           )}
+                          options={Object.keys(DataToSendParticipantsType)
+                            .map(dataType =>
+                              translateDataToSendParticipantsType(dataType)
+                            )
+                            .filter(
+                              dataType =>
+                                dataType !==
+                                DataToSendParticipantsType.NOT_PLANNING_TO_SEND_DATA
+                            )}
+                          redirect={`/models/${modelID}/task-list/ops-eval-and-learning/evaluation`}
+                          answered={dataToSendParticicipants.length > 0}
+                          needsTool={questionOneNeedsTools}
+                          subtext={t('sendDataNeedsAnswer')}
+                        />
+
+                        <ITToolsFormComponent
+                          flatErrors={flatErrors}
+                          formikValue={values.oelSendReports}
+                          fieldName="oelSendReports"
+                          needsTool={questionOneNeedsTools}
+                          htmlID="oel-send-reports"
+                          EnumType={OelSendReportsType}
+                          translation={translateOelSendReportsType}
                         />
                       </FieldGroup>
+
+                      {/* Question Two: Will the model have a learning system? */}
 
                       <FieldGroup
                         scrollElement="oelLearningContractor"
                         error={!!flatErrors.oelLearningContractor}
                         className="margin-y-4"
                       >
-                        <FieldArray
-                          name="oelLearningContractor"
-                          render={arrayHelpers => (
-                            <>
-                              <legend className="usa-label maxw-none">
-                                {t('sendReportTools')}
-                              </legend>
+                        <legend className="usa-label maxw-none">
+                          {t('sendReportTools')}
+                        </legend>
 
-                              <FieldErrorMsg>
-                                {flatErrors.oelLearningContractor}
-                              </FieldErrorMsg>
+                        <FieldErrorMsg>
+                          {flatErrors.oelLearningContractor}
+                        </FieldErrorMsg>
 
-                              <ITToolsSummary
-                                question={o('dataToSend')}
-                                answers={modelLearningSystems.map(system =>
-                                  translateModelLearningSystemType(system || '')
-                                )}
-                                redirect={`/models/${modelID}/task-list/ops-eval-and-learning/learning`}
-                                answered={modelLearningSystems.length > 0}
-                                needsTool={modelLearningSystems.includes(
-                                  ModelLearningSystemType.LEARNING_CONTRACTOR
-                                )}
-                                subtext={t('learningNeedsAnswer')}
-                              />
-
-                              <p className="margin-top-4">{t('tools')}</p>
-
-                              {Object.keys(OelLearningContractorType)
-                                .sort(sortOtherEnum)
-                                .map(type => {
-                                  return (
-                                    <Fragment key={type}>
-                                      <Field
-                                        as={CheckboxField}
-                                        disabled={
-                                          !modelLearningSystems.includes(
-                                            ModelLearningSystemType.LEARNING_CONTRACTOR
-                                          ) || modelLearningSystems.length === 0
-                                        }
-                                        id={`it-tools-oel-learning-contractor-${type}`}
-                                        name="oelLearningContractor"
-                                        label={translateOelLearningContractorType(
-                                          type
-                                        )}
-                                        value={type}
-                                        checked={values?.oelLearningContractor.includes(
-                                          type as OelLearningContractorType
-                                        )}
-                                        onChange={(
-                                          e: React.ChangeEvent<HTMLInputElement>
-                                        ) => {
-                                          if (e.target.checked) {
-                                            arrayHelpers.push(e.target.value);
-                                          } else {
-                                            const idx = values.oelLearningContractor.indexOf(
-                                              e.target
-                                                .value as OelLearningContractorType
-                                            );
-                                            arrayHelpers.remove(idx);
-                                          }
-                                        }}
-                                      />
-                                      {type ===
-                                        OelLearningContractorType.OTHER &&
-                                        values.oelLearningContractor.includes(
-                                          type
-                                        ) && (
-                                          <div className="margin-left-4 margin-top-1">
-                                            <Label
-                                              htmlFor="it-tools-oel-learning-contractor-other"
-                                              className={classNames(
-                                                {
-                                                  'text-gray-30':
-                                                    !modelLearningSystems.includes(
-                                                      ModelLearningSystemType.LEARNING_CONTRACTOR
-                                                    ) ||
-                                                    modelLearningSystems.length ===
-                                                      0
-                                                },
-                                                'text-normal'
-                                              )}
-                                            >
-                                              {h('pleaseSpecify')}
-                                            </Label>
-                                            <FieldErrorMsg>
-                                              {
-                                                flatErrors.oelLearningContractorOther
-                                              }
-                                            </FieldErrorMsg>
-                                            <Field
-                                              as={TextInput}
-                                              type="text"
-                                              disabled={
-                                                !modelLearningSystems.includes(
-                                                  ModelLearningSystemType.LEARNING_CONTRACTOR
-                                                ) ||
-                                                modelLearningSystems.length ===
-                                                  0
-                                              }
-                                              className="maxw-none"
-                                              id="it-tools-oel-learning-contractor-other"
-                                              maxLength={50}
-                                              name="oelLearningContractorOther"
-                                            />
-                                          </div>
-                                        )}
-                                    </Fragment>
-                                  );
-                                })}
-                              <AddNote
-                                id="it-tools-oel-learning-contractor-note"
-                                field="oelLearningContractorNote"
-                              />
-                            </>
+                        <ITToolsSummary
+                          question={o('dataToSend')}
+                          answers={modelLearningSystems.map(system =>
+                            translateModelLearningSystemType(system || '')
                           )}
+                          redirect={`/models/${modelID}/task-list/ops-eval-and-learning/learning`}
+                          answered={modelLearningSystems.length > 0}
+                          needsTool={questionTwoNeedsTools}
+                          subtext={t('learningNeedsAnswer')}
+                        />
+
+                        <ITToolsFormComponent
+                          flatErrors={flatErrors}
+                          formikValue={values.oelLearningContractor}
+                          fieldName="oelLearningContractor"
+                          needsTool={questionTwoNeedsTools}
+                          htmlID="oel-learning-contractor"
+                          EnumType={OelLearningContractorType}
+                          translation={translateOelLearningContractorType}
                         />
                       </FieldGroup>
+
+                      {/* Question Three: Will the model have a learning system? */}
 
                       <FieldGroup
                         scrollElement="oelParticipantCollaboration"
                         error={!!flatErrors.oelParticipantCollaboration}
                         className="margin-y-4"
                       >
-                        <FieldArray
-                          name="oelParticipantCollaboration"
-                          render={arrayHelpers => (
-                            <>
-                              <legend className="usa-label maxw-none">
-                                {t('sendReportTools')}
-                              </legend>
+                        <legend className="usa-label maxw-none">
+                          {t('sendReportTools')}
+                        </legend>
 
-                              <FieldErrorMsg>
-                                {flatErrors.oelParticipantCollaboration}
-                              </FieldErrorMsg>
+                        <FieldErrorMsg>
+                          {flatErrors.oelParticipantCollaboration}
+                        </FieldErrorMsg>
 
-                              <ITToolsSummary
-                                question={o('dataToSend')}
-                                answers={modelLearningSystems.map(system =>
-                                  translateModelLearningSystemType(system || '')
-                                )}
-                                redirect={`/models/${modelID}/task-list/ops-eval-and-learning/learning`}
-                                answered={modelLearningSystems.length > 0}
-                                needsTool={modelLearningSystems.includes(
-                                  ModelLearningSystemType.PARTICIPANT_COLLABORATION
-                                )}
-                                subtext={t('participantNeedsAnswer')}
-                              />
-
-                              <p className="margin-top-4">{t('tools')}</p>
-
-                              {Object.keys(OelParticipantCollaborationType)
-                                .sort(sortOtherEnum)
-                                .map(type => {
-                                  return (
-                                    <Fragment key={type}>
-                                      <Field
-                                        as={CheckboxField}
-                                        disabled={
-                                          !modelLearningSystems.includes(
-                                            ModelLearningSystemType.PARTICIPANT_COLLABORATION
-                                          ) || modelLearningSystems.length === 0
-                                        }
-                                        id={`it-tools-oel-participant-collaboration-${type}`}
-                                        name="oelParticipantCollaboration"
-                                        label={translateOelParticipantCollaborationType(
-                                          type
-                                        )}
-                                        value={type}
-                                        checked={values?.oelParticipantCollaboration.includes(
-                                          type as OelParticipantCollaborationType
-                                        )}
-                                        onChange={(
-                                          e: React.ChangeEvent<HTMLInputElement>
-                                        ) => {
-                                          if (e.target.checked) {
-                                            arrayHelpers.push(e.target.value);
-                                          } else {
-                                            const idx = values.oelParticipantCollaboration.indexOf(
-                                              e.target
-                                                .value as OelParticipantCollaborationType
-                                            );
-                                            arrayHelpers.remove(idx);
-                                          }
-                                        }}
-                                      />
-                                      {type ===
-                                        OelParticipantCollaborationType.OTHER &&
-                                        values.oelParticipantCollaboration.includes(
-                                          type
-                                        ) && (
-                                          <div className="margin-left-4 margin-top-1">
-                                            <Label
-                                              htmlFor="it-tools-oel-participant-collaboration-other"
-                                              className={classNames(
-                                                {
-                                                  'text-gray-30':
-                                                    !modelLearningSystems.includes(
-                                                      ModelLearningSystemType.PARTICIPANT_COLLABORATION
-                                                    ) ||
-                                                    modelLearningSystems.length ===
-                                                      0
-                                                },
-                                                'text-normal'
-                                              )}
-                                            >
-                                              {h('pleaseSpecify')}
-                                            </Label>
-                                            <FieldErrorMsg>
-                                              {
-                                                flatErrors.oelParticipantCollaborationOther
-                                              }
-                                            </FieldErrorMsg>
-                                            <Field
-                                              as={TextInput}
-                                              type="text"
-                                              disabled={
-                                                !modelLearningSystems.includes(
-                                                  ModelLearningSystemType.PARTICIPANT_COLLABORATION
-                                                ) ||
-                                                modelLearningSystems.length ===
-                                                  0
-                                              }
-                                              className="maxw-none"
-                                              id="it-tools-oel-participant-collaboration-other"
-                                              maxLength={50}
-                                              name="oelParticipantCollaborationOther"
-                                            />
-                                          </div>
-                                        )}
-                                    </Fragment>
-                                  );
-                                })}
-                              <AddNote
-                                id="it-tools-oel-participant-collaboration-note"
-                                field="oelParticipantCollaborationNote"
-                              />
-                            </>
+                        <ITToolsSummary
+                          question={o('dataToSend')}
+                          answers={modelLearningSystems.map(system =>
+                            translateModelLearningSystemType(system || '')
                           )}
+                          redirect={`/models/${modelID}/task-list/ops-eval-and-learning/learning`}
+                          answered={modelLearningSystems.length > 0}
+                          needsTool={questionThreeNeedsTools}
+                          subtext={t('participantNeedsAnswer')}
+                        />
+
+                        <ITToolsFormComponent
+                          flatErrors={flatErrors}
+                          formikValue={values.oelParticipantCollaboration}
+                          fieldName="oelParticipantCollaboration"
+                          needsTool={questionThreeNeedsTools}
+                          htmlID="oel-participant-collaboration"
+                          EnumType={OelParticipantCollaborationType}
+                          translation={translateOelParticipantCollaborationType}
                         />
                       </FieldGroup>
 

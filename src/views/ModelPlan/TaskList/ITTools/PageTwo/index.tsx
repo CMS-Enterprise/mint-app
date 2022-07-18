@@ -113,9 +113,11 @@ const ITToolsPageTwo = () => {
   const questionOneNeedsTools: boolean =
     recruitmentMethod === RecruitmentType.LOI ||
     recruitmentMethod === RecruitmentType.NOFO;
+
   const questionTwoNeedsTools: boolean = selectionMethod.includes(
     ParticipantSelectionType.APPLICATION_REVIEW_AND_SCORING_TOOL
   );
+
   const questionThreeNeedsTools: boolean = selectionMethod.includes(
     ParticipantSelectionType.APPLICATION_SUPPORT_CONTRACTOR
   );
@@ -229,6 +231,7 @@ const ITToolsPageTwo = () => {
                   >
                     <h2>{p('heading')}</h2>
                     <Fieldset disabled={loading}>
+                      {/* Question One: How will you recruit the participants? */}
                       <FieldGroup
                         scrollElement="ppToAdvertise"
                         error={!!flatErrors.ppToAdvertise}
@@ -267,6 +270,8 @@ const ITToolsPageTwo = () => {
                         />
                       </FieldGroup>
 
+                      {/* Question Two: How will you select participants? */}
+
                       <FieldGroup
                         scrollElement="ppCollectScoreReview"
                         error={!!flatErrors.ppCollectScoreReview}
@@ -303,6 +308,8 @@ const ITToolsPageTwo = () => {
                           translation={translatePpCollectScoreReviewType}
                         />
                       </FieldGroup>
+
+                      {/* Question Three: How will you select participants? */}
 
                       <FieldGroup
                         scrollElement="ppAppSupportContractor"

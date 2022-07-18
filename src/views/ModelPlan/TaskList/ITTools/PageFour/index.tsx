@@ -1,4 +1,4 @@
-import React, { Fragment, useRef } from 'react';
+import React, { useRef } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
@@ -9,19 +9,15 @@ import {
   Button,
   Fieldset,
   Grid,
-  IconArrowBack,
-  Label,
-  TextInput
+  IconArrowBack
 } from '@trussworks/react-uswds';
-import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
+import { Form, Formik, FormikProps } from 'formik';
 
-import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
 import ITToolsSummary from 'components/ITToolsSummary';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import AutoSave from 'components/shared/AutoSave';
-import CheckboxField from 'components/shared/CheckboxField';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
@@ -43,7 +39,6 @@ import {
 } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import {
-  sortOtherEnum,
   translateBenchmarkForPerformanceType,
   translateBoolean,
   translateOelHelpdeskSupportType,
@@ -52,6 +47,8 @@ import {
   translateOelPerformanceBenchmarkType
 } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
+
+import { ITToolsFormComponent } from '..';
 
 const initialFormValues: ITToolsPageFourFormType = {
   __typename: 'PlanITTools',
@@ -114,7 +111,9 @@ const ITToolsPageFour = () => {
    * 'Specify other' answer will not be rendered even if OTHER value is true
    */
   const questionOneNeedsTools: boolean = helpdeskUse || false;
+
   const questionTwoNeedsTools: boolean = iddocSupport || false;
+
   const questionThreeNeedsTools: boolean =
     benchmarkForPerformance === BenchmarkForPerformanceType.YES_RECONCILE ||
     benchmarkForPerformance === BenchmarkForPerformanceType.YES_NO_RECONCILE;
@@ -229,310 +228,110 @@ const ITToolsPageFour = () => {
                     <h2>{o('heading')}</h2>
 
                     <Fieldset disabled={loading}>
+                      {/* Question One: Do you plan to use a helpdesk? */}
                       <FieldGroup
                         scrollElement="oelHelpdeskSupport"
                         error={!!flatErrors.oelHelpdeskSupport}
                         className="margin-y-4"
                       >
-                        <FieldArray
-                          name="oelHelpdeskSupport"
-                          render={arrayHelpers => (
-                            <>
-                              <legend className="usa-label maxw-none">
-                                {t('helpDeskTools')}
-                              </legend>
+                        <legend className="usa-label maxw-none">
+                          {t('helpDeskTools')}
+                        </legend>
 
-                              <FieldErrorMsg>
-                                {flatErrors.oelHelpdeskSupport}
-                              </FieldErrorMsg>
+                        <FieldErrorMsg>
+                          {flatErrors.oelHelpdeskSupport}
+                        </FieldErrorMsg>
 
-                              <ITToolsSummary
-                                question={o('helpDesk')}
-                                answers={[
-                                  translateBoolean(helpdeskUse || false)
-                                ]}
-                                redirect={`/models/${modelID}/task-list/ops-eval-and-learning`}
-                                answered={helpdeskUse !== null}
-                                needsTool={questionOneNeedsTools}
-                                subtext={t('yesNeedsAnswer')}
-                              />
+                        <ITToolsSummary
+                          question={o('helpDesk')}
+                          answers={[translateBoolean(helpdeskUse || false)]}
+                          redirect={`/models/${modelID}/task-list/ops-eval-and-learning`}
+                          answered={helpdeskUse !== null}
+                          needsTool={questionOneNeedsTools}
+                          subtext={t('yesNeedsAnswer')}
+                        />
 
-                              <p className="margin-top-4">{t('tools')}</p>
-
-                              {Object.keys(OelHelpdeskSupportType)
-                                .sort(sortOtherEnum)
-                                .map(type => {
-                                  return (
-                                    <Fragment key={type}>
-                                      <Field
-                                        as={CheckboxField}
-                                        disabled={!questionOneNeedsTools}
-                                        id={`it-tools-oel-help-desk-${type}`}
-                                        name="oelHelpdeskSupport"
-                                        label={translateOelHelpdeskSupportType(
-                                          type
-                                        )}
-                                        value={type}
-                                        checked={
-                                          values?.oelHelpdeskSupport.includes(
-                                            type as OelHelpdeskSupportType
-                                          ) && questionOneNeedsTools
-                                        }
-                                        onChange={(
-                                          e: React.ChangeEvent<HTMLInputElement>
-                                        ) => {
-                                          if (e.target.checked) {
-                                            arrayHelpers.push(e.target.value);
-                                          } else {
-                                            const idx = values.oelHelpdeskSupport.indexOf(
-                                              e.target
-                                                .value as OelHelpdeskSupportType
-                                            );
-                                            arrayHelpers.remove(idx);
-                                          }
-                                        }}
-                                      />
-                                      {type === OelHelpdeskSupportType.OTHER &&
-                                        questionOneNeedsTools &&
-                                        values.oelHelpdeskSupport.includes(
-                                          type
-                                        ) && (
-                                          <div className="margin-left-4 margin-top-1">
-                                            <Label
-                                              htmlFor="it-tools-oel-help-desk-other"
-                                              className="text-normal"
-                                            >
-                                              {h('pleaseSpecify')}
-                                            </Label>
-                                            <FieldErrorMsg>
-                                              {
-                                                flatErrors.oelHelpdeskSupportOther
-                                              }
-                                            </FieldErrorMsg>
-                                            <Field
-                                              as={TextInput}
-                                              type="text"
-                                              className="maxw-none"
-                                              id="it-tools-oel-help-desk-other"
-                                              maxLength={50}
-                                              name="oelHelpdeskSupportOther"
-                                            />
-                                          </div>
-                                        )}
-                                    </Fragment>
-                                  );
-                                })}
-                              <AddNote
-                                id="it-tools-oel-help-desk-note"
-                                field="oelHelpdeskSupportNote"
-                              />
-                            </>
-                          )}
+                        <ITToolsFormComponent
+                          flatErrors={flatErrors}
+                          formikValue={values.oelHelpdeskSupport}
+                          fieldName="oelHelpdeskSupport"
+                          needsTool={questionOneNeedsTools}
+                          htmlID="oel-help-desk"
+                          EnumType={OelHelpdeskSupportType}
+                          translation={translateOelHelpdeskSupportType}
                         />
                       </FieldGroup>
+
+                      {/* Question Two: Are you planning to use IDDOC support? */}
 
                       <FieldGroup
                         scrollElement="oelManageAco"
                         error={!!flatErrors.oelManageAco}
                         className="margin-y-4"
                       >
-                        <FieldArray
-                          name="oelManageAco"
-                          render={arrayHelpers => (
-                            <>
-                              <legend className="usa-label maxw-none">
-                                {t('iddocTools')}
-                              </legend>
+                        <legend className="usa-label maxw-none">
+                          {t('iddocTools')}
+                        </legend>
 
-                              <FieldErrorMsg>
-                                {flatErrors.oelManageAco}
-                              </FieldErrorMsg>
+                        <FieldErrorMsg>{flatErrors.oelManageAco}</FieldErrorMsg>
 
-                              <ITToolsSummary
-                                question={o('iddocSupport')}
-                                answers={[
-                                  translateBoolean(iddocSupport || false)
-                                ]}
-                                redirect={`/models/${modelID}/task-list/ops-eval-and-learning`}
-                                answered={iddocSupport !== null}
-                                needsTool={questionTwoNeedsTools}
-                                subtext={t('yesNeedsAnswer')}
-                              />
+                        <ITToolsSummary
+                          question={o('iddocSupport')}
+                          answers={[translateBoolean(iddocSupport || false)]}
+                          redirect={`/models/${modelID}/task-list/ops-eval-and-learning`}
+                          answered={iddocSupport !== null}
+                          needsTool={questionTwoNeedsTools}
+                          subtext={t('yesNeedsAnswer')}
+                        />
 
-                              <p className="margin-top-4">{t('tools')}</p>
-
-                              {Object.keys(OelManageAcoType)
-                                .sort(sortOtherEnum)
-                                .map(type => {
-                                  return (
-                                    <Fragment key={type}>
-                                      <Field
-                                        as={CheckboxField}
-                                        disabled={!questionTwoNeedsTools}
-                                        id={`it-tools-oel-manage-aco-${type}`}
-                                        name="oelManageAco"
-                                        label={translateOelManageAcoType(type)}
-                                        subLabel={translateOelManageAcoSubinfoType(
-                                          type
-                                        )}
-                                        value={type}
-                                        checked={
-                                          values?.oelManageAco.includes(
-                                            type as OelManageAcoType
-                                          ) && questionTwoNeedsTools
-                                        }
-                                        onChange={(
-                                          e: React.ChangeEvent<HTMLInputElement>
-                                        ) => {
-                                          if (e.target.checked) {
-                                            arrayHelpers.push(e.target.value);
-                                          } else {
-                                            const idx = values.oelManageAco.indexOf(
-                                              e.target.value as OelManageAcoType
-                                            );
-                                            arrayHelpers.remove(idx);
-                                          }
-                                        }}
-                                      />
-                                      {type === OelManageAcoType.OTHER &&
-                                        questionTwoNeedsTools &&
-                                        values.oelManageAco.includes(type) && (
-                                          <div className="margin-left-4 margin-top-1">
-                                            <Label
-                                              htmlFor="it-tools-oel-manage-aco-other"
-                                              className="text-normal"
-                                            >
-                                              {h('pleaseSpecify')}
-                                            </Label>
-                                            <FieldErrorMsg>
-                                              {flatErrors.oelManageAcoOther}
-                                            </FieldErrorMsg>
-                                            <Field
-                                              as={TextInput}
-                                              type="text"
-                                              className="maxw-none"
-                                              id="it-tools-oel-manage-aco-other"
-                                              maxLength={50}
-                                              name="oelManageAcoOther"
-                                            />
-                                          </div>
-                                        )}
-                                    </Fragment>
-                                  );
-                                })}
-                              <AddNote
-                                id="it-tools-oel-manage-aco-note"
-                                field="oelManageAcoNote"
-                              />
-                            </>
-                          )}
+                        <ITToolsFormComponent
+                          flatErrors={flatErrors}
+                          formikValue={values.oelManageAco}
+                          fieldName="oelManageAco"
+                          needsTool={questionTwoNeedsTools}
+                          htmlID="oel-manage-aco"
+                          EnumType={OelManageAcoType}
+                          translation={translateOelManageAcoType}
+                          subTranslation={translateOelManageAcoSubinfoType}
                         />
                       </FieldGroup>
+
+                      {/* Question Three: Will you establish a benchmark to capture performance? */}
 
                       <FieldGroup
                         scrollElement="oelPerformanceBenchmark"
                         error={!!flatErrors.oelPerformanceBenchmark}
                         className="margin-y-4"
                       >
-                        <FieldArray
-                          name="oelPerformanceBenchmark"
-                          render={arrayHelpers => (
-                            <>
-                              <legend className="usa-label maxw-none">
-                                {t('benchmarkTools')}
-                              </legend>
+                        <legend className="usa-label maxw-none">
+                          {t('benchmarkTools')}
+                        </legend>
 
-                              <FieldErrorMsg>
-                                {flatErrors.oelPerformanceBenchmark}
-                              </FieldErrorMsg>
+                        <FieldErrorMsg>
+                          {flatErrors.oelPerformanceBenchmark}
+                        </FieldErrorMsg>
 
-                              <ITToolsSummary
-                                question={o('establishBenchmark')}
-                                answers={[
-                                  benchmarkForPerformance
-                                ].map(benchmark =>
-                                  translateBenchmarkForPerformanceType(
-                                    benchmark || ''
-                                  )
-                                )}
-                                redirect={`/models/${modelID}/task-list/ops-eval-and-learning/performance`}
-                                answered={benchmarkForPerformance !== null}
-                                needsTool={questionThreeNeedsTools}
-                                subtext={t('eitherYesNeedsAnswer')}
-                              />
-
-                              <p className="margin-top-4">{t('tools')}</p>
-
-                              {Object.keys(OelPerformanceBenchmarkType)
-                                .sort(sortOtherEnum)
-                                .map(type => {
-                                  return (
-                                    <Fragment key={type}>
-                                      <Field
-                                        as={CheckboxField}
-                                        disabled={!questionThreeNeedsTools}
-                                        id={`it-tools-oel-performance-benchmark-${type}`}
-                                        name="oelPerformanceBenchmark"
-                                        label={translateOelPerformanceBenchmarkType(
-                                          type
-                                        )}
-                                        value={type}
-                                        checked={
-                                          values?.oelPerformanceBenchmark.includes(
-                                            type as OelPerformanceBenchmarkType
-                                          ) && questionThreeNeedsTools
-                                        }
-                                        onChange={(
-                                          e: React.ChangeEvent<HTMLInputElement>
-                                        ) => {
-                                          if (e.target.checked) {
-                                            arrayHelpers.push(e.target.value);
-                                          } else {
-                                            const idx = values.oelPerformanceBenchmark.indexOf(
-                                              e.target
-                                                .value as OelPerformanceBenchmarkType
-                                            );
-                                            arrayHelpers.remove(idx);
-                                          }
-                                        }}
-                                      />
-                                      {type ===
-                                        OelPerformanceBenchmarkType.OTHER &&
-                                        questionThreeNeedsTools &&
-                                        values.oelPerformanceBenchmark.includes(
-                                          type
-                                        ) && (
-                                          <div className="margin-left-4 margin-top-1">
-                                            <Label
-                                              htmlFor="it-tools-oel-performance-benchmark-other"
-                                              className="text-normal"
-                                            >
-                                              {h('pleaseSpecify')}
-                                            </Label>
-                                            <FieldErrorMsg>
-                                              {
-                                                flatErrors.oelPerformanceBenchmarkOther
-                                              }
-                                            </FieldErrorMsg>
-                                            <Field
-                                              as={TextInput}
-                                              type="text"
-                                              className="maxw-none"
-                                              id="it-tools-oel-performance-benchmark-other"
-                                              maxLength={50}
-                                              name="oelPerformanceBenchmarkOther"
-                                            />
-                                          </div>
-                                        )}
-                                    </Fragment>
-                                  );
-                                })}
-                              <AddNote
-                                id="it-tools-oel-performance-benchmark-note"
-                                field="oelPerformanceBenchmarkNote"
-                              />
-                            </>
+                        <ITToolsSummary
+                          question={o('establishBenchmark')}
+                          answers={[benchmarkForPerformance].map(benchmark =>
+                            translateBenchmarkForPerformanceType(
+                              benchmark || ''
+                            )
                           )}
+                          redirect={`/models/${modelID}/task-list/ops-eval-and-learning/performance`}
+                          answered={benchmarkForPerformance !== null}
+                          needsTool={questionThreeNeedsTools}
+                          subtext={t('eitherYesNeedsAnswer')}
+                        />
+
+                        <ITToolsFormComponent
+                          flatErrors={flatErrors}
+                          formikValue={values.oelPerformanceBenchmark}
+                          fieldName="oelPerformanceBenchmark"
+                          needsTool={questionThreeNeedsTools}
+                          htmlID="oel-performance-benchmark"
+                          EnumType={OelPerformanceBenchmarkType}
+                          translation={translateOelPerformanceBenchmarkType}
                         />
                       </FieldGroup>
 
