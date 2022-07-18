@@ -228,7 +228,7 @@ const ITToolsPageOne = () => {
                       <FieldGroup
                         scrollElement="gcPartCD"
                         error={!!flatErrors.gcPartCD}
-                        className="margin-y-4"
+                        className="margin-y-0"
                       >
                         <legend className="usa-label">
                           {t('partCDTools')}
@@ -266,7 +266,7 @@ const ITToolsPageOne = () => {
                       <FieldGroup
                         scrollElement="gcCollectBids"
                         error={!!flatErrors.gcCollectBids}
-                        className="margin-y-4"
+                        className="margin-y-0"
                       >
                         <legend className="usa-label">
                           {t('collectBidsTools')}
@@ -306,7 +306,7 @@ const ITToolsPageOne = () => {
                       <FieldGroup
                         scrollElement="gcUpdateContract"
                         error={!!flatErrors.gcUpdateContract}
-                        className="margin-y-4"
+                        className="margin-y-0"
                       >
                         <legend className="usa-label">
                           {t('updateContract')}

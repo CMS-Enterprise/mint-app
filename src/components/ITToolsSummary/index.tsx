@@ -40,9 +40,9 @@ const ITToolsSummary = ({
           ? t('summaryBox.previouslyAnswered')
           : t('summaryBox.havenNotAnswered')}
       </p>
-      <p>{question}</p>
+      <p className="margin-bottom-0">{question}</p>
       {answered && answers.length && (
-        <ul>
+        <ul className="margin-y-0">
           {answers.map(answer => (
             <li key={answer}>{answer}</li>
           ))}
@@ -52,7 +52,7 @@ const ITToolsSummary = ({
         <div className="text-base">
           <p>{subtext || t('changeAnswer')}</p>
           {!subtext && options && (
-            <ul>
+            <ul className="margin-y-0">
               {options.map(option => (
                 <li key={option}>{option}</li>
               ))}

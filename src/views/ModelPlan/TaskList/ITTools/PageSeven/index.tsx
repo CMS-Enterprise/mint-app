@@ -235,10 +235,10 @@ const ITToolsPageSeven = () => {
                       <FieldGroup
                         scrollElement="oelSendReports"
                         error={!!flatErrors.oelSendReports}
-                        className="margin-y-4"
+                        className="margin-y-0"
                       >
                         <legend className="usa-label maxw-none">
-                          {t('sendReportTools')}
+                          {t('oelSendReportsTools')}
                         </legend>
 
                         <FieldErrorMsg>
@@ -284,10 +284,10 @@ const ITToolsPageSeven = () => {
                       <FieldGroup
                         scrollElement="oelLearningContractor"
                         error={!!flatErrors.oelLearningContractor}
-                        className="margin-y-4"
+                        className="margin-y-0"
                       >
                         <legend className="usa-label maxw-none">
-                          {t('sendReportTools')}
+                          {t('oelLearningContractorTools')}
                         </legend>
 
                         <FieldErrorMsg>
@@ -322,10 +322,10 @@ const ITToolsPageSeven = () => {
                       <FieldGroup
                         scrollElement="oelParticipantCollaboration"
                         error={!!flatErrors.oelParticipantCollaboration}
-                        className="margin-y-4"
+                        className="margin-y-0"
                       >
                         <legend className="usa-label maxw-none">
-                          {t('sendReportTools')}
+                          {t('oelParticipantCollaborationTools')}
                         </legend>
 
                         <FieldErrorMsg>

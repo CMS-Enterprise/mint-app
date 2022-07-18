@@ -224,7 +224,7 @@ const ITToolsPageThree = () => {
                       <FieldGroup
                         scrollElement="ppCommunicateWithParticipant"
                         error={!!flatErrors.ppCommunicateWithParticipant}
-                        className="margin-y-4"
+                        className="margin-y-0"
                       >
                         <legend className="usa-label maxw-none">
                           {t('communicateTools')}
@@ -271,7 +271,7 @@ const ITToolsPageThree = () => {
                       <FieldGroup
                         scrollElement="ppManageProviderOverlap"
                         error={!!flatErrors.ppManageProviderOverlap}
-                        className="margin-y-4"
+                        className="margin-y-0"
                       >
                         <legend className="usa-label maxw-none">
                           {t('manageOverlap')}
@@ -301,7 +301,7 @@ const ITToolsPageThree = () => {
                       <FieldGroup
                         scrollElement="bManageBeneficiaryOverlap"
                         error={!!flatErrors.bManageBeneficiaryOverlap}
-                        className="margin-y-4"
+                        className="margin-y-0"
                       >
                         <legend className="usa-label maxw-none">
                           {t('beneficiaryOverlaps')}
@@ -324,8 +324,6 @@ const ITToolsPageThree = () => {
                           EnumType={BManageBeneficiaryOverlapType}
                           translation={translateBManageBeneficiaryOverlapType}
                         />
-
-                        <p className="margin-top-2">{t('tools')}</p>
                       </FieldGroup>
 
                       <div className="margin-top-6 margin-bottom-3">

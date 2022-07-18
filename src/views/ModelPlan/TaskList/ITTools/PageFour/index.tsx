@@ -232,7 +232,7 @@ const ITToolsPageFour = () => {
                       <FieldGroup
                         scrollElement="oelHelpdeskSupport"
                         error={!!flatErrors.oelHelpdeskSupport}
-                        className="margin-y-4"
+                        className="margin-y-0"
                       >
                         <legend className="usa-label maxw-none">
                           {t('helpDeskTools')}
@@ -268,7 +268,7 @@ const ITToolsPageFour = () => {
                       <FieldGroup
                         scrollElement="oelManageAco"
                         error={!!flatErrors.oelManageAco}
-                        className="margin-y-4"
+                        className="margin-y-0"
                       >
                         <legend className="usa-label maxw-none">
                           {t('iddocTools')}
@@ -303,7 +303,7 @@ const ITToolsPageFour = () => {
                       <FieldGroup
                         scrollElement="oelPerformanceBenchmark"
                         error={!!flatErrors.oelPerformanceBenchmark}
-                        className="margin-y-4"
+                        className="margin-y-0"
                       >
                         <legend className="usa-label maxw-none">
                           {t('benchmarkTools')}

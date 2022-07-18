@@ -50,7 +50,7 @@ const CheckboxField = ({
       >
         {label}
       </label>
-      <p className="text-base margin-y-1 margin-left-4 line-height-body-3">
+      <p className="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs">
         {subLabel}
       </p>
     </div>

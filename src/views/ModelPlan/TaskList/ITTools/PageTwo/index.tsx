@@ -230,19 +230,22 @@ const ITToolsPageTwo = () => {
                     }}
                   >
                     <h2>{p('heading')}</h2>
+
                     <Fieldset disabled={loading}>
                       {/* Question One: How will you recruit the participants? */}
                       <FieldGroup
                         scrollElement="ppToAdvertise"
                         error={!!flatErrors.ppToAdvertise}
-                        className="margin-y-4"
+                        className="margin-y-0"
                       >
                         <legend className="usa-label">
                           {t('advertiseModel')}
                         </legend>
+
                         <p className="text-base margin-top-1 margin-bottom-3 line-height-body-3">
                           {t('advertiseModelInfo')}
                         </p>
+
                         <FieldErrorMsg>
                           {flatErrors.ppToAdvertise}
                         </FieldErrorMsg>
@@ -276,7 +279,7 @@ const ITToolsPageTwo = () => {
                       <FieldGroup
                         scrollElement="ppCollectScoreReview"
                         error={!!flatErrors.ppCollectScoreReview}
-                        className="margin-y-4"
+                        className="margin-y-0"
                       >
                         <legend className="usa-label maxw-none">
                           {t('collectTools')}
@@ -316,7 +319,7 @@ const ITToolsPageTwo = () => {
                       <FieldGroup
                         scrollElement="ppAppSupportContractor"
                         error={!!flatErrors.ppAppSupportContractor}
-                        className="margin-y-4"
+                        className="margin-y-0"
                       >
                         <legend className="usa-label maxw-none">
                           {t('appSupport')}

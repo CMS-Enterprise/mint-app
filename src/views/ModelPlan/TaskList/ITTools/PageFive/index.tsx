@@ -247,7 +247,7 @@ const ITToolsPageFive = () => {
                       <FieldGroup
                         scrollElement="oelProcessAppeals"
                         error={!!flatErrors.oelProcessAppeals}
-                        className="margin-y-4"
+                        className="margin-y-0"
                       >
                         <legend className="usa-label">
                           {t('appealTools')}
@@ -297,7 +297,7 @@ const ITToolsPageFive = () => {
                       <FieldGroup
                         scrollElement="oelEvaluationContractor"
                         error={!!flatErrors.oelEvaluationContractor}
-                        className="margin-y-4"
+                        className="margin-y-0"
                       >
                         <legend className="usa-label">
                           {t('contractorTool')}
@@ -343,7 +343,7 @@ const ITToolsPageFive = () => {
                       <FieldGroup
                         scrollElement="oelCollectData"
                         error={!!flatErrors.oelCollectData}
-                        className="margin-y-4"
+                        className="margin-y-0"
                       >
                         <legend className="usa-label">
                           {t('monitorTools')}

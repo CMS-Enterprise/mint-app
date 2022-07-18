@@ -239,7 +239,13 @@ const itTools = {
     'What tools will you use to compute the shared savings payment?',
   sharedSavingsNeedsAnswer:
     'If you change your answer to include “Shared Savings”, you can select tools from the list below.',
-  recoverTools: 'What tools will you use to recover payments?'
+  recoverTools: 'What tools will you use to recover payments?',
+  oelSendReportsTools:
+    'What tools will you use to create and send reporting/data to participants?',
+  oelLearningContractorTools:
+    'How will you acquire a learning contractor, if any?',
+  oelParticipantCollaborationTools:
+    'What tools will you use to enable participant-to-participant collaboration?'
 };
 
 export default itTools;

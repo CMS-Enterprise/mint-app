@@ -233,7 +233,7 @@ const ITToolsPageNine = () => {
                       <FieldGroup
                         scrollElement="pNonClaimsBasedPayments"
                         error={!!flatErrors.pNonClaimsBasedPayments}
-                        className="margin-y-4"
+                        className="margin-y-0"
                       >
                         <legend className="usa-label maxw-none">
                           {t('nonClaimsTools')}
@@ -275,7 +275,7 @@ const ITToolsPageNine = () => {
                       <FieldGroup
                         scrollElement="pSharedSavingsPlan"
                         error={!!flatErrors.pSharedSavingsPlan}
-                        className="margin-y-4"
+                        className="margin-y-0"
                       >
                         <legend className="usa-label maxw-none">
                           {t('sharedSavingsTools')}
@@ -313,7 +313,7 @@ const ITToolsPageNine = () => {
                       <FieldGroup
                         scrollElement="pRecoverPayments"
                         error={!!flatErrors.pRecoverPayments}
-                        className="margin-y-4"
+                        className="margin-y-0"
                       >
                         <legend className="usa-label maxw-none">
                           {t('recoverTools')}

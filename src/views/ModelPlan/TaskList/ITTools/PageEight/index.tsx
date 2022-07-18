@@ -243,7 +243,7 @@ const ITToolsPageEight = () => {
                       <FieldGroup
                         scrollElement="oelEducateBeneficiaries"
                         error={!!flatErrors.oelEducateBeneficiaries}
-                        className="margin-y-4"
+                        className="margin-y-0"
                       >
                         <legend className="usa-label maxw-none">
                           {t('educateTools')}
@@ -283,7 +283,7 @@ const ITToolsPageEight = () => {
                       <FieldGroup
                         scrollElement="pMakeClaimsPayments"
                         error={!!flatErrors.pMakeClaimsPayments}
-                        className="margin-y-4"
+                        className="margin-y-0"
                       >
                         <legend className="usa-label maxw-none">
                           {t('ffsTools')}
@@ -321,7 +321,7 @@ const ITToolsPageEight = () => {
                       <FieldGroup
                         scrollElement="pInformFfs"
                         error={!!flatErrors.pInformFfs}
-                        className="margin-y-4"
+                        className="margin-y-0"
                       >
                         <legend className="usa-label maxw-none">
                           {t('waiveParticipantsTools')}

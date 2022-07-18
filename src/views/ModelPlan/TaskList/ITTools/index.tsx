@@ -70,7 +70,7 @@ export const ITToolsFormComponent = ({
                 id={`it-tools-${htmlID}-${type}`}
                 name={fieldName}
                 label={translation(type)}
-                sublabel={subTranslation ? subTranslation(type) : null}
+                subLabel={subTranslation ? subTranslation(type) : null}
                 value={type}
                 checked={formikValue.includes(type) && needsTool}
               />
