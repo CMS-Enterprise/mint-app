@@ -36,6 +36,7 @@ import { UpdatePaymentsVariables } from 'queries/Payments/types/UpdatePayments';
 import UpdatePayments from 'queries/Payments/UpdatePayments';
 import {
   AnticipatedPaymentFrequencyType,
+  ClaimsBasedPayType,
   ComplexityCalculationLevelType,
   PayType
 } from 'types/graphql-global-types';
@@ -68,6 +69,7 @@ const Complexity = () => {
   const {
     id,
     payType,
+    payClaims,
     expectedCalculationComplexityLevel,
     expectedCalculationComplexityLevelNote,
     canParticipantsSelectBetweenPaymentMechanisms,
@@ -87,6 +89,15 @@ const Complexity = () => {
     redirect?: 'next' | 'back' | 'task-list'
   ) => {
     const { id: updateId, __typename, ...changeValues } = formikValues;
+    const hasClaimsBasedPayment = formikValues.payType.includes(
+      PayType.CLAIMS_BASED_PAYMENTS
+    );
+    const hasReductionToCostSharing = formikValues.payClaims.includes(
+      ClaimsBasedPayType.REDUCTIONS_TO_BENEFICIARY_COST_SHARING
+    );
+    const hasNonClaimBasedPayment = formikValues.payType.includes(
+      PayType.NON_CLAIMS_BASED_PAYMENTS
+    );
     update({
       variables: {
         id: updateId,
@@ -100,9 +111,23 @@ const Complexity = () => {
               `/models/${modelID}/task-list/payment/recover-payment`
             );
           } else if (redirect === 'back') {
-            history.push(
-              `/models/${modelID}/task-list/payment/claims-based-payment`
-            );
+            if (hasNonClaimBasedPayment) {
+              history.push(
+                `/models/${modelID}/task-list/payment/non-claims-based-payment`
+              );
+            } else if (hasClaimsBasedPayment) {
+              if (hasReductionToCostSharing) {
+                history.push(
+                  `/models/${modelID}/task-list/payment/beneficiary-cost-sharing`
+                );
+              } else {
+                history.push(
+                  `/models/${modelID}/task-list/payment/anticipating-dependencies`
+                );
+              }
+            } else {
+              history.push(`/models/${modelID}/task-list/payment`);
+            }
           } else if (redirect === 'task-list') {
             history.push(`/models/${modelID}/task-list/`);
           }
@@ -126,6 +151,7 @@ const Complexity = () => {
     __typename: 'PlanPayments',
     id: id ?? '',
     payType: payType ?? [],
+    payClaims: payClaims ?? [],
     expectedCalculationComplexityLevel:
       expectedCalculationComplexityLevel ?? null,
     expectedCalculationComplexityLevelNote:
