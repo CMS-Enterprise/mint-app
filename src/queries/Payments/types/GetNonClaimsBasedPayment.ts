@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { PayType, NonClaimsBasedPayType } from "./../../../types/graphql-global-types";
+import { PayType, ClaimsBasedPayType, NonClaimsBasedPayType } from "./../../../types/graphql-global-types";
 
 // ====================================================
 // GraphQL query operation: GetNonClaimsBasedPayment
@@ -13,6 +13,7 @@ export interface GetNonClaimsBasedPayment_modelPlan_payments {
   __typename: "PlanPayments";
   id: UUID;
   payType: PayType[];
+  payClaims: ClaimsBasedPayType[];
   nonClaimsPayments: NonClaimsBasedPayType[];
   nonClaimsPaymentOther: string | null;
   paymentCalculationOwner: string | null;

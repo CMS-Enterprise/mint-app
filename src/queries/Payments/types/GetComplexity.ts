@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { PayType, ComplexityCalculationLevelType, AnticipatedPaymentFrequencyType } from "./../../../types/graphql-global-types";
+import { PayType, ClaimsBasedPayType, ComplexityCalculationLevelType, AnticipatedPaymentFrequencyType } from "./../../../types/graphql-global-types";
 
 // ====================================================
 // GraphQL query operation: GetComplexity
@@ -13,6 +13,7 @@ export interface GetComplexity_modelPlan_payments {
   __typename: "PlanPayments";
   id: UUID;
   payType: PayType[];
+  payClaims: ClaimsBasedPayType[];
   expectedCalculationComplexityLevel: ComplexityCalculationLevelType | null;
   expectedCalculationComplexityLevelNote: string | null;
   canParticipantsSelectBetweenPaymentMechanisms: boolean | null;
