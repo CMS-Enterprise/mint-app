@@ -18,8 +18,8 @@ import (
 )
 
 // CmsCenters is the resolver for the cmsCenters field.
-func (r *modelPlanResolver) CmsCenters(ctx context.Context, obj *models.ModelPlan) ([]models.CMSCenter, error) {
-	cmsCenters := models.ConvertEnums[models.CMSCenter](obj.CMSCenters)
+func (r *modelPlanResolver) CmsCenters(ctx context.Context, obj *models.ModelPlan) ([]model.CMSCenter, error) {
+	cmsCenters := models.ConvertEnums[model.CMSCenter](obj.CMSCenters)
 	return cmsCenters, nil
 }
 
