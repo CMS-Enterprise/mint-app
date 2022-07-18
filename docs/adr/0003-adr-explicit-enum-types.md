@@ -27,6 +27,7 @@ Ideally, we would not need to manually write the resolver for GQL, and we could 
 
 * `+` Compile time type safety
    * Note this really only provides safety if you use the constant value that defines the enum value. Otherwise, you could still cast a string to the enum type at compile time.
+   * Given that data received by GQL or the backend is necessarily input-driven, this doesn't provide us with any compile-time safety gains anyway.
 * `+` Clarity about valid options for a field
 * `+` A net negative number of lines of code.
 * `-` Extra number of manually coded enum types in the models package
