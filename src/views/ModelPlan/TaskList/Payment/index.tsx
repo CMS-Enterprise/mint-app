@@ -21,8 +21,7 @@ export const renderCurrentPage = (
 ) => {
   let adjustedCurrentPage = currentPage;
   if (currentPage > 2 && !hasClaims) adjustedCurrentPage -= 2;
-  if (currentPage > 2 && !hasReductionCostSharing) adjustedCurrentPage -= 1;
-  if (currentPage > 6 && !hasNonClaims) adjustedCurrentPage -= 1;
+  if (currentPage > 3 && !hasReductionCostSharing) adjustedCurrentPage -= 1;
   return adjustedCurrentPage;
 };
 
