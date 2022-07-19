@@ -275,7 +275,7 @@ const FundingSource = () => {
                                           }
                                         >
                                           <Label
-                                            htmlFor="payment-funding-source-other"
+                                            htmlFor="payment-funding-source-trust-fund"
                                             className="text-normal"
                                           >
                                             {t('whichType')}
@@ -285,7 +285,8 @@ const FundingSource = () => {
                                           </FieldErrorMsg>
                                           <Field
                                             as={TextInput}
-                                            id="payment-funding-source-other"
+                                            id="payment-funding-source-trust-fund"
+                                            data-testid="payment-funding-source-trust-fund"
                                             maxLength={50}
                                             name="fundingSourceTrustFund"
                                           />
