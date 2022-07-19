@@ -68,7 +68,7 @@ describe('Model Plan -- Claims Based Payment', () => {
 
     await waitFor(() => {
       expect(screen.getByTestId('payment-pay-claims-other')).toHaveValue(
-        'Other'
+        'pay claims other'
       );
     });
   });

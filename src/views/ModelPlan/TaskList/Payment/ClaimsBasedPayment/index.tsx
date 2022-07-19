@@ -258,7 +258,7 @@ const ClaimsBasedPayment = () => {
                           ClaimsBasedPayType.OTHER
                         ) && (
                           <FieldGroup
-                            scrollElement="payment-pay-claims-other"
+                            scrollElement="payClaimsOther"
                             error={!!flatErrors.payClaimsOther}
                           >
                             <Label
@@ -275,7 +275,7 @@ const ClaimsBasedPayment = () => {
                               error={flatErrors.payClaimsOther}
                               id="payment-pay-claims-other"
                               data-testid="payment-pay-claims-other"
-                              name="payment-pay-claims-other"
+                              name="payClaimsOther"
                             />
                           </FieldGroup>
                         )}
