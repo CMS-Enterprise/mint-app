@@ -20,6 +20,7 @@ export default gql`
         payRecipientsNote
         payType
         payTypeNote
+        payClaims
       }
     }
   }

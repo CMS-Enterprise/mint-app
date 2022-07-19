@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { FundingSource, PayRecipient, PayType } from "./../../../types/graphql-global-types";
+import { FundingSource, PayRecipient, PayType, ClaimsBasedPayType } from "./../../../types/graphql-global-types";
 
 // ====================================================
 // GraphQL query operation: GetFunding
@@ -25,6 +25,7 @@ export interface GetFunding_modelPlan_payments {
   payRecipientsNote: string | null;
   payType: PayType[];
   payTypeNote: string | null;
+  payClaims: ClaimsBasedPayType[];
 }
 
 export interface GetFunding_modelPlan {

@@ -15,9 +15,9 @@ import Recover from './Recover';
 // Used to render the current page based on certain answers populated within this task list item
 export const renderCurrentPage = (
   currentPage: number,
-  hasClaims: boolean | null,
-  hasNonClaims: boolean | null,
-  hasReductionCostSharing?: boolean
+  hasClaims: boolean,
+  hasNonClaims: boolean,
+  hasReductionCostSharing: boolean
 ) => {
   let adjustedCurrentPage = currentPage;
   if (currentPage > 2 && !hasClaims) adjustedCurrentPage -= 2;
@@ -28,9 +28,9 @@ export const renderCurrentPage = (
 
 // Used to render the total pages based on certain answers populated within this task list item
 export const renderTotalPages = (
-  hasClaims: boolean | null,
-  hasNonClaims: boolean | null,
-  hasReductionCostSharing?: boolean
+  hasClaims: boolean,
+  hasNonClaims: boolean,
+  hasReductionCostSharing: boolean
 ) => {
   let totalPages = 3;
   if (hasClaims) totalPages += 2;

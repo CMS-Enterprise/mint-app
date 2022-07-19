@@ -33,6 +33,7 @@ import {
 import { UpdatePaymentsVariables } from 'queries/Payments/types/UpdatePayments';
 import UpdatePayments from 'queries/Payments/UpdatePayments';
 import {
+  ClaimsBasedPayType,
   FundingSource as FundingSourceEnum,
   PayRecipient,
   PayType
@@ -80,7 +81,8 @@ const FundingSource = () => {
     payRecipientsOtherSpecification,
     payRecipientsNote,
     payType,
-    payTypeNote
+    payTypeNote,
+    payClaims
   } = data?.modelPlan?.payments || ({} as FundingFormType);
 
   const modelName = data?.modelPlan?.modelName || '';
@@ -143,7 +145,8 @@ const FundingSource = () => {
     payRecipientsOtherSpecification: payRecipientsOtherSpecification ?? '',
     payRecipientsNote: payRecipientsNote ?? '',
     payType: payType ?? [],
-    payTypeNote: payTypeNote ?? ''
+    payTypeNote: payTypeNote ?? '',
+    payClaims: payClaims ?? []
   };
 
   if ((!loading && error) || (!loading && !data?.modelPlan)) {
@@ -593,11 +596,17 @@ const FundingSource = () => {
           currentPage={renderCurrentPage(
             1,
             payType.includes(PayType.CLAIMS_BASED_PAYMENTS),
-            payType.includes(PayType.NON_CLAIMS_BASED_PAYMENTS)
+            payType.includes(PayType.NON_CLAIMS_BASED_PAYMENTS),
+            payClaims.includes(
+              ClaimsBasedPayType.REDUCTIONS_TO_BENEFICIARY_COST_SHARING
+            )
           )}
           totalPages={renderTotalPages(
             payType.includes(PayType.CLAIMS_BASED_PAYMENTS),
-            payType.includes(PayType.NON_CLAIMS_BASED_PAYMENTS)
+            payType.includes(PayType.NON_CLAIMS_BASED_PAYMENTS),
+            payClaims.includes(
+              ClaimsBasedPayType.REDUCTIONS_TO_BENEFICIARY_COST_SHARING
+            )
           )}
           className="margin-y-6"
         />
