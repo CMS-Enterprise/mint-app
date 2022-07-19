@@ -8,6 +8,7 @@ export default gql`
       payments {
         id
         payType
+        payClaims
         willRecoverPayments
         willRecoverPaymentsNote
         anticipateReconcilingPaymentsRetrospectively
