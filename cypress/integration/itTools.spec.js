@@ -19,7 +19,9 @@ describe('The Model Plan IT Tools Form', () => {
 
     cy.get('[data-testid="model-plan-name"]').contains('PM Butler');
 
-    cy.get('#it-tools-gc-partc-OTHER')
+    cy.get('#it-tools-gc-partc-OTHER').should('be.disabled');
+
+    cy.get('#it-tools-gc-collect-bids-OTHER')
       .check({ force: true })
       .should('be.checked');
 
