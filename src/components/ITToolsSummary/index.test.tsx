@@ -30,13 +30,13 @@ describe('The ITToolsSummary component', () => {
     );
 
     await waitFor(() => {
-      expect(getByTestId('tools-question')).toHaveTextContent(
-        'Will you manage Part C/D enrollment?'
-      );
+      expect(
+        getByTestId('tools-question-managePartCDEnrollment')
+      ).toHaveTextContent('Will you manage Part C/D enrollment?');
 
-      expect(getByTestId('has-answered-tools-question')).toHaveTextContent(
-        'You previously answered:'
-      );
+      expect(
+        getByTestId('has-answered-tools-question-managePartCDEnrollment')
+      ).toHaveTextContent('You previously answered:');
 
       const listItems = getAllByRole('listitem');
       expect(listItems).toHaveLength(1);
@@ -66,15 +66,17 @@ describe('The ITToolsSummary component', () => {
     );
 
     await waitFor(() => {
-      expect(getByTestId('tools-question')).toHaveTextContent(
-        'Will you manage Part C/D enrollment?'
-      );
+      expect(
+        getByTestId('tools-question-managePartCDEnrollment')
+      ).toHaveTextContent('Will you manage Part C/D enrollment?');
 
-      expect(getByTestId('has-answered-tools-question')).toHaveTextContent(
-        'You haven’t answered:'
-      );
+      expect(
+        getByTestId('has-answered-tools-question-managePartCDEnrollment')
+      ).toHaveTextContent('You haven’t answered:');
 
-      expect(getByTestId('tools-change-answer')).toHaveTextContent(
+      expect(
+        getByTestId('tools-change-answer-managePartCDEnrollment')
+      ).toHaveTextContent(
         'If you change your answer to “Yes”, you can select tools from the list below.'
       );
     });

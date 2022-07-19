@@ -35,16 +35,22 @@ const ITToolsSummary = ({
       heading={t('summaryBox.heading')}
       className={classNames(className)}
     >
-      <p className="text-bold" data-testid="has-answered-tools-question">
+      <p
+        className="text-bold"
+        data-testid={`has-answered-tools-question-${scrollElememnt}`}
+      >
         {answered
           ? t('summaryBox.previouslyAnswered')
           : t('summaryBox.havenNotAnswered')}
       </p>
-      <p className="margin-bottom-0" data-testid="tools-question">
+      <p
+        className="margin-bottom-0"
+        data-testid={`tools-question-${scrollElememnt}`}
+      >
         {question}
       </p>
       {answered && answers.length && (
-        <ul className="margin-y-0">
+        <ul className="margin-y-0" data-testid="tools-answers">
           {answers.map(answer => (
             <li key={answer}>{answer}</li>
           ))}
@@ -52,7 +58,7 @@ const ITToolsSummary = ({
       )}
       {!needsTool && (
         <div className="text-base">
-          <p data-testid="tools-change-answer">
+          <p data-testid={`tools-change-answer-${scrollElememnt}`}>
             {subtext || t('changeAnswer')}
           </p>
           {!subtext && options && (

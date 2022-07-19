@@ -68,6 +68,7 @@ export const ITToolsFormComponent = ({
                 as={CheckboxField}
                 disabled={!needsTool}
                 id={`it-tools-${htmlID}-${type}`}
+                testid={`it-tools-${htmlID}-${type}`}
                 name={fieldName}
                 label={translation(type)}
                 subLabel={subTranslation ? subTranslation(type) : null}
@@ -92,6 +93,7 @@ export const ITToolsFormComponent = ({
                       type="text"
                       className="maxw-none"
                       id={`it-tools-${htmlID}-other`}
+                      data-testid={`it-tools-${htmlID}-other`}
                       maxLength={50}
                       name={`${fieldName}Other`}
                     />

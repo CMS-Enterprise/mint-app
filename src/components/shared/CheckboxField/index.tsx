@@ -5,6 +5,7 @@ type CheckboxFieldProps = {
   checked?: boolean;
   disabled?: boolean;
   id: string;
+  testid?: string;
   label: string;
   subLabel?: string;
   name: string;
@@ -18,6 +19,7 @@ const CheckboxField = ({
   checked,
   disabled,
   id,
+  testid,
   label,
   subLabel,
   name,
@@ -36,6 +38,7 @@ const CheckboxField = ({
         className="usa-checkbox__input"
         disabled={disabled}
         id={id}
+        data-testid={testid}
         name={name}
         onChange={onChange}
         onBlur={onBlur}
