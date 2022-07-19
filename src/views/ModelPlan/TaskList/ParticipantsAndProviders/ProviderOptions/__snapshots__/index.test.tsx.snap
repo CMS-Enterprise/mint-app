@@ -445,6 +445,9 @@ exports[`Model Plan ProviderOptions matches snapshot 1`] = `
       >
         They can leave after a certain date but there are implications
       </label>
+      <p
+        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+      />
     </div>
     <div
       class="mint-checkbox usa-checkbox"
@@ -462,6 +465,9 @@ exports[`Model Plan ProviderOptions matches snapshot 1`] = `
       >
         They are not allowed to leave
       </label>
+      <p
+        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+      />
     </div>
     <div
       class="mint-checkbox usa-checkbox"
@@ -479,6 +485,9 @@ exports[`Model Plan ProviderOptions matches snapshot 1`] = `
       >
         It varies by type of provider
       </label>
+      <p
+        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+      />
     </div>
     <div
       class="mint-checkbox usa-checkbox"
@@ -496,6 +505,9 @@ exports[`Model Plan ProviderOptions matches snapshot 1`] = `
       >
         They can leave voluntarily at any time without implications
       </label>
+      <p
+        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+      />
     </div>
     <div
       class="mint-checkbox usa-checkbox"
@@ -513,6 +525,9 @@ exports[`Model Plan ProviderOptions matches snapshot 1`] = `
       >
         Other
       </label>
+      <p
+        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+      />
     </div>
     <div
       class="mint-checkbox usa-checkbox"
@@ -530,6 +545,9 @@ exports[`Model Plan ProviderOptions matches snapshot 1`] = `
       >
         Not applicable
       </label>
+      <p
+        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+      />
     </div>
     <div
       class="margin-top-4 margin-bottom-8"

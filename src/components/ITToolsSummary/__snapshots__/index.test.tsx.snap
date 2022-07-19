@@ -19,18 +19,19 @@ exports[`The ITToolsSummary component matches snapshot 1`] = `
       >
         <p
           class="text-bold"
-          data-testid="has-answered-tools-question"
+          data-testid="has-answered-tools-question-managePartCDEnrollment"
         >
           You previously answered:
         </p>
         <p
           class="margin-bottom-0"
-          data-testid="tools-question"
+          data-testid="tools-question-managePartCDEnrollment"
         >
           Will you manage Part C/D enrollment?
         </p>
         <ul
           class="margin-y-0"
+          data-testid="tools-answers"
         >
           <li>
             Yes

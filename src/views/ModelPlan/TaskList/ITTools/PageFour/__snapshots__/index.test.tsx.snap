@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`IT Tools Page One matches snapshot 1`] = `
+exports[`IT Tools Page four matches snapshot 1`] = `
 <DocumentFragment>
   <nav
     aria-label="Breadcrumbs"
@@ -99,10 +99,10 @@ exports[`IT Tools Page One matches snapshot 1`] = `
       <form
         action="#"
         class="margin-top-6"
-        data-testid="it-tools-page-one-form"
+        data-testid="it-tools-page-four-form"
       >
         <h2>
-          General characteristics
+          Operations, evaluation, and learning
         </h2>
         <fieldset
           class="usa-fieldset"
@@ -110,18 +110,13 @@ exports[`IT Tools Page One matches snapshot 1`] = `
         >
           <div
             class="usa-form-group margin-y-0"
-            data-scroll="gcPartCD"
+            data-scroll="oelHelpdeskSupport"
           >
             <legend
-              class="usa-label"
+              class="usa-label maxw-none"
             >
-              What tools will you use to manage Part C/D enrollment?
+              What tools will you use for helpdesk support?
             </legend>
-            <p
-              class="text-base margin-top-1 margin-bottom-3 line-height-body-3"
-            >
-              (models that impact Medicare Advantage/Part D)
-            </p>
             <div
               class="usa-summary-box"
               data-testid="summary-box"
@@ -139,15 +134,15 @@ exports[`IT Tools Page One matches snapshot 1`] = `
                 >
                   <p
                     class="text-bold"
-                    data-testid="has-answered-tools-question-managePartCDEnrollment"
+                    data-testid="has-answered-tools-question-helpdeskUse"
                   >
                     You previously answered:
                   </p>
                   <p
                     class="margin-bottom-0"
-                    data-testid="tools-question-managePartCDEnrollment"
+                    data-testid="tools-question-helpdeskUse"
                   >
-                    Will you manage Part C/D enrollment?
+                    Do you plan to use a helpdesk?
                   </p>
                   <ul
                     class="margin-y-0"
@@ -161,7 +156,7 @@ exports[`IT Tools Page One matches snapshot 1`] = `
                     Want to change your answer? 
                     <a
                       class="usa-link"
-                      href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/characteristics/key-characteristics"
+                      href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/ops-eval-and-learning"
                     >
                       Go to question
                     </a>
@@ -180,17 +175,17 @@ exports[`IT Tools Page One matches snapshot 1`] = `
             >
               <input
                 class="usa-checkbox__input"
-                data-testid="it-tools-gc-partc-MARX"
-                id="it-tools-gc-partc-MARX"
-                name="gcPartCD"
+                data-testid="it-tools-oel-help-desk-CBOSC"
+                id="it-tools-oel-help-desk-CBOSC"
+                name="oelHelpdeskSupport"
                 type="checkbox"
-                value="MARX"
+                value="CBOSC"
               />
               <label
                 class="usa-checkbox__label"
-                for="it-tools-gc-partc-MARX"
+                for="it-tools-oel-help-desk-CBOSC"
               >
-                Medicare Advantage Prescription Drug System (MARx)
+                Consolidated Business Operations Support Center (CBOSC)
               </label>
               <p
                 class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
@@ -201,15 +196,36 @@ exports[`IT Tools Page One matches snapshot 1`] = `
             >
               <input
                 class="usa-checkbox__input"
-                data-testid="it-tools-gc-partc-OTHER"
-                id="it-tools-gc-partc-OTHER"
-                name="gcPartCD"
+                data-testid="it-tools-oel-help-desk-CONTRACTOR"
+                id="it-tools-oel-help-desk-CONTRACTOR"
+                name="oelHelpdeskSupport"
+                type="checkbox"
+                value="CONTRACTOR"
+              />
+              <label
+                class="usa-checkbox__label"
+                for="it-tools-oel-help-desk-CONTRACTOR"
+              >
+                Through a contractor
+              </label>
+              <p
+                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+              />
+            </div>
+            <div
+              class="mint-checkbox usa-checkbox"
+            >
+              <input
+                class="usa-checkbox__input"
+                data-testid="it-tools-oel-help-desk-OTHER"
+                id="it-tools-oel-help-desk-OTHER"
+                name="oelHelpdeskSupport"
                 type="checkbox"
                 value="OTHER"
               />
               <label
                 class="usa-checkbox__label"
-                for="it-tools-gc-partc-OTHER"
+                for="it-tools-oel-help-desk-OTHER"
               >
                 Other
               </label>
@@ -249,18 +265,13 @@ exports[`IT Tools Page One matches snapshot 1`] = `
           </div>
           <div
             class="usa-form-group margin-y-0"
-            data-scroll="gcCollectBids"
+            data-scroll="oelManageAco"
           >
             <legend
-              class="usa-label"
+              class="usa-label maxw-none"
             >
-              What tools will you use to review and collect plan bids?
+              Which IDDOC tools will you use?
             </legend>
-            <p
-              class="text-base margin-top-1 margin-bottom-3 line-height-body-3"
-            >
-              (models that impact Medicare Advantage/Part D)
-            </p>
             <div
               class="usa-summary-box"
               data-testid="summary-box"
@@ -278,29 +289,30 @@ exports[`IT Tools Page One matches snapshot 1`] = `
                 >
                   <p
                     class="text-bold"
-                    data-testid="has-answered-tools-question-collectPlanBids"
+                    data-testid="has-answered-tools-question-iddocSupport"
                   >
-                    You previously answered:
+                    You haven’t answered:
                   </p>
                   <p
                     class="margin-bottom-0"
-                    data-testid="tools-question-collectPlanBids"
+                    data-testid="tools-question-iddocSupport"
                   >
-                    Will you review and collect plan bids?
+                    Are you planning to use IDDOC support?
                   </p>
-                  <ul
-                    class="margin-y-0"
-                    data-testid="tools-answers"
+                  <div
+                    class="text-base"
                   >
-                    <li>
-                      Yes
-                    </li>
-                  </ul>
+                    <p
+                      data-testid="tools-change-answer-iddocSupport"
+                    >
+                      If you change your answer to “Yes”, you can select tools from the list below.
+                    </p>
+                  </div>
                   <p>
                     Want to change your answer? 
                     <a
                       class="usa-link"
-                      href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/characteristics/key-characteristics"
+                      href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/ops-eval-and-learning"
                     >
                       Go to question
                     </a>
@@ -315,40 +327,92 @@ exports[`IT Tools Page One matches snapshot 1`] = `
               Tools
             </p>
             <div
-              class="mint-checkbox usa-checkbox"
+              class="mint-checkbox usa-checkbox easy-checkbox--disabled"
             >
               <input
                 class="usa-checkbox__input"
-                data-testid="it-tools-gc-collect-bids-HPMS"
-                id="it-tools-gc-collect-bids-HPMS"
-                name="gcCollectBids"
+                data-testid="it-tools-oel-manage-aco-ACO_OS"
+                disabled=""
+                id="it-tools-oel-manage-aco-ACO_OS"
+                name="oelManageAco"
                 type="checkbox"
-                value="HPMS"
+                value="ACO_OS"
               />
               <label
                 class="usa-checkbox__label"
-                for="it-tools-gc-collect-bids-HPMS"
+                for="it-tools-oel-manage-aco-ACO_OS"
               >
-                Health Plan Management System (HPMS)
+                Accountable Care Organization Operating System (ACO-OS)
               </label>
               <p
                 class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
-              />
+              >
+                supports design, development, and operations and maintenance
+              </p>
             </div>
             <div
-              class="mint-checkbox usa-checkbox"
+              class="mint-checkbox usa-checkbox easy-checkbox--disabled"
             >
               <input
                 class="usa-checkbox__input"
-                data-testid="it-tools-gc-collect-bids-OTHER"
-                id="it-tools-gc-collect-bids-OTHER"
-                name="gcCollectBids"
+                data-testid="it-tools-oel-manage-aco-ACO_UI"
+                disabled=""
+                id="it-tools-oel-manage-aco-ACO_UI"
+                name="oelManageAco"
+                type="checkbox"
+                value="ACO_UI"
+              />
+              <label
+                class="usa-checkbox__label"
+                for="it-tools-oel-manage-aco-ACO_UI"
+              >
+                Accountable Care Organization User Interface (ACO-UI)
+              </label>
+              <p
+                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+              >
+                supports operations and maintenance
+              </p>
+            </div>
+            <div
+              class="mint-checkbox usa-checkbox easy-checkbox--disabled"
+            >
+              <input
+                class="usa-checkbox__input"
+                data-testid="it-tools-oel-manage-aco-INNOVATION"
+                disabled=""
+                id="it-tools-oel-manage-aco-INNOVATION"
+                name="oelManageAco"
+                type="checkbox"
+                value="INNOVATION"
+              />
+              <label
+                class="usa-checkbox__label"
+                for="it-tools-oel-manage-aco-INNOVATION"
+              >
+                4innovation (4i)
+              </label>
+              <p
+                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+              >
+                supports design, development, operations and maintenance in cloud environments (AWS)
+              </p>
+            </div>
+            <div
+              class="mint-checkbox usa-checkbox easy-checkbox--disabled"
+            >
+              <input
+                class="usa-checkbox__input"
+                data-testid="it-tools-oel-manage-aco-OTHER"
+                disabled=""
+                id="it-tools-oel-manage-aco-OTHER"
+                name="oelManageAco"
                 type="checkbox"
                 value="OTHER"
               />
               <label
                 class="usa-checkbox__label"
-                for="it-tools-gc-collect-bids-OTHER"
+                for="it-tools-oel-manage-aco-OTHER"
               >
                 Other
               </label>
@@ -388,18 +452,13 @@ exports[`IT Tools Page One matches snapshot 1`] = `
           </div>
           <div
             class="usa-form-group margin-y-0"
-            data-scroll="gcUpdateContract"
+            data-scroll="oelPerformanceBenchmark"
           >
             <legend
-              class="usa-label"
+              class="usa-label maxw-none"
             >
-              What tools will you use to update the plan’s contract?
+              What tools will you use to establish a benchmark with participants?
             </legend>
-            <p
-              class="text-base margin-top-1 margin-bottom-3 line-height-body-3"
-            >
-              (models that impact Medicare Advantage/Part D)
-            </p>
             <div
               class="usa-summary-box"
               data-testid="summary-box"
@@ -417,29 +476,30 @@ exports[`IT Tools Page One matches snapshot 1`] = `
                 >
                   <p
                     class="text-bold"
-                    data-testid="has-answered-tools-question-planContactUpdated"
+                    data-testid="has-answered-tools-question-benchmarkForPerformance"
                   >
-                    You previously answered:
+                    You haven’t answered:
                   </p>
                   <p
                     class="margin-bottom-0"
-                    data-testid="tools-question-planContactUpdated"
+                    data-testid="tools-question-benchmarkForPerformance"
                   >
-                    Have you updated the plan’s contact?
+                    Will you establish a benchmark to capture performance?
                   </p>
-                  <ul
-                    class="margin-y-0"
-                    data-testid="tools-answers"
+                  <div
+                    class="text-base"
                   >
-                    <li>
-                      Yes
-                    </li>
-                  </ul>
+                    <p
+                      data-testid="tools-change-answer-benchmarkForPerformance"
+                    >
+                      If your answer is either yes option, you will need to select tools from the list below.
+                    </p>
+                  </div>
                   <p>
                     Want to change your answer? 
                     <a
                       class="usa-link"
-                      href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/characteristics/key-characteristics"
+                      href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/ops-eval-and-learning/performance"
                     >
                       Go to question
                     </a>
@@ -454,40 +514,64 @@ exports[`IT Tools Page One matches snapshot 1`] = `
               Tools
             </p>
             <div
-              class="mint-checkbox usa-checkbox"
+              class="mint-checkbox usa-checkbox easy-checkbox--disabled"
             >
               <input
                 class="usa-checkbox__input"
-                data-testid="it-tools-gc-update-contract-HPMS"
-                id="it-tools-gc-update-contract-HPMS"
-                name="gcUpdateContract"
+                data-testid="it-tools-oel-performance-benchmark-CCW"
+                disabled=""
+                id="it-tools-oel-performance-benchmark-CCW"
+                name="oelPerformanceBenchmark"
                 type="checkbox"
-                value="HPMS"
+                value="CCW"
               />
               <label
                 class="usa-checkbox__label"
-                for="it-tools-gc-update-contract-HPMS"
+                for="it-tools-oel-performance-benchmark-CCW"
               >
-                Health Plan Management System (HPMS)
+                Chronic Conditions Warehouse (CCW)
               </label>
               <p
                 class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
               />
             </div>
             <div
-              class="mint-checkbox usa-checkbox"
+              class="mint-checkbox usa-checkbox easy-checkbox--disabled"
             >
               <input
                 class="usa-checkbox__input"
-                data-testid="it-tools-gc-update-contract-OTHER"
-                id="it-tools-gc-update-contract-OTHER"
-                name="gcUpdateContract"
+                data-testid="it-tools-oel-performance-benchmark-IDR"
+                disabled=""
+                id="it-tools-oel-performance-benchmark-IDR"
+                name="oelPerformanceBenchmark"
+                type="checkbox"
+                value="IDR"
+              />
+              <label
+                class="usa-checkbox__label"
+                for="it-tools-oel-performance-benchmark-IDR"
+              >
+                Integrated Data Repository (IDR)
+              </label>
+              <p
+                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+              />
+            </div>
+            <div
+              class="mint-checkbox usa-checkbox easy-checkbox--disabled"
+            >
+              <input
+                class="usa-checkbox__input"
+                data-testid="it-tools-oel-performance-benchmark-OTHER"
+                disabled=""
+                id="it-tools-oel-performance-benchmark-OTHER"
+                name="oelPerformanceBenchmark"
                 type="checkbox"
                 value="OTHER"
               />
               <label
                 class="usa-checkbox__label"
-                for="it-tools-gc-update-contract-OTHER"
+                for="it-tools-oel-performance-benchmark-OTHER"
               >
                 Other
               </label>
@@ -528,6 +612,13 @@ exports[`IT Tools Page One matches snapshot 1`] = `
           <div
             class="margin-top-6 margin-bottom-3"
           >
+            <button
+              class="usa-button usa-button usa-button--outline margin-bottom-1"
+              data-testid="button"
+              type="button"
+            >
+              Back
+            </button>
             <button
               class="usa-button"
               data-testid="button"
@@ -571,7 +662,7 @@ exports[`IT Tools Page One matches snapshot 1`] = `
     <span
       class="mint-page-number__page-num"
     >
-      Page 1 of 9
+      Page 4 of 9
     </span>
   </div>
 </DocumentFragment>

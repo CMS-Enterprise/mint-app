@@ -11,13 +11,13 @@ function useScrollElement(dataFetched: boolean) {
     // TODO: setTimeout 0 is a temporary way to ensure the element is scrolled
     setTimeout(() => {
       const fieldGroup = document.querySelector(
-        `[data-scroll="${location.state.scrollElement}"]`
+        `[data-scroll="${location?.state?.scrollElement}"]`
       );
       if (fieldGroup) {
         fieldGroup.scrollIntoView();
       }
     }, 0);
-  }, [location.state.scrollElement, dataFetched]);
+  }, [location?.state?.scrollElement, dataFetched]);
 }
 
 export default useScrollElement;
