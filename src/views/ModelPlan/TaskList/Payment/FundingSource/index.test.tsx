@@ -6,9 +6,7 @@ import { render, screen, waitFor } from '@testing-library/react';
 import GetFunding from 'queries/Payments/GetFunding';
 import { GetFunding_modelPlan_payments as GetFundingType } from 'queries/Payments/types/GetFunding';
 import {
-  ClaimsBasedPayType,
   FundingSource as FundingSourceType,
-  PayRecipient,
   PayType
 } from 'types/graphql-global-types';
 
