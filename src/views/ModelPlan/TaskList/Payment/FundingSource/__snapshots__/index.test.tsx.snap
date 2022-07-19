@@ -1,0 +1,528 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Model Plan Payment matches snapshot 1`] = `
+<DocumentFragment>
+  <nav
+    aria-label="Breadcrumbs"
+    class="usa-breadcrumb usa-breadcrumb--wrap"
+  >
+    <ol
+      class="usa-breadcrumb__list"
+    >
+      <li
+        class="usa-breadcrumb__list-item"
+      >
+        <a
+          class="usa-breadcrumb__link"
+          href="/"
+        >
+          <span>
+            Home
+          </span>
+        </a>
+      </li>
+      <li
+        class="usa-breadcrumb__list-item"
+      >
+        <a
+          class="usa-breadcrumb__link"
+          href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/"
+        >
+          <span>
+            Model Plan task list
+          </span>
+        </a>
+      </li>
+      <li
+        aria-current="page"
+        class="usa-breadcrumb__list-item usa-current"
+      >
+        Payment
+      </li>
+    </ol>
+  </nav>
+  <h1
+    aria-live="polite"
+    class="mint-h1 margin-top-4 margin-bottom-2"
+    tabindex="-1"
+  >
+    Payment
+  </h1>
+  <p
+    class="margin-top-0 margin-bottom-1 font-body-lg"
+    data-testid="model-plan-name"
+  >
+    for 
+  </p>
+  <p
+    class="margin-bottom-2 font-body-md line-height-sans-4"
+  >
+    If there's a question or field that is not applicable to your model or you don't currently know the answer, you may leave it blank. If you need help, ask a question using the link below.
+  </p>
+  <div
+    class="padding-2 bg-primary-lighter display-flex"
+    data-testid="ask-a-question"
+  >
+    <svg
+      class="usa-icon text-primary margin-right-1"
+      focusable="false"
+      height="1em"
+      role="img"
+      viewBox="0 0 24 24"
+      width="1em"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M0 0h24v24H0z"
+        fill="none"
+      />
+      <path
+        d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-7 9h-2V5h2v6zm0 4h-2v-2h2v2z"
+      />
+    </svg>
+    <button
+      class="usa-button usa-button--unstyled"
+      data-testid="ask-a-question-button"
+      type="button"
+    >
+      Ask a question
+    </button>
+  </div>
+  <div
+    class="grid-container padding-left-0 padding-right-0"
+    data-testid="gridContainer"
+  >
+    <div
+      class="grid-row grid-gap"
+      data-testid="grid"
+    >
+      <div
+        class="desktop:grid-col-6"
+        data-testid="grid"
+      >
+        <form
+          action="#"
+          class="margin-top-6"
+          data-testid="payment-funding-source-form"
+        >
+          <legend
+            class="usa-label maxw-none"
+          >
+            What will be the funding source for payments? Select all that apply.
+          </legend>
+          <div
+            class="mint-checkbox usa-checkbox"
+          >
+            <input
+              class="usa-checkbox__input"
+              id="payment-funding-source-PATIENT_PROTECTION_AFFORDABLE_CARE_ACT"
+              name="fundingSource"
+              type="checkbox"
+              value="PATIENT_PROTECTION_AFFORDABLE_CARE_ACT"
+            />
+            <label
+              class="usa-checkbox__label"
+              for="payment-funding-source-PATIENT_PROTECTION_AFFORDABLE_CARE_ACT"
+            >
+              Patient Protection Affordable Care Act (Sec 3021)
+            </label>
+          </div>
+          <div
+            class="mint-checkbox usa-checkbox"
+          >
+            <input
+              class="usa-checkbox__input"
+              id="payment-funding-source-TRUST_FUND"
+              name="fundingSource"
+              type="checkbox"
+              value="TRUST_FUND"
+            />
+            <label
+              class="usa-checkbox__label"
+              for="payment-funding-source-TRUST_FUND"
+            >
+              Trust Fund
+            </label>
+          </div>
+          <div
+            class="mint-checkbox usa-checkbox"
+          >
+            <input
+              class="usa-checkbox__input"
+              id="payment-funding-source-OTHER"
+              name="fundingSource"
+              type="checkbox"
+              value="OTHER"
+            />
+            <label
+              class="usa-checkbox__label"
+              for="payment-funding-source-OTHER"
+            >
+              Other
+            </label>
+          </div>
+          <div
+            class="margin-top-4 margin-bottom-8"
+          >
+            <button
+              class="usa-button usa-button usa-button--unstyled"
+              data-testid="add-note-toggle"
+              type="button"
+            >
+              <svg
+                aria-hidden="true"
+                class="usa-icon margin-right-1"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+                />
+              </svg>
+              Add an additional note
+            </button>
+          </div>
+          <legend
+            class="usa-label maxw-none"
+          >
+            What is the funding source for reconciliation or other expenditures? Select all that apply.
+          </legend>
+          <div
+            class="mint-checkbox usa-checkbox"
+          >
+            <input
+              class="usa-checkbox__input"
+              id="payment-funding-source-reconciliation-PATIENT_PROTECTION_AFFORDABLE_CARE_ACT"
+              name="fundingSourceR"
+              type="checkbox"
+              value="PATIENT_PROTECTION_AFFORDABLE_CARE_ACT"
+            />
+            <label
+              class="usa-checkbox__label"
+              for="payment-funding-source-reconciliation-PATIENT_PROTECTION_AFFORDABLE_CARE_ACT"
+            >
+              Patient Protection Affordable Care Act (Sec 3021)
+            </label>
+          </div>
+          <div
+            class="mint-checkbox usa-checkbox"
+          >
+            <input
+              class="usa-checkbox__input"
+              id="payment-funding-source-reconciliation-TRUST_FUND"
+              name="fundingSourceR"
+              type="checkbox"
+              value="TRUST_FUND"
+            />
+            <label
+              class="usa-checkbox__label"
+              for="payment-funding-source-reconciliation-TRUST_FUND"
+            >
+              Trust Fund
+            </label>
+          </div>
+          <div
+            class="mint-checkbox usa-checkbox"
+          >
+            <input
+              class="usa-checkbox__input"
+              id="payment-funding-source-reconciliation-OTHER"
+              name="fundingSourceR"
+              type="checkbox"
+              value="OTHER"
+            />
+            <label
+              class="usa-checkbox__label"
+              for="payment-funding-source-reconciliation-OTHER"
+            >
+              Other
+            </label>
+          </div>
+          <div
+            class="margin-top-4 margin-bottom-8"
+          >
+            <button
+              class="usa-button usa-button usa-button--unstyled"
+              data-testid="add-note-toggle"
+              type="button"
+            >
+              <svg
+                aria-hidden="true"
+                class="usa-icon margin-right-1"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+                />
+              </svg>
+              Add an additional note
+            </button>
+          </div>
+          <legend
+            class="usa-label maxw-none"
+          >
+            What will you pay?
+          </legend>
+          <div
+            class="mint-checkbox usa-checkbox"
+          >
+            <input
+              class="usa-checkbox__input"
+              id="payment-pay-recipients-BENEFICIARIES"
+              name="payRecipients"
+              type="checkbox"
+              value="BENEFICIARIES"
+            />
+            <label
+              class="usa-checkbox__label"
+              for="payment-pay-recipients-BENEFICIARIES"
+            >
+              Beneficiaries
+            </label>
+          </div>
+          <div
+            class="mint-checkbox usa-checkbox"
+          >
+            <input
+              class="usa-checkbox__input"
+              id="payment-pay-recipients-PARTICIPANTS"
+              name="payRecipients"
+              type="checkbox"
+              value="PARTICIPANTS"
+            />
+            <label
+              class="usa-checkbox__label"
+              for="payment-pay-recipients-PARTICIPANTS"
+            >
+              Participants
+            </label>
+          </div>
+          <div
+            class="mint-checkbox usa-checkbox"
+          >
+            <input
+              class="usa-checkbox__input"
+              id="payment-pay-recipients-PROVIDERS"
+              name="payRecipients"
+              type="checkbox"
+              value="PROVIDERS"
+            />
+            <label
+              class="usa-checkbox__label"
+              for="payment-pay-recipients-PROVIDERS"
+            >
+              Providers
+            </label>
+          </div>
+          <div
+            class="mint-checkbox usa-checkbox"
+          >
+            <input
+              class="usa-checkbox__input"
+              id="payment-pay-recipients-STATES"
+              name="payRecipients"
+              type="checkbox"
+              value="STATES"
+            />
+            <label
+              class="usa-checkbox__label"
+              for="payment-pay-recipients-STATES"
+            >
+              States
+            </label>
+          </div>
+          <div
+            class="mint-checkbox usa-checkbox"
+          >
+            <input
+              class="usa-checkbox__input"
+              id="payment-pay-recipients-OTHER"
+              name="payRecipients"
+              type="checkbox"
+              value="OTHER"
+            />
+            <label
+              class="usa-checkbox__label"
+              for="payment-pay-recipients-OTHER"
+            >
+              Other
+            </label>
+          </div>
+          <div
+            class="margin-top-4 margin-bottom-8"
+          >
+            <button
+              class="usa-button usa-button usa-button--unstyled"
+              data-testid="add-note-toggle"
+              type="button"
+            >
+              <svg
+                aria-hidden="true"
+                class="usa-icon margin-right-1"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+                />
+              </svg>
+              Add an additional note
+            </button>
+          </div>
+          <legend
+            class="usa-label maxw-none"
+          >
+            What will you pay?
+          </legend>
+          <p
+            class="text-base margin-y-1 margin-top-2"
+          >
+            If you select claims-based payments or non-claims-based payments, there will be additional questions to answer.
+          </p>
+          <div
+            class="mint-checkbox usa-checkbox"
+          >
+            <input
+              class="usa-checkbox__input"
+              id="payment-pay-type-CLAIMS_BASED_PAYMENTS"
+              name="payType"
+              type="checkbox"
+              value="CLAIMS_BASED_PAYMENTS"
+            />
+            <label
+              class="usa-checkbox__label"
+              for="payment-pay-type-CLAIMS_BASED_PAYMENTS"
+            >
+              Claims-Based Payments
+            </label>
+          </div>
+          <div
+            class="mint-checkbox usa-checkbox"
+          >
+            <input
+              class="usa-checkbox__input"
+              id="payment-pay-type-NON_CLAIMS_BASED_PAYMENTS"
+              name="payType"
+              type="checkbox"
+              value="NON_CLAIMS_BASED_PAYMENTS"
+            />
+            <label
+              class="usa-checkbox__label"
+              for="payment-pay-type-NON_CLAIMS_BASED_PAYMENTS"
+            >
+              Non-Claims-Based Payments
+            </label>
+          </div>
+          <div
+            class="mint-checkbox usa-checkbox"
+          >
+            <input
+              class="usa-checkbox__input"
+              id="payment-pay-type-GRANTS"
+              name="payType"
+              type="checkbox"
+              value="GRANTS"
+            />
+            <label
+              class="usa-checkbox__label"
+              for="payment-pay-type-GRANTS"
+            >
+              Grants
+            </label>
+          </div>
+          <div
+            class="margin-top-4 margin-bottom-8"
+          >
+            <button
+              class="usa-button usa-button usa-button--unstyled"
+              data-testid="add-note-toggle"
+              type="button"
+            >
+              <svg
+                aria-hidden="true"
+                class="usa-icon margin-right-1"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+                />
+              </svg>
+              Add an additional note
+            </button>
+          </div>
+          <div
+            class="margin-top-6 margin-bottom-3"
+          >
+            <button
+              class="usa-button"
+              data-testid="button"
+              type="submit"
+            >
+              Next
+            </button>
+          </div>
+          <button
+            class="usa-button usa-button usa-button--unstyled"
+            data-testid="button"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              class="usa-icon margin-right-1"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M0 0h24v24H0z"
+                fill="none"
+              />
+              <path
+                d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
+              />
+            </svg>
+            Save and return to task list
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
