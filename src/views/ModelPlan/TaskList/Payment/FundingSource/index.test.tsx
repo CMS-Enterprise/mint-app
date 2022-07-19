@@ -18,19 +18,19 @@ const mockData: GetFundingType = {
   __typename: 'PlanPayments',
   id: '123',
   fundingSource: [FundingSourceType.TRUST_FUND],
-  fundingSourceTrustFund: 'trust fund',
+  fundingSourceTrustFund: 'Trust Fund',
   fundingSourceOther: null,
   fundingSourceNote: null,
-  fundingSourceR: [FundingSourceType.OTHER],
+  fundingSourceR: [],
   fundingSourceRTrustFund: null,
   fundingSourceROther: null,
   fundingSourceRNote: null,
-  payRecipients: [PayRecipient.BENEFICIARIES],
+  payRecipients: [],
   payRecipientsOtherSpecification: null,
   payRecipientsNote: null,
   payType: [PayType.CLAIMS_BASED_PAYMENTS],
   payTypeNote: null,
-  payClaims: [ClaimsBasedPayType.REDUCTIONS_TO_BENEFICIARY_COST_SHARING]
+  payClaims: []
 };
 
 const paymentMock = [
@@ -60,7 +60,7 @@ describe('Model Plan Payment', () => {
         ]}
       >
         <MockedProvider mocks={paymentMock} addTypename={false}>
-          <Route path="/models/:modelID/task-list/task-list/payment">
+          <Route path="/models/:modelID/task-list/payment">
             <FundingSource />
           </Route>
         </MockedProvider>
@@ -76,7 +76,7 @@ describe('Model Plan Payment', () => {
     await waitFor(() => {
       expect(
         screen.getByTestId('payment-funding-source-trust-fund')
-      ).toHaveValue('trust fund');
+      ).toHaveValue('Trust Fund');
     });
   });
 
@@ -84,11 +84,11 @@ describe('Model Plan Payment', () => {
     const { asFragment } = render(
       <MemoryRouter
         initialEntries={[
-          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/task-list/payment'
+          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/payment'
         ]}
       >
         <MockedProvider mocks={paymentMock} addTypename={false}>
-          <Route path="/models/:modelID/task-list/task-list/payment">
+          <Route path="/models/:modelID/task-list/payment">
             <FundingSource />
           </Route>
         </MockedProvider>
