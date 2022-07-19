@@ -1,0 +1,486 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Model Plan -- NonClaimsBasedPayment matches snapshot 1`] = `
+<DocumentFragment>
+  <nav
+    aria-label="Breadcrumbs"
+    class="usa-breadcrumb usa-breadcrumb--wrap"
+  >
+    <ol
+      class="usa-breadcrumb__list"
+    >
+      <li
+        class="usa-breadcrumb__list-item"
+      >
+        <a
+          class="usa-breadcrumb__link"
+          href="/"
+        >
+          <span>
+            Home
+          </span>
+        </a>
+      </li>
+      <li
+        class="usa-breadcrumb__list-item"
+      >
+        <a
+          class="usa-breadcrumb__link"
+          href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/"
+        >
+          <span>
+            Model Plan task list
+          </span>
+        </a>
+      </li>
+      <li
+        aria-current="page"
+        class="usa-breadcrumb__list-item usa-current"
+      >
+        Payment
+      </li>
+    </ol>
+  </nav>
+  <h1
+    aria-live="polite"
+    class="mint-h1 margin-top-4 margin-bottom-2"
+    tabindex="-1"
+  >
+    Payment
+  </h1>
+  <p
+    class="margin-top-0 margin-bottom-1 font-body-lg"
+    data-testid="model-plan-name"
+  >
+    for 
+  </p>
+  <p
+    class="margin-bottom-2 font-body-md line-height-sans-4"
+  >
+    If there's a question or field that is not applicable to your model or you don't currently know the answer, you may leave it blank. If you need help, ask a question using the link below.
+  </p>
+  <div
+    class="padding-2 bg-primary-lighter display-flex"
+    data-testid="ask-a-question"
+  >
+    <svg
+      class="usa-icon text-primary margin-right-1"
+      focusable="false"
+      height="1em"
+      role="img"
+      viewBox="0 0 24 24"
+      width="1em"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M0 0h24v24H0z"
+        fill="none"
+      />
+      <path
+        d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-7 9h-2V5h2v6zm0 4h-2v-2h2v2z"
+      />
+    </svg>
+    <button
+      class="usa-button usa-button--unstyled"
+      data-testid="ask-a-question-button"
+      type="button"
+    >
+      Ask a question
+    </button>
+  </div>
+  <div
+    class="grid-container padding-left-0 padding-right-0"
+    data-testid="gridContainer"
+  >
+    <div
+      class="grid-row grid-gap"
+      data-testid="grid"
+    >
+      <div
+        class="desktop:grid-col-6"
+        data-testid="grid"
+      >
+        <form
+          action="#"
+          class="margin-top-6"
+          data-testid="payment-non-claims-based-payment-form"
+        >
+          <h3
+            aria-live="polite"
+            class="mint-h1 margin-bottom-3"
+            tabindex="-1"
+          >
+            Non-claims-based payment questions
+          </h3>
+          <div
+            class="usa-form-group margin-top-4"
+            data-scroll="payment-nonclaims-payments"
+          >
+            <label
+              class="usa-label"
+              data-testid="label"
+              for="payment-nonclaims-payments"
+            >
+              Select which non-claims-based payments will you pay.
+            </label>
+            <div
+              class="easi-multiselect position-relative"
+              id="payment-nonclaims-payments"
+            >
+              <div
+                class="easi-multiselect__field"
+                role="listbox"
+              >
+                <div
+                  class="usa-select maxw-none padding-0"
+                >
+                  <input
+                    class="usa-input padding-1 height-full border-0"
+                    placeholder="0 selected"
+                    type="search"
+                    value=""
+                  />
+                  <div
+                    class="easi-multiselect__controls"
+                  >
+                    <div
+                      class="easi-multiselect__controls-button easi-multiselect__controls-close"
+                    >
+                      <svg
+                        class="usa-icon usa-icon--size-4"
+                        focusable="false"
+                        height="1em"
+                        role="button"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M0 0h24v24H0z"
+                          fill="none"
+                        />
+                        <path
+                          d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="usa-form-group"
+            data-scroll="payment-nonclaims-payments-owner"
+          >
+            <label
+              class="usa-label"
+              data-testid="label"
+              for="paymentCalculationOwner"
+            >
+              Who will calculate the non-claims based payments?
+            </label>
+            <input
+              class="usa-input"
+              data-testid="payment-nonclaims-payments-owner"
+              id="payment-nonclaims-payments-owner"
+              name="paymentCalculationOwner"
+              type="text"
+              value=""
+            />
+          </div>
+          <div
+            class="usa-form-group"
+            data-scroll="payment-nonclaims-payments-paycycle"
+          >
+            <label
+              class="usa-label"
+              data-testid="label"
+              for="numberPaymentsPerPayCycle"
+            >
+              Number of payments per payment cycle
+            </label>
+            <p
+              class="text-base margin-y-1"
+            >
+              This only applies if you are making non-claims-based payments
+            </p>
+            <input
+              class="usa-input"
+              data-testid="payment-nonclaims-payments-paycycle"
+              id="payment-nonclaims-payments-paycycle"
+              name="numberPaymentsPerPayCycle"
+              type="text"
+              value=""
+            />
+            <div
+              class="margin-top-4 margin-bottom-8"
+            >
+              <button
+                class="usa-button usa-button usa-button--unstyled"
+                data-testid="add-note-toggle"
+                type="button"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="usa-icon margin-right-1"
+                  focusable="false"
+                  height="1em"
+                  role="img"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M0 0h24v24H0z"
+                    fill="none"
+                  />
+                  <path
+                    d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+                  />
+                </svg>
+                Add an additional note
+              </button>
+            </div>
+          </div>
+          <div
+            class="usa-form-group margin-top-4"
+            data-scroll="payment-nonclaims-shared-involvement"
+          >
+            <label
+              class="usa-label maxw-none"
+              data-testid="label"
+              for="payment-nonclaims-shared-involvement"
+            >
+              Will the shared systems be invovled for additional payment of claims?
+            </label>
+            <fieldset
+              class="usa-fieldset"
+              data-testid="fieldset"
+            >
+              <div
+                class="usa-radio"
+                data-testid="radio"
+              >
+                <input
+                  class="usa-radio__input"
+                  id="payment-nonclaims-shared-involvement-Yes"
+                  name="payment-nonclaims-shared-involvement"
+                  type="radio"
+                  value="YES"
+                />
+                <label
+                  class="usa-radio__label"
+                  for="payment-nonclaims-shared-involvement-Yes"
+                >
+                  Yes
+                </label>
+              </div>
+              <div
+                class="usa-radio"
+                data-testid="radio"
+              >
+                <input
+                  class="usa-radio__input"
+                  id="payment-nonclaims-shared-involvement-No"
+                  name="payment-nonclaims-shared-involvement"
+                  type="radio"
+                  value="FALSE"
+                />
+                <label
+                  class="usa-radio__label"
+                  for="payment-nonclaims-shared-involvement-No"
+                >
+                  No
+                </label>
+              </div>
+            </fieldset>
+            <div
+              class="margin-top-4 margin-bottom-8"
+            >
+              <button
+                class="usa-button usa-button usa-button--unstyled"
+                data-testid="add-note-toggle"
+                type="button"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="usa-icon margin-right-1"
+                  focusable="false"
+                  height="1em"
+                  role="img"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M0 0h24v24H0z"
+                    fill="none"
+                  />
+                  <path
+                    d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+                  />
+                </svg>
+                Add an additional note
+              </button>
+            </div>
+          </div>
+          <div
+            class="usa-form-group margin-top-4"
+            data-scroll="payment-use-innovation-payment-contractor"
+          >
+            <label
+              class="usa-label maxw-none"
+              data-testid="label"
+              for="payment-use-innovation-payment-contractor"
+            >
+              Are you planning to use the Innovation Payment Contractor?
+            </label>
+            <p
+              class="text-base margin-y-1"
+            >
+              Note: If there will be 30+ payees we recommend a contractor. 
+            </p>
+            <fieldset
+              class="usa-fieldset"
+              data-testid="fieldset"
+            >
+              <div
+                class="usa-radio"
+                data-testid="radio"
+              >
+                <input
+                  class="usa-radio__input"
+                  id="payment-use-innovation-payment-contractor-Yes"
+                  name="payment-use-innovation-payment-contractor"
+                  type="radio"
+                  value="YES"
+                />
+                <label
+                  class="usa-radio__label"
+                  for="payment-use-innovation-payment-contractor-Yes"
+                >
+                  Yes
+                </label>
+              </div>
+              <div
+                class="usa-radio"
+                data-testid="radio"
+              >
+                <input
+                  class="usa-radio__input"
+                  id="payment-use-innovation-payment-contractor-No"
+                  name="payment-use-innovation-payment-contractor"
+                  type="radio"
+                  value="FALSE"
+                />
+                <label
+                  class="usa-radio__label"
+                  for="payment-use-innovation-payment-contractor-No"
+                >
+                  No
+                </label>
+              </div>
+            </fieldset>
+            <div
+              class="margin-top-4 margin-bottom-8"
+            >
+              <button
+                class="usa-button usa-button usa-button--unstyled"
+                data-testid="add-note-toggle"
+                type="button"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="usa-icon margin-right-1"
+                  focusable="false"
+                  height="1em"
+                  role="img"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M0 0h24v24H0z"
+                    fill="none"
+                  />
+                  <path
+                    d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
+                  />
+                </svg>
+                Add an additional note
+              </button>
+            </div>
+          </div>
+          <div
+            class="usa-form-group margin-top-4"
+            data-scroll="payment-funding-structure"
+          >
+            <label
+              class="usa-label maxw-none"
+              data-testid="label"
+              for="payment-funding-structure"
+            >
+              What is the funding structure?
+            </label>
+            <p
+              class="text-base margin-y-1"
+            >
+              If possible, upload a copy of the allotment and allowance.
+            </p>
+            <textarea
+              class="usa-textarea height-15"
+              data-testid="payment-funding-structure"
+              id="payment-funding-structure"
+              name="fundingStructure"
+            />
+          </div>
+          <div
+            class="margin-top-6 margin-bottom-3"
+          >
+            <button
+              class="usa-button usa-button usa-button--outline margin-bottom-1"
+              data-testid="button"
+              type="button"
+            >
+              Back
+            </button>
+            <button
+              class="usa-button"
+              data-testid="button"
+              type="submit"
+            >
+              Next
+            </button>
+          </div>
+          <button
+            class="usa-button usa-button usa-button--unstyled"
+            data-testid="button"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              class="usa-icon margin-right-1"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M0 0h24v24H0z"
+                fill="none"
+              />
+              <path
+                d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
+              />
+            </svg>
+            Save and return to task list
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
