@@ -520,13 +520,19 @@ const Complexity = () => {
       {data && (
         <PageNumber
           currentPage={renderCurrentPage(
-            2,
+            6,
             payType.includes(PayType.CLAIMS_BASED_PAYMENTS),
-            payType.includes(PayType.NON_CLAIMS_BASED_PAYMENTS)
+            payType.includes(PayType.NON_CLAIMS_BASED_PAYMENTS),
+            payClaims.includes(
+              ClaimsBasedPayType.REDUCTIONS_TO_BENEFICIARY_COST_SHARING
+            )
           )}
           totalPages={renderTotalPages(
             payType.includes(PayType.CLAIMS_BASED_PAYMENTS),
-            payType.includes(PayType.NON_CLAIMS_BASED_PAYMENTS)
+            payType.includes(PayType.NON_CLAIMS_BASED_PAYMENTS),
+            payClaims.includes(
+              ClaimsBasedPayType.REDUCTIONS_TO_BENEFICIARY_COST_SHARING
+            )
           )}
           className="margin-y-6"
         />

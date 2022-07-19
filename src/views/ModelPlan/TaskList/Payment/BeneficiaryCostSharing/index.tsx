@@ -33,7 +33,7 @@ import {
 } from 'queries/Payments/types/GetBeneficiaryCostSharing';
 import { UpdatePaymentsVariables } from 'queries/Payments/types/UpdatePayments';
 import UpdatePayments from 'queries/Payments/UpdatePayments';
-import { PayType } from 'types/graphql-global-types';
+import { ClaimsBasedPayType, PayType } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import { NotFoundPartial } from 'views/NotFound';
 
@@ -59,6 +59,7 @@ const BeneficiaryCostSharing = () => {
   const {
     id,
     payType,
+    payClaims,
     beneficiaryCostSharingLevelAndHandling,
     waiveBeneficiaryCostSharingForAnyServices,
     waiveBeneficiaryCostSharingServiceSpecification,
@@ -111,6 +112,7 @@ const BeneficiaryCostSharing = () => {
     __typename: 'PlanPayments',
     id: id ?? '',
     payType: payType ?? [],
+    payClaims: payClaims ?? [],
     beneficiaryCostSharingLevelAndHandling:
       beneficiaryCostSharingLevelAndHandling ?? '',
     waiveBeneficiaryCostSharingForAnyServices:
@@ -427,13 +429,19 @@ const BeneficiaryCostSharing = () => {
       {data && (
         <PageNumber
           currentPage={renderCurrentPage(
-            2,
+            4,
             payType.includes(PayType.CLAIMS_BASED_PAYMENTS),
-            payType.includes(PayType.NON_CLAIMS_BASED_PAYMENTS)
+            payType.includes(PayType.NON_CLAIMS_BASED_PAYMENTS),
+            payClaims.includes(
+              ClaimsBasedPayType.REDUCTIONS_TO_BENEFICIARY_COST_SHARING
+            )
           )}
           totalPages={renderTotalPages(
             payType.includes(PayType.CLAIMS_BASED_PAYMENTS),
-            payType.includes(PayType.NON_CLAIMS_BASED_PAYMENTS)
+            payType.includes(PayType.NON_CLAIMS_BASED_PAYMENTS),
+            payClaims.includes(
+              ClaimsBasedPayType.REDUCTIONS_TO_BENEFICIARY_COST_SHARING
+            )
           )}
           className="margin-y-6"
         />

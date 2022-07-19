@@ -33,7 +33,7 @@ import {
 } from 'queries/Payments/types/GetRecover';
 import { UpdatePaymentsVariables } from 'queries/Payments/types/UpdatePayments';
 import UpdatePayments from 'queries/Payments/UpdatePayments';
-import { PayType } from 'types/graphql-global-types';
+import { ClaimsBasedPayType, PayType } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import { NotFoundPartial } from 'views/NotFound';
 
@@ -59,6 +59,7 @@ const Recover = () => {
   const {
     id,
     payType,
+    payClaims,
     willRecoverPayments,
     willRecoverPaymentsNote,
     anticipateReconcilingPaymentsRetrospectively,
@@ -100,6 +101,7 @@ const Recover = () => {
     __typename: 'PlanPayments',
     id: id ?? '',
     payType: payType ?? [],
+    payClaims: payClaims ?? [],
     willRecoverPayments: willRecoverPayments ?? null,
     willRecoverPaymentsNote: willRecoverPaymentsNote ?? '',
     anticipateReconcilingPaymentsRetrospectively:
@@ -390,13 +392,19 @@ const Recover = () => {
       {data && (
         <PageNumber
           currentPage={renderCurrentPage(
-            2,
+            7,
             payType.includes(PayType.CLAIMS_BASED_PAYMENTS),
-            payType.includes(PayType.NON_CLAIMS_BASED_PAYMENTS)
+            payType.includes(PayType.NON_CLAIMS_BASED_PAYMENTS),
+            payClaims.includes(
+              ClaimsBasedPayType.REDUCTIONS_TO_BENEFICIARY_COST_SHARING
+            )
           )}
           totalPages={renderTotalPages(
             payType.includes(PayType.CLAIMS_BASED_PAYMENTS),
-            payType.includes(PayType.NON_CLAIMS_BASED_PAYMENTS)
+            payType.includes(PayType.NON_CLAIMS_BASED_PAYMENTS),
+            payClaims.includes(
+              ClaimsBasedPayType.REDUCTIONS_TO_BENEFICIARY_COST_SHARING
+            )
           )}
           className="margin-y-6"
         />
