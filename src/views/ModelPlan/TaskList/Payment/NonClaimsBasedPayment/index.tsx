@@ -234,7 +234,7 @@ const NonClaimsBasedPayment = () => {
                   <Grid desktop={{ col: 6 }}>
                     <Form
                       className="margin-top-6"
-                      data-testid="payment-beneficiary-cost-sharing-form"
+                      data-testid="payment-non-claims-based-payment-form"
                       onSubmit={e => {
                         handleSubmit(e);
                       }}
