@@ -73,6 +73,7 @@ const ITToolsSummary = ({
       <p>
         {t('summaryBox.changeAnswer')}{' '}
         <UswdsReactLink
+          data-testid={`it-tools-redirect-${scrollElememnt}`}
           to={{
             pathname: redirect,
             state: { scrollElement: scrollElememnt }

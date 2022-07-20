@@ -53,7 +53,14 @@ const CheckboxField = ({
       >
         {label}
       </label>
-      <p className="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs">
+      <p
+        className={classnames(
+          'margin-y-1 margin-left-4 line-height-body-3 font-body-2xs',
+          {
+            'text-gray-30': disabled
+          }
+        )}
+      >
         {subLabel}
       </p>
     </div>
