@@ -1,3 +1,11 @@
+/**
+Custom command specifically for testing IT Tools
+Check if the targeted element should be disabled
+Stored original location - used to revisit once Tools answer has been changed
+Navigates to original tool question, changes answer, saves, and revisits page on IT Tools form
+Finally checks the now enabled checkbox on the IT Tools form
+ */
+
 Cypress.Commands.add(
   'itToolsRedirect',
   (
