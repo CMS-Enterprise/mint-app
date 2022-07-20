@@ -400,6 +400,55 @@ func (e CMMIGroup) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
+type CMSCenter string
+
+const (
+	CMSCenterCmmi                                 CMSCenter = "CMMI"
+	CMSCenterCenterForMedicare                    CMSCenter = "CENTER_FOR_MEDICARE"
+	CMSCenterFederalCoordinatedHealthCareOffice   CMSCenter = "FEDERAL_COORDINATED_HEALTH_CARE_OFFICE"
+	CMSCenterCenterForClinicalStandardsAndQuality CMSCenter = "CENTER_FOR_CLINICAL_STANDARDS_AND_QUALITY"
+	CMSCenterCenterForProgramIntegrity            CMSCenter = "CENTER_FOR_PROGRAM_INTEGRITY"
+	CMSCenterOther                                CMSCenter = "OTHER"
+)
+
+var AllCMSCenter = []CMSCenter{
+	CMSCenterCmmi,
+	CMSCenterCenterForMedicare,
+	CMSCenterFederalCoordinatedHealthCareOffice,
+	CMSCenterCenterForClinicalStandardsAndQuality,
+	CMSCenterCenterForProgramIntegrity,
+	CMSCenterOther,
+}
+
+func (e CMSCenter) IsValid() bool {
+	switch e {
+	case CMSCenterCmmi, CMSCenterCenterForMedicare, CMSCenterFederalCoordinatedHealthCareOffice, CMSCenterCenterForClinicalStandardsAndQuality, CMSCenterCenterForProgramIntegrity, CMSCenterOther:
+		return true
+	}
+	return false
+}
+
+func (e CMSCenter) String() string {
+	return string(e)
+}
+
+func (e *CMSCenter) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = CMSCenter(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid CMSCenter", str)
+	}
+	return nil
+}
+
+func (e CMSCenter) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
 type CcmInvolvmentType string
 
 const (
