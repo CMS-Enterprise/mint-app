@@ -4,11 +4,14 @@ Cypress.Commands.add(
     toolElement,
     redirectElement,
     elementToCheck,
-    pageNumber,
     multiselect,
     shouldBeEnabled
   ) => {
     if (!shouldBeEnabled) cy.get(toolElement).should('be.disabled');
+
+    cy.location().then(location => {
+      cy.wrap(location.pathname).as('itToolPage');
+    });
 
     cy.get(`[data-testid="${redirectElement}"]`).first().click();
 
@@ -24,13 +27,8 @@ Cypress.Commands.add(
 
     cy.contains('button', 'Save and return to task list').click();
 
-    cy.get('[data-testid="it-tools"]').click();
-
-    // cy.wait(500);
-
-    [...Array(pageNumber - 1)].forEach(() => {
-      cy.contains('button', 'Next').click();
-      //   cy.wait(500);
+    cy.get('@itToolPage').then(itToolPage => {
+      cy.visit(itToolPage);
     });
 
     cy.wait(1000);
