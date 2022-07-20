@@ -41,6 +41,7 @@ exports[`The ITToolsSummary component matches snapshot 1`] = `
           Want to change your answer? 
           <a
             class="usa-link"
+            data-testid="it-tools-redirect-managePartCDEnrollment"
             href="/models/123/task-list/payments"
           >
             Go to question

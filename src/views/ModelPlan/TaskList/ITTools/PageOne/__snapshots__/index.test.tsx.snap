@@ -161,6 +161,7 @@ exports[`IT Tools Page One matches snapshot 1`] = `
                     Want to change your answer? 
                     <a
                       class="usa-link"
+                      data-testid="it-tools-redirect-managePartCDEnrollment"
                       href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/characteristics/key-characteristics"
                     >
                       Go to question
@@ -300,6 +301,7 @@ exports[`IT Tools Page One matches snapshot 1`] = `
                     Want to change your answer? 
                     <a
                       class="usa-link"
+                      data-testid="it-tools-redirect-collectPlanBids"
                       href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/characteristics/key-characteristics"
                     >
                       Go to question
@@ -439,6 +441,7 @@ exports[`IT Tools Page One matches snapshot 1`] = `
                     Want to change your answer? 
                     <a
                       class="usa-link"
+                      data-testid="it-tools-redirect-planContactUpdated"
                       href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/characteristics/key-characteristics"
                     >
                       Go to question

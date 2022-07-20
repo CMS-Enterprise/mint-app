@@ -153,6 +153,7 @@ exports[`IT Tools Page seven matches snapshot 1`] = `
                     Want to change your answer? 
                     <a
                       class="usa-link"
+                      data-testid="it-tools-redirect-dataToSendParticicipants"
                       href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/ops-eval-and-learning/evaluation"
                     >
                       Go to question
@@ -330,6 +331,7 @@ exports[`IT Tools Page seven matches snapshot 1`] = `
                     Want to change your answer? 
                     <a
                       class="usa-link"
+                      data-testid="it-tools-redirect-modelLearningSystems"
                       href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/ops-eval-and-learning/learning"
                     >
                       Go to question
@@ -363,7 +365,7 @@ exports[`IT Tools Page seven matches snapshot 1`] = `
                 A cross-model contract
               </label>
               <p
-                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-gray-30"
               />
             </div>
             <div
@@ -385,7 +387,7 @@ exports[`IT Tools Page seven matches snapshot 1`] = `
                 Research, Measurement, Assessment, Design, and Analysis (RMADA)
               </label>
               <p
-                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-gray-30"
               />
             </div>
             <div
@@ -407,7 +409,7 @@ exports[`IT Tools Page seven matches snapshot 1`] = `
                 Other
               </label>
               <p
-                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-gray-30"
               />
             </div>
             <div
@@ -489,6 +491,7 @@ exports[`IT Tools Page seven matches snapshot 1`] = `
                     Want to change your answer? 
                     <a
                       class="usa-link"
+                      data-testid="it-tools-redirect-modelLearningSystems"
                       href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/ops-eval-and-learning/learning"
                     >
                       Go to question
@@ -522,7 +525,7 @@ exports[`IT Tools Page seven matches snapshot 1`] = `
                 Connect (a Salesforce tool)
               </label>
               <p
-                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-gray-30"
               />
             </div>
             <div
@@ -544,7 +547,7 @@ exports[`IT Tools Page seven matches snapshot 1`] = `
                 Other
               </label>
               <p
-                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-gray-30"
               />
             </div>
             <div

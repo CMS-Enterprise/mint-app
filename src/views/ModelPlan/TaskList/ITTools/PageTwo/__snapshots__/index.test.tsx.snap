@@ -161,6 +161,7 @@ exports[`IT Tools Page two matches snapshot 1`] = `
                     Want to change your answer? 
                     <a
                       class="usa-link"
+                      data-testid="it-tools-redirect-recruitmentMethod"
                       href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/participants-and-providers/participants-options"
                     >
                       Go to question
@@ -322,6 +323,7 @@ exports[`IT Tools Page two matches snapshot 1`] = `
                     Want to change your answer? 
                     <a
                       class="usa-link"
+                      data-testid="it-tools-redirect-selectionMethod"
                       href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/participants-and-providers/participants-options"
                     >
                       Go to question
@@ -355,7 +357,7 @@ exports[`IT Tools Page two matches snapshot 1`] = `
                 Salesforce Application Review and Scoring (ARS)
               </label>
               <p
-                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-gray-30"
               />
             </div>
             <div
@@ -377,7 +379,7 @@ exports[`IT Tools Page two matches snapshot 1`] = `
                 Grant Solutions
               </label>
               <p
-                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-gray-30"
               />
             </div>
             <div
@@ -399,7 +401,7 @@ exports[`IT Tools Page two matches snapshot 1`] = `
                 Salesforce Request for Application (RFA)
               </label>
               <p
-                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-gray-30"
               />
             </div>
             <div
@@ -421,7 +423,7 @@ exports[`IT Tools Page two matches snapshot 1`] = `
                 Other
               </label>
               <p
-                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-gray-30"
               />
             </div>
             <div
@@ -508,6 +510,7 @@ exports[`IT Tools Page two matches snapshot 1`] = `
                     Want to change your answer? 
                     <a
                       class="usa-link"
+                      data-testid="it-tools-redirect-selectionMethod"
                       href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/participants-and-providers/participants-options"
                     >
                       Go to question
@@ -541,7 +544,7 @@ exports[`IT Tools Page two matches snapshot 1`] = `
                 Research, Measurement, Assessment, Design, and Analysis (RMADA)
               </label>
               <p
-                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-gray-30"
               />
             </div>
             <div
@@ -563,7 +566,7 @@ exports[`IT Tools Page two matches snapshot 1`] = `
                 Other
               </label>
               <p
-                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-gray-30"
               />
             </div>
             <div

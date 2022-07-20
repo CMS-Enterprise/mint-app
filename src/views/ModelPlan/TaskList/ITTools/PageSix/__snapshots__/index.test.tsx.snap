@@ -153,6 +153,7 @@ exports[`IT Tools Page six matches snapshot 1`] = `
                     Want to change your answer? 
                     <a
                       class="usa-link"
+                      data-testid="it-tools-redirect-dataNeededForMonitoring"
                       href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/ops-eval-and-learning/evaluation"
                     >
                       Go to question
@@ -338,6 +339,7 @@ exports[`IT Tools Page six matches snapshot 1`] = `
                     Want to change your answer? 
                     <a
                       class="usa-link"
+                      data-testid="it-tools-redirect-dataNeededForMonitoring"
                       href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/ops-eval-and-learning/evaluation"
                     >
                       Go to question
@@ -371,7 +373,7 @@ exports[`IT Tools Page six matches snapshot 1`] = `
                 Chronic Conditions Warehouse (CCW)
               </label>
               <p
-                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-gray-30"
               />
             </div>
             <div
@@ -393,7 +395,7 @@ exports[`IT Tools Page six matches snapshot 1`] = `
                 Integrated Data Repository (IDR)
               </label>
               <p
-                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-gray-30"
               />
             </div>
             <div
@@ -415,7 +417,7 @@ exports[`IT Tools Page six matches snapshot 1`] = `
                 Other
               </label>
               <p
-                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-gray-30"
               />
             </div>
             <div
@@ -505,6 +507,7 @@ exports[`IT Tools Page six matches snapshot 1`] = `
                     Want to change your answer? 
                     <a
                       class="usa-link"
+                      data-testid="it-tools-redirect-dataNeededForMonitoring"
                       href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/ops-eval-and-learning/evaluation"
                     >
                       Go to question
@@ -538,7 +541,7 @@ exports[`IT Tools Page six matches snapshot 1`] = `
                 Existing CMS data and process
               </label>
               <p
-                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-gray-30"
               />
             </div>
             <div
@@ -560,7 +563,7 @@ exports[`IT Tools Page six matches snapshot 1`] = `
                 Health Data Reporting (new CMMI process)
               </label>
               <p
-                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-gray-30"
               />
             </div>
             <div
@@ -582,7 +585,7 @@ exports[`IT Tools Page six matches snapshot 1`] = `
                 None
               </label>
               <p
-                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-gray-30"
               />
             </div>
             <div
@@ -604,7 +607,7 @@ exports[`IT Tools Page six matches snapshot 1`] = `
                 Other new process
               </label>
               <p
-                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs text-gray-30"
               />
             </div>
             <div
