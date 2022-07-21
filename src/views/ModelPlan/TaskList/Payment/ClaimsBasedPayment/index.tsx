@@ -279,7 +279,7 @@ const ClaimsBasedPayment = () => {
                           </FieldGroup>
                         )}
 
-                        <AddNote id="pay-claims-note" field="payClaimsNotes" />
+                        <AddNote id="pay-claims-note" field="payClaimsNote" />
                       </FieldGroup>
 
                       <FieldGroup
