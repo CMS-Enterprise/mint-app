@@ -288,7 +288,7 @@ const AnticipateDependencies = () => {
                         className="margin-top-4"
                       >
                         <Label
-                          htmlFor="payment-needs-claims-data-collection"
+                          htmlFor="needsClaimsDataCollection"
                           className="maxw-none"
                         >
                           {t('needsClaimsDataCollection')}
@@ -300,28 +300,21 @@ const AnticipateDependencies = () => {
                           {flatErrors.needsClaimsDataCollection}
                         </FieldErrorMsg>
                         <Fieldset>
-                          <Field
-                            as={Radio}
-                            id="payment-needs-claims-data-collection-Yes"
-                            name="payment-needs-claims-data-collection"
-                            label={h('yes')}
-                            value="YES"
-                            checked={values.needsClaimsDataCollection === true}
-                            onChange={() => {
-                              setFieldValue('needsClaimsDataCollection', true);
-                            }}
-                          />
-                          <Field
-                            as={Radio}
-                            id="payment-needs-claims-data-collection-No"
-                            name="payment-needs-claims-data-collection"
-                            label={h('no')}
-                            value="FALSE"
-                            checked={values.needsClaimsDataCollection === false}
-                            onChange={() => {
-                              setFieldValue('needsClaimsDataCollection', false);
-                            }}
-                          />
+                          {[true, false].map(key => (
+                            <Field
+                              as={Radio}
+                              key={key}
+                              id={`payment-needs-claims-data-collection-${key}`}
+                              data-testid={`payment-needs-claims-data-collection-${key}`}
+                              name="needsClaimsDataCollection"
+                              label={key ? h('yes') : h('no')}
+                              value={key ? 'YES' : 'NO'}
+                              checked={values.needsClaimsDataCollection === key}
+                              onChange={() => {
+                                setFieldValue('needsClaimsDataCollection', key);
+                              }}
+                            />
+                          ))}
                         </Fieldset>
                         <AddNote
                           id="payment-needs-claims-data-collection-note"

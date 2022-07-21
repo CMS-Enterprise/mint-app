@@ -206,7 +206,7 @@ exports[`Model Plan -- Anticipate Dependencies matches snapshot 1`] = `
             <label
               class="usa-label maxw-none"
               data-testid="label"
-              for="payment-needs-claims-data-collection"
+              for="needsClaimsDataCollection"
             >
               Will any additional data need to be collected for claims?
             </label>
@@ -225,14 +225,15 @@ exports[`Model Plan -- Anticipate Dependencies matches snapshot 1`] = `
               >
                 <input
                   class="usa-radio__input"
-                  id="payment-needs-claims-data-collection-Yes"
-                  name="payment-needs-claims-data-collection"
+                  data-testid="payment-needs-claims-data-collection-true"
+                  id="payment-needs-claims-data-collection-true"
+                  name="needsClaimsDataCollection"
                   type="radio"
                   value="YES"
                 />
                 <label
                   class="usa-radio__label"
-                  for="payment-needs-claims-data-collection-Yes"
+                  for="payment-needs-claims-data-collection-true"
                 >
                   Yes
                 </label>
@@ -243,14 +244,15 @@ exports[`Model Plan -- Anticipate Dependencies matches snapshot 1`] = `
               >
                 <input
                   class="usa-radio__input"
-                  id="payment-needs-claims-data-collection-No"
-                  name="payment-needs-claims-data-collection"
+                  data-testid="payment-needs-claims-data-collection-false"
+                  id="payment-needs-claims-data-collection-false"
+                  name="needsClaimsDataCollection"
                   type="radio"
-                  value="FALSE"
+                  value="NO"
                 />
                 <label
                   class="usa-radio__label"
-                  for="payment-needs-claims-data-collection-No"
+                  for="payment-needs-claims-data-collection-false"
                 >
                   No
                 </label>

@@ -16,7 +16,7 @@ const mockData: GetAnticipateDependenciesType = {
   payClaims: [ClaimsBasedPayType.OTHER],
   creatingDependenciesBetweenServices: null,
   creatingDependenciesBetweenServicesNote: null,
-  needsClaimsDataCollection: null,
+  needsClaimsDataCollection: true,
   needsClaimsDataCollectionNote: null,
   providingThirdPartyFile: null,
   isContractorAwareTestDataRequirements: null
@@ -60,6 +60,12 @@ describe('Model Plan -- Anticipate Dependencies', () => {
       expect(
         screen.getByTestId('payment-anticipate-dependencies-form')
       ).toBeInTheDocument();
+    });
+
+    await waitFor(() => {
+      expect(
+        screen.getByTestId('payment-needs-claims-data-collection-true')
+      ).toBeChecked();
     });
   });
 
