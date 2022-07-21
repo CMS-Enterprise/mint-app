@@ -126,14 +126,15 @@ exports[`Model Plan -- Recover matches snapshot 1`] = `
               >
                 <input
                   class="usa-radio__input"
-                  id="payment-recover-payment-Yes"
-                  name="payment-recover-payment"
+                  data-testid="payment-recover-payment-true"
+                  id="payment-recover-payment-true"
+                  name="willRecoverPayments"
                   type="radio"
                   value="YES"
                 />
                 <label
                   class="usa-radio__label"
-                  for="payment-recover-payment-Yes"
+                  for="payment-recover-payment-true"
                 >
                   Yes
                 </label>
@@ -144,14 +145,15 @@ exports[`Model Plan -- Recover matches snapshot 1`] = `
               >
                 <input
                   class="usa-radio__input"
-                  id="payment-recover-payment-No"
-                  name="payment-recover-payment"
+                  data-testid="payment-recover-payment-false"
+                  id="payment-recover-payment-false"
+                  name="willRecoverPayments"
                   type="radio"
                   value="NO"
                 />
                 <label
                   class="usa-radio__label"
-                  for="payment-recover-payment-No"
+                  for="payment-recover-payment-false"
                 >
                   No
                 </label>
@@ -208,14 +210,15 @@ exports[`Model Plan -- Recover matches snapshot 1`] = `
               >
                 <input
                   class="usa-radio__input"
-                  id="payment-anticipate-reconciling-payment-retro-Yes"
-                  name="payment-anticipate-reconciling-payment-retro"
+                  data-testid="payment-anticipate-reconciling-payment-retro-true"
+                  id="payment-anticipate-reconciling-payment-retro-true"
+                  name="anticipateReconcilingPaymentsRetrospectively"
                   type="radio"
                   value="YES"
                 />
                 <label
                   class="usa-radio__label"
-                  for="payment-anticipate-reconciling-payment-retro-Yes"
+                  for="payment-anticipate-reconciling-payment-retro-true"
                 >
                   Yes
                 </label>
@@ -226,14 +229,15 @@ exports[`Model Plan -- Recover matches snapshot 1`] = `
               >
                 <input
                   class="usa-radio__input"
-                  id="payment-anticipate-reconciling-payment-retro-No"
-                  name="payment-anticipate-reconciling-payment-retro"
+                  data-testid="payment-anticipate-reconciling-payment-retro-false"
+                  id="payment-anticipate-reconciling-payment-retro-false"
+                  name="anticipateReconcilingPaymentsRetrospectively"
                   type="radio"
                   value="NO"
                 />
                 <label
                   class="usa-radio__label"
-                  for="payment-anticipate-reconciling-payment-retro-No"
+                  for="payment-anticipate-reconciling-payment-retro-false"
                 >
                   No
                 </label>

@@ -16,7 +16,7 @@ const mockData: GetRecoverType = {
   payClaims: [ClaimsBasedPayType.OTHER],
   willRecoverPayments: null,
   willRecoverPaymentsNote: 'string',
-  anticipateReconcilingPaymentsRetrospectively: null,
+  anticipateReconcilingPaymentsRetrospectively: true,
   anticipateReconcilingPaymentsRetrospectivelyNote: 'string',
   paymentStartDate: null,
   paymentStartDateNote: 'string'
@@ -58,6 +58,11 @@ describe('Model Plan -- Recover', () => {
 
     await waitFor(() => {
       expect(screen.getByTestId('payment-recover-form')).toBeInTheDocument();
+    });
+    await waitFor(() => {
+      expect(
+        screen.getByTestId('payment-anticipate-reconciling-payment-retro-true')
+      ).toBeChecked();
     });
   });
 
