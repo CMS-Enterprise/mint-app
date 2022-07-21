@@ -39,7 +39,6 @@ import { ClaimsBasedPayType, PayType } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import {
   mapMultiSelectOptions,
-  sortOtherEnum,
   translateClaimsBasedPayType
 } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
