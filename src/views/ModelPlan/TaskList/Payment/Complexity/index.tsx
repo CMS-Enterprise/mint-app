@@ -12,7 +12,8 @@ import {
   GridContainer,
   IconArrowBack,
   Label,
-  Radio
+  Radio,
+  TextInput
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
 
@@ -25,7 +26,6 @@ import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import MultiSelect from 'components/shared/MultiSelect';
-import TextField from 'components/shared/TextField';
 import GetComplexity from 'queries/Payments/GetComplexity';
 import {
   GetComplexity as GetComplexityType,
@@ -359,7 +359,7 @@ const Complexity = () => {
                                 }
                               </FieldErrorMsg>
                               <Field
-                                as={TextField}
+                                as={TextInput}
                                 error={
                                   flatErrors.canParticipantsSelectBetweenPaymentMechanismsHow
                                 }
@@ -443,7 +443,7 @@ const Complexity = () => {
                               {flatErrors.anticipatedPaymentFrequencyOther}
                             </FieldErrorMsg>
                             <Field
-                              as={TextField}
+                              as={TextInput}
                               error={
                                 flatErrors.anticipatedPaymentFrequencyOther
                               }

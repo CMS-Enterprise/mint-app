@@ -257,7 +257,6 @@ exports[`Model Plan -- Complexity matches snapshot 1`] = `
                   data-testid="payment-multiple-payments-how"
                   id="payment-multiple-payments-how"
                   name="canParticipantsSelectBetweenPaymentMechanismsHow"
-                  type="text"
                   value="lorem ipsum"
                 />
               </div>
