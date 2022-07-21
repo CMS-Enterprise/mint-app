@@ -415,7 +415,7 @@ const FundingSource = () => {
                         className="margin-top-4"
                       >
                         <Label htmlFor="payRecipients" className="maxw-none">
-                          {t('whatWillYouPay')}
+                          {t('whoWillYouPay')}
                         </Label>
                         <FieldErrorMsg>
                           {flatErrors.payRecipients}
@@ -471,53 +471,42 @@ const FundingSource = () => {
                         />
                       </FieldGroup>
 
-                      <FieldArray
-                        name="payType"
-                        render={arrayHelpers => (
-                          <>
-                            <legend className="usa-label maxw-none">
-                              {t('whatWillYouPay')}
-                            </legend>
-                            <p className="text-base margin-y-1 margin-top-2">
-                              {t('whatWillYouPaySubCopy')}
-                            </p>
-                            <FieldErrorMsg>{flatErrors.payType}</FieldErrorMsg>
-
-                            {Object.keys(PayType)
-                              .sort(sortPayTypeEnums)
-                              .map(type => {
-                                return (
-                                  <Fragment key={type}>
-                                    <Field
-                                      as={CheckboxField}
-                                      id={`payment-pay-type-${type}`}
-                                      name="payType"
-                                      label={translatePayType(type)}
-                                      value={type}
-                                      checked={values.payType.includes(
-                                        type as PayType
-                                      )}
-                                      onChange={(
-                                        e: React.ChangeEvent<HTMLInputElement>
-                                      ) => {
-                                        if (e.target.checked) {
-                                          arrayHelpers.push(e.target.value);
-                                        } else {
-                                          const idx = values.payType.indexOf(
-                                            e.target.value as PayType
-                                          );
-                                          arrayHelpers.remove(idx);
-                                        }
-                                      }}
-                                    />
-                                  </Fragment>
-                                );
-                              })}
-                          </>
-                        )}
-                      />
-
-                      <AddNote id="payment-pay-type-note" field="payTypeNote" />
+                      <FieldGroup
+                        scrollElement="payType"
+                        error={!!flatErrors.payType}
+                        className="margin-top-4"
+                      >
+                        <Label htmlFor="payType" className="maxw-none">
+                          {t('whatWillYouPay')}
+                        </Label>
+                        <p className="text-base margin-y-1 margin-top-2">
+                          {t('whatWillYouPaySubCopy')}
+                        </p>
+                        <FieldErrorMsg>{flatErrors.payType}</FieldErrorMsg>
+                        <Fieldset>
+                          {Object.keys(PayType)
+                            .sort(sortPayTypeEnums)
+                            .map(type => {
+                              return (
+                                <Field
+                                  key={type}
+                                  as={CheckboxField}
+                                  id={`payment-pay-recipients-${type}`}
+                                  name="payType"
+                                  label={translatePayType(type)}
+                                  value={type}
+                                  checked={values.payType.includes(
+                                    type as PayType
+                                  )}
+                                />
+                              );
+                            })}
+                        </Fieldset>
+                        <AddNote
+                          id="payment-pay-type-note"
+                          field="payTypeNote"
+                        />
+                      </FieldGroup>
 
                       <div className="margin-top-6 margin-bottom-3">
                         <Button type="submit" onClick={() => setErrors({})}>
