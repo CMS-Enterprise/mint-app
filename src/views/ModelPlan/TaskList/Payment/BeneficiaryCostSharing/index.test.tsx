@@ -77,6 +77,11 @@ describe('Model Plan -- BeneficiaryCostSharing', () => {
       </MemoryRouter>
     );
 
+    await waitFor(() => {
+      expect(
+        screen.getByTestId('payment-beneficiary-cost-sharing-form')
+      ).toBeInTheDocument();
+    });
     expect(asFragment()).toMatchSnapshot();
   });
 });

@@ -88,6 +88,11 @@ describe('Model Plan -- Claims Based Payment', () => {
       </MemoryRouter>
     );
 
+    await waitFor(() => {
+      expect(
+        screen.getByTestId('payment-claims-based-payment-form')
+      ).toBeInTheDocument();
+    });
     expect(asFragment()).toMatchSnapshot();
   });
 });

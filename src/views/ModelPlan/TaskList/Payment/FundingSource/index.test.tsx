@@ -93,6 +93,11 @@ describe('Model Plan Payment', () => {
       </MemoryRouter>
     );
 
+    await waitFor(() => {
+      expect(
+        screen.getByTestId('payment-funding-source-form')
+      ).toBeInTheDocument();
+    });
     expect(asFragment()).toMatchSnapshot();
   });
 });

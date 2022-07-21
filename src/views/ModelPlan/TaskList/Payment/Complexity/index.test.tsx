@@ -89,6 +89,9 @@ describe('Model Plan -- Complexity', () => {
       </MemoryRouter>
     );
 
+    await waitFor(() => {
+      expect(screen.getByTestId('payment-complexity-form')).toBeInTheDocument();
+    });
     expect(asFragment()).toMatchSnapshot();
   });
 });

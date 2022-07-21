@@ -86,6 +86,11 @@ describe('Model Plan -- NonClaimsBasedPayment', () => {
       </MemoryRouter>
     );
 
+    await waitFor(() => {
+      expect(
+        screen.getByTestId('payment-non-claims-based-payment-form')
+      ).toBeInTheDocument();
+    });
     expect(asFragment()).toMatchSnapshot();
   });
 });

@@ -76,6 +76,9 @@ describe('Model Plan -- Recover', () => {
       </MemoryRouter>
     );
 
+    await waitFor(() => {
+      expect(screen.getByTestId('payment-recover-form')).toBeInTheDocument();
+    });
     expect(asFragment()).toMatchSnapshot();
   });
 });
