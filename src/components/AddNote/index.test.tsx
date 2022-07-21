@@ -16,14 +16,10 @@ describe('The AddNote component', () => {
         </Formik>
       );
 
-      screen.getByRole('button', { name: /Add an additional note/i }).click();
-
       await waitFor(() => {
-        setTimeout(() => {
-          userEvent.type(getByTestId('test-note'), 'Test Note');
-
-          expect(getByTestId('test-note')).toHaveValue('Test Note');
-        }, 0);
+        screen.getByRole('button', { name: /Add an additional note/i }).click();
+        userEvent.type(getByTestId('test-note'), 'Test Note');
+        expect(getByTestId('test-note')).toHaveValue('Test Note');
       });
     });
   });
@@ -31,8 +27,11 @@ describe('The AddNote component', () => {
   it('checks if init value expands note on load', async () => {
     await act(async () => {
       const { getByTestId } = render(
-        <Formik initialValues={{ testNote: 'test expand' }} onSubmit={onSubmit}>
-          <AddNote id="test-note" field="testNote" />
+        <Formik
+          initialValues={{ testNote2: 'test expand' }}
+          onSubmit={onSubmit}
+        >
+          <AddNote id="test-note-2" field="testNote2" />
         </Formik>
       );
 
@@ -40,7 +39,7 @@ describe('The AddNote component', () => {
       expect(button).not.toBeInTheDocument();
 
       await waitFor(() => {
-        expect(getByTestId('test-note')).toHaveValue('test expand');
+        expect(getByTestId('test-note-2')).toHaveValue('test expand');
       });
     });
   });
