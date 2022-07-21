@@ -346,7 +346,7 @@ const Recover = () => {
                           <div className="width-card-lg position-relative">
                             <Field
                               as={DatePicker}
-                              error={+!!flatErrors.paymentStartDate}
+                              error={!!flatErrors.paymentStartDate}
                               id="payment-payment-start-date"
                               maxLength={50}
                               name="paymentStartDate"
