@@ -78,6 +78,12 @@ describe('Model Plan -- Anticipate Dependencies', () => {
       </MemoryRouter>
     );
 
+    await waitFor(() => {
+      expect(
+        screen.getByTestId('payment-anticipate-dependencies-form')
+      ).toBeInTheDocument();
+    });
+
     expect(asFragment()).toMatchSnapshot();
   });
 });
