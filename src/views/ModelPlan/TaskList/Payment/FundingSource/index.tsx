@@ -318,188 +318,158 @@ const FundingSource = () => {
                         />
                       </FieldGroup>
 
-                      <FieldArray
-                        name="fundingSourceR"
-                        render={arrayHelpers => (
-                          <>
-                            <legend className="usa-label maxw-none">
-                              {t('reconciliation')}
-                            </legend>
-                            <FieldErrorMsg>
-                              {flatErrors.fundingSourceR}
-                            </FieldErrorMsg>
-
-                            {Object.keys(FundingSourceEnum)
-                              .sort(sortOtherEnum)
-                              .map(type => {
-                                return (
-                                  <Fragment key={type}>
-                                    <Field
-                                      as={CheckboxField}
-                                      id={`payment-funding-source-reconciliation-${type}`}
-                                      name="fundingSourceR"
-                                      label={translateSourceOptions(type)}
-                                      value={type}
-                                      checked={values.fundingSourceR?.includes(
-                                        type as FundingSourceEnum
-                                      )}
-                                      onChange={(
-                                        e: React.ChangeEvent<HTMLInputElement>
-                                      ) => {
-                                        if (e.target.checked) {
-                                          arrayHelpers.push(e.target.value);
-                                        } else {
-                                          const idx = values.fundingSourceR!.indexOf(
-                                            e.target.value as FundingSourceEnum
-                                          );
-                                          arrayHelpers.remove(idx);
+                      <FieldGroup
+                        scrollElement="fundingSourceR"
+                        error={!!flatErrors.fundingSourceR}
+                        className="margin-top-4"
+                      >
+                        <Label htmlFor="fundingSourceR" className="maxw-none">
+                          {t('reconciliation')}
+                        </Label>
+                        <FieldErrorMsg>
+                          {flatErrors.fundingSourceR}
+                        </FieldErrorMsg>
+                        <Fieldset>
+                          {Object.keys(FundingSourceEnum)
+                            .sort(sortOtherEnum)
+                            .map(type => {
+                              return (
+                                <Fragment key={type}>
+                                  <Field
+                                    key={type}
+                                    as={CheckboxField}
+                                    id={`payment-funding-source-reconciliation-${type}`}
+                                    name="fundingSourceR"
+                                    label={translateSourceOptions(type)}
+                                    value={type}
+                                    checked={values.fundingSourceR?.includes(
+                                      type as FundingSourceEnum
+                                    )}
+                                  />
+                                  {type === 'TRUST_FUND' &&
+                                    values.fundingSourceR?.includes(
+                                      type as FundingSourceEnum
+                                    ) && (
+                                      <FieldGroup
+                                        className="margin-left-4 margin-top-2 margin-bottom-4"
+                                        error={
+                                          !!flatErrors.fundingSourceRTrustFund
                                         }
-                                      }}
-                                    />
-                                    {type === 'TRUST_FUND' &&
-                                      values.fundingSourceR.includes(
-                                        type as FundingSourceEnum
-                                      ) && (
-                                        <FieldGroup
-                                          className="margin-left-4 margin-top-2 margin-bottom-4"
-                                          error={
-                                            !!flatErrors.fundingSourceRTrustFund
-                                          }
+                                      >
+                                        <Label
+                                          htmlFor="fundingSourceRTrustFund"
+                                          className="text-normal"
                                         >
-                                          <Label
-                                            htmlFor="fundingSourceRTrustFund"
-                                            className="text-normal"
-                                          >
-                                            {t('whichType')}
-                                          </Label>
-                                          <FieldErrorMsg>
-                                            {flatErrors.fundingSourceRTrustFund}
-                                          </FieldErrorMsg>
-                                          <Field
-                                            as={TextInput}
-                                            id="payment-funding-source-reconciliation-trust-fund"
-                                            maxLength={50}
-                                            name="fundingSourceRTrustFund"
-                                          />
-                                        </FieldGroup>
-                                      )}
-                                    {type === 'OTHER' &&
-                                      values.fundingSourceR?.includes(
-                                        type as FundingSourceEnum
-                                      ) && (
-                                        <FieldGroup
-                                          className="margin-left-4 margin-top-2 margin-bottom-4"
-                                          error={
-                                            !!flatErrors.fundingSourceROther
-                                          }
+                                          {t('whichType')}
+                                        </Label>
+                                        <FieldErrorMsg>
+                                          {flatErrors.fundingSourceRTrustFund}
+                                        </FieldErrorMsg>
+                                        <Field
+                                          as={TextInput}
+                                          id="payment-funding-source-reconciliation-trust-fund"
+                                          data-testid="payment-funding-source-reconciliation-trust-fund"
+                                          maxLength={50}
+                                          name="fundingSourceRTrustFund"
+                                        />
+                                      </FieldGroup>
+                                    )}
+                                  {type === 'OTHER' &&
+                                    values.fundingSourceR?.includes(
+                                      type as FundingSourceEnum
+                                    ) && (
+                                      <FieldGroup
+                                        className="margin-left-4 margin-top-2 margin-bottom-4"
+                                        error={!!flatErrors.fundingSourceROther}
+                                      >
+                                        <Label
+                                          htmlFor="fundingSourceROther"
+                                          className="text-normal"
                                         >
-                                          <Label
-                                            htmlFor="fundingSourceROther"
-                                            className="text-normal"
-                                          >
-                                            {t('otherSourceOption')}
-                                          </Label>
-                                          <FieldErrorMsg>
-                                            {flatErrors.fundingSourceROther}
-                                          </FieldErrorMsg>
-                                          <Field
-                                            as={TextInput}
-                                            id="payment-funding-source-reconciliation-other"
-                                            maxLength={50}
-                                            name="fundingSourceROther"
-                                          />
-                                        </FieldGroup>
-                                      )}
-                                  </Fragment>
-                                );
-                              })}
-                          </>
-                        )}
-                      />
+                                          {t('otherSourceOption')}
+                                        </Label>
+                                        <FieldErrorMsg>
+                                          {flatErrors.fundingSourceROther}
+                                        </FieldErrorMsg>
+                                        <Field
+                                          as={TextInput}
+                                          id="payment-funding-source-reconciliation-other"
+                                          maxLength={50}
+                                          name="fundingSourceROther"
+                                        />
+                                      </FieldGroup>
+                                    )}
+                                </Fragment>
+                              );
+                            })}
+                        </Fieldset>
+                        <AddNote
+                          id="payment-funding-source-reconciliation-note"
+                          field="fundingSourceRNote"
+                        />
+                      </FieldGroup>
 
-                      <AddNote
-                        id="payment-funding-source-reconciliation-note"
-                        field="fundingSourceRNote"
-                      />
-
-                      <FieldArray
-                        name="payRecipients"
-                        render={arrayHelpers => (
-                          <>
-                            <legend className="usa-label maxw-none">
-                              {t('whatWillYouPay')}
-                            </legend>
-                            <FieldErrorMsg>
-                              {flatErrors.payRecipients}
-                            </FieldErrorMsg>
-
-                            {Object.keys(PayRecipient)
-                              .sort(sortOtherEnum)
-                              .map(type => {
-                                return (
-                                  <Fragment key={type}>
-                                    <Field
-                                      as={CheckboxField}
-                                      id={`payment-pay-recipients-${type}`}
-                                      name="payRecipients"
-                                      label={translatePayRecipient(type)}
-                                      value={type}
-                                      checked={values.payRecipients.includes(
-                                        type as PayRecipient
-                                      )}
-                                      onChange={(
-                                        e: React.ChangeEvent<HTMLInputElement>
-                                      ) => {
-                                        if (e.target.checked) {
-                                          arrayHelpers.push(e.target.value);
-                                        } else {
-                                          const idx = values.payRecipients.indexOf(
-                                            e.target.value as PayRecipient
-                                          );
-                                          arrayHelpers.remove(idx);
-                                        }
-                                      }}
-                                    />
-                                    {type === 'OTHER' &&
-                                      values.payRecipients.includes(
-                                        type as PayRecipient
-                                      ) && (
-                                        <FieldGroup
-                                          className="margin-left-4 margin-top-2 margin-bottom-4"
-                                          error={
-                                            !!flatErrors.payRecipientsOtherSpecification
-                                          }
+                      <FieldGroup
+                        scrollElement="payRecipients"
+                        error={!!flatErrors.payRecipients}
+                        className="margin-top-4"
+                      >
+                        <Label htmlFor="payRecipients" className="maxw-none">
+                          {t('whatWillYouPay')}
+                        </Label>
+                        <FieldErrorMsg>
+                          {flatErrors.payRecipients}
+                        </FieldErrorMsg>
+                        <Fieldset>
+                          {Object.keys(PayRecipient)
+                            .sort(sortOtherEnum)
+                            .map(type => {
+                              return (
+                                <Fragment key={type}>
+                                  <Field
+                                    as={CheckboxField}
+                                    id={`payment-pay-recipients-${type}`}
+                                    name="payRecipients"
+                                    label={translatePayRecipient(type)}
+                                    value={type}
+                                    checked={values.payRecipients.includes(
+                                      type as PayRecipient
+                                    )}
+                                  />
+                                  {type === 'OTHER' &&
+                                    values.payRecipients.includes(
+                                      type as PayRecipient
+                                    ) && (
+                                      <FieldGroup
+                                        className="margin-left-4 margin-top-2 margin-bottom-4"
+                                        error={!!flatErrors.payRecipientsOther}
+                                      >
+                                        <Label
+                                          htmlFor="payRecipientsOther"
+                                          className="text-normal"
                                         >
-                                          <Label
-                                            htmlFor="payRecipientsOtherSpecification"
-                                            className="text-normal"
-                                          >
-                                            {t('otherPayOption')}
-                                          </Label>
-                                          <FieldErrorMsg>
-                                            {
-                                              flatErrors.payRecipientsOtherSpecification
-                                            }
-                                          </FieldErrorMsg>
-                                          <Field
-                                            as={TextInput}
-                                            id="payment-pay-recipients-other"
-                                            maxLength={50}
-                                            name="payRecipientsOtherSpecification"
-                                          />
-                                        </FieldGroup>
-                                      )}
-                                  </Fragment>
-                                );
-                              })}
-                          </>
-                        )}
-                      />
-
-                      <AddNote
-                        id="payment-pay-recipients-note"
-                        field="payRecipientsNote"
-                      />
+                                          {t('otherPayOption')}
+                                        </Label>
+                                        <FieldErrorMsg>
+                                          {flatErrors.payRecipientsOther}
+                                        </FieldErrorMsg>
+                                        <Field
+                                          as={TextInput}
+                                          id="payment-pay-recipients-other"
+                                          maxLength={50}
+                                          name="payRecipientsOther"
+                                        />
+                                      </FieldGroup>
+                                    )}
+                                </Fragment>
+                              );
+                            })}
+                        </Fieldset>
+                        <AddNote
+                          id="payment-pay-recipients-note"
+                          field="payRecipientsNote"
+                        />
+                      </FieldGroup>
 
                       <FieldArray
                         name="payType"
