@@ -29,23 +29,38 @@ As an alternative, we have been using a postgres db dump file to quickly seed th
 
 ## Pros and Cons of the Alternatives <!-- optional -->
 
-### *[alternative 1]*
+### Direct interaction with the database store in Go
 
-* `+` *[argument 1 pro]*
-* `+` *[argument 2 pro]*
-* `-` *[argument 1 con]*
-* *[...]* <!-- numbers of pros and cons can vary -->
+* `+` Complete flexibility about data going into the database 
+* `+` You can purposely seed bad data if desired
+* `+` You can set UUID values explicitly
+* `-` Requires manual recreation of business logic
+* `-` Cumbersome to maintain
+* `-` Requires a lot of boilerplate code
 
-### *[alternative 2]*
 
-* `+` *[argument 1 pro]*
-* `+` *[argument 2 pro]*
-* `-` *[argument 1 con]*
-* *[...]* <!-- numbers of pros and cons can vary -->
+### DB Dump files 
+* `+` Complete flexibility about data going into the database
+* `+` You can purposely seed bad data if desired
+* `+` You can set UUID values explicitly
+* `-` The seed files are fragile, and break any time you update the schema
+* `-` Editing a sql dump file is not straight forward
+#### Continue using db dump file, but let migrations update the dump file
 
-### *[alternative 3]*
+* `+` All the above pros
+* `+` Additional ability to test database migrations
+* `-` Complexity required to implement and maintain this
+      
+    * Migrations would need to run partially, then seed the data, then migrate again
+    * At that point, we'd have to either dump the data again, or continue using the  old version of the seed data
+* `-` More manual intervention required
 
-* `+` *[argument 1 pro]*
-* `+` *[argument 2 pro]*
-* `-` *[argument 1 con]*
-* *[...]* <!-- numbers of pros and cons can vary -->
+
+#### Continue using db dump file, but write a Go program to update the seed file programmatically
+
+* `+` All the db dump file pros
+* `+` Manual db file manipulation would not be required
+* `+` Consistent seed data update approach
+* `-` ~ a few days development to develop the Go code
+* `-` additional code would need to be maintained
+* `-` additional complexity added to update the seed data
