@@ -1,8 +1,9 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
 import {
+  Alert,
   Breadcrumb,
   BreadcrumbBar,
   BreadcrumbLink,
@@ -22,6 +23,7 @@ import AskAQuestion from 'components/AskAQuestion';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import AutoSave from 'components/shared/AutoSave';
+import DatePickerWarning from 'components/shared/DatePickerWarning';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
@@ -43,6 +45,8 @@ const Recover = () => {
   const { t } = useTranslation('payments');
   const { t: h } = useTranslation('draftModelPlan');
   const { modelID } = useParams<{ modelID: string }>();
+  const [dateInPast, setDateInPast] = useState(false);
+  const [dateLoaded, setDateLoaded] = useState(false);
 
   const formikRef = useRef<FormikProps<RecoverFormType>>(null);
   const history = useHistory();
@@ -96,6 +100,19 @@ const Recover = () => {
         formikRef?.current?.setErrors(errors);
       });
   };
+
+  // TODO: Figure out why the form doesn't rerender once a date value is fetched - delay works for now
+  // Loading var passed from GQL does not seem to accurately identify a completed payload for date
+  useEffect(() => {
+    setTimeout(() => {
+      setDateLoaded(true);
+      if (paymentStartDate && new Date() > new Date(paymentStartDate)) {
+        setDateInPast(true);
+      } else {
+        setDateInPast(false);
+      }
+    }, 250);
+  }, [paymentStartDate]);
 
   const initialValues: RecoverFormType = {
     __typename: 'PlanPayments',
@@ -168,17 +185,30 @@ const Recover = () => {
           } = formikProps;
           const flatErrors = flattenErrors(errors);
 
-          const handleOnBlur = (e: string, field: string) => {
-            if (e === '') {
+          const handleOnBlur = (
+            e: React.ChangeEvent<HTMLInputElement>,
+            field: string
+          ) => {
+            if (e.target.value === '') {
+              setFieldValue(field, null);
+              if (e.target.id !== '') {
+                setDateInPast(false);
+              }
               return;
             }
             try {
-              setFieldValue(field, new Date(e).toISOString());
+              setFieldValue(field, new Date(e.target.value).toISOString());
+              if (new Date() > new Date(e.target.value)) {
+                setDateInPast(true);
+              } else {
+                setDateInPast(false);
+              }
               delete errors[field as keyof RecoverFormType];
             } catch (err) {
               setFieldError(field, t('validDate'));
             }
           };
+
           return (
             <>
               {Object.keys(errors).length > 0 && (
@@ -312,43 +342,57 @@ const Recover = () => {
                         />
                       </FieldGroup>
 
-                      <FieldGroup
-                        scrollElement="payment-payment-start-date"
-                        error={!!flatErrors.paymentStartDate}
-                        className="margin-top-4"
-                      >
-                        <Label
-                          htmlFor="payment-payment-start-date"
-                          className="maxw-none"
+                      {!loading && dateLoaded && (
+                        <FieldGroup
+                          scrollElement="paymentStartDate"
+                          error={!!flatErrors.paymentStartDate}
+                          className="margin-top-4"
                         >
-                          {t('paymentStartDate')}
-                        </Label>
-                        <p className="text-normal margin-bottom-1 margin-top-0">
-                          {t('paymentStartDateSubcopy')}
-                        </p>
-                        <div className="usa-hint" id="appointment-date-hint">
-                          {h('datePlaceholder')}
-                        </div>
-                        <FieldErrorMsg>
-                          {flatErrors.paymentStartDate}
-                        </FieldErrorMsg>
-                        <Field
-                          as={DatePicker}
-                          error={+!!flatErrors.paymentStartDate}
-                          className="width-card-lg"
-                          id="payment-payment-start-date"
-                          maxLength={50}
-                          name="paymentStartDate"
-                          defaultValue={values.paymentStartDate}
-                          onBlur={(e: any) =>
-                            handleOnBlur(e.target.value, 'paymentStartDate')
-                          }
-                        />
-                        <AddNote
-                          id="payment-payment-start-date-note"
-                          field="paymentStartDateNote"
-                        />
-                      </FieldGroup>
+                          <Label
+                            htmlFor="paymentStartDate"
+                            className="maxw-none"
+                          >
+                            {t('paymentStartDate')}
+                          </Label>
+                          <p className="text-normal margin-bottom-1 margin-top-0">
+                            {t('paymentStartDateSubcopy')}
+                          </p>
+                          <div className="usa-hint" id="appointment-date-hint">
+                            {h('datePlaceholder')}
+                          </div>
+                          <FieldErrorMsg>
+                            {flatErrors.paymentStartDate}
+                          </FieldErrorMsg>
+                          <div className="width-card-lg position-relative">
+                            <Field
+                              as={DatePicker}
+                              error={+!!flatErrors.paymentStartDate}
+                              id="payment-payment-start-date"
+                              maxLength={50}
+                              name="paymentStartDate"
+                              defaultValue={values.paymentStartDate}
+                              onBlur={(
+                                e: React.ChangeEvent<HTMLInputElement>
+                              ) => {
+                                handleOnBlur(e, 'paymentStartDate');
+                              }}
+                            />
+                            {dateInPast && (
+                              <DatePickerWarning label={h('dateWarning')} />
+                            )}
+                          </div>
+                          {dateInPast && (
+                            <Alert type="warning" className="margin-top-4">
+                              {h('dateWarning')}
+                            </Alert>
+                          )}
+
+                          <AddNote
+                            id="payment-payment-start-date-note"
+                            field="paymentStartDateNote"
+                          />
+                        </FieldGroup>
+                      )}
 
                       <div className="margin-top-6 margin-bottom-3">
                         <Button
