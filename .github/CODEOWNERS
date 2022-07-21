@@ -3,20 +3,20 @@
 * @CMSGov/mint
 
 # Frontend Changes
-# /yarn.lock @CMSGov/mint-frontend
-# /package.json @CMSGov/mint-frontend
-# /src/ @CMSGov/mint-frontend
-# /cypress/ @CMSGov/mint-frontend
-# /public/ @CMSGov/mint-frontend
-# /.storybook/ @CMSGov/mint-frontend
-# *.js @CMSGov/mint-frontend
-# *.ts @CMSGov/mint-frontend
-# *.tsx @CMSGov/mint-frontend
+/yarn.lock @CMSGov/mint-frontend
+/package.json @CMSGov/mint-frontend
+/src/ @CMSGov/mint-frontend
+/cypress/ @CMSGov/mint-frontend
+/public/ @CMSGov/mint-frontend
+/.storybook/ @CMSGov/mint-frontend
+*.js @CMSGov/mint-frontend
+*.ts @CMSGov/mint-frontend
+*.tsx @CMSGov/mint-frontend
 
 # Backend Changes
-# /go.mod @CMSGov/mint-backend
-# /go.sum @CMSGov/mint-backend
-# /pkg/ @CMSGov/mint-backend
-# /cmd/ @CMSGov/mint-backend
-# /migrations/ @CMSGov/mint-backend
-# *.go @CMSGov/mint-backend
+/go.mod @CMSGov/mint-backend
+/go.sum @CMSGov/mint-backend
+/pkg/ @CMSGov/mint-backend
+/cmd/ @CMSGov/mint-backend
+/migrations/ @CMSGov/mint-backend
+*.go @CMSGov/mint-backend
