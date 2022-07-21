@@ -224,12 +224,12 @@ const AnticipateDependencies = () => {
                       </PageHeading>
 
                       <FieldGroup
-                        scrollElement="payment-creating-dependencies-between-services"
+                        scrollElement="creatingDependenciesBetweenServices"
                         error={!!flatErrors.creatingDependenciesBetweenServices}
                         className="margin-top-4"
                       >
                         <Label
-                          htmlFor="payment-creating-dependencies-between-services"
+                          htmlFor="creatingDependenciesBetweenServices"
                           className="maxw-none"
                         >
                           {t('ancitipateCreatingDependencies')}
@@ -241,40 +241,27 @@ const AnticipateDependencies = () => {
                           {flatErrors.creatingDependenciesBetweenServices}
                         </FieldErrorMsg>
                         <Fieldset>
-                          <Field
-                            as={Radio}
-                            id="payment-creating-dependencies-between-services-Yes"
-                            name="payment-creating-dependencies-between-services"
-                            label={h('yes')}
-                            value="YES"
-                            checked={
-                              values.creatingDependenciesBetweenServices ===
-                              true
-                            }
-                            onChange={() => {
-                              setFieldValue(
-                                'creatingDependenciesBetweenServices',
-                                true
-                              );
-                            }}
-                          />
-                          <Field
-                            as={Radio}
-                            id="payment-creating-dependencies-between-services-No"
-                            name="payment-creating-dependencies-between-services"
-                            label={h('no')}
-                            value="FALSE"
-                            checked={
-                              values.creatingDependenciesBetweenServices ===
-                              false
-                            }
-                            onChange={() => {
-                              setFieldValue(
-                                'creatingDependenciesBetweenServices',
-                                false
-                              );
-                            }}
-                          />
+                          {[true, false].map(key => (
+                            <Field
+                              as={Radio}
+                              key={key}
+                              id={`payment-creating-dependencies-between-services-${key}`}
+                              data-testid={`payment-creating-dependencies-between-services-${key}`}
+                              name="creatingDependenciesBetweenServices"
+                              label={key ? h('yes') : h('no')}
+                              value={key ? 'YES' : 'NO'}
+                              checked={
+                                values.creatingDependenciesBetweenServices ===
+                                key
+                              }
+                              onChange={() => {
+                                setFieldValue(
+                                  'creatingDependenciesBetweenServices',
+                                  key
+                                );
+                              }}
+                            />
+                          ))}
                         </Fieldset>
                         <AddNote
                           id="payment-creating-dependencies-between-services-note"
@@ -283,7 +270,7 @@ const AnticipateDependencies = () => {
                       </FieldGroup>
 
                       <FieldGroup
-                        scrollElement="payment-needs-claims-data-collection"
+                        scrollElement="needsClaimsDataCollection"
                         error={!!flatErrors.needsClaimsDataCollection}
                         className="margin-top-4"
                       >
@@ -323,12 +310,12 @@ const AnticipateDependencies = () => {
                       </FieldGroup>
 
                       <FieldGroup
-                        scrollElement="payment-providing-third-party-file"
+                        scrollElement="providingThirdPartyFile"
                         error={!!flatErrors.providingThirdPartyFile}
                         className="margin-top-4"
                       >
                         <Label
-                          htmlFor="payment-providing-third-party-file"
+                          htmlFor="providingThirdPartyFile"
                           className="maxw-none"
                         >
                           {t('thirdParty')}
@@ -337,28 +324,21 @@ const AnticipateDependencies = () => {
                           {flatErrors.providingThirdPartyFile}
                         </FieldErrorMsg>
                         <Fieldset>
-                          <Field
-                            as={Radio}
-                            id="payment-providing-third-party-file-Yes"
-                            name="payment-providing-third-party-file"
-                            label={h('yes')}
-                            value="YES"
-                            checked={values.providingThirdPartyFile === true}
-                            onChange={() => {
-                              setFieldValue('providingThirdPartyFile', true);
-                            }}
-                          />
-                          <Field
-                            as={Radio}
-                            id="payment-providing-third-party-file-No"
-                            name="payment-providing-third-party-file"
-                            label={h('no')}
-                            value="FALSE"
-                            checked={values.providingThirdPartyFile === false}
-                            onChange={() => {
-                              setFieldValue('providingThirdPartyFile', false);
-                            }}
-                          />
+                          {[true, false].map(key => (
+                            <Field
+                              as={Radio}
+                              key={key}
+                              id={`payment-providing-third-party-file-${key}`}
+                              data-testid={`payment-providing-third-party-file-${key}`}
+                              name="providingThirdPartyFile"
+                              label={key ? h('yes') : h('no')}
+                              value={key ? 'YES' : 'NO'}
+                              checked={values.providingThirdPartyFile === key}
+                              onChange={() => {
+                                setFieldValue('providingThirdPartyFile', key);
+                              }}
+                            />
+                          ))}
                         </Fieldset>
                       </FieldGroup>
 
@@ -367,14 +347,14 @@ const AnticipateDependencies = () => {
                       </Alert>
 
                       <FieldGroup
-                        scrollElement="payment-contractor-aware-test-data-requirements"
+                        scrollElement="isContractorAwareTestDataRequirements"
                         error={
                           !!flatErrors.isContractorAwareTestDataRequirements
                         }
                         className="margin-top-4"
                       >
                         <Label
-                          htmlFor="payment-contractor-aware-test-data-requirements"
+                          htmlFor="isContractorAwareTestDataRequirements"
                           className="maxw-none"
                         >
                           {t('isContractorAwareTestDataRequirements')}
@@ -383,40 +363,27 @@ const AnticipateDependencies = () => {
                           {flatErrors.isContractorAwareTestDataRequirements}
                         </FieldErrorMsg>
                         <Fieldset>
-                          <Field
-                            as={Radio}
-                            id="payment-contractor-aware-test-data-requirements-Yes"
-                            name="payment-contractor-aware-test-data-requirements"
-                            label={h('yes')}
-                            value="YES"
-                            checked={
-                              values.isContractorAwareTestDataRequirements ===
-                              true
-                            }
-                            onChange={() => {
-                              setFieldValue(
-                                'isContractorAwareTestDataRequirements',
-                                true
-                              );
-                            }}
-                          />
-                          <Field
-                            as={Radio}
-                            id="payment-contractor-aware-test-data-requirements-No"
-                            name="payment-contractor-aware-test-data-requirements"
-                            label={h('no')}
-                            value="FALSE"
-                            checked={
-                              values.isContractorAwareTestDataRequirements ===
-                              false
-                            }
-                            onChange={() => {
-                              setFieldValue(
-                                'isContractorAwareTestDataRequirements',
-                                false
-                              );
-                            }}
-                          />
+                          {[true, false].map(key => (
+                            <Field
+                              as={Radio}
+                              key={key}
+                              id={`payment-contractor-aware-test-data-requirements-${key}`}
+                              data-testid={`payment-contractor-aware-test-data-requirements-${key}`}
+                              name="isContractorAwareTestDataRequirements"
+                              label={key ? h('yes') : h('no')}
+                              value={key ? 'YES' : 'NO'}
+                              checked={
+                                values.isContractorAwareTestDataRequirements ===
+                                key
+                              }
+                              onChange={() => {
+                                setFieldValue(
+                                  'isContractorAwareTestDataRequirements',
+                                  key
+                                );
+                              }}
+                            />
+                          ))}
                         </Fieldset>
                       </FieldGroup>
 

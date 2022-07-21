@@ -114,12 +114,12 @@ exports[`Model Plan -- Anticipate Dependencies matches snapshot 1`] = `
           </h3>
           <div
             class="usa-form-group margin-top-4"
-            data-scroll="payment-creating-dependencies-between-services"
+            data-scroll="creatingDependenciesBetweenServices"
           >
             <label
               class="usa-label maxw-none"
               data-testid="label"
-              for="payment-creating-dependencies-between-services"
+              for="creatingDependenciesBetweenServices"
             >
               Are you anticipating creating dependencies between services?
             </label>
@@ -138,14 +138,15 @@ exports[`Model Plan -- Anticipate Dependencies matches snapshot 1`] = `
               >
                 <input
                   class="usa-radio__input"
-                  id="payment-creating-dependencies-between-services-Yes"
-                  name="payment-creating-dependencies-between-services"
+                  data-testid="payment-creating-dependencies-between-services-true"
+                  id="payment-creating-dependencies-between-services-true"
+                  name="creatingDependenciesBetweenServices"
                   type="radio"
                   value="YES"
                 />
                 <label
                   class="usa-radio__label"
-                  for="payment-creating-dependencies-between-services-Yes"
+                  for="payment-creating-dependencies-between-services-true"
                 >
                   Yes
                 </label>
@@ -156,14 +157,15 @@ exports[`Model Plan -- Anticipate Dependencies matches snapshot 1`] = `
               >
                 <input
                   class="usa-radio__input"
-                  id="payment-creating-dependencies-between-services-No"
-                  name="payment-creating-dependencies-between-services"
+                  data-testid="payment-creating-dependencies-between-services-false"
+                  id="payment-creating-dependencies-between-services-false"
+                  name="creatingDependenciesBetweenServices"
                   type="radio"
-                  value="FALSE"
+                  value="NO"
                 />
                 <label
                   class="usa-radio__label"
-                  for="payment-creating-dependencies-between-services-No"
+                  for="payment-creating-dependencies-between-services-false"
                 >
                   No
                 </label>
@@ -201,7 +203,7 @@ exports[`Model Plan -- Anticipate Dependencies matches snapshot 1`] = `
           </div>
           <div
             class="usa-form-group margin-top-4"
-            data-scroll="payment-needs-claims-data-collection"
+            data-scroll="needsClaimsDataCollection"
           >
             <label
               class="usa-label maxw-none"
@@ -290,12 +292,12 @@ exports[`Model Plan -- Anticipate Dependencies matches snapshot 1`] = `
           </div>
           <div
             class="usa-form-group margin-top-4"
-            data-scroll="payment-providing-third-party-file"
+            data-scroll="providingThirdPartyFile"
           >
             <label
               class="usa-label maxw-none"
               data-testid="label"
-              for="payment-providing-third-party-file"
+              for="providingThirdPartyFile"
             >
               Will your contractor be providing data (a Third Party File) that will be used in claims processing?
             </label>
@@ -309,14 +311,15 @@ exports[`Model Plan -- Anticipate Dependencies matches snapshot 1`] = `
               >
                 <input
                   class="usa-radio__input"
-                  id="payment-providing-third-party-file-Yes"
-                  name="payment-providing-third-party-file"
+                  data-testid="payment-providing-third-party-file-true"
+                  id="payment-providing-third-party-file-true"
+                  name="providingThirdPartyFile"
                   type="radio"
                   value="YES"
                 />
                 <label
                   class="usa-radio__label"
-                  for="payment-providing-third-party-file-Yes"
+                  for="payment-providing-third-party-file-true"
                 >
                   Yes
                 </label>
@@ -327,14 +330,15 @@ exports[`Model Plan -- Anticipate Dependencies matches snapshot 1`] = `
               >
                 <input
                   class="usa-radio__input"
-                  id="payment-providing-third-party-file-No"
-                  name="payment-providing-third-party-file"
+                  data-testid="payment-providing-third-party-file-false"
+                  id="payment-providing-third-party-file-false"
+                  name="providingThirdPartyFile"
                   type="radio"
-                  value="FALSE"
+                  value="NO"
                 />
                 <label
                   class="usa-radio__label"
-                  for="payment-providing-third-party-file-No"
+                  for="payment-providing-third-party-file-false"
                 >
                   No
                 </label>
@@ -357,12 +361,12 @@ exports[`Model Plan -- Anticipate Dependencies matches snapshot 1`] = `
           </div>
           <div
             class="usa-form-group margin-top-4"
-            data-scroll="payment-contractor-aware-test-data-requirements"
+            data-scroll="isContractorAwareTestDataRequirements"
           >
             <label
               class="usa-label maxw-none"
               data-testid="label"
-              for="payment-contractor-aware-test-data-requirements"
+              for="isContractorAwareTestDataRequirements"
             >
               Is your contractor aware that test data will be needed, and when that test data must be available? 
             </label>
@@ -376,14 +380,15 @@ exports[`Model Plan -- Anticipate Dependencies matches snapshot 1`] = `
               >
                 <input
                   class="usa-radio__input"
-                  id="payment-contractor-aware-test-data-requirements-Yes"
-                  name="payment-contractor-aware-test-data-requirements"
+                  data-testid="payment-contractor-aware-test-data-requirements-true"
+                  id="payment-contractor-aware-test-data-requirements-true"
+                  name="isContractorAwareTestDataRequirements"
                   type="radio"
                   value="YES"
                 />
                 <label
                   class="usa-radio__label"
-                  for="payment-contractor-aware-test-data-requirements-Yes"
+                  for="payment-contractor-aware-test-data-requirements-true"
                 >
                   Yes
                 </label>
@@ -394,14 +399,15 @@ exports[`Model Plan -- Anticipate Dependencies matches snapshot 1`] = `
               >
                 <input
                   class="usa-radio__input"
-                  id="payment-contractor-aware-test-data-requirements-No"
-                  name="payment-contractor-aware-test-data-requirements"
+                  data-testid="payment-contractor-aware-test-data-requirements-false"
+                  id="payment-contractor-aware-test-data-requirements-false"
+                  name="isContractorAwareTestDataRequirements"
                   type="radio"
-                  value="FALSE"
+                  value="NO"
                 />
                 <label
                   class="usa-radio__label"
-                  for="payment-contractor-aware-test-data-requirements-No"
+                  for="payment-contractor-aware-test-data-requirements-false"
                 >
                   No
                 </label>
