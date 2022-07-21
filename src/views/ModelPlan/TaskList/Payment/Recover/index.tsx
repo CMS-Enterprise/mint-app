@@ -253,28 +253,21 @@ const Recover = () => {
                           {flatErrors.willRecoverPayments}
                         </FieldErrorMsg>
                         <Fieldset>
-                          <Field
-                            as={Radio}
-                            id="payment-recover-payment-Yes"
-                            name="payment-recover-payment"
-                            label={h('yes')}
-                            value="YES"
-                            checked={values.willRecoverPayments === true}
-                            onChange={() => {
-                              setFieldValue('willRecoverPayments', true);
-                            }}
-                          />
-                          <Field
-                            as={Radio}
-                            id="payment-recover-payment-No"
-                            name="payment-recover-payment"
-                            label={h('no')}
-                            value="NO"
-                            checked={values.willRecoverPayments === false}
-                            onChange={() => {
-                              setFieldValue('willRecoverPayments', false);
-                            }}
-                          />
+                          {[true, false].map(key => (
+                            <Field
+                              as={Radio}
+                              key={key}
+                              id={`payment-recover-payment-${key}`}
+                              data-testid={`payment-recover-payment-${key}`}
+                              name="willRecoverPayments"
+                              label={key ? h('yes') : h('no')}
+                              value={key ? 'YES' : 'NO'}
+                              checked={values.willRecoverPayments === key}
+                              onChange={() => {
+                                setFieldValue('willRecoverPayments', key);
+                              }}
+                            />
+                          ))}
                         </Fieldset>
                         <AddNote
                           id="payment-recover-payment-note"
@@ -301,40 +294,27 @@ const Recover = () => {
                           }
                         </FieldErrorMsg>
                         <Fieldset>
-                          <Field
-                            as={Radio}
-                            id="payment-anticipate-reconciling-payment-retro-Yes"
-                            name="payment-anticipate-reconciling-payment-retro"
-                            label={h('yes')}
-                            value="YES"
-                            checked={
-                              values.anticipateReconcilingPaymentsRetrospectively ===
-                              true
-                            }
-                            onChange={() => {
-                              setFieldValue(
-                                'anticipateReconcilingPaymentsRetrospectively',
-                                true
-                              );
-                            }}
-                          />
-                          <Field
-                            as={Radio}
-                            id="payment-anticipate-reconciling-payment-retro-No"
-                            name="payment-anticipate-reconciling-payment-retro"
-                            label={h('no')}
-                            value="NO"
-                            checked={
-                              values.anticipateReconcilingPaymentsRetrospectively ===
-                              false
-                            }
-                            onChange={() => {
-                              setFieldValue(
-                                'anticipateReconcilingPaymentsRetrospectively',
-                                false
-                              );
-                            }}
-                          />
+                          {[true, false].map(key => (
+                            <Field
+                              as={Radio}
+                              key={key}
+                              id={`payment-anticipate-reconciling-payment-retro-${key}`}
+                              data-testid={`payment-anticipate-reconciling-payment-retro-${key}`}
+                              name="anticipateReconcilingPaymentsRetrospectively"
+                              label={key ? h('yes') : h('no')}
+                              value={key ? 'YES' : 'NO'}
+                              checked={
+                                values.anticipateReconcilingPaymentsRetrospectively ===
+                                key
+                              }
+                              onChange={() => {
+                                setFieldValue(
+                                  'anticipateReconcilingPaymentsRetrospectively',
+                                  key
+                                );
+                              }}
+                            />
+                          ))}
                         </Fieldset>
                         <AddNote
                           id="payment-anticipate-reconciling-payment-retro-note"
