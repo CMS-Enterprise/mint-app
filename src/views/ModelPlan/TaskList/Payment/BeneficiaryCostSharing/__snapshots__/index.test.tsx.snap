@@ -128,7 +128,9 @@ exports[`Model Plan -- BeneficiaryCostSharing matches snapshot 1`] = `
               data-testid="payment-beneficiary-cost-sharing"
               id="payment-beneficiary-cost-sharing"
               name="beneficiaryCostSharingLevelAndHandling"
-            />
+            >
+              This is a string
+            </textarea>
           </div>
           <div
             class="usa-form-group margin-top-4"
@@ -164,6 +166,24 @@ exports[`Model Plan -- BeneficiaryCostSharing matches snapshot 1`] = `
                 </label>
               </div>
               <div
+                class="usa-form-group margin-left-4 margin-y-1"
+                data-scroll="payment-waive-any-service-specification"
+              >
+                <label
+                  class="usa-label text-normal"
+                  data-testid="label"
+                  for="payment-waive-any-service-specification"
+                >
+                  Please specify which services.
+                </label>
+                <textarea
+                  class="usa-textarea height-15"
+                  data-testid="payment-waive-any-service-specification"
+                  id="payment-waive-any-service-specification"
+                  name="payment-waive-any-service-specification"
+                />
+              </div>
+              <div
                 class="usa-radio"
                 data-testid="radio"
               >
@@ -182,6 +202,64 @@ exports[`Model Plan -- BeneficiaryCostSharing matches snapshot 1`] = `
                 </label>
               </div>
             </fieldset>
+            <div
+              class="usa-form-group margin-top-4"
+              data-scroll="payment-waive-part-of-payment"
+            >
+              <label
+                class="usa-label maxw-none text-normal"
+                data-testid="label"
+                for="payment-waive-part-of-payment"
+              >
+                Would the waiver only apply for part of the payment?
+              </label>
+              <p
+                class="text-base margin-y-1"
+              >
+                For example, we would assess cost-sharing for the service itself, but not for an add-on payment
+              </p>
+              <fieldset
+                class="usa-fieldset"
+                data-testid="fieldset"
+              >
+                <div
+                  class="usa-radio"
+                  data-testid="radio"
+                >
+                  <input
+                    class="usa-radio__input"
+                    id="payment-waive-part-of-payment-Yes"
+                    name="payment-waive-part-of-payment"
+                    type="radio"
+                    value="YES"
+                  />
+                  <label
+                    class="usa-radio__label"
+                    for="payment-waive-part-of-payment-Yes"
+                  >
+                    Yes
+                  </label>
+                </div>
+                <div
+                  class="usa-radio"
+                  data-testid="radio"
+                >
+                  <input
+                    class="usa-radio__input"
+                    id="payment-waive-part-of-payment-No"
+                    name="payment-waive-part-of-payment"
+                    type="radio"
+                    value="FALSE"
+                  />
+                  <label
+                    class="usa-radio__label"
+                    for="payment-waive-part-of-payment-No"
+                  >
+                    No
+                  </label>
+                </div>
+              </fieldset>
+            </div>
             <div
               class="margin-top-4 margin-bottom-8"
             >

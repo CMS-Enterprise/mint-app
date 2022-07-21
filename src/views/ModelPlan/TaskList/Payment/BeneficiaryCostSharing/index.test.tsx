@@ -14,8 +14,8 @@ const mockData: GetBeneficiaryCostSharingType = {
   id: '123',
   payType: [PayType.CLAIMS_BASED_PAYMENTS],
   payClaims: [ClaimsBasedPayType.OTHER],
-  beneficiaryCostSharingLevelAndHandling: null,
-  waiveBeneficiaryCostSharingForAnyServices: null,
+  beneficiaryCostSharingLevelAndHandling: 'This is a string',
+  waiveBeneficiaryCostSharingForAnyServices: true,
   waiveBeneficiaryCostSharingServiceSpecification: null,
   waiverOnlyAppliesPartOfPayment: null,
   waiveBeneficiaryCostSharingNote: null
@@ -58,6 +58,16 @@ describe('Model Plan -- BeneficiaryCostSharing', () => {
     await waitFor(() => {
       expect(
         screen.getByTestId('payment-beneficiary-cost-sharing-form')
+      ).toBeInTheDocument();
+    });
+    await waitFor(() => {
+      expect(
+        screen.getByTestId('payment-beneficiary-cost-sharing')
+      ).toHaveValue('This is a string');
+    });
+    await waitFor(() => {
+      expect(
+        screen.getByTestId('payment-waive-any-service-specification')
       ).toBeInTheDocument();
     });
   });
