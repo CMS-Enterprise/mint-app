@@ -11,6 +11,7 @@ const payments = {
     other: 'Other'
   },
   whichType: 'Which type?',
+  validDate: 'Please use a valid date format',
   otherSourceOption: 'Please describe the funding source.',
   reconciliation:
     'What is the funding source for reconciliation or other expenditures? Select all that apply.',
