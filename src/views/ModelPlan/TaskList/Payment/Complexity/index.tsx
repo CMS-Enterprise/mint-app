@@ -42,7 +42,7 @@ import {
 } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import {
-  sortOtherEnum,
+  mapMultiSelectOptions,
   translateAnticipatedPaymentFrequencyType
 } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
@@ -137,15 +137,6 @@ const Complexity = () => {
         formikRef?.current?.setErrors(errors);
       });
   };
-
-  const mappedAnticipatedPaymentFrequencyType = Object.keys(
-    AnticipatedPaymentFrequencyType
-  )
-    .sort(sortOtherEnum)
-    .map(key => ({
-      value: key,
-      label: translateAnticipatedPaymentFrequencyType(key)
-    }));
 
   const initialValues: ComplexityFormType = {
     __typename: 'PlanPayments',
@@ -418,7 +409,10 @@ const Complexity = () => {
                           as={MultiSelect}
                           id="payment-frequency-payments"
                           name="anticipatedPaymentFrequency"
-                          options={mappedAnticipatedPaymentFrequencyType}
+                          options={mapMultiSelectOptions(
+                            translateAnticipatedPaymentFrequencyType,
+                            AnticipatedPaymentFrequencyType
+                          )}
                           selectedLabel={t(
                             'selectedAnticipatedPaymentFrequency'
                           )}

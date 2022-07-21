@@ -41,7 +41,10 @@ import {
   PayType
 } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
-import { sortOtherEnum, translateNonClaimsBasedPayType } from 'utils/modelPlan';
+import {
+  mapMultiSelectOptions,
+  translateNonClaimsBasedPayType
+} from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
 
 import { renderCurrentPage, renderTotalPages } from '..';
@@ -127,13 +130,6 @@ const NonClaimsBasedPayment = () => {
         formikRef?.current?.setErrors(errors);
       });
   };
-
-  const mappedNonClaimsBasedPayType = Object.keys(NonClaimsBasedPayType)
-    .sort(sortOtherEnum)
-    .map(key => ({
-      value: key,
-      label: translateNonClaimsBasedPayType(key)
-    }));
 
   const initialValues: NonClaimsBasedPaymentFormType = {
     __typename: 'PlanPayments',
@@ -262,7 +258,10 @@ const NonClaimsBasedPayment = () => {
                           as={MultiSelect}
                           id="payment-nonclaims-payments"
                           name="payment-nonclaims-payments"
-                          options={mappedNonClaimsBasedPayType}
+                          options={mapMultiSelectOptions(
+                            translateNonClaimsBasedPayType,
+                            NonClaimsBasedPayType
+                          )}
                           selectedLabel={t('selectedNonClaimsPayments')}
                           onChange={(value: string[] | []) => {
                             setFieldValue('nonClaimsPayments', value);

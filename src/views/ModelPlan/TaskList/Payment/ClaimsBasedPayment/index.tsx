@@ -37,7 +37,11 @@ import { UpdatePaymentsVariables } from 'queries/Payments/types/UpdatePayments';
 import UpdatePayments from 'queries/Payments/UpdatePayments';
 import { ClaimsBasedPayType, PayType } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
-import { sortOtherEnum, translateClaimsBasedPayType } from 'utils/modelPlan';
+import {
+  mapMultiSelectOptions,
+  sortOtherEnum,
+  translateClaimsBasedPayType
+} from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
 
 import { renderCurrentPage, renderTotalPages } from '..';
@@ -107,13 +111,6 @@ const ClaimsBasedPayment = () => {
         formikRef?.current?.setErrors(errors);
       });
   };
-
-  const mappedClaimsBasedPayType = Object.keys(ClaimsBasedPayType)
-    .sort(sortOtherEnum)
-    .map(key => ({
-      value: key,
-      label: translateClaimsBasedPayType(key)
-    }));
 
   const initialValues: ClaimsBasedPaymentFormType = {
     __typename: 'PlanPayments',
@@ -246,7 +243,10 @@ const ClaimsBasedPayment = () => {
                           as={MultiSelect}
                           id="payment-pay-claims"
                           name="payClaims"
-                          options={mappedClaimsBasedPayType}
+                          options={mapMultiSelectOptions(
+                            translateClaimsBasedPayType,
+                            ClaimsBasedPayType
+                          )}
                           selectedLabel={t('selectedClaimsOptions')}
                           onChange={(value: string[] | []) => {
                             setFieldValue('payClaims', value);
