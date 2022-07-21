@@ -241,7 +241,7 @@ exports[`Model Plan -- Claims Based Payment matches snapshot 1`] = `
               <label
                 class="usa-label text-normal"
                 data-testid="label"
-                for="payment-pay-claims-other"
+                for="payClaimsOther"
               >
                 Please describe the other claims-based payments you will pay.
               </label>
@@ -286,12 +286,12 @@ exports[`Model Plan -- Claims Based Payment matches snapshot 1`] = `
           </div>
           <div
             class="usa-form-group margin-top-4"
-            data-scroll="payment-provider-exclusion-ffs-system"
+            data-scroll="shouldAnyProvidersExcludedFFSSystems"
           >
             <label
               class="usa-label maxw-none"
               data-testid="label"
-              for="payment-provider-exclusion-ffs-system"
+              for="shouldAnyProvidersExcludedFFSSystems"
             >
               Should any model providers be excluded from existing Fee-for-Service payment systems?
             </label>
@@ -305,14 +305,15 @@ exports[`Model Plan -- Claims Based Payment matches snapshot 1`] = `
               >
                 <input
                   class="usa-radio__input"
-                  id="payment-provider-exclusion-ffs-system-Yes"
-                  name="payment-provider-exclusion-ffs-system"
+                  data-testid="payment-provider-exclusion-ffs-system-true"
+                  id="payment-provider-exclusion-ffs-system-true"
+                  name="shouldAnyProvidersExcludedFFSSystems"
                   type="radio"
                   value="YES"
                 />
                 <label
                   class="usa-radio__label"
-                  for="payment-provider-exclusion-ffs-system-Yes"
+                  for="payment-provider-exclusion-ffs-system-true"
                 >
                   Yes
                 </label>
@@ -323,14 +324,15 @@ exports[`Model Plan -- Claims Based Payment matches snapshot 1`] = `
               >
                 <input
                   class="usa-radio__input"
-                  id="payment-provider-exclusion-ffs-system-No"
-                  name="payment-provider-exclusion-ffs-system"
+                  data-testid="payment-provider-exclusion-ffs-system-false"
+                  id="payment-provider-exclusion-ffs-system-false"
+                  name="shouldAnyProvidersExcludedFFSSystems"
                   type="radio"
-                  value="FALSE"
+                  value="NO"
                 />
                 <label
                   class="usa-radio__label"
-                  for="payment-provider-exclusion-ffs-system-No"
+                  for="payment-provider-exclusion-ffs-system-false"
                 >
                   No
                 </label>
@@ -368,12 +370,12 @@ exports[`Model Plan -- Claims Based Payment matches snapshot 1`] = `
           </div>
           <div
             class="usa-form-group margin-top-4"
-            data-scroll="payment-change-medicare-phyisican-fee-schedule"
+            data-scroll="changesMedicarePhysicianFeeSchedule"
           >
             <label
               class="usa-label maxw-none"
               data-testid="label"
-              for="payment-change-medicare-phyisican-fee-schedule"
+              for="changesMedicarePhysicianFeeSchedule"
             >
               Will the model change the Medicare Physician Fee Schedule?
             </label>
@@ -392,14 +394,15 @@ exports[`Model Plan -- Claims Based Payment matches snapshot 1`] = `
               >
                 <input
                   class="usa-radio__input"
-                  id="payment-change-medicare-phyisican-fee-schedule-Yes"
-                  name="payment-change-medicare-phyisican-fee-schedule"
+                  data-testid="payment-change-medicare-phyisican-fee-schedule-true"
+                  id="payment-change-medicare-phyisican-fee-schedule-true"
+                  name="changesMedicarePhysicianFeeSchedule"
                   type="radio"
                   value="YES"
                 />
                 <label
                   class="usa-radio__label"
-                  for="payment-change-medicare-phyisican-fee-schedule-Yes"
+                  for="payment-change-medicare-phyisican-fee-schedule-true"
                 >
                   Yes
                 </label>
@@ -410,14 +413,15 @@ exports[`Model Plan -- Claims Based Payment matches snapshot 1`] = `
               >
                 <input
                   class="usa-radio__input"
-                  id="payment-change-medicare-phyisican-fee-schedule-No"
-                  name="payment-change-medicare-phyisican-fee-schedule"
+                  data-testid="payment-change-medicare-phyisican-fee-schedule-false"
+                  id="payment-change-medicare-phyisican-fee-schedule-false"
+                  name="changesMedicarePhysicianFeeSchedule"
                   type="radio"
-                  value="FALSE"
+                  value="NO"
                 />
                 <label
                   class="usa-radio__label"
-                  for="payment-change-medicare-phyisican-fee-schedule-No"
+                  for="payment-change-medicare-phyisican-fee-schedule-false"
                 >
                   No
                 </label>
@@ -455,12 +459,12 @@ exports[`Model Plan -- Claims Based Payment matches snapshot 1`] = `
           </div>
           <div
             class="usa-form-group margin-top-4"
-            data-scroll="payment-affects-medicare-secondary-payer-claims"
+            data-scroll="affectsMedicareSecondaryPayerClaims"
           >
             <label
               class="usa-label maxw-none"
               data-testid="label"
-              for="payment-affects-medicare-secondary-payer-claims"
+              for="affectsMedicareSecondaryPayerClaims"
             >
               Does the model affect Medicare Secondary Payer claims?
             </label>
@@ -475,7 +479,7 @@ exports[`Model Plan -- Claims Based Payment matches snapshot 1`] = `
                 <input
                   class="usa-radio__input"
                   id="payment-affects-medicare-secondary-payer-claims-Yes"
-                  name="payment-affects-medicare-secondary-payer-claims"
+                  name="affectsMedicareSecondaryPayerClaims"
                   type="radio"
                   value="YES"
                 />
@@ -493,7 +497,7 @@ exports[`Model Plan -- Claims Based Payment matches snapshot 1`] = `
                 <input
                   class="usa-radio__input"
                   id="payment-affects-medicare-secondary-payer-claims-No"
-                  name="payment-affects-medicare-secondary-payer-claims"
+                  name="affectsMedicareSecondaryPayerClaims"
                   type="radio"
                   value="FALSE"
                 />
@@ -537,12 +541,12 @@ exports[`Model Plan -- Claims Based Payment matches snapshot 1`] = `
           </div>
           <div
             class="usa-form-group margin-top-4"
-            data-scroll="payment-affect-current-policy"
+            data-scroll="payModelDifferentiation"
           >
             <label
               class="usa-label maxw-none"
               data-testid="label"
-              for="payment-affect-current-policy"
+              for="payModelDifferentiation"
             >
               How does the model differ from current policy, especially in terms of payment rates and periodicity of payment?
             </label>
@@ -550,7 +554,7 @@ exports[`Model Plan -- Claims Based Payment matches snapshot 1`] = `
               class="usa-textarea height-15"
               data-testid="payment-affect-current-policy"
               id="payment-affect-current-policy"
-              name="payment-affect-current-policy"
+              name="payModelDifferentiation"
             />
           </div>
           <div

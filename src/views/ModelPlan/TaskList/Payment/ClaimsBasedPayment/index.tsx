@@ -245,7 +245,7 @@ const ClaimsBasedPayment = () => {
                         <Field
                           as={MultiSelect}
                           id="payment-pay-claims"
-                          name="beneficiaries"
+                          name="payClaims"
                           options={mappedClaimsBasedPayType}
                           selectedLabel={t('selectedClaimsOptions')}
                           onChange={(value: string[] | []) => {
@@ -262,7 +262,7 @@ const ClaimsBasedPayment = () => {
                             error={!!flatErrors.payClaimsOther}
                           >
                             <Label
-                              htmlFor="payment-pay-claims-other"
+                              htmlFor="payClaimsOther"
                               className="text-normal"
                             >
                               {t('selectClaimsOther')}
@@ -284,14 +284,14 @@ const ClaimsBasedPayment = () => {
                       </FieldGroup>
 
                       <FieldGroup
-                        scrollElement="payment-provider-exclusion-ffs-system"
+                        scrollElement="shouldAnyProvidersExcludedFFSSystems"
                         error={
                           !!flatErrors.shouldAnyProvidersExcludedFFSSystems
                         }
                         className="margin-top-4"
                       >
                         <Label
-                          htmlFor="payment-provider-exclusion-ffs-system"
+                          htmlFor="shouldAnyProvidersExcludedFFSSystems"
                           className="maxw-none"
                         >
                           {t('excludedFromPayment')}
@@ -300,40 +300,27 @@ const ClaimsBasedPayment = () => {
                           {flatErrors.shouldAnyProvidersExcludedFFSSystems}
                         </FieldErrorMsg>
                         <Fieldset>
-                          <Field
-                            as={Radio}
-                            id="payment-provider-exclusion-ffs-system-Yes"
-                            name="payment-provider-exclusion-ffs-system"
-                            label={h('yes')}
-                            value="YES"
-                            checked={
-                              values.shouldAnyProvidersExcludedFFSSystems ===
-                              true
-                            }
-                            onChange={() => {
-                              setFieldValue(
-                                'shouldAnyProvidersExcludedFFSSystems',
-                                true
-                              );
-                            }}
-                          />
-                          <Field
-                            as={Radio}
-                            id="payment-provider-exclusion-ffs-system-No"
-                            name="payment-provider-exclusion-ffs-system"
-                            label={h('no')}
-                            value="FALSE"
-                            checked={
-                              values.shouldAnyProvidersExcludedFFSSystems ===
-                              false
-                            }
-                            onChange={() => {
-                              setFieldValue(
-                                'shouldAnyProvidersExcludedFFSSystems',
-                                false
-                              );
-                            }}
-                          />
+                          {[true, false].map(key => (
+                            <Field
+                              as={Radio}
+                              key={key}
+                              id={`payment-provider-exclusion-ffs-system-${key}`}
+                              data-testid={`payment-provider-exclusion-ffs-system-${key}`}
+                              name="shouldAnyProvidersExcludedFFSSystems"
+                              label={key ? h('yes') : h('no')}
+                              value={key ? 'YES' : 'NO'}
+                              checked={
+                                values.shouldAnyProvidersExcludedFFSSystems ===
+                                key
+                              }
+                              onChange={() => {
+                                setFieldValue(
+                                  'shouldAnyProvidersExcludedFFSSystems',
+                                  key
+                                );
+                              }}
+                            />
+                          ))}
                         </Fieldset>
                         <AddNote
                           id="payment-provider-exclusion-ffs-system-note"
@@ -342,12 +329,12 @@ const ClaimsBasedPayment = () => {
                       </FieldGroup>
 
                       <FieldGroup
-                        scrollElement="payment-change-medicare-phyisican-fee-schedule"
+                        scrollElement="changesMedicarePhysicianFeeSchedule"
                         error={!!flatErrors.changesMedicarePhysicianFeeSchedule}
                         className="margin-top-4"
                       >
                         <Label
-                          htmlFor="payment-change-medicare-phyisican-fee-schedule"
+                          htmlFor="changesMedicarePhysicianFeeSchedule"
                           className="maxw-none"
                         >
                           {t('chageMedicareFeeSchedule')}
@@ -359,40 +346,27 @@ const ClaimsBasedPayment = () => {
                           {flatErrors.changesMedicarePhysicianFeeSchedule}
                         </FieldErrorMsg>
                         <Fieldset>
-                          <Field
-                            as={Radio}
-                            id="payment-change-medicare-phyisican-fee-schedule-Yes"
-                            name="payment-change-medicare-phyisican-fee-schedule"
-                            label={h('yes')}
-                            value="YES"
-                            checked={
-                              values.changesMedicarePhysicianFeeSchedule ===
-                              true
-                            }
-                            onChange={() => {
-                              setFieldValue(
-                                'changesMedicarePhysicianFeeSchedule',
-                                true
-                              );
-                            }}
-                          />
-                          <Field
-                            as={Radio}
-                            id="payment-change-medicare-phyisican-fee-schedule-No"
-                            name="payment-change-medicare-phyisican-fee-schedule"
-                            label={h('no')}
-                            value="FALSE"
-                            checked={
-                              values.changesMedicarePhysicianFeeSchedule ===
-                              false
-                            }
-                            onChange={() => {
-                              setFieldValue(
-                                'changesMedicarePhysicianFeeSchedule',
-                                false
-                              );
-                            }}
-                          />
+                          {[true, false].map(key => (
+                            <Field
+                              as={Radio}
+                              key={key}
+                              id={`payment-change-medicare-phyisican-fee-schedule-${key}`}
+                              data-testid={`payment-change-medicare-phyisican-fee-schedule-${key}`}
+                              name="changesMedicarePhysicianFeeSchedule"
+                              label={key ? h('yes') : h('no')}
+                              value={key ? 'YES' : 'NO'}
+                              checked={
+                                values.changesMedicarePhysicianFeeSchedule ===
+                                key
+                              }
+                              onChange={() => {
+                                setFieldValue(
+                                  'changesMedicarePhysicianFeeSchedule',
+                                  key
+                                );
+                              }}
+                            />
+                          ))}
                         </Fieldset>
                         <AddNote
                           id="payment-change-medicare-phyisican-fee-schedule-note"
@@ -401,12 +375,12 @@ const ClaimsBasedPayment = () => {
                       </FieldGroup>
 
                       <FieldGroup
-                        scrollElement="payment-affects-medicare-secondary-payer-claims"
+                        scrollElement="affectsMedicareSecondaryPayerClaims"
                         error={!!flatErrors.affectsMedicareSecondaryPayerClaims}
                         className="margin-top-4"
                       >
                         <Label
-                          htmlFor="payment-affects-medicare-secondary-payer-claims"
+                          htmlFor="affectsMedicareSecondaryPayerClaims"
                           className="maxw-none"
                         >
                           {t('affectMedicareSecondaryPayerClaim')}
@@ -418,7 +392,7 @@ const ClaimsBasedPayment = () => {
                           <Field
                             as={Radio}
                             id="payment-affects-medicare-secondary-payer-claims-Yes"
-                            name="payment-affects-medicare-secondary-payer-claims"
+                            name="affectsMedicareSecondaryPayerClaims"
                             label={h('yes')}
                             value="YES"
                             checked={
@@ -459,14 +433,14 @@ const ClaimsBasedPayment = () => {
                                 }
                                 id="payment-affects-medicare-secondary-payer-claims-how"
                                 data-testid="payment-affects-medicare-secondary-payer-claims-how"
-                                name="payment-affects-medicare-secondary-payer-claims-how"
+                                name="affectsMedicareSecondaryPayerClaimsHow"
                               />
                             </FieldGroup>
                           )}
                           <Field
                             as={Radio}
                             id="payment-affects-medicare-secondary-payer-claims-No"
-                            name="payment-affects-medicare-secondary-payer-claims"
+                            name="affectsMedicareSecondaryPayerClaims"
                             label={h('no')}
                             value="FALSE"
                             checked={
@@ -488,12 +462,12 @@ const ClaimsBasedPayment = () => {
                       </FieldGroup>
 
                       <FieldGroup
-                        scrollElement="payment-affect-current-policy"
+                        scrollElement="payModelDifferentiation"
                         error={!!flatErrors.payModelDifferentiation}
                         className="margin-top-4"
                       >
                         <Label
-                          htmlFor="payment-affect-current-policy"
+                          htmlFor="payModelDifferentiation"
                           className="maxw-none"
                         >
                           {t('affectCurrentPolicy')}
@@ -507,7 +481,7 @@ const ClaimsBasedPayment = () => {
                           error={flatErrors.payModelDifferentiation}
                           id="payment-affect-current-policy"
                           data-testid="payment-affect-current-policy"
-                          name="payment-affect-current-policy"
+                          name="payModelDifferentiation"
                         />
                       </FieldGroup>
 
