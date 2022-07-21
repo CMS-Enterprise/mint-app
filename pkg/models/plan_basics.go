@@ -60,3 +60,13 @@ func (p PlanBasics) GetModifiedBy() *string {
 func (p PlanBasics) GetCreatedBy() string {
 	return p.CreatedBy
 }
+
+// ModelType is an enum that represents the basic type of a model
+type ModelType string
+
+// These constants represent the different values of ModelType
+const (
+	MTVoluntary ModelType = "VOLUNTARY"
+	MTMandatory ModelType = "MANDATORY"
+	MTTBD       ModelType = "TBD"
+)

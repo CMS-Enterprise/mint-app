@@ -674,7 +674,7 @@ type ComplexityRoot struct {
 }
 
 type ModelPlanResolver interface {
-	CmsCenters(ctx context.Context, obj *models.ModelPlan) ([]models.CMSCenter, error)
+	CmsCenters(ctx context.Context, obj *models.ModelPlan) ([]model.CMSCenter, error)
 
 	CmmiGroups(ctx context.Context, obj *models.ModelPlan) ([]model.CMMIGroup, error)
 
@@ -6878,8 +6878,10 @@ enum PayType {
 enum ClaimsBasedPayType {
   ADJUSTMENTS_TO_FFS_PAYMENTS
   CARE_MANAGEMENT_HOME_VISITS
+  REDUCTIONS_TO_BENEFICIARY_COST_SHARING
   SNF_CLAIMS_WITHOUT_3DAY_HOSPITAL_ADMISSIONS
   TELEHEALTH_SERVICES_NOT_TRADITIONAL_MEDICARE
+  SERVICES_NOT_COVERED_THROUGH_TRADITIONAL_MEDICARE
   OTHER
 }
 
@@ -9032,9 +9034,9 @@ func (ec *executionContext) _ModelPlan_cmsCenters(ctx context.Context, field gra
 		}
 		return graphql.Null
 	}
-	res := resTmp.([]models.CMSCenter)
+	res := resTmp.([]model.CMSCenter)
 	fc.Result = res
-	return ec.marshalNCMSCenter2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐCMSCenterᚄ(ctx, field.Selections, res)
+	return ec.marshalNCMSCenter2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCMSCenterᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_ModelPlan_cmsCenters(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -41731,32 +41733,26 @@ func (ec *executionContext) marshalNCMMIGroup2ᚕgithubᚗcomᚋcmsgovᚋmintᚑ
 	return ret
 }
 
-func (ec *executionContext) unmarshalNCMSCenter2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐCMSCenter(ctx context.Context, v interface{}) (models.CMSCenter, error) {
-	tmp, err := graphql.UnmarshalString(v)
-	res := models.CMSCenter(tmp)
+func (ec *executionContext) unmarshalNCMSCenter2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCMSCenter(ctx context.Context, v interface{}) (model.CMSCenter, error) {
+	var res model.CMSCenter
+	err := res.UnmarshalGQL(v)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) marshalNCMSCenter2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐCMSCenter(ctx context.Context, sel ast.SelectionSet, v models.CMSCenter) graphql.Marshaler {
-	res := graphql.MarshalString(string(v))
-	if res == graphql.Null {
-		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
-			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
-		}
-	}
-	return res
+func (ec *executionContext) marshalNCMSCenter2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCMSCenter(ctx context.Context, sel ast.SelectionSet, v model.CMSCenter) graphql.Marshaler {
+	return v
 }
 
-func (ec *executionContext) unmarshalNCMSCenter2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐCMSCenterᚄ(ctx context.Context, v interface{}) ([]models.CMSCenter, error) {
+func (ec *executionContext) unmarshalNCMSCenter2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCMSCenterᚄ(ctx context.Context, v interface{}) ([]model.CMSCenter, error) {
 	var vSlice []interface{}
 	if v != nil {
 		vSlice = graphql.CoerceList(v)
 	}
 	var err error
-	res := make([]models.CMSCenter, len(vSlice))
+	res := make([]model.CMSCenter, len(vSlice))
 	for i := range vSlice {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
-		res[i], err = ec.unmarshalNCMSCenter2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐCMSCenter(ctx, vSlice[i])
+		res[i], err = ec.unmarshalNCMSCenter2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCMSCenter(ctx, vSlice[i])
 		if err != nil {
 			return nil, err
 		}
@@ -41764,7 +41760,7 @@ func (ec *executionContext) unmarshalNCMSCenter2ᚕgithubᚗcomᚋcmsgovᚋmint�
 	return res, nil
 }
 
-func (ec *executionContext) marshalNCMSCenter2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐCMSCenterᚄ(ctx context.Context, sel ast.SelectionSet, v []models.CMSCenter) graphql.Marshaler {
+func (ec *executionContext) marshalNCMSCenter2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCMSCenterᚄ(ctx context.Context, sel ast.SelectionSet, v []model.CMSCenter) graphql.Marshaler {
 	ret := make(graphql.Array, len(v))
 	var wg sync.WaitGroup
 	isLen1 := len(v) == 1
@@ -41788,7 +41784,7 @@ func (ec *executionContext) marshalNCMSCenter2ᚕgithubᚗcomᚋcmsgovᚋmintᚑ
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalNCMSCenter2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐCMSCenter(ctx, sel, v[i])
+			ret[i] = ec.marshalNCMSCenter2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCMSCenter(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -47103,7 +47099,7 @@ func (ec *executionContext) marshalOCMMIGroup2ᚕgithubᚗcomᚋcmsgovᚋmintᚑ
 	return ret
 }
 
-func (ec *executionContext) unmarshalOCMSCenter2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐCMSCenterᚄ(ctx context.Context, v interface{}) ([]models.CMSCenter, error) {
+func (ec *executionContext) unmarshalOCMSCenter2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCMSCenterᚄ(ctx context.Context, v interface{}) ([]model.CMSCenter, error) {
 	if v == nil {
 		return nil, nil
 	}
@@ -47112,10 +47108,10 @@ func (ec *executionContext) unmarshalOCMSCenter2ᚕgithubᚗcomᚋcmsgovᚋmint�
 		vSlice = graphql.CoerceList(v)
 	}
 	var err error
-	res := make([]models.CMSCenter, len(vSlice))
+	res := make([]model.CMSCenter, len(vSlice))
 	for i := range vSlice {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
-		res[i], err = ec.unmarshalNCMSCenter2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐCMSCenter(ctx, vSlice[i])
+		res[i], err = ec.unmarshalNCMSCenter2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCMSCenter(ctx, vSlice[i])
 		if err != nil {
 			return nil, err
 		}
@@ -47123,7 +47119,7 @@ func (ec *executionContext) unmarshalOCMSCenter2ᚕgithubᚗcomᚋcmsgovᚋmint�
 	return res, nil
 }
 
-func (ec *executionContext) marshalOCMSCenter2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐCMSCenterᚄ(ctx context.Context, sel ast.SelectionSet, v []models.CMSCenter) graphql.Marshaler {
+func (ec *executionContext) marshalOCMSCenter2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCMSCenterᚄ(ctx context.Context, sel ast.SelectionSet, v []model.CMSCenter) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
@@ -47150,7 +47146,7 @@ func (ec *executionContext) marshalOCMSCenter2ᚕgithubᚗcomᚋcmsgovᚋmintᚑ
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalNCMSCenter2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐCMSCenter(ctx, sel, v[i])
+			ret[i] = ec.marshalNCMSCenter2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCMSCenter(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)

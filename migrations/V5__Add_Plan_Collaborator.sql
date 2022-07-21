@@ -1,3 +1,10 @@
+CREATE TYPE TEAM_ROLE AS ENUM (
+    'MODEL_LEAD',
+    'MODEL_TEAM',
+    'LEADERSHIP',
+    'LEARNING',
+    'EVALUATION'
+);
 CREATE TABLE plan_collaborator (
     id UUID PRIMARY KEY NOT NULL,
     model_plan_id UUID NOT NULL, --foreign key to model plan
