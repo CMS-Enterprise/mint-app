@@ -311,14 +311,14 @@ const Complexity = () => {
                       </FieldGroup>
 
                       <FieldGroup
-                        scrollElement="payment-complexity"
+                        scrollElement="canParticipantsSelectBetweenPaymentMechanisms"
                         error={
                           !!flatErrors.canParticipantsSelectBetweenPaymentMechanisms
                         }
                         className="margin-top-4"
                       >
                         <Label
-                          htmlFor="payment-multiple-payments"
+                          htmlFor="canParticipantsSelectBetweenPaymentMechanisms"
                           className="maxw-none"
                         >
                           {t('canParticipantsSelectBetweenPaymentMechanisms')}
@@ -332,7 +332,7 @@ const Complexity = () => {
                           <Field
                             as={Radio}
                             id="payment-multiple-payments-Yes"
-                            name="payment-multiple-payments"
+                            name="canParticipantsSelectBetweenPaymentMechanisms"
                             label={h('yes')}
                             value="YES"
                             checked={
@@ -381,7 +381,7 @@ const Complexity = () => {
                           <Field
                             as={Radio}
                             id="payment-multiple-payments-No"
-                            name="payment-multiple-payments"
+                            name="canParticipantsSelectBetweenPaymentMechanisms"
                             label={h('no')}
                             value="NO"
                             checked={
@@ -403,11 +403,11 @@ const Complexity = () => {
                       </FieldGroup>
 
                       <FieldGroup
-                        scrollElement="payment-frequency-payments"
+                        scrollElement="anticipatedPaymentFrequency"
                         error={!!flatErrors.anticipatedPaymentFrequency}
                         className="margin-top-4"
                       >
-                        <Label htmlFor="payment-frequency-payments">
+                        <Label htmlFor="anticipatedPaymentFrequency">
                           {t('anticipatedPaymentFrequency')}
                         </Label>
                         <FieldErrorMsg>
@@ -417,7 +417,7 @@ const Complexity = () => {
                         <Field
                           as={MultiSelect}
                           id="payment-frequency-payments"
-                          name="payment-frequency-payments"
+                          name="anticipatedPaymentFrequency"
                           options={mappedAnticipatedPaymentFrequencyType}
                           selectedLabel={t(
                             'selectedAnticipatedPaymentFrequency'
@@ -434,7 +434,7 @@ const Complexity = () => {
                           AnticipatedPaymentFrequencyType.OTHER
                         ) && (
                           <FieldGroup
-                            scrollElement="payment-frequency-payments-other"
+                            scrollElement="anticipatedPaymentFrequencyOther"
                             error={
                               !!flatErrors.anticipatedPaymentFrequencyOther
                             }
@@ -455,7 +455,7 @@ const Complexity = () => {
                               }
                               id="payment-frequency-payments-other"
                               data-testid="payment-frequency-payments-other"
-                              name="nonClaimsPaymentOther"
+                              name="anticipatedPaymentFrequencyOther"
                             />
                           </FieldGroup>
                         )}
