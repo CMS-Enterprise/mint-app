@@ -114,12 +114,12 @@ exports[`Model Plan -- BeneficiaryCostSharing matches snapshot 1`] = `
           </h3>
           <div
             class="usa-form-group"
-            data-scroll="payment-beneficiary-cost-sharing"
+            data-scroll="beneficiaryCostSharingLevelAndHandling"
           >
             <label
               class="usa-label maxw-none"
               data-testid="label"
-              for="payment-beneficiary-cost-sharing"
+              for="beneficiaryCostSharingLevelAndHandling"
             >
               What is the intended level of beneficiary cost-sharing and how will it be handled?
             </label>
@@ -134,12 +134,12 @@ exports[`Model Plan -- BeneficiaryCostSharing matches snapshot 1`] = `
           </div>
           <div
             class="usa-form-group margin-top-4"
-            data-scroll="payment-waive-any-service"
+            data-scroll="waiveBeneficiaryCostSharingForAnyServices"
           >
             <label
               class="usa-label maxw-none"
               data-testid="label"
-              for="payment-waive-any-service"
+              for="waiveBeneficiaryCostSharingForAnyServices"
             >
               Will you waive beneficiary cost-sharing (coinsurance and/or deductible) for any services in the model?
             </label>
@@ -154,7 +154,7 @@ exports[`Model Plan -- BeneficiaryCostSharing matches snapshot 1`] = `
                 <input
                   class="usa-radio__input"
                   id="payment-waive-any-service-Yes"
-                  name="payment-waive-any-service"
+                  name="waiveBeneficiaryCostSharingForAnyServices"
                   type="radio"
                   value="YES"
                 />
@@ -167,12 +167,12 @@ exports[`Model Plan -- BeneficiaryCostSharing matches snapshot 1`] = `
               </div>
               <div
                 class="usa-form-group margin-left-4 margin-y-1"
-                data-scroll="payment-waive-any-service-specification"
+                data-scroll="waiveBeneficiaryCostSharingServiceSpecification"
               >
                 <label
                   class="usa-label text-normal"
                   data-testid="label"
-                  for="payment-waive-any-service-specification"
+                  for="waiveBeneficiaryCostSharingServiceSpecification"
                 >
                   Please specify which services.
                 </label>
@@ -180,7 +180,7 @@ exports[`Model Plan -- BeneficiaryCostSharing matches snapshot 1`] = `
                   class="usa-textarea height-15"
                   data-testid="payment-waive-any-service-specification"
                   id="payment-waive-any-service-specification"
-                  name="payment-waive-any-service-specification"
+                  name="waiveBeneficiaryCostSharingServiceSpecification"
                 />
               </div>
               <div
@@ -190,7 +190,7 @@ exports[`Model Plan -- BeneficiaryCostSharing matches snapshot 1`] = `
                 <input
                   class="usa-radio__input"
                   id="payment-waive-any-service-No"
-                  name="payment-waive-any-service"
+                  name="waiveBeneficiaryCostSharingForAnyServices"
                   type="radio"
                   value="FALSE"
                 />
@@ -204,12 +204,12 @@ exports[`Model Plan -- BeneficiaryCostSharing matches snapshot 1`] = `
             </fieldset>
             <div
               class="usa-form-group margin-top-4"
-              data-scroll="payment-waive-part-of-payment"
+              data-scroll="waiverOnlyAppliesPartOfPayment"
             >
               <label
                 class="usa-label maxw-none text-normal"
                 data-testid="label"
-                for="payment-waive-part-of-payment"
+                for="waiverOnlyAppliesPartOfPayment"
               >
                 Would the waiver only apply for part of the payment?
               </label>
@@ -228,14 +228,15 @@ exports[`Model Plan -- BeneficiaryCostSharing matches snapshot 1`] = `
                 >
                   <input
                     class="usa-radio__input"
-                    id="payment-waive-part-of-payment-Yes"
-                    name="payment-waive-part-of-payment"
+                    data-testid="payment-waive-part-of-payment-true"
+                    id="payment-waive-part-of-payment-true"
+                    name="waiverOnlyAppliesPartOfPayment"
                     type="radio"
                     value="YES"
                   />
                   <label
                     class="usa-radio__label"
-                    for="payment-waive-part-of-payment-Yes"
+                    for="payment-waive-part-of-payment-true"
                   >
                     Yes
                   </label>
@@ -246,14 +247,15 @@ exports[`Model Plan -- BeneficiaryCostSharing matches snapshot 1`] = `
                 >
                   <input
                     class="usa-radio__input"
-                    id="payment-waive-part-of-payment-No"
-                    name="payment-waive-part-of-payment"
+                    data-testid="payment-waive-part-of-payment-false"
+                    id="payment-waive-part-of-payment-false"
+                    name="waiverOnlyAppliesPartOfPayment"
                     type="radio"
-                    value="FALSE"
+                    value="NO"
                   />
                   <label
                     class="usa-radio__label"
-                    for="payment-waive-part-of-payment-No"
+                    for="payment-waive-part-of-payment-false"
                   >
                     No
                   </label>
