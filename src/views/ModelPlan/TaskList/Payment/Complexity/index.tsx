@@ -171,6 +171,19 @@ const Complexity = () => {
     return <NotFoundPartial />;
   }
 
+  const complexityLevelLabel = (key: string) => {
+    switch (key) {
+      case ComplexityCalculationLevelType.LOW:
+        return t('complexityLevel.low');
+      case ComplexityCalculationLevelType.MIDDLE:
+        return t('complexityLevel.middle');
+      case ComplexityCalculationLevelType.HIGH:
+        return t('complexityLevel.high');
+      default:
+        return '';
+    }
+  };
+
   return (
     <>
       <BreadcrumbBar variant="wrap">
@@ -251,12 +264,12 @@ const Complexity = () => {
                       }}
                     >
                       <FieldGroup
-                        scrollElement="payment-complexity"
+                        scrollElement="expectedCalculationComplexityLevel"
                         error={!!flatErrors.expectedCalculationComplexityLevel}
                         className="margin-top-4"
                       >
                         <Label
-                          htmlFor="payment-complexity"
+                          htmlFor="expectedCalculationComplexityLevel"
                           className="maxw-none"
                         >
                           {t('expectedCalculationComplexityLevel')}
@@ -265,57 +278,31 @@ const Complexity = () => {
                           {flatErrors.expectedCalculationComplexityLevel}
                         </FieldErrorMsg>
                         <Fieldset>
-                          <Field
-                            as={Radio}
-                            id="payment-complexity-low"
-                            name="payment-complexity"
-                            label={t('complexityLevel.low')}
-                            value={ComplexityCalculationLevelType.LOW}
-                            checked={
-                              values.expectedCalculationComplexityLevel ===
-                              ComplexityCalculationLevelType.LOW
-                            }
-                            onChange={() => {
-                              setFieldValue(
-                                'expectedCalculationComplexityLevel',
-                                ComplexityCalculationLevelType.LOW
-                              );
-                            }}
-                          />
-                          <Field
-                            as={Radio}
-                            id="payment-complexity-middle"
-                            name="payment-complexity"
-                            label={t('complexityLevel.middle')}
-                            value={ComplexityCalculationLevelType.MIDDLE}
-                            checked={
-                              values.expectedCalculationComplexityLevel ===
-                              ComplexityCalculationLevelType.MIDDLE
-                            }
-                            onChange={() => {
-                              setFieldValue(
-                                'expectedCalculationComplexityLevel',
-                                ComplexityCalculationLevelType.MIDDLE
-                              );
-                            }}
-                          />
-                          <Field
-                            as={Radio}
-                            id="payment-complexity-high"
-                            name="payment-complexity"
-                            label={t('complexityLevel.high')}
-                            value={ComplexityCalculationLevelType.HIGH}
-                            checked={
-                              values.expectedCalculationComplexityLevel ===
-                              ComplexityCalculationLevelType.HIGH
-                            }
-                            onChange={() => {
-                              setFieldValue(
-                                'expectedCalculationComplexityLevel',
-                                ComplexityCalculationLevelType.HIGH
-                              );
-                            }}
-                          />
+                          {[
+                            ComplexityCalculationLevelType.LOW,
+                            ComplexityCalculationLevelType.MIDDLE,
+                            ComplexityCalculationLevelType.HIGH
+                          ].map(key => (
+                            <Field
+                              as={Radio}
+                              key={key}
+                              id={`payment-complexity-${key}`}
+                              data-testid={`payment-complexity-${key}`}
+                              name="expectedCalculationComplexityLevel"
+                              label={complexityLevelLabel(key)}
+                              value={key}
+                              checked={
+                                values.expectedCalculationComplexityLevel ===
+                                key
+                              }
+                              onChange={() => {
+                                setFieldValue(
+                                  'expectedCalculationComplexityLevel',
+                                  key
+                                );
+                              }}
+                            />
+                          ))}
                         </Fieldset>
                         <AddNote
                           id="payment-complexity-note"
