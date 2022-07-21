@@ -275,7 +275,7 @@ const FundingSource = () => {
                                           }
                                         >
                                           <Label
-                                            htmlFor="payment-funding-source-trust-fund"
+                                            htmlFor="fundingSourceTrustFund"
                                             className="text-normal"
                                           >
                                             {t('whichType')}
@@ -303,7 +303,7 @@ const FundingSource = () => {
                                           }
                                         >
                                           <Label
-                                            htmlFor="payment-funding-source-other"
+                                            htmlFor="fundingSourceOther"
                                             className="text-normal"
                                           >
                                             {t('otherSourceOption')}
@@ -380,7 +380,7 @@ const FundingSource = () => {
                                           }
                                         >
                                           <Label
-                                            htmlFor="payment-funding-source-reconciliation-trust-fund"
+                                            htmlFor="fundingSourceRTrustFund"
                                             className="text-normal"
                                           >
                                             {t('whichType')}
@@ -407,7 +407,7 @@ const FundingSource = () => {
                                           }
                                         >
                                           <Label
-                                            htmlFor="payment-funding-source-reconciliation-other"
+                                            htmlFor="fundingSourceROther"
                                             className="text-normal"
                                           >
                                             {t('otherSourceOption')}
@@ -484,7 +484,7 @@ const FundingSource = () => {
                                           }
                                         >
                                           <Label
-                                            htmlFor="payment-pay-recipients-other"
+                                            htmlFor="payRecipientsOtherSpecification"
                                             className="text-normal"
                                           >
                                             {t('otherPayOption')}

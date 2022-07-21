@@ -150,7 +150,7 @@ exports[`Model Plan Payment matches snapshot 1`] = `
             <label
               class="usa-label text-normal"
               data-testid="label"
-              for="payment-funding-source-trust-fund"
+              for="fundingSourceTrustFund"
             >
               Which type?
             </label>
