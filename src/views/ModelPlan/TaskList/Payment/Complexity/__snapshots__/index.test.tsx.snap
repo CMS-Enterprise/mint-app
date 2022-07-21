@@ -107,12 +107,12 @@ exports[`Model Plan -- Complexity matches snapshot 1`] = `
         >
           <div
             class="usa-form-group margin-top-4"
-            data-scroll="payment-complexity"
+            data-scroll="expectedCalculationComplexityLevel"
           >
             <label
               class="usa-label maxw-none"
               data-testid="label"
-              for="payment-complexity"
+              for="expectedCalculationComplexityLevel"
             >
               What level of complexity do you expect calculations to be?
             </label>
@@ -126,14 +126,15 @@ exports[`Model Plan -- Complexity matches snapshot 1`] = `
               >
                 <input
                   class="usa-radio__input"
-                  id="payment-complexity-low"
-                  name="payment-complexity"
+                  data-testid="payment-complexity-LOW"
+                  id="payment-complexity-LOW"
+                  name="expectedCalculationComplexityLevel"
                   type="radio"
                   value="LOW"
                 />
                 <label
                   class="usa-radio__label"
-                  for="payment-complexity-low"
+                  for="payment-complexity-LOW"
                 >
                   Low level
                 </label>
@@ -144,14 +145,15 @@ exports[`Model Plan -- Complexity matches snapshot 1`] = `
               >
                 <input
                   class="usa-radio__input"
-                  id="payment-complexity-middle"
-                  name="payment-complexity"
+                  data-testid="payment-complexity-MIDDLE"
+                  id="payment-complexity-MIDDLE"
+                  name="expectedCalculationComplexityLevel"
                   type="radio"
                   value="MIDDLE"
                 />
                 <label
                   class="usa-radio__label"
-                  for="payment-complexity-middle"
+                  for="payment-complexity-MIDDLE"
                 >
                   Middle level
                 </label>
@@ -162,14 +164,15 @@ exports[`Model Plan -- Complexity matches snapshot 1`] = `
               >
                 <input
                   class="usa-radio__input"
-                  id="payment-complexity-high"
-                  name="payment-complexity"
+                  data-testid="payment-complexity-HIGH"
+                  id="payment-complexity-HIGH"
+                  name="expectedCalculationComplexityLevel"
                   type="radio"
                   value="HIGH"
                 />
                 <label
                   class="usa-radio__label"
-                  for="payment-complexity-high"
+                  for="payment-complexity-HIGH"
                 >
                   High level
                 </label>
@@ -207,12 +210,12 @@ exports[`Model Plan -- Complexity matches snapshot 1`] = `
           </div>
           <div
             class="usa-form-group margin-top-4"
-            data-scroll="payment-complexity"
+            data-scroll="canParticipantsSelectBetweenPaymentMechanisms"
           >
             <label
               class="usa-label maxw-none"
               data-testid="label"
-              for="payment-multiple-payments"
+              for="canParticipantsSelectBetweenPaymentMechanisms"
             >
               Will participants be allowed to select between multiple payment mechanisms?
             </label>
@@ -227,7 +230,7 @@ exports[`Model Plan -- Complexity matches snapshot 1`] = `
                 <input
                   class="usa-radio__input"
                   id="payment-multiple-payments-Yes"
-                  name="payment-multiple-payments"
+                  name="canParticipantsSelectBetweenPaymentMechanisms"
                   type="radio"
                   value="YES"
                 />
@@ -265,7 +268,7 @@ exports[`Model Plan -- Complexity matches snapshot 1`] = `
                 <input
                   class="usa-radio__input"
                   id="payment-multiple-payments-No"
-                  name="payment-multiple-payments"
+                  name="canParticipantsSelectBetweenPaymentMechanisms"
                   type="radio"
                   value="NO"
                 />
@@ -309,12 +312,12 @@ exports[`Model Plan -- Complexity matches snapshot 1`] = `
           </div>
           <div
             class="usa-form-group margin-top-4"
-            data-scroll="payment-frequency-payments"
+            data-scroll="anticipatedPaymentFrequency"
           >
             <label
               class="usa-label"
               data-testid="label"
-              for="payment-frequency-payments"
+              for="anticipatedPaymentFrequency"
             >
               How often do you anticipate making payments?
             </label>
