@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button, IconAdd } from '@trussworks/react-uswds';
 import classNames from 'classnames';
-import { Field } from 'formik';
+import { Field, useField } from 'formik';
 
 import FieldGroup from 'components/shared/FieldGroup';
 import TextAreaField from 'components/shared/TextAreaField';
@@ -13,21 +13,28 @@ type AddNoteType = {
   className?: string;
 };
 
-const AddNote = ({ field, id, className }: AddNoteType) => {
+const AddNote = ({ field: fieldName, id, className }: AddNoteType) => {
   const { t } = useTranslation('draftModelPlan');
-  const [note, setNote] = useState(false);
+  const [field] = useField(fieldName);
+  const [note, setNote] = useState<boolean>(!!field.value?.trim());
+
+  useEffect(() => {
+    if (!note) setNote(!!field.value?.trim());
+  }, [field.value, note]);
 
   return (
     <div className={classNames('margin-top-4 margin-bottom-8', className)}>
-      <Button
-        type="button"
-        data-testid="add-note-toggle"
-        className="usa-button usa-button--unstyled"
-        onClick={() => setNote(true)}
-      >
-        <IconAdd className="margin-right-1" aria-hidden />
-        {t('additionalNote')}
-      </Button>
+      {!note && (
+        <Button
+          type="button"
+          data-testid="add-note-toggle"
+          className="usa-button usa-button--unstyled"
+          onClick={() => setNote(true)}
+        >
+          <IconAdd className="margin-right-1" aria-hidden />
+          {t('additionalNote')}
+        </Button>
+      )}
 
       {note && (
         <FieldGroup>
@@ -36,7 +43,7 @@ const AddNote = ({ field, id, className }: AddNoteType) => {
             className="height-15"
             id={id}
             data-testid={id}
-            name={field}
+            name={fieldName}
             label={t('Notes')}
           />
         </FieldGroup>

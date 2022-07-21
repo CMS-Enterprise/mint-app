@@ -19,9 +19,28 @@ describe('The AddNote component', () => {
       screen.getByRole('button', { name: /Add an additional note/i }).click();
 
       await waitFor(() => {
-        userEvent.type(getByTestId('test-note'), 'Test Note');
+        setTimeout(() => {
+          userEvent.type(getByTestId('test-note'), 'Test Note');
 
-        expect(getByTestId('test-note')).toHaveValue('Test Note');
+          expect(getByTestId('test-note')).toHaveValue('Test Note');
+        }, 0);
+      });
+    });
+  });
+
+  it('checks if init value expands note on load', async () => {
+    await act(async () => {
+      const { getByTestId } = render(
+        <Formik initialValues={{ testNote: 'test expand' }} onSubmit={onSubmit}>
+          <AddNote id="test-note" field="testNote" />
+        </Formik>
+      );
+
+      const button = screen.queryByTestId('add-note-toggle');
+      expect(button).not.toBeInTheDocument();
+
+      await waitFor(() => {
+        expect(getByTestId('test-note')).toHaveValue('test expand');
       });
     });
   });
