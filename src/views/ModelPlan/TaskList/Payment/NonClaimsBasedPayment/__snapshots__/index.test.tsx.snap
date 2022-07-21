@@ -345,14 +345,15 @@ exports[`Model Plan -- NonClaimsBasedPayment matches snapshot 1`] = `
               >
                 <input
                   class="usa-radio__input"
-                  id="payment-nonclaims-shared-involvement-Yes"
-                  name="payment-nonclaims-shared-involvement"
+                  data-testid="payment-nonclaims-shared-involvement-true"
+                  id="payment-nonclaims-shared-involvement-true"
+                  name="sharedSystemsInvolvedAdditionalClaimPayment"
                   type="radio"
                   value="YES"
                 />
                 <label
                   class="usa-radio__label"
-                  for="payment-nonclaims-shared-involvement-Yes"
+                  for="payment-nonclaims-shared-involvement-true"
                 >
                   Yes
                 </label>
@@ -363,14 +364,15 @@ exports[`Model Plan -- NonClaimsBasedPayment matches snapshot 1`] = `
               >
                 <input
                   class="usa-radio__input"
-                  id="payment-nonclaims-shared-involvement-No"
-                  name="payment-nonclaims-shared-involvement"
+                  data-testid="payment-nonclaims-shared-involvement-false"
+                  id="payment-nonclaims-shared-involvement-false"
+                  name="sharedSystemsInvolvedAdditionalClaimPayment"
                   type="radio"
-                  value="FALSE"
+                  value="NO"
                 />
                 <label
                   class="usa-radio__label"
-                  for="payment-nonclaims-shared-involvement-No"
+                  for="payment-nonclaims-shared-involvement-false"
                 >
                   No
                 </label>
@@ -432,14 +434,15 @@ exports[`Model Plan -- NonClaimsBasedPayment matches snapshot 1`] = `
               >
                 <input
                   class="usa-radio__input"
-                  id="payment-use-innovation-payment-contractor-Yes"
-                  name="payment-use-innovation-payment-contractor"
+                  data-testid="payment-use-innovation-payment-contractor-true"
+                  id="payment-use-innovation-payment-contractor-true"
+                  name="planningToUseInnovationPaymentContractor"
                   type="radio"
                   value="YES"
                 />
                 <label
                   class="usa-radio__label"
-                  for="payment-use-innovation-payment-contractor-Yes"
+                  for="payment-use-innovation-payment-contractor-true"
                 >
                   Yes
                 </label>
@@ -450,14 +453,15 @@ exports[`Model Plan -- NonClaimsBasedPayment matches snapshot 1`] = `
               >
                 <input
                   class="usa-radio__input"
-                  id="payment-use-innovation-payment-contractor-No"
-                  name="payment-use-innovation-payment-contractor"
+                  data-testid="payment-use-innovation-payment-contractor-false"
+                  id="payment-use-innovation-payment-contractor-false"
+                  name="planningToUseInnovationPaymentContractor"
                   type="radio"
-                  value="FALSE"
+                  value="NO"
                 />
                 <label
                   class="usa-radio__label"
-                  for="payment-use-innovation-payment-contractor-No"
+                  for="payment-use-innovation-payment-contractor-false"
                 >
                   No
                 </label>

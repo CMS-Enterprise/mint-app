@@ -360,40 +360,27 @@ const NonClaimsBasedPayment = () => {
                           }
                         </FieldErrorMsg>
                         <Fieldset>
-                          <Field
-                            as={Radio}
-                            id="payment-nonclaims-shared-involvement-Yes"
-                            name="payment-nonclaims-shared-involvement"
-                            label={h('yes')}
-                            value="YES"
-                            checked={
-                              values.sharedSystemsInvolvedAdditionalClaimPayment ===
-                              true
-                            }
-                            onChange={() => {
-                              setFieldValue(
-                                'sharedSystemsInvolvedAdditionalClaimPayment',
-                                true
-                              );
-                            }}
-                          />
-                          <Field
-                            as={Radio}
-                            id="payment-nonclaims-shared-involvement-No"
-                            name="payment-nonclaims-shared-involvement"
-                            label={h('no')}
-                            value="FALSE"
-                            checked={
-                              values.sharedSystemsInvolvedAdditionalClaimPayment ===
-                              false
-                            }
-                            onChange={() => {
-                              setFieldValue(
-                                'sharedSystemsInvolvedAdditionalClaimPayment',
-                                false
-                              );
-                            }}
-                          />
+                          {[true, false].map(key => (
+                            <Field
+                              as={Radio}
+                              key={key}
+                              id={`payment-nonclaims-shared-involvement-${key}`}
+                              data-testid={`payment-nonclaims-shared-involvement-${key}`}
+                              name="sharedSystemsInvolvedAdditionalClaimPayment"
+                              label={key ? h('yes') : h('no')}
+                              value={key ? 'YES' : 'NO'}
+                              checked={
+                                values.sharedSystemsInvolvedAdditionalClaimPayment ===
+                                key
+                              }
+                              onChange={() => {
+                                setFieldValue(
+                                  'sharedSystemsInvolvedAdditionalClaimPayment',
+                                  key
+                                );
+                              }}
+                            />
+                          ))}
                         </Fieldset>
                         <AddNote
                           id="payment-nonclaims-shared-involvement-note"
@@ -421,40 +408,27 @@ const NonClaimsBasedPayment = () => {
                           {flatErrors.planningToUseInnovationPaymentContractor}
                         </FieldErrorMsg>
                         <Fieldset>
-                          <Field
-                            as={Radio}
-                            id="payment-use-innovation-payment-contractor-Yes"
-                            name="payment-use-innovation-payment-contractor"
-                            label={h('yes')}
-                            value="YES"
-                            checked={
-                              values.planningToUseInnovationPaymentContractor ===
-                              true
-                            }
-                            onChange={() => {
-                              setFieldValue(
-                                'planningToUseInnovationPaymentContractor',
-                                true
-                              );
-                            }}
-                          />
-                          <Field
-                            as={Radio}
-                            id="payment-use-innovation-payment-contractor-No"
-                            name="payment-use-innovation-payment-contractor"
-                            label={h('no')}
-                            value="FALSE"
-                            checked={
-                              values.planningToUseInnovationPaymentContractor ===
-                              false
-                            }
-                            onChange={() => {
-                              setFieldValue(
-                                'planningToUseInnovationPaymentContractor',
-                                false
-                              );
-                            }}
-                          />
+                          {[true, false].map(key => (
+                            <Field
+                              as={Radio}
+                              key={key}
+                              id={`payment-use-innovation-payment-contractor-${key}`}
+                              data-testid={`payment-use-innovation-payment-contractor-${key}`}
+                              name="planningToUseInnovationPaymentContractor"
+                              label={key ? h('yes') : h('no')}
+                              value={key ? 'YES' : 'NO'}
+                              checked={
+                                values.planningToUseInnovationPaymentContractor ===
+                                key
+                              }
+                              onChange={() => {
+                                setFieldValue(
+                                  'planningToUseInnovationPaymentContractor',
+                                  key
+                                );
+                              }}
+                            />
+                          ))}
                         </Fieldset>
                         <AddNote
                           id="payment-use-innovation-payment-contractor-note"
