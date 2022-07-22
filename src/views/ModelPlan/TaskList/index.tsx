@@ -326,8 +326,7 @@ const TaskList = () => {
 
                               {/* Basics needs to render the last updated data based on multiple modifiedDts values */}
                               {key === 'basics' &&
-                                renderBasicsStatus() ===
-                                  TaskStatus.IN_PROGRESS && (
+                                renderBasicsStatus() !== TaskStatus.READY && (
                                   <TaskListLastUpdated>
                                     <p className="margin-y-0">
                                       {t('taskListItem.lastUpdated')}
@@ -350,8 +349,8 @@ const TaskList = () => {
                                 )}
 
                               {key !== 'basics' &&
-                                taskListSections[key].status ===
-                                  TaskStatus.IN_PROGRESS && (
+                                taskListSections[key].status !==
+                                  TaskStatus.READY && (
                                   <TaskListLastUpdated>
                                     <p className="margin-y-0">
                                       {t('taskListItem.lastUpdated')}
