@@ -348,9 +348,8 @@ namespace :db do
     if file == nil
       dump()
     else
-      if file.start_with?("/")
-      else
-      file = "scripts/data/"+file+".sql"
+      if !file.start_with?("/") #files that start with / are fully qualified path names
+        file = "scripts/data/"+file+".sql"        
       end
      dump(file)
     end
@@ -363,9 +362,8 @@ namespace :db do
     if file == nil
       seed()    
     else
-      if file.start_with?("/")
-      else
-      file = "scripts/data/"+file+".sql"
+      if !file.start_with?("/") #files that start with / are fully qualified path names
+        file = "scripts/data/"+file+".sql"        
       end
      seed(file)
     end
