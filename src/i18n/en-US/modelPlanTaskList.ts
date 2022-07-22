@@ -34,37 +34,44 @@ const modelPlanTaskList = {
     basics: {
       heading: 'Model basics',
       copy:
-        'Start filling out as much of the basic model information as you know and reach out to the Model Assessment Team if you need help.'
+        'Start filling out as much of the basic model information as you know and reach out to the Model Assessment Team if you need help.',
+      path: 'basics'
     },
-    characteristics: {
+    generalCharacteristics: {
       heading: 'General characteristics',
       copy:
-        'Start filling out as much of the general model characteristics as you know and reach out to the Model Assessment Team if you need help.'
+        'Start filling out as much of the general model characteristics as you know and reach out to the Model Assessment Team if you need help.',
+      path: 'characteristics'
     },
-    'participants-and-providers': {
+    participantsAndProviders: {
       heading: 'Participants and providers',
       copy:
-        'Start filling out as much of the model participant information as you know and reach out to the Model Assessment Team if you need help.'
+        'Start filling out as much of the model participant information as you know and reach out to the Model Assessment Team if you need help.',
+      path: 'participants-and-providers'
     },
     beneficiaries: {
       heading: 'Beneficiaries',
       copy:
-        'Start filling out as much of the beneficiary information as you know and reach out to the Model Assessment Team if you need help.'
+        'Start filling out as much of the beneficiary information as you know and reach out to the Model Assessment Team if you need help.',
+      path: 'beneficiaries'
     },
-    'ops-eval-and-learning': {
+    opsEvalAndLearning: {
       heading: 'Operations, evaluation, and learning',
       copy:
-        'Start filling out as much of the model operation information as you know and reach out to the Model Assessment Team if you need help.'
+        'Start filling out as much of the model operation information as you know and reach out to the Model Assessment Team if you need help.',
+      path: 'ops-eval-and-learning'
     },
-    payment: {
+    payments: {
       heading: 'Payment',
       copy:
-        'Start filling out as much of the payment information as you know and reach out to the Model Assessment Team if you need help.'
+        'Start filling out as much of the payment information as you know and reach out to the Model Assessment Team if you need help.',
+      path: 'payments'
     },
-    finalizeModelPlan: {
-      heading: 'Finalize Model Plan',
+    itTools: {
+      heading: 'IT tools',
       copy:
-        'Review all sections of the Model Plan and confirm with the Model Assessment Team that your model is ready for internal clearance processes.'
+        'Choose the IT solutions your model will utilize. Many questions in this section are populated based on responses to questions answered in previous sections.',
+      path: 'it-tools'
     }
   },
   taskListButton: {

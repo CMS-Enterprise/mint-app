@@ -20,6 +20,7 @@ export default gql`
         goal
         testInterventions
         note
+        modifiedDts
         status
       }
       milestones {
