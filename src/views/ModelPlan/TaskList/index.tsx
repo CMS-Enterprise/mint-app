@@ -349,7 +349,7 @@ const TaskList = () => {
                                   </TaskListLastUpdated>
                                 )}
 
-                              {key !== 'bascis' &&
+                              {key !== 'basics' &&
                                 taskListSections[key].status ===
                                   TaskStatus.IN_PROGRESS && (
                                   <TaskListLastUpdated>
