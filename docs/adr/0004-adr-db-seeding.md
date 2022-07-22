@@ -15,7 +15,7 @@ As an alternative, we have been using a postgres db dump file to quickly seed th
 
 ## Decision Outcome
 
-* Chosen Alternative: **Implement a Go seed program that utilizes the schema resolver methods**
+* Chosen Alternative: **Implement a Go seed program that utilizes the schema resolver methods** ( User Story: [EASI - 2187](https://jiraent.cms.gov/browse/EASI-2187) )
 
   * While utilizing resolvers to seed the data takes away some flexibility it is the most easily maintainable. 
   * Business logic is maintained throughout the existing resolvers, so the data easily reflects production data without needing to manually construct it.
