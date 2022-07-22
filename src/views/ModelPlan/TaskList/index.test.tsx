@@ -55,6 +55,7 @@ describe('The Model Plan Task List', () => {
       highLevelNote: null,
       phasedIn: null,
       phasedInNote: null,
+      modifiedDts: null,
       status: 'READY'
     },
     opsEvalAndLearning: [] as any,

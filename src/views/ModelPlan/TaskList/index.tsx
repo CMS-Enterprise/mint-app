@@ -75,6 +75,7 @@ const TaskList = () => {
 
   const {
     modelName,
+    modifiedDts,
     basics,
     milestones,
     modelCategory,
@@ -110,8 +111,8 @@ const TaskList = () => {
    * */
   const renderBasicsStatus = (): TaskStatus => {
     if (
-      basics?.status === TaskStatus.COMPLETE &&
-      milestones?.status === TaskStatus.COMPLETE
+      basics.status === TaskStatus.COMPLETE &&
+      milestones.status === TaskStatus.COMPLETE
     ) {
       return TaskStatus.COMPLETE;
     }
@@ -119,6 +120,22 @@ const TaskList = () => {
       return TaskStatus.READY;
     }
     return TaskStatus.IN_PROGRESS;
+  };
+
+  /**
+   * Used to calculate last modified date on Basics as milstones is encapsulated in Basics, but has it's modifiedDts
+   * May be changed/merged in the future to match other task list sections
+   * */
+  const renderBasicsLastUpdated = () => {
+    const basicDates = [
+      modifiedDts,
+      basics?.modifiedDts,
+      milestones.modifiedDts
+    ];
+    basicDates.sort((a, b) => {
+      return a?.localeCompare(b!) || 0;
+    });
+    return basicDates[0];
   };
 
   const dicussionBanner = () => {
@@ -306,21 +323,48 @@ const TaskList = () => {
                                   {t(`numberedList.${key}.copy`)}
                                 </p>
                               </TaskListDescription>
-                              {taskListSections[key].status ===
-                                'IN_PROGRESS' && (
-                                <TaskListLastUpdated>
-                                  <p className="margin-y-0">
-                                    {t('taskListItem.lastUpdated')}
-                                  </p>
-                                  <p className="margin-y-0">
-                                    {taskListSections[key].modifiedDts &&
-                                      formatDate(
-                                        taskListSections[key].modifiedDts!,
-                                        'MM/d/yyyy'
-                                      )}
-                                  </p>
-                                </TaskListLastUpdated>
-                              )}
+
+                              {/* Basics needs to render the last updated data based on multiple modifiedDts values */}
+                              {key === 'basics' &&
+                                renderBasicsStatus() ===
+                                  TaskStatus.IN_PROGRESS && (
+                                  <TaskListLastUpdated>
+                                    <p className="margin-y-0">
+                                      {t('taskListItem.lastUpdated')}
+                                    </p>
+                                    <p className="margin-y-0">
+                                      {key === 'basics' &&
+                                        renderBasicsLastUpdated() &&
+                                        formatDate(
+                                          renderBasicsLastUpdated() || '',
+                                          'MM/d/yyyy'
+                                        )}
+                                      {key !== 'basics' &&
+                                        taskListSections[key].modifiedDts &&
+                                        formatDate(
+                                          taskListSections[key].modifiedDts!,
+                                          'MM/d/yyyy'
+                                        )}
+                                    </p>
+                                  </TaskListLastUpdated>
+                                )}
+
+                              {key !== 'bascis' &&
+                                taskListSections[key].status ===
+                                  TaskStatus.IN_PROGRESS && (
+                                  <TaskListLastUpdated>
+                                    <p className="margin-y-0">
+                                      {t('taskListItem.lastUpdated')}
+                                    </p>
+                                    <p className="margin-y-0">
+                                      {taskListSections[key].modifiedDts &&
+                                        formatDate(
+                                          taskListSections[key].modifiedDts!,
+                                          'MM/d/yyyy'
+                                        )}
+                                    </p>
+                                  </TaskListLastUpdated>
+                                )}
                             </div>
                             <TaskListButton
                               path={t(`numberedList.${key}.path`)}

@@ -38,6 +38,7 @@ export default gql`
         wrapUpEnds
         phasedIn
         phasedInNote
+        modifiedDts
         status
       }
       documents {

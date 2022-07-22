@@ -38,6 +38,7 @@ export interface GetModelPlan_modelPlan_milestones {
   wrapUpEnds: Time | null;
   phasedIn: boolean | null;
   phasedInNote: string | null;
+  modifiedDts: Time | null;
   status: TaskStatus;
 }
 
