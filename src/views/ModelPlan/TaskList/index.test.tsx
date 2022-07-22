@@ -37,6 +37,7 @@ describe('The Model Plan Task List', () => {
       goal: null,
       testInterventions: null,
       note: null,
+      modifiedDts: null,
       status: 'READY'
     },
     milestones: {

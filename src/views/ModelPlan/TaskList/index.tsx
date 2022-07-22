@@ -30,6 +30,7 @@ import {
   GetModelPlan_modelPlan_participantsAndProviders as ParticipantsAndProvidersType,
   GetModelPlanVariables
 } from 'queries/types/GetModelPlan';
+import { TaskStatus } from 'types/graphql-global-types';
 import { formatDate } from 'utils/date';
 import { getUnansweredQuestions } from 'utils/modelPlan';
 
@@ -75,6 +76,9 @@ const TaskList = () => {
   const {
     modelName,
     basics,
+    milestones,
+    modelCategory,
+    cmsCenters,
     discussions,
     documents,
     status,
@@ -99,6 +103,23 @@ const TaskList = () => {
   const { unansweredQuestions, answeredQuestions } = getUnansweredQuestions(
     discussions
   );
+
+  /**
+   * Used to calculate status on Basics as milstones is encapsulated in Basics, but has it's own status
+   * May be changed/merged in the future to match other task list sections
+   * */
+  const renderBasicsStatus = (): TaskStatus => {
+    if (
+      basics?.status === TaskStatus.COMPLETE &&
+      milestones?.status === TaskStatus.COMPLETE
+    ) {
+      return TaskStatus.COMPLETE;
+    }
+    if (modelCategory === null && cmsCenters.length === 0) {
+      return TaskStatus.READY;
+    }
+    return TaskStatus.IN_PROGRESS;
+  };
 
   const dicussionBanner = () => {
     return (
@@ -273,7 +294,11 @@ const TaskList = () => {
                             key={key}
                             testId={`task-list-intake-form-${key}`}
                             heading={t(`numberedList.${key}.heading`)}
-                            status={taskListSections[key].status}
+                            status={
+                              key === 'basics'
+                                ? renderBasicsStatus()
+                                : taskListSections[key].status
+                            }
                           >
                             <div className="model-plan-task-list__task-row display-flex flex-justify flex-align-start">
                               <TaskListDescription>
