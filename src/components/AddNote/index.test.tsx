@@ -16,8 +16,9 @@ describe('The AddNote component', () => {
         </Formik>
       );
 
+      screen.getByRole('button', { name: /Add an additional note/i }).click();
+
       await waitFor(() => {
-        screen.getByRole('button', { name: /Add an additional note/i }).click();
         userEvent.type(getByTestId('test-note'), 'Test Note');
         expect(getByTestId('test-note')).toHaveValue('Test Note');
       });
