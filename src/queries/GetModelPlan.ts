@@ -20,6 +20,7 @@ export default gql`
         goal
         testInterventions
         note
+        modifiedDts
         status
       }
       milestones {
@@ -37,6 +38,7 @@ export default gql`
         wrapUpEnds
         phasedIn
         phasedInNote
+        modifiedDts
         status
       }
       documents {

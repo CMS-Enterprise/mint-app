@@ -23,8 +23,16 @@ import GetModelPlan from 'queries/GetModelPlan';
 import {
   GetModelPlan as GetModelPlanType,
   GetModelPlan_modelPlan as GetModelPlanTypes,
+  GetModelPlan_modelPlan_basics as BasicsType,
+  GetModelPlan_modelPlan_beneficiaries as BeneficiariesType,
+  GetModelPlan_modelPlan_generalCharacteristics as GeneralCharacteristicsType,
+  GetModelPlan_modelPlan_opsEvalAndLearning as OpsEvalAndLearningType,
+  GetModelPlan_modelPlan_participantsAndProviders as ParticipantsAndProvidersType,
+  GetModelPlan_modelPlan_payments as PaymentsType,
   GetModelPlanVariables
 } from 'queries/types/GetModelPlan';
+import { TaskStatus } from 'types/graphql-global-types';
+import { formatDate } from 'utils/date';
 import { getUnansweredQuestions } from 'utils/modelPlan';
 
 import Discussions from '../Discussions';
@@ -39,9 +47,14 @@ import TaskListStatus from './_components/TaskListStatus';
 
 import './index.scss';
 
-type TaskListItemProps = {
-  heading: string;
-  copy: string;
+type TaskListSectionsType = {
+  [key: string]:
+    | BasicsType
+    | BeneficiariesType
+    | GeneralCharacteristicsType
+    | OpsEvalAndLearningType
+    | ParticipantsAndProvidersType
+    | PaymentsType;
 };
 
 const TaskList = () => {
@@ -64,11 +77,11 @@ const TaskList = () => {
 
   const {
     modelName,
+    modifiedDts,
+    basics,
+    milestones,
     modelCategory,
     cmsCenters,
-    // modifiedDts,
-    milestones,
-    basics,
     discussions,
     documents,
     status,
@@ -76,47 +89,55 @@ const TaskList = () => {
     participantsAndProviders,
     opsEvalAndLearning,
     beneficiaries,
-    // operations,
     payments
-    // finalizeModelPlan
+    // itTools
   } = modelPlan;
 
-  const taskListItem: TaskListItemProps[] = t('numberedList', {
-    returnObjects: true
-  });
+  const taskListSections: TaskListSectionsType = {
+    basics,
+    generalCharacteristics,
+    participantsAndProviders,
+    beneficiaries,
+    opsEvalAndLearning,
+    payments
+    // itTools
+  };
 
   const { unansweredQuestions, answeredQuestions } = getUnansweredQuestions(
     discussions
   );
 
-  const taskListItemStatus = (key: string) => {
-    switch (key) {
-      case 'basics':
-        if (
-          basics?.status === 'COMPLETE' &&
-          milestones?.status === 'COMPLETE'
-        ) {
-          return 'COMPLETE';
-        }
-        if (modelCategory === null && cmsCenters.length === 0) {
-          return 'READY';
-        }
-        return 'IN_PROGRESS';
-      case 'characteristics':
-        return generalCharacteristics?.status;
-      case 'participants-and-providers':
-        return participantsAndProviders.status;
-      case 'beneficiaries':
-        return beneficiaries.status;
-      case 'ops-eval-and-learning':
-        return opsEvalAndLearning.status;
-      case 'payment':
-        return payments.status;
-      // case 'finalizeModelPlan':
-      //   return;
-      default:
-        return 'CANNOT_START';
+  /**
+   * Used to calculate status on Basics as milstones is encapsulated in Basics, but has it's own status
+   * May be changed/merged in the future to match other task list sections
+   * */
+  const renderBasicsStatus = (): TaskStatus => {
+    if (
+      basics.status === TaskStatus.COMPLETE &&
+      milestones.status === TaskStatus.COMPLETE
+    ) {
+      return TaskStatus.COMPLETE;
     }
+    if (modelCategory === null && cmsCenters.length === 0) {
+      return TaskStatus.READY;
+    }
+    return TaskStatus.IN_PROGRESS;
+  };
+
+  /**
+   * Used to calculate last modified date on Basics as milstones is encapsulated in Basics, but has it's modifiedDts
+   * May be changed/merged in the future to match other task list sections
+   * */
+  const renderBasicsLastUpdated = () => {
+    const basicDates = [
+      modifiedDts,
+      basics?.modifiedDts,
+      milestones.modifiedDts
+    ];
+    basicDates.sort((a, b) => {
+      return a?.localeCompare(b!) || 0;
+    });
+    return basicDates[0];
   };
 
   const dicussionBanner = () => {
@@ -285,42 +306,73 @@ const TaskList = () => {
                     data-testid="task-list"
                     className="model-plan-task-list__task-list model-plan-task-list__task-list--primary margin-top-6 margin-bottom-0 padding-left-0"
                   >
-                    {Object.keys(taskListItem).map((key: any) => {
-                      const lastTaskItem = Object.keys(taskListItem).slice(
-                        -1
-                      )[0];
-                      const path =
-                        key === 'finalizeModelPlan' ? 'submit-request' : key;
-
+                    {Object.keys(taskListSections).map((key: string) => {
                       return (
                         <Fragment key={key}>
                           <TaskListItem
                             key={key}
                             testId={`task-list-intake-form-${key}`}
-                            heading={taskListItem[key].heading}
-                            status={taskListItemStatus(key)}
+                            heading={t(`numberedList.${key}.heading`)}
+                            status={
+                              key === 'basics'
+                                ? renderBasicsStatus()
+                                : taskListSections[key].status
+                            }
                           >
                             <div className="model-plan-task-list__task-row display-flex flex-justify flex-align-start">
                               <TaskListDescription>
                                 <p className="margin-top-0">
-                                  {taskListItem[key].copy}
+                                  {t(`numberedList.${key}.copy`)}
                                 </p>
                               </TaskListDescription>
-                              {taskListItemStatus(key) === 'IN_PROGRESS' && (
-                                <TaskListLastUpdated>
-                                  <p className="margin-y-0">
-                                    {t('taskListItem.lastUpdated')}
-                                  </p>
-                                  <p className="margin-y-0">4/1/2022</p>
-                                </TaskListLastUpdated>
-                              )}
+
+                              {/* Basics needs to render the last updated data based on multiple modifiedDts values */}
+                              {key === 'basics' &&
+                                renderBasicsStatus() !== TaskStatus.READY && (
+                                  <TaskListLastUpdated>
+                                    <p className="margin-y-0">
+                                      {t('taskListItem.lastUpdated')}
+                                    </p>
+                                    <p className="margin-y-0">
+                                      {key === 'basics' &&
+                                        renderBasicsLastUpdated() &&
+                                        formatDate(
+                                          renderBasicsLastUpdated() || '',
+                                          'MM/d/yyyy'
+                                        )}
+                                      {key !== 'basics' &&
+                                        taskListSections[key].modifiedDts &&
+                                        formatDate(
+                                          taskListSections[key].modifiedDts!,
+                                          'MM/d/yyyy'
+                                        )}
+                                    </p>
+                                  </TaskListLastUpdated>
+                                )}
+
+                              {key !== 'basics' &&
+                                taskListSections[key].status !==
+                                  TaskStatus.READY && (
+                                  <TaskListLastUpdated>
+                                    <p className="margin-y-0">
+                                      {t('taskListItem.lastUpdated')}
+                                    </p>
+                                    <p className="margin-y-0">
+                                      {taskListSections[key].modifiedDts &&
+                                        formatDate(
+                                          taskListSections[key].modifiedDts!,
+                                          'MM/d/yyyy'
+                                        )}
+                                    </p>
+                                  </TaskListLastUpdated>
+                                )}
                             </div>
                             <TaskListButton
-                              path={path}
-                              status={taskListItemStatus(key)}
+                              path={t(`numberedList.${key}.path`)}
+                              status={taskListSections[key].status}
                             />
                           </TaskListItem>
-                          {key !== lastTaskItem && (
+                          {key !== 'itTools' && (
                             <Divider className="margin-bottom-4" />
                           )}
                         </Fragment>
