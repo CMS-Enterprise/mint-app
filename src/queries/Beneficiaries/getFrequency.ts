@@ -13,6 +13,7 @@ export default gql`
         beneficiaryOverlap
         beneficiaryOverlapNote
         precedenceRules
+        status
       }
     }
   }

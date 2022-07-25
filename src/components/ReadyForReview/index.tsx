@@ -5,13 +5,21 @@ import { Field } from 'formik';
 
 import CheckboxField from 'components/shared/CheckboxField';
 import FieldGroup from 'components/shared/FieldGroup';
+import { TaskStatus, TaskStatusInput } from 'types/graphql-global-types';
 
 type ReadyForReviewType = {
   field: string;
   id: string;
+  sectionName: string;
+  status: TaskStatus;
 };
 
-const ReadyForReview = ({ field, id }: ReadyForReviewType) => {
+const ReadyForReview = ({
+  field,
+  id,
+  sectionName,
+  status
+}: ReadyForReviewType) => {
   const { t } = useTranslation('draftModelPlan');
   return (
     <FieldGroup className="margin-top-8 margin-bottom-3">
@@ -23,10 +31,10 @@ const ReadyForReview = ({ field, id }: ReadyForReviewType) => {
           data-testid={id}
           name={field}
           label={t('modelPlanCopy', {
-            sectionName: 'Participants and providers'
+            sectionName: `${sectionName}`
           })}
-          value="test"
-          // checked={values.fundingSource?.includes(type as FundingSourceEnum)}
+          value={TaskStatusInput.READY_FOR_REVIEW}
+          checked={status === TaskStatus.READY_FOR_REVIEW}
         />
       </SummaryBox>
     </FieldGroup>
