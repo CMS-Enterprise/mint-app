@@ -232,7 +232,7 @@ export const Coordination = () => {
                   </Fieldset>
                   <AddNote
                     id="participants-and-providers-coordniate-work-note"
-                    field="coordinateWorkeNote"
+                    field="coordinateWorkNote"
                   />
                 </FieldGroup>
 

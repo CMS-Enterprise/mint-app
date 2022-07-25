@@ -18,6 +18,7 @@ export interface GetModelPlan_modelPlan_basics {
   goal: string | null;
   testInterventions: string | null;
   note: string | null;
+  modifiedDts: Time | null;
   status: TaskStatus;
 }
 
@@ -37,6 +38,7 @@ export interface GetModelPlan_modelPlan_milestones {
   wrapUpEnds: Time | null;
   phasedIn: boolean | null;
   phasedInNote: string | null;
+  modifiedDts: Time | null;
   status: TaskStatus;
 }
 

@@ -723,6 +723,7 @@ type PlanPayments {
   # Page 2
   payClaims:                                      [ClaimsBasedPayType!]!
   payClaimsOther:                                 String
+  payClaimsNote:                                  String
   shouldAnyProvidersExcludedFFSSystems:           Boolean
   shouldAnyProviderExcludedFFSSystemsNote:        String
   changesMedicarePhysicianFeeSchedule:            Boolean
@@ -804,6 +805,7 @@ input PlanPaymentsChanges @goModel(model: "map[string]interface{}") {
   # Page 2
   payClaims:                                      [ClaimsBasedPayType!]
   payClaimsOther:                                 String
+  payClaimsNote:                                  String
   shouldAnyProvidersExcludedFFSSystems:           Boolean
   shouldAnyProviderExcludedFFSSystemsNote:        String
   changesMedicarePhysicianFeeSchedule:            Boolean
@@ -1911,9 +1913,12 @@ enum PayType {
 
 enum ClaimsBasedPayType {
   ADJUSTMENTS_TO_FFS_PAYMENTS
-  PAYMENTS_CARE_MANAGEMENT_HOME_VISITS
-  PAYMENTS_SNF_CLAIMS_WITHOUT_3DAY_HOSPITAL_ADMISSIONS
-  PAYMENTS_TELEHEALTH_SERVICES_NOT_TRADITIONAL_MEDICARE
+  CARE_MANAGEMENT_HOME_VISITS
+  REDUCTIONS_TO_BENEFICIARY_COST_SHARING
+  SNF_CLAIMS_WITHOUT_3DAY_HOSPITAL_ADMISSIONS
+  TELEHEALTH_SERVICES_NOT_TRADITIONAL_MEDICARE
+  SERVICES_NOT_COVERED_THROUGH_TRADITIONAL_MEDICARE
+  OTHER
 }
 
 enum NonClaimsBasedPayType {
