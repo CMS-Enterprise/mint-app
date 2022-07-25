@@ -262,12 +262,10 @@ const ITToolsPageFive = () => {
                         <ITToolsSummary
                           question={t('participantAppeal')}
                           answers={[
-                            appealPerformance !== null
-                              ? o('performanceScores')
-                              : '',
-                            appealFeedback !== null ? o('feedbackResults') : '',
-                            appealPayments !== null ? o('payments') : '',
-                            appealOther !== null ? o('Others') : ''
+                            appealPerformance ? o('performanceScores') : '',
+                            appealFeedback ? o('feedbackResults') : '',
+                            appealPayments ? o('payments') : '',
+                            appealOther ? o('Others') : ''
                           ].filter(appeal => appeal !== '')}
                           redirect={`/models/${modelID}/task-list/ops-eval-and-learning/performance`}
                           answered={
