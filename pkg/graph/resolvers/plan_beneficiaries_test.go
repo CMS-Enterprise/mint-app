@@ -6,7 +6,7 @@ import (
 )
 
 // "github.com/cmsgov/mint-app/pkg/graph/model"
-// "github.com/cmsgov/mint-app/pkg/modelSections"
+// "github.com/cmsgov/mint-app/pkg/models"
 func (suite *ResolverSuite) TestPlanBeneficiariesUpdate() {
 	plan := suite.createModelPlan("Plan For Beneficiaries") // should create the beneficiaries as part of the resolver
 
