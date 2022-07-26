@@ -111,6 +111,7 @@ const TaskList = () => {
    * */
   const renderBasicsStatus = (): TaskStatus => {
     if (
+      // * TEMPORARY SOLUTION to render "READY FOR REVIEW" on Task List page, until better solution from BE
       // basics.status === TaskStatus.READY_FOR_REVIEW &&
       milestones.status === TaskStatus.READY_FOR_REVIEW
     ) {
