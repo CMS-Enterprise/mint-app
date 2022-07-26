@@ -80,9 +80,9 @@ const modelPlanTaskList = {
   },
   taskListItem: {
     ready: 'Ready to start',
+    readyForReview: 'Ready for review',
     inProgress: 'In progress',
     completed: 'Completed',
-    cannotStart: 'Cannot start yet',
     notNeeded: 'Not needed',
     lastUpdated: 'Last updated:'
   },
