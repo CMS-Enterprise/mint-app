@@ -9,5 +9,6 @@ This log lists the architectural decisions for the MINT application.
 - [ADR-0002](0002-adr-data-export.md) - Data Export Approach
 - [ADR-0003](0003-adr-explicit-enum-types.md) - Using Explicit Enums or pq.StringArray
 - [ADR-0004](0004-adr-db-seeding.md) - Database Seeding Approach
+- [ADR-0005](0005-adr-db-seeding.md) - Full duplex communication
 
 <!-- adrlogstop -->
