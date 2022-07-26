@@ -13,7 +13,6 @@ import {
   IconArrowBack,
   Label,
   Radio,
-  SummaryBox,
   TextInput
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
@@ -24,7 +23,6 @@ import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import ReadyForReview from 'components/ReadyForReview';
 import AutoSave from 'components/shared/AutoSave';
-import CheckboxField from 'components/shared/CheckboxField';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
@@ -37,12 +35,7 @@ import {
 } from 'queries/Beneficiaries/types/GetFrequency';
 import { UpdateModelPlanBeneficiariesVariables } from 'queries/Beneficiaries/types/UpdateModelPlanBeneficiaries';
 import UpdateModelPlanBeneficiaries from 'queries/Beneficiaries/UpdateModelPlanBeneficiaries';
-import {
-  FrequencyType,
-  OverlapType,
-  TaskStatus,
-  TaskStatusInput
-} from 'types/graphql-global-types';
+import { FrequencyType, OverlapType } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import {
   sortOtherEnum,
@@ -123,7 +116,7 @@ const Frequency = () => {
     beneficiaryOverlapNote: beneficiaryOverlapNote ?? '',
     precedenceRules: precedenceRules ?? '',
     // status: TaskStatus.IN_PROGRESS
-    status: false
+    status
   };
 
   if ((!loading && error) || (!loading && !data?.modelPlan)) {
@@ -166,8 +159,7 @@ const Frequency = () => {
       <Formik
         initialValues={initialValues}
         onSubmit={values => {
-          // handleFormSubmit(values, 'task-list');
-          console.log(values.status);
+          handleFormSubmit(values, 'task-list');
         }}
         enableReinitialize
         innerRef={formikRef}
@@ -335,39 +327,13 @@ const Frequency = () => {
                         />
                       </FieldGroup>
 
-                      {/* <ReadyForReview
+                      <ReadyForReview
                         id="beneficiaries-status"
                         field="status"
                         sectionName={t('heading')}
                         status={values.status}
-                      /> */}
-
-                      <FieldGroup className="margin-top-8 margin-bottom-3">
-                        <SummaryBox
-                          heading=""
-                          className="bg-white border-base-light padding-2"
-                        >
-                          <p className="margin-0">{t('modelPlanStatus')}</p>
-                          <label htmlFor="status">
-                            <Field type="checkbox" name="status" />
-                            {/* {t('modelPlanCopy', {
-                              sectionName: `${t('heading')}`
-                            })} */}
-                            asdfasdf
-                          </label>
-                          {/* <Field
-                            as={CheckboxField}
-                            id="beneficiaries-status"
-                            data-testid="beneficiaries-status"
-                            name="status"
-                            label=
-                            // value={TaskStatusInput.READY_FOR_REVIEW}
-                            // checked={
-                            //   values.status === TaskStatus.READY_FOR_REVIEW
-                            // }
-                          /> */}
-                        </SummaryBox>
-                      </FieldGroup>
+                        setFieldValue={setFieldValue}
+                      />
 
                       <div className="margin-top-6 margin-bottom-3">
                         <Button
