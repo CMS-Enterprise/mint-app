@@ -19,6 +19,7 @@ import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
+import ReadyForReview from 'components/ReadyForReview';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
@@ -71,7 +72,8 @@ const Milestones = () => {
     highLevelNote,
     wrapUpEnds,
     phasedIn,
-    phasedInNote
+    phasedInNote,
+    status
   } = data?.modelPlan?.milestones || ({} as MilestonesFormType);
 
   const [update] = useMutation<
@@ -120,7 +122,8 @@ const Milestones = () => {
     wrapUpEnds: wrapUpEnds ?? null,
     highLevelNote: highLevelNote ?? '',
     phasedIn: phasedIn ?? null,
-    phasedInNote: phasedInNote ?? ''
+    phasedInNote: phasedInNote ?? '',
+    status
   };
 
   if ((!loading && error) || (!loading && !data?.modelPlan)) {
@@ -534,6 +537,14 @@ const Milestones = () => {
                   </FieldGroup>
 
                   <AddNote id="ModelType-phasedInNote" field="phasedInNote" />
+
+                  <ReadyForReview
+                    id="basics-status"
+                    field="status"
+                    sectionName={t('heading')}
+                    status={values.status}
+                    setFieldValue={setFieldValue}
+                  />
 
                   <div className="margin-top-6 margin-bottom-3">
                     <Button
