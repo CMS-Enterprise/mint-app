@@ -54,8 +54,8 @@ const TaskListItem = ({
       tagCopy = t('taskListItem.inProgress');
       tagStyle = 'bg-warning';
       break;
-    case 'COMPLETE':
-      tagCopy = t('taskListItem.completed');
+    case 'READY_FOR_REVIEW':
+      tagCopy = t('taskListItem.readyForReview');
       tagStyle = 'bg-success-dark text-white';
       break;
     default:
