@@ -76,7 +76,8 @@ const modelPlanTaskList = {
   },
   taskListButton: {
     start: 'Start',
-    continue: 'Continue'
+    continue: 'Continue',
+    update: 'Update'
   },
   taskListItem: {
     ready: 'Ready to start',
