@@ -2,6 +2,8 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import classnames from 'classnames';
 
+import { TaskStatus } from 'types/graphql-global-types';
+
 type TaskListLastUpdatedProps = {
   children?: React.ReactNode | React.ReactNodeArray;
 };
@@ -29,7 +31,7 @@ export const TaskListDescription = ({ children }: TaskListDescriptionProps) => {
 type TaskListItemProps = {
   children?: React.ReactNode | React.ReactNodeArray;
   heading: string;
-  status: 'READY' | 'IN_PROGRESS' | 'CANNOT_START' | 'COMPLETE';
+  status: TaskStatus;
   testId: string;
 };
 
