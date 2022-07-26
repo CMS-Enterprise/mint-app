@@ -17,6 +17,7 @@ import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
+import ReadyForReview from 'components/ReadyForReview';
 import AutoSave from 'components/shared/AutoSave';
 import CheckboxField from 'components/shared/CheckboxField';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
@@ -65,7 +66,8 @@ const Learning = () => {
     modelLearningSystems,
     modelLearningSystemsOther,
     modelLearningSystemsNote,
-    anticipatedChallenges
+    anticipatedChallenges,
+    status
   } = data?.modelPlan?.opsEvalAndLearning || ({} as GetLearningFormType);
 
   const modelName = data?.modelPlan?.modelName || '';
@@ -109,7 +111,8 @@ const Learning = () => {
     modelLearningSystems: modelLearningSystems ?? [],
     modelLearningSystemsOther: modelLearningSystemsOther ?? '',
     modelLearningSystemsNote: modelLearningSystemsNote ?? '',
-    anticipatedChallenges: anticipatedChallenges ?? ''
+    anticipatedChallenges: anticipatedChallenges ?? '',
+    status
   };
 
   if ((!loading && error) || (!loading && !data?.modelPlan)) {
@@ -156,7 +159,13 @@ const Learning = () => {
         innerRef={formikRef}
       >
         {(formikProps: FormikProps<GetLearningFormType>) => {
-          const { errors, handleSubmit, setErrors, values } = formikProps;
+          const {
+            errors,
+            handleSubmit,
+            setFieldValue,
+            setErrors,
+            values
+          } = formikProps;
           const flatErrors = flattenErrors(errors);
 
           return (
@@ -279,6 +288,14 @@ const Learning = () => {
                     name="anticipatedChallenges"
                   />
                 </FieldGroup>
+
+                <ReadyForReview
+                  id="ops-eval-and-learning-learning-status"
+                  field="status"
+                  sectionName={t('heading')}
+                  status={values.status}
+                  setFieldValue={setFieldValue}
+                />
 
                 <div className="margin-top-6 margin-bottom-3">
                   <Button
