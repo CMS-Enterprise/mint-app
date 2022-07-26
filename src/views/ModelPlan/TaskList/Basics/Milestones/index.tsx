@@ -29,10 +29,7 @@ import {
   GetMilestones_modelPlan_milestones as MilestonesFormType,
   GetMilestonesVariables
 } from 'queries/Basics/types/GetMilestones';
-import {
-  UpdatePlanMilestones as UpdatePlanMilestonesType,
-  UpdatePlanMilestonesVariables
-} from 'queries/Basics/types/UpdatePlanMilestones';
+import { UpdatePlanMilestonesVariables } from 'queries/Basics/types/UpdatePlanMilestones';
 import UpdatePlanMilestones from 'queries/Basics/UpdatePlanMilestones';
 import flattenErrors from 'utils/flattenErrors';
 import planBasicsSchema from 'validations/planBasics';
