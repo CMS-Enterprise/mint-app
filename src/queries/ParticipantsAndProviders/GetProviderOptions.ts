@@ -19,6 +19,8 @@ export default gql`
         providerOverlap
         providerOverlapHierarchy
         providerOverlapNote
+        readyForReviewBy
+        readyForReviewDts
         status
       }
     }

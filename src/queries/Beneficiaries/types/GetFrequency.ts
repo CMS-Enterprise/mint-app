@@ -18,6 +18,8 @@ export interface GetFrequency_modelPlan_beneficiaries {
   beneficiaryOverlap: OverlapType | null;
   beneficiaryOverlapNote: string | null;
   precedenceRules: string | null;
+  readyForReviewBy: string | null;
+  readyForReviewDts: Time | null;
   status: TaskStatus;
 }
 

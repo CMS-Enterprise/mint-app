@@ -13,6 +13,8 @@ export default gql`
         modelLearningSystemsOther
         modelLearningSystemsNote
         anticipatedChallenges
+        readyForReviewBy
+        readyForReviewDts
         status
       }
     }

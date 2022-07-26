@@ -18,6 +18,8 @@ export interface GetLearning_modelPlan_opsEvalAndLearning {
   modelLearningSystemsOther: string | null;
   modelLearningSystemsNote: string | null;
   anticipatedChallenges: string | null;
+  readyForReviewBy: string | null;
+  readyForReviewDts: Time | null;
   status: TaskStatus;
 }
 

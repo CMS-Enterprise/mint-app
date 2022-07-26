@@ -21,6 +21,8 @@ export interface GetAuthority_modelPlan_generalCharacteristics {
   waiversRequired: boolean | null;
   waiversRequiredTypes: WaiverType[];
   waiversRequiredNote: string | null;
+  readyForReviewBy: string | null;
+  readyForReviewDts: Time | null;
   status: TaskStatus;
 }
 

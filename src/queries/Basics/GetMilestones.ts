@@ -19,6 +19,8 @@ export default gql`
         wrapUpEnds
         phasedIn
         phasedInNote
+        readyForReviewBy
+        readyForReviewDts
         status
       }
     }
