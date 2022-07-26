@@ -52,16 +52,16 @@ export const translateCmsCenter = (category: string) => {
   switch (category) {
     case 'CMMI':
       return 'CMMI';
-    case 'Center for Medicare (CM)':
-      return 'CENTER_FOR_MEDICARE';
-    case 'Federal Coordinated Health Care':
-      return 'FEDERAL_COORDINATED_HEALTH_CARE_OFFICE';
-    case 'Center for Clinical Standards and Quality (CCSQ)':
-      return 'CENTER_FOR_CLINICAL_STANDARDS_AND_QUALITY';
-    case 'Center for Program Integrity (CPI)':
-      return 'CENTER_FOR_PROGRAM_INTEGRITY';
-    case 'Other':
-      return 'OTHER';
+    case 'CENTER_FOR_MEDICARE':
+      return 'Center for Medicare (CM)';
+    case 'FEDERAL_COORDINATED_HEALTH_CARE_OFFICE':
+      return 'Federal Coordinated Health Care';
+    case 'CENTER_FOR_CLINICAL_STANDARDS_AND_QUALITY':
+      return 'Center for Clinical Standards and Quality (CCSQ)';
+    case 'CENTER_FOR_PROGRAM_INTEGRITY':
+      return 'Center for Program Integrity (CPI)';
+    case 'OTHER':
+      return 'Other';
     default:
       return '';
   }
@@ -69,16 +69,16 @@ export const translateCmsCenter = (category: string) => {
 
 export const translateCmmiGroups = (category: string) => {
   switch (category) {
-    case 'Patient Care Models Group (PCMG)':
-      return 'PATIENT_CARE_MODELS_GROUP';
-    case 'Policy and Programs Group (PPG)':
-      return 'POLICY_AND_PROGRAMS_GROUP';
-    case 'Preventative and Population Health Care Models Group (PPHCMG)':
-      return 'PREVENTIVE_AND_POPULATION_HEALTH_CARE_MODELS_GROUP';
-    case 'Seamless Care Models Group (SCMG)':
-      return 'SEAMLESS_CARE_MODELS_GROUP';
-    case 'State Innovations Group (SIG)':
-      return 'STATE_INNOVATIONS_GROUP';
+    case 'PATIENT_CARE_MODELS_GROUP':
+      return 'Patient Care Models Group (PCMG)';
+    case 'POLICY_AND_PROGRAMS_GROUP':
+      return 'Policy and Programs Group (PPG)';
+    case 'PREVENTIVE_AND_POPULATION_HEALTH_CARE_MODELS_GROUP':
+      return 'Preventative and Population Health Care Models Group (PPHCMG)';
+    case 'SEAMLESS_CARE_MODELS_GROUP':
+      return 'Seamless Care Models Group (SCMG)';
+    case 'STATE_INNOVATIONS_GROUP':
+      return 'State Innovations Group (SIG)';
     default:
       return '';
   }

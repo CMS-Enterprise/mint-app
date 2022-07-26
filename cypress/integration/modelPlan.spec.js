@@ -88,7 +88,7 @@ describe('The Model Plan Form', () => {
     cy.get('#plan-basics-model-name').should('have.value', 'Empty Plan');
     cy.get('#plan-basics-model-category').select('Demonstration');
     cy.get('#plan-basics-model-category').contains('Demonstration');
-    cy.get('#new-plan-cmsCenters--1')
+    cy.get('#new-plan-cmsCenters-CENTER_FOR_MEDICARE')
       .check({ force: true })
       .should('be.checked');
     cy.contains('button', 'Next').click();
@@ -156,7 +156,7 @@ describe('The Model Plan Form', () => {
     cy.get('#plan-basics-model-category')
       .select('Demonstration')
       .contains('Demonstration');
-    cy.get('#new-plan-cmsCenters--1')
+    cy.get('#new-plan-cmsCenters-CENTER_FOR_MEDICARE')
       .check({ force: true })
       .should('be.checked');
     cy.contains('button', 'Next').click();
@@ -284,23 +284,5 @@ describe('The Model Plan Form', () => {
       expect(loc.pathname).to.match(/\/models\/.{36}\/task-list/);
     });
     cy.get('.mint-tag').contains('Cleared');
-  });
-
-  it('archives a model plan', () => {
-    cy.clickPlanTableByName('Empty Plan');
-
-    cy.contains('button', 'Remove your Model Plan').click();
-
-    cy.contains('button', 'Remove request').click();
-
-    cy.location().should(loc => {
-      expect(loc.pathname).to.eq('/models');
-    });
-
-    cy.get('table').within(() => {
-      cy.get('tbody').within(() => {
-        cy.contains('th', 'Empty Plan').should('not.exist');
-      });
-    });
   });
 });

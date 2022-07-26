@@ -7,6 +7,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"io"
 	"strconv"
 	"sync"
 	"sync/atomic"
@@ -50,6 +51,7 @@ type ResolverRoot interface {
 	PlanParticipantsAndProviders() PlanParticipantsAndProvidersResolver
 	PlanPayments() PlanPaymentsResolver
 	Query() QueryResolver
+	Subscription() SubscriptionResolver
 	UserInfo() UserInfoResolver
 }
 
@@ -141,6 +143,9 @@ type ComplexityRoot struct {
 		DeletePlanDiscussion               func(childComplexity int, id uuid.UUID) int
 		DeletePlanDocument                 func(childComplexity int, input model.PlanDocumentInput) int
 		GeneratePresignedUploadURL         func(childComplexity int, input model.GeneratePresignedUploadURLInput) int
+		LockTaskListSection                func(childComplexity int, modelPlanID uuid.UUID, section model.TaskListSection) int
+		UnlockAllTaskListSections          func(childComplexity int, modelPlanID uuid.UUID) int
+		UnlockTaskListSection              func(childComplexity int, modelPlanID uuid.UUID, section model.TaskListSection) int
 		UpdateDiscussionReply              func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
 		UpdateModelPlan                    func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
 		UpdatePlanBasics                   func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
@@ -621,6 +626,7 @@ type ComplexityRoot struct {
 		ExpectedCalculationComplexityLevelNote            func(childComplexity int) int
 		FundingSource                                     func(childComplexity int) int
 		FundingSourceNote                                 func(childComplexity int) int
+		FundingSourceOther                                func(childComplexity int) int
 		FundingSourceR                                    func(childComplexity int) int
 		FundingSourceRNote                                func(childComplexity int) int
 		FundingSourceROther                               func(childComplexity int) int
@@ -639,6 +645,7 @@ type ComplexityRoot struct {
 		NumberPaymentsPerPayCycle                         func(childComplexity int) int
 		NumberPaymentsPerPayCycleNote                     func(childComplexity int) int
 		PayClaims                                         func(childComplexity int) int
+		PayClaimsNote                                     func(childComplexity int) int
 		PayClaimsOther                                    func(childComplexity int) int
 		PayModelDifferentiation                           func(childComplexity int) int
 		PayRecipients                                     func(childComplexity int) int
@@ -676,6 +683,23 @@ type ComplexityRoot struct {
 		PlanDocumentDownloadURL   func(childComplexity int, id uuid.UUID) int
 		PlanPayments              func(childComplexity int, id uuid.UUID) int
 		ReadPlanDocumentByModelID func(childComplexity int, id uuid.UUID) int
+		TaskListSectionLocks      func(childComplexity int, modelPlanID uuid.UUID) int
+	}
+
+	Subscription struct {
+		OnTaskListSectionLocksChanged func(childComplexity int, modelPlanID uuid.UUID) int
+	}
+
+	TaskListSectionLockStatus struct {
+		LockedBy    func(childComplexity int) int
+		ModelPlanID func(childComplexity int) int
+		RefCount    func(childComplexity int) int
+		Section     func(childComplexity int) int
+	}
+
+	TaskListSectionLockStatusChanged struct {
+		ChangeType func(childComplexity int) int
+		LockStatus func(childComplexity int) int
 	}
 
 	UserInfo struct {
@@ -686,7 +710,7 @@ type ComplexityRoot struct {
 }
 
 type ModelPlanResolver interface {
-	CmsCenters(ctx context.Context, obj *models.ModelPlan) ([]models.CMSCenter, error)
+	CmsCenters(ctx context.Context, obj *models.ModelPlan) ([]model.CMSCenter, error)
 
 	CmmiGroups(ctx context.Context, obj *models.ModelPlan) ([]model.CMMIGroup, error)
 
@@ -725,6 +749,9 @@ type MutationResolver interface {
 	CreateDiscussionReply(ctx context.Context, input model.DiscussionReplyCreateInput) (*models.DiscussionReply, error)
 	UpdateDiscussionReply(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.DiscussionReply, error)
 	DeleteDiscussionReply(ctx context.Context, id uuid.UUID) (*models.DiscussionReply, error)
+	LockTaskListSection(ctx context.Context, modelPlanID uuid.UUID, section model.TaskListSection) (bool, error)
+	UnlockTaskListSection(ctx context.Context, modelPlanID uuid.UUID, section model.TaskListSection) (bool, error)
+	UnlockAllTaskListSections(ctx context.Context, modelPlanID uuid.UUID) ([]*model.TaskListSectionLockStatus, error)
 	UpdatePlanPayments(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanPayments, error)
 }
 type PlanBeneficiariesResolver interface {
@@ -872,7 +899,11 @@ type QueryResolver interface {
 	ExistingModelCollection(ctx context.Context) ([]*models.ExistingModel, error)
 	CedarPersonsByCommonName(ctx context.Context, commonName string) ([]*models.UserInfo, error)
 	PlanCollaboratorByID(ctx context.Context, id uuid.UUID) (*models.PlanCollaborator, error)
+	TaskListSectionLocks(ctx context.Context, modelPlanID uuid.UUID) ([]*model.TaskListSectionLockStatus, error)
 	PlanPayments(ctx context.Context, id uuid.UUID) (*models.PlanPayments, error)
+}
+type SubscriptionResolver interface {
+	OnTaskListSectionLocksChanged(ctx context.Context, modelPlanID uuid.UUID) (<-chan *model.TaskListSectionLockStatusChanged, error)
 }
 type UserInfoResolver interface {
 	Email(ctx context.Context, obj *models.UserInfo) (string, error)
@@ -1390,6 +1421,42 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Mutation.GeneratePresignedUploadURL(childComplexity, args["input"].(model.GeneratePresignedUploadURLInput)), true
+
+	case "Mutation.lockTaskListSection":
+		if e.complexity.Mutation.LockTaskListSection == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_lockTaskListSection_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Mutation.LockTaskListSection(childComplexity, args["modelPlanID"].(uuid.UUID), args["section"].(model.TaskListSection)), true
+
+	case "Mutation.unlockAllTaskListSections":
+		if e.complexity.Mutation.UnlockAllTaskListSections == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_unlockAllTaskListSections_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Mutation.UnlockAllTaskListSections(childComplexity, args["modelPlanID"].(uuid.UUID)), true
+
+	case "Mutation.unlockTaskListSection":
+		if e.complexity.Mutation.UnlockTaskListSection == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_unlockTaskListSection_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Mutation.UnlockTaskListSection(childComplexity, args["modelPlanID"].(uuid.UUID), args["section"].(model.TaskListSection)), true
 
 	case "Mutation.updateDiscussionReply":
 		if e.complexity.Mutation.UpdateDiscussionReply == nil {
@@ -4564,6 +4631,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.PlanPayments.FundingSourceNote(childComplexity), true
 
+	case "PlanPayments.fundingSourceOther":
+		if e.complexity.PlanPayments.FundingSourceOther == nil {
+			break
+		}
+
+		return e.complexity.PlanPayments.FundingSourceOther(childComplexity), true
+
 	case "PlanPayments.fundingSourceR":
 		if e.complexity.PlanPayments.FundingSourceR == nil {
 			break
@@ -4689,6 +4763,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.PlanPayments.PayClaims(childComplexity), true
+
+	case "PlanPayments.payClaimsNote":
+		if e.complexity.PlanPayments.PayClaimsNote == nil {
+			break
+		}
+
+		return e.complexity.PlanPayments.PayClaimsNote(childComplexity), true
 
 	case "PlanPayments.payClaimsOther":
 		if e.complexity.PlanPayments.PayClaimsOther == nil {
@@ -4963,6 +5044,72 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Query.ReadPlanDocumentByModelID(childComplexity, args["id"].(uuid.UUID)), true
 
+	case "Query.taskListSectionLocks":
+		if e.complexity.Query.TaskListSectionLocks == nil {
+			break
+		}
+
+		args, err := ec.field_Query_taskListSectionLocks_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Query.TaskListSectionLocks(childComplexity, args["modelPlanID"].(uuid.UUID)), true
+
+	case "Subscription.onTaskListSectionLocksChanged":
+		if e.complexity.Subscription.OnTaskListSectionLocksChanged == nil {
+			break
+		}
+
+		args, err := ec.field_Subscription_onTaskListSectionLocksChanged_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Subscription.OnTaskListSectionLocksChanged(childComplexity, args["modelPlanID"].(uuid.UUID)), true
+
+	case "TaskListSectionLockStatus.lockedBy":
+		if e.complexity.TaskListSectionLockStatus.LockedBy == nil {
+			break
+		}
+
+		return e.complexity.TaskListSectionLockStatus.LockedBy(childComplexity), true
+
+	case "TaskListSectionLockStatus.modelPlanID":
+		if e.complexity.TaskListSectionLockStatus.ModelPlanID == nil {
+			break
+		}
+
+		return e.complexity.TaskListSectionLockStatus.ModelPlanID(childComplexity), true
+
+	case "TaskListSectionLockStatus.refCount":
+		if e.complexity.TaskListSectionLockStatus.RefCount == nil {
+			break
+		}
+
+		return e.complexity.TaskListSectionLockStatus.RefCount(childComplexity), true
+
+	case "TaskListSectionLockStatus.section":
+		if e.complexity.TaskListSectionLockStatus.Section == nil {
+			break
+		}
+
+		return e.complexity.TaskListSectionLockStatus.Section(childComplexity), true
+
+	case "TaskListSectionLockStatusChanged.changeType":
+		if e.complexity.TaskListSectionLockStatusChanged.ChangeType == nil {
+			break
+		}
+
+		return e.complexity.TaskListSectionLockStatusChanged.ChangeType(childComplexity), true
+
+	case "TaskListSectionLockStatusChanged.lockStatus":
+		if e.complexity.TaskListSectionLockStatusChanged.LockStatus == nil {
+			break
+		}
+
+		return e.complexity.TaskListSectionLockStatusChanged.LockStatus(childComplexity), true
+
 	case "UserInfo.commonName":
 		if e.complexity.UserInfo.CommonName == nil {
 			break
@@ -5026,6 +5173,23 @@ func (e *executableSchema) Exec(ctx context.Context) graphql.ResponseHandler {
 			ctx = graphql.WithUnmarshalerMap(ctx, inputUnmarshalMap)
 			data := ec._Mutation(ctx, rc.Operation.SelectionSet)
 			var buf bytes.Buffer
+			data.MarshalGQL(&buf)
+
+			return &graphql.Response{
+				Data: buf.Bytes(),
+			}
+		}
+	case ast.Subscription:
+		next := ec._Subscription(ctx, rc.Operation.SelectionSet)
+
+		var buf bytes.Buffer
+		return func(ctx context.Context) *graphql.Response {
+			buf.Reset()
+			data := next(ctx)
+
+			if data == nil {
+				return nil
+			}
 			data.MarshalGQL(&buf)
 
 			return &graphql.Response{
@@ -5165,6 +5329,18 @@ type ExistingModel {
   createdDts: Time!
   modifiedBy: String
   modifiedDts: Time
+}
+
+type TaskListSectionLockStatusChanged {
+  changeType: ChangeType!
+  lockStatus: TaskListSectionLockStatus!
+}
+
+type TaskListSectionLockStatus {
+  modelPlanID: UUID!
+  section: TaskListSection!
+  lockedBy: String!
+  refCount: Int!
 }
 
 """
@@ -5782,28 +5958,30 @@ type PlanPayments {
   modelPlanID: UUID!
 
   # Page 1
-  fundingSource:                      [FundingSource!]
+  fundingSource:                      [FundingSource!]!
   fundingSourceTrustFund:             String
+  fundingSourceOther:                 String
   fundingSourceNote:                  String
-  fundingSourceR:                     [FundingSource!]
+  fundingSourceR:                     [FundingSource!]!
   fundingSourceRTrustFund:            String
   fundingSourceROther:                String
   fundingSourceRNote:                 String
-  payRecipients:                      [PayRecipient!]
+  payRecipients:                      [PayRecipient!]!
   payRecipientsOtherSpecification:    String
   payRecipientsNote:                  String
-  payType:                            [PayType!]
+  payType:                            [PayType!]!
   payTypeNote:                        String
 
   # Page 2
-  payClaims:                                      [ClaimsBasedPayType!]
+  payClaims:                                      [ClaimsBasedPayType!]!
   payClaimsOther:                                 String
+  payClaimsNote:                                  String
   shouldAnyProvidersExcludedFFSSystems:           Boolean
   shouldAnyProviderExcludedFFSSystemsNote:        String
   changesMedicarePhysicianFeeSchedule:            Boolean
   changesMedicarePhysicianFeeScheduleNote:        String
   affectsMedicareSecondaryPayerClaims:            Boolean
-  affectsMedicareSecondaryPayerClaimsHow: String
+  affectsMedicareSecondaryPayerClaimsHow:         String
   affectsMedicareSecondaryPayerClaimsNote:        String
   payModelDifferentiation:                        String
 
@@ -5823,11 +6001,11 @@ type PlanPayments {
   waiveBeneficiaryCostSharingNote:                 String
 
   # Page 5
-  nonClaimsPayments:                               [NonClaimsBasedPayType!]
+  nonClaimsPayments:                               [NonClaimsBasedPayType!]!
   nonClaimsPaymentOther:                           String
   paymentCalculationOwner:                         String
   numberPaymentsPerPayCycle:                       String
-  numberPaymentsPerPayCycleNote:                  String
+  numberPaymentsPerPayCycleNote:                   String
   sharedSystemsInvolvedAdditionalClaimPayment:     Boolean
   sharedSystemsInvolvedAdditionalClaimPaymentNote: String
   planningToUseInnovationPaymentContractor:        Boolean
@@ -5840,30 +6018,31 @@ type PlanPayments {
   canParticipantsSelectBetweenPaymentMechanisms:     Boolean
   canParticipantsSelectBetweenPaymentMechanismsHow:  String
   canParticipantsSelectBetweenPaymentMechanismsNote: String
-  anticipatedPaymentFrequency:                       [AnticipatedPaymentFrequencyType!]
+  anticipatedPaymentFrequency:                       [AnticipatedPaymentFrequencyType!]!
   anticipatedPaymentFrequencyOther:                  String
-  anticipatedPaymentFrequencyNote:                  String
+  anticipatedPaymentFrequencyNote:                   String
 
   # Page 7
   willRecoverPayments:                               Boolean
-  willRecoverPaymentsNote:                          String
+  willRecoverPaymentsNote:                           String
   anticipateReconcilingPaymentsRetrospectively:      Boolean
-  anticipateReconcilingPaymentsRetrospectivelyNote: String
+  anticipateReconcilingPaymentsRetrospectivelyNote:  String
   paymentStartDate:                                  Time
-  paymentStartDateNote:                             String
+  paymentStartDateNote:                              String
 
   # Meta
-  createdBy: String!
-  createdDts: Time!
-  modifiedBy: String
+  createdBy:   String!
+  createdDts:  Time!
+  modifiedBy:  String
   modifiedDts: Time
-  status: TaskStatus!
+  status:      TaskStatus!
 }
 
 input PlanPaymentsChanges @goModel(model: "map[string]interface{}") {
   # Page 1
   fundingSource:                      [FundingSource!]
   fundingSourceTrustFund:             String
+  fundingSourceOther:                 String
   fundingSourceNote:                  String
   fundingSourceR:                     [FundingSource!]
   fundingSourceRTrustFund:            String
@@ -5878,6 +6057,7 @@ input PlanPaymentsChanges @goModel(model: "map[string]interface{}") {
   # Page 2
   payClaims:                                      [ClaimsBasedPayType!]
   payClaimsOther:                                 String
+  payClaimsNote:                                  String
   shouldAnyProvidersExcludedFFSSystems:           Boolean
   shouldAnyProviderExcludedFFSSystemsNote:        String
   changesMedicarePhysicianFeeSchedule:            Boolean
@@ -6388,6 +6568,7 @@ type Query {
   existingModelCollection: [ExistingModel!]!
   cedarPersonsByCommonName(commonName: String!): [UserInfo!]!
   planCollaboratorByID(id: UUID!): PlanCollaborator!
+  taskListSectionLocks(modelPlanID: UUID!): [TaskListSectionLockStatus!]!
   planPayments(id: UUID!): PlanPayments!
 }
 
@@ -6461,8 +6642,28 @@ updateDiscussionReply(id: UUID!, changes: DiscussionReplyChanges!): DiscussionRe
 deleteDiscussionReply(id: UUID!): DiscussionReply!
 @hasRole(role: MINT_BASE_USER)
 
+lockTaskListSection(modelPlanID: UUID!, section: TaskListSection!): Boolean!
+@hasRole(role: MINT_BASE_USER)
+
+unlockTaskListSection(modelPlanID: UUID!, section: TaskListSection!): Boolean!
+@hasRole(role: MINT_BASE_USER)
+
+unlockAllTaskListSections(modelPlanID: UUID!): [TaskListSectionLockStatus!]!
+@hasRole(role: MINT_ADMIN_USER)
+
 updatePlanPayments(id: UUID!, changes: PlanPaymentsChanges!): PlanPayments!
 @hasRole(role: MINT_BASE_USER)
+}
+
+type Subscription {
+  onTaskListSectionLocksChanged(modelPlanID: UUID!): TaskListSectionLockStatusChanged!
+  @hasRole(role: MINT_BASE_USER)
+}
+
+enum ChangeType {
+  ADDED
+  UPDATED
+  REMOVED
 }
 
 enum TaskStatus {
@@ -6473,6 +6674,16 @@ enum TaskStatus {
 enum TaskStatusInput {
   IN_PROGRESS
   READY_FOR_REVIEW
+}
+
+enum TaskListSection {
+  MODEL_BASICS,
+  GENERAL_CHARACTERISTICS,
+  PARTICIPANTS_AND_PROVIDERS,
+  BENEFICIARIES,
+  OPERATIONS_EVALUATION_AND_LEARNING,
+  PAYMENT,
+  IT_TOOLS
 }
 
 enum TeamRole {
@@ -6999,9 +7210,12 @@ enum PayType {
 
 enum ClaimsBasedPayType {
   ADJUSTMENTS_TO_FFS_PAYMENTS
-  PAYMENTS_CARE_MANAGEMENT_HOME_VISITS
-  PAYMENTS_SNF_CLAIMS_WITHOUT_3DAY_HOSPITAL_ADMISSIONS
-  PAYMENTS_TELEHEALTH_SERVICES_NOT_TRADITIONAL_MEDICARE
+  CARE_MANAGEMENT_HOME_VISITS
+  REDUCTIONS_TO_BENEFICIARY_COST_SHARING
+  SNF_CLAIMS_WITHOUT_3DAY_HOSPITAL_ADMISSIONS
+  TELEHEALTH_SERVICES_NOT_TRADITIONAL_MEDICARE
+  SERVICES_NOT_COVERED_THROUGH_TRADITIONAL_MEDICARE
+  OTHER
 }
 
 enum NonClaimsBasedPayType {
@@ -7227,6 +7441,69 @@ func (ec *executionContext) field_Mutation_generatePresignedUploadURL_args(ctx c
 		}
 	}
 	args["input"] = arg0
+	return args, nil
+}
+
+func (ec *executionContext) field_Mutation_lockTaskListSection_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 uuid.UUID
+	if tmp, ok := rawArgs["modelPlanID"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("modelPlanID"))
+		arg0, err = ec.unmarshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["modelPlanID"] = arg0
+	var arg1 model.TaskListSection
+	if tmp, ok := rawArgs["section"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("section"))
+		arg1, err = ec.unmarshalNTaskListSection2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTaskListSection(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["section"] = arg1
+	return args, nil
+}
+
+func (ec *executionContext) field_Mutation_unlockAllTaskListSections_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 uuid.UUID
+	if tmp, ok := rawArgs["modelPlanID"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("modelPlanID"))
+		arg0, err = ec.unmarshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["modelPlanID"] = arg0
+	return args, nil
+}
+
+func (ec *executionContext) field_Mutation_unlockTaskListSection_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 uuid.UUID
+	if tmp, ok := rawArgs["modelPlanID"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("modelPlanID"))
+		arg0, err = ec.unmarshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["modelPlanID"] = arg0
+	var arg1 model.TaskListSection
+	if tmp, ok := rawArgs["section"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("section"))
+		arg1, err = ec.unmarshalNTaskListSection2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTaskListSection(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["section"] = arg1
 	return args, nil
 }
 
@@ -7650,6 +7927,36 @@ func (ec *executionContext) field_Query_readPlanDocumentByModelID_args(ctx conte
 		}
 	}
 	args["id"] = arg0
+	return args, nil
+}
+
+func (ec *executionContext) field_Query_taskListSectionLocks_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 uuid.UUID
+	if tmp, ok := rawArgs["modelPlanID"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("modelPlanID"))
+		arg0, err = ec.unmarshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["modelPlanID"] = arg0
+	return args, nil
+}
+
+func (ec *executionContext) field_Subscription_onTaskListSectionLocksChanged_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 uuid.UUID
+	if tmp, ok := rawArgs["modelPlanID"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("modelPlanID"))
+		arg0, err = ec.unmarshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["modelPlanID"] = arg0
 	return args, nil
 }
 
@@ -9153,9 +9460,9 @@ func (ec *executionContext) _ModelPlan_cmsCenters(ctx context.Context, field gra
 		}
 		return graphql.Null
 	}
-	res := resTmp.([]models.CMSCenter)
+	res := resTmp.([]model.CMSCenter)
 	fc.Result = res
-	return ec.marshalNCMSCenter2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐCMSCenterᚄ(ctx, field.Selections, res)
+	return ec.marshalNCMSCenter2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCMSCenterᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_ModelPlan_cmsCenters(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -10565,6 +10872,8 @@ func (ec *executionContext) fieldContext_ModelPlan_payments(ctx context.Context,
 				return ec.fieldContext_PlanPayments_fundingSource(ctx, field)
 			case "fundingSourceTrustFund":
 				return ec.fieldContext_PlanPayments_fundingSourceTrustFund(ctx, field)
+			case "fundingSourceOther":
+				return ec.fieldContext_PlanPayments_fundingSourceOther(ctx, field)
 			case "fundingSourceNote":
 				return ec.fieldContext_PlanPayments_fundingSourceNote(ctx, field)
 			case "fundingSourceR":
@@ -10589,6 +10898,8 @@ func (ec *executionContext) fieldContext_ModelPlan_payments(ctx context.Context,
 				return ec.fieldContext_PlanPayments_payClaims(ctx, field)
 			case "payClaimsOther":
 				return ec.fieldContext_PlanPayments_payClaimsOther(ctx, field)
+			case "payClaimsNote":
+				return ec.fieldContext_PlanPayments_payClaimsNote(ctx, field)
 			case "shouldAnyProvidersExcludedFFSSystems":
 				return ec.fieldContext_PlanPayments_shouldAnyProvidersExcludedFFSSystems(ctx, field)
 			case "shouldAnyProviderExcludedFFSSystemsNote":
@@ -13744,6 +14055,253 @@ func (ec *executionContext) fieldContext_Mutation_deleteDiscussionReply(ctx cont
 	return fc, nil
 }
 
+func (ec *executionContext) _Mutation_lockTaskListSection(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Mutation_lockTaskListSection(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		directive0 := func(rctx context.Context) (interface{}, error) {
+			ctx = rctx // use context from middleware stack in children
+			return ec.resolvers.Mutation().LockTaskListSection(rctx, fc.Args["modelPlanID"].(uuid.UUID), fc.Args["section"].(model.TaskListSection))
+		}
+		directive1 := func(ctx context.Context) (interface{}, error) {
+			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_BASE_USER")
+			if err != nil {
+				return nil, err
+			}
+			if ec.directives.HasRole == nil {
+				return nil, errors.New("directive hasRole is not implemented")
+			}
+			return ec.directives.HasRole(ctx, nil, directive0, role)
+		}
+
+		tmp, err := directive1(rctx)
+		if err != nil {
+			return nil, graphql.ErrorOnPath(ctx, err)
+		}
+		if tmp == nil {
+			return nil, nil
+		}
+		if data, ok := tmp.(bool); ok {
+			return data, nil
+		}
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be bool`, tmp)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(bool)
+	fc.Result = res
+	return ec.marshalNBoolean2bool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Mutation_lockTaskListSection(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_lockTaskListSection_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Mutation_unlockTaskListSection(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Mutation_unlockTaskListSection(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		directive0 := func(rctx context.Context) (interface{}, error) {
+			ctx = rctx // use context from middleware stack in children
+			return ec.resolvers.Mutation().UnlockTaskListSection(rctx, fc.Args["modelPlanID"].(uuid.UUID), fc.Args["section"].(model.TaskListSection))
+		}
+		directive1 := func(ctx context.Context) (interface{}, error) {
+			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_BASE_USER")
+			if err != nil {
+				return nil, err
+			}
+			if ec.directives.HasRole == nil {
+				return nil, errors.New("directive hasRole is not implemented")
+			}
+			return ec.directives.HasRole(ctx, nil, directive0, role)
+		}
+
+		tmp, err := directive1(rctx)
+		if err != nil {
+			return nil, graphql.ErrorOnPath(ctx, err)
+		}
+		if tmp == nil {
+			return nil, nil
+		}
+		if data, ok := tmp.(bool); ok {
+			return data, nil
+		}
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be bool`, tmp)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(bool)
+	fc.Result = res
+	return ec.marshalNBoolean2bool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Mutation_unlockTaskListSection(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_unlockTaskListSection_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Mutation_unlockAllTaskListSections(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Mutation_unlockAllTaskListSections(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		directive0 := func(rctx context.Context) (interface{}, error) {
+			ctx = rctx // use context from middleware stack in children
+			return ec.resolvers.Mutation().UnlockAllTaskListSections(rctx, fc.Args["modelPlanID"].(uuid.UUID))
+		}
+		directive1 := func(ctx context.Context) (interface{}, error) {
+			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_ADMIN_USER")
+			if err != nil {
+				return nil, err
+			}
+			if ec.directives.HasRole == nil {
+				return nil, errors.New("directive hasRole is not implemented")
+			}
+			return ec.directives.HasRole(ctx, nil, directive0, role)
+		}
+
+		tmp, err := directive1(rctx)
+		if err != nil {
+			return nil, graphql.ErrorOnPath(ctx, err)
+		}
+		if tmp == nil {
+			return nil, nil
+		}
+		if data, ok := tmp.([]*model.TaskListSectionLockStatus); ok {
+			return data, nil
+		}
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be []*github.com/cmsgov/mint-app/pkg/graph/model.TaskListSectionLockStatus`, tmp)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.([]*model.TaskListSectionLockStatus)
+	fc.Result = res
+	return ec.marshalNTaskListSectionLockStatus2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTaskListSectionLockStatusᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Mutation_unlockAllTaskListSections(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "modelPlanID":
+				return ec.fieldContext_TaskListSectionLockStatus_modelPlanID(ctx, field)
+			case "section":
+				return ec.fieldContext_TaskListSectionLockStatus_section(ctx, field)
+			case "lockedBy":
+				return ec.fieldContext_TaskListSectionLockStatus_lockedBy(ctx, field)
+			case "refCount":
+				return ec.fieldContext_TaskListSectionLockStatus_refCount(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type TaskListSectionLockStatus", field.Name)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_unlockAllTaskListSections_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _Mutation_updatePlanPayments(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_Mutation_updatePlanPayments(ctx, field)
 	if err != nil {
@@ -13815,6 +14373,8 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanPayments(ctx context
 				return ec.fieldContext_PlanPayments_fundingSource(ctx, field)
 			case "fundingSourceTrustFund":
 				return ec.fieldContext_PlanPayments_fundingSourceTrustFund(ctx, field)
+			case "fundingSourceOther":
+				return ec.fieldContext_PlanPayments_fundingSourceOther(ctx, field)
 			case "fundingSourceNote":
 				return ec.fieldContext_PlanPayments_fundingSourceNote(ctx, field)
 			case "fundingSourceR":
@@ -13839,6 +14399,8 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanPayments(ctx context
 				return ec.fieldContext_PlanPayments_payClaims(ctx, field)
 			case "payClaimsOther":
 				return ec.fieldContext_PlanPayments_payClaimsOther(ctx, field)
+			case "payClaimsNote":
+				return ec.fieldContext_PlanPayments_payClaimsNote(ctx, field)
 			case "shouldAnyProvidersExcludedFFSSystems":
 				return ec.fieldContext_PlanPayments_shouldAnyProvidersExcludedFFSSystems(ctx, field)
 			case "shouldAnyProviderExcludedFFSSystemsNote":
@@ -31227,11 +31789,14 @@ func (ec *executionContext) _PlanPayments_fundingSource(ctx context.Context, fie
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
 	res := resTmp.([]models.FundingSource)
 	fc.Result = res
-	return ec.marshalOFundingSource2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFundingSourceᚄ(ctx, field.Selections, res)
+	return ec.marshalNFundingSource2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFundingSourceᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanPayments_fundingSource(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -31276,6 +31841,47 @@ func (ec *executionContext) _PlanPayments_fundingSourceTrustFund(ctx context.Con
 }
 
 func (ec *executionContext) fieldContext_PlanPayments_fundingSourceTrustFund(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanPayments",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanPayments_fundingSourceOther(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_fundingSourceOther(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.FundingSourceOther, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanPayments_fundingSourceOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "PlanPayments",
 		Field:      field,
@@ -31350,11 +31956,14 @@ func (ec *executionContext) _PlanPayments_fundingSourceR(ctx context.Context, fi
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
 	res := resTmp.([]models.FundingSource)
 	fc.Result = res
-	return ec.marshalOFundingSource2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFundingSourceᚄ(ctx, field.Selections, res)
+	return ec.marshalNFundingSource2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFundingSourceᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanPayments_fundingSourceR(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -31514,11 +32123,14 @@ func (ec *executionContext) _PlanPayments_payRecipients(ctx context.Context, fie
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
 	res := resTmp.([]models.PayRecipient)
 	fc.Result = res
-	return ec.marshalOPayRecipient2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPayRecipientᚄ(ctx, field.Selections, res)
+	return ec.marshalNPayRecipient2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPayRecipientᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanPayments_payRecipients(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -31637,11 +32249,14 @@ func (ec *executionContext) _PlanPayments_payType(ctx context.Context, field gra
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
 	res := resTmp.([]models.PayType)
 	fc.Result = res
-	return ec.marshalOPayType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPayTypeᚄ(ctx, field.Selections, res)
+	return ec.marshalNPayType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPayTypeᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanPayments_payType(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -31719,11 +32334,14 @@ func (ec *executionContext) _PlanPayments_payClaims(ctx context.Context, field g
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
 	res := resTmp.([]models.ClaimsBasedPayType)
 	fc.Result = res
-	return ec.marshalOClaimsBasedPayType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐClaimsBasedPayTypeᚄ(ctx, field.Selections, res)
+	return ec.marshalNClaimsBasedPayType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐClaimsBasedPayTypeᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanPayments_payClaims(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -31768,6 +32386,47 @@ func (ec *executionContext) _PlanPayments_payClaimsOther(ctx context.Context, fi
 }
 
 func (ec *executionContext) fieldContext_PlanPayments_payClaimsOther(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanPayments",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanPayments_payClaimsNote(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_payClaimsNote(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.PayClaimsNote, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanPayments_payClaimsNote(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "PlanPayments",
 		Field:      field,
@@ -32580,11 +33239,14 @@ func (ec *executionContext) _PlanPayments_nonClaimsPayments(ctx context.Context,
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
 	res := resTmp.([]model.NonClaimsBasedPayType)
 	fc.Result = res
-	return ec.marshalONonClaimsBasedPayType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐNonClaimsBasedPayTypeᚄ(ctx, field.Selections, res)
+	return ec.marshalNNonClaimsBasedPayType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐNonClaimsBasedPayTypeᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanPayments_nonClaimsPayments(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -33195,11 +33857,14 @@ func (ec *executionContext) _PlanPayments_anticipatedPaymentFrequency(ctx contex
 		return graphql.Null
 	}
 	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
 		return graphql.Null
 	}
 	res := resTmp.([]models.AnticipatedPaymentFrequencyType)
 	fc.Result = res
-	return ec.marshalOAnticipatedPaymentFrequencyType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐAnticipatedPaymentFrequencyTypeᚄ(ctx, field.Selections, res)
+	return ec.marshalNAnticipatedPaymentFrequencyType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐAnticipatedPaymentFrequencyTypeᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanPayments_anticipatedPaymentFrequency(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -34465,6 +35130,71 @@ func (ec *executionContext) fieldContext_Query_planCollaboratorByID(ctx context.
 	return fc, nil
 }
 
+func (ec *executionContext) _Query_taskListSectionLocks(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Query_taskListSectionLocks(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Query().TaskListSectionLocks(rctx, fc.Args["modelPlanID"].(uuid.UUID))
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.([]*model.TaskListSectionLockStatus)
+	fc.Result = res
+	return ec.marshalNTaskListSectionLockStatus2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTaskListSectionLockStatusᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Query_taskListSectionLocks(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "modelPlanID":
+				return ec.fieldContext_TaskListSectionLockStatus_modelPlanID(ctx, field)
+			case "section":
+				return ec.fieldContext_TaskListSectionLockStatus_section(ctx, field)
+			case "lockedBy":
+				return ec.fieldContext_TaskListSectionLockStatus_lockedBy(ctx, field)
+			case "refCount":
+				return ec.fieldContext_TaskListSectionLockStatus_refCount(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type TaskListSectionLockStatus", field.Name)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Query_taskListSectionLocks_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _Query_planPayments(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_Query_planPayments(ctx, field)
 	if err != nil {
@@ -34512,6 +35242,8 @@ func (ec *executionContext) fieldContext_Query_planPayments(ctx context.Context,
 				return ec.fieldContext_PlanPayments_fundingSource(ctx, field)
 			case "fundingSourceTrustFund":
 				return ec.fieldContext_PlanPayments_fundingSourceTrustFund(ctx, field)
+			case "fundingSourceOther":
+				return ec.fieldContext_PlanPayments_fundingSourceOther(ctx, field)
 			case "fundingSourceNote":
 				return ec.fieldContext_PlanPayments_fundingSourceNote(ctx, field)
 			case "fundingSourceR":
@@ -34536,6 +35268,8 @@ func (ec *executionContext) fieldContext_Query_planPayments(ctx context.Context,
 				return ec.fieldContext_PlanPayments_payClaims(ctx, field)
 			case "payClaimsOther":
 				return ec.fieldContext_PlanPayments_payClaimsOther(ctx, field)
+			case "payClaimsNote":
+				return ec.fieldContext_PlanPayments_payClaimsNote(ctx, field)
 			case "shouldAnyProvidersExcludedFFSSystems":
 				return ec.fieldContext_PlanPayments_shouldAnyProvidersExcludedFFSSystems(ctx, field)
 			case "shouldAnyProviderExcludedFFSSystemsNote":
@@ -34774,6 +35508,379 @@ func (ec *executionContext) fieldContext_Query___schema(ctx context.Context, fie
 				return ec.fieldContext___Schema_directives(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type __Schema", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Subscription_onTaskListSectionLocksChanged(ctx context.Context, field graphql.CollectedField) (ret func(ctx context.Context) graphql.Marshaler) {
+	fc, err := ec.fieldContext_Subscription_onTaskListSectionLocksChanged(ctx, field)
+	if err != nil {
+		return nil
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = nil
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		directive0 := func(rctx context.Context) (interface{}, error) {
+			ctx = rctx // use context from middleware stack in children
+			return ec.resolvers.Subscription().OnTaskListSectionLocksChanged(rctx, fc.Args["modelPlanID"].(uuid.UUID))
+		}
+		directive1 := func(ctx context.Context) (interface{}, error) {
+			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_BASE_USER")
+			if err != nil {
+				return nil, err
+			}
+			if ec.directives.HasRole == nil {
+				return nil, errors.New("directive hasRole is not implemented")
+			}
+			return ec.directives.HasRole(ctx, nil, directive0, role)
+		}
+
+		tmp, err := directive1(rctx)
+		if err != nil {
+			return nil, graphql.ErrorOnPath(ctx, err)
+		}
+		if tmp == nil {
+			return nil, nil
+		}
+		if data, ok := tmp.(<-chan *model.TaskListSectionLockStatusChanged); ok {
+			return data, nil
+		}
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be <-chan *github.com/cmsgov/mint-app/pkg/graph/model.TaskListSectionLockStatusChanged`, tmp)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return nil
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return nil
+	}
+	return func(ctx context.Context) graphql.Marshaler {
+		select {
+		case res, ok := <-resTmp.(<-chan *model.TaskListSectionLockStatusChanged):
+			if !ok {
+				return nil
+			}
+			return graphql.WriterFunc(func(w io.Writer) {
+				w.Write([]byte{'{'})
+				graphql.MarshalString(field.Alias).MarshalGQL(w)
+				w.Write([]byte{':'})
+				ec.marshalNTaskListSectionLockStatusChanged2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTaskListSectionLockStatusChanged(ctx, field.Selections, res).MarshalGQL(w)
+				w.Write([]byte{'}'})
+			})
+		case <-ctx.Done():
+			return nil
+		}
+	}
+}
+
+func (ec *executionContext) fieldContext_Subscription_onTaskListSectionLocksChanged(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Subscription",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "changeType":
+				return ec.fieldContext_TaskListSectionLockStatusChanged_changeType(ctx, field)
+			case "lockStatus":
+				return ec.fieldContext_TaskListSectionLockStatusChanged_lockStatus(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type TaskListSectionLockStatusChanged", field.Name)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Subscription_onTaskListSectionLocksChanged_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _TaskListSectionLockStatus_modelPlanID(ctx context.Context, field graphql.CollectedField, obj *model.TaskListSectionLockStatus) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_TaskListSectionLockStatus_modelPlanID(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ModelPlanID, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(uuid.UUID)
+	fc.Result = res
+	return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_TaskListSectionLockStatus_modelPlanID(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "TaskListSectionLockStatus",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type UUID does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _TaskListSectionLockStatus_section(ctx context.Context, field graphql.CollectedField, obj *model.TaskListSectionLockStatus) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_TaskListSectionLockStatus_section(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Section, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(model.TaskListSection)
+	fc.Result = res
+	return ec.marshalNTaskListSection2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTaskListSection(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_TaskListSectionLockStatus_section(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "TaskListSectionLockStatus",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type TaskListSection does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _TaskListSectionLockStatus_lockedBy(ctx context.Context, field graphql.CollectedField, obj *model.TaskListSectionLockStatus) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_TaskListSectionLockStatus_lockedBy(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.LockedBy, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalNString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_TaskListSectionLockStatus_lockedBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "TaskListSectionLockStatus",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _TaskListSectionLockStatus_refCount(ctx context.Context, field graphql.CollectedField, obj *model.TaskListSectionLockStatus) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_TaskListSectionLockStatus_refCount(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.RefCount, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(int)
+	fc.Result = res
+	return ec.marshalNInt2int(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_TaskListSectionLockStatus_refCount(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "TaskListSectionLockStatus",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Int does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _TaskListSectionLockStatusChanged_changeType(ctx context.Context, field graphql.CollectedField, obj *model.TaskListSectionLockStatusChanged) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_TaskListSectionLockStatusChanged_changeType(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ChangeType, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(model.ChangeType)
+	fc.Result = res
+	return ec.marshalNChangeType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐChangeType(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_TaskListSectionLockStatusChanged_changeType(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "TaskListSectionLockStatusChanged",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type ChangeType does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _TaskListSectionLockStatusChanged_lockStatus(ctx context.Context, field graphql.CollectedField, obj *model.TaskListSectionLockStatusChanged) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_TaskListSectionLockStatusChanged_lockStatus(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.LockStatus, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*model.TaskListSectionLockStatus)
+	fc.Result = res
+	return ec.marshalNTaskListSectionLockStatus2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTaskListSectionLockStatus(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_TaskListSectionLockStatusChanged_lockStatus(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "TaskListSectionLockStatusChanged",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "modelPlanID":
+				return ec.fieldContext_TaskListSectionLockStatus_modelPlanID(ctx, field)
+			case "section":
+				return ec.fieldContext_TaskListSectionLockStatus_section(ctx, field)
+			case "lockedBy":
+				return ec.fieldContext_TaskListSectionLockStatus_lockedBy(ctx, field)
+			case "refCount":
+				return ec.fieldContext_TaskListSectionLockStatus_refCount(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type TaskListSectionLockStatus", field.Name)
 		},
 	}
 	return fc, nil
@@ -36695,7 +37802,12 @@ func (ec *executionContext) unmarshalInputDiscussionReplyCreateInput(ctx context
 		asMap["resolution"] = false
 	}
 
-	for k, v := range asMap {
+	fieldsInOrder := [...]string{"discussionID", "content", "resolution"}
+	for _, k := range fieldsInOrder {
+		v, ok := asMap[k]
+		if !ok {
+			continue
+		}
 		switch k {
 		case "discussionID":
 			var err error
@@ -36734,7 +37846,12 @@ func (ec *executionContext) unmarshalInputGeneratePresignedUploadURLInput(ctx co
 		asMap[k] = v
 	}
 
-	for k, v := range asMap {
+	fieldsInOrder := [...]string{"fileName", "mimeType", "size"}
+	for _, k := range fieldsInOrder {
+		v, ok := asMap[k]
+		if !ok {
+			continue
+		}
 		switch k {
 		case "fileName":
 			var err error
@@ -36773,7 +37890,12 @@ func (ec *executionContext) unmarshalInputPlanCollaboratorCreateInput(ctx contex
 		asMap[k] = v
 	}
 
-	for k, v := range asMap {
+	fieldsInOrder := [...]string{"modelPlanID", "euaUserID", "fullName", "teamRole"}
+	for _, k := range fieldsInOrder {
+		v, ok := asMap[k]
+		if !ok {
+			continue
+		}
 		switch k {
 		case "modelPlanID":
 			var err error
@@ -36820,7 +37942,12 @@ func (ec *executionContext) unmarshalInputPlanDiscussionCreateInput(ctx context.
 		asMap[k] = v
 	}
 
-	for k, v := range asMap {
+	fieldsInOrder := [...]string{"modelPlanID", "content"}
+	for _, k := range fieldsInOrder {
+		v, ok := asMap[k]
+		if !ok {
+			continue
+		}
 		switch k {
 		case "modelPlanID":
 			var err error
@@ -36851,7 +37978,12 @@ func (ec *executionContext) unmarshalInputPlanDocumentInput(ctx context.Context,
 		asMap[k] = v
 	}
 
-	for k, v := range asMap {
+	fieldsInOrder := [...]string{"id", "modelPlanID", "documentParameters", "url"}
+	for _, k := range fieldsInOrder {
+		v, ok := asMap[k]
+		if !ok {
+			continue
+		}
 		switch k {
 		case "id":
 			var err error
@@ -36898,7 +38030,12 @@ func (ec *executionContext) unmarshalInputPlanDocumentParameters(ctx context.Con
 		asMap[k] = v
 	}
 
-	for k, v := range asMap {
+	fieldsInOrder := [...]string{"fileName", "fileSize", "fileType", "documentType", "otherTypeDescription", "optionalNotes"}
+	for _, k := range fieldsInOrder {
+		v, ok := asMap[k]
+		if !ok {
+			continue
+		}
 		switch k {
 		case "fileName":
 			var err error
@@ -37772,6 +38909,33 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._Mutation_deleteDiscussionReply(ctx, field)
+			})
+
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		case "lockTaskListSection":
+
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_lockTaskListSection(ctx, field)
+			})
+
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		case "unlockTaskListSection":
+
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_unlockTaskListSection(ctx, field)
+			})
+
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		case "unlockAllTaskListSections":
+
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_unlockAllTaskListSections(ctx, field)
 			})
 
 			if out.Values[i] == graphql.Null {
@@ -40768,6 +41932,9 @@ func (ec *executionContext) _PlanPayments(ctx context.Context, sel ast.Selection
 					}
 				}()
 				res = ec._PlanPayments_fundingSource(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&invalids, 1)
+				}
 				return res
 			}
 
@@ -40778,6 +41945,10 @@ func (ec *executionContext) _PlanPayments(ctx context.Context, sel ast.Selection
 		case "fundingSourceTrustFund":
 
 			out.Values[i] = ec._PlanPayments_fundingSourceTrustFund(ctx, field, obj)
+
+		case "fundingSourceOther":
+
+			out.Values[i] = ec._PlanPayments_fundingSourceOther(ctx, field, obj)
 
 		case "fundingSourceNote":
 
@@ -40793,6 +41964,9 @@ func (ec *executionContext) _PlanPayments(ctx context.Context, sel ast.Selection
 					}
 				}()
 				res = ec._PlanPayments_fundingSourceR(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&invalids, 1)
+				}
 				return res
 			}
 
@@ -40822,6 +41996,9 @@ func (ec *executionContext) _PlanPayments(ctx context.Context, sel ast.Selection
 					}
 				}()
 				res = ec._PlanPayments_payRecipients(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&invalids, 1)
+				}
 				return res
 			}
 
@@ -40847,6 +42024,9 @@ func (ec *executionContext) _PlanPayments(ctx context.Context, sel ast.Selection
 					}
 				}()
 				res = ec._PlanPayments_payType(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&invalids, 1)
+				}
 				return res
 			}
 
@@ -40868,6 +42048,9 @@ func (ec *executionContext) _PlanPayments(ctx context.Context, sel ast.Selection
 					}
 				}()
 				res = ec._PlanPayments_payClaims(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&invalids, 1)
+				}
 				return res
 			}
 
@@ -40878,6 +42061,10 @@ func (ec *executionContext) _PlanPayments(ctx context.Context, sel ast.Selection
 		case "payClaimsOther":
 
 			out.Values[i] = ec._PlanPayments_payClaimsOther(ctx, field, obj)
+
+		case "payClaimsNote":
+
+			out.Values[i] = ec._PlanPayments_payClaimsNote(ctx, field, obj)
 
 		case "shouldAnyProvidersExcludedFFSSystems":
 
@@ -40965,6 +42152,9 @@ func (ec *executionContext) _PlanPayments(ctx context.Context, sel ast.Selection
 					}
 				}()
 				res = ec._PlanPayments_nonClaimsPayments(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&invalids, 1)
+				}
 				return res
 			}
 
@@ -41051,6 +42241,9 @@ func (ec *executionContext) _PlanPayments(ctx context.Context, sel ast.Selection
 					}
 				}()
 				res = ec._PlanPayments_anticipatedPaymentFrequency(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&invalids, 1)
+				}
 				return res
 			}
 
@@ -41356,6 +42549,29 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 			out.Concurrently(i, func() graphql.Marshaler {
 				return rrm(innerCtx)
 			})
+		case "taskListSectionLocks":
+			field := field
+
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Query_taskListSectionLocks(ctx, field)
+				if res == graphql.Null {
+					atomic.AddUint32(&invalids, 1)
+				}
+				return res
+			}
+
+			rrm := func(ctx context.Context) graphql.Marshaler {
+				return ec.OperationContext.RootResolverMiddleware(ctx, innerFunc)
+			}
+
+			out.Concurrently(i, func() graphql.Marshaler {
+				return rrm(innerCtx)
+			})
 		case "planPayments":
 			field := field
 
@@ -41391,6 +42607,110 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 				return ec._Query___schema(ctx, field)
 			})
 
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch()
+	if invalids > 0 {
+		return graphql.Null
+	}
+	return out
+}
+
+var subscriptionImplementors = []string{"Subscription"}
+
+func (ec *executionContext) _Subscription(ctx context.Context, sel ast.SelectionSet) func(ctx context.Context) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, subscriptionImplementors)
+	ctx = graphql.WithFieldContext(ctx, &graphql.FieldContext{
+		Object: "Subscription",
+	})
+	if len(fields) != 1 {
+		ec.Errorf(ctx, "must subscribe to exactly one stream")
+		return nil
+	}
+
+	switch fields[0].Name {
+	case "onTaskListSectionLocksChanged":
+		return ec._Subscription_onTaskListSectionLocksChanged(ctx, fields[0])
+	default:
+		panic("unknown field " + strconv.Quote(fields[0].Name))
+	}
+}
+
+var taskListSectionLockStatusImplementors = []string{"TaskListSectionLockStatus"}
+
+func (ec *executionContext) _TaskListSectionLockStatus(ctx context.Context, sel ast.SelectionSet, obj *model.TaskListSectionLockStatus) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, taskListSectionLockStatusImplementors)
+	out := graphql.NewFieldSet(fields)
+	var invalids uint32
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("TaskListSectionLockStatus")
+		case "modelPlanID":
+
+			out.Values[i] = ec._TaskListSectionLockStatus_modelPlanID(ctx, field, obj)
+
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		case "section":
+
+			out.Values[i] = ec._TaskListSectionLockStatus_section(ctx, field, obj)
+
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		case "lockedBy":
+
+			out.Values[i] = ec._TaskListSectionLockStatus_lockedBy(ctx, field, obj)
+
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		case "refCount":
+
+			out.Values[i] = ec._TaskListSectionLockStatus_refCount(ctx, field, obj)
+
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch()
+	if invalids > 0 {
+		return graphql.Null
+	}
+	return out
+}
+
+var taskListSectionLockStatusChangedImplementors = []string{"TaskListSectionLockStatusChanged"}
+
+func (ec *executionContext) _TaskListSectionLockStatusChanged(ctx context.Context, sel ast.SelectionSet, obj *model.TaskListSectionLockStatusChanged) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, taskListSectionLockStatusChangedImplementors)
+	out := graphql.NewFieldSet(fields)
+	var invalids uint32
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("TaskListSectionLockStatusChanged")
+		case "changeType":
+
+			out.Values[i] = ec._TaskListSectionLockStatusChanged_changeType(ctx, field, obj)
+
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		case "lockStatus":
+
+			out.Values[i] = ec._TaskListSectionLockStatusChanged_lockStatus(ctx, field, obj)
+
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}
@@ -42004,6 +43324,67 @@ func (ec *executionContext) marshalNAnticipatedPaymentFrequencyType2githubᚗcom
 	return res
 }
 
+func (ec *executionContext) unmarshalNAnticipatedPaymentFrequencyType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐAnticipatedPaymentFrequencyTypeᚄ(ctx context.Context, v interface{}) ([]models.AnticipatedPaymentFrequencyType, error) {
+	var vSlice []interface{}
+	if v != nil {
+		vSlice = graphql.CoerceList(v)
+	}
+	var err error
+	res := make([]models.AnticipatedPaymentFrequencyType, len(vSlice))
+	for i := range vSlice {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
+		res[i], err = ec.unmarshalNAnticipatedPaymentFrequencyType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐAnticipatedPaymentFrequencyType(ctx, vSlice[i])
+		if err != nil {
+			return nil, err
+		}
+	}
+	return res, nil
+}
+
+func (ec *executionContext) marshalNAnticipatedPaymentFrequencyType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐAnticipatedPaymentFrequencyTypeᚄ(ctx context.Context, sel ast.SelectionSet, v []models.AnticipatedPaymentFrequencyType) graphql.Marshaler {
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalNAnticipatedPaymentFrequencyType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐAnticipatedPaymentFrequencyType(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
+}
+
 func (ec *executionContext) unmarshalNAuthorityAllowance2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐAuthorityAllowance(ctx context.Context, v interface{}) (model.AuthorityAllowance, error) {
 	var res model.AuthorityAllowance
 	err := res.UnmarshalGQL(v)
@@ -42303,32 +43684,26 @@ func (ec *executionContext) marshalNCMMIGroup2ᚕgithubᚗcomᚋcmsgovᚋmintᚑ
 	return ret
 }
 
-func (ec *executionContext) unmarshalNCMSCenter2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐCMSCenter(ctx context.Context, v interface{}) (models.CMSCenter, error) {
-	tmp, err := graphql.UnmarshalString(v)
-	res := models.CMSCenter(tmp)
+func (ec *executionContext) unmarshalNCMSCenter2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCMSCenter(ctx context.Context, v interface{}) (model.CMSCenter, error) {
+	var res model.CMSCenter
+	err := res.UnmarshalGQL(v)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) marshalNCMSCenter2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐCMSCenter(ctx context.Context, sel ast.SelectionSet, v models.CMSCenter) graphql.Marshaler {
-	res := graphql.MarshalString(string(v))
-	if res == graphql.Null {
-		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
-			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
-		}
-	}
-	return res
+func (ec *executionContext) marshalNCMSCenter2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCMSCenter(ctx context.Context, sel ast.SelectionSet, v model.CMSCenter) graphql.Marshaler {
+	return v
 }
 
-func (ec *executionContext) unmarshalNCMSCenter2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐCMSCenterᚄ(ctx context.Context, v interface{}) ([]models.CMSCenter, error) {
+func (ec *executionContext) unmarshalNCMSCenter2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCMSCenterᚄ(ctx context.Context, v interface{}) ([]model.CMSCenter, error) {
 	var vSlice []interface{}
 	if v != nil {
 		vSlice = graphql.CoerceList(v)
 	}
 	var err error
-	res := make([]models.CMSCenter, len(vSlice))
+	res := make([]model.CMSCenter, len(vSlice))
 	for i := range vSlice {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
-		res[i], err = ec.unmarshalNCMSCenter2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐCMSCenter(ctx, vSlice[i])
+		res[i], err = ec.unmarshalNCMSCenter2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCMSCenter(ctx, vSlice[i])
 		if err != nil {
 			return nil, err
 		}
@@ -42336,7 +43711,7 @@ func (ec *executionContext) unmarshalNCMSCenter2ᚕgithubᚗcomᚋcmsgovᚋmint�
 	return res, nil
 }
 
-func (ec *executionContext) marshalNCMSCenter2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐCMSCenterᚄ(ctx context.Context, sel ast.SelectionSet, v []models.CMSCenter) graphql.Marshaler {
+func (ec *executionContext) marshalNCMSCenter2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCMSCenterᚄ(ctx context.Context, sel ast.SelectionSet, v []model.CMSCenter) graphql.Marshaler {
 	ret := make(graphql.Array, len(v))
 	var wg sync.WaitGroup
 	isLen1 := len(v) == 1
@@ -42360,7 +43735,7 @@ func (ec *executionContext) marshalNCMSCenter2ᚕgithubᚗcomᚋcmsgovᚋmintᚑ
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalNCMSCenter2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐCMSCenter(ctx, sel, v[i])
+			ret[i] = ec.marshalNCMSCenter2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCMSCenter(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -42451,6 +43826,16 @@ func (ec *executionContext) marshalNCcmInvolvmentType2ᚕgithubᚗcomᚋcmsgov�
 	return ret
 }
 
+func (ec *executionContext) unmarshalNChangeType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐChangeType(ctx context.Context, v interface{}) (model.ChangeType, error) {
+	var res model.ChangeType
+	err := res.UnmarshalGQL(v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalNChangeType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐChangeType(ctx context.Context, sel ast.SelectionSet, v model.ChangeType) graphql.Marshaler {
+	return v
+}
+
 func (ec *executionContext) unmarshalNClaimsBasedPayType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐClaimsBasedPayType(ctx context.Context, v interface{}) (models.ClaimsBasedPayType, error) {
 	tmp, err := graphql.UnmarshalString(v)
 	res := models.ClaimsBasedPayType(tmp)
@@ -42465,6 +43850,67 @@ func (ec *executionContext) marshalNClaimsBasedPayType2githubᚗcomᚋcmsgovᚋm
 		}
 	}
 	return res
+}
+
+func (ec *executionContext) unmarshalNClaimsBasedPayType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐClaimsBasedPayTypeᚄ(ctx context.Context, v interface{}) ([]models.ClaimsBasedPayType, error) {
+	var vSlice []interface{}
+	if v != nil {
+		vSlice = graphql.CoerceList(v)
+	}
+	var err error
+	res := make([]models.ClaimsBasedPayType, len(vSlice))
+	for i := range vSlice {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
+		res[i], err = ec.unmarshalNClaimsBasedPayType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐClaimsBasedPayType(ctx, vSlice[i])
+		if err != nil {
+			return nil, err
+		}
+	}
+	return res, nil
+}
+
+func (ec *executionContext) marshalNClaimsBasedPayType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐClaimsBasedPayTypeᚄ(ctx context.Context, sel ast.SelectionSet, v []models.ClaimsBasedPayType) graphql.Marshaler {
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalNClaimsBasedPayType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐClaimsBasedPayType(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
 }
 
 func (ec *executionContext) unmarshalNContractorSupportType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐContractorSupportType(ctx context.Context, v interface{}) (model.ContractorSupportType, error) {
@@ -43003,6 +44449,67 @@ func (ec *executionContext) marshalNFundingSource2githubᚗcomᚋcmsgovᚋmint�
 		}
 	}
 	return res
+}
+
+func (ec *executionContext) unmarshalNFundingSource2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFundingSourceᚄ(ctx context.Context, v interface{}) ([]models.FundingSource, error) {
+	var vSlice []interface{}
+	if v != nil {
+		vSlice = graphql.CoerceList(v)
+	}
+	var err error
+	res := make([]models.FundingSource, len(vSlice))
+	for i := range vSlice {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
+		res[i], err = ec.unmarshalNFundingSource2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFundingSource(ctx, vSlice[i])
+		if err != nil {
+			return nil, err
+		}
+	}
+	return res, nil
+}
+
+func (ec *executionContext) marshalNFundingSource2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFundingSourceᚄ(ctx context.Context, sel ast.SelectionSet, v []models.FundingSource) graphql.Marshaler {
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalNFundingSource2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐFundingSource(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
 }
 
 func (ec *executionContext) unmarshalNGcCollectBidsType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐGcCollectBidsType(ctx context.Context, v interface{}) (model.GcCollectBidsType, error) {
@@ -43703,6 +45210,67 @@ func (ec *executionContext) unmarshalNNonClaimsBasedPayType2githubᚗcomᚋcmsgo
 
 func (ec *executionContext) marshalNNonClaimsBasedPayType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐNonClaimsBasedPayType(ctx context.Context, sel ast.SelectionSet, v model.NonClaimsBasedPayType) graphql.Marshaler {
 	return v
+}
+
+func (ec *executionContext) unmarshalNNonClaimsBasedPayType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐNonClaimsBasedPayTypeᚄ(ctx context.Context, v interface{}) ([]model.NonClaimsBasedPayType, error) {
+	var vSlice []interface{}
+	if v != nil {
+		vSlice = graphql.CoerceList(v)
+	}
+	var err error
+	res := make([]model.NonClaimsBasedPayType, len(vSlice))
+	for i := range vSlice {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
+		res[i], err = ec.unmarshalNNonClaimsBasedPayType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐNonClaimsBasedPayType(ctx, vSlice[i])
+		if err != nil {
+			return nil, err
+		}
+	}
+	return res, nil
+}
+
+func (ec *executionContext) marshalNNonClaimsBasedPayType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐNonClaimsBasedPayTypeᚄ(ctx context.Context, sel ast.SelectionSet, v []model.NonClaimsBasedPayType) graphql.Marshaler {
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalNNonClaimsBasedPayType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐNonClaimsBasedPayType(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
 }
 
 func (ec *executionContext) unmarshalNOelClaimsBasedMeasuresType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐOelClaimsBasedMeasuresType(ctx context.Context, v interface{}) (model.OelClaimsBasedMeasuresType, error) {
@@ -45283,6 +46851,67 @@ func (ec *executionContext) marshalNPayRecipient2githubᚗcomᚋcmsgovᚋmintᚑ
 	return res
 }
 
+func (ec *executionContext) unmarshalNPayRecipient2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPayRecipientᚄ(ctx context.Context, v interface{}) ([]models.PayRecipient, error) {
+	var vSlice []interface{}
+	if v != nil {
+		vSlice = graphql.CoerceList(v)
+	}
+	var err error
+	res := make([]models.PayRecipient, len(vSlice))
+	for i := range vSlice {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
+		res[i], err = ec.unmarshalNPayRecipient2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPayRecipient(ctx, vSlice[i])
+		if err != nil {
+			return nil, err
+		}
+	}
+	return res, nil
+}
+
+func (ec *executionContext) marshalNPayRecipient2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPayRecipientᚄ(ctx context.Context, sel ast.SelectionSet, v []models.PayRecipient) graphql.Marshaler {
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalNPayRecipient2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPayRecipient(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
+}
+
 func (ec *executionContext) unmarshalNPayType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPayType(ctx context.Context, v interface{}) (models.PayType, error) {
 	tmp, err := graphql.UnmarshalString(v)
 	res := models.PayType(tmp)
@@ -45297,6 +46926,67 @@ func (ec *executionContext) marshalNPayType2githubᚗcomᚋcmsgovᚋmintᚑapp�
 		}
 	}
 	return res
+}
+
+func (ec *executionContext) unmarshalNPayType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPayTypeᚄ(ctx context.Context, v interface{}) ([]models.PayType, error) {
+	var vSlice []interface{}
+	if v != nil {
+		vSlice = graphql.CoerceList(v)
+	}
+	var err error
+	res := make([]models.PayType, len(vSlice))
+	for i := range vSlice {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
+		res[i], err = ec.unmarshalNPayType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPayType(ctx, vSlice[i])
+		if err != nil {
+			return nil, err
+		}
+	}
+	return res, nil
+}
+
+func (ec *executionContext) marshalNPayType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPayTypeᚄ(ctx context.Context, sel ast.SelectionSet, v []models.PayType) graphql.Marshaler {
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalNPayType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPayType(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
 }
 
 func (ec *executionContext) marshalNPlanBasics2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanBasics(ctx context.Context, sel ast.SelectionSet, v models.PlanBasics) graphql.Marshaler {
@@ -46351,6 +48041,84 @@ func (ec *executionContext) marshalNString2ᚕstringᚄ(ctx context.Context, sel
 	return ret
 }
 
+func (ec *executionContext) unmarshalNTaskListSection2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTaskListSection(ctx context.Context, v interface{}) (model.TaskListSection, error) {
+	var res model.TaskListSection
+	err := res.UnmarshalGQL(v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalNTaskListSection2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTaskListSection(ctx context.Context, sel ast.SelectionSet, v model.TaskListSection) graphql.Marshaler {
+	return v
+}
+
+func (ec *executionContext) marshalNTaskListSectionLockStatus2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTaskListSectionLockStatusᚄ(ctx context.Context, sel ast.SelectionSet, v []*model.TaskListSectionLockStatus) graphql.Marshaler {
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalNTaskListSectionLockStatus2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTaskListSectionLockStatus(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
+}
+
+func (ec *executionContext) marshalNTaskListSectionLockStatus2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTaskListSectionLockStatus(ctx context.Context, sel ast.SelectionSet, v *model.TaskListSectionLockStatus) graphql.Marshaler {
+	if v == nil {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
+		return graphql.Null
+	}
+	return ec._TaskListSectionLockStatus(ctx, sel, v)
+}
+
+func (ec *executionContext) marshalNTaskListSectionLockStatusChanged2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTaskListSectionLockStatusChanged(ctx context.Context, sel ast.SelectionSet, v model.TaskListSectionLockStatusChanged) graphql.Marshaler {
+	return ec._TaskListSectionLockStatusChanged(ctx, sel, &v)
+}
+
+func (ec *executionContext) marshalNTaskListSectionLockStatusChanged2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTaskListSectionLockStatusChanged(ctx context.Context, sel ast.SelectionSet, v *model.TaskListSectionLockStatusChanged) graphql.Marshaler {
+	if v == nil {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
+		return graphql.Null
+	}
+	return ec._TaskListSectionLockStatusChanged(ctx, sel, v)
+}
+
 func (ec *executionContext) unmarshalNTaskStatus2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTaskStatus(ctx context.Context, v interface{}) (models.TaskStatus, error) {
 	tmp, err := graphql.UnmarshalString(v)
 	res := models.TaskStatus(tmp)
@@ -47370,7 +49138,7 @@ func (ec *executionContext) marshalOCMMIGroup2ᚕgithubᚗcomᚋcmsgovᚋmintᚑ
 	return ret
 }
 
-func (ec *executionContext) unmarshalOCMSCenter2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐCMSCenterᚄ(ctx context.Context, v interface{}) ([]models.CMSCenter, error) {
+func (ec *executionContext) unmarshalOCMSCenter2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCMSCenterᚄ(ctx context.Context, v interface{}) ([]model.CMSCenter, error) {
 	if v == nil {
 		return nil, nil
 	}
@@ -47379,10 +49147,10 @@ func (ec *executionContext) unmarshalOCMSCenter2ᚕgithubᚗcomᚋcmsgovᚋmint�
 		vSlice = graphql.CoerceList(v)
 	}
 	var err error
-	res := make([]models.CMSCenter, len(vSlice))
+	res := make([]model.CMSCenter, len(vSlice))
 	for i := range vSlice {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithIndex(i))
-		res[i], err = ec.unmarshalNCMSCenter2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐCMSCenter(ctx, vSlice[i])
+		res[i], err = ec.unmarshalNCMSCenter2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCMSCenter(ctx, vSlice[i])
 		if err != nil {
 			return nil, err
 		}
@@ -47390,7 +49158,7 @@ func (ec *executionContext) unmarshalOCMSCenter2ᚕgithubᚗcomᚋcmsgovᚋmint�
 	return res, nil
 }
 
-func (ec *executionContext) marshalOCMSCenter2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐCMSCenterᚄ(ctx context.Context, sel ast.SelectionSet, v []models.CMSCenter) graphql.Marshaler {
+func (ec *executionContext) marshalOCMSCenter2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCMSCenterᚄ(ctx context.Context, sel ast.SelectionSet, v []model.CMSCenter) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
@@ -47417,7 +49185,7 @@ func (ec *executionContext) marshalOCMSCenter2ᚕgithubᚗcomᚋcmsgovᚋmintᚑ
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalNCMSCenter2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐCMSCenter(ctx, sel, v[i])
+			ret[i] = ec.marshalNCMSCenter2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCMSCenter(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)

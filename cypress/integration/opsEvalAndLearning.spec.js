@@ -88,6 +88,8 @@ describe('The Model Plan Ops Eval and Learning Form', () => {
 
     // Page - /ops-eval-and-learning/iddoc-testing
 
+    cy.wait(500);
+
     cy.get('#ops-eval-and-learning-uat-needs')
       .type('Users to make sure this works correctly')
       .should('have.value', 'Users to make sure this works correctly');

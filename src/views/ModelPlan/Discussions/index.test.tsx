@@ -3,8 +3,8 @@ import { MockedProvider } from '@apollo/client/testing';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 
-import GetModelPlanDiscussions from 'queries/GetModelPlanDiscussions';
-import { GetModelPlanDiscussions as GetModelPlanDiscussionsType } from 'queries/types/GetModelPlanDiscussions';
+import GetModelPlanDiscussions from 'queries/Discussions/GetModelPlanDiscussions';
+import { GetModelPlanDiscussions as GetModelPlanDiscussionsType } from 'queries/Discussions/types/GetModelPlanDiscussions';
 
 import Discussions from './index';
 

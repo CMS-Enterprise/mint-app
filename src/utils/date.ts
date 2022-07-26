@@ -8,15 +8,16 @@ export const parseAsLocalTime = (date: string) => DateTime.fromISO(date);
 export const formatDateAndIgnoreTimezone = (date: string) =>
   parseAsDate(date).toFormat('MMMM d yyyy');
 
-export const formatDate = (date: string | DateTime) => {
+export const formatDate = (date: string | DateTime, format?: string) => {
+  const dateFormat = format || 'MMMM d yyyy';
   // ISO String
   if (typeof date === 'string') {
-    return parseAsLocalTime(date).toFormat('MMMM d yyyy');
+    return parseAsLocalTime(date).toFormat(dateFormat);
   }
 
   // luxon DateTime
   if (date instanceof DateTime) {
-    return date.toFormat('MMMM d yyyy');
+    return date.toFormat(dateFormat);
   }
 
   return '';

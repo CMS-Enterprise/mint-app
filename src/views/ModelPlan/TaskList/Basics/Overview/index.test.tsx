@@ -3,45 +3,33 @@ import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
 
-import GetModelPlan from 'queries/GetModelPlan';
-import {
-  CMMIGroup,
-  CMSCenter,
-  ModelCategory,
-  ModelStatus
-} from 'types/graphql-global-types';
+import GetBasics from 'queries/Basics/GetBasics';
+import { GetBasics_modelPlan_basics as GetBasicsType } from 'queries/Basics/types/GetBasics';
 
 import Overview from './index';
+
+const overviewMockData: GetBasicsType = {
+  __typename: 'PlanBasics',
+  id: '123',
+  modelType: null,
+  problem: '',
+  goal: '',
+  testInterventions: '',
+  note: ''
+};
 
 const mocks = [
   {
     request: {
-      query: GetModelPlan,
+      query: GetBasics,
       variables: { id: 'f11eb129-2c80-4080-9440-439cbe1a286f' }
     },
     result: {
       data: {
         modelPlan: {
-          modelName: 'My excellent plan that I just initiated',
-          __typename: 'ModelPlan',
           id: 'f11eb129-2c80-4080-9440-439cbe1a286f',
-          status: ModelStatus.PLAN_DRAFT,
-          modelCategory: ModelCategory.PRIMARY_CARE_TRANSFORMATION,
-          cmmiGroups: [
-            CMMIGroup.STATE_INNOVATIONS_GROUP,
-            CMMIGroup.POLICY_AND_PROGRAMS_GROUP
-          ],
-          cmsCenters: [CMSCenter.CENTER_FOR_MEDICARE, CMSCenter.OTHER],
-          cmsOther: 'The Center for Awesomeness ',
-          archived: false,
-          discussions: [],
-          generalCharacteristics: [],
-          participantsAndProviders: [],
-          opsEvalAndLearning: [],
-          basics: [],
-          documents: [],
-          milestones: [],
-          modifiedDts: ''
+          modelName: 'My excellent plan that I just initiated',
+          basics: overviewMockData
         }
       }
     }

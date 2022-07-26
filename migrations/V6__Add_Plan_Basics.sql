@@ -1,3 +1,4 @@
+CREATE TYPE MODEL_TYPE AS ENUM ('VOLUNTARY', 'MANDATORY', 'TBD');
 CREATE TABLE plan_basics (
     id UUID PRIMARY KEY NOT NULL,
     model_plan_id UUID NOT NULL UNIQUE, --foreign key to model plan

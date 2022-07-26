@@ -1,5 +1,5 @@
 import React, { Fragment, useRef } from 'react';
-import { Trans, useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { Link, Route, Switch, useHistory, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
 import {
@@ -32,7 +32,8 @@ import TextAreaField from 'components/shared/TextAreaField';
 import GetOpsEvalAndLearning from 'queries/OpsEvalAndLearning/GetOpsEvalAndLearning';
 import {
   GetOpsEvalAndLearning as GetOpsEvalAndLearningType,
-  GetOpsEvalAndLearning_modelPlan_opsEvalAndLearning as OpsEvalAndLearningFormType
+  GetOpsEvalAndLearning_modelPlan_opsEvalAndLearning as OpsEvalAndLearningFormType,
+  GetOpsEvalAndLearningVariables
 } from 'queries/OpsEvalAndLearning/types/GetOpsEvalAndLearning';
 import { UpdatePlanOpsEvalAndLearningVariables } from 'queries/OpsEvalAndLearning/types/UpdatePlanOpsEvalAndLearning';
 import UpdatePlanOpsEvalAndLearning from 'queries/OpsEvalAndLearning/UpdatePlanOpsEvalAndLearning';
@@ -100,14 +101,14 @@ export const OpsEvalAndLearningContent = () => {
 
   const history = useHistory();
 
-  const { data, loading, error } = useQuery<GetOpsEvalAndLearningType>(
-    GetOpsEvalAndLearning,
-    {
-      variables: {
-        id: modelID
-      }
+  const { data, loading, error } = useQuery<
+    GetOpsEvalAndLearningType,
+    GetOpsEvalAndLearningVariables
+  >(GetOpsEvalAndLearning, {
+    variables: {
+      id: modelID
     }
-  );
+  });
 
   const {
     id,
@@ -214,9 +215,7 @@ export const OpsEvalAndLearningContent = () => {
         className="margin-top-0 margin-bottom-1 font-body-lg"
         data-testid="model-plan-name"
       >
-        <Trans i18nKey="modelPlanTaskList:subheading">
-          indexZero {modelName} indexTwo
-        </Trans>
+        {h('for')} {modelName}
       </p>
       <p className="margin-bottom-2 font-body-md line-height-sans-4">
         {h('helpText')}
