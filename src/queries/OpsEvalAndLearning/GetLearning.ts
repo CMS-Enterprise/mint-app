@@ -13,6 +13,7 @@ export default gql`
         modelLearningSystemsOther
         modelLearningSystemsNote
         anticipatedChallenges
+        status
       }
     }
   }

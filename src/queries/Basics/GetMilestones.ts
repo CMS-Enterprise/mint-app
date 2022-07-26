@@ -19,6 +19,7 @@ export default gql`
         wrapUpEnds
         phasedIn
         phasedInNote
+        status
       }
     }
   }

@@ -16,6 +16,7 @@ export default gql`
         waiversRequired
         waiversRequiredTypes
         waiversRequiredNote
+        status
       }
     }
   }

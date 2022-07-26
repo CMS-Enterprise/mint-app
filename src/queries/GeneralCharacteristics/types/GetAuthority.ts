@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { AuthorityAllowance, WaiverType } from "./../../../types/graphql-global-types";
+import { AuthorityAllowance, WaiverType, TaskStatus } from "./../../../types/graphql-global-types";
 
 // ====================================================
 // GraphQL query operation: GetAuthority
@@ -21,6 +21,7 @@ export interface GetAuthority_modelPlan_generalCharacteristics {
   waiversRequired: boolean | null;
   waiversRequiredTypes: WaiverType[];
   waiversRequiredNote: string | null;
+  status: TaskStatus;
 }
 
 export interface GetAuthority_modelPlan {

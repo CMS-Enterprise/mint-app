@@ -19,6 +19,7 @@ export default gql`
         providerOverlap
         providerOverlapHierarchy
         providerOverlapNote
+        status
       }
     }
   }
