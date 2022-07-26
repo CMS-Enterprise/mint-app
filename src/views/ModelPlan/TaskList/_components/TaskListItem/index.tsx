@@ -44,19 +44,12 @@ const TaskListItem = ({
   const taskListItemClasses = classnames(
     'model-plan-task-list__item',
     'display-flex',
-    'padding-bottom-4',
-    {
-      'text-base-dark': status === 'CANNOT_START'
-    }
+    'padding-bottom-4'
   );
 
   let tagStyle;
   let tagCopy;
   switch (status) {
-    case 'READY':
-      tagCopy = t('taskListItem.ready');
-      tagStyle = 'bg-accent-cool';
-      break;
     case 'IN_PROGRESS':
       tagCopy = t('taskListItem.inProgress');
       tagStyle = 'bg-warning';
@@ -66,8 +59,8 @@ const TaskListItem = ({
       tagStyle = 'bg-success-dark text-white';
       break;
     default:
-      tagCopy = t('taskListItem.cannotStart');
-      tagStyle = 'text-base border-2px border-base';
+      tagCopy = t('taskListItem.ready');
+      tagStyle = 'bg-accent-cool';
   }
 
   return (
