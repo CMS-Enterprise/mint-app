@@ -111,7 +111,7 @@ const TaskList = () => {
    * */
   const renderBasicsStatus = (): TaskStatus => {
     if (
-      basics.status === TaskStatus.READY_FOR_REVIEW &&
+      // basics.status === TaskStatus.READY_FOR_REVIEW &&
       milestones.status === TaskStatus.READY_FOR_REVIEW
     ) {
       return TaskStatus.READY_FOR_REVIEW;
