@@ -4,12 +4,16 @@ import { Provider } from 'react-redux';
 import {
   ApolloClient,
   ApolloProvider,
-  createHttpLink,
-  InMemoryCache
+  HttpLink,
+  InMemoryCache,
+  split
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
+import { GraphQLWsLink } from '@apollo/client/link/subscriptions';
+import { getMainDefinition } from '@apollo/client/utilities';
 import axios from 'axios';
 import { detect } from 'detect-browser';
+import { createClient } from 'graphql-ws';
 import { TextEncoder } from 'text-encoding';
 
 import { localAuthStorageKey } from 'constants/localAuth';
@@ -55,7 +59,7 @@ function getAuthHeader(targetUrl: string) {
 /**
  * Setup client for GraphQL
  */
-const httpLink = createHttpLink({
+const httpLink = new HttpLink({
   uri: process.env.REACT_APP_GRAPHQL_ADDRESS
 });
 
@@ -69,10 +73,36 @@ const authLink = setContext((request, { headers }) => {
   };
 });
 
+const wsLink = new GraphQLWsLink(
+  createClient({
+    url: 'ws://localhost:8085/api/graph/query',
+    connectionParams: {
+      authToken: getAuthHeader(process.env.REACT_APP_GRAPHQL_ADDRESS as string)
+    }
+  })
+);
+
+// The split function takes three parameters:
+//
+// * A function that's called for each operation to execute
+// * The Link to use for an operation if the function returns a "truthy" value
+// * The Link to use for an operation if the function returns a "falsy" value
+const splitLink = split(
+  ({ query }) => {
+    const definition = getMainDefinition(query);
+    return (
+      definition.kind === 'OperationDefinition' &&
+      definition.operation === 'subscription'
+    );
+  },
+  wsLink,
+  authLink.concat(httpLink)
+);
+
 const typePolicies = {};
 
 const client = new ApolloClient({
-  link: authLink.concat(httpLink),
+  link: splitLink,
   cache: new InMemoryCache({
     typePolicies
   }),

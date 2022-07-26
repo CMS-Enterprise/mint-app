@@ -1,7 +1,7 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link, useParams } from 'react-router-dom';
-import { useQuery } from '@apollo/client';
+import { useMutation, useQuery, useSubscription } from '@apollo/client';
 import {
   Breadcrumb,
   BreadcrumbBar,
@@ -20,6 +20,9 @@ import PageHeading from 'components/PageHeading';
 import Divider from 'components/shared/Divider';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import GetModelPlan from 'queries/GetModelPlan';
+import GetTaskListSubscriptions from 'queries/TaskListSubscription/GetTaskListSubscriptions';
+import LockTaskListSection from 'queries/TaskListSubscription/LockTaskListSection';
+import SubscribeToTaskList from 'queries/TaskListSubscription/SubscribeToTaskList';
 import {
   GetModelPlan as GetModelPlanType,
   GetModelPlan_modelPlan as GetModelPlanTypes,
@@ -61,6 +64,42 @@ const TaskList = () => {
   const { t: d } = useTranslation('discussions');
   const { modelID } = useParams<{ modelID: string }>();
   const [isDiscussionOpen, setIsDiscussionOpen] = useState(false);
+
+  const {
+    data: subscriptionData,
+    loading: subscriptionLoading,
+    error: subscriptionError
+  } = useSubscription(SubscribeToTaskList, {
+    variables: { modelPlanID: modelID }
+  });
+
+  console.log(subscriptionData);
+  console.log(subscriptionLoading);
+  console.log(subscriptionError);
+
+  const [update] = useMutation(LockTaskListSection);
+
+  useEffect(() => {
+    update({
+      variables: {
+        modelPlanID: modelID
+      }
+    })
+      .then(response => {
+        console.log(response);
+      })
+      .catch(errors => {
+        console.log(errors);
+      });
+  }, [modelID, update]);
+
+  // const { data: connections } = useQuery(GetTaskListSubscriptions, {
+  //   variables: {
+  //     modelPlanID: modelID
+  //   }
+  // });
+
+  // console.log(connections);
 
   const { data, loading, error } = useQuery<
     GetModelPlanType,
