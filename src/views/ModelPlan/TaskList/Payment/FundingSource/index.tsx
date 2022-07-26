@@ -442,22 +442,26 @@ const FundingSource = () => {
                                     ) && (
                                       <FieldGroup
                                         className="margin-left-4 margin-top-2 margin-bottom-4"
-                                        error={!!flatErrors.payRecipientsOther}
+                                        error={
+                                          !!flatErrors.payRecipientsOtherSpecification
+                                        }
                                       >
                                         <Label
-                                          htmlFor="payRecipientsOther"
+                                          htmlFor="payRecipientsOtherSpecification"
                                           className="text-normal"
                                         >
                                           {t('otherPayOption')}
                                         </Label>
                                         <FieldErrorMsg>
-                                          {flatErrors.payRecipientsOther}
+                                          {
+                                            flatErrors.payRecipientsOtherSpecification
+                                          }
                                         </FieldErrorMsg>
                                         <Field
                                           as={TextInput}
-                                          id="payment-pay-recipients-other"
+                                          id="payment-pay-recipients-other-specification"
                                           maxLength={50}
-                                          name="payRecipientsOther"
+                                          name="payRecipientsOtherSpecification"
                                         />
                                       </FieldGroup>
                                     )}
