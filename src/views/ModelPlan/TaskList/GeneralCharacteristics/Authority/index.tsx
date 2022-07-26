@@ -19,6 +19,7 @@ import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
+import ReadyForReview from 'components/ReadyForReview';
 import AutoSave from 'components/shared/AutoSave';
 import CheckboxField from 'components/shared/CheckboxField';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
@@ -71,7 +72,8 @@ const Authority = () => {
     authorityAllowancesNote,
     waiversRequired,
     waiversRequiredTypes,
-    waiversRequiredNote
+    waiversRequiredNote,
+    status
   } = data?.modelPlan?.generalCharacteristics || ({} as AuthorityFormType);
 
   const [update] = useMutation<UpdatePlanGeneralCharacteristicsVariables>(
@@ -116,7 +118,8 @@ const Authority = () => {
     authorityAllowancesNote: authorityAllowancesNote ?? '',
     waiversRequired: waiversRequired ?? null,
     waiversRequiredTypes: waiversRequiredTypes ?? [],
-    waiversRequiredNote: waiversRequiredNote ?? ''
+    waiversRequiredNote: waiversRequiredNote ?? '',
+    status
   };
 
   if ((!loading && error) || (!loading && !data?.modelPlan)) {
@@ -424,6 +427,14 @@ const Authority = () => {
                 <AddNote
                   id="plan-characteristics-waivers-required-note"
                   field="waiversRequiredNote"
+                />
+
+                <ReadyForReview
+                  id="characteristics-status"
+                  field="status"
+                  sectionName={t('heading')}
+                  status={values.status}
+                  setFieldValue={setFieldValue}
                 />
 
                 <div className="margin-top-6 margin-bottom-3">
