@@ -26,7 +26,8 @@ const draftModelPlan = {
     "If there's a question or field that is not applicable to your model or you don't currently know the answer, you may leave it blank. If you need help, ask a question using the link below.",
   modelPlanStatus: 'Model Plan status',
   modelPlanCopy:
-    'This section of the Model Plan ({{-sectionName}}) is ready for review.'
+    'This section of the Model Plan ({{-sectionName}}) is ready for review.',
+  markedReady: 'Marked ready for review {{-reviewer}} on {{date}}'
 };
 
 export default draftModelPlan;
