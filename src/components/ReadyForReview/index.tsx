@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { SummaryBox } from '@trussworks/react-uswds';
 import { Field } from 'formik';
@@ -6,6 +6,7 @@ import { Field } from 'formik';
 import CheckboxField from 'components/shared/CheckboxField';
 import FieldGroup from 'components/shared/FieldGroup';
 import { TaskStatus, TaskStatusInput } from 'types/graphql-global-types';
+import { formatDate } from 'utils/date';
 
 type ReadyForReviewType = {
   id: string;
@@ -48,11 +49,14 @@ const ReadyForReview = ({
             }
           }}
         />
-        {readyForReviewBy &&
-          t('markedReady', {
-            reviewer: `GARY ZHAO`,
-            date: 'asdf'
-          })}
+        {readyForReviewBy && readyForReviewDts && (
+          <p className="margin-top-1 margin-bottom-0 margin-left-4 text-base">
+            {t('markedReady', {
+              reviewer: `${readyForReviewBy}`
+            })}
+            {formatDate(readyForReviewDts, 'M/d/yyyy')}
+          </p>
+        )}
       </SummaryBox>
     </FieldGroup>
   );

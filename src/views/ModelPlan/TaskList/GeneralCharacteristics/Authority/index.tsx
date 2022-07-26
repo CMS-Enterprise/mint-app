@@ -48,7 +48,13 @@ const Authority = () => {
   const { t: h } = useTranslation('draftModelPlan');
   const { modelID } = useParams<{ modelID: string }>();
 
-  const formikRef = useRef<FormikProps<AuthorityFormType>>(null);
+  // Omitting readyForReviewBy and readyForReviewDts from initialValues and getting submitted through Formik
+  type InitialValueType = Omit<
+    AuthorityFormType,
+    'readyForReviewBy' | 'readyForReviewDts'
+  >;
+
+  const formikRef = useRef<FormikProps<InitialValueType>>(null);
   const history = useHistory();
 
   const { data, loading, error } = useQuery<
@@ -73,6 +79,8 @@ const Authority = () => {
     waiversRequired,
     waiversRequiredTypes,
     waiversRequiredNote,
+    readyForReviewBy,
+    readyForReviewDts,
     status
   } = data?.modelPlan?.generalCharacteristics || ({} as AuthorityFormType);
 
@@ -81,7 +89,7 @@ const Authority = () => {
   );
 
   const handleFormSubmit = (
-    formikValues: AuthorityFormType,
+    formikValues: InitialValueType,
     redirect?: 'back' | 'task-list'
   ) => {
     const { id: updateId, __typename, ...changeValues } = formikValues;
@@ -107,7 +115,7 @@ const Authority = () => {
       });
   };
 
-  const initialValues: AuthorityFormType = {
+  const initialValues: InitialValueType = {
     __typename: 'PlanGeneralCharacteristics',
     id: id ?? '',
     rulemakingRequired: rulemakingRequired ?? null,
@@ -160,12 +168,13 @@ const Authority = () => {
       <Formik
         initialValues={initialValues}
         onSubmit={values => {
-          handleFormSubmit(values, 'task-list');
+          // handleFormSubmit(values, 'task-list');
+          console.log(values.status);
         }}
         enableReinitialize
         innerRef={formikRef}
       >
-        {(formikProps: FormikProps<AuthorityFormType>) => {
+        {(formikProps: FormikProps<InitialValueType>) => {
           const {
             errors,
             handleSubmit,
@@ -435,6 +444,8 @@ const Authority = () => {
                   sectionName={t('heading')}
                   status={values.status}
                   setFieldValue={setFieldValue}
+                  readyForReviewBy={readyForReviewBy}
+                  readyForReviewDts={readyForReviewDts}
                 />
 
                 <div className="margin-top-6 margin-bottom-3">
