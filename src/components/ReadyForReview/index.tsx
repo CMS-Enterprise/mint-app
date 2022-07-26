@@ -13,6 +13,8 @@ type ReadyForReviewType = {
   sectionName: string;
   status: TaskStatus;
   setFieldValue: (field: string, value: any) => void;
+  readyForReviewBy: string | null;
+  readyForReviewDts: string | null;
 };
 
 const ReadyForReview = ({
@@ -20,7 +22,9 @@ const ReadyForReview = ({
   field,
   sectionName,
   status,
-  setFieldValue
+  setFieldValue,
+  readyForReviewBy,
+  readyForReviewDts
 }: ReadyForReviewType) => {
   const { t } = useTranslation('draftModelPlan');
   return (
@@ -44,6 +48,11 @@ const ReadyForReview = ({
             }
           }}
         />
+        {readyForReviewBy &&
+          t('markedReady', {
+            reviewer: `GARY ZHAO`,
+            date: 'asdf'
+          })}
       </SummaryBox>
     </FieldGroup>
   );
