@@ -111,10 +111,10 @@ const TaskList = () => {
    * */
   const renderBasicsStatus = (): TaskStatus => {
     if (
-      basics.status === TaskStatus.COMPLETE &&
-      milestones.status === TaskStatus.COMPLETE
+      basics.status === TaskStatus.READY_FOR_REVIEW &&
+      milestones.status === TaskStatus.READY_FOR_REVIEW
     ) {
-      return TaskStatus.COMPLETE;
+      return TaskStatus.READY_FOR_REVIEW;
     }
     if (modelCategory === null && cmsCenters.length === 0) {
       return TaskStatus.READY;
