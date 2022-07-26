@@ -677,9 +677,10 @@ type ComplexityRoot struct {
 	}
 
 	TaskListSectionLockStatus struct {
-		LockedBy func(childComplexity int) int
-		RefCount func(childComplexity int) int
-		Section  func(childComplexity int) int
+		LockedBy    func(childComplexity int) int
+		ModelPlanID func(childComplexity int) int
+		RefCount    func(childComplexity int) int
+		Section     func(childComplexity int) int
 	}
 
 	TaskListSectionLockStatusChanged struct {
@@ -4962,6 +4963,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.TaskListSectionLockStatus.LockedBy(childComplexity), true
 
+	case "TaskListSectionLockStatus.modelPlanID":
+		if e.complexity.TaskListSectionLockStatus.ModelPlanID == nil {
+			break
+		}
+
+		return e.complexity.TaskListSectionLockStatus.ModelPlanID(childComplexity), true
+
 	case "TaskListSectionLockStatus.refCount":
 		if e.complexity.TaskListSectionLockStatus.RefCount == nil {
 			break
@@ -5217,6 +5225,7 @@ type TaskListSectionLockStatusChanged {
 }
 
 type TaskListSectionLockStatus {
+  modelPlanID: UUID!
   section: TaskListSection!
   lockedBy: String!
   refCount: Int!
@@ -14067,6 +14076,8 @@ func (ec *executionContext) fieldContext_Mutation_unlockAllTaskListSections(ctx 
 		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			switch field.Name {
+			case "modelPlanID":
+				return ec.fieldContext_TaskListSectionLockStatus_modelPlanID(ctx, field)
 			case "section":
 				return ec.fieldContext_TaskListSectionLockStatus_section(ctx, field)
 			case "lockedBy":
@@ -34384,6 +34395,8 @@ func (ec *executionContext) fieldContext_Query_taskListSectionLocks(ctx context.
 		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			switch field.Name {
+			case "modelPlanID":
+				return ec.fieldContext_TaskListSectionLockStatus_modelPlanID(ctx, field)
 			case "section":
 				return ec.fieldContext_TaskListSectionLockStatus_section(ctx, field)
 			case "lockedBy":
@@ -34825,6 +34838,50 @@ func (ec *executionContext) fieldContext_Subscription_onTaskListSectionLocksChan
 	return fc, nil
 }
 
+func (ec *executionContext) _TaskListSectionLockStatus_modelPlanID(ctx context.Context, field graphql.CollectedField, obj *model.TaskListSectionLockStatus) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_TaskListSectionLockStatus_modelPlanID(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ModelPlanID, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(uuid.UUID)
+	fc.Result = res
+	return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_TaskListSectionLockStatus_modelPlanID(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "TaskListSectionLockStatus",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type UUID does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _TaskListSectionLockStatus_section(ctx context.Context, field graphql.CollectedField, obj *model.TaskListSectionLockStatus) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_TaskListSectionLockStatus_section(ctx, field)
 	if err != nil {
@@ -35040,6 +35097,8 @@ func (ec *executionContext) fieldContext_TaskListSectionLockStatusChanged_lockSt
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			switch field.Name {
+			case "modelPlanID":
+				return ec.fieldContext_TaskListSectionLockStatus_modelPlanID(ctx, field)
 			case "section":
 				return ec.fieldContext_TaskListSectionLockStatus_section(ctx, field)
 			case "lockedBy":
@@ -41759,6 +41818,13 @@ func (ec *executionContext) _TaskListSectionLockStatus(ctx context.Context, sel 
 		switch field.Name {
 		case "__typename":
 			out.Values[i] = graphql.MarshalString("TaskListSectionLockStatus")
+		case "modelPlanID":
+
+			out.Values[i] = ec._TaskListSectionLockStatus_modelPlanID(ctx, field, obj)
+
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
 		case "section":
 
 			out.Values[i] = ec._TaskListSectionLockStatus_section(ctx, field, obj)

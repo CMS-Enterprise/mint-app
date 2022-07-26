@@ -113,6 +113,7 @@ type TaskListSectionLockStatusChanged {
 }
 
 type TaskListSectionLockStatus {
+  modelPlanID: UUID!
   section: TaskListSection!
   lockedBy: String!
   refCount: Int!

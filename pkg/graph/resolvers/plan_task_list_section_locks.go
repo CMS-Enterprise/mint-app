@@ -88,9 +88,10 @@ func (p PlanTaskListSectionLocksResolverImplementation) LockTaskListSection(ps p
 	}
 
 	status := model.TaskListSectionLockStatus{
-		Section:  section,
-		LockedBy: principal,
-		RefCount: lockStatus.RefCount + 1,
+		ModelPlanID: modelPlanID,
+		Section:     section,
+		LockedBy:    principal,
+		RefCount:    lockStatus.RefCount + 1,
 	}
 
 	planTaskListSessionLocks.Lock()
