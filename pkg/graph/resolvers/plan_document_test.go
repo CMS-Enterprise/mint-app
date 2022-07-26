@@ -5,7 +5,7 @@ package resolvers
 	"github.com/cmsgov/mint-app/pkg/upload"
 	"testing"
 
-	"github.com/cmsgov/mint-app/pkg/models"
+	"github.com/cmsgov/mint-app/pkg/modelSections"
 	"github.com/cmsgov/mint-app/pkg/storage"
 	"github.com/stretchr/testify/assert"
 	"go.uber.org/zap"
@@ -14,7 +14,7 @@ package resolvers
 	_ "github.com/lib/pq" // required for postgres driver in sql
 )
 
-func createDummyPlanDocumentInput(plan *models.ModelPlan) model.PlanDocumentInput {
+func createDummyPlanDocumentInput(plan *modelSections.ModelPlan) model.PlanDocumentInput {
 	fakeString := "FAKE"
 	url := "http://localhost:9050/mint-test-bucket/e9eb4a4f-9100-416f-be5b-f141bb436cfa.pdf?X-Amz-Algorithm=AWS4-HMAC-SHA256&"
 	input := model.PlanDocumentInput{
@@ -60,7 +60,7 @@ func createS3Client(store *storage.Store) upload.S3Client {
 	assert.NoError(t, err)
 
 	modelName := "FAKE"
-	planTemplate := models.ModelPlan{ModelName: &modelName}
+	planTemplate := modelSections.ModelPlan{ModelName: &modelName}
 	plan, err := ModelPlanCreate(logger, &planTemplate, store)
 	assert.NoError(t, err)
 
@@ -79,7 +79,7 @@ func TestPlanDocumentRead(t *testing.T) {
 	assert.NoError(t, err)
 
 	modelName := "FAKE"
-	planTemplate := models.ModelPlan{ModelName: &modelName}
+	planTemplate := modelSections.ModelPlan{ModelName: &modelName}
 	plan, err := ModelPlanCreate(logger, &planTemplate, store)
 	assert.NoError(t, err)
 
@@ -109,7 +109,7 @@ func TestPlanDocumentsReadByModelPlanID(t *testing.T) {
 	s3Client := createS3Client()
 
 	modelName := "FAKE"
-	planTemplate := models.ModelPlan{ModelName: &modelName}
+	planTemplate := modelSections.ModelPlan{ModelName: &modelName}
 	plan, err := ModelPlanCreate(logger, &planTemplate, store)
 	assert.NoError(t, err)
 
@@ -147,7 +147,7 @@ func TestPlanDocumentDelete(t *testing.T) {
 	assert.NoError(t, err)
 
 	modelName := "FAKE"
-	planTemplate := models.ModelPlan{ModelName: &modelName}
+	planTemplate := modelSections.ModelPlan{ModelName: &modelName}
 	plan, err := ModelPlanCreate(logger, &planTemplate, store)
 	assert.NoError(t, err)
 
