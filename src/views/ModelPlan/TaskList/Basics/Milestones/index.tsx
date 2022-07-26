@@ -76,10 +76,9 @@ const Milestones = () => {
     status
   } = data?.modelPlan?.milestones || ({} as MilestonesFormType);
 
-  const [update] = useMutation<
-    UpdatePlanMilestonesType,
-    UpdatePlanMilestonesVariables
-  >(UpdatePlanMilestones);
+  const [update] = useMutation<UpdatePlanMilestonesVariables>(
+    UpdatePlanMilestones
+  );
 
   const handleFormSubmit = (
     formikValues: MilestonesFormType,
@@ -539,7 +538,7 @@ const Milestones = () => {
                   <AddNote id="ModelType-phasedInNote" field="phasedInNote" />
 
                   <ReadyForReview
-                    id="basics-status"
+                    id="milestones-status"
                     field="status"
                     sectionName={t('heading')}
                     status={values.status}
