@@ -13,7 +13,8 @@ require (
 	github.com/go-openapi/validate v0.22.0
 	github.com/golang/mock v1.6.0
 	github.com/google/uuid v1.3.0
-	github.com/gorilla/mux v1.7.4
+	github.com/gorilla/mux v1.8.0
+	github.com/gregjones/httpcache v0.0.0-20190611155906-901d90724c79 // indirect
 	github.com/guregu/null v4.0.0+incompatible
 	github.com/jmoiron/sqlx v1.3.5
 	github.com/lib/pq v1.10.6
@@ -48,7 +49,6 @@ require (
 	github.com/go-stack/stack v1.8.1 // indirect
 	github.com/goccy/go-json v0.9.4 // indirect
 	github.com/gorilla/websocket v1.5.0 // indirect
-	github.com/gregjones/httpcache v0.0.0-20190611155906-901d90724c79 // indirect
 	github.com/hashicorp/golang-lru v0.5.4 // indirect
 	github.com/hashicorp/hcl v1.0.0 // indirect
 	github.com/inconshreveable/mousetrap v1.0.0 // indirect

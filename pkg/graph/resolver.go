@@ -4,6 +4,8 @@ import (
 	"context"
 	"time"
 
+	"github.com/cmsgov/mint-app/pkg/shared/pubsub"
+
 	ldclient "gopkg.in/launchdarkly/go-server-sdk.v5"
 
 	"github.com/cmsgov/mint-app/pkg/email"
@@ -27,6 +29,7 @@ type Resolver struct {
 	s3Client    *upload.S3Client
 	emailClient *email.Client
 	ldClient    *ldclient.LDClient
+	pubsub      pubsub.PubSub
 }
 
 // ResolverService holds service methods for use in resolvers
@@ -45,6 +48,7 @@ func NewResolver(
 	s3Client *upload.S3Client,
 	emailClient *email.Client,
 	ldClient *ldclient.LDClient,
+	pubsub pubsub.PubSub,
 ) *Resolver {
-	return &Resolver{store: store, service: service, s3Client: s3Client, emailClient: emailClient, ldClient: ldClient}
+	return &Resolver{store: store, service: service, s3Client: s3Client, emailClient: emailClient, ldClient: ldClient, pubsub: pubsub}
 }
