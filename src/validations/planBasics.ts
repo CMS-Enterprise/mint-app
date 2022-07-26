@@ -30,9 +30,14 @@ const planBasicsSchema = {
       .min(1, 'Select a CMS Component')
       .required('Select a CMS Component'),
     cmsOther: Yup.string().required('Please specific CMS Component'),
-    cmmiGroups: Yup.array()
-      .min(1, 'Select a CMMI Group')
-      .required('Select a CMMI Group')
+    cmmiGroups: Yup.array().when('cmsCenters', {
+      is: (val: [string]) => {
+        return val.includes('CMMI');
+      },
+      then: Yup.array()
+        .min(1, 'Select a CMMI Group')
+        .required('Select a CMMI Group')
+    })
   }),
 
   pageOneSchemaWithCmmiGroups: Yup.object().shape({
@@ -41,9 +46,14 @@ const planBasicsSchema = {
     cmsCenters: Yup.array()
       .min(1, 'Select a CMS Component')
       .required('Select a CMS Component'),
-    cmmiGroups: Yup.array()
-      .min(1, 'Select a CMMI Group')
-      .required('Select a CMMI Group')
+    cmmiGroups: Yup.array().when('cmsCenters', {
+      is: (val: [string]) => {
+        return val.includes('CMMI');
+      },
+      then: Yup.array()
+        .min(1, 'Select a CMMI Group')
+        .required('Select a CMMI Group')
+    })
   }),
 
   pageTwoSchema: Yup.object().shape({
@@ -60,7 +70,7 @@ const planBasicsSchema = {
     performancePeriodStarts: datePickerSchema,
     performancePeriodEnds: datePickerSchema,
     wrapUpEnds: datePickerSchema,
-    phasedIn: Yup.boolean().required('Please answer question')
+    phasedIn: Yup.boolean().nullable().required('Please answer question')
   })
 };
 

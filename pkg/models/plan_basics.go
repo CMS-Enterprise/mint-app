@@ -11,3 +11,13 @@ type PlanBasics struct {
 	TestInterventions *string `json:"testInterventions" db:"test_interventions" statusWeight:"1"`
 	Note              *string `json:"note" db:"note"`
 }
+
+// ModelType is an enum that represents the basic type of a model
+type ModelType string
+
+// These constants represent the different values of ModelType
+const (
+	MTVoluntary ModelType = "VOLUNTARY"
+	MTMandatory ModelType = "MANDATORY"
+	MTTBD       ModelType = "TBD"
+)

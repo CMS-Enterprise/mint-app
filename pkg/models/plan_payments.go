@@ -20,7 +20,7 @@ const (
 	// AnticipatedPaymentFrequencyTypeMonthly indicates payments every month
 	AnticipatedPaymentFrequencyTypeMonthly AnticipatedPaymentFrequencyType = "MONTHLY"
 	// AnticipatedPaymentFrequencyTypeSemiMonthly indicates semi-monthly payments
-	AnticipatedPaymentFrequencyTypeSemiMonthly AnticipatedPaymentFrequencyType = "SEMI-MONTHLY"
+	AnticipatedPaymentFrequencyTypeSemiMonthly AnticipatedPaymentFrequencyType = "SEMIMONTHLY"
 	// AnticipatedPaymentFrequencyTypeWeekly indicates payments every week
 	AnticipatedPaymentFrequencyTypeWeekly AnticipatedPaymentFrequencyType = "WEEKLY"
 	// AnticipatedPaymentFrequencyTypeDaily indicates payments every day

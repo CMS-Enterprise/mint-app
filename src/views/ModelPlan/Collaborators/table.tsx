@@ -7,7 +7,7 @@ import { DateTime } from 'luxon';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import IconInitial from 'components/shared/IconInitial';
-import { GetModelCollaborators_modelPlan_collaborators as CollaboratorType } from 'queries/types/GetModelCollaborators';
+import { GetModelCollaborators_modelPlan_collaborators as CollaboratorType } from 'queries/Collaborators/types/GetModelCollaborators';
 import { translateTeamRole } from 'utils/modelPlan';
 import {
   currentTableSortDescription,

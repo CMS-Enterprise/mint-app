@@ -6,6 +6,8 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/cmsgov/mint-app/pkg/shared/pubsub"
+
 	"github.com/gorilla/mux"
 	"github.com/spf13/viper"
 	"go.uber.org/zap"
@@ -19,6 +21,7 @@ type Server struct {
 	Config      *viper.Viper
 	logger      *zap.Logger
 	environment appconfig.Environment
+	pubsub      pubsub.PubSub
 }
 
 func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
@@ -50,6 +53,7 @@ func NewServer(config *viper.Viper) *Server {
 		Config:      config,
 		logger:      zapLogger,
 		environment: environment,
+		pubsub:      pubsub.NewServicePubSub(),
 	}
 
 	// set up routes

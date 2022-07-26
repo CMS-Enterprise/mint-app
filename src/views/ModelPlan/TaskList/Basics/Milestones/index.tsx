@@ -1,5 +1,5 @@
-import React, { useRef, useState } from 'react';
-import { Trans, useTranslation } from 'react-i18next';
+import React, { useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
 import {
@@ -9,46 +9,35 @@ import {
   Button,
   DatePicker,
   Fieldset,
-  IconAdd,
   IconArrowBack,
   Label,
   Radio
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
 
+import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
-import TextAreaField from 'components/shared/TextAreaField';
-import GetModelPlan from 'queries/GetModelPlan';
+import GetMilestones from 'queries/Basics/GetMilestones';
 import {
-  GetModelPlan as GetModelPlanType,
-  GetModelPlanVariables
-} from 'queries/types/GetModelPlan';
-import { UpdatePlanMilestones as UpdatePlanMilestonesType } from 'queries/types/UpdatePlanMilestones';
-import UpdatePlanMilestones from 'queries/UpdatePlanMilestones';
+  GetMilestones as GetMilestonesType,
+  GetMilestones_modelPlan_milestones as MilestonesFormType,
+  GetMilestonesVariables
+} from 'queries/Basics/types/GetMilestones';
+import {
+  UpdatePlanMilestones as UpdatePlanMilestonesType,
+  UpdatePlanMilestonesVariables
+} from 'queries/Basics/types/UpdatePlanMilestones';
+import UpdatePlanMilestones from 'queries/Basics/UpdatePlanMilestones';
 import flattenErrors from 'utils/flattenErrors';
 import planBasicsSchema from 'validations/planBasics';
+import { NotFoundPartial } from 'views/NotFound';
 
 import './index.scss';
-
-type PlanBasicsMilestoneTypes = {
-  completeICIP: string | null;
-  clearanceStarts: string | null;
-  clearanceEnds: string | null;
-  announced: string | null;
-  applicationsStart: string | null;
-  applicationsEnd: string | null;
-  performancePeriodStarts: string | null;
-  performancePeriodEnds: string | null;
-  wrapUpEnds: string | null;
-  highLevelNote: string;
-  phasedIn: boolean | undefined;
-  phasedInNote: string;
-};
 
 const Milestones = () => {
   const { t } = useTranslation('basics');
@@ -56,59 +45,49 @@ const Milestones = () => {
   const { modelID } = useParams<{ modelID: string }>();
 
   const history = useHistory();
-  const formikRef = useRef<FormikProps<PlanBasicsMilestoneTypes>>(null);
-  const [hasHighLevelNote, setHasHighLevelNote] = useState(false);
-  const [hasAdditionalNote, setHasAdditionalNote] = useState(false);
+  const formikRef = useRef<FormikProps<MilestonesFormType>>(null);
 
-  const { data, loading } = useQuery<GetModelPlanType, GetModelPlanVariables>(
-    GetModelPlan,
-    {
-      variables: {
-        id: modelID
-      }
+  const { data, loading, error } = useQuery<
+    GetMilestonesType,
+    GetMilestonesVariables
+  >(GetMilestones, {
+    variables: {
+      id: modelID
     }
-  );
+  });
 
-  const { modelName, milestones } = data?.modelPlan || {};
+  const { modelName } = data?.modelPlan || {};
 
-  const [update] = useMutation<UpdatePlanMilestonesType>(UpdatePlanMilestones);
+  const {
+    id,
+    completeICIP,
+    clearanceStarts,
+    clearanceEnds,
+    announced,
+    applicationsStart,
+    applicationsEnd,
+    performancePeriodStarts,
+    performancePeriodEnds,
+    highLevelNote,
+    wrapUpEnds,
+    phasedIn,
+    phasedInNote
+  } = data?.modelPlan?.milestones || ({} as MilestonesFormType);
 
-  const initialValues: PlanBasicsMilestoneTypes = {
-    completeICIP: milestones?.completeICIP ?? null,
-    clearanceStarts: milestones?.clearanceStarts ?? null,
-    clearanceEnds: milestones?.clearanceEnds ?? null,
-    announced: milestones?.announced ?? null,
-    applicationsStart: milestones?.applicationsStart ?? null,
-    applicationsEnd: milestones?.applicationsEnd ?? null,
-    performancePeriodStarts: milestones?.performancePeriodStarts ?? null,
-    performancePeriodEnds: milestones?.performancePeriodEnds ?? null,
-    wrapUpEnds: milestones?.wrapUpEnds ?? null,
-    highLevelNote: milestones?.highLevelNote ?? '',
-    phasedIn: milestones?.phasedIn ?? undefined,
-    phasedInNote: milestones?.phasedInNote ?? ''
-  };
+  const [update] = useMutation<
+    UpdatePlanMilestonesType,
+    UpdatePlanMilestonesVariables
+  >(UpdatePlanMilestones);
 
   const handleFormSubmit = (
-    formikValues: PlanBasicsMilestoneTypes,
+    formikValues: MilestonesFormType,
     redirect?: 'back' | 'task-list'
   ) => {
+    const { id: updateId, __typename, ...changeValues } = formikValues;
     update({
       variables: {
-        id: milestones?.id,
-        changes: {
-          completeICIP: formikValues.completeICIP,
-          clearanceStarts: formikValues.clearanceStarts,
-          clearanceEnds: formikValues.clearanceEnds,
-          announced: formikValues.announced,
-          applicationsStart: formikValues.applicationsStart,
-          applicationsEnd: formikValues.applicationsEnd,
-          performancePeriodStarts: formikValues.performancePeriodStarts,
-          performancePeriodEnds: formikValues.performancePeriodEnds,
-          wrapUpEnds: formikValues.wrapUpEnds,
-          highLevelNote: formikValues.highLevelNote,
-          phasedIn: formikValues.phasedIn,
-          phasedInNote: formikValues.phasedInNote
-        }
+        id: updateId,
+        changes: changeValues
       }
     })
       .then(response => {
@@ -126,6 +105,27 @@ const Milestones = () => {
         formikRef?.current?.setErrors(errors);
       });
   };
+
+  const initialValues: MilestonesFormType = {
+    __typename: 'PlanMilestones',
+    id: id ?? '',
+    completeICIP: completeICIP ?? null,
+    clearanceStarts: clearanceStarts ?? null,
+    clearanceEnds: clearanceEnds ?? null,
+    announced: announced ?? null,
+    applicationsStart: applicationsStart ?? null,
+    applicationsEnd: applicationsEnd ?? null,
+    performancePeriodStarts: performancePeriodStarts ?? null,
+    performancePeriodEnds: performancePeriodEnds ?? null,
+    wrapUpEnds: wrapUpEnds ?? null,
+    highLevelNote: highLevelNote ?? '',
+    phasedIn: phasedIn ?? null,
+    phasedInNote: phasedInNote ?? ''
+  };
+
+  if ((!loading && error) || (!loading && !data?.modelPlan)) {
+    return <NotFoundPartial />;
+  }
 
   return (
     <div data-testid="model-plan-milestones">
@@ -149,9 +149,7 @@ const Milestones = () => {
         className="margin-top-0 margin-bottom-1 font-body-lg"
         data-testid="model-plan-name"
       >
-        <Trans i18nKey="modelPlanTaskList:subheading">
-          indexZero {modelName} indexTwo
-        </Trans>
+        {h('for')} {modelName}
       </p>
       <p className="margin-bottom-2 font-body-md line-height-sans-4">
         {h('helpText')}
@@ -171,7 +169,7 @@ const Milestones = () => {
           validateOnMount={false}
           innerRef={formikRef}
         >
-          {(formikProps: FormikProps<PlanBasicsMilestoneTypes>) => {
+          {(formikProps: FormikProps<MilestonesFormType>) => {
             const {
               errors,
               handleSubmit,
@@ -182,14 +180,15 @@ const Milestones = () => {
               values
             } = formikProps;
             const flatErrors = flattenErrors(errors);
-            const handleOnBlur = (e: any, field: string) => {
+
+            const handleOnBlur = (e: string, field: string) => {
               if (e === '') {
                 return;
               }
               try {
                 setFieldValue(field, new Date(e).toISOString());
-                delete errors[field as keyof PlanBasicsMilestoneTypes];
-              } catch (error) {
+                delete errors[field as keyof MilestonesFormType];
+              } catch (err) {
                 setFieldError(field, t('validDate'));
               }
             };
@@ -496,28 +495,7 @@ const Milestones = () => {
                     />
                   </FieldGroup>
 
-                  <div className="grid-col-12">
-                    <Button
-                      type="button"
-                      className="usa-button usa-button--unstyled margin-top-4"
-                      onClick={() => setHasHighLevelNote(!hasHighLevelNote)}
-                    >
-                      <IconAdd className="margin-right-1" aria-hidden />
-                      {h('additionalNote')}
-                    </Button>
-                  </div>
-
-                  {hasHighLevelNote && (
-                    <FieldGroup className="margin-top-4 grid-col-12">
-                      <Field
-                        as={TextAreaField}
-                        className="height-15"
-                        id="ModelType-HighLevelNote"
-                        name="highLevelNote"
-                        label={t('Notes')}
-                      />
-                    </FieldGroup>
-                  )}
+                  <AddNote id="ModelType-HighLevelNote" field="highLevelNote" />
 
                   <FieldGroup
                     scrollElement="phasedIn"
@@ -555,28 +533,7 @@ const Milestones = () => {
                     </Fieldset>
                   </FieldGroup>
 
-                  <div className="grid-col-12">
-                    <Button
-                      type="button"
-                      className="usa-button usa-button--unstyled margin-top-4"
-                      onClick={() => setHasAdditionalNote(!hasAdditionalNote)}
-                    >
-                      <IconAdd className="margin-right-1" aria-hidden />
-                      {h('additionalNote')}
-                    </Button>
-                  </div>
-
-                  {hasAdditionalNote && (
-                    <FieldGroup className="margin-top-4 grid-col-12">
-                      <Field
-                        as={TextAreaField}
-                        className="height-15"
-                        id="ModelType-phasedInNote"
-                        name="phasedInNote"
-                        label={t('notes')}
-                      />
-                    </FieldGroup>
-                  )}
+                  <AddNote id="ModelType-phasedInNote" field="phasedInNote" />
 
                   <div className="margin-top-6 margin-bottom-3">
                     <Button
@@ -590,7 +547,7 @@ const Milestones = () => {
                             if (Object.keys(err).length > 0) {
                               window.scrollTo(0, 0);
                             } else {
-                              handleFormSubmit(values, 'task-list');
+                              handleFormSubmit(values, 'back');
                             }
                           });
                         }

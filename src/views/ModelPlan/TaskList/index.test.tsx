@@ -12,8 +12,6 @@ import {
   ModelStatus
 } from 'types/graphql-global-types';
 
-import { charactersticMockData } from './Characteristics/mock';
-import { participantsAndProvidersData } from './Participants/mock';
 import TaskList from './index';
 
 describe('The Model Plan Task List', () => {
@@ -39,6 +37,7 @@ describe('The Model Plan Task List', () => {
       goal: null,
       testInterventions: null,
       note: null,
+      modifiedDts: null,
       status: 'READY'
     },
     milestones: {
@@ -56,11 +55,12 @@ describe('The Model Plan Task List', () => {
       highLevelNote: null,
       phasedIn: null,
       phasedInNote: null,
+      modifiedDts: null,
       status: 'READY'
     },
     opsEvalAndLearning: [] as any,
-    generalCharacteristics: charactersticMockData as any,
-    participantsAndProviders: participantsAndProvidersData as any,
+    generalCharacteristics: [] as any,
+    participantsAndProviders: [] as any,
     beneficiaries: [] as any,
     documents: [
       {

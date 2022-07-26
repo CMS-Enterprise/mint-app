@@ -21,16 +21,15 @@ import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import teamRoles from 'constants/enums/teamRoles';
 import useUserSearch from 'hooks/useCedarUsers';
-import CreateModelPlanCollaborator from 'queries/CreateModelPlanCollaborator';
-import GetModelPlanCollaborator from 'queries/GetModelPlanCollaborator';
-import { CreateModelPlanCollaborator as CreateCollaboratorsType } from 'queries/types/CreateModelPlanCollaborator';
+import CreateModelPlanCollaborator from 'queries/Collaborators/CreateModelPlanCollaborator';
+import GetModelPlanCollaborator from 'queries/Collaborators/GetModelPlanCollaborator';
+import { CreateModelPlanCollaborator as CreateCollaboratorsType } from 'queries/Collaborators/types/CreateModelPlanCollaborator';
 import {
   GetModelCollaborator,
-  GetModelCollaborator_planCollaboratorByID as GetCollaboratorType
-} from 'queries/types/GetModelCollaborator';
-import { UpdateModelPlanCollaborator as UpdateModelPlanCollaboratorType } from 'queries/types/UpdateModelPlanCollaborator';
-import UpdateModelPlanCollaborator from 'queries/UpdateModelPlanCollaborator';
-import { CollaboratorForm } from 'types/collaborator';
+  GetModelCollaborator_planCollaboratorByID as CollaboratorFormType
+} from 'queries/Collaborators/types/GetModelCollaborator';
+import { UpdateModelPlanCollaborator as UpdateModelPlanCollaboratorType } from 'queries/Collaborators/types/UpdateModelPlanCollaborator';
+import UpdateModelPlanCollaborator from 'queries/Collaborators/UpdateModelPlanCollaborator';
 import flattenErrors from 'utils/flattenErrors';
 import { translateTeamRole } from 'utils/modelPlan';
 import CollaboratorsValidationSchema from 'validations/modelPlanCollaborators';
@@ -42,7 +41,7 @@ const Collaborators = () => {
   const { collaboratorId } = useParams<{ collaboratorId: string }>();
   const { t: h } = useTranslation('draftModelPlan');
   const { t } = useTranslation('newModel');
-  const formikRef = useRef<FormikProps<CollaboratorForm>>(null);
+  const formikRef = useRef<FormikProps<CollaboratorFormType>>(null);
 
   const [searchTerm, setSearchTerm] = useState('');
 
@@ -65,9 +64,9 @@ const Collaborators = () => {
   });
 
   const collaborator =
-    data?.planCollaboratorByID ?? ({} as GetCollaboratorType);
+    data?.planCollaboratorByID ?? ({} as CollaboratorFormType);
 
-  const handleUpdateDraftModelPlan = (formikValues?: CollaboratorForm) => {
+  const handleUpdateDraftModelPlan = (formikValues?: CollaboratorFormType) => {
     const { fullName = '', teamRole = '', euaUserID = '' } = formikValues || {};
 
     if (collaboratorId) {
@@ -107,7 +106,7 @@ const Collaborators = () => {
     }
   };
 
-  const initialValues: CollaboratorForm = collaborator;
+  const initialValues: CollaboratorFormType = collaborator;
 
   return (
     <MainContent>
@@ -130,13 +129,7 @@ const Collaborators = () => {
             validateOnMount={false}
             innerRef={formikRef}
           >
-            {(
-              formikProps: FormikProps<{
-                euaUserId: string;
-                fullName: string;
-                teamRole: string | null;
-              }>
-            ) => {
+            {(formikProps: FormikProps<CollaboratorFormType>) => {
               const {
                 errors,
                 values,
@@ -216,12 +209,18 @@ const Collaborators = () => {
                             <ComboboxPopover>
                               {foundUsers.formattedUsers.length > 0 ? (
                                 <ComboboxList>
-                                  {foundUsers.formattedUsers.map(user => {
-                                    const str = `${user.label}, ${user.value}`;
-                                    return (
-                                      <ComboboxOption key={str} value={str} />
-                                    );
-                                  })}
+                                  {foundUsers.formattedUsers.map(
+                                    (user, index) => {
+                                      const str = `${user.label}, ${user.value}`;
+                                      return (
+                                        <ComboboxOption
+                                          key={str}
+                                          index={index}
+                                          value={str}
+                                        />
+                                      );
+                                    }
+                                  )}
                                 </ComboboxList>
                               ) : (
                                 <span className="display-block margin-1">
@@ -247,7 +246,7 @@ const Collaborators = () => {
                         id="collaborator-role"
                         name="role"
                         value={values.teamRole || ''}
-                        onChange={(e: any) => {
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                           setFieldValue('teamRole', e.target.value);
                         }}
                       >
