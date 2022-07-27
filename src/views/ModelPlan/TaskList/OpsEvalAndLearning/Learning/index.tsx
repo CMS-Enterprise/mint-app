@@ -47,7 +47,13 @@ const Learning = () => {
   const { t: h } = useTranslation('draftModelPlan');
   const { modelID } = useParams<{ modelID: string }>();
 
-  const formikRef = useRef<FormikProps<GetLearningFormType>>(null);
+  // Omitting readyForReviewBy and readyForReviewDts from initialValues and getting submitted through Formik
+  type InitialValueType = Omit<
+    GetLearningFormType,
+    'readyForReviewBy' | 'readyForReviewDts'
+  >;
+
+  const formikRef = useRef<FormikProps<InitialValueType>>(null);
   const history = useHistory();
 
   const { data, loading, error } = useQuery<
@@ -67,6 +73,8 @@ const Learning = () => {
     modelLearningSystemsOther,
     modelLearningSystemsNote,
     anticipatedChallenges,
+    readyForReviewBy,
+    readyForReviewDts,
     status
   } = data?.modelPlan?.opsEvalAndLearning || ({} as GetLearningFormType);
 
@@ -77,7 +85,7 @@ const Learning = () => {
   );
 
   const handleFormSubmit = (
-    formikValues: GetLearningFormType,
+    formikValues: InitialValueType,
     redirect?: 'next' | 'back' | 'task-list'
   ) => {
     const { id: updateId, __typename, ...changeValues } = formikValues;
@@ -103,7 +111,7 @@ const Learning = () => {
       });
   };
 
-  const initialValues: GetLearningFormType = {
+  const initialValues: InitialValueType = {
     __typename: 'PlanOpsEvalAndLearning',
     id: id ?? '',
     iddocSupport: iddocSupport ?? null,
@@ -158,7 +166,7 @@ const Learning = () => {
         enableReinitialize
         innerRef={formikRef}
       >
-        {(formikProps: FormikProps<GetLearningFormType>) => {
+        {(formikProps: FormikProps<InitialValueType>) => {
           const {
             errors,
             handleSubmit,
@@ -295,6 +303,8 @@ const Learning = () => {
                   sectionName={t('heading')}
                   status={values.status}
                   setFieldValue={setFieldValue}
+                  readyForReviewBy={readyForReviewBy}
+                  readyForReviewDts={readyForReviewDts}
                 />
 
                 <div className="margin-top-6 margin-bottom-3">
