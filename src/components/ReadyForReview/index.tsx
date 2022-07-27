@@ -28,6 +28,10 @@ const ReadyForReview = ({
   readyForReviewDts
 }: ReadyForReviewType) => {
   const { t } = useTranslation('draftModelPlan');
+  // Status state is checked before rendering
+  // This is so that when user unclicks the "Ready for review" checkbox, it will not cause the `markedReady` copy to disappear
+  const [persistentCopy] = useState(status === TaskStatus.READY_FOR_REVIEW);
+
   return (
     <FieldGroup className="margin-top-8 margin-bottom-3">
       <SummaryBox heading="" className="bg-white border-base-light padding-2">
@@ -44,12 +48,13 @@ const ReadyForReview = ({
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             if (e.target.checked) {
               setFieldValue('status', TaskStatusInput.READY_FOR_REVIEW);
+              console.log(status);
             } else {
               setFieldValue('status', TaskStatusInput.IN_PROGRESS);
             }
           }}
         />
-        {readyForReviewBy && readyForReviewDts && (
+        {persistentCopy && readyForReviewBy && readyForReviewDts && (
           <p className="margin-top-1 margin-bottom-0 margin-left-4 text-base">
             {t('markedReady', {
               reviewer: `${readyForReviewBy}`
