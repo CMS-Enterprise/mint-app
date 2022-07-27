@@ -160,12 +160,12 @@ type ComplexityRoot struct {
 		Announced               func(childComplexity int) int
 		ApplicationsEnd         func(childComplexity int) int
 		ApplicationsStart       func(childComplexity int) int
+		CMSOther                func(childComplexity int) int
 		ClearanceEnds           func(childComplexity int) int
 		ClearanceStarts         func(childComplexity int) int
 		CmmiGroups              func(childComplexity int) int
 		CmsCenters              func(childComplexity int) int
-		CmsOther                func(childComplexity int) int
-		CompleteIcip            func(childComplexity int) int
+		CompleteICIP            func(childComplexity int) int
 		CreatedBy               func(childComplexity int) int
 		CreatedDts              func(childComplexity int) int
 		Goal                    func(childComplexity int) int
@@ -724,23 +724,9 @@ type MutationResolver interface {
 	UpdatePlanPayments(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanPayments, error)
 }
 type PlanBasicsResolver interface {
-	ModelCategory(ctx context.Context, obj *models.PlanBasics) (*models.ModelCategory, error)
 	CmsCenters(ctx context.Context, obj *models.PlanBasics) ([]model.CMSCenter, error)
-	CmsOther(ctx context.Context, obj *models.PlanBasics) (*string, error)
-	CmmiGroups(ctx context.Context, obj *models.PlanBasics) ([]model.CMMIGroup, error)
 
-	CompleteIcip(ctx context.Context, obj *models.PlanBasics) (*time.Time, error)
-	ClearanceStarts(ctx context.Context, obj *models.PlanBasics) (*time.Time, error)
-	ClearanceEnds(ctx context.Context, obj *models.PlanBasics) (*time.Time, error)
-	Announced(ctx context.Context, obj *models.PlanBasics) (*time.Time, error)
-	ApplicationsStart(ctx context.Context, obj *models.PlanBasics) (*time.Time, error)
-	ApplicationsEnd(ctx context.Context, obj *models.PlanBasics) (*time.Time, error)
-	PerformancePeriodStarts(ctx context.Context, obj *models.PlanBasics) (*time.Time, error)
-	PerformancePeriodEnds(ctx context.Context, obj *models.PlanBasics) (*time.Time, error)
-	WrapUpEnds(ctx context.Context, obj *models.PlanBasics) (*time.Time, error)
-	HighLevelNote(ctx context.Context, obj *models.PlanBasics) (*string, error)
-	PhasedIn(ctx context.Context, obj *models.PlanBasics) (*bool, error)
-	PhasedInNote(ctx context.Context, obj *models.PlanBasics) (*string, error)
+	CmmiGroups(ctx context.Context, obj *models.PlanBasics) ([]model.CMMIGroup, error)
 }
 type PlanBeneficiariesResolver interface {
 	Beneficiaries(ctx context.Context, obj *models.PlanBeneficiaries) ([]model.BeneficiariesType, error)
@@ -1576,6 +1562,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.PlanBasics.ApplicationsStart(childComplexity), true
 
+	case "PlanBasics.cmsOther":
+		if e.complexity.PlanBasics.CMSOther == nil {
+			break
+		}
+
+		return e.complexity.PlanBasics.CMSOther(childComplexity), true
+
 	case "PlanBasics.clearanceEnds":
 		if e.complexity.PlanBasics.ClearanceEnds == nil {
 			break
@@ -1604,19 +1597,12 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.PlanBasics.CmsCenters(childComplexity), true
 
-	case "PlanBasics.cmsOther":
-		if e.complexity.PlanBasics.CmsOther == nil {
-			break
-		}
-
-		return e.complexity.PlanBasics.CmsOther(childComplexity), true
-
 	case "PlanBasics.completeICIP":
-		if e.complexity.PlanBasics.CompleteIcip == nil {
+		if e.complexity.PlanBasics.CompleteICIP == nil {
 			break
 		}
 
-		return e.complexity.PlanBasics.CompleteIcip(childComplexity), true
+		return e.complexity.PlanBasics.CompleteICIP(childComplexity), true
 
 	case "PlanBasics.createdBy":
 		if e.complexity.PlanBasics.CreatedBy == nil {
@@ -13970,7 +13956,7 @@ func (ec *executionContext) _PlanBasics_modelCategory(ctx context.Context, field
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.PlanBasics().ModelCategory(rctx, obj)
+		return obj.ModelCategory, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -13988,8 +13974,8 @@ func (ec *executionContext) fieldContext_PlanBasics_modelCategory(ctx context.Co
 	fc = &graphql.FieldContext{
 		Object:     "PlanBasics",
 		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
+		IsMethod:   false,
+		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type ModelCategory does not have child fields")
 		},
@@ -14055,7 +14041,7 @@ func (ec *executionContext) _PlanBasics_cmsOther(ctx context.Context, field grap
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.PlanBasics().CmsOther(rctx, obj)
+		return obj.CMSOther, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -14073,8 +14059,8 @@ func (ec *executionContext) fieldContext_PlanBasics_cmsOther(ctx context.Context
 	fc = &graphql.FieldContext{
 		Object:     "PlanBasics",
 		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
+		IsMethod:   false,
+		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type String does not have child fields")
 		},
@@ -14345,7 +14331,7 @@ func (ec *executionContext) _PlanBasics_completeICIP(ctx context.Context, field 
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.PlanBasics().CompleteIcip(rctx, obj)
+		return obj.CompleteICIP, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -14363,8 +14349,8 @@ func (ec *executionContext) fieldContext_PlanBasics_completeICIP(ctx context.Con
 	fc = &graphql.FieldContext{
 		Object:     "PlanBasics",
 		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
+		IsMethod:   false,
+		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type Time does not have child fields")
 		},
@@ -14386,7 +14372,7 @@ func (ec *executionContext) _PlanBasics_clearanceStarts(ctx context.Context, fie
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.PlanBasics().ClearanceStarts(rctx, obj)
+		return obj.ClearanceStarts, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -14404,8 +14390,8 @@ func (ec *executionContext) fieldContext_PlanBasics_clearanceStarts(ctx context.
 	fc = &graphql.FieldContext{
 		Object:     "PlanBasics",
 		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
+		IsMethod:   false,
+		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type Time does not have child fields")
 		},
@@ -14427,7 +14413,7 @@ func (ec *executionContext) _PlanBasics_clearanceEnds(ctx context.Context, field
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.PlanBasics().ClearanceEnds(rctx, obj)
+		return obj.ClearanceEnds, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -14445,8 +14431,8 @@ func (ec *executionContext) fieldContext_PlanBasics_clearanceEnds(ctx context.Co
 	fc = &graphql.FieldContext{
 		Object:     "PlanBasics",
 		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
+		IsMethod:   false,
+		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type Time does not have child fields")
 		},
@@ -14468,7 +14454,7 @@ func (ec *executionContext) _PlanBasics_announced(ctx context.Context, field gra
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.PlanBasics().Announced(rctx, obj)
+		return obj.Announced, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -14486,8 +14472,8 @@ func (ec *executionContext) fieldContext_PlanBasics_announced(ctx context.Contex
 	fc = &graphql.FieldContext{
 		Object:     "PlanBasics",
 		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
+		IsMethod:   false,
+		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type Time does not have child fields")
 		},
@@ -14509,7 +14495,7 @@ func (ec *executionContext) _PlanBasics_applicationsStart(ctx context.Context, f
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.PlanBasics().ApplicationsStart(rctx, obj)
+		return obj.ApplicationsStart, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -14527,8 +14513,8 @@ func (ec *executionContext) fieldContext_PlanBasics_applicationsStart(ctx contex
 	fc = &graphql.FieldContext{
 		Object:     "PlanBasics",
 		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
+		IsMethod:   false,
+		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type Time does not have child fields")
 		},
@@ -14550,7 +14536,7 @@ func (ec *executionContext) _PlanBasics_applicationsEnd(ctx context.Context, fie
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.PlanBasics().ApplicationsEnd(rctx, obj)
+		return obj.ApplicationsEnd, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -14568,8 +14554,8 @@ func (ec *executionContext) fieldContext_PlanBasics_applicationsEnd(ctx context.
 	fc = &graphql.FieldContext{
 		Object:     "PlanBasics",
 		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
+		IsMethod:   false,
+		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type Time does not have child fields")
 		},
@@ -14591,7 +14577,7 @@ func (ec *executionContext) _PlanBasics_performancePeriodStarts(ctx context.Cont
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.PlanBasics().PerformancePeriodStarts(rctx, obj)
+		return obj.PerformancePeriodStarts, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -14609,8 +14595,8 @@ func (ec *executionContext) fieldContext_PlanBasics_performancePeriodStarts(ctx 
 	fc = &graphql.FieldContext{
 		Object:     "PlanBasics",
 		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
+		IsMethod:   false,
+		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type Time does not have child fields")
 		},
@@ -14632,7 +14618,7 @@ func (ec *executionContext) _PlanBasics_performancePeriodEnds(ctx context.Contex
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.PlanBasics().PerformancePeriodEnds(rctx, obj)
+		return obj.PerformancePeriodEnds, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -14650,8 +14636,8 @@ func (ec *executionContext) fieldContext_PlanBasics_performancePeriodEnds(ctx co
 	fc = &graphql.FieldContext{
 		Object:     "PlanBasics",
 		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
+		IsMethod:   false,
+		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type Time does not have child fields")
 		},
@@ -14673,7 +14659,7 @@ func (ec *executionContext) _PlanBasics_wrapUpEnds(ctx context.Context, field gr
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.PlanBasics().WrapUpEnds(rctx, obj)
+		return obj.WrapUpEnds, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -14691,8 +14677,8 @@ func (ec *executionContext) fieldContext_PlanBasics_wrapUpEnds(ctx context.Conte
 	fc = &graphql.FieldContext{
 		Object:     "PlanBasics",
 		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
+		IsMethod:   false,
+		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type Time does not have child fields")
 		},
@@ -14714,7 +14700,7 @@ func (ec *executionContext) _PlanBasics_highLevelNote(ctx context.Context, field
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.PlanBasics().HighLevelNote(rctx, obj)
+		return obj.HighLevelNote, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -14732,8 +14718,8 @@ func (ec *executionContext) fieldContext_PlanBasics_highLevelNote(ctx context.Co
 	fc = &graphql.FieldContext{
 		Object:     "PlanBasics",
 		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
+		IsMethod:   false,
+		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type String does not have child fields")
 		},
@@ -14755,7 +14741,7 @@ func (ec *executionContext) _PlanBasics_phasedIn(ctx context.Context, field grap
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.PlanBasics().PhasedIn(rctx, obj)
+		return obj.PhasedIn, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -14773,8 +14759,8 @@ func (ec *executionContext) fieldContext_PlanBasics_phasedIn(ctx context.Context
 	fc = &graphql.FieldContext{
 		Object:     "PlanBasics",
 		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
+		IsMethod:   false,
+		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type Boolean does not have child fields")
 		},
@@ -14796,7 +14782,7 @@ func (ec *executionContext) _PlanBasics_phasedInNote(ctx context.Context, field 
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.PlanBasics().PhasedInNote(rctx, obj)
+		return obj.PhasedInNote, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -14814,8 +14800,8 @@ func (ec *executionContext) fieldContext_PlanBasics_phasedInNote(ctx context.Con
 	fc = &graphql.FieldContext{
 		Object:     "PlanBasics",
 		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
+		IsMethod:   false,
+		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type String does not have child fields")
 		},
@@ -37536,22 +37522,9 @@ func (ec *executionContext) _PlanBasics(ctx context.Context, sel ast.SelectionSe
 				atomic.AddUint32(&invalids, 1)
 			}
 		case "modelCategory":
-			field := field
 
-			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._PlanBasics_modelCategory(ctx, field, obj)
-				return res
-			}
+			out.Values[i] = ec._PlanBasics_modelCategory(ctx, field, obj)
 
-			out.Concurrently(i, func() graphql.Marshaler {
-				return innerFunc(ctx)
-
-			})
 		case "cmsCenters":
 			field := field
 
@@ -37573,22 +37546,9 @@ func (ec *executionContext) _PlanBasics(ctx context.Context, sel ast.SelectionSe
 
 			})
 		case "cmsOther":
-			field := field
 
-			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._PlanBasics_cmsOther(ctx, field, obj)
-				return res
-			}
+			out.Values[i] = ec._PlanBasics_cmsOther(ctx, field, obj)
 
-			out.Concurrently(i, func() graphql.Marshaler {
-				return innerFunc(ctx)
-
-			})
 		case "cmmiGroups":
 			field := field
 
@@ -37630,209 +37590,53 @@ func (ec *executionContext) _PlanBasics(ctx context.Context, sel ast.SelectionSe
 			out.Values[i] = ec._PlanBasics_note(ctx, field, obj)
 
 		case "completeICIP":
-			field := field
 
-			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._PlanBasics_completeICIP(ctx, field, obj)
-				return res
-			}
+			out.Values[i] = ec._PlanBasics_completeICIP(ctx, field, obj)
 
-			out.Concurrently(i, func() graphql.Marshaler {
-				return innerFunc(ctx)
-
-			})
 		case "clearanceStarts":
-			field := field
 
-			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._PlanBasics_clearanceStarts(ctx, field, obj)
-				return res
-			}
+			out.Values[i] = ec._PlanBasics_clearanceStarts(ctx, field, obj)
 
-			out.Concurrently(i, func() graphql.Marshaler {
-				return innerFunc(ctx)
-
-			})
 		case "clearanceEnds":
-			field := field
 
-			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._PlanBasics_clearanceEnds(ctx, field, obj)
-				return res
-			}
+			out.Values[i] = ec._PlanBasics_clearanceEnds(ctx, field, obj)
 
-			out.Concurrently(i, func() graphql.Marshaler {
-				return innerFunc(ctx)
-
-			})
 		case "announced":
-			field := field
 
-			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._PlanBasics_announced(ctx, field, obj)
-				return res
-			}
+			out.Values[i] = ec._PlanBasics_announced(ctx, field, obj)
 
-			out.Concurrently(i, func() graphql.Marshaler {
-				return innerFunc(ctx)
-
-			})
 		case "applicationsStart":
-			field := field
 
-			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._PlanBasics_applicationsStart(ctx, field, obj)
-				return res
-			}
+			out.Values[i] = ec._PlanBasics_applicationsStart(ctx, field, obj)
 
-			out.Concurrently(i, func() graphql.Marshaler {
-				return innerFunc(ctx)
-
-			})
 		case "applicationsEnd":
-			field := field
 
-			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._PlanBasics_applicationsEnd(ctx, field, obj)
-				return res
-			}
+			out.Values[i] = ec._PlanBasics_applicationsEnd(ctx, field, obj)
 
-			out.Concurrently(i, func() graphql.Marshaler {
-				return innerFunc(ctx)
-
-			})
 		case "performancePeriodStarts":
-			field := field
 
-			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._PlanBasics_performancePeriodStarts(ctx, field, obj)
-				return res
-			}
+			out.Values[i] = ec._PlanBasics_performancePeriodStarts(ctx, field, obj)
 
-			out.Concurrently(i, func() graphql.Marshaler {
-				return innerFunc(ctx)
-
-			})
 		case "performancePeriodEnds":
-			field := field
 
-			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._PlanBasics_performancePeriodEnds(ctx, field, obj)
-				return res
-			}
+			out.Values[i] = ec._PlanBasics_performancePeriodEnds(ctx, field, obj)
 
-			out.Concurrently(i, func() graphql.Marshaler {
-				return innerFunc(ctx)
-
-			})
 		case "wrapUpEnds":
-			field := field
 
-			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._PlanBasics_wrapUpEnds(ctx, field, obj)
-				return res
-			}
+			out.Values[i] = ec._PlanBasics_wrapUpEnds(ctx, field, obj)
 
-			out.Concurrently(i, func() graphql.Marshaler {
-				return innerFunc(ctx)
-
-			})
 		case "highLevelNote":
-			field := field
 
-			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._PlanBasics_highLevelNote(ctx, field, obj)
-				return res
-			}
+			out.Values[i] = ec._PlanBasics_highLevelNote(ctx, field, obj)
 
-			out.Concurrently(i, func() graphql.Marshaler {
-				return innerFunc(ctx)
-
-			})
 		case "phasedIn":
-			field := field
 
-			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._PlanBasics_phasedIn(ctx, field, obj)
-				return res
-			}
+			out.Values[i] = ec._PlanBasics_phasedIn(ctx, field, obj)
 
-			out.Concurrently(i, func() graphql.Marshaler {
-				return innerFunc(ctx)
-
-			})
 		case "phasedInNote":
-			field := field
 
-			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._PlanBasics_phasedInNote(ctx, field, obj)
-				return res
-			}
+			out.Values[i] = ec._PlanBasics_phasedInNote(ctx, field, obj)
 
-			out.Concurrently(i, func() graphql.Marshaler {
-				return innerFunc(ctx)
-
-			})
 		case "createdBy":
 
 			out.Values[i] = ec._PlanBasics_createdBy(ctx, field, obj)
