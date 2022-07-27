@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { ModelCategory, CMSCenter, CMMIGroup, ModelStatus, ModelType, TaskStatus, DiscussionStatus } from "./../../types/graphql-global-types";
+import { ModelStatus, ModelType, TaskStatus, DiscussionStatus } from "./../../types/graphql-global-types";
 
 // ====================================================
 // GraphQL query operation: GetModelPlan
@@ -18,26 +18,6 @@ export interface GetModelPlan_modelPlan_basics {
   goal: string | null;
   testInterventions: string | null;
   note: string | null;
-  modifiedDts: Time | null;
-  status: TaskStatus;
-}
-
-export interface GetModelPlan_modelPlan_milestones {
-  __typename: "PlanMilestones";
-  id: UUID;
-  modelPlanID: UUID;
-  completeICIP: Time | null;
-  clearanceStarts: Time | null;
-  clearanceEnds: Time | null;
-  announced: Time | null;
-  applicationsStart: Time | null;
-  applicationsEnd: Time | null;
-  performancePeriodStarts: Time | null;
-  performancePeriodEnds: Time | null;
-  highLevelNote: string | null;
-  wrapUpEnds: Time | null;
-  phasedIn: boolean | null;
-  phasedInNote: string | null;
   modifiedDts: Time | null;
   status: TaskStatus;
 }
@@ -112,15 +92,10 @@ export interface GetModelPlan_modelPlan {
   __typename: "ModelPlan";
   id: UUID;
   modelName: string;
-  modelCategory: ModelCategory | null;
-  cmsCenters: CMSCenter[];
-  cmsOther: string | null;
-  cmmiGroups: CMMIGroup[];
   modifiedDts: Time | null;
   archived: boolean;
   status: ModelStatus;
   basics: GetModelPlan_modelPlan_basics;
-  milestones: GetModelPlan_modelPlan_milestones;
   documents: GetModelPlan_modelPlan_documents[];
   discussions: GetModelPlan_modelPlan_discussions[];
   generalCharacteristics: GetModelPlan_modelPlan_generalCharacteristics;

@@ -5,21 +5,22 @@ export default gql`
     modelPlan(id: $id) {
       id
       modelName
-      milestones {
-        id
-        completeICIP
-        clearanceStarts
-        clearanceEnds
-        announced
-        applicationsStart
-        applicationsEnd
-        performancePeriodStarts
-        performancePeriodEnds
-        highLevelNote
-        wrapUpEnds
-        phasedIn
-        phasedInNote
-      }
+      # TODO: GARY MILESTONES
+      # milestones {
+      #   id
+      #   completeICIP
+      #   clearanceStarts
+      #   clearanceEnds
+      #   announced
+      #   applicationsStart
+      #   applicationsEnd
+      #   performancePeriodStarts
+      #   performancePeriodEnds
+      #   highLevelNote
+      #   wrapUpEnds
+      #   phasedIn
+      #   phasedInNote
+      # }
     }
   }
 `;

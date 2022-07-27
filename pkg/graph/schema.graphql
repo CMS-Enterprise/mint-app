@@ -29,17 +29,12 @@ ModelPlan represent the data point for plans about a model. It is the central da
 type ModelPlan {
   id: UUID!
   modelName: String!
-  modelCategory: ModelCategory
-  cmsCenters: [CMSCenter!]!
-  cmsOther: String
-  cmmiGroups: [CMMIGroup!]!
   archived: Boolean!
   createdBy: String!
   createdDts: Time!
   modifiedBy: String
   modifiedDts: Time
   basics: PlanBasics!
-  milestones: PlanMilestones!
   generalCharacteristics: PlanGeneralCharacteristics!
   participantsAndProviders: PlanParticipantsAndProviders!
   beneficiaries: PlanBeneficiaries!
@@ -59,10 +54,6 @@ https://gqlgen.com/reference/changesets/
 """
 input ModelPlanChanges @goModel(model: "map[string]interface{}") {
   modelName: String
-  modelCategory: ModelCategory
-  cmsCenters: [CMSCenter!]
-  cmsOther: String
-  cmmiGroups: [CMMIGroup!]
   someNumbers: [Int!]
   archived: Boolean
   status: ModelStatus
@@ -205,11 +196,30 @@ type PlanBasics {
   id: UUID!
   modelPlanID: UUID!
 
+  modelCategory: ModelCategory
+  cmsCenters: [CMSCenter!]!
+  cmsOther: String
+  cmmiGroups: [CMMIGroup!]!
   modelType: ModelType
   problem: String
   goal: String
   testInterventions: String
   note: String
+
+  # Milestones
+  completeICIP: Time
+  clearanceStarts: Time
+  clearanceEnds: Time
+  announced: Time
+  applicationsStart: Time
+  applicationsEnd: Time
+  performancePeriodStarts: Time
+  performancePeriodEnds: Time
+  wrapUpEnds: Time
+  highLevelNote: String
+  phasedIn: Boolean
+  phasedInNote: String
+
   createdBy: String!
   createdDts: Time!
   modifiedBy: String
@@ -223,11 +233,29 @@ Fields explicitly set with NULL will be unset, and omitted fields will be left u
 https://gqlgen.com/reference/changesets/
 """
 input PlanBasicsChanges @goModel(model: "map[string]interface{}") {
+  modelCategory: ModelCategory
+  cmsCenters: [CMSCenter!]
+  cmsOther: String
+  cmmiGroups: [CMMIGroup!]
   modelType: ModelType
   problem: String
   goal: String
   testInterventions: String
   note: String
+
+  # Milestones
+  completeICIP: Time
+  clearanceStarts: Time
+  clearanceEnds: Time
+  announced: Time
+  applicationsStart: Time
+  applicationsEnd: Time
+  performancePeriodStarts: Time
+  performancePeriodEnds: Time
+  wrapUpEnds: Time
+  highLevelNote: String
+  phasedIn: Boolean
+  phasedInNote: String
 }
 
 """
@@ -237,61 +265,6 @@ type UserInfo {
   commonName: String!
   email: String!
   euaUserId: String!
-}
-"""
-Represents plan milestones
-"""
-type PlanMilestones {
-  id: UUID!
-  modelPlanID: UUID!
-
-  completeICIP: Time
-  clearanceStarts: Time
-  clearanceEnds: Time
-
-  announced: Time
-
-  applicationsStart: Time
-  applicationsEnd: Time
-
-  performancePeriodStarts: Time
-  performancePeriodEnds: Time
-  wrapUpEnds: Time
-  highLevelNote: String
-
-  phasedIn: Boolean
-  phasedInNote: String
-
-
-  createdBy: String!
-  createdDts: Time!
-  modifiedBy: String
-  modifiedDts: Time
-  status: TaskStatus!
-}
-
-"""
-PlanMilestoneChanges represents the possible changes you can make to a Plan Milestones object when updating it.
-Fields explicitly set with NULL will be unset, and omitted fields will be left unchanged.
-https://gqlgen.com/reference/changesets/
-"""
-input PlanMilestoneChanges @goModel(model: "map[string]interface{}") {
-  completeICIP: Time
-  clearanceStarts: Time
-  clearanceEnds: Time
-
-  announced: Time
-
-  applicationsStart: Time
-  applicationsEnd: Time
-
-  performancePeriodStarts: Time
-  performancePeriodEnds: Time
-  wrapUpEnds: Time
-  highLevelNote: String
-
-  phasedIn: Boolean
-  phasedInNote: String
 }
 
 """
@@ -1342,9 +1315,6 @@ deletePlanCollaborator(id: UUID!): PlanCollaborator!
 @hasRole(role: MINT_BASE_USER)
 
 updatePlanBasics(id: UUID!, changes: PlanBasicsChanges!): PlanBasics!
-@hasRole(role: MINT_BASE_USER)
-
-updatePlanMilestones(id: UUID!, changes: PlanMilestoneChanges!): PlanMilestones!
 @hasRole(role: MINT_BASE_USER)
 
 updatePlanGeneralCharacteristics(id: UUID!, changes: PlanGeneralCharacteristicsChanges!): PlanGeneralCharacteristics!

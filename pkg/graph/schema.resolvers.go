@@ -5,6 +5,8 @@ package graph
 
 import (
 	"context"
+	"fmt"
+	"time"
 
 	"github.com/google/uuid"
 
@@ -16,32 +18,12 @@ import (
 	"github.com/cmsgov/mint-app/pkg/models"
 )
 
-// CmsCenters is the resolver for the cmsCenters field.
-func (r *modelPlanResolver) CmsCenters(ctx context.Context, obj *models.ModelPlan) ([]model.CMSCenter, error) {
-	cmsCenters := models.ConvertEnums[model.CMSCenter](obj.CMSCenters)
-	return cmsCenters, nil
-}
-
-// CmmiGroups is the resolver for the cmmiGroups field.
-func (r *modelPlanResolver) CmmiGroups(ctx context.Context, obj *models.ModelPlan) ([]model.CMMIGroup, error) {
-	cmmiGroups := models.ConvertEnums[model.CMMIGroup](obj.CMMIGroups)
-	return cmmiGroups, nil
-}
-
 // Basics is the resolver for the basics field.
 func (r *modelPlanResolver) Basics(ctx context.Context, obj *models.ModelPlan) (*models.PlanBasics, error) {
 	logger := appcontext.ZLogger(ctx)
 	principal := appcontext.Principal(ctx).ID()
 
 	return resolvers.PlanBasicsGetByModelPlanID(logger, &principal, obj.ID, r.store)
-}
-
-// Milestones is the resolver for the milestones field.
-func (r *modelPlanResolver) Milestones(ctx context.Context, obj *models.ModelPlan) (*models.PlanMilestones, error) {
-	logger := appcontext.ZLogger(ctx)
-	principal := appcontext.Principal(ctx).ID()
-
-	return resolvers.FetchPlanMilestonesByModelPlanID(logger, &principal, obj.ID, r.store)
 }
 
 // GeneralCharacteristics is the resolver for the generalCharacteristics field.
@@ -168,14 +150,6 @@ func (r *mutationResolver) UpdatePlanBasics(ctx context.Context, id uuid.UUID, c
 	logger := appcontext.ZLogger(ctx)
 
 	return resolvers.UpdatePlanBasics(logger, id, changes, principal, r.store)
-}
-
-// UpdatePlanMilestones is the resolver for the updatePlanMilestones field.
-func (r *mutationResolver) UpdatePlanMilestones(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanMilestones, error) {
-	principal := appcontext.Principal(ctx).ID()
-	logger := appcontext.ZLogger(ctx)
-
-	return resolvers.UpdatePlanMilestones(logger, id, changes, principal, r.store)
 }
 
 // UpdatePlanGeneralCharacteristics is the resolver for the updatePlanGeneralCharacteristics field.
@@ -328,6 +302,86 @@ func (r *mutationResolver) UpdatePlanPayments(ctx context.Context, id uuid.UUID,
 	principal := appcontext.Principal(ctx).ID()
 
 	return resolvers.PlanPaymentsUpdate(logger, r.store, id, changes, principal)
+}
+
+// ModelCategory is the resolver for the modelCategory field.
+func (r *planBasicsResolver) ModelCategory(ctx context.Context, obj *models.PlanBasics) (*models.ModelCategory, error) {
+	panic(fmt.Errorf("not implemented"))
+}
+
+// CmsCenters is the resolver for the cmsCenters field.
+func (r *planBasicsResolver) CmsCenters(ctx context.Context, obj *models.PlanBasics) ([]model.CMSCenter, error) {
+	panic(fmt.Errorf("not implemented"))
+}
+
+// CmsOther is the resolver for the cmsOther field.
+func (r *planBasicsResolver) CmsOther(ctx context.Context, obj *models.PlanBasics) (*string, error) {
+	panic(fmt.Errorf("not implemented"))
+}
+
+// CmmiGroups is the resolver for the cmmiGroups field.
+func (r *planBasicsResolver) CmmiGroups(ctx context.Context, obj *models.PlanBasics) ([]model.CMMIGroup, error) {
+	panic(fmt.Errorf("not implemented"))
+}
+
+// CompleteIcip is the resolver for the completeICIP field.
+func (r *planBasicsResolver) CompleteIcip(ctx context.Context, obj *models.PlanBasics) (*time.Time, error) {
+	panic(fmt.Errorf("not implemented"))
+}
+
+// ClearanceStarts is the resolver for the clearanceStarts field.
+func (r *planBasicsResolver) ClearanceStarts(ctx context.Context, obj *models.PlanBasics) (*time.Time, error) {
+	panic(fmt.Errorf("not implemented"))
+}
+
+// ClearanceEnds is the resolver for the clearanceEnds field.
+func (r *planBasicsResolver) ClearanceEnds(ctx context.Context, obj *models.PlanBasics) (*time.Time, error) {
+	panic(fmt.Errorf("not implemented"))
+}
+
+// Announced is the resolver for the announced field.
+func (r *planBasicsResolver) Announced(ctx context.Context, obj *models.PlanBasics) (*time.Time, error) {
+	panic(fmt.Errorf("not implemented"))
+}
+
+// ApplicationsStart is the resolver for the applicationsStart field.
+func (r *planBasicsResolver) ApplicationsStart(ctx context.Context, obj *models.PlanBasics) (*time.Time, error) {
+	panic(fmt.Errorf("not implemented"))
+}
+
+// ApplicationsEnd is the resolver for the applicationsEnd field.
+func (r *planBasicsResolver) ApplicationsEnd(ctx context.Context, obj *models.PlanBasics) (*time.Time, error) {
+	panic(fmt.Errorf("not implemented"))
+}
+
+// PerformancePeriodStarts is the resolver for the performancePeriodStarts field.
+func (r *planBasicsResolver) PerformancePeriodStarts(ctx context.Context, obj *models.PlanBasics) (*time.Time, error) {
+	panic(fmt.Errorf("not implemented"))
+}
+
+// PerformancePeriodEnds is the resolver for the performancePeriodEnds field.
+func (r *planBasicsResolver) PerformancePeriodEnds(ctx context.Context, obj *models.PlanBasics) (*time.Time, error) {
+	panic(fmt.Errorf("not implemented"))
+}
+
+// WrapUpEnds is the resolver for the wrapUpEnds field.
+func (r *planBasicsResolver) WrapUpEnds(ctx context.Context, obj *models.PlanBasics) (*time.Time, error) {
+	panic(fmt.Errorf("not implemented"))
+}
+
+// HighLevelNote is the resolver for the highLevelNote field.
+func (r *planBasicsResolver) HighLevelNote(ctx context.Context, obj *models.PlanBasics) (*string, error) {
+	panic(fmt.Errorf("not implemented"))
+}
+
+// PhasedIn is the resolver for the phasedIn field.
+func (r *planBasicsResolver) PhasedIn(ctx context.Context, obj *models.PlanBasics) (*bool, error) {
+	panic(fmt.Errorf("not implemented"))
+}
+
+// PhasedInNote is the resolver for the phasedInNote field.
+func (r *planBasicsResolver) PhasedInNote(ctx context.Context, obj *models.PlanBasics) (*string, error) {
+	panic(fmt.Errorf("not implemented"))
 }
 
 // Beneficiaries is the resolver for the beneficiaries field.
@@ -821,6 +875,9 @@ func (r *Resolver) ModelPlan() generated.ModelPlanResolver { return &modelPlanRe
 // Mutation returns generated.MutationResolver implementation.
 func (r *Resolver) Mutation() generated.MutationResolver { return &mutationResolver{r} }
 
+// PlanBasics returns generated.PlanBasicsResolver implementation.
+func (r *Resolver) PlanBasics() generated.PlanBasicsResolver { return &planBasicsResolver{r} }
+
 // PlanBeneficiaries returns generated.PlanBeneficiariesResolver implementation.
 func (r *Resolver) PlanBeneficiaries() generated.PlanBeneficiariesResolver {
 	return &planBeneficiariesResolver{r}
@@ -866,6 +923,7 @@ func (r *Resolver) UserInfo() generated.UserInfoResolver { return &userInfoResol
 
 type modelPlanResolver struct{ *Resolver }
 type mutationResolver struct{ *Resolver }
+type planBasicsResolver struct{ *Resolver }
 type planBeneficiariesResolver struct{ *Resolver }
 type planDiscussionResolver struct{ *Resolver }
 type planDocumentResolver struct{ *Resolver }
@@ -877,3 +935,30 @@ type planPaymentsResolver struct{ *Resolver }
 type queryResolver struct{ *Resolver }
 type subscriptionResolver struct{ *Resolver }
 type userInfoResolver struct{ *Resolver }
+
+// !!! WARNING !!!
+// The code below was going to be deleted when updating resolvers. It has been copied here so you have
+// one last chance to move it out of harms way if you want. There are two reasons this happens:
+//  - When renaming or deleting a resolver the old code will be put in here. You can safely delete
+//    it when you're done.
+//  - You have helper methods in this file. Move them out to keep these resolver files clean.
+func (r *modelPlanResolver) CmsCenters(ctx context.Context, obj *models.ModelPlan) ([]model.CMSCenter, error) {
+	cmsCenters := models.ConvertEnums[model.CMSCenter](obj.CMSCenters)
+	return cmsCenters, nil
+}
+func (r *modelPlanResolver) CmmiGroups(ctx context.Context, obj *models.ModelPlan) ([]model.CMMIGroup, error) {
+	cmmiGroups := models.ConvertEnums[model.CMMIGroup](obj.CMMIGroups)
+	return cmmiGroups, nil
+}
+func (r *modelPlanResolver) Milestones(ctx context.Context, obj *models.ModelPlan) (*models.PlanMilestones, error) {
+	logger := appcontext.ZLogger(ctx)
+	principal := appcontext.Principal(ctx).ID()
+
+	return resolvers.FetchPlanMilestonesByModelPlanID(logger, &principal, obj.ID, r.store)
+}
+func (r *mutationResolver) UpdatePlanMilestones(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanMilestones, error) {
+	principal := appcontext.Principal(ctx).ID()
+	logger := appcontext.ZLogger(ctx)
+
+	return resolvers.UpdatePlanMilestones(logger, id, changes, principal, r.store)
+}

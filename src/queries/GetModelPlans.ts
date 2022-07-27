@@ -5,9 +5,10 @@ export default gql`
     modelPlanCollection {
       id
       modelName
-      modelCategory
-      cmsCenters
-      cmmiGroups
+      # modelCategory # TODO: GARY
+      # cmsCenters # TODO: GARY
+      # NO CMS OTHER???? TODO
+      # cmmiGroups # TODO: GARY
       status
       createdBy
       createdDts
