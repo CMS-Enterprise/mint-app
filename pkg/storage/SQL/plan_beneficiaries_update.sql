@@ -23,6 +23,8 @@ SET
     precedence_rules = :precedence_rules,
     modified_by = :modified_by,
     modified_dts = CURRENT_TIMESTAMP,
+    ready_for_review_by = :ready_for_review_by,
+    ready_for_review_dts = :ready_for_review_dts,
     status = :status
 WHERE plan_beneficiaries.id = :id
 RETURNING id,
