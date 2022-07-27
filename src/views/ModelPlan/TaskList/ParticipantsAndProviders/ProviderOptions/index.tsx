@@ -57,7 +57,13 @@ export const ProviderOptions = () => {
   const { t: h } = useTranslation('draftModelPlan');
   const { modelID } = useParams<{ modelID: string }>();
 
-  const formikRef = useRef<FormikProps<ProviderOptionsFormType>>(null);
+  // Omitting readyForReviewBy and readyForReviewDts from initialValues and getting submitted through Formik
+  type InitialValueType = Omit<
+    ProviderOptionsFormType,
+    'readyForReviewBy' | 'readyForReviewDts'
+  >;
+
+  const formikRef = useRef<FormikProps<InitialValueType>>(null);
   const history = useHistory();
 
   const { data, loading, error } = useQuery<
@@ -83,6 +89,8 @@ export const ProviderOptions = () => {
     providerOverlap,
     providerOverlapHierarchy,
     providerOverlapNote,
+    readyForReviewBy,
+    readyForReviewDts,
     status
   } =
     data?.modelPlan?.participantsAndProviders ||
@@ -95,7 +103,7 @@ export const ProviderOptions = () => {
   );
 
   const handleFormSubmit = (
-    formikValues: ProviderOptionsFormType,
+    formikValues: InitialValueType,
     redirect?: 'back' | 'task-list'
   ) => {
     const { id: updateId, __typename, ...changeValues } = formikValues;
@@ -121,7 +129,7 @@ export const ProviderOptions = () => {
       });
   };
 
-  const initialValues: ProviderOptionsFormType = {
+  const initialValues: InitialValueType = {
     __typename: 'PlanParticipantsAndProviders',
     id: id ?? '',
     providerAdditionFrequency: providerAdditionFrequency ?? null,
@@ -182,7 +190,7 @@ export const ProviderOptions = () => {
         enableReinitialize
         innerRef={formikRef}
       >
-        {(formikProps: FormikProps<ProviderOptionsFormType>) => {
+        {(formikProps: FormikProps<InitialValueType>) => {
           const {
             errors,
             handleSubmit,
@@ -484,6 +492,8 @@ export const ProviderOptions = () => {
                   sectionName={t('heading')}
                   status={values.status}
                   setFieldValue={setFieldValue}
+                  readyForReviewBy={readyForReviewBy}
+                  readyForReviewDts={readyForReviewDts}
                 />
 
                 <div className="margin-top-6 margin-bottom-3">
