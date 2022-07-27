@@ -1,10 +1,6 @@
 SELECT
     id,
     model_name,
-    model_category,
-    cms_centers,
-    cms_other,
-    cmmi_groups,
     archived,
     status,
     created_by,

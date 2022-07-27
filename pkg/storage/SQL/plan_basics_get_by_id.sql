@@ -1,6 +1,10 @@
 SELECT
     id,
     model_plan_id,
+    model_category,
+    cms_centers,
+    cms_other,
+    cmmi_groups,
     model_type,
     problem,
     goal,
