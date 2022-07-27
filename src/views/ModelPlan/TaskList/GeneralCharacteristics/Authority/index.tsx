@@ -168,8 +168,7 @@ const Authority = () => {
       <Formik
         initialValues={initialValues}
         onSubmit={values => {
-          // handleFormSubmit(values, 'task-list');
-          console.log(values.status);
+          handleFormSubmit(values, 'task-list');
         }}
         enableReinitialize
         innerRef={formikRef}
