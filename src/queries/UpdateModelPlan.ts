@@ -5,10 +5,6 @@ export default gql`
     updateModelPlan(id: $id, changes: $changes) {
       id
       modelName
-      # modelCategory # TODO: GARY
-      # cmsCenters # TODO: GARY
-      # cmmiGroups # TODO: GARY
-      # cmsOther # TODO: GARY
       createdBy
       modifiedBy
       modifiedDts

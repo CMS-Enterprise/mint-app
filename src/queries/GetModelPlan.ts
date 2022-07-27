@@ -5,43 +5,36 @@ export default gql`
     modelPlan(id: $id) {
       id
       modelName
-      # modelCategory # TODO: GARY
-      # cmsCenters # TODO: GARY
-      # cmsOther # TODO: GARY
-      # cmmiGroups # TODO: GARY
       modifiedDts
       archived
       status
       basics {
         id
         modelPlanID
+        modelCategory
+        cmsCenters
+        cmsOther
+        cmmiGroups
         modelType
         problem
         goal
         testInterventions
         note
+        completeICIP
+        clearanceStarts
+        clearanceEnds
+        announced
+        applicationsStart
+        applicationsEnd
+        performancePeriodStarts
+        performancePeriodEnds
+        highLevelNote
+        wrapUpEnds
+        phasedIn
+        phasedInNote
         modifiedDts
         status
       }
-      # TODO: GARY MILESTONES
-      # milestones {
-      #   id
-      #   modelPlanID
-      #   completeICIP
-      #   clearanceStarts
-      #   clearanceEnds
-      #   announced
-      #   applicationsStart
-      #   applicationsEnd
-      #   performancePeriodStarts
-      #   performancePeriodEnds
-      #   highLevelNote
-      #   wrapUpEnds
-      #   phasedIn
-      #   phasedInNote
-      #   modifiedDts
-      #   status
-      # }
       documents {
         id
         fileName

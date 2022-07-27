@@ -5,10 +5,12 @@ export default gql`
     modelPlan(id: $id) {
       id
       modelName
-      # modelCategory # TODO: GARY
-      # cmsCenters # TODO: GARY
-      # cmsOther # TODO: GARY
-      # cmmiGroups # TODO: GARY
+      basics {
+        modelCategory
+        cmsCenters
+        cmsOther
+        cmmiGroups
+      }
     }
   }
 `;

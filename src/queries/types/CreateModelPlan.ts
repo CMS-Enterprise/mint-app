@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { ModelType, TaskStatus, TeamRole } from "./../../types/graphql-global-types";
+import { ModelCategory, CMSCenter, CMMIGroup, ModelType, TaskStatus, TeamRole } from "./../../types/graphql-global-types";
 
 // ====================================================
 // GraphQL mutation operation: CreateModelPlan
@@ -13,11 +13,27 @@ export interface CreateModelPlan_createModelPlan_basics {
   __typename: "PlanBasics";
   id: UUID;
   modelPlanID: UUID;
+  modelCategory: ModelCategory | null;
+  cmsCenters: CMSCenter[];
+  cmsOther: string | null;
+  cmmiGroups: CMMIGroup[];
   modelType: ModelType | null;
   problem: string | null;
   goal: string | null;
   testInterventions: string | null;
   note: string | null;
+  completeICIP: Time | null;
+  clearanceStarts: Time | null;
+  clearanceEnds: Time | null;
+  announced: Time | null;
+  applicationsStart: Time | null;
+  applicationsEnd: Time | null;
+  performancePeriodStarts: Time | null;
+  performancePeriodEnds: Time | null;
+  wrapUpEnds: Time | null;
+  highLevelNote: string | null;
+  phasedIn: boolean | null;
+  phasedInNote: string | null;
   createdBy: string;
   createdDts: Time;
   modifiedBy: string | null;
