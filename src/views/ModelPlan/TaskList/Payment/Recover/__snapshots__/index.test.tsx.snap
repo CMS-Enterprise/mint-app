@@ -162,31 +162,24 @@ exports[`Model Plan -- Recover matches snapshot 1`] = `
             <div
               class="margin-top-4 margin-bottom-8"
             >
-              <button
-                class="usa-button usa-button usa-button--unstyled"
-                data-testid="add-note-toggle"
-                type="button"
+              <div
+                class="usa-form-group"
               >
-                <svg
-                  aria-hidden="true"
-                  class="usa-icon margin-right-1"
-                  focusable="false"
-                  height="1em"
-                  role="img"
-                  viewBox="0 0 24 24"
-                  width="1em"
-                  xmlns="http://www.w3.org/2000/svg"
+                <label
+                  class="usa-label"
+                  for="payment-recover-payment-note"
                 >
-                  <path
-                    d="M0 0h24v24H0z"
-                    fill="none"
-                  />
-                  <path
-                    d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
-                  />
-                </svg>
-                Add an additional note
-              </button>
+                  Notes
+                </label>
+                <textarea
+                  class="usa-textarea height-15"
+                  data-testid="payment-recover-payment-note"
+                  id="payment-recover-payment-note"
+                  name="willRecoverPaymentsNote"
+                >
+                  string
+                </textarea>
+              </div>
             </div>
           </div>
           <div
@@ -246,31 +239,24 @@ exports[`Model Plan -- Recover matches snapshot 1`] = `
             <div
               class="margin-top-4 margin-bottom-8"
             >
-              <button
-                class="usa-button usa-button usa-button--unstyled"
-                data-testid="add-note-toggle"
-                type="button"
+              <div
+                class="usa-form-group"
               >
-                <svg
-                  aria-hidden="true"
-                  class="usa-icon margin-right-1"
-                  focusable="false"
-                  height="1em"
-                  role="img"
-                  viewBox="0 0 24 24"
-                  width="1em"
-                  xmlns="http://www.w3.org/2000/svg"
+                <label
+                  class="usa-label"
+                  for="payment-anticipate-reconciling-payment-retro-note"
                 >
-                  <path
-                    d="M0 0h24v24H0z"
-                    fill="none"
-                  />
-                  <path
-                    d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"
-                  />
-                </svg>
-                Add an additional note
-              </button>
+                  Notes
+                </label>
+                <textarea
+                  class="usa-textarea height-15"
+                  data-testid="payment-anticipate-reconciling-payment-retro-note"
+                  id="payment-anticipate-reconciling-payment-retro-note"
+                  name="anticipateReconcilingPaymentsRetrospectivelyNote"
+                >
+                  string
+                </textarea>
+              </div>
             </div>
           </div>
           <div
