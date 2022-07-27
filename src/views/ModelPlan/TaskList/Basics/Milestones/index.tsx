@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
@@ -9,20 +9,19 @@ import {
   Button,
   DatePicker,
   Fieldset,
-  IconAdd,
   IconArrowBack,
   Label,
   Radio
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
 
+import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
-import TextAreaField from 'components/shared/TextAreaField';
 import GetMilestones from 'queries/Basics/GetMilestones';
 import {
   GetMilestones as GetMilestonesType,
@@ -47,8 +46,6 @@ const Milestones = () => {
 
   const history = useHistory();
   const formikRef = useRef<FormikProps<MilestonesFormType>>(null);
-  const [hasHighLevelNote, setHasHighLevelNote] = useState(false);
-  const [hasAdditionalNote, setHasAdditionalNote] = useState(false);
 
   const { data, loading, error } = useQuery<
     GetMilestonesType,
@@ -498,28 +495,7 @@ const Milestones = () => {
                     />
                   </FieldGroup>
 
-                  <div className="grid-col-12">
-                    <Button
-                      type="button"
-                      className="usa-button usa-button--unstyled margin-top-4"
-                      onClick={() => setHasHighLevelNote(!hasHighLevelNote)}
-                    >
-                      <IconAdd className="margin-right-1" aria-hidden />
-                      {h('additionalNote')}
-                    </Button>
-                  </div>
-
-                  {hasHighLevelNote && (
-                    <FieldGroup className="margin-top-4 grid-col-12">
-                      <Field
-                        as={TextAreaField}
-                        className="height-15"
-                        id="ModelType-HighLevelNote"
-                        name="highLevelNote"
-                        label={t('Notes')}
-                      />
-                    </FieldGroup>
-                  )}
+                  <AddNote id="ModelType-HighLevelNote" field="highLevelNote" />
 
                   <FieldGroup
                     scrollElement="phasedIn"
@@ -557,28 +533,7 @@ const Milestones = () => {
                     </Fieldset>
                   </FieldGroup>
 
-                  <div className="grid-col-12">
-                    <Button
-                      type="button"
-                      className="usa-button usa-button--unstyled margin-top-4"
-                      onClick={() => setHasAdditionalNote(!hasAdditionalNote)}
-                    >
-                      <IconAdd className="margin-right-1" aria-hidden />
-                      {h('additionalNote')}
-                    </Button>
-                  </div>
-
-                  {hasAdditionalNote && (
-                    <FieldGroup className="margin-top-4 grid-col-12">
-                      <Field
-                        as={TextAreaField}
-                        className="height-15"
-                        id="ModelType-phasedInNote"
-                        name="phasedInNote"
-                        label={t('notes')}
-                      />
-                    </FieldGroup>
-                  )}
+                  <AddNote id="ModelType-phasedInNote" field="phasedInNote" />
 
                   <div className="margin-top-6 margin-bottom-3">
                     <Button

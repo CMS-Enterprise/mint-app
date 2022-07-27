@@ -5,7 +5,6 @@ package graph
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/google/uuid"
 
@@ -302,6 +301,25 @@ func (r *mutationResolver) DeleteDiscussionReply(ctx context.Context, id uuid.UU
 	logger := appcontext.ZLogger(ctx)
 
 	return resolvers.DeleteDiscussionReply(logger, id, principal, r.store)
+}
+
+// LockTaskListSection is the resolver for the lockTaskListSection field.
+func (r *mutationResolver) LockTaskListSection(ctx context.Context, modelPlanID uuid.UUID, section model.TaskListSection) (bool, error) {
+	principal := appcontext.Principal(ctx).ID()
+
+	return resolvers.LockTaskListSection(r.pubsub, modelPlanID, section, principal)
+}
+
+// UnlockTaskListSection is the resolver for the unlockTaskListSection field.
+func (r *mutationResolver) UnlockTaskListSection(ctx context.Context, modelPlanID uuid.UUID, section model.TaskListSection) (bool, error) {
+	principal := appcontext.Principal(ctx).ID()
+
+	return resolvers.UnlockTaskListSection(r.pubsub, modelPlanID, section, principal)
+}
+
+// UnlockAllTaskListSections is the resolver for the unlockAllTaskListSections field.
+func (r *mutationResolver) UnlockAllTaskListSections(ctx context.Context, modelPlanID uuid.UUID) ([]*model.TaskListSectionLockStatus, error) {
+	return resolvers.UnlockAllTaskListSections(r.pubsub, modelPlanID)
 }
 
 // UpdatePlanPayments is the resolver for the updatePlanPayments field.
@@ -773,11 +791,23 @@ func (r *queryResolver) PlanCollaboratorByID(ctx context.Context, id uuid.UUID) 
 	return resolvers.FetchCollaboratorByID(logger, id, r.store)
 }
 
+// TaskListSectionLocks is the resolver for the taskListSectionLocks field.
+func (r *queryResolver) TaskListSectionLocks(ctx context.Context, modelPlanID uuid.UUID) ([]*model.TaskListSectionLockStatus, error) {
+	return resolvers.GetTaskListSectionLocks(modelPlanID)
+}
+
 // PlanPayments is the resolver for the planPayments field.
 func (r *queryResolver) PlanPayments(ctx context.Context, id uuid.UUID) (*models.PlanPayments, error) {
 	logger := appcontext.ZLogger(ctx)
 
 	return resolvers.PlanPaymentsRead(logger, r.store, id)
+}
+
+// OnTaskListSectionLocksChanged is the resolver for the onTaskListSectionLocksChanged field.
+func (r *subscriptionResolver) OnTaskListSectionLocksChanged(ctx context.Context, modelPlanID uuid.UUID) (<-chan *model.TaskListSectionLockStatusChanged, error) {
+	principal := appcontext.Principal(ctx).ID()
+
+	return resolvers.SubscribeTaskListSectionLockChanges(r.pubsub, modelPlanID, principal, ctx.Done())
 }
 
 // Email is the resolver for the email field.
@@ -828,6 +858,9 @@ func (r *Resolver) PlanPayments() generated.PlanPaymentsResolver { return &planP
 // Query returns generated.QueryResolver implementation.
 func (r *Resolver) Query() generated.QueryResolver { return &queryResolver{r} }
 
+// Subscription returns generated.SubscriptionResolver implementation.
+func (r *Resolver) Subscription() generated.SubscriptionResolver { return &subscriptionResolver{r} }
+
 // UserInfo returns generated.UserInfoResolver implementation.
 func (r *Resolver) UserInfo() generated.UserInfoResolver { return &userInfoResolver{r} }
 
@@ -842,29 +875,5 @@ type planOpsEvalAndLearningResolver struct{ *Resolver }
 type planParticipantsAndProvidersResolver struct{ *Resolver }
 type planPaymentsResolver struct{ *Resolver }
 type queryResolver struct{ *Resolver }
+type subscriptionResolver struct{ *Resolver }
 type userInfoResolver struct{ *Resolver }
-
-// !!! WARNING !!!
-// The code below was going to be deleted when updating resolvers. It has been copied here so you have
-// one last chance to move it out of harms way if you want. There are two reasons this happens:
-//  - When renaming or deleting a resolver the old code will be put in here. You can safely delete
-//    it when you're done.
-//  - You have helper methods in this file. Move them out to keep these resolver files clean.
-func (r *planPaymentsResolver) NumberPaymentsPerPayCycleNote(ctx context.Context, obj *models.PlanPayments) (*string, error) {
-	panic(fmt.Errorf("not implemented"))
-}
-func (r *planPaymentsResolver) AnticipatedPaymentFrequencyNote(ctx context.Context, obj *models.PlanPayments) (*string, error) {
-	panic(fmt.Errorf("not implemented"))
-}
-func (r *planPaymentsResolver) WillRecoverPaymentsNote(ctx context.Context, obj *models.PlanPayments) (*string, error) {
-	panic(fmt.Errorf("not implemented"))
-}
-func (r *planPaymentsResolver) AnticipateReconcilingPaymentsRetrospectivelyNote(ctx context.Context, obj *models.PlanPayments) (*string, error) {
-	panic(fmt.Errorf("not implemented"))
-}
-func (r *planPaymentsResolver) PaymentStartDateNote(ctx context.Context, obj *models.PlanPayments) (*string, error) {
-	panic(fmt.Errorf("not implemented"))
-}
-func (r *planPaymentsResolver) PayRecipientsOtherSpecification(ctx context.Context, obj *models.PlanPayments) (*string, error) {
-	return obj.PayRecipientsOtherSpecification, nil
-}
