@@ -48,7 +48,6 @@ const ReadyForReview = ({
           onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             if (e.target.checked) {
               setFieldValue('status', TaskStatusInput.READY_FOR_REVIEW);
-              console.log(status);
             } else {
               setFieldValue('status', TaskStatusInput.IN_PROGRESS);
             }
