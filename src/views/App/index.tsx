@@ -38,6 +38,7 @@ import SubmitRequest from 'views/ModelPlan/TaskList/SubmitRequest';
 import NotFound from 'views/NotFound';
 import PrivacyPolicy from 'views/PrivacyPolicy';
 import Sandbox from 'views/Sandbox';
+import SubscriptionWrapper from 'views/SubscriptionWrapper';
 import TermsAndConditions from 'views/TermsAndConditions';
 import TimeOutWrapper from 'views/TimeOutWrapper';
 import UserInfo from 'views/User';
@@ -169,21 +170,23 @@ const App = () => {
       </button>
       <BrowserRouter>
         <AuthenticationWrapper>
-          <MessageProvider>
-            <FlagsWrapper>
-              <UserInfoWrapper>
-                <TimeOutWrapper>
-                  <NavContextProvider>
-                    <PageWrapper>
-                      <Header />
-                      <AppRoutes />
-                      <Footer />
-                    </PageWrapper>
-                  </NavContextProvider>
-                </TimeOutWrapper>
-              </UserInfoWrapper>
-            </FlagsWrapper>
-          </MessageProvider>
+          <SubscriptionWrapper>
+            <MessageProvider>
+              <FlagsWrapper>
+                <UserInfoWrapper>
+                  <TimeOutWrapper>
+                    <NavContextProvider>
+                      <PageWrapper>
+                        <Header />
+                        <AppRoutes />
+                        <Footer />
+                      </PageWrapper>
+                    </NavContextProvider>
+                  </TimeOutWrapper>
+                </UserInfoWrapper>
+              </FlagsWrapper>
+            </MessageProvider>
+          </SubscriptionWrapper>
         </AuthenticationWrapper>
       </BrowserRouter>
     </>

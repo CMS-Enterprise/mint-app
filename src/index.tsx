@@ -10,10 +10,12 @@ import {
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import { GraphQLWsLink } from '@apollo/client/link/subscriptions';
+import { WebSocketLink } from '@apollo/client/link/ws';
 import { getMainDefinition } from '@apollo/client/utilities';
 import axios from 'axios';
 import { detect } from 'detect-browser';
 import { createClient } from 'graphql-ws';
+import { SubscriptionClient } from 'subscriptions-transport-ws';
 import { TextEncoder } from 'text-encoding';
 
 import { localAuthStorageKey } from 'constants/localAuth';
@@ -73,14 +75,22 @@ const authLink = setContext((request, { headers }) => {
   };
 });
 
-const wsLink = new GraphQLWsLink(
-  createClient({
-    url: 'ws://localhost:8085/api/graph/query',
+const wsLink = new WebSocketLink(
+  new SubscriptionClient('ws://localhost:8085/api/graph/query', {
     connectionParams: {
       authToken: getAuthHeader(process.env.REACT_APP_GRAPHQL_ADDRESS as string)
     }
   })
 );
+
+// const wsLink = new GraphQLWsLink(
+//   createClient({
+//     url: 'ws://localhost:8085/api/graph/query',
+//     connectionParams: {
+//       authToken: getAuthHeader(process.env.REACT_APP_GRAPHQL_ADDRESS as string)
+//     }
+//   })
+// );
 
 // The split function takes three parameters:
 //

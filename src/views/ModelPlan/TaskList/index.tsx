@@ -70,28 +70,35 @@ const TaskList = () => {
     loading: subscriptionLoading,
     error: subscriptionError
   } = useSubscription(SubscribeToTaskList, {
-    variables: { modelPlanID: modelID }
+    variables: { modelPlanID: modelID },
+    onSubscriptionData: data => {
+      console.log(data);
+    },
+    onSubscriptionComplete: () => {
+      console.log('complete');
+    }
   });
 
   console.log(subscriptionData);
   console.log(subscriptionLoading);
-  console.log(subscriptionError);
+  console.log(JSON.stringify(subscriptionError));
 
-  const [update] = useMutation(LockTaskListSection);
+  // const [update] = useMutation(LockTaskListSection);
 
-  useEffect(() => {
-    update({
-      variables: {
-        modelPlanID: modelID
-      }
-    })
-      .then(response => {
-        console.log(response);
-      })
-      .catch(errors => {
-        console.log(errors);
-      });
-  }, [modelID, update]);
+  // useEffect(() => {
+  //   update({
+  //     variables: {
+  //       modelPlanID: modelID,
+  //       section: 'MODEL_BASICS'
+  //     }
+  //   })
+  //     .then(response => {
+  //       console.log(response);
+  //     })
+  //     .catch(errors => {
+  //       console.log(errors);
+  //     });
+  // }, [modelID, update]);
 
   // const { data: connections } = useQuery(GetTaskListSubscriptions, {
   //   variables: {
