@@ -1,7 +1,6 @@
 UPDATE model_plan
 SET
     model_name = :model_name,
-
     status = :status,
     archived = :archived,
     modified_by = :modified_by,
