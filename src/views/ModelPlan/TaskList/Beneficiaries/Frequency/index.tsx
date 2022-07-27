@@ -49,7 +49,13 @@ const Frequency = () => {
   const { t: h } = useTranslation('draftModelPlan');
   const { modelID } = useParams<{ modelID: string }>();
 
-  const formikRef = useRef<FormikProps<FrequencyFormType>>(null);
+  // Omitting readyForReviewBy and readyForReviewDts from initialValues and getting submitted through Formik
+  type InitialValueType = Omit<
+    FrequencyFormType,
+    'readyForReviewBy' | 'readyForReviewDts'
+  >;
+
+  const formikRef = useRef<FormikProps<InitialValueType>>(null);
   const history = useHistory();
 
   const { data, loading, error } = useQuery<
@@ -69,6 +75,8 @@ const Frequency = () => {
     beneficiaryOverlap,
     beneficiaryOverlapNote,
     precedenceRules,
+    readyForReviewBy,
+    readyForReviewDts,
     status
   } = data?.modelPlan?.beneficiaries || ({} as FrequencyFormType);
 
@@ -79,7 +87,7 @@ const Frequency = () => {
   );
 
   const handleFormSubmit = (
-    formikValues: FrequencyFormType,
+    formikValues: InitialValueType,
     redirect?: 'task-list' | 'back'
   ) => {
     const { id: updateId, __typename, ...changeValues } = formikValues;
@@ -105,7 +113,7 @@ const Frequency = () => {
       });
   };
 
-  const initialValues: FrequencyFormType = {
+  const initialValues: InitialValueType = {
     __typename: 'PlanBeneficiaries',
     id: id ?? '',
     beneficiarySelectionFrequency: beneficiarySelectionFrequency ?? null,
@@ -163,7 +171,7 @@ const Frequency = () => {
         enableReinitialize
         innerRef={formikRef}
       >
-        {(formikProps: FormikProps<FrequencyFormType>) => {
+        {(formikProps: FormikProps<InitialValueType>) => {
           const {
             errors,
             handleSubmit,
@@ -332,6 +340,8 @@ const Frequency = () => {
                         sectionName={t('heading')}
                         status={values.status}
                         setFieldValue={setFieldValue}
+                        readyForReviewBy={readyForReviewBy}
+                        readyForReviewDts={readyForReviewDts}
                       />
 
                       <div className="margin-top-6 margin-bottom-3">
