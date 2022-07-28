@@ -25,14 +25,14 @@ import FieldGroup from 'components/shared/FieldGroup';
 import GetMilestones from 'queries/Basics/GetMilestones';
 import {
   GetMilestones as GetMilestonesType,
-  GetMilestones_modelPlan_milestones as MilestonesFormType,
+  GetMilestones_modelPlan_basics as MilestonesFormType,
   GetMilestonesVariables
 } from 'queries/Basics/types/GetMilestones';
 import {
-  UpdatePlanMilestones as UpdatePlanMilestonesType,
-  UpdatePlanMilestonesVariables
-} from 'queries/Basics/types/UpdatePlanMilestones';
-import UpdatePlanMilestones from 'queries/Basics/UpdatePlanMilestones';
+  UpdatePlanBasics as UpdatePlanBasicsType,
+  UpdatePlanBasicsVariables
+} from 'queries/Basics/types/UpdatePlanBasics';
+import UpdatePlanBasics from 'queries/Basics/UpdatePlanBasics';
 import flattenErrors from 'utils/flattenErrors';
 import planBasicsSchema from 'validations/planBasics';
 import { NotFoundPartial } from 'views/NotFound';
@@ -72,12 +72,11 @@ const Milestones = () => {
     wrapUpEnds,
     phasedIn,
     phasedInNote
-  } = data?.modelPlan?.milestones || ({} as MilestonesFormType);
+  } = data?.modelPlan?.basics || ({} as MilestonesFormType);
 
-  const [update] = useMutation<
-    UpdatePlanMilestonesType,
-    UpdatePlanMilestonesVariables
-  >(UpdatePlanMilestones);
+  const [update] = useMutation<UpdatePlanBasicsType, UpdatePlanBasicsVariables>(
+    UpdatePlanBasics
+  );
 
   const handleFormSubmit = (
     formikValues: MilestonesFormType,
@@ -107,7 +106,7 @@ const Milestones = () => {
   };
 
   const initialValues: MilestonesFormType = {
-    __typename: 'PlanMilestones',
+    __typename: 'PlanBasics',
     id: id ?? '',
     completeICIP: completeICIP ?? null,
     clearanceStarts: clearanceStarts ?? null,
