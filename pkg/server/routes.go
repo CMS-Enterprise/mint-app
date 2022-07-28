@@ -63,10 +63,10 @@ func (s *Server) routes(
 		oktaAuthenticationMiddleware,
 	)
 
-	// if s.NewLocalAuthIsEnabled() {
-	// 	localAuthenticationMiddleware := local.NewLocalAuthenticationMiddleware(s.logger)
-	// 	s.router.Use(localAuthenticationMiddleware)
-	// }
+	if s.NewLocalAuthIsEnabled() {
+		localAuthenticationMiddleware := local.NewLocalAuthenticationMiddleware(s.logger)
+		s.router.Use(localAuthenticationMiddleware)
+	}
 
 	requirePrincipalMiddleware := authorization.NewRequirePrincipalMiddleware(s.logger)
 
@@ -182,24 +182,7 @@ func (s *Server) routes(
 			},
 			Subprotocols: []string{"graphql-transport-ws"},
 		},
-		InitFunc: func(ctx context.Context, initPayload transport.InitPayload) (context.Context, error) {
-			// Get the token from payload
-			all := initPayload
-			fmt.Println("ALL OF EM BABY", all)
-			any := initPayload["authToken"]
-			token, ok := any.(string)
-			if !ok || token == "" {
-				return nil, errors.New("authToken not found in transport payload")
-			}
-
-			// Perform token verification and authentication...
-			userId := "john.doe" // e.g. userId, err := GetUserFromAuthentication(token)
-
-			// put it in context
-			ctxNew := context.WithValue(ctx, "username", userId)
-
-			return ctxNew, nil
-		},
+		InitFunc: local.NewLocalWebSocketAuthenticationMiddleware(s.logger),
 	})
 	graphqlServer.AddTransport(transport.Options{})
 	graphqlServer.AddTransport(transport.GET{})

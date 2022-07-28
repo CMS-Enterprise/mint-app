@@ -3,9 +3,10 @@ package authorization
 import (
 	"net/http"
 
+	"go.uber.org/zap"
+
 	"github.com/cmsgov/mint-app/pkg/appcontext"
 	"github.com/cmsgov/mint-app/pkg/authentication"
-	"go.uber.org/zap"
 )
 
 func requirePrincipalMiddleware(logger *zap.Logger, next http.Handler) http.Handler {
@@ -16,13 +17,13 @@ func requirePrincipalMiddleware(logger *zap.Logger, next http.Handler) http.Hand
 		if principal == authentication.ANON {
 			logger.Info("Authorization failure: principal not found in context")
 
-			// w.Header().Set("Content-Type", "application/json")
-			// w.WriteHeader(http.StatusUnauthorized)
-			// _, writeErr := w.Write([]byte(`{"errors": [{"message": "Unauthorized"}]}`))
-			// if writeErr != nil {
-			// 	logger.Error("failed to write response body")
-			// }
-			// return
+			w.Header().Set("Content-Type", "application/json")
+			w.WriteHeader(http.StatusUnauthorized)
+			_, writeErr := w.Write([]byte(`{"errors": [{"message": "Unauthorized"}]}`))
+			if writeErr != nil {
+				logger.Error("failed to write response body")
+			}
+			return
 		}
 
 		next.ServeHTTP(w, r)
