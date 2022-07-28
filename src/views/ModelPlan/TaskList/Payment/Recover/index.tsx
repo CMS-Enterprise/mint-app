@@ -22,6 +22,7 @@ import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
+import ReadyForReview from 'components/ReadyForReview';
 import AutoSave from 'components/shared/AutoSave';
 import DatePickerWarning from 'components/shared/DatePickerWarning';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
@@ -48,7 +49,13 @@ const Recover = () => {
   const [dateInPast, setDateInPast] = useState(false);
   const [dateLoaded, setDateLoaded] = useState(false);
 
-  const formikRef = useRef<FormikProps<RecoverFormType>>(null);
+  // Omitting readyForReviewBy and readyForReviewDts from initialValues and getting submitted through Formik
+  type InitialValueType = Omit<
+    RecoverFormType,
+    'readyForReviewBy' | 'readyForReviewDts'
+  >;
+
+  const formikRef = useRef<FormikProps<InitialValueType>>(null);
   const history = useHistory();
 
   const { data, loading, error } = useQuery<
@@ -69,7 +76,10 @@ const Recover = () => {
     anticipateReconcilingPaymentsRetrospectively,
     anticipateReconcilingPaymentsRetrospectivelyNote,
     paymentStartDate,
-    paymentStartDateNote
+    paymentStartDateNote,
+    readyForReviewBy,
+    readyForReviewDts,
+    status
   } = data?.modelPlan?.payments || ({} as RecoverFormType);
 
   const modelName = data?.modelPlan?.modelName || '';
@@ -77,7 +87,7 @@ const Recover = () => {
   const [update] = useMutation<UpdatePaymentsVariables>(UpdatePayments);
 
   const handleFormSubmit = (
-    formikValues: RecoverFormType,
+    formikValues: InitialValueType,
     redirect?: 'back' | 'task-list'
   ) => {
     const { id: updateId, __typename, ...changeValues } = formikValues;
@@ -114,7 +124,7 @@ const Recover = () => {
     }, 250);
   }, [paymentStartDate]);
 
-  const initialValues: RecoverFormType = {
+  const initialValues: InitialValueType = {
     __typename: 'PlanPayments',
     id: id ?? '',
     payType: payType ?? [],
@@ -126,7 +136,8 @@ const Recover = () => {
     anticipateReconcilingPaymentsRetrospectivelyNote:
       anticipateReconcilingPaymentsRetrospectivelyNote ?? '',
     paymentStartDate: paymentStartDate ?? '',
-    paymentStartDateNote: paymentStartDateNote ?? ''
+    paymentStartDateNote: paymentStartDateNote ?? '',
+    status
   };
 
   if ((!loading && error) || (!loading && !data?.modelPlan)) {
@@ -174,7 +185,7 @@ const Recover = () => {
         enableReinitialize
         innerRef={formikRef}
       >
-        {(formikProps: FormikProps<RecoverFormType>) => {
+        {(formikProps: FormikProps<InitialValueType>) => {
           const {
             errors,
             handleSubmit,
@@ -203,7 +214,7 @@ const Recover = () => {
               } else {
                 setDateInPast(false);
               }
-              delete errors[field as keyof RecoverFormType];
+              delete errors[field as keyof InitialValueType];
             } catch (err) {
               setFieldError(field, t('validDate'));
             }
@@ -373,6 +384,16 @@ const Recover = () => {
                           />
                         </FieldGroup>
                       )}
+
+                      <ReadyForReview
+                        id="payment-status"
+                        field="status"
+                        sectionName={t('heading')}
+                        status={values.status}
+                        setFieldValue={setFieldValue}
+                        readyForReviewBy={readyForReviewBy}
+                        readyForReviewDts={readyForReviewDts}
+                      />
 
                       <div className="margin-top-6 margin-bottom-3">
                         <Button
