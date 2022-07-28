@@ -70,8 +70,9 @@ const BasicsContent = () => {
     }
   });
 
-  const { id, modelName, modelCategory, cmsCenters, cmmiGroups, cmsOther } =
-    data?.modelPlan || {};
+  const { id, modelName, basics } = data?.modelPlan || {};
+
+  const { modelCategory, cmsCenters, cmmiGroups, cmsOther } = basics || {};
 
   const [update] = useMutation<UpdateModelPlanVariables>(UpdateModelPlan);
 
