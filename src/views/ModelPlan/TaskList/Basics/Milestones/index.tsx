@@ -42,8 +42,14 @@ const Milestones = () => {
   const { t: h } = useTranslation('draftModelPlan');
   const { modelID } = useParams<{ modelID: string }>();
 
+  // Omitting readyForReviewBy and readyForReviewDts from initialValues and getting submitted through Formik
+  type InitialValueType = Omit<
+    MilestonesFormType,
+    'readyForReviewBy' | 'readyForReviewDts'
+  >;
+
   const history = useHistory();
-  const formikRef = useRef<FormikProps<MilestonesFormType>>(null);
+  const formikRef = useRef<FormikProps<InitialValueType>>(null);
 
   const { data, loading, error } = useQuery<
     GetMilestonesType,
@@ -70,6 +76,8 @@ const Milestones = () => {
     wrapUpEnds,
     phasedIn,
     phasedInNote,
+    readyForReviewBy,
+    readyForReviewDts,
     status
   } = data?.modelPlan?.milestones || ({} as MilestonesFormType);
 
@@ -78,7 +86,7 @@ const Milestones = () => {
   );
 
   const handleFormSubmit = (
-    formikValues: MilestonesFormType,
+    formikValues: InitialValueType,
     redirect?: 'back' | 'task-list'
   ) => {
     const { id: updateId, __typename, ...changeValues } = formikValues;
@@ -104,7 +112,7 @@ const Milestones = () => {
       });
   };
 
-  const initialValues: MilestonesFormType = {
+  const initialValues: InitialValueType = {
     __typename: 'PlanMilestones',
     id: id ?? '',
     completeICIP: completeICIP ?? null,
@@ -168,7 +176,7 @@ const Milestones = () => {
           validateOnMount={false}
           innerRef={formikRef}
         >
-          {(formikProps: FormikProps<MilestonesFormType>) => {
+          {(formikProps: FormikProps<InitialValueType>) => {
             const {
               errors,
               handleSubmit,
@@ -186,7 +194,7 @@ const Milestones = () => {
               }
               try {
                 setFieldValue(field, new Date(e).toISOString());
-                delete errors[field as keyof MilestonesFormType];
+                delete errors[field as keyof InitialValueType];
               } catch (err) {
                 setFieldError(field, t('validDate'));
               }
@@ -540,6 +548,8 @@ const Milestones = () => {
                     sectionName={t('heading')}
                     status={values.status}
                     setFieldValue={setFieldValue}
+                    readyForReviewBy={readyForReviewBy}
+                    readyForReviewDts={readyForReviewDts}
                   />
 
                   <div className="margin-top-6 margin-bottom-3">
