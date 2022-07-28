@@ -77,9 +77,6 @@ const TaskList = () => {
     modelName,
     modifiedDts,
     basics,
-    milestones,
-    modelCategory,
-    cmsCenters,
     discussions,
     documents,
     status,
@@ -110,13 +107,10 @@ const TaskList = () => {
    * May be changed/merged in the future to match other task list sections
    * */
   const renderBasicsStatus = (): TaskStatus => {
-    if (
-      basics.status === TaskStatus.COMPLETE &&
-      milestones.status === TaskStatus.COMPLETE
-    ) {
+    if (basics.status === TaskStatus.COMPLETE) {
       return TaskStatus.COMPLETE;
     }
-    if (modelCategory === null && cmsCenters.length === 0) {
+    if (basics.modelCategory === null && basics.cmsCenters.length === 0) {
       return TaskStatus.READY;
     }
     return TaskStatus.IN_PROGRESS;
@@ -127,11 +121,7 @@ const TaskList = () => {
    * May be changed/merged in the future to match other task list sections
    * */
   const renderBasicsLastUpdated = () => {
-    const basicDates = [
-      modifiedDts,
-      basics?.modifiedDts,
-      milestones.modifiedDts
-    ];
+    const basicDates = [modifiedDts, basics?.modifiedDts];
     basicDates.sort((a, b) => {
       return a?.localeCompare(b!) || 0;
     });
@@ -336,12 +326,6 @@ const TaskList = () => {
                                         renderBasicsLastUpdated() &&
                                         formatDate(
                                           renderBasicsLastUpdated() || '',
-                                          'MM/d/yyyy'
-                                        )}
-                                      {key !== 'basics' &&
-                                        taskListSections[key].modifiedDts &&
-                                        formatDate(
-                                          taskListSections[key].modifiedDts!,
                                           'MM/d/yyyy'
                                         )}
                                     </p>
