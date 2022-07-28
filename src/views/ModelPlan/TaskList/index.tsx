@@ -65,23 +65,23 @@ const TaskList = () => {
   const { modelID } = useParams<{ modelID: string }>();
   const [isDiscussionOpen, setIsDiscussionOpen] = useState(false);
 
-  const {
-    data: subscriptionData,
-    loading: subscriptionLoading,
-    error: subscriptionError
-  } = useSubscription(SubscribeToTaskList, {
-    variables: { modelPlanID: modelID },
-    onSubscriptionData: data => {
-      console.log(data);
-    },
-    onSubscriptionComplete: () => {
-      console.log('complete');
-    }
-  });
+  // const {
+  //   data: subscriptionData,
+  //   loading: subscriptionLoading,
+  //   error: subscriptionError
+  // } = useSubscription(SubscribeToTaskList, {
+  //   variables: { modelPlanID: modelID },
+  //   onSubscriptionData: data => {
+  //     console.log(data);
+  //   },
+  //   onSubscriptionComplete: () => {
+  //     console.log('complete');
+  //   }
+  // });
 
-  console.log(subscriptionData);
-  console.log(subscriptionLoading);
-  console.log(JSON.stringify(subscriptionError));
+  // console.log(subscriptionData);
+  // console.log(subscriptionLoading);
+  // console.log(JSON.stringify(subscriptionError));
 
   // const [update] = useMutation(LockTaskListSection);
 
