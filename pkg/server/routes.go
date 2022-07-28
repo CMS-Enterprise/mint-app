@@ -8,15 +8,19 @@ import (
 	"os"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/99designs/gqlgen/graphql"
 	"github.com/99designs/gqlgen/graphql/handler"
 	"github.com/99designs/gqlgen/graphql/handler/extension"
+	"github.com/99designs/gqlgen/graphql/handler/lru"
+	"github.com/99designs/gqlgen/graphql/handler/transport"
 	"github.com/99designs/gqlgen/graphql/playground"
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/lambda"
 	"github.com/gorilla/mux"
+	"github.com/gorilla/websocket"
 	_ "github.com/lib/pq" // pq is required to get the postgres driver into sqlx
 	"go.uber.org/zap"
 
@@ -59,10 +63,10 @@ func (s *Server) routes(
 		oktaAuthenticationMiddleware,
 	)
 
-	if s.NewLocalAuthIsEnabled() {
-		localAuthenticationMiddleware := local.NewLocalAuthenticationMiddleware(s.logger)
-		s.router.Use(localAuthenticationMiddleware)
-	}
+	// if s.NewLocalAuthIsEnabled() {
+	// 	localAuthenticationMiddleware := local.NewLocalAuthenticationMiddleware(s.logger)
+	// 	s.router.Use(localAuthenticationMiddleware)
+	// }
 
 	requirePrincipalMiddleware := authorization.NewRequirePrincipalMiddleware(s.logger)
 
@@ -145,7 +149,7 @@ func (s *Server) routes(
 	// set up GraphQL routes
 	gql := s.router.PathPrefix("/api/graph").Subrouter()
 
-	gql.Use(requirePrincipalMiddleware)
+	// gql.Use(requirePrincipalMiddleware)
 
 	resolver := graph.NewResolver(
 		store,
@@ -169,7 +173,45 @@ func (s *Server) routes(
 		return next(ctx)
 	}}
 	gqlConfig := generated.Config{Resolvers: resolver, Directives: gqlDirectives}
-	graphqlServer := handler.NewDefaultServer(generated.NewExecutableSchema(gqlConfig))
+	graphqlServer := handler.New(generated.NewExecutableSchema(gqlConfig))
+	graphqlServer.AddTransport(transport.Websocket{
+		KeepAlivePingInterval: 10 * time.Second,
+		Upgrader: websocket.Upgrader{
+			CheckOrigin: func(r *http.Request) bool {
+				return true
+			},
+			Subprotocols: []string{"graphql-transport-ws"},
+		},
+		InitFunc: func(ctx context.Context, initPayload transport.InitPayload) (context.Context, error) {
+			// Get the token from payload
+			all := initPayload
+			fmt.Println("ALL OF EM BABY", all)
+			any := initPayload["authToken"]
+			token, ok := any.(string)
+			if !ok || token == "" {
+				return nil, errors.New("authToken not found in transport payload")
+			}
+
+			// Perform token verification and authentication...
+			userId := "john.doe" // e.g. userId, err := GetUserFromAuthentication(token)
+
+			// put it in context
+			ctxNew := context.WithValue(ctx, "username", userId)
+
+			return ctxNew, nil
+		},
+	})
+	graphqlServer.AddTransport(transport.Options{})
+	graphqlServer.AddTransport(transport.GET{})
+	graphqlServer.AddTransport(transport.POST{})
+	graphqlServer.AddTransport(transport.MultipartForm{})
+
+	graphqlServer.SetQueryCache(lru.New(1000))
+
+	graphqlServer.Use(extension.Introspection{})
+	graphqlServer.Use(extension.AutomaticPersistedQuery{
+		Cache: lru.New(100),
+	})
 	graphqlServer.Use(extension.FixedComplexityLimit(1000))
 	graphqlServer.AroundResponses(NewGQLResponseMiddleware())
 

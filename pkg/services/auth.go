@@ -2,15 +2,31 @@ package services
 
 import (
 	"context"
-
-	"go.uber.org/zap"
+	"fmt"
 
 	"github.com/cmsgov/mint-app/pkg/appcontext"
 	"github.com/cmsgov/mint-app/pkg/graph/model"
+	"go.uber.org/zap"
 )
 
 // HasRole authorizes a user as having a given role
 func HasRole(ctx context.Context, role model.Role) (bool, error) {
+	fmt.Println("CONTEXT VALUE USERNAME", ctx.Value("username"))
+	fmt.Println("CONTEXT VALUE USERNAME", ctx.Value("username"))
+	fmt.Println("CONTEXT VALUE USERNAME", ctx.Value("username"))
+	fmt.Println("CONTEXT VALUE USERNAME", ctx.Value("username"))
+	fmt.Println("CONTEXT VALUE USERNAME", ctx.Value("username"))
+	fmt.Println("CONTEXT VALUE USERNAME", ctx.Value("username"))
+	fmt.Println("CONTEXT VALUE USERNAME", ctx.Value("username"))
+	fmt.Println("CONTEXT VALUE USERNAME", ctx.Value("username"))
+	fmt.Println("CONTEXT VALUE USERNAME", ctx.Value("username"))
+	fmt.Println("CONTEXT VALUE USERNAME", ctx.Value("username"))
+	fmt.Println("CONTEXT VALUE USERNAME", ctx.Value("username"))
+	fmt.Println("CONTEXT VALUE USERNAME", ctx.Value("username"))
+	fmt.Println("CONTEXT VALUE USERNAME", ctx.Value("username"))
+	fmt.Println("CONTEXT VALUE USERNAME", ctx.Value("username"))
+	fmt.Println("CONTEXT VALUE USERNAME", ctx.Value("username"))
+	fmt.Println("CONTEXT VALUE USERNAME", ctx.Value("username"))
 	logger := appcontext.ZLogger(ctx)
 	principal := appcontext.Principal(ctx)
 	switch role {
