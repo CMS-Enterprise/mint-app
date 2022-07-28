@@ -7,6 +7,7 @@ import generalCharacteristics from './draftModelPlan/generalCharacteristics';
 import newModel from './draftModelPlan/newModel';
 import operationsEvaluationAndLearning from './draftModelPlan/operationsEvaulationAndLearning';
 import participantsAndProviders from './draftModelPlan/participantsAndProviders';
+import payments from './draftModelPlan/payments';
 import accessibilityStatement from './accessibilityStatement';
 import auth from './auth';
 import cookies from './cookies';
@@ -41,6 +42,7 @@ const enUS = {
   newModel,
   operationsEvaluationAndLearning,
   participantsAndProviders,
+  payments,
   privacyPolicy,
   tableAndPagination,
   termsAndConditions
