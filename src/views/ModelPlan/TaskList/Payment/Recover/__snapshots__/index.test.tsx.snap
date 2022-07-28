@@ -1,0 +1,319 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Model Plan -- Recover matches snapshot 1`] = `
+<DocumentFragment>
+  <nav
+    aria-label="Breadcrumbs"
+    class="usa-breadcrumb usa-breadcrumb--wrap"
+  >
+    <ol
+      class="usa-breadcrumb__list"
+    >
+      <li
+        class="usa-breadcrumb__list-item"
+      >
+        <a
+          class="usa-breadcrumb__link"
+          href="/"
+        >
+          <span>
+            Home
+          </span>
+        </a>
+      </li>
+      <li
+        class="usa-breadcrumb__list-item"
+      >
+        <a
+          class="usa-breadcrumb__link"
+          href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/"
+        >
+          <span>
+            Model Plan task list
+          </span>
+        </a>
+      </li>
+      <li
+        aria-current="page"
+        class="usa-breadcrumb__list-item usa-current"
+      >
+        Payment
+      </li>
+    </ol>
+  </nav>
+  <h1
+    aria-live="polite"
+    class="mint-h1 margin-top-4 margin-bottom-2"
+    tabindex="-1"
+  >
+    Payment
+  </h1>
+  <p
+    class="margin-top-0 margin-bottom-1 font-body-lg"
+    data-testid="model-plan-name"
+  >
+    for My excellent plan that I just initiated
+  </p>
+  <p
+    class="margin-bottom-2 font-body-md line-height-sans-4"
+  >
+    If there's a question or field that is not applicable to your model or you don't currently know the answer, you may leave it blank. If you need help, ask a question using the link below.
+  </p>
+  <div
+    class="padding-2 bg-primary-lighter display-flex"
+    data-testid="ask-a-question"
+  >
+    <svg
+      class="usa-icon text-primary margin-right-1"
+      focusable="false"
+      height="1em"
+      role="img"
+      viewBox="0 0 24 24"
+      width="1em"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M0 0h24v24H0z"
+        fill="none"
+      />
+      <path
+        d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-7 9h-2V5h2v6zm0 4h-2v-2h2v2z"
+      />
+    </svg>
+    <button
+      class="usa-button usa-button--unstyled"
+      data-testid="ask-a-question-button"
+      type="button"
+    >
+      Ask a question
+    </button>
+  </div>
+  <div
+    class="grid-container padding-left-0 padding-right-0"
+    data-testid="gridContainer"
+  >
+    <div
+      class="grid-row grid-gap"
+      data-testid="grid"
+    >
+      <div
+        class="desktop:grid-col-6"
+        data-testid="grid"
+      >
+        <form
+          action="#"
+          class="margin-top-6"
+          data-testid="payment-recover-form"
+        >
+          <div
+            class="usa-form-group margin-top-4"
+            data-scroll="payment-recover-payment"
+          >
+            <label
+              class="usa-label maxw-none"
+              data-testid="label"
+              for="payment-recover-payment"
+            >
+              Will you recover the payments?
+            </label>
+            <fieldset
+              class="usa-fieldset"
+              data-testid="fieldset"
+            >
+              <div
+                class="usa-radio"
+                data-testid="radio"
+              >
+                <input
+                  class="usa-radio__input"
+                  data-testid="payment-recover-payment-true"
+                  id="payment-recover-payment-true"
+                  name="willRecoverPayments"
+                  type="radio"
+                  value="YES"
+                />
+                <label
+                  class="usa-radio__label"
+                  for="payment-recover-payment-true"
+                >
+                  Yes
+                </label>
+              </div>
+              <div
+                class="usa-radio"
+                data-testid="radio"
+              >
+                <input
+                  class="usa-radio__input"
+                  data-testid="payment-recover-payment-false"
+                  id="payment-recover-payment-false"
+                  name="willRecoverPayments"
+                  type="radio"
+                  value="NO"
+                />
+                <label
+                  class="usa-radio__label"
+                  for="payment-recover-payment-false"
+                >
+                  No
+                </label>
+              </div>
+            </fieldset>
+            <div
+              class="margin-top-4 margin-bottom-8"
+            >
+              <div
+                class="usa-form-group"
+              >
+                <label
+                  class="usa-label"
+                  for="payment-recover-payment-note"
+                >
+                  Notes
+                </label>
+                <textarea
+                  class="usa-textarea height-15"
+                  data-testid="payment-recover-payment-note"
+                  id="payment-recover-payment-note"
+                  name="willRecoverPaymentsNote"
+                >
+                  string
+                </textarea>
+              </div>
+            </div>
+          </div>
+          <div
+            class="usa-form-group margin-top-4"
+            data-scroll="payment-anticipate-reconciling-payment-retro"
+          >
+            <label
+              class="usa-label maxw-none"
+              data-testid="label"
+              for="payment-anticipate-reconciling-payment-retro"
+            >
+              Do you anticipate reconciling payments retrospectively?
+            </label>
+            <fieldset
+              class="usa-fieldset"
+              data-testid="fieldset"
+            >
+              <div
+                class="usa-radio"
+                data-testid="radio"
+              >
+                <input
+                  class="usa-radio__input"
+                  data-testid="payment-anticipate-reconciling-payment-retro-true"
+                  id="payment-anticipate-reconciling-payment-retro-true"
+                  name="anticipateReconcilingPaymentsRetrospectively"
+                  type="radio"
+                  value="YES"
+                />
+                <label
+                  class="usa-radio__label"
+                  for="payment-anticipate-reconciling-payment-retro-true"
+                >
+                  Yes
+                </label>
+              </div>
+              <div
+                class="usa-radio"
+                data-testid="radio"
+              >
+                <input
+                  class="usa-radio__input"
+                  data-testid="payment-anticipate-reconciling-payment-retro-false"
+                  id="payment-anticipate-reconciling-payment-retro-false"
+                  name="anticipateReconcilingPaymentsRetrospectively"
+                  type="radio"
+                  value="NO"
+                />
+                <label
+                  class="usa-radio__label"
+                  for="payment-anticipate-reconciling-payment-retro-false"
+                >
+                  No
+                </label>
+              </div>
+            </fieldset>
+            <div
+              class="margin-top-4 margin-bottom-8"
+            >
+              <div
+                class="usa-form-group"
+              >
+                <label
+                  class="usa-label"
+                  for="payment-anticipate-reconciling-payment-retro-note"
+                >
+                  Notes
+                </label>
+                <textarea
+                  class="usa-textarea height-15"
+                  data-testid="payment-anticipate-reconciling-payment-retro-note"
+                  id="payment-anticipate-reconciling-payment-retro-note"
+                  name="anticipateReconcilingPaymentsRetrospectivelyNote"
+                >
+                  string
+                </textarea>
+              </div>
+            </div>
+          </div>
+          <div
+            class="margin-top-6 margin-bottom-3"
+          >
+            <button
+              class="usa-button usa-button usa-button--outline margin-bottom-1"
+              data-testid="button"
+              type="button"
+            >
+              Back
+            </button>
+            <button
+              class="usa-button"
+              data-testid="button"
+              type="submit"
+            >
+              Save and start next Model Plan section
+            </button>
+          </div>
+          <button
+            class="usa-button usa-button usa-button--unstyled"
+            data-testid="button"
+            type="button"
+          >
+            <svg
+              aria-hidden="true"
+              class="usa-icon margin-right-1"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M0 0h24v24H0z"
+                fill="none"
+              />
+              <path
+                d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
+              />
+            </svg>
+            Save and return to task list
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div
+    class="mint-page-number margin-y-6"
+  >
+    <span
+      class="mint-page-number__page-num"
+    >
+      Page 5 of 5
+    </span>
+  </div>
+</DocumentFragment>
+`;

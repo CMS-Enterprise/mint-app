@@ -162,6 +162,23 @@ export const translateGeographyApplication = (type: string) => {
   }
 };
 
+export const translatePayRecipient = (type: string) => {
+  switch (type) {
+    case 'PARTICIPANTS':
+      return i18next.t('payments:whoWillYouPayOptions.participants');
+    case 'PROVIDERS':
+      return i18next.t('payments:whoWillYouPayOptions.providers');
+    case 'BENEFICIARIES':
+      return i18next.t('payments:whoWillYouPayOptions.beneficiaries');
+    case 'STATES':
+      return i18next.t('payments:whoWillYouPayOptions.states');
+    case 'OTHER':
+      return i18next.t('payments:whoWillYouPayOptions.other');
+    default:
+      return '';
+  }
+};
+
 export const translateAgreementTypes = (type: string) => {
   switch (type) {
     case 'PARTICIPATION':
@@ -326,6 +343,117 @@ export const translateSelectionMethodType = (type: string) => {
       return i18next.t('beneficiaries:selectionMethod.other');
     case 'NA':
       return i18next.t('beneficiaries:selectionMethod.na');
+    default:
+      return '';
+  }
+};
+
+export const translateSourceOptions = (type: string) => {
+  switch (type) {
+    case 'PATIENT_PROTECTION_AFFORDABLE_CARE_ACT':
+      return i18next.t('payments:sourceOptions.ppaca');
+    case 'TRUST_FUND':
+      return i18next.t('payments:sourceOptions.trustFund');
+    case 'OTHER':
+      return i18next.t('payments:sourceOptions.other');
+    default:
+      return '';
+  }
+};
+
+export const translatePayType = (type: string) => {
+  switch (type) {
+    case 'CLAIMS_BASED_PAYMENTS':
+      return i18next.t('payments:whatWillYouPayOptions.claims');
+    case 'GRANTS':
+      return i18next.t('payments:whatWillYouPayOptions.grants');
+    case 'NON_CLAIMS_BASED_PAYMENTS':
+      return i18next.t('payments:whatWillYouPayOptions.nonClaims');
+    default:
+      return '';
+  }
+};
+
+export const translateClaimsBasedPayType = (type: string) => {
+  switch (type) {
+    case 'ADJUSTMENTS_TO_FFS_PAYMENTS':
+      return i18next.t('payments:selectClaimsOptions.ffsPayments');
+    case 'REDUCTIONS_TO_BENEFICIARY_COST_SHARING':
+      return i18next.t('payments:selectClaimsOptions.reduction');
+    case 'CARE_MANAGEMENT_HOME_VISITS':
+      return i18next.t('payments:selectClaimsOptions.homeVisits');
+    case 'SNF_CLAIMS_WITHOUT_3DAY_HOSPITAL_ADMISSIONS':
+      return i18next.t('payments:selectClaimsOptions.snfClaims');
+    case 'TELEHEALTH_SERVICES_NOT_TRADITIONAL_MEDICARE':
+      return i18next.t('payments:selectClaimsOptions.telehealth');
+    case 'SERVICES_NOT_COVERED_THROUGH_TRADITIONAL_MEDICARE':
+      return i18next.t('payments:selectClaimsOptions.servicesNotCovered');
+    case 'OTHER':
+      return i18next.t('payments:selectClaimsOptions.other');
+    default:
+      return '';
+  }
+};
+
+export const translateNonClaimsBasedPayType = (type: string) => {
+  switch (type) {
+    case 'ADVANCED_PAYMENT':
+      return i18next.t('payments:nonClaimsPaymentsOptions.advancedPayment');
+    case 'BUNDLED_EPISODE_OF_CARE':
+      return i18next.t(
+        'payments:nonClaimsPaymentsOptions.bundledEpisodeOfCare'
+      );
+    case 'CAPITATION_POPULATION_BASED_FULL':
+      return i18next.t(
+        'payments:nonClaimsPaymentsOptions.capitationPopulationBasedFull'
+      );
+    case 'CAPITATION_POPULATION_BASED_PARTIAL':
+      return i18next.t(
+        'payments:nonClaimsPaymentsOptions.capitationPopulationBasedPartial'
+      );
+    case 'CARE_COORDINATION_MANAGEMENT_FEE':
+      return i18next.t(
+        'payments:nonClaimsPaymentsOptions.careCoordinationManagementFee'
+      );
+    case 'GLOBAL_BUDGET':
+      return i18next.t('payments:nonClaimsPaymentsOptions.globalBudget');
+    case 'GRANTS':
+      return i18next.t('payments:nonClaimsPaymentsOptions.grants');
+    case 'INCENTIVE_PAYMENT':
+      return i18next.t('payments:nonClaimsPaymentsOptions.incentivePayment');
+    case 'MAPD_SHARED_SAVINGS':
+      return i18next.t('payments:nonClaimsPaymentsOptions.mapdSharedSavings');
+    case 'OTHER':
+      return i18next.t('payments:nonClaimsPaymentsOptions.other');
+    case 'SHARED_SAVINGS':
+      return i18next.t('payments:nonClaimsPaymentsOptions.sharedSavings');
+    default:
+      return '';
+  }
+};
+
+export const translateAnticipatedPaymentFrequencyType = (type: string) => {
+  switch (type) {
+    case 'ANNUALLY':
+      return i18next.t('payments:anticipatedPaymentFrequencyOptions.annually');
+    case 'BIANNUALLY':
+      return i18next.t(
+        'payments:anticipatedPaymentFrequencyOptions.biannually'
+      );
+    case 'DAILY':
+      return i18next.t('payments:anticipatedPaymentFrequencyOptions.daily');
+    case 'MONTHLY':
+      return i18next.t('payments:anticipatedPaymentFrequencyOptions.monthly');
+    case 'OTHER':
+      return i18next.t('payments:anticipatedPaymentFrequencyOptions.other');
+    case 'QUARTERLY':
+      return i18next.t('payments:anticipatedPaymentFrequencyOptions.quarterly');
+    case 'SEMIMONTHLY':
+      return i18next.t(
+        'payments:anticipatedPaymentFrequencyOptions.semimonthly'
+      );
+    case 'WEEKLY':
+      return i18next.t('payments:anticipatedPaymentFrequencyOptions.weekly');
     default:
       return '';
   }
@@ -1434,6 +1562,16 @@ export const sortOtherEnum = (a: string, b: string) => {
   )
     return -1;
   if (a < b || b === 'OTHER') {
+    return -1;
+  }
+  if (a > b) {
+    return 1;
+  }
+  return 0;
+};
+
+export const sortPayTypeEnums = (a: string, b: string) => {
+  if (a < b || b === 'GRANTS') {
     return -1;
   }
   if (a > b) {

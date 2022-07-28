@@ -8,7 +8,7 @@ import itTools from './draftModelPlan/itTools';
 import newModel from './draftModelPlan/newModel';
 import operationsEvaluationAndLearning from './draftModelPlan/operationsEvaulationAndLearning';
 import participantsAndProviders from './draftModelPlan/participantsAndProviders';
-import payments from './draftModelPlan/payment';
+import payments from './draftModelPlan/payments';
 import accessibilityStatement from './accessibilityStatement';
 import auth from './auth';
 import cookies from './cookies';

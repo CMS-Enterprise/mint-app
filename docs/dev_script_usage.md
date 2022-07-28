@@ -14,7 +14,11 @@ scripts/dev db:clean          # Deletes all rows from all tables
 scripts/dev db:migrate        # Runs database migrations and wait for them to complete
 scripts/dev db:recreate       # Destroys the database container and recreates it
 scripts/dev db:dump           # Dump DB to file
+scripts/dev db:dump[file]           # Dump DB to file
+  --> dumps to an alternate source file. Paths starting with / assume a fully qualified path, otherwise, it will assume a file name in the scripts/data folder
 scripts/dev db:seed           # Load development dataset from file
+scripts/dev db:seed[file]     # Load development dataset from file
+  --> loads from an alternate source file. Paths starting with / assume a fully qualified path, otherwise, it will assume a file name in the scripts/data folder
 scripts/dev docker:sweep      # Delete all dangling volumes
 scripts/dev down              # Stops all services in the project
 scripts/dev gql               # Generate code from GraphQL schema
