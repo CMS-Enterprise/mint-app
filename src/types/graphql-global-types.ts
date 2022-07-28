@@ -206,6 +206,12 @@ export enum FrequencyType {
   ROLLING = "ROLLING",
 }
 
+export enum FundingSource {
+  OTHER = "OTHER",
+  PATIENT_PROTECTION_AFFORDABLE_CARE_ACT = "PATIENT_PROTECTION_AFFORDABLE_CARE_ACT",
+  TRUST_FUND = "TRUST_FUND",
+}
+
 export enum GcCollectBidsType {
   HPMS = "HPMS",
   OTHER = "OTHER",

@@ -108,6 +108,16 @@ export interface GetModelPlan_modelPlan_opsEvalAndLearning {
   status: TaskStatus;
 }
 
+export interface GetModelPlan_modelPlan_payments {
+  __typename: "PlanPayments";
+  id: UUID;
+  createdBy: string;
+  createdDts: Time;
+  modifiedBy: string | null;
+  modifiedDts: Time | null;
+  status: TaskStatus;
+}
+
 export interface GetModelPlan_modelPlan_itTools {
   __typename: "PlanITTools";
   id: UUID;
@@ -137,6 +147,7 @@ export interface GetModelPlan_modelPlan {
   participantsAndProviders: GetModelPlan_modelPlan_participantsAndProviders;
   beneficiaries: GetModelPlan_modelPlan_beneficiaries;
   opsEvalAndLearning: GetModelPlan_modelPlan_opsEvalAndLearning;
+  payments: GetModelPlan_modelPlan_payments;
   itTools: GetModelPlan_modelPlan_itTools;
 }
 
