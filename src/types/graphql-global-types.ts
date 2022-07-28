@@ -864,6 +864,7 @@ export interface PlanPaymentsChanges {
   anticipateReconcilingPaymentsRetrospectivelyNote?: string | null;
   paymentStartDate?: Time | null;
   paymentStartDateNote?: string | null;
+  status?: TaskStatusInput | null;
 }
 
 //==============================================================
