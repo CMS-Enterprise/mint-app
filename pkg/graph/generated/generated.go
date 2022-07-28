@@ -659,6 +659,8 @@ type ComplexityRoot struct {
 		PlanningToUseInnovationPaymentContractor          func(childComplexity int) int
 		PlanningToUseInnovationPaymentContractorNote      func(childComplexity int) int
 		ProvidingThirdPartyFile                           func(childComplexity int) int
+		ReadyForReviewBy                                  func(childComplexity int) int
+		ReadyForReviewDts                                 func(childComplexity int) int
 		SharedSystemsInvolvedAdditionalClaimPayment       func(childComplexity int) int
 		SharedSystemsInvolvedAdditionalClaimPaymentNote   func(childComplexity int) int
 		ShouldAnyProviderExcludedFFSSystemsNote           func(childComplexity int) int
@@ -4862,6 +4864,20 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.PlanPayments.ProvidingThirdPartyFile(childComplexity), true
 
+	case "PlanPayments.readyForReviewBy":
+		if e.complexity.PlanPayments.ReadyForReviewBy == nil {
+			break
+		}
+
+		return e.complexity.PlanPayments.ReadyForReviewBy(childComplexity), true
+
+	case "PlanPayments.readyForReviewDts":
+		if e.complexity.PlanPayments.ReadyForReviewDts == nil {
+			break
+		}
+
+		return e.complexity.PlanPayments.ReadyForReviewDts(childComplexity), true
+
 	case "PlanPayments.sharedSystemsInvolvedAdditionalClaimPayment":
 		if e.complexity.PlanPayments.SharedSystemsInvolvedAdditionalClaimPayment == nil {
 			break
@@ -6035,6 +6051,8 @@ type PlanPayments {
   createdDts:  Time!
   modifiedBy:  String
   modifiedDts: Time
+  readyForReviewBy: String
+  readyForReviewDts: Time
   status:      TaskStatus!
 }
 
@@ -10994,6 +11012,10 @@ func (ec *executionContext) fieldContext_ModelPlan_payments(ctx context.Context,
 				return ec.fieldContext_PlanPayments_modifiedBy(ctx, field)
 			case "modifiedDts":
 				return ec.fieldContext_PlanPayments_modifiedDts(ctx, field)
+			case "readyForReviewBy":
+				return ec.fieldContext_PlanPayments_readyForReviewBy(ctx, field)
+			case "readyForReviewDts":
+				return ec.fieldContext_PlanPayments_readyForReviewDts(ctx, field)
 			case "status":
 				return ec.fieldContext_PlanPayments_status(ctx, field)
 			}
@@ -14495,6 +14517,10 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanPayments(ctx context
 				return ec.fieldContext_PlanPayments_modifiedBy(ctx, field)
 			case "modifiedDts":
 				return ec.fieldContext_PlanPayments_modifiedDts(ctx, field)
+			case "readyForReviewBy":
+				return ec.fieldContext_PlanPayments_readyForReviewBy(ctx, field)
+			case "readyForReviewDts":
+				return ec.fieldContext_PlanPayments_readyForReviewDts(ctx, field)
 			case "status":
 				return ec.fieldContext_PlanPayments_status(ctx, field)
 			}
@@ -34378,6 +34404,88 @@ func (ec *executionContext) fieldContext_PlanPayments_modifiedDts(ctx context.Co
 	return fc, nil
 }
 
+func (ec *executionContext) _PlanPayments_readyForReviewBy(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_readyForReviewBy(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ReadyForReviewBy, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanPayments_readyForReviewBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanPayments",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanPayments_readyForReviewDts(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_readyForReviewDts(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ReadyForReviewDts, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*time.Time)
+	fc.Result = res
+	return ec.marshalOTime2ᚖtimeᚐTime(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanPayments_readyForReviewDts(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanPayments",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Time does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _PlanPayments_status(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_PlanPayments_status(ctx, field)
 	if err != nil {
@@ -35364,6 +35472,10 @@ func (ec *executionContext) fieldContext_Query_planPayments(ctx context.Context,
 				return ec.fieldContext_PlanPayments_modifiedBy(ctx, field)
 			case "modifiedDts":
 				return ec.fieldContext_PlanPayments_modifiedDts(ctx, field)
+			case "readyForReviewBy":
+				return ec.fieldContext_PlanPayments_readyForReviewBy(ctx, field)
+			case "readyForReviewDts":
+				return ec.fieldContext_PlanPayments_readyForReviewDts(ctx, field)
 			case "status":
 				return ec.fieldContext_PlanPayments_status(ctx, field)
 			}
@@ -42304,6 +42416,14 @@ func (ec *executionContext) _PlanPayments(ctx context.Context, sel ast.Selection
 		case "modifiedDts":
 
 			out.Values[i] = ec._PlanPayments_modifiedDts(ctx, field, obj)
+
+		case "readyForReviewBy":
+
+			out.Values[i] = ec._PlanPayments_readyForReviewBy(ctx, field, obj)
+
+		case "readyForReviewDts":
+
+			out.Values[i] = ec._PlanPayments_readyForReviewDts(ctx, field, obj)
 
 		case "status":
 
