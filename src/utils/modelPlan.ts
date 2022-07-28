@@ -1395,48 +1395,6 @@ export const translatePInformFfsType = (type: string) => {
   }
 };
 
-export const translatePayType = (type: string) => {
-  switch (type) {
-    case 'CLAIMS_BASED_PAYMENTS':
-      return i18next.t('payments:whatWillYouPayOptions.claims');
-    case 'NON_CLAIMS_BASED_PAYMENTS':
-      return i18next.t('payments:whatWillYouPayOptions.nonClaims');
-    case 'GRANTS':
-      return i18next.t('payments:whatWillYouPayOptions.grants');
-    default:
-      return '';
-  }
-};
-
-export const translateNonClaimsBasedPayType = (type: string) => {
-  switch (type) {
-    case 'ADVANCED_PAYMENT':
-      return i18next.t('payments:nonClaimsPaymentsOptions.advancedPayment');
-    case 'BUNDLED_EPISODE_OF_CARE':
-      return i18next.t('payments:nonClaimsPaymentsOptions.bundled');
-    case 'CAPITATION_POPULATION_BASED_FULL':
-      return i18next.t('payments:nonClaimsPaymentsOptions.capitationFull');
-    case 'CAPITATION_POPULATION_BASED_PARTIAL':
-      return i18next.t('payments:nonClaimsPaymentsOptions.capitationPart');
-    case 'CARE_COORDINATION_MANAGEMENT_FEE':
-      return i18next.t('payments:nonClaimsPaymentsOptions.careCoordination');
-    case 'GLOBAL_BUDGET':
-      return i18next.t('payments:nonClaimsPaymentsOptions.globalBudget');
-    case 'GRANTS':
-      return i18next.t('payments:nonClaimsPaymentsOptions.grants');
-    case 'INCENTIVE_PAYMENT':
-      return i18next.t('payments:nonClaimsPaymentsOptions.incentivePayment');
-    case 'MAPD_SHARED_SAVINGS':
-      return i18next.t('payments:nonClaimsPaymentsOptions.mapSharedSavings');
-    case 'SHARED_SAVINGS':
-      return i18next.t('payments:nonClaimsPaymentsOptions.sharedSavings');
-    case 'OTHER':
-      return i18next.t('payments:nonClaimsPaymentsOptions.other');
-    default:
-      return '';
-  }
-};
-
 export const translatePNonClaimsBasedPaymentsType = (type: string) => {
   switch (type) {
     case 'APPS':
