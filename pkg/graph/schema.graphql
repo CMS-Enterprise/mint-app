@@ -811,6 +811,8 @@ type PlanPayments {
   createdDts:  Time!
   modifiedBy:  String
   modifiedDts: Time
+  readyForReviewBy: String
+  readyForReviewDts: Time
   status:      TaskStatus!
 }
 
