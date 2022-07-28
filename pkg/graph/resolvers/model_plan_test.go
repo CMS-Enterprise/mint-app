@@ -22,12 +22,12 @@ func (suite *ResolverSuite) TestModelPlanUpdate() {
 	plan := suite.createModelPlan("Test Plan")
 
 	changes := map[string]interface{}{
-		"modelName":  "NEW_AND_IMPROVED",
-		"status":     models.ModelStatusIcipComplete,
-		"archived":   true,
-		"cmsCenters": []string{"CMMI", "OTHER"},
-		"cmsOther":   "SOME OTHER CMS CENTER",
-		"cmmiGroups": []string{"PATIENT_CARE_MODELS_GROUP", "SEAMLESS_CARE_MODELS_GROUP"},
+		"modelName": "NEW_AND_IMPROVED",
+		"status":    models.ModelStatusIcipComplete,
+		"archived":  true,
+		// "cmsCenters": []string{"CMMI", "OTHER"},
+		// "cmsOther":   "SOME OTHER CMS CENTER",
+		// "cmmiGroups": []string{"PATIENT_CARE_MODELS_GROUP", "SEAMLESS_CARE_MODELS_GROUP"},
 	}
 	updater := "UPDT"
 	result, err := ModelPlanUpdate(suite.testConfigs.Logger, plan.ID, changes, &updater, suite.testConfigs.Store) // update plan with new user "UPDT"
