@@ -1,7 +1,7 @@
-import React, { Fragment, useContext, useEffect, useState } from 'react';
+import React, { Fragment, useContext, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link, useParams } from 'react-router-dom';
-import { useMutation, useQuery, useSubscription } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import {
   Breadcrumb,
   BreadcrumbBar,
@@ -20,9 +20,6 @@ import PageHeading from 'components/PageHeading';
 import Divider from 'components/shared/Divider';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import GetModelPlan from 'queries/GetModelPlan';
-import GetTaskListSubscriptions from 'queries/TaskListSubscription/GetTaskListSubscriptions';
-import LockTaskListSection from 'queries/TaskListSubscription/LockTaskListSection';
-import SubscribeToTaskList from 'queries/TaskListSubscription/SubscribeToTaskList';
 import {
   GetModelPlan as GetModelPlanType,
   GetModelPlan_modelPlan as GetModelPlanTypes,
@@ -66,26 +63,8 @@ const TaskList = () => {
   const { modelID } = useParams<{ modelID: string }>();
   const [isDiscussionOpen, setIsDiscussionOpen] = useState(false);
 
-  const { taskListSectionLocks } = useContext(SubscriptionContext);
-  console.log('task list');
-  console.log(taskListSectionLocks);
-
-  // const [update] = useMutation(LockTaskListSection);
-
-  // useEffect(() => {
-  //   update({
-  //     variables: {
-  //       modelPlanID: modelID,
-  //       section: 'MODEL_BASICS'
-  //     }
-  //   })
-  //     .then(response => {
-  //       console.log(response);
-  //     })
-  //     .catch(errors => {
-  //       console.log(errors);
-  //     });
-  // }, [modelID, update]);
+  // const { taskListSectionLocks } = useContext(SubscriptionContext);
+  // console.log(taskListSectionLocks);
 
   const { data, loading, error } = useQuery<
     GetModelPlanType,

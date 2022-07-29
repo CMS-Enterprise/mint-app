@@ -16,7 +16,7 @@ type SubscriptionWrapperProps = {
   children: React.ReactNode;
 };
 
-type LockSectionType = {
+export type LockSectionType = {
   lockedBy: string;
   modelPlanID: string;
   refCount: number;
@@ -29,16 +29,16 @@ const removeLockedSection = (
   locksToUpdate: LockSectionType[],
   lockSection: LockSectionType
 ) => {
-  const updatedLock: LockSectionType[] = [...locksToUpdate];
+  const updatedLocks: LockSectionType[] = [...locksToUpdate];
 
   // Finds and removes the locked object from the SubscriptionContext array
-  updatedLock.splice(
-    updatedLock.findIndex((section: LockSectionType) => {
+  updatedLocks.splice(
+    updatedLocks.findIndex((section: LockSectionType) => {
       return section.section === lockSection.section;
     }),
     1
   );
-  return updatedLock;
+  return updatedLocks;
 };
 
 // Updates SubscriptionContext on the addition of lock
@@ -46,7 +46,7 @@ const addLockedSection = (
   locksToUpdate: LockSectionType[],
   lockSection: LockSectionType
 ) => {
-  const updatedLock: LockSectionType[] = [...locksToUpdate];
+  const updatedLocks: LockSectionType[] = [...locksToUpdate];
 
   // Finds the lock index from the SubscriptionContext array
   const foundSectionIndex: number = locksToUpdate.findIndex(
@@ -55,12 +55,12 @@ const addLockedSection = (
 
   // If the lock exists, replace the lock object
   if (foundSectionIndex !== -1) {
-    updatedLock[foundSectionIndex] = lockSection;
+    updatedLocks[foundSectionIndex] = lockSection;
     // Otherwise add the lock object to the SubscriptionContext array
   } else {
-    updatedLock.push(lockSection);
+    updatedLocks.push(lockSection);
   }
-  return updatedLock;
+  return updatedLocks;
 };
 
 // Create the subscription context - can be used anywhere in a model plan
@@ -89,7 +89,7 @@ const SubscriptionWrapper = ({ children }: SubscriptionWrapperProps) => {
 
   useEffect(() => {
     if (modelID) {
-      // useLazyQuery hook to fetch data on new modelID
+      // useLazyQuery hook to fetch existing subscription data on new modelID
       getTaskListLocks({ variables: { modelPlanID: modelID } });
 
       // Sets the initial lock statuses once useLazyQuery data is fetched
