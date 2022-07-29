@@ -26,7 +26,7 @@ export type LockSectionType = {
 
 // Updates SubscriptionContext on the removal of lock
 const removeLockedSection = (
-  locksToUpdate: LockSectionType[],
+  locksToUpdate: LockSectionType[] = [],
   lockSection: LockSectionType
 ) => {
   const updatedLocks: LockSectionType[] = [...locksToUpdate];
@@ -43,7 +43,7 @@ const removeLockedSection = (
 
 // Updates SubscriptionContext on the addition of lock
 const addLockedSection = (
-  locksToUpdate: LockSectionType[],
+  locksToUpdate: LockSectionType[] = [],
   lockSection: LockSectionType
 ) => {
   const updatedLocks: LockSectionType[] = [...locksToUpdate];
@@ -66,8 +66,10 @@ const addLockedSection = (
 // Create the subscription context - can be used anywhere in a model plan
 export const SubscriptionContext = createContext<{
   taskListSectionLocks: LockSectionType[];
+  loading: boolean;
 }>({
-  taskListSectionLocks: []
+  taskListSectionLocks: [],
+  loading: true
 });
 
 const SubscriptionWrapper = ({ children }: SubscriptionWrapperProps) => {
@@ -78,8 +80,10 @@ const SubscriptionWrapper = ({ children }: SubscriptionWrapperProps) => {
   // The value that will be given to the context
   const [subscriptionContextData, setSubscriptionContextData] = useState<{
     taskListSectionLocks: LockSectionType[];
+    loading: boolean;
   }>({
-    taskListSectionLocks: []
+    taskListSectionLocks: [],
+    loading: true
   });
 
   // useLazyQuery hook to init query and create subscription in the presence of a new model plan id
@@ -93,7 +97,7 @@ const SubscriptionWrapper = ({ children }: SubscriptionWrapperProps) => {
       getTaskListLocks({ variables: { modelPlanID: modelID } });
 
       // Sets the initial lock statuses once useLazyQuery data is fetched
-      setSubscriptionContextData(data);
+      setSubscriptionContextData({ ...data, loading: false });
 
       // Subscription initiator and message update method
       subscribeToMore({
@@ -122,7 +126,8 @@ const SubscriptionWrapper = ({ children }: SubscriptionWrapperProps) => {
 
           // Formatting lock object to mirror prev updateQuery param
           const formattedSubscriptionContext = {
-            taskListSectionLocks: updatedSubscriptionContext
+            taskListSectionLocks: updatedSubscriptionContext,
+            loading: false
           };
 
           setSubscriptionContextData(formattedSubscriptionContext);

@@ -70,25 +70,30 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
 
   const { authState } = useOktaAuth();
 
-  const subscriptionLocks = useContext(SubscriptionContext);
+  const { taskListSectionLocks, loading } = useContext(SubscriptionContext);
 
   const [update] = useMutation(LockTaskListSection);
 
   let lockState: LockStatus | undefined;
   if (
     taskListSection &&
-    subscriptionLocks?.taskListSectionLocks &&
-    authState?.euaId
+    taskListSectionLocks &&
+    authState?.euaId &&
+    !locking &&
+    !loading
   ) {
     lockState = findLockedSection(
-      subscriptionLocks.taskListSectionLocks,
+      taskListSectionLocks,
       taskListSection,
       authState?.euaId as string
     );
   }
-  console.log(lockState);
 
-  if (lockState === LockStatus.UNLOCKED && !locking) {
+  console.log(loading);
+  console.log(lockState);
+  console.log(taskListSectionLocks);
+
+  if (lockState === LockStatus.UNLOCKED && !locking && !loading) {
     setLocking(true);
     update({
       variables: {
