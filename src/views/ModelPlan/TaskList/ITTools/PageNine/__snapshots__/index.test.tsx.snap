@@ -159,7 +159,7 @@ exports[`IT Tools Page nine matches snapshot 1`] = `
                     <a
                       class="usa-link"
                       data-testid="it-tools-redirect-payType"
-                      href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/payments"
+                      href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/payment"
                     >
                       Go to question
                     </a>
@@ -358,7 +358,7 @@ exports[`IT Tools Page nine matches snapshot 1`] = `
                     <a
                       class="usa-link"
                       data-testid="it-tools-redirect-nonClaimsPayments"
-                      href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/payments"
+                      href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/payment/non-claims-based-payment"
                     >
                       Go to question
                     </a>
@@ -496,7 +496,7 @@ exports[`IT Tools Page nine matches snapshot 1`] = `
                     <a
                       class="usa-link"
                       data-testid="it-tools-redirect-willRecoverPayments"
-                      href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/payments"
+                      href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/payment/recover-payment"
                     >
                       Go to question
                     </a>

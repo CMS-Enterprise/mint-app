@@ -136,6 +136,9 @@ exports[`Model Plan Payment matches snapshot 1`] = `
                 >
                   Patient Protection Affordable Care Act (Sec 3021)
                 </label>
+                <p
+                  class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                />
               </div>
               <div
                 class="mint-checkbox usa-checkbox"
@@ -153,6 +156,9 @@ exports[`Model Plan Payment matches snapshot 1`] = `
                 >
                   Trust Fund
                 </label>
+                <p
+                  class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                />
               </div>
               <div
                 class="usa-form-group margin-left-4 margin-top-2 margin-bottom-4"
@@ -189,6 +195,9 @@ exports[`Model Plan Payment matches snapshot 1`] = `
                 >
                   Other
                 </label>
+                <p
+                  class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                />
               </div>
             </fieldset>
             <div
@@ -252,6 +261,9 @@ exports[`Model Plan Payment matches snapshot 1`] = `
                 >
                   Patient Protection Affordable Care Act (Sec 3021)
                 </label>
+                <p
+                  class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                />
               </div>
               <div
                 class="mint-checkbox usa-checkbox"
@@ -269,6 +281,9 @@ exports[`Model Plan Payment matches snapshot 1`] = `
                 >
                   Trust Fund
                 </label>
+                <p
+                  class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                />
               </div>
               <div
                 class="mint-checkbox usa-checkbox"
@@ -286,6 +301,9 @@ exports[`Model Plan Payment matches snapshot 1`] = `
                 >
                   Other
                 </label>
+                <p
+                  class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                />
               </div>
             </fieldset>
             <div
@@ -349,6 +367,9 @@ exports[`Model Plan Payment matches snapshot 1`] = `
                 >
                   Beneficiaries
                 </label>
+                <p
+                  class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                />
               </div>
               <div
                 class="mint-checkbox usa-checkbox"
@@ -366,6 +387,9 @@ exports[`Model Plan Payment matches snapshot 1`] = `
                 >
                   Participants
                 </label>
+                <p
+                  class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                />
               </div>
               <div
                 class="mint-checkbox usa-checkbox"
@@ -383,6 +407,9 @@ exports[`Model Plan Payment matches snapshot 1`] = `
                 >
                   Providers
                 </label>
+                <p
+                  class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                />
               </div>
               <div
                 class="mint-checkbox usa-checkbox"
@@ -400,6 +427,9 @@ exports[`Model Plan Payment matches snapshot 1`] = `
                 >
                   States
                 </label>
+                <p
+                  class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                />
               </div>
               <div
                 class="mint-checkbox usa-checkbox"
@@ -417,6 +447,9 @@ exports[`Model Plan Payment matches snapshot 1`] = `
                 >
                   Other
                 </label>
+                <p
+                  class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                />
               </div>
             </fieldset>
             <div
@@ -485,6 +518,9 @@ exports[`Model Plan Payment matches snapshot 1`] = `
                 >
                   Claims-Based Payments
                 </label>
+                <p
+                  class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                />
               </div>
               <div
                 class="mint-checkbox usa-checkbox"
@@ -502,6 +538,9 @@ exports[`Model Plan Payment matches snapshot 1`] = `
                 >
                   Non-Claims-Based Payments
                 </label>
+                <p
+                  class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                />
               </div>
               <div
                 class="mint-checkbox usa-checkbox"
@@ -519,6 +558,9 @@ exports[`Model Plan Payment matches snapshot 1`] = `
                 >
                   Grants
                 </label>
+                <p
+                  class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                />
               </div>
             </fieldset>
             <div
