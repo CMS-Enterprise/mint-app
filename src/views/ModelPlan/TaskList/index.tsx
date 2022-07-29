@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { Fragment, useContext, useEffect, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link, useParams } from 'react-router-dom';
 import { useMutation, useQuery, useSubscription } from '@apollo/client';
@@ -36,6 +36,7 @@ import {
 import { TaskStatus } from 'types/graphql-global-types';
 import { formatDate } from 'utils/date';
 import { getUnansweredQuestions } from 'utils/modelPlan';
+import { SubscriptionContext } from 'views/SubscriptionWrapper';
 
 import Discussions from '../Discussions';
 
@@ -64,6 +65,10 @@ const TaskList = () => {
   const { t: d } = useTranslation('discussions');
   const { modelID } = useParams<{ modelID: string }>();
   const [isDiscussionOpen, setIsDiscussionOpen] = useState(false);
+
+  const { data: subscriptionData } = useContext(SubscriptionContext);
+  console.log('task list');
+  console.log(subscriptionData);
 
   // const {
   //   data: subscriptionData,

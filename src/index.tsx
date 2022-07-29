@@ -9,6 +9,7 @@ import {
   split
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
+import { GraphQLWsLink } from '@apollo/client/link/subscriptions';
 import { WebSocketLink } from '@apollo/client/link/ws';
 import { getMainDefinition } from '@apollo/client/utilities';
 import axios from 'axios';
@@ -78,19 +79,18 @@ const wsLink = new WebSocketLink(
   new SubscriptionClient('ws://localhost:8085/api/graph/query', {
     connectionParams: {
       authToken: getAuthHeader(process.env.REACT_APP_GRAPHQL_ADDRESS as string)
-    },
-    wsOptionArguments: [
-      {
-        // This are passed as extra arguments to the WebSocket constructor
-        headers: {
-          Authorization: getAuthHeader(
-            process.env.REACT_APP_GRAPHQL_ADDRESS as string
-          )
-        }
-      }
-    ]
+    }
   })
 );
+
+// const wsLink = new GraphQLWsLink(
+//   createClient({
+//     url: 'ws://localhost:8085/api/graph/query',
+//     connectionParams: {
+//       authToken: getAuthHeader(process.env.REACT_APP_GRAPHQL_ADDRESS as string)
+//     }
+//   })
+// );
 
 // The split function takes three parameters:
 //
