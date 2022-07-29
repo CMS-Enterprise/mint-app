@@ -109,10 +109,13 @@ const BasicsContent = () => {
     __typename: 'ModelPlan',
     id: id ?? '',
     modelName: modelName ?? '',
-    modelCategory: modelCategory ?? null,
-    cmsCenters: cmsCenters ?? [],
-    cmmiGroups: cmmiGroups ?? [],
-    cmsOther: cmsOther ?? ''
+    basics: {
+      __typename: 'PlanBasics',
+      modelCategory: modelCategory ?? null,
+      cmsCenters: cmsCenters ?? [],
+      cmmiGroups: cmmiGroups ?? [],
+      cmsOther: cmsOther ?? ''
+    }
   };
 
   // 4 options
@@ -245,7 +248,7 @@ const BasicsContent = () => {
                     as={Dropdown}
                     id="plan-basics-model-category"
                     name="modelCategory"
-                    value={values.modelCategory || ''}
+                    value={values.basics.modelCategory || ''}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                       setFieldValue('modelCategory', e.target.value);
                     }}
@@ -286,7 +289,7 @@ const BasicsContent = () => {
                                 name="cmsCenters"
                                 label={translateCmsCenter(center)}
                                 value={center}
-                                checked={values?.cmsCenters.includes(
+                                checked={values.basics.cmsCenters.includes(
                                   center as CMSCenter
                                 )}
                                 onChange={(
@@ -295,7 +298,7 @@ const BasicsContent = () => {
                                   if (e.target.checked) {
                                     arrayHelpers.push(e.target.value);
                                   } else {
-                                    const idx = values.cmsCenters.indexOf(
+                                    const idx = values.basics.cmsCenters.indexOf(
                                       e.target.value as CMSCenter
                                     );
                                     arrayHelpers.remove(idx);
@@ -312,7 +315,7 @@ const BasicsContent = () => {
                           );
                         })}
 
-                        {values.cmsCenters.includes(CMSCenter.OTHER) && (
+                        {values.basics.cmsCenters.includes(CMSCenter.OTHER) && (
                           <FieldGroup
                             className="margin-top-4"
                             error={!!flatErrors.cmsOther}
@@ -333,7 +336,7 @@ const BasicsContent = () => {
                     )}
                   />
                 </FieldGroup>
-                {values.cmsCenters.includes(CMSCenter.CMMI) && (
+                {values.basics.cmsCenters.includes(CMSCenter.CMMI) && (
                   <FieldGroup
                     error={!!flatErrors.cmmiGroup}
                     className="margin-top-4"
@@ -356,7 +359,7 @@ const BasicsContent = () => {
                                   name="cmmiGroup"
                                   label={translateCmmiGroups(group)}
                                   value={group}
-                                  checked={values?.cmmiGroups.includes(
+                                  checked={values.basics.cmmiGroups.includes(
                                     group as CMMIGroup
                                   )}
                                   onChange={(
@@ -365,7 +368,7 @@ const BasicsContent = () => {
                                     if (e.target.checked) {
                                       arrayHelpers.push(e.target.value);
                                     } else {
-                                      const idx = values.cmmiGroups.indexOf(
+                                      const idx = values.basics.cmmiGroups.indexOf(
                                         e.target.value as CMMIGroup
                                       );
                                       arrayHelpers.remove(idx);
