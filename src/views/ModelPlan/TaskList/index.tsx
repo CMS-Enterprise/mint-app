@@ -66,27 +66,9 @@ const TaskList = () => {
   const { modelID } = useParams<{ modelID: string }>();
   const [isDiscussionOpen, setIsDiscussionOpen] = useState(false);
 
-  const { data: subscriptionData } = useContext(SubscriptionContext);
+  const { taskListSectionLocks } = useContext(SubscriptionContext);
   console.log('task list');
-  console.log(subscriptionData);
-
-  // const {
-  //   data: subscriptionData,
-  //   loading: subscriptionLoading,
-  //   error: subscriptionError
-  // } = useSubscription(SubscribeToTaskList, {
-  //   variables: { modelPlanID: modelID },
-  //   onSubscriptionData: data => {
-  //     console.log(data);
-  //   },
-  //   onSubscriptionComplete: () => {
-  //     console.log('complete');
-  //   }
-  // });
-
-  // console.log(subscriptionData);
-  // console.log(subscriptionLoading);
-  // console.log(JSON.stringify(subscriptionError));
+  console.log(taskListSectionLocks);
 
   // const [update] = useMutation(LockTaskListSection);
 
@@ -104,14 +86,6 @@ const TaskList = () => {
   //       console.log(errors);
   //     });
   // }, [modelID, update]);
-
-  // const { data: connections } = useQuery(GetTaskListSubscriptions, {
-  //   variables: {
-  //     modelPlanID: modelID
-  //   }
-  // });
-
-  // console.log(connections);
 
   const { data, loading, error } = useQuery<
     GetModelPlanType,

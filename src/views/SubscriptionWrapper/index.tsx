@@ -16,9 +16,58 @@ type SubscriptionWrapperProps = {
   children: React.ReactNode;
 };
 
+type LockSectionType = {
+  lockedBy: string;
+  modelPlanID: string;
+  refCount: number;
+  section: string;
+  __typename: 'TaskListSectionLockStatus';
+};
+
+// function to update SubscriptionContext on the removal of lock
+const removeLockedSection = (
+  locksToUpdate: LockSectionType[],
+  lockSection: LockSectionType
+) => {
+  const updatedLock: LockSectionType[] = [...locksToUpdate];
+
+  // Finds and removes the locked object from the SubscriptionContext array
+  updatedLock.splice(
+    updatedLock.findIndex((section: LockSectionType) => {
+      return section.section === lockSection.section;
+    }),
+    1
+  );
+  return updatedLock;
+};
+
+// function to update context on the addition of lock
+const addLockedSection = (
+  locksToUpdate: LockSectionType[],
+  lockSection: LockSectionType
+) => {
+  const updatedLock: LockSectionType[] = [...locksToUpdate];
+
+  // Finds the lock index from the SubscriptionContext array
+  const foundSectionIndex: number = locksToUpdate.findIndex(
+    (section: LockSectionType) => section.section === lockSection.section
+  );
+
+  // If the lock exists, replace the lock object
+  if (foundSectionIndex !== -1) {
+    updatedLock[foundSectionIndex] = lockSection;
+    // Otherwise add the lock object to the SubscriptionContext array
+  } else {
+    updatedLock.push(lockSection);
+  }
+  return updatedLock;
+};
+
 // Create the subscription context - can be used anywhere in a model plan
-export const SubscriptionContext = createContext({
-  data: {}
+export const SubscriptionContext = createContext<{
+  taskListSectionLocks: LockSectionType[];
+}>({
+  taskListSectionLocks: []
 });
 
 const SubscriptionWrapper = ({ children }: SubscriptionWrapperProps) => {
@@ -27,7 +76,11 @@ const SubscriptionWrapper = ({ children }: SubscriptionWrapperProps) => {
   const modelID = pathname.split('/')[2];
 
   // The value that will be given to the context
-  const [taskListData, setTaskListData] = useState({});
+  const [taskListData, setTaskListData] = useState<{
+    taskListSectionLocks: LockSectionType[];
+  }>({
+    taskListSectionLocks: []
+  });
 
   // Hook useLazyQuery to only init query and subscribe on the presence of a new model plan id
   const [getTaskListLocks, { data, subscribeToMore }] = useLazyQuery(
@@ -36,29 +89,50 @@ const SubscriptionWrapper = ({ children }: SubscriptionWrapperProps) => {
 
   useEffect(() => {
     if (modelID) {
+      // useLazyQuery hook to fetch data on new modelID
+      getTaskListLocks({ variables: { modelPlanID: modelID } });
+
+      // Sets the initial lock statuses once useLazyQuery data is fetched
       setTaskListData(data);
 
-      getTaskListLocks({ variables: { modelPlanID: modelID } });
+      // Subscription initiator and message update method
       subscribeToMore({
         document: SubscribeToTaskList,
         variables: {
           modelPlanID: modelID
         },
         updateQuery: (prev, { subscriptionData }) => {
-          const lockChange = subscriptionData.data;
-          if (!lockChange) return prev;
+          if (!subscriptionData.data) return prev;
 
-          if (
-            lockChange.onTaskListSectionLocksChanged.changeType === 'REMOVED'
-          ) {
-            // function to update context on the removal of lock
+          const lockChange =
+            subscriptionData.data.onTaskListSectionLocksChanged;
+
+          let updatedLock;
+
+          // If section lock is to be freed, remove the lock from the SubscriptionContext
+          if (lockChange.changeType === 'REMOVED') {
+            updatedLock = removeLockedSection(
+              prev.taskListSectionLocks,
+              lockChange.lockStatus
+            );
+            // If section lock is to be added, add the lock from the SubscriptionContext
           } else {
-            // function to update context on the addition of lock
+            updatedLock = addLockedSection(
+              prev.taskListSectionLocks,
+              lockChange.lockStatus
+            );
           }
 
-          const updatedData = { ...prev, subscriptionData };
-          setTaskListData(updatedData);
-          return updatedData;
+          // Formatting lock object to mirror prev updateQuery param
+          const formattedLocks = {
+            taskListSectionLocks: updatedLock
+          };
+
+          console.log(formattedLocks);
+
+          setTaskListData(formattedLocks);
+          // Returns the formatted locks to be used as the next 'prev' parameter of updateQuery
+          return formattedLocks;
         }
       });
     }
@@ -66,7 +140,7 @@ const SubscriptionWrapper = ({ children }: SubscriptionWrapperProps) => {
 
   return (
     // The Provider gives access to the context to its children
-    <SubscriptionContext.Provider value={{ data: taskListData }}>
+    <SubscriptionContext.Provider value={taskListData}>
       {children}
     </SubscriptionContext.Provider>
   );
