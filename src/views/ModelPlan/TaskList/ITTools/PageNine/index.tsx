@@ -252,7 +252,7 @@ const ITToolsPageNine = () => {
                           answers={payType.map(type =>
                             translatePayType(type || '')
                           )}
-                          redirect={`/models/${modelID}/task-list/payments`}
+                          redirect={`/models/${modelID}/task-list/payment`}
                           answered={payType.length > 0}
                           needsTool={questionOneNeedsTools}
                           subtext={t('nonClaimsNeedsAnswer')}
@@ -286,11 +286,11 @@ const ITToolsPageNine = () => {
                         </FieldErrorMsg>
 
                         <ITToolsSummary
-                          question={p('selectNonClaims')}
+                          question={p('nonClaimsPayments')}
                           answers={nonClaimsPayments.map(type =>
                             translateNonClaimsBasedPayType(type || '')
                           )}
-                          redirect={`/models/${modelID}/task-list/payments`}
+                          redirect={`/models/${modelID}/task-list/payment/non-claims-based-payment`}
                           answered={nonClaimsPayments.length > 0}
                           needsTool={questionTwoNeedsTools}
                           subtext={t('sharedSavingsNeedsAnswer')}
@@ -324,11 +324,11 @@ const ITToolsPageNine = () => {
                         </FieldErrorMsg>
 
                         <ITToolsSummary
-                          question={p('reoverPayments')}
+                          question={p('willRecoverPayments')}
                           answers={[
                             translateBoolean(willRecoverPayments || false)
                           ]}
-                          redirect={`/models/${modelID}/task-list/payments`}
+                          redirect={`/models/${modelID}/task-list/payment/recover-payment`}
                           answered={willRecoverPayments !== null}
                           needsTool={questionThreeNeedsTools}
                           subtext={t('yesFFSNeedsAnswer')}

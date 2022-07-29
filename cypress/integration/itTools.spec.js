@@ -212,21 +212,54 @@ describe('The Model Plan IT Tools Form', () => {
     cy.itToolsRedirect(
       '#it-tools-oel-educate-beneficiaries-OC',
       'it-tools-redirect-modelLearningSystems',
-      'ops-eval-and-learning-learning-systems-EDUCATE_BENEFICIARIES'
+      '#ops-eval-and-learning-learning-systems-EDUCATE_BENEFICIARIES'
     );
 
-    // TODO: Include payments cypress tests once payments is developed
+    cy.itToolsRedirect(
+      '#it-tools-p-claims-payments-HIGLAS',
+      'it-tools-redirect-payType',
+      '#payment-pay-recipients-CLAIMS_BASED_PAYMENTS'
+    );
 
-    // cy.contains('button', 'Next').click();
+    cy.itToolsRedirect(
+      '#it-tools-p-inform-ffs-FFS_COMPETENCY_CENTER',
+      'it-tools-redirect-shouldAnyProvidersExcludedFFSSystems',
+      '#payment-provider-exclusion-ffs-system-true'
+    );
 
-    // cy.contains('button', 'Save and start next Model Plan section').click();
+    cy.contains('button', 'Next').click();
 
-    // cy.location().should(loc => {
-    //   expect(loc.pathname).to.match(/\/models\/.{36}\/task-list/);
-    // });
+    // Page - /it-tools/page-nine
 
-    // cy.get(
-    //   '[data-testid="task-list-intake-form-ops-eval-and-learning"]'
-    // ).contains('In progress');
+    cy.wait(1000);
+
+    cy.itToolsRedirect(
+      '#it-tools-p-non-claims-payments-APPS',
+      'it-tools-redirect-payType',
+      '#payment-pay-recipients-NON_CLAIMS_BASED_PAYMENTS'
+    );
+
+    cy.itToolsRedirect(
+      '#it-tools-p-shared-savings-RMADA',
+      'it-tools-redirect-nonClaimsPayments',
+      '#easi-multiselect__option-SHARED_SAVINGS',
+      true
+    );
+
+    cy.itToolsRedirect(
+      '#it-tools-p-recover-payments-APPS',
+      'it-tools-redirect-willRecoverPayments',
+      '#payment-recover-payment-true'
+    );
+
+    cy.contains('button', 'Save and start next Model Plan section').click();
+
+    cy.location().should(loc => {
+      expect(loc.pathname).to.match(/\/models\/.{36}\/task-list/);
+    });
+
+    cy.get('[data-testid="task-list-intake-form-itTools"]').contains(
+      'In progress'
+    );
   });
 });

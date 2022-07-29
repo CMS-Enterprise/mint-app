@@ -27,6 +27,7 @@ import FieldGroup from 'components/shared/FieldGroup';
 import MultiSelect from 'components/shared/MultiSelect';
 import TextAreaField from 'components/shared/TextAreaField';
 import TextField from 'components/shared/TextField';
+import useScrollElement from 'hooks/useScrollElement';
 import GetClaimsBasedPayment from 'queries/Payments/GetClaimsBasedPayment';
 import {
   GetClaimsBasedPayment as GetClaimsBasedPaymentType,
@@ -61,6 +62,9 @@ const ClaimsBasedPayment = () => {
       id: modelID
     }
   });
+
+  // If redirected from IT Tools, scrolls to the relevant question
+  useScrollElement(!loading);
 
   const {
     id,

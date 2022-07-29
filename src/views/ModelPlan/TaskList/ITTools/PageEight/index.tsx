@@ -298,7 +298,7 @@ const ITToolsPageEight = () => {
                           answers={payType.map(type =>
                             translatePayType(type || '')
                           )}
-                          redirect={`/models/${modelID}/task-list/payments`}
+                          redirect={`/models/${modelID}/task-list/payment`}
                           answered={payType.length > 0}
                           needsTool={questionTwoNeedsTools}
                           subtext={t('ffsNeedsAnswer')}
@@ -330,13 +330,13 @@ const ITToolsPageEight = () => {
                         <FieldErrorMsg>{flatErrors.pInformFfs}</FieldErrorMsg>
 
                         <ITToolsSummary
-                          question={p('participantsExcluded')}
+                          question={p('excludedFromPayment')}
                           answers={[
                             translateBoolean(
                               shouldAnyProvidersExcludedFFSSystems || false
                             )
                           ]}
-                          redirect={`/models/${modelID}/task-list/payments`}
+                          redirect={`/models/${modelID}/task-list/payment/claims-based-payment`}
                           answered={
                             shouldAnyProvidersExcludedFFSSystems !== null
                           }
