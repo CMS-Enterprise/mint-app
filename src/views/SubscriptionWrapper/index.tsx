@@ -1,8 +1,8 @@
 /**
   Subscription wrapper and context for fetching and updating task list locked states.
   subscribeToMore method returns a previous state and a new subscription message.
-  context get modified based on the addition or removal of a locked task list section.
-  context can be accessed from anywhere in a model plan
+  SubscriptionContext gets modified based on the addition or removal of a locked task list section.
+  SubscriptionContext can be accessed from anywhere in a model plan
  */
 
 import React, { createContext, useEffect, useState } from 'react';
@@ -24,7 +24,7 @@ type LockSectionType = {
   __typename: 'TaskListSectionLockStatus';
 };
 
-// function to update SubscriptionContext on the removal of lock
+// Updates SubscriptionContext on the removal of lock
 const removeLockedSection = (
   locksToUpdate: LockSectionType[],
   lockSection: LockSectionType
@@ -41,7 +41,7 @@ const removeLockedSection = (
   return updatedLock;
 };
 
-// function to update context on the addition of lock
+// Updates SubscriptionContext on the addition of lock
 const addLockedSection = (
   locksToUpdate: LockSectionType[],
   lockSection: LockSectionType
@@ -76,13 +76,13 @@ const SubscriptionWrapper = ({ children }: SubscriptionWrapperProps) => {
   const modelID = pathname.split('/')[2];
 
   // The value that will be given to the context
-  const [taskListData, setTaskListData] = useState<{
+  const [subscriptionContextData, setSubscriptionContextData] = useState<{
     taskListSectionLocks: LockSectionType[];
   }>({
     taskListSectionLocks: []
   });
 
-  // Hook useLazyQuery to only init query and subscribe on the presence of a new model plan id
+  // useLazyQuery hook to init query and create subscription in the presence of a new model plan id
   const [getTaskListLocks, { data, subscribeToMore }] = useLazyQuery(
     GetTaskListSubscriptions
   );
@@ -93,7 +93,7 @@ const SubscriptionWrapper = ({ children }: SubscriptionWrapperProps) => {
       getTaskListLocks({ variables: { modelPlanID: modelID } });
 
       // Sets the initial lock statuses once useLazyQuery data is fetched
-      setTaskListData(data);
+      setSubscriptionContextData(data);
 
       // Subscription initiator and message update method
       subscribeToMore({
@@ -107,32 +107,27 @@ const SubscriptionWrapper = ({ children }: SubscriptionWrapperProps) => {
           const lockChange =
             subscriptionData.data.onTaskListSectionLocksChanged;
 
-          let updatedLock;
-
-          // If section lock is to be freed, remove the lock from the SubscriptionContext
-          if (lockChange.changeType === 'REMOVED') {
-            updatedLock = removeLockedSection(
-              prev.taskListSectionLocks,
-              lockChange.lockStatus
-            );
-            // If section lock is to be added, add the lock from the SubscriptionContext
-          } else {
-            updatedLock = addLockedSection(
-              prev.taskListSectionLocks,
-              lockChange.lockStatus
-            );
-          }
+          const updatedSubscriptionContext =
+            lockChange.changeType === 'REMOVED'
+              ? // If section lock is to be freed, remove the lock from the SubscriptionContext
+                removeLockedSection(
+                  prev.taskListSectionLocks,
+                  lockChange.lockStatus
+                )
+              : // If section lock is to be added, add the lock from the SubscriptionContext
+                addLockedSection(
+                  prev.taskListSectionLocks,
+                  lockChange.lockStatus
+                );
 
           // Formatting lock object to mirror prev updateQuery param
-          const formattedLocks = {
-            taskListSectionLocks: updatedLock
+          const formattedSubscriptionContext = {
+            taskListSectionLocks: updatedSubscriptionContext
           };
 
-          console.log(formattedLocks);
-
-          setTaskListData(formattedLocks);
+          setSubscriptionContextData(formattedSubscriptionContext);
           // Returns the formatted locks to be used as the next 'prev' parameter of updateQuery
-          return formattedLocks;
+          return formattedSubscriptionContext;
         }
       });
     }
@@ -140,7 +135,7 @@ const SubscriptionWrapper = ({ children }: SubscriptionWrapperProps) => {
 
   return (
     // The Provider gives access to the context to its children
-    <SubscriptionContext.Provider value={taskListData}>
+    <SubscriptionContext.Provider value={subscriptionContextData}>
       {children}
     </SubscriptionContext.Provider>
   );
