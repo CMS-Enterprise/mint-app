@@ -54,7 +54,7 @@ func authenticateMiddleware(logger *zap.Logger, next http.Handler) http.Handler 
 func devUserContext(ctx context.Context, authHeader string) (context.Context, error) {
 	// don't attempt to handle local auth if the Authorization Header doesn't start with "Local"
 	if !strings.HasPrefix(authHeader, "Local") {
-		return nil, nil
+		return ctx, nil
 	}
 
 	tokenParts := strings.Split(authHeader, "Local ")
