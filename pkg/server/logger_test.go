@@ -9,7 +9,7 @@ import (
 	"github.com/cmsgov/mint-app/pkg/appcontext"
 )
 
-func (s ServerTestSuite) TestLoggerMiddleware() {
+func (s *ServerTestSuite) TestLoggerMiddleware() {
 	s.Run("get a new logger with trace ID", func() {
 
 		req := httptest.NewRequest("GET", "/systems/", nil)
