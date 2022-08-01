@@ -20,6 +20,7 @@ export default gql`
         goal
         testInterventions
         note
+        modifiedDts
         status
       }
       milestones {
@@ -37,6 +38,7 @@ export default gql`
         wrapUpEnds
         phasedIn
         phasedInNote
+        modifiedDts
         status
       }
       documents {
@@ -83,6 +85,14 @@ export default gql`
         status
       }
       opsEvalAndLearning {
+        id
+        createdBy
+        createdDts
+        modifiedBy
+        modifiedDts
+        status
+      }
+      payments {
         id
         createdBy
         createdDts

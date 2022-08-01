@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
@@ -8,13 +8,13 @@ import {
   BreadcrumbLink,
   Button,
   Fieldset,
-  IconAdd,
   IconArrowBack,
   Label,
   Radio
 } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
 
+import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
@@ -45,7 +45,6 @@ const Overview = () => {
 
   const formikRef = useRef<FormikProps<BasicsFormType>>(null);
   const history = useHistory();
-  const [hasAdditionalNote, setHasAdditionalNote] = useState(false);
 
   const { data, loading, error } = useQuery<GetBasicsType, GetBasicsVariables>(
     GetBasics,
@@ -258,26 +257,7 @@ const Overview = () => {
                   />
                 </FieldGroup>
 
-                <Button
-                  type="button"
-                  className="usa-button usa-button--unstyled margin-top-4"
-                  onClick={() => setHasAdditionalNote(true)}
-                >
-                  <IconAdd className="margin-right-1" aria-hidden />
-                  {h('additionalNote')}
-                </Button>
-
-                {hasAdditionalNote && (
-                  <FieldGroup className="margin-top-4">
-                    <Field
-                      as={TextAreaField}
-                      className="height-15"
-                      id="ModelType-note"
-                      name="note"
-                      label={t('Notes')}
-                    />
-                  </FieldGroup>
-                )}
+                <AddNote id="ModelType-note" field="note" />
 
                 <div className="margin-top-6 margin-bottom-3">
                   <Button

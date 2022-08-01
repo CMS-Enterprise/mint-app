@@ -209,12 +209,18 @@ const Collaborators = () => {
                             <ComboboxPopover>
                               {foundUsers.formattedUsers.length > 0 ? (
                                 <ComboboxList>
-                                  {foundUsers.formattedUsers.map(user => {
-                                    const str = `${user.label}, ${user.value}`;
-                                    return (
-                                      <ComboboxOption key={str} value={str} />
-                                    );
-                                  })}
+                                  {foundUsers.formattedUsers.map(
+                                    (user, index) => {
+                                      const str = `${user.label}, ${user.value}`;
+                                      return (
+                                        <ComboboxOption
+                                          key={str}
+                                          index={index}
+                                          value={str}
+                                        />
+                                      );
+                                    }
+                                  )}
                                 </ComboboxList>
                               ) : (
                                 <span className="display-block margin-1">

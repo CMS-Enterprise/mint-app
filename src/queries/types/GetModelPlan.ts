@@ -18,6 +18,7 @@ export interface GetModelPlan_modelPlan_basics {
   goal: string | null;
   testInterventions: string | null;
   note: string | null;
+  modifiedDts: Time | null;
   status: TaskStatus;
 }
 
@@ -37,6 +38,7 @@ export interface GetModelPlan_modelPlan_milestones {
   wrapUpEnds: Time | null;
   phasedIn: boolean | null;
   phasedInNote: string | null;
+  modifiedDts: Time | null;
   status: TaskStatus;
 }
 
@@ -106,6 +108,16 @@ export interface GetModelPlan_modelPlan_opsEvalAndLearning {
   status: TaskStatus;
 }
 
+export interface GetModelPlan_modelPlan_payments {
+  __typename: "PlanPayments";
+  id: UUID;
+  createdBy: string;
+  createdDts: Time;
+  modifiedBy: string | null;
+  modifiedDts: Time | null;
+  status: TaskStatus;
+}
+
 export interface GetModelPlan_modelPlan {
   __typename: "ModelPlan";
   id: UUID;
@@ -125,6 +137,7 @@ export interface GetModelPlan_modelPlan {
   participantsAndProviders: GetModelPlan_modelPlan_participantsAndProviders;
   beneficiaries: GetModelPlan_modelPlan_beneficiaries;
   opsEvalAndLearning: GetModelPlan_modelPlan_opsEvalAndLearning;
+  payments: GetModelPlan_modelPlan_payments;
 }
 
 export interface GetModelPlan {
