@@ -2,6 +2,8 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import classnames from 'classnames';
 
+import { TaskStatus } from 'types/graphql-global-types';
+
 type TaskListLastUpdatedProps = {
   children?: React.ReactNode | React.ReactNodeArray;
 };
@@ -29,7 +31,7 @@ export const TaskListDescription = ({ children }: TaskListDescriptionProps) => {
 type TaskListItemProps = {
   children?: React.ReactNode | React.ReactNodeArray;
   heading: string;
-  status: 'READY' | 'IN_PROGRESS' | 'CANNOT_START' | 'COMPLETE';
+  status: TaskStatus;
   testId: string;
 };
 
@@ -44,30 +46,23 @@ const TaskListItem = ({
   const taskListItemClasses = classnames(
     'model-plan-task-list__item',
     'display-flex',
-    'padding-bottom-4',
-    {
-      'text-base-dark': status === 'CANNOT_START'
-    }
+    'padding-bottom-4'
   );
 
   let tagStyle;
   let tagCopy;
   switch (status) {
-    case 'READY':
-      tagCopy = t('taskListItem.ready');
-      tagStyle = 'bg-accent-cool';
-      break;
     case 'IN_PROGRESS':
       tagCopy = t('taskListItem.inProgress');
       tagStyle = 'bg-warning';
       break;
-    case 'COMPLETE':
-      tagCopy = t('taskListItem.completed');
+    case 'READY_FOR_REVIEW':
+      tagCopy = t('taskListItem.readyForReview');
       tagStyle = 'bg-success-dark text-white';
       break;
     default:
-      tagCopy = t('taskListItem.cannotStart');
-      tagStyle = 'text-base border-2px border-base';
+      tagCopy = t('taskListItem.ready');
+      tagStyle = 'bg-accent-cool';
   }
 
   return (

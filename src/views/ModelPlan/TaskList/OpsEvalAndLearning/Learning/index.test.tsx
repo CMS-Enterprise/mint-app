@@ -5,7 +5,7 @@ import { render, screen, waitFor } from '@testing-library/react';
 
 import GetLearning from 'queries/OpsEvalAndLearning/GetLearning';
 import { GetLearning_modelPlan_opsEvalAndLearning as GetLearningType } from 'queries/OpsEvalAndLearning/types/GetLearning';
-import { CcmInvolvmentType } from 'types/graphql-global-types';
+import { CcmInvolvmentType, TaskStatus } from 'types/graphql-global-types';
 
 import Learning from '.';
 
@@ -17,7 +17,10 @@ const learningMockData: GetLearningType = {
   modelLearningSystems: [],
   modelLearningSystemsOther: '',
   modelLearningSystemsNote: '',
-  anticipatedChallenges: 'Hard challenges'
+  anticipatedChallenges: 'Hard challenges',
+  readyForReviewBy: 'ASDF',
+  readyForReviewDts: '2022-05-12T15:01:39.190679Z',
+  status: TaskStatus.IN_PROGRESS
 };
 
 const learningMock = [

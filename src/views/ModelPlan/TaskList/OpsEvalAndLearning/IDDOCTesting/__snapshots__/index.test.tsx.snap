@@ -210,6 +210,7 @@ exports[`Model Plan Ops Eval and Learning IDDOC matches snapshot 1`] = `
     >
       <input
         class="usa-checkbox__input"
+        data-testid="ops-eval-and-learning-data-monitoring-file-BENEFICIARY"
         id="ops-eval-and-learning-data-monitoring-file-BENEFICIARY"
         name="dataMonitoringFileTypes"
         type="checkbox"
@@ -227,6 +228,7 @@ exports[`Model Plan Ops Eval and Learning IDDOC matches snapshot 1`] = `
     >
       <input
         class="usa-checkbox__input"
+        data-testid="ops-eval-and-learning-data-monitoring-file-PART_A"
         id="ops-eval-and-learning-data-monitoring-file-PART_A"
         name="dataMonitoringFileTypes"
         type="checkbox"
@@ -244,6 +246,7 @@ exports[`Model Plan Ops Eval and Learning IDDOC matches snapshot 1`] = `
     >
       <input
         class="usa-checkbox__input"
+        data-testid="ops-eval-and-learning-data-monitoring-file-PART_B"
         id="ops-eval-and-learning-data-monitoring-file-PART_B"
         name="dataMonitoringFileTypes"
         type="checkbox"
@@ -261,6 +264,7 @@ exports[`Model Plan Ops Eval and Learning IDDOC matches snapshot 1`] = `
     >
       <input
         class="usa-checkbox__input"
+        data-testid="ops-eval-and-learning-data-monitoring-file-PROVIDER"
         id="ops-eval-and-learning-data-monitoring-file-PROVIDER"
         name="dataMonitoringFileTypes"
         type="checkbox"
@@ -278,6 +282,7 @@ exports[`Model Plan Ops Eval and Learning IDDOC matches snapshot 1`] = `
     >
       <input
         class="usa-checkbox__input"
+        data-testid="ops-eval-and-learning-data-monitoring-file-OTHER"
         id="ops-eval-and-learning-data-monitoring-file-OTHER"
         name="dataMonitoringFileTypes"
         type="checkbox"

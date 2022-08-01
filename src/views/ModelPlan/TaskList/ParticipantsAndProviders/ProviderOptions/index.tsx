@@ -19,6 +19,7 @@ import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
+import ReadyForReview from 'components/ReadyForReview';
 import AutoSave from 'components/shared/AutoSave';
 import CheckboxField from 'components/shared/CheckboxField';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
@@ -56,7 +57,13 @@ export const ProviderOptions = () => {
   const { t: h } = useTranslation('draftModelPlan');
   const { modelID } = useParams<{ modelID: string }>();
 
-  const formikRef = useRef<FormikProps<ProviderOptionsFormType>>(null);
+  // Omitting readyForReviewBy and readyForReviewDts from initialValues and getting submitted through Formik
+  type InitialValueType = Omit<
+    ProviderOptionsFormType,
+    'readyForReviewBy' | 'readyForReviewDts'
+  >;
+
+  const formikRef = useRef<FormikProps<InitialValueType>>(null);
   const history = useHistory();
 
   const { data, loading, error } = useQuery<
@@ -81,7 +88,10 @@ export const ProviderOptions = () => {
     providerLeaveMethodNote,
     providerOverlap,
     providerOverlapHierarchy,
-    providerOverlapNote
+    providerOverlapNote,
+    readyForReviewBy,
+    readyForReviewDts,
+    status
   } =
     data?.modelPlan?.participantsAndProviders ||
     ({} as ProviderOptionsFormType);
@@ -93,7 +103,7 @@ export const ProviderOptions = () => {
   );
 
   const handleFormSubmit = (
-    formikValues: ProviderOptionsFormType,
+    formikValues: InitialValueType,
     redirect?: 'back' | 'task-list'
   ) => {
     const { id: updateId, __typename, ...changeValues } = formikValues;
@@ -119,7 +129,7 @@ export const ProviderOptions = () => {
       });
   };
 
-  const initialValues: ProviderOptionsFormType = {
+  const initialValues: InitialValueType = {
     __typename: 'PlanParticipantsAndProviders',
     id: id ?? '',
     providerAdditionFrequency: providerAdditionFrequency ?? null,
@@ -133,7 +143,8 @@ export const ProviderOptions = () => {
     providerLeaveMethodNote: providerLeaveMethodNote ?? '',
     providerOverlap: providerOverlap ?? null,
     providerOverlapHierarchy: providerOverlapHierarchy ?? '',
-    providerOverlapNote: providerOverlapNote ?? ''
+    providerOverlapNote: providerOverlapNote ?? '',
+    status
   };
 
   if ((!loading && error) || (!loading && !data?.modelPlan)) {
@@ -179,7 +190,7 @@ export const ProviderOptions = () => {
         enableReinitialize
         innerRef={formikRef}
       >
-        {(formikProps: FormikProps<ProviderOptionsFormType>) => {
+        {(formikProps: FormikProps<InitialValueType>) => {
           const {
             errors,
             handleSubmit,
@@ -474,6 +485,16 @@ export const ProviderOptions = () => {
                     field="providerOverlapNote"
                   />
                 </FieldGroup>
+
+                <ReadyForReview
+                  id="participants-and-providers-provider-status"
+                  field="status"
+                  sectionName={t('heading')}
+                  status={values.status}
+                  setFieldValue={setFieldValue}
+                  readyForReviewBy={readyForReviewBy}
+                  readyForReviewDts={readyForReviewDts}
+                />
 
                 <div className="margin-top-6 margin-bottom-3">
                   <Button
