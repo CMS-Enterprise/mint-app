@@ -87,7 +87,8 @@ const modelPlanTaskList = {
     lastUpdated: 'Last updated:'
   },
   errorHeading: 'Failed to fetch model plan',
-  errorMessage: 'Please try again'
+  errorMessage: 'Please try again',
+  locked: ' is editing this section. You may access it when they’re done.'
 };
 
 export default modelPlanTaskList;

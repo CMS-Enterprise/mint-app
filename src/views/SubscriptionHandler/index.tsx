@@ -6,7 +6,7 @@
  */
 
 import React, { useContext, useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { useOktaAuth } from '@okta/okta-react';
 
@@ -28,15 +28,22 @@ type SubscriptionHandlerProps = {
 enum LockStatus {
   LOCKED = 'LOCKED',
   UNLOCKED = 'UNLOCKED',
-  OCCUPYING = 'OCCUPYING'
+  OCCUPYING = 'OCCUPYING',
+  CANT_LOCK = 'CANT_LOCK'
 }
 
-type taskListSectionMapType = {
+type TaskListSectionMapType = {
   [key: string]: string;
 };
 
-const taskListSectionMap: taskListSectionMapType = {
-  characteristics: TaskListSection.GENERAL_CHARACTERISTICS
+const taskListSectionMap: TaskListSectionMapType = {
+  basics: TaskListSection.MODEL_BASICS,
+  beneficiaries: TaskListSection.BENEFICIARIES,
+  characteristics: TaskListSection.GENERAL_CHARACTERISTICS,
+  'it-tools': TaskListSection.IT_TOOLS,
+  'ops-eval-and-learning': TaskListSection.OPERATIONS_EVALUATION_AND_LEARNING,
+  'participants-and-providers': TaskListSection.PARTICIPANTS_AND_PROVIDERS,
+  payment: TaskListSection.PAYMENT
 };
 
 // Checks if current page is locked
@@ -63,20 +70,28 @@ const findLockedSection = (
 };
 
 const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
-  // Gets the model plan id from any location within the application
+  // Gets the modelID and tasklist section route from any location within the application
   const { pathname } = useLocation();
   const modelID = pathname.split('/')[2];
   const taskListRoute = pathname.split('/')[4];
 
+  const history = useHistory();
+
+  // Checks if param is valid modelPlan UUID
   const validModelID: boolean = isUUID(modelID);
 
   const [prevPath, setPrevPath] = useState<string>('');
   const [locking, setLocking] = useState<boolean>(false);
 
+  // Init the variable for the state of the current section of the modelID
+  let lockState: LockStatus;
+
   const taskListSection = taskListSectionMap[taskListRoute];
 
+  // Used to get current user euaID
   const { authState } = useOktaAuth();
 
+  // Get the subscription context - messages (locks, unlocks), loading
   const { taskListSectionLocks, loading } = useContext(SubscriptionContext);
 
   const [addLock] = useMutation<LockTaskListSectionVariables>(
@@ -87,11 +102,9 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
     UnlockTackListSection
   );
 
-  let lockState: LockStatus | undefined;
-
   /**
    * Checks to see the status of task list section
-   * Returns - 'LOCKED', 'UNLOCKED', or 'OCCUPYING'
+   * Returns - 'LOCKED', 'UNLOCKED', 'OCCUPYING', or 'CANT_LOCK' (pages that don't require locking)
    * 'OCCUPYING' refers to the current user already occupying the page
    */
   if (
@@ -106,6 +119,12 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
       taskListSection,
       authState?.euaId as string
     );
+  } else {
+    lockState = LockStatus.CANT_LOCK;
+  }
+
+  if (lockState === LockStatus.LOCKED) {
+    history.push(`/models/${modelID}/task-list`);
   }
 
   // Checks the location before unmounting to see if lock should be unlocked
@@ -115,14 +134,19 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
     };
   }, [pathname]);
 
-  if ((!validModelID || !taskListSection) && taskListSectionLocks?.length > 0) {
+  // Checks to see if section should be unlocked and calls mutation
+  if (
+    (!validModelID || !taskListSection) &&
+    taskListSectionLocks?.length > 0 &&
+    !locking
+  ) {
     const prevModelID = prevPath.split('/')[2];
 
     const lockedSection = taskListSectionLocks.find(
       (section: LockSectionType) => section.lockedBy === authState?.euaId
     );
 
-    if (lockedSection && !locking && isUUID(prevModelID)) {
+    if (lockedSection && isUUID(prevModelID)) {
       setLocking(true);
       removeLock({
         variables: {
@@ -139,6 +163,7 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
     }
   }
 
+  // Checks to see if section should be locked and calls mutation
   if (
     lockState === LockStatus.UNLOCKED &&
     taskListSection &&

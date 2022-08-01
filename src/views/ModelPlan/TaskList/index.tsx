@@ -19,6 +19,11 @@ import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import Divider from 'components/shared/Divider';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
+import GetModelPlanCollaborators from 'queries/Collaborators/GetModelCollaborators';
+import {
+  GetModelCollaborators,
+  GetModelCollaborators_modelPlan_collaborators as GetCollaboratorsType
+} from 'queries/Collaborators/types/GetModelCollaborators';
 import GetModelPlan from 'queries/GetModelPlan';
 import {
   GetModelPlan as GetModelPlanType,
@@ -31,10 +36,13 @@ import {
   GetModelPlan_modelPlan_payments as PaymentsType,
   GetModelPlanVariables
 } from 'queries/types/GetModelPlan';
-import { TaskStatus } from 'types/graphql-global-types';
+import { TaskListSection, TaskStatus } from 'types/graphql-global-types';
 import { formatDate } from 'utils/date';
 import { getUnansweredQuestions } from 'utils/modelPlan';
-import { SubscriptionContext } from 'views/SubscriptionWrapper';
+import {
+  LockSectionType,
+  SubscriptionContext
+} from 'views/SubscriptionWrapper';
 
 import Discussions from '../Discussions';
 
@@ -43,6 +51,7 @@ import TaskListItem, {
   TaskListDescription,
   TaskListLastUpdated
 } from './_components/TaskListItem';
+import TaskListLock from './_components/TaskListLock';
 import TaskListSideNav from './_components/TaskListSideNav';
 import TaskListStatus from './_components/TaskListStatus';
 
@@ -58,6 +67,20 @@ type TaskListSectionsType = {
     | PaymentsType;
 };
 
+type TaskListSectionMapType = {
+  [key: string]: string;
+};
+
+const taskListSectionMap: TaskListSectionMapType = {
+  basics: TaskListSection.MODEL_BASICS,
+  beneficiaries: TaskListSection.BENEFICIARIES,
+  generalCharacteristics: TaskListSection.GENERAL_CHARACTERISTICS,
+  itTools: TaskListSection.IT_TOOLS,
+  opsEvalAndLearning: TaskListSection.OPERATIONS_EVALUATION_AND_LEARNING,
+  participantsAndProviders: TaskListSection.PARTICIPANTS_AND_PROVIDERS,
+  payments: TaskListSection.PAYMENT
+};
+
 const TaskList = () => {
   const { t } = useTranslation('modelPlanTaskList');
   const { t: h } = useTranslation('draftModelPlan');
@@ -65,8 +88,7 @@ const TaskList = () => {
   const { modelID } = useParams<{ modelID: string }>();
   const [isDiscussionOpen, setIsDiscussionOpen] = useState(false);
 
-  // const { taskListSectionLocks } = useContext(SubscriptionContext);
-  // console.log(taskListSectionLocks);
+  const { taskListSectionLocks } = useContext(SubscriptionContext);
 
   const { data, loading, error } = useQuery<
     GetModelPlanType,
@@ -97,6 +119,18 @@ const TaskList = () => {
     // itTools
   } = modelPlan;
 
+  const { data: collaboratorData } = useQuery<GetModelCollaborators>(
+    GetModelPlanCollaborators,
+    {
+      variables: {
+        id: modelID
+      }
+    }
+  );
+
+  const collaborators = (collaboratorData?.modelPlan?.collaborators ??
+    []) as GetCollaboratorsType[];
+
   const taskListSections: TaskListSectionsType = {
     basics,
     generalCharacteristics,
@@ -110,6 +144,14 @@ const TaskList = () => {
   const { unansweredQuestions, answeredQuestions } = getUnansweredQuestions(
     discussions
   );
+
+  const getTaskListLockedStatus = (
+    section: string
+  ): LockSectionType | undefined => {
+    return taskListSectionLocks.find(
+      sectionLock => sectionLock.section === taskListSectionMap[section]
+    );
+  };
 
   /**
    * Used to calculate status on Basics as milstones is encapsulated in Basics, but has it's own status
@@ -373,7 +415,15 @@ const TaskList = () => {
                             </div>
                             <TaskListButton
                               path={t(`numberedList.${key}.path`)}
+                              disabled={!!getTaskListLockedStatus(key)}
                               status={taskListSections[key].status}
+                            />
+                            <TaskListLock
+                              collaborator={collaborators.find(
+                                collaborator =>
+                                  collaborator.euaUserID ===
+                                  getTaskListLockedStatus(key)?.lockedBy
+                              )}
                             />
                           </TaskListItem>
                           {key !== 'itTools' && (
@@ -387,7 +437,12 @@ const TaskList = () => {
               )}
             </Grid>
             <Grid desktop={{ col: 3 }}>
-              {data && <TaskListSideNav modelPlan={modelPlan} />}
+              {data && (
+                <TaskListSideNav
+                  modelPlan={modelPlan}
+                  collaborators={collaborators}
+                />
+              )}
             </Grid>
           </Grid>
         )}

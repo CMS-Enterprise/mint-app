@@ -5,10 +5,11 @@ import { Button } from '@trussworks/react-uswds';
 
 type TaskListButtonProps = {
   path: string;
+  disabled?: boolean;
   status: 'READY' | 'IN_PROGRESS' | 'CANNOT_START' | 'COMPLETE';
 };
 
-const TaskListButton = ({ path, status }: TaskListButtonProps) => {
+const TaskListButton = ({ path, disabled, status }: TaskListButtonProps) => {
   const { t } = useTranslation('modelPlanTaskList');
   const { modelID } = useParams<{ modelID: string }>();
   const history = useHistory();
@@ -20,6 +21,7 @@ const TaskListButton = ({ path, status }: TaskListButtonProps) => {
   return (
     <Button
       type="button"
+      disabled={disabled}
       data-testid={path}
       onClick={() => history.push(`/models/${modelID}/task-list/${path}`)}
     >
