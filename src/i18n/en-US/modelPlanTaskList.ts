@@ -65,7 +65,7 @@ const modelPlanTaskList = {
       heading: 'Payment',
       copy:
         'Start filling out as much of the payment information as you know and reach out to the Model Assessment Team if you need help.',
-      path: 'payments'
+      path: 'payment'
     },
     itTools: {
       heading: 'IT tools',

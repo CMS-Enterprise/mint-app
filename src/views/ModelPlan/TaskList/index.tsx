@@ -28,6 +28,7 @@ import {
   GetModelPlan_modelPlan_generalCharacteristics as GeneralCharacteristicsType,
   GetModelPlan_modelPlan_opsEvalAndLearning as OpsEvalAndLearningType,
   GetModelPlan_modelPlan_participantsAndProviders as ParticipantsAndProvidersType,
+  GetModelPlan_modelPlan_payments as PaymentsType,
   GetModelPlanVariables
 } from 'queries/types/GetModelPlan';
 import { TaskStatus } from 'types/graphql-global-types';
@@ -53,7 +54,8 @@ type TaskListSectionsType = {
     | BeneficiariesType
     | GeneralCharacteristicsType
     | OpsEvalAndLearningType
-    | ParticipantsAndProvidersType;
+    | ParticipantsAndProvidersType
+    | PaymentsType;
 };
 
 const TaskList = () => {
@@ -90,8 +92,8 @@ const TaskList = () => {
     generalCharacteristics,
     participantsAndProviders,
     opsEvalAndLearning,
-    beneficiaries
-    // payments,
+    beneficiaries,
+    payments
     // itTools
   } = modelPlan;
 
@@ -100,8 +102,8 @@ const TaskList = () => {
     generalCharacteristics,
     participantsAndProviders,
     beneficiaries,
-    opsEvalAndLearning
-    // payments,
+    opsEvalAndLearning,
+    payments
     // itTools
   };
 
