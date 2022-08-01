@@ -5,13 +5,17 @@
   SubscriptionContext can be accessed from anywhere in a model plan
  */
 
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { useOktaAuth } from '@okta/okta-react';
 
 import LockTaskListSection from 'queries/TaskListSubscription/LockTaskListSection';
+import { LockTaskListSectionVariables } from 'queries/TaskListSubscription/types/LockTaskListSection';
+import { UnlockTaskListSectionVariables } from 'queries/TaskListSubscription/types/UnlockTaskListSection';
+import UnlockTackListSection from 'queries/TaskListSubscription/UnlockTackListSection';
 import { TaskListSection } from 'types/graphql-global-types';
+import { isUUID } from 'utils/modelPlan';
 import {
   LockSectionType,
   SubscriptionContext
@@ -64,6 +68,9 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
   const modelID = pathname.split('/')[2];
   const taskListRoute = pathname.split('/')[4];
 
+  const validModelID: boolean = isUUID(modelID);
+
+  const [prevPath, setPrevPath] = useState<string>('');
   const [locking, setLocking] = useState<boolean>(false);
 
   const taskListSection = taskListSectionMap[taskListRoute];
@@ -72,9 +79,21 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
 
   const { taskListSectionLocks, loading } = useContext(SubscriptionContext);
 
-  const [update] = useMutation(LockTaskListSection);
+  const [addLock] = useMutation<LockTaskListSectionVariables>(
+    LockTaskListSection
+  );
+
+  const [removeLock] = useMutation<UnlockTaskListSectionVariables>(
+    UnlockTackListSection
+  );
 
   let lockState: LockStatus | undefined;
+
+  /**
+   * Checks to see the status of task list section
+   * Returns - 'LOCKED', 'UNLOCKED', or 'OCCUPYING'
+   * 'OCCUPYING' refers to the current user already occupying the page
+   */
   if (
     taskListSection &&
     taskListSectionLocks &&
@@ -89,24 +108,55 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
     );
   }
 
-  console.log(loading);
-  console.log(lockState);
-  console.log(taskListSectionLocks);
+  // Checks the location before unmounting to see if lock should be unlocked
+  useEffect(() => {
+    return () => {
+      setPrevPath(pathname);
+    };
+  }, [pathname]);
 
-  if (lockState === LockStatus.UNLOCKED && !locking && !loading) {
+  if ((!validModelID || !taskListSection) && taskListSectionLocks?.length > 0) {
+    const prevModelID = prevPath.split('/')[2];
+
+    const lockedSection = taskListSectionLocks.find(
+      (section: LockSectionType) => section.lockedBy === authState?.euaId
+    );
+
+    if (lockedSection && !locking && isUUID(prevModelID)) {
+      setLocking(true);
+      removeLock({
+        variables: {
+          modelPlanID: lockedSection.modelPlanID,
+          section: lockedSection.section
+        }
+      })
+        .then(() => {
+          setLocking(false);
+        })
+        .catch(() => {
+          setLocking(false);
+        });
+    }
+  }
+
+  if (
+    lockState === LockStatus.UNLOCKED &&
+    taskListSection &&
+    !locking &&
+    !loading &&
+    validModelID
+  ) {
     setLocking(true);
-    update({
+    addLock({
       variables: {
         modelPlanID: modelID,
         section: taskListSection
       }
     })
-      .then(response => {
-        console.log(response);
+      .then(() => {
         setLocking(false);
       })
-      .catch(errors => {
-        console.log(errors);
+      .catch(() => {
         setLocking(false);
       });
   }

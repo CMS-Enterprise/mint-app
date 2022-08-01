@@ -11,6 +11,7 @@ import { useLazyQuery } from '@apollo/client';
 
 import GetTaskListSubscriptions from 'queries/TaskListSubscription/GetTaskListSubscriptions';
 import SubscribeToTaskList from 'queries/TaskListSubscription/SubscribeToTaskList';
+import { isUUID } from 'utils/modelPlan';
 
 type SubscriptionWrapperProps = {
   children: React.ReactNode;
@@ -76,6 +77,7 @@ const SubscriptionWrapper = ({ children }: SubscriptionWrapperProps) => {
   // Gets the model plan id from any location within the application
   const { pathname } = useLocation();
   const modelID = pathname.split('/')[2];
+  const validModelID: boolean = isUUID(modelID);
 
   // The value that will be given to the context
   const [subscriptionContextData, setSubscriptionContextData] = useState<{
@@ -92,7 +94,7 @@ const SubscriptionWrapper = ({ children }: SubscriptionWrapperProps) => {
   );
 
   useEffect(() => {
-    if (modelID) {
+    if (modelID && validModelID) {
       // useLazyQuery hook to fetch existing subscription data on new modelID
       getTaskListLocks({ variables: { modelPlanID: modelID } });
 
@@ -136,7 +138,7 @@ const SubscriptionWrapper = ({ children }: SubscriptionWrapperProps) => {
         }
       });
     }
-  }, [modelID, data, getTaskListLocks, subscribeToMore]);
+  }, [modelID, validModelID, data, getTaskListLocks, subscribeToMore]);
 
   return (
     // The Provider gives access to the context to its children
