@@ -26,7 +26,7 @@ type StoreTestSuite struct {
 
 // EqualTime uses time.Time's Equal() to check for equality
 // and wraps failures with useful error messages.
-func (s StoreTestSuite) EqualTime(expected, actual time.Time) {
+func (s *StoreTestSuite) EqualTime(expected, actual time.Time) {
 	if !actual.Equal(expected) {
 		s.Failf("times were not equal", "expected %v, got %v", expected, actual)
 	}
