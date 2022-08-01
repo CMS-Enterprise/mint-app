@@ -85,24 +85,29 @@ const BasicsContent = () => {
       return;
     }
     const { id: updateId, __typename, ...changeValues } = formikValues;
-    update({
-      variables: {
-        id: updateId,
-        changes: changeValues
-      }
-    })
-      .then(response => {
-        if (!response?.errors) {
-          if (redirect === 'next') {
-            history.push(`/models/${modelID}/task-list/basics/overview`);
-          } else if (redirect === 'back') {
-            history.push(`/models/${modelID}/task-list/`);
-          }
-        }
-      })
-      .catch(errors => {
-        formikRef?.current?.setErrors(errors);
-      });
+    console.log(changeValues);
+    // update({
+    //   variables: {
+    //     id: updateId,
+    //     changes: {
+    //       modelName: changeValues.modelName
+    //     },
+    //     basicsId: changeValues.basics.id,
+    //     basicsChanges: changeValues.basics
+    //   }
+    // })
+    //   .then(response => {
+    //     if (!response?.errors) {
+    //       if (redirect === 'next') {
+    //         history.push(`/models/${modelID}/task-list/basics/overview`);
+    //       } else if (redirect === 'back') {
+    //         history.push(`/models/${modelID}/task-list/`);
+    //       }
+    //     }
+    //   })
+    //   .catch(errors => {
+    //     formikRef?.current?.setErrors(errors);
+    //   });
   };
 
   const initialValues: ModelPlanInfoFormType = {
