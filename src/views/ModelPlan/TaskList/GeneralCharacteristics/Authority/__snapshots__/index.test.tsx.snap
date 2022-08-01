@@ -209,6 +209,7 @@ exports[`Model Plan Characteristics matches snapshot 1`] = `
     >
       <input
         class="usa-checkbox__input"
+        data-testid="plan-characteristics-authority-allowance-ACA"
         id="plan-characteristics-authority-allowance-ACA"
         name="authorityAllowances"
         type="checkbox"
@@ -226,6 +227,7 @@ exports[`Model Plan Characteristics matches snapshot 1`] = `
     >
       <input
         class="usa-checkbox__input"
+        data-testid="plan-characteristics-authority-allowance-CONGRESSIONALLY_MANDATED"
         id="plan-characteristics-authority-allowance-CONGRESSIONALLY_MANDATED"
         name="authorityAllowances"
         type="checkbox"
@@ -243,6 +245,7 @@ exports[`Model Plan Characteristics matches snapshot 1`] = `
     >
       <input
         class="usa-checkbox__input"
+        data-testid="plan-characteristics-authority-allowance-SSA_PART_B"
         id="plan-characteristics-authority-allowance-SSA_PART_B"
         name="authorityAllowances"
         type="checkbox"
@@ -260,6 +263,7 @@ exports[`Model Plan Characteristics matches snapshot 1`] = `
     >
       <input
         class="usa-checkbox__input"
+        data-testid="plan-characteristics-authority-allowance-OTHER"
         id="plan-characteristics-authority-allowance-OTHER"
         name="authorityAllowances"
         type="checkbox"
@@ -409,6 +413,7 @@ exports[`Model Plan Characteristics matches snapshot 1`] = `
             >
               <input
                 class="usa-checkbox__input"
+                data-testid="characteristics-status"
                 id="characteristics-status"
                 name="status"
                 type="checkbox"

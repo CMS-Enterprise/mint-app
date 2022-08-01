@@ -408,6 +408,7 @@ exports[`Model Plan Beneficiaries matches snapshot 1`] = `
                   >
                     <input
                       class="usa-checkbox__input"
+                      data-testid="beneficiaries-status"
                       id="beneficiaries-status"
                       name="status"
                       type="checkbox"

@@ -434,6 +434,7 @@ exports[`Model Plan ProviderOptions matches snapshot 1`] = `
     >
       <input
         class="usa-checkbox__input"
+        data-testid="participants-and-providers-leave-method-AFTER_A_CERTAIN_WITH_IMPLICATIONS"
         id="participants-and-providers-leave-method-AFTER_A_CERTAIN_WITH_IMPLICATIONS"
         name="providerLeaveMethod"
         type="checkbox"
@@ -451,6 +452,7 @@ exports[`Model Plan ProviderOptions matches snapshot 1`] = `
     >
       <input
         class="usa-checkbox__input"
+        data-testid="participants-and-providers-leave-method-NOT_ALLOWED_TO_LEAVE"
         id="participants-and-providers-leave-method-NOT_ALLOWED_TO_LEAVE"
         name="providerLeaveMethod"
         type="checkbox"
@@ -468,6 +470,7 @@ exports[`Model Plan ProviderOptions matches snapshot 1`] = `
     >
       <input
         class="usa-checkbox__input"
+        data-testid="participants-and-providers-leave-method-VARIES_BY_TYPE_OF_PROVIDER"
         id="participants-and-providers-leave-method-VARIES_BY_TYPE_OF_PROVIDER"
         name="providerLeaveMethod"
         type="checkbox"
@@ -485,6 +488,7 @@ exports[`Model Plan ProviderOptions matches snapshot 1`] = `
     >
       <input
         class="usa-checkbox__input"
+        data-testid="participants-and-providers-leave-method-VOLUNTARILY_WITHOUT_IMPLICATIONS"
         id="participants-and-providers-leave-method-VOLUNTARILY_WITHOUT_IMPLICATIONS"
         name="providerLeaveMethod"
         type="checkbox"
@@ -502,6 +506,7 @@ exports[`Model Plan ProviderOptions matches snapshot 1`] = `
     >
       <input
         class="usa-checkbox__input"
+        data-testid="participants-and-providers-leave-method-OTHER"
         id="participants-and-providers-leave-method-OTHER"
         name="providerLeaveMethod"
         type="checkbox"
@@ -519,6 +524,7 @@ exports[`Model Plan ProviderOptions matches snapshot 1`] = `
     >
       <input
         class="usa-checkbox__input"
+        data-testid="participants-and-providers-leave-method-NOT_APPLICABLE"
         id="participants-and-providers-leave-method-NOT_APPLICABLE"
         name="providerLeaveMethod"
         type="checkbox"
@@ -693,6 +699,7 @@ exports[`Model Plan ProviderOptions matches snapshot 1`] = `
             >
               <input
                 class="usa-checkbox__input"
+                data-testid="participants-and-providers-provider-status"
                 id="participants-and-providers-provider-status"
                 name="status"
                 type="checkbox"

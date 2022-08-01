@@ -285,6 +285,7 @@ exports[`Model Plan -- Recover matches snapshot 1`] = `
                   >
                     <input
                       class="usa-checkbox__input"
+                      data-testid="payment-status"
                       id="payment-status"
                       name="status"
                       type="checkbox"
