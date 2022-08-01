@@ -32,6 +32,8 @@ import {
   GetModelPlanInfo_modelPlan as ModelPlanInfoFormType,
   GetModelPlanInfoVariables
 } from 'queries/Basics/types/GetModelPlanInfo';
+import { UpdatePlanBasicsVariables } from 'queries/Basics/types/UpdatePlanBasics';
+import UpdatePlanBasics from 'queries/Basics/UpdatePlanBasics';
 import { UpdateModelPlanVariables } from 'queries/types/UpdateModelPlan';
 import UpdateModelPlan from 'queries/UpdateModelPlan';
 import {
@@ -75,6 +77,7 @@ const BasicsContent = () => {
   const { modelCategory, cmsCenters, cmmiGroups, cmsOther } = basics || {};
 
   const [update] = useMutation<UpdateModelPlanVariables>(UpdateModelPlan);
+  const [updateTwo] = useMutation<UpdatePlanBasicsVariables>(UpdatePlanBasics);
 
   const handleFormSubmit = (
     formikValues: ModelPlanInfoFormType,
@@ -252,10 +255,10 @@ const BasicsContent = () => {
                   <Field
                     as={Dropdown}
                     id="plan-basics-model-category"
-                    name="modelCategory"
+                    name="basics.modelCategory"
                     value={values.basics.modelCategory || ''}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                      setFieldValue('modelCategory', e.target.value);
+                      setFieldValue('basics.modelCategory', e.target.value);
                     }}
                   >
                     <option key="default-select" disabled value="">
@@ -291,30 +294,12 @@ const BasicsContent = () => {
                               <Field
                                 as={CheckboxField}
                                 id={`new-plan-cmsCenters-${center}`}
-                                name="cmsCenters"
+                                name="basics.cmsCenters"
                                 label={translateCmsCenter(center)}
                                 value={center}
                                 checked={values.basics.cmsCenters.includes(
                                   center as CMSCenter
                                 )}
-                                onChange={(
-                                  e: React.ChangeEvent<HTMLInputElement>
-                                ) => {
-                                  if (e.target.checked) {
-                                    arrayHelpers.push(e.target.value);
-                                  } else {
-                                    const idx = values.basics.cmsCenters.indexOf(
-                                      e.target.value as CMSCenter
-                                    );
-                                    arrayHelpers.remove(idx);
-                                  }
-                                  if (e.target.value === CMSCenter.CMMI) {
-                                    setAreCmmiGroupsShown(true);
-                                  }
-                                  if (e.target.value === CMSCenter.OTHER) {
-                                    setShowOther(!showOther);
-                                  }
-                                }}
                               />
                             </Fragment>
                           );
@@ -333,7 +318,7 @@ const BasicsContent = () => {
                               as={TextInput}
                               id="plan-basics-cmsCategory--Other"
                               maxLength={50}
-                              name="cmsOther"
+                              name="basics.cmsOther"
                             />
                           </FieldGroup>
                         )}
@@ -343,49 +328,27 @@ const BasicsContent = () => {
                 </FieldGroup>
                 {values.basics.cmsCenters.includes(CMSCenter.CMMI) && (
                   <FieldGroup
-                    error={!!flatErrors.cmmiGroup}
+                    error={!!flatErrors.cmmiGroups}
                     className="margin-top-4"
                   >
-                    <FieldArray
-                      name="cmmiGroups"
-                      render={arrayHelpers => (
-                        <>
-                          <legend className="usa-label text-normal">
-                            {t('cmmiGroup')}
-                          </legend>
-                          <FieldErrorMsg>{flatErrors.cmmiGroups}</FieldErrorMsg>
-
-                          {Object.keys(CMMIGroup).map(group => {
-                            return (
-                              <Fragment key={group}>
-                                <Field
-                                  as={CheckboxField}
-                                  id={`new-plan-cmmiGroup-${group}`}
-                                  name="cmmiGroup"
-                                  label={translateCmmiGroups(group)}
-                                  value={group}
-                                  checked={values.basics.cmmiGroups.includes(
-                                    group as CMMIGroup
-                                  )}
-                                  onChange={(
-                                    e: React.ChangeEvent<HTMLInputElement>
-                                  ) => {
-                                    if (e.target.checked) {
-                                      arrayHelpers.push(e.target.value);
-                                    } else {
-                                      const idx = values.basics.cmmiGroups.indexOf(
-                                        e.target.value as CMMIGroup
-                                      );
-                                      arrayHelpers.remove(idx);
-                                    }
-                                  }}
-                                />
-                              </Fragment>
-                            );
-                          })}
-                        </>
-                      )}
-                    />
+                    <Label htmlFor="basics.cmmiGroups">{t('cmmiGroup')}</Label>
+                    <FieldErrorMsg>{flatErrors.cmmiGroups}</FieldErrorMsg>
+                    {Object.keys(CMMIGroup).map(group => {
+                      return (
+                        <Fragment key={group}>
+                          <Field
+                            as={CheckboxField}
+                            id={`new-plan-cmmiGroup-${group}`}
+                            name="basics.cmmiGroups"
+                            label={translateCmmiGroups(group)}
+                            value={group}
+                            checked={values.basics.cmmiGroups.includes(
+                              group as CMMIGroup
+                            )}
+                          />
+                        </Fragment>
+                      );
+                    })}
                   </FieldGroup>
                 )}
 
