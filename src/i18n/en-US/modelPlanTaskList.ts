@@ -88,7 +88,11 @@ const modelPlanTaskList = {
   },
   errorHeading: 'Failed to fetch model plan',
   errorMessage: 'Please try again',
-  locked: ' is editing this section. You may access it when they’re done.'
+  locked: ' is editing this section. You may access it when they’re done.',
+  lockedHeading:
+    'Someone is currently editing the Model Plan section you’re trying to access.',
+  lockedSubheading: 'Please try again later.',
+  returnToTaskList: 'Return to the task list'
 };
 
 export default modelPlanTaskList;

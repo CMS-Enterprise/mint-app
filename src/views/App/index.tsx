@@ -22,6 +22,7 @@ import Login from 'views/Login';
 import ModelPlan from 'views/ModelPlan';
 import Collaborators from 'views/ModelPlan/Collaborators';
 import Documents from 'views/ModelPlan/Documents';
+import LockedTaskListSection from 'views/ModelPlan/LockedTaskListSection';
 import NewPlan from 'views/ModelPlan/NewPlan';
 import Status from 'views/ModelPlan/Status';
 import StepsOverview from 'views/ModelPlan/StepsOverview';
@@ -148,6 +149,12 @@ const AppRoutes = () => {
       {flags.sandbox && <Route path="/sandbox" exact component={Sandbox} />}
 
       <Route path="/implicit/callback" component={LoginCallback} />
+
+      {/* Locked Task List Section */}
+      <SecureRoute
+        path="/models/:modelID/locked-task-list-section"
+        component={LockedTaskListSection}
+      />
 
       {/* 404 */}
       <Route path="*" component={NotFound} />
