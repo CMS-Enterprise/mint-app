@@ -27,6 +27,17 @@ export enum AlternativePaymentModelType {
   REGULAR = "REGULAR",
 }
 
+export enum AnticipatedPaymentFrequencyType {
+  ANNUALLY = "ANNUALLY",
+  BIANNUALLY = "BIANNUALLY",
+  DAILY = "DAILY",
+  MONTHLY = "MONTHLY",
+  OTHER = "OTHER",
+  QUARTERLY = "QUARTERLY",
+  SEMIMONTHLY = "SEMIMONTHLY",
+  WEEKLY = "WEEKLY",
+}
+
 export enum AuthorityAllowance {
   ACA = "ACA",
   CONGRESSIONALLY_MANDATED = "CONGRESSIONALLY_MANDATED",
@@ -73,6 +84,22 @@ export enum CcmInvolvmentType {
   OTHER = "OTHER",
   YES_EVALUATION = "YES_EVALUATION",
   YES__IMPLEMENTATION = "YES__IMPLEMENTATION",
+}
+
+export enum ClaimsBasedPayType {
+  ADJUSTMENTS_TO_FFS_PAYMENTS = "ADJUSTMENTS_TO_FFS_PAYMENTS",
+  CARE_MANAGEMENT_HOME_VISITS = "CARE_MANAGEMENT_HOME_VISITS",
+  OTHER = "OTHER",
+  REDUCTIONS_TO_BENEFICIARY_COST_SHARING = "REDUCTIONS_TO_BENEFICIARY_COST_SHARING",
+  SERVICES_NOT_COVERED_THROUGH_TRADITIONAL_MEDICARE = "SERVICES_NOT_COVERED_THROUGH_TRADITIONAL_MEDICARE",
+  SNF_CLAIMS_WITHOUT_3DAY_HOSPITAL_ADMISSIONS = "SNF_CLAIMS_WITHOUT_3DAY_HOSPITAL_ADMISSIONS",
+  TELEHEALTH_SERVICES_NOT_TRADITIONAL_MEDICARE = "TELEHEALTH_SERVICES_NOT_TRADITIONAL_MEDICARE",
+}
+
+export enum ComplexityCalculationLevelType {
+  HIGH = "HIGH",
+  LOW = "LOW",
+  MIDDLE = "MIDDLE",
 }
 
 export enum ConfidenceType {
@@ -173,6 +200,12 @@ export enum FrequencyType {
   ROLLING = "ROLLING",
 }
 
+export enum FundingSource {
+  OTHER = "OTHER",
+  PATIENT_PROTECTION_AFFORDABLE_CARE_ACT = "PATIENT_PROTECTION_AFFORDABLE_CARE_ACT",
+  TRUST_FUND = "TRUST_FUND",
+}
+
 export enum GeographyApplication {
   BENEFICIARIES = "BENEFICIARIES",
   OTHER = "OTHER",
@@ -245,6 +278,20 @@ export enum MonitoringFileType {
   PROVIDER = "PROVIDER",
 }
 
+export enum NonClaimsBasedPayType {
+  ADVANCED_PAYMENT = "ADVANCED_PAYMENT",
+  BUNDLED_EPISODE_OF_CARE = "BUNDLED_EPISODE_OF_CARE",
+  CAPITATION_POPULATION_BASED_FULL = "CAPITATION_POPULATION_BASED_FULL",
+  CAPITATION_POPULATION_BASED_PARTIAL = "CAPITATION_POPULATION_BASED_PARTIAL",
+  CARE_COORDINATION_MANAGEMENT_FEE = "CARE_COORDINATION_MANAGEMENT_FEE",
+  GLOBAL_BUDGET = "GLOBAL_BUDGET",
+  GRANTS = "GRANTS",
+  INCENTIVE_PAYMENT = "INCENTIVE_PAYMENT",
+  MAPD_SHARED_SAVINGS = "MAPD_SHARED_SAVINGS",
+  OTHER = "OTHER",
+  SHARED_SAVINGS = "SHARED_SAVINGS",
+}
+
 export enum OverlapType {
   NO = "NO",
   YES_NEED_POLICIES = "YES_NEED_POLICIES",
@@ -299,6 +346,20 @@ export enum ParticipantsType {
   STANDALONE_PART_D_PLANS = "STANDALONE_PART_D_PLANS",
   STATES = "STATES",
   STATE_MEDICAID_AGENCIES = "STATE_MEDICAID_AGENCIES",
+}
+
+export enum PayRecipient {
+  BENEFICIARIES = "BENEFICIARIES",
+  OTHER = "OTHER",
+  PARTICIPANTS = "PARTICIPANTS",
+  PROVIDERS = "PROVIDERS",
+  STATES = "STATES",
+}
+
+export enum PayType {
+  CLAIMS_BASED_PAYMENTS = "CLAIMS_BASED_PAYMENTS",
+  GRANTS = "GRANTS",
+  NON_CLAIMS_BASED_PAYMENTS = "NON_CLAIMS_BASED_PAYMENTS",
 }
 
 export enum ProviderAddType {
@@ -722,6 +783,68 @@ export interface PlanParticipantsAndProvidersChanges {
   providerOverlap?: OverlapType | null;
   providerOverlapHierarchy?: string | null;
   providerOverlapNote?: string | null;
+}
+
+export interface PlanPaymentsChanges {
+  fundingSource?: FundingSource[] | null;
+  fundingSourceTrustFund?: string | null;
+  fundingSourceOther?: string | null;
+  fundingSourceNote?: string | null;
+  fundingSourceR?: FundingSource[] | null;
+  fundingSourceRTrustFund?: string | null;
+  fundingSourceROther?: string | null;
+  fundingSourceRNote?: string | null;
+  payRecipients?: PayRecipient[] | null;
+  payRecipientsOtherSpecification?: string | null;
+  payRecipientsNote?: string | null;
+  payType?: PayType[] | null;
+  payTypeNote?: string | null;
+  payClaims?: ClaimsBasedPayType[] | null;
+  payClaimsOther?: string | null;
+  payClaimsNote?: string | null;
+  shouldAnyProvidersExcludedFFSSystems?: boolean | null;
+  shouldAnyProviderExcludedFFSSystemsNote?: string | null;
+  changesMedicarePhysicianFeeSchedule?: boolean | null;
+  changesMedicarePhysicianFeeScheduleNote?: string | null;
+  affectsMedicareSecondaryPayerClaims?: boolean | null;
+  affectsMedicareSecondaryPayerClaimsHow?: string | null;
+  affectsMedicareSecondaryPayerClaimsNote?: string | null;
+  payModelDifferentiation?: string | null;
+  creatingDependenciesBetweenServices?: boolean | null;
+  creatingDependenciesBetweenServicesNote?: string | null;
+  needsClaimsDataCollection?: boolean | null;
+  needsClaimsDataCollectionNote?: string | null;
+  providingThirdPartyFile?: boolean | null;
+  isContractorAwareTestDataRequirements?: boolean | null;
+  beneficiaryCostSharingLevelAndHandling?: string | null;
+  waiveBeneficiaryCostSharingForAnyServices?: boolean | null;
+  waiveBeneficiaryCostSharingServiceSpecification?: string | null;
+  waiverOnlyAppliesPartOfPayment?: boolean | null;
+  waiveBeneficiaryCostSharingNote?: string | null;
+  nonClaimsPayments?: NonClaimsBasedPayType[] | null;
+  nonClaimsPaymentOther?: string | null;
+  paymentCalculationOwner?: string | null;
+  numberPaymentsPerPayCycle?: string | null;
+  numberPaymentsPerPayCycleNote?: string | null;
+  sharedSystemsInvolvedAdditionalClaimPayment?: boolean | null;
+  sharedSystemsInvolvedAdditionalClaimPaymentNote?: string | null;
+  planningToUseInnovationPaymentContractor?: boolean | null;
+  planningToUseInnovationPaymentContractorNote?: string | null;
+  fundingStructure?: string | null;
+  expectedCalculationComplexityLevel?: ComplexityCalculationLevelType | null;
+  expectedCalculationComplexityLevelNote?: string | null;
+  canParticipantsSelectBetweenPaymentMechanisms?: boolean | null;
+  canParticipantsSelectBetweenPaymentMechanismsHow?: string | null;
+  canParticipantsSelectBetweenPaymentMechanismsNote?: string | null;
+  anticipatedPaymentFrequency?: AnticipatedPaymentFrequencyType[] | null;
+  anticipatedPaymentFrequencyOther?: string | null;
+  anticipatedPaymentFrequencyNote?: string | null;
+  willRecoverPayments?: boolean | null;
+  willRecoverPaymentsNote?: string | null;
+  anticipateReconcilingPaymentsRetrospectively?: boolean | null;
+  anticipateReconcilingPaymentsRetrospectivelyNote?: string | null;
+  paymentStartDate?: Time | null;
+  paymentStartDateNote?: string | null;
 }
 
 //==============================================================
