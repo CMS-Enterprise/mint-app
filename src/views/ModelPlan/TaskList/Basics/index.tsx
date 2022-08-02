@@ -58,8 +58,12 @@ const BasicsContent = () => {
 
   const formikRef = useRef<FormikProps<ModelPlanInfoFormType>>(null);
   const history = useHistory();
-  const [areCmmiGroupsShown, setAreCmmiGroupsShown] = useState(false);
-  const [showOther, setShowOther] = useState(false);
+  const [areCmmiGroupsShown, setAreCmmiGroupsShown] = useState(
+    formikRef?.current?.values.basics.cmsCenters.includes(CMSCenter.CMMI)
+  );
+  const [showOther, setShowOther] = useState(
+    formikRef?.current?.values.basics.cmsCenters.includes(CMSCenter.OTHER)
+  );
 
   const { data, loading, error } = useQuery<
     GetModelPlanInfoType,
@@ -131,25 +135,6 @@ const BasicsContent = () => {
       cmsOther: cmsOther ?? ''
     }
   };
-
-  useEffect(() => {
-    if (formikRef?.current?.values.basics.cmsCenters.includes(CMSCenter.CMMI)) {
-      setAreCmmiGroupsShown(true);
-    } else {
-      setAreCmmiGroupsShown(false);
-    }
-
-    if (
-      formikRef?.current?.values.basics.cmsCenters.includes(CMSCenter.OTHER)
-    ) {
-      setShowOther(true);
-    } else {
-      setShowOther(false);
-    }
-  }, [
-    formikRef?.current?.values,
-    formikRef?.current?.values.basics.cmsCenters
-  ]);
 
   // 4 options
   // 1. Basics (name, category, CMS Component without CMMI and Other)
@@ -307,7 +292,7 @@ const BasicsContent = () => {
                   className="margin-top-4"
                 >
                   <FieldArray
-                    name="cmsCenters"
+                    name="basics.cmsCenters"
                     render={arrayHelpers => (
                       <>
                         <legend className="usa-label">
@@ -329,6 +314,24 @@ const BasicsContent = () => {
                                 checked={values.basics.cmsCenters.includes(
                                   center as CMSCenter
                                 )}
+                                onChange={(
+                                  e: React.ChangeEvent<HTMLInputElement>
+                                ) => {
+                                  if (e.target.checked) {
+                                    arrayHelpers.push(e.target.value);
+                                  } else {
+                                    const idx = values.basics.cmsCenters.indexOf(
+                                      e.target.value as CMSCenter
+                                    );
+                                    arrayHelpers.remove(idx);
+                                  }
+                                  if (e.target.value === CMSCenter.CMMI) {
+                                    setAreCmmiGroupsShown(!areCmmiGroupsShown);
+                                  }
+                                  if (e.target.value === CMSCenter.OTHER) {
+                                    setShowOther(!showOther);
+                                  }
+                                }}
                               />
                             </Fragment>
                           );
