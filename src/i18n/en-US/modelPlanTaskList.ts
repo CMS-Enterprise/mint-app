@@ -102,8 +102,8 @@ const modelPlanTaskList = {
     'participants-and-providers': 'Participants and providers',
     payment: 'payment'
   },
-  lockErrorHeading: 'An error occured',
-  lockErrorInfo: 'Please return to the task list and try again'
+  lockErrorHeading: 'Sorry, an has error occured.',
+  lockErrorInfo: 'Please return to the task list and try again.'
 };
 
 export default modelPlanTaskList;
