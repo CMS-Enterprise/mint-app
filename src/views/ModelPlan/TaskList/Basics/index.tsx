@@ -1,4 +1,4 @@
-import React, { Fragment, useRef, useState } from 'react';
+import React, { Fragment, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, Route, Switch, useHistory, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
@@ -32,8 +32,6 @@ import {
   GetModelPlanInfo_modelPlan as ModelPlanInfoFormType,
   GetModelPlanInfoVariables
 } from 'queries/Basics/types/GetModelPlanInfo';
-import { UpdatePlanBasicsVariables } from 'queries/Basics/types/UpdatePlanBasics';
-import UpdatePlanBasics from 'queries/Basics/UpdatePlanBasics';
 import { UpdateModelPlanVariables } from 'queries/types/UpdateModelPlan';
 import UpdateModelPlan from 'queries/UpdateModelPlan';
 import {
@@ -77,7 +75,6 @@ const BasicsContent = () => {
   const { modelCategory, cmsCenters, cmmiGroups, cmsOther } = basics || {};
 
   const [update] = useMutation<UpdateModelPlanVariables>(UpdateModelPlan);
-  const [updateTwo] = useMutation<UpdatePlanBasicsVariables>(UpdatePlanBasics);
 
   const handleFormSubmit = (
     formikValues: ModelPlanInfoFormType,
@@ -89,28 +86,28 @@ const BasicsContent = () => {
     }
     const { id: updateId, __typename, ...changeValues } = formikValues;
     console.log(changeValues);
-    // update({
-    //   variables: {
-    //     id: updateId,
-    //     changes: {
-    //       modelName: changeValues.modelName
-    //     },
-    //     basicsId: changeValues.basics.id,
-    //     basicsChanges: changeValues.basics
-    //   }
-    // })
-    //   .then(response => {
-    //     if (!response?.errors) {
-    //       if (redirect === 'next') {
-    //         history.push(`/models/${modelID}/task-list/basics/overview`);
-    //       } else if (redirect === 'back') {
-    //         history.push(`/models/${modelID}/task-list/`);
-    //       }
-    //     }
-    //   })
-    //   .catch(errors => {
-    //     formikRef?.current?.setErrors(errors);
-    //   });
+    update({
+      variables: {
+        id: updateId,
+        changes: {
+          modelName: changeValues.modelName
+        },
+        basicsId: changeValues.basics.id,
+        basicsChanges: changeValues.basics
+      }
+    })
+      .then(response => {
+        if (!response?.errors) {
+          if (redirect === 'next') {
+            history.push(`/models/${modelID}/task-list/basics/overview`);
+          } else if (redirect === 'back') {
+            history.push(`/models/${modelID}/task-list/`);
+          }
+        }
+      })
+      .catch(errors => {
+        formikRef?.current?.setErrors(errors);
+      });
   };
 
   const initialValues: ModelPlanInfoFormType = {
@@ -119,6 +116,7 @@ const BasicsContent = () => {
     modelName: modelName ?? '',
     basics: {
       __typename: 'PlanBasics',
+      id: basics?.id ?? '',
       modelCategory: modelCategory ?? null,
       cmsCenters: cmsCenters ?? [],
       cmmiGroups: cmmiGroups ?? [],
@@ -126,6 +124,23 @@ const BasicsContent = () => {
     }
   };
 
+  useEffect(() => {
+    if (formikRef?.current?.values.basics.cmsCenters.includes(CMSCenter.CMMI)) {
+      console.log(`gary`);
+      setAreCmmiGroupsShown(true);
+    } else {
+      setAreCmmiGroupsShown(false);
+    }
+    if (formikRef?.current?.values.basics.cmsOther?.includes(CMSCenter.OTHER)) {
+      console.log('asdfasdfasdf');
+      setShowOther(true);
+    }
+  }, [
+    formikRef?.current?.values.basics.cmsCenters,
+    formikRef?.current?.values.basics.cmsOther
+  ]);
+
+  console.log(areCmmiGroupsShown);
   // 4 options
   // 1. Basics (name, category, CMS Component without CMMI and Other)
   // 2. Basics + cmmi group
@@ -179,7 +194,8 @@ const BasicsContent = () => {
       <Formik
         initialValues={initialValues}
         onSubmit={values => {
-          handleFormSubmit(values, 'next');
+          console.log(values);
+          // handleFormSubmit(values, 'next');
         }}
         enableReinitialize
         validationSchema={validationSchema}
@@ -331,6 +347,7 @@ const BasicsContent = () => {
                     error={!!flatErrors.cmmiGroups}
                     className="margin-top-4"
                   >
+                    {setAreCmmiGroupsShown(true)}
                     <Label htmlFor="basics.cmmiGroups">{t('cmmiGroup')}</Label>
                     <FieldErrorMsg>{flatErrors.cmmiGroups}</FieldErrorMsg>
                     {Object.keys(CMMIGroup).map(group => {
