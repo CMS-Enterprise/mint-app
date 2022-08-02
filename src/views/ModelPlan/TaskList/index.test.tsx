@@ -62,6 +62,7 @@ describe('The Model Plan Task List', () => {
     generalCharacteristics: [] as any,
     participantsAndProviders: [] as any,
     beneficiaries: [] as any,
+    payments: [] as any,
     documents: [
       {
         id: '6e224030-09d5-46f7-ad04-4bb851b36eab',
