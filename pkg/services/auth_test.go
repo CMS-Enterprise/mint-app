@@ -8,7 +8,7 @@ import (
 	"github.com/cmsgov/mint-app/pkg/graph/model"
 )
 
-func (s ServicesTestSuite) TestHasRole() {
+func (s *ServicesTestSuite) TestHasRole() {
 	fnAuth := HasRole
 	nonAdmin := authentication.EUAPrincipal{EUAID: "FAKE", JobCodeMINT: true, JobCodeADMIN: false}
 	yesADMIN := authentication.EUAPrincipal{EUAID: "FAKE", JobCodeMINT: true, JobCodeADMIN: true}

@@ -10,7 +10,7 @@ import (
 	"github.com/cmsgov/mint-app/pkg/authentication"
 )
 
-func (s GraphQLTestSuite) TestCurrentUserQuery() {
+func (s *GraphQLTestSuite) TestCurrentUserQuery() {
 	var resp struct {
 		CurrentUser struct {
 			LaunchDarkly struct {
