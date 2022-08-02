@@ -1,16 +1,12 @@
 package models
 
 import (
-	"time"
-
-	"github.com/google/uuid"
 	"github.com/lib/pq"
 )
 
 // PlanITTools represents a Plan IT Tools model
 type PlanITTools struct {
-	ID          uuid.UUID `json:"id" db:"id"`
-	ModelPlanID uuid.UUID `json:"modelPlanID" db:"model_plan_id"`
+	BaseTaskListSection
 
 	//Page 1
 	GcPartCD              pq.StringArray `json:"gcPartCD" db:"gc_part_c_d"`
@@ -103,53 +99,4 @@ type PlanITTools struct {
 	PRecoverPayments      pq.StringArray `json:"pRecoverPayments" db:"p_recover_payments"`
 	PRecoverPaymentsOther *string        `json:"pRecoverPaymentsOther" db:"p_recover_payments_other"`
 	PRecoverPaymentsNote  *string        `json:"pRecoverPaymentsNote" db:"p_recover_payments_note"`
-
-	// Meta
-	CreatedBy   string     `json:"createdBy" db:"created_by"`
-	CreatedDts  time.Time  `json:"createdDts" db:"created_dts"`
-	ModifiedBy  *string    `json:"modifiedBy" db:"modified_by"`
-	ModifiedDts *time.Time `json:"modifiedDts" db:"modified_dts"`
-	Status      TaskStatus `json:"status" db:"status"`
-}
-
-// CalcStatus returns a TaskStatus based on how many fields have been entered in the PlanITTools struct
-func (it *PlanITTools) CalcStatus() error {
-	//TODO: this section is largely conditional, it might be necessary to override the generic functionality in favor of a more specific one
-	/*
-		if desired, we can provide get other task list questions to determine if a question is required or not
-	*/
-
-	status, err := GenericallyCalculateStatus(*it)
-	if err != nil {
-		return err
-	}
-
-	// it.Status = TaskReady
-	it.Status = status
-	return nil
-}
-
-// GetModelTypeName returns the name of the model
-func (it PlanITTools) GetModelTypeName() string {
-	return "Plan_IT_Tools"
-}
-
-// GetID returns the ID property for a PlanITTools struct
-func (it PlanITTools) GetID() uuid.UUID {
-	return it.ID
-}
-
-// GetPlanID returns the ModelPlanID property for a PlanITTools struct
-func (it PlanITTools) GetPlanID() uuid.UUID {
-	return it.ModelPlanID
-}
-
-// GetModifiedBy returns the ModifiedBy property for a PlanITTools struct
-func (it PlanITTools) GetModifiedBy() *string {
-	return it.ModifiedBy
-}
-
-// GetCreatedBy returns the ModifiedBy property for a PlanITTools struct
-func (it PlanITTools) GetCreatedBy() string {
-	return it.CreatedBy
 }

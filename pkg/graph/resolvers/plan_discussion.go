@@ -1,8 +1,6 @@
 package resolvers
 
 import (
-	"time"
-
 	"go.uber.org/zap"
 
 	"github.com/google/uuid"
@@ -18,7 +16,9 @@ func CreatePlanDiscussion(logger *zap.Logger, input *model.PlanDiscussionCreateI
 		ModelPlanID: input.ModelPlanID,
 		Content:     input.Content,
 		Status:      models.DiscussionUnAnswered,
-		CreatedBy:   principal,
+		BaseStruct: models.BaseStruct{
+			CreatedBy: principal,
+		},
 	}
 
 	result, err := store.PlanDiscussionCreate(logger, planDiscussion)
@@ -33,14 +33,10 @@ func UpdatePlanDiscussion(logger *zap.Logger, id uuid.UUID, changes map[string]i
 		return nil, err
 	}
 
-	err = ApplyChanges(changes, existingDiscussion)
+	err = BaseStructPreUpdate(existingDiscussion, changes, principal)
 	if err != nil {
 		return nil, err
 	}
-
-	existingDiscussion.ModifiedBy = &principal
-	modifiedTime := time.Now()
-	existingDiscussion.ModifiedDts = &modifiedTime
 
 	result, err := store.PlanDiscussionUpdate(logger, existingDiscussion)
 	return result, err
@@ -58,7 +54,9 @@ func CreateDiscussionReply(logger *zap.Logger, input *model.DiscussionReplyCreat
 		DiscussionID: input.DiscussionID,
 		Content:      input.Content,
 		Resolution:   input.Resolution,
-		CreatedBy:    principal,
+		BaseStruct: models.BaseStruct{
+			CreatedBy: principal,
+		},
 	}
 
 	result, err := store.DiscussionReplyCreate(logger, discussionReply)
@@ -73,12 +71,10 @@ func UpdateDiscussionReply(logger *zap.Logger, id uuid.UUID, changes map[string]
 		return nil, err
 	}
 
-	err = ApplyChanges(changes, existingReply)
+	err = BaseStructPreUpdate(existingReply, changes, principal)
 	if err != nil {
 		return nil, err
 	}
-
-	existingReply.ModifiedBy = &principal
 
 	result, err := store.DiscussionReplyUpdate(logger, existingReply)
 	return result, err

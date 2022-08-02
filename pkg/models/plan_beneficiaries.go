@@ -1,16 +1,12 @@
 package models
 
 import (
-	"time"
-
-	"github.com/google/uuid"
 	"github.com/lib/pq"
 )
 
 //PlanBeneficiaries represents the beneficiaries section of the model plan task list
 type PlanBeneficiaries struct {
-	ID          uuid.UUID `json:"id" db:"id"`
-	ModelPlanID uuid.UUID `json:"modelPlanID" db:"model_plan_id"`
+	BaseTaskListSection
 
 	//page 1
 	Beneficiaries                         pq.StringArray  `json:"beneficiaries" db:"beneficiaries"`
@@ -38,48 +34,4 @@ type PlanBeneficiaries struct {
 	BeneficiaryOverlap                 *OverlapType   `json:"beneficiaryOverlap" db:"beneficiary_overlap" statusWeight:"1"`
 	BeneficiaryOverlapNote             *string        `json:"beneficiaryOverlapNote" db:"beneficiary_overlap_note"`
 	PrecedenceRules                    *string        `json:"precedenceRules" db:"precedence_rules"`
-
-	// Meta
-	CreatedBy   string     `json:"createdBy" db:"created_by"`
-	CreatedDts  time.Time  `json:"createdDts" db:"created_dts"`
-	ModifiedBy  *string    `json:"modifiedBy" db:"modified_by"`
-	ModifiedDts *time.Time `json:"modifiedDts" db:"modified_dts"`
-	Status      TaskStatus `json:"status" db:"status"`
-}
-
-// CalcStatus returns a TaskStatus based on how many fields have been entered in the PlanBeneficiaries struct
-func (b *PlanBeneficiaries) CalcStatus() error {
-	status, err := GenericallyCalculateStatus(*b)
-	if err != nil {
-		return err
-	}
-
-	b.Status = status
-	return nil
-
-}
-
-// GetModelTypeName returns the name of the model
-func (b PlanBeneficiaries) GetModelTypeName() string {
-	return "Plan_Beneficiaries"
-}
-
-// GetID returns the ID property for a PlanBeneficiaries struct
-func (b PlanBeneficiaries) GetID() uuid.UUID {
-	return b.ID
-}
-
-// GetPlanID returns the ModelPlanID property for a PlanBeneficiaries struct
-func (b PlanBeneficiaries) GetPlanID() uuid.UUID {
-	return b.ModelPlanID
-}
-
-// GetModifiedBy returns the ModifiedBy property for a PlanBeneficiaries struct
-func (b PlanBeneficiaries) GetModifiedBy() *string {
-	return b.ModifiedBy
-}
-
-// GetCreatedBy returns the ModifiedBy property for a PlanBeneficiaries struct
-func (b PlanBeneficiaries) GetCreatedBy() string {
-	return b.CreatedBy
 }

@@ -82,6 +82,8 @@ SET gc_part_c_d = :gc_part_c_d,
     p_recover_payments_note = :p_recover_payments_note,
     modified_by = :modified_by,
     modified_dts = CURRENT_TIMESTAMP,
+    ready_for_review_by = :ready_for_review_by,
+    ready_for_review_dts = :ready_for_review_dts,
     status = :status
 WHERE plan_it_tools.id = :id
 RETURNING id,
@@ -171,4 +173,6 @@ created_by,
 created_dts,
 modified_by,
 modified_dts,
+ready_for_review_by,
+ready_for_review_dts,
 status;

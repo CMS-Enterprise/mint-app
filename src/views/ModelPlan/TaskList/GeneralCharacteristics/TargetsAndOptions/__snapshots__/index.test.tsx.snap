@@ -155,6 +155,7 @@ exports[`Model Plan Characteristics matches snapshot 1`] = `
       >
         <input
           class="usa-checkbox__input"
+          data-testid="plan-characteristics-geographies-type-REGION"
           id="plan-characteristics-geographies-type-REGION"
           name="geographiesTargetedTypes"
           type="checkbox"
@@ -172,6 +173,7 @@ exports[`Model Plan Characteristics matches snapshot 1`] = `
       >
         <input
           class="usa-checkbox__input"
+          data-testid="plan-characteristics-geographies-type-STATE"
           id="plan-characteristics-geographies-type-STATE"
           name="geographiesTargetedTypes"
           type="checkbox"
@@ -190,6 +192,7 @@ exports[`Model Plan Characteristics matches snapshot 1`] = `
         <input
           checked=""
           class="usa-checkbox__input"
+          data-testid="plan-characteristics-geographies-type-OTHER"
           id="plan-characteristics-geographies-type-OTHER"
           name="geographiesTargetedTypes"
           type="checkbox"
@@ -231,6 +234,7 @@ exports[`Model Plan Characteristics matches snapshot 1`] = `
       >
         <input
           class="usa-checkbox__input"
+          data-testid="plan-characteristics-geographies-applied-to-BENEFICIARIES"
           id="plan-characteristics-geographies-applied-to-BENEFICIARIES"
           name="geographiesTargetedAppliedTo"
           type="checkbox"
@@ -248,6 +252,7 @@ exports[`Model Plan Characteristics matches snapshot 1`] = `
       >
         <input
           class="usa-checkbox__input"
+          data-testid="plan-characteristics-geographies-applied-to-PARTICIPANTS"
           id="plan-characteristics-geographies-applied-to-PARTICIPANTS"
           name="geographiesTargetedAppliedTo"
           type="checkbox"
@@ -265,6 +270,7 @@ exports[`Model Plan Characteristics matches snapshot 1`] = `
       >
         <input
           class="usa-checkbox__input"
+          data-testid="plan-characteristics-geographies-applied-to-PROVIDERS"
           id="plan-characteristics-geographies-applied-to-PROVIDERS"
           name="geographiesTargetedAppliedTo"
           type="checkbox"
@@ -282,6 +288,7 @@ exports[`Model Plan Characteristics matches snapshot 1`] = `
       >
         <input
           class="usa-checkbox__input"
+          data-testid="plan-characteristics-geographies-applied-to-OTHER"
           id="plan-characteristics-geographies-applied-to-OTHER"
           name="geographiesTargetedAppliedTo"
           type="checkbox"
@@ -421,6 +428,7 @@ exports[`Model Plan Characteristics matches snapshot 1`] = `
     >
       <input
         class="usa-checkbox__input"
+        data-testid="plan-characteristics-agreement-type-COOPERATIVE"
         id="plan-characteristics-agreement-type-COOPERATIVE"
         name="agreementTypes"
         type="checkbox"
@@ -438,6 +446,7 @@ exports[`Model Plan Characteristics matches snapshot 1`] = `
     >
       <input
         class="usa-checkbox__input"
+        data-testid="plan-characteristics-agreement-type-PARTICIPATION"
         id="plan-characteristics-agreement-type-PARTICIPATION"
         name="agreementTypes"
         type="checkbox"
@@ -455,6 +464,7 @@ exports[`Model Plan Characteristics matches snapshot 1`] = `
     >
       <input
         class="usa-checkbox__input"
+        data-testid="plan-characteristics-agreement-type-OTHER"
         id="plan-characteristics-agreement-type-OTHER"
         name="agreementTypes"
         type="checkbox"

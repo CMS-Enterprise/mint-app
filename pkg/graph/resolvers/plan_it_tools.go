@@ -11,21 +11,16 @@ import (
 //PlanITToolsUpdate updates a plan ITTools buisness object
 func PlanITToolsUpdate(logger *zap.Logger, id uuid.UUID, changes map[string]interface{}, principal string, store *storage.Store) (*models.PlanITTools, error) {
 	//Get existing plan ITTools
-	existingITTools, err := store.PlanITToolsGetByID(logger, id)
+	existing, err := store.PlanITToolsGetByID(logger, id)
 	if err != nil {
 		return nil, err
 	}
-	err = ApplyChanges(changes, existingITTools)
-	if err != nil {
-		return nil, err
-	}
-	existingITTools.ModifiedBy = &principal
-	err = existingITTools.CalcStatus()
+	err = BaseTaskListSectionPreUpdate(existing, changes, principal)
 	if err != nil {
 		return nil, err
 	}
 
-	retITTools, err := store.PlanITToolsUpdate(logger, existingITTools)
+	retITTools, err := store.PlanITToolsUpdate(logger, existing)
 	return retITTools, err
 
 }

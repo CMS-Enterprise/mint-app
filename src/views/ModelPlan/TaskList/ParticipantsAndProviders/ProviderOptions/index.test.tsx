@@ -5,7 +5,7 @@ import { render, screen, waitFor } from '@testing-library/react';
 
 import GetProviderOptions from 'queries/ParticipantsAndProviders/GetProviderOptions';
 import { GetProviderOptions_modelPlan_participantsAndProviders as GetProviderOptionsType } from 'queries/ParticipantsAndProviders/types/GetProviderOptions';
-import { ProviderAddType } from 'types/graphql-global-types';
+import { ProviderAddType, TaskStatus } from 'types/graphql-global-types';
 
 import ProviderOptions from './index';
 
@@ -23,7 +23,10 @@ const providerOptionsMockData: GetProviderOptionsType = {
   providerLeaveMethodNote: '',
   providerOverlap: null,
   providerOverlapHierarchy: '',
-  providerOverlapNote: ''
+  providerOverlapNote: '',
+  readyForReviewBy: 'ASDF',
+  readyForReviewDts: '2022-05-12T15:01:39.190679Z',
+  status: TaskStatus.IN_PROGRESS
 };
 
 const providerOptionsMock = [
