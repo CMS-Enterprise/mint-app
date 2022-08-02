@@ -90,21 +90,21 @@ const BasicsContent = () => {
     }
     const {
       id: updateId,
-      modelName: formModelName,
-      basics: formBasics
+      modelName: updateModelName,
+      basics: updateBasics
     } = formikValues;
     update({
       variables: {
         id: updateId,
         changes: {
-          modelName: formModelName
+          modelName: updateModelName
         },
-        basicsId: formBasics.id,
+        basicsId: updateBasics.id,
         basicsChanges: {
-          modelCategory: formBasics.modelCategory,
-          cmsCenters: formBasics.cmsCenters,
-          cmmiGroups: formBasics.cmmiGroups,
-          cmsOther: formBasics.cmsOther
+          modelCategory: updateBasics.modelCategory,
+          cmsCenters: updateBasics.cmsCenters,
+          cmmiGroups: updateBasics.cmmiGroups,
+          cmsOther: updateBasics.cmsOther
         }
       }
     })
@@ -304,36 +304,35 @@ const BasicsContent = () => {
 
                         {Object.keys(CMSCenter).map(center => {
                           return (
-                            <Fragment key={center}>
-                              <Field
-                                as={CheckboxField}
-                                id={`new-plan-cmsCenters-${center}`}
-                                name="basics.cmsCenters"
-                                label={translateCmsCenter(center)}
-                                value={center}
-                                checked={values.basics.cmsCenters.includes(
-                                  center as CMSCenter
-                                )}
-                                onChange={(
-                                  e: React.ChangeEvent<HTMLInputElement>
-                                ) => {
-                                  if (e.target.checked) {
-                                    arrayHelpers.push(e.target.value);
-                                  } else {
-                                    const idx = values.basics.cmsCenters.indexOf(
-                                      e.target.value as CMSCenter
-                                    );
-                                    arrayHelpers.remove(idx);
-                                  }
-                                  if (e.target.value === CMSCenter.CMMI) {
-                                    setAreCmmiGroupsShown(!areCmmiGroupsShown);
-                                  }
-                                  if (e.target.value === CMSCenter.OTHER) {
-                                    setShowOther(!showOther);
-                                  }
-                                }}
-                              />
-                            </Fragment>
+                            <Field
+                              key={center}
+                              as={CheckboxField}
+                              id={`new-plan-cmsCenters-${center}`}
+                              name="basics.cmsCenters"
+                              label={translateCmsCenter(center)}
+                              value={center}
+                              checked={values.basics.cmsCenters.includes(
+                                center as CMSCenter
+                              )}
+                              onChange={(
+                                e: React.ChangeEvent<HTMLInputElement>
+                              ) => {
+                                if (e.target.checked) {
+                                  arrayHelpers.push(e.target.value);
+                                } else {
+                                  const idx = values.basics.cmsCenters.indexOf(
+                                    e.target.value as CMSCenter
+                                  );
+                                  arrayHelpers.remove(idx);
+                                }
+                                if (e.target.value === CMSCenter.CMMI) {
+                                  setAreCmmiGroupsShown(!areCmmiGroupsShown);
+                                }
+                                if (e.target.value === CMSCenter.OTHER) {
+                                  setShowOther(!showOther);
+                                }
+                              }}
+                            />
                           );
                         })}
 
