@@ -92,7 +92,16 @@ const modelPlanTaskList = {
   lockedHeading:
     'Someone is currently editing the Model Plan section you’re trying to access.',
   lockedSubheading: 'Please try again later.',
-  returnToTaskList: 'Return to the task list'
+  returnToTaskList: 'Return to the task list',
+  breadCrumbState: {
+    basics: 'Model basics',
+    beneficiaries: 'Beneficiaries',
+    characteristics: 'General characteristics',
+    'it-tools': 'IT tools',
+    'ops-eval-and-learning': 'Operation, evaluation, and learning',
+    'participants-and-providers': 'Participants and providers',
+    payment: 'payment'
+  }
 };
 
 export default modelPlanTaskList;

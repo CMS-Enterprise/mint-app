@@ -124,7 +124,11 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
   }
 
   if (lockState === LockStatus.LOCKED) {
-    history.push(`/models/${modelID}/locked-task-list-section`);
+    history.push({
+      pathname: `/models/${modelID}/locked-task-list-section`,
+      // Passing the route for breadcrumbs on locked section page
+      state: { route: taskListRoute }
+    });
   }
 
   // Checks the location before unmounting to see if lock should be unlocked
