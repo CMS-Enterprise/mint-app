@@ -98,6 +98,8 @@ SELECT
     created_dts,
     modified_by,
     modified_dts,
+    ready_for_review_by,
+    ready_for_review_dts,
     status
 FROM plan_ops_eval_and_learning
 WHERE id = :id;

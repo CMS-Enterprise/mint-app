@@ -9,7 +9,7 @@ import (
 	"github.com/cmsgov/mint-app/pkg/models"
 )
 
-func (s ServicesTestSuite) TestNewFetchMetrics() {
+func (s *ServicesTestSuite) TestNewFetchMetrics() {
 	serviceClock := clock.NewMock()
 	serviceConfig := NewConfig(zap.NewNop(), nil)
 	serviceConfig.clock = serviceClock

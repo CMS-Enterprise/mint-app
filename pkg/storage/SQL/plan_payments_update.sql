@@ -63,6 +63,8 @@ SET
     created_dts = :created_dts,
     modified_by = :modified_by,
     modified_dts = CURRENT_TIMESTAMP,
+    ready_for_review_by = :ready_for_review_by,
+    ready_for_review_dts = :ready_for_review_dts,
     status = :status
 WHERE plan_payments.id = :id
 RETURNING id,
@@ -130,4 +132,6 @@ created_by,
 created_dts,
 modified_by,
 modified_dts,
+ready_for_review_by,
+ready_for_review_dts,
 status;

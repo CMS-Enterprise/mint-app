@@ -86,6 +86,8 @@ SELECT
     created_dts,
     modified_by,
     modified_dts,
+    ready_for_review_by,
+    ready_for_review_dts,
     status
 FROM plan_it_tools
 WHERE id = :id;

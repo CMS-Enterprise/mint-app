@@ -48,6 +48,8 @@ SET
     provider_overlap_note = :provider_overlap_note,
     modified_by = :modified_by,
     modified_dts = CURRENT_TIMESTAMP,
+    ready_for_review_by = :ready_for_review_by,
+    ready_for_review_dts = :ready_for_review_dts,
     status = :status
 WHERE plan_participants_and_providers.id = :id
 RETURNING
@@ -103,4 +105,8 @@ created_by,
 created_dts,
 modified_by,
 modified_dts,
+ready_for_review_by,
+ready_for_review_dts,
+ready_for_review_by,
+ready_for_review_dts,
 status;

@@ -14,7 +14,6 @@ func (suite *ResolverSuite) TestPlanOpsEvalAndLearningUpdate() {
 
 	changes := map[string]interface{}{
 		"stakeholdersNote":                  "These stakeholders might change",
-		"helpdeskUseOther":                  "We will utilize existing CMS helpdesk",
 		"technicalContactsIdentified":       true,
 		"technicalContactsIdentifiedDetail": "Mrs. Robinson",
 	}
@@ -31,7 +30,6 @@ func (suite *ResolverSuite) TestPlanOpsEvalAndLearningUpdate() {
 	suite.Nil(oel.StakeholdersOther)
 	// suite.Nil(oel.StakeholdersNote)
 	suite.Nil(oel.HelpdeskUse)
-	// suite.Nil(oel.HelpdeskUseOther)
 	suite.Nil(oel.HelpdeskUseNote)
 	suite.Nil(oel.ContractorSupport)
 	suite.Nil(oel.ContractorSupportOther)

@@ -94,6 +94,8 @@ SET agency_or_state_help = :agency_or_state_help,
     anticipated_challenges = :anticipated_challenges,
     modified_by = :modified_by,
     modified_dts = CURRENT_TIMESTAMP,
+    ready_for_review_by = :ready_for_review_by,
+    ready_for_review_dts = :ready_for_review_dts,
     status = :status
 WHERE plan_ops_eval_and_learning.id = :id
 RETURNING
@@ -196,4 +198,6 @@ created_by,
 created_dts,
 modified_by,
 modified_dts,
+ready_for_review_by,
+ready_for_review_dts,
 status;

@@ -9,7 +9,8 @@ import {
   CMMIGroup,
   CMSCenter,
   ModelCategory,
-  ModelStatus
+  ModelStatus,
+  TaskStatus
 } from 'types/graphql-global-types';
 
 import TaskListButton from './index';
@@ -46,9 +47,7 @@ describe('The Header component', () => {
     };
   };
 
-  const renderedComponent = (
-    status: 'READY' | 'IN_PROGRESS' | 'CANNOT_START' | 'COMPLETE' = 'READY'
-  ) =>
+  const renderedComponent = (status: TaskStatus) =>
     render(
       <MemoryRouter initialEntries={[`/models/${modelPlan.id}/task-list`]}>
         <MockedProvider mocks={[modelPlanQuery(modelPlan)]} addTypename={false}>
@@ -58,22 +57,23 @@ describe('The Header component', () => {
     );
 
   it('renders without crashing', async () => {
-    renderedComponent();
+    renderedComponent(TaskStatus.READY);
     expect(await screen.getByRole('button')).toBeInTheDocument();
     expect(screen.getByText('Start')).toBeInTheDocument();
   });
 
   describe('displays the correct text', () => {
     it('for IN_PROGRESS status', () => {
-      renderedComponent('IN_PROGRESS');
+      renderedComponent(TaskStatus.IN_PROGRESS);
 
       expect(screen.getByRole('button')).toBeInTheDocument();
       expect(screen.getByText('Continue')).toBeInTheDocument();
     });
-    it('for CANNOT_START status', () => {
-      renderedComponent('CANNOT_START');
+    it('for READY_FOR_REVIEW status', () => {
+      renderedComponent(TaskStatus.READY_FOR_REVIEW);
 
-      expect(screen.queryByRole('button')).toBeNull();
+      expect(screen.getByRole('button')).toBeInTheDocument();
+      expect(screen.getByText('Update')).toBeInTheDocument();
     });
   });
 });

@@ -16,6 +16,9 @@ export default gql`
         waiversRequired
         waiversRequiredTypes
         waiversRequiredNote
+        readyForReviewBy
+        readyForReviewDts
+        status
       }
     }
   }

@@ -103,6 +103,7 @@ exports[`Model Plan Communication matches snapshot 1`] = `
     >
       <input
         class="usa-checkbox__input"
+        data-testid="participants-and-providers-communication-method-IT_TOOL"
         id="participants-and-providers-communication-method-IT_TOOL"
         name="communicationMethod"
         type="checkbox"
@@ -123,6 +124,7 @@ exports[`Model Plan Communication matches snapshot 1`] = `
     >
       <input
         class="usa-checkbox__input"
+        data-testid="participants-and-providers-communication-method-MASS_EMAIL"
         id="participants-and-providers-communication-method-MASS_EMAIL"
         name="communicationMethod"
         type="checkbox"
@@ -143,6 +145,7 @@ exports[`Model Plan Communication matches snapshot 1`] = `
     >
       <input
         class="usa-checkbox__input"
+        data-testid="participants-and-providers-communication-method-OTHER"
         id="participants-and-providers-communication-method-OTHER"
         name="communicationMethod"
         type="checkbox"
@@ -163,6 +166,7 @@ exports[`Model Plan Communication matches snapshot 1`] = `
     >
       <input
         class="usa-checkbox__input"
+        data-testid="participants-and-providers-communication-method-NO_COMMUNICATION"
         id="participants-and-providers-communication-method-NO_COMMUNICATION"
         name="communicationMethod"
         type="checkbox"

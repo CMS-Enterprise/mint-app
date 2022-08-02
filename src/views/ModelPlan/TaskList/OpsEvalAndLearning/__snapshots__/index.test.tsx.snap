@@ -103,6 +103,7 @@ exports[`Model Plan Ops Eval and Learning matches snapshot 1`] = `
     >
       <input
         class="usa-checkbox__input"
+        data-testid="ops-eval-and-learning-agency-or-state-help-YES_AGENCY_IAA"
         id="ops-eval-and-learning-agency-or-state-help-YES_AGENCY_IAA"
         name="agencyOrStateHelp"
         type="checkbox"
@@ -123,6 +124,7 @@ exports[`Model Plan Ops Eval and Learning matches snapshot 1`] = `
     >
       <input
         class="usa-checkbox__input"
+        data-testid="ops-eval-and-learning-agency-or-state-help-YES_AGENCY_IDEAS"
         id="ops-eval-and-learning-agency-or-state-help-YES_AGENCY_IDEAS"
         name="agencyOrStateHelp"
         type="checkbox"
@@ -143,6 +145,7 @@ exports[`Model Plan Ops Eval and Learning matches snapshot 1`] = `
     >
       <input
         class="usa-checkbox__input"
+        data-testid="ops-eval-and-learning-agency-or-state-help-YES_STATE"
         id="ops-eval-and-learning-agency-or-state-help-YES_STATE"
         name="agencyOrStateHelp"
         type="checkbox"
@@ -163,6 +166,7 @@ exports[`Model Plan Ops Eval and Learning matches snapshot 1`] = `
     >
       <input
         class="usa-checkbox__input"
+        data-testid="ops-eval-and-learning-agency-or-state-help-OTHER"
         id="ops-eval-and-learning-agency-or-state-help-OTHER"
         name="agencyOrStateHelp"
         type="checkbox"
@@ -183,6 +187,7 @@ exports[`Model Plan Ops Eval and Learning matches snapshot 1`] = `
     >
       <input
         class="usa-checkbox__input"
+        data-testid="ops-eval-and-learning-agency-or-state-help-NO"
         id="ops-eval-and-learning-agency-or-state-help-NO"
         name="agencyOrStateHelp"
         type="checkbox"
@@ -405,6 +410,7 @@ exports[`Model Plan Ops Eval and Learning matches snapshot 1`] = `
     >
       <input
         class="usa-checkbox__input"
+        data-testid="ops-eval-and-learning-contractor-support-MULTIPLE"
         id="ops-eval-and-learning-contractor-support-MULTIPLE"
         name="contractorSupport"
         type="checkbox"
@@ -425,6 +431,7 @@ exports[`Model Plan Ops Eval and Learning matches snapshot 1`] = `
     >
       <input
         class="usa-checkbox__input"
+        data-testid="ops-eval-and-learning-contractor-support-NONE"
         id="ops-eval-and-learning-contractor-support-NONE"
         name="contractorSupport"
         type="checkbox"
@@ -445,6 +452,7 @@ exports[`Model Plan Ops Eval and Learning matches snapshot 1`] = `
     >
       <input
         class="usa-checkbox__input"
+        data-testid="ops-eval-and-learning-contractor-support-ONE"
         id="ops-eval-and-learning-contractor-support-ONE"
         name="contractorSupport"
         type="checkbox"
@@ -465,6 +473,7 @@ exports[`Model Plan Ops Eval and Learning matches snapshot 1`] = `
     >
       <input
         class="usa-checkbox__input"
+        data-testid="ops-eval-and-learning-contractor-support-OTHER"
         id="ops-eval-and-learning-contractor-support-OTHER"
         name="contractorSupport"
         type="checkbox"

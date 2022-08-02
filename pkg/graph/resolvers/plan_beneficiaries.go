@@ -11,21 +11,17 @@ import (
 // PlanBeneficiariesUpdate updates a plan Beneficiary buisness object
 func PlanBeneficiariesUpdate(logger *zap.Logger, id uuid.UUID, changes map[string]interface{}, principal string, store *storage.Store) (*models.PlanBeneficiaries, error) {
 	// Get existing plan beneficiaries
-	existingBeneficiaries, err := store.PlanBeneficiariesGetByID(logger, id)
+	existing, err := store.PlanBeneficiariesGetByID(logger, id)
 	if err != nil {
 		return nil, err
 	}
 
-	err = ApplyChanges(changes, existingBeneficiaries)
+	err = BaseTaskListSectionPreUpdate(existing, changes, principal)
 	if err != nil {
 		return nil, err
 	}
-	existingBeneficiaries.ModifiedBy = &principal
-	err = existingBeneficiaries.CalcStatus()
-	if err != nil {
-		return nil, err
-	}
-	retGeneralCharacteristics, err := store.PlanBeneficiariesUpdate(logger, existingBeneficiaries)
+
+	retGeneralCharacteristics, err := store.PlanBeneficiariesUpdate(logger, existing)
 	return retGeneralCharacteristics, err
 }
 

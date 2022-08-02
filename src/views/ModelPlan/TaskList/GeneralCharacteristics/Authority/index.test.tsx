@@ -5,6 +5,7 @@ import { render, screen, waitFor } from '@testing-library/react';
 
 import GetAuthority from 'queries/GeneralCharacteristics/GetAuthority';
 import { GetAuthority_modelPlan_generalCharacteristics as GetAuthorityType } from 'queries/GeneralCharacteristics/types/GetAuthority';
+import { TaskStatus } from 'types/graphql-global-types';
 
 import Authority from './index';
 
@@ -19,7 +20,10 @@ const authorityMockData: GetAuthorityType = {
   authorityAllowancesNote: '',
   waiversRequired: false,
   waiversRequiredTypes: [],
-  waiversRequiredNote: ''
+  waiversRequiredNote: '',
+  readyForReviewBy: 'ASDF',
+  readyForReviewDts: '2022-05-12T15:01:39.190679Z',
+  status: TaskStatus.IN_PROGRESS
 };
 
 const authorityMock = [
