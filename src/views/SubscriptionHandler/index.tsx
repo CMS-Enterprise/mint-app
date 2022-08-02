@@ -81,10 +81,6 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
 
   const [prevPath, setPrevPath] = useState<string>('');
 
-  // Component states for handling locking/unlocking loading mutation loading
-  // Is a more solid way to control loading without rerender interruptions
-  const [locking, setLocking] = useState<boolean>(false);
-
   let lockState: LockStatus;
 
   const taskListSection = taskListSectionMap[taskListRoute];
@@ -94,13 +90,15 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
   // Get the subscription context - messages (locks, unlocks), loading
   const { taskListSectionLocks, loading } = useContext(SubscriptionContext);
 
-  const [addLock] = useMutation<LockTaskListSectionVariables>(
-    LockTaskListSection
-  );
+  const [
+    addLock,
+    { loading: addLockLoading }
+  ] = useMutation<LockTaskListSectionVariables>(LockTaskListSection);
 
-  const [removeLock] = useMutation<UnlockTaskListSectionVariables>(
-    UnlockTackListSection
-  );
+  const [
+    removeLock,
+    { loading: removeLockLoading }
+  ] = useMutation<UnlockTaskListSectionVariables>(UnlockTackListSection);
 
   /**
    * Checks to see the status of task list section
@@ -111,7 +109,8 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
     taskListSection &&
     taskListSectionLocks &&
     authState?.euaId &&
-    !locking &&
+    !addLockLoading &&
+    !removeLockLoading &&
     !loading
   ) {
     lockState = findLockedSection(
@@ -142,7 +141,8 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
   if (
     (!validModelID || !taskListSection) &&
     taskListSectionLocks?.length > 0 &&
-    !locking
+    !addLockLoading &&
+    !removeLockLoading
   ) {
     const prevModelID = prevPath.split('/')[2];
 
@@ -151,19 +151,18 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
     );
 
     if (lockedSection && isUUID(prevModelID)) {
-      setLocking(true);
       removeLock({
         variables: {
           modelPlanID: lockedSection.modelPlanID,
           section: lockedSection.section
         }
-      })
-        .then(() => {
-          setLocking(false);
-        })
-        .catch(() => {
-          setLocking(false);
+      }).catch(() => {
+        history.push({
+          pathname: `/models/${modelID}/locked-task-list-section`,
+          // Passing error status to default error page
+          state: { route: taskListRoute, error: true }
         });
+      });
     }
   }
 
@@ -171,23 +170,23 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
   if (
     lockState === LockStatus.UNLOCKED &&
     taskListSection &&
-    !locking &&
+    !addLockLoading &&
+    !removeLockLoading &&
     !loading &&
     validModelID
   ) {
-    setLocking(true);
     addLock({
       variables: {
         modelPlanID: modelID,
         section: taskListSection
       }
-    })
-      .then(() => {
-        setLocking(false);
-      })
-      .catch(() => {
-        setLocking(false);
+    }).catch(() => {
+      history.push({
+        pathname: `/models/${modelID}/locked-task-list-section`,
+        // Passing error status to default error page
+        state: { route: taskListRoute, error: true }
       });
+    });
   }
 
   return <div>{children}</div>;

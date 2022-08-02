@@ -101,7 +101,9 @@ const modelPlanTaskList = {
     'ops-eval-and-learning': 'Operation, evaluation, and learning',
     'participants-and-providers': 'Participants and providers',
     payment: 'payment'
-  }
+  },
+  lockErrorHeading: 'An error occured',
+  lockErrorInfo: 'Please return to the task list and try again'
 };
 
 export default modelPlanTaskList;

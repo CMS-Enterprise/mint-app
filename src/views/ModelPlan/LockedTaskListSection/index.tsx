@@ -13,15 +13,16 @@ import PageHeading from 'components/PageHeading';
 
 interface LocationState {
   state: {
+    error: boolean;
     route: string;
   };
+  error: boolean;
   route: string;
 }
-
 const LockedTaskListSection = () => {
   const { t } = useTranslation('modelPlanTaskList');
   const location = useLocation<LocationState>();
-  const route = location?.state?.route;
+  const { error, route } = location?.state;
   const { modelID } = useParams<{ modelID: string }>();
 
   return (
@@ -45,20 +46,37 @@ const LockedTaskListSection = () => {
         </BreadcrumbBar>
       )}
 
-      <div className="margin-y-7">
-        <PageHeading className="margin-bottom-2">
-          {t('lockedHeading')}
-        </PageHeading>
-        <p>{t('lockedSubheading')}</p>
+      {!error ? (
+        <div className="margin-y-7">
+          <PageHeading className="margin-bottom-2">
+            {t('lockedHeading')}
+          </PageHeading>
+          <p>{t('lockedSubheading')}</p>
 
-        <UswdsReactLink
-          className="usa-button margin-top-6"
-          variant="unstyled"
-          to={`/models/${modelID}/task-list`}
-        >
-          {t('returnToTaskList')}
-        </UswdsReactLink>
-      </div>
+          <UswdsReactLink
+            className="usa-button margin-top-6"
+            variant="unstyled"
+            to={`/models/${modelID}/task-list`}
+          >
+            {t('returnToTaskList')}
+          </UswdsReactLink>
+        </div>
+      ) : (
+        <div className="margin-y-7">
+          <PageHeading className="margin-bottom-2">
+            {t('lockErrorHeading')}
+          </PageHeading>
+          <p>{t('lockErrorInfo')}</p>
+
+          <UswdsReactLink
+            className="usa-button margin-top-6"
+            variant="unstyled"
+            to={`/models/${modelID}/task-list`}
+          >
+            {t('returnToTaskList')}
+          </UswdsReactLink>
+        </div>
+      )}
     </MainContent>
   );
 };
