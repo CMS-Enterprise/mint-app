@@ -132,6 +132,22 @@ const BasicsContent = () => {
     }
   };
 
+  useEffect(() => {
+    if (formikRef?.current?.values.basics.cmsCenters.includes(CMSCenter.CMMI)) {
+      setAreCmmiGroupsShown(true);
+    } else {
+      setAreCmmiGroupsShown(false);
+    }
+
+    if (
+      formikRef?.current?.values.basics.cmsCenters.includes(CMSCenter.OTHER)
+    ) {
+      setShowOther(true);
+    } else {
+      setShowOther(false);
+    }
+  }, [formikRef?.current?.values.basics.cmsCenters]);
+
   // 4 options
   // 1. Basics (name, category, CMS Component without CMMI and Other)
   // 2. Basics + cmmi group
@@ -213,6 +229,7 @@ const BasicsContent = () => {
                   classNames="margin-top-3"
                   heading={h('checkAndFix')}
                 >
+                  {console.log(flatErrors)}
                   {Object.keys(flatErrors).map(key => {
                     return (
                       <ErrorAlertMessage
@@ -251,13 +268,15 @@ const BasicsContent = () => {
 
                 <FieldGroup
                   scrollElement="modelCategory"
-                  error={!!flatErrors.modelCategory}
+                  error={!!flatErrors.basics.modelCategory}
                   className="margin-top-4"
                 >
                   <Label htmlFor="plan-basics-model-category">
                     {t('modelCategory')}
                   </Label>
-                  <FieldErrorMsg>{flatErrors.modelCategory}</FieldErrorMsg>
+                  <FieldErrorMsg>
+                    {flatErrors.basics.modelCategory}
+                  </FieldErrorMsg>
                   <Field
                     as={Dropdown}
                     id="plan-basics-model-category"
@@ -282,7 +301,7 @@ const BasicsContent = () => {
 
                 <FieldGroup
                   scrollElement="cmsCenters"
-                  error={!!flatErrors.cmsCenters}
+                  error={!!flatErrors.basics.cmsCenters}
                   className="margin-top-4"
                 >
                   <FieldArray
@@ -292,7 +311,9 @@ const BasicsContent = () => {
                         <legend className="usa-label">
                           {t('cmsComponent')}
                         </legend>
-                        <FieldErrorMsg>{flatErrors.cmsCenters}</FieldErrorMsg>
+                        <FieldErrorMsg>
+                          {flatErrors.basics.cmsCenters}
+                        </FieldErrorMsg>
 
                         {Object.keys(CMSCenter).map(center => {
                           return (
@@ -314,12 +335,14 @@ const BasicsContent = () => {
                         {values.basics.cmsCenters.includes(CMSCenter.OTHER) && (
                           <FieldGroup
                             className="margin-top-4"
-                            error={!!flatErrors.cmsOther}
+                            error={!!flatErrors.basics.cmsOther}
                           >
                             <Label htmlFor="plan-basics-cmsCategory--Other">
                               {h('pleaseSpecify')}
                             </Label>
-                            <FieldErrorMsg>{flatErrors.cmsOther}</FieldErrorMsg>
+                            <FieldErrorMsg>
+                              {flatErrors.basics.cmsOther}
+                            </FieldErrorMsg>
                             <Field
                               as={TextInput}
                               id="plan-basics-cmsCategory--Other"
@@ -334,11 +357,13 @@ const BasicsContent = () => {
                 </FieldGroup>
                 {values.basics.cmsCenters.includes(CMSCenter.CMMI) && (
                   <FieldGroup
-                    error={!!flatErrors.cmmiGroups}
+                    error={!!flatErrors.basics.cmmiGroups}
                     className="margin-top-4"
                   >
                     <Label htmlFor="basics.cmmiGroups">{t('cmmiGroup')}</Label>
-                    <FieldErrorMsg>{flatErrors.cmmiGroups}</FieldErrorMsg>
+                    <FieldErrorMsg>
+                      {flatErrors.basics.cmmiGroups}
+                    </FieldErrorMsg>
                     {Object.keys(CMMIGroup).map(group => {
                       return (
                         <Fragment key={group}>
