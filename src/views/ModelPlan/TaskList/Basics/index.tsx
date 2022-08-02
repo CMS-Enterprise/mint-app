@@ -84,16 +84,24 @@ const BasicsContent = () => {
       formikRef?.current?.setFieldError('modelName', 'Enter the Model name');
       return;
     }
-    const { id: updateId, __typename, ...changeValues } = formikValues;
-    console.log(changeValues);
+    const {
+      id: updateId,
+      modelName: formModelName,
+      basics: formBasics
+    } = formikValues;
     update({
       variables: {
         id: updateId,
         changes: {
-          modelName: changeValues.modelName
+          modelName: formModelName
         },
-        basicsId: changeValues.basics.id,
-        basicsChanges: changeValues.basics
+        basicsId: formBasics.id,
+        basicsChanges: {
+          modelCategory: formBasics.modelCategory,
+          cmsCenters: formBasics.cmsCenters,
+          cmmiGroups: formBasics.cmmiGroups,
+          cmsOther: formBasics.cmsOther
+        }
       }
     })
       .then(response => {
@@ -124,23 +132,6 @@ const BasicsContent = () => {
     }
   };
 
-  useEffect(() => {
-    if (formikRef?.current?.values.basics.cmsCenters.includes(CMSCenter.CMMI)) {
-      console.log(`gary`);
-      setAreCmmiGroupsShown(true);
-    } else {
-      setAreCmmiGroupsShown(false);
-    }
-    if (formikRef?.current?.values.basics.cmsOther?.includes(CMSCenter.OTHER)) {
-      console.log('asdfasdfasdf');
-      setShowOther(true);
-    }
-  }, [
-    formikRef?.current?.values.basics.cmsCenters,
-    formikRef?.current?.values.basics.cmsOther
-  ]);
-
-  console.log(areCmmiGroupsShown);
   // 4 options
   // 1. Basics (name, category, CMS Component without CMMI and Other)
   // 2. Basics + cmmi group
@@ -194,8 +185,7 @@ const BasicsContent = () => {
       <Formik
         initialValues={initialValues}
         onSubmit={values => {
-          console.log(values);
-          // handleFormSubmit(values, 'next');
+          handleFormSubmit(values, 'next');
         }}
         enableReinitialize
         validationSchema={validationSchema}
@@ -347,7 +337,6 @@ const BasicsContent = () => {
                     error={!!flatErrors.cmmiGroups}
                     className="margin-top-4"
                   >
-                    {setAreCmmiGroupsShown(true)}
                     <Label htmlFor="basics.cmmiGroups">{t('cmmiGroup')}</Label>
                     <FieldErrorMsg>{flatErrors.cmmiGroups}</FieldErrorMsg>
                     {Object.keys(CMMIGroup).map(group => {
