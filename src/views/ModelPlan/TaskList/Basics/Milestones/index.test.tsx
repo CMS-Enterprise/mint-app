@@ -5,6 +5,7 @@ import { render, screen, waitFor } from '@testing-library/react';
 
 import GetMilestones from 'queries/Basics/GetMilestones';
 import { GetMilestones_modelPlan_milestones as GetMilestonesType } from 'queries/Basics/types/GetMilestones';
+import { TaskStatus } from 'types/graphql-global-types';
 
 import Milestones from './index';
 
@@ -22,7 +23,10 @@ const milestonesMockData: GetMilestonesType = {
   wrapUpEnds: null,
   highLevelNote: '',
   phasedIn: null,
-  phasedInNote: ''
+  phasedInNote: '',
+  readyForReviewBy: 'ASDF',
+  readyForReviewDts: '2022-05-12T15:01:39.190679Z',
+  status: TaskStatus.IN_PROGRESS
 };
 
 const mocks = [

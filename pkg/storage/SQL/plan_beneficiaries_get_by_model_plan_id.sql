@@ -26,6 +26,8 @@ SELECT
     created_dts,
     modified_by,
     modified_dts,
+    ready_for_review_by,
+    ready_for_review_dts,
     status
 FROM plan_beneficiaries
 WHERE model_plan_id = :model_plan_id;

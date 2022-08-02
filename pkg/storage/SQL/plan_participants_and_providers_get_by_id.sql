@@ -51,6 +51,8 @@ SELECT
     created_dts,
     modified_by,
     modified_dts,
+    ready_for_review_by,
+    ready_for_review_dts,
     status
 FROM public.plan_participants_and_providers
 WHERE id = :id;

@@ -3,9 +3,11 @@ import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
 import { Button } from '@trussworks/react-uswds';
 
+import { TaskStatus } from 'types/graphql-global-types';
+
 type TaskListButtonProps = {
   path: string;
-  status: 'READY' | 'IN_PROGRESS' | 'CANNOT_START' | 'COMPLETE';
+  status: TaskStatus;
 };
 
 const TaskListButton = ({ path, status }: TaskListButtonProps) => {
@@ -13,19 +15,15 @@ const TaskListButton = ({ path, status }: TaskListButtonProps) => {
   const { modelID } = useParams<{ modelID: string }>();
   const history = useHistory();
 
-  if (status === 'CANNOT_START') {
-    return <></>;
-  }
-
   return (
     <Button
       type="button"
       data-testid={path}
       onClick={() => history.push(`/models/${modelID}/task-list/${path}`)}
     >
-      {status === 'READY'
-        ? t('taskListButton.start')
-        : t('taskListButton.continue')}
+      {status === 'READY' && t('taskListButton.start')}
+      {status === 'IN_PROGRESS' && t('taskListButton.continue')}
+      {status === 'READY_FOR_REVIEW' && t('taskListButton.update')}
     </Button>
   );
 };

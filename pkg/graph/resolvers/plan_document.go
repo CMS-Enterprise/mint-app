@@ -35,7 +35,7 @@ func PlanDocumentCreate(
 	s3Client *upload.S3Client) (*model.PlanDocumentPayload, error) {
 	document, err := store.PlanDocumentCreate(logger, principal, document, documentURL, s3Client)
 	if err != nil {
-		return nil, genericmodel.HandleModelUpdateError(logger, err, models.PlanDocument{ID: document.ID})
+		return nil, genericmodel.HandleModelUpdateError(logger, err, document)
 	}
 
 	return createDocumentPayload(s3Client, document)

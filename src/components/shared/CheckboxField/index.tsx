@@ -34,6 +34,7 @@ const CheckboxField = ({
         className="usa-checkbox__input"
         disabled={disabled}
         id={id}
+        data-testid={id}
         name={name}
         onChange={onChange}
         onBlur={onBlur}

@@ -30,7 +30,7 @@ func (suite *ResolverSuite) TestModelPlanUpdate() {
 		"cmmiGroups": []string{"PATIENT_CARE_MODELS_GROUP", "SEAMLESS_CARE_MODELS_GROUP"},
 	}
 	updater := "UPDT"
-	result, err := ModelPlanUpdate(suite.testConfigs.Logger, plan.ID, changes, &updater, suite.testConfigs.Store) // update plan with new user "UPDT"
+	result, err := ModelPlanUpdate(suite.testConfigs.Logger, plan.ID, changes, updater, suite.testConfigs.Store) // update plan with new user "UPDT"
 
 	suite.NoError(err)
 	suite.EqualValues(plan.ID, result.ID)

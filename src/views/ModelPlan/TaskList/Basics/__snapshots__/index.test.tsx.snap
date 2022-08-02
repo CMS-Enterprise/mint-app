@@ -214,6 +214,7 @@ exports[`Model Plan Documents page matches snapshot 1`] = `
             >
               <input
                 class="usa-checkbox__input"
+                data-testid="new-plan-cmsCenters-CENTER_FOR_CLINICAL_STANDARDS_AND_QUALITY"
                 id="new-plan-cmsCenters-CENTER_FOR_CLINICAL_STANDARDS_AND_QUALITY"
                 name="cmsCenters"
                 type="checkbox"
@@ -231,6 +232,7 @@ exports[`Model Plan Documents page matches snapshot 1`] = `
             >
               <input
                 class="usa-checkbox__input"
+                data-testid="new-plan-cmsCenters-CENTER_FOR_MEDICARE"
                 id="new-plan-cmsCenters-CENTER_FOR_MEDICARE"
                 name="cmsCenters"
                 type="checkbox"
@@ -248,6 +250,7 @@ exports[`Model Plan Documents page matches snapshot 1`] = `
             >
               <input
                 class="usa-checkbox__input"
+                data-testid="new-plan-cmsCenters-CENTER_FOR_PROGRAM_INTEGRITY"
                 id="new-plan-cmsCenters-CENTER_FOR_PROGRAM_INTEGRITY"
                 name="cmsCenters"
                 type="checkbox"
@@ -265,6 +268,7 @@ exports[`Model Plan Documents page matches snapshot 1`] = `
             >
               <input
                 class="usa-checkbox__input"
+                data-testid="new-plan-cmsCenters-CMMI"
                 id="new-plan-cmsCenters-CMMI"
                 name="cmsCenters"
                 type="checkbox"
@@ -282,6 +286,7 @@ exports[`Model Plan Documents page matches snapshot 1`] = `
             >
               <input
                 class="usa-checkbox__input"
+                data-testid="new-plan-cmsCenters-FEDERAL_COORDINATED_HEALTH_CARE_OFFICE"
                 id="new-plan-cmsCenters-FEDERAL_COORDINATED_HEALTH_CARE_OFFICE"
                 name="cmsCenters"
                 type="checkbox"
@@ -299,6 +304,7 @@ exports[`Model Plan Documents page matches snapshot 1`] = `
             >
               <input
                 class="usa-checkbox__input"
+                data-testid="new-plan-cmsCenters-OTHER"
                 id="new-plan-cmsCenters-OTHER"
                 name="cmsCenters"
                 type="checkbox"

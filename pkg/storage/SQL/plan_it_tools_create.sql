@@ -84,6 +84,8 @@ INSERT INTO plan_it_tools(
     p_recover_payments_note,
     created_by,
     modified_by,
+    ready_for_review_by,
+    ready_for_review_dts,
     status
 )
 VALUES (
@@ -172,6 +174,8 @@ VALUES (
     :p_recover_payments_note,
     :created_by,
     :modified_by,
+    :ready_for_review_by,
+    :ready_for_review_dts,
     :status
 )
 RETURNING id,
@@ -261,4 +265,6 @@ created_by,
 created_dts,
 modified_by,
 modified_dts,
+ready_for_review_by,
+ready_for_review_dts,
 status;

@@ -410,9 +410,14 @@ export enum StakeholdersType {
 }
 
 export enum TaskStatus {
-  COMPLETE = "COMPLETE",
   IN_PROGRESS = "IN_PROGRESS",
   READY = "READY",
+  READY_FOR_REVIEW = "READY_FOR_REVIEW",
+}
+
+export enum TaskStatusInput {
+  IN_PROGRESS = "IN_PROGRESS",
+  READY_FOR_REVIEW = "READY_FOR_REVIEW",
 }
 
 export enum TeamRole {
@@ -480,6 +485,7 @@ export interface PlanBasicsChanges {
   goal?: string | null;
   testInterventions?: string | null;
   note?: string | null;
+  status?: TaskStatusInput | null;
 }
 
 export interface PlanBeneficiariesChanges {
@@ -504,6 +510,7 @@ export interface PlanBeneficiariesChanges {
   beneficiaryOverlap?: OverlapType | null;
   beneficiaryOverlapNote?: string | null;
   precedenceRules?: string | null;
+  status?: TaskStatusInput | null;
 }
 
 /**
@@ -614,6 +621,7 @@ export interface PlanGeneralCharacteristicsChanges {
   waiversRequired?: boolean | null;
   waiversRequiredTypes?: WaiverType[] | null;
   waiversRequiredNote?: string | null;
+  status?: TaskStatusInput | null;
 }
 
 /**
@@ -634,6 +642,7 @@ export interface PlanMilestoneChanges {
   highLevelNote?: string | null;
   phasedIn?: boolean | null;
   phasedInNote?: string | null;
+  status?: TaskStatusInput | null;
 }
 
 /**
@@ -736,6 +745,7 @@ export interface PlanOpsEvalAndLearningChanges {
   modelLearningSystemsOther?: string | null;
   modelLearningSystemsNote?: string | null;
   anticipatedChallenges?: string | null;
+  status?: TaskStatusInput | null;
 }
 
 /**
@@ -791,6 +801,7 @@ export interface PlanParticipantsAndProvidersChanges {
   providerOverlap?: OverlapType | null;
   providerOverlapHierarchy?: string | null;
   providerOverlapNote?: string | null;
+  status?: TaskStatusInput | null;
 }
 
 export interface PlanPaymentsChanges {
@@ -853,6 +864,7 @@ export interface PlanPaymentsChanges {
   anticipateReconcilingPaymentsRetrospectivelyNote?: string | null;
   paymentStartDate?: Time | null;
   paymentStartDateNote?: string | null;
+  status?: TaskStatusInput | null;
 }
 
 //==============================================================

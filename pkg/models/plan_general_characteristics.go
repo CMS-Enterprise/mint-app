@@ -1,16 +1,12 @@
 package models
 
 import (
-	"time"
-
-	"github.com/google/uuid"
 	"github.com/lib/pq"
 )
 
 // PlanGeneralCharacteristics represents the "general characteristics" section of a plan
 type PlanGeneralCharacteristics struct {
-	ID          uuid.UUID `json:"id" db:"id"`
-	ModelPlanID uuid.UUID `json:"modelPlanID" db:"model_plan_id"`
+	BaseTaskListSection
 
 	// Page 1
 	IsNewModel                  *bool          `json:"isNewModel" db:"is_new_model" statusWeight:"1"`
@@ -72,47 +68,4 @@ type PlanGeneralCharacteristics struct {
 	WaiversRequired               *bool          `json:"waiversRequired" db:"waivers_required" statusWeight:"1"`
 	WaiversRequiredTypes          pq.StringArray `json:"waiversRequiredTypes" db:"waivers_required_types"`
 	WaiversRequiredNote           *string        `json:"waiversRequiredNote" db:"waivers_required_note"`
-
-	// Meta
-	CreatedBy   string     `json:"createdBy" db:"created_by"`
-	CreatedDts  time.Time  `json:"createdDts" db:"created_dts"`
-	ModifiedBy  *string    `json:"modifiedBy" db:"modified_by"`
-	ModifiedDts *time.Time `json:"modifiedDts" db:"modified_dts"`
-	Status      TaskStatus `json:"status" db:"status"`
-}
-
-// CalcStatus calculates the status of the Plan General Characteristics and sets the Status field
-func (gc *PlanGeneralCharacteristics) CalcStatus() error {
-	status, err := GenericallyCalculateStatus(*gc)
-	if err != nil {
-		return err
-	}
-
-	gc.Status = status
-	return nil
-}
-
-// GetModelTypeName returns a string name that represents the PlanBasics struct
-func (gc PlanGeneralCharacteristics) GetModelTypeName() string {
-	return "Plan_General_Characteristics"
-}
-
-// GetID returns the ID property for a PlanBasics struct
-func (gc PlanGeneralCharacteristics) GetID() uuid.UUID {
-	return gc.ID
-}
-
-// GetPlanID returns the ModelPlanID property for a PlanBasics struct
-func (gc PlanGeneralCharacteristics) GetPlanID() uuid.UUID {
-	return gc.ModelPlanID
-}
-
-// GetModifiedBy returns the ModifiedBy property for a PlanBasics struct
-func (gc PlanGeneralCharacteristics) GetModifiedBy() *string {
-	return gc.ModifiedBy
-}
-
-// GetCreatedBy returns the ModifiedBy property for a PlanBasics struct
-func (gc PlanGeneralCharacteristics) GetCreatedBy() string {
-	return gc.CreatedBy
 }
