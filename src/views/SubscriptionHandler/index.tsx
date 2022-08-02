@@ -36,6 +36,7 @@ type TaskListSectionMapType = {
   [key: string]: string;
 };
 
+// Map used to connect url route to Task List Section
 const taskListSectionMap: TaskListSectionMapType = {
   basics: TaskListSection.MODEL_BASICS,
   beneficiaries: TaskListSection.BENEFICIARIES,
@@ -46,18 +47,17 @@ const taskListSectionMap: TaskListSectionMapType = {
   payment: TaskListSection.PAYMENT
 };
 
-// Checks if current page is locked
+// Find lock and sets the LockStatus of the current task list section
 const findLockedSection = (
   locks: LockSectionType[],
   route: string,
   userEUA: string
 ): LockStatus => {
-  // Finds the lock index from the SubscriptionContext array
   const foundLockedSection = locks.find(
     (section: LockSectionType) => section.section === route
   );
 
-  // If the locked section is not found send mutation to lock
+  // If the locked section is not found, set to UNLOCKED, then send mutation to lock
   if (!foundLockedSection) {
     return LockStatus.UNLOCKED;
   }
@@ -77,18 +77,18 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
 
   const history = useHistory();
 
-  // Checks if param is valid modelPlan UUID
   const validModelID: boolean = isUUID(modelID);
 
   const [prevPath, setPrevPath] = useState<string>('');
+
+  // Component states for handling locking/unlocking loading mutation loading
+  // Is a more solid way to control loading without rerender interruptions
   const [locking, setLocking] = useState<boolean>(false);
 
-  // Init the variable for the state of the current section of the modelID
   let lockState: LockStatus;
 
   const taskListSection = taskListSectionMap[taskListRoute];
 
-  // Used to get current user euaID
   const { authState } = useOktaAuth();
 
   // Get the subscription context - messages (locks, unlocks), loading
