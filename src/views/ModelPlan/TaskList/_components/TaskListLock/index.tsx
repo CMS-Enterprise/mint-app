@@ -27,7 +27,7 @@ const TaskListLock = ({ collaborator }: TaskListLockProps) => {
       {collaborator && (
         <div className="display-inline-flex">
           <div
-            className={`display-flex flex-align-center flex-justify-center circle-4 margin-right-1 ${
+            className={`display-flex flex-align-center flex-justify-center circle-4 margin-right-1 flex-none ${
               arrayOfColors[randomColorIndex(0, 3)]
             }`}
           >

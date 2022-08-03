@@ -73,6 +73,10 @@ h5 {
   font-size: size('body', $theme-h5-font-size);
 }
 
+.flex-none {
+  flex: none !important;
+}
+
 .pointer {
   cursor: pointer !important;
 }

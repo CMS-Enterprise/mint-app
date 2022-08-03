@@ -273,6 +273,7 @@ const TaskList = () => {
             />
           </ErrorAlert>
         )}
+        {loading && <div className="height-viewport" />}
         {!loading && data && (
           <Grid row gap>
             <Grid desktop={{ col: 9 }}>
@@ -362,6 +363,13 @@ const TaskList = () => {
                             key={key}
                             testId={`task-list-intake-form-${key}`}
                             heading={t(`numberedList.${key}.heading`)}
+                            lastUpdated={
+                              taskListSections[key].modifiedDts &&
+                              formatDate(
+                                taskListSections[key].modifiedDts!,
+                                'MM/d/yyyy'
+                              )
+                            }
                             status={
                               key === 'basics'
                                 ? renderBasicsStatus()
@@ -376,7 +384,7 @@ const TaskList = () => {
                               </TaskListDescription>
 
                               {/* Basics needs to render the last updated data based on multiple modifiedDts values */}
-                              {key === 'basics' &&
+                              {/* {key === 'basics' &&
                                 renderBasicsStatus() !== TaskStatus.READY && (
                                   <TaskListLastUpdated>
                                     <p className="margin-y-0">
@@ -414,7 +422,7 @@ const TaskList = () => {
                                         )}
                                     </p>
                                   </TaskListLastUpdated>
-                                )}
+                                )} */}
                             </div>
                             <TaskListButton
                               path={t(`numberedList.${key}.path`)}
