@@ -11,22 +11,17 @@ import (
 // UpdatePlanGeneralCharacteristics implements resolver logic to update a plan general characteristics object
 func UpdatePlanGeneralCharacteristics(logger *zap.Logger, id uuid.UUID, changes map[string]interface{}, principal string, store *storage.Store) (*models.PlanGeneralCharacteristics, error) {
 	// Get existing plan general characteristics
-	existingGeneralCharacteristics, err := store.PlanGeneralCharacteristicsGetByID(logger, id)
+	existing, err := store.PlanGeneralCharacteristicsGetByID(logger, id)
 	if err != nil {
 		return nil, err
 	}
 
-	err = ApplyChanges(changes, existingGeneralCharacteristics)
-	if err != nil {
-		return nil, err
-	}
-	existingGeneralCharacteristics.ModifiedBy = &principal
-	err = existingGeneralCharacteristics.CalcStatus()
+	err = BaseTaskListSectionPreUpdate(existing, changes, principal)
 	if err != nil {
 		return nil, err
 	}
 
-	retGeneralCharacteristics, err := store.PlanGeneralCharacteristicsUpdate(logger, existingGeneralCharacteristics)
+	retGeneralCharacteristics, err := store.PlanGeneralCharacteristicsUpdate(logger, existing)
 	return retGeneralCharacteristics, err
 }
 

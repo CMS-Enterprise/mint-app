@@ -27,7 +27,7 @@ func (suite *ResolverSuite) TestModelPlanUpdate() {
 		"archived":  true,
 	}
 	updater := "UPDT"
-	result, err := ModelPlanUpdate(suite.testConfigs.Logger, plan.ID, changes, &updater, suite.testConfigs.Store) // update plan with new user "UPDT"
+	result, err := ModelPlanUpdate(suite.testConfigs.Logger, plan.ID, changes, updater, suite.testConfigs.Store) // update plan with new user "UPDT"
 
 	suite.NoError(err)
 	suite.EqualValues(plan.ID, result.ID)

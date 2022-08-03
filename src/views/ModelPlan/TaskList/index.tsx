@@ -109,8 +109,8 @@ const TaskList = () => {
    * May be changed/merged in the future to match other task list sections
    * */
   const renderBasicsStatus = (): TaskStatus => {
-    if (basics.status === TaskStatus.COMPLETE) {
-      return TaskStatus.COMPLETE;
+    if (basics.status === TaskStatus.READY_FOR_REVIEW) {
+      return TaskStatus.READY_FOR_REVIEW;
     }
     if (basics.modelCategory === null && basics.cmsCenters.length === 0) {
       return TaskStatus.READY;

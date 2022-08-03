@@ -117,7 +117,7 @@ func (r *mutationResolver) UpdateModelPlan(ctx context.Context, id uuid.UUID, ch
 	principal := appcontext.Principal(ctx).ID()
 	logger := appcontext.ZLogger(ctx)
 
-	return resolvers.ModelPlanUpdate(logger, id, changes, &principal, r.store)
+	return resolvers.ModelPlanUpdate(logger, id, changes, principal, r.store)
 }
 
 // CreatePlanCollaborator is the resolver for the createPlanCollaborator field.

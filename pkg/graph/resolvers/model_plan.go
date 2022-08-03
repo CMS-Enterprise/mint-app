@@ -15,7 +15,9 @@ func ModelPlanCreate(logger *zap.Logger, modelName string, store *storage.Store,
 	plan := &models.ModelPlan{
 		ModelName: modelName,
 		Status:    models.ModelStatusPlanDraft,
-		CreatedBy: principalInfo.EuaUserID,
+		BaseStruct: models.BaseStruct{
+			CreatedBy: principalInfo.EuaUserID,
+		},
 	}
 
 	// Create the model plan itself
@@ -30,22 +32,23 @@ func ModelPlanCreate(logger *zap.Logger, modelName string, store *storage.Store,
 		EUAUserID:   principalInfo.EuaUserID,
 		FullName:    principalInfo.CommonName,
 		TeamRole:    models.TeamRoleModelLead,
-		CreatedBy:   principalInfo.EuaUserID,
+		BaseStruct: models.BaseStruct{
+			CreatedBy: principalInfo.EuaUserID,
+		},
 	}
 	_, err = store.PlanCollaboratorCreate(logger, collab)
 	if err != nil {
 		return nil, err
 	}
 
+	baseTaskList := models.NewBaseTaskListSection(createdPlan.ID, principalInfo.EuaUserID) //make a taskList status, with status Ready
+	//TODO, should we make a BASE STRUCT FIRST? Then we can pass that to every sub struct
+
 	// Create a default plan basics object
 	basics := &models.PlanBasics{
-		ModelPlanID: createdPlan.ID,
-		CreatedBy:   principalInfo.EuaUserID,
+		BaseTaskListSection: baseTaskList,
 	}
-	err = basics.CalcStatus()
-	if err != nil {
-		return nil, err
-	}
+
 	_, err = store.PlanBasicsCreate(logger, basics)
 	if err != nil {
 		return nil, err
@@ -53,80 +56,50 @@ func ModelPlanCreate(logger *zap.Logger, modelName string, store *storage.Store,
 
 	// Create a default plan general characteristics object
 	generalCharacteristics := &models.PlanGeneralCharacteristics{
-		ModelPlanID: createdPlan.ID,
-		CreatedBy:   principalInfo.EuaUserID,
-		ModifiedBy:  &principalInfo.EuaUserID,
-	}
-	err = generalCharacteristics.CalcStatus()
-	if err != nil {
-		return nil, err
+		BaseTaskListSection: baseTaskList,
 	}
 	_, err = store.PlanGeneralCharacteristicsCreate(logger, generalCharacteristics)
 	if err != nil {
 		return nil, err
 	}
+	// Create a default Plan Beneficiares object
 	beneficiaries := &models.PlanBeneficiaries{
-		ModelPlanID: createdPlan.ID,
-		CreatedBy:   principalInfo.EuaUserID,
+		BaseTaskListSection: baseTaskList,
 	}
-	err = beneficiaries.CalcStatus()
-	if err != nil {
-		return nil, err
-	}
-
 	_, err = store.PlanBeneficiariesCreate(logger, beneficiaries)
 	if err != nil {
 		return nil, err
 	}
+	//Create a default Plan Participants and Providers object
 	participantsAndProviders := &models.PlanParticipantsAndProviders{
-		ModelPlanID: createdPlan.ID,
-		CreatedBy:   principalInfo.EuaUserID,
-		ModifiedBy:  &principalInfo.EuaUserID,
-	}
-	err = participantsAndProviders.CalcStatus()
-	if err != nil {
-		return nil, err
+		BaseTaskListSection: baseTaskList,
 	}
 	_, err = store.PlanParticipantsAndProvidersCreate(logger, participantsAndProviders)
 	if err != nil {
 		return nil, err
 	}
 
+	//Create default Plan OpsEvalAndLearning object
 	opsEvalAndLearning := &models.PlanOpsEvalAndLearning{
-		ModelPlanID: createdPlan.ID,
-		CreatedBy:   principalInfo.EuaUserID,
-		ModifiedBy:  &principalInfo.EuaUserID,
-	}
-	err = opsEvalAndLearning.CalcStatus()
-	if err != nil {
-		return nil, err
+		BaseTaskListSection: baseTaskList,
 	}
 	_, err = store.PlanOpsEvalAndLearningCreate(logger, opsEvalAndLearning)
 	if err != nil {
 		return nil, err
 	}
 
+	//Create default PlanPayments object
 	planPayments := &models.PlanPayments{
-		ModelPlanID: createdPlan.ID,
-		CreatedBy:   principalInfo.EuaUserID,
-	}
-	err = planPayments.CalcStatus()
-	if err != nil {
-		return nil, err
+		BaseTaskListSection: baseTaskList,
 	}
 	_, err = store.PlanPaymentsCreate(logger, planPayments)
 	if err != nil {
 		return nil, err
 	}
 
+	//Create default PlanITTools object
 	itTools := &models.PlanITTools{
-		ModelPlanID: createdPlan.ID,
-		CreatedBy:   principalInfo.EuaUserID,
-		ModifiedBy:  &principalInfo.EuaUserID,
-	}
-	err = itTools.CalcStatus()
-	if err != nil {
-		return nil, err
+		BaseTaskListSection: baseTaskList,
 	}
 	_, err = store.PlanITToolsCreate(logger, itTools)
 	if err != nil {
@@ -137,19 +110,17 @@ func ModelPlanCreate(logger *zap.Logger, modelName string, store *storage.Store,
 }
 
 // ModelPlanUpdate implements resolver logic to update a model plan
-func ModelPlanUpdate(logger *zap.Logger, id uuid.UUID, changes map[string]interface{}, principal *string, store *storage.Store) (*models.ModelPlan, error) {
+func ModelPlanUpdate(logger *zap.Logger, id uuid.UUID, changes map[string]interface{}, principal string, store *storage.Store) (*models.ModelPlan, error) {
 	// Get existing plan
 	existingPlan, err := store.ModelPlanGetByID(logger, id)
 	if err != nil {
 		return nil, err
 	}
 
-	err = ApplyChanges(changes, existingPlan)
+	err = BaseStructPreUpdate(existingPlan, changes, principal)
 	if err != nil {
 		return nil, err
 	}
-
-	existingPlan.ModifiedBy = principal
 
 	retPlan, err := store.ModelPlanUpdate(logger, existingPlan)
 	if err != nil {

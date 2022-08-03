@@ -277,6 +277,7 @@ exports[`Model Plan Coordination matches snapshot 1`] = `
     >
       <input
         class="usa-checkbox__input"
+        data-testid="participants-and-providers-participant-id-CCNS"
         id="participants-and-providers-participant-id-CCNS"
         name="participantsIds"
         type="checkbox"
@@ -294,6 +295,7 @@ exports[`Model Plan Coordination matches snapshot 1`] = `
     >
       <input
         class="usa-checkbox__input"
+        data-testid="participants-and-providers-participant-id-NPIS"
         id="participants-and-providers-participant-id-NPIS"
         name="participantsIds"
         type="checkbox"
@@ -311,6 +313,7 @@ exports[`Model Plan Coordination matches snapshot 1`] = `
     >
       <input
         class="usa-checkbox__input"
+        data-testid="participants-and-providers-participant-id-TINS"
         id="participants-and-providers-participant-id-TINS"
         name="participantsIds"
         type="checkbox"
@@ -328,6 +331,7 @@ exports[`Model Plan Coordination matches snapshot 1`] = `
     >
       <input
         class="usa-checkbox__input"
+        data-testid="participants-and-providers-participant-id-OTHER"
         id="participants-and-providers-participant-id-OTHER"
         name="participantsIds"
         type="checkbox"
@@ -364,6 +368,7 @@ exports[`Model Plan Coordination matches snapshot 1`] = `
     >
       <input
         class="usa-checkbox__input"
+        data-testid="participants-and-providers-participant-id-NO_IDENTIFIERS"
         id="participants-and-providers-participant-id-NO_IDENTIFIERS"
         name="participantsIds"
         type="checkbox"

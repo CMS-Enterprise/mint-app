@@ -10,7 +10,7 @@ import (
 // being calculated for the overall status of the struct.
 const tagName = "statusWeight"
 
-// GenericallyCalculateStatus calculates the overall status of a struct based on the `statusWeight` tags.
+// GenericallyCalculateStatus (Deprecated:) calculates the overall status of a struct based on the `statusWeight` tags.
 // The function has the following restrictions, and will throw an error if any of the conditions are not met:
 // - The only parameter to this function must be a struct. If it is not, an error will be returned.
 // - If the struct has `statusWeight` tags, they MUST be placed on pointer types only
@@ -75,7 +75,9 @@ func GenericallyCalculateStatus(obj interface{}) (TaskStatus, error) {
 	status := TaskReady
 
 	if currentWeight == totalWeight {
-		status = TaskComplete
+		//TODO, if this is meant to still be used, it should be changed to return percentage, or numerator / denominator.
+		// We no longer mark a status as complete, that status no longer exists
+		status = TaskInProgress
 	} else if currentWeight > 0 {
 		status = TaskInProgress
 	}

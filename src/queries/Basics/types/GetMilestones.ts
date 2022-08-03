@@ -3,6 +3,8 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
+import { TaskStatus } from "./../../../types/graphql-global-types";
+
 // ====================================================
 // GraphQL query operation: GetMilestones
 // ====================================================
@@ -22,6 +24,9 @@ export interface GetMilestones_modelPlan_basics {
   wrapUpEnds: Time | null;
   phasedIn: boolean | null;
   phasedInNote: string | null;
+  readyForReviewBy: string | null;
+  readyForReviewDts: Time | null;
+  status: TaskStatus;
 }
 
 export interface GetMilestones_modelPlan {
