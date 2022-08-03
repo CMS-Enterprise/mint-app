@@ -870,6 +870,7 @@ export interface PlanITToolsChanges {
   pRecoverPayments?: PRecoverPaymentsType[] | null;
   pRecoverPaymentsOther?: string | null;
   pRecoverPaymentsNote?: string | null;
+  status?: TaskStatusInput | null;
 }
 
 /**
