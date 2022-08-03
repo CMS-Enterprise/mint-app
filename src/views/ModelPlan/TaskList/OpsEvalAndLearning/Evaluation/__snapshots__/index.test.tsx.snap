@@ -103,7 +103,6 @@ exports[`Model Plan Ops Eval and Learning matches snapshot 1`] = `
     >
       <input
         class="usa-checkbox__input"
-        data-testid="ops-eval-and-learning-evaluation-approach-COMPARISON_MATCH"
         id="ops-eval-and-learning-evaluation-approach-COMPARISON_MATCH"
         name="evaluationApproaches"
         type="checkbox"
@@ -124,7 +123,6 @@ exports[`Model Plan Ops Eval and Learning matches snapshot 1`] = `
     >
       <input
         class="usa-checkbox__input"
-        data-testid="ops-eval-and-learning-evaluation-approach-CONTROL_INTERVENTION"
         id="ops-eval-and-learning-evaluation-approach-CONTROL_INTERVENTION"
         name="evaluationApproaches"
         type="checkbox"
@@ -145,7 +143,6 @@ exports[`Model Plan Ops Eval and Learning matches snapshot 1`] = `
     >
       <input
         class="usa-checkbox__input"
-        data-testid="ops-eval-and-learning-evaluation-approach-INTERRUPTED_TIME"
         id="ops-eval-and-learning-evaluation-approach-INTERRUPTED_TIME"
         name="evaluationApproaches"
         type="checkbox"
@@ -166,7 +163,6 @@ exports[`Model Plan Ops Eval and Learning matches snapshot 1`] = `
     >
       <input
         class="usa-checkbox__input"
-        data-testid="ops-eval-and-learning-evaluation-approach-NON_MEDICARE_DATA"
         id="ops-eval-and-learning-evaluation-approach-NON_MEDICARE_DATA"
         name="evaluationApproaches"
         type="checkbox"
@@ -187,7 +183,6 @@ exports[`Model Plan Ops Eval and Learning matches snapshot 1`] = `
     >
       <input
         class="usa-checkbox__input"
-        data-testid="ops-eval-and-learning-evaluation-approach-OTHER"
         id="ops-eval-and-learning-evaluation-approach-OTHER"
         name="evaluationApproaches"
         type="checkbox"
@@ -242,7 +237,6 @@ exports[`Model Plan Ops Eval and Learning matches snapshot 1`] = `
     >
       <input
         class="usa-checkbox__input"
-        data-testid="ops-eval-and-learning-cmmi-involvement-YES_EVALUATION"
         id="ops-eval-and-learning-cmmi-involvement-YES_EVALUATION"
         name="ccmInvolvment"
         type="checkbox"
@@ -263,7 +257,6 @@ exports[`Model Plan Ops Eval and Learning matches snapshot 1`] = `
     >
       <input
         class="usa-checkbox__input"
-        data-testid="ops-eval-and-learning-cmmi-involvement-YES__IMPLEMENTATION"
         id="ops-eval-and-learning-cmmi-involvement-YES__IMPLEMENTATION"
         name="ccmInvolvment"
         type="checkbox"
@@ -284,7 +277,6 @@ exports[`Model Plan Ops Eval and Learning matches snapshot 1`] = `
     >
       <input
         class="usa-checkbox__input"
-        data-testid="ops-eval-and-learning-cmmi-involvement-OTHER"
         id="ops-eval-and-learning-cmmi-involvement-OTHER"
         name="ccmInvolvment"
         type="checkbox"
@@ -305,7 +297,6 @@ exports[`Model Plan Ops Eval and Learning matches snapshot 1`] = `
     >
       <input
         class="usa-checkbox__input"
-        data-testid="ops-eval-and-learning-cmmi-involvement-NO"
         id="ops-eval-and-learning-cmmi-involvement-NO"
         name="ccmInvolvment"
         type="checkbox"

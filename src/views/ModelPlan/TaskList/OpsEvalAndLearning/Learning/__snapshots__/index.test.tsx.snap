@@ -103,7 +103,6 @@ exports[`Model Plan Ops Eval and Learning - Learning matches snapshot 1`] = `
     >
       <input
         class="usa-checkbox__input"
-        data-testid="ops-eval-and-learning-learning-systems-EDUCATE_BENEFICIARIES"
         id="ops-eval-and-learning-learning-systems-EDUCATE_BENEFICIARIES"
         name="modelLearningSystems"
         type="checkbox"
@@ -124,7 +123,6 @@ exports[`Model Plan Ops Eval and Learning - Learning matches snapshot 1`] = `
     >
       <input
         class="usa-checkbox__input"
-        data-testid="ops-eval-and-learning-learning-systems-IT_PLATFORM_CONNECT"
         id="ops-eval-and-learning-learning-systems-IT_PLATFORM_CONNECT"
         name="modelLearningSystems"
         type="checkbox"
@@ -145,7 +143,6 @@ exports[`Model Plan Ops Eval and Learning - Learning matches snapshot 1`] = `
     >
       <input
         class="usa-checkbox__input"
-        data-testid="ops-eval-and-learning-learning-systems-LEARNING_CONTRACTOR"
         id="ops-eval-and-learning-learning-systems-LEARNING_CONTRACTOR"
         name="modelLearningSystems"
         type="checkbox"
@@ -166,7 +163,6 @@ exports[`Model Plan Ops Eval and Learning - Learning matches snapshot 1`] = `
     >
       <input
         class="usa-checkbox__input"
-        data-testid="ops-eval-and-learning-learning-systems-PARTICIPANT_COLLABORATION"
         id="ops-eval-and-learning-learning-systems-PARTICIPANT_COLLABORATION"
         name="modelLearningSystems"
         type="checkbox"
@@ -187,7 +183,6 @@ exports[`Model Plan Ops Eval and Learning - Learning matches snapshot 1`] = `
     >
       <input
         class="usa-checkbox__input"
-        data-testid="ops-eval-and-learning-learning-systems-OTHER"
         id="ops-eval-and-learning-learning-systems-OTHER"
         name="modelLearningSystems"
         type="checkbox"
@@ -208,7 +203,6 @@ exports[`Model Plan Ops Eval and Learning - Learning matches snapshot 1`] = `
     >
       <input
         class="usa-checkbox__input"
-        data-testid="ops-eval-and-learning-learning-systems-NO_LEARNING_SYSTEM"
         id="ops-eval-and-learning-learning-systems-NO_LEARNING_SYSTEM"
         name="modelLearningSystems"
         type="checkbox"
@@ -316,6 +310,9 @@ exports[`Model Plan Ops Eval and Learning - Learning matches snapshot 1`] = `
               >
                 This section of the Model Plan (Operations, evaluation, and learning) is ready for review.
               </label>
+              <p
+                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+              />
             </div>
           </div>
         </div>

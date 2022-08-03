@@ -39,7 +39,7 @@ const ReadyForReview = ({
         <Field
           as={CheckboxField}
           id={id}
-          data-testid={id}
+          testid={id}
           name={field}
           label={t('modelPlanCopy', {
             sectionName: `${sectionName}`
