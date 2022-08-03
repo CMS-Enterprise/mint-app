@@ -14,7 +14,7 @@ export type NavigationProps = {
 
 export const navLinks = () => [
   {
-    link: '/models',
+    link: '/',
     label: 'home'
   },
   // {
