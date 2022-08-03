@@ -2,14 +2,11 @@ package models
 
 import (
 	"time"
-
-	"github.com/google/uuid"
 )
 
 // PlanMilestones represents the "plan milestones" section of a plan
 type PlanMilestones struct {
-	ID          uuid.UUID `json:"id" db:"id"`
-	ModelPlanID uuid.UUID `json:"modelPlanID" db:"model_plan_id"`
+	BaseTaskListSection
 
 	CompleteICIP    *time.Time `json:"completeICIP" db:"complete_icip" statusWeight:"1"`
 	ClearanceStarts *time.Time `json:"clearanceStarts" db:"clearance_starts" statusWeight:"1"`
@@ -27,47 +24,4 @@ type PlanMilestones struct {
 
 	PhasedIn     *bool   `json:"phasedIn" db:"phased_in" statusWeight:"1"` //default to false
 	PhasedInNote *string `json:"phasedInNote" db:"phased_in_note"`
-
-	CreatedBy   string     `json:"createdBy" db:"created_by"`
-	CreatedDts  time.Time  `json:"createdDts" db:"created_dts"`
-	ModifiedBy  *string    `json:"modifiedBy" db:"modified_by"`
-	ModifiedDts *time.Time `json:"modifiedDts" db:"modified_dts"`
-
-	Status TaskStatus `json:"status" db:"status"`
-}
-
-// CalcStatus calculates the status of the Plan Milestones and sets the Status field
-func (pm *PlanMilestones) CalcStatus() error {
-	status, err := GenericallyCalculateStatus(*pm)
-	if err != nil {
-		return err
-	}
-
-	pm.Status = status
-	return nil
-}
-
-// GetModelTypeName returns a string name that represents the PlanMilestones struct
-func (pm PlanMilestones) GetModelTypeName() string {
-	return "Plan_Milestones"
-}
-
-// GetID returns the GetID property for a PlanMilestones struct
-func (pm PlanMilestones) GetID() uuid.UUID {
-	return pm.ID
-}
-
-// GetPlanID returns the ModelPlanID property for a PlanMilestones struct
-func (pm PlanMilestones) GetPlanID() uuid.UUID {
-	return pm.ModelPlanID
-}
-
-// GetModifiedBy returns the ModifiedBy property for a PlanMilestones struct
-func (pm PlanMilestones) GetModifiedBy() *string {
-	return pm.ModifiedBy
-}
-
-// GetCreatedBy returns the CreatedBy property for a PlanMilestones struct
-func (pm PlanMilestones) GetCreatedBy() string {
-	return pm.CreatedBy
 }

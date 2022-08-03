@@ -97,6 +97,8 @@ INSERT INTO plan_ops_eval_and_learning(
     anticipated_challenges,
     created_by,
     modified_by,
+    ready_for_review_by,
+    ready_for_review_dts,
     status
 )
 VALUES (
@@ -198,6 +200,8 @@ VALUES (
     :anticipated_challenges,
     :created_by,
     :modified_by,
+    :ready_for_review_by,
+    :ready_for_review_dts,
     :status
 ) RETURNING
 id,
@@ -299,4 +303,6 @@ created_by,
 created_dts,
 modified_by,
 modified_dts,
+ready_for_review_by,
+ready_for_review_dts,
 status;

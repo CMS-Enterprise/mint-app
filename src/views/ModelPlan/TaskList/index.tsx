@@ -31,6 +31,7 @@ import {
   GetModelPlan_modelPlan_basics as BasicsType,
   GetModelPlan_modelPlan_beneficiaries as BeneficiariesType,
   GetModelPlan_modelPlan_generalCharacteristics as GeneralCharacteristicsType,
+  GetModelPlan_modelPlan_itTools as ITToolsType,
   GetModelPlan_modelPlan_opsEvalAndLearning as OpsEvalAndLearningType,
   GetModelPlan_modelPlan_participantsAndProviders as ParticipantsAndProvidersType,
   GetModelPlan_modelPlan_payments as PaymentsType,
@@ -64,7 +65,8 @@ type TaskListSectionsType = {
     | GeneralCharacteristicsType
     | OpsEvalAndLearningType
     | ParticipantsAndProvidersType
-    | PaymentsType;
+    | PaymentsType
+    | ITToolsType;
 };
 
 type TaskListSectionMapType = {
@@ -115,8 +117,8 @@ const TaskList = () => {
     participantsAndProviders,
     opsEvalAndLearning,
     beneficiaries,
-    payments
-    // itTools
+    payments,
+    itTools
   } = modelPlan;
 
   const { data: collaboratorData } = useQuery<GetModelCollaborators>(
@@ -137,8 +139,8 @@ const TaskList = () => {
     participantsAndProviders,
     beneficiaries,
     opsEvalAndLearning,
-    payments
-    // itTools
+    payments,
+    itTools
   };
 
   const { unansweredQuestions, answeredQuestions } = getUnansweredQuestions(
@@ -159,10 +161,11 @@ const TaskList = () => {
    * */
   const renderBasicsStatus = (): TaskStatus => {
     if (
-      basics.status === TaskStatus.COMPLETE &&
-      milestones.status === TaskStatus.COMPLETE
+      // * TEMPORARY SOLUTION to render "READY FOR REVIEW" on Task List page, until better solution from BE
+      // basics.status === TaskStatus.READY_FOR_REVIEW &&
+      milestones.status === TaskStatus.READY_FOR_REVIEW
     ) {
-      return TaskStatus.COMPLETE;
+      return TaskStatus.READY_FOR_REVIEW;
     }
     if (modelCategory === null && cmsCenters.length === 0) {
       return TaskStatus.READY;

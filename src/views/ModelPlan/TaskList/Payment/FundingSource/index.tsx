@@ -25,6 +25,7 @@ import CheckboxField from 'components/shared/CheckboxField';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
+import useScrollElement from 'hooks/useScrollElement';
 import GetFunding from 'queries/Payments/GetFunding';
 import {
   GetFunding as GetFundingType,
@@ -67,6 +68,9 @@ const FundingSource = () => {
       id: modelID
     }
   });
+
+  // If redirected from IT Tools, scrolls to the relevant question
+  useScrollElement(!loading);
 
   const {
     id,

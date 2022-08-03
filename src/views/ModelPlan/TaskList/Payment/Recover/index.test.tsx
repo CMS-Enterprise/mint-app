@@ -5,7 +5,11 @@ import { render, screen, waitFor } from '@testing-library/react';
 
 import GetRecover from 'queries/Payments/GetRecover';
 import { GetRecover_modelPlan_payments as GetRecoverType } from 'queries/Payments/types/GetRecover';
-import { ClaimsBasedPayType, PayType } from 'types/graphql-global-types';
+import {
+  ClaimsBasedPayType,
+  PayType,
+  TaskStatus
+} from 'types/graphql-global-types';
 
 import Recover from './index';
 
@@ -19,7 +23,10 @@ const mockData: GetRecoverType = {
   anticipateReconcilingPaymentsRetrospectively: true,
   anticipateReconcilingPaymentsRetrospectivelyNote: 'string',
   paymentStartDate: null,
-  paymentStartDateNote: 'string'
+  paymentStartDateNote: 'string',
+  readyForReviewBy: 'ASDF',
+  readyForReviewDts: '2022-05-12T15:01:39.190679Z',
+  status: TaskStatus.IN_PROGRESS
 };
 
 const paymentsMock = [

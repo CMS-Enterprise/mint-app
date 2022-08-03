@@ -1,16 +1,12 @@
 package models
 
 import (
-	"time"
-
-	"github.com/google/uuid"
 	"github.com/lib/pq"
 )
 
 //PlanParticipantsAndProviders represents the tasks list section that handles information around participants and providers
 type PlanParticipantsAndProviders struct {
-	ID          uuid.UUID `json:"id" db:"id"`
-	ModelPlanID uuid.UUID `json:"modelPlanID" db:"model_plan_id"`
+	BaseTaskListSection
 
 	//page 1
 	Participants                      pq.StringArray `json:"participants" db:"participants"`
@@ -67,13 +63,6 @@ type PlanParticipantsAndProviders struct {
 	ProviderOverlap                *OverlapType   `json:"providerOverlap" db:"provider_overlap" statusWeight:"1"`
 	ProviderOverlapHierarchy       *string        `json:"providerOverlapHierarchy" db:"provider_overlap_hierarchy"`
 	ProviderOverlapNote            *string        `json:"providerOverlapNote" db:"provider_overlap_note"`
-
-	// Meta
-	CreatedBy   string     `json:"createdBy" db:"created_by"`
-	CreatedDts  time.Time  `json:"createdDts" db:"created_dts"`
-	ModifiedBy  *string    `json:"modifiedBy" db:"modified_by"`
-	ModifiedDts *time.Time `json:"modifiedDts" db:"modified_dts"`
-	Status      TaskStatus `json:"status" db:"status"`
 }
 
 //RecruitmentType represents the possible RecruitmentType options
@@ -98,40 +87,3 @@ const (
 	RiskCAPITATION ParticipantRiskType = "CAPITATION"
 	RiskOTHER      ParticipantRiskType = "OTHER"
 )
-
-// CalcStatus returns a TaskStatus based on how many fields have been entered in the PlanParticipantsAndProviders struct
-func (pp *PlanParticipantsAndProviders) CalcStatus() error {
-
-	status, err := GenericallyCalculateStatus(*pp)
-	if err != nil {
-		return err
-	}
-
-	pp.Status = status
-	return nil
-}
-
-// GetModelTypeName returns the name of the model
-func (pp PlanParticipantsAndProviders) GetModelTypeName() string {
-	return "Plan_Participants_And_Providers"
-}
-
-// GetID returns the ID property for a PlanParticipantsAndProviders struct
-func (pp PlanParticipantsAndProviders) GetID() uuid.UUID {
-	return pp.ID
-}
-
-// GetPlanID returns the ModelPlanID property for a PlanParticipantsAndProviders struct
-func (pp PlanParticipantsAndProviders) GetPlanID() uuid.UUID {
-	return pp.ModelPlanID
-}
-
-// GetModifiedBy returns the ModifiedBy property for a PlanParticipantsAndProviders struct
-func (pp PlanParticipantsAndProviders) GetModifiedBy() *string {
-	return pp.ModifiedBy
-}
-
-// GetCreatedBy returns the ModifiedBy property for a PlanParticipantsAndProviders struct
-func (pp PlanParticipantsAndProviders) GetCreatedBy() string {
-	return pp.CreatedBy
-}

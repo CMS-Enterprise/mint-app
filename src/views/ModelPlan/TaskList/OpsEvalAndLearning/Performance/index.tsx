@@ -22,6 +22,7 @@ import AutoSave from 'components/shared/AutoSave';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
+import useScrollElement from 'hooks/useScrollElement';
 import GetPerformance from 'queries/OpsEvalAndLearning/GetPerformance';
 import {
   GetPerformance as GetPerformanceType,
@@ -78,6 +79,9 @@ const Performance = () => {
   } = data?.modelPlan?.opsEvalAndLearning || ({} as PerformanceFormType);
 
   const modelName = data?.modelPlan?.modelName || '';
+
+  // If redirected from IT Tools, scrolls to the relevant question
+  useScrollElement(!loading);
 
   const [update] = useMutation<UpdatePlanOpsEvalAndLearningVariables>(
     UpdatePlanOpsEvalAndLearning

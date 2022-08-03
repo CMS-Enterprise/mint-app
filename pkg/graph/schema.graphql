@@ -214,6 +214,8 @@ type PlanBasics {
   createdDts: Time!
   modifiedBy: String
   modifiedDts: Time
+  readyForReviewBy: String
+  readyForReviewDts: Time
   status: TaskStatus!
 }
 
@@ -228,6 +230,7 @@ input PlanBasicsChanges @goModel(model: "map[string]interface{}") {
   goal: String
   testInterventions: String
   note: String
+  status: TaskStatusInput 
 }
 
 """
@@ -267,6 +270,8 @@ type PlanMilestones {
   createdDts: Time!
   modifiedBy: String
   modifiedDts: Time
+  readyForReviewBy: String
+  readyForReviewDts: Time
   status: TaskStatus!
 }
 
@@ -292,6 +297,7 @@ input PlanMilestoneChanges @goModel(model: "map[string]interface{}") {
 
   phasedIn: Boolean
   phasedInNote: String
+  status: TaskStatusInput
 }
 
 """
@@ -434,6 +440,8 @@ type PlanGeneralCharacteristics {
   createdDts: Time!
   modifiedBy: String
   modifiedDts: Time
+  readyForReviewBy: String
+  readyForReviewDts: Time
   status: TaskStatus!
 }
 
@@ -504,6 +512,8 @@ input PlanGeneralCharacteristicsChanges @goModel(model: "map[string]interface{}"
   waiversRequired: Boolean
   waiversRequiredTypes: [WaiverType!]
   waiversRequiredNote: String
+
+  status: TaskStatusInput
 }
 
 """
@@ -542,6 +552,8 @@ type PlanBeneficiaries {
   createdDts: Time!
   modifiedBy: String
   modifiedDts: Time
+  readyForReviewBy: String
+  readyForReviewDts: Time
   status: TaskStatus!
 }
 
@@ -571,6 +583,7 @@ input PlanBeneficiariesChanges @goModel(model: "map[string]interface{}") {
   beneficiaryOverlapNote: String
   precedenceRules: String
 
+  status: TaskStatusInput
 }
 
 """
@@ -641,6 +654,8 @@ type PlanParticipantsAndProviders {
   createdDts: Time!
   modifiedBy: String
   modifiedDts: Time
+  readyForReviewBy: String
+  readyForReviewDts: Time
   status: TaskStatus!
 
 }
@@ -708,6 +723,7 @@ input PlanParticipantsAndProvidersChanges @goModel(model: "map[string]interface{
   providerOverlapHierarchy:       String
   providerOverlapNote:            String
 
+  status: TaskStatusInput
 }
 
 """
@@ -795,6 +811,8 @@ type PlanPayments {
   createdDts:  Time!
   modifiedBy:  String
   modifiedDts: Time
+  readyForReviewBy: String
+  readyForReviewDts: Time
   status:      TaskStatus!
 }
 
@@ -871,6 +889,8 @@ input PlanPaymentsChanges @goModel(model: "map[string]interface{}") {
   anticipateReconcilingPaymentsRetrospectivelyNote: String
   paymentStartDate:                                  Time
   paymentStartDateNote:                             String
+
+  status: TaskStatusInput
 }
 
 """"
@@ -976,6 +996,8 @@ type PlanITTools {
   createdDts: Time!
   modifiedBy: String
   modifiedDts: Time
+  readyForReviewBy: String
+  readyForReviewDts: Time
   status: TaskStatus!
 }
 
@@ -1073,6 +1095,8 @@ input PlanITToolsChanges @goModel(model: "map[string]interface{}") {
   pRecoverPayments: [PRecoverPaymentsType!]
   pRecoverPaymentsOther: String
   pRecoverPaymentsNote: String
+  
+  status: TaskStatusInput
 
 }
 """
@@ -1191,6 +1215,8 @@ type PlanOpsEvalAndLearning {
     createdDts: Time!
     modifiedBy: String
     modifiedDts: Time
+    readyForReviewBy: String
+    readyForReviewDts: Time
     status: TaskStatus!
 }
 
@@ -1304,6 +1330,8 @@ input PlanOpsEvalAndLearningChanges @goModel(model: "map[string]interface{}") {
     modelLearningSystemsOther: String
     modelLearningSystemsNote: String
     anticipatedChallenges: String
+
+    status: TaskStatusInput
 }
 """
 Query definition for the schema
@@ -1419,7 +1447,11 @@ enum ChangeType {
 enum TaskStatus {
   READY
   IN_PROGRESS
-  COMPLETE
+  READY_FOR_REVIEW
+}
+enum TaskStatusInput {
+  IN_PROGRESS
+  READY_FOR_REVIEW
 }
 
 enum TaskListSection {

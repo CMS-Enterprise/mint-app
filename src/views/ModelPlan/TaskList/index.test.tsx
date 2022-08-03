@@ -62,6 +62,7 @@ describe('The Model Plan Task List', () => {
     generalCharacteristics: [] as any,
     participantsAndProviders: [] as any,
     beneficiaries: [] as any,
+    itTools: [] as any,
     payments: [] as any,
     documents: [
       {
@@ -177,7 +178,10 @@ describe('The Model Plan Task List', () => {
       );
 
       await waitFor(() => {
-        expect(screen.getByText('Ready to start')).toHaveClass(
+        // expect(screen.getByText('Ready to start')).toHaveClass(
+        //   'bg-accent-cool'
+        // );
+        expect(screen.getAllByTestId('tasklist-tag')[0]).toHaveClass(
           'bg-accent-cool'
         );
       });
