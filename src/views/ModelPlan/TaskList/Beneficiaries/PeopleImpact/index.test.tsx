@@ -92,6 +92,10 @@ describe('Model Plan Beneficiaries', () => {
       </MemoryRouter>
     );
 
+    await waitFor(() => {
+      expect(screen.getByTestId('expected-people-impacted')).toHaveValue(100);
+    });
+
     expect(asFragment()).toMatchSnapshot();
   });
 });

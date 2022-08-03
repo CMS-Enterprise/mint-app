@@ -28,6 +28,7 @@ import DatePickerWarning from 'components/shared/DatePickerWarning';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
+import useScrollElement from 'hooks/useScrollElement';
 import GetRecover from 'queries/Payments/GetRecover';
 import {
   GetRecover as GetRecoverType,
@@ -66,6 +67,9 @@ const Recover = () => {
       id: modelID
     }
   });
+
+  // If redirected from IT Tools, scrolls to the relevant question
+  useScrollElement(!loading);
 
   const {
     id,

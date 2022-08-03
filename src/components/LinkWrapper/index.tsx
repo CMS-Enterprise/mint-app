@@ -3,10 +3,20 @@ import { Link as RouterLink } from 'react-router-dom';
 import { Link as UswdsLink } from '@trussworks/react-uswds';
 import classnames from 'classnames';
 
+interface ToStateProps {
+  [key: string]: string | number | null;
+}
+
+export interface LocationProps {
+  pathname: string;
+  state: ToStateProps;
+  scrollElement?: string;
+}
+
 type UswdsReactLinkProps = {
   variant?: 'external' | 'unstyled' | 'nav';
   className?: string;
-  to: string;
+  to: string | LocationProps;
   target?: '_blank';
   rel?: 'noopener noreferrer';
   'data-testid'?: string;

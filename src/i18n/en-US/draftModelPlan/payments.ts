@@ -162,7 +162,6 @@ const payments = {
   },
   desiredHierarchy:
     'If model participants may be included in additional models that may interact, please note the desired hierarchy of how any payment changes or edits should be applied.',
-  reoverPayments: 'Will you recover the payments?',
   reconilingPayments: 'Do you anticipate reconciling payments retrospectively?',
   paymentsStart: 'When will payments start? (Enter approximate)',
   paymentStartInfo:

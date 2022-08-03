@@ -83,6 +83,10 @@ describe('Model Plan Beneficiaries', () => {
       </MemoryRouter>
     );
 
+    await waitFor(() => {
+      expect(screen.getByTestId('beneficiaries-other')).toHaveValue('other');
+    });
+
     expect(asFragment()).toMatchSnapshot();
   });
 });
