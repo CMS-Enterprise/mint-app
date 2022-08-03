@@ -17,13 +17,17 @@ const basicMockData: GetModelPlanInfoType = {
   __typename: 'ModelPlan',
   id: 'f11eb129-2c80-4080-9440-439cbe1a286f',
   modelName: 'My excellent plan that I just initiated',
-  modelCategory: ModelCategory.PRIMARY_CARE_TRANSFORMATION,
-  cmmiGroups: [
-    CMMIGroup.STATE_INNOVATIONS_GROUP,
-    CMMIGroup.POLICY_AND_PROGRAMS_GROUP
-  ],
-  cmsCenters: [CMSCenter.CENTER_FOR_MEDICARE, CMSCenter.OTHER],
-  cmsOther: 'The Center for Awesomeness '
+  basics: {
+    id: 'asdf',
+    __typename: 'PlanBasics',
+    modelCategory: ModelCategory.PRIMARY_CARE_TRANSFORMATION,
+    cmmiGroups: [
+      CMMIGroup.STATE_INNOVATIONS_GROUP,
+      CMMIGroup.POLICY_AND_PROGRAMS_GROUP
+    ],
+    cmsCenters: [CMSCenter.CENTER_FOR_MEDICARE, CMSCenter.OTHER],
+    cmsOther: 'The Center for Awesomeness '
+  }
 };
 
 const mocks = [
