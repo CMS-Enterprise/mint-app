@@ -6,7 +6,7 @@
  */
 
 import React, { useContext, useEffect, useState } from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
+import { Redirect, useHistory, useLocation } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { useOktaAuth } from '@okta/okta-react';
 
@@ -122,20 +122,25 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
     lockState = LockStatus.CANT_LOCK;
   }
 
-  if (lockState === LockStatus.LOCKED) {
-    history.push({
-      pathname: `/models/${modelID}/locked-task-list-section`,
-      // Passing the route for breadcrumbs on locked section page
-      state: { route: taskListRoute }
-    });
-  }
-
   // Checks the location before unmounting to see if lock should be unlocked
   useEffect(() => {
     return () => {
       setPrevPath(pathname);
     };
   }, [pathname]);
+
+  if (lockState === LockStatus.LOCKED) {
+    return (
+      <Redirect
+        push
+        to={{
+          pathname: `/models/${modelID}/locked-task-list-section`,
+          // Passing the route for breadcrumbs on locked section page
+          state: { route: taskListRoute }
+        }}
+      />
+    );
+  }
 
   // Checks to see if section should be unlocked and calls mutation
   if (
