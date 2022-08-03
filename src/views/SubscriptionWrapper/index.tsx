@@ -138,6 +138,9 @@ const SubscriptionWrapper = ({ children }: SubscriptionWrapperProps) => {
         }
       });
     }
+    return () => {
+      getTaskListLocks();
+    };
   }, [modelID, validModelID, data, getTaskListLocks, subscribeToMore]);
 
   return (
