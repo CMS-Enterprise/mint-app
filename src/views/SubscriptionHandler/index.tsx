@@ -80,6 +80,8 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
   const validModelID: boolean = isUUID(modelID);
 
   const [prevPath, setPrevPath] = useState<string>('');
+  // Used in addtion to mutation loading states to catch delayed updates to the context
+  const [locking, setLocking] = useState<boolean>(false);
 
   let lockState: LockStatus;
 
@@ -113,6 +115,7 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
     authState?.euaId &&
     !addLockLoading &&
     !removeLockLoading &&
+    !locking &&
     !loading
   ) {
     lockState = findLockedSection(
@@ -171,6 +174,7 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
     taskListSectionLocks?.length > 0 &&
     !addLockLoading &&
     !removeLockLoading &&
+    !locking &&
     !loading
   ) {
     const lockedSection = taskListSectionLocks.find(
@@ -186,6 +190,7 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
     taskListSection &&
     !addLockLoading &&
     !removeLockLoading &&
+    !locking &&
     !loading &&
     validModelID
   ) {
@@ -197,18 +202,26 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
 
     if (prevLockedSection) removeLockedSection(prevLockedSection);
 
+    setLocking(true);
+
     addLock({
       variables: {
         modelPlanID: modelID,
         section: taskListSection
       }
-    }).catch(() => {
-      history.push({
-        pathname: `/models/${modelID}/locked-task-list-section`,
-        // Passing error status to default error page
-        state: { route: taskListRoute, error: true }
+    })
+      .then(() => {
+        setTimeout(() => {
+          setLocking(false);
+        }, 50);
+      })
+      .catch(() => {
+        history.push({
+          pathname: `/models/${modelID}/locked-task-list-section`,
+          // Passing error status to default error page
+          state: { route: taskListRoute, error: true }
+        });
       });
-    });
   }
 
   return <div>{children}</div>;
