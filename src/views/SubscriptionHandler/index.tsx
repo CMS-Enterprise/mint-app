@@ -25,7 +25,7 @@ type SubscriptionHandlerProps = {
   children: React.ReactNode;
 };
 
-enum LockStatus {
+export enum LockStatus {
   LOCKED = 'LOCKED',
   UNLOCKED = 'UNLOCKED',
   OCCUPYING = 'OCCUPYING',
@@ -37,7 +37,7 @@ type TaskListSectionMapType = {
 };
 
 // Map used to connect url route to Task List Section
-const taskListSectionMap: TaskListSectionMapType = {
+export const taskListSectionMap: TaskListSectionMapType = {
   basics: TaskListSection.MODEL_BASICS,
   beneficiaries: TaskListSection.BENEFICIARIES,
   characteristics: TaskListSection.GENERAL_CHARACTERISTICS,
@@ -48,10 +48,10 @@ const taskListSectionMap: TaskListSectionMapType = {
 };
 
 // Find lock and sets the LockStatus of the current task list section
-const findLockedSection = (
+export const findLockedSection = (
   locks: LockSectionType[],
   route: string,
-  userEUA: string
+  userEUA?: string
 ): LockStatus => {
   const foundLockedSection = locks.find(
     (section: LockSectionType) => section.section === route
@@ -80,10 +80,13 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
   const validModelID: boolean = isUUID(modelID);
 
   const [prevPath, setPrevPath] = useState<string>('');
+  const prevRoute = prevPath.split('/')[4];
 
   let lockState: LockStatus;
+  let prevLockState: LockStatus;
 
   const taskListSection = taskListSectionMap[taskListRoute];
+  const prevListSection = taskListSectionMap[prevRoute];
 
   const { authState } = useOktaAuth();
 
@@ -99,6 +102,8 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
     removeLock,
     { loading: removeLockLoading }
   ] = useMutation<UnlockTaskListSectionVariables>(UnlockTackListSection);
+
+  //   console.log(taskListSectionLocks);
 
   /**
    * Checks to see the status of task list section
@@ -118,9 +123,17 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
       taskListSection,
       authState?.euaId as string
     );
+    prevLockState = findLockedSection(
+      taskListSectionLocks,
+      prevListSection,
+      authState?.euaId as string
+    );
   } else {
     lockState = LockStatus.CANT_LOCK;
+    prevLockState = LockStatus.CANT_LOCK;
   }
+
+  console.log(taskListSectionLocks);
 
   // Checks the location before unmounting to see if lock should be unlocked
   useEffect(() => {
@@ -144,15 +157,19 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
 
   // Checks to see if section should be unlocked and calls mutation
   if (
-    (!validModelID || !taskListSection) &&
+    // (!validModelID || !taskListSection) &&
+    (!validModelID || !taskListSection || prevRoute !== taskListRoute) &&
+    prevLockState === LockStatus.LOCKED &&
     taskListSectionLocks?.length > 0 &&
     !addLockLoading &&
-    !removeLockLoading
+    !removeLockLoading &&
+    !loading
   ) {
     const prevModelID = prevPath.split('/')[2];
 
     const lockedSection = taskListSectionLocks.find(
       (section: LockSectionType) => section.lockedBy === authState?.euaId
+      // && taskListSectionMap[prevRoute] === section.section
     );
 
     if (lockedSection && isUUID(prevModelID)) {

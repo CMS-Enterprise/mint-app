@@ -1,7 +1,9 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
+import { arrayOfColors } from 'components/shared/IconInitial';
 import { GetModelCollaborators_modelPlan_collaborators as GetCollaboratorsType } from 'queries/Collaborators/types/GetModelCollaborators';
+import { getUserInitials } from 'utils/modelPlan';
 
 type TaskListLockProps = {
   collaborator: GetCollaboratorsType | undefined;
@@ -10,13 +12,6 @@ type TaskListLockProps = {
 
 const TaskListLock = ({ collaborator }: TaskListLockProps) => {
   const { t } = useTranslation('modelPlanTaskList');
-
-  const arrayOfColors = [
-    'bg-accent-cool-lighter',
-    'bg-secondary-lighter',
-    'bg-primary-lighter',
-    'bg-accent-warm-lighter'
-  ];
 
   const randomColorIndex = (min: number, max: number) => {
     return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -31,12 +26,7 @@ const TaskListLock = ({ collaborator }: TaskListLockProps) => {
               arrayOfColors[randomColorIndex(0, 3)]
             }`}
           >
-            {collaborator.fullName
-              ?.match(/(\b\S)?/g)
-              ?.join('')
-              ?.match(/(^\S|\S$)?/g)
-              ?.join('')
-              ?.toUpperCase()}
+            {getUserInitials(collaborator.fullName)}
           </div>
           <div className="display-flex flex-align-center">{t('locked')}</div>
         </div>

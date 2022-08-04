@@ -1542,3 +1542,13 @@ export const isUUID = (uuid: string) =>
   /^[0-9a-f]{8}-[0-9a-f]{4}-[0-5][0-9a-f]{3}-[089ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(
     uuid
   );
+
+/* Takes first letter of first and last name */
+/* i.e. Steve Rogers == SR */
+export const getUserInitials = (user: string) =>
+  user
+    ?.match(/(\b\S)?/g)
+    ?.join('')
+    ?.match(/(^\S|\S$)?/g)
+    ?.join('')
+    ?.toUpperCase();
