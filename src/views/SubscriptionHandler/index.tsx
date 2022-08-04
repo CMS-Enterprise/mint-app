@@ -80,13 +80,10 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
   const validModelID: boolean = isUUID(modelID);
 
   const [prevPath, setPrevPath] = useState<string>('');
-  const prevRoute = prevPath.split('/')[4];
 
   let lockState: LockStatus;
-  let prevLockState: LockStatus;
 
   const taskListSection = taskListSectionMap[taskListRoute];
-  const prevListSection = taskListSectionMap[prevRoute];
 
   const { authState } = useOktaAuth();
 
@@ -123,17 +120,9 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
       taskListSection,
       authState?.euaId as string
     );
-    prevLockState = findLockedSection(
-      taskListSectionLocks,
-      prevListSection,
-      authState?.euaId as string
-    );
   } else {
     lockState = LockStatus.CANT_LOCK;
-    prevLockState = LockStatus.CANT_LOCK;
   }
-
-  console.log(taskListSectionLocks);
 
   // Checks the location before unmounting to see if lock should be unlocked
   useEffect(() => {
@@ -155,28 +144,16 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
     );
   }
 
-  // Checks to see if section should be unlocked and calls mutation
-  if (
-    // (!validModelID || !taskListSection) &&
-    (!validModelID || !taskListSection || prevRoute !== taskListRoute) &&
-    prevLockState === LockStatus.LOCKED &&
-    taskListSectionLocks?.length > 0 &&
-    !addLockLoading &&
-    !removeLockLoading &&
-    !loading
-  ) {
+  // Removes a section that is locked
+  const removeLockedSection = (section: LockSectionType | undefined) => {
     const prevModelID = prevPath.split('/')[2];
 
-    const lockedSection = taskListSectionLocks.find(
-      (section: LockSectionType) => section.lockedBy === authState?.euaId
-      // && taskListSectionMap[prevRoute] === section.section
-    );
-
-    if (lockedSection && isUUID(prevModelID)) {
+    // Check if the prev path was a part of a model plan
+    if (section && isUUID(prevModelID)) {
       removeLock({
         variables: {
-          modelPlanID: lockedSection.modelPlanID,
-          section: lockedSection.section
+          modelPlanID: section.modelPlanID,
+          section: section.section
         }
       }).catch(() => {
         history.push({
@@ -186,6 +163,21 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
         });
       });
     }
+  };
+
+  // Checks to see if section should be unlocked and calls mutation
+  if (
+    (!validModelID || !taskListSection) &&
+    taskListSectionLocks?.length > 0 &&
+    !addLockLoading &&
+    !removeLockLoading &&
+    !loading
+  ) {
+    const lockedSection = taskListSectionLocks.find(
+      (section: LockSectionType) => section.lockedBy === authState?.euaId
+    );
+
+    removeLockedSection(lockedSection);
   }
 
   // Checks to see if section should be locked and calls mutation
@@ -197,6 +189,14 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
     !loading &&
     validModelID
   ) {
+    const prevLockedSection = taskListSectionLocks.find(
+      (section: LockSectionType) =>
+        section.lockedBy === authState?.euaId &&
+        taskListSection !== section.section
+    );
+
+    if (prevLockedSection) removeLockedSection(prevLockedSection);
+
     addLock({
       variables: {
         modelPlanID: modelID,
