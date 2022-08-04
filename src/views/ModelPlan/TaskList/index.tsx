@@ -88,7 +88,6 @@ const TaskList = () => {
   const [isDiscussionOpen, setIsDiscussionOpen] = useState(false);
 
   const { taskListSectionLocks } = useContext(SubscriptionContext);
-  // console.log(taskListSectionLocks);
 
   const { data, loading, error } = useQuery<
     GetModelPlanType,

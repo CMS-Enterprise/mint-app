@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from 'react';
+import React, { useRef } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
@@ -44,12 +44,7 @@ import {
   translateGcUpdateContractType
 } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
-import {
-  findLockedSection,
-  LockStatus,
-  taskListSectionMap
-} from 'views/SubscriptionHandler';
-import { SubscriptionContext } from 'views/SubscriptionWrapper';
+import { LockStatus } from 'views/SubscriptionHandler';
 
 import { ITToolsFormComponent } from '..';
 
@@ -83,16 +78,17 @@ const initialModelPlanValues: ModelPlanType = {
   itTools: initialFormValues
 };
 
-const ITToolsPageOne = () => {
+const ITToolsPageOne = ({
+  characteristicsLock
+}: {
+  characteristicsLock: LockStatus;
+}) => {
   const { t } = useTranslation('itTools');
   const { t: c } = useTranslation('generalCharacteristics');
   const { t: h } = useTranslation('draftModelPlan');
   const { modelID } = useParams<{ modelID: string }>();
   const formikRef = useRef<FormikProps<ITToolsPageOneFormType>>(null);
   const history = useHistory();
-
-  const { taskListSectionLocks } = useContext(SubscriptionContext);
-  // console.log(taskListSectionLocks);
 
   const { data, loading, error } = useQuery<
     GetITToolsPageOneType,
@@ -114,12 +110,6 @@ const ITToolsPageOne = () => {
       planContactUpdated
     }
   } = modelPlan;
-
-  // Identified the lock status of the relevant IT tools page
-  const characteristicsLock: LockStatus = findLockedSection(
-    taskListSectionLocks,
-    taskListSectionMap.characteristics
-  );
 
   /**
    * Identifying if each question requires tooling as well as rending answers
