@@ -5,7 +5,7 @@ repos:
     hooks:
       - id: no-commit-to-branch
         args: [
-          '--pattern', '^(?!((main)|(EASI-\d{0,5}|NOREF|dependabot|feat\/EASI-\d{0,5})\/[a-zA-Z0-9\-]+)$).*',
+          '--pattern', '^(?!((main)|(EASI-\d{0,5}|NOREF|dependabot|feat\/EASI-\d{0,5})\/[a-zA-Z0-9\-_]+)$).*',
         ]
         name: Enforce branch naming pattern
         description: Enforces branch naming policy. Allowed branch patterns are 'EASI-#/*', 'feature/EASI-#/*', and 'NOREF/*'. 'main', and 'dependabot/*' are also allowed for CI purposes.
@@ -82,7 +82,7 @@ repos:
         files: "pkg/graph/schema\\.graphql|pkg/graph/schema\\.resolvers\\.go|src/queries/.*\\.ts"
 
   # for some reason, trying to call "go run cmd/intake_schema_gen/main.go" directly from this config doesn't work;
-  # so call scripts/gen_intake_schema, which calls that command and works 
+  # so call scripts/gen_intake_schema, which calls that command and works
   - repo: local
     hooks:
       - id: check-intake-schema-generation
