@@ -89,6 +89,7 @@ type TaskListSectionLockStatus struct {
 type TaskListSectionLockStatusChanged struct {
 	ChangeType ChangeType                 `json:"changeType"`
 	LockStatus *TaskListSectionLockStatus `json:"lockStatus"`
+	Role       Role                       `json:"role"`
 }
 
 type AgencyOrStateHelpType string

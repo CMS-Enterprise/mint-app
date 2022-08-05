@@ -110,6 +110,7 @@ type ExistingModel {
 type TaskListSectionLockStatusChanged {
   changeType: ChangeType!
   lockStatus: TaskListSectionLockStatus!
+  role: Role!
 }
 
 type TaskListSectionLockStatus {
@@ -230,7 +231,7 @@ input PlanBasicsChanges @goModel(model: "map[string]interface{}") {
   goal: String
   testInterventions: String
   note: String
-  status: TaskStatusInput 
+  status: TaskStatusInput
 }
 
 """
@@ -1095,7 +1096,7 @@ input PlanITToolsChanges @goModel(model: "map[string]interface{}") {
   pRecoverPayments: [PRecoverPaymentsType!]
   pRecoverPaymentsOther: String
   pRecoverPaymentsNote: String
-  
+
   status: TaskStatusInput
 
 }
@@ -1435,6 +1436,9 @@ updatePlanPayments(id: UUID!, changes: PlanPaymentsChanges!): PlanPayments!
 
 type Subscription {
   onTaskListSectionLocksChanged(modelPlanID: UUID!): TaskListSectionLockStatusChanged!
+  @hasRole(role: MINT_BASE_USER)
+
+  autoLockTaskListSection(modelPlanID: UUID!, section: TaskListSection!): TaskListSectionLockStatusChanged!
   @hasRole(role: MINT_BASE_USER)
 }
 
