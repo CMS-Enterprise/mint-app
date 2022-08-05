@@ -213,7 +213,7 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
       .then(() => {
         setTimeout(() => {
           setLocking(false);
-        }, 50);
+        }, 100);
       })
       .catch(() => {
         history.push({
