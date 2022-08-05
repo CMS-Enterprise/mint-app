@@ -1,8 +1,8 @@
 /**
-  Subscription wrapper and context for fetching and updating task list locked states.
-  subscribeToMore method returns a previous state and a new subscription message.
-  SubscriptionContext gets modified based on the addition or removal of a locked task list section.
-  SubscriptionContext can be accessed from anywhere in a model plan
+  Subscription handler for checking lock statuses, adding locks, and removing locks
+  Utilizes the SubscriptionContext to listen for updates made from locking/unlocking mutations
+  Uses app location to identify the model plan and current task list section of the model plan
+  Redirects locked and errors states to /locked-task-list-section view
  */
 
 import React, { useContext, useEffect, useState } from 'react';
@@ -36,7 +36,7 @@ type TaskListSectionMapType = {
   [key: string]: string;
 };
 
-// Map used to connect url route to Task List Section
+// Map used to connect url route to Subscription Task List Section
 export const taskListSectionMap: TaskListSectionMapType = {
   basics: TaskListSection.MODEL_BASICS,
   beneficiaries: TaskListSection.BENEFICIARIES,
@@ -48,6 +48,7 @@ export const taskListSectionMap: TaskListSectionMapType = {
 };
 
 // Find lock and sets the LockStatus of the current task list section
+// Returns - LOCKED || UNLOCKED || OCCUPYING
 export const findLockedSection = (
   locks: LockSectionType[],
   route: string,
@@ -184,7 +185,7 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
     removeLockedSection(lockedSection);
   }
 
-  // Checks to see if section should be locked and calls mutation
+  // Checks to see if section should be locked and calls mutation to add lock
   if (
     lockState === LockStatus.UNLOCKED &&
     taskListSection &&
@@ -200,6 +201,8 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
         taskListSection !== section.section
     );
 
+    // If coming from IT Tools
+    // (Or any react-router redirect from one section directly to another)
     if (prevLockedSection) removeLockedSection(prevLockedSection);
 
     setLocking(true);
@@ -211,6 +214,11 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
       }
     })
       .then(() => {
+        /**
+         * TODO: Remove if ref counts are removed along with locking state
+         * There is a slight delay in th receiving the mutation status from the context
+         * Occasionally mutation fires quickly twice, adding 2 to the ref count
+         */
         setTimeout(() => {
           setLocking(false);
         }, 100);
