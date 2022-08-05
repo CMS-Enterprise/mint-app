@@ -581,19 +581,7 @@ const Milestones = () => {
                   <Button
                     type="button"
                     className="usa-button usa-button--unstyled"
-                    onClick={() => {
-                      if (Object.keys(errors).length > 0) {
-                        window.scrollTo(0, 0);
-                      } else {
-                        validateForm().then(err => {
-                          if (Object.keys(err).length > 0) {
-                            window.scrollTo(0, 0);
-                          } else {
-                            handleFormSubmit(values, 'task-list');
-                          }
-                        });
-                      }
-                    }}
+                    onClick={() => handleFormSubmit(values, 'task-list')}
                   >
                     <IconArrowBack className="margin-right-1" aria-hidden />
                     {h('saveAndReturn')}
