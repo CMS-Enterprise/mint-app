@@ -11,35 +11,11 @@ import { useLazyQuery } from '@apollo/client';
 
 import GetTaskListSubscriptions from 'queries/TaskListSubscription/GetTaskListSubscriptions';
 import SubscribeToTaskList from 'queries/TaskListSubscription/SubscribeToTaskList';
+import { TaskListSubscription_onTaskListSectionLocksChanged_lockStatus as LockSectionType } from 'queries/TaskListSubscription/types/TaskListSubscription';
 import { isUUID } from 'utils/modelPlan';
 
 type SubscriptionWrapperProps = {
   children: React.ReactNode;
-};
-
-export type LockSectionType = {
-  lockedBy: string;
-  modelPlanID: string;
-  refCount: number;
-  section: string;
-  __typename: 'TaskListSectionLockStatus';
-};
-
-// Updates SubscriptionContext on the removal of lock
-const removeLockedSection = (
-  locksToUpdate: LockSectionType[] = [],
-  lockSection: LockSectionType
-) => {
-  const updatedLocks: LockSectionType[] = [...locksToUpdate];
-
-  // Finds and removes the locked object from the SubscriptionContext array
-  updatedLocks.splice(
-    updatedLocks.findIndex((section: LockSectionType) => {
-      return section.section === lockSection.section;
-    }),
-    1
-  );
-  return updatedLocks;
 };
 
 // Updates SubscriptionContext on the addition of lock
@@ -61,6 +37,23 @@ const addLockedSection = (
   } else {
     updatedLocks.push(lockSection);
   }
+  return updatedLocks;
+};
+
+// Updates SubscriptionContext on the removal of lock
+const removeLockedSection = (
+  locksToUpdate: LockSectionType[] = [],
+  lockSection: LockSectionType
+) => {
+  const updatedLocks: LockSectionType[] = [...locksToUpdate];
+
+  // Finds and removes the locked object from the SubscriptionContext array
+  updatedLocks.splice(
+    updatedLocks.findIndex((section: LockSectionType) => {
+      return section.section === lockSection.section;
+    }),
+    1
+  );
   return updatedLocks;
 };
 

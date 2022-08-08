@@ -12,14 +12,12 @@ import { useOktaAuth } from '@okta/okta-react';
 
 import LockTaskListSection from 'queries/TaskListSubscription/LockTaskListSection';
 import { LockTaskListSectionVariables } from 'queries/TaskListSubscription/types/LockTaskListSection';
+import { TaskListSubscription_onTaskListSectionLocksChanged_lockStatus as LockSectionType } from 'queries/TaskListSubscription/types/TaskListSubscription';
 import { UnlockTaskListSectionVariables } from 'queries/TaskListSubscription/types/UnlockTaskListSection';
 import UnlockTackListSection from 'queries/TaskListSubscription/UnlockTackListSection';
 import { TaskListSection } from 'types/graphql-global-types';
 import { isUUID } from 'utils/modelPlan';
-import {
-  LockSectionType,
-  SubscriptionContext
-} from 'views/SubscriptionWrapper';
+import { SubscriptionContext } from 'views/SubscriptionWrapper';
 
 type SubscriptionHandlerProps = {
   children: React.ReactNode;
@@ -189,11 +187,11 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
   if (
     lockState === LockStatus.UNLOCKED &&
     taskListSection &&
+    validModelID &&
     !addLockLoading &&
     !removeLockLoading &&
     !locking &&
-    !loading &&
-    validModelID
+    !loading
   ) {
     const prevLockedSection = taskListSectionLocks.find(
       (section: LockSectionType) =>
