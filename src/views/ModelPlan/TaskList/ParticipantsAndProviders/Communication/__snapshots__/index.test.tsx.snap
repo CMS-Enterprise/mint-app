@@ -103,7 +103,6 @@ exports[`Model Plan Communication matches snapshot 1`] = `
     >
       <input
         class="usa-checkbox__input"
-        data-testid="participants-and-providers-communication-method-IT_TOOL"
         id="participants-and-providers-communication-method-IT_TOOL"
         name="communicationMethod"
         type="checkbox"
@@ -115,13 +114,15 @@ exports[`Model Plan Communication matches snapshot 1`] = `
       >
         Manage ongoing communications with participants using an IT tool
       </label>
+      <p
+        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+      />
     </div>
     <div
       class="mint-checkbox usa-checkbox"
     >
       <input
         class="usa-checkbox__input"
-        data-testid="participants-and-providers-communication-method-MASS_EMAIL"
         id="participants-and-providers-communication-method-MASS_EMAIL"
         name="communicationMethod"
         type="checkbox"
@@ -133,13 +134,15 @@ exports[`Model Plan Communication matches snapshot 1`] = `
       >
         Send mass emails to new participants
       </label>
+      <p
+        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+      />
     </div>
     <div
       class="mint-checkbox usa-checkbox"
     >
       <input
         class="usa-checkbox__input"
-        data-testid="participants-and-providers-communication-method-OTHER"
         id="participants-and-providers-communication-method-OTHER"
         name="communicationMethod"
         type="checkbox"
@@ -151,13 +154,15 @@ exports[`Model Plan Communication matches snapshot 1`] = `
       >
         Other
       </label>
+      <p
+        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+      />
     </div>
     <div
       class="mint-checkbox usa-checkbox"
     >
       <input
         class="usa-checkbox__input"
-        data-testid="participants-and-providers-communication-method-NO_COMMUNICATION"
         id="participants-and-providers-communication-method-NO_COMMUNICATION"
         name="communicationMethod"
         type="checkbox"
@@ -169,6 +174,9 @@ exports[`Model Plan Communication matches snapshot 1`] = `
       >
         We are not planning to communicate
       </label>
+      <p
+        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+      />
     </div>
     <div
       class="margin-top-4 margin-bottom-8"
