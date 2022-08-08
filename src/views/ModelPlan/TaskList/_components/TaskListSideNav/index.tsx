@@ -8,14 +8,14 @@ import UswdsReactLink from 'components/LinkWrapper';
 import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
 import IconInitial from 'components/shared/IconInitial';
+import ArchiveModelPlan from 'queries/ArchiveModelPlan';
 import GetModelPlanCollaborators from 'queries/Collaborators/GetModelCollaborators';
 import {
   GetModelCollaborators,
   GetModelCollaborators_modelPlan_collaborators as GetCollaboratorsType
 } from 'queries/Collaborators/types/GetModelCollaborators';
+import { ArchiveModelPlan as ArchiveModelPlanType } from 'queries/types/ArchiveModelPlan';
 import { GetModelPlan_modelPlan as GetModelPlanType } from 'queries/types/GetModelPlan';
-import { UpdateModelPlan as UpdateModelPlanType } from 'queries/types/UpdateModelPlan';
-import UpdateModelPlan from 'queries/UpdateModelPlan';
 
 const TaskListSideNav = ({ modelPlan }: { modelPlan: GetModelPlanType }) => {
   const { id: modelID } = modelPlan;
@@ -32,7 +32,7 @@ const TaskListSideNav = ({ modelPlan }: { modelPlan: GetModelPlanType }) => {
   const collaborators = (data?.modelPlan?.collaborators ??
     []) as GetCollaboratorsType[];
 
-  const [update] = useMutation<UpdateModelPlanType>(UpdateModelPlan);
+  const [update] = useMutation<ArchiveModelPlanType>(ArchiveModelPlan);
 
   const archiveModelPlan = () => {
     update({
