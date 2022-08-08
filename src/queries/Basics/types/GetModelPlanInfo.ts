@@ -11,6 +11,7 @@ import { ModelCategory, CMSCenter, CMMIGroup } from "./../../../types/graphql-gl
 
 export interface GetModelPlanInfo_modelPlan_basics {
   __typename: "PlanBasics";
+  id: UUID;
   modelCategory: ModelCategory | null;
   cmsCenters: CMSCenter[];
   cmsOther: string | null;

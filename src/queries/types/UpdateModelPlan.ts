@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { ModelPlanChanges, ModelStatus } from "./../../types/graphql-global-types";
+import { ModelPlanChanges, PlanBasicsChanges } from "./../../types/graphql-global-types";
 
 // ====================================================
 // GraphQL mutation operation: UpdateModelPlan
@@ -12,19 +12,21 @@ import { ModelPlanChanges, ModelStatus } from "./../../types/graphql-global-type
 export interface UpdateModelPlan_updateModelPlan {
   __typename: "ModelPlan";
   id: UUID;
-  modelName: string;
-  createdBy: string;
-  modifiedBy: string | null;
-  modifiedDts: Time | null;
-  archived: boolean;
-  status: ModelStatus;
+}
+
+export interface UpdateModelPlan_updatePlanBasics {
+  __typename: "PlanBasics";
+  id: UUID;
 }
 
 export interface UpdateModelPlan {
   updateModelPlan: UpdateModelPlan_updateModelPlan;
+  updatePlanBasics: UpdateModelPlan_updatePlanBasics;
 }
 
 export interface UpdateModelPlanVariables {
   id: UUID;
   changes: ModelPlanChanges;
+  basicsId: UUID;
+  basicsChanges: PlanBasicsChanges;
 }

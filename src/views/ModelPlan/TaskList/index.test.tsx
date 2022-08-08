@@ -20,41 +20,11 @@ describe('The Model Plan Task List', () => {
     id: '6e224030-09d5-46f7-ad04-4bb851b36eab',
     status: ModelStatus.PLAN_DRAFT,
     modelName: 'Test',
-    modelCategory: ModelCategory.PRIMARY_CARE_TRANSFORMATION,
-    cmmiGroups: [
-      CMMIGroup.STATE_INNOVATIONS_GROUP,
-      CMMIGroup.POLICY_AND_PROGRAMS_GROUP
-    ],
-    cmsCenters: [CMSCenter.CENTER_FOR_MEDICARE, CMSCenter.OTHER],
-    cmsOther: 'The Center for Awesomeness ',
+
     modifiedDts: '2022-05-12T15:01:39.190679Z',
     archived: false,
     basics: {
       id: 'adsf',
-      modelPlanID: '6e224030-09d5-46f7-ad04-4bb851b36eab',
-      modelType: null,
-      problem: null,
-      goal: null,
-      testInterventions: null,
-      note: null,
-      modifiedDts: null,
-      status: 'READY'
-    },
-    milestones: {
-      id: 'adsf',
-      modelPlanID: '6e224030-09d5-46f7-ad04-4bb851b36eab',
-      completeICIP: null,
-      clearanceStarts: null,
-      clearanceEnds: null,
-      announced: null,
-      applicationsStart: null,
-      applicationsEnd: null,
-      performancePeriodStarts: null,
-      performancePeriodEnds: null,
-      wrapUpEnds: null,
-      highLevelNote: null,
-      phasedIn: null,
-      phasedInNote: null,
       modifiedDts: null,
       status: 'READY'
     },
@@ -163,8 +133,8 @@ describe('The Model Plan Task List', () => {
 
   describe('Statuses', () => {
     it('renders proper buttons for Model Basics', async () => {
-      modelPlan.modelCategory = null;
-      modelPlan.cmsCenters = [];
+      modelPlan.basics.modelCategory = null;
+      modelPlan.basics.cmsCenters = [];
       render(
         <MemoryRouter initialEntries={[`/models/${modelPlan.id}/task-list`]}>
           <MockedProvider

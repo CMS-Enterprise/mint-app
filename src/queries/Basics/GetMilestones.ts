@@ -6,6 +6,7 @@ export default gql`
       id
       modelName
       basics {
+        id
         completeICIP
         clearanceStarts
         clearanceEnds

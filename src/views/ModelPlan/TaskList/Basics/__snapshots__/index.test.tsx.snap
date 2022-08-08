@@ -145,7 +145,7 @@ exports[`Model Plan Documents page matches snapshot 1`] = `
               class="usa-select"
               data-testid="dropdown"
               id="plan-basics-model-category"
-              name="modelCategory"
+              name="basics.modelCategory"
             >
               <option
                 disabled=""
@@ -216,7 +216,7 @@ exports[`Model Plan Documents page matches snapshot 1`] = `
                 class="usa-checkbox__input"
                 data-testid="new-plan-cmsCenters-CENTER_FOR_CLINICAL_STANDARDS_AND_QUALITY"
                 id="new-plan-cmsCenters-CENTER_FOR_CLINICAL_STANDARDS_AND_QUALITY"
-                name="cmsCenters"
+                name="basics.cmsCenters"
                 type="checkbox"
                 value="CENTER_FOR_CLINICAL_STANDARDS_AND_QUALITY"
               />
@@ -234,7 +234,7 @@ exports[`Model Plan Documents page matches snapshot 1`] = `
                 class="usa-checkbox__input"
                 data-testid="new-plan-cmsCenters-CENTER_FOR_MEDICARE"
                 id="new-plan-cmsCenters-CENTER_FOR_MEDICARE"
-                name="cmsCenters"
+                name="basics.cmsCenters"
                 type="checkbox"
                 value="CENTER_FOR_MEDICARE"
               />
@@ -252,7 +252,7 @@ exports[`Model Plan Documents page matches snapshot 1`] = `
                 class="usa-checkbox__input"
                 data-testid="new-plan-cmsCenters-CENTER_FOR_PROGRAM_INTEGRITY"
                 id="new-plan-cmsCenters-CENTER_FOR_PROGRAM_INTEGRITY"
-                name="cmsCenters"
+                name="basics.cmsCenters"
                 type="checkbox"
                 value="CENTER_FOR_PROGRAM_INTEGRITY"
               />
@@ -270,7 +270,7 @@ exports[`Model Plan Documents page matches snapshot 1`] = `
                 class="usa-checkbox__input"
                 data-testid="new-plan-cmsCenters-CMMI"
                 id="new-plan-cmsCenters-CMMI"
-                name="cmsCenters"
+                name="basics.cmsCenters"
                 type="checkbox"
                 value="CMMI"
               />
@@ -288,7 +288,7 @@ exports[`Model Plan Documents page matches snapshot 1`] = `
                 class="usa-checkbox__input"
                 data-testid="new-plan-cmsCenters-FEDERAL_COORDINATED_HEALTH_CARE_OFFICE"
                 id="new-plan-cmsCenters-FEDERAL_COORDINATED_HEALTH_CARE_OFFICE"
-                name="cmsCenters"
+                name="basics.cmsCenters"
                 type="checkbox"
                 value="FEDERAL_COORDINATED_HEALTH_CARE_OFFICE"
               />
@@ -306,7 +306,7 @@ exports[`Model Plan Documents page matches snapshot 1`] = `
                 class="usa-checkbox__input"
                 data-testid="new-plan-cmsCenters-OTHER"
                 id="new-plan-cmsCenters-OTHER"
-                name="cmsCenters"
+                name="basics.cmsCenters"
                 type="checkbox"
                 value="OTHER"
               />

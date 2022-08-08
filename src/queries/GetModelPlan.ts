@@ -10,28 +10,6 @@ export default gql`
       status
       basics {
         id
-        modelPlanID
-        modelCategory
-        cmsCenters
-        cmsOther
-        cmmiGroups
-        modelType
-        problem
-        goal
-        testInterventions
-        note
-        completeICIP
-        clearanceStarts
-        clearanceEnds
-        announced
-        applicationsStart
-        applicationsEnd
-        performancePeriodStarts
-        performancePeriodEnds
-        highLevelNote
-        wrapUpEnds
-        phasedIn
-        phasedInNote
         modifiedDts
         status
       }

@@ -11,6 +11,7 @@ import { TaskStatus } from "./../../../types/graphql-global-types";
 
 export interface GetMilestones_modelPlan_basics {
   __typename: "PlanBasics";
+  id: UUID;
   completeICIP: Time | null;
   clearanceStarts: Time | null;
   clearanceEnds: Time | null;
