@@ -38,9 +38,7 @@ const TaskListSideNav = ({ modelPlan }: { modelPlan: GetModelPlanType }) => {
     update({
       variables: {
         id: modelID,
-        changes: {
-          archived: true
-        }
+        archived: true
       }
     })
       .then(response => {

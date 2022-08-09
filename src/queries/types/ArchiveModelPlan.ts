@@ -3,8 +3,6 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { ModelPlanChanges } from "./../../types/graphql-global-types";
-
 // ====================================================
 // GraphQL mutation operation: ArchiveModelPlan
 // ====================================================
@@ -20,5 +18,5 @@ export interface ArchiveModelPlan {
 
 export interface ArchiveModelPlanVariables {
   id: UUID;
-  changes: ModelPlanChanges;
+  archived: boolean;
 }
