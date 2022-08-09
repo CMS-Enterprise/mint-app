@@ -5,7 +5,7 @@
   SubscriptionContext can be accessed from anywhere in a model plan
  */
 
-import React, { createContext, useEffect, useState } from 'react';
+import React, { createContext, useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useLazyQuery } from '@apollo/client';
 
@@ -73,10 +73,10 @@ const SubscriptionWrapper = ({ children }: SubscriptionWrapperProps) => {
   const validModelID: boolean = isUUID(modelID);
 
   // Used to manage if a mounted component is already subscribed
-  const [subscribed, setSubscribed] = useState<boolean>(false);
+  const subscribed = useRef<boolean>(false);
 
-  // The value that will be given to the context
-  const [subscriptionContextData, setSubscriptionContextData] = useState<{
+  // // The value that will be given to the context
+  const subscriptionContextData = useRef<{
     taskListSectionLocks: LockSectionType[];
     loading: boolean;
   }>({
@@ -95,10 +95,9 @@ const SubscriptionWrapper = ({ children }: SubscriptionWrapperProps) => {
       getTaskListLocks({ variables: { modelPlanID: modelID } });
 
       // Sets the initial lock statuses once useLazyQuery data is fetched
-      setSubscriptionContextData({ ...data, loading: false });
+      subscriptionContextData.current = { ...data, loading: false };
 
-      if (!subscribed) {
-        console.log(`Subscribed to: ${modelID}`);
+      if (!subscribed.current) {
         // Subscription initiator and message update method
         subscribeToMore({
           document: SubscribeToTaskList,
@@ -130,15 +129,15 @@ const SubscriptionWrapper = ({ children }: SubscriptionWrapperProps) => {
               loading: false
             };
 
-            setSubscriptionContextData(formattedSubscriptionContext);
+            subscriptionContextData.current = formattedSubscriptionContext;
             // Returns the formatted locks to be used as the next 'prev' parameter of updateQuery
             return formattedSubscriptionContext;
           }
         });
-        setSubscribed(true);
+        subscribed.current = true;
       }
     } else {
-      setSubscribed(false);
+      subscribed.current = false;
     }
   }, [
     modelID,
@@ -151,7 +150,7 @@ const SubscriptionWrapper = ({ children }: SubscriptionWrapperProps) => {
 
   return (
     // The Provider gives access to the context to its children
-    <SubscriptionContext.Provider value={subscriptionContextData}>
+    <SubscriptionContext.Provider value={subscriptionContextData.current}>
       {children}
     </SubscriptionContext.Provider>
   );
