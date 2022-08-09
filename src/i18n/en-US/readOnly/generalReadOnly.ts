@@ -1,6 +1,10 @@
 const generalReadOnly = {
   back: 'Back to all models',
-  readMore: 'Read more',
+  description: {
+    more: 'Read more',
+    less: 'Read less'
+  },
+  showSummary: 'Show model summary',
   hideSummary: 'Hide model summary',
   status: 'Status',
   updateStatus: 'Update this Model Plan',
