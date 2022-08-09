@@ -26,6 +26,7 @@ import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import MultiSelect from 'components/shared/MultiSelect';
+import useScrollElement from 'hooks/useScrollElement';
 import GetKeyCharacteristics from 'queries/GeneralCharacteristics/GetKeyCharacteristics';
 import {
   GetKeyCharacteristics as GetKeyCharacteristicsType,
@@ -82,6 +83,9 @@ const KeyCharacteristics = () => {
   } =
     data?.modelPlan?.generalCharacteristics ||
     ({} as KeyCharacteristicsFormType);
+
+  // If redirected from IT Tools, scrolls to the relevant question
+  useScrollElement(!loading);
 
   const [update] = useMutation<UpdatePlanGeneralCharacteristicsVariables>(
     UpdatePlanGeneralCharacteristics

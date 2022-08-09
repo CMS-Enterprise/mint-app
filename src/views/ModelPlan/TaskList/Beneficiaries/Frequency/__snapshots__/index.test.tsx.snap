@@ -420,6 +420,9 @@ exports[`Model Plan Beneficiaries matches snapshot 1`] = `
                     >
                       This section of the Model Plan (Beneficiaries) is ready for review.
                     </label>
+                    <p
+                      class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                    />
                   </div>
                 </div>
               </div>

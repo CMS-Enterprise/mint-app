@@ -209,7 +209,6 @@ exports[`Model Plan Characteristics matches snapshot 1`] = `
     >
       <input
         class="usa-checkbox__input"
-        data-testid="plan-characteristics-authority-allowance-ACA"
         id="plan-characteristics-authority-allowance-ACA"
         name="authorityAllowances"
         type="checkbox"
@@ -221,13 +220,15 @@ exports[`Model Plan Characteristics matches snapshot 1`] = `
       >
         3021 (ACA)
       </label>
+      <p
+        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+      />
     </div>
     <div
       class="mint-checkbox usa-checkbox"
     >
       <input
         class="usa-checkbox__input"
-        data-testid="plan-characteristics-authority-allowance-CONGRESSIONALLY_MANDATED"
         id="plan-characteristics-authority-allowance-CONGRESSIONALLY_MANDATED"
         name="authorityAllowances"
         type="checkbox"
@@ -239,13 +240,15 @@ exports[`Model Plan Characteristics matches snapshot 1`] = `
       >
         Congressionally Mandated Demonstration
       </label>
+      <p
+        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+      />
     </div>
     <div
       class="mint-checkbox usa-checkbox"
     >
       <input
         class="usa-checkbox__input"
-        data-testid="plan-characteristics-authority-allowance-SSA_PART_B"
         id="plan-characteristics-authority-allowance-SSA_PART_B"
         name="authorityAllowances"
         type="checkbox"
@@ -257,13 +260,15 @@ exports[`Model Plan Characteristics matches snapshot 1`] = `
       >
         Section 1833(e) (Part B services) of the Social Security Act
       </label>
+      <p
+        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+      />
     </div>
     <div
       class="mint-checkbox usa-checkbox"
     >
       <input
         class="usa-checkbox__input"
-        data-testid="plan-characteristics-authority-allowance-OTHER"
         id="plan-characteristics-authority-allowance-OTHER"
         name="authorityAllowances"
         type="checkbox"
@@ -275,6 +280,9 @@ exports[`Model Plan Characteristics matches snapshot 1`] = `
       >
         Other
       </label>
+      <p
+        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+      />
     </div>
     <div
       class="margin-top-4 margin-bottom-8"
@@ -425,6 +433,9 @@ exports[`Model Plan Characteristics matches snapshot 1`] = `
               >
                 This section of the Model Plan (General characteristics) is ready for review.
               </label>
+              <p
+                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+              />
             </div>
           </div>
         </div>

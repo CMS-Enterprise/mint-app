@@ -26,6 +26,7 @@ import {
   GetModelPlan_modelPlan_basics as BasicsType,
   GetModelPlan_modelPlan_beneficiaries as BeneficiariesType,
   GetModelPlan_modelPlan_generalCharacteristics as GeneralCharacteristicsType,
+  GetModelPlan_modelPlan_itTools as ITToolsType,
   GetModelPlan_modelPlan_opsEvalAndLearning as OpsEvalAndLearningType,
   GetModelPlan_modelPlan_participantsAndProviders as ParticipantsAndProvidersType,
   GetModelPlan_modelPlan_payments as PaymentsType,
@@ -54,7 +55,8 @@ type TaskListSectionsType = {
     | GeneralCharacteristicsType
     | OpsEvalAndLearningType
     | ParticipantsAndProvidersType
-    | PaymentsType;
+    | PaymentsType
+    | ITToolsType;
 };
 
 const TaskList = () => {
@@ -85,8 +87,8 @@ const TaskList = () => {
     participantsAndProviders,
     opsEvalAndLearning,
     beneficiaries,
-    payments
-    // itTools
+    payments,
+    itTools
   } = modelPlan;
 
   const taskListSections: TaskListSectionsType = {
@@ -95,8 +97,8 @@ const TaskList = () => {
     participantsAndProviders,
     beneficiaries,
     opsEvalAndLearning,
-    payments
-    // itTools
+    payments,
+    itTools
   };
 
   const { unansweredQuestions, answeredQuestions } = getUnansweredQuestions(

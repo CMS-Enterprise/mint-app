@@ -210,7 +210,6 @@ exports[`Model Plan Ops Eval and Learning IDDOC matches snapshot 1`] = `
     >
       <input
         class="usa-checkbox__input"
-        data-testid="ops-eval-and-learning-data-monitoring-file-BENEFICIARY"
         id="ops-eval-and-learning-data-monitoring-file-BENEFICIARY"
         name="dataMonitoringFileTypes"
         type="checkbox"
@@ -222,13 +221,15 @@ exports[`Model Plan Ops Eval and Learning IDDOC matches snapshot 1`] = `
       >
         Beneficiary
       </label>
+      <p
+        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+      />
     </div>
     <div
       class="mint-checkbox usa-checkbox"
     >
       <input
         class="usa-checkbox__input"
-        data-testid="ops-eval-and-learning-data-monitoring-file-PART_A"
         id="ops-eval-and-learning-data-monitoring-file-PART_A"
         name="dataMonitoringFileTypes"
         type="checkbox"
@@ -240,13 +241,15 @@ exports[`Model Plan Ops Eval and Learning IDDOC matches snapshot 1`] = `
       >
         Part A
       </label>
+      <p
+        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+      />
     </div>
     <div
       class="mint-checkbox usa-checkbox"
     >
       <input
         class="usa-checkbox__input"
-        data-testid="ops-eval-and-learning-data-monitoring-file-PART_B"
         id="ops-eval-and-learning-data-monitoring-file-PART_B"
         name="dataMonitoringFileTypes"
         type="checkbox"
@@ -258,13 +261,15 @@ exports[`Model Plan Ops Eval and Learning IDDOC matches snapshot 1`] = `
       >
         Part B
       </label>
+      <p
+        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+      />
     </div>
     <div
       class="mint-checkbox usa-checkbox"
     >
       <input
         class="usa-checkbox__input"
-        data-testid="ops-eval-and-learning-data-monitoring-file-PROVIDER"
         id="ops-eval-and-learning-data-monitoring-file-PROVIDER"
         name="dataMonitoringFileTypes"
         type="checkbox"
@@ -276,13 +281,15 @@ exports[`Model Plan Ops Eval and Learning IDDOC matches snapshot 1`] = `
       >
         Provider
       </label>
+      <p
+        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+      />
     </div>
     <div
       class="mint-checkbox usa-checkbox"
     >
       <input
         class="usa-checkbox__input"
-        data-testid="ops-eval-and-learning-data-monitoring-file-OTHER"
         id="ops-eval-and-learning-data-monitoring-file-OTHER"
         name="dataMonitoringFileTypes"
         type="checkbox"
@@ -294,6 +301,9 @@ exports[`Model Plan Ops Eval and Learning IDDOC matches snapshot 1`] = `
       >
         Other
       </label>
+      <p
+        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+      />
     </div>
     <div
       class="usa-form-group margin-top-6"

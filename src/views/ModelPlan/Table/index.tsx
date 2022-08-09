@@ -16,8 +16,8 @@ import Alert from 'components/shared/Alert';
 import GlobalClientFilter from 'components/TableFilter';
 import TablePagination from 'components/TablePagination';
 import TableResults from 'components/TableResults';
+import { GetModelCollaborators_modelPlan_collaborators as CollaboratorsType } from 'queries/Collaborators/types/GetModelCollaborators';
 import GetDraftModelPlans from 'queries/GetModelPlans';
-import { GetModelCollaborators_modelPlan_collaborators as CollaboratorsType } from 'queries/types/GetModelCollaborators';
 import {
   GetModelPlans as GetDraftModelPlansType,
   GetModelPlans_modelPlanCollection as DraftModelPlanType

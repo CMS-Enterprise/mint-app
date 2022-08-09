@@ -29,6 +29,7 @@ import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import MultiSelect from 'components/shared/MultiSelect';
 import TextAreaField from 'components/shared/TextAreaField';
+import useScrollElement from 'hooks/useScrollElement';
 import GetOpsEvalAndLearning from 'queries/OpsEvalAndLearning/GetOpsEvalAndLearning';
 import {
   GetOpsEvalAndLearning as GetOpsEvalAndLearningType,
@@ -130,6 +131,9 @@ export const OpsEvalAndLearningContent = () => {
   } = data?.modelPlan?.opsEvalAndLearning || ({} as OpsEvalAndLearningFormType);
 
   const modelName = data?.modelPlan?.modelName || '';
+
+  // If redirected from IT Tools, scrolls to the relevant question
+  useScrollElement(!loading);
 
   const [update] = useMutation<UpdatePlanOpsEvalAndLearningVariables>(
     UpdatePlanOpsEvalAndLearning
