@@ -73,7 +73,7 @@ const ReadOnly = () => {
           </PageHeading>
 
           <CollapsableLink
-            className="margin-top-3"
+            className="margin-top-3 padding-0"
             eyeIcon
             startOpen
             labelPosition="bottom"
@@ -116,58 +116,42 @@ const ReadOnly = () => {
                 </div>
               )}
             </div>
-            {/* <Grid row className="margin-top-3">
-                    {cmsComponent && (
-                      <Grid desktop={{ col: 6 }} className="margin-bottom-2">
-                        <DescriptionDefinition
-                          definition={t('singleSystem.summary.subheader1')}
-                        />
-                        <DescriptionTerm
-                          className="font-body-md"
-                          term={cmsComponent}
-                        />
-                      </Grid>
-                    )}
-                    {businessOwners.length && (
-                      <Grid desktop={{ col: 6 }} className="margin-bottom-2">
-                        <DescriptionDefinition
-                          definition={t('singleSystem.summary.subheader2', {
-                            count: businessOwners.length
-                          })}
-                        />
-                        <DescriptionTerm
-                          className="font-body-md"
-                          term={businessOwners
-                            .map(bo => getPersonFullName(bo))
-                            .join(', ')}
-                        />
-                      </Grid>
-                    )}
-                    {flags.systemProfileHiddenFields && (
-                      <>
-                        {/* Go live date
-                        <Grid desktop={{ col: 6 }} className="margin-bottom-2">
-                          <DescriptionDefinition
-                            definition={t('singleSystem.summary.subheader3')}
-                          />
-                          <DescriptionTerm
-                            className="font-body-md"
-                            term="July 27, 2015"
-                          />
-                        </Grid>
-                        {/* Most recent major change
-                        <Grid desktop={{ col: 6 }} className="margin-bottom-2">
-                          <DescriptionDefinition
-                            definition={t('singleSystem.summary.subheader4')}
-                          />
-                          <DescriptionTerm
-                            className="font-body-md"
-                            term="December 4, 2021"
-                          />
-                        </Grid>
-                      </>
-                    )}
-                  </Grid> */}
+            <Grid row className="margin-top-3" gap={2}>
+              <Grid desktop={{ col: 6 }} className="margin-bottom-2">
+                <DescriptionDefinition
+                  definition={t('summary.keyCharacteristics')}
+                />
+                <DescriptionTerm
+                  className="font-body-md"
+                  term="this is description terms"
+                />
+              </Grid>
+              <Grid desktop={{ col: 6 }} className="margin-bottom-2">
+                <DescriptionDefinition definition={t('summary.modelLeads')} />
+                <DescriptionTerm
+                  className="font-body-md"
+                  term="this is description terms"
+                />
+              </Grid>
+              {/* Go live date */}
+              <Grid desktop={{ col: 6 }}>
+                <DescriptionDefinition
+                  definition={t('summary.modelStartDate')}
+                />
+                <DescriptionTerm
+                  className="font-body-md"
+                  term="July 27, 2015"
+                />
+              </Grid>
+              {/* Most recent major change */}
+              <Grid desktop={{ col: 6 }}>
+                <DescriptionDefinition definition={t('summary.crAndTdls')} />
+                <DescriptionTerm
+                  className="font-body-md"
+                  term="December 4, 2021"
+                />
+              </Grid>
+            </Grid>
           </CollapsableLink>
         </GridContainer>
       </SummaryBox>
