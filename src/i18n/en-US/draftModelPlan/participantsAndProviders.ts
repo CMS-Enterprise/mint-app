@@ -53,7 +53,7 @@ const participantsAndProviders = {
     fairly: 'Fairly confident',
     completely: 'Completely confident'
   },
-  recruitPartifipants: 'How will you recruit the participants?',
+  recruitParticipants: 'How will you recruit the participants?',
   recruitOptions: {
     loi: 'LOI (Letter of interest)',
     rfa: 'RFA (Request for applications)',
@@ -66,7 +66,7 @@ const participantsAndProviders = {
   },
   howWillYouSelect: 'How will you select participants? Select all that appy.',
   selectOtions: {
-    reviewApplications: 'Model team wil review applications',
+    reviewApplications: 'Model team will review applications',
     solicitSupport: 'Solicit support for CMII staff',
     anotherComponent: 'Another CMS component or process will provide support',
     applicationReview: 'Use an Application Review and Scoring tool',

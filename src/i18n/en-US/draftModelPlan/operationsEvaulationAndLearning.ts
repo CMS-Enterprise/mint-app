@@ -179,6 +179,7 @@ const operationsEvaluationAndLearning = {
   additionalDataInfo:
     'Note: If you are not sure what current data is collected via provider billing, please ask Provider Billing Group (PBG)',
   dataToSend: 'What data will you send to participants? Select all that apply.',
+  dataToSendOther: 'What other data do you need to send?',
   dataToSendOptions: {
     baseline: 'Baseline/historical data',
     claims: 'Claims-level data',

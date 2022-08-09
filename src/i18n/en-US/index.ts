@@ -4,6 +4,7 @@ import discussions from './draftModelPlan/discussions';
 import documents from './draftModelPlan/documents';
 import draftModelPlan from './draftModelPlan/draftModelPlan';
 import generalCharacteristics from './draftModelPlan/generalCharacteristics';
+import itTools from './draftModelPlan/itTools';
 import newModel from './draftModelPlan/newModel';
 import operationsEvaluationAndLearning from './draftModelPlan/operationsEvaulationAndLearning';
 import participantsAndProviders from './draftModelPlan/participantsAndProviders';
@@ -37,6 +38,7 @@ const enUS = {
   generalCharacteristics,
   header,
   home,
+  itTools,
   modelPlan,
   modelPlanTaskList,
   newModel,
