@@ -116,7 +116,7 @@ const ReadOnly = () => {
                 </div>
               )}
             </div>
-            <Grid row className="margin-top-3" gap={2}>
+            <Grid row className="margin-top-3">
               <Grid desktop={{ col: 6 }} className="margin-bottom-2">
                 <DescriptionDefinition
                   definition={t('summary.keyCharacteristics')}
@@ -134,7 +134,7 @@ const ReadOnly = () => {
                 />
               </Grid>
               {/* Go live date */}
-              <Grid desktop={{ col: 6 }}>
+              <Grid desktop={{ col: 6 }} className="margin-bottom-2">
                 <DescriptionDefinition
                   definition={t('summary.modelStartDate')}
                 />
@@ -144,7 +144,7 @@ const ReadOnly = () => {
                 />
               </Grid>
               {/* Most recent major change */}
-              <Grid desktop={{ col: 6 }}>
+              <Grid desktop={{ col: 6 }} className="margin-bottom-2">
                 <DescriptionDefinition definition={t('summary.crAndTdls')} />
                 <DescriptionTerm
                   className="font-body-md"
