@@ -1,0 +1,20 @@
+.model-plan-read-only {
+  .description-truncated {
+    .description-definition {
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    &.expanded {
+      .description-definition {
+        display: block;
+        overflow: auto;
+      }
+      .expand-icon {
+        transform: rotate(180deg);
+      }
+    }
+  }
+}
+
