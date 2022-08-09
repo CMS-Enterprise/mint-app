@@ -72,6 +72,9 @@ const SubscriptionWrapper = ({ children }: SubscriptionWrapperProps) => {
   const modelID = pathname.split('/')[2];
   const validModelID: boolean = isUUID(modelID);
 
+  // Used to manage if a mounted component is already subscribed
+  const [subscribed, setSubscribed] = useState<boolean>(false);
+
   // The value that will be given to the context
   const [subscriptionContextData, setSubscriptionContextData] = useState<{
     taskListSectionLocks: LockSectionType[];
@@ -87,51 +90,64 @@ const SubscriptionWrapper = ({ children }: SubscriptionWrapperProps) => {
   );
 
   useEffect(() => {
-    if (modelID && validModelID) {
+    if (modelID && validModelID && subscribeToMore) {
       // useLazyQuery hook to fetch existing subscription data on new modelID
       getTaskListLocks({ variables: { modelPlanID: modelID } });
 
       // Sets the initial lock statuses once useLazyQuery data is fetched
       setSubscriptionContextData({ ...data, loading: false });
 
-      // Subscription initiator and message update method
-      subscribeToMore({
-        document: SubscribeToTaskList,
-        variables: {
-          modelPlanID: modelID
-        },
-        updateQuery: (prev, { subscriptionData }) => {
-          if (!subscriptionData.data) return prev;
+      if (!subscribed) {
+        console.log(`Subscribed to: ${modelID}`);
+        // Subscription initiator and message update method
+        subscribeToMore({
+          document: SubscribeToTaskList,
+          variables: {
+            modelPlanID: modelID
+          },
+          updateQuery: (prev, { subscriptionData }) => {
+            if (!subscriptionData.data) return prev;
 
-          const lockChange =
-            subscriptionData.data.onTaskListSectionLocksChanged;
+            const lockChange =
+              subscriptionData.data.onTaskListSectionLocksChanged;
 
-          const updatedSubscriptionContext =
-            lockChange.changeType === 'REMOVED'
-              ? // If section lock is to be freed, remove the lock from the SubscriptionContext
-                removeLockedSection(
-                  prev.taskListSectionLocks,
-                  lockChange.lockStatus
-                )
-              : // If section lock is to be added, add the lock from the SubscriptionContext
-                addLockedSection(
-                  prev.taskListSectionLocks,
-                  lockChange.lockStatus
-                );
+            const updatedSubscriptionContext =
+              lockChange.changeType === 'REMOVED'
+                ? // If section lock is to be freed, remove the lock from the SubscriptionContext
+                  removeLockedSection(
+                    prev.taskListSectionLocks,
+                    lockChange.lockStatus
+                  )
+                : // If section lock is to be added, add the lock from the SubscriptionContext
+                  addLockedSection(
+                    prev.taskListSectionLocks,
+                    lockChange.lockStatus
+                  );
 
-          // Formatting lock object to mirror prev updateQuery param
-          const formattedSubscriptionContext = {
-            taskListSectionLocks: updatedSubscriptionContext,
-            loading: false
-          };
+            // Formatting lock object to mirror prev updateQuery param
+            const formattedSubscriptionContext = {
+              taskListSectionLocks: updatedSubscriptionContext,
+              loading: false
+            };
 
-          setSubscriptionContextData(formattedSubscriptionContext);
-          // Returns the formatted locks to be used as the next 'prev' parameter of updateQuery
-          return formattedSubscriptionContext;
-        }
-      });
+            setSubscriptionContextData(formattedSubscriptionContext);
+            // Returns the formatted locks to be used as the next 'prev' parameter of updateQuery
+            return formattedSubscriptionContext;
+          }
+        });
+        setSubscribed(true);
+      }
+    } else {
+      setSubscribed(false);
     }
-  }, [modelID, validModelID, data, getTaskListLocks, subscribeToMore]);
+  }, [
+    modelID,
+    validModelID,
+    data,
+    getTaskListLocks,
+    subscribeToMore,
+    subscribed
+  ]);
 
   return (
     // The Provider gives access to the context to its children
