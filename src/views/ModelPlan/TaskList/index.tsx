@@ -79,11 +79,7 @@ const TaskList = () => {
 
   const {
     modelName,
-    modifiedDts,
     basics,
-    milestones,
-    modelCategory,
-    cmsCenters,
     discussions,
     documents,
     status,
@@ -108,40 +104,6 @@ const TaskList = () => {
   const { unansweredQuestions, answeredQuestions } = getUnansweredQuestions(
     discussions
   );
-
-  /**
-   * Used to calculate status on Basics as milstones is encapsulated in Basics, but has it's own status
-   * May be changed/merged in the future to match other task list sections
-   * */
-  const renderBasicsStatus = (): TaskStatus => {
-    if (
-      // * TEMPORARY SOLUTION to render "READY FOR REVIEW" on Task List page, until better solution from BE
-      // basics.status === TaskStatus.READY_FOR_REVIEW &&
-      milestones.status === TaskStatus.READY_FOR_REVIEW
-    ) {
-      return TaskStatus.READY_FOR_REVIEW;
-    }
-    if (modelCategory === null && cmsCenters.length === 0) {
-      return TaskStatus.READY;
-    }
-    return TaskStatus.IN_PROGRESS;
-  };
-
-  /**
-   * Used to calculate last modified date on Basics as milstones is encapsulated in Basics, but has it's modifiedDts
-   * May be changed/merged in the future to match other task list sections
-   * */
-  const renderBasicsLastUpdated = () => {
-    const basicDates = [
-      modifiedDts,
-      basics?.modifiedDts,
-      milestones.modifiedDts
-    ];
-    basicDates.sort((a, b) => {
-      return a?.localeCompare(b!) || 0;
-    });
-    return basicDates[0];
-  };
 
   const dicussionBanner = () => {
     return (
@@ -316,11 +278,7 @@ const TaskList = () => {
                             key={key}
                             testId={`task-list-intake-form-${key}`}
                             heading={t(`numberedList.${key}.heading`)}
-                            status={
-                              key === 'basics'
-                                ? renderBasicsStatus()
-                                : taskListSections[key].status
-                            }
+                            status={taskListSections[key].status}
                           >
                             <div className="model-plan-task-list__task-row display-flex flex-justify flex-align-start">
                               <TaskListDescription>
@@ -329,46 +287,21 @@ const TaskList = () => {
                                 </p>
                               </TaskListDescription>
 
-                              {/* Basics needs to render the last updated data based on multiple modifiedDts values */}
-                              {key === 'basics' &&
-                                renderBasicsStatus() !== TaskStatus.READY && (
-                                  <TaskListLastUpdated>
-                                    <p className="margin-y-0">
-                                      {t('taskListItem.lastUpdated')}
-                                    </p>
-                                    <p className="margin-y-0">
-                                      {key === 'basics' &&
-                                        renderBasicsLastUpdated() &&
-                                        formatDate(
-                                          renderBasicsLastUpdated() || '',
-                                          'MM/d/yyyy'
-                                        )}
-                                      {key !== 'basics' &&
-                                        taskListSections[key].modifiedDts &&
-                                        formatDate(
-                                          taskListSections[key].modifiedDts!,
-                                          'MM/d/yyyy'
-                                        )}
-                                    </p>
-                                  </TaskListLastUpdated>
-                                )}
-
-                              {key !== 'basics' &&
-                                taskListSections[key].status !==
-                                  TaskStatus.READY && (
-                                  <TaskListLastUpdated>
-                                    <p className="margin-y-0">
-                                      {t('taskListItem.lastUpdated')}
-                                    </p>
-                                    <p className="margin-y-0">
-                                      {taskListSections[key].modifiedDts &&
-                                        formatDate(
-                                          taskListSections[key].modifiedDts!,
-                                          'MM/d/yyyy'
-                                        )}
-                                    </p>
-                                  </TaskListLastUpdated>
-                                )}
+                              {taskListSections[key].status !==
+                                TaskStatus.READY && (
+                                <TaskListLastUpdated>
+                                  <p className="margin-y-0">
+                                    {t('taskListItem.lastUpdated')}
+                                  </p>
+                                  <p className="margin-y-0">
+                                    {taskListSections[key].modifiedDts &&
+                                      formatDate(
+                                        taskListSections[key].modifiedDts!,
+                                        'MM/d/yyyy'
+                                      )}
+                                  </p>
+                                </TaskListLastUpdated>
+                              )}
                             </div>
                             <TaskListButton
                               path={t(`numberedList.${key}.path`)}

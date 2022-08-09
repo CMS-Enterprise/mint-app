@@ -9,14 +9,20 @@ import { ModelCategory, CMSCenter, CMMIGroup } from "./../../../types/graphql-gl
 // GraphQL query operation: GetModelPlanInfo
 // ====================================================
 
-export interface GetModelPlanInfo_modelPlan {
-  __typename: "ModelPlan";
+export interface GetModelPlanInfo_modelPlan_basics {
+  __typename: "PlanBasics";
   id: UUID;
-  modelName: string;
   modelCategory: ModelCategory | null;
   cmsCenters: CMSCenter[];
   cmsOther: string | null;
   cmmiGroups: CMMIGroup[];
+}
+
+export interface GetModelPlanInfo_modelPlan {
+  __typename: "ModelPlan";
+  id: UUID;
+  modelName: string;
+  basics: GetModelPlanInfo_modelPlan_basics;
 }
 
 export interface GetModelPlanInfo {

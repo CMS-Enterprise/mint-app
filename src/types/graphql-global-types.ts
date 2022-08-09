@@ -629,10 +629,6 @@ export interface GeneratePresignedUploadURLInput {
  */
 export interface ModelPlanChanges {
   modelName?: string | null;
-  modelCategory?: ModelCategory | null;
-  cmsCenters?: CMSCenter[] | null;
-  cmsOther?: string | null;
-  cmmiGroups?: CMMIGroup[] | null;
   someNumbers?: number[] | null;
   archived?: boolean | null;
   status?: ModelStatus | null;
@@ -644,11 +640,27 @@ export interface ModelPlanChanges {
  * https: // gqlgen.com/reference/changesets/
  */
 export interface PlanBasicsChanges {
+  modelCategory?: ModelCategory | null;
+  cmsCenters?: CMSCenter[] | null;
+  cmsOther?: string | null;
+  cmmiGroups?: CMMIGroup[] | null;
   modelType?: ModelType | null;
   problem?: string | null;
   goal?: string | null;
   testInterventions?: string | null;
   note?: string | null;
+  completeICIP?: Time | null;
+  clearanceStarts?: Time | null;
+  clearanceEnds?: Time | null;
+  announced?: Time | null;
+  applicationsStart?: Time | null;
+  applicationsEnd?: Time | null;
+  performancePeriodStarts?: Time | null;
+  performancePeriodEnds?: Time | null;
+  wrapUpEnds?: Time | null;
+  highLevelNote?: string | null;
+  phasedIn?: boolean | null;
+  phasedInNote?: string | null;
   status?: TaskStatusInput | null;
 }
 
@@ -870,27 +882,6 @@ export interface PlanITToolsChanges {
   pRecoverPayments?: PRecoverPaymentsType[] | null;
   pRecoverPaymentsOther?: string | null;
   pRecoverPaymentsNote?: string | null;
-  status?: TaskStatusInput | null;
-}
-
-/**
- * PlanMilestoneChanges represents the possible changes you can make to a Plan Milestones object when updating it.
- * Fields explicitly set with NULL will be unset, and omitted fields will be left unchanged.
- * https: // gqlgen.com/reference/changesets/
- */
-export interface PlanMilestoneChanges {
-  completeICIP?: Time | null;
-  clearanceStarts?: Time | null;
-  clearanceEnds?: Time | null;
-  announced?: Time | null;
-  applicationsStart?: Time | null;
-  applicationsEnd?: Time | null;
-  performancePeriodStarts?: Time | null;
-  performancePeriodEnds?: Time | null;
-  wrapUpEnds?: Time | null;
-  highLevelNote?: string | null;
-  phasedIn?: boolean | null;
-  phasedInNote?: string | null;
   status?: TaskStatusInput | null;
 }
 
