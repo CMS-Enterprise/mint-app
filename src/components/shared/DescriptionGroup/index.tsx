@@ -31,14 +31,18 @@ export const DescriptionTerm = ({ className, term }: DescriptionTermProps) => (
 
 type DescriptionDefinitionProps = {
   className?: string;
-  definition?: string | null;
+  definition?: React.ReactNode;
 };
 
-export const DescriptionDefinition = ({
-  className,
-  definition
-}: DescriptionDefinitionProps) => (
-  <dd className={classnames('description-definition', 'margin-0', className)}>
+export const DescriptionDefinition = React.forwardRef<
+  HTMLElement,
+  DescriptionDefinitionProps
+  // eslint-disable-next-line react/prop-types
+>(({ className, definition }, ref) => (
+  <dd
+    ref={ref}
+    className={classnames('description-definition', 'margin-0', className)}
+  >
     {definition}
   </dd>
-);
+));
