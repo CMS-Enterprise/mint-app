@@ -17,10 +17,10 @@ export const navLinks = () => [
     link: '/models',
     label: 'home'
   },
-  // {
-  //   link: '/models',
-  //   label: 'models'
-  // },
+  {
+    link: '/models/read-only',
+    label: 'models'
+  },
   {
     link: '/help',
     label: 'help'
