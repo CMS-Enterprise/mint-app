@@ -57,7 +57,8 @@ type ResolverRoot interface {
 }
 
 type DirectiveRoot struct {
-	HasRole func(ctx context.Context, obj interface{}, next graphql.Resolver, role model.Role) (res interface{}, err error)
+	HasRole        func(ctx context.Context, obj interface{}, next graphql.Resolver, role model.Role) (res interface{}, err error)
+	IsCollaborator func(ctx context.Context, obj interface{}, next graphql.Resolver) (res interface{}, err error)
 }
 
 type ComplexityRoot struct {
@@ -6472,33 +6473,42 @@ createModelPlan(modelName: String!): ModelPlan!
 @hasRole(role: MINT_BASE_USER)
 
 updateModelPlan(id: UUID!, changes: ModelPlanChanges!): ModelPlan!
+@isCollaborator
 @hasRole(role: MINT_BASE_USER)
 
 createPlanCollaborator(input: PlanCollaboratorCreateInput!): PlanCollaborator!
+@isCollaborator
 @hasRole(role: MINT_BASE_USER)
 
 updatePlanCollaborator(id: UUID!, newRole: TeamRole!): PlanCollaborator!
+@isCollaborator
 @hasRole(role: MINT_BASE_USER)
 
 deletePlanCollaborator(id: UUID!): PlanCollaborator!
 @hasRole(role: MINT_BASE_USER)
 
 updatePlanBasics(id: UUID!, changes: PlanBasicsChanges!): PlanBasics!
+@isCollaborator
 @hasRole(role: MINT_BASE_USER)
 
 updatePlanGeneralCharacteristics(id: UUID!, changes: PlanGeneralCharacteristicsChanges!): PlanGeneralCharacteristics!
+@isCollaborator
 @hasRole(role: MINT_BASE_USER)
 
 updatePlanBeneficiaries(id: UUID!, changes: PlanBeneficiariesChanges!): PlanBeneficiaries!
+@isCollaborator
 @hasRole(role: MINT_BASE_USER)
 
 updatePlanParticipantsAndProviders(id: UUID!, changes: PlanParticipantsAndProvidersChanges!): PlanParticipantsAndProviders!
+@isCollaborator
 @hasRole(role: MINT_BASE_USER)
 
 updatePlanItTools(id: UUID!, changes:PlanITToolsChanges!): PlanITTools!
+@isCollaborator
 @hasRole(role: MINT_BASE_USER)
 
 updatePlanOpsEvalAndLearning(id: UUID!, changes: PlanOpsEvalAndLearningChanges!): PlanOpsEvalAndLearning!
+@isCollaborator
 @hasRole(role: MINT_BASE_USER)
 
 generatePresignedUploadURL(input: GeneratePresignedUploadURLInput!): GeneratePresignedUploadURLPayload!
@@ -6508,6 +6518,7 @@ createPlanDocument(input: PlanDocumentInput!): PlanDocumentPayload!
 @hasRole(role: MINT_BASE_USER)
 
 updatePlanDocument(input: PlanDocumentInput!): PlanDocumentPayload!
+@isCollaborator
 @hasRole(role: MINT_BASE_USER)
 
 deletePlanDocument(input: PlanDocumentInput!): Int!
@@ -6517,15 +6528,18 @@ createPlanDiscussion(input: PlanDiscussionCreateInput!): PlanDiscussion!
 @hasRole(role: MINT_BASE_USER)
 
 updatePlanDiscussion(id: UUID!, changes: PlanDiscussionChanges!): PlanDiscussion!
+@isCollaborator
 @hasRole(role: MINT_BASE_USER)
 
 deletePlanDiscussion(id: UUID!): PlanDiscussion!
 @hasRole(role: MINT_BASE_USER)
 
 createDiscussionReply(input: DiscussionReplyCreateInput!): DiscussionReply!
+@isCollaborator
 @hasRole(role: MINT_BASE_USER)
 
 updateDiscussionReply(id: UUID!, changes: DiscussionReplyChanges!): DiscussionReply!
+@isCollaborator
 @hasRole(role: MINT_BASE_USER)
 
 deleteDiscussionReply(id: UUID!): DiscussionReply!
@@ -7139,6 +7153,8 @@ enum AnticipatedPaymentFrequencyType {
 }
 
 directive @hasRole(role: Role!) on FIELD_DEFINITION
+
+directive @isCollaborator on FIELD_DEFINITION
 
 # https://gqlgen.com/config/#inline-config-with-directives
 directive @goModel(
@@ -11051,6 +11067,12 @@ func (ec *executionContext) _Mutation_updateModelPlan(ctx context.Context, field
 			return ec.resolvers.Mutation().UpdateModelPlan(rctx, fc.Args["id"].(uuid.UUID), fc.Args["changes"].(map[string]interface{}))
 		}
 		directive1 := func(ctx context.Context) (interface{}, error) {
+			if ec.directives.IsCollaborator == nil {
+				return nil, errors.New("directive isCollaborator is not implemented")
+			}
+			return ec.directives.IsCollaborator(ctx, nil, directive0)
+		}
+		directive2 := func(ctx context.Context) (interface{}, error) {
 			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_BASE_USER")
 			if err != nil {
 				return nil, err
@@ -11058,10 +11080,10 @@ func (ec *executionContext) _Mutation_updateModelPlan(ctx context.Context, field
 			if ec.directives.HasRole == nil {
 				return nil, errors.New("directive hasRole is not implemented")
 			}
-			return ec.directives.HasRole(ctx, nil, directive0, role)
+			return ec.directives.HasRole(ctx, nil, directive1, role)
 		}
 
-		tmp, err := directive1(rctx)
+		tmp, err := directive2(rctx)
 		if err != nil {
 			return nil, graphql.ErrorOnPath(ctx, err)
 		}
@@ -11168,6 +11190,12 @@ func (ec *executionContext) _Mutation_createPlanCollaborator(ctx context.Context
 			return ec.resolvers.Mutation().CreatePlanCollaborator(rctx, fc.Args["input"].(model.PlanCollaboratorCreateInput))
 		}
 		directive1 := func(ctx context.Context) (interface{}, error) {
+			if ec.directives.IsCollaborator == nil {
+				return nil, errors.New("directive isCollaborator is not implemented")
+			}
+			return ec.directives.IsCollaborator(ctx, nil, directive0)
+		}
+		directive2 := func(ctx context.Context) (interface{}, error) {
 			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_BASE_USER")
 			if err != nil {
 				return nil, err
@@ -11175,10 +11203,10 @@ func (ec *executionContext) _Mutation_createPlanCollaborator(ctx context.Context
 			if ec.directives.HasRole == nil {
 				return nil, errors.New("directive hasRole is not implemented")
 			}
-			return ec.directives.HasRole(ctx, nil, directive0, role)
+			return ec.directives.HasRole(ctx, nil, directive1, role)
 		}
 
-		tmp, err := directive1(rctx)
+		tmp, err := directive2(rctx)
 		if err != nil {
 			return nil, graphql.ErrorOnPath(ctx, err)
 		}
@@ -11267,6 +11295,12 @@ func (ec *executionContext) _Mutation_updatePlanCollaborator(ctx context.Context
 			return ec.resolvers.Mutation().UpdatePlanCollaborator(rctx, fc.Args["id"].(uuid.UUID), fc.Args["newRole"].(models.TeamRole))
 		}
 		directive1 := func(ctx context.Context) (interface{}, error) {
+			if ec.directives.IsCollaborator == nil {
+				return nil, errors.New("directive isCollaborator is not implemented")
+			}
+			return ec.directives.IsCollaborator(ctx, nil, directive0)
+		}
+		directive2 := func(ctx context.Context) (interface{}, error) {
 			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_BASE_USER")
 			if err != nil {
 				return nil, err
@@ -11274,10 +11308,10 @@ func (ec *executionContext) _Mutation_updatePlanCollaborator(ctx context.Context
 			if ec.directives.HasRole == nil {
 				return nil, errors.New("directive hasRole is not implemented")
 			}
-			return ec.directives.HasRole(ctx, nil, directive0, role)
+			return ec.directives.HasRole(ctx, nil, directive1, role)
 		}
 
-		tmp, err := directive1(rctx)
+		tmp, err := directive2(rctx)
 		if err != nil {
 			return nil, graphql.ErrorOnPath(ctx, err)
 		}
@@ -11465,6 +11499,12 @@ func (ec *executionContext) _Mutation_updatePlanBasics(ctx context.Context, fiel
 			return ec.resolvers.Mutation().UpdatePlanBasics(rctx, fc.Args["id"].(uuid.UUID), fc.Args["changes"].(map[string]interface{}))
 		}
 		directive1 := func(ctx context.Context) (interface{}, error) {
+			if ec.directives.IsCollaborator == nil {
+				return nil, errors.New("directive isCollaborator is not implemented")
+			}
+			return ec.directives.IsCollaborator(ctx, nil, directive0)
+		}
+		directive2 := func(ctx context.Context) (interface{}, error) {
 			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_BASE_USER")
 			if err != nil {
 				return nil, err
@@ -11472,10 +11512,10 @@ func (ec *executionContext) _Mutation_updatePlanBasics(ctx context.Context, fiel
 			if ec.directives.HasRole == nil {
 				return nil, errors.New("directive hasRole is not implemented")
 			}
-			return ec.directives.HasRole(ctx, nil, directive0, role)
+			return ec.directives.HasRole(ctx, nil, directive1, role)
 		}
 
-		tmp, err := directive1(rctx)
+		tmp, err := directive2(rctx)
 		if err != nil {
 			return nil, graphql.ErrorOnPath(ctx, err)
 		}
@@ -11606,6 +11646,12 @@ func (ec *executionContext) _Mutation_updatePlanGeneralCharacteristics(ctx conte
 			return ec.resolvers.Mutation().UpdatePlanGeneralCharacteristics(rctx, fc.Args["id"].(uuid.UUID), fc.Args["changes"].(map[string]interface{}))
 		}
 		directive1 := func(ctx context.Context) (interface{}, error) {
+			if ec.directives.IsCollaborator == nil {
+				return nil, errors.New("directive isCollaborator is not implemented")
+			}
+			return ec.directives.IsCollaborator(ctx, nil, directive0)
+		}
+		directive2 := func(ctx context.Context) (interface{}, error) {
 			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_BASE_USER")
 			if err != nil {
 				return nil, err
@@ -11613,10 +11659,10 @@ func (ec *executionContext) _Mutation_updatePlanGeneralCharacteristics(ctx conte
 			if ec.directives.HasRole == nil {
 				return nil, errors.New("directive hasRole is not implemented")
 			}
-			return ec.directives.HasRole(ctx, nil, directive0, role)
+			return ec.directives.HasRole(ctx, nil, directive1, role)
 		}
 
-		tmp, err := directive1(rctx)
+		tmp, err := directive2(rctx)
 		if err != nil {
 			return nil, graphql.ErrorOnPath(ctx, err)
 		}
@@ -11807,6 +11853,12 @@ func (ec *executionContext) _Mutation_updatePlanBeneficiaries(ctx context.Contex
 			return ec.resolvers.Mutation().UpdatePlanBeneficiaries(rctx, fc.Args["id"].(uuid.UUID), fc.Args["changes"].(map[string]interface{}))
 		}
 		directive1 := func(ctx context.Context) (interface{}, error) {
+			if ec.directives.IsCollaborator == nil {
+				return nil, errors.New("directive isCollaborator is not implemented")
+			}
+			return ec.directives.IsCollaborator(ctx, nil, directive0)
+		}
+		directive2 := func(ctx context.Context) (interface{}, error) {
 			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_BASE_USER")
 			if err != nil {
 				return nil, err
@@ -11814,10 +11866,10 @@ func (ec *executionContext) _Mutation_updatePlanBeneficiaries(ctx context.Contex
 			if ec.directives.HasRole == nil {
 				return nil, errors.New("directive hasRole is not implemented")
 			}
-			return ec.directives.HasRole(ctx, nil, directive0, role)
+			return ec.directives.HasRole(ctx, nil, directive1, role)
 		}
 
-		tmp, err := directive1(rctx)
+		tmp, err := directive2(rctx)
 		if err != nil {
 			return nil, graphql.ErrorOnPath(ctx, err)
 		}
@@ -11948,6 +12000,12 @@ func (ec *executionContext) _Mutation_updatePlanParticipantsAndProviders(ctx con
 			return ec.resolvers.Mutation().UpdatePlanParticipantsAndProviders(rctx, fc.Args["id"].(uuid.UUID), fc.Args["changes"].(map[string]interface{}))
 		}
 		directive1 := func(ctx context.Context) (interface{}, error) {
+			if ec.directives.IsCollaborator == nil {
+				return nil, errors.New("directive isCollaborator is not implemented")
+			}
+			return ec.directives.IsCollaborator(ctx, nil, directive0)
+		}
+		directive2 := func(ctx context.Context) (interface{}, error) {
 			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_BASE_USER")
 			if err != nil {
 				return nil, err
@@ -11955,10 +12013,10 @@ func (ec *executionContext) _Mutation_updatePlanParticipantsAndProviders(ctx con
 			if ec.directives.HasRole == nil {
 				return nil, errors.New("directive hasRole is not implemented")
 			}
-			return ec.directives.HasRole(ctx, nil, directive0, role)
+			return ec.directives.HasRole(ctx, nil, directive1, role)
 		}
 
-		tmp, err := directive1(rctx)
+		tmp, err := directive2(rctx)
 		if err != nil {
 			return nil, graphql.ErrorOnPath(ctx, err)
 		}
@@ -12139,6 +12197,12 @@ func (ec *executionContext) _Mutation_updatePlanItTools(ctx context.Context, fie
 			return ec.resolvers.Mutation().UpdatePlanItTools(rctx, fc.Args["id"].(uuid.UUID), fc.Args["changes"].(map[string]interface{}))
 		}
 		directive1 := func(ctx context.Context) (interface{}, error) {
+			if ec.directives.IsCollaborator == nil {
+				return nil, errors.New("directive isCollaborator is not implemented")
+			}
+			return ec.directives.IsCollaborator(ctx, nil, directive0)
+		}
+		directive2 := func(ctx context.Context) (interface{}, error) {
 			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_BASE_USER")
 			if err != nil {
 				return nil, err
@@ -12146,10 +12210,10 @@ func (ec *executionContext) _Mutation_updatePlanItTools(ctx context.Context, fie
 			if ec.directives.HasRole == nil {
 				return nil, errors.New("directive hasRole is not implemented")
 			}
-			return ec.directives.HasRole(ctx, nil, directive0, role)
+			return ec.directives.HasRole(ctx, nil, directive1, role)
 		}
 
-		tmp, err := directive1(rctx)
+		tmp, err := directive2(rctx)
 		if err != nil {
 			return nil, graphql.ErrorOnPath(ctx, err)
 		}
@@ -12400,6 +12464,12 @@ func (ec *executionContext) _Mutation_updatePlanOpsEvalAndLearning(ctx context.C
 			return ec.resolvers.Mutation().UpdatePlanOpsEvalAndLearning(rctx, fc.Args["id"].(uuid.UUID), fc.Args["changes"].(map[string]interface{}))
 		}
 		directive1 := func(ctx context.Context) (interface{}, error) {
+			if ec.directives.IsCollaborator == nil {
+				return nil, errors.New("directive isCollaborator is not implemented")
+			}
+			return ec.directives.IsCollaborator(ctx, nil, directive0)
+		}
+		directive2 := func(ctx context.Context) (interface{}, error) {
 			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_BASE_USER")
 			if err != nil {
 				return nil, err
@@ -12407,10 +12477,10 @@ func (ec *executionContext) _Mutation_updatePlanOpsEvalAndLearning(ctx context.C
 			if ec.directives.HasRole == nil {
 				return nil, errors.New("directive hasRole is not implemented")
 			}
-			return ec.directives.HasRole(ctx, nil, directive0, role)
+			return ec.directives.HasRole(ctx, nil, directive1, role)
 		}
 
-		tmp, err := directive1(rctx)
+		tmp, err := directive2(rctx)
 		if err != nil {
 			return nil, graphql.ErrorOnPath(ctx, err)
 		}
@@ -12853,6 +12923,12 @@ func (ec *executionContext) _Mutation_updatePlanDocument(ctx context.Context, fi
 			return ec.resolvers.Mutation().UpdatePlanDocument(rctx, fc.Args["input"].(model.PlanDocumentInput))
 		}
 		directive1 := func(ctx context.Context) (interface{}, error) {
+			if ec.directives.IsCollaborator == nil {
+				return nil, errors.New("directive isCollaborator is not implemented")
+			}
+			return ec.directives.IsCollaborator(ctx, nil, directive0)
+		}
+		directive2 := func(ctx context.Context) (interface{}, error) {
 			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_BASE_USER")
 			if err != nil {
 				return nil, err
@@ -12860,10 +12936,10 @@ func (ec *executionContext) _Mutation_updatePlanDocument(ctx context.Context, fi
 			if ec.directives.HasRole == nil {
 				return nil, errors.New("directive hasRole is not implemented")
 			}
-			return ec.directives.HasRole(ctx, nil, directive0, role)
+			return ec.directives.HasRole(ctx, nil, directive1, role)
 		}
 
-		tmp, err := directive1(rctx)
+		tmp, err := directive2(rctx)
 		if err != nil {
 			return nil, graphql.ErrorOnPath(ctx, err)
 		}
@@ -13116,6 +13192,12 @@ func (ec *executionContext) _Mutation_updatePlanDiscussion(ctx context.Context, 
 			return ec.resolvers.Mutation().UpdatePlanDiscussion(rctx, fc.Args["id"].(uuid.UUID), fc.Args["changes"].(map[string]interface{}))
 		}
 		directive1 := func(ctx context.Context) (interface{}, error) {
+			if ec.directives.IsCollaborator == nil {
+				return nil, errors.New("directive isCollaborator is not implemented")
+			}
+			return ec.directives.IsCollaborator(ctx, nil, directive0)
+		}
+		directive2 := func(ctx context.Context) (interface{}, error) {
 			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_BASE_USER")
 			if err != nil {
 				return nil, err
@@ -13123,10 +13205,10 @@ func (ec *executionContext) _Mutation_updatePlanDiscussion(ctx context.Context, 
 			if ec.directives.HasRole == nil {
 				return nil, errors.New("directive hasRole is not implemented")
 			}
-			return ec.directives.HasRole(ctx, nil, directive0, role)
+			return ec.directives.HasRole(ctx, nil, directive1, role)
 		}
 
-		tmp, err := directive1(rctx)
+		tmp, err := directive2(rctx)
 		if err != nil {
 			return nil, graphql.ErrorOnPath(ctx, err)
 		}
@@ -13314,6 +13396,12 @@ func (ec *executionContext) _Mutation_createDiscussionReply(ctx context.Context,
 			return ec.resolvers.Mutation().CreateDiscussionReply(rctx, fc.Args["input"].(model.DiscussionReplyCreateInput))
 		}
 		directive1 := func(ctx context.Context) (interface{}, error) {
+			if ec.directives.IsCollaborator == nil {
+				return nil, errors.New("directive isCollaborator is not implemented")
+			}
+			return ec.directives.IsCollaborator(ctx, nil, directive0)
+		}
+		directive2 := func(ctx context.Context) (interface{}, error) {
 			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_BASE_USER")
 			if err != nil {
 				return nil, err
@@ -13321,10 +13409,10 @@ func (ec *executionContext) _Mutation_createDiscussionReply(ctx context.Context,
 			if ec.directives.HasRole == nil {
 				return nil, errors.New("directive hasRole is not implemented")
 			}
-			return ec.directives.HasRole(ctx, nil, directive0, role)
+			return ec.directives.HasRole(ctx, nil, directive1, role)
 		}
 
-		tmp, err := directive1(rctx)
+		tmp, err := directive2(rctx)
 		if err != nil {
 			return nil, graphql.ErrorOnPath(ctx, err)
 		}
@@ -13411,6 +13499,12 @@ func (ec *executionContext) _Mutation_updateDiscussionReply(ctx context.Context,
 			return ec.resolvers.Mutation().UpdateDiscussionReply(rctx, fc.Args["id"].(uuid.UUID), fc.Args["changes"].(map[string]interface{}))
 		}
 		directive1 := func(ctx context.Context) (interface{}, error) {
+			if ec.directives.IsCollaborator == nil {
+				return nil, errors.New("directive isCollaborator is not implemented")
+			}
+			return ec.directives.IsCollaborator(ctx, nil, directive0)
+		}
+		directive2 := func(ctx context.Context) (interface{}, error) {
 			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_BASE_USER")
 			if err != nil {
 				return nil, err
@@ -13418,10 +13512,10 @@ func (ec *executionContext) _Mutation_updateDiscussionReply(ctx context.Context,
 			if ec.directives.HasRole == nil {
 				return nil, errors.New("directive hasRole is not implemented")
 			}
-			return ec.directives.HasRole(ctx, nil, directive0, role)
+			return ec.directives.HasRole(ctx, nil, directive1, role)
 		}
 
-		tmp, err := directive1(rctx)
+		tmp, err := directive2(rctx)
 		if err != nil {
 			return nil, graphql.ErrorOnPath(ctx, err)
 		}

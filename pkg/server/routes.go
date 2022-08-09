@@ -16,6 +16,7 @@ import (
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/lambda"
+	"github.com/google/uuid"
 	"github.com/gorilla/mux"
 	_ "github.com/lib/pq" // pq is required to get the postgres driver into sqlx
 	"go.uber.org/zap"
@@ -158,16 +159,37 @@ func (s *Server) routes(
 		ldClient,
 		s.pubsub,
 	)
-	gqlDirectives := generated.DirectiveRoot{HasRole: func(ctx context.Context, obj interface{}, next graphql.Resolver, role model.Role) (res interface{}, err error) {
-		hasRole, err := services.HasRole(ctx, role)
-		if err != nil {
-			return nil, err
-		}
-		if !hasRole {
-			return nil, errors.New("not authorized")
-		}
-		return next(ctx)
-	}}
+	gqlDirectives := generated.DirectiveRoot{
+		HasRole: func(ctx context.Context, obj interface{}, next graphql.Resolver, role model.Role) (res interface{}, err error) {
+			hasRole, err := services.HasRole(ctx, role)
+			if err != nil {
+				return nil, err
+			}
+			if !hasRole {
+				return nil, errors.New("not authorized")
+			}
+			return next(ctx)
+
+		},
+		IsCollaborator: func(ctx context.Context, obj interface{}, next graphql.Resolver) (res interface{}, err error) {
+			// c.Value(principalKey).(authentication.Principal)
+			//TODO get the modelPlanID from the query! --> get the collaborators, find out if is a collaborator..
+			//Alternatively, get a quick SQL call we could do instead?
+			// modelPlanID := ctx.Value("modelPlanID").(uuid.UUID)
+			modelPlanID := uuid.UUID{}
+
+			isCollab, err := services.IsCollaborator(ctx, modelPlanID)
+
+			if err != nil {
+				return nil, err
+			}
+			if !isCollab {
+				return nil, errors.New("user does not have permission to update this model plan")
+
+			}
+			return next(ctx)
+		},
+	}
 	gqlConfig := generated.Config{Resolvers: resolver, Directives: gqlDirectives}
 	graphqlServer := handler.NewDefaultServer(generated.NewExecutableSchema(gqlConfig))
 	graphqlServer.Use(extension.FixedComplexityLimit(1000))

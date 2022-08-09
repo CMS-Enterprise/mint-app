@@ -1328,33 +1328,42 @@ createModelPlan(modelName: String!): ModelPlan!
 @hasRole(role: MINT_BASE_USER)
 
 updateModelPlan(id: UUID!, changes: ModelPlanChanges!): ModelPlan!
+@isCollaborator
 @hasRole(role: MINT_BASE_USER)
 
 createPlanCollaborator(input: PlanCollaboratorCreateInput!): PlanCollaborator!
+@isCollaborator
 @hasRole(role: MINT_BASE_USER)
 
 updatePlanCollaborator(id: UUID!, newRole: TeamRole!): PlanCollaborator!
+@isCollaborator
 @hasRole(role: MINT_BASE_USER)
 
 deletePlanCollaborator(id: UUID!): PlanCollaborator!
 @hasRole(role: MINT_BASE_USER)
 
 updatePlanBasics(id: UUID!, changes: PlanBasicsChanges!): PlanBasics!
+@isCollaborator
 @hasRole(role: MINT_BASE_USER)
 
 updatePlanGeneralCharacteristics(id: UUID!, changes: PlanGeneralCharacteristicsChanges!): PlanGeneralCharacteristics!
+@isCollaborator
 @hasRole(role: MINT_BASE_USER)
 
 updatePlanBeneficiaries(id: UUID!, changes: PlanBeneficiariesChanges!): PlanBeneficiaries!
+@isCollaborator
 @hasRole(role: MINT_BASE_USER)
 
 updatePlanParticipantsAndProviders(id: UUID!, changes: PlanParticipantsAndProvidersChanges!): PlanParticipantsAndProviders!
+@isCollaborator
 @hasRole(role: MINT_BASE_USER)
 
 updatePlanItTools(id: UUID!, changes:PlanITToolsChanges!): PlanITTools!
+@isCollaborator
 @hasRole(role: MINT_BASE_USER)
 
 updatePlanOpsEvalAndLearning(id: UUID!, changes: PlanOpsEvalAndLearningChanges!): PlanOpsEvalAndLearning!
+@isCollaborator
 @hasRole(role: MINT_BASE_USER)
 
 generatePresignedUploadURL(input: GeneratePresignedUploadURLInput!): GeneratePresignedUploadURLPayload!
@@ -1364,6 +1373,7 @@ createPlanDocument(input: PlanDocumentInput!): PlanDocumentPayload!
 @hasRole(role: MINT_BASE_USER)
 
 updatePlanDocument(input: PlanDocumentInput!): PlanDocumentPayload!
+@isCollaborator
 @hasRole(role: MINT_BASE_USER)
 
 deletePlanDocument(input: PlanDocumentInput!): Int!
@@ -1373,15 +1383,18 @@ createPlanDiscussion(input: PlanDiscussionCreateInput!): PlanDiscussion!
 @hasRole(role: MINT_BASE_USER)
 
 updatePlanDiscussion(id: UUID!, changes: PlanDiscussionChanges!): PlanDiscussion!
+@isCollaborator
 @hasRole(role: MINT_BASE_USER)
 
 deletePlanDiscussion(id: UUID!): PlanDiscussion!
 @hasRole(role: MINT_BASE_USER)
 
 createDiscussionReply(input: DiscussionReplyCreateInput!): DiscussionReply!
+@isCollaborator
 @hasRole(role: MINT_BASE_USER)
 
 updateDiscussionReply(id: UUID!, changes: DiscussionReplyChanges!): DiscussionReply!
+@isCollaborator
 @hasRole(role: MINT_BASE_USER)
 
 deleteDiscussionReply(id: UUID!): DiscussionReply!
@@ -1995,6 +2008,8 @@ enum AnticipatedPaymentFrequencyType {
 }
 
 directive @hasRole(role: Role!) on FIELD_DEFINITION
+
+directive @isCollaborator on FIELD_DEFINITION
 
 # https://gqlgen.com/config/#inline-config-with-directives
 directive @goModel(
