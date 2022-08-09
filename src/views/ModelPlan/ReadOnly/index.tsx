@@ -119,35 +119,43 @@ const ReadOnly = () => {
             <Grid row className="margin-top-3">
               <Grid desktop={{ col: 6 }} className="margin-bottom-2">
                 <DescriptionDefinition
+                  className="font-body-sm"
                   definition={t('summary.keyCharacteristics')}
                 />
                 <DescriptionTerm
-                  className="font-body-md"
+                  className="font-body-lg line-height-sans-2 margin-0"
                   term="this is description terms"
                 />
               </Grid>
               <Grid desktop={{ col: 6 }} className="margin-bottom-2">
-                <DescriptionDefinition definition={t('summary.modelLeads')} />
+                <DescriptionDefinition
+                  className="font-body-sm"
+                  definition={t('summary.modelLeads')}
+                />
                 <DescriptionTerm
-                  className="font-body-md"
+                  className="font-body-lg line-height-sans-2 margin-0"
                   term="this is description terms"
                 />
               </Grid>
               {/* Go live date */}
               <Grid desktop={{ col: 6 }} className="margin-bottom-2">
                 <DescriptionDefinition
+                  className="font-body-sm"
                   definition={t('summary.modelStartDate')}
                 />
                 <DescriptionTerm
-                  className="font-body-md"
+                  className="font-body-lg line-height-sans-2 margin-0"
                   term="July 27, 2015"
                 />
               </Grid>
               {/* Most recent major change */}
               <Grid desktop={{ col: 6 }} className="margin-bottom-2">
-                <DescriptionDefinition definition={t('summary.crAndTdls')} />
+                <DescriptionDefinition
+                  className="font-body-sm"
+                  definition={t('summary.crAndTdls')}
+                />
                 <DescriptionTerm
-                  className="font-body-md"
+                  className="font-body-lg line-height-sans-2 margin-0"
                   term="December 4, 2021"
                 />
               </Grid>
