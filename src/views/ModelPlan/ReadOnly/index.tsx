@@ -18,6 +18,9 @@ import {
   DescriptionDefinition,
   DescriptionTerm
 } from 'components/shared/DescriptionGroup';
+import { ModelStatus } from 'types/graphql-global-types';
+
+import TaskListStatus from '../TaskList/_components/TaskListStatus';
 
 import './index.scss';
 
@@ -155,6 +158,16 @@ const ReadOnly = () => {
           </CollapsableLink>
         </GridContainer>
       </SummaryBox>
+      <div className="model-plan-status-bar bg-base-lightest">
+        <GridContainer>
+          <div className="padding-y-1">
+            <TaskListStatus
+              modelID="823dffdc-e71e-48c2-bb2b-bb60a38b79b3"
+              status={ModelStatus.PLAN_DRAFT}
+            />
+          </div>
+        </GridContainer>
+      </div>
     </MainContent>
   );
 };
