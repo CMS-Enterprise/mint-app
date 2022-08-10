@@ -9,8 +9,8 @@ import { TaskStatus } from "./../../../types/graphql-global-types";
 // GraphQL query operation: GetMilestones
 // ====================================================
 
-export interface GetMilestones_modelPlan_milestones {
-  __typename: "PlanMilestones";
+export interface GetMilestones_modelPlan_basics {
+  __typename: "PlanBasics";
   id: UUID;
   completeICIP: Time | null;
   clearanceStarts: Time | null;
@@ -33,7 +33,7 @@ export interface GetMilestones_modelPlan {
   __typename: "ModelPlan";
   id: UUID;
   modelName: string;
-  milestones: GetMilestones_modelPlan_milestones;
+  basics: GetMilestones_modelPlan_basics;
 }
 
 export interface GetMilestones {

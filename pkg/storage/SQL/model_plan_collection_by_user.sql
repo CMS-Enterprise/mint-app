@@ -1,11 +1,7 @@
 SELECT
     model_plan.id,
     model_plan.model_name,
-    model_plan.model_category,
-    model_plan.cms_centers,
-    model_plan.cms_other,
     model_plan.status,
-    model_plan.cmmi_groups,
     model_plan.archived,
     model_plan.created_by,
     model_plan.created_dts,

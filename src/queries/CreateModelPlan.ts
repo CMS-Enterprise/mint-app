@@ -6,27 +6,18 @@ export default gql`
       id
       createdBy
       modelName
-      modelCategory
-      cmsCenters
-      cmsOther
-      cmmiGroups
       basics {
         id
         modelPlanID
+        modelCategory
+        cmsCenters
+        cmsOther
+        cmmiGroups
         modelType
         problem
         goal
         testInterventions
         note
-        createdBy
-        createdDts
-        modifiedBy
-        modifiedDts
-        status
-      }
-      milestones {
-        id
-        modelPlanID
         completeICIP
         clearanceStarts
         clearanceEnds
