@@ -26,7 +26,9 @@ const UserInfo = () => {
           ))}
         </ul>
         <p>User is basic user: {`${user.isBasicUser(userGroups, flags)}`}</p>
-        <p>User is admin user: {`${user.isAdmin(userGroups, flags)}`}</p>
+        <p>
+          User is assessment user: {`${user.isAssessment(userGroups, flags)}`}
+        </p>
 
         <h2>Raw Access Token Claims</h2>
         <pre>

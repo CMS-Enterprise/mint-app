@@ -183,9 +183,6 @@ const OktaClientID = "OKTA_CLIENT_ID"
 // OktaIssuer is the okta issuer
 const OktaIssuer = "OKTA_ISSUER"
 
-// AltJobCodes are alternate job codes
-const AltJobCodes = "ALT_JOB_CODES"
-
 // FlagSourceOption represents an environment
 type FlagSourceOption string
 
