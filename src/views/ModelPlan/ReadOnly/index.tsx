@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useParams } from 'react-router-dom';
+import { useQuery } from '@apollo/client';
 import {
   Alert,
   Button,
@@ -20,7 +22,14 @@ import {
   DescriptionTerm
 } from 'components/shared/DescriptionGroup';
 import SectionWrapper from 'components/shared/SectionWrapper';
+import GetModelPlan from 'queries/GetModelPlan';
+import {
+  GetModelPlan as GetModelPlanType,
+  GetModelPlan_modelPlan as GetModelPlanTypes,
+  GetModelPlanVariables
+} from 'queries/types/GetModelPlan';
 import { ModelStatus } from 'types/graphql-global-types';
+import { NotFoundPartial } from 'views/NotFound';
 
 import TaskListStatus from '../TaskList/_components/TaskListStatus';
 
@@ -29,7 +38,8 @@ import './index.scss';
 const ReadOnly = () => {
   const { t } = useTranslation('modelSummary');
   const { t: h } = useTranslation('generalReadOnly');
-  // const { modelID } = useParams<{ modelID: string }>();
+  const { modelID } = useParams<{ modelID: string }>();
+
   const descriptionRef = React.createRef<HTMLElement>();
   const [
     isDescriptionExpandable,
@@ -48,6 +58,21 @@ const ReadOnly = () => {
       setIsDescriptionExpandable(true);
     }
   });
+
+  const { data, loading, error } = useQuery<
+    GetModelPlanType,
+    GetModelPlanVariables
+  >(GetModelPlan, {
+    variables: {
+      id: modelID
+    }
+  });
+
+  const modelPlan = data?.modelPlan || ({} as GetModelPlanTypes);
+
+  if ((!loading && error) || (!loading && !data?.modelPlan)) {
+    return <NotFoundPartial />;
+  }
 
   return (
     <MainContent
@@ -68,7 +93,7 @@ const ReadOnly = () => {
           </Link>
 
           <PageHeading className="margin-0 line-height-sans-2">
-            Medicare Diabetes Prevention Program - Expanded Model Revamped
+            {modelPlan.modelName}
           </PageHeading>
 
           <CollapsableLink
@@ -90,8 +115,22 @@ const ReadOnly = () => {
                 }
               )}
             >
+              {/* * TODO:
+                1. Create a new query for READ ONLY
+                2. Pull in data
+
+                  - Summary description should be the model goal from Model Basics section
+
+                  - Key Characteristics should be populated by the info from /characteristics/key-characteristics - keyCharacteristics
+
+                  - Start date should be the performance start date on Milestones
+
+                  - Should include warning on model plan changes beneath summary - Warning message should show for every Model Plan status except for "Cleared" and "Announced"
+
+                  End TODO:
+              */}
               <DescriptionDefinition
-                definition={t('descriptionFiller')}
+                definition={modelPlan.modelName}
                 ref={descriptionRef}
                 className="font-body-lg line-height-body-5 text-light"
               />
