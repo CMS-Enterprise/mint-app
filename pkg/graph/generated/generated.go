@@ -6469,84 +6469,84 @@ Mutations definition for the schema
 """
 type Mutation {
 createModelPlan(modelName: String!): ModelPlan!
-@hasRole(role: MINT_BASE_USER)
+@hasRole(role: MINT_USER)
 
 updateModelPlan(id: UUID!, changes: ModelPlanChanges!): ModelPlan!
-@hasRole(role: MINT_BASE_USER)
+@hasRole(role: MINT_USER)
 
 createPlanCollaborator(input: PlanCollaboratorCreateInput!): PlanCollaborator!
-@hasRole(role: MINT_BASE_USER)
+@hasRole(role: MINT_USER)
 
 updatePlanCollaborator(id: UUID!, newRole: TeamRole!): PlanCollaborator!
-@hasRole(role: MINT_BASE_USER)
+@hasRole(role: MINT_USER)
 
 deletePlanCollaborator(id: UUID!): PlanCollaborator!
-@hasRole(role: MINT_BASE_USER)
+@hasRole(role: MINT_USER)
 
 updatePlanBasics(id: UUID!, changes: PlanBasicsChanges!): PlanBasics!
-@hasRole(role: MINT_BASE_USER)
+@hasRole(role: MINT_USER)
 
 updatePlanGeneralCharacteristics(id: UUID!, changes: PlanGeneralCharacteristicsChanges!): PlanGeneralCharacteristics!
-@hasRole(role: MINT_BASE_USER)
+@hasRole(role: MINT_USER)
 
 updatePlanBeneficiaries(id: UUID!, changes: PlanBeneficiariesChanges!): PlanBeneficiaries!
-@hasRole(role: MINT_BASE_USER)
+@hasRole(role: MINT_USER)
 
 updatePlanParticipantsAndProviders(id: UUID!, changes: PlanParticipantsAndProvidersChanges!): PlanParticipantsAndProviders!
-@hasRole(role: MINT_BASE_USER)
+@hasRole(role: MINT_USER)
 
 updatePlanItTools(id: UUID!, changes:PlanITToolsChanges!): PlanITTools!
-@hasRole(role: MINT_BASE_USER)
+@hasRole(role: MINT_USER)
 
 updatePlanOpsEvalAndLearning(id: UUID!, changes: PlanOpsEvalAndLearningChanges!): PlanOpsEvalAndLearning!
-@hasRole(role: MINT_BASE_USER)
+@hasRole(role: MINT_USER)
 
 generatePresignedUploadURL(input: GeneratePresignedUploadURLInput!): GeneratePresignedUploadURLPayload!
-@hasRole(role: MINT_BASE_USER)
+@hasRole(role: MINT_USER)
 
 createPlanDocument(input: PlanDocumentInput!): PlanDocumentPayload!
-@hasRole(role: MINT_BASE_USER)
+@hasRole(role: MINT_USER)
 
 updatePlanDocument(input: PlanDocumentInput!): PlanDocumentPayload!
-@hasRole(role: MINT_BASE_USER)
+@hasRole(role: MINT_USER)
 
 deletePlanDocument(input: PlanDocumentInput!): Int!
-@hasRole(role: MINT_BASE_USER)
+@hasRole(role: MINT_USER)
 
 createPlanDiscussion(input: PlanDiscussionCreateInput!): PlanDiscussion!
-@hasRole(role: MINT_BASE_USER)
+@hasRole(role: MINT_USER)
 
 updatePlanDiscussion(id: UUID!, changes: PlanDiscussionChanges!): PlanDiscussion!
-@hasRole(role: MINT_BASE_USER)
+@hasRole(role: MINT_USER)
 
 deletePlanDiscussion(id: UUID!): PlanDiscussion!
-@hasRole(role: MINT_BASE_USER)
+@hasRole(role: MINT_USER)
 
 createDiscussionReply(input: DiscussionReplyCreateInput!): DiscussionReply!
-@hasRole(role: MINT_BASE_USER)
+@hasRole(role: MINT_USER)
 
 updateDiscussionReply(id: UUID!, changes: DiscussionReplyChanges!): DiscussionReply!
-@hasRole(role: MINT_BASE_USER)
+@hasRole(role: MINT_USER)
 
 deleteDiscussionReply(id: UUID!): DiscussionReply!
-@hasRole(role: MINT_BASE_USER)
+@hasRole(role: MINT_USER)
 
 lockTaskListSection(modelPlanID: UUID!, section: TaskListSection!): Boolean!
-@hasRole(role: MINT_BASE_USER)
+@hasRole(role: MINT_USER)
 
 unlockTaskListSection(modelPlanID: UUID!, section: TaskListSection!): Boolean!
-@hasRole(role: MINT_BASE_USER)
+@hasRole(role: MINT_USER)
 
 unlockAllTaskListSections(modelPlanID: UUID!): [TaskListSectionLockStatus!]!
-@hasRole(role: MINT_ADMIN_USER)
+@hasRole(role: MINT_ASSESSMENT)
 
 updatePlanPayments(id: UUID!, changes: PlanPaymentsChanges!): PlanPayments!
-@hasRole(role: MINT_BASE_USER)
+@hasRole(role: MINT_USER)
 }
 
 type Subscription {
   onTaskListSectionLocksChanged(modelPlanID: UUID!): TaskListSectionLockStatusChanged!
-  @hasRole(role: MINT_BASE_USER)
+  @hasRole(role: MINT_USER)
 }
 
 enum ChangeType {
@@ -7153,12 +7153,12 @@ enum Role {
   """
   A basic MINT user
   """
-  MINT_BASE_USER
+  MINT_USER
 
   """
-  A MINT admin user
+  A MINT assessment team user
   """
-  MINT_ADMIN_USER
+  MINT_ASSESSMENT
 }
 `, BuiltIn: false},
 }
@@ -10934,7 +10934,7 @@ func (ec *executionContext) _Mutation_createModelPlan(ctx context.Context, field
 			return ec.resolvers.Mutation().CreateModelPlan(rctx, fc.Args["modelName"].(string))
 		}
 		directive1 := func(ctx context.Context) (interface{}, error) {
-			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_BASE_USER")
+			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
 			if err != nil {
 				return nil, err
 			}
@@ -11051,7 +11051,7 @@ func (ec *executionContext) _Mutation_updateModelPlan(ctx context.Context, field
 			return ec.resolvers.Mutation().UpdateModelPlan(rctx, fc.Args["id"].(uuid.UUID), fc.Args["changes"].(map[string]interface{}))
 		}
 		directive1 := func(ctx context.Context) (interface{}, error) {
-			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_BASE_USER")
+			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
 			if err != nil {
 				return nil, err
 			}
@@ -11168,7 +11168,7 @@ func (ec *executionContext) _Mutation_createPlanCollaborator(ctx context.Context
 			return ec.resolvers.Mutation().CreatePlanCollaborator(rctx, fc.Args["input"].(model.PlanCollaboratorCreateInput))
 		}
 		directive1 := func(ctx context.Context) (interface{}, error) {
-			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_BASE_USER")
+			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
 			if err != nil {
 				return nil, err
 			}
@@ -11267,7 +11267,7 @@ func (ec *executionContext) _Mutation_updatePlanCollaborator(ctx context.Context
 			return ec.resolvers.Mutation().UpdatePlanCollaborator(rctx, fc.Args["id"].(uuid.UUID), fc.Args["newRole"].(models.TeamRole))
 		}
 		directive1 := func(ctx context.Context) (interface{}, error) {
-			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_BASE_USER")
+			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
 			if err != nil {
 				return nil, err
 			}
@@ -11366,7 +11366,7 @@ func (ec *executionContext) _Mutation_deletePlanCollaborator(ctx context.Context
 			return ec.resolvers.Mutation().DeletePlanCollaborator(rctx, fc.Args["id"].(uuid.UUID))
 		}
 		directive1 := func(ctx context.Context) (interface{}, error) {
-			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_BASE_USER")
+			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
 			if err != nil {
 				return nil, err
 			}
@@ -11465,7 +11465,7 @@ func (ec *executionContext) _Mutation_updatePlanBasics(ctx context.Context, fiel
 			return ec.resolvers.Mutation().UpdatePlanBasics(rctx, fc.Args["id"].(uuid.UUID), fc.Args["changes"].(map[string]interface{}))
 		}
 		directive1 := func(ctx context.Context) (interface{}, error) {
-			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_BASE_USER")
+			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
 			if err != nil {
 				return nil, err
 			}
@@ -11606,7 +11606,7 @@ func (ec *executionContext) _Mutation_updatePlanGeneralCharacteristics(ctx conte
 			return ec.resolvers.Mutation().UpdatePlanGeneralCharacteristics(rctx, fc.Args["id"].(uuid.UUID), fc.Args["changes"].(map[string]interface{}))
 		}
 		directive1 := func(ctx context.Context) (interface{}, error) {
-			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_BASE_USER")
+			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
 			if err != nil {
 				return nil, err
 			}
@@ -11807,7 +11807,7 @@ func (ec *executionContext) _Mutation_updatePlanBeneficiaries(ctx context.Contex
 			return ec.resolvers.Mutation().UpdatePlanBeneficiaries(rctx, fc.Args["id"].(uuid.UUID), fc.Args["changes"].(map[string]interface{}))
 		}
 		directive1 := func(ctx context.Context) (interface{}, error) {
-			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_BASE_USER")
+			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
 			if err != nil {
 				return nil, err
 			}
@@ -11948,7 +11948,7 @@ func (ec *executionContext) _Mutation_updatePlanParticipantsAndProviders(ctx con
 			return ec.resolvers.Mutation().UpdatePlanParticipantsAndProviders(rctx, fc.Args["id"].(uuid.UUID), fc.Args["changes"].(map[string]interface{}))
 		}
 		directive1 := func(ctx context.Context) (interface{}, error) {
-			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_BASE_USER")
+			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
 			if err != nil {
 				return nil, err
 			}
@@ -12139,7 +12139,7 @@ func (ec *executionContext) _Mutation_updatePlanItTools(ctx context.Context, fie
 			return ec.resolvers.Mutation().UpdatePlanItTools(rctx, fc.Args["id"].(uuid.UUID), fc.Args["changes"].(map[string]interface{}))
 		}
 		directive1 := func(ctx context.Context) (interface{}, error) {
-			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_BASE_USER")
+			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
 			if err != nil {
 				return nil, err
 			}
@@ -12400,7 +12400,7 @@ func (ec *executionContext) _Mutation_updatePlanOpsEvalAndLearning(ctx context.C
 			return ec.resolvers.Mutation().UpdatePlanOpsEvalAndLearning(rctx, fc.Args["id"].(uuid.UUID), fc.Args["changes"].(map[string]interface{}))
 		}
 		directive1 := func(ctx context.Context) (interface{}, error) {
-			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_BASE_USER")
+			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
 			if err != nil {
 				return nil, err
 			}
@@ -12685,7 +12685,7 @@ func (ec *executionContext) _Mutation_generatePresignedUploadURL(ctx context.Con
 			return ec.resolvers.Mutation().GeneratePresignedUploadURL(rctx, fc.Args["input"].(model.GeneratePresignedUploadURLInput))
 		}
 		directive1 := func(ctx context.Context) (interface{}, error) {
-			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_BASE_USER")
+			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
 			if err != nil {
 				return nil, err
 			}
@@ -12768,7 +12768,7 @@ func (ec *executionContext) _Mutation_createPlanDocument(ctx context.Context, fi
 			return ec.resolvers.Mutation().CreatePlanDocument(rctx, fc.Args["input"].(model.PlanDocumentInput))
 		}
 		directive1 := func(ctx context.Context) (interface{}, error) {
-			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_BASE_USER")
+			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
 			if err != nil {
 				return nil, err
 			}
@@ -12853,7 +12853,7 @@ func (ec *executionContext) _Mutation_updatePlanDocument(ctx context.Context, fi
 			return ec.resolvers.Mutation().UpdatePlanDocument(rctx, fc.Args["input"].(model.PlanDocumentInput))
 		}
 		directive1 := func(ctx context.Context) (interface{}, error) {
-			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_BASE_USER")
+			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
 			if err != nil {
 				return nil, err
 			}
@@ -12938,7 +12938,7 @@ func (ec *executionContext) _Mutation_deletePlanDocument(ctx context.Context, fi
 			return ec.resolvers.Mutation().DeletePlanDocument(rctx, fc.Args["input"].(model.PlanDocumentInput))
 		}
 		directive1 := func(ctx context.Context) (interface{}, error) {
-			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_BASE_USER")
+			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
 			if err != nil {
 				return nil, err
 			}
@@ -13017,7 +13017,7 @@ func (ec *executionContext) _Mutation_createPlanDiscussion(ctx context.Context, 
 			return ec.resolvers.Mutation().CreatePlanDiscussion(rctx, fc.Args["input"].(model.PlanDiscussionCreateInput))
 		}
 		directive1 := func(ctx context.Context) (interface{}, error) {
-			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_BASE_USER")
+			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
 			if err != nil {
 				return nil, err
 			}
@@ -13116,7 +13116,7 @@ func (ec *executionContext) _Mutation_updatePlanDiscussion(ctx context.Context, 
 			return ec.resolvers.Mutation().UpdatePlanDiscussion(rctx, fc.Args["id"].(uuid.UUID), fc.Args["changes"].(map[string]interface{}))
 		}
 		directive1 := func(ctx context.Context) (interface{}, error) {
-			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_BASE_USER")
+			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
 			if err != nil {
 				return nil, err
 			}
@@ -13215,7 +13215,7 @@ func (ec *executionContext) _Mutation_deletePlanDiscussion(ctx context.Context, 
 			return ec.resolvers.Mutation().DeletePlanDiscussion(rctx, fc.Args["id"].(uuid.UUID))
 		}
 		directive1 := func(ctx context.Context) (interface{}, error) {
-			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_BASE_USER")
+			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
 			if err != nil {
 				return nil, err
 			}
@@ -13314,7 +13314,7 @@ func (ec *executionContext) _Mutation_createDiscussionReply(ctx context.Context,
 			return ec.resolvers.Mutation().CreateDiscussionReply(rctx, fc.Args["input"].(model.DiscussionReplyCreateInput))
 		}
 		directive1 := func(ctx context.Context) (interface{}, error) {
-			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_BASE_USER")
+			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
 			if err != nil {
 				return nil, err
 			}
@@ -13411,7 +13411,7 @@ func (ec *executionContext) _Mutation_updateDiscussionReply(ctx context.Context,
 			return ec.resolvers.Mutation().UpdateDiscussionReply(rctx, fc.Args["id"].(uuid.UUID), fc.Args["changes"].(map[string]interface{}))
 		}
 		directive1 := func(ctx context.Context) (interface{}, error) {
-			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_BASE_USER")
+			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
 			if err != nil {
 				return nil, err
 			}
@@ -13508,7 +13508,7 @@ func (ec *executionContext) _Mutation_deleteDiscussionReply(ctx context.Context,
 			return ec.resolvers.Mutation().DeleteDiscussionReply(rctx, fc.Args["id"].(uuid.UUID))
 		}
 		directive1 := func(ctx context.Context) (interface{}, error) {
-			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_BASE_USER")
+			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
 			if err != nil {
 				return nil, err
 			}
@@ -13605,7 +13605,7 @@ func (ec *executionContext) _Mutation_lockTaskListSection(ctx context.Context, f
 			return ec.resolvers.Mutation().LockTaskListSection(rctx, fc.Args["modelPlanID"].(uuid.UUID), fc.Args["section"].(model.TaskListSection))
 		}
 		directive1 := func(ctx context.Context) (interface{}, error) {
-			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_BASE_USER")
+			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
 			if err != nil {
 				return nil, err
 			}
@@ -13684,7 +13684,7 @@ func (ec *executionContext) _Mutation_unlockTaskListSection(ctx context.Context,
 			return ec.resolvers.Mutation().UnlockTaskListSection(rctx, fc.Args["modelPlanID"].(uuid.UUID), fc.Args["section"].(model.TaskListSection))
 		}
 		directive1 := func(ctx context.Context) (interface{}, error) {
-			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_BASE_USER")
+			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
 			if err != nil {
 				return nil, err
 			}
@@ -13763,7 +13763,7 @@ func (ec *executionContext) _Mutation_unlockAllTaskListSections(ctx context.Cont
 			return ec.resolvers.Mutation().UnlockAllTaskListSections(rctx, fc.Args["modelPlanID"].(uuid.UUID))
 		}
 		directive1 := func(ctx context.Context) (interface{}, error) {
-			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_ADMIN_USER")
+			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_ASSESSMENT")
 			if err != nil {
 				return nil, err
 			}
@@ -13852,7 +13852,7 @@ func (ec *executionContext) _Mutation_updatePlanPayments(ctx context.Context, fi
 			return ec.resolvers.Mutation().UpdatePlanPayments(rctx, fc.Args["id"].(uuid.UUID), fc.Args["changes"].(map[string]interface{}))
 		}
 		directive1 := func(ctx context.Context) (interface{}, error) {
-			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_BASE_USER")
+			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
 			if err != nil {
 				return nil, err
 			}
@@ -34919,7 +34919,7 @@ func (ec *executionContext) _Subscription_onTaskListSectionLocksChanged(ctx cont
 			return ec.resolvers.Subscription().OnTaskListSectionLocksChanged(rctx, fc.Args["modelPlanID"].(uuid.UUID))
 		}
 		directive1 := func(ctx context.Context) (interface{}, error) {
-			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_BASE_USER")
+			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
 			if err != nil {
 				return nil, err
 			}

@@ -1,42 +1,58 @@
-import { ADMIN_DEV, ADMIN_PROD, BASIC_PROD } from 'constants/jobCodes';
+import { ASSESSMENT, BASIC } from 'constants/jobCodes';
 import { Flags } from 'types/flags';
 
-import { isAdmin, isBasicUser } from './user';
+import { isAssessment, isBasicUser } from './user';
 
 describe('user', () => {
-  describe('isAdmin', () => {
-    describe('groups', () => {
-      const flags = {} as Flags;
-      describe('dev job code exists in groups', () => {
-        const groups = [ADMIN_DEV];
-
-        it('returns true', () => {
-          expect(isAdmin(groups, flags)).toBe(true);
-        });
+  describe('isAssessment', () => {
+    const defaultFlags = {} as Flags;
+    describe('only user job code exists in groups', () => {
+      const groups = [BASIC];
+      it('returns false', () => {
+        expect(isAssessment(groups, defaultFlags)).toBe(false);
       });
+    });
 
-      describe('prod job code exists in groups', () => {
-        const groups = [ADMIN_PROD];
-
-        it('returns true', () => {
-          expect(isAdmin(groups, flags)).toBe(true);
-        });
+    describe('only assessment job code', () => {
+      const groups = [ASSESSMENT];
+      it('returns true', () => {
+        expect(isAssessment(groups, defaultFlags)).toBe(true);
       });
+    });
 
-      describe('no admin job code exists in groups', () => {
-        const groups = [BASIC_PROD];
+    describe('both job codes', () => {
+      const groups = [BASIC, ASSESSMENT];
+      it('returns true', () => {
+        expect(isAssessment(groups, defaultFlags)).toBe(true);
+      });
+    });
 
-        it('returns false', () => {
-          expect(isAdmin(groups, flags)).toBe(false);
-        });
+    describe('no job code exists in groups', () => {
+      const groups: Array<String> = [];
+      it('returns false', () => {
+        expect(isAssessment(groups, defaultFlags)).toBe(false);
       });
     });
   });
 
   describe('isBasicUser', () => {
     const defaultFlags = {} as Flags;
-    describe('prod user job code exists in groups', () => {
-      const groups = [BASIC_PROD];
+    describe('only user job code exists in groups', () => {
+      const groups = [BASIC];
+      it('returns true', () => {
+        expect(isBasicUser(groups, defaultFlags)).toBe(true);
+      });
+    });
+
+    describe('only assessment job code', () => {
+      const groups = [ASSESSMENT];
+      it('returns false', () => {
+        expect(isBasicUser(groups, defaultFlags)).toBe(false);
+      });
+    });
+
+    describe('both job codes', () => {
+      const groups = [BASIC, ASSESSMENT];
       it('returns true', () => {
         expect(isBasicUser(groups, defaultFlags)).toBe(true);
       });
@@ -44,8 +60,8 @@ describe('user', () => {
 
     describe('no job code exists in groups', () => {
       const groups: Array<String> = [];
-      it('returns true', () => {
-        expect(isBasicUser(groups, defaultFlags)).toBe(true);
+      it('returns false', () => {
+        expect(isBasicUser(groups, defaultFlags)).toBe(false);
       });
     });
   });

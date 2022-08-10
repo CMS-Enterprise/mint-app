@@ -88,7 +88,6 @@ func (s Server) NewCEDARClientCheck() {
 
 // OktaClientConfig is the okta client configuration
 type OktaClientConfig struct {
-	AltJobCodes  bool
 	OktaClientID string
 	OktaIssuer   string
 }
@@ -101,7 +100,6 @@ func (s Server) NewOktaClientConfig() OktaClientConfig {
 	return OktaClientConfig{
 		OktaClientID: s.Config.GetString(appconfig.OktaClientID),
 		OktaIssuer:   s.Config.GetString(appconfig.OktaIssuer),
-		AltJobCodes:  s.Config.GetBool(appconfig.AltJobCodes),
 	}
 }
 

@@ -51,7 +51,7 @@ const Home = () => {
               </p>
               <UswdsReactLink
                 className={classnames('usa-button', {
-                  'usa-button--outline': user.isAdmin(userGroups, flags)
+                  'usa-button--outline': user.isAssessment(userGroups, flags)
                 })}
                 variant="unstyled"
                 to="/models/steps-overview"
@@ -62,7 +62,7 @@ const Home = () => {
             <hr className="home__hr margin-top-4" aria-hidden />
             <div className="mint-header__basic">
               <h2 className="margin-top-4">
-                {user.isAdmin(userGroups, flags)
+                {user.isAssessment(userGroups, flags)
                   ? t('requestsTable.admin.heading')
                   : t('requestsTable.basic.heading')}
               </h2>
