@@ -7,7 +7,7 @@ const ModelPlan = () => {
   return (
     <GridContainer>
       <Grid desktop={{ col: 12 }}>
-        <DraftModelPlansTable />
+        <DraftModelPlansTable readOnly />
       </Grid>
     </GridContainer>
   );
