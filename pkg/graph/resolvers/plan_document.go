@@ -4,6 +4,7 @@ import (
 	"github.com/google/uuid"
 	"go.uber.org/zap"
 
+	"github.com/cmsgov/mint-app/pkg/authentication"
 	"github.com/cmsgov/mint-app/pkg/graph/model"
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/storage"
@@ -30,10 +31,10 @@ func PlanDocumentCreate(
 	logger *zap.Logger,
 	document *models.PlanDocument,
 	documentURL *string,
-	principal string,
+	principal authentication.Principal,
 	store *storage.Store,
 	s3Client *upload.S3Client) (*model.PlanDocumentPayload, error) {
-	document, err := store.PlanDocumentCreate(logger, principal, document, documentURL, s3Client)
+	document, err := store.PlanDocumentCreate(logger, principal.ID(), document, documentURL, s3Client)
 	if err != nil {
 		return nil, genericmodel.HandleModelUpdateError(logger, err, document)
 	}
@@ -62,22 +63,24 @@ func PlanDocumentsReadByModelPlanID(logger *zap.Logger, id uuid.UUID, store *sto
 }
 
 // PlanDocumentUpdate implements resolver logic to update a plan milestones object
-func PlanDocumentUpdate(logger *zap.Logger, s3Client *upload.S3Client, input *models.PlanDocument, principal *string, store *storage.Store) (*model.PlanDocumentPayload, error) {
-	input.ModifiedBy = principal
+func PlanDocumentUpdate(logger *zap.Logger, s3Client *upload.S3Client, input *models.PlanDocument, principal authentication.Principal, store *storage.Store) (*model.PlanDocumentPayload, error) {
+	euaid := principal.ID()
+	input.ModifiedBy = &euaid
 
 	document, err := store.PlanDocumentUpdate(logger, input)
 	if err != nil {
 		return nil, genericmodel.HandleModelUpdateError(logger, err, input)
 	}
 
-	document.ModifiedBy = principal
+	document.ModifiedBy = &euaid
 
 	return createDocumentPayload(s3Client, document)
 }
 
 // PlanDocumentDelete implements resolver logic to update a plan document object
-func PlanDocumentDelete(logger *zap.Logger, input *models.PlanDocument, principal *string, store *storage.Store) (int, error) {
-	input.ModifiedBy = principal
+func PlanDocumentDelete(logger *zap.Logger, input *models.PlanDocument, principal authentication.Principal, store *storage.Store) (int, error) {
+	euaid := principal.ID()
+	input.ModifiedBy = &euaid
 
 	sqlResult, err := store.PlanDocumentDelete(logger, input.ID)
 	if err != nil {

@@ -4,12 +4,13 @@ import (
 	"github.com/google/uuid"
 	"go.uber.org/zap"
 
+	"github.com/cmsgov/mint-app/pkg/authentication"
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/storage"
 )
 
 // UpdatePlanBasics implements resolver logic to update a plan basics object
-func UpdatePlanBasics(logger *zap.Logger, id uuid.UUID, changes map[string]interface{}, principal string, store *storage.Store) (*models.PlanBasics, error) {
+func UpdatePlanBasics(logger *zap.Logger, id uuid.UUID, changes map[string]interface{}, principal authentication.Principal, store *storage.Store) (*models.PlanBasics, error) {
 	// Get existing basics
 	existing, err := store.PlanBasicsGetByID(logger, id)
 	if err != nil {
@@ -26,8 +27,8 @@ func UpdatePlanBasics(logger *zap.Logger, id uuid.UUID, changes map[string]inter
 }
 
 // PlanBasicsGetByModelPlanID implements resolver logic to get plan basics by a model plan ID
-func PlanBasicsGetByModelPlanID(logger *zap.Logger, principal *string, modelPlanID uuid.UUID, store *storage.Store) (*models.PlanBasics, error) {
-	plan, err := store.PlanBasicsGetByModelPlanID(logger, principal, modelPlanID)
+func PlanBasicsGetByModelPlanID(logger *zap.Logger, modelPlanID uuid.UUID, store *storage.Store) (*models.PlanBasics, error) {
+	plan, err := store.PlanBasicsGetByModelPlanID(logger, modelPlanID)
 	if err != nil {
 		return nil, err
 	}

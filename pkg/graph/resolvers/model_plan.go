@@ -4,6 +4,7 @@ import (
 	"github.com/google/uuid"
 	"go.uber.org/zap"
 
+	"github.com/cmsgov/mint-app/pkg/authentication"
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/storage"
 )
@@ -110,7 +111,7 @@ func ModelPlanCreate(logger *zap.Logger, modelName string, store *storage.Store,
 }
 
 // ModelPlanUpdate implements resolver logic to update a model plan
-func ModelPlanUpdate(logger *zap.Logger, id uuid.UUID, changes map[string]interface{}, principal string, store *storage.Store) (*models.ModelPlan, error) {
+func ModelPlanUpdate(logger *zap.Logger, id uuid.UUID, changes map[string]interface{}, principal authentication.Principal, store *storage.Store) (*models.ModelPlan, error) {
 	// Get existing plan
 	existingPlan, err := store.ModelPlanGetByID(logger, id)
 	if err != nil {
@@ -131,7 +132,7 @@ func ModelPlanUpdate(logger *zap.Logger, id uuid.UUID, changes map[string]interf
 }
 
 // ModelPlanGetByID implements resolver logic to get a model plan by its ID
-func ModelPlanGetByID(logger *zap.Logger, principal string, id uuid.UUID, store *storage.Store) (*models.ModelPlan, error) {
+func ModelPlanGetByID(logger *zap.Logger, id uuid.UUID, store *storage.Store) (*models.ModelPlan, error) {
 	plan, err := store.ModelPlanGetByID(logger, id)
 	if err != nil {
 		return nil, err
@@ -142,8 +143,8 @@ func ModelPlanGetByID(logger *zap.Logger, principal string, id uuid.UUID, store 
 }
 
 // ModelPlanCollectionByUser implements resolver logic to get a list of model plans by who's a collaborator on them (TODO)
-func ModelPlanCollectionByUser(logger *zap.Logger, principal string, store *storage.Store) ([]*models.ModelPlan, error) {
-	plans, err := store.ModelPlanCollectionByUser(logger, principal, false)
+func ModelPlanCollectionByUser(logger *zap.Logger, principal authentication.Principal, store *storage.Store) ([]*models.ModelPlan, error) {
+	plans, err := store.ModelPlanCollectionByUser(logger, principal.ID(), false)
 	if err != nil {
 		return nil, err
 	}

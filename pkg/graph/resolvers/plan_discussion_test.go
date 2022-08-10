@@ -16,7 +16,7 @@ func (suite *ResolverSuite) TestCreatePlanDiscussion() {
 		Content:     "This is a test comment",
 	}
 
-	result, err := CreatePlanDiscussion(suite.testConfigs.Logger, input, suite.testConfigs.UserInfo.EuaUserID, suite.testConfigs.Store)
+	result, err := CreatePlanDiscussion(suite.testConfigs.Logger, input, suite.testConfigs.Principal, suite.testConfigs.Store)
 	suite.NoError(err)
 	suite.NotNil(result.ID)
 	suite.EqualValues(plan.ID, result.ModelPlanID)
@@ -34,23 +34,21 @@ func (suite *ResolverSuite) TestUpdatePlanDiscussion() {
 		"content": "This is now updated! Thanks for looking at my test",
 		"status":  models.DiscussionAnswered,
 	}
-
-	updater := "UPDT"
-	result, err := UpdatePlanDiscussion(suite.testConfigs.Logger, discussion.ID, changes, updater, suite.testConfigs.Store)
+	result, err := UpdatePlanDiscussion(suite.testConfigs.Logger, discussion.ID, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
 
 	suite.NoError(err)
 	suite.EqualValues(discussion.ID, result.ID)
 	suite.EqualValues(changes["content"], result.Content)
 	suite.EqualValues(changes["status"], result.Status)
 	suite.EqualValues(suite.testConfigs.UserInfo.EuaUserID, result.CreatedBy)
-	suite.EqualValues(updater, *result.ModifiedBy)
+	suite.EqualValues(suite.testConfigs.Principal.EUAID, *result.ModifiedBy)
 }
 
 func (suite *ResolverSuite) TestDeletePlanDiscussion() {
 	plan := suite.createModelPlan("Test Plan")
 	discussion := suite.createPlanDiscussion(plan, "This is a test comment")
 
-	result, err := DeletePlanDiscussion(suite.testConfigs.Logger, discussion.ID, suite.testConfigs.UserInfo.EuaUserID, suite.testConfigs.Store)
+	result, err := DeletePlanDiscussion(suite.testConfigs.Logger, discussion.ID, suite.testConfigs.Principal, suite.testConfigs.Store)
 	suite.NoError(err)
 	suite.EqualValues(discussion, result)
 
@@ -65,7 +63,7 @@ func (suite *ResolverSuite) TestDeletePlanDiscussionWithReply() {
 	discussion := suite.createPlanDiscussion(plan, "This is a test comment")
 	_ = suite.createDiscussionReply(discussion, "This is a test reply", false)
 
-	_, err := DeletePlanDiscussion(suite.testConfigs.Logger, discussion.ID, suite.testConfigs.UserInfo.EuaUserID, suite.testConfigs.Store)
+	_, err := DeletePlanDiscussion(suite.testConfigs.Logger, discussion.ID, suite.testConfigs.Principal, suite.testConfigs.Store)
 	suite.Error(err)
 	suite.Contains(err.Error(), "violates foreign key constraint") // maybe a weak check, and should be a custom error type, but works for now
 }
@@ -80,7 +78,7 @@ func (suite *ResolverSuite) TestCreateDiscussionReply() {
 		Resolution:   true,
 	}
 
-	result, err := CreateDiscussionReply(suite.testConfigs.Logger, input, suite.testConfigs.UserInfo.EuaUserID, suite.testConfigs.Store)
+	result, err := CreateDiscussionReply(suite.testConfigs.Logger, input, suite.testConfigs.Principal, suite.testConfigs.Store)
 	suite.NoError(err)
 	suite.NotNil(result.ID)
 	suite.EqualValues(discussion.ID, result.DiscussionID)
@@ -100,14 +98,13 @@ func (suite *ResolverSuite) TestUpdateDiscussionReply() {
 		"resolution": true,
 	}
 
-	updater := "UPDT"
-	result, err := UpdateDiscussionReply(suite.testConfigs.Logger, reply.ID, changes, updater, suite.testConfigs.Store)
+	result, err := UpdateDiscussionReply(suite.testConfigs.Logger, reply.ID, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
 
 	suite.NoError(err)
 	suite.EqualValues(changes["content"], result.Content)
 	suite.EqualValues(changes["resolution"], result.Resolution)
 	suite.EqualValues(suite.testConfigs.UserInfo.EuaUserID, result.CreatedBy)
-	suite.EqualValues(updater, *result.ModifiedBy)
+	suite.EqualValues(suite.testConfigs.Principal.EUAID, *result.ModifiedBy)
 }
 
 func (suite *ResolverSuite) TestDiscussionReplyCollectionByDiscusionID() {
@@ -160,7 +157,7 @@ func (suite *ResolverSuite) TestDeleteDiscussionReply() {
 	reply := suite.createDiscussionReply(discussion, "This is a test reply", false)
 	_ = suite.createDiscussionReply(discussion, "This is another test reply", false)
 
-	_, err := DeleteDiscussionReply(suite.testConfigs.Logger, reply.ID, suite.testConfigs.UserInfo.EuaUserID, suite.testConfigs.Store)
+	_, err := DeleteDiscussionReply(suite.testConfigs.Logger, reply.ID, suite.testConfigs.Principal, suite.testConfigs.Store)
 	suite.NoError(err)
 
 	// Should only have 1 left now
