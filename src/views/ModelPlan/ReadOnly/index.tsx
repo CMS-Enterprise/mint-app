@@ -73,7 +73,7 @@ const ReadOnly = () => {
           </PageHeading>
 
           <CollapsableLink
-            className="margin-top-2 padding-0"
+            className="margin-top-3 padding-0"
             eyeIcon
             startOpen
             labelPosition="bottom"
@@ -123,7 +123,7 @@ const ReadOnly = () => {
                   definition={t('summary.keyCharacteristics')}
                 />
                 <DescriptionTerm
-                  className="font-body-lg line-height-sans-2 margin-0"
+                  className="font-body-lg line-height-sans-2 margin-bottom-0"
                   term="this is description terms"
                 />
               </Grid>
@@ -133,27 +133,33 @@ const ReadOnly = () => {
                   definition={t('summary.modelLeads')}
                 />
                 <DescriptionTerm
-                  className="font-body-lg line-height-sans-2 margin-0"
+                  className="font-body-lg line-height-sans-2 margin-bottom-0"
                   term="this is description terms"
                 />
               </Grid>
-              <Grid desktop={{ col: 6 }} className="margin-bottom-2">
+              <Grid
+                desktop={{ col: 6 }}
+                className="margin-bottom-2 desktop:margin-bottom-0"
+              >
                 <DescriptionDefinition
                   className="font-body-sm"
                   definition={t('summary.modelStartDate')}
                 />
                 <DescriptionTerm
-                  className="font-body-lg line-height-sans-2 margin-0"
+                  className="font-body-lg line-height-sans-2 margin-bottom-0"
                   term="July 27, 2015"
                 />
               </Grid>
-              <Grid desktop={{ col: 6 }} className="margin-bottom-2">
+              <Grid
+                desktop={{ col: 6 }}
+                className="margin-bottom-2 desktop:margin-bottom-0"
+              >
                 <DescriptionDefinition
                   className="font-body-sm"
                   definition={t('summary.crAndTdls')}
                 />
                 <DescriptionTerm
-                  className="font-body-lg line-height-sans-2 margin-0"
+                  className="font-body-lg line-height-sans-2 margin-bottom-0"
                   term="December 4, 2021"
                 />
               </Grid>
