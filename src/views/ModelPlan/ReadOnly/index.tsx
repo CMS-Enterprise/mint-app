@@ -117,30 +117,27 @@ const ReadOnly = () => {
               )}
             </div>
             <Grid row className="margin-top-3">
-              <Grid desktop={{ col: 6 }} className="margin-bottom-2">
+              <Grid col={6} className="margin-bottom-2">
                 <DescriptionDefinition
                   className="font-body-sm"
                   definition={t('summary.keyCharacteristics')}
                 />
                 <DescriptionTerm
                   className="font-body-lg line-height-sans-2 margin-bottom-0"
-                  term="this is description terms"
+                  term="this is description termasdfasjsd fs"
                 />
               </Grid>
-              <Grid desktop={{ col: 6 }} className="margin-bottom-2">
+              <Grid col={6} className="margin-bottom-2">
                 <DescriptionDefinition
                   className="font-body-sm"
                   definition={t('summary.modelLeads')}
                 />
                 <DescriptionTerm
                   className="font-body-lg line-height-sans-2 margin-bottom-0"
-                  term="this is description terms"
+                  term="this is description termasdfasdfasdfasdfasd lakjsdlfkj lkajsd fs"
                 />
               </Grid>
-              <Grid
-                desktop={{ col: 6 }}
-                className="margin-bottom-2 desktop:margin-bottom-0"
-              >
+              <Grid col={6} className="margin-bottom-2 desktop:margin-bottom-0">
                 <DescriptionDefinition
                   className="font-body-sm"
                   definition={t('summary.modelStartDate')}
@@ -150,10 +147,7 @@ const ReadOnly = () => {
                   term="July 27, 2015"
                 />
               </Grid>
-              <Grid
-                desktop={{ col: 6 }}
-                className="margin-bottom-2 desktop:margin-bottom-0"
-              >
+              <Grid col={6} className="margin-bottom-2 desktop:margin-bottom-0">
                 <DescriptionDefinition
                   className="font-body-sm"
                   definition={t('summary.crAndTdls')}
