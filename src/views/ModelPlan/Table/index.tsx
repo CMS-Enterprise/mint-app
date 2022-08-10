@@ -38,9 +38,10 @@ import './index.scss';
 type TableProps = {
   data: DraftModelPlanType[];
   hiddenColumns?: string[];
+  readOnly?: boolean;
 };
 
-const Table = ({ data, hiddenColumns }: TableProps) => {
+const Table = ({ data, hiddenColumns, readOnly }: TableProps) => {
   const { t } = useTranslation('home');
 
   const columns = useMemo(() => {
@@ -49,11 +50,10 @@ const Table = ({ data, hiddenColumns }: TableProps) => {
         Header: t('requestsTable.headers.name'),
         accessor: 'modelName',
         Cell: ({ row, value }: any) => {
-          return (
-            <UswdsReactLink to={`/models/${row.original.id}/task-list`}>
-              {value}
-            </UswdsReactLink>
-          );
+          const href = readOnly
+            ? `/models/${row.original.id}/read-only`
+            : `/models/${row.original.id}/task-list`;
+          return <UswdsReactLink to={href}>{value}</UswdsReactLink>;
         }
       },
       {
@@ -295,9 +295,13 @@ const Table = ({ data, hiddenColumns }: TableProps) => {
 
 type DraftModelTableProps = {
   hiddenColumns?: string[];
+  readOnly?: boolean;
 };
 
-const DraftModelPlansTable = ({ hiddenColumns }: DraftModelTableProps) => {
+const DraftModelPlansTable = ({
+  hiddenColumns,
+  readOnly
+}: DraftModelTableProps) => {
   const { error, loading, data: modelPlans } = useQuery<GetDraftModelPlansType>(
     GetDraftModelPlans
   );
@@ -312,7 +316,7 @@ const DraftModelPlansTable = ({ hiddenColumns }: DraftModelTableProps) => {
     return <div>{JSON.stringify(error)}</div>;
   }
 
-  return <Table data={data} hiddenColumns={hiddenColumns} />;
+  return <Table data={data} hiddenColumns={hiddenColumns} readOnly />;
 };
 
 export default DraftModelPlansTable;
