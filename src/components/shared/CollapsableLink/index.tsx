@@ -6,7 +6,6 @@ import {
   IconVisibilityOff,
   IconVisiblity
 } from '@trussworks/react-uswds';
-import classnames from 'classnames';
 
 import './index.scss';
 
