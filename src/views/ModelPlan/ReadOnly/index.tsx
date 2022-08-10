@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
+  Alert,
   Button,
   Grid,
   GridContainer,
@@ -18,6 +19,7 @@ import {
   DescriptionDefinition,
   DescriptionTerm
 } from 'components/shared/DescriptionGroup';
+import SectionWrapper from 'components/shared/SectionWrapper';
 import { ModelStatus } from 'types/graphql-global-types';
 
 import TaskListStatus from '../TaskList/_components/TaskListStatus';
@@ -158,7 +160,7 @@ const ReadOnly = () => {
           </CollapsableLink>
         </GridContainer>
       </SummaryBox>
-      <div className="model-plan-status-bar bg-base-lightest">
+      <SectionWrapper className="model-plan-status-bar bg-base-lightest">
         <GridContainer>
           <div className="padding-y-1">
             <TaskListStatus
@@ -171,7 +173,12 @@ const ReadOnly = () => {
             />
           </div>
         </GridContainer>
-      </div>
+      </SectionWrapper>
+      <SectionWrapper className="model-plan-alert-wrapper">
+        <Alert type="warning" className="margin-bottom-5 desktop:margin-y-3">
+          {h('alert')}
+        </Alert>
+      </SectionWrapper>
     </MainContent>
   );
 };
