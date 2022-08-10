@@ -74,7 +74,11 @@ const AppRoutes = () => {
       {/* Model Routes */}
       <SecureRoute path="/models" exact component={ModelPlan} />
 
-      <SecureRoute path="/models/read-only" exact component={ReadOnly} />
+      <SecureRoute
+        path="/models/:modelID/read-only"
+        exact
+        component={ReadOnly}
+      />
 
       <SecureRoute
         path="/models/steps-overview"

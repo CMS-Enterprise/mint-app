@@ -14,11 +14,11 @@ export type NavigationProps = {
 
 export const navLinks = () => [
   {
-    link: '/models',
+    link: '/',
     label: 'home'
   },
   {
-    link: '/models/read-only',
+    link: '/models',
     label: 'models'
   },
   {
