@@ -85,22 +85,19 @@ const SubscriptionWrapper = ({ children }: SubscriptionWrapperProps) => {
   });
 
   // useLazyQuery hook to init query and create subscription in the presence of a new model plan id
-  const [getTaskListLocks, { data, loading, subscribeToMore }] = useLazyQuery(
+  const [getTaskListLocks, { data, subscribeToMore }] = useLazyQuery(
     GetTaskListSubscriptions
   );
-
-  console.log(subscriptionContextData.current);
-  // console.log(loading);
 
   useEffect(() => {
     if (modelID && validModelID && subscribeToMore) {
       // useLazyQuery hook to fetch existing subscription data on new modelID
-      if (!data && !loading) {
-        getTaskListLocks({ variables: { modelPlanID: modelID } });
-      }
+
+      getTaskListLocks({ variables: { modelPlanID: modelID } });
+
       if (data) {
         // Sets the initial lock statuses once useLazyQuery data is fetched
-        subscriptionContextData.current = { ...data, loading };
+        subscriptionContextData.current = { ...data, loading: false };
       }
 
       if (!subscribed.current) {
@@ -132,7 +129,7 @@ const SubscriptionWrapper = ({ children }: SubscriptionWrapperProps) => {
             // Formatting lock object to mirror prev updateQuery param
             const formattedSubscriptionContext = {
               taskListSectionLocks: updatedSubscriptionContext,
-              loading
+              loading: false
             };
 
             subscriptionContextData.current = formattedSubscriptionContext;
@@ -149,7 +146,6 @@ const SubscriptionWrapper = ({ children }: SubscriptionWrapperProps) => {
     modelID,
     validModelID,
     data,
-    loading,
     getTaskListLocks,
     subscribeToMore,
     subscribed

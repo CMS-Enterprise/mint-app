@@ -48,7 +48,7 @@ const LockedTaskListSection = () => {
 
       {!error ? (
         <div className="margin-y-7">
-          <PageHeading className="margin-bottom-2">
+          <PageHeading className="margin-bottom-2" data-testid="page-locked">
             {t('lockedHeading')}
           </PageHeading>
           <p>{t('lockedSubheading')}</p>
@@ -63,7 +63,7 @@ const LockedTaskListSection = () => {
         </div>
       ) : (
         <div className="margin-y-7">
-          <PageHeading className="margin-bottom-2">
+          <PageHeading className="margin-bottom-2" data-testid="page-error">
             {t('lockErrorHeading')}
           </PageHeading>
           <p>{t('lockErrorInfo')}</p>

@@ -124,6 +124,8 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
     lockState = LockStatus.CANT_LOCK;
   }
 
+  console.log(lockState);
+
   // Checks the location before unmounting to see if lock should be unlocked
   useEffect(() => {
     return () => {
