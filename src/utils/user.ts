@@ -1,8 +1,8 @@
-import { ADMIN_DEV, ADMIN_PROD, BASIC_PROD } from 'constants/jobCodes';
+import { ASSESSMENT, BASIC } from 'constants/jobCodes';
 import { Flags } from 'types/flags';
 
-export const isAdmin = (groups: Array<String> = [], flags: Flags) => {
-  if (groups.includes(ADMIN_DEV) || groups.includes(ADMIN_PROD)) {
+export const isAssessment = (groups: Array<String> = [], flags: Flags) => {
+  if (groups.includes(ASSESSMENT)) {
     return true;
   }
 
@@ -10,20 +10,15 @@ export const isAdmin = (groups: Array<String> = [], flags: Flags) => {
 };
 
 export const isBasicUser = (groups: Array<String> = [], flags: Flags) => {
-  if (groups.includes(BASIC_PROD)) {
+  if (groups.includes(BASIC)) {
     return true;
   }
-  if (groups.length === 0) {
-    return true;
-  }
-  if (!isAdmin(groups, flags)) {
-    return true;
-  }
+
   return false;
 };
 
 const user = {
-  isAdmin,
+  isAssessment,
   isBasicUser
 };
 

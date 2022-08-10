@@ -16,15 +16,15 @@ func HasRole(ctx context.Context, role model.Role) (bool, error) {
 	logger := appcontext.ZLogger(ctx)
 	principal := appcontext.Principal(ctx)
 	switch role {
-	case model.RoleMintBaseUser:
-		if !principal.AllowMINT() {
+	case model.RoleMintUser:
+		if !principal.AllowUSER() {
 			logger.Info("does not have MINT job code")
 			return false, nil
 		}
 		logger.Info("user authorized as MINT user", zap.Bool("Authorized", true))
 		return true, nil
-	case model.RoleMintAdminUser:
-		if !principal.AllowADMIN() {
+	case model.RoleMintAssessment:
+		if !principal.AllowASSESSMENT() {
 			logger.Info("does not have ADMIN job code")
 			return false, nil
 		}
@@ -47,15 +47,4 @@ func IsCollaborator(ctx context.Context, modelPlanID uuid.UUID) (bool, error) {
 
 	return true, nil
 
-}
-
-// AuthorizeHasMINTRole authorizes that the user can use MINT
-func AuthorizeHasMINTRole(ctx context.Context) (bool, error) {
-	return HasRole(ctx, model.RoleMintBaseUser)
-}
-
-// AuthorizeRequireADMINJobCode authorizes a user as being a member of the
-// ADMIN (MINT Admin Team)
-func AuthorizeRequireADMINJobCode(ctx context.Context) (bool, error) {
-	return HasRole(ctx, model.RoleMintAdminUser)
 }

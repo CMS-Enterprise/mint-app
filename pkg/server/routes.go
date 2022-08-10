@@ -50,7 +50,6 @@ func (s *Server) routes(
 	oktaAuthenticationMiddleware := okta.NewOktaAuthenticationMiddleware(
 		handlers.NewHandlerBase(s.logger),
 		jwtVerifier,
-		oktaConfig.AltJobCodes,
 	)
 
 	s.router.Use(
@@ -240,19 +239,4 @@ func (s *Server) routes(
 			return nil
 		})
 	}
-	// endpoint for short-lived backfill process
-	// backfillHandler := handlers.NewBackfillHandler(
-	// 	base,
-	// 	services.NewBackfill(
-	// 		serviceConfig,
-	// 		store.FetchSystemIntakeByID,
-	// 		store.FetchSystemIntakeByLifecycleID,
-	// 		store.CreateSystemIntake,
-	// 		store.UpdateSystemIntake,
-	// 		store.CreateNote,
-	// 		services.AuthorizeHasEASiRole,
-	// 	),
-	// )
-	// api.Handle("/backfill", backfillHandler.Handle())
-
 }

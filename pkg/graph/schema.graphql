@@ -1325,97 +1325,84 @@ Mutations definition for the schema
 """
 type Mutation {
 createModelPlan(modelName: String!): ModelPlan!
-@hasRole(role: MINT_BASE_USER)
+@hasRole(role: MINT_USER)
 
 updateModelPlan(id: UUID!, changes: ModelPlanChanges!): ModelPlan!
-@isCollaborator
-@hasRole(role: MINT_BASE_USER)
+@hasRole(role: MINT_USER)
 
 createPlanCollaborator(input: PlanCollaboratorCreateInput!): PlanCollaborator!
-@isCollaborator
-@hasRole(role: MINT_BASE_USER)
+@hasRole(role: MINT_USER)
 
 updatePlanCollaborator(id: UUID!, newRole: TeamRole!): PlanCollaborator!
-@isCollaborator
-@hasRole(role: MINT_BASE_USER)
+@hasRole(role: MINT_USER)
 
 deletePlanCollaborator(id: UUID!): PlanCollaborator!
-@hasRole(role: MINT_BASE_USER)
+@hasRole(role: MINT_USER)
 
 updatePlanBasics(id: UUID!, changes: PlanBasicsChanges!): PlanBasics!
-@isCollaborator
-@hasRole(role: MINT_BASE_USER)
+@hasRole(role: MINT_USER)
 
 updatePlanGeneralCharacteristics(id: UUID!, changes: PlanGeneralCharacteristicsChanges!): PlanGeneralCharacteristics!
-@isCollaborator
-@hasRole(role: MINT_BASE_USER)
+@hasRole(role: MINT_USER)
 
 updatePlanBeneficiaries(id: UUID!, changes: PlanBeneficiariesChanges!): PlanBeneficiaries!
-@isCollaborator
-@hasRole(role: MINT_BASE_USER)
+@hasRole(role: MINT_USER)
 
 updatePlanParticipantsAndProviders(id: UUID!, changes: PlanParticipantsAndProvidersChanges!): PlanParticipantsAndProviders!
-@isCollaborator
-@hasRole(role: MINT_BASE_USER)
+@hasRole(role: MINT_USER)
 
 updatePlanItTools(id: UUID!, changes:PlanITToolsChanges!): PlanITTools!
-@isCollaborator
-@hasRole(role: MINT_BASE_USER)
+@hasRole(role: MINT_USER)
 
 updatePlanOpsEvalAndLearning(id: UUID!, changes: PlanOpsEvalAndLearningChanges!): PlanOpsEvalAndLearning!
-@isCollaborator
-@hasRole(role: MINT_BASE_USER)
+@hasRole(role: MINT_USER)
 
 generatePresignedUploadURL(input: GeneratePresignedUploadURLInput!): GeneratePresignedUploadURLPayload!
-@hasRole(role: MINT_BASE_USER)
+@hasRole(role: MINT_USER)
 
 createPlanDocument(input: PlanDocumentInput!): PlanDocumentPayload!
-@hasRole(role: MINT_BASE_USER)
+@hasRole(role: MINT_USER)
 
 updatePlanDocument(input: PlanDocumentInput!): PlanDocumentPayload!
-@isCollaborator
-@hasRole(role: MINT_BASE_USER)
+@hasRole(role: MINT_USER)
 
 deletePlanDocument(input: PlanDocumentInput!): Int!
-@hasRole(role: MINT_BASE_USER)
+@hasRole(role: MINT_USER)
 
 createPlanDiscussion(input: PlanDiscussionCreateInput!): PlanDiscussion!
-@hasRole(role: MINT_BASE_USER)
+@hasRole(role: MINT_USER)
 
 updatePlanDiscussion(id: UUID!, changes: PlanDiscussionChanges!): PlanDiscussion!
-@isCollaborator
-@hasRole(role: MINT_BASE_USER)
+@hasRole(role: MINT_USER)
 
 deletePlanDiscussion(id: UUID!): PlanDiscussion!
-@hasRole(role: MINT_BASE_USER)
+@hasRole(role: MINT_USER)
 
 createDiscussionReply(input: DiscussionReplyCreateInput!): DiscussionReply!
-@isCollaborator
-@hasRole(role: MINT_BASE_USER)
+@hasRole(role: MINT_USER)
 
 updateDiscussionReply(id: UUID!, changes: DiscussionReplyChanges!): DiscussionReply!
-@isCollaborator
-@hasRole(role: MINT_BASE_USER)
+@hasRole(role: MINT_USER)
 
 deleteDiscussionReply(id: UUID!): DiscussionReply!
-@hasRole(role: MINT_BASE_USER)
+@hasRole(role: MINT_USER)
 
 lockTaskListSection(modelPlanID: UUID!, section: TaskListSection!): Boolean!
-@hasRole(role: MINT_BASE_USER)
+@hasRole(role: MINT_USER)
 
 unlockTaskListSection(modelPlanID: UUID!, section: TaskListSection!): Boolean!
-@hasRole(role: MINT_BASE_USER)
+@hasRole(role: MINT_USER)
 
 unlockAllTaskListSections(modelPlanID: UUID!): [TaskListSectionLockStatus!]!
-@hasRole(role: MINT_ADMIN_USER)
+@hasRole(role: MINT_ASSESSMENT)
 
 updatePlanPayments(id: UUID!, changes: PlanPaymentsChanges!): PlanPayments!
-@hasRole(role: MINT_BASE_USER)
+@hasRole(role: MINT_USER)
 }
 
 type Subscription {
   onTaskListSectionLocksChanged(modelPlanID: UUID!): TaskListSectionLockStatusChanged!
-  @hasRole(role: MINT_BASE_USER)
+  @hasRole(role: MINT_USER)
 }
 
 enum ChangeType {
@@ -2024,10 +2011,10 @@ enum Role {
   """
   A basic MINT user
   """
-  MINT_BASE_USER
+  MINT_USER
 
   """
-  A MINT admin user
+  A MINT assessment team user
   """
-  MINT_ADMIN_USER
+  MINT_ASSESSMENT
 }
