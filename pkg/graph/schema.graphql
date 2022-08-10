@@ -1996,8 +1996,6 @@ enum AnticipatedPaymentFrequencyType {
 
 directive @hasRole(role: Role!) on FIELD_DEFINITION
 
-directive @isCollaborator on FIELD_DEFINITION
-
 # https://gqlgen.com/config/#inline-config-with-directives
 directive @goModel(
   model: String

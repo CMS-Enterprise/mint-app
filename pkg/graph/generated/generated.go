@@ -57,8 +57,7 @@ type ResolverRoot interface {
 }
 
 type DirectiveRoot struct {
-	HasRole        func(ctx context.Context, obj interface{}, next graphql.Resolver, role model.Role) (res interface{}, err error)
-	IsCollaborator func(ctx context.Context, obj interface{}, next graphql.Resolver) (res interface{}, err error)
+	HasRole func(ctx context.Context, obj interface{}, next graphql.Resolver, role model.Role) (res interface{}, err error)
 }
 
 type ComplexityRoot struct {
@@ -7140,8 +7139,6 @@ enum AnticipatedPaymentFrequencyType {
 }
 
 directive @hasRole(role: Role!) on FIELD_DEFINITION
-
-directive @isCollaborator on FIELD_DEFINITION
 
 # https://gqlgen.com/config/#inline-config-with-directives
 directive @goModel(
