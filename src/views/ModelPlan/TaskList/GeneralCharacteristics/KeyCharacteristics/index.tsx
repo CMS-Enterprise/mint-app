@@ -17,6 +17,7 @@ import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
+import ITToolsWarning from 'components/ITToosWarning';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import Alert from 'components/shared/Alert';
@@ -399,6 +400,9 @@ const KeyCharacteristics = () => {
                       >
                         {t('reviewPlanBids')}
                       </Label>
+                      <ITToolsWarning
+                        route={`/models/${modelID}/task-list/it-tools/page-one`}
+                      />
                       <FieldErrorMsg>
                         {flatErrors.collectPlanBids}
                       </FieldErrorMsg>
@@ -445,6 +449,9 @@ const KeyCharacteristics = () => {
                       >
                         {t('manageEnrollment')}
                       </Label>
+                      <ITToolsWarning
+                        route={`/models/${modelID}/task-list/it-tools/page-one`}
+                      />
                       <FieldErrorMsg>
                         {flatErrors.managePartCDEnrollment}
                       </FieldErrorMsg>
@@ -491,6 +498,9 @@ const KeyCharacteristics = () => {
                       >
                         {t('updatedContact')}
                       </Label>
+                      <ITToolsWarning
+                        route={`/models/${modelID}/task-list/it-tools/page-one`}
+                      />
                       <FieldErrorMsg>
                         {flatErrors.planContactUpdated}
                       </FieldErrorMsg>
