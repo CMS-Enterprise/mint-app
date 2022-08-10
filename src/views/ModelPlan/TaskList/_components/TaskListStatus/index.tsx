@@ -5,6 +5,7 @@ import { IconEdit } from '@trussworks/react-uswds';
 import UswdsReactLink from 'components/LinkWrapper';
 import Tag from 'components/shared/Tag';
 import { ModelStatus } from 'types/graphql-global-types';
+import { formatDate } from 'utils/date';
 import { translateModelPlanStatus } from 'utils/modelPlan';
 
 type TaskListStatusProps = {
@@ -12,15 +13,18 @@ type TaskListStatusProps = {
   modelID: string;
   status: ModelStatus;
   updateLabel?: string;
+  modifiedDts?: string;
 };
 
 const TaskListStatus = ({
   icon,
   modelID,
   status,
-  updateLabel
+  updateLabel,
+  modifiedDts
 }: TaskListStatusProps) => {
   const { t } = useTranslation('modelPlanTaskList');
+  const { t: h } = useTranslation('generalReadOnly');
 
   return (
     <div className="display-flex flex-align-center" style={{ gap: '10px' }}>
@@ -28,6 +32,13 @@ const TaskListStatus = ({
       <Tag className="bg-base text-white margin-right-0">
         {translateModelPlanStatus(status)}
       </Tag>
+      {!!modifiedDts && (
+        <p className="margin-y-0 text-normal">
+          {h('lastUpdate')}
+          {formatDate(modifiedDts, 'M/d/yyyy')}
+        </p>
+      )}
+
       <div>
         <UswdsReactLink
           to={`/models/${modelID}/status`}
