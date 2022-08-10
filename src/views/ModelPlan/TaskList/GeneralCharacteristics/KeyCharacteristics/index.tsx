@@ -38,7 +38,8 @@ import { UpdatePlanGeneralCharacteristicsVariables } from 'queries/GeneralCharac
 import UpdatePlanGeneralCharacteristics from 'queries/GeneralCharacteristics/UpdatePlanGeneralCharacteristics';
 import {
   AlternativePaymentModelType,
-  KeyCharacteristic
+  KeyCharacteristic,
+  TaskStatus
 } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import {
@@ -84,6 +85,9 @@ const KeyCharacteristics = () => {
   } =
     data?.modelPlan?.generalCharacteristics ||
     ({} as KeyCharacteristicsFormType);
+
+  const itToolsStarted: boolean =
+    data?.modelPlan.itTools.status !== TaskStatus.READY;
 
   // If redirected from IT Tools, scrolls to the relevant question
   useScrollElement(!loading);
@@ -400,9 +404,11 @@ const KeyCharacteristics = () => {
                       >
                         {t('reviewPlanBids')}
                       </Label>
-                      <ITToolsWarning
-                        route={`/models/${modelID}/task-list/it-tools/page-one`}
-                      />
+                      {itToolsStarted && (
+                        <ITToolsWarning
+                          route={`/models/${modelID}/task-list/it-tools/page-one`}
+                        />
+                      )}
                       <FieldErrorMsg>
                         {flatErrors.collectPlanBids}
                       </FieldErrorMsg>
@@ -449,9 +455,11 @@ const KeyCharacteristics = () => {
                       >
                         {t('manageEnrollment')}
                       </Label>
-                      <ITToolsWarning
-                        route={`/models/${modelID}/task-list/it-tools/page-one`}
-                      />
+                      {itToolsStarted && (
+                        <ITToolsWarning
+                          route={`/models/${modelID}/task-list/it-tools/page-one`}
+                        />
+                      )}
                       <FieldErrorMsg>
                         {flatErrors.managePartCDEnrollment}
                       </FieldErrorMsg>
@@ -498,9 +506,11 @@ const KeyCharacteristics = () => {
                       >
                         {t('updatedContact')}
                       </Label>
-                      <ITToolsWarning
-                        route={`/models/${modelID}/task-list/it-tools/page-one`}
-                      />
+                      {itToolsStarted && (
+                        <ITToolsWarning
+                          route={`/models/${modelID}/task-list/it-tools/page-one`}
+                        />
+                      )}
                       <FieldErrorMsg>
                         {flatErrors.planContactUpdated}
                       </FieldErrorMsg>

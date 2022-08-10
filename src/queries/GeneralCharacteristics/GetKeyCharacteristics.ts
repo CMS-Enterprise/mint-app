@@ -20,6 +20,9 @@ export default gql`
         planContactUpdated
         planContactUpdatedNote
       }
+      itTools {
+        status
+      }
     }
   }
 `;
