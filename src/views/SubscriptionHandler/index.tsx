@@ -5,7 +5,7 @@
   Redirects locked and errors states to /locked-task-list-section view
  */
 
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 import { Redirect, useHistory, useLocation } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { useOktaAuth } from '@okta/okta-react';
@@ -78,9 +78,9 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
 
   const validModelID: boolean = isUUID(modelID);
 
-  const [prevPath, setPrevPath] = useState<string>('');
+  const prevPath = useRef<string>('');
   // Used in addtion to mutation loading states to catch delayed updates to the context
-  const [locking, setLocking] = useState<boolean>(false);
+  const locking = useRef<boolean>(false);
 
   let lockState: LockStatus;
 
@@ -101,8 +101,6 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
     { loading: removeLockLoading }
   ] = useMutation<UnlockTaskListSectionVariables>(UnlockTackListSection);
 
-  //   console.log(taskListSectionLocks);
-
   /**
    * Checks to see the status of task list section
    * Returns - 'LOCKED', 'UNLOCKED', 'OCCUPYING', or 'CANT_LOCK' (pages that don't require locking)
@@ -114,7 +112,7 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
     authState?.euaId &&
     !addLockLoading &&
     !removeLockLoading &&
-    !locking &&
+    !locking.current &&
     !loading
   ) {
     lockState = findLockedSection(
@@ -129,7 +127,7 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
   // Checks the location before unmounting to see if lock should be unlocked
   useEffect(() => {
     return () => {
-      setPrevPath(pathname);
+      prevPath.current = pathname;
     };
   }, [pathname]);
 
@@ -148,7 +146,7 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
 
   // Removes a section that is locked
   const removeLockedSection = (section: LockSectionType | undefined) => {
-    const prevModelID = prevPath.split('/')[2];
+    const prevModelID = prevPath.current.split('/')[2];
 
     // Check if the prev path was a part of a model plan
     if (section && isUUID(prevModelID)) {
@@ -173,7 +171,7 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
     taskListSectionLocks?.length > 0 &&
     !addLockLoading &&
     !removeLockLoading &&
-    !locking &&
+    !locking.current &&
     !loading
   ) {
     const lockedSection = taskListSectionLocks.find(
@@ -190,7 +188,7 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
     validModelID &&
     !addLockLoading &&
     !removeLockLoading &&
-    !locking &&
+    !locking.current &&
     !loading
   ) {
     const prevLockedSection = taskListSectionLocks.find(
@@ -203,7 +201,7 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
     // (Or any react-router redirect from one section directly to another)
     if (prevLockedSection) removeLockedSection(prevLockedSection);
 
-    setLocking(true);
+    locking.current = true;
 
     addLock({
       variables: {
@@ -218,7 +216,7 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
          * Occasionally mutation fires quickly twice, adding 2 to the ref count
          */
         setTimeout(() => {
-          setLocking(false);
+          locking.current = false;
         }, 100);
       })
       .catch(() => {
