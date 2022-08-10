@@ -73,7 +73,7 @@ const ReadOnly = () => {
           </PageHeading>
 
           <CollapsableLink
-            className="margin-top-3 padding-0"
+            className="margin-top-2 padding-0"
             eyeIcon
             startOpen
             labelPosition="bottom"
@@ -137,7 +137,6 @@ const ReadOnly = () => {
                   term="this is description terms"
                 />
               </Grid>
-              {/* Go live date */}
               <Grid desktop={{ col: 6 }} className="margin-bottom-2">
                 <DescriptionDefinition
                   className="font-body-sm"
@@ -148,7 +147,6 @@ const ReadOnly = () => {
                   term="July 27, 2015"
                 />
               </Grid>
-              {/* Most recent major change */}
               <Grid desktop={{ col: 6 }} className="margin-bottom-2">
                 <DescriptionDefinition
                   className="font-body-sm"
