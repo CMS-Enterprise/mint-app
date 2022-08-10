@@ -9,9 +9,14 @@ import { translateModelPlanStatus } from 'utils/modelPlan';
 type TaskListStatusProps = {
   modelID: string;
   status: ModelStatus;
+  updateLabel?: string;
 };
 
-const TaskListStatus = ({ modelID, status }: TaskListStatusProps) => {
+const TaskListStatus = ({
+  modelID,
+  status,
+  updateLabel
+}: TaskListStatusProps) => {
   const { t } = useTranslation('modelPlanTaskList');
 
   return (
@@ -22,7 +27,7 @@ const TaskListStatus = ({ modelID, status }: TaskListStatusProps) => {
       </Tag>
       <div>
         <UswdsReactLink to={`/models/${modelID}/status`}>
-          {t('update')}
+          {updateLabel ?? t('update')}
         </UswdsReactLink>
       </div>
     </div>

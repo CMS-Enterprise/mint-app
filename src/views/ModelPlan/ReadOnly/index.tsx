@@ -164,6 +164,7 @@ const ReadOnly = () => {
             <TaskListStatus
               modelID="823dffdc-e71e-48c2-bb2b-bb60a38b79b3"
               status={ModelStatus.PLAN_DRAFT}
+              updateLabel={h('updateStatus')}
             />
           </div>
         </GridContainer>
