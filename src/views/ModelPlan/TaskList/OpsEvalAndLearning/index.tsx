@@ -19,6 +19,7 @@ import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
+import ITToolsWarning from 'components/ITToosWarning';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
@@ -42,7 +43,8 @@ import {
   AgencyOrStateHelpType,
   CcmInvolvmentType,
   ContractorSupportType,
-  StakeholdersType
+  StakeholdersType,
+  TaskStatus
 } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import {
@@ -131,6 +133,9 @@ export const OpsEvalAndLearningContent = () => {
   } = data?.modelPlan?.opsEvalAndLearning || ({} as OpsEvalAndLearningFormType);
 
   const modelName = data?.modelPlan?.modelName || '';
+
+  const itToolsStarted: boolean =
+    data?.modelPlan.itTools.status !== TaskStatus.READY;
 
   // If redirected from IT Tools, scrolls to the relevant question
   useScrollElement(!loading);
@@ -402,6 +407,11 @@ export const OpsEvalAndLearningContent = () => {
                   <Label htmlFor="ops-eval-and-learning-help-desk-use">
                     {t('helpDesk')}
                   </Label>
+                  {itToolsStarted && (
+                    <ITToolsWarning
+                      route={`/models/${modelID}/task-list/it-tools/page-four`}
+                    />
+                  )}
                   <FieldErrorMsg>{flatErrors.helpdeskUse}</FieldErrorMsg>
                   <Fieldset>
                     {[true, false].map(key => (
@@ -533,6 +543,11 @@ export const OpsEvalAndLearningContent = () => {
                   <Label htmlFor="ops-eval-and-learning-iddoc-support">
                     {t('iddocSupport')}
                   </Label>
+                  {itToolsStarted && (
+                    <ITToolsWarning
+                      route={`/models/${modelID}/task-list/it-tools/page-four`}
+                    />
+                  )}
                   <p className="text-base margin-y-1">
                     {t('iddocSupportInfo')}
                   </p>

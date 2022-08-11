@@ -24,6 +24,9 @@ export default gql`
         appealOther
         appealNote
       }
+      itTools {
+        status
+      }
     }
   }
 `;

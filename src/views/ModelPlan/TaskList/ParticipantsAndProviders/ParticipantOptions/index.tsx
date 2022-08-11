@@ -18,6 +18,7 @@ import { Field, Form, Formik, FormikProps } from 'formik';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
+import ITToolsWarning from 'components/ITToosWarning';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import AutoSave from 'components/shared/AutoSave';
@@ -38,7 +39,8 @@ import UpdatePlanParticipantsAndProviders from 'queries/ParticipantsAndProviders
 import {
   ConfidenceType,
   ParticipantSelectionType,
-  RecruitmentType
+  RecruitmentType,
+  TaskStatus
 } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import {
@@ -83,6 +85,9 @@ export const ParticipantOptions = () => {
     ({} as ParticipantOptionsFormType);
 
   const modelName = data?.modelPlan?.modelName || '';
+
+  const itToolsStarted: boolean =
+    data?.modelPlan.itTools.status !== TaskStatus.READY;
 
   // If redirected from IT Tools, scrolls to the relevant question
   useScrollElement(!loading);
@@ -311,6 +316,11 @@ export const ParticipantOptions = () => {
                   <Label htmlFor="participants-and-providers-recruitment-method">
                     {t('recruitParticipants')}
                   </Label>
+                  {itToolsStarted && (
+                    <ITToolsWarning
+                      route={`/models/${modelID}/task-list/it-tools/page-two`}
+                    />
+                  )}
                   <FieldErrorMsg>{flatErrors.recruitmentMethod}</FieldErrorMsg>
                   <Fieldset>
                     {Object.keys(RecruitmentType)
@@ -370,6 +380,11 @@ export const ParticipantOptions = () => {
                   <Label htmlFor="participants-and-providers-selection-method">
                     {t('howWillYouSelect')}
                   </Label>
+                  {itToolsStarted && (
+                    <ITToolsWarning
+                      route={`/models/${modelID}/task-list/it-tools/page-two`}
+                    />
+                  )}
                   <FieldErrorMsg>{flatErrors.participants}</FieldErrorMsg>
                   <Field
                     as={MultiSelect}

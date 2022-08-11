@@ -17,6 +17,7 @@ import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
+import ITToolsWarning from 'components/ITToosWarning';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import AutoSave from 'components/shared/AutoSave';
@@ -38,7 +39,8 @@ import {
   CcmInvolvmentType,
   DataForMonitoringType,
   DataToSendParticipantsType,
-  EvaluationApproachType
+  EvaluationApproachType,
+  TaskStatus
 } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import {
@@ -90,6 +92,9 @@ const Evaluation = () => {
   } = data?.modelPlan?.opsEvalAndLearning || ({} as EvaluationFormType);
 
   const modelName = data?.modelPlan?.modelName || '';
+
+  const itToolsStarted: boolean =
+    data?.modelPlan.itTools.status !== TaskStatus.READY;
 
   // If redirected from IT Tools, scrolls to the relevant question
   useScrollElement(!loading);
@@ -243,6 +248,12 @@ const Evaluation = () => {
                         {t('evaluationApproach')}
                       </legend>
 
+                      {itToolsStarted && (
+                        <ITToolsWarning
+                          route={`/models/${modelID}/task-list/it-tools/page-five`}
+                        />
+                      )}
+
                       <FieldErrorMsg>
                         {flatErrors.evaluationApproaches}
                       </FieldErrorMsg>
@@ -385,6 +396,11 @@ const Evaluation = () => {
                   >
                     {t('dataNeeded')}
                   </Label>
+                  {itToolsStarted && (
+                    <ITToolsWarning
+                      route={`/models/${modelID}/task-list/it-tools/page-five`}
+                    />
+                  )}
 
                   <p className="text-base margin-y-1">{t('dataNeededInfo')}</p>
 

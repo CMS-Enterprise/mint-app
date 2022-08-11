@@ -17,6 +17,9 @@ export default gql`
         selectionOther
         selectionNote
       }
+      itTools {
+        status
+      }
     }
   }
 `;

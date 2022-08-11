@@ -17,6 +17,7 @@ import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
+import ITToolsWarning from 'components/ITToosWarning';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import AutoSave from 'components/shared/AutoSave';
@@ -35,7 +36,8 @@ import { UpdatePlanParticipantsAndProvidersVariables } from 'queries/Participant
 import UpdatePlanParticipantsAndProviders from 'queries/ParticipantsAndProviders/UpdatePlanParticipantsAndProviders';
 import {
   ParticipantCommunicationType,
-  ParticipantRiskType
+  ParticipantRiskType,
+  TaskStatus
 } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import {
@@ -77,6 +79,9 @@ export const Communication = () => {
     data?.modelPlan?.participantsAndProviders || ({} as CommunicationFormType);
 
   const modelName = data?.modelPlan?.modelName || '';
+
+  const itToolsStarted: boolean =
+    data?.modelPlan.itTools.status !== TaskStatus.READY;
 
   // If redirected from IT Tools, scrolls to the relevant question
   useScrollElement(!loading);
@@ -215,6 +220,11 @@ export const Communication = () => {
                       <legend className="usa-label">
                         {t('participantCommunication')}
                       </legend>
+                      {itToolsStarted && (
+                        <ITToolsWarning
+                          route={`/models/${modelID}/task-list/it-tools/page-three`}
+                        />
+                      )}
                       <FieldErrorMsg>
                         {flatErrors.communicationMethod}
                       </FieldErrorMsg>

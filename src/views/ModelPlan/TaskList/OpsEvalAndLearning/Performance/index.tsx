@@ -16,6 +16,7 @@ import { Field, Form, Formik, FormikProps } from 'formik';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
+import ITToolsWarning from 'components/ITToosWarning';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import AutoSave from 'components/shared/AutoSave';
@@ -31,7 +32,10 @@ import {
 } from 'queries/OpsEvalAndLearning/types/GetPerformance';
 import { UpdatePlanOpsEvalAndLearningVariables } from 'queries/OpsEvalAndLearning/types/UpdatePlanOpsEvalAndLearning';
 import UpdatePlanOpsEvalAndLearning from 'queries/OpsEvalAndLearning/UpdatePlanOpsEvalAndLearning';
-import { BenchmarkForPerformanceType } from 'types/graphql-global-types';
+import {
+  BenchmarkForPerformanceType,
+  TaskStatus
+} from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import {
   sortOtherEnum,
@@ -79,6 +83,9 @@ const Performance = () => {
   } = data?.modelPlan?.opsEvalAndLearning || ({} as PerformanceFormType);
 
   const modelName = data?.modelPlan?.modelName || '';
+
+  const itToolsStarted: boolean =
+    data?.modelPlan.itTools.status !== TaskStatus.READY;
 
   // If redirected from IT Tools, scrolls to the relevant question
   useScrollElement(!loading);
@@ -232,6 +239,11 @@ const Performance = () => {
                   <Label htmlFor="ops-eval-and-learning-benchmark-performance">
                     {t('establishBenchmark')}
                   </Label>
+                  {itToolsStarted && (
+                    <ITToolsWarning
+                      route={`/models/${modelID}/task-list/it-tools/page-four`}
+                    />
+                  )}
                   <FieldErrorMsg>
                     {flatErrors.benchmarkForPerformance}
                   </FieldErrorMsg>
@@ -268,6 +280,7 @@ const Performance = () => {
                   <Label htmlFor="ops-eval-and-learning-compute-performance">
                     {t('computeScores')}
                   </Label>
+
                   <FieldErrorMsg>
                     {flatErrors.computePerformanceScores}
                   </FieldErrorMsg>
@@ -416,7 +429,11 @@ const Performance = () => {
                   <Label htmlFor="ops-eval-and-learning-appeals">
                     {t('participantAppeal')}
                   </Label>
-
+                  {itToolsStarted && (
+                    <ITToolsWarning
+                      route={`/models/${modelID}/task-list/it-tools/page-five`}
+                    />
+                  )}
                   <Label
                     htmlFor="ops-eval-and-learning-appeal-performance"
                     className="text-normal margin-top-2"
