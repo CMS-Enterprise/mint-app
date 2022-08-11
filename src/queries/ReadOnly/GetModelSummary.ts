@@ -6,12 +6,10 @@ export default gql`
       modelName
       basics {
         goal
+        applicationsStart
       }
       generalCharacteristics {
         keyCharacteristics
-      }
-      basics {
-        applicationsStart
       }
       collaborators {
         fullName
