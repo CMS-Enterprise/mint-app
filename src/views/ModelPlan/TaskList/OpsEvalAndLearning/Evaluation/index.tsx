@@ -398,7 +398,7 @@ const Evaluation = () => {
                   </Label>
                   {itToolsStarted && (
                     <ITToolsWarning
-                      route={`/models/${modelID}/task-list/it-tools/page-five`}
+                      route={`/models/${modelID}/task-list/it-tools/page-six`}
                     />
                   )}
 

@@ -431,7 +431,7 @@ const Performance = () => {
                   </Label>
                   {itToolsStarted && (
                     <ITToolsWarning
-                      route={`/models/${modelID}/task-list/it-tools/page-six`}
+                      route={`/models/${modelID}/task-list/it-tools/page-five`}
                     />
                   )}
                   <Label
