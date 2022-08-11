@@ -28,6 +28,7 @@ import {
   GetModelSummary_modelPlan as GetModelSummaryTypes
 } from 'queries/ReadOnly/types/GetModelSummary';
 import { ModelStatus } from 'types/graphql-global-types';
+import { formatDate } from 'utils/date';
 import { NotFoundPartial } from 'views/NotFound';
 
 import TaskListStatus from '../TaskList/_components/TaskListStatus';
@@ -69,6 +70,9 @@ const ReadOnly = () => {
 
   const { modelName, basics, generalCharacteristics, collaborators } =
     data?.modelPlan || ({} as GetModelSummaryTypes);
+
+  const formatedApplicationStartDate =
+    basics?.applicationsStart && formatDate(basics?.applicationsStart);
 
   if ((!loading && error) || (!loading && !data?.modelPlan)) {
     return <NotFoundPartial />;
@@ -172,7 +176,7 @@ const ReadOnly = () => {
                 />
                 <DescriptionTerm
                   className="font-body-lg line-height-sans-2 margin-bottom-0"
-                  term=""
+                  term="COLLABORERS GOES HERE"
                 />
               </Grid>
               <Grid col={6} className="margin-bottom-2 desktop:margin-bottom-0">
@@ -182,7 +186,7 @@ const ReadOnly = () => {
                 />
                 <DescriptionTerm
                   className="font-body-lg line-height-sans-2 margin-bottom-0"
-                  term={basics?.applicationsStart ?? ''}
+                  term={formatedApplicationStartDate ?? ''}
                 />
               </Grid>
               <Grid col={6} className="margin-bottom-2 desktop:margin-bottom-0">
