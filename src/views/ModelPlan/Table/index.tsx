@@ -316,7 +316,9 @@ const DraftModelPlansTable = ({
     return <div>{JSON.stringify(error)}</div>;
   }
 
-  return <Table data={data} hiddenColumns={hiddenColumns} readOnly />;
+  return (
+    <Table data={data} hiddenColumns={hiddenColumns} readOnly={readOnly} />
+  );
 };
 
 export default DraftModelPlansTable;
