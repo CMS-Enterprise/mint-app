@@ -75,10 +75,19 @@ const ReadOnly = () => {
   const formattedApplicationStartDate =
     basics?.applicationsStart && formatDate(basics?.applicationsStart);
 
-  const characteristics = generalCharacteristics?.keyCharacteristics;
-  const formattedKeyCharacteristics = characteristics.map((item, index) => {
-    return `${translateKeyCharacteristics(item)}${
-      index === characteristics.length - 1 ? '' : ', '
+  const formattedKeyCharacteristics = generalCharacteristics?.keyCharacteristics.map(
+    (item, index) => {
+      return `${translateKeyCharacteristics(item)}${
+        index === generalCharacteristics?.keyCharacteristics.length - 1
+          ? ''
+          : ', '
+      }`;
+    }
+  );
+
+  const formattedModelLeads = collaborators?.map((collaborator, index) => {
+    return `${collaborator.fullName}${
+      index === collaborators.length - 1 ? '' : ', '
     }`;
   });
 
@@ -180,7 +189,7 @@ const ReadOnly = () => {
                 />
                 <DescriptionTerm
                   className="font-body-lg line-height-sans-2 margin-bottom-0"
-                  term="COLLABORERS GOES HERE"
+                  term={formattedModelLeads ?? ''}
                 />
               </Grid>
               <Grid col={6} className="margin-bottom-2 desktop:margin-bottom-0">
