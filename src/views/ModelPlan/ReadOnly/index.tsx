@@ -29,6 +29,7 @@ import {
 } from 'queries/ReadOnly/types/GetModelSummary';
 import { ModelStatus } from 'types/graphql-global-types';
 import { formatDate } from 'utils/date';
+import { translateKeyCharacteristics } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
 
 import TaskListStatus from '../TaskList/_components/TaskListStatus';
@@ -123,11 +124,7 @@ const ReadOnly = () => {
                 1. Create a new query for READ ONLY
                 2. Pull in data
 
-                  - Summary description should be the model goal from Model Basics section
-
                   - Key Characteristics should be populated by the info from /characteristics/key-characteristics - keyCharacteristics
-
-                  - Start date should be the performance start date on Milestones
 
                   - Should include warning on model plan changes beneath summary - Warning message should show for every Model Plan status except for "Cleared" and "Announced"
 
@@ -166,7 +163,9 @@ const ReadOnly = () => {
                 />
                 <DescriptionTerm
                   className="font-body-lg line-height-sans-2 margin-bottom-0"
-                  term={generalCharacteristics?.keyCharacteristics[0]}
+                  term={translateKeyCharacteristics(
+                    generalCharacteristics?.keyCharacteristics[0]
+                  )}
                 />
               </Grid>
               <Grid col={6} className="margin-bottom-2">
