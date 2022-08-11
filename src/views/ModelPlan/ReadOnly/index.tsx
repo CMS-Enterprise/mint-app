@@ -22,12 +22,11 @@ import {
   DescriptionTerm
 } from 'components/shared/DescriptionGroup';
 import SectionWrapper from 'components/shared/SectionWrapper';
-import GetModelPlan from 'queries/GetModelPlan';
+import GetModelSummary from 'queries/ReadOnly/GetModelSummary';
 import {
-  GetModelPlan as GetModelPlanType,
-  GetModelPlan_modelPlan as GetModelPlanTypes,
-  GetModelPlanVariables
-} from 'queries/types/GetModelPlan';
+  GetModelSummary as GetModelSummaryType,
+  GetModelSummary_modelPlan as GetModelSummaryTypes
+} from 'queries/ReadOnly/types/GetModelSummary';
 import { ModelStatus } from 'types/graphql-global-types';
 import { NotFoundPartial } from 'views/NotFound';
 
@@ -59,16 +58,16 @@ const ReadOnly = () => {
     }
   });
 
-  const { data, loading, error } = useQuery<
-    GetModelPlanType,
-    GetModelPlanVariables
-  >(GetModelPlan, {
-    variables: {
-      id: modelID
+  const { data, loading, error } = useQuery<GetModelSummaryType>(
+    GetModelSummary,
+    {
+      variables: {
+        id: modelID
+      }
     }
-  });
+  );
 
-  const modelPlan = data?.modelPlan || ({} as GetModelPlanTypes);
+  const modelPlan = data?.modelPlan || ({} as GetModelSummaryTypes);
 
   if ((!loading && error) || (!loading && !data?.modelPlan)) {
     return <NotFoundPartial />;
