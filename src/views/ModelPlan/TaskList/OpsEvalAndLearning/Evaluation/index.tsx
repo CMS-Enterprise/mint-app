@@ -461,6 +461,11 @@ const Evaluation = () => {
                   >
                     {t('dataToSend')}
                   </Label>
+                  {itToolsStarted && (
+                    <ITToolsWarning
+                      route={`/models/${modelID}/task-list/it-tools/page-seven`}
+                    />
+                  )}
 
                   <FieldErrorMsg>
                     {flatErrors.dataToSendParticicipants}

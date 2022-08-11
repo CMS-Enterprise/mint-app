@@ -15,6 +15,7 @@ import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
+import ITToolsWarning from 'components/ITToosWarning';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import ReadyForReview from 'components/ReadyForReview';
@@ -33,7 +34,10 @@ import {
 } from 'queries/OpsEvalAndLearning/types/GetLearning';
 import { UpdatePlanOpsEvalAndLearningVariables } from 'queries/OpsEvalAndLearning/types/UpdatePlanOpsEvalAndLearning';
 import UpdatePlanOpsEvalAndLearning from 'queries/OpsEvalAndLearning/UpdatePlanOpsEvalAndLearning';
-import { ModelLearningSystemType } from 'types/graphql-global-types';
+import {
+  ModelLearningSystemType,
+  TaskStatus
+} from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import {
   sortOtherEnum,
@@ -80,6 +84,9 @@ const Learning = () => {
   } = data?.modelPlan?.opsEvalAndLearning || ({} as GetLearningFormType);
 
   const modelName = data?.modelPlan?.modelName || '';
+
+  const itToolsStarted: boolean =
+    data?.modelPlan.itTools.status !== TaskStatus.READY;
 
   // If redirected from IT Tools, scrolls to the relevant question
   useScrollElement(!loading);
@@ -214,6 +221,12 @@ const Learning = () => {
                       <legend className="usa-label">
                         {t('learningSystem')}
                       </legend>
+
+                      {itToolsStarted && (
+                        <ITToolsWarning
+                          route={`/models/${modelID}/task-list/it-tools/page-seven`}
+                        />
+                      )}
 
                       <FieldErrorMsg>
                         {flatErrors.modelLearningSystems}

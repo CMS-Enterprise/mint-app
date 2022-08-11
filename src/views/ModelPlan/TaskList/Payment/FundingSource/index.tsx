@@ -18,6 +18,7 @@ import { Field, Form, Formik, FormikProps } from 'formik';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
+import ITToolsWarning from 'components/ITToosWarning';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import AutoSave from 'components/shared/AutoSave';
@@ -38,7 +39,8 @@ import {
   ClaimsBasedPayType,
   FundingSource as FundingSourceEnum,
   PayRecipient,
-  PayType
+  PayType,
+  TaskStatus
 } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import {
@@ -91,6 +93,9 @@ const FundingSource = () => {
   } = data?.modelPlan?.payments || ({} as FundingFormType);
 
   const modelName = data?.modelPlan?.modelName || '';
+
+  const itToolsStarted: boolean =
+    data?.modelPlan.itTools.status !== TaskStatus.READY;
 
   const [update] = useMutation<UpdatePaymentsVariables>(UpdatePayments);
 
@@ -487,6 +492,11 @@ const FundingSource = () => {
                         <Label htmlFor="payType" className="maxw-none">
                           {t('whatWillYouPay')}
                         </Label>
+                        {itToolsStarted && (
+                          <ITToolsWarning
+                            route={`/models/${modelID}/task-list/it-tools/page-eight`}
+                          />
+                        )}
                         <p className="text-base margin-y-1 margin-top-2">
                           {t('whatWillYouPaySubCopy')}
                         </p>

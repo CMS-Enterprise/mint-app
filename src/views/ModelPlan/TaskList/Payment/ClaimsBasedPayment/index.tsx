@@ -18,6 +18,7 @@ import { Field, Form, Formik, FormikProps } from 'formik';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
+import ITToolsWarning from 'components/ITToosWarning';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import AutoSave from 'components/shared/AutoSave';
@@ -36,7 +37,11 @@ import {
 } from 'queries/Payments/types/GetClaimsBasedPayment';
 import { UpdatePaymentsVariables } from 'queries/Payments/types/UpdatePayments';
 import UpdatePayments from 'queries/Payments/UpdatePayments';
-import { ClaimsBasedPayType, PayType } from 'types/graphql-global-types';
+import {
+  ClaimsBasedPayType,
+  PayType,
+  TaskStatus
+} from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import {
   mapMultiSelectOptions,
@@ -83,6 +88,9 @@ const ClaimsBasedPayment = () => {
   } = data?.modelPlan?.payments || ({} as ClaimsBasedPaymentFormType);
 
   const modelName = data?.modelPlan?.modelName || '';
+
+  const itToolsStarted: boolean =
+    data?.modelPlan.itTools.status !== TaskStatus.READY;
 
   const [update] = useMutation<UpdatePaymentsVariables>(UpdatePayments);
 
@@ -299,6 +307,12 @@ const ClaimsBasedPayment = () => {
                         >
                           {t('excludedFromPayment')}
                         </Label>
+                        {itToolsStarted && (
+                          <ITToolsWarning
+                            className="margin-top-neg-5"
+                            route={`/models/${modelID}/task-list/it-tools/page-eight`}
+                          />
+                        )}
                         <FieldErrorMsg>
                           {flatErrors.shouldAnyProvidersExcludedFFSSystems}
                         </FieldErrorMsg>

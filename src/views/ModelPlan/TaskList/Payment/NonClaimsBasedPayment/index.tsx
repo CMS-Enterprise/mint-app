@@ -18,6 +18,7 @@ import { Field, Form, Formik, FormikProps } from 'formik';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
+import ITToolsWarning from 'components/ITToosWarning';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import AutoSave from 'components/shared/AutoSave';
@@ -39,7 +40,8 @@ import UpdatePayments from 'queries/Payments/UpdatePayments';
 import {
   ClaimsBasedPayType,
   NonClaimsBasedPayType,
-  PayType
+  PayType,
+  TaskStatus
 } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import {
@@ -87,6 +89,9 @@ const NonClaimsBasedPayment = () => {
   } = data?.modelPlan?.payments || ({} as NonClaimsBasedPaymentFormType);
 
   const modelName = data?.modelPlan?.modelName || '';
+
+  const itToolsStarted: boolean =
+    data?.modelPlan.itTools.status !== TaskStatus.READY;
 
   const [update] = useMutation<UpdatePaymentsVariables>(UpdatePayments);
 
@@ -254,6 +259,11 @@ const NonClaimsBasedPayment = () => {
                         <Label htmlFor="payment-nonclaims-payments">
                           {t('nonClaimsPayments')}
                         </Label>
+                        {itToolsStarted && (
+                          <ITToolsWarning
+                            route={`/models/${modelID}/task-list/it-tools/page-nine`}
+                          />
+                        )}
                         <FieldErrorMsg>
                           {flatErrors.nonClaimsPayments}
                         </FieldErrorMsg>

@@ -20,6 +20,7 @@ import { Field, Form, Formik, FormikProps } from 'formik';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
+import ITToolsWarning from 'components/ITToosWarning';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import ReadyForReview from 'components/ReadyForReview';
@@ -37,7 +38,11 @@ import {
 } from 'queries/Payments/types/GetRecover';
 import { UpdatePaymentsVariables } from 'queries/Payments/types/UpdatePayments';
 import UpdatePayments from 'queries/Payments/UpdatePayments';
-import { ClaimsBasedPayType, PayType } from 'types/graphql-global-types';
+import {
+  ClaimsBasedPayType,
+  PayType,
+  TaskStatus
+} from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import { NotFoundPartial } from 'views/NotFound';
 
@@ -87,6 +92,9 @@ const Recover = () => {
   } = data?.modelPlan?.payments || ({} as RecoverFormType);
 
   const modelName = data?.modelPlan?.modelName || '';
+
+  const itToolsStarted: boolean =
+    data?.modelPlan.itTools.status !== TaskStatus.READY;
 
   const [update] = useMutation<UpdatePaymentsVariables>(UpdatePayments);
 
@@ -264,6 +272,13 @@ const Recover = () => {
                         >
                           {t('willRecoverPayments')}
                         </Label>
+
+                        {itToolsStarted && (
+                          <ITToolsWarning
+                            route={`/models/${modelID}/task-list/it-tools/page-nine`}
+                          />
+                        )}
+
                         <FieldErrorMsg>
                           {flatErrors.willRecoverPayments}
                         </FieldErrorMsg>

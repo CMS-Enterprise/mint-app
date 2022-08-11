@@ -25,11 +25,17 @@ export interface GetRecover_modelPlan_payments {
   status: TaskStatus;
 }
 
+export interface GetRecover_modelPlan_itTools {
+  __typename: "PlanITTools";
+  status: TaskStatus;
+}
+
 export interface GetRecover_modelPlan {
   __typename: "ModelPlan";
   id: UUID;
   modelName: string;
   payments: GetRecover_modelPlan_payments;
+  itTools: GetRecover_modelPlan_itTools;
 }
 
 export interface GetRecover {

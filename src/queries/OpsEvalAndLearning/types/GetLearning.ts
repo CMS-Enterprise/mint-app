@@ -23,11 +23,17 @@ export interface GetLearning_modelPlan_opsEvalAndLearning {
   status: TaskStatus;
 }
 
+export interface GetLearning_modelPlan_itTools {
+  __typename: "PlanITTools";
+  status: TaskStatus;
+}
+
 export interface GetLearning_modelPlan {
   __typename: "ModelPlan";
   id: UUID;
   modelName: string;
   opsEvalAndLearning: GetLearning_modelPlan_opsEvalAndLearning;
+  itTools: GetLearning_modelPlan_itTools;
 }
 
 export interface GetLearning {
