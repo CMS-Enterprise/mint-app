@@ -142,16 +142,6 @@ const ReadOnly = () => {
                 }
               )}
             >
-              {/* * TODO:
-                1. Create a new query for READ ONLY
-                2. Pull in data
-
-                  - Key Characteristics should be populated by the info from /characteristics/key-characteristics - keyCharacteristics
-
-                  - Should include warning on model plan changes beneath summary - Warning message should show for every Model Plan status except for "Cleared" and "Announced"
-
-                  End TODO:
-              */}
               <DescriptionDefinition
                 definition={basics?.goal ?? ''}
                 ref={descriptionRef}
