@@ -20,11 +20,11 @@ func (s *Store) CheckIfCollaborator(logger *zap.Logger, principalID string, mode
 		return isCollaborator, err
 	}
 	arg := map[string]interface{}{
-		"modelPlanID": modelPlanID,
-		"euaID":       principalID,
+		"model_plan_id": modelPlanID,
+		"eua_user_id":   principalID,
 	}
 
-	err = stmt.Select(&isCollaborator, arg)
+	err = stmt.Get(&isCollaborator, arg)
 	if err != nil {
 		return isCollaborator, err
 	}
