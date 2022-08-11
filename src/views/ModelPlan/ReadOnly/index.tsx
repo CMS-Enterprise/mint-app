@@ -69,8 +69,14 @@ const ReadOnly = () => {
     }
   );
 
-  const { modelName, basics, generalCharacteristics, collaborators } =
-    data?.modelPlan || ({} as GetModelSummaryTypes);
+  const {
+    modelName,
+    modifiedDts,
+    status,
+    basics,
+    generalCharacteristics,
+    collaborators
+  } = data?.modelPlan || ({} as GetModelSummaryTypes);
 
   const formattedApplicationStartDate =
     basics?.applicationsStart && formatDate(basics?.applicationsStart);
@@ -179,7 +185,11 @@ const ReadOnly = () => {
                 />
                 <DescriptionTerm
                   className="font-body-lg line-height-sans-2 margin-bottom-0"
-                  term={formattedKeyCharacteristics ?? ''}
+                  term={
+                    generalCharacteristics?.keyCharacteristics.length !== 0
+                      ? formattedKeyCharacteristics
+                      : t('noAnswer.noneEntered')
+                  }
                 />
               </Grid>
               <Grid col={6} className="margin-bottom-2">
@@ -189,7 +199,7 @@ const ReadOnly = () => {
                 />
                 <DescriptionTerm
                   className="font-body-lg line-height-sans-2 margin-bottom-0"
-                  term={formattedModelLeads ?? ''}
+                  term={formattedModelLeads}
                 />
               </Grid>
               <Grid col={6} className="margin-bottom-2 desktop:margin-bottom-0">
@@ -199,7 +209,7 @@ const ReadOnly = () => {
                 />
                 <DescriptionTerm
                   className="font-body-lg line-height-sans-2 margin-bottom-0"
-                  term={formattedApplicationStartDate ?? ''}
+                  term={formattedApplicationStartDate ?? t('noAnswer.tBD')}
                 />
               </Grid>
               <Grid col={6} className="margin-bottom-2 desktop:margin-bottom-0">
@@ -209,7 +219,7 @@ const ReadOnly = () => {
                 />
                 <DescriptionTerm
                   className="font-body-lg line-height-sans-2 margin-bottom-0"
-                  term=""
+                  term={t('noAnswer.noneEntered')}
                 />
               </Grid>
             </Grid>
@@ -222,18 +232,19 @@ const ReadOnly = () => {
             <TaskListStatus
               icon
               modelID="823dffdc-e71e-48c2-bb2b-bb60a38b79b3"
-              status={ModelStatus.PLAN_DRAFT}
+              status={status}
               updateLabel={h('updateStatus')}
-              // modifiedDts={modifiedDts}
-              modifiedDts="2022-08-10T18:26:13.200336Z"
+              modifiedDts={modifiedDts ?? ''}
             />
           </div>
         </GridContainer>
       </SectionWrapper>
       <SectionWrapper className="model-plan-alert-wrapper">
-        <Alert type="warning" className="margin-bottom-5 desktop:margin-y-3">
-          {h('alert')}
-        </Alert>
+        {status !== ModelStatus.CLEARED && status !== ModelStatus.ANNOUNCED && (
+          <Alert type="warning" className="margin-bottom-5 desktop:margin-y-3">
+            {h('alert')}
+          </Alert>
+        )}
       </SectionWrapper>
     </MainContent>
   );
