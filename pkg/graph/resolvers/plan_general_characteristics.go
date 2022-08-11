@@ -17,7 +17,7 @@ func UpdatePlanGeneralCharacteristics(logger *zap.Logger, id uuid.UUID, changes 
 		return nil, err
 	}
 
-	err = BaseTaskListSectionPreUpdate(existing, changes, principal)
+	err = BaseTaskListSectionPreUpdate(logger, existing, changes, principal, store)
 	if err != nil {
 		return nil, err
 	}

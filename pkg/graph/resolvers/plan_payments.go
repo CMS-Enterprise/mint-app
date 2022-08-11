@@ -53,7 +53,7 @@ func PlanPaymentsUpdate(
 		return nil, err
 	}
 
-	err = BaseTaskListSectionPreUpdate(payments, changes, principal)
+	err = BaseTaskListSectionPreUpdate(logger, payments, changes, principal, store)
 	if err != nil {
 		return nil, err
 	}

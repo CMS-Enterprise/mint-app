@@ -5,9 +5,11 @@ import (
 
 	"github.com/google/uuid"
 	"github.com/stretchr/testify/suite"
+	"go.uber.org/zap"
 
 	"github.com/cmsgov/mint-app/pkg/authentication"
 	"github.com/cmsgov/mint-app/pkg/models"
+	"github.com/cmsgov/mint-app/pkg/storage"
 )
 
 // PreUpdateSuite is the testify suite for the resolver package
@@ -38,7 +40,8 @@ func (suite *PreUpdateSuite) TestBaseTaskListSectionPreUpdate() {
 		"goal":      "Some goal",
 	}
 
-	err := BaseTaskListSectionPreUpdate(&planBasics, changes, suite.Principal)
+	//TODO verify the store logic here, it likely doesn't work. Also check the logger
+	err := BaseTaskListSectionPreUpdate(&zap.Logger{}, &planBasics, changes, suite.Principal, &storage.Store{})
 	//0/5 in Progess
 	suite.Nil(err)
 	suite.EqualValues(planBasics.Status, models.TaskInProgress)
@@ -48,7 +51,7 @@ func (suite *PreUpdateSuite) TestBaseTaskListSectionPreUpdate() {
 	//1/5 Ready for Review
 	changes["status"] = models.TaskReadyForReview
 	suite.Principal.EUAID = "REVI"
-	err = BaseTaskListSectionPreUpdate(&planBasics, changes, suite.Principal)
+	err = BaseTaskListSectionPreUpdate(&zap.Logger{}, &planBasics, changes, suite.Principal, &storage.Store{})
 	suite.Nil(err)
 	suite.EqualValues(planBasics.Status, models.TaskReadyForReview)
 	suite.EqualValues(*planBasics.ReadyForReviewBy, "REVI")

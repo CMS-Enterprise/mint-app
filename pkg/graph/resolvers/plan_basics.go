@@ -17,7 +17,7 @@ func UpdatePlanBasics(logger *zap.Logger, id uuid.UUID, changes map[string]inter
 		return nil, err
 	}
 
-	err = BaseTaskListSectionPreUpdate(existing, changes, principal)
+	err = BaseTaskListSectionPreUpdate(logger, existing, changes, principal, store)
 	if err != nil {
 		return nil, err
 	}

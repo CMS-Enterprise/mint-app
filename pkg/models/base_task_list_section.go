@@ -70,3 +70,8 @@ func (b *BaseTaskListSection) CalcStatus(oldStatus TaskStatus) error {
 
 	return nil
 }
+
+//GetModelPlanID returns the modelPlanID of the task list section
+func (b BaseTaskListSection) GetModelPlanID() uuid.UUID {
+	return b.ModelPlanID
+}

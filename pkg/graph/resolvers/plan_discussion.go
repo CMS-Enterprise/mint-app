@@ -34,7 +34,7 @@ func UpdatePlanDiscussion(logger *zap.Logger, id uuid.UUID, changes map[string]i
 		return nil, err
 	}
 
-	err = BaseStructPreUpdate(existingDiscussion, changes, principal)
+	err = BaseStructPreUpdate(logger, existingDiscussion, changes, principal, store)
 	if err != nil {
 		return nil, err
 	}
@@ -72,7 +72,7 @@ func UpdateDiscussionReply(logger *zap.Logger, id uuid.UUID, changes map[string]
 		return nil, err
 	}
 
-	err = BaseStructPreUpdate(existingReply, changes, principal)
+	err = BaseStructPreUpdate(logger, existingReply, changes, principal, store)
 	if err != nil {
 		return nil, err
 	}

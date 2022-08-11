@@ -118,7 +118,7 @@ func ModelPlanUpdate(logger *zap.Logger, id uuid.UUID, changes map[string]interf
 		return nil, err
 	}
 
-	err = BaseStructPreUpdate(existingPlan, changes, principal)
+	err = BaseStructPreUpdate(logger, existingPlan, changes, principal, store)
 	if err != nil {
 		return nil, err
 	}
@@ -137,7 +137,6 @@ func ModelPlanGetByID(logger *zap.Logger, id uuid.UUID, store *storage.Store) (*
 	if err != nil {
 		return nil, err
 	}
-	//TODO add job code authorization Checks?
 
 	return plan, nil
 }
