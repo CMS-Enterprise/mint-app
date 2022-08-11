@@ -72,8 +72,15 @@ const ReadOnly = () => {
   const { modelName, basics, generalCharacteristics, collaborators } =
     data?.modelPlan || ({} as GetModelSummaryTypes);
 
-  const formatedApplicationStartDate =
+  const formattedApplicationStartDate =
     basics?.applicationsStart && formatDate(basics?.applicationsStart);
+
+  const characteristics = generalCharacteristics?.keyCharacteristics;
+  const formattedKeyCharacteristics = characteristics.map((item, index) => {
+    return `${translateKeyCharacteristics(item)}${
+      index === characteristics.length - 1 ? '' : ', '
+    }`;
+  });
 
   if ((!loading && error) || (!loading && !data?.modelPlan)) {
     return <NotFoundPartial />;
@@ -163,9 +170,7 @@ const ReadOnly = () => {
                 />
                 <DescriptionTerm
                   className="font-body-lg line-height-sans-2 margin-bottom-0"
-                  term={translateKeyCharacteristics(
-                    generalCharacteristics?.keyCharacteristics[0]
-                  )}
+                  term={formattedKeyCharacteristics ?? ''}
                 />
               </Grid>
               <Grid col={6} className="margin-bottom-2">
@@ -185,7 +190,7 @@ const ReadOnly = () => {
                 />
                 <DescriptionTerm
                   className="font-body-lg line-height-sans-2 margin-bottom-0"
-                  term={formatedApplicationStartDate ?? ''}
+                  term={formattedApplicationStartDate ?? ''}
                 />
               </Grid>
               <Grid col={6} className="margin-bottom-2 desktop:margin-bottom-0">
