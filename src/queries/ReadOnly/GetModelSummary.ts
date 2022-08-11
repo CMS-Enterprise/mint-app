@@ -4,6 +4,8 @@ export default gql`
   query GetModelSummary($id: UUID!) {
     modelPlan(id: $id) {
       modelName
+      modifiedDts
+      status
       basics {
         goal
         applicationsStart
