@@ -67,7 +67,8 @@ const ReadOnly = () => {
     }
   );
 
-  const modelPlan = data?.modelPlan || ({} as GetModelSummaryTypes);
+  const { modelName, basics, generalCharacteristics, collaborators } =
+    data?.modelPlan || ({} as GetModelSummaryTypes);
 
   if ((!loading && error) || (!loading && !data?.modelPlan)) {
     return <NotFoundPartial />;
@@ -92,7 +93,7 @@ const ReadOnly = () => {
           </Link>
 
           <PageHeading className="margin-0 line-height-sans-2">
-            {modelPlan.modelName}
+            {modelName}
           </PageHeading>
 
           <CollapsableLink
@@ -129,7 +130,7 @@ const ReadOnly = () => {
                   End TODO:
               */}
               <DescriptionDefinition
-                definition={modelPlan.modelName}
+                definition={basics?.goal ?? ''}
                 ref={descriptionRef}
                 className="font-body-lg line-height-body-5 text-light"
               />
@@ -161,7 +162,7 @@ const ReadOnly = () => {
                 />
                 <DescriptionTerm
                   className="font-body-lg line-height-sans-2 margin-bottom-0"
-                  term="this is description termasdfasjsd fs"
+                  term={generalCharacteristics?.keyCharacteristics[0]}
                 />
               </Grid>
               <Grid col={6} className="margin-bottom-2">
@@ -171,7 +172,7 @@ const ReadOnly = () => {
                 />
                 <DescriptionTerm
                   className="font-body-lg line-height-sans-2 margin-bottom-0"
-                  term="this is description termasdfasdfasdfasdfasd lakjsdlfkj lkajsd fs"
+                  term=""
                 />
               </Grid>
               <Grid col={6} className="margin-bottom-2 desktop:margin-bottom-0">
@@ -181,7 +182,7 @@ const ReadOnly = () => {
                 />
                 <DescriptionTerm
                   className="font-body-lg line-height-sans-2 margin-bottom-0"
-                  term="July 27, 2015"
+                  term={basics?.applicationsStart ?? ''}
                 />
               </Grid>
               <Grid col={6} className="margin-bottom-2 desktop:margin-bottom-0">
@@ -191,7 +192,7 @@ const ReadOnly = () => {
                 />
                 <DescriptionTerm
                   className="font-body-lg line-height-sans-2 margin-bottom-0"
-                  term="December 4, 2021"
+                  term=""
                 />
               </Grid>
             </Grid>
