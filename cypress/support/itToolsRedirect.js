@@ -13,7 +13,8 @@ Cypress.Commands.add(
     redirectElement,
     elementToCheck,
     multiselect,
-    shouldBeEnabled
+    shouldBeEnabled,
+    alias
   ) => {
     if (!shouldBeEnabled) cy.get(toolElement).should('be.disabled');
 
@@ -39,8 +40,14 @@ Cypress.Commands.add(
       cy.visit(itToolPage);
     });
 
+    cy.wait(alias).its('response.statusCode').should('eq', 200);
     cy.wait(1000);
-
+    // cy.wait(100);
+    // cy.wait(100);
+    // cy.wait(100);
+    // cy.wait(100);
+    // cy.wait(100);
+    // cy.wait(100);
     cy.get(toolElement).check({ force: true }).should('be.checked');
   }
 );

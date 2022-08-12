@@ -18,7 +18,7 @@ import { Field, Form, Formik, FormikProps } from 'formik';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
-import ITToolsWarning from 'components/ITToosWarning';
+import ITToolsWarning from 'components/ITToolsWarning';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import AutoSave from 'components/shared/AutoSave';
@@ -96,7 +96,7 @@ const ClaimsBasedPayment = () => {
 
   const handleFormSubmit = (
     formikValues: ClaimsBasedPaymentFormType,
-    redirect?: 'next' | 'back' | 'task-list'
+    redirect?: 'next' | 'back' | 'task-list' | string
   ) => {
     const { id: updateId, __typename, ...changeValues } = formikValues;
     update({
@@ -115,6 +115,8 @@ const ClaimsBasedPayment = () => {
             history.push(`/models/${modelID}/task-list/payment`);
           } else if (redirect === 'task-list') {
             history.push(`/models/${modelID}/task-list/`);
+          } else if (redirect) {
+            history.push(redirect);
           }
         }
       })
@@ -309,8 +311,14 @@ const ClaimsBasedPayment = () => {
                         </Label>
                         {itToolsStarted && (
                           <ITToolsWarning
+                            id="payment-provider-exclusion-ffs-system-warning"
                             className="margin-top-neg-5"
-                            route={`/models/${modelID}/task-list/it-tools/page-eight`}
+                            onClick={() =>
+                              handleFormSubmit(
+                                values,
+                                `/models/${modelID}/task-list/it-tools/page-eight`
+                              )
+                            }
                           />
                         )}
                         <FieldErrorMsg>

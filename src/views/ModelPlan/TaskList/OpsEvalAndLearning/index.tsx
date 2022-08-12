@@ -19,7 +19,7 @@ import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
-import ITToolsWarning from 'components/ITToosWarning';
+import ITToolsWarning from 'components/ITToolsWarning';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
@@ -146,7 +146,7 @@ export const OpsEvalAndLearningContent = () => {
 
   const handleFormSubmit = (
     formikValues: OpsEvalAndLearningFormType,
-    redirect?: 'next' | 'back'
+    redirect?: 'next' | 'back' | string
   ) => {
     const { id: updateId, __typename, ...changeValues } = formikValues;
     update({
@@ -169,6 +169,8 @@ export const OpsEvalAndLearningContent = () => {
             }
           } else if (redirect === 'back') {
             history.push(`/models/${modelID}/task-list/`);
+          } else if (redirect) {
+            history.push(redirect);
           }
         }
       })
@@ -409,7 +411,13 @@ export const OpsEvalAndLearningContent = () => {
                   </Label>
                   {itToolsStarted && (
                     <ITToolsWarning
-                      route={`/models/${modelID}/task-list/it-tools/page-four`}
+                      id="ops-eval-and-learning-help-desk-use-warning"
+                      onClick={() =>
+                        handleFormSubmit(
+                          values,
+                          `/models/${modelID}/task-list/it-tools/page-four`
+                        )
+                      }
                     />
                   )}
                   <FieldErrorMsg>{flatErrors.helpdeskUse}</FieldErrorMsg>
@@ -545,7 +553,13 @@ export const OpsEvalAndLearningContent = () => {
                   </Label>
                   {itToolsStarted && (
                     <ITToolsWarning
-                      route={`/models/${modelID}/task-list/it-tools/page-four`}
+                      id="ops-eval-and-learning-iddoc-support-warning"
+                      onClick={() =>
+                        handleFormSubmit(
+                          values,
+                          `/models/${modelID}/task-list/it-tools/page-four`
+                        )
+                      }
                     />
                   )}
                   <p className="text-base margin-y-1">

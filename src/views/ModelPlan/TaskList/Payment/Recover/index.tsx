@@ -20,7 +20,7 @@ import { Field, Form, Formik, FormikProps } from 'formik';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
-import ITToolsWarning from 'components/ITToosWarning';
+import ITToolsWarning from 'components/ITToolsWarning';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import ReadyForReview from 'components/ReadyForReview';
@@ -100,7 +100,7 @@ const Recover = () => {
 
   const handleFormSubmit = (
     formikValues: InitialValueType,
-    redirect?: 'back' | 'task-list'
+    redirect?: 'back' | 'task-list' | string
   ) => {
     const { id: updateId, __typename, ...changeValues } = formikValues;
     update({
@@ -115,6 +115,8 @@ const Recover = () => {
             history.push(`/models/${modelID}/task-list/payment/complexity`);
           } else if (redirect === 'task-list') {
             history.push(`/models/${modelID}/task-list/`);
+          } else if (redirect) {
+            history.push(redirect);
           }
         }
       })
@@ -275,7 +277,13 @@ const Recover = () => {
 
                         {itToolsStarted && (
                           <ITToolsWarning
-                            route={`/models/${modelID}/task-list/it-tools/page-nine`}
+                            id="payment-recover-payment-warning"
+                            onClick={() =>
+                              handleFormSubmit(
+                                values,
+                                `/models/${modelID}/task-list/it-tools/page-nine`
+                              )
+                            }
                           />
                         )}
 

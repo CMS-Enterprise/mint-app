@@ -17,7 +17,7 @@ import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
-import ITToolsWarning from 'components/ITToosWarning';
+import ITToolsWarning from 'components/ITToolsWarning';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import AutoSave from 'components/shared/AutoSave';
@@ -92,7 +92,7 @@ export const Communication = () => {
 
   const handleFormSubmit = (
     formikValues: CommunicationFormType,
-    redirect?: 'next' | 'back' | 'task-list'
+    redirect?: 'next' | 'back' | 'task-list' | string
   ) => {
     const { id: updateId, __typename, ...changeValues } = formikValues;
     update({
@@ -113,6 +113,8 @@ export const Communication = () => {
             );
           } else if (redirect === 'task-list') {
             history.push(`/models/${modelID}/task-list`);
+          } else if (redirect) {
+            history.push(redirect);
           }
         }
       })
@@ -222,7 +224,13 @@ export const Communication = () => {
                       </legend>
                       {itToolsStarted && (
                         <ITToolsWarning
-                          route={`/models/${modelID}/task-list/it-tools/page-three`}
+                          id="participants-and-providers-communication-method-warning"
+                          onClick={() =>
+                            handleFormSubmit(
+                              values,
+                              `/models/${modelID}/task-list/it-tools/page-three`
+                            )
+                          }
                         />
                       )}
                       <FieldErrorMsg>

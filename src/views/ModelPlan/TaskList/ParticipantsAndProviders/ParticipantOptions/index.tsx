@@ -18,7 +18,7 @@ import { Field, Form, Formik, FormikProps } from 'formik';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
-import ITToolsWarning from 'components/ITToosWarning';
+import ITToolsWarning from 'components/ITToolsWarning';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import AutoSave from 'components/shared/AutoSave';
@@ -98,7 +98,7 @@ export const ParticipantOptions = () => {
 
   const handleFormSubmit = (
     formikValues: ParticipantOptionsFormType,
-    redirect?: 'next' | 'back' | 'task-list'
+    redirect?: 'next' | 'back' | 'task-list' | string
   ) => {
     const { id: updateId, __typename, ...changeValues } = formikValues;
     update({
@@ -119,6 +119,8 @@ export const ParticipantOptions = () => {
             );
           } else if (redirect === 'task-list') {
             history.push(`/models/${modelID}/task-list`);
+          } else if (redirect) {
+            history.push(redirect);
           }
         }
       })
@@ -318,7 +320,13 @@ export const ParticipantOptions = () => {
                   </Label>
                   {itToolsStarted && (
                     <ITToolsWarning
-                      route={`/models/${modelID}/task-list/it-tools/page-two`}
+                      id="participants-and-providers-recruitment-method-warning"
+                      onClick={() =>
+                        handleFormSubmit(
+                          values,
+                          `/models/${modelID}/task-list/it-tools/page-two`
+                        )
+                      }
                     />
                   )}
                   <FieldErrorMsg>{flatErrors.recruitmentMethod}</FieldErrorMsg>
@@ -382,7 +390,13 @@ export const ParticipantOptions = () => {
                   </Label>
                   {itToolsStarted && (
                     <ITToolsWarning
-                      route={`/models/${modelID}/task-list/it-tools/page-two`}
+                      id="participants-and-providers-selection-method-warning"
+                      onClick={() =>
+                        handleFormSubmit(
+                          values,
+                          `/models/${modelID}/task-list/it-tools/page-two`
+                        )
+                      }
                     />
                   )}
                   <FieldErrorMsg>{flatErrors.participants}</FieldErrorMsg>

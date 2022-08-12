@@ -16,7 +16,7 @@ import { Field, Form, Formik, FormikProps } from 'formik';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
-import ITToolsWarning from 'components/ITToosWarning';
+import ITToolsWarning from 'components/ITToolsWarning';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import AutoSave from 'components/shared/AutoSave';
@@ -96,7 +96,7 @@ const Performance = () => {
 
   const handleFormSubmit = (
     formikValues: PerformanceFormType,
-    redirect?: 'next' | 'back' | 'task-list'
+    redirect?: 'next' | 'back' | 'task-list' | string
   ) => {
     const { id: updateId, __typename, ...changeValues } = formikValues;
     update({
@@ -123,6 +123,8 @@ const Performance = () => {
             }
           } else if (redirect === 'task-list') {
             history.push(`/models/${modelID}/task-list`);
+          } else if (redirect) {
+            history.push(redirect);
           }
         }
       })
@@ -241,7 +243,13 @@ const Performance = () => {
                   </Label>
                   {itToolsStarted && (
                     <ITToolsWarning
-                      route={`/models/${modelID}/task-list/it-tools/page-four`}
+                      id="ops-eval-and-learning-benchmark-performance-warning"
+                      onClick={() =>
+                        handleFormSubmit(
+                          values,
+                          `/models/${modelID}/task-list/it-tools/page-four`
+                        )
+                      }
                     />
                   )}
                   <FieldErrorMsg>
@@ -431,7 +439,13 @@ const Performance = () => {
                   </Label>
                   {itToolsStarted && (
                     <ITToolsWarning
-                      route={`/models/${modelID}/task-list/it-tools/page-five`}
+                      id="ops-eval-and-learning-appeal-performance-warning"
+                      onClick={() =>
+                        handleFormSubmit(
+                          values,
+                          `/models/${modelID}/task-list/it-tools/page-four`
+                        )
+                      }
                     />
                   )}
                   <Label

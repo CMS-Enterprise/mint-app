@@ -18,7 +18,7 @@ import { Field, Form, Formik, FormikProps } from 'formik';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
-import ITToolsWarning from 'components/ITToosWarning';
+import ITToolsWarning from 'components/ITToolsWarning';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import AutoSave from 'components/shared/AutoSave';
@@ -101,7 +101,7 @@ const FundingSource = () => {
 
   const handleFormSubmit = (
     formikValues: FundingFormType,
-    redirect?: 'next' | 'back'
+    redirect?: 'next' | 'back' | string
   ) => {
     const { id: updateId, __typename, ...changeValues } = formikValues;
     const hasClaimsBasedPayment = formikValues.payType.includes(
@@ -132,6 +132,8 @@ const FundingSource = () => {
             }
           } else if (redirect === 'back') {
             history.push(`/models/${modelID}/task-list/`);
+          } else if (redirect) {
+            history.push(redirect);
           }
         }
       })
@@ -494,7 +496,13 @@ const FundingSource = () => {
                         </Label>
                         {itToolsStarted && (
                           <ITToolsWarning
-                            route={`/models/${modelID}/task-list/it-tools/page-eight`}
+                            id="payment-pay-recipients-warning"
+                            onClick={() =>
+                              handleFormSubmit(
+                                values,
+                                `/models/${modelID}/task-list/it-tools/page-eight`
+                              )
+                            }
                           />
                         )}
                         <p className="text-base margin-y-1 margin-top-2">

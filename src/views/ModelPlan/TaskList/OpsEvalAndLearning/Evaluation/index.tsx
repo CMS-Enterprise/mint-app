@@ -17,7 +17,7 @@ import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
-import ITToolsWarning from 'components/ITToosWarning';
+import ITToolsWarning from 'components/ITToolsWarning';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import AutoSave from 'components/shared/AutoSave';
@@ -105,7 +105,7 @@ const Evaluation = () => {
 
   const handleFormSubmit = (
     formikValues: EvaluationFormType,
-    redirect?: 'next' | 'back' | 'task-list'
+    redirect?: 'next' | 'back' | 'task-list' | string
   ) => {
     const { id: updateId, __typename, ...changeValues } = formikValues;
     update({
@@ -132,6 +132,8 @@ const Evaluation = () => {
             );
           } else if (redirect === 'task-list') {
             history.push(`/models/${modelID}/task-list`);
+          } else if (redirect) {
+            history.push(redirect);
           }
         }
       })
@@ -250,7 +252,13 @@ const Evaluation = () => {
 
                       {itToolsStarted && (
                         <ITToolsWarning
-                          route={`/models/${modelID}/task-list/it-tools/page-five`}
+                          id="ops-eval-and-learning-evaluation-approach-warning"
+                          onClick={() =>
+                            handleFormSubmit(
+                              values,
+                              `/models/${modelID}/task-list/it-tools/page-five`
+                            )
+                          }
                         />
                       )}
 
@@ -398,7 +406,13 @@ const Evaluation = () => {
                   </Label>
                   {itToolsStarted && (
                     <ITToolsWarning
-                      route={`/models/${modelID}/task-list/it-tools/page-six`}
+                      id="ops-eval-and-learning-data-needed-warning"
+                      onClick={() =>
+                        handleFormSubmit(
+                          values,
+                          `/models/${modelID}/task-list/it-tools/page-six`
+                        )
+                      }
                     />
                   )}
 
@@ -463,7 +477,13 @@ const Evaluation = () => {
                   </Label>
                   {itToolsStarted && (
                     <ITToolsWarning
-                      route={`/models/${modelID}/task-list/it-tools/page-seven`}
+                      id="ops-eval-and-learning-data-to-send-warning"
+                      onClick={() =>
+                        handleFormSubmit(
+                          values,
+                          `/models/${modelID}/task-list/it-tools/page-seven`
+                        )
+                      }
                     />
                   )}
 

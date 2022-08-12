@@ -17,7 +17,7 @@ import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
-import ITToolsWarning from 'components/ITToosWarning';
+import ITToolsWarning from 'components/ITToolsWarning';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import Alert from 'components/shared/Alert';
@@ -98,7 +98,7 @@ const KeyCharacteristics = () => {
 
   const handleFormSubmit = (
     formikValues: KeyCharacteristicsFormType,
-    redirect?: 'next' | 'back' | 'task-list'
+    redirect?: 'next' | 'back' | 'task-list' | string
   ) => {
     const { id: updateId, __typename, ...changeValues } = formikValues;
     update({
@@ -117,6 +117,8 @@ const KeyCharacteristics = () => {
             history.push(`/models/${modelID}/task-list/characteristics`);
           } else if (redirect === 'task-list') {
             history.push(`/models/${modelID}/task-list`);
+          } else if (redirect) {
+            history.push(redirect);
           }
         }
       })
@@ -406,7 +408,13 @@ const KeyCharacteristics = () => {
                       </Label>
                       {itToolsStarted && (
                         <ITToolsWarning
-                          route={`/models/${modelID}/task-list/it-tools/page-one`}
+                          id="plan-characteristics-collect-bids-warning"
+                          onClick={() =>
+                            handleFormSubmit(
+                              values,
+                              `/models/${modelID}/task-list/it-tools/page-one`
+                            )
+                          }
                         />
                       )}
                       <FieldErrorMsg>
@@ -457,7 +465,13 @@ const KeyCharacteristics = () => {
                       </Label>
                       {itToolsStarted && (
                         <ITToolsWarning
-                          route={`/models/${modelID}/task-list/it-tools/page-one`}
+                          id="plan-characteristics-manage-enrollment-warning"
+                          onClick={() =>
+                            handleFormSubmit(
+                              values,
+                              `/models/${modelID}/task-list/it-tools/page-one`
+                            )
+                          }
                         />
                       )}
                       <FieldErrorMsg>
@@ -508,7 +522,13 @@ const KeyCharacteristics = () => {
                       </Label>
                       {itToolsStarted && (
                         <ITToolsWarning
-                          route={`/models/${modelID}/task-list/it-tools/page-one`}
+                          id="plan-characteristics-contact-updated-warning"
+                          onClick={() =>
+                            handleFormSubmit(
+                              values,
+                              `/models/${modelID}/task-list/it-tools/page-one`
+                            )
+                          }
                         />
                       )}
                       <FieldErrorMsg>

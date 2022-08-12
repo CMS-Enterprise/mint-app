@@ -15,7 +15,7 @@ import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
-import ITToolsWarning from 'components/ITToosWarning';
+import ITToolsWarning from 'components/ITToolsWarning';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import ReadyForReview from 'components/ReadyForReview';
@@ -97,7 +97,7 @@ const Learning = () => {
 
   const handleFormSubmit = (
     formikValues: InitialValueType,
-    redirect?: 'next' | 'back' | 'task-list'
+    redirect?: 'next' | 'back' | 'task-list' | string
   ) => {
     const { id: updateId, __typename, ...changeValues } = formikValues;
     update({
@@ -114,6 +114,8 @@ const Learning = () => {
             );
           } else if (redirect === 'task-list') {
             history.push(`/models/${modelID}/task-list`);
+          } else if (redirect) {
+            history.push(redirect);
           }
         }
       })
@@ -224,7 +226,13 @@ const Learning = () => {
 
                       {itToolsStarted && (
                         <ITToolsWarning
-                          route={`/models/${modelID}/task-list/it-tools/page-seven`}
+                          id="ops-eval-and-learning-learning-systems-warning"
+                          onClick={() =>
+                            handleFormSubmit(
+                              values,
+                              `/models/${modelID}/task-list/it-tools/page-seven`
+                            )
+                          }
                         />
                       )}
 
