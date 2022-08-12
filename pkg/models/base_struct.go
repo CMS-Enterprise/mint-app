@@ -14,11 +14,6 @@ type IBaseStruct interface {
 	GetModifiedBy() *string
 }
 
-//IModelPlanRelation is an interface that represents models that are related to a model plan.
-type IModelPlanRelation interface {
-	GetModelPlanID() uuid.UUID
-}
-
 // BaseStruct represents the shared data in common betwen all models
 type BaseStruct struct {
 	ID          uuid.UUID  `json:"id" db:"id"`

@@ -8,7 +8,9 @@ import (
 // ConvertToPlanDocumentModel takes an auto-generated model plan input and converts it to a hand-written one
 func ConvertToPlanDocumentModel(input *model.PlanDocumentInput) *models.PlanDocument {
 	documentModel := models.PlanDocument{
-		ModelPlanID:          input.ModelPlanID,
+		ModelPlanRelation: models.ModelPlanRelation{
+			ModelPlanID: input.ModelPlanID,
+		},
 		VirusScanned:         false,
 		VirusClean:           false,
 		FileSize:             0,

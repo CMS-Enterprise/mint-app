@@ -1,6 +1,8 @@
 package resolvers
 
 import (
+	"fmt"
+
 	"go.uber.org/zap"
 
 	"github.com/google/uuid"
@@ -14,9 +16,11 @@ import (
 // CreatePlanDiscussion implements resolver logic to create a plan Discussion object
 func CreatePlanDiscussion(logger *zap.Logger, input *model.PlanDiscussionCreateInput, principal authentication.Principal, store *storage.Store) (*models.PlanDiscussion, error) {
 	planDiscussion := &models.PlanDiscussion{
-		ModelPlanID: input.ModelPlanID,
-		Content:     input.Content,
-		Status:      models.DiscussionUnAnswered,
+		ModelPlanRelation: models.ModelPlanRelation{
+			ModelPlanID: input.ModelPlanID,
+		},
+		Content: input.Content,
+		Status:  models.DiscussionUnAnswered,
 		BaseStruct: models.BaseStruct{
 			CreatedBy: principal.ID(),
 		},
@@ -70,6 +74,14 @@ func UpdateDiscussionReply(logger *zap.Logger, id uuid.UUID, changes map[string]
 	existingReply, err := store.DiscussionReplyByID(logger, id)
 	if err != nil {
 		return nil, err
+	}
+	//This requries special SQL script to check
+	isCollaborator, err := IsCollaboratorByDiscussionID(logger, principal, store, existingReply.DiscussionID)
+	if err != nil {
+		return nil, err
+	}
+	if !isCollaborator {
+		return nil, fmt.Errorf("user is not a collaborator") //TODO better error here please.
 	}
 
 	err = BaseStructPreUpdate(logger, existingReply, changes, principal, store)

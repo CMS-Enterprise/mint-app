@@ -1,6 +1,8 @@
 package resolvers
 
 import (
+	"fmt"
+
 	"github.com/google/uuid"
 	"go.uber.org/zap"
 
@@ -13,10 +15,12 @@ import (
 // CreatePlanCollaborator implements resolver logic to create a plan collaborator
 func CreatePlanCollaborator(logger *zap.Logger, input *model.PlanCollaboratorCreateInput, principal authentication.Principal, store *storage.Store) (*models.PlanCollaborator, error) {
 	collaborator := &models.PlanCollaborator{
-		ModelPlanID: input.ModelPlanID,
-		FullName:    input.FullName,
-		TeamRole:    input.TeamRole,
-		EUAUserID:   input.EuaUserID,
+		ModelPlanRelation: models.ModelPlanRelation{
+			ModelPlanID: input.ModelPlanID,
+		},
+		FullName:  input.FullName,
+		TeamRole:  input.TeamRole,
+		EUAUserID: input.EuaUserID,
 		BaseStruct: models.BaseStruct{
 			CreatedBy: principal.ID(),
 		},
@@ -34,6 +38,14 @@ func UpdatePlanCollaborator(logger *zap.Logger, id uuid.UUID, newRole models.Tea
 		return nil, err
 	}
 	modified := principal.ID()
+
+	isCollaborator, err := IsCollaborator(logger, principal, store, existingCollaborator.ModelPlanID)
+	if err != nil {
+		return nil, err
+	}
+	if !isCollaborator {
+		return nil, fmt.Errorf("user is not a collaborator") //TODO better error here please.
+	}
 
 	existingCollaborator.ModifiedBy = &modified
 	existingCollaborator.TeamRole = newRole

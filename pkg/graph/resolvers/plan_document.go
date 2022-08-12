@@ -1,6 +1,8 @@
 package resolvers
 
 import (
+	"fmt"
+
 	"github.com/google/uuid"
 	"go.uber.org/zap"
 
@@ -66,6 +68,15 @@ func PlanDocumentsReadByModelPlanID(logger *zap.Logger, id uuid.UUID, store *sto
 func PlanDocumentUpdate(logger *zap.Logger, s3Client *upload.S3Client, input *models.PlanDocument, principal authentication.Principal, store *storage.Store) (*model.PlanDocumentPayload, error) {
 	euaid := principal.ID()
 	input.ModifiedBy = &euaid
+
+	//TODO convert to use Apply Changes and Base Struct pre-update
+	isCollaborator, err := IsCollaborator(logger, principal, store, input.GetModelPlanID())
+	if err != nil {
+		return nil, err
+	}
+	if !isCollaborator {
+		return nil, fmt.Errorf("user is not a collaborator") //TODO better error here please.
+	}
 
 	document, err := store.PlanDocumentUpdate(logger, input)
 	if err != nil {

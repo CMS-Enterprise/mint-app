@@ -18,8 +18,9 @@ func BaseStructPreUpdate(logger *zap.Logger, bs models.IBaseStruct, changes map[
 
 	section.ModifiedBy = &modified
 
-	modelPlanRelation := bs.(models.IModelPlanRelation)
-	if modelPlanRelation != nil {
+	modelPlanRelation, hasModelPlanRelation := bs.(models.IModelPlanRelation)
+
+	if hasModelPlanRelation {
 		isCollaborator, err := IsCollaborator(logger, principal, store, modelPlanRelation.GetModelPlanID())
 		if err != nil {
 			return err
