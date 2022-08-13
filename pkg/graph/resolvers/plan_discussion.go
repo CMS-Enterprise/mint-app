@@ -1,8 +1,6 @@
 package resolvers
 
 import (
-	"fmt"
-
 	"go.uber.org/zap"
 
 	"github.com/google/uuid"
@@ -38,7 +36,7 @@ func UpdatePlanDiscussion(logger *zap.Logger, id uuid.UUID, changes map[string]i
 		return nil, err
 	}
 
-	err = BaseStructPreUpdate(logger, existingDiscussion, changes, principal, store)
+	err = BaseStructPreUpdate(logger, existingDiscussion, changes, principal, store, true)
 	if err != nil {
 		return nil, err
 	}
@@ -56,9 +54,12 @@ func DeletePlanDiscussion(logger *zap.Logger, id uuid.UUID, principal authentica
 // CreateDiscussionReply implements resolver logic to create a Discussion reply object
 func CreateDiscussionReply(logger *zap.Logger, input *model.DiscussionReplyCreateInput, principal authentication.Principal, store *storage.Store) (*models.DiscussionReply, error) {
 	discussionReply := &models.DiscussionReply{
-		DiscussionID: input.DiscussionID,
-		Content:      input.Content,
-		Resolution:   input.Resolution,
+		DiscussionRelation: models.DiscussionRelation{
+			DiscussionID: input.DiscussionID,
+		},
+		// DiscussionID: input.DiscussionID,
+		Content:    input.Content,
+		Resolution: input.Resolution,
 		BaseStruct: models.BaseStruct{
 			CreatedBy: principal.ID(),
 		},
@@ -75,16 +76,16 @@ func UpdateDiscussionReply(logger *zap.Logger, id uuid.UUID, changes map[string]
 	if err != nil {
 		return nil, err
 	}
-	//This requries special SQL script to check
-	isCollaborator, err := IsCollaboratorByDiscussionID(logger, principal, store, existingReply.DiscussionID)
-	if err != nil {
-		return nil, err
-	}
-	if !isCollaborator {
-		return nil, fmt.Errorf("user is not a collaborator") //TODO better error here please.
-	}
+	// //This requries special SQL script to check
+	// isCollaborator, err := IsCollaboratorByDiscussionID(logger, principal, store, existingReply.DiscussionID)
+	// if err != nil {
+	// 	return nil, err
+	// }
+	// if !isCollaborator {
+	// 	return nil, fmt.Errorf("user is not a collaborator") //TODO better error here please.
+	// }
 
-	err = BaseStructPreUpdate(logger, existingReply, changes, principal, store)
+	err = BaseStructPreUpdate(logger, existingReply, changes, principal, store, true)
 	if err != nil {
 		return nil, err
 	}

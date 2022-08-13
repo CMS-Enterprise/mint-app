@@ -15,9 +15,10 @@ type PlanDiscussion struct {
 //DiscussionReply represents a comment that was made on the PlanDiscussion
 type DiscussionReply struct {
 	BaseStruct
-	DiscussionID uuid.UUID `json:"discussionID" db:"discussion_id"`
-	Content      string    `json:"content" db:"content"`
-	Resolution   bool      `json:"resolution" db:"resolution"` //default to false
+	DiscussionRelation
+	// DiscussionID uuid.UUID `json:"discussionID" db:"discussion_id"`
+	Content    string `json:"content" db:"content"`
+	Resolution bool   `json:"resolution" db:"resolution"` //default to false
 }
 
 //DiscussionStatus is an enum that represents the status of a Discussion
@@ -29,3 +30,23 @@ const (
 	DiscussionWaiting    DiscussionStatus = "WAITING_FOR_RESPONSE"
 	DiscussionUnAnswered DiscussionStatus = "UNANSWERED"
 )
+
+//IDiscussionRelation is an interface that represents models that are related to a discussion.
+type IDiscussionRelation interface {
+	GetDiscussionID() uuid.UUID
+}
+
+//DiscussionRelation is an embedded struct meant to satisify the IDiscussionRelation interface
+type DiscussionRelation struct {
+	DiscussionID uuid.UUID `json:"discussionID" db:"discussion_id"`
+}
+
+//GetDiscussionID returns DiscussionID
+func (d DiscussionRelation) GetDiscussionID() uuid.UUID {
+	return d.DiscussionID
+}
+
+//CheckAccess fulfills the check accessinterface
+func (d DiscussionRelation) CheckAccess() {
+
+}

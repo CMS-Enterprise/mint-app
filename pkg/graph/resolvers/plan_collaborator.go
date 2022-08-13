@@ -1,8 +1,6 @@
 package resolvers
 
 import (
-	"fmt"
-
 	"github.com/google/uuid"
 	"go.uber.org/zap"
 
@@ -37,17 +35,21 @@ func UpdatePlanCollaborator(logger *zap.Logger, id uuid.UUID, newRole models.Tea
 	if err != nil {
 		return nil, err
 	}
-	modified := principal.ID()
-
-	isCollaborator, err := IsCollaborator(logger, principal, store, existingCollaborator.ModelPlanID)
+	err = BaseStructPreUpdate(logger, existingCollaborator, nil, principal, store, false)
 	if err != nil {
 		return nil, err
 	}
-	if !isCollaborator {
-		return nil, fmt.Errorf("user is not a collaborator") //TODO better error here please.
-	}
+	// modified := principal.ID()
 
-	existingCollaborator.ModifiedBy = &modified
+	// isCollaborator, err := IsCollaboratorModelPlanID(logger, principal, store, existingCollaborator.ModelPlanID)
+	// if err != nil {
+	// 	return nil, err
+	// }
+	// if !isCollaborator {
+	// 	return nil, fmt.Errorf("user is not a collaborator") //TODO better error here please.
+	// }
+
+	// existingCollaborator.ModifiedBy = &modified
 	existingCollaborator.TeamRole = newRole
 
 	return store.PlanCollaboratorUpdate(logger, existingCollaborator)

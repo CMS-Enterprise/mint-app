@@ -13,7 +13,7 @@ func BaseTaskListSectionPreUpdate(logger *zap.Logger, tls models.IBaseTaskListSe
 	section := tls.GetBaseTaskListSection()
 	oldStatus := section.Status
 
-	err := BaseStructPreUpdate(logger, tls, changes, principal, store)
+	err := BaseStructPreUpdate(logger, tls, changes, principal, store, true)
 	if err != nil {
 		return err
 	}

@@ -120,7 +120,7 @@ func ModelPlanUpdate(logger *zap.Logger, id uuid.UUID, changes map[string]interf
 		return nil, err
 	}
 
-	err = BaseStructPreUpdate(logger, existingPlan, changes, principal, store)
+	err = BaseStructPreUpdate(logger, existingPlan, changes, principal, store, true)
 	if err != nil {
 		return nil, err
 	}

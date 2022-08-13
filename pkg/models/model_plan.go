@@ -15,6 +15,11 @@ func (m ModelPlan) GetModelPlanID() uuid.UUID {
 	return m.ID
 }
 
+//CheckAccess fulfills the check accessinterface
+func (m ModelPlan) CheckAccess() {
+
+}
+
 // ModelCategory represents the category of a model
 type ModelCategory string
 
