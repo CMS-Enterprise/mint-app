@@ -30,14 +30,14 @@ func TestPrincipal(t *testing.T) {
 		"submitter": {
 			appcontext.WithPrincipal(
 				context.Background(),
-				&authentication.EUAPrincipal{EUAID: "MINT", JobCodeMINT: true},
+				&authentication.EUAPrincipal{EUAID: "MINT", JobCodeUSER: true},
 			),
 			false,
 		},
 		"reviewer": {
 			appcontext.WithPrincipal(
 				context.Background(),
-				&authentication.EUAPrincipal{EUAID: "BOSS", JobCodeADMIN: true},
+				&authentication.EUAPrincipal{EUAID: "BOSS", JobCodeASSESSMENT: true},
 			),
 			false,
 		},
