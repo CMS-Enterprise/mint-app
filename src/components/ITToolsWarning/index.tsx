@@ -8,7 +8,7 @@ import './index.scss';
 interface ITToolsWarningType {
   className?: string;
   id: string;
-  onClick?: () => void;
+  onClick: () => void;
 }
 
 const ITToolsWarning = ({ className, id, onClick }: ITToolsWarningType) => {
