@@ -22,12 +22,9 @@ func (suite *ResolverSuite) TestModelPlanUpdate() {
 	plan := suite.createModelPlan("Test Plan")
 
 	changes := map[string]interface{}{
-		"modelName":  "NEW_AND_IMPROVED",
-		"status":     models.ModelStatusIcipComplete,
-		"archived":   true,
-		"cmsCenters": []string{"CMMI", "OTHER"},
-		"cmsOther":   "SOME OTHER CMS CENTER",
-		"cmmiGroups": []string{"PATIENT_CARE_MODELS_GROUP", "SEAMLESS_CARE_MODELS_GROUP"},
+		"modelName": "NEW_AND_IMPROVED",
+		"status":    models.ModelStatusIcipComplete,
+		"archived":  true,
 	}
 	updater := "UPDT"
 	result, err := ModelPlanUpdate(suite.testConfigs.Logger, plan.ID, changes, updater, suite.testConfigs.Store) // update plan with new user "UPDT"
@@ -36,9 +33,7 @@ func (suite *ResolverSuite) TestModelPlanUpdate() {
 	suite.EqualValues(plan.ID, result.ID)
 	suite.EqualValues(changes["modelName"], result.ModelName)
 	suite.EqualValues(changes["archived"], result.Archived)
-	suite.EqualValues(changes["cmsCenters"], result.CMSCenters)
-	suite.EqualValues(changes["cmsOther"], *result.CMSOther)
-	suite.EqualValues(changes["cmmiGroups"], result.CMMIGroups)
+
 	suite.EqualValues(changes["status"], result.Status)
 	suite.EqualValues(suite.testConfigs.UserInfo.EuaUserID, result.CreatedBy)
 	suite.NotNil(result.ModifiedBy)

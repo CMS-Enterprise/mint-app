@@ -101,7 +101,7 @@ func (p PlanTaskListSectionLocksResolverImplementation) LockTaskListSection(ps p
 		ps.Publish(modelPlanID, pubsubevents.TaskListSectionLocksChanged, model.TaskListSectionLockStatusChanged{
 			ChangeType: model.ChangeTypeAdded,
 			LockStatus: &status,
-			Role:       model.RoleMintBaseUser,
+			Role:       model.RoleMintUser,
 		})
 	}
 
@@ -146,7 +146,7 @@ func (p PlanTaskListSectionLocksResolverImplementation) UnlockAllTaskListSection
 	for section, status := range planTaskListSessionLocks.modelSections[modelPlanID] {
 		dupe := status
 		deletedSections = append(deletedSections, &dupe)
-		deleteTaskListLockSection(ps, modelPlanID, section, status, model.RoleMintAdminUser)
+		deleteTaskListLockSection(ps, modelPlanID, section, status, model.RoleMintUser)
 	}
 
 	delete(planTaskListSessionLocks.modelSections, modelPlanID)
@@ -189,7 +189,7 @@ func OnLockTaskListSectionContext(ps pubsub.PubSub, modelPlanID uuid.UUID, princ
 		}
 
 		for section := range ownedSectionLocks {
-			_, err := UnlockTaskListSection(ps, modelPlanID, section, principal, model.RoleMintBaseUser)
+			_, err := UnlockTaskListSection(ps, modelPlanID, section, principal, model.RoleMintUser)
 
 			if err != nil {
 				fmt.Printf("Uncapturable error on websocket disconnect: %v\n", err.Error())

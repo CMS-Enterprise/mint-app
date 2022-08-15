@@ -13,22 +13,15 @@ export interface CreateModelPlan_createModelPlan_basics {
   __typename: "PlanBasics";
   id: UUID;
   modelPlanID: UUID;
+  modelCategory: ModelCategory | null;
+  cmsCenters: CMSCenter[];
+  cmsOther: string | null;
+  cmmiGroups: CMMIGroup[];
   modelType: ModelType | null;
   problem: string | null;
   goal: string | null;
   testInterventions: string | null;
   note: string | null;
-  createdBy: string;
-  createdDts: Time;
-  modifiedBy: string | null;
-  modifiedDts: Time | null;
-  status: TaskStatus;
-}
-
-export interface CreateModelPlan_createModelPlan_milestones {
-  __typename: "PlanMilestones";
-  id: UUID;
-  modelPlanID: UUID;
   completeICIP: Time | null;
   clearanceStarts: Time | null;
   clearanceEnds: Time | null;
@@ -61,12 +54,7 @@ export interface CreateModelPlan_createModelPlan {
   id: UUID;
   createdBy: string;
   modelName: string;
-  modelCategory: ModelCategory | null;
-  cmsCenters: CMSCenter[];
-  cmsOther: string | null;
-  cmmiGroups: CMMIGroup[];
   basics: CreateModelPlan_createModelPlan_basics;
-  milestones: CreateModelPlan_createModelPlan_milestones;
   collaborators: CreateModelPlan_createModelPlan_collaborators[];
 }
 

@@ -2543,19 +2543,19 @@ type Role string
 
 const (
 	// A basic MINT user
-	RoleMintBaseUser Role = "MINT_BASE_USER"
-	// A MINT admin user
-	RoleMintAdminUser Role = "MINT_ADMIN_USER"
+	RoleMintUser Role = "MINT_USER"
+	// A MINT assessment team user
+	RoleMintAssessment Role = "MINT_ASSESSMENT"
 )
 
 var AllRole = []Role{
-	RoleMintBaseUser,
-	RoleMintAdminUser,
+	RoleMintUser,
+	RoleMintAssessment,
 }
 
 func (e Role) IsValid() bool {
 	switch e {
-	case RoleMintBaseUser, RoleMintAdminUser:
+	case RoleMintUser, RoleMintAssessment:
 		return true
 	}
 	return false

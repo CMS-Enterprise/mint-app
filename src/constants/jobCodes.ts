@@ -1,7 +1,6 @@
-export const BASIC_PROD = 'MINT_P_USER';
-export const ADMIN_DEV = 'MINT_D_ADMIN';
-export const ADMIN_PROD = 'MINT_P_ADMIN';
+export const BASIC = 'MINT_USER';
+export const ASSESSMENT = 'MINT_ASSESSMENT';
 
-export const JOB_CODES = [BASIC_PROD, ADMIN_DEV, ADMIN_PROD];
+export const JOB_CODES = [BASIC, ASSESSMENT];
 
 export default JOB_CODES;
