@@ -109,6 +109,7 @@ const ReadOnly = () => {
       <SummaryBox
         heading=""
         className="padding-y-6 border-0 bg-primary-lighter"
+        data-testid="read-only-model-summary"
       >
         <GridContainer>
           <Link
@@ -130,7 +131,7 @@ const ReadOnly = () => {
             labelPosition="bottom"
             closeLabel={h('hideSummary')}
             styleLeftBar={false}
-            id={t('singleSystem.id')}
+            id={`${modelName?.replace(/\s+/g, '-').toLowerCase()}--description`}
             label={h('showSummary')}
           >
             <div
@@ -145,6 +146,7 @@ const ReadOnly = () => {
               <DescriptionDefinition
                 definition={basics?.goal ?? ''}
                 ref={descriptionRef}
+                dataTestId="read-only-model-summary__description"
                 className="font-body-lg line-height-body-5 text-light"
               />
               {isDescriptionExpandable && (
