@@ -805,7 +805,7 @@ func (r *subscriptionResolver) OnLockTaskListSectionContext(ctx context.Context,
 
 // Email is the resolver for the email field.
 func (r *userInfoResolver) Email(ctx context.Context, obj *models.UserInfo) (string, error) {
-	panic(fmt.Errorf("not implemented"))
+	return string(obj.Email), nil
 }
 
 // ModelPlan returns generated.ModelPlanResolver implementation.
