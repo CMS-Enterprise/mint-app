@@ -5,6 +5,7 @@ package graph
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/google/uuid"
 
@@ -315,6 +316,11 @@ func (r *mutationResolver) UnlockTaskListSection(ctx context.Context, modelPlanI
 	principal := appcontext.Principal(ctx).ID()
 
 	return resolvers.UnlockTaskListSection(r.pubsub, modelPlanID, section, principal, model.RoleMintBaseUser)
+}
+
+// CreateTaskListSectionLockContext is the resolver for the createTaskListSectionLockContext field.
+func (r *mutationResolver) CreateTaskListSectionLockContext(ctx context.Context, customID *uuid.UUID) (uuid.UUID, error) {
+	panic(fmt.Errorf("not implemented"))
 }
 
 // UnlockAllTaskListSections is the resolver for the unlockAllTaskListSections field.
@@ -810,15 +816,16 @@ func (r *subscriptionResolver) OnTaskListSectionLocksChanged(ctx context.Context
 	return resolvers.SubscribeTaskListSectionLockChanges(r.pubsub, modelPlanID, principal, ctx.Done())
 }
 
-// AutoLockTaskListSection is the resolver for the autoLockTaskListSection field.
-func (r *subscriptionResolver) AutoLockTaskListSection(ctx context.Context, modelPlanID uuid.UUID, section model.TaskListSection) (<-chan *model.TaskListSectionLockStatusChanged, error) {
+// OnLockTaskListSectionContext is the resolver for the onLockTaskListSectionContext field.
+func (r *subscriptionResolver) OnLockTaskListSectionContext(ctx context.Context, modelPlanID uuid.UUID) (<-chan *model.TaskListSectionLockStatusChanged, error) {
 	principal := appcontext.Principal(ctx).ID()
-	return resolvers.AutoLockTaskListSection(r.pubsub, modelPlanID, section, principal, ctx.Done())
+
+	return resolvers.OnLockTaskListSectionContext(r.pubsub, modelPlanID, principal, ctx.Done())
 }
 
 // Email is the resolver for the email field.
 func (r *userInfoResolver) Email(ctx context.Context, obj *models.UserInfo) (string, error) {
-	return string(obj.Email), nil
+	panic(fmt.Errorf("not implemented"))
 }
 
 // ModelPlan returns generated.ModelPlanResolver implementation.

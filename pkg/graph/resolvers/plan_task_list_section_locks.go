@@ -82,8 +82,8 @@ func (p PlanTaskListSectionLocksResolverImplementation) LockTaskListSection(ps p
 		modelLocks = planTaskListSessionLocks.modelSections[modelPlanID]
 	}
 
-	lockStatus, sectionIsLocked := modelLocks[section]
-	if sectionIsLocked && lockStatus.LockedBy != principal {
+	lockStatus, sectionWasLocked := modelLocks[section]
+	if sectionWasLocked && lockStatus.LockedBy != principal {
 		return false, fmt.Errorf("failed to lock section [%v], already locked by [%v]", lockStatus.Section, lockStatus.LockedBy)
 	}
 
@@ -91,14 +91,13 @@ func (p PlanTaskListSectionLocksResolverImplementation) LockTaskListSection(ps p
 		ModelPlanID: modelPlanID,
 		Section:     section,
 		LockedBy:    principal,
-		RefCount:    lockStatus.RefCount + 1,
 	}
 
 	planTaskListSessionLocks.Lock()
 	planTaskListSessionLocks.modelSections[modelPlanID][section] = status
 	planTaskListSessionLocks.Unlock()
 
-	if status.RefCount == 1 {
+	if !sectionWasLocked {
 		ps.Publish(modelPlanID, pubsubevents.TaskListSectionLocksChanged, model.TaskListSectionLockStatusChanged{
 			ChangeType: model.ChangeTypeAdded,
 			LockStatus: &status,
@@ -121,14 +120,7 @@ func (p PlanTaskListSectionLocksResolverImplementation) UnlockTaskListSection(ps
 		return false, fmt.Errorf("failed to unlock section [%v], user [%v] not authorized to unlock section locked by user [%v]", status.Section, principal, status.LockedBy)
 	}
 
-	status.RefCount--
-
-	if status.RefCount > 0 {
-		planTaskListSessionLocks.modelSections[modelPlanID][section] = status
-	} else {
-		deleteTaskListLockSection(ps, modelPlanID, section, status, role)
-	}
-
+	deleteTaskListLockSection(ps, modelPlanID, section, status, role)
 	return true, nil
 }
 
@@ -181,25 +173,31 @@ func SubscribeTaskListSectionLockChanges(ps pubsub.PubSub, modelPlanID uuid.UUID
 	return NewPlanTaskListSectionLocksResolverImplementation().SubscribeTaskListSectionLockChanges(ps, modelPlanID, principal, onDisconnect)
 }
 
-// AutoLockTaskListSection locks a task list section and maintains a webhook. Once that webhook dies it will auto-unlock that section.
-func AutoLockTaskListSection(ps pubsub.PubSub, modelPlanID uuid.UUID, section model.TaskListSection, principal string, onDisconnect <-chan struct{}) (<-chan *model.TaskListSectionLockStatusChanged, error) {
+// OnLockTaskListSectionContext maintains a webhook monitoring changes to task list sections. Once that webhook dies it will auto-unlock any section locked by that EUAID.
+func OnLockTaskListSectionContext(ps pubsub.PubSub, modelPlanID uuid.UUID, principal string, onDisconnect <-chan struct{}) (<-chan *model.TaskListSectionLockStatusChanged, error) {
 	onDone := make(chan struct{})
 
-	go func(ps pubsub.PubSub, modelPlanID uuid.UUID, section model.TaskListSection) {
+	go func(ps pubsub.PubSub, modelPlanID uuid.UUID) {
 		r := <-onDisconnect
-		_, err := UnlockTaskListSection(ps, modelPlanID, section, principal, model.RoleMintBaseUser)
 
-		if err != nil {
-			fmt.Printf("Uncapturable error on websocket disconnect: %v\n", err.Error())
+		ownedSectionLocks := make(map[model.TaskListSection]bool)
+		modelSectionLocks := planTaskListSessionLocks.modelSections[modelPlanID]
+		for section, status := range modelSectionLocks {
+			if status.LockedBy == principal {
+				ownedSectionLocks[section] = true
+			}
+		}
+
+		for section := range ownedSectionLocks {
+			_, err := UnlockTaskListSection(ps, modelPlanID, section, principal, model.RoleMintBaseUser)
+
+			if err != nil {
+				fmt.Printf("Uncapturable error on websocket disconnect: %v\n", err.Error())
+			}
 		}
 
 		onDone <- r
-	}(ps, modelPlanID, section)
-
-	_, err := LockTaskListSection(ps, modelPlanID, section, principal)
-	if err != nil {
-		return nil, err
-	}
+	}(ps, modelPlanID)
 
 	return NewPlanTaskListSectionLocksResolverImplementation().SubscribeTaskListSectionLockChanges(ps, modelPlanID, principal, onDisconnect)
 }

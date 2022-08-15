@@ -83,7 +83,6 @@ type TaskListSectionLockStatus struct {
 	ModelPlanID uuid.UUID       `json:"modelPlanID"`
 	Section     TaskListSection `json:"section"`
 	LockedBy    string          `json:"lockedBy"`
-	RefCount    int             `json:"refCount"`
 }
 
 type TaskListSectionLockStatusChanged struct {

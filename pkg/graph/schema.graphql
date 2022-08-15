@@ -117,7 +117,6 @@ type TaskListSectionLockStatus {
   modelPlanID: UUID!
   section: TaskListSection!
   lockedBy: String!
-  refCount: Int!
 }
 
 """
@@ -1427,6 +1426,9 @@ lockTaskListSection(modelPlanID: UUID!, section: TaskListSection!): Boolean!
 unlockTaskListSection(modelPlanID: UUID!, section: TaskListSection!): Boolean!
 @hasRole(role: MINT_BASE_USER)
 
+createTaskListSectionLockContext(customID: UUID): UUID!
+@hasRole(role: MINT_BASE_USER)
+
 unlockAllTaskListSections(modelPlanID: UUID!): [TaskListSectionLockStatus!]!
 @hasRole(role: MINT_ADMIN_USER)
 
@@ -1438,7 +1440,7 @@ type Subscription {
   onTaskListSectionLocksChanged(modelPlanID: UUID!): TaskListSectionLockStatusChanged!
   @hasRole(role: MINT_BASE_USER)
 
-  autoLockTaskListSection(modelPlanID: UUID!, section: TaskListSection!): TaskListSectionLockStatusChanged!
+  onLockTaskListSectionContext(modelPlanID: UUID!): TaskListSectionLockStatusChanged!
   @hasRole(role: MINT_BASE_USER)
 }
 

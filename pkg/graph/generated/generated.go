@@ -138,6 +138,7 @@ type ComplexityRoot struct {
 		CreatePlanCollaborator             func(childComplexity int, input model.PlanCollaboratorCreateInput) int
 		CreatePlanDiscussion               func(childComplexity int, input model.PlanDiscussionCreateInput) int
 		CreatePlanDocument                 func(childComplexity int, input model.PlanDocumentInput) int
+		CreateTaskListSectionLockContext   func(childComplexity int, customID *uuid.UUID) int
 		DeleteDiscussionReply              func(childComplexity int, id uuid.UUID) int
 		DeletePlanCollaborator             func(childComplexity int, id uuid.UUID) int
 		DeletePlanDiscussion               func(childComplexity int, id uuid.UUID) int
@@ -689,14 +690,13 @@ type ComplexityRoot struct {
 	}
 
 	Subscription struct {
-		AutoLockTaskListSection       func(childComplexity int, modelPlanID uuid.UUID, section model.TaskListSection) int
+		OnLockTaskListSectionContext  func(childComplexity int, modelPlanID uuid.UUID) int
 		OnTaskListSectionLocksChanged func(childComplexity int, modelPlanID uuid.UUID) int
 	}
 
 	TaskListSectionLockStatus struct {
 		LockedBy    func(childComplexity int) int
 		ModelPlanID func(childComplexity int) int
-		RefCount    func(childComplexity int) int
 		Section     func(childComplexity int) int
 	}
 
@@ -755,6 +755,7 @@ type MutationResolver interface {
 	DeleteDiscussionReply(ctx context.Context, id uuid.UUID) (*models.DiscussionReply, error)
 	LockTaskListSection(ctx context.Context, modelPlanID uuid.UUID, section model.TaskListSection) (bool, error)
 	UnlockTaskListSection(ctx context.Context, modelPlanID uuid.UUID, section model.TaskListSection) (bool, error)
+	CreateTaskListSectionLockContext(ctx context.Context, customID *uuid.UUID) (uuid.UUID, error)
 	UnlockAllTaskListSections(ctx context.Context, modelPlanID uuid.UUID) ([]*model.TaskListSectionLockStatus, error)
 	UpdatePlanPayments(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanPayments, error)
 }
@@ -908,7 +909,7 @@ type QueryResolver interface {
 }
 type SubscriptionResolver interface {
 	OnTaskListSectionLocksChanged(ctx context.Context, modelPlanID uuid.UUID) (<-chan *model.TaskListSectionLockStatusChanged, error)
-	AutoLockTaskListSection(ctx context.Context, modelPlanID uuid.UUID, section model.TaskListSection) (<-chan *model.TaskListSectionLockStatusChanged, error)
+	OnLockTaskListSectionContext(ctx context.Context, modelPlanID uuid.UUID) (<-chan *model.TaskListSectionLockStatusChanged, error)
 }
 type UserInfoResolver interface {
 	Email(ctx context.Context, obj *models.UserInfo) (string, error)
@@ -1366,6 +1367,18 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Mutation.CreatePlanDocument(childComplexity, args["input"].(model.PlanDocumentInput)), true
+
+	case "Mutation.createTaskListSectionLockContext":
+		if e.complexity.Mutation.CreateTaskListSectionLockContext == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_createTaskListSectionLockContext_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Mutation.CreateTaskListSectionLockContext(childComplexity, args["customID"].(*uuid.UUID)), true
 
 	case "Mutation.deleteDiscussionReply":
 		if e.complexity.Mutation.DeleteDiscussionReply == nil {
@@ -5075,17 +5088,17 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Query.TaskListSectionLocks(childComplexity, args["modelPlanID"].(uuid.UUID)), true
 
-	case "Subscription.autoLockTaskListSection":
-		if e.complexity.Subscription.AutoLockTaskListSection == nil {
+	case "Subscription.onLockTaskListSectionContext":
+		if e.complexity.Subscription.OnLockTaskListSectionContext == nil {
 			break
 		}
 
-		args, err := ec.field_Subscription_autoLockTaskListSection_args(context.TODO(), rawArgs)
+		args, err := ec.field_Subscription_onLockTaskListSectionContext_args(context.TODO(), rawArgs)
 		if err != nil {
 			return 0, false
 		}
 
-		return e.complexity.Subscription.AutoLockTaskListSection(childComplexity, args["modelPlanID"].(uuid.UUID), args["section"].(model.TaskListSection)), true
+		return e.complexity.Subscription.OnLockTaskListSectionContext(childComplexity, args["modelPlanID"].(uuid.UUID)), true
 
 	case "Subscription.onTaskListSectionLocksChanged":
 		if e.complexity.Subscription.OnTaskListSectionLocksChanged == nil {
@@ -5112,13 +5125,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.TaskListSectionLockStatus.ModelPlanID(childComplexity), true
-
-	case "TaskListSectionLockStatus.refCount":
-		if e.complexity.TaskListSectionLockStatus.RefCount == nil {
-			break
-		}
-
-		return e.complexity.TaskListSectionLockStatus.RefCount(childComplexity), true
 
 	case "TaskListSectionLockStatus.section":
 		if e.complexity.TaskListSectionLockStatus.Section == nil {
@@ -5379,7 +5385,6 @@ type TaskListSectionLockStatus {
   modelPlanID: UUID!
   section: TaskListSection!
   lockedBy: String!
-  refCount: Int!
 }
 
 """
@@ -6689,6 +6694,9 @@ lockTaskListSection(modelPlanID: UUID!, section: TaskListSection!): Boolean!
 unlockTaskListSection(modelPlanID: UUID!, section: TaskListSection!): Boolean!
 @hasRole(role: MINT_BASE_USER)
 
+createTaskListSectionLockContext(customID: UUID): UUID!
+@hasRole(role: MINT_BASE_USER)
+
 unlockAllTaskListSections(modelPlanID: UUID!): [TaskListSectionLockStatus!]!
 @hasRole(role: MINT_ADMIN_USER)
 
@@ -6700,7 +6708,7 @@ type Subscription {
   onTaskListSectionLocksChanged(modelPlanID: UUID!): TaskListSectionLockStatusChanged!
   @hasRole(role: MINT_BASE_USER)
 
-  autoLockTaskListSection(modelPlanID: UUID!, section: TaskListSection!): TaskListSectionLockStatusChanged!
+  onLockTaskListSectionContext(modelPlanID: UUID!): TaskListSectionLockStatusChanged!
   @hasRole(role: MINT_BASE_USER)
 }
 
@@ -7413,6 +7421,21 @@ func (ec *executionContext) field_Mutation_createPlanDocument_args(ctx context.C
 	return args, nil
 }
 
+func (ec *executionContext) field_Mutation_createTaskListSectionLockContext_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 *uuid.UUID
+	if tmp, ok := rawArgs["customID"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("customID"))
+		arg0, err = ec.unmarshalOUUID2ᚖgithubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["customID"] = arg0
+	return args, nil
+}
+
 func (ec *executionContext) field_Mutation_deleteDiscussionReply_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
@@ -7989,7 +8012,7 @@ func (ec *executionContext) field_Query_taskListSectionLocks_args(ctx context.Co
 	return args, nil
 }
 
-func (ec *executionContext) field_Subscription_autoLockTaskListSection_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+func (ec *executionContext) field_Subscription_onLockTaskListSectionContext_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
 	var arg0 uuid.UUID
@@ -8001,15 +8024,6 @@ func (ec *executionContext) field_Subscription_autoLockTaskListSection_args(ctx 
 		}
 	}
 	args["modelPlanID"] = arg0
-	var arg1 model.TaskListSection
-	if tmp, ok := rawArgs["section"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("section"))
-		arg1, err = ec.unmarshalNTaskListSection2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐTaskListSection(ctx, tmp)
-		if err != nil {
-			return nil, err
-		}
-	}
-	args["section"] = arg1
 	return args, nil
 }
 
@@ -14285,6 +14299,85 @@ func (ec *executionContext) fieldContext_Mutation_unlockTaskListSection(ctx cont
 	return fc, nil
 }
 
+func (ec *executionContext) _Mutation_createTaskListSectionLockContext(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Mutation_createTaskListSectionLockContext(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		directive0 := func(rctx context.Context) (interface{}, error) {
+			ctx = rctx // use context from middleware stack in children
+			return ec.resolvers.Mutation().CreateTaskListSectionLockContext(rctx, fc.Args["customID"].(*uuid.UUID))
+		}
+		directive1 := func(ctx context.Context) (interface{}, error) {
+			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_BASE_USER")
+			if err != nil {
+				return nil, err
+			}
+			if ec.directives.HasRole == nil {
+				return nil, errors.New("directive hasRole is not implemented")
+			}
+			return ec.directives.HasRole(ctx, nil, directive0, role)
+		}
+
+		tmp, err := directive1(rctx)
+		if err != nil {
+			return nil, graphql.ErrorOnPath(ctx, err)
+		}
+		if tmp == nil {
+			return nil, nil
+		}
+		if data, ok := tmp.(uuid.UUID); ok {
+			return data, nil
+		}
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be github.com/google/uuid.UUID`, tmp)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(uuid.UUID)
+	fc.Result = res
+	return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Mutation_createTaskListSectionLockContext(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type UUID does not have child fields")
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_createTaskListSectionLockContext_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _Mutation_unlockAllTaskListSections(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_Mutation_unlockAllTaskListSections(ctx, field)
 	if err != nil {
@@ -14354,8 +14447,6 @@ func (ec *executionContext) fieldContext_Mutation_unlockAllTaskListSections(ctx 
 				return ec.fieldContext_TaskListSectionLockStatus_section(ctx, field)
 			case "lockedBy":
 				return ec.fieldContext_TaskListSectionLockStatus_lockedBy(ctx, field)
-			case "refCount":
-				return ec.fieldContext_TaskListSectionLockStatus_refCount(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TaskListSectionLockStatus", field.Name)
 		},
@@ -35333,8 +35424,6 @@ func (ec *executionContext) fieldContext_Query_taskListSectionLocks(ctx context.
 				return ec.fieldContext_TaskListSectionLockStatus_section(ctx, field)
 			case "lockedBy":
 				return ec.fieldContext_TaskListSectionLockStatus_lockedBy(ctx, field)
-			case "refCount":
-				return ec.fieldContext_TaskListSectionLockStatus_refCount(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TaskListSectionLockStatus", field.Name)
 		},
@@ -35776,8 +35865,8 @@ func (ec *executionContext) fieldContext_Subscription_onTaskListSectionLocksChan
 	return fc, nil
 }
 
-func (ec *executionContext) _Subscription_autoLockTaskListSection(ctx context.Context, field graphql.CollectedField) (ret func(ctx context.Context) graphql.Marshaler) {
-	fc, err := ec.fieldContext_Subscription_autoLockTaskListSection(ctx, field)
+func (ec *executionContext) _Subscription_onLockTaskListSectionContext(ctx context.Context, field graphql.CollectedField) (ret func(ctx context.Context) graphql.Marshaler) {
+	fc, err := ec.fieldContext_Subscription_onLockTaskListSectionContext(ctx, field)
 	if err != nil {
 		return nil
 	}
@@ -35791,7 +35880,7 @@ func (ec *executionContext) _Subscription_autoLockTaskListSection(ctx context.Co
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		directive0 := func(rctx context.Context) (interface{}, error) {
 			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Subscription().AutoLockTaskListSection(rctx, fc.Args["modelPlanID"].(uuid.UUID), fc.Args["section"].(model.TaskListSection))
+			return ec.resolvers.Subscription().OnLockTaskListSectionContext(rctx, fc.Args["modelPlanID"].(uuid.UUID))
 		}
 		directive1 := func(ctx context.Context) (interface{}, error) {
 			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_BASE_USER")
@@ -35845,7 +35934,7 @@ func (ec *executionContext) _Subscription_autoLockTaskListSection(ctx context.Co
 	}
 }
 
-func (ec *executionContext) fieldContext_Subscription_autoLockTaskListSection(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Subscription_onLockTaskListSectionContext(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Subscription",
 		Field:      field,
@@ -35870,7 +35959,7 @@ func (ec *executionContext) fieldContext_Subscription_autoLockTaskListSection(ct
 		}
 	}()
 	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Subscription_autoLockTaskListSection_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+	if fc.Args, err = ec.field_Subscription_onLockTaskListSectionContext_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return
 	}
@@ -36009,50 +36098,6 @@ func (ec *executionContext) fieldContext_TaskListSectionLockStatus_lockedBy(ctx 
 	return fc, nil
 }
 
-func (ec *executionContext) _TaskListSectionLockStatus_refCount(ctx context.Context, field graphql.CollectedField, obj *model.TaskListSectionLockStatus) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_TaskListSectionLockStatus_refCount(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.RefCount, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(int)
-	fc.Result = res
-	return ec.marshalNInt2int(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_TaskListSectionLockStatus_refCount(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "TaskListSectionLockStatus",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type Int does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
 func (ec *executionContext) _TaskListSectionLockStatusChanged_changeType(ctx context.Context, field graphql.CollectedField, obj *model.TaskListSectionLockStatusChanged) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_TaskListSectionLockStatusChanged_changeType(ctx, field)
 	if err != nil {
@@ -36142,8 +36187,6 @@ func (ec *executionContext) fieldContext_TaskListSectionLockStatusChanged_lockSt
 				return ec.fieldContext_TaskListSectionLockStatus_section(ctx, field)
 			case "lockedBy":
 				return ec.fieldContext_TaskListSectionLockStatus_lockedBy(ctx, field)
-			case "refCount":
-				return ec.fieldContext_TaskListSectionLockStatus_refCount(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TaskListSectionLockStatus", field.Name)
 		},
@@ -39236,6 +39279,15 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._Mutation_unlockTaskListSection(ctx, field)
+			})
+
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		case "createTaskListSectionLockContext":
+
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_createTaskListSectionLockContext(ctx, field)
 			})
 
 			if out.Values[i] == graphql.Null {
@@ -42950,8 +43002,8 @@ func (ec *executionContext) _Subscription(ctx context.Context, sel ast.Selection
 	switch fields[0].Name {
 	case "onTaskListSectionLocksChanged":
 		return ec._Subscription_onTaskListSectionLocksChanged(ctx, fields[0])
-	case "autoLockTaskListSection":
-		return ec._Subscription_autoLockTaskListSection(ctx, fields[0])
+	case "onLockTaskListSectionContext":
+		return ec._Subscription_onLockTaskListSectionContext(ctx, fields[0])
 	default:
 		panic("unknown field " + strconv.Quote(fields[0].Name))
 	}
@@ -42984,13 +43036,6 @@ func (ec *executionContext) _TaskListSectionLockStatus(ctx context.Context, sel 
 		case "lockedBy":
 
 			out.Values[i] = ec._TaskListSectionLockStatus_lockedBy(ctx, field, obj)
-
-			if out.Values[i] == graphql.Null {
-				invalids++
-			}
-		case "refCount":
-
-			out.Values[i] = ec._TaskListSectionLockStatus_refCount(ctx, field, obj)
 
 			if out.Values[i] == graphql.Null {
 				invalids++
