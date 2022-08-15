@@ -15,14 +15,11 @@ const ITToolsWarning = ({ className, id, onClick }: ITToolsWarningType) => {
   const { t } = useTranslation('itTools');
 
   return (
-    <Alert
-      id={id}
-      type="warning"
-      className={classNames('it-tools-warning', className)}
-    >
+    <Alert type="warning" className={classNames('it-tools-warning', className)}>
       {t('warningRedirect')}
       <Button
         type="button"
+        id={id}
         className="usa-button usa-button--unstyled"
         onClick={onClick}
       >

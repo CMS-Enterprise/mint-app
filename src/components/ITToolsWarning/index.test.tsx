@@ -4,8 +4,6 @@ import { render } from '@testing-library/react';
 
 import ITToolsWarning from './index';
 
-const modelID: string = '123';
-
 describe('The ITToolsWarning component', () => {
   it('matches snapshot', async () => {
     const { asFragment } = render(
@@ -15,9 +13,7 @@ describe('The ITToolsWarning component', () => {
         ]}
       >
         <Route path="/models/:modelID/task-list/ops-eval-and-learning">
-          <ITToolsWarning
-            route={`/models/${modelID}/task-list/it-tools/page-four`}
-          />
+          <ITToolsWarning id="test-id" onClick={() => null} />
         </Route>
       </MemoryRouter>
     );
