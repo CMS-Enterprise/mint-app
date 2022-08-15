@@ -31,6 +31,7 @@ export const DescriptionTerm = ({ className, term }: DescriptionTermProps) => (
 
 type DescriptionDefinitionProps = {
   className?: string;
+  dataTestId?: string;
   definition?: React.ReactNode;
 };
 
@@ -38,9 +39,10 @@ export const DescriptionDefinition = React.forwardRef<
   HTMLElement,
   DescriptionDefinitionProps
   // eslint-disable-next-line react/prop-types
->(({ className, definition }, ref) => (
+>(({ className, definition, dataTestId }, ref) => (
   <dd
     ref={ref}
+    data-testid={dataTestId}
     className={classnames('description-definition', 'margin-0', className)}
   >
     {definition}
