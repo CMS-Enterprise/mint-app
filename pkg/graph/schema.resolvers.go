@@ -5,8 +5,6 @@ package graph
 
 import (
 	"context"
-	"fmt"
-	"time"
 
 	"github.com/google/uuid"
 
@@ -221,7 +219,7 @@ func (r *mutationResolver) DeletePlanDocument(ctx context.Context, input model.P
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 
-	return resolvers.PlanDocumentDelete(logger, document, principal, r.store)
+	return resolvers.PlanDocumentDelete(logger, r.s3Client, document, principal, r.store)
 }
 
 // CreatePlanDiscussion is the resolver for the createPlanDiscussion field.
@@ -861,52 +859,3 @@ type planPaymentsResolver struct{ *Resolver }
 type queryResolver struct{ *Resolver }
 type subscriptionResolver struct{ *Resolver }
 type userInfoResolver struct{ *Resolver }
-
-// !!! WARNING !!!
-// The code below was going to be deleted when updating resolvers. It has been copied here so you have
-// one last chance to move it out of harms way if you want. There are two reasons this happens:
-//  - When renaming or deleting a resolver the old code will be put in here. You can safely delete
-//    it when you're done.
-//  - You have helper methods in this file. Move them out to keep these resolver files clean.
-func (r *planBasicsResolver) ModelCategory(ctx context.Context, obj *models.PlanBasics) (*models.ModelCategory, error) {
-	panic(fmt.Errorf("not implemented"))
-}
-func (r *planBasicsResolver) CmsOther(ctx context.Context, obj *models.PlanBasics) (*string, error) {
-	panic(fmt.Errorf("not implemented"))
-}
-func (r *planBasicsResolver) CompleteIcip(ctx context.Context, obj *models.PlanBasics) (*time.Time, error) {
-	panic(fmt.Errorf("not implemented"))
-}
-func (r *planBasicsResolver) ClearanceStarts(ctx context.Context, obj *models.PlanBasics) (*time.Time, error) {
-	panic(fmt.Errorf("not implemented"))
-}
-func (r *planBasicsResolver) ClearanceEnds(ctx context.Context, obj *models.PlanBasics) (*time.Time, error) {
-	panic(fmt.Errorf("not implemented"))
-}
-func (r *planBasicsResolver) Announced(ctx context.Context, obj *models.PlanBasics) (*time.Time, error) {
-	panic(fmt.Errorf("not implemented"))
-}
-func (r *planBasicsResolver) ApplicationsStart(ctx context.Context, obj *models.PlanBasics) (*time.Time, error) {
-	panic(fmt.Errorf("not implemented"))
-}
-func (r *planBasicsResolver) ApplicationsEnd(ctx context.Context, obj *models.PlanBasics) (*time.Time, error) {
-	panic(fmt.Errorf("not implemented"))
-}
-func (r *planBasicsResolver) PerformancePeriodStarts(ctx context.Context, obj *models.PlanBasics) (*time.Time, error) {
-	panic(fmt.Errorf("not implemented"))
-}
-func (r *planBasicsResolver) PerformancePeriodEnds(ctx context.Context, obj *models.PlanBasics) (*time.Time, error) {
-	panic(fmt.Errorf("not implemented"))
-}
-func (r *planBasicsResolver) WrapUpEnds(ctx context.Context, obj *models.PlanBasics) (*time.Time, error) {
-	panic(fmt.Errorf("not implemented"))
-}
-func (r *planBasicsResolver) HighLevelNote(ctx context.Context, obj *models.PlanBasics) (*string, error) {
-	panic(fmt.Errorf("not implemented"))
-}
-func (r *planBasicsResolver) PhasedIn(ctx context.Context, obj *models.PlanBasics) (*bool, error) {
-	panic(fmt.Errorf("not implemented"))
-}
-func (r *planBasicsResolver) PhasedInNote(ctx context.Context, obj *models.PlanBasics) (*string, error) {
-	panic(fmt.Errorf("not implemented"))
-}

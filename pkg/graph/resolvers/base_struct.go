@@ -21,18 +21,6 @@ func BaseStructPreUpdate(logger *zap.Logger, bs models.IBaseStruct, changes map[
 		return err
 	}
 
-	// modelPlanRelation, hasModelPlanRelation := bs.(models.IModelPlanRelation)
-
-	// if hasModelPlanRelation {
-	// 	isCollaborator, err := IsCollaborator(logger, principal, store, modelPlanRelation.GetModelPlanID())
-	// 	if err != nil {
-	// 		return err
-	// 	}
-	// 	if !isCollaborator {
-	// 		return fmt.Errorf("user is not a collaborator") //TODO better error here please.
-	// 	}
-	// }
-
 	if applyChanges {
 
 		err := ApplyChanges(changes, bs)
@@ -46,17 +34,13 @@ func BaseStructPreUpdate(logger *zap.Logger, bs models.IBaseStruct, changes map[
 }
 
 //BaseStructPreCreate is called before an object is created to make sure the user has permissions to do so
-func BaseStructPreCreate(logger *zap.Logger, bs models.IBaseStruct, changes map[string]interface{}, principal authentication.Principal, store *storage.Store) error {
+func BaseStructPreCreate(logger *zap.Logger, bs models.IBaseStruct, principal authentication.Principal, store *storage.Store) error {
 	err := ErrorIfNotCollaborator(bs, logger, principal, store)
 	return err
-	// if err != nil {
-	// 	return err
-	// }
-
 }
 
 //BaseStructPreDelete is called before an object is deleted to make sure the user has permissions to do so
-func BaseStructPreDelete(logger *zap.Logger, bs models.IBaseStruct, changes map[string]interface{}, principal authentication.Principal, store *storage.Store) error {
+func BaseStructPreDelete(logger *zap.Logger, bs models.IBaseStruct, principal authentication.Principal, store *storage.Store) error {
 	err := ErrorIfNotCollaborator(bs, logger, principal, store)
 	return err
 }

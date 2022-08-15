@@ -23,6 +23,10 @@ func CreatePlanDiscussion(logger *zap.Logger, input *model.PlanDiscussionCreateI
 			CreatedBy: principal.ID(),
 		},
 	}
+	err := BaseStructPreCreate(logger, planDiscussion, principal, store)
+	if err != nil {
+		return nil, err
+	}
 
 	result, err := store.PlanDiscussionCreate(logger, planDiscussion)
 	return result, err
@@ -47,6 +51,15 @@ func UpdatePlanDiscussion(logger *zap.Logger, id uuid.UUID, changes map[string]i
 
 // DeletePlanDiscussion implements resolver logic to Delete a plan Discussion object
 func DeletePlanDiscussion(logger *zap.Logger, id uuid.UUID, principal authentication.Principal, store *storage.Store) (*models.PlanDiscussion, error) {
+
+	existingDiscussion, err := store.PlanDiscussionByID(logger, id)
+	if err != nil {
+		return nil, err
+	}
+	err = BaseStructPreDelete(logger, existingDiscussion, principal, store)
+	if err != nil {
+		return nil, err
+	}
 	result, err := store.PlanDiscussionDelete(logger, id)
 	return result, err
 }
@@ -57,12 +70,16 @@ func CreateDiscussionReply(logger *zap.Logger, input *model.DiscussionReplyCreat
 		DiscussionRelation: models.DiscussionRelation{
 			DiscussionID: input.DiscussionID,
 		},
-		// DiscussionID: input.DiscussionID,
 		Content:    input.Content,
 		Resolution: input.Resolution,
 		BaseStruct: models.BaseStruct{
 			CreatedBy: principal.ID(),
 		},
+	}
+
+	err := BaseStructPreCreate(logger, discussionReply, principal, store)
+	if err != nil {
+		return nil, err
 	}
 
 	result, err := store.DiscussionReplyCreate(logger, discussionReply)
@@ -76,15 +93,6 @@ func UpdateDiscussionReply(logger *zap.Logger, id uuid.UUID, changes map[string]
 	if err != nil {
 		return nil, err
 	}
-	// //This requries special SQL script to check
-	// isCollaborator, err := IsCollaboratorByDiscussionID(logger, principal, store, existingReply.DiscussionID)
-	// if err != nil {
-	// 	return nil, err
-	// }
-	// if !isCollaborator {
-	// 	return nil, fmt.Errorf("user is not a collaborator") //TODO better error here please.
-	// }
-
 	err = BaseStructPreUpdate(logger, existingReply, changes, principal, store, true)
 	if err != nil {
 		return nil, err
@@ -96,7 +104,16 @@ func UpdateDiscussionReply(logger *zap.Logger, id uuid.UUID, changes map[string]
 
 // DeleteDiscussionReply implements resolver logic to Delete a Discussion reply object
 func DeleteDiscussionReply(logger *zap.Logger, id uuid.UUID, principal authentication.Principal, store *storage.Store) (*models.DiscussionReply, error) {
+	existingReply, err := store.DiscussionReplyByID(logger, id)
+	if err != nil {
+		return nil, err
+	}
+	err = BaseStructPreDelete(logger, existingReply, principal, store)
+	if err != nil {
+		return nil, err
+	}
 	result, err := store.DiscussionReplyDelete(logger, id)
+
 	return result, err
 }
 

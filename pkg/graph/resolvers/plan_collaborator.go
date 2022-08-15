@@ -24,6 +24,11 @@ func CreatePlanCollaborator(logger *zap.Logger, input *model.PlanCollaboratorCre
 		},
 	}
 
+	err := BaseStructPreCreate(logger, collaborator, principal, store)
+	if err != nil {
+		return nil, err
+	}
+
 	retCollaborator, err := store.PlanCollaboratorCreate(logger, collaborator)
 	return retCollaborator, err
 }
@@ -39,17 +44,7 @@ func UpdatePlanCollaborator(logger *zap.Logger, id uuid.UUID, newRole models.Tea
 	if err != nil {
 		return nil, err
 	}
-	// modified := principal.ID()
 
-	// isCollaborator, err := IsCollaboratorModelPlanID(logger, principal, store, existingCollaborator.ModelPlanID)
-	// if err != nil {
-	// 	return nil, err
-	// }
-	// if !isCollaborator {
-	// 	return nil, fmt.Errorf("user is not a collaborator") //TODO better error here please.
-	// }
-
-	// existingCollaborator.ModifiedBy = &modified
 	existingCollaborator.TeamRole = newRole
 
 	return store.PlanCollaboratorUpdate(logger, existingCollaborator)
@@ -57,15 +52,20 @@ func UpdatePlanCollaborator(logger *zap.Logger, id uuid.UUID, newRole models.Tea
 
 // DeletePlanCollaborator implements resolver logic to delete a plan collaborator
 func DeletePlanCollaborator(logger *zap.Logger, id uuid.UUID, principal authentication.Principal, store *storage.Store) (*models.PlanCollaborator, error) {
-	//TODO CHECK IF COLLABORATOR
+	existingCollaborator, err := store.PlanCollaboratorFetchByID(id)
+	if err != nil {
+		return nil, err
+	}
+	err = BaseStructPreDelete(logger, existingCollaborator, principal, store)
+	if err != nil {
+		return nil, err
+	}
 	retCollaborator, err := store.PlanCollaboratorDelete(logger, id)
 	return retCollaborator, err
 }
 
 // FetchCollaboratorsByModelPlanID implements resolver logic to fetch a list of plan collaborators by a model plan ID
 func FetchCollaboratorsByModelPlanID(logger *zap.Logger, modelPlanID uuid.UUID, store *storage.Store) ([]*models.PlanCollaborator, error) {
-	// TODO Do something with principal??
-
 	collaborators, err := store.PlanCollaboratorsByModelPlanID(logger, modelPlanID)
 	return collaborators, err
 }

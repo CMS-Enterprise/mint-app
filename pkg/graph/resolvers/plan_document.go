@@ -34,7 +34,13 @@ func PlanDocumentCreate(
 	principal authentication.Principal,
 	store *storage.Store,
 	s3Client *upload.S3Client) (*model.PlanDocumentPayload, error) {
-	document, err := store.PlanDocumentCreate(logger, principal.ID(), document, documentURL, s3Client)
+
+	err := BaseStructPreCreate(logger, document, principal, store)
+	if err != nil {
+		return nil, err
+	}
+
+	document, err = store.PlanDocumentCreate(logger, principal.ID(), document, documentURL, s3Client)
 	if err != nil {
 		return nil, genericmodel.HandleModelUpdateError(logger, err, document)
 	}
@@ -64,8 +70,7 @@ func PlanDocumentsReadByModelPlanID(logger *zap.Logger, id uuid.UUID, store *sto
 
 // PlanDocumentUpdate implements resolver logic to update a plan milestones object
 func PlanDocumentUpdate(logger *zap.Logger, s3Client *upload.S3Client, input *models.PlanDocument, principal authentication.Principal, store *storage.Store) (*model.PlanDocumentPayload, error) {
-	// euaid := principal.ID()
-	// input.ModifiedBy = &euaid
+
 	existingdoc, err := store.PlanDocumentRead(logger, s3Client, input.ID)
 	if err != nil {
 		return nil, err
@@ -77,13 +82,6 @@ func PlanDocumentUpdate(logger *zap.Logger, s3Client *upload.S3Client, input *mo
 		return nil, err
 	}
 	// //TODO convert to use Apply Changes and Base Struct pre-update
-	// isCollaborator, err := IsCollaborator(logger, principal, store, input.GetModelPlanID())
-	// if err != nil {
-	// 	return nil, err
-	// }
-	// if !isCollaborator {
-	// 	return nil, fmt.Errorf("user is not a collaborator") //TODO better error here please.
-	// }
 
 	document, err := store.PlanDocumentUpdate(logger, input)
 	if err != nil {
@@ -94,9 +92,18 @@ func PlanDocumentUpdate(logger *zap.Logger, s3Client *upload.S3Client, input *mo
 }
 
 // PlanDocumentDelete implements resolver logic to update a plan document object
-func PlanDocumentDelete(logger *zap.Logger, input *models.PlanDocument, principal authentication.Principal, store *storage.Store) (int, error) {
+func PlanDocumentDelete(logger *zap.Logger, s3Client *upload.S3Client, input *models.PlanDocument, principal authentication.Principal, store *storage.Store) (int, error) {
 	euaid := principal.ID()
 	input.ModifiedBy = &euaid
+
+	existingdoc, err := store.PlanDocumentRead(logger, s3Client, input.ID)
+	if err != nil {
+		return 0, err
+	}
+	err = BaseStructPreDelete(logger, existingdoc, principal, store)
+	if err != nil {
+		return 0, err
+	}
 
 	sqlResult, err := store.PlanDocumentDelete(logger, input.ID)
 	if err != nil {
