@@ -6,18 +6,19 @@ import { render, screen, waitFor, within } from '@testing-library/react';
 import GetModelSummary from 'queries/ReadOnly/GetModelSummary';
 import { GetModelSummary_modelPlan as GetModelSummaryTypes } from 'queries/ReadOnly/types/GetModelSummary';
 import { KeyCharacteristic, ModelStatus } from 'types/graphql-global-types';
+import { translateKeyCharacteristics } from 'utils/modelPlan';
 
 import ReadOnly from './index';
 
 const mockData: GetModelSummaryTypes = {
   __typename: 'ModelPlan',
   modelName: 'Testing Model Summary',
-  modifiedDts: null,
+  modifiedDts: '2022-08-27T04:00:00Z',
   status: ModelStatus.PLAN_DRAFT,
   basics: {
     __typename: 'PlanBasics',
     goal: 'This is the goal',
-    applicationsStart: null
+    applicationsStart: '2022-08-20T04:00:00Z'
   },
   generalCharacteristics: {
     __typename: 'PlanGeneralCharacteristics',
@@ -70,6 +71,16 @@ describe('Read Only Model Plan Summary', () => {
         screen.getByTestId('read-only-model-summary__description')
       );
       expect(getByText('This is the goal')).toBeInTheDocument();
+    });
+
+    await waitFor(() => {
+      expect(screen.getByText('First Collaborator')).toBeInTheDocument();
+      expect(screen.getByText('August 20, 2022')).toBeInTheDocument();
+      expect(
+        screen.getByText(
+          translateKeyCharacteristics(KeyCharacteristic.EPISODE_BASED)
+        )
+      ).toBeInTheDocument();
     });
   });
 
