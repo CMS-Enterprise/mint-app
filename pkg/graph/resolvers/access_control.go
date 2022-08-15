@@ -26,7 +26,7 @@ func ErrorIfNotCollaborator(obj interface{}, logger *zap.Logger, principal authe
 				return err
 			}
 			if !isCollaborator {
-				return fmt.Errorf("user is not a collaborator") //TODO better error here please.
+				return fmt.Errorf("user is not a collaborator")
 			}
 		} else if hasDiscussionRelation {
 			isCollaborator, err := IsCollaboratorByDiscussionID(logger, principal, store, discussionRelation.GetDiscussionID())
@@ -34,10 +34,10 @@ func ErrorIfNotCollaborator(obj interface{}, logger *zap.Logger, principal authe
 				return err
 			}
 			if !isCollaborator {
-				return fmt.Errorf("user is not a collaborator") //TODO better error here please.
+				return fmt.Errorf("user is not a collaborator")
 			}
 		} else {
-			return fmt.Errorf("desired access control is not configured") //TODO better error here please.
+			return fmt.Errorf("desired access control is not configured")
 		}
 
 	}
@@ -48,7 +48,6 @@ func ErrorIfNotCollaborator(obj interface{}, logger *zap.Logger, principal authe
 // Users with the Assessment role are automatically allowed access to update all records.
 func IsCollaboratorModelPlanID(logger *zap.Logger, principal authentication.Principal, store *storage.Store, modelPlanID uuid.UUID) (bool, error) {
 
-	//TODO restructure this
 	if principal.AllowASSESSMENT() {
 		return true, nil
 	} else if principal.AllowUSER() {
@@ -58,7 +57,7 @@ func IsCollaboratorModelPlanID(logger *zap.Logger, principal authentication.Prin
 	} else {
 		errString := "user has no roles"
 		logger.Error(errString, zap.String("user", principal.ID()), zap.String("ModelPlanID", modelPlanID.String()))
-		return false, fmt.Errorf("user has no roles") //TODO better error please
+		return false, fmt.Errorf("user has no roles")
 	}
 
 }
@@ -66,8 +65,6 @@ func IsCollaboratorModelPlanID(logger *zap.Logger, principal authentication.Prin
 //IsCollaboratorByDiscussionID handles the logic to asses if a user has permission to update an object by virtue of being a collaborator.
 // Users with the Assessment role are automatically allowed access to update all records.
 func IsCollaboratorByDiscussionID(logger *zap.Logger, principal authentication.Principal, store *storage.Store, discussionID uuid.UUID) (bool, error) {
-
-	//TODO restructure this
 	if principal.AllowASSESSMENT() {
 		return true, nil
 	} else if principal.AllowUSER() {
@@ -77,7 +74,7 @@ func IsCollaboratorByDiscussionID(logger *zap.Logger, principal authentication.P
 	} else {
 		errString := "user has no roles"
 		logger.Error(errString, zap.String("user", principal.ID()), zap.String("DiscussionID", discussionID.String()))
-		return false, fmt.Errorf(errString) //TODO better error please
+		return false, fmt.Errorf(errString)
 	}
 
 }

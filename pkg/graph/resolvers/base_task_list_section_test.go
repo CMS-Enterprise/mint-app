@@ -40,7 +40,6 @@ func (suite *PreUpdateSuite) TestBaseTaskListSectionPreUpdate() {
 		"goal":      "Some goal",
 	}
 
-	//TODO verify the store logic here, it likely doesn't work. Also check the logger
 	err := BaseTaskListSectionPreUpdate(&zap.Logger{}, &planBasics, changes, suite.Principal, &storage.Store{})
 	//0/5 in Progess
 	suite.Nil(err)
