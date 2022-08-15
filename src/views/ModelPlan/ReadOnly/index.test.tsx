@@ -104,4 +104,52 @@ describe('Read Only Model Plan Summary', () => {
     });
     expect(asFragment()).toMatchSnapshot();
   });
+
+  describe.only('Status Tag updates', () => {
+    it('renders "ICIP complete" tag and alert', async () => {
+      mock[0].result.data.modelPlan.status = ModelStatus.ICIP_COMPLETE;
+      render(
+        <MemoryRouter
+          initialEntries={[
+            '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/read-only'
+          ]}
+        >
+          <MockedProvider mocks={mock} addTypename={false}>
+            <Route path="/models/:modelID/read-only">
+              <ReadOnly />
+            </Route>
+          </MockedProvider>
+        </MemoryRouter>
+      );
+
+      await waitFor(() => {
+        expect(screen.getByTestId('tag').textContent).toContain(
+          'ICIP complete'
+        );
+        expect(screen.getByTestId('alert')).toBeInTheDocument();
+      });
+    });
+
+    it('renders "Cleared" tag and does not render alert', async () => {
+      mock[0].result.data.modelPlan.status = ModelStatus.CLEARED;
+      render(
+        <MemoryRouter
+          initialEntries={[
+            '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/read-only'
+          ]}
+        >
+          <MockedProvider mocks={mock} addTypename={false}>
+            <Route path="/models/:modelID/read-only">
+              <ReadOnly />
+            </Route>
+          </MockedProvider>
+        </MemoryRouter>
+      );
+
+      await waitFor(() => {
+        expect(screen.getByTestId('tag').textContent).toContain('Cleared');
+        expect(screen.queryByTestId('alert')).toBeNull();
+      });
+    });
+  });
 });
