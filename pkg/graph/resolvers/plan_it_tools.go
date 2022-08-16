@@ -8,7 +8,7 @@ import (
 	"github.com/cmsgov/mint-app/pkg/storage"
 )
 
-//PlanITToolsUpdate updates a plan ITTools buisness object
+// PlanITToolsUpdate updates a plan ITTools buisness object
 func PlanITToolsUpdate(logger *zap.Logger, id uuid.UUID, changes map[string]interface{}, principal string, store *storage.Store) (*models.PlanITTools, error) {
 	//Get existing plan ITTools
 	existing, err := store.PlanITToolsGetByID(logger, id)

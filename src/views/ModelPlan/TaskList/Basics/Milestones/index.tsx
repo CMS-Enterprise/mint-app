@@ -26,11 +26,11 @@ import FieldGroup from 'components/shared/FieldGroup';
 import GetMilestones from 'queries/Basics/GetMilestones';
 import {
   GetMilestones as GetMilestonesType,
-  GetMilestones_modelPlan_milestones as MilestonesFormType,
+  GetMilestones_modelPlan_basics as MilestonesFormType,
   GetMilestonesVariables
 } from 'queries/Basics/types/GetMilestones';
-import { UpdatePlanMilestonesVariables } from 'queries/Basics/types/UpdatePlanMilestones';
-import UpdatePlanMilestones from 'queries/Basics/UpdatePlanMilestones';
+import { UpdatePlanBasicsVariables } from 'queries/Basics/types/UpdatePlanBasics';
+import UpdatePlanBasics from 'queries/Basics/UpdatePlanBasics';
 import flattenErrors from 'utils/flattenErrors';
 import planBasicsSchema from 'validations/planBasics';
 import { NotFoundPartial } from 'views/NotFound';
@@ -79,11 +79,9 @@ const Milestones = () => {
     readyForReviewBy,
     readyForReviewDts,
     status
-  } = data?.modelPlan?.milestones || ({} as MilestonesFormType);
+  } = data?.modelPlan?.basics || ({} as MilestonesFormType);
 
-  const [update] = useMutation<UpdatePlanMilestonesVariables>(
-    UpdatePlanMilestones
-  );
+  const [update] = useMutation<UpdatePlanBasicsVariables>(UpdatePlanBasics);
 
   const handleFormSubmit = (
     formikValues: InitialValueType,
@@ -113,7 +111,7 @@ const Milestones = () => {
   };
 
   const initialValues: InitialValueType = {
-    __typename: 'PlanMilestones',
+    __typename: 'PlanBasics',
     id: id ?? '',
     completeICIP: completeICIP ?? null,
     clearanceStarts: clearanceStarts ?? null,
@@ -583,19 +581,7 @@ const Milestones = () => {
                   <Button
                     type="button"
                     className="usa-button usa-button--unstyled"
-                    onClick={() => {
-                      if (Object.keys(errors).length > 0) {
-                        window.scrollTo(0, 0);
-                      } else {
-                        validateForm().then(err => {
-                          if (Object.keys(err).length > 0) {
-                            window.scrollTo(0, 0);
-                          } else {
-                            handleFormSubmit(values, 'task-list');
-                          }
-                        });
-                      }
-                    }}
+                    onClick={() => handleFormSubmit(values, 'task-list')}
                   >
                     <IconArrowBack className="margin-right-1" aria-hidden />
                     {h('saveAndReturn')}

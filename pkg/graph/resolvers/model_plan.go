@@ -54,15 +54,6 @@ func ModelPlanCreate(logger *zap.Logger, modelName string, store *storage.Store,
 		return nil, err
 	}
 
-	// Create a default plan milestones object
-	milestones := &models.PlanMilestones{
-		BaseTaskListSection: baseTaskList,
-	}
-	_, err = store.PlanMilestonesCreate(logger, milestones)
-	if err != nil {
-		return nil, err
-	}
-
 	// Create a default plan general characteristics object
 	generalCharacteristics := &models.PlanGeneralCharacteristics{
 		BaseTaskListSection: baseTaskList,

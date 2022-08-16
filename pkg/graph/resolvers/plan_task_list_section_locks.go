@@ -109,6 +109,7 @@ func (p PlanTaskListSectionLocksResolverImplementation) LockTaskListSection(ps p
 }
 
 // UnlockTaskListSection will unlock the provided task list section on the provided model
+//
 //	This method will fail if the provided principal is not the person who locked the task list section
 func (p PlanTaskListSectionLocksResolverImplementation) UnlockTaskListSection(ps pubsub.PubSub, modelPlanID uuid.UUID, section model.TaskListSection, principal string) (bool, error) {
 	if !isSectionLocked(modelPlanID, section) {

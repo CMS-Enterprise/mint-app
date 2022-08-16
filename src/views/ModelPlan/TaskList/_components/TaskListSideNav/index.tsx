@@ -10,7 +10,7 @@ import PageHeading from 'components/PageHeading';
 import IconInitial from 'components/shared/IconInitial';
 import { GetModelCollaborators_modelPlan_collaborators as GetCollaboratorsType } from 'queries/Collaborators/types/GetModelCollaborators';
 import { GetModelPlan_modelPlan as GetModelPlanType } from 'queries/types/GetModelPlan';
-import { UpdateModelPlan as UpdateModelPlanType } from 'queries/types/UpdateModelPlan';
+import { UpdateModelPlanVariables as UpdateModelPlanType } from 'queries/types/UpdateModelPlan';
 import UpdateModelPlan from 'queries/UpdateModelPlan';
 
 const TaskListSideNav = ({
@@ -31,9 +31,7 @@ const TaskListSideNav = ({
     update({
       variables: {
         id: modelID,
-        changes: {
-          archived: true
-        }
+        archived: true
       }
     })
       .then(response => {

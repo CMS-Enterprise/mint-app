@@ -86,7 +86,7 @@ func DeleteDiscussionReply(logger *zap.Logger, id uuid.UUID, principal string, s
 	return result, err
 }
 
-//DiscussionReplyCollectionByDiscusionID returns all Discussion reply objects by a Discussion ID
+// DiscussionReplyCollectionByDiscusionID returns all Discussion reply objects by a Discussion ID
 func DiscussionReplyCollectionByDiscusionID(logger *zap.Logger, discussionID uuid.UUID, store *storage.Store) ([]*models.DiscussionReply, error) {
 
 	result, err := store.DiscussionReplyCollectionByDiscusionID(logger, discussionID)
@@ -94,7 +94,7 @@ func DiscussionReplyCollectionByDiscusionID(logger *zap.Logger, discussionID uui
 
 }
 
-//PlanDiscussionCollectionByModelPlanID returns all plan discussion objects related to a model plan, as noted by it's ID
+// PlanDiscussionCollectionByModelPlanID returns all plan discussion objects related to a model plan, as noted by it's ID
 func PlanDiscussionCollectionByModelPlanID(logger *zap.Logger, modelPlanID uuid.UUID, store *storage.Store) ([]*models.PlanDiscussion, error) {
 
 	result, err := store.PlanDiscussionCollectionByModelPlanID(logger, modelPlanID)

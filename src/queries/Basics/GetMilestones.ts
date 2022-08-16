@@ -5,7 +5,7 @@ export default gql`
     modelPlan(id: $id) {
       id
       modelName
-      milestones {
+      basics {
         id
         completeICIP
         clearanceStarts

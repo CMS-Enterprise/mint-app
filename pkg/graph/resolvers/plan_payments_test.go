@@ -2,7 +2,7 @@ package resolvers
 
 import "github.com/cmsgov/mint-app/pkg/models"
 
-//TestPlanPaymentsUpdate tests PlanPaymentsUpdate
+// TestPlanPaymentsUpdate tests PlanPaymentsUpdate
 func (suite *ResolverSuite) TestPlanPaymentsUpdate() {
 	plan := suite.createModelPlan("Plan Payments")
 
