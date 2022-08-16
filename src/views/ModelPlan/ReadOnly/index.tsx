@@ -9,7 +9,6 @@ import {
   GridContainer,
   IconArrowBack,
   IconExpandMore,
-  Link,
   SummaryBox
 } from '@trussworks/react-uswds';
 import classnames from 'classnames';
@@ -35,6 +34,7 @@ import { NotFoundPartial } from 'views/NotFound';
 import TaskListStatus from '../TaskList/_components/TaskListStatus';
 
 import './index.scss';
+import UswdsReactLink from 'components/LinkWrapper';
 
 const ReadOnly = () => {
   const { t } = useTranslation('modelSummary');
@@ -112,13 +112,13 @@ const ReadOnly = () => {
         data-testid="read-only-model-summary"
       >
         <GridContainer>
-          <Link
-            href="/"
+          <UswdsReactLink
+            to="/models"
             className="display-flex flex-align-center margin-bottom-3"
           >
             <IconArrowBack className="text-primary margin-right-1" />
             {h('back')}
-          </Link>
+          </UswdsReactLink>
 
           <PageHeading className="margin-0 line-height-sans-2">
             {modelName}
