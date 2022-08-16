@@ -101,7 +101,7 @@ func (p PlanTaskListSectionLocksResolverImplementation) LockTaskListSection(ps p
 		ps.Publish(modelPlanID, pubsubevents.TaskListSectionLocksChanged, model.TaskListSectionLockStatusChanged{
 			ChangeType: model.ChangeTypeAdded,
 			LockStatus: &status,
-			Role:       model.RoleMintUser,
+			ActionType: model.ActionTypeNormal,
 		})
 	}
 
@@ -110,7 +110,7 @@ func (p PlanTaskListSectionLocksResolverImplementation) LockTaskListSection(ps p
 
 // UnlockTaskListSection will unlock the provided task list section on the provided model
 //	This method will fail if the provided principal is not the person who locked the task list section
-func (p PlanTaskListSectionLocksResolverImplementation) UnlockTaskListSection(ps pubsub.PubSub, modelPlanID uuid.UUID, section model.TaskListSection, principal string, role model.Role) (bool, error) {
+func (p PlanTaskListSectionLocksResolverImplementation) UnlockTaskListSection(ps pubsub.PubSub, modelPlanID uuid.UUID, section model.TaskListSection, principal string, actionType model.ActionType) (bool, error) {
 	if !isSectionLocked(modelPlanID, section) {
 		return false, nil
 	}
@@ -120,11 +120,11 @@ func (p PlanTaskListSectionLocksResolverImplementation) UnlockTaskListSection(ps
 		return false, fmt.Errorf("failed to unlock section [%v], user [%v] not authorized to unlock section locked by user [%v]", status.Section, principal, status.LockedBy)
 	}
 
-	deleteTaskListLockSection(ps, modelPlanID, section, status, role)
+	deleteTaskListLockSection(ps, modelPlanID, section, status, actionType)
 	return true, nil
 }
 
-func deleteTaskListLockSection(ps pubsub.PubSub, modelPlanID uuid.UUID, section model.TaskListSection, status model.TaskListSectionLockStatus, role model.Role) {
+func deleteTaskListLockSection(ps pubsub.PubSub, modelPlanID uuid.UUID, section model.TaskListSection, status model.TaskListSectionLockStatus, actionType model.ActionType) {
 	planTaskListSessionLocks.Lock()
 	delete(planTaskListSessionLocks.modelSections[modelPlanID], section)
 	planTaskListSessionLocks.Unlock()
@@ -132,7 +132,7 @@ func deleteTaskListLockSection(ps pubsub.PubSub, modelPlanID uuid.UUID, section 
 	ps.Publish(modelPlanID, pubsubevents.TaskListSectionLocksChanged, model.TaskListSectionLockStatusChanged{
 		ChangeType: model.ChangeTypeRemoved,
 		LockStatus: &status,
-		Role:       role,
+		ActionType: actionType,
 	})
 }
 
@@ -146,7 +146,7 @@ func (p PlanTaskListSectionLocksResolverImplementation) UnlockAllTaskListSection
 	for section, status := range planTaskListSessionLocks.modelSections[modelPlanID] {
 		dupe := status
 		deletedSections = append(deletedSections, &dupe)
-		deleteTaskListLockSection(ps, modelPlanID, section, status, model.RoleMintUser)
+		deleteTaskListLockSection(ps, modelPlanID, section, status, model.ActionTypeAdmin)
 	}
 
 	delete(planTaskListSessionLocks.modelSections, modelPlanID)
@@ -189,7 +189,7 @@ func OnLockTaskListSectionContext(ps pubsub.PubSub, modelPlanID uuid.UUID, princ
 		}
 
 		for section := range ownedSectionLocks {
-			_, err := UnlockTaskListSection(ps, modelPlanID, section, principal, model.RoleMintUser)
+			_, err := UnlockTaskListSection(ps, modelPlanID, section, principal, model.ActionTypeNormal)
 
 			if err != nil {
 				fmt.Printf("Uncapturable error on websocket disconnect: %v\n", err.Error())
@@ -208,8 +208,8 @@ func LockTaskListSection(ps pubsub.PubSub, modelPlanID uuid.UUID, section model.
 }
 
 // UnlockTaskListSection is a convenience relay method to call the corresponding method on a resolver implementation
-func UnlockTaskListSection(ps pubsub.PubSub, modelPlanID uuid.UUID, section model.TaskListSection, principal string, role model.Role) (bool, error) {
-	return NewPlanTaskListSectionLocksResolverImplementation().UnlockTaskListSection(ps, modelPlanID, section, principal, role)
+func UnlockTaskListSection(ps pubsub.PubSub, modelPlanID uuid.UUID, section model.TaskListSection, principal string, actionType model.ActionType) (bool, error) {
+	return NewPlanTaskListSectionLocksResolverImplementation().UnlockTaskListSection(ps, modelPlanID, section, principal, actionType)
 }
 
 // UnlockAllTaskListSections is a convenience relay method to call the corresponding method on a resolver implementation

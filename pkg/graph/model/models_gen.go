@@ -88,7 +88,50 @@ type TaskListSectionLockStatus struct {
 type TaskListSectionLockStatusChanged struct {
 	ChangeType ChangeType                 `json:"changeType"`
 	LockStatus *TaskListSectionLockStatus `json:"lockStatus"`
-	Role       Role                       `json:"role"`
+	ActionType ActionType                 `json:"actionType"`
+}
+
+type ActionType string
+
+const (
+	// A normal flow action
+	ActionTypeNormal ActionType = "NORMAL"
+	// An administrative action
+	ActionTypeAdmin ActionType = "ADMIN"
+)
+
+var AllActionType = []ActionType{
+	ActionTypeNormal,
+	ActionTypeAdmin,
+}
+
+func (e ActionType) IsValid() bool {
+	switch e {
+	case ActionTypeNormal, ActionTypeAdmin:
+		return true
+	}
+	return false
+}
+
+func (e ActionType) String() string {
+	return string(e)
+}
+
+func (e *ActionType) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = ActionType(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid ActionType", str)
+	}
+	return nil
+}
+
+func (e ActionType) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
 type AgencyOrStateHelpType string

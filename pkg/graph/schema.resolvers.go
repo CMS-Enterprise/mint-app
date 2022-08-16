@@ -288,7 +288,7 @@ func (r *mutationResolver) LockTaskListSection(ctx context.Context, modelPlanID 
 func (r *mutationResolver) UnlockTaskListSection(ctx context.Context, modelPlanID uuid.UUID, section model.TaskListSection) (bool, error) {
 	principal := appcontext.Principal(ctx).ID()
 
-	return resolvers.UnlockTaskListSection(r.pubsub, modelPlanID, section, principal, model.RoleMintUser)
+	return resolvers.UnlockTaskListSection(r.pubsub, modelPlanID, section, principal, model.ActionTypeNormal)
 }
 
 // UnlockAllTaskListSections is the resolver for the unlockAllTaskListSections field.

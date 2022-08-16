@@ -687,9 +687,9 @@ type ComplexityRoot struct {
 	}
 
 	TaskListSectionLockStatusChanged struct {
+		ActionType func(childComplexity int) int
 		ChangeType func(childComplexity int) int
 		LockStatus func(childComplexity int) int
-		Role       func(childComplexity int) int
 	}
 
 	UserInfo struct {
@@ -5023,6 +5023,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.TaskListSectionLockStatus.Section(childComplexity), true
 
+	case "TaskListSectionLockStatusChanged.actionType":
+		if e.complexity.TaskListSectionLockStatusChanged.ActionType == nil {
+			break
+		}
+
+		return e.complexity.TaskListSectionLockStatusChanged.ActionType(childComplexity), true
+
 	case "TaskListSectionLockStatusChanged.changeType":
 		if e.complexity.TaskListSectionLockStatusChanged.ChangeType == nil {
 			break
@@ -5036,13 +5043,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.TaskListSectionLockStatusChanged.LockStatus(childComplexity), true
-
-	case "TaskListSectionLockStatusChanged.role":
-		if e.complexity.TaskListSectionLockStatusChanged.Role == nil {
-			break
-		}
-
-		return e.complexity.TaskListSectionLockStatusChanged.Role(childComplexity), true
 
 	case "UserInfo.commonName":
 		if e.complexity.UserInfo.CommonName == nil {
@@ -5259,7 +5259,7 @@ type ExistingModel {
 type TaskListSectionLockStatusChanged {
   changeType: ChangeType!
   lockStatus: TaskListSectionLockStatus!
-  role: Role!
+  actionType: ActionType!
 }
 
 type TaskListSectionLockStatus {
@@ -7176,6 +7176,18 @@ enum Role {
   A MINT assessment team user
   """
   MINT_ASSESSMENT
+}
+
+enum ActionType {
+  """
+  A normal flow action
+  """
+  NORMAL
+
+  """
+  An administrative action
+  """
+  ADMIN
 }
 `, BuiltIn: false},
 }
@@ -35010,8 +35022,8 @@ func (ec *executionContext) fieldContext_Subscription_onTaskListSectionLocksChan
 				return ec.fieldContext_TaskListSectionLockStatusChanged_changeType(ctx, field)
 			case "lockStatus":
 				return ec.fieldContext_TaskListSectionLockStatusChanged_lockStatus(ctx, field)
-			case "role":
-				return ec.fieldContext_TaskListSectionLockStatusChanged_role(ctx, field)
+			case "actionType":
+				return ec.fieldContext_TaskListSectionLockStatusChanged_actionType(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TaskListSectionLockStatusChanged", field.Name)
 		},
@@ -35111,8 +35123,8 @@ func (ec *executionContext) fieldContext_Subscription_onLockTaskListSectionConte
 				return ec.fieldContext_TaskListSectionLockStatusChanged_changeType(ctx, field)
 			case "lockStatus":
 				return ec.fieldContext_TaskListSectionLockStatusChanged_lockStatus(ctx, field)
-			case "role":
-				return ec.fieldContext_TaskListSectionLockStatusChanged_role(ctx, field)
+			case "actionType":
+				return ec.fieldContext_TaskListSectionLockStatusChanged_actionType(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TaskListSectionLockStatusChanged", field.Name)
 		},
@@ -35359,8 +35371,8 @@ func (ec *executionContext) fieldContext_TaskListSectionLockStatusChanged_lockSt
 	return fc, nil
 }
 
-func (ec *executionContext) _TaskListSectionLockStatusChanged_role(ctx context.Context, field graphql.CollectedField, obj *model.TaskListSectionLockStatusChanged) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_TaskListSectionLockStatusChanged_role(ctx, field)
+func (ec *executionContext) _TaskListSectionLockStatusChanged_actionType(ctx context.Context, field graphql.CollectedField, obj *model.TaskListSectionLockStatusChanged) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_TaskListSectionLockStatusChanged_actionType(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -35373,7 +35385,7 @@ func (ec *executionContext) _TaskListSectionLockStatusChanged_role(ctx context.C
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.Role, nil
+		return obj.ActionType, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -35385,19 +35397,19 @@ func (ec *executionContext) _TaskListSectionLockStatusChanged_role(ctx context.C
 		}
 		return graphql.Null
 	}
-	res := resTmp.(model.Role)
+	res := resTmp.(model.ActionType)
 	fc.Result = res
-	return ec.marshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, field.Selections, res)
+	return ec.marshalNActionType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐActionType(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_TaskListSectionLockStatusChanged_role(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_TaskListSectionLockStatusChanged_actionType(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "TaskListSectionLockStatusChanged",
 		Field:      field,
 		IsMethod:   false,
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type Role does not have child fields")
+			return nil, errors.New("field of type ActionType does not have child fields")
 		},
 	}
 	return fc, nil
@@ -42130,9 +42142,9 @@ func (ec *executionContext) _TaskListSectionLockStatusChanged(ctx context.Contex
 			if out.Values[i] == graphql.Null {
 				invalids++
 			}
-		case "role":
+		case "actionType":
 
-			out.Values[i] = ec._TaskListSectionLockStatusChanged_role(ctx, field, obj)
+			out.Values[i] = ec._TaskListSectionLockStatusChanged_actionType(ctx, field, obj)
 
 			if out.Values[i] == graphql.Null {
 				invalids++
@@ -42520,6 +42532,16 @@ func (ec *executionContext) ___Type(ctx context.Context, sel ast.SelectionSet, o
 // endregion **************************** object.gotpl ****************************
 
 // region    ***************************** type.gotpl *****************************
+
+func (ec *executionContext) unmarshalNActionType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐActionType(ctx context.Context, v interface{}) (model.ActionType, error) {
+	var res model.ActionType
+	err := res.UnmarshalGQL(v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalNActionType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐActionType(ctx context.Context, sel ast.SelectionSet, v model.ActionType) graphql.Marshaler {
+	return v
+}
 
 func (ec *executionContext) unmarshalNAgencyOrStateHelpType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐAgencyOrStateHelpType(ctx context.Context, v interface{}) (model.AgencyOrStateHelpType, error) {
 	var res model.AgencyOrStateHelpType

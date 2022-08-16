@@ -101,7 +101,7 @@ type ExistingModel {
 type TaskListSectionLockStatusChanged {
   changeType: ChangeType!
   lockStatus: TaskListSectionLockStatus!
-  role: Role!
+  actionType: ActionType!
 }
 
 type TaskListSectionLockStatus {
@@ -2018,4 +2018,16 @@ enum Role {
   A MINT assessment team user
   """
   MINT_ASSESSMENT
+}
+
+enum ActionType {
+  """
+  A normal flow action
+  """
+  NORMAL
+
+  """
+  An administrative action
+  """
+  ADMIN
 }
