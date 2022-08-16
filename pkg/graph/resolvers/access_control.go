@@ -20,13 +20,18 @@ func ErrorIfNotCollaborator(obj interface{}, logger *zap.Logger, principal authe
 	if checkAccessControl {
 		modelPlanRelation, hasModelPlanRelation := obj.(models.IModelPlanRelation)
 		discussionRelation, hasDiscussionRelation := obj.(models.IDiscussionRelation)
+		notCollabErrString := "user is not a collaborator"
 		if hasModelPlanRelation { //Favor modelPlanRelation  first
+
 			isCollaborator, err := IsCollaboratorModelPlanID(logger, principal, store, modelPlanRelation.GetModelPlanID())
 			if err != nil {
 				return err
 			}
 			if !isCollaborator {
-				return fmt.Errorf("user is not a collaborator")
+
+				logger.Error(notCollabErrString, zap.String("user", principal.ID()), zap.String("ModelPlanID", modelPlanRelation.GetModelPlanID().String()))
+				return fmt.Errorf(notCollabErrString)
+				// return fmt.Errorf("user %s is not a collaborator on model plan %s", principal, modelPlanRelation.GetModelPlanID().String())
 			}
 		} else if hasDiscussionRelation {
 			isCollaborator, err := IsCollaboratorByDiscussionID(logger, principal, store, discussionRelation.GetDiscussionID())
@@ -34,7 +39,8 @@ func ErrorIfNotCollaborator(obj interface{}, logger *zap.Logger, principal authe
 				return err
 			}
 			if !isCollaborator {
-				return fmt.Errorf("user is not a collaborator")
+				logger.Error(notCollabErrString, zap.String("user", principal.ID()), zap.String("DiscussionID", discussionRelation.GetDiscussionID().String()))
+				return fmt.Errorf(notCollabErrString)
 			}
 		} else {
 			return fmt.Errorf("desired access control is not configured")
@@ -57,7 +63,7 @@ func IsCollaboratorModelPlanID(logger *zap.Logger, principal authentication.Prin
 	} else {
 		errString := "user has no roles"
 		logger.Error(errString, zap.String("user", principal.ID()), zap.String("ModelPlanID", modelPlanID.String()))
-		return false, fmt.Errorf("user has no roles")
+		return false, fmt.Errorf(errString)
 	}
 
 }
