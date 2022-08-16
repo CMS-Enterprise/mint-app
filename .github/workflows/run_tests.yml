@@ -70,8 +70,12 @@ jobs:
         uses: satackey/action-docker-layer-caching@v0.0.11
       - name: Run backend server tests
         run: |
+          scripts/dev down
           scripts/dev up:backend
           scripts/dev test:go
+      - name: Docker Compose Down
+        if: always() # Always spin down the container
+        run: |
           scripts/dev down
       # - name: Login to Amazon ECR
       #   id: login-ecr
