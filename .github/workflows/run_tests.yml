@@ -112,6 +112,21 @@ jobs:
         run: |
           ./scripts/github-action-announce-broken-branch
 
+  server_test_temp:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+      - name: Run backend server tests
+        run: |
+          scripts/dev up:backend
+          scripts/dev test:go
+          scripts/dev down
+      - name: Announce failure
+        if: ${{ failure() }}
+        run: |
+          ./scripts/github-action-announce-broken-branch
+
   e2e_tests:
     if: ${{ false }} # Disabled until we can pull images to test from ECR
     runs-on: ubuntu-latest
