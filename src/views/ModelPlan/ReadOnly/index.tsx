@@ -223,7 +223,7 @@ const ReadOnly = () => {
           <div className="padding-y-1">
             <TaskListStatus
               icon
-              modelID="823dffdc-e71e-48c2-bb2b-bb60a38b79b3"
+              modelID={modelID}
               status={status}
               updateLabel={h('updateStatus')}
               modifiedDts={modifiedDts ?? ''}
