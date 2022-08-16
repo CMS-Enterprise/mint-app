@@ -17,14 +17,14 @@ type Principal interface {
 	// for the given Principal
 	ID() string
 
-	// AllowMINT says whether this principal
-	// is authorized to operate within MINT
-	AllowMINT() bool
+	// AllowUSER says whether this principal
+	// is authorized to operate within MINT as a regular user
+	AllowUSER() bool
 
-	// AllowADMIN says whether this principal
+	// AllowASSESSMENT says whether this principal
 	// is authorized to operate as part of
 	// the Review Team within MINT
-	AllowADMIN() bool
+	AllowASSESSMENT() bool
 }
 
 type anonymous struct{}
@@ -43,22 +43,22 @@ func (*anonymous) ID() string {
 // AllowMINT says Anonymous users are
 // not explicitly allowed to submit
 // info to EASi
-func (*anonymous) AllowMINT() bool {
+func (*anonymous) AllowUSER() bool {
 	return false
 }
 
 // AllowADMIN says Anonymous users are
 // not explicitly ruled in as ADMIN
-func (*anonymous) AllowADMIN() bool {
+func (*anonymous) AllowASSESSMENT() bool {
 	return false
 }
 
 // EUAPrincipal represents information
 // gleaned from the Okta JWT
 type EUAPrincipal struct {
-	EUAID        string
-	JobCodeMINT  bool
-	JobCodeADMIN bool
+	EUAID             string
+	JobCodeUSER       bool
+	JobCodeASSESSMENT bool
 }
 
 // String satisfies the fmt.Stringer interface
@@ -72,15 +72,15 @@ func (p *EUAPrincipal) ID() string {
 	return p.EUAID
 }
 
-// AllowMINT says whether this principal
+// AllowUSER says whether this principal
 // is authorized to operate within MINT
-func (p *EUAPrincipal) AllowMINT() bool {
-	return p.JobCodeMINT
+func (p *EUAPrincipal) AllowUSER() bool {
+	return p.JobCodeUSER
 }
 
-// AllowADMIN says whether this principal
+// AllowASSESSMENT says whether this principal
 // is authorized to operate as part of
-// the Admin Team within MINT
-func (p *EUAPrincipal) AllowADMIN() bool {
-	return p.JobCodeADMIN
+// the Assessment Team within MINT
+func (p *EUAPrincipal) AllowASSESSMENT() bool {
+	return p.JobCodeASSESSMENT
 }

@@ -16,8 +16,8 @@ import (
 )
 
 const (
-	prodADMINJobCode = "MINT_P_ADMIN"
-	testADMINJobCode = "MINT_D_ADMIN"
+	jobCodeUser       = "MINT_USER"
+	jobCodeAssessment = "MINT_ASSESSMENT"
 )
 
 func (f oktaMiddlewareFactory) jwt(logger *zap.Logger, authHeader string) (*jwtverifier.Jwt, error) {
@@ -64,17 +64,16 @@ func (f oktaMiddlewareFactory) newPrincipal(jwt *jwtverifier.Jwt) (*authenticati
 	// the current assumption is that anyone with an appropriate
 	// JWT provided by Okta for MINT is allowed to use MINT
 	// as a viewer/submitter
-	jcMINT := true
+	jcUser := jwtGroupsContainsJobCode(jwt, f.jobCodeUser)
 
 	// need to check the claims for empowerment as each role
-	jcADMIN := jwtGroupsContainsJobCode(jwt, f.codeADMIN)
+	jcAssessment := jwtGroupsContainsJobCode(jwt, f.jobCodeAssessment)
 
 	return &authentication.EUAPrincipal{
-			EUAID:        euaID,
-			JobCodeMINT:  jcMINT,
-			JobCodeADMIN: jcADMIN,
-		},
-		nil
+		EUAID:             euaID,
+		JobCodeUSER:       jcUser,
+		JobCodeASSESSMENT: jcAssessment,
+	}, nil
 }
 
 func (f oktaMiddlewareFactory) newAuthenticationMiddleware(next http.Handler) http.Handler {
@@ -105,7 +104,7 @@ func (f oktaMiddlewareFactory) newAuthenticationMiddleware(next http.Handler) ht
 			)
 			return
 		}
-		logger = logger.With(zap.String("user", principal.ID())).With(zap.Bool("admin", principal.AllowADMIN()))
+		logger = logger.With(zap.String("user", principal.ID())).With(zap.Bool("assessment", principal.AllowASSESSMENT()))
 
 		ctx := r.Context()
 		ctx = appcontext.WithPrincipal(ctx, principal)
@@ -135,24 +134,18 @@ type JwtVerifier interface {
 
 type oktaMiddlewareFactory struct {
 	handlers.HandlerBase
-	verifier  JwtVerifier
-	codeADMIN string
+	verifier          JwtVerifier
+	jobCodeUser       string
+	jobCodeAssessment string
 }
 
 // NewOktaAuthenticationMiddleware returns a wrapper for HandlerFunc to authorize with Okta
-func NewOktaAuthenticationMiddleware(base handlers.HandlerBase, jwtVerifier JwtVerifier, useTestJobCodes bool) func(http.Handler) http.Handler {
-	// by default we want to use the PROD job codes, and only in
-	// pre-PROD environments do we want to empower the
-	// alternate job codes.
-	JobCodeADMIN := prodADMINJobCode
-	if useTestJobCodes {
-		JobCodeADMIN = testADMINJobCode
-	}
-
+func NewOktaAuthenticationMiddleware(base handlers.HandlerBase, jwtVerifier JwtVerifier) func(http.Handler) http.Handler {
 	middlewareFactory := oktaMiddlewareFactory{
-		HandlerBase: base,
-		verifier:    jwtVerifier,
-		codeADMIN:   JobCodeADMIN,
+		HandlerBase:       base,
+		verifier:          jwtVerifier,
+		jobCodeUser:       jobCodeUser,
+		jobCodeAssessment: jobCodeAssessment,
 	}
 	return middlewareFactory.newAuthenticationMiddleware
 }
