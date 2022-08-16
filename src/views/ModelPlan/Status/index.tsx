@@ -42,6 +42,8 @@ const Status = () => {
     status: Yup.string().required('Enter a role for this team member')
   });
 
+  const readOnly = history.location.hash === '#read-only';
+
   const { data } = useQuery<GetModelPlanType>(GetModelPlan, {
     variables: {
       id: modelID
@@ -63,7 +65,11 @@ const Status = () => {
     })
       .then(response => {
         if (!response?.errors) {
-          history.push(`/models/${modelID}/task-list/`);
+          if (readOnly) {
+            history.push(`/models/${modelID}/read-only/`);
+          } else {
+            history.push(`/models/${modelID}/task-list/`);
+          }
         }
       })
       .catch(errors => {
@@ -75,22 +81,24 @@ const Status = () => {
     <MainContent>
       <GridContainer>
         <Grid desktop={{ col: 6 }}>
-          <BreadcrumbBar variant="wrap">
-            <Breadcrumb>
-              <BreadcrumbLink asCustom={Link} to="/">
-                <span>{h('home')}</span>
-              </BreadcrumbLink>
-            </Breadcrumb>
-            <Breadcrumb>
-              <BreadcrumbLink
-                asCustom={Link}
-                to={`/models/${modelID}/task-list/`}
-              >
-                <span>{h('tasklistBreadcrumb')}</span>
-              </BreadcrumbLink>
-            </Breadcrumb>
-            <Breadcrumb current>{t('status.heading')}</Breadcrumb>
-          </BreadcrumbBar>
+          {!readOnly && (
+            <BreadcrumbBar variant="wrap">
+              <Breadcrumb>
+                <BreadcrumbLink asCustom={Link} to="/">
+                  <span>{h('home')}</span>
+                </BreadcrumbLink>
+              </Breadcrumb>
+              <Breadcrumb>
+                <BreadcrumbLink
+                  asCustom={Link}
+                  to={`/models/${modelID}/task-list/`}
+                >
+                  <span>{h('tasklistBreadcrumb')}</span>
+                </BreadcrumbLink>
+              </Breadcrumb>
+              <Breadcrumb current>{t('status.heading')}</Breadcrumb>
+            </BreadcrumbBar>
+          )}
           <PageHeading className="margin-bottom-1">
             {t('status.heading')}
           </PageHeading>
@@ -166,11 +174,15 @@ const Status = () => {
                       type="button"
                       className="usa-button usa-button--unstyled"
                       onClick={() =>
-                        history.push(`/models/${modelID}/task-list/`)
+                        readOnly
+                          ? history.push(`/models/${modelID}/read-only/`)
+                          : history.push(`/models/${modelID}/task-list/`)
                       }
                     >
                       <IconArrowBack className="margin-right-1" aria-hidden />
-                      {t('status.return')}
+                      {readOnly
+                        ? t('status.summaryReturn')
+                        : t('status.return')}
                     </Button>
                   </Form>
                 </>
