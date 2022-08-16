@@ -42,7 +42,7 @@ func (suite *PreUpdateSuite) TestBaseTaskListSectionPreUpdate() {
 	err = BaseTaskListSectionPreUpdate(&planBasics, changes, "REVI")
 	suite.Nil(err)
 	suite.EqualValues(planBasics.Status, models.TaskReadyForReview)
-	suite.EqualValues(*planBasics.ReadyForReviewBy, "REVI")
+	suite.EqualValues(*planBasics.ReadyForReviewBy, "REVZ")
 	suite.NotNil(planBasics.ReadyForReviewDts)
 
 }
