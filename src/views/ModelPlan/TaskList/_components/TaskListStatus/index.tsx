@@ -14,6 +14,7 @@ type TaskListStatusProps = {
   status: ModelStatus;
   updateLabel?: string;
   modifiedDts?: string;
+  readOnly?: boolean;
 };
 
 const TaskListStatus = ({
@@ -21,7 +22,8 @@ const TaskListStatus = ({
   modelID,
   status,
   updateLabel,
-  modifiedDts
+  modifiedDts,
+  readOnly
 }: TaskListStatusProps) => {
   const { t } = useTranslation('modelPlanTaskList');
   const { t: h } = useTranslation('generalReadOnly');
@@ -41,7 +43,11 @@ const TaskListStatus = ({
 
       <div>
         <UswdsReactLink
-          to={`/models/${modelID}/status`}
+          to={
+            readOnly
+              ? `/models/${modelID}/status#read-only`
+              : `/models/${modelID}/status`
+          }
           className="display-flex flex-align-center"
         >
           {icon && <IconEdit className="margin-right-1" />}
