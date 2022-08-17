@@ -20,6 +20,9 @@ export default gql`
         affectsMedicareSecondaryPayerClaimsNote
         payModelDifferentiation
       }
+      itTools {
+        status
+      }
     }
   }
 `;

@@ -17,6 +17,9 @@ export default gql`
         readyForReviewDts
         status
       }
+      itTools {
+        status
+      }
     }
   }
 `;
