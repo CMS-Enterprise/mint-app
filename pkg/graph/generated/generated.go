@@ -144,6 +144,7 @@ type ComplexityRoot struct {
 		UnlockTaskListSection              func(childComplexity int, modelPlanID uuid.UUID, section model.TaskListSection) int
 		UpdateDiscussionReply              func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
 		UpdateModelPlan                    func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
+		UpdateNDAAgreement                 func(childComplexity int, changes map[string]interface{}) int
 		UpdatePlanBasics                   func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
 		UpdatePlanBeneficiaries            func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
 		UpdatePlanCollaborator             func(childComplexity int, id uuid.UUID, newRole models.TeamRole) int
@@ -154,6 +155,16 @@ type ComplexityRoot struct {
 		UpdatePlanOpsEvalAndLearning       func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
 		UpdatePlanParticipantsAndProviders func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
 		UpdatePlanPayments                 func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
+	}
+
+	NDAAgreement struct {
+		Accepted    func(childComplexity int) int
+		CreatedBy   func(childComplexity int) int
+		CreatedDts  func(childComplexity int) int
+		ID          func(childComplexity int) int
+		ModifiedBy  func(childComplexity int) int
+		ModifiedDts func(childComplexity int) int
+		UserID      func(childComplexity int) int
 	}
 
 	PlanBasics struct {
@@ -667,6 +678,7 @@ type ComplexityRoot struct {
 		ExistingModelCollection   func(childComplexity int) int
 		ModelPlan                 func(childComplexity int, id uuid.UUID) int
 		ModelPlanCollection       func(childComplexity int) int
+		NdaAgreement              func(childComplexity int, euaID string) int
 		PlanCollaboratorByID      func(childComplexity int, id uuid.UUID) int
 		PlanDocument              func(childComplexity int, id uuid.UUID) int
 		PlanDocumentDownloadURL   func(childComplexity int, id uuid.UUID) int
@@ -736,6 +748,7 @@ type MutationResolver interface {
 	UnlockTaskListSection(ctx context.Context, modelPlanID uuid.UUID, section model.TaskListSection) (bool, error)
 	UnlockAllTaskListSections(ctx context.Context, modelPlanID uuid.UUID) ([]*model.TaskListSectionLockStatus, error)
 	UpdatePlanPayments(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanPayments, error)
+	UpdateNDAAgreement(ctx context.Context, changes map[string]interface{}) (*models.NDAAgreement, error)
 }
 type PlanBasicsResolver interface {
 	CmsCenters(ctx context.Context, obj *models.PlanBasics) ([]model.CMSCenter, error)
@@ -889,6 +902,7 @@ type QueryResolver interface {
 	PlanCollaboratorByID(ctx context.Context, id uuid.UUID) (*models.PlanCollaborator, error)
 	TaskListSectionLocks(ctx context.Context, modelPlanID uuid.UUID) ([]*model.TaskListSectionLockStatus, error)
 	PlanPayments(ctx context.Context, id uuid.UUID) (*models.PlanPayments, error)
+	NdaAgreement(ctx context.Context, euaID string) (*models.NDAAgreement, error)
 }
 type SubscriptionResolver interface {
 	OnTaskListSectionLocksChanged(ctx context.Context, modelPlanID uuid.UUID) (<-chan *model.TaskListSectionLockStatusChanged, error)
@@ -1435,6 +1449,18 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Mutation.UpdateModelPlan(childComplexity, args["id"].(uuid.UUID), args["changes"].(map[string]interface{})), true
 
+	case "Mutation.updateNDAAgreement":
+		if e.complexity.Mutation.UpdateNDAAgreement == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_updateNDAAgreement_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Mutation.UpdateNDAAgreement(childComplexity, args["changes"].(map[string]interface{})), true
+
 	case "Mutation.updatePlanBasics":
 		if e.complexity.Mutation.UpdatePlanBasics == nil {
 			break
@@ -1554,6 +1580,55 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Mutation.UpdatePlanPayments(childComplexity, args["id"].(uuid.UUID), args["changes"].(map[string]interface{})), true
+
+	case "NDAAgreement.accepted":
+		if e.complexity.NDAAgreement.Accepted == nil {
+			break
+		}
+
+		return e.complexity.NDAAgreement.Accepted(childComplexity), true
+
+	case "NDAAgreement.createdBy":
+		if e.complexity.NDAAgreement.CreatedBy == nil {
+			break
+		}
+
+		return e.complexity.NDAAgreement.CreatedBy(childComplexity), true
+
+	case "NDAAgreement.createdDts":
+		if e.complexity.NDAAgreement.CreatedDts == nil {
+			break
+		}
+
+		return e.complexity.NDAAgreement.CreatedDts(childComplexity), true
+
+	case "NDAAgreement.id":
+		if e.complexity.NDAAgreement.ID == nil {
+			break
+		}
+
+		return e.complexity.NDAAgreement.ID(childComplexity), true
+
+	case "NDAAgreement.modifiedBy":
+		if e.complexity.NDAAgreement.ModifiedBy == nil {
+			break
+		}
+
+		return e.complexity.NDAAgreement.ModifiedBy(childComplexity), true
+
+	case "NDAAgreement.modifiedDts":
+		if e.complexity.NDAAgreement.ModifiedDts == nil {
+			break
+		}
+
+		return e.complexity.NDAAgreement.ModifiedDts(childComplexity), true
+
+	case "NDAAgreement.userID":
+		if e.complexity.NDAAgreement.UserID == nil {
+			break
+		}
+
+		return e.complexity.NDAAgreement.UserID(childComplexity), true
 
 	case "PlanBasics.announced":
 		if e.complexity.PlanBasics.Announced == nil {
@@ -4904,6 +4979,18 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Query.ModelPlanCollection(childComplexity), true
 
+	case "Query.ndaAgreement":
+		if e.complexity.Query.NdaAgreement == nil {
+			break
+		}
+
+		args, err := ec.field_Query_ndaAgreement_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Query.NdaAgreement(childComplexity, args["euaID"].(string)), true
+
 	case "Query.planCollaboratorByID":
 		if e.complexity.Query.PlanCollaboratorByID == nil {
 			break
@@ -6447,6 +6534,31 @@ input PlanOpsEvalAndLearningChanges @goModel(model: "map[string]interface{}") {
 
     status: TaskStatusInput
 }
+
+"""
+NDAAgreement represents the acceptance of the NDA waiver
+"""
+type NDAAgreement {
+  id: UUID!
+
+  userID: String!
+  accepted: Boolean!
+
+  createdBy: String!
+  createdDts: Time!
+  modifiedBy: String
+  modifiedDts: Time
+}
+
+"""
+NDAAgreementChanges represents the possible fields that can be updated for an  NDA waiver
+Fields explicitly set with NULL will be unset, and omitted fields will be left unchanged.
+https://gqlgen.com/reference/changesets/
+"""
+input NDAAgreementChanges @goModel(model: "map[string]interface{}"){
+  userID: String!
+  accepted: Boolean!
+}
 """
 Query definition for the schema
 """
@@ -6462,6 +6574,7 @@ type Query {
   planCollaboratorByID(id: UUID!): PlanCollaborator!
   taskListSectionLocks(modelPlanID: UUID!): [TaskListSectionLockStatus!]!
   planPayments(id: UUID!): PlanPayments!
+  ndaAgreement(euaID: String!): NDAAgreement #Should this not be nullable? Should we make an 
 }
 
 """
@@ -6541,6 +6654,9 @@ unlockAllTaskListSections(modelPlanID: UUID!): [TaskListSectionLockStatus!]!
 @hasRole(role: MINT_ASSESSMENT)
 
 updatePlanPayments(id: UUID!, changes: PlanPaymentsChanges!): PlanPayments!
+@hasRole(role: MINT_USER)
+
+updateNDAAgreement(changes: NDAAgreementChanges!): NDAAgreement!
 @hasRole(role: MINT_USER)
 }
 
@@ -7444,6 +7560,21 @@ func (ec *executionContext) field_Mutation_updateModelPlan_args(ctx context.Cont
 	return args, nil
 }
 
+func (ec *executionContext) field_Mutation_updateNDAAgreement_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 map[string]interface{}
+	if tmp, ok := rawArgs["changes"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("changes"))
+		arg0, err = ec.unmarshalNNDAAgreementChanges2map(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["changes"] = arg0
+	return args, nil
+}
+
 func (ec *executionContext) field_Mutation_updatePlanBasics_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
@@ -7717,6 +7848,21 @@ func (ec *executionContext) field_Query_modelPlan_args(ctx context.Context, rawA
 		}
 	}
 	args["id"] = arg0
+	return args, nil
+}
+
+func (ec *executionContext) field_Query_ndaAgreement_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 string
+	if tmp, ok := rawArgs["euaID"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("euaID"))
+		arg0, err = ec.unmarshalNString2string(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["euaID"] = arg0
 	return args, nil
 }
 
@@ -14047,6 +14193,403 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanPayments(ctx context
 	if fc.Args, err = ec.field_Mutation_updatePlanPayments_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Mutation_updateNDAAgreement(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Mutation_updateNDAAgreement(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		directive0 := func(rctx context.Context) (interface{}, error) {
+			ctx = rctx // use context from middleware stack in children
+			return ec.resolvers.Mutation().UpdateNDAAgreement(rctx, fc.Args["changes"].(map[string]interface{}))
+		}
+		directive1 := func(ctx context.Context) (interface{}, error) {
+			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
+			if err != nil {
+				return nil, err
+			}
+			if ec.directives.HasRole == nil {
+				return nil, errors.New("directive hasRole is not implemented")
+			}
+			return ec.directives.HasRole(ctx, nil, directive0, role)
+		}
+
+		tmp, err := directive1(rctx)
+		if err != nil {
+			return nil, graphql.ErrorOnPath(ctx, err)
+		}
+		if tmp == nil {
+			return nil, nil
+		}
+		if data, ok := tmp.(*models.NDAAgreement); ok {
+			return data, nil
+		}
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.NDAAgreement`, tmp)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*models.NDAAgreement)
+	fc.Result = res
+	return ec.marshalNNDAAgreement2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐNDAAgreement(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Mutation_updateNDAAgreement(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_NDAAgreement_id(ctx, field)
+			case "userID":
+				return ec.fieldContext_NDAAgreement_userID(ctx, field)
+			case "accepted":
+				return ec.fieldContext_NDAAgreement_accepted(ctx, field)
+			case "createdBy":
+				return ec.fieldContext_NDAAgreement_createdBy(ctx, field)
+			case "createdDts":
+				return ec.fieldContext_NDAAgreement_createdDts(ctx, field)
+			case "modifiedBy":
+				return ec.fieldContext_NDAAgreement_modifiedBy(ctx, field)
+			case "modifiedDts":
+				return ec.fieldContext_NDAAgreement_modifiedDts(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type NDAAgreement", field.Name)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_updateNDAAgreement_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _NDAAgreement_id(ctx context.Context, field graphql.CollectedField, obj *models.NDAAgreement) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_NDAAgreement_id(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ID, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(uuid.UUID)
+	fc.Result = res
+	return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_NDAAgreement_id(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "NDAAgreement",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type UUID does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _NDAAgreement_userID(ctx context.Context, field graphql.CollectedField, obj *models.NDAAgreement) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_NDAAgreement_userID(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.UserID, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalNString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_NDAAgreement_userID(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "NDAAgreement",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _NDAAgreement_accepted(ctx context.Context, field graphql.CollectedField, obj *models.NDAAgreement) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_NDAAgreement_accepted(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Accepted, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(bool)
+	fc.Result = res
+	return ec.marshalNBoolean2bool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_NDAAgreement_accepted(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "NDAAgreement",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _NDAAgreement_createdBy(ctx context.Context, field graphql.CollectedField, obj *models.NDAAgreement) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_NDAAgreement_createdBy(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.CreatedBy, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalNString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_NDAAgreement_createdBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "NDAAgreement",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _NDAAgreement_createdDts(ctx context.Context, field graphql.CollectedField, obj *models.NDAAgreement) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_NDAAgreement_createdDts(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.CreatedDts, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(time.Time)
+	fc.Result = res
+	return ec.marshalNTime2timeᚐTime(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_NDAAgreement_createdDts(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "NDAAgreement",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Time does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _NDAAgreement_modifiedBy(ctx context.Context, field graphql.CollectedField, obj *models.NDAAgreement) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_NDAAgreement_modifiedBy(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ModifiedBy, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_NDAAgreement_modifiedBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "NDAAgreement",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _NDAAgreement_modifiedDts(ctx context.Context, field graphql.CollectedField, obj *models.NDAAgreement) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_NDAAgreement_modifiedDts(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ModifiedDts, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*time.Time)
+	fc.Result = res
+	return ec.marshalOTime2ᚖtimeᚐTime(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_NDAAgreement_modifiedDts(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "NDAAgreement",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Time does not have child fields")
+		},
 	}
 	return fc, nil
 }
@@ -34772,6 +35315,74 @@ func (ec *executionContext) fieldContext_Query_planPayments(ctx context.Context,
 	return fc, nil
 }
 
+func (ec *executionContext) _Query_ndaAgreement(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Query_ndaAgreement(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Query().NdaAgreement(rctx, fc.Args["euaID"].(string))
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*models.NDAAgreement)
+	fc.Result = res
+	return ec.marshalONDAAgreement2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐNDAAgreement(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Query_ndaAgreement(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_NDAAgreement_id(ctx, field)
+			case "userID":
+				return ec.fieldContext_NDAAgreement_userID(ctx, field)
+			case "accepted":
+				return ec.fieldContext_NDAAgreement_accepted(ctx, field)
+			case "createdBy":
+				return ec.fieldContext_NDAAgreement_createdBy(ctx, field)
+			case "createdDts":
+				return ec.fieldContext_NDAAgreement_createdDts(ctx, field)
+			case "modifiedBy":
+				return ec.fieldContext_NDAAgreement_modifiedBy(ctx, field)
+			case "modifiedDts":
+				return ec.fieldContext_NDAAgreement_modifiedDts(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type NDAAgreement", field.Name)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Query_ndaAgreement_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _Query___type(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_Query___type(ctx, field)
 	if err != nil {
@@ -38261,6 +38872,79 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 			if out.Values[i] == graphql.Null {
 				invalids++
 			}
+		case "updateNDAAgreement":
+
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_updateNDAAgreement(ctx, field)
+			})
+
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch()
+	if invalids > 0 {
+		return graphql.Null
+	}
+	return out
+}
+
+var nDAAgreementImplementors = []string{"NDAAgreement"}
+
+func (ec *executionContext) _NDAAgreement(ctx context.Context, sel ast.SelectionSet, obj *models.NDAAgreement) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, nDAAgreementImplementors)
+	out := graphql.NewFieldSet(fields)
+	var invalids uint32
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("NDAAgreement")
+		case "id":
+
+			out.Values[i] = ec._NDAAgreement_id(ctx, field, obj)
+
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		case "userID":
+
+			out.Values[i] = ec._NDAAgreement_userID(ctx, field, obj)
+
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		case "accepted":
+
+			out.Values[i] = ec._NDAAgreement_accepted(ctx, field, obj)
+
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		case "createdBy":
+
+			out.Values[i] = ec._NDAAgreement_createdBy(ctx, field, obj)
+
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		case "createdDts":
+
+			out.Values[i] = ec._NDAAgreement_createdDts(ctx, field, obj)
+
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		case "modifiedBy":
+
+			out.Values[i] = ec._NDAAgreement_modifiedBy(ctx, field, obj)
+
+		case "modifiedDts":
+
+			out.Values[i] = ec._NDAAgreement_modifiedDts(ctx, field, obj)
+
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}
@@ -41890,6 +42574,26 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 			out.Concurrently(i, func() graphql.Marshaler {
 				return rrm(innerCtx)
 			})
+		case "ndaAgreement":
+			field := field
+
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Query_ndaAgreement(ctx, field)
+				return res
+			}
+
+			rrm := func(ctx context.Context) graphql.Marshaler {
+				return ec.OperationContext.RootResolverMiddleware(ctx, innerFunc)
+			}
+
+			out.Concurrently(i, func() graphql.Marshaler {
+				return rrm(innerCtx)
+			})
 		case "__type":
 
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
@@ -44495,6 +45199,24 @@ func (ec *executionContext) marshalNMonitoringFileType2ᚕgithubᚗcomᚋcmsgov�
 	}
 
 	return ret
+}
+
+func (ec *executionContext) marshalNNDAAgreement2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐNDAAgreement(ctx context.Context, sel ast.SelectionSet, v models.NDAAgreement) graphql.Marshaler {
+	return ec._NDAAgreement(ctx, sel, &v)
+}
+
+func (ec *executionContext) marshalNNDAAgreement2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐNDAAgreement(ctx context.Context, sel ast.SelectionSet, v *models.NDAAgreement) graphql.Marshaler {
+	if v == nil {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
+		return graphql.Null
+	}
+	return ec._NDAAgreement(ctx, sel, v)
+}
+
+func (ec *executionContext) unmarshalNNDAAgreementChanges2map(ctx context.Context, v interface{}) (map[string]interface{}, error) {
+	return v.(map[string]interface{}), nil
 }
 
 func (ec *executionContext) unmarshalNNonClaimsBasedPayType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐNonClaimsBasedPayType(ctx context.Context, v interface{}) (model.NonClaimsBasedPayType, error) {
@@ -49776,6 +50498,13 @@ func (ec *executionContext) marshalOMonitoringFileType2ᚕgithubᚗcomᚋcmsgov�
 	}
 
 	return ret
+}
+
+func (ec *executionContext) marshalONDAAgreement2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐNDAAgreement(ctx context.Context, sel ast.SelectionSet, v *models.NDAAgreement) graphql.Marshaler {
+	if v == nil {
+		return graphql.Null
+	}
+	return ec._NDAAgreement(ctx, sel, v)
 }
 
 func (ec *executionContext) unmarshalONonClaimsBasedPayType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐNonClaimsBasedPayTypeᚄ(ctx context.Context, v interface{}) ([]model.NonClaimsBasedPayType, error) {

@@ -304,6 +304,11 @@ func (r *mutationResolver) UpdatePlanPayments(ctx context.Context, id uuid.UUID,
 	return resolvers.PlanPaymentsUpdate(logger, r.store, id, changes, principal)
 }
 
+// UpdateNDAAgreement is the resolver for the updateNDAAgreement field.
+func (r *mutationResolver) UpdateNDAAgreement(ctx context.Context, changes map[string]interface{}) (*models.NDAAgreement, error) {
+	panic(fmt.Errorf("not implemented"))
+}
+
 // CmsCenters is the resolver for the cmsCenters field.
 func (r *planBasicsResolver) CmsCenters(ctx context.Context, obj *models.PlanBasics) ([]model.CMSCenter, error) {
 	cmsCenters := models.ConvertEnums[model.CMSCenter](obj.CMSCenters)
@@ -787,6 +792,11 @@ func (r *queryResolver) PlanPayments(ctx context.Context, id uuid.UUID) (*models
 	logger := appcontext.ZLogger(ctx)
 
 	return resolvers.PlanPaymentsRead(logger, r.store, id)
+}
+
+// NdaAgreement is the resolver for the ndaAgreement field.
+func (r *queryResolver) NdaAgreement(ctx context.Context, euaID string) (*models.NDAAgreement, error) {
+	panic(fmt.Errorf("not implemented"))
 }
 
 // OnTaskListSectionLocksChanged is the resolver for the onTaskListSectionLocksChanged field.
