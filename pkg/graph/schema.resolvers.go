@@ -288,7 +288,7 @@ func (r *mutationResolver) LockTaskListSection(ctx context.Context, modelPlanID 
 func (r *mutationResolver) UnlockTaskListSection(ctx context.Context, modelPlanID uuid.UUID, section model.TaskListSection) (bool, error) {
 	principal := appcontext.Principal(ctx).ID()
 
-	return resolvers.UnlockTaskListSection(r.pubsub, modelPlanID, section, principal)
+	return resolvers.UnlockTaskListSection(r.pubsub, modelPlanID, section, principal, model.ActionTypeNormal)
 }
 
 // UnlockAllTaskListSections is the resolver for the unlockAllTaskListSections field.
@@ -794,6 +794,13 @@ func (r *subscriptionResolver) OnTaskListSectionLocksChanged(ctx context.Context
 	principal := appcontext.Principal(ctx).ID()
 
 	return resolvers.SubscribeTaskListSectionLockChanges(r.pubsub, modelPlanID, principal, ctx.Done())
+}
+
+// OnLockTaskListSectionContext is the resolver for the onLockTaskListSectionContext field.
+func (r *subscriptionResolver) OnLockTaskListSectionContext(ctx context.Context, modelPlanID uuid.UUID) (<-chan *model.TaskListSectionLockStatusChanged, error) {
+	principal := appcontext.Principal(ctx).ID()
+
+	return resolvers.OnLockTaskListSectionContext(r.pubsub, modelPlanID, principal, ctx.Done())
 }
 
 // Email is the resolver for the email field.
