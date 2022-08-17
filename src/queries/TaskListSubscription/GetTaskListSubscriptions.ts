@@ -6,7 +6,6 @@ export default gql`
       modelPlanID
       section
       lockedBy
-      refCount
     }
   }
 `;

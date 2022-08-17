@@ -5,14 +5,14 @@
   Redirects locked and errors states to /locked-task-list-section view
  */
 
-import React, { useContext, useEffect, useRef } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { Redirect, useHistory, useLocation } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { useOktaAuth } from '@okta/okta-react';
 
 import LockTaskListSection from 'queries/TaskListSubscription/LockTaskListSection';
 import { LockTaskListSectionVariables } from 'queries/TaskListSubscription/types/LockTaskListSection';
-import { TaskListSubscription_onTaskListSectionLocksChanged_lockStatus as LockSectionType } from 'queries/TaskListSubscription/types/TaskListSubscription';
+import { TaskListSubscription_onLockTaskListSectionContext_lockStatus as LockSectionType } from 'queries/TaskListSubscription/types/TaskListSubscription';
 import { UnlockTaskListSectionVariables } from 'queries/TaskListSubscription/types/UnlockTaskListSection';
 import UnlockTackListSection from 'queries/TaskListSubscription/UnlockTackListSection';
 import { TaskListSection } from 'types/graphql-global-types';
@@ -78,9 +78,10 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
 
   const validModelID: boolean = isUUID(modelID);
 
-  const prevPath = useRef<string>('');
   // Used in addtion to mutation loading states to catch delayed updates to the context
   const locking = useRef<boolean>(false);
+
+  const [prevPath, setPrevPath] = useState<string>('');
 
   let lockState: LockStatus;
 
@@ -127,7 +128,7 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
   // Checks the location before unmounting to see if lock should be unlocked
   useEffect(() => {
     return () => {
-      prevPath.current = pathname;
+      setPrevPath(pathname);
     };
   }, [pathname]);
 
@@ -146,7 +147,9 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
 
   // Removes a section that is locked
   const removeLockedSection = (section: LockSectionType | undefined) => {
-    const prevModelID = prevPath.current.split('/')[2];
+    const prevModelID = prevPath.split('/')[2];
+
+    // console.log(prevPath);
 
     // Check if the prev path was a part of a model plan
     if (section && isUUID(prevModelID)) {
@@ -172,7 +175,8 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
     !addLockLoading &&
     !removeLockLoading &&
     !locking.current &&
-    !loading
+    !loading &&
+    prevPath
   ) {
     const lockedSection = taskListSectionLocks.find(
       (section: LockSectionType) => section.lockedBy === authState?.euaId

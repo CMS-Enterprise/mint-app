@@ -11,7 +11,8 @@ import { useLazyQuery } from '@apollo/client';
 
 import GetTaskListSubscriptions from 'queries/TaskListSubscription/GetTaskListSubscriptions';
 import SubscribeToTaskList from 'queries/TaskListSubscription/SubscribeToTaskList';
-import { TaskListSubscription_onTaskListSectionLocksChanged_lockStatus as LockSectionType } from 'queries/TaskListSubscription/types/TaskListSubscription';
+import { TaskListSubscription_onLockTaskListSectionContext_lockStatus as LockSectionType } from 'queries/TaskListSubscription/types/TaskListSubscription';
+import { ChangeType } from 'types/graphql-global-types';
 import { isUUID } from 'utils/modelPlan';
 
 type SubscriptionWrapperProps = {
@@ -111,10 +112,12 @@ const SubscriptionWrapper = ({ children }: SubscriptionWrapperProps) => {
             if (!subscriptionData.data) return prev;
 
             const lockChange =
-              subscriptionData.data.onTaskListSectionLocksChanged;
+              subscriptionData.data.onLockTaskListSectionContext;
+
+            console.log(lockChange);
 
             const updatedSubscriptionContext =
-              lockChange.changeType === 'REMOVED'
+              lockChange.changeType === ChangeType.REMOVED
                 ? // If section lock is to be freed, remove the lock from the SubscriptionContext
                   removeLockedSection(
                     prev.taskListSectionLocks,

@@ -7,6 +7,11 @@
 // START Enums and Input Objects
 //==============================================================
 
+export enum ActionType {
+  ADMIN = "ADMIN",
+  NORMAL = "NORMAL",
+}
+
 export enum AgencyOrStateHelpType {
   NO = "NO",
   OTHER = "OTHER",
