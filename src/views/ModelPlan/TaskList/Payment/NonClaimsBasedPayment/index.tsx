@@ -18,6 +18,7 @@ import { Field, Form, Formik, FormikProps } from 'formik';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
+import ITToolsWarning from 'components/ITToolsWarning';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import AutoSave from 'components/shared/AutoSave';
@@ -39,7 +40,8 @@ import UpdatePayments from 'queries/Payments/UpdatePayments';
 import {
   ClaimsBasedPayType,
   NonClaimsBasedPayType,
-  PayType
+  PayType,
+  TaskStatus
 } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import {
@@ -88,11 +90,14 @@ const NonClaimsBasedPayment = () => {
 
   const modelName = data?.modelPlan?.modelName || '';
 
+  const itToolsStarted: boolean =
+    data?.modelPlan.itTools.status !== TaskStatus.READY;
+
   const [update] = useMutation<UpdatePaymentsVariables>(UpdatePayments);
 
   const handleFormSubmit = (
     formikValues: NonClaimsBasedPaymentFormType,
-    redirect?: 'next' | 'back' | 'task-list'
+    redirect?: 'next' | 'back' | 'task-list' | string
   ) => {
     const { id: updateId, __typename, ...changeValues } = formikValues;
     const hasClaimsBasedPayment = formikValues.payType.includes(
@@ -127,6 +132,8 @@ const NonClaimsBasedPayment = () => {
             }
           } else if (redirect === 'task-list') {
             history.push(`/models/${modelID}/task-list/`);
+          } else if (redirect) {
+            history.push(redirect);
           }
         }
       })
@@ -254,6 +261,17 @@ const NonClaimsBasedPayment = () => {
                         <Label htmlFor="payment-nonclaims-payments">
                           {t('nonClaimsPayments')}
                         </Label>
+                        {itToolsStarted && (
+                          <ITToolsWarning
+                            id="payment-nonclaims-payments-warning"
+                            onClick={() =>
+                              handleFormSubmit(
+                                values,
+                                `/models/${modelID}/task-list/it-tools/page-nine`
+                              )
+                            }
+                          />
+                        )}
                         <FieldErrorMsg>
                           {flatErrors.nonClaimsPayments}
                         </FieldErrorMsg>

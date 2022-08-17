@@ -23,6 +23,9 @@ export default gql`
         iddocSupport
         iddocSupportNote
       }
+      itTools {
+        status
+      }
     }
   }
 `;

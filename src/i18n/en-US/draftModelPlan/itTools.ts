@@ -252,7 +252,10 @@ const itTools = {
     subHeading: 'Please try again later.',
     return: 'Return to the task list',
     goBack: 'Go back'
-  }
+  },
+  warningRedirect:
+    'Changing your answer to this question may also affect your responses to questions in IT tools.  ',
+  goToITTools: 'Go to IT tools'
 };
 
 export default itTools;
