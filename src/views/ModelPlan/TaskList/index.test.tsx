@@ -5,7 +5,12 @@ import { render, screen, waitFor } from '@testing-library/react';
 
 import GetModelPlanQuery from 'queries/GetModelPlan';
 import { GetModelPlan_modelPlan as GetModelPlanTypes } from 'queries/types/GetModelPlan';
-import { ModelStatus } from 'types/graphql-global-types';
+import {
+  CMMIGroup,
+  CMSCenter,
+  ModelCategory,
+  ModelStatus
+} from 'types/graphql-global-types';
 
 import TaskList from './index';
 

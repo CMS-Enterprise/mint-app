@@ -32,8 +32,8 @@ import {
   GetModelPlanInfo_modelPlan as ModelPlanInfoFormType,
   GetModelPlanInfoVariables
 } from 'queries/Basics/types/GetModelPlanInfo';
-import { UpdateModelPlanAndBasicsVariables } from 'queries/types/UpdateModelPlanAndBasics';
-import UpdateModelPlanAndBasics from 'queries/UpdateModelPlanAndBasics';
+import { UpdateModelPlanVariables } from 'queries/types/UpdateModelPlan';
+import UpdateModelPlan from 'queries/UpdateModelPlan';
 import {
   CMMIGroup,
   CMSCenter,
@@ -78,9 +78,7 @@ const BasicsContent = () => {
 
   const { modelCategory, cmsCenters, cmmiGroups, cmsOther } = basics || {};
 
-  const [update] = useMutation<UpdateModelPlanAndBasicsVariables>(
-    UpdateModelPlanAndBasics
-  );
+  const [update] = useMutation<UpdateModelPlanVariables>(UpdateModelPlan);
 
   const handleFormSubmit = (
     formikValues: ModelPlanInfoFormType,
