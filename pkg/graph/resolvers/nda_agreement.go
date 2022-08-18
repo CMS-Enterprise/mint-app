@@ -1,53 +1,77 @@
 package resolvers
 
 import (
+	"time"
+
 	"github.com/google/uuid"
 	"go.uber.org/zap"
 
 	"github.com/cmsgov/mint-app/pkg/authentication"
+	"github.com/cmsgov/mint-app/pkg/graph/model"
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/storage"
 )
 
 //NDAAgreementGetByEUA returns an EUA agreement by eua
-func NDAAgreementGetByEUA(logger *zap.Logger, euaID string, store *storage.Store) (*models.NDAAgreement, error) {
-	nda, err := store.NDAAgreementGetByEUA(logger, euaID)
+func NDAAgreementGetByEUA(logger *zap.Logger, principal authentication.Principal, store *storage.Store) (*model.NDAAccepted, error) {
+	nda, err := store.NDAAgreementGetByEUA(logger, principal.ID())
+	accepted := model.NDAAccepted{}
 	if err != nil {
 		return nil, err
 	}
-	return nda, err
+	if nda == nil {
+		accepted.Accepted = false
+	} else {
+		accepted.Accepted = nda.Accepted
+		accepted.AcceptedDts = nda.AcceptedDts
+	}
+
+	return &accepted, err
 
 }
 
 //NDAAgreementUpdateOrCreate either writes an entry to the nda table, or updates an existing one
-func NDAAgreementUpdateOrCreate(logger *zap.Logger, changes map[string]interface{}, principal authentication.Principal, store *storage.Store) (*models.NDAAgreement, error) {
-	existing, err := store.NDAAgreementGetByEUA(logger, changes["userID"].(string))
+func NDAAgreementUpdateOrCreate(logger *zap.Logger, accept bool, principal authentication.Principal, store *storage.Store) (*model.NDAAccepted, error) {
+	existing, err := store.NDAAgreementGetByEUA(logger, principal.ID())
 	if err != nil {
 		return nil, err
 	}
 	if existing == nil {
 		existing = &models.NDAAgreement{}
 		existing.CreatedBy = principal.ID()
+		existing.UserID = principal.ID()
+	} else {
+		existing.ModifiedBy = models.StringPointer(principal.ID())
 	}
 
-	err = BaseStructPreUpdate(existing, changes, principal.ID()) //TODO refactor to use the changes for collab based access control
-	if err != nil {
-		return nil, err
+	if !existing.Accepted && accept { //If not currently accepted, set acceptedDts to now
+		now := time.Now()
+		existing.AcceptedDts = &now
 	}
+	existing.Accepted = accept
+	accepted := model.NDAAccepted{}
 
 	if existing.ID == uuid.Nil {
-		// if existing == nil {
-		// nda := &models.NDAAgreement{
-		// 	BaseStruct: models.BaseStruct{
-		// 		// ID: ut
-		// 	},
-		// }
-		logger.Info("nda", zap.Any("nda", existing))
 
-		return store.NDAAgreementCreate(logger, existing)
+		new, err2 := store.NDAAgreementCreate(logger, existing)
+		if err2 != nil {
+			return nil, err2
+		}
+		accepted.Accepted = new.Accepted
+		accepted.AcceptedDts = new.AcceptedDts
+
+	} else {
+
+		existing.ModifiedBy = models.StringPointer(principal.ID())
+		update, err3 := store.NDAAgreementUpdate(logger, existing)
+		if err3 != nil {
+			return nil, err3
+		}
+		accepted.Accepted = update.Accepted
+		accepted.AcceptedDts = update.AcceptedDts
 
 	}
 
-	return store.NDAAgreementUpdate(logger, existing)
+	return &accepted, err
 
 }

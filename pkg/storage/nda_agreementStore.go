@@ -70,7 +70,7 @@ func (s *Store) NDAAgreementCreate(logger *zap.Logger, nda *models.NDAAgreement)
 		return nil, genericmodel.HandleModelCreationError(logger, err, nda)
 	}
 
-	err = statement.Get(&nda, &nda)
+	err = statement.Get(nda, &nda)
 	if err != nil {
 		return nil, genericmodel.HandleModelCreationError(logger, err, nda)
 	}

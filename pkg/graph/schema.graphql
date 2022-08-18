@@ -1305,29 +1305,37 @@ input PlanOpsEvalAndLearningChanges @goModel(model: "map[string]interface{}") {
 }
 
 """
-NDAAgreement represents the acceptance of the NDA waiver
+NDAAccepted represents whether a user has accepted an NDA or not. If accepted previously, there will be a datestamp visible
 """
-type NDAAgreement {
-  id: UUID!
-
-  userID: String!
+type NDAAccepted {
   accepted: Boolean!
-
-  createdBy: String!
-  createdDts: Time!
-  modifiedBy: String
-  modifiedDts: Time
+  acceptedDts: Time
 }
 
-"""
-NDAAgreementChanges represents the possible fields that can be updated for an  NDA waiver
-Fields explicitly set with NULL will be unset, and omitted fields will be left unchanged.
-https://gqlgen.com/reference/changesets/
-"""
-input NDAAgreementChanges @goModel(model: "map[string]interface{}"){
-  userID: String!
-  accepted: Boolean!
-}
+# """
+# NDAAgreement represents the acceptance of the NDA waiver
+# """
+# type NDAAgreement {
+#   id: UUID!
+
+#   userID: String!
+#   accepted: Boolean!
+
+#   createdBy: String!
+#   createdDts: Time!
+#   modifiedBy: String
+#   modifiedDts: Time
+# }
+
+# """
+# NDAAgreementChanges represents the possible fields that can be updated for an  NDA waiver
+# Fields explicitly set with NULL will be unset, and omitted fields will be left unchanged.
+# https://gqlgen.com/reference/changesets/
+# """
+# input NDAAgreementChanges @goModel(model: "map[string]interface{}"){
+#   userID: String!
+#   accepted: Boolean!
+# }
 """
 Query definition for the schema
 """
@@ -1343,7 +1351,7 @@ type Query {
   planCollaboratorByID(id: UUID!): PlanCollaborator!
   taskListSectionLocks(modelPlanID: UUID!): [TaskListSectionLockStatus!]!
   planPayments(id: UUID!): PlanPayments!
-  ndaAgreement(euaID: String!): NDAAgreement #Should this not be nullable? Should we make an 
+  ndaAccepted: NDAAccepted!
 }
 
 """
@@ -1425,7 +1433,7 @@ unlockAllTaskListSections(modelPlanID: UUID!): [TaskListSectionLockStatus!]!
 updatePlanPayments(id: UUID!, changes: PlanPaymentsChanges!): PlanPayments!
 @hasRole(role: MINT_USER)
 
-updateOrCreateNDAAgreement(changes: NDAAgreementChanges!): NDAAgreement!
+acceptNDAAgreement(accept: Boolean!): NDAAccepted!
 @hasRole(role: MINT_USER)
 }
 

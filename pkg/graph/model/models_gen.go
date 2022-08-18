@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io"
 	"strconv"
+	"time"
 
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/google/uuid"
@@ -39,6 +40,12 @@ type GeneratePresignedUploadURLPayload struct {
 type LaunchDarklySettings struct {
 	UserKey    string `json:"userKey"`
 	SignedHash string `json:"signedHash"`
+}
+
+// NDAAccepted represents whether a user has accepted an NDA or not. If accepted previously, there will be a datestamp visible
+type NDAAccepted struct {
+	Accepted    bool       `json:"accepted"`
+	AcceptedDts *time.Time `json:"acceptedDts"`
 }
 
 // PlanCollaboratorCreateInput represents the data required to create a collaborator on a plan

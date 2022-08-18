@@ -2,6 +2,7 @@ SELECT
     id,
     user_id,
     accepted,
+    accepted_dts,
     created_by,
     created_dts,
     modified_by,
