@@ -18,6 +18,7 @@ import { Field, Form, Formik, FormikProps } from 'formik';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
+import ITToolsWarning from 'components/ITToolsWarning';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import AutoSave from 'components/shared/AutoSave';
@@ -38,7 +39,8 @@ import {
   ClaimsBasedPayType,
   FundingSource as FundingSourceEnum,
   PayRecipient,
-  PayType
+  PayType,
+  TaskStatus
 } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import {
@@ -92,11 +94,14 @@ const FundingSource = () => {
 
   const modelName = data?.modelPlan?.modelName || '';
 
+  const itToolsStarted: boolean =
+    data?.modelPlan.itTools.status !== TaskStatus.READY;
+
   const [update] = useMutation<UpdatePaymentsVariables>(UpdatePayments);
 
   const handleFormSubmit = (
     formikValues: FundingFormType,
-    redirect?: 'next' | 'back'
+    redirect?: 'next' | 'back' | string
   ) => {
     const { id: updateId, __typename, ...changeValues } = formikValues;
     const hasClaimsBasedPayment = formikValues.payType.includes(
@@ -127,6 +132,8 @@ const FundingSource = () => {
             }
           } else if (redirect === 'back') {
             history.push(`/models/${modelID}/task-list/`);
+          } else if (redirect) {
+            history.push(redirect);
           }
         }
       })
@@ -487,6 +494,17 @@ const FundingSource = () => {
                         <Label htmlFor="payType" className="maxw-none">
                           {t('whatWillYouPay')}
                         </Label>
+                        {itToolsStarted && (
+                          <ITToolsWarning
+                            id="payment-pay-recipients-warning"
+                            onClick={() =>
+                              handleFormSubmit(
+                                values,
+                                `/models/${modelID}/task-list/it-tools/page-eight`
+                              )
+                            }
+                          />
+                        )}
                         <p className="text-base margin-y-1 margin-top-2">
                           {t('whatWillYouPaySubCopy')}
                         </p>

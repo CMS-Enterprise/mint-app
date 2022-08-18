@@ -17,6 +17,7 @@ import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
+import ITToolsWarning from 'components/ITToolsWarning';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import AutoSave from 'components/shared/AutoSave';
@@ -35,7 +36,8 @@ import { UpdatePlanParticipantsAndProvidersVariables } from 'queries/Participant
 import UpdatePlanParticipantsAndProviders from 'queries/ParticipantsAndProviders/UpdatePlanParticipantsAndProviders';
 import {
   ParticipantCommunicationType,
-  ParticipantRiskType
+  ParticipantRiskType,
+  TaskStatus
 } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import {
@@ -78,6 +80,9 @@ export const Communication = () => {
 
   const modelName = data?.modelPlan?.modelName || '';
 
+  const itToolsStarted: boolean =
+    data?.modelPlan.itTools.status !== TaskStatus.READY;
+
   // If redirected from IT Tools, scrolls to the relevant question
   useScrollElement(!loading);
 
@@ -87,7 +92,7 @@ export const Communication = () => {
 
   const handleFormSubmit = (
     formikValues: CommunicationFormType,
-    redirect?: 'next' | 'back' | 'task-list'
+    redirect?: 'next' | 'back' | 'task-list' | string
   ) => {
     const { id: updateId, __typename, ...changeValues } = formikValues;
     update({
@@ -108,6 +113,8 @@ export const Communication = () => {
             );
           } else if (redirect === 'task-list') {
             history.push(`/models/${modelID}/task-list`);
+          } else if (redirect) {
+            history.push(redirect);
           }
         }
       })
@@ -215,6 +222,17 @@ export const Communication = () => {
                       <legend className="usa-label">
                         {t('participantCommunication')}
                       </legend>
+                      {itToolsStarted && (
+                        <ITToolsWarning
+                          id="participants-and-providers-communication-method-warning"
+                          onClick={() =>
+                            handleFormSubmit(
+                              values,
+                              `/models/${modelID}/task-list/it-tools/page-three`
+                            )
+                          }
+                        />
+                      )}
                       <FieldErrorMsg>
                         {flatErrors.communicationMethod}
                       </FieldErrorMsg>

@@ -15,6 +15,7 @@ import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
+import ITToolsWarning from 'components/ITToolsWarning';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import ReadyForReview from 'components/ReadyForReview';
@@ -33,7 +34,10 @@ import {
 } from 'queries/OpsEvalAndLearning/types/GetLearning';
 import { UpdatePlanOpsEvalAndLearningVariables } from 'queries/OpsEvalAndLearning/types/UpdatePlanOpsEvalAndLearning';
 import UpdatePlanOpsEvalAndLearning from 'queries/OpsEvalAndLearning/UpdatePlanOpsEvalAndLearning';
-import { ModelLearningSystemType } from 'types/graphql-global-types';
+import {
+  ModelLearningSystemType,
+  TaskStatus
+} from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import {
   sortOtherEnum,
@@ -81,6 +85,9 @@ const Learning = () => {
 
   const modelName = data?.modelPlan?.modelName || '';
 
+  const itToolsStarted: boolean =
+    data?.modelPlan.itTools.status !== TaskStatus.READY;
+
   // If redirected from IT Tools, scrolls to the relevant question
   useScrollElement(!loading);
 
@@ -90,7 +97,7 @@ const Learning = () => {
 
   const handleFormSubmit = (
     formikValues: InitialValueType,
-    redirect?: 'next' | 'back' | 'task-list'
+    redirect?: 'next' | 'back' | 'task-list' | string
   ) => {
     const { id: updateId, __typename, ...changeValues } = formikValues;
     update({
@@ -107,6 +114,8 @@ const Learning = () => {
             );
           } else if (redirect === 'task-list') {
             history.push(`/models/${modelID}/task-list`);
+          } else if (redirect) {
+            history.push(redirect);
           }
         }
       })
@@ -214,6 +223,18 @@ const Learning = () => {
                       <legend className="usa-label">
                         {t('learningSystem')}
                       </legend>
+
+                      {itToolsStarted && (
+                        <ITToolsWarning
+                          id="ops-eval-and-learning-learning-systems-warning"
+                          onClick={() =>
+                            handleFormSubmit(
+                              values,
+                              `/models/${modelID}/task-list/it-tools/page-seven`
+                            )
+                          }
+                        />
+                      )}
 
                       <FieldErrorMsg>
                         {flatErrors.modelLearningSystems}

@@ -20,6 +20,7 @@ import { Field, Form, Formik, FormikProps } from 'formik';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
+import ITToolsWarning from 'components/ITToolsWarning';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import ReadyForReview from 'components/ReadyForReview';
@@ -37,7 +38,11 @@ import {
 } from 'queries/Payments/types/GetRecover';
 import { UpdatePaymentsVariables } from 'queries/Payments/types/UpdatePayments';
 import UpdatePayments from 'queries/Payments/UpdatePayments';
-import { ClaimsBasedPayType, PayType } from 'types/graphql-global-types';
+import {
+  ClaimsBasedPayType,
+  PayType,
+  TaskStatus
+} from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import { NotFoundPartial } from 'views/NotFound';
 
@@ -88,11 +93,14 @@ const Recover = () => {
 
   const modelName = data?.modelPlan?.modelName || '';
 
+  const itToolsStarted: boolean =
+    data?.modelPlan.itTools.status !== TaskStatus.READY;
+
   const [update] = useMutation<UpdatePaymentsVariables>(UpdatePayments);
 
   const handleFormSubmit = (
     formikValues: InitialValueType,
-    redirect?: 'back' | 'task-list'
+    redirect?: 'back' | 'task-list' | string
   ) => {
     const { id: updateId, __typename, ...changeValues } = formikValues;
     update({
@@ -107,6 +115,8 @@ const Recover = () => {
             history.push(`/models/${modelID}/task-list/payment/complexity`);
           } else if (redirect === 'task-list') {
             history.push(`/models/${modelID}/task-list/`);
+          } else if (redirect) {
+            history.push(redirect);
           }
         }
       })
@@ -264,6 +274,19 @@ const Recover = () => {
                         >
                           {t('willRecoverPayments')}
                         </Label>
+
+                        {itToolsStarted && (
+                          <ITToolsWarning
+                            id="payment-recover-payment-warning"
+                            onClick={() =>
+                              handleFormSubmit(
+                                values,
+                                `/models/${modelID}/task-list/it-tools/page-nine`
+                              )
+                            }
+                          />
+                        )}
+
                         <FieldErrorMsg>
                           {flatErrors.willRecoverPayments}
                         </FieldErrorMsg>

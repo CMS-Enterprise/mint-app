@@ -245,7 +245,10 @@ const itTools = {
   oelLearningContractorTools:
     'How will you acquire a learning contractor, if any?',
   oelParticipantCollaborationTools:
-    'What tools will you use to enable participant-to-participant collaboration?'
+    'What tools will you use to enable participant-to-participant collaboration?',
+  warningRedirect:
+    'Changing your answer to this question may also affect your responses to questions in IT tools.  ',
+  goToITTools: 'Go to IT tools'
 };
 
 export default itTools;

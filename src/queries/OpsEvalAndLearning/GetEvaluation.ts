@@ -24,6 +24,9 @@ export default gql`
         shareCclfData
         shareCclfDataNote
       }
+      itTools {
+        status
+      }
     }
   }
 `;
