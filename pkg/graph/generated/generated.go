@@ -144,7 +144,7 @@ type ComplexityRoot struct {
 		UnlockTaskListSection              func(childComplexity int, modelPlanID uuid.UUID, section model.TaskListSection) int
 		UpdateDiscussionReply              func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
 		UpdateModelPlan                    func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
-		UpdateNDAAgreement                 func(childComplexity int, changes map[string]interface{}) int
+		UpdateOrCreateNDAAgreement         func(childComplexity int, changes map[string]interface{}) int
 		UpdatePlanBasics                   func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
 		UpdatePlanBeneficiaries            func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
 		UpdatePlanCollaborator             func(childComplexity int, id uuid.UUID, newRole models.TeamRole) int
@@ -748,7 +748,7 @@ type MutationResolver interface {
 	UnlockTaskListSection(ctx context.Context, modelPlanID uuid.UUID, section model.TaskListSection) (bool, error)
 	UnlockAllTaskListSections(ctx context.Context, modelPlanID uuid.UUID) ([]*model.TaskListSectionLockStatus, error)
 	UpdatePlanPayments(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanPayments, error)
-	UpdateNDAAgreement(ctx context.Context, changes map[string]interface{}) (*models.NDAAgreement, error)
+	UpdateOrCreateNDAAgreement(ctx context.Context, changes map[string]interface{}) (*models.NDAAgreement, error)
 }
 type PlanBasicsResolver interface {
 	CmsCenters(ctx context.Context, obj *models.PlanBasics) ([]model.CMSCenter, error)
@@ -1449,17 +1449,17 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Mutation.UpdateModelPlan(childComplexity, args["id"].(uuid.UUID), args["changes"].(map[string]interface{})), true
 
-	case "Mutation.updateNDAAgreement":
-		if e.complexity.Mutation.UpdateNDAAgreement == nil {
+	case "Mutation.updateOrCreateNDAAgreement":
+		if e.complexity.Mutation.UpdateOrCreateNDAAgreement == nil {
 			break
 		}
 
-		args, err := ec.field_Mutation_updateNDAAgreement_args(context.TODO(), rawArgs)
+		args, err := ec.field_Mutation_updateOrCreateNDAAgreement_args(context.TODO(), rawArgs)
 		if err != nil {
 			return 0, false
 		}
 
-		return e.complexity.Mutation.UpdateNDAAgreement(childComplexity, args["changes"].(map[string]interface{})), true
+		return e.complexity.Mutation.UpdateOrCreateNDAAgreement(childComplexity, args["changes"].(map[string]interface{})), true
 
 	case "Mutation.updatePlanBasics":
 		if e.complexity.Mutation.UpdatePlanBasics == nil {
@@ -6656,7 +6656,7 @@ unlockAllTaskListSections(modelPlanID: UUID!): [TaskListSectionLockStatus!]!
 updatePlanPayments(id: UUID!, changes: PlanPaymentsChanges!): PlanPayments!
 @hasRole(role: MINT_USER)
 
-updateNDAAgreement(changes: NDAAgreementChanges!): NDAAgreement!
+updateOrCreateNDAAgreement(changes: NDAAgreementChanges!): NDAAgreement!
 @hasRole(role: MINT_USER)
 }
 
@@ -7560,7 +7560,7 @@ func (ec *executionContext) field_Mutation_updateModelPlan_args(ctx context.Cont
 	return args, nil
 }
 
-func (ec *executionContext) field_Mutation_updateNDAAgreement_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+func (ec *executionContext) field_Mutation_updateOrCreateNDAAgreement_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
 	var arg0 map[string]interface{}
@@ -14197,8 +14197,8 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanPayments(ctx context
 	return fc, nil
 }
 
-func (ec *executionContext) _Mutation_updateNDAAgreement(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Mutation_updateNDAAgreement(ctx, field)
+func (ec *executionContext) _Mutation_updateOrCreateNDAAgreement(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Mutation_updateOrCreateNDAAgreement(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -14212,7 +14212,7 @@ func (ec *executionContext) _Mutation_updateNDAAgreement(ctx context.Context, fi
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		directive0 := func(rctx context.Context) (interface{}, error) {
 			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Mutation().UpdateNDAAgreement(rctx, fc.Args["changes"].(map[string]interface{}))
+			return ec.resolvers.Mutation().UpdateOrCreateNDAAgreement(rctx, fc.Args["changes"].(map[string]interface{}))
 		}
 		directive1 := func(ctx context.Context) (interface{}, error) {
 			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
@@ -14252,7 +14252,7 @@ func (ec *executionContext) _Mutation_updateNDAAgreement(ctx context.Context, fi
 	return ec.marshalNNDAAgreement2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐNDAAgreement(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Mutation_updateNDAAgreement(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Mutation_updateOrCreateNDAAgreement(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Mutation",
 		Field:      field,
@@ -14285,7 +14285,7 @@ func (ec *executionContext) fieldContext_Mutation_updateNDAAgreement(ctx context
 		}
 	}()
 	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_updateNDAAgreement_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+	if fc.Args, err = ec.field_Mutation_updateOrCreateNDAAgreement_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return
 	}
@@ -38872,10 +38872,10 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 			if out.Values[i] == graphql.Null {
 				invalids++
 			}
-		case "updateNDAAgreement":
+		case "updateOrCreateNDAAgreement":
 
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_updateNDAAgreement(ctx, field)
+				return ec._Mutation_updateOrCreateNDAAgreement(ctx, field)
 			})
 
 			if out.Values[i] == graphql.Null {

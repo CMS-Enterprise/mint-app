@@ -304,9 +304,12 @@ func (r *mutationResolver) UpdatePlanPayments(ctx context.Context, id uuid.UUID,
 	return resolvers.PlanPaymentsUpdate(logger, r.store, id, changes, principal)
 }
 
-// UpdateNDAAgreement is the resolver for the updateNDAAgreement field.
-func (r *mutationResolver) UpdateNDAAgreement(ctx context.Context, changes map[string]interface{}) (*models.NDAAgreement, error) {
-	panic(fmt.Errorf("not implemented"))
+// UpdateOrCreateNDAAgreement is the resolver for the updateOrCreateNDAAgreement field.
+func (r *mutationResolver) UpdateOrCreateNDAAgreement(ctx context.Context, changes map[string]interface{}) (*models.NDAAgreement, error) {
+	logger := appcontext.ZLogger(ctx)
+	principal := appcontext.Principal(ctx)
+
+	return resolvers.NDAAgreementUpdateOrCreate(logger, changes, principal, r.store)
 }
 
 // CmsCenters is the resolver for the cmsCenters field.
@@ -796,7 +799,9 @@ func (r *queryResolver) PlanPayments(ctx context.Context, id uuid.UUID) (*models
 
 // NdaAgreement is the resolver for the ndaAgreement field.
 func (r *queryResolver) NdaAgreement(ctx context.Context, euaID string) (*models.NDAAgreement, error) {
-	panic(fmt.Errorf("not implemented"))
+	logger := appcontext.ZLogger(ctx)
+
+	return resolvers.NDAAgreementGetByEUA(logger, euaID, r.store)
 }
 
 // OnTaskListSectionLocksChanged is the resolver for the onTaskListSectionLocksChanged field.
@@ -884,6 +889,9 @@ type userInfoResolver struct{ *Resolver }
 //  - When renaming or deleting a resolver the old code will be put in here. You can safely delete
 //    it when you're done.
 //  - You have helper methods in this file. Move them out to keep these resolver files clean.
+func (r *mutationResolver) UpdateNDAAgreement(ctx context.Context, changes map[string]interface{}) (*models.NDAAgreement, error) {
+	panic(fmt.Errorf("not implemented"))
+}
 func (r *planBasicsResolver) ModelCategory(ctx context.Context, obj *models.PlanBasics) (*models.ModelCategory, error) {
 	panic(fmt.Errorf("not implemented"))
 }

@@ -1425,7 +1425,7 @@ unlockAllTaskListSections(modelPlanID: UUID!): [TaskListSectionLockStatus!]!
 updatePlanPayments(id: UUID!, changes: PlanPaymentsChanges!): PlanPayments!
 @hasRole(role: MINT_USER)
 
-updateNDAAgreement(changes: NDAAgreementChanges!): NDAAgreement!
+updateOrCreateNDAAgreement(changes: NDAAgreementChanges!): NDAAgreement!
 @hasRole(role: MINT_USER)
 }
 

@@ -1,7 +1,7 @@
 CREATE TABLE nda_agreement (
     id UUID PRIMARY KEY NOT NULL,
     --page 1
-    user_id EUA_ID NOT NULL,
+    user_id EUA_ID NOT NULL UNIQUE,
     accepted BOOLEAN NOT NULL,
     --META DATA
     created_by EUA_ID NOT NULL,
