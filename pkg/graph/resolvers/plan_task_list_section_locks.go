@@ -66,7 +66,10 @@ func (p PlanTaskListSectionLocksResolverImplementation) GetTaskListSectionLocks(
 
 // SubscribeTaskListSectionLockChanges creates a Subscriber and registers it for the pubsubevents.TaskListSectionLocksChanged event
 func (p PlanTaskListSectionLocksResolverImplementation) SubscribeTaskListSectionLockChanges(ps pubsub.PubSub, modelPlanID uuid.UUID, principal string, onDisconnect <-chan struct{}) (<-chan *model.TaskListSectionLockStatusChanged, error) {
-	subscriber := subscribers.NewTaskListSectionLockChangedSubscriber(principal)
+	subscriber, err := subscribers.NewTaskListSectionLockChangedSubscriber(principal)
+	if err != nil {
+		return nil, err
+	}
 
 	ps.Subscribe(modelPlanID, pubsubevents.TaskListSectionLocksChanged, subscriber, onDisconnect)
 
