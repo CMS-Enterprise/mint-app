@@ -13,6 +13,7 @@ import {
 } from '@trussworks/react-uswds';
 import classnames from 'classnames';
 
+import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import CollapsableLink from 'components/shared/CollapsableLink';
@@ -34,7 +35,6 @@ import { NotFoundPartial } from 'views/NotFound';
 import TaskListStatus from '../TaskList/_components/TaskListStatus';
 
 import './index.scss';
-import UswdsReactLink from 'components/LinkWrapper';
 
 const ReadOnly = () => {
   const { t } = useTranslation('modelSummary');
