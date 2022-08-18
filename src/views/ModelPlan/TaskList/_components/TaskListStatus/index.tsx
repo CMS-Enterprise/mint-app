@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { IconEdit } from '@trussworks/react-uswds';
+import { Grid, GridContainer, IconEdit } from '@trussworks/react-uswds';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import Tag from 'components/shared/Tag';
@@ -27,28 +27,44 @@ const TaskListStatus = ({
   const { t: h } = useTranslation('generalReadOnly');
 
   return (
-    <div className="display-flex flex-align-center" style={{ gap: '10px' }}>
-      <p className="margin-y-0">{t('status')}</p>
-      <Tag className="bg-base text-white margin-right-0">
-        {translateModelPlanStatus(status)}
-      </Tag>
-      {!!modifiedDts && (
-        <p className="margin-y-0 text-normal">
-          {h('lastUpdate')}
-          {formatDate(modifiedDts, 'M/d/yyyy')}
-        </p>
-      )}
-
-      <div>
-        <UswdsReactLink
-          to={`/models/${modelID}/status`}
+    <GridContainer className="padding-0">
+      <Grid row style={{ gap: '10px' }}>
+        <Grid
+          col={modifiedDts ? 12 : 'auto'}
+          desktop={{ col: 'auto' }}
           className="display-flex flex-align-center"
+          style={{ gap: '10px' }}
         >
-          {icon && <IconEdit className="margin-right-1" />}
-          {updateLabel ?? t('update')}
-        </UswdsReactLink>
-      </div>
-    </div>
+          <p className="margin-y-0">{t('status')}</p>
+          <Tag className="bg-base text-white margin-right-0">
+            {translateModelPlanStatus(status)}
+          </Tag>
+        </Grid>
+        <Grid
+          col={modifiedDts ? 12 : 'auto'}
+          desktop={{ col: 'auto' }}
+          className="display-flex flex-align-center flex-wrap"
+          style={{ gap: '10px' }}
+        >
+          {!!modifiedDts && (
+            <p className="margin-y-0 text-normal">
+              {h('lastUpdate')}
+              {formatDate(modifiedDts, 'M/d/yyyy')}
+            </p>
+          )}
+
+          <div>
+            <UswdsReactLink
+              to={`/models/${modelID}/status`}
+              className="display-flex flex-align-center"
+            >
+              {icon && <IconEdit className="margin-right-1" />}
+              {updateLabel ?? t('update')}
+            </UswdsReactLink>
+          </div>
+        </Grid>
+      </Grid>
+    </GridContainer>
   );
 };
 
