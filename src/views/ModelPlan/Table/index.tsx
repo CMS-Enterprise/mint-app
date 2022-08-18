@@ -103,7 +103,7 @@ const Table = ({ data, hiddenColumns, readOnly }: TableProps) => {
         }
       }
     ];
-  }, [t]);
+  }, [readOnly, t]);
 
   const {
     getTableProps,
