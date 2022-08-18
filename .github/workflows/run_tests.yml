@@ -33,7 +33,6 @@ env:
 
 jobs:
   server_test:
-    if: ${{ false }} # Disabled until we can pull images to test from ECR
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
@@ -41,7 +40,7 @@ jobs:
         with:
           ref: ${{ env.GIT_HASH }}
       - name: Configure go cache
-        uses: actions/cache@c3f1317a9e7b1ef106c153ac8c0f00fed3ddbc0d
+        uses: actions/cache@a7c34adf76222e77931dedbf4a45b2e4648ced19
         with:
           path: |
             ~/go/pkg/mod
@@ -57,56 +56,71 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@67fbcbb121271f7775d2e7715933280b06314838
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-west-2
-      - name: Login to Amazon ECR
-        id: login-ecr
-        uses: aws-actions/amazon-ecr-login@b874a33292cc9887d2e80bc63f6f1a11fccb4a7b
+      # - name: Configure AWS credentials
+      #   uses: aws-actions/configure-aws-credentials@67fbcbb121271f7775d2e7715933280b06314838
+      #   with:
+      #     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      #     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      #     aws-region: us-west-2
+      - name: Set env vars with direnv
+        uses: HatsuneMiku3939/direnv-action@v1
+      - name: Get docker images
+        run: docker-compose pull
+      - name: Docker Layer Caching
+        uses: satackey/action-docker-layer-caching@v0.0.11
       - name: Run backend server tests
-        env:
-          APP_ENV: test
-          AWS_REGION: us-west-2 # easi app tests expect AWS_REGION instead of AWS_DEFAULT_REGION
-          AWS_SES_SOURCE: '"EASi Test" <no-reply-test@info.easi.cms.gov>'
-          AWS_SES_SOURCE_ARN: ${{ secrets.AWS_SES_SOURCE_ARN }}
-          AWS_S3_FILE_UPLOAD_BUCKET: easi-app-file-uploads
-          CLIENT_PROTOCOL: http
-          CLIENT_PORT: 3000
-          CLIENT_HOSTNAME: localhost:3005
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: easi-db-migrate
-          GRT_EMAIL: success@simulator.amazonses.com
-          ACCESSIBILITY_TEAM_EMAIL: success@simulator.amazonses.com
-          OKTA_CLIENT_ID: 0oad9awvebnsMwWNa297
-          OKTA_DOMAIN: https://test.idp.idm.cms.gov
-          OKTA_ISSUER: https://test.idp.idm.cms.gov/oauth2/ausd980kt2CBBzStG297
-          OKTA_REDIRECT_URI: http://localhost:3005/implicit/callback
-          OKTA_TEST_PASSWORD: ${{ secrets.OKTA_TEST_PASSWORD }}
-          OKTA_TEST_SECRET: ${{ secrets.OKTA_TEST_SECRET }}
-          OKTA_TEST_USERNAME: ${{ secrets.OKTA_TEST_USERNAME }}
-          PGHOST: localhost
-          PGPORT: 5432
-          PGDATABASE: postgres
-          PGUSER: app_user
-          PGPASS: supersecretapp
-          PGSSLMODE: disable
-          DB_MAX_CONNECTIONS: 20
-          FLAG_SOURCE: LOCAL
         run: |
-          docker-compose --project-name easi-server-test -f docker-compose.ci_server_test.yml up -d db
-          docker-compose --project-name easi-server-test -f docker-compose.ci_server_test.yml up --exit-code-from db_migrate db_migrate
-          ./scripts/build_app
-          ./scripts/testsuite
-          docker-compose --project-name easi-server-test -f docker-compose.ci_server_test.yml down
-      - name: Upload backend test artifacts
-        uses: actions/upload-artifact@3cea5372237819ed00197afe530f5a7ea3e805c8
-        with:
-          name: backend-tests
-          path: results
-          retention-days: 14
+          scripts/dev down
+          scripts/dev up:backend
+          scripts/dev test:go
+      - name: Docker Compose Down
+        if: always() # Always spin down the container
+        run: |
+          scripts/dev down
+      # - name: Login to Amazon ECR
+      #   id: login-ecr
+      #   uses: aws-actions/amazon-ecr-login@b874a33292cc9887d2e80bc63f6f1a11fccb4a7b
+      # - name: Run backend server tests
+      #   env:
+      #     APP_ENV: test
+      #     AWS_REGION: us-west-2 # easi app tests expect AWS_REGION instead of AWS_DEFAULT_REGION
+      #     AWS_SES_SOURCE: '"EASi Test" <no-reply-test@info.easi.cms.gov>'
+      #     AWS_SES_SOURCE_ARN: ${{ secrets.AWS_SES_SOURCE_ARN }}
+      #     AWS_S3_FILE_UPLOAD_BUCKET: easi-app-file-uploads
+      #     CLIENT_PROTOCOL: http
+      #     CLIENT_PORT: 3000
+      #     CLIENT_HOSTNAME: localhost:3005
+      #     ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+      #     ECR_REPOSITORY: easi-db-migrate
+      #     GRT_EMAIL: success@simulator.amazonses.com
+      #     ACCESSIBILITY_TEAM_EMAIL: success@simulator.amazonses.com
+      #     OKTA_CLIENT_ID: 0oad9awvebnsMwWNa297
+      #     OKTA_DOMAIN: https://test.idp.idm.cms.gov
+      #     OKTA_ISSUER: https://test.idp.idm.cms.gov/oauth2/ausd980kt2CBBzStG297
+      #     OKTA_REDIRECT_URI: http://localhost:3005/implicit/callback
+      #     OKTA_TEST_PASSWORD: ${{ secrets.OKTA_TEST_PASSWORD }}
+      #     OKTA_TEST_SECRET: ${{ secrets.OKTA_TEST_SECRET }}
+      #     OKTA_TEST_USERNAME: ${{ secrets.OKTA_TEST_USERNAME }}
+      #     PGHOST: localhost
+      #     PGPORT: 5432
+      #     PGDATABASE: postgres
+      #     PGUSER: app_user
+      #     PGPASS: supersecretapp
+      #     PGSSLMODE: disable
+      #     DB_MAX_CONNECTIONS: 20
+      #     FLAG_SOURCE: LOCAL
+      #   run: |
+      #     docker-compose --project-name easi-server-test -f docker-compose.ci_server_test.yml up -d db
+      #     docker-compose --project-name easi-server-test -f docker-compose.ci_server_test.yml up --exit-code-from db_migrate db_migrate
+      #     ./scripts/build_app
+      #     ./scripts/testsuite
+      #     docker-compose --project-name easi-server-test -f docker-compose.ci_server_test.yml down
+      # - name: Upload backend test artifacts
+      #   uses: actions/upload-artifact@3cea5372237819ed00197afe530f5a7ea3e805c8
+      #   with:
+      #     name: backend-tests
+      #     path: results
+      #     retention-days: 14
       - name: Announce failure
         if: ${{ failure() }}
         run: |
@@ -128,7 +142,7 @@ jobs:
         id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn cache dir)"
       - name: Configure yarn cache
-        uses: actions/cache@c3f1317a9e7b1ef106c153ac8c0f00fed3ddbc0d
+        uses: actions/cache@a7c34adf76222e77931dedbf4a45b2e4648ced19
         id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
         with:
           path: |
@@ -209,7 +223,7 @@ jobs:
         with:
           go-version: ${{ env.EASI_APP_GO_VERSION }}
       - name: Configure go cache
-        uses: actions/cache@c3f1317a9e7b1ef106c153ac8c0f00fed3ddbc0d
+        uses: actions/cache@a7c34adf76222e77931dedbf4a45b2e4648ced19
         with:
           path: |
             ~/go/pkg/mod
@@ -220,7 +234,7 @@ jobs:
         id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn cache dir)"
       - name: Configure yarn cache
-        uses: actions/cache@c3f1317a9e7b1ef106c153ac8c0f00fed3ddbc0d
+        uses: actions/cache@a7c34adf76222e77931dedbf4a45b2e4648ced19
         id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
         with:
           path: |
@@ -260,7 +274,7 @@ jobs:
         id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn cache dir)"
       - name: Configure yarn cache
-        uses: actions/cache@c3f1317a9e7b1ef106c153ac8c0f00fed3ddbc0d
+        uses: actions/cache@a7c34adf76222e77931dedbf4a45b2e4648ced19
         id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
         with:
           path: |
@@ -293,7 +307,7 @@ jobs:
         id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn cache dir)"
       - name: Configure yarn cache
-        uses: actions/cache@c3f1317a9e7b1ef106c153ac8c0f00fed3ddbc0d # v2.1.6
+        uses: actions/cache@a7c34adf76222e77931dedbf4a45b2e4648ced19 # v2.1.6
         id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
         with:
           path: |

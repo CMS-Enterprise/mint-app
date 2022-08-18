@@ -17,6 +17,7 @@ import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
+import ITToolsWarning from 'components/ITToolsWarning';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import AutoSave from 'components/shared/AutoSave';
@@ -38,7 +39,8 @@ import {
   CcmInvolvmentType,
   DataForMonitoringType,
   DataToSendParticipantsType,
-  EvaluationApproachType
+  EvaluationApproachType,
+  TaskStatus
 } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import {
@@ -91,6 +93,9 @@ const Evaluation = () => {
 
   const modelName = data?.modelPlan?.modelName || '';
 
+  const itToolsStarted: boolean =
+    data?.modelPlan.itTools.status !== TaskStatus.READY;
+
   // If redirected from IT Tools, scrolls to the relevant question
   useScrollElement(!loading);
 
@@ -100,7 +105,7 @@ const Evaluation = () => {
 
   const handleFormSubmit = (
     formikValues: EvaluationFormType,
-    redirect?: 'next' | 'back' | 'task-list'
+    redirect?: 'next' | 'back' | 'task-list' | string
   ) => {
     const { id: updateId, __typename, ...changeValues } = formikValues;
     update({
@@ -127,6 +132,8 @@ const Evaluation = () => {
             );
           } else if (redirect === 'task-list') {
             history.push(`/models/${modelID}/task-list`);
+          } else if (redirect) {
+            history.push(redirect);
           }
         }
       })
@@ -242,6 +249,18 @@ const Evaluation = () => {
                       <legend className="usa-label">
                         {t('evaluationApproach')}
                       </legend>
+
+                      {itToolsStarted && (
+                        <ITToolsWarning
+                          id="ops-eval-and-learning-evaluation-approach-warning"
+                          onClick={() =>
+                            handleFormSubmit(
+                              values,
+                              `/models/${modelID}/task-list/it-tools/page-five`
+                            )
+                          }
+                        />
+                      )}
 
                       <FieldErrorMsg>
                         {flatErrors.evaluationApproaches}
@@ -385,6 +404,17 @@ const Evaluation = () => {
                   >
                     {t('dataNeeded')}
                   </Label>
+                  {itToolsStarted && (
+                    <ITToolsWarning
+                      id="ops-eval-and-learning-data-needed-warning"
+                      onClick={() =>
+                        handleFormSubmit(
+                          values,
+                          `/models/${modelID}/task-list/it-tools/page-six`
+                        )
+                      }
+                    />
+                  )}
 
                   <p className="text-base margin-y-1">{t('dataNeededInfo')}</p>
 
@@ -445,6 +475,17 @@ const Evaluation = () => {
                   >
                     {t('dataToSend')}
                   </Label>
+                  {itToolsStarted && (
+                    <ITToolsWarning
+                      id="ops-eval-and-learning-data-to-send-warning"
+                      onClick={() =>
+                        handleFormSubmit(
+                          values,
+                          `/models/${modelID}/task-list/it-tools/page-seven`
+                        )
+                      }
+                    />
+                  )}
 
                   <FieldErrorMsg>
                     {flatErrors.dataToSendParticicipants}
