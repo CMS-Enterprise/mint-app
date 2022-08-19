@@ -214,16 +214,10 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
       }
     })
       .then(() => {
-        /**
-         * TODO: Remove if ref counts are removed along with locking state
-         * There is a slight delay in th receiving the mutation status from the context
-         * Occasionally mutation fires quickly twice, adding 2 to the ref count
-         */
-        setTimeout(() => {
-          locking.current = false;
-        }, 100);
+        locking.current = false;
       })
       .catch(() => {
+        locking.current = false;
         history.push({
           pathname: `/models/${modelID}/locked-task-list-section`,
           // Passing error status to default error page

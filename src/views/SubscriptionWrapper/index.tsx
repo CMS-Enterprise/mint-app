@@ -114,8 +114,6 @@ const SubscriptionWrapper = ({ children }: SubscriptionWrapperProps) => {
             const lockChange =
               subscriptionData.data.onLockTaskListSectionContext;
 
-            console.log(lockChange);
-
             const updatedSubscriptionContext =
               lockChange.changeType === ChangeType.REMOVED
                 ? // If section lock is to be freed, remove the lock from the SubscriptionContext
