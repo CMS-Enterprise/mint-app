@@ -1312,30 +1312,6 @@ type NDAAccepted {
   acceptedDts: Time
 }
 
-# """
-# NDAAgreement represents the acceptance of the NDA waiver
-# """
-# type NDAAgreement {
-#   id: UUID!
-
-#   userID: String!
-#   accepted: Boolean!
-
-#   createdBy: String!
-#   createdDts: Time!
-#   modifiedBy: String
-#   modifiedDts: Time
-# }
-
-# """
-# NDAAgreementChanges represents the possible fields that can be updated for an  NDA waiver
-# Fields explicitly set with NULL will be unset, and omitted fields will be left unchanged.
-# https://gqlgen.com/reference/changesets/
-# """
-# input NDAAgreementChanges @goModel(model: "map[string]interface{}"){
-#   userID: String!
-#   accepted: Boolean!
-# }
 """
 Query definition for the schema
 """
