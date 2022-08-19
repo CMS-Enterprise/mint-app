@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link, useHistory, useParams } from 'react-router-dom';
+import { Link, useHistory, useLocation, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
 import {
   Breadcrumb,
@@ -37,12 +37,13 @@ const Status = () => {
   const { modelID } = useParams<{ modelID: string }>();
 
   const history = useHistory();
+  const location = useLocation();
   const formikRef = useRef<FormikProps<StatusFormProps>>(null);
   const validationSchema = Yup.object().shape({
     status: Yup.string().required('Enter a role for this team member')
   });
 
-  const readOnly = history.location.hash === '#read-only';
+  const readOnly = location.hash === '#read-only';
 
   const { data } = useQuery<GetModelPlanType>(GetModelPlan, {
     variables: {
