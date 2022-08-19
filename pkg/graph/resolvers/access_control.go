@@ -7,6 +7,7 @@ import (
 
 	"github.com/google/uuid"
 
+	"github.com/cmsgov/mint-app/pkg/apperrors"
 	"github.com/cmsgov/mint-app/pkg/authentication"
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/storage"
@@ -29,8 +30,8 @@ func ErrorIfNotCollaborator(obj interface{}, logger *zap.Logger, principal authe
 			}
 			if !isCollaborator {
 
-				logger.Error(notCollabErrString, zap.String("user", principal.ID()), zap.String("ModelPlanID", modelPlanRelation.GetModelPlanID().String()))
-				return fmt.Errorf(notCollabErrString)
+				logger.Warn(notCollabErrString, zap.String("user", principal.ID()), zap.String("ModelPlanID", modelPlanRelation.GetModelPlanID().String()))
+				return apperrors.NotCollaboratorError{}
 				// return fmt.Errorf("user %s is not a collaborator on model plan %s", principal, modelPlanRelation.GetModelPlanID().String())
 			}
 		} else if hasDiscussionRelation {
@@ -39,8 +40,8 @@ func ErrorIfNotCollaborator(obj interface{}, logger *zap.Logger, principal authe
 				return err
 			}
 			if !isCollaborator {
-				logger.Error(notCollabErrString, zap.String("user", principal.ID()), zap.String("DiscussionID", discussionRelation.GetDiscussionID().String()))
-				return fmt.Errorf(notCollabErrString)
+				logger.Warn(notCollabErrString, zap.String("user", principal.ID()), zap.String("DiscussionID", discussionRelation.GetDiscussionID().String()))
+				return apperrors.NotCollaboratorError{}
 			}
 		} else {
 			return fmt.Errorf("desired access control is not configured")
@@ -62,7 +63,7 @@ func IsCollaboratorModelPlanID(logger *zap.Logger, principal authentication.Prin
 
 	} else {
 		errString := "user has no roles"
-		logger.Error(errString, zap.String("user", principal.ID()), zap.String("ModelPlanID", modelPlanID.String()))
+		logger.Warn(errString, zap.String("user", principal.ID()), zap.String("ModelPlanID", modelPlanID.String()))
 		return false, fmt.Errorf(errString)
 	}
 
@@ -79,7 +80,7 @@ func IsCollaboratorByDiscussionID(logger *zap.Logger, principal authentication.P
 
 	} else {
 		errString := "user has no roles"
-		logger.Error(errString, zap.String("user", principal.ID()), zap.String("DiscussionID", discussionID.String()))
+		logger.Warn(errString, zap.String("user", principal.ID()), zap.String("DiscussionID", discussionID.String()))
 		return false, fmt.Errorf(errString)
 	}
 
