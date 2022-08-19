@@ -90,27 +90,6 @@ repos:
         files: "pkg/graph/schema\\.graphql|pkg/graph/schema\\.resolvers\\.go|src/queries/.*\\.ts"
         pass_filenames: false
 
-  # for some reason, trying to call "go run cmd/intake_schema_gen/main.go" directly from this config doesn't work;
-  # so call scripts/gen_intake_schema, which calls that command and works 
-  - repo: local
-    hooks:
-      - id: check-intake-schema-generation
-        name: Generate CEDAR Intake schema
-        entry: scripts/gen_intake_schema
-        language: script
-        files: cmd/gen_intake_schema/main\.go|pkg/cedar/intake/models/.*\.go|pkg/cedar/intake/schemas/.*\.json|pkg/cedar/intake/translation/constants\.go
-        pass_filenames: false
-
-  - repo: local
-    hooks:
-      - id: preprocess-cedar-swagger
-        name: Generate CEDAR Intake client
-        description: Re-generates CEDAR Intake and CEDAR Core clients when either of the swagger files change. This will re-generate both clients if either file changes.
-        entry: scripts/generate_cedar_clients
-        language: script
-        files: pkg/cedar/intake/cedar_intake.json|pkg/cedar/core/cedar_core.json
-        pass_filenames: false
-
   - repo: https://github.com/awslabs/git-secrets
     rev: b9e96b3212fa06aea65964ff0d5cda84ce935f38
     hooks:
