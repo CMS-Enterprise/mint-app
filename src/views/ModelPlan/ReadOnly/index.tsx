@@ -36,7 +36,6 @@ import TaskListStatus from '../TaskList/_components/TaskListStatus';
 
 import './index.scss';
 
-
 const ReadOnly = () => {
   const { t } = useTranslation('modelSummary');
   const { t: h } = useTranslation('generalReadOnly');
