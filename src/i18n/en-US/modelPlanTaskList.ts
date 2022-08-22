@@ -15,6 +15,7 @@ const modelPlanTaskList = {
   },
   sideNav: {
     saveAndExit: 'Save & Exit',
+    view: 'View this Model Plan',
     remove: 'Remove your Model Plan',
     relatedContent: 'Related Content',
     ariaLabelForOverview: 'Open overview for adding a system in a new tab',
