@@ -302,8 +302,8 @@ func (r *mutationResolver) UpdatePlanPayments(ctx context.Context, id uuid.UUID,
 	return resolvers.PlanPaymentsUpdate(logger, r.store, id, changes, principal)
 }
 
-// AcceptNDAAgreement is the resolver for the acceptNDAAgreement field.
-func (r *mutationResolver) AcceptNDAAgreement(ctx context.Context, accept bool) (*model.NDAAccepted, error) {
+// AcceptNda is the resolver for the acceptNDA field.
+func (r *mutationResolver) AcceptNda(ctx context.Context, accept bool) (*model.NDAInfo, error) {
 	logger := appcontext.ZLogger(ctx)
 	principal := appcontext.Principal(ctx)
 	return resolvers.NDAAgreementUpdateOrCreate(logger, accept, principal, r.store)
@@ -794,8 +794,8 @@ func (r *queryResolver) PlanPayments(ctx context.Context, id uuid.UUID) (*models
 	return resolvers.PlanPaymentsRead(logger, r.store, id)
 }
 
-// NdaAccepted is the resolver for the ndaAccepted field.
-func (r *queryResolver) NdaAccepted(ctx context.Context) (*model.NDAAccepted, error) {
+// NdaInfo is the resolver for the ndaInfo field.
+func (r *queryResolver) NdaInfo(ctx context.Context) (*model.NDAInfo, error) {
 	logger := appcontext.ZLogger(ctx)
 	principal := appcontext.Principal(ctx)
 	return resolvers.NDAAgreementGetByEUA(logger, principal, r.store)

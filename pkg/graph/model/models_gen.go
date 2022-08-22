@@ -42,8 +42,8 @@ type LaunchDarklySettings struct {
 	SignedHash string `json:"signedHash"`
 }
 
-// NDAAccepted represents whether a user has accepted an NDA or not. If accepted previously, there will be a datestamp visible
-type NDAAccepted struct {
+// NDAInfo represents whether a user has accepted an NDA or not. If accepted previously, there will be a datestamp visible
+type NDAInfo struct {
 	Accepted    bool       `json:"accepted"`
 	AcceptedDts *time.Time `json:"acceptedDts"`
 }

@@ -1305,9 +1305,9 @@ input PlanOpsEvalAndLearningChanges @goModel(model: "map[string]interface{}") {
 }
 
 """
-NDAAccepted represents whether a user has accepted an NDA or not. If accepted previously, there will be a datestamp visible
+NDAInfo represents whether a user has accepted an NDA or not. If accepted previously, there will be a datestamp visible
 """
-type NDAAccepted {
+type NDAInfo {
   accepted: Boolean!
   acceptedDts: Time
 }
@@ -1327,7 +1327,7 @@ type Query {
   planCollaboratorByID(id: UUID!): PlanCollaborator!
   taskListSectionLocks(modelPlanID: UUID!): [TaskListSectionLockStatus!]!
   planPayments(id: UUID!): PlanPayments!
-  ndaAccepted: NDAAccepted!
+  ndaInfo: NDAInfo!
 }
 
 """
@@ -1409,7 +1409,7 @@ unlockAllTaskListSections(modelPlanID: UUID!): [TaskListSectionLockStatus!]!
 updatePlanPayments(id: UUID!, changes: PlanPaymentsChanges!): PlanPayments!
 @hasRole(role: MINT_USER)
 
-acceptNDAAgreement(accept: Boolean!): NDAAccepted!
+acceptNDA(accept: Boolean!): NDAInfo!
 @hasRole(role: MINT_USER)
 }
 

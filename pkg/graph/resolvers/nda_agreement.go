@@ -13,9 +13,9 @@ import (
 )
 
 //NDAAgreementGetByEUA returns an EUA agreement by eua
-func NDAAgreementGetByEUA(logger *zap.Logger, principal authentication.Principal, store *storage.Store) (*model.NDAAccepted, error) {
+func NDAAgreementGetByEUA(logger *zap.Logger, principal authentication.Principal, store *storage.Store) (*model.NDAInfo, error) {
 	nda, err := store.NDAAgreementGetByEUA(logger, principal.ID())
-	accepted := model.NDAAccepted{}
+	accepted := model.NDAInfo{}
 	if err != nil {
 		return nil, err
 	}
@@ -31,7 +31,7 @@ func NDAAgreementGetByEUA(logger *zap.Logger, principal authentication.Principal
 }
 
 //NDAAgreementUpdateOrCreate either writes an entry to the nda table, or updates an existing one
-func NDAAgreementUpdateOrCreate(logger *zap.Logger, accept bool, principal authentication.Principal, store *storage.Store) (*model.NDAAccepted, error) {
+func NDAAgreementUpdateOrCreate(logger *zap.Logger, accept bool, principal authentication.Principal, store *storage.Store) (*model.NDAInfo, error) {
 	existing, err := store.NDAAgreementGetByEUA(logger, principal.ID())
 	if err != nil {
 		return nil, err
@@ -49,7 +49,7 @@ func NDAAgreementUpdateOrCreate(logger *zap.Logger, accept bool, principal authe
 		existing.AcceptedDts = &now
 	}
 	existing.Accepted = accept
-	accepted := model.NDAAccepted{}
+	accepted := model.NDAInfo{}
 
 	if existing.ID == uuid.Nil {
 
