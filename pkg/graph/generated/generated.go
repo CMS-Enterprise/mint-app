@@ -158,8 +158,8 @@ type ComplexityRoot struct {
 	}
 
 	NDAInfo struct {
-		Accepted    func(childComplexity int) int
-		AcceptedDts func(childComplexity int) int
+		Agreed    func(childComplexity int) int
+		AgreedDts func(childComplexity int) int
 	}
 
 	PlanBasics struct {
@@ -1578,19 +1578,19 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Mutation.UpdatePlanPayments(childComplexity, args["id"].(uuid.UUID), args["changes"].(map[string]interface{})), true
 
-	case "NDAInfo.accepted":
-		if e.complexity.NDAInfo.Accepted == nil {
+	case "NDAInfo.agreed":
+		if e.complexity.NDAInfo.Agreed == nil {
 			break
 		}
 
-		return e.complexity.NDAInfo.Accepted(childComplexity), true
+		return e.complexity.NDAInfo.Agreed(childComplexity), true
 
-	case "NDAInfo.acceptedDts":
-		if e.complexity.NDAInfo.AcceptedDts == nil {
+	case "NDAInfo.agreedDts":
+		if e.complexity.NDAInfo.AgreedDts == nil {
 			break
 		}
 
-		return e.complexity.NDAInfo.AcceptedDts(childComplexity), true
+		return e.complexity.NDAInfo.AgreedDts(childComplexity), true
 
 	case "PlanBasics.announced":
 		if e.complexity.PlanBasics.Announced == nil {
@@ -6505,11 +6505,11 @@ input PlanOpsEvalAndLearningChanges @goModel(model: "map[string]interface{}") {
 }
 
 """
-NDAInfo represents whether a user has accepted an NDA or not. If accepted previously, there will be a datestamp visible
+NDAInfo represents whether a user has agreed to an NDA or not. If agreed to previously, there will be a datestamp visible
 """
 type NDAInfo {
-  accepted: Boolean!
-  acceptedDts: Time
+  agreed: Boolean!
+  agreedDts: Time
 }
 
 """
@@ -14226,10 +14226,10 @@ func (ec *executionContext) fieldContext_Mutation_acceptNDA(ctx context.Context,
 		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			switch field.Name {
-			case "accepted":
-				return ec.fieldContext_NDAInfo_accepted(ctx, field)
-			case "acceptedDts":
-				return ec.fieldContext_NDAInfo_acceptedDts(ctx, field)
+			case "agreed":
+				return ec.fieldContext_NDAInfo_agreed(ctx, field)
+			case "agreedDts":
+				return ec.fieldContext_NDAInfo_agreedDts(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type NDAInfo", field.Name)
 		},
@@ -14248,8 +14248,8 @@ func (ec *executionContext) fieldContext_Mutation_acceptNDA(ctx context.Context,
 	return fc, nil
 }
 
-func (ec *executionContext) _NDAInfo_accepted(ctx context.Context, field graphql.CollectedField, obj *model.NDAInfo) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_NDAInfo_accepted(ctx, field)
+func (ec *executionContext) _NDAInfo_agreed(ctx context.Context, field graphql.CollectedField, obj *model.NDAInfo) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_NDAInfo_agreed(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -14262,7 +14262,7 @@ func (ec *executionContext) _NDAInfo_accepted(ctx context.Context, field graphql
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.Accepted, nil
+		return obj.Agreed, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -14279,7 +14279,7 @@ func (ec *executionContext) _NDAInfo_accepted(ctx context.Context, field graphql
 	return ec.marshalNBoolean2bool(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_NDAInfo_accepted(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_NDAInfo_agreed(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "NDAInfo",
 		Field:      field,
@@ -14292,8 +14292,8 @@ func (ec *executionContext) fieldContext_NDAInfo_accepted(ctx context.Context, f
 	return fc, nil
 }
 
-func (ec *executionContext) _NDAInfo_acceptedDts(ctx context.Context, field graphql.CollectedField, obj *model.NDAInfo) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_NDAInfo_acceptedDts(ctx, field)
+func (ec *executionContext) _NDAInfo_agreedDts(ctx context.Context, field graphql.CollectedField, obj *model.NDAInfo) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_NDAInfo_agreedDts(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -14306,7 +14306,7 @@ func (ec *executionContext) _NDAInfo_acceptedDts(ctx context.Context, field grap
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.AcceptedDts, nil
+		return obj.AgreedDts, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -14320,7 +14320,7 @@ func (ec *executionContext) _NDAInfo_acceptedDts(ctx context.Context, field grap
 	return ec.marshalOTime2ᚖtimeᚐTime(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_NDAInfo_acceptedDts(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_NDAInfo_agreedDts(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "NDAInfo",
 		Field:      field,
@@ -35091,10 +35091,10 @@ func (ec *executionContext) fieldContext_Query_ndaInfo(ctx context.Context, fiel
 		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			switch field.Name {
-			case "accepted":
-				return ec.fieldContext_NDAInfo_accepted(ctx, field)
-			case "acceptedDts":
-				return ec.fieldContext_NDAInfo_acceptedDts(ctx, field)
+			case "agreed":
+				return ec.fieldContext_NDAInfo_agreed(ctx, field)
+			case "agreedDts":
+				return ec.fieldContext_NDAInfo_agreedDts(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type NDAInfo", field.Name)
 		},
@@ -38722,16 +38722,16 @@ func (ec *executionContext) _NDAInfo(ctx context.Context, sel ast.SelectionSet, 
 		switch field.Name {
 		case "__typename":
 			out.Values[i] = graphql.MarshalString("NDAInfo")
-		case "accepted":
+		case "agreed":
 
-			out.Values[i] = ec._NDAInfo_accepted(ctx, field, obj)
+			out.Values[i] = ec._NDAInfo_agreed(ctx, field, obj)
 
 			if out.Values[i] == graphql.Null {
 				invalids++
 			}
-		case "acceptedDts":
+		case "agreedDts":
 
-			out.Values[i] = ec._NDAInfo_acceptedDts(ctx, field, obj)
+			out.Values[i] = ec._NDAInfo_agreedDts(ctx, field, obj)
 
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))

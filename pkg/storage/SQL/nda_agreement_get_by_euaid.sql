@@ -1,8 +1,8 @@
 SELECT
     id,
     user_id,
-    accepted,
-    accepted_dts,
+    agreed,
+    agreed_dts,
     created_by,
     created_dts,
     modified_by,

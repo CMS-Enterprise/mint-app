@@ -42,10 +42,10 @@ type LaunchDarklySettings struct {
 	SignedHash string `json:"signedHash"`
 }
 
-// NDAInfo represents whether a user has accepted an NDA or not. If accepted previously, there will be a datestamp visible
+// NDAInfo represents whether a user has agreed to an NDA or not. If agreed to previously, there will be a datestamp visible
 type NDAInfo struct {
-	Accepted    bool       `json:"accepted"`
-	AcceptedDts *time.Time `json:"acceptedDts"`
+	Agreed    bool       `json:"agreed"`
+	AgreedDts *time.Time `json:"agreedDts"`
 }
 
 // PlanCollaboratorCreateInput represents the data required to create a collaborator on a plan

@@ -20,10 +20,10 @@ func NDAAgreementGetByEUA(logger *zap.Logger, principal authentication.Principal
 		return nil, err
 	}
 	if nda == nil {
-		accepted.Accepted = false
+		accepted.Agreed = false
 	} else {
-		accepted.Accepted = nda.Accepted
-		accepted.AcceptedDts = nda.AcceptedDts
+		accepted.Agreed = nda.Agreed
+		accepted.AgreedDts = nda.AgreedDts
 	}
 
 	return &accepted, err
@@ -44,11 +44,11 @@ func NDAAgreementUpdateOrCreate(logger *zap.Logger, accept bool, principal authe
 		existing.ModifiedBy = models.StringPointer(principal.ID())
 	}
 
-	if !existing.Accepted && accept { //If not currently accepted, set acceptedDts to now
+	if !existing.Agreed && accept { //If not currently accepted, set acceptedDts to now
 		now := time.Now()
-		existing.AcceptedDts = &now
+		existing.AgreedDts = &now
 	}
-	existing.Accepted = accept
+	existing.Agreed = accept
 	accepted := model.NDAInfo{}
 
 	if existing.ID == uuid.Nil {
@@ -57,8 +57,8 @@ func NDAAgreementUpdateOrCreate(logger *zap.Logger, accept bool, principal authe
 		if err2 != nil {
 			return nil, err2
 		}
-		accepted.Accepted = new.Accepted
-		accepted.AcceptedDts = new.AcceptedDts
+		accepted.Agreed = new.Agreed
+		accepted.AgreedDts = new.AgreedDts
 
 	} else {
 
@@ -67,8 +67,8 @@ func NDAAgreementUpdateOrCreate(logger *zap.Logger, accept bool, principal authe
 		if err3 != nil {
 			return nil, err3
 		}
-		accepted.Accepted = update.Accepted
-		accepted.AcceptedDts = update.AcceptedDts
+		accepted.Agreed = update.Agreed
+		accepted.AgreedDts = update.AgreedDts
 
 	}
 

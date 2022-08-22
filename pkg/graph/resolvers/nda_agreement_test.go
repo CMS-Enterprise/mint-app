@@ -15,8 +15,8 @@ func (suite *ResolverSuite) TestNDAAgreementGetByEUA() {
 	//TODO, refactor to use the changes to take principal instead of making it here
 	nda, err := NDAAgreementGetByEUA(suite.testConfigs.Logger, princ, suite.testConfigs.Store)
 	suite.NoError(err)
-	suite.EqualValues(nda.Accepted, false)
-	suite.Nil(nda.AcceptedDts)
+	suite.EqualValues(nda.Agreed, false)
+	suite.Nil(nda.AgreedDts)
 
 }
 
@@ -30,12 +30,12 @@ func (suite *ResolverSuite) TestNDAAgreementUpdateOrCreate() {
 
 	nda, err := NDAAgreementUpdateOrCreate(suite.testConfigs.Logger, false, princ, suite.testConfigs.Store)
 	suite.NoError(err)
-	suite.EqualValues(nda.Accepted, false)
-	suite.Nil(nda.AcceptedDts)
+	suite.EqualValues(nda.Agreed, false)
+	suite.Nil(nda.AgreedDts)
 
 	nda, err = NDAAgreementUpdateOrCreate(suite.testConfigs.Logger, true, princ, suite.testConfigs.Store)
 	suite.NoError(err)
-	suite.EqualValues(nda.Accepted, true)
-	suite.NotNil(nda.AcceptedDts)
+	suite.EqualValues(nda.Agreed, true)
+	suite.NotNil(nda.AgreedDts)
 
 }
