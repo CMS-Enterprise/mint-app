@@ -96,6 +96,11 @@ func (r *modelPlanResolver) ItTools(ctx context.Context, obj *models.ModelPlan) 
 	return resolvers.PlanITToolsGetByModelPlanID(logger, obj.ID, r.store)
 }
 
+// IsFavorite is the resolver for the isFavorite field.
+func (r *modelPlanResolver) IsFavorite(ctx context.Context, obj *models.ModelPlan) (bool, error) {
+	panic(fmt.Errorf("not implemented: IsFavorite - isFavorite"))
+}
+
 // CreateModelPlan is the resolver for the createModelPlan field.
 func (r *mutationResolver) CreateModelPlan(ctx context.Context, modelName string) (*models.ModelPlan, error) {
 	logger := appcontext.ZLogger(ctx)
@@ -302,6 +307,16 @@ func (r *mutationResolver) UpdatePlanPayments(ctx context.Context, id uuid.UUID,
 	principal := appcontext.Principal(ctx).ID()
 
 	return resolvers.PlanPaymentsUpdate(logger, r.store, id, changes, principal)
+}
+
+// AddModelPlanFavorite is the resolver for the addModelPlanFavorite field.
+func (r *mutationResolver) AddModelPlanFavorite(ctx context.Context, modelPlanID uuid.UUID) (*models.ModelPlanFavorite, error) {
+	panic(fmt.Errorf("not implemented: AddModelPlanFavorite - addModelPlanFavorite"))
+}
+
+// DeleteModelPlanFavorite is the resolver for the deleteModelPlanFavorite field.
+func (r *mutationResolver) DeleteModelPlanFavorite(ctx context.Context, modelPlanID uuid.UUID) (*models.ModelPlanFavorite, error) {
+	panic(fmt.Errorf("not implemented: DeleteModelPlanFavorite - deleteModelPlanFavorite"))
 }
 
 // CmsCenters is the resolver for the cmsCenters field.
@@ -787,6 +802,11 @@ func (r *queryResolver) PlanPayments(ctx context.Context, id uuid.UUID) (*models
 	logger := appcontext.ZLogger(ctx)
 
 	return resolvers.PlanPaymentsRead(logger, r.store, id)
+}
+
+// ModelPlanFavorites is the resolver for the modelPlanFavorites field.
+func (r *queryResolver) ModelPlanFavorites(ctx context.Context) ([]*models.ModelPlanFavorite, error) {
+	panic(fmt.Errorf("not implemented: ModelPlanFavorites - modelPlanFavorites"))
 }
 
 // OnTaskListSectionLocksChanged is the resolver for the onTaskListSectionLocksChanged field.

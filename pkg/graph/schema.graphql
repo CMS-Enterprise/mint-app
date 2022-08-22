@@ -45,6 +45,7 @@ type ModelPlan {
   payments: PlanPayments!
   itTools: PlanITTools!
   status: ModelStatus!
+  isFavorite: Boolean!
 }
 
 """
@@ -1303,6 +1304,18 @@ input PlanOpsEvalAndLearningChanges @goModel(model: "map[string]interface{}") {
 
     status: TaskStatusInput
 }
+
+type ModelPlanFavorite {
+    id: UUID!
+    modelPlanID: UUID!
+    userID: String!
+
+    createdBy: String!
+    createdDts: Time!
+    modifiedBy: String
+    modifiedDts: Time
+
+}
 """
 Query definition for the schema
 """
@@ -1318,6 +1331,7 @@ type Query {
   planCollaboratorByID(id: UUID!): PlanCollaborator!
   taskListSectionLocks(modelPlanID: UUID!): [TaskListSectionLockStatus!]!
   planPayments(id: UUID!): PlanPayments!
+  modelPlanFavorites: [ModelPlanFavorite!]!
 }
 
 """
@@ -1397,6 +1411,12 @@ unlockAllTaskListSections(modelPlanID: UUID!): [TaskListSectionLockStatus!]!
 @hasRole(role: MINT_ASSESSMENT)
 
 updatePlanPayments(id: UUID!, changes: PlanPaymentsChanges!): PlanPayments!
+@hasRole(role: MINT_USER)
+
+addModelPlanFavorite(modelPlanID: UUID!): ModelPlanFavorite!
+@hasRole(role: MINT_USER)
+
+deleteModelPlanFavorite(modelPlanID: UUID!): ModelPlanFavorite!
 @hasRole(role: MINT_USER)
 }
 
