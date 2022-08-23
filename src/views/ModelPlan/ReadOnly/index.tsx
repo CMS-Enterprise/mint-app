@@ -35,7 +35,7 @@ import { NotFoundPartial } from 'views/NotFound';
 
 import TaskListStatus from '../TaskList/_components/TaskListStatus';
 
-import ReadOnlySideNav from './_components/ReadOnlySidenav';
+import SideNav from './_components/Sidenav';
 
 import './index.scss';
 
@@ -248,7 +248,7 @@ const ReadOnly = () => {
           <Grid row gap>
             {!isMobile && (
               <Grid desktop={{ col: 3 }} className="padding-right-4 sticky-nav">
-                <ReadOnlySideNav modelID={modelID} />
+                <SideNav modelID={modelID} />
               </Grid>
             )}
           </Grid>
