@@ -39,11 +39,27 @@ import SideNav from './_components/Sidenav';
 
 import './index.scss';
 
+type SubpageKey =
+  | 'model-basics'
+  | 'general-characteristics'
+  | 'participants-and-providers'
+  | 'beneficiaries'
+  | 'operations-evaluation-and-learning'
+  | 'payment'
+  | 'it-tools'
+  | 'team'
+  | 'discussions'
+  | 'documents'
+  | 'crs-and-tdl';
+
 const ReadOnly = () => {
   const { t } = useTranslation('modelSummary');
   const { t: h } = useTranslation('generalReadOnly');
   const isMobile = useCheckResponsiveScreen('tablet');
-  const { modelID } = useParams<{ modelID: string }>();
+  const { modelID, subinfo } = useParams<{
+    modelID: string;
+    subinfo: SubpageKey;
+  }>();
 
   const descriptionRef = React.createRef<HTMLElement>();
   const [
@@ -100,6 +116,12 @@ const ReadOnly = () => {
       index === collaborators.length - 1 ? '' : ', '
     }`;
   });
+
+  // * If we do the same approach as EASI, then it will be best to extract the subNavItems object from `Sidenav/index.tsx` and put it in its own file. That way it will keep the navigation items consistent to pages available.
+
+  // const subpageKey: SubpageKey = subinfo || 'home';
+
+  // const subComponent = subComponents[subpageKey];
 
   if ((!loading && error) || (!loading && !data?.modelPlan)) {
     return <NotFoundPartial />;
