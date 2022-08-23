@@ -1409,7 +1409,7 @@ unlockAllTaskListSections(modelPlanID: UUID!): [TaskListSectionLockStatus!]!
 updatePlanPayments(id: UUID!, changes: PlanPaymentsChanges!): PlanPayments!
 @hasRole(role: MINT_USER)
 
-acceptNDA(accept: Boolean!): NDAInfo!
+agreeToNDA(agree: Boolean! = true): NDAInfo!
 @hasRole(role: MINT_USER)
 }
 

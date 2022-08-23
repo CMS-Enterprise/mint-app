@@ -302,11 +302,11 @@ func (r *mutationResolver) UpdatePlanPayments(ctx context.Context, id uuid.UUID,
 	return resolvers.PlanPaymentsUpdate(logger, r.store, id, changes, principal)
 }
 
-// AcceptNda is the resolver for the acceptNDA field.
-func (r *mutationResolver) AcceptNda(ctx context.Context, accept bool) (*model.NDAInfo, error) {
+// AgreeToNda is the resolver for the agreeToNDA field.
+func (r *mutationResolver) AgreeToNda(ctx context.Context, agree bool) (*model.NDAInfo, error) {
 	logger := appcontext.ZLogger(ctx)
 	principal := appcontext.Principal(ctx)
-	return resolvers.NDAAgreementUpdateOrCreate(logger, accept, principal, r.store)
+	return resolvers.NDAAgreementUpdateOrCreate(logger, agree, principal, r.store)
 }
 
 // CmsCenters is the resolver for the cmsCenters field.

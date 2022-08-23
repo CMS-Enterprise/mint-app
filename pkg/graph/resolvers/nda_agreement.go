@@ -15,23 +15,23 @@ import (
 //NDAAgreementGetByEUA returns an EUA agreement by eua
 func NDAAgreementGetByEUA(logger *zap.Logger, principal authentication.Principal, store *storage.Store) (*model.NDAInfo, error) {
 	nda, err := store.NDAAgreementGetByEUA(logger, principal.ID())
-	accepted := model.NDAInfo{}
+	info := model.NDAInfo{}
 	if err != nil {
 		return nil, err
 	}
 	if nda == nil {
-		accepted.Agreed = false
+		info.Agreed = false
 	} else {
-		accepted.Agreed = nda.Agreed
-		accepted.AgreedDts = nda.AgreedDts
+		info.Agreed = nda.Agreed
+		info.AgreedDts = nda.AgreedDts
 	}
 
-	return &accepted, err
+	return &info, err
 
 }
 
 //NDAAgreementUpdateOrCreate either writes an entry to the nda table, or updates an existing one
-func NDAAgreementUpdateOrCreate(logger *zap.Logger, accept bool, principal authentication.Principal, store *storage.Store) (*model.NDAInfo, error) {
+func NDAAgreementUpdateOrCreate(logger *zap.Logger, agree bool, principal authentication.Principal, store *storage.Store) (*model.NDAInfo, error) {
 	existing, err := store.NDAAgreementGetByEUA(logger, principal.ID())
 	if err != nil {
 		return nil, err
@@ -44,12 +44,12 @@ func NDAAgreementUpdateOrCreate(logger *zap.Logger, accept bool, principal authe
 		existing.ModifiedBy = models.StringPointer(principal.ID())
 	}
 
-	if !existing.Agreed && accept { //If not currently accepted, set acceptedDts to now
+	if !existing.Agreed && agree { //If not currently agreed, set agreeDts to now
 		now := time.Now()
 		existing.AgreedDts = &now
 	}
-	existing.Agreed = accept
-	accepted := model.NDAInfo{}
+	existing.Agreed = agree
+	info := model.NDAInfo{}
 
 	if existing.ID == uuid.Nil {
 
@@ -57,8 +57,8 @@ func NDAAgreementUpdateOrCreate(logger *zap.Logger, accept bool, principal authe
 		if err2 != nil {
 			return nil, err2
 		}
-		accepted.Agreed = new.Agreed
-		accepted.AgreedDts = new.AgreedDts
+		info.Agreed = new.Agreed
+		info.AgreedDts = new.AgreedDts
 
 	} else {
 
@@ -67,11 +67,11 @@ func NDAAgreementUpdateOrCreate(logger *zap.Logger, accept bool, principal authe
 		if err3 != nil {
 			return nil, err3
 		}
-		accepted.Agreed = update.Agreed
-		accepted.AgreedDts = update.AgreedDts
+		info.Agreed = update.Agreed
+		info.AgreedDts = update.AgreedDts
 
 	}
 
-	return &accepted, err
+	return &info, err
 
 }

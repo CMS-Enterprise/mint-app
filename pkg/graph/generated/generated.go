@@ -129,7 +129,7 @@ type ComplexityRoot struct {
 	}
 
 	Mutation struct {
-		AcceptNda                          func(childComplexity int, accept bool) int
+		AgreeToNda                         func(childComplexity int, agree bool) int
 		CreateDiscussionReply              func(childComplexity int, input model.DiscussionReplyCreateInput) int
 		CreateModelPlan                    func(childComplexity int, modelName string) int
 		CreatePlanCollaborator             func(childComplexity int, input model.PlanCollaboratorCreateInput) int
@@ -744,7 +744,7 @@ type MutationResolver interface {
 	UnlockTaskListSection(ctx context.Context, modelPlanID uuid.UUID, section model.TaskListSection) (bool, error)
 	UnlockAllTaskListSections(ctx context.Context, modelPlanID uuid.UUID) ([]*model.TaskListSectionLockStatus, error)
 	UpdatePlanPayments(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanPayments, error)
-	AcceptNda(ctx context.Context, accept bool) (*model.NDAInfo, error)
+	AgreeToNda(ctx context.Context, agree bool) (*model.NDAInfo, error)
 }
 type PlanBasicsResolver interface {
 	CmsCenters(ctx context.Context, obj *models.PlanBasics) ([]model.CMSCenter, error)
@@ -1266,17 +1266,17 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.ModelPlan.Status(childComplexity), true
 
-	case "Mutation.acceptNDA":
-		if e.complexity.Mutation.AcceptNda == nil {
+	case "Mutation.agreeToNDA":
+		if e.complexity.Mutation.AgreeToNda == nil {
 			break
 		}
 
-		args, err := ec.field_Mutation_acceptNDA_args(context.TODO(), rawArgs)
+		args, err := ec.field_Mutation_agreeToNDA_args(context.TODO(), rawArgs)
 		if err != nil {
 			return 0, false
 		}
 
-		return e.complexity.Mutation.AcceptNda(childComplexity, args["accept"].(bool)), true
+		return e.complexity.Mutation.AgreeToNda(childComplexity, args["agree"].(bool)), true
 
 	case "Mutation.createDiscussionReply":
 		if e.complexity.Mutation.CreateDiscussionReply == nil {
@@ -6609,7 +6609,7 @@ unlockAllTaskListSections(modelPlanID: UUID!): [TaskListSectionLockStatus!]!
 updatePlanPayments(id: UUID!, changes: PlanPaymentsChanges!): PlanPayments!
 @hasRole(role: MINT_USER)
 
-acceptNDA(accept: Boolean!): NDAInfo!
+agreeToNDA(agree: Boolean! = true): NDAInfo!
 @hasRole(role: MINT_USER)
 }
 
@@ -7267,18 +7267,18 @@ func (ec *executionContext) dir_hasRole_args(ctx context.Context, rawArgs map[st
 	return args, nil
 }
 
-func (ec *executionContext) field_Mutation_acceptNDA_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+func (ec *executionContext) field_Mutation_agreeToNDA_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
 	var arg0 bool
-	if tmp, ok := rawArgs["accept"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("accept"))
+	if tmp, ok := rawArgs["agree"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("agree"))
 		arg0, err = ec.unmarshalNBoolean2bool(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
 	}
-	args["accept"] = arg0
+	args["agree"] = arg0
 	return args, nil
 }
 
@@ -14163,8 +14163,8 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanPayments(ctx context
 	return fc, nil
 }
 
-func (ec *executionContext) _Mutation_acceptNDA(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Mutation_acceptNDA(ctx, field)
+func (ec *executionContext) _Mutation_agreeToNDA(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Mutation_agreeToNDA(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -14178,7 +14178,7 @@ func (ec *executionContext) _Mutation_acceptNDA(ctx context.Context, field graph
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		directive0 := func(rctx context.Context) (interface{}, error) {
 			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Mutation().AcceptNda(rctx, fc.Args["accept"].(bool))
+			return ec.resolvers.Mutation().AgreeToNda(rctx, fc.Args["agree"].(bool))
 		}
 		directive1 := func(ctx context.Context) (interface{}, error) {
 			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
@@ -14218,7 +14218,7 @@ func (ec *executionContext) _Mutation_acceptNDA(ctx context.Context, field graph
 	return ec.marshalNNDAInfo2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐNDAInfo(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Mutation_acceptNDA(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Mutation_agreeToNDA(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Mutation",
 		Field:      field,
@@ -14241,7 +14241,7 @@ func (ec *executionContext) fieldContext_Mutation_acceptNDA(ctx context.Context,
 		}
 	}()
 	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_acceptNDA_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+	if fc.Args, err = ec.field_Mutation_agreeToNDA_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return
 	}
@@ -38692,10 +38692,10 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 			if out.Values[i] == graphql.Null {
 				invalids++
 			}
-		case "acceptNDA":
+		case "agreeToNDA":
 
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_acceptNDA(ctx, field)
+				return ec._Mutation_agreeToNDA(ctx, field)
 			})
 
 			if out.Values[i] == graphql.Null {
