@@ -1,9 +1,26 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { NavLink } from 'react-router-dom';
-import { SideNav } from '@trussworks/react-uswds';
+import { SideNav as TrussSideNav } from '@trussworks/react-uswds';
 
 import './index.scss';
+
+interface SideNavProps {
+  modelID: string;
+}
+
+type SubpageKey =
+  | 'model-basics'
+  | 'general-characteristics'
+  | 'participants-and-providers'
+  | 'beneficiaries'
+  | 'operations-evaluation-and-learning'
+  | 'payment'
+  | 'it-tools'
+  | 'team'
+  | 'discussions'
+  | 'documents'
+  | 'crs-and-tdl';
 
 type sideNavItemProps = {
   groupEnd?: boolean; // Value used to designate end of sidenav subgrouping / border-bottom
@@ -15,11 +32,8 @@ type sideNavItemProps = {
 interface sideNavProps {
   [key: string]: sideNavItemProps;
 }
-interface ReadOnlySideNavProps {
-  modelID: string;
-}
 
-const ReadOnlySideNav = ({ modelID }: ReadOnlySideNavProps) => {
+const SideNav = ({ modelID }: SideNavProps) => {
   const { t } = useTranslation('modelSummary');
 
   const sideNavItems: sideNavProps = {
@@ -74,10 +88,10 @@ const ReadOnlySideNav = ({ modelID }: ReadOnlySideNavProps) => {
   );
 
   return (
-    <div className="read-only-side-nav__wrapper">
-      <SideNav items={subNavigationLinks} />
+    <div id="read-only-side-nav__wrapper">
+      <TrussSideNav items={subNavigationLinks} />
     </div>
   );
 };
 
-export default ReadOnlySideNav;
+export default SideNav;

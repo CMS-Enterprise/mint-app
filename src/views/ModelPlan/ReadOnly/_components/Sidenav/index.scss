@@ -1,4 +1,4 @@
-.read-only-side-nav__wrapper {
+#read-only-side-nav__wrapper {
   .usa-sidenav {
     border: none;
 
@@ -8,7 +8,8 @@
 
     a {
       &:not(.usa-current) {
-      padding-left: 0;
+        padding-left: 0;
+        color: color($theme-color-base-darkest)
       }
 
       &.nav-group-border {
