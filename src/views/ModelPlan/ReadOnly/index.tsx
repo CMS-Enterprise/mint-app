@@ -248,7 +248,7 @@ const ReadOnly = () => {
           <Grid row gap>
             {!isMobile && (
               <Grid desktop={{ col: 3 }} className="padding-right-4 sticky-nav">
-                <ReadOnlySideNav />
+                <ReadOnlySideNav modelID={modelID} />
               </Grid>
             )}
           </Grid>
