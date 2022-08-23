@@ -9,14 +9,14 @@ interface SideNavProps {
   modelID: string;
 }
 
-interface sideNavProps {
+interface sideNavItemsProps {
   [key: string]: string;
 }
 
 const SideNav = ({ modelID }: SideNavProps) => {
   const { t } = useTranslation('modelSummary');
 
-  const sideNavItems: sideNavProps = {
+  const sideNavItems: sideNavItemsProps = {
     modelBasics: `/models/${modelID}/read-only/`,
     generalCharacteristics: `/models/${modelID}/read-only/general-characteristics`,
     participantsAndProviders: `/models/${modelID}/read-only/participants-and-providers`,
