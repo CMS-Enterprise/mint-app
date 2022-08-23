@@ -32,4 +32,16 @@
       padding-right: 2rem;
     }
   }
+
+
+  .sticky-nav {
+    align-self: start;
+    position: sticky;
+    top: 0;
+    padding-top: 1rem;
+
+    @media screen and (min-width: $desktop) {
+      margin-top: -1rem;
+    }
+  }
 }
