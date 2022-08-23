@@ -1,4 +1,4 @@
-CREATE TABLE model_plan_favorite (
+CREATE TABLE plan_favorite (
     id UUID PRIMARY KEY NOT NULL,
     model_plan_id UUID NOT NULL, --foreign key to model plan
     user_id EUA_ID NOT NULL,
@@ -9,7 +9,7 @@ CREATE TABLE model_plan_favorite (
     modified_dts TIMESTAMP WITH TIME ZONE,
 
 );
-ALTER TABLE model_plan_favorite
+ALTER TABLE plan_favorite
 ADD CONSTRAINT fk_favorite_plan FOREIGN KEY (model_plan_id)
 REFERENCES public.model_plan (id) MATCH SIMPLE
 ON UPDATE NO ACTION

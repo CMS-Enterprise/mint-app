@@ -6,7 +6,6 @@ package graph
 import (
 	"context"
 	"fmt"
-	"time"
 
 	"github.com/google/uuid"
 
@@ -309,14 +308,14 @@ func (r *mutationResolver) UpdatePlanPayments(ctx context.Context, id uuid.UUID,
 	return resolvers.PlanPaymentsUpdate(logger, r.store, id, changes, principal)
 }
 
-// AddModelPlanFavorite is the resolver for the addModelPlanFavorite field.
-func (r *mutationResolver) AddModelPlanFavorite(ctx context.Context, modelPlanID uuid.UUID) (*models.ModelPlanFavorite, error) {
-	panic(fmt.Errorf("not implemented: AddModelPlanFavorite - addModelPlanFavorite"))
+// AddPlanFavorite is the resolver for the addPlanFavorite field.
+func (r *mutationResolver) AddPlanFavorite(ctx context.Context, modelPlanID uuid.UUID) (*models.PlanFavorite, error) {
+	panic(fmt.Errorf("not implemented: AddPlanFavorite - addPlanFavorite"))
 }
 
-// DeleteModelPlanFavorite is the resolver for the deleteModelPlanFavorite field.
-func (r *mutationResolver) DeleteModelPlanFavorite(ctx context.Context, modelPlanID uuid.UUID) (*models.ModelPlanFavorite, error) {
-	panic(fmt.Errorf("not implemented: DeleteModelPlanFavorite - deleteModelPlanFavorite"))
+// DeletePlanFavorite is the resolver for the deletePlanFavorite field.
+func (r *mutationResolver) DeletePlanFavorite(ctx context.Context, modelPlanID uuid.UUID) (*models.PlanFavorite, error) {
+	panic(fmt.Errorf("not implemented: DeletePlanFavorite - deletePlanFavorite"))
 }
 
 // CmsCenters is the resolver for the cmsCenters field.
@@ -804,9 +803,9 @@ func (r *queryResolver) PlanPayments(ctx context.Context, id uuid.UUID) (*models
 	return resolvers.PlanPaymentsRead(logger, r.store, id)
 }
 
-// ModelPlanFavorites is the resolver for the modelPlanFavorites field.
-func (r *queryResolver) ModelPlanFavorites(ctx context.Context) ([]*models.ModelPlanFavorite, error) {
-	panic(fmt.Errorf("not implemented: ModelPlanFavorites - modelPlanFavorites"))
+// PlanFavorites is the resolver for the planFavorites field.
+func (r *queryResolver) PlanFavorites(ctx context.Context) ([]*models.PlanFavorite, error) {
+	panic(fmt.Errorf("not implemented: PlanFavorites - planFavorites"))
 }
 
 // OnTaskListSectionLocksChanged is the resolver for the onTaskListSectionLocksChanged field.
@@ -894,52 +893,3 @@ type planPaymentsResolver struct{ *Resolver }
 type queryResolver struct{ *Resolver }
 type subscriptionResolver struct{ *Resolver }
 type userInfoResolver struct{ *Resolver }
-
-// !!! WARNING !!!
-// The code below was going to be deleted when updating resolvers. It has been copied here so you have
-// one last chance to move it out of harms way if you want. There are two reasons this happens:
-//  - When renaming or deleting a resolver the old code will be put in here. You can safely delete
-//    it when you're done.
-//  - You have helper methods in this file. Move them out to keep these resolver files clean.
-func (r *planBasicsResolver) ModelCategory(ctx context.Context, obj *models.PlanBasics) (*models.ModelCategory, error) {
-	panic(fmt.Errorf("not implemented"))
-}
-func (r *planBasicsResolver) CmsOther(ctx context.Context, obj *models.PlanBasics) (*string, error) {
-	panic(fmt.Errorf("not implemented"))
-}
-func (r *planBasicsResolver) CompleteIcip(ctx context.Context, obj *models.PlanBasics) (*time.Time, error) {
-	panic(fmt.Errorf("not implemented"))
-}
-func (r *planBasicsResolver) ClearanceStarts(ctx context.Context, obj *models.PlanBasics) (*time.Time, error) {
-	panic(fmt.Errorf("not implemented"))
-}
-func (r *planBasicsResolver) ClearanceEnds(ctx context.Context, obj *models.PlanBasics) (*time.Time, error) {
-	panic(fmt.Errorf("not implemented"))
-}
-func (r *planBasicsResolver) Announced(ctx context.Context, obj *models.PlanBasics) (*time.Time, error) {
-	panic(fmt.Errorf("not implemented"))
-}
-func (r *planBasicsResolver) ApplicationsStart(ctx context.Context, obj *models.PlanBasics) (*time.Time, error) {
-	panic(fmt.Errorf("not implemented"))
-}
-func (r *planBasicsResolver) ApplicationsEnd(ctx context.Context, obj *models.PlanBasics) (*time.Time, error) {
-	panic(fmt.Errorf("not implemented"))
-}
-func (r *planBasicsResolver) PerformancePeriodStarts(ctx context.Context, obj *models.PlanBasics) (*time.Time, error) {
-	panic(fmt.Errorf("not implemented"))
-}
-func (r *planBasicsResolver) PerformancePeriodEnds(ctx context.Context, obj *models.PlanBasics) (*time.Time, error) {
-	panic(fmt.Errorf("not implemented"))
-}
-func (r *planBasicsResolver) WrapUpEnds(ctx context.Context, obj *models.PlanBasics) (*time.Time, error) {
-	panic(fmt.Errorf("not implemented"))
-}
-func (r *planBasicsResolver) HighLevelNote(ctx context.Context, obj *models.PlanBasics) (*string, error) {
-	panic(fmt.Errorf("not implemented"))
-}
-func (r *planBasicsResolver) PhasedIn(ctx context.Context, obj *models.PlanBasics) (*bool, error) {
-	panic(fmt.Errorf("not implemented"))
-}
-func (r *planBasicsResolver) PhasedInNote(ctx context.Context, obj *models.PlanBasics) (*string, error) {
-	panic(fmt.Errorf("not implemented"))
-}

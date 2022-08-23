@@ -8,9 +8,9 @@ import (
 	"github.com/cmsgov/mint-app/pkg/storage"
 )
 
-//ModelPlanFavoriteCollection returns a list of favorites
-func ModelPlanFavoriteCollection(logger *zap.Logger, principal authentication.Principal, store *storage.Store) ([]*models.ModelPlanFavorite, error) {
-	favorites, err := store.ModelPlanFavoriteCollectionByUser(logger, principal.ID(), false)
+//PlanFavoriteCollection returns a list of favorites
+func PlanFavoriteCollection(logger *zap.Logger, principal authentication.Principal, store *storage.Store) ([]*models.PlanFavorite, error) {
+	favorites, err := store.PlanFavoriteCollectionByUser(logger, principal.ID(), false)
 	if err != nil {
 		return nil, err
 	}

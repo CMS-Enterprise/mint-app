@@ -129,28 +129,18 @@ type ComplexityRoot struct {
 		Status                   func(childComplexity int) int
 	}
 
-	ModelPlanFavorite struct {
-		CreatedBy   func(childComplexity int) int
-		CreatedDts  func(childComplexity int) int
-		ID          func(childComplexity int) int
-		ModelPlanID func(childComplexity int) int
-		ModifiedBy  func(childComplexity int) int
-		ModifiedDts func(childComplexity int) int
-		UserID      func(childComplexity int) int
-	}
-
 	Mutation struct {
-		AddModelPlanFavorite               func(childComplexity int, modelPlanID uuid.UUID) int
+		AddPlanFavorite                    func(childComplexity int, modelPlanID uuid.UUID) int
 		CreateDiscussionReply              func(childComplexity int, input model.DiscussionReplyCreateInput) int
 		CreateModelPlan                    func(childComplexity int, modelName string) int
 		CreatePlanCollaborator             func(childComplexity int, input model.PlanCollaboratorCreateInput) int
 		CreatePlanDiscussion               func(childComplexity int, input model.PlanDiscussionCreateInput) int
 		CreatePlanDocument                 func(childComplexity int, input model.PlanDocumentInput) int
 		DeleteDiscussionReply              func(childComplexity int, id uuid.UUID) int
-		DeleteModelPlanFavorite            func(childComplexity int, modelPlanID uuid.UUID) int
 		DeletePlanCollaborator             func(childComplexity int, id uuid.UUID) int
 		DeletePlanDiscussion               func(childComplexity int, id uuid.UUID) int
 		DeletePlanDocument                 func(childComplexity int, input model.PlanDocumentInput) int
+		DeletePlanFavorite                 func(childComplexity int, modelPlanID uuid.UUID) int
 		GeneratePresignedUploadURL         func(childComplexity int, input model.GeneratePresignedUploadURLInput) int
 		LockTaskListSection                func(childComplexity int, modelPlanID uuid.UUID, section model.TaskListSection) int
 		UnlockAllTaskListSections          func(childComplexity int, modelPlanID uuid.UUID) int
@@ -282,6 +272,16 @@ type ComplexityRoot struct {
 	PlanDocumentPayload struct {
 		Document     func(childComplexity int) int
 		PresignedURL func(childComplexity int) int
+	}
+
+	PlanFavorite struct {
+		CreatedBy   func(childComplexity int) int
+		CreatedDts  func(childComplexity int) int
+		ID          func(childComplexity int) int
+		ModelPlanID func(childComplexity int) int
+		ModifiedBy  func(childComplexity int) int
+		ModifiedDts func(childComplexity int) int
+		UserID      func(childComplexity int) int
 	}
 
 	PlanGeneralCharacteristics struct {
@@ -680,10 +680,10 @@ type ComplexityRoot struct {
 		ExistingModelCollection   func(childComplexity int) int
 		ModelPlan                 func(childComplexity int, id uuid.UUID) int
 		ModelPlanCollection       func(childComplexity int) int
-		ModelPlanFavorites        func(childComplexity int) int
 		PlanCollaboratorByID      func(childComplexity int, id uuid.UUID) int
 		PlanDocument              func(childComplexity int, id uuid.UUID) int
 		PlanDocumentDownloadURL   func(childComplexity int, id uuid.UUID) int
+		PlanFavorites             func(childComplexity int) int
 		PlanPayments              func(childComplexity int, id uuid.UUID) int
 		ReadPlanDocumentByModelID func(childComplexity int, id uuid.UUID) int
 		TaskListSectionLocks      func(childComplexity int, modelPlanID uuid.UUID) int
@@ -753,8 +753,8 @@ type MutationResolver interface {
 	UnlockTaskListSection(ctx context.Context, modelPlanID uuid.UUID, section model.TaskListSection) (bool, error)
 	UnlockAllTaskListSections(ctx context.Context, modelPlanID uuid.UUID) ([]*model.TaskListSectionLockStatus, error)
 	UpdatePlanPayments(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanPayments, error)
-	AddModelPlanFavorite(ctx context.Context, modelPlanID uuid.UUID) (*models.ModelPlanFavorite, error)
-	DeleteModelPlanFavorite(ctx context.Context, modelPlanID uuid.UUID) (*models.ModelPlanFavorite, error)
+	AddPlanFavorite(ctx context.Context, modelPlanID uuid.UUID) (*models.PlanFavorite, error)
+	DeletePlanFavorite(ctx context.Context, modelPlanID uuid.UUID) (*models.PlanFavorite, error)
 }
 type PlanBasicsResolver interface {
 	CmsCenters(ctx context.Context, obj *models.PlanBasics) ([]model.CMSCenter, error)
@@ -908,7 +908,7 @@ type QueryResolver interface {
 	PlanCollaboratorByID(ctx context.Context, id uuid.UUID) (*models.PlanCollaborator, error)
 	TaskListSectionLocks(ctx context.Context, modelPlanID uuid.UUID) ([]*model.TaskListSectionLockStatus, error)
 	PlanPayments(ctx context.Context, id uuid.UUID) (*models.PlanPayments, error)
-	ModelPlanFavorites(ctx context.Context) ([]*models.ModelPlanFavorite, error)
+	PlanFavorites(ctx context.Context) ([]*models.PlanFavorite, error)
 }
 type SubscriptionResolver interface {
 	OnTaskListSectionLocksChanged(ctx context.Context, modelPlanID uuid.UUID) (<-chan *model.TaskListSectionLockStatusChanged, error)
@@ -1283,66 +1283,17 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.ModelPlan.Status(childComplexity), true
 
-	case "ModelPlanFavorite.createdBy":
-		if e.complexity.ModelPlanFavorite.CreatedBy == nil {
+	case "Mutation.addPlanFavorite":
+		if e.complexity.Mutation.AddPlanFavorite == nil {
 			break
 		}
 
-		return e.complexity.ModelPlanFavorite.CreatedBy(childComplexity), true
-
-	case "ModelPlanFavorite.createdDts":
-		if e.complexity.ModelPlanFavorite.CreatedDts == nil {
-			break
-		}
-
-		return e.complexity.ModelPlanFavorite.CreatedDts(childComplexity), true
-
-	case "ModelPlanFavorite.id":
-		if e.complexity.ModelPlanFavorite.ID == nil {
-			break
-		}
-
-		return e.complexity.ModelPlanFavorite.ID(childComplexity), true
-
-	case "ModelPlanFavorite.modelPlanID":
-		if e.complexity.ModelPlanFavorite.ModelPlanID == nil {
-			break
-		}
-
-		return e.complexity.ModelPlanFavorite.ModelPlanID(childComplexity), true
-
-	case "ModelPlanFavorite.modifiedBy":
-		if e.complexity.ModelPlanFavorite.ModifiedBy == nil {
-			break
-		}
-
-		return e.complexity.ModelPlanFavorite.ModifiedBy(childComplexity), true
-
-	case "ModelPlanFavorite.modifiedDts":
-		if e.complexity.ModelPlanFavorite.ModifiedDts == nil {
-			break
-		}
-
-		return e.complexity.ModelPlanFavorite.ModifiedDts(childComplexity), true
-
-	case "ModelPlanFavorite.userID":
-		if e.complexity.ModelPlanFavorite.UserID == nil {
-			break
-		}
-
-		return e.complexity.ModelPlanFavorite.UserID(childComplexity), true
-
-	case "Mutation.addModelPlanFavorite":
-		if e.complexity.Mutation.AddModelPlanFavorite == nil {
-			break
-		}
-
-		args, err := ec.field_Mutation_addModelPlanFavorite_args(context.TODO(), rawArgs)
+		args, err := ec.field_Mutation_addPlanFavorite_args(context.TODO(), rawArgs)
 		if err != nil {
 			return 0, false
 		}
 
-		return e.complexity.Mutation.AddModelPlanFavorite(childComplexity, args["modelPlanID"].(uuid.UUID)), true
+		return e.complexity.Mutation.AddPlanFavorite(childComplexity, args["modelPlanID"].(uuid.UUID)), true
 
 	case "Mutation.createDiscussionReply":
 		if e.complexity.Mutation.CreateDiscussionReply == nil {
@@ -1416,18 +1367,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Mutation.DeleteDiscussionReply(childComplexity, args["id"].(uuid.UUID)), true
 
-	case "Mutation.deleteModelPlanFavorite":
-		if e.complexity.Mutation.DeleteModelPlanFavorite == nil {
-			break
-		}
-
-		args, err := ec.field_Mutation_deleteModelPlanFavorite_args(context.TODO(), rawArgs)
-		if err != nil {
-			return 0, false
-		}
-
-		return e.complexity.Mutation.DeleteModelPlanFavorite(childComplexity, args["modelPlanID"].(uuid.UUID)), true
-
 	case "Mutation.deletePlanCollaborator":
 		if e.complexity.Mutation.DeletePlanCollaborator == nil {
 			break
@@ -1463,6 +1402,18 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Mutation.DeletePlanDocument(childComplexity, args["input"].(model.PlanDocumentInput)), true
+
+	case "Mutation.deletePlanFavorite":
+		if e.complexity.Mutation.DeletePlanFavorite == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_deletePlanFavorite_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Mutation.DeletePlanFavorite(childComplexity, args["modelPlanID"].(uuid.UUID)), true
 
 	case "Mutation.generatePresignedUploadURL":
 		if e.complexity.Mutation.GeneratePresignedUploadURL == nil {
@@ -2334,6 +2285,55 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.PlanDocumentPayload.PresignedURL(childComplexity), true
+
+	case "PlanFavorite.createdBy":
+		if e.complexity.PlanFavorite.CreatedBy == nil {
+			break
+		}
+
+		return e.complexity.PlanFavorite.CreatedBy(childComplexity), true
+
+	case "PlanFavorite.createdDts":
+		if e.complexity.PlanFavorite.CreatedDts == nil {
+			break
+		}
+
+		return e.complexity.PlanFavorite.CreatedDts(childComplexity), true
+
+	case "PlanFavorite.id":
+		if e.complexity.PlanFavorite.ID == nil {
+			break
+		}
+
+		return e.complexity.PlanFavorite.ID(childComplexity), true
+
+	case "PlanFavorite.modelPlanID":
+		if e.complexity.PlanFavorite.ModelPlanID == nil {
+			break
+		}
+
+		return e.complexity.PlanFavorite.ModelPlanID(childComplexity), true
+
+	case "PlanFavorite.modifiedBy":
+		if e.complexity.PlanFavorite.ModifiedBy == nil {
+			break
+		}
+
+		return e.complexity.PlanFavorite.ModifiedBy(childComplexity), true
+
+	case "PlanFavorite.modifiedDts":
+		if e.complexity.PlanFavorite.ModifiedDts == nil {
+			break
+		}
+
+		return e.complexity.PlanFavorite.ModifiedDts(childComplexity), true
+
+	case "PlanFavorite.userID":
+		if e.complexity.PlanFavorite.UserID == nil {
+			break
+		}
+
+		return e.complexity.PlanFavorite.UserID(childComplexity), true
 
 	case "PlanGeneralCharacteristics.additionalServicesInvolved":
 		if e.complexity.PlanGeneralCharacteristics.AdditionalServicesInvolved == nil {
@@ -5005,13 +5005,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Query.ModelPlanCollection(childComplexity), true
 
-	case "Query.modelPlanFavorites":
-		if e.complexity.Query.ModelPlanFavorites == nil {
-			break
-		}
-
-		return e.complexity.Query.ModelPlanFavorites(childComplexity), true
-
 	case "Query.planCollaboratorByID":
 		if e.complexity.Query.PlanCollaboratorByID == nil {
 			break
@@ -5047,6 +5040,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Query.PlanDocumentDownloadURL(childComplexity, args["id"].(uuid.UUID)), true
+
+	case "Query.planFavorites":
+		if e.complexity.Query.PlanFavorites == nil {
+			break
+		}
+
+		return e.complexity.Query.PlanFavorites(childComplexity), true
 
 	case "Query.planPayments":
 		if e.complexity.Query.PlanPayments == nil {
@@ -6569,7 +6569,7 @@ input PlanOpsEvalAndLearningChanges @goModel(model: "map[string]interface{}") {
     status: TaskStatusInput
 }
 
-type ModelPlanFavorite {
+type PlanFavorite {
     id: UUID!
     modelPlanID: UUID!
     userID: String!
@@ -6595,7 +6595,7 @@ type Query {
   planCollaboratorByID(id: UUID!): PlanCollaborator!
   taskListSectionLocks(modelPlanID: UUID!): [TaskListSectionLockStatus!]!
   planPayments(id: UUID!): PlanPayments!
-  modelPlanFavorites: [ModelPlanFavorite!]!
+  planFavorites: [PlanFavorite!]!
 }
 
 """
@@ -6677,10 +6677,10 @@ unlockAllTaskListSections(modelPlanID: UUID!): [TaskListSectionLockStatus!]!
 updatePlanPayments(id: UUID!, changes: PlanPaymentsChanges!): PlanPayments!
 @hasRole(role: MINT_USER)
 
-addModelPlanFavorite(modelPlanID: UUID!): ModelPlanFavorite!
+addPlanFavorite(modelPlanID: UUID!): PlanFavorite!
 @hasRole(role: MINT_USER)
 
-deleteModelPlanFavorite(modelPlanID: UUID!): ModelPlanFavorite!
+deletePlanFavorite(modelPlanID: UUID!): PlanFavorite!
 @hasRole(role: MINT_USER)
 }
 
@@ -7338,7 +7338,7 @@ func (ec *executionContext) dir_hasRole_args(ctx context.Context, rawArgs map[st
 	return args, nil
 }
 
-func (ec *executionContext) field_Mutation_addModelPlanFavorite_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+func (ec *executionContext) field_Mutation_addPlanFavorite_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
 	var arg0 uuid.UUID
@@ -7443,21 +7443,6 @@ func (ec *executionContext) field_Mutation_deleteDiscussionReply_args(ctx contex
 	return args, nil
 }
 
-func (ec *executionContext) field_Mutation_deleteModelPlanFavorite_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
-	var err error
-	args := map[string]interface{}{}
-	var arg0 uuid.UUID
-	if tmp, ok := rawArgs["modelPlanID"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("modelPlanID"))
-		arg0, err = ec.unmarshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, tmp)
-		if err != nil {
-			return nil, err
-		}
-	}
-	args["modelPlanID"] = arg0
-	return args, nil
-}
-
 func (ec *executionContext) field_Mutation_deletePlanCollaborator_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
@@ -7500,6 +7485,21 @@ func (ec *executionContext) field_Mutation_deletePlanDocument_args(ctx context.C
 		}
 	}
 	args["input"] = arg0
+	return args, nil
+}
+
+func (ec *executionContext) field_Mutation_deletePlanFavorite_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 uuid.UUID
+	if tmp, ok := rawArgs["modelPlanID"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("modelPlanID"))
+		arg0, err = ec.unmarshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["modelPlanID"] = arg0
 	return args, nil
 }
 
@@ -11160,308 +11160,6 @@ func (ec *executionContext) fieldContext_ModelPlan_isFavorite(ctx context.Contex
 	return fc, nil
 }
 
-func (ec *executionContext) _ModelPlanFavorite_id(ctx context.Context, field graphql.CollectedField, obj *models.ModelPlanFavorite) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_ModelPlanFavorite_id(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.ID, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(uuid.UUID)
-	fc.Result = res
-	return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_ModelPlanFavorite_id(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "ModelPlanFavorite",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type UUID does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _ModelPlanFavorite_modelPlanID(ctx context.Context, field graphql.CollectedField, obj *models.ModelPlanFavorite) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_ModelPlanFavorite_modelPlanID(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.ModelPlanID, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(uuid.UUID)
-	fc.Result = res
-	return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_ModelPlanFavorite_modelPlanID(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "ModelPlanFavorite",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type UUID does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _ModelPlanFavorite_userID(ctx context.Context, field graphql.CollectedField, obj *models.ModelPlanFavorite) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_ModelPlanFavorite_userID(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.UserID, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(string)
-	fc.Result = res
-	return ec.marshalNString2string(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_ModelPlanFavorite_userID(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "ModelPlanFavorite",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type String does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _ModelPlanFavorite_createdBy(ctx context.Context, field graphql.CollectedField, obj *models.ModelPlanFavorite) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_ModelPlanFavorite_createdBy(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.CreatedBy, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(string)
-	fc.Result = res
-	return ec.marshalNString2string(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_ModelPlanFavorite_createdBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "ModelPlanFavorite",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type String does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _ModelPlanFavorite_createdDts(ctx context.Context, field graphql.CollectedField, obj *models.ModelPlanFavorite) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_ModelPlanFavorite_createdDts(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.CreatedDts, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(time.Time)
-	fc.Result = res
-	return ec.marshalNTime2timeᚐTime(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_ModelPlanFavorite_createdDts(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "ModelPlanFavorite",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type Time does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _ModelPlanFavorite_modifiedBy(ctx context.Context, field graphql.CollectedField, obj *models.ModelPlanFavorite) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_ModelPlanFavorite_modifiedBy(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.ModifiedBy, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		return graphql.Null
-	}
-	res := resTmp.(*string)
-	fc.Result = res
-	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_ModelPlanFavorite_modifiedBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "ModelPlanFavorite",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type String does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _ModelPlanFavorite_modifiedDts(ctx context.Context, field graphql.CollectedField, obj *models.ModelPlanFavorite) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_ModelPlanFavorite_modifiedDts(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.ModifiedDts, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		return graphql.Null
-	}
-	res := resTmp.(*time.Time)
-	fc.Result = res
-	return ec.marshalOTime2ᚖtimeᚐTime(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_ModelPlanFavorite_modifiedDts(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "ModelPlanFavorite",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type Time does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
 func (ec *executionContext) _Mutation_createModelPlan(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_Mutation_createModelPlan(ctx, field)
 	if err != nil {
@@ -14599,8 +14297,8 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanPayments(ctx context
 	return fc, nil
 }
 
-func (ec *executionContext) _Mutation_addModelPlanFavorite(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Mutation_addModelPlanFavorite(ctx, field)
+func (ec *executionContext) _Mutation_addPlanFavorite(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Mutation_addPlanFavorite(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -14614,7 +14312,7 @@ func (ec *executionContext) _Mutation_addModelPlanFavorite(ctx context.Context, 
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		directive0 := func(rctx context.Context) (interface{}, error) {
 			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Mutation().AddModelPlanFavorite(rctx, fc.Args["modelPlanID"].(uuid.UUID))
+			return ec.resolvers.Mutation().AddPlanFavorite(rctx, fc.Args["modelPlanID"].(uuid.UUID))
 		}
 		directive1 := func(ctx context.Context) (interface{}, error) {
 			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
@@ -14634,10 +14332,10 @@ func (ec *executionContext) _Mutation_addModelPlanFavorite(ctx context.Context, 
 		if tmp == nil {
 			return nil, nil
 		}
-		if data, ok := tmp.(*models.ModelPlanFavorite); ok {
+		if data, ok := tmp.(*models.PlanFavorite); ok {
 			return data, nil
 		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.ModelPlanFavorite`, tmp)
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.PlanFavorite`, tmp)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -14649,12 +14347,12 @@ func (ec *executionContext) _Mutation_addModelPlanFavorite(ctx context.Context, 
 		}
 		return graphql.Null
 	}
-	res := resTmp.(*models.ModelPlanFavorite)
+	res := resTmp.(*models.PlanFavorite)
 	fc.Result = res
-	return ec.marshalNModelPlanFavorite2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelPlanFavorite(ctx, field.Selections, res)
+	return ec.marshalNPlanFavorite2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanFavorite(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Mutation_addModelPlanFavorite(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Mutation_addPlanFavorite(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Mutation",
 		Field:      field,
@@ -14663,21 +14361,21 @@ func (ec *executionContext) fieldContext_Mutation_addModelPlanFavorite(ctx conte
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			switch field.Name {
 			case "id":
-				return ec.fieldContext_ModelPlanFavorite_id(ctx, field)
+				return ec.fieldContext_PlanFavorite_id(ctx, field)
 			case "modelPlanID":
-				return ec.fieldContext_ModelPlanFavorite_modelPlanID(ctx, field)
+				return ec.fieldContext_PlanFavorite_modelPlanID(ctx, field)
 			case "userID":
-				return ec.fieldContext_ModelPlanFavorite_userID(ctx, field)
+				return ec.fieldContext_PlanFavorite_userID(ctx, field)
 			case "createdBy":
-				return ec.fieldContext_ModelPlanFavorite_createdBy(ctx, field)
+				return ec.fieldContext_PlanFavorite_createdBy(ctx, field)
 			case "createdDts":
-				return ec.fieldContext_ModelPlanFavorite_createdDts(ctx, field)
+				return ec.fieldContext_PlanFavorite_createdDts(ctx, field)
 			case "modifiedBy":
-				return ec.fieldContext_ModelPlanFavorite_modifiedBy(ctx, field)
+				return ec.fieldContext_PlanFavorite_modifiedBy(ctx, field)
 			case "modifiedDts":
-				return ec.fieldContext_ModelPlanFavorite_modifiedDts(ctx, field)
+				return ec.fieldContext_PlanFavorite_modifiedDts(ctx, field)
 			}
-			return nil, fmt.Errorf("no field named %q was found under type ModelPlanFavorite", field.Name)
+			return nil, fmt.Errorf("no field named %q was found under type PlanFavorite", field.Name)
 		},
 	}
 	defer func() {
@@ -14687,15 +14385,15 @@ func (ec *executionContext) fieldContext_Mutation_addModelPlanFavorite(ctx conte
 		}
 	}()
 	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_addModelPlanFavorite_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+	if fc.Args, err = ec.field_Mutation_addPlanFavorite_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return
 	}
 	return fc, nil
 }
 
-func (ec *executionContext) _Mutation_deleteModelPlanFavorite(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Mutation_deleteModelPlanFavorite(ctx, field)
+func (ec *executionContext) _Mutation_deletePlanFavorite(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Mutation_deletePlanFavorite(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -14709,7 +14407,7 @@ func (ec *executionContext) _Mutation_deleteModelPlanFavorite(ctx context.Contex
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		directive0 := func(rctx context.Context) (interface{}, error) {
 			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Mutation().DeleteModelPlanFavorite(rctx, fc.Args["modelPlanID"].(uuid.UUID))
+			return ec.resolvers.Mutation().DeletePlanFavorite(rctx, fc.Args["modelPlanID"].(uuid.UUID))
 		}
 		directive1 := func(ctx context.Context) (interface{}, error) {
 			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
@@ -14729,10 +14427,10 @@ func (ec *executionContext) _Mutation_deleteModelPlanFavorite(ctx context.Contex
 		if tmp == nil {
 			return nil, nil
 		}
-		if data, ok := tmp.(*models.ModelPlanFavorite); ok {
+		if data, ok := tmp.(*models.PlanFavorite); ok {
 			return data, nil
 		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.ModelPlanFavorite`, tmp)
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.PlanFavorite`, tmp)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -14744,12 +14442,12 @@ func (ec *executionContext) _Mutation_deleteModelPlanFavorite(ctx context.Contex
 		}
 		return graphql.Null
 	}
-	res := resTmp.(*models.ModelPlanFavorite)
+	res := resTmp.(*models.PlanFavorite)
 	fc.Result = res
-	return ec.marshalNModelPlanFavorite2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelPlanFavorite(ctx, field.Selections, res)
+	return ec.marshalNPlanFavorite2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanFavorite(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Mutation_deleteModelPlanFavorite(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Mutation_deletePlanFavorite(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Mutation",
 		Field:      field,
@@ -14758,21 +14456,21 @@ func (ec *executionContext) fieldContext_Mutation_deleteModelPlanFavorite(ctx co
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			switch field.Name {
 			case "id":
-				return ec.fieldContext_ModelPlanFavorite_id(ctx, field)
+				return ec.fieldContext_PlanFavorite_id(ctx, field)
 			case "modelPlanID":
-				return ec.fieldContext_ModelPlanFavorite_modelPlanID(ctx, field)
+				return ec.fieldContext_PlanFavorite_modelPlanID(ctx, field)
 			case "userID":
-				return ec.fieldContext_ModelPlanFavorite_userID(ctx, field)
+				return ec.fieldContext_PlanFavorite_userID(ctx, field)
 			case "createdBy":
-				return ec.fieldContext_ModelPlanFavorite_createdBy(ctx, field)
+				return ec.fieldContext_PlanFavorite_createdBy(ctx, field)
 			case "createdDts":
-				return ec.fieldContext_ModelPlanFavorite_createdDts(ctx, field)
+				return ec.fieldContext_PlanFavorite_createdDts(ctx, field)
 			case "modifiedBy":
-				return ec.fieldContext_ModelPlanFavorite_modifiedBy(ctx, field)
+				return ec.fieldContext_PlanFavorite_modifiedBy(ctx, field)
 			case "modifiedDts":
-				return ec.fieldContext_ModelPlanFavorite_modifiedDts(ctx, field)
+				return ec.fieldContext_PlanFavorite_modifiedDts(ctx, field)
 			}
-			return nil, fmt.Errorf("no field named %q was found under type ModelPlanFavorite", field.Name)
+			return nil, fmt.Errorf("no field named %q was found under type PlanFavorite", field.Name)
 		},
 	}
 	defer func() {
@@ -14782,7 +14480,7 @@ func (ec *executionContext) fieldContext_Mutation_deleteModelPlanFavorite(ctx co
 		}
 	}()
 	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_deleteModelPlanFavorite_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+	if fc.Args, err = ec.field_Mutation_deletePlanFavorite_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return
 	}
@@ -18932,6 +18630,308 @@ func (ec *executionContext) fieldContext_PlanDocumentPayload_presignedURL(ctx co
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanFavorite_id(ctx context.Context, field graphql.CollectedField, obj *models.PlanFavorite) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanFavorite_id(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ID, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(uuid.UUID)
+	fc.Result = res
+	return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanFavorite_id(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanFavorite",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type UUID does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanFavorite_modelPlanID(ctx context.Context, field graphql.CollectedField, obj *models.PlanFavorite) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanFavorite_modelPlanID(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ModelPlanID, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(uuid.UUID)
+	fc.Result = res
+	return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanFavorite_modelPlanID(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanFavorite",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type UUID does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanFavorite_userID(ctx context.Context, field graphql.CollectedField, obj *models.PlanFavorite) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanFavorite_userID(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.UserID, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalNString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanFavorite_userID(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanFavorite",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanFavorite_createdBy(ctx context.Context, field graphql.CollectedField, obj *models.PlanFavorite) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanFavorite_createdBy(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.CreatedBy, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalNString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanFavorite_createdBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanFavorite",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanFavorite_createdDts(ctx context.Context, field graphql.CollectedField, obj *models.PlanFavorite) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanFavorite_createdDts(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.CreatedDts, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(time.Time)
+	fc.Result = res
+	return ec.marshalNTime2timeᚐTime(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanFavorite_createdDts(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanFavorite",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Time does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanFavorite_modifiedBy(ctx context.Context, field graphql.CollectedField, obj *models.PlanFavorite) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanFavorite_modifiedBy(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ModifiedBy, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanFavorite_modifiedBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanFavorite",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanFavorite_modifiedDts(ctx context.Context, field graphql.CollectedField, obj *models.PlanFavorite) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanFavorite_modifiedDts(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ModifiedDts, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*time.Time)
+	fc.Result = res
+	return ec.marshalOTime2ᚖtimeᚐTime(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanFavorite_modifiedDts(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanFavorite",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Time does not have child fields")
 		},
 	}
 	return fc, nil
@@ -35512,8 +35512,8 @@ func (ec *executionContext) fieldContext_Query_planPayments(ctx context.Context,
 	return fc, nil
 }
 
-func (ec *executionContext) _Query_modelPlanFavorites(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Query_modelPlanFavorites(ctx, field)
+func (ec *executionContext) _Query_planFavorites(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Query_planFavorites(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -35526,7 +35526,7 @@ func (ec *executionContext) _Query_modelPlanFavorites(ctx context.Context, field
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Query().ModelPlanFavorites(rctx)
+		return ec.resolvers.Query().PlanFavorites(rctx)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -35538,12 +35538,12 @@ func (ec *executionContext) _Query_modelPlanFavorites(ctx context.Context, field
 		}
 		return graphql.Null
 	}
-	res := resTmp.([]*models.ModelPlanFavorite)
+	res := resTmp.([]*models.PlanFavorite)
 	fc.Result = res
-	return ec.marshalNModelPlanFavorite2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelPlanFavoriteᚄ(ctx, field.Selections, res)
+	return ec.marshalNPlanFavorite2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanFavoriteᚄ(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Query_modelPlanFavorites(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Query_planFavorites(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Query",
 		Field:      field,
@@ -35552,21 +35552,21 @@ func (ec *executionContext) fieldContext_Query_modelPlanFavorites(ctx context.Co
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			switch field.Name {
 			case "id":
-				return ec.fieldContext_ModelPlanFavorite_id(ctx, field)
+				return ec.fieldContext_PlanFavorite_id(ctx, field)
 			case "modelPlanID":
-				return ec.fieldContext_ModelPlanFavorite_modelPlanID(ctx, field)
+				return ec.fieldContext_PlanFavorite_modelPlanID(ctx, field)
 			case "userID":
-				return ec.fieldContext_ModelPlanFavorite_userID(ctx, field)
+				return ec.fieldContext_PlanFavorite_userID(ctx, field)
 			case "createdBy":
-				return ec.fieldContext_ModelPlanFavorite_createdBy(ctx, field)
+				return ec.fieldContext_PlanFavorite_createdBy(ctx, field)
 			case "createdDts":
-				return ec.fieldContext_ModelPlanFavorite_createdDts(ctx, field)
+				return ec.fieldContext_PlanFavorite_createdDts(ctx, field)
 			case "modifiedBy":
-				return ec.fieldContext_ModelPlanFavorite_modifiedBy(ctx, field)
+				return ec.fieldContext_PlanFavorite_modifiedBy(ctx, field)
 			case "modifiedDts":
-				return ec.fieldContext_ModelPlanFavorite_modifiedDts(ctx, field)
+				return ec.fieldContext_PlanFavorite_modifiedDts(ctx, field)
 			}
-			return nil, fmt.Errorf("no field named %q was found under type ModelPlanFavorite", field.Name)
+			return nil, fmt.Errorf("no field named %q was found under type PlanFavorite", field.Name)
 		},
 	}
 	return fc, nil
@@ -38938,70 +38938,6 @@ func (ec *executionContext) _ModelPlan(ctx context.Context, sel ast.SelectionSet
 	return out
 }
 
-var modelPlanFavoriteImplementors = []string{"ModelPlanFavorite"}
-
-func (ec *executionContext) _ModelPlanFavorite(ctx context.Context, sel ast.SelectionSet, obj *models.ModelPlanFavorite) graphql.Marshaler {
-	fields := graphql.CollectFields(ec.OperationContext, sel, modelPlanFavoriteImplementors)
-	out := graphql.NewFieldSet(fields)
-	var invalids uint32
-	for i, field := range fields {
-		switch field.Name {
-		case "__typename":
-			out.Values[i] = graphql.MarshalString("ModelPlanFavorite")
-		case "id":
-
-			out.Values[i] = ec._ModelPlanFavorite_id(ctx, field, obj)
-
-			if out.Values[i] == graphql.Null {
-				invalids++
-			}
-		case "modelPlanID":
-
-			out.Values[i] = ec._ModelPlanFavorite_modelPlanID(ctx, field, obj)
-
-			if out.Values[i] == graphql.Null {
-				invalids++
-			}
-		case "userID":
-
-			out.Values[i] = ec._ModelPlanFavorite_userID(ctx, field, obj)
-
-			if out.Values[i] == graphql.Null {
-				invalids++
-			}
-		case "createdBy":
-
-			out.Values[i] = ec._ModelPlanFavorite_createdBy(ctx, field, obj)
-
-			if out.Values[i] == graphql.Null {
-				invalids++
-			}
-		case "createdDts":
-
-			out.Values[i] = ec._ModelPlanFavorite_createdDts(ctx, field, obj)
-
-			if out.Values[i] == graphql.Null {
-				invalids++
-			}
-		case "modifiedBy":
-
-			out.Values[i] = ec._ModelPlanFavorite_modifiedBy(ctx, field, obj)
-
-		case "modifiedDts":
-
-			out.Values[i] = ec._ModelPlanFavorite_modifiedDts(ctx, field, obj)
-
-		default:
-			panic("unknown field " + strconv.Quote(field.Name))
-		}
-	}
-	out.Dispatch()
-	if invalids > 0 {
-		return graphql.Null
-	}
-	return out
-}
-
 var mutationImplementors = []string{"Mutation"}
 
 func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet) graphql.Marshaler {
@@ -39246,19 +39182,19 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 			if out.Values[i] == graphql.Null {
 				invalids++
 			}
-		case "addModelPlanFavorite":
+		case "addPlanFavorite":
 
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_addModelPlanFavorite(ctx, field)
+				return ec._Mutation_addPlanFavorite(ctx, field)
 			})
 
 			if out.Values[i] == graphql.Null {
 				invalids++
 			}
-		case "deleteModelPlanFavorite":
+		case "deletePlanFavorite":
 
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_deleteModelPlanFavorite(ctx, field)
+				return ec._Mutation_deletePlanFavorite(ctx, field)
 			})
 
 			if out.Values[i] == graphql.Null {
@@ -39972,6 +39908,70 @@ func (ec *executionContext) _PlanDocumentPayload(ctx context.Context, sel ast.Se
 		case "presignedURL":
 
 			out.Values[i] = ec._PlanDocumentPayload_presignedURL(ctx, field, obj)
+
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch()
+	if invalids > 0 {
+		return graphql.Null
+	}
+	return out
+}
+
+var planFavoriteImplementors = []string{"PlanFavorite"}
+
+func (ec *executionContext) _PlanFavorite(ctx context.Context, sel ast.SelectionSet, obj *models.PlanFavorite) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, planFavoriteImplementors)
+	out := graphql.NewFieldSet(fields)
+	var invalids uint32
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("PlanFavorite")
+		case "id":
+
+			out.Values[i] = ec._PlanFavorite_id(ctx, field, obj)
+
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		case "modelPlanID":
+
+			out.Values[i] = ec._PlanFavorite_modelPlanID(ctx, field, obj)
+
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		case "userID":
+
+			out.Values[i] = ec._PlanFavorite_userID(ctx, field, obj)
+
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		case "createdBy":
+
+			out.Values[i] = ec._PlanFavorite_createdBy(ctx, field, obj)
+
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		case "createdDts":
+
+			out.Values[i] = ec._PlanFavorite_createdDts(ctx, field, obj)
+
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		case "modifiedBy":
+
+			out.Values[i] = ec._PlanFavorite_modifiedBy(ctx, field, obj)
+
+		case "modifiedDts":
+
+			out.Values[i] = ec._PlanFavorite_modifiedDts(ctx, field, obj)
 
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
@@ -42893,7 +42893,7 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 			out.Concurrently(i, func() graphql.Marshaler {
 				return rrm(innerCtx)
 			})
-		case "modelPlanFavorites":
+		case "planFavorites":
 			field := field
 
 			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
@@ -42902,7 +42902,7 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 						ec.Error(ctx, ec.Recover(ctx, r))
 					}
 				}()
-				res = ec._Query_modelPlanFavorites(ctx, field)
+				res = ec._Query_planFavorites(ctx, field)
 				if res == graphql.Null {
 					atomic.AddUint32(&invalids, 1)
 				}
@@ -45448,64 +45448,6 @@ func (ec *executionContext) unmarshalNModelPlanChanges2map(ctx context.Context, 
 	return v.(map[string]interface{}), nil
 }
 
-func (ec *executionContext) marshalNModelPlanFavorite2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelPlanFavorite(ctx context.Context, sel ast.SelectionSet, v models.ModelPlanFavorite) graphql.Marshaler {
-	return ec._ModelPlanFavorite(ctx, sel, &v)
-}
-
-func (ec *executionContext) marshalNModelPlanFavorite2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelPlanFavoriteᚄ(ctx context.Context, sel ast.SelectionSet, v []*models.ModelPlanFavorite) graphql.Marshaler {
-	ret := make(graphql.Array, len(v))
-	var wg sync.WaitGroup
-	isLen1 := len(v) == 1
-	if !isLen1 {
-		wg.Add(len(v))
-	}
-	for i := range v {
-		i := i
-		fc := &graphql.FieldContext{
-			Index:  &i,
-			Result: &v[i],
-		}
-		ctx := graphql.WithFieldContext(ctx, fc)
-		f := func(i int) {
-			defer func() {
-				if r := recover(); r != nil {
-					ec.Error(ctx, ec.Recover(ctx, r))
-					ret = nil
-				}
-			}()
-			if !isLen1 {
-				defer wg.Done()
-			}
-			ret[i] = ec.marshalNModelPlanFavorite2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelPlanFavorite(ctx, sel, v[i])
-		}
-		if isLen1 {
-			f(i)
-		} else {
-			go f(i)
-		}
-
-	}
-	wg.Wait()
-
-	for _, e := range ret {
-		if e == graphql.Null {
-			return graphql.Null
-		}
-	}
-
-	return ret
-}
-
-func (ec *executionContext) marshalNModelPlanFavorite2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelPlanFavorite(ctx context.Context, sel ast.SelectionSet, v *models.ModelPlanFavorite) graphql.Marshaler {
-	if v == nil {
-		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
-			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
-		}
-		return graphql.Null
-	}
-	return ec._ModelPlanFavorite(ctx, sel, v)
-}
-
 func (ec *executionContext) unmarshalNModelStatus2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐModelStatus(ctx context.Context, v interface{}) (models.ModelStatus, error) {
 	tmp, err := graphql.UnmarshalString(v)
 	res := models.ModelStatus(tmp)
@@ -47626,6 +47568,64 @@ func (ec *executionContext) marshalNPlanDocumentPayload2ᚖgithubᚗcomᚋcmsgov
 		return graphql.Null
 	}
 	return ec._PlanDocumentPayload(ctx, sel, v)
+}
+
+func (ec *executionContext) marshalNPlanFavorite2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanFavorite(ctx context.Context, sel ast.SelectionSet, v models.PlanFavorite) graphql.Marshaler {
+	return ec._PlanFavorite(ctx, sel, &v)
+}
+
+func (ec *executionContext) marshalNPlanFavorite2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanFavoriteᚄ(ctx context.Context, sel ast.SelectionSet, v []*models.PlanFavorite) graphql.Marshaler {
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalNPlanFavorite2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanFavorite(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
+}
+
+func (ec *executionContext) marshalNPlanFavorite2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanFavorite(ctx context.Context, sel ast.SelectionSet, v *models.PlanFavorite) graphql.Marshaler {
+	if v == nil {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
+		return graphql.Null
+	}
+	return ec._PlanFavorite(ctx, sel, v)
 }
 
 func (ec *executionContext) marshalNPlanGeneralCharacteristics2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanGeneralCharacteristics(ctx context.Context, sel ast.SelectionSet, v models.PlanGeneralCharacteristics) graphql.Marshaler {

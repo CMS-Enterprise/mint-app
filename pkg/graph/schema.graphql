@@ -1305,7 +1305,7 @@ input PlanOpsEvalAndLearningChanges @goModel(model: "map[string]interface{}") {
     status: TaskStatusInput
 }
 
-type ModelPlanFavorite {
+type PlanFavorite {
     id: UUID!
     modelPlanID: UUID!
     userID: String!
@@ -1331,7 +1331,7 @@ type Query {
   planCollaboratorByID(id: UUID!): PlanCollaborator!
   taskListSectionLocks(modelPlanID: UUID!): [TaskListSectionLockStatus!]!
   planPayments(id: UUID!): PlanPayments!
-  modelPlanFavorites: [ModelPlanFavorite!]!
+  planFavorites: [PlanFavorite!]!
 }
 
 """
@@ -1413,10 +1413,10 @@ unlockAllTaskListSections(modelPlanID: UUID!): [TaskListSectionLockStatus!]!
 updatePlanPayments(id: UUID!, changes: PlanPaymentsChanges!): PlanPayments!
 @hasRole(role: MINT_USER)
 
-addModelPlanFavorite(modelPlanID: UUID!): ModelPlanFavorite!
+addPlanFavorite(modelPlanID: UUID!): PlanFavorite!
 @hasRole(role: MINT_USER)
 
-deleteModelPlanFavorite(modelPlanID: UUID!): ModelPlanFavorite!
+deletePlanFavorite(modelPlanID: UUID!): PlanFavorite!
 @hasRole(role: MINT_USER)
 }
 

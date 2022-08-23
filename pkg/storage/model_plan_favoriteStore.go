@@ -21,9 +21,9 @@ var modelPlanFavoriteDeleteSQL string
 //go:embed SQL/model_plan_favorite_collection_by_user.sql
 var modelPlanFavoriteCollectionByUserSQL string
 
-//ModelPlanFavoriteCollectionByUser returns a list of model plans for a given EUA ID (TODO: Make this go by collaborators, not by createdBy)
-func (s *Store) ModelPlanFavoriteCollectionByUser(logger *zap.Logger, EUAID string, archived bool) ([]*models.ModelPlanFavorite, error) {
-	favorites := []*models.ModelPlanFavorite{}
+//PlanFavoriteCollectionByUser returns a list of model plans for a given EUA ID (TODO: Make this go by collaborators, not by createdBy)
+func (s *Store) PlanFavoriteCollectionByUser(logger *zap.Logger, EUAID string, archived bool) ([]*models.PlanFavorite, error) {
+	favorites := []*models.PlanFavorite{}
 
 	stmt, err := s.db.PrepareNamed(modelPlanFavoriteCollectionByUserSQL)
 	if err != nil {
@@ -51,8 +51,8 @@ func (s *Store) ModelPlanFavoriteCollectionByUser(logger *zap.Logger, EUAID stri
 	return favorites, nil
 }
 
-//ModelPlanFavoriteCreate creates and returns a modelPlan favorite object
-func (s *Store) ModelPlanFavoriteCreate(logger *zap.Logger, favorite models.ModelPlanFavorite) (*models.ModelPlanFavorite, error) {
+//PlanFavoriteCreate creates and returns a modelPlan favorite object
+func (s *Store) PlanFavoriteCreate(logger *zap.Logger, favorite models.PlanFavorite) (*models.PlanFavorite, error) {
 
 	if favorite.ID == uuid.Nil {
 		favorite.ID = uuid.New()
@@ -66,7 +66,7 @@ func (s *Store) ModelPlanFavoriteCreate(logger *zap.Logger, favorite models.Mode
 		)
 		return nil, err
 	}
-	retFavorite := models.ModelPlanFavorite{}
+	retFavorite := models.PlanFavorite{}
 	err = stmt.Get(&retFavorite, favorite)
 	if err != nil {
 		logger.Error(
@@ -80,8 +80,8 @@ func (s *Store) ModelPlanFavoriteCreate(logger *zap.Logger, favorite models.Mode
 	return &retFavorite, nil
 }
 
-//ModelPlanFavoriteDelete deletes a model plan favorite
-func (s *Store) ModelPlanFavoriteDelete(logger *zap.Logger, EUAID string, modelPlanID uuid.UUID) (*models.ModelPlanFavorite, error) {
+//PlanFavoriteDelete deletes a model plan favorite
+func (s *Store) PlanFavoriteDelete(logger *zap.Logger, EUAID string, modelPlanID uuid.UUID) (*models.PlanFavorite, error) {
 	stmt, err := s.db.PrepareNamed(modelPlanFavoriteDeleteSQL)
 	if err != nil {
 		return nil, err
@@ -90,7 +90,7 @@ func (s *Store) ModelPlanFavoriteDelete(logger *zap.Logger, EUAID string, modelP
 		"euaID":       EUAID,
 		"modelPlanId": modelPlanID,
 	}
-	delFavorite := models.ModelPlanFavorite{}
+	delFavorite := models.PlanFavorite{}
 	err = stmt.Get(&delFavorite, arg)
 	if err != nil {
 		return nil, err
