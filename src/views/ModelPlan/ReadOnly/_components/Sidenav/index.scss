@@ -9,7 +9,11 @@
     a {
       &:not(.usa-current) {
         padding-left: 0;
-        color: color($theme-color-base-darkest)
+        color: color($theme-color-base-darkest);
+
+        &:hover {
+          color: color($theme-color-primary);
+        }
       }
 
       &.nav-group-border {
