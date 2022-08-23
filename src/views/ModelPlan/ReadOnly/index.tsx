@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { NavLink, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import {
   Alert,
@@ -9,7 +9,6 @@ import {
   GridContainer,
   IconArrowBack,
   IconExpandMore,
-  SideNav,
   SummaryBox
 } from '@trussworks/react-uswds';
 import classnames from 'classnames';
@@ -101,27 +100,6 @@ const ReadOnly = () => {
       index === collaborators.length - 1 ? '' : ', '
     }`;
   });
-
-  const subNavigationObject: string[] = t('navigation', {
-    returnObjects: true
-  });
-  console.log(subNavigationObject);
-
-  // Mapping of all sub navigation links
-  const subNavigationLinks: React.ReactNode[] = Object.keys(
-    subNavigationObject
-  ).map((key: string) => (
-    <NavLink
-      to="asdf"
-      key={key}
-      activeClassName="usa-current"
-      // className={classnames({
-      //   'nav-group-border': subNavigationObject[key].groupEnd
-      // })}
-    >
-      {t(`navigation.${key}`)}
-    </NavLink>
-  ));
 
   if ((!loading && error) || (!loading && !data?.modelPlan)) {
     return <NotFoundPartial />;
@@ -270,9 +248,7 @@ const ReadOnly = () => {
           <Grid row gap>
             {!isMobile && (
               <Grid desktop={{ col: 3 }} className="padding-right-4 sticky-nav">
-                {/* Side navigation for single system */}
                 <ReadOnlySideNav />
-                <SideNav items={subNavigationLinks} />
               </Grid>
             )}
           </Grid>
