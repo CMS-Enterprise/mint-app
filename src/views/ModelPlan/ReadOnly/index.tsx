@@ -251,6 +251,37 @@ const ReadOnly = () => {
                 <SideNav modelID={modelID} />
               </Grid>
             )}
+
+            <Grid desktop={{ col: 9 }}>
+              <div>
+                {/* <div id={subComponent.componentId ?? ''}> */}
+                <GridContainer className="padding-left-0 padding-right-0">
+                  <Grid row gap>
+                    {/* Central component */}
+                    <Grid desktop={{ col: 8 }}>Main Content</Grid>
+
+                    {/* Contact info sidebar */}
+                    <Grid
+                      desktop={{ col: 4 }}
+                      className={classnames({
+                        'sticky-nav': !isMobile
+                      })}
+                    >
+                      {/* Setting a ref here to reference the grid width for the fixed side nav */}
+                      <div className="side-divider">
+                        <div className="top-divider" />
+                        {/* <PointsOfContactSidebar
+                        subpageKey={subpageKey}
+                        system={systemProfileData}
+                        systemId={systemId}
+                      /> */}
+                        contact info
+                      </div>
+                    </Grid>
+                  </Grid>
+                </GridContainer>
+              </div>
+            </Grid>
           </Grid>
         </GridContainer>
       </SectionWrapper>
