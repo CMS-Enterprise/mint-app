@@ -1,0 +1,20 @@
+.read-only-side-nav__wrapper {
+  .usa-sidenav {
+    border: none;
+
+    &__item {
+      border: none;
+    }
+
+    a {
+      &:not(.usa-current) {
+      padding-left: 0;
+      }
+
+      &.nav-group-border {
+        border-bottom: .5px solid color($theme-color-disabled-light);
+      }
+    }
+
+  }
+}

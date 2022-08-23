@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { NavLink } from 'react-router-dom';
 import { SideNav } from '@trussworks/react-uswds';
 
-const ReadOnlySideNav = () => {
+import './index.scss';
   const { t } = useTranslation('modelSummary');
 
   const subNavigationObject: string[] = t('navigation', {
