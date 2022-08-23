@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useParams } from 'react-router-dom';
+import { NavLink, useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import {
   Alert,
@@ -9,6 +9,7 @@ import {
   GridContainer,
   IconArrowBack,
   IconExpandMore,
+  SideNav,
   SummaryBox
 } from '@trussworks/react-uswds';
 import classnames from 'classnames';
@@ -22,6 +23,7 @@ import {
   DescriptionTerm
 } from 'components/shared/DescriptionGroup';
 import SectionWrapper from 'components/shared/SectionWrapper';
+import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import GetModelSummary from 'queries/ReadOnly/GetModelSummary';
 import {
   GetModelSummary as GetModelSummaryType,
@@ -34,11 +36,14 @@ import { NotFoundPartial } from 'views/NotFound';
 
 import TaskListStatus from '../TaskList/_components/TaskListStatus';
 
+import ReadOnlySideNav from './_components/ReadOnlySidenav';
+
 import './index.scss';
 
 const ReadOnly = () => {
   const { t } = useTranslation('modelSummary');
   const { t: h } = useTranslation('generalReadOnly');
+  const isMobile = useCheckResponsiveScreen('tablet');
   const { modelID } = useParams<{ modelID: string }>();
 
   const descriptionRef = React.createRef<HTMLElement>();
@@ -96,6 +101,27 @@ const ReadOnly = () => {
       index === collaborators.length - 1 ? '' : ', '
     }`;
   });
+
+  const subNavigationObject: string[] = t('navigation', {
+    returnObjects: true
+  });
+  console.log(subNavigationObject);
+
+  // Mapping of all sub navigation links
+  const subNavigationLinks: React.ReactNode[] = Object.keys(
+    subNavigationObject
+  ).map((key: string) => (
+    <NavLink
+      to="asdf"
+      key={key}
+      activeClassName="usa-current"
+      // className={classnames({
+      //   'nav-group-border': subNavigationObject[key].groupEnd
+      // })}
+    >
+      {t(`navigation.${key}`)}
+    </NavLink>
+  ));
 
   if ((!loading && error) || (!loading && !data?.modelPlan)) {
     return <NotFoundPartial />;
@@ -238,6 +264,19 @@ const ReadOnly = () => {
             {h('alert')}
           </Alert>
         )}
+      </SectionWrapper>
+      <SectionWrapper className="model-plan__body-content">
+        <GridContainer>
+          <Grid row gap>
+            {!isMobile && (
+              <Grid desktop={{ col: 3 }} className="padding-right-4 sticky-nav">
+                {/* Side navigation for single system */}
+                <ReadOnlySideNav />
+                <SideNav items={subNavigationLinks} />
+              </Grid>
+            )}
+          </Grid>
+        </GridContainer>
       </SectionWrapper>
     </MainContent>
   );
