@@ -21,6 +21,9 @@ var planFavoriteDeleteSQL string
 //go:embed SQL/plan_favorite_collection_by_user.sql
 var planFavoriteCollectionByUserSQL string
 
+//go:embed SQL/plan_favorite_get.sql
+var planFavoriteGetSQL string
+
 //PlanFavoriteCollectionByUser returns a list of model plans for a given EUA ID (TODO: Make this go by collaborators, not by createdBy)
 func (s *Store) PlanFavoriteCollectionByUser(logger *zap.Logger, EUAID string, archived bool) ([]*models.PlanFavorite, error) {
 	favorites := []*models.PlanFavorite{}
@@ -87,8 +90,8 @@ func (s *Store) PlanFavoriteDelete(logger *zap.Logger, EUAID string, planID uuid
 		return nil, err
 	}
 	arg := map[string]interface{}{
-		"euaID":  EUAID,
-		"planId": planID,
+		"user_id": EUAID,
+		"planId":  planID,
 	}
 	delFavorite := models.PlanFavorite{}
 	err = stmt.Get(&delFavorite, arg)
@@ -97,4 +100,26 @@ func (s *Store) PlanFavoriteDelete(logger *zap.Logger, EUAID string, planID uuid
 	}
 
 	return &delFavorite, nil
+}
+
+//PlanFavoriteGet returns a plan favorite
+func (s *Store) PlanFavoriteGet(logger *zap.Logger, EUAID string, modelPlanID uuid.UUID) (*models.PlanFavorite, error) {
+	stmt, err := s.db.PrepareNamed(planFavoriteGetSQL)
+	if err != nil {
+		return nil, err
+	}
+	arg := map[string]interface{}{
+		"user_id":       EUAID,
+		"model_plan_Id": modelPlanID,
+	}
+	retFavorite := models.PlanFavorite{}
+	err = stmt.Get(&retFavorite, arg)
+	if err != nil {
+		if err.Error() == "sql: no rows in result set" { //EXPECT THERE TO BE NULL results, don't treat this as an error
+			return nil, nil
+		}
+		return nil, err
+	}
+
+	return &retFavorite, nil
 }

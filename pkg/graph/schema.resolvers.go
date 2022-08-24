@@ -5,7 +5,6 @@ package graph
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/google/uuid"
 
@@ -97,7 +96,10 @@ func (r *modelPlanResolver) ItTools(ctx context.Context, obj *models.ModelPlan) 
 
 // IsFavorite is the resolver for the isFavorite field.
 func (r *modelPlanResolver) IsFavorite(ctx context.Context, obj *models.ModelPlan) (bool, error) {
-	panic(fmt.Errorf("not implemented: IsFavorite - isFavorite"))
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+
+	return resolvers.IsPlanFavorited(logger, principal, r.store, obj.ID)
 }
 
 // CreateModelPlan is the resolver for the createModelPlan field.
@@ -310,12 +312,16 @@ func (r *mutationResolver) UpdatePlanPayments(ctx context.Context, id uuid.UUID,
 
 // AddPlanFavorite is the resolver for the addPlanFavorite field.
 func (r *mutationResolver) AddPlanFavorite(ctx context.Context, modelPlanID uuid.UUID) (*models.PlanFavorite, error) {
-	panic(fmt.Errorf("not implemented: AddPlanFavorite - addPlanFavorite"))
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.PlanFavoriteCreate(logger, principal, r.store, modelPlanID)
 }
 
 // DeletePlanFavorite is the resolver for the deletePlanFavorite field.
 func (r *mutationResolver) DeletePlanFavorite(ctx context.Context, modelPlanID uuid.UUID) (*models.PlanFavorite, error) {
-	panic(fmt.Errorf("not implemented: DeletePlanFavorite - deletePlanFavorite"))
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.PlanFavoriteDelete(logger, principal, r.store, modelPlanID)
 }
 
 // CmsCenters is the resolver for the cmsCenters field.
@@ -805,7 +811,10 @@ func (r *queryResolver) PlanPayments(ctx context.Context, id uuid.UUID) (*models
 
 // PlanFavorites is the resolver for the planFavorites field.
 func (r *queryResolver) PlanFavorites(ctx context.Context) ([]*models.PlanFavorite, error) {
-	panic(fmt.Errorf("not implemented: PlanFavorites - planFavorites"))
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+
+	return resolvers.PlanFavoriteCollection(logger, principal, r.store)
 }
 
 // OnTaskListSectionLocksChanged is the resolver for the onTaskListSectionLocksChanged field.
