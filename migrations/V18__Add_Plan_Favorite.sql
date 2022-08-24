@@ -13,4 +13,7 @@ ALTER TABLE plan_favorite
 ADD CONSTRAINT fk_favorite_plan FOREIGN KEY (model_plan_id)
 REFERENCES public.model_plan (id) MATCH SIMPLE
 ON UPDATE NO ACTION
-ON DELETE NO ACTION
+ON DELETE NO ACTION;
+
+CREATE UNIQUE INDEX idx_plan_favorite_user
+ON plan_favorite(model_plan_id, user_id);

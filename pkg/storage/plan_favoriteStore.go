@@ -33,7 +33,7 @@ func (s *Store) PlanFavoriteCollectionByUser(logger *zap.Logger, EUAID string, a
 		return nil, err
 	}
 	arg := map[string]interface{}{
-		"euaID": EUAID,
+		"user_id": EUAID,
 	}
 
 	err = stmt.Select(&favorites, arg)
@@ -42,7 +42,7 @@ func (s *Store) PlanFavoriteCollectionByUser(logger *zap.Logger, EUAID string, a
 		logger.Error(
 			"Failed to fetch plan favorites",
 			zap.Error(err),
-			zap.String("euaID", EUAID),
+			zap.String("user_id", EUAID),
 		)
 		return nil, &apperrors.QueryError{
 			Err:       err,
@@ -90,8 +90,8 @@ func (s *Store) PlanFavoriteDelete(logger *zap.Logger, EUAID string, planID uuid
 		return nil, err
 	}
 	arg := map[string]interface{}{
-		"user_id": EUAID,
-		"planId":  planID,
+		"user_id":       EUAID,
+		"model_plan_id": planID,
 	}
 	delFavorite := models.PlanFavorite{}
 	err = stmt.Get(&delFavorite, arg)
@@ -110,7 +110,7 @@ func (s *Store) PlanFavoriteGet(logger *zap.Logger, EUAID string, modelPlanID uu
 	}
 	arg := map[string]interface{}{
 		"user_id":       EUAID,
-		"model_plan_Id": modelPlanID,
+		"model_plan_id": modelPlanID,
 	}
 	retFavorite := models.PlanFavorite{}
 	err = stmt.Get(&retFavorite, arg)
