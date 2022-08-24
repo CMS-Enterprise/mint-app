@@ -16,38 +16,38 @@ import (
 //ErrorIfNotCollaborator returns an error if the user is not a collaborator. It wraps checks to see if it has a model plan, or Discussion relation, with priority given to ModelPlan
 func ErrorIfNotCollaborator(obj interface{}, logger *zap.Logger, principal authentication.Principal, store *storage.Store) error {
 
-	_, checkAccessControl := obj.(models.ICheckAccess) //See if object was meant to check for access
+	modelPlanRelation, hasModelPlanRelation := obj.(models.IModelPlanRelation)
+	discussionRelation, hasDiscussionRelation := obj.(models.IDiscussionRelation)
+	notCollabErrString := "user is not a collaborator"
+	if hasModelPlanRelation { //Favor modelPlanRelation  first
 
-	if checkAccessControl {
-		modelPlanRelation, hasModelPlanRelation := obj.(models.IModelPlanRelation)
-		discussionRelation, hasDiscussionRelation := obj.(models.IDiscussionRelation)
-		notCollabErrString := "user is not a collaborator"
-		if hasModelPlanRelation { //Favor modelPlanRelation  first
-
-			isCollaborator, err := IsCollaboratorModelPlanID(logger, principal, store, modelPlanRelation.GetModelPlanID())
-			if err != nil {
-				return err
-			}
-			if !isCollaborator {
-
-				logger.Warn(notCollabErrString, zap.String("user", principal.ID()), zap.String("ModelPlanID", modelPlanRelation.GetModelPlanID().String()))
-				return apperrors.NotCollaboratorError{}
-				// return fmt.Errorf("user %s is not a collaborator on model plan %s", principal, modelPlanRelation.GetModelPlanID().String())
-			}
-		} else if hasDiscussionRelation {
-			isCollaborator, err := IsCollaboratorByDiscussionID(logger, principal, store, discussionRelation.GetDiscussionID())
-			if err != nil {
-				return err
-			}
-			if !isCollaborator {
-				logger.Warn(notCollabErrString, zap.String("user", principal.ID()), zap.String("DiscussionID", discussionRelation.GetDiscussionID().String()))
-				return apperrors.NotCollaboratorError{}
-			}
-		} else {
-			return fmt.Errorf("desired access control is not configured")
+		isCollaborator, err := IsCollaboratorModelPlanID(logger, principal, store, modelPlanRelation.GetModelPlanID())
+		if err != nil {
+			return err
 		}
+		if !isCollaborator {
 
+			logger.Warn(notCollabErrString, zap.String("user", principal.ID()), zap.String("ModelPlanID", modelPlanRelation.GetModelPlanID().String()))
+			return apperrors.NotCollaboratorError{
+				Err: fmt.Errorf("ModelPlanID: " + modelPlanRelation.GetModelPlanID().String()),
+			}
+			// return fmt.Errorf("user %s is not a collaborator on model plan %s", principal, modelPlanRelation.GetModelPlanID().String())
+		}
+	} else if hasDiscussionRelation {
+		isCollaborator, err := IsCollaboratorByDiscussionID(logger, principal, store, discussionRelation.GetDiscussionID())
+		if err != nil {
+			return err
+		}
+		if !isCollaborator {
+			logger.Warn(notCollabErrString, zap.String("user", principal.ID()), zap.String("DiscussionID", discussionRelation.GetDiscussionID().String()))
+			return apperrors.NotCollaboratorError{
+				Err: fmt.Errorf("DiscussionID: " + discussionRelation.GetDiscussionID().String()),
+			}
+		}
+	} else {
+		return fmt.Errorf("desired access control is not configured")
 	}
+
 	return nil
 }
 

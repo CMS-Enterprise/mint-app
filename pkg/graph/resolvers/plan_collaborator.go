@@ -40,7 +40,7 @@ func UpdatePlanCollaborator(logger *zap.Logger, id uuid.UUID, newRole models.Tea
 	if err != nil {
 		return nil, err
 	}
-	err = BaseStructPreUpdate(logger, existingCollaborator, nil, principal, store, false)
+	err = BaseStructPreUpdate(logger, existingCollaborator, nil, principal, store, false, true)
 	if err != nil {
 		return nil, err
 	}

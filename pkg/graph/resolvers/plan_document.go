@@ -77,7 +77,7 @@ func PlanDocumentUpdate(logger *zap.Logger, s3Client *upload.S3Client, input *mo
 	}
 	input.ModelPlanID = existingdoc.ModelPlanID
 
-	err = BaseStructPreUpdate(logger, input, nil, principal, store, false)
+	err = BaseStructPreUpdate(logger, input, nil, principal, store, false, true)
 	if err != nil {
 		return nil, err
 	}

@@ -45,8 +45,3 @@ type DiscussionRelation struct {
 func (d DiscussionRelation) GetDiscussionID() uuid.UUID {
 	return d.DiscussionID
 }
-
-//CheckAccess fulfills the check accessinterface
-func (d DiscussionRelation) CheckAccess() {
-
-}

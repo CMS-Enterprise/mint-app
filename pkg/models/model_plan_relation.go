@@ -16,13 +16,3 @@ type ModelPlanRelation struct {
 func (m ModelPlanRelation) GetModelPlanID() uuid.UUID {
 	return m.ModelPlanID
 }
-
-//CheckAccess fulfills the check accessinterface
-func (m ModelPlanRelation) CheckAccess() {
-
-}
-
-//ICheckAccess is an interface meant to demonstrate that this model should have an access check
-type ICheckAccess interface {
-	CheckAccess()
-}
