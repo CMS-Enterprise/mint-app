@@ -3,6 +3,7 @@ package resolvers
 import (
 	"go.uber.org/zap"
 
+	"github.com/cmsgov/mint-app/pkg/accesscontrol"
 	"github.com/cmsgov/mint-app/pkg/authentication"
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/storage"
@@ -16,7 +17,7 @@ func BaseStructPreUpdate(logger *zap.Logger, bs models.IBaseStruct, changes map[
 
 	section.ModifiedBy = &modified
 
-	err := ErrorIfNotCollaborator(bs, logger, principal, store)
+	err := accesscontrol.ErrorIfNotCollaborator(bs, logger, principal, store)
 	if err != nil {
 		return err
 	}
@@ -35,12 +36,12 @@ func BaseStructPreUpdate(logger *zap.Logger, bs models.IBaseStruct, changes map[
 
 //BaseStructPreCreate is called before an object is created to make sure the user has permissions to do so
 func BaseStructPreCreate(logger *zap.Logger, bs models.IBaseStruct, principal authentication.Principal, store *storage.Store) error {
-	err := ErrorIfNotCollaborator(bs, logger, principal, store)
+	err := accesscontrol.ErrorIfNotCollaborator(bs, logger, principal, store)
 	return err
 }
 
 //BaseStructPreDelete is called before an object is deleted to make sure the user has permissions to do so
 func BaseStructPreDelete(logger *zap.Logger, bs models.IBaseStruct, principal authentication.Principal, store *storage.Store) error {
-	err := ErrorIfNotCollaborator(bs, logger, principal, store)
+	err := accesscontrol.ErrorIfNotCollaborator(bs, logger, principal, store)
 	return err
 }
