@@ -15,7 +15,7 @@ type CurrentUser {
   launchDarkly: LaunchDarklySettings!
 }
 """
-UUIDs are represented using 36 ASCII characters, for example B0511859-ADE6-4A67-8969-16EC280C0E1A
+UUIDs are represented using 36 ASCII characters, for example B05859-ADE6-4A67-8969-16EC280C0E1A
 """
 scalar UUID
 """
@@ -1304,6 +1304,13 @@ input PlanOpsEvalAndLearningChanges @goModel(model: "map[string]interface{}") {
 
     status: TaskStatusInput
 }
+"""
+NDAInfo represents whether a user has agreed to an NDA or not. If agreed to previously, there will be a datestamp visible
+"""
+type NDAInfo {
+  agreed: Boolean!
+  agreedDts: Time
+}
 
 type PlanFavorite {
     id: UUID!
@@ -1332,6 +1339,7 @@ type Query {
   taskListSectionLocks(modelPlanID: UUID!): [TaskListSectionLockStatus!]!
   planPayments(id: UUID!): PlanPayments!
   planFavorites: [PlanFavorite!]!
+  ndaInfo: NDAInfo!
 }
 
 """
@@ -1411,6 +1419,9 @@ unlockAllTaskListSections(modelPlanID: UUID!): [TaskListSectionLockStatus!]!
 @hasRole(role: MINT_ASSESSMENT)
 
 updatePlanPayments(id: UUID!, changes: PlanPaymentsChanges!): PlanPayments!
+@hasRole(role: MINT_USER)
+
+agreeToNDA(agree: Boolean! = true): NDAInfo!
 @hasRole(role: MINT_USER)
 
 addPlanFavorite(modelPlanID: UUID!): PlanFavorite!

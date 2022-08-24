@@ -310,6 +310,13 @@ func (r *mutationResolver) UpdatePlanPayments(ctx context.Context, id uuid.UUID,
 	return resolvers.PlanPaymentsUpdate(logger, r.store, id, changes, principal)
 }
 
+// AgreeToNda is the resolver for the agreeToNDA field.
+func (r *mutationResolver) AgreeToNda(ctx context.Context, agree bool) (*model.NDAInfo, error) {
+	logger := appcontext.ZLogger(ctx)
+	principal := appcontext.Principal(ctx)
+	return resolvers.NDAAgreementUpdateOrCreate(logger, agree, principal, r.store)
+}
+
 // AddPlanFavorite is the resolver for the addPlanFavorite field.
 func (r *mutationResolver) AddPlanFavorite(ctx context.Context, modelPlanID uuid.UUID) (*models.PlanFavorite, error) {
 	principal := appcontext.Principal(ctx)
@@ -815,6 +822,13 @@ func (r *queryResolver) PlanFavorites(ctx context.Context) ([]*models.PlanFavori
 	logger := appcontext.ZLogger(ctx)
 
 	return resolvers.PlanFavoriteCollection(logger, principal, r.store)
+}
+
+// NdaInfo is the resolver for the ndaInfo field.
+func (r *queryResolver) NdaInfo(ctx context.Context) (*model.NDAInfo, error) {
+	logger := appcontext.ZLogger(ctx)
+	principal := appcontext.Principal(ctx)
+	return resolvers.NDAAgreementGetByEUA(logger, principal, r.store)
 }
 
 // OnTaskListSectionLocksChanged is the resolver for the onTaskListSectionLocksChanged field.
