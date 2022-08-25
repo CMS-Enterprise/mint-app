@@ -10,7 +10,10 @@ const generalReadOnly = {
   updateStatus: 'Update this Model Plan',
   lastUpdate: 'Last updated on ',
   alert:
-    'Information outlined in this Model Plan can change drastically until it’s been cleared. '
+    'Information outlined in this Model Plan can change drastically until it’s been cleared.',
+  modelLeads: 'Model lead(s)',
+  sendAnEmail: 'Send an email',
+  moreTeamMembers: 'More team members'
 };
 
 export default generalReadOnly;

@@ -281,6 +281,7 @@ const ReadOnly = () => {
                   <Grid row gap>
                     {/* Central component */}
                     <Grid desktop={{ col: 8 }}>Main Content</Grid>
+                    {/* <Grid desktop={{ col: 8 }}>{subComponent.component}</Grid> */}
 
                     {/* Contact info sidebar */}
                     <Grid
@@ -291,12 +292,17 @@ const ReadOnly = () => {
                     >
                       {/* Setting a ref here to reference the grid width for the fixed side nav */}
                       <div className="model-plan__model-leads__wrapper padding-y-1">
+                        <p className="font-body-xs margin-top-0 margin-bottom-3">
+                          {/* {t('singleSystem.pointsOfContact', {
+                            count: contactsWithRoles.length
+                          })} */}
+                          contact info
+                        </p>
                         {/* <PointsOfContactSidebar
                         subpageKey={subpageKey}
                         system={systemProfileData}
                         systemId={systemId}
                       /> */}
-                        contact info
                       </div>
                     </Grid>
                   </Grid>
