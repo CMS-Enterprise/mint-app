@@ -1303,6 +1303,15 @@ input PlanOpsEvalAndLearningChanges @goModel(model: "map[string]interface{}") {
 
     status: TaskStatusInput
 }
+
+"""
+NDAInfo represents whether a user has agreed to an NDA or not. If agreed to previously, there will be a datestamp visible
+"""
+type NDAInfo {
+  agreed: Boolean!
+  agreedDts: Time
+}
+
 """
 Query definition for the schema
 """
@@ -1318,6 +1327,7 @@ type Query {
   planCollaboratorByID(id: UUID!): PlanCollaborator!
   taskListSectionLocks(modelPlanID: UUID!): [TaskListSectionLockStatus!]!
   planPayments(id: UUID!): PlanPayments!
+  ndaInfo: NDAInfo!
 }
 
 """
@@ -1397,6 +1407,9 @@ unlockAllTaskListSections(modelPlanID: UUID!): [TaskListSectionLockStatus!]!
 @hasRole(role: MINT_ASSESSMENT)
 
 updatePlanPayments(id: UUID!, changes: PlanPaymentsChanges!): PlanPayments!
+@hasRole(role: MINT_USER)
+
+agreeToNDA(agree: Boolean! = true): NDAInfo!
 @hasRole(role: MINT_USER)
 }
 
