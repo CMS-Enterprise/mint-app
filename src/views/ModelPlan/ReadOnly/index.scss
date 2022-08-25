@@ -49,6 +49,7 @@
     padding-left: 2rem;
     border-left: .25rem solid color($theme-color-primary-lighter);
     border-top: 0;
+
     @media screen and (min-width: $desktop) {
       padding-left: 0;
       border-top: .25rem solid color($theme-color-primary-lighter);
