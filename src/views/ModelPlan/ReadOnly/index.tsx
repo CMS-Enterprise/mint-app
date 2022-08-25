@@ -290,8 +290,7 @@ const ReadOnly = () => {
                       })}
                     >
                       {/* Setting a ref here to reference the grid width for the fixed side nav */}
-                      <div className="side-divider">
-                        <div className="top-divider" />
+                      <div className="model-plan__model-leads__wrapper padding-y-1">
                         {/* <PointsOfContactSidebar
                         subpageKey={subpageKey}
                         system={systemProfileData}
