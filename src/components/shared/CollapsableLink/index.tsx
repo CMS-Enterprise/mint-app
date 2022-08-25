@@ -6,7 +6,6 @@ import {
   IconVisibilityOff,
   IconVisiblity
 } from '@trussworks/react-uswds';
-import classnames from 'classnames';
 
 import './index.scss';
 
@@ -56,7 +55,7 @@ const CollapsableLink = ({
       onClick={() => setOpen(!isOpen)}
       aria-expanded={isOpen}
       aria-controls={id}
-      className={classnames({ 'text-bold': isOpen }, className)}
+      className={className}
       unstyled
       data-testid="collapsable-link"
     >

@@ -9,7 +9,7 @@ export const formatDateAndIgnoreTimezone = (date: string) =>
   parseAsDate(date).toFormat('MMMM d yyyy');
 
 export const formatDate = (date: string | DateTime, format?: string) => {
-  const dateFormat = format || 'MMMM d yyyy';
+  const dateFormat = format || 'MMMM d, yyyy';
   // ISO String
   if (typeof date === 'string') {
     return parseAsLocalTime(date).toFormat(dateFormat);

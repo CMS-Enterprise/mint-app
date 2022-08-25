@@ -81,9 +81,15 @@ const TaskListSideNav = ({ modelPlan }: { modelPlan: GetModelPlanType }) => {
         className="sidenav-actions border-top-05 border-primary-lighter padding-top-2 margin-top-2"
         data-testid="sidenav-actions"
       >
-        <div className="margin-bottom-1">
-          <UswdsReactLink to="/">{t('sideNav.saveAndExit')}</UswdsReactLink>
-        </div>
+        <UswdsReactLink to="/" className="display-block margin-bottom-1">
+          {t('sideNav.saveAndExit')}
+        </UswdsReactLink>
+        <UswdsReactLink
+          to={`/models/${modelID}/read-only`}
+          className="display-block margin-bottom-1"
+        >
+          {t('sideNav.view')}
+        </UswdsReactLink>
         <Button
           className="line-height-body-5 test-withdraw-request"
           type="button"
