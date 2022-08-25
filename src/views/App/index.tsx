@@ -81,7 +81,7 @@ const AppRoutes = () => {
       />
 
       <SecureRoute
-        path="/models/:modelID/:subinfo"
+        path="/models/:modelID/read-only/:subinfo"
         exact
         component={ReadOnly}
       />
@@ -91,6 +91,7 @@ const AppRoutes = () => {
         exact
         component={StepsOverview}
       />
+
       <SecureRoute path="/models/new-plan" component={NewPlan} />
       <SecureRoute
         path="/models/:modelID/collaborators"
