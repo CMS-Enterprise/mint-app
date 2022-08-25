@@ -731,8 +731,6 @@ type ModelPlanResolver interface {
 	Discussions(ctx context.Context, obj *models.ModelPlan) ([]*models.PlanDiscussion, error)
 	Payments(ctx context.Context, obj *models.ModelPlan) (*models.PlanPayments, error)
 	ItTools(ctx context.Context, obj *models.ModelPlan) (*models.PlanITTools, error)
-
-	IsFavorite(ctx context.Context, obj *models.ModelPlan) (bool, error)
 }
 type MutationResolver interface {
 	CreateModelPlan(ctx context.Context, modelName string) (*models.ModelPlan, error)
@@ -11198,7 +11196,7 @@ func (ec *executionContext) _ModelPlan_isFavorite(ctx context.Context, field gra
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.ModelPlan().IsFavorite(rctx, obj)
+		return obj.IsFavorite, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -11219,8 +11217,8 @@ func (ec *executionContext) fieldContext_ModelPlan_isFavorite(ctx context.Contex
 	fc = &graphql.FieldContext{
 		Object:     "ModelPlan",
 		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
+		IsMethod:   false,
+		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type Boolean does not have child fields")
 		},
@@ -39196,25 +39194,12 @@ func (ec *executionContext) _ModelPlan(ctx context.Context, sel ast.SelectionSet
 				atomic.AddUint32(&invalids, 1)
 			}
 		case "isFavorite":
-			field := field
 
-			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._ModelPlan_isFavorite(ctx, field, obj)
-				if res == graphql.Null {
-					atomic.AddUint32(&invalids, 1)
-				}
-				return res
+			out.Values[i] = ec._ModelPlan_isFavorite(ctx, field, obj)
+
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&invalids, 1)
 			}
-
-			out.Concurrently(i, func() graphql.Marshaler {
-				return innerFunc(ctx)
-
-			})
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
 		}

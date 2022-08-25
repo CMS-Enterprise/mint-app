@@ -94,14 +94,6 @@ func (r *modelPlanResolver) ItTools(ctx context.Context, obj *models.ModelPlan) 
 	return resolvers.PlanITToolsGetByModelPlanID(logger, obj.ID, r.store)
 }
 
-// IsFavorite is the resolver for the isFavorite field.
-func (r *modelPlanResolver) IsFavorite(ctx context.Context, obj *models.ModelPlan) (bool, error) {
-	principal := appcontext.Principal(ctx)
-	logger := appcontext.ZLogger(ctx)
-
-	return resolvers.IsPlanFavorited(logger, principal, r.store, obj.ID)
-}
-
 // CreateModelPlan is the resolver for the createModelPlan field.
 func (r *mutationResolver) CreateModelPlan(ctx context.Context, modelName string) (*models.ModelPlan, error) {
 	logger := appcontext.ZLogger(ctx)
@@ -916,3 +908,16 @@ type planPaymentsResolver struct{ *Resolver }
 type queryResolver struct{ *Resolver }
 type subscriptionResolver struct{ *Resolver }
 type userInfoResolver struct{ *Resolver }
+
+// !!! WARNING !!!
+// The code below was going to be deleted when updating resolvers. It has been copied here so you have
+// one last chance to move it out of harms way if you want. There are two reasons this happens:
+//  - When renaming or deleting a resolver the old code will be put in here. You can safely delete
+//    it when you're done.
+//  - You have helper methods in this file. Move them out to keep these resolver files clean.
+func (r *modelPlanResolver) IsFavorite(ctx context.Context, obj *models.ModelPlan) (bool, error) {
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+
+	return resolvers.IsPlanFavorited(logger, principal, r.store, obj.ID)
+}
