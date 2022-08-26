@@ -23,7 +23,7 @@ func CreatePlanDiscussion(logger *zap.Logger, input *model.PlanDiscussionCreateI
 			CreatedBy: principal.ID(),
 		},
 	}
-	err := BaseStructPreCreate(logger, planDiscussion, principal, store)
+	err := BaseStructPreCreate(logger, planDiscussion, principal, store, true)
 	if err != nil {
 		return nil, err
 	}
@@ -56,7 +56,7 @@ func DeletePlanDiscussion(logger *zap.Logger, id uuid.UUID, principal authentica
 	if err != nil {
 		return nil, err
 	}
-	err = BaseStructPreDelete(logger, existingDiscussion, principal, store)
+	err = BaseStructPreDelete(logger, existingDiscussion, principal, store, true)
 	if err != nil {
 		return nil, err
 	}
@@ -77,7 +77,7 @@ func CreateDiscussionReply(logger *zap.Logger, input *model.DiscussionReplyCreat
 		},
 	}
 
-	err := BaseStructPreCreate(logger, discussionReply, principal, store)
+	err := BaseStructPreCreate(logger, discussionReply, principal, store, true)
 	if err != nil {
 		return nil, err
 	}
@@ -108,7 +108,7 @@ func DeleteDiscussionReply(logger *zap.Logger, id uuid.UUID, principal authentic
 	if err != nil {
 		return nil, err
 	}
-	err = BaseStructPreDelete(logger, existingReply, principal, store)
+	err = BaseStructPreDelete(logger, existingReply, principal, store, true)
 	if err != nil {
 		return nil, err
 	}

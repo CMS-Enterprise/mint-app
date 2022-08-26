@@ -24,7 +24,7 @@ func CreatePlanCollaborator(logger *zap.Logger, input *model.PlanCollaboratorCre
 		},
 	}
 
-	err := BaseStructPreCreate(logger, collaborator, principal, store)
+	err := BaseStructPreCreate(logger, collaborator, principal, store, true)
 	if err != nil {
 		return nil, err
 	}
@@ -56,7 +56,7 @@ func DeletePlanCollaborator(logger *zap.Logger, id uuid.UUID, principal authenti
 	if err != nil {
 		return nil, err
 	}
-	err = BaseStructPreDelete(logger, existingCollaborator, principal, store)
+	err = BaseStructPreDelete(logger, existingCollaborator, principal, store, true)
 	if err != nil {
 		return nil, err
 	}

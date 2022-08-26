@@ -92,17 +92,17 @@ func (r *modelPlanResolver) ItTools(ctx context.Context, obj *models.ModelPlan) 
 // CreateModelPlan is the resolver for the createModelPlan field.
 func (r *mutationResolver) CreateModelPlan(ctx context.Context, modelName string) (*models.ModelPlan, error) {
 	logger := appcontext.ZLogger(ctx)
-	principalID := appcontext.Principal(ctx).ID()
-	principalInfo, err := r.service.FetchUserInfo(ctx, principalID)
+	principal := appcontext.Principal(ctx)
+	principalInfo, err := r.service.FetchUserInfo(ctx, principal.ID())
 	if err != nil { //if can't get user info, use EUAID as commonName
 		tempPrincipalInfo := models.UserInfo{
-			EuaUserID:  principalID,
-			CommonName: principalID,
+			EuaUserID:  principal.ID(),
+			CommonName: principal.ID(),
 		}
 		principalInfo = &tempPrincipalInfo
 	}
 
-	return resolvers.ModelPlanCreate(logger, modelName, r.store, principalInfo)
+	return resolvers.ModelPlanCreate(logger, modelName, r.store, principalInfo, principal)
 }
 
 // UpdateModelPlan is the resolver for the updateModelPlan field.

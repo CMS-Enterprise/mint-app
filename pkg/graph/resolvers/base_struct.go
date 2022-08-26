@@ -37,13 +37,23 @@ func BaseStructPreUpdate(logger *zap.Logger, bs models.IBaseStruct, changes map[
 }
 
 //BaseStructPreCreate is called before an object is created to make sure the user has permissions to do so
-func BaseStructPreCreate(logger *zap.Logger, bs models.IBaseStruct, principal authentication.Principal, store *storage.Store) error {
-	err := accesscontrol.ErrorIfNotCollaborator(bs, logger, principal, store)
-	return err
+func BaseStructPreCreate(logger *zap.Logger, bs models.IBaseStruct, principal authentication.Principal, store *storage.Store, checkAccess bool) error {
+	if checkAccess {
+		err := accesscontrol.ErrorIfNotCollaborator(bs, logger, principal, store)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }
 
 //BaseStructPreDelete is called before an object is deleted to make sure the user has permissions to do so
-func BaseStructPreDelete(logger *zap.Logger, bs models.IBaseStruct, principal authentication.Principal, store *storage.Store) error {
-	err := accesscontrol.ErrorIfNotCollaborator(bs, logger, principal, store)
-	return err
+func BaseStructPreDelete(logger *zap.Logger, bs models.IBaseStruct, principal authentication.Principal, store *storage.Store, checkAccess bool) error {
+	if checkAccess {
+		err := accesscontrol.ErrorIfNotCollaborator(bs, logger, principal, store)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }

@@ -6,7 +6,7 @@ import (
 
 func (suite *ResolverSuite) TestModelPlanCreate() {
 	planName := "Test Plan"
-	result, err := ModelPlanCreate(suite.testConfigs.Logger, planName, suite.testConfigs.Store, suite.testConfigs.UserInfo)
+	result, err := ModelPlanCreate(suite.testConfigs.Logger, planName, suite.testConfigs.Store, suite.testConfigs.UserInfo, suite.testConfigs.Principal)
 
 	suite.NoError(err)
 	suite.NotNil(result.ID)

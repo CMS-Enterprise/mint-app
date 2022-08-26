@@ -35,7 +35,7 @@ func PlanDocumentCreate(
 	store *storage.Store,
 	s3Client *upload.S3Client) (*model.PlanDocumentPayload, error) {
 
-	err := BaseStructPreCreate(logger, document, principal, store)
+	err := BaseStructPreCreate(logger, document, principal, store, true)
 	if err != nil {
 		return nil, err
 	}
@@ -100,7 +100,7 @@ func PlanDocumentDelete(logger *zap.Logger, s3Client *upload.S3Client, input *mo
 	if err != nil {
 		return 0, err
 	}
-	err = BaseStructPreDelete(logger, existingdoc, principal, store)
+	err = BaseStructPreDelete(logger, existingdoc, principal, store, true)
 	if err != nil {
 		return 0, err
 	}
