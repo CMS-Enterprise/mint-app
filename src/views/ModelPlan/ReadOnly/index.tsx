@@ -129,8 +129,6 @@ const ReadOnly = () => {
     }`;
   });
 
-  // * If we do the same approach as EASI, then it will be best to extract the subNavItems object from `Sidenav/index.tsx` and put it in its own file. That way it will keep the navigation items consistent to pages available.
-
   const subComponents: subComponentsProps = {
     'model-basics': {
       route: `/models/${modelID}/read-only`,
@@ -334,12 +332,10 @@ const ReadOnly = () => {
             )}
 
             <Grid desktop={{ col: 9 }}>
-              <div>
-                {/* <div id={subComponent.componentId ?? ''}> */}
+              <div id={subinfo ?? ''}>
                 <GridContainer className="padding-left-0 padding-right-0">
                   <Grid row gap>
                     {/* Central component */}
-                    {/* <Grid desktop={{ col: 8 }}>Main Content</Grid> */}
                     <Grid desktop={{ col: 8 }}>{subComponent.component}</Grid>
 
                     {/* Contact info sidebar */}
