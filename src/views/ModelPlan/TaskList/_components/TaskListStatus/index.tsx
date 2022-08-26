@@ -59,7 +59,7 @@ const TaskListStatus = ({
             <UswdsReactLink
               to={
                 readOnly
-                  ? `/models/${modelID}/status#read-only`
+                  ? `/models/${modelID}/task-list`
                   : `/models/${modelID}/status`
               }
               className="display-flex flex-align-center"
