@@ -10,17 +10,18 @@ const modelSummary = {
     tBD: 'To be determined'
   },
   navigation: {
-    modelBasics: 'Model basics',
-    generalCharacteristics: 'General characteristics',
-    participantsAndProviders: 'Participants and providers',
+    'model-basics': 'Model basics',
+    'general-characteristics': 'General characteristics',
+    'participants-and-providers': 'Participants and providers',
     beneficiaries: 'Beneficiaries',
-    operationsEvaluationAndLearning: 'Operations, evaluation, and learning',
+    'operations-evaluation-and-learning':
+      'Operations, evaluation, and learning',
     payment: 'Payment',
-    itTools: 'IT tools',
+    'it-tools': 'IT tools',
     team: 'Team',
     discussions: 'Discussions',
     documents: 'Documents',
-    crsAndTdls: 'CRs and TDLs'
+    'crs-and-tdl': 'CRs and TDLs'
   }
 };
 
