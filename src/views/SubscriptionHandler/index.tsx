@@ -172,7 +172,8 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
 
   // Checks to see if section should be unlocked and calls mutation
   if (
-    (!validModelID || !taskListSection) &&
+    validModelID &&
+    !taskListSection &&
     taskListSectionLocks?.length > 0 &&
     !addLockLoading &&
     !removeLockLoading &&
