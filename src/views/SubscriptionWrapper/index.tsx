@@ -70,11 +70,11 @@ export const SubscriptionContext = createContext<{
 const SubscriptionWrapper = ({ children }: SubscriptionWrapperProps) => {
   // Gets the model plan id from any location within the application
   const { pathname } = useLocation();
-  const modelID = pathname.split('/')[2];
+  const modelID: string | undefined = pathname.split('/')[2];
   const validModelID: boolean = isUUID(modelID);
 
-  // Used to manage if a mounted component is already subscribed
-  const subscribed = useRef<boolean>(false);
+  // Holds reference to subscribeToMore used for closing ws connection on leaving model plan
+  const subscribed = useRef<ReturnType<typeof subscribeToMore> | null>(null);
 
   // // The value that will be given to the context
   const subscriptionContextData = useRef<{
@@ -91,7 +91,6 @@ const SubscriptionWrapper = ({ children }: SubscriptionWrapperProps) => {
   );
 
   useEffect(() => {
-    // const abortController = new AbortController();
     if (modelID && validModelID && subscribeToMore) {
       // useLazyQuery hook to fetch existing subscription data on new modelID
 
@@ -104,7 +103,7 @@ const SubscriptionWrapper = ({ children }: SubscriptionWrapperProps) => {
 
       if (!subscribed.current) {
         // Subscription initiator and message update method
-        subscribeToMore({
+        subscribed.current = subscribeToMore({
           document: SubscribeToTaskList,
           variables: {
             modelPlanID: modelID
@@ -139,16 +138,13 @@ const SubscriptionWrapper = ({ children }: SubscriptionWrapperProps) => {
             return formattedSubscriptionContext;
           }
         });
-        subscribed.current = true;
       }
     } else {
-      // TODO: Unsubscribe from GQL Subscription
-      subscribed.current = false;
-      // return () => {
-      //   abortController.abort();
-      // };
+      // Unsubscribe from GQL Subscription
+      // Invoking the reference to subscribeToMore within subscribed.current will close the ws connection
+      if (subscribed.current) subscribed.current();
+      subscribed.current = null;
     }
-    // return () => null;
   }, [
     modelID,
     validModelID,
