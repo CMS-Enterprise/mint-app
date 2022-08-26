@@ -42,6 +42,15 @@ import SideNav from './_components/Sidenav';
 
 import './index.scss';
 
+type subComponentProps = {
+  component: React.ReactNode;
+  route: string;
+};
+
+export interface subComponentsProps {
+  [key: string]: subComponentProps;
+}
+
 type SubpageKey =
   | 'model-basics'
   | 'general-characteristics'
@@ -320,7 +329,7 @@ const ReadOnly = () => {
           <Grid row gap>
             {!isMobile && (
               <Grid desktop={{ col: 3 }} className="padding-right-4 sticky-nav">
-                <SideNav modelID={modelID} />
+                <SideNav subComponents={subComponents} />
               </Grid>
             )}
 
