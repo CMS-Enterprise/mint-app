@@ -24,6 +24,7 @@ import Collaborators from 'views/ModelPlan/Collaborators';
 import Documents from 'views/ModelPlan/Documents';
 import LockedTaskListSection from 'views/ModelPlan/LockedTaskListSection';
 import NewPlan from 'views/ModelPlan/NewPlan';
+import ReadOnly from 'views/ModelPlan/ReadOnly';
 import Status from 'views/ModelPlan/Status';
 import StepsOverview from 'views/ModelPlan/StepsOverview';
 import TaskList from 'views/ModelPlan/TaskList';
@@ -74,6 +75,12 @@ const AppRoutes = () => {
 
       {/* Model Routes */}
       <SecureRoute path="/models" exact component={ModelPlan} />
+
+      <SecureRoute
+        path="/models/:modelID/read-only"
+        exact
+        component={ReadOnly}
+      />
 
       <SecureRoute
         path="/models/steps-overview"

@@ -6,16 +6,18 @@ exports[`The TaskListSideNavActions matches snapshot 1`] = `
     class="sidenav-actions border-top-05 border-primary-lighter padding-top-2 margin-top-2"
     data-testid="sidenav-actions"
   >
-    <div
-      class="margin-bottom-1"
+    <a
+      class="usa-link display-block margin-bottom-1"
+      href="/"
     >
-      <a
-        class="usa-link"
-        href="/"
-      >
-        Save & Exit
-      </a>
-    </div>
+      Save & Exit
+    </a>
+    <a
+      class="usa-link display-block margin-bottom-1"
+      href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/read-only"
+    >
+      View this Model Plan
+    </a>
     <button
       class="usa-button usa-button--unstyled line-height-body-5 test-withdraw-request"
       data-testid="button"
