@@ -1,0 +1,35 @@
+.model-plan-read-only {
+  .description-truncated {
+    .description-definition {
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    &.expanded {
+      .description-definition {
+        display: block;
+        overflow: auto;
+      }
+      .expand-icon {
+        transform: rotate(180deg);
+      }
+    }
+  }
+
+  .model-plan-status-bar {
+    p {
+      font-weight: bold;
+    }
+  }
+
+  .model-plan-alert-wrapper {
+    @media screen and (min-width: 64em) {
+      margin-left: auto;
+      margin-right: auto;
+      max-width: 75rem;
+      padding-left: 2rem;
+      padding-right: 2rem;
+    }
+  }
+}

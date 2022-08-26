@@ -9,6 +9,8 @@ import newModel from './draftModelPlan/newModel';
 import operationsEvaluationAndLearning from './draftModelPlan/operationsEvaulationAndLearning';
 import participantsAndProviders from './draftModelPlan/participantsAndProviders';
 import payments from './draftModelPlan/payments';
+import generalReadOnly from './readOnly/generalReadOnly';
+import modelSummary from './readOnly/modelSummary';
 import accessibilityStatement from './accessibilityStatement';
 import auth from './auth';
 import cookies from './cookies';
@@ -47,7 +49,9 @@ const enUS = {
   payments,
   privacyPolicy,
   tableAndPagination,
-  termsAndConditions
+  termsAndConditions,
+  generalReadOnly,
+  modelSummary
 };
 
 export default enUS;
