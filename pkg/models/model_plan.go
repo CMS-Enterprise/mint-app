@@ -3,10 +3,9 @@ package models
 // ModelPlan is the top-level object for an entire draft model plan
 type ModelPlan struct {
 	BaseStruct
-	ModelName  string      `json:"modelName" db:"model_name"`
-	Archived   bool        `json:"archived" db:"archived"`
-	Status     ModelStatus `json:"status" db:"status"`
-	IsFavorite bool        `json:"isFavorite" db:"is_favorite"`
+	ModelName string      `json:"modelName" db:"model_name"`
+	Archived  bool        `json:"archived" db:"archived"`
+	Status    ModelStatus `json:"status" db:"status"`
 }
 
 // ModelCategory represents the category of a model

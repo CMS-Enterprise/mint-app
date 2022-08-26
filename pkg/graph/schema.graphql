@@ -1338,7 +1338,6 @@ type Query {
   planCollaboratorByID(id: UUID!): PlanCollaborator!
   taskListSectionLocks(modelPlanID: UUID!): [TaskListSectionLockStatus!]!
   planPayments(id: UUID!): PlanPayments!
-  planFavorites: [PlanFavorite!]!
   ndaInfo: NDAInfo!
 }
 

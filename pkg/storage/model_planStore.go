@@ -96,16 +96,13 @@ func (s *Store) ModelPlanUpdate(logger *zap.Logger, plan *models.ModelPlan) (*mo
 }
 
 // ModelPlanGetByID returns a model plan for a given ID
-func (s *Store) ModelPlanGetByID(logger *zap.Logger, id uuid.UUID, userID string) (*models.ModelPlan, error) {
+func (s *Store) ModelPlanGetByID(logger *zap.Logger, id uuid.UUID) (*models.ModelPlan, error) {
 	plan := models.ModelPlan{}
 	stmt, err := s.db.PrepareNamed(modelPlanGetByIDSQL)
 	if err != nil {
 		return nil, err
 	}
-	arg := map[string]interface{}{
-		"id":      id,
-		"user_id": userID,
-	}
+	arg := map[string]interface{}{"id": id}
 
 	err = stmt.Get(&plan, arg)
 

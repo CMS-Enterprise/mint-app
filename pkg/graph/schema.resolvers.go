@@ -94,6 +94,14 @@ func (r *modelPlanResolver) ItTools(ctx context.Context, obj *models.ModelPlan) 
 	return resolvers.PlanITToolsGetByModelPlanID(logger, obj.ID, r.store)
 }
 
+// IsFavorite is the resolver for the isFavorite field.
+func (r *modelPlanResolver) IsFavorite(ctx context.Context, obj *models.ModelPlan) (bool, error) {
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+
+	return resolvers.IsPlanFavorited(logger, principal, r.store, obj.ID)
+}
+
 // CreateModelPlan is the resolver for the createModelPlan field.
 func (r *mutationResolver) CreateModelPlan(ctx context.Context, modelName string) (*models.ModelPlan, error) {
 	logger := appcontext.ZLogger(ctx)
@@ -808,14 +816,6 @@ func (r *queryResolver) PlanPayments(ctx context.Context, id uuid.UUID) (*models
 	return resolvers.PlanPaymentsRead(logger, r.store, id)
 }
 
-// PlanFavorites is the resolver for the planFavorites field.
-func (r *queryResolver) PlanFavorites(ctx context.Context) ([]*models.PlanFavorite, error) {
-	principal := appcontext.Principal(ctx)
-	logger := appcontext.ZLogger(ctx)
-
-	return resolvers.PlanFavoriteCollection(logger, principal, r.store)
-}
-
 // NdaInfo is the resolver for the ndaInfo field.
 func (r *queryResolver) NdaInfo(ctx context.Context) (*model.NDAInfo, error) {
 	logger := appcontext.ZLogger(ctx)
@@ -915,9 +915,9 @@ type userInfoResolver struct{ *Resolver }
 //  - When renaming or deleting a resolver the old code will be put in here. You can safely delete
 //    it when you're done.
 //  - You have helper methods in this file. Move them out to keep these resolver files clean.
-func (r *modelPlanResolver) IsFavorite(ctx context.Context, obj *models.ModelPlan) (bool, error) {
+func (r *queryResolver) PlanFavorites(ctx context.Context) ([]*models.PlanFavorite, error) {
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 
-	return resolvers.IsPlanFavorited(logger, principal, r.store, obj.ID)
+	return resolvers.PlanFavoriteCollection(logger, principal, r.store)
 }
