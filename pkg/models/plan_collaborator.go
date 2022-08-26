@@ -4,7 +4,6 @@ package models
 type PlanCollaborator struct {
 	BaseStruct
 	ModelPlanRelation
-	// ModelPlanID uuid.UUID `json:"modelPlanID" db:"model_plan_id"`
 	EUAUserID string   `json:"euaUserId" db:"eua_user_id"`
 	FullName  string   `json:"fullName" db:"full_name"`
 	TeamRole  TeamRole `json:"teamRole" db:"team_role"`

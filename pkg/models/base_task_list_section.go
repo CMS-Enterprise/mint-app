@@ -21,7 +21,6 @@ type IBaseTaskListSection interface {
 type BaseTaskListSection struct {
 	BaseStruct
 	ModelPlanRelation
-	// ModelPlanID       uuid.UUID  `json:"modelPlanID" db:"model_plan_id"`
 	ReadyForReviewBy  *string    `json:"readyForReviewBy" db:"ready_for_review_by"`
 	ReadyForReviewDts *time.Time `json:"readyForReviewDts" db:"ready_for_review_dts"`
 	Status            TaskStatus `json:"status" db:"status"`
