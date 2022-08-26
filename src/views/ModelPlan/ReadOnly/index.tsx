@@ -122,49 +122,49 @@ const ReadOnly = () => {
 
   // * If we do the same approach as EASI, then it will be best to extract the subNavItems object from `Sidenav/index.tsx` and put it in its own file. That way it will keep the navigation items consistent to pages available.
 
-  const subComponents = {
+  const subComponents: subComponentsProps = {
     'model-basics': {
-      route: `/models/${modelID},/read-only`,
+      route: `/models/${modelID}/read-only`,
       component: <h1>modelBasics</h1>
     },
     'general-characteristics': {
-      route: `/models/${modelID},/read-only/general-characteristics`,
+      route: `/models/${modelID}/read-only/general-characteristics`,
       component: <h1>generalCharacteristics</h1>
     },
     'participants-and-providers': {
-      route: `/models/${modelID},/read-only/participants-and-providers`,
+      route: `/models/${modelID}/read-only/participants-and-providers`,
       component: <h1>participantsAndProviders</h1>
     },
     beneficiaries: {
-      route: `/models/${modelID},/read-only/beneficiaries`,
+      route: `/models/${modelID}/read-only/beneficiaries`,
       component: <h1>beneficiaries</h1>
     },
     'operations-evaluation-and-learning': {
-      route: `/models/${modelID},/read-only/operations-evaluation-and-learning`,
+      route: `/models/${modelID}/read-only/operations-evaluation-and-learning`,
       component: <h1>operationsEvaluationAndLearning</h1>
     },
     payment: {
-      route: `/models/${modelID},/read-only/payment`,
+      route: `/models/${modelID}/read-only/payment`,
       component: <h1>payment</h1>
     },
     'it-tools': {
-      route: `/models/${modelID},/read-only/it-tools`,
+      route: `/models/${modelID}/read-only/it-tools`,
       component: <h1>itTools</h1>
     },
     team: {
-      route: `/models/${modelID},/read-only/team`,
+      route: `/models/${modelID}/read-only/team`,
       component: <h1>team</h1>
     },
     discussions: {
-      route: `/models/${modelID},/read-only/discussions`,
+      route: `/models/${modelID}/read-only/discussions`,
       component: <h1>discussions</h1>
     },
     documents: {
-      route: `/models/${modelID},/read-only/documents`,
+      route: `/models/${modelID}/read-only/documents`,
       component: <h1>documents</h1>
     },
     'crs-and-tdl': {
-      route: `/models/${modelID},/read-only/crs-and-tdl`,
+      route: `/models/${modelID}/read-only/crs-and-tdl`,
       component: <h1>crsAndTdls</h1>
     }
   };
