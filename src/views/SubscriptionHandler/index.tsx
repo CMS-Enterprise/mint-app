@@ -149,22 +149,24 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
   const removeLockedSection = (section: LockSectionType | undefined) => {
     const prevModelID = prevPath.split('/')[2];
 
-    // console.log(prevPath);
-
     // Check if the prev path was a part of a model plan
-    if (section && isUUID(prevModelID)) {
+    if (section && isUUID(prevModelID) && prevPath !== pathname) {
       removeLock({
         variables: {
           modelPlanID: section.modelPlanID,
           section: section.section
         }
-      }).catch(() => {
-        history.push({
-          pathname: `/models/${modelID}/locked-task-list-section`,
-          // Passing error status to default error page
-          state: { route: taskListRoute, error: true }
+      })
+        .then(() => {
+          setPrevPath(pathname);
+        })
+        .catch(() => {
+          history.push({
+            pathname: `/models/${modelID}/locked-task-list-section`,
+            // Passing error status to default error page
+            state: { route: taskListRoute, error: true }
+          });
         });
-      });
     }
   };
 

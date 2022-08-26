@@ -91,6 +91,7 @@ const SubscriptionWrapper = ({ children }: SubscriptionWrapperProps) => {
   );
 
   useEffect(() => {
+    // const abortController = new AbortController();
     if (modelID && validModelID && subscribeToMore) {
       // useLazyQuery hook to fetch existing subscription data on new modelID
 
@@ -141,8 +142,13 @@ const SubscriptionWrapper = ({ children }: SubscriptionWrapperProps) => {
         subscribed.current = true;
       }
     } else {
+      // TODO: Unsubscribe from GQL Subscription
       subscribed.current = false;
+      // return () => {
+      //   abortController.abort();
+      // };
     }
+    // return () => null;
   }, [
     modelID,
     validModelID,

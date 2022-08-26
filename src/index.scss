@@ -85,6 +85,10 @@ h5 {
   pointer-events: none;
 }
 
+button:disabled {
+  cursor: default;
+}
+
 .skipnav {
   top: 0;
   left: 0;
