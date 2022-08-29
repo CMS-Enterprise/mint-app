@@ -21,7 +21,7 @@ const SideNav = ({ subComponents }: SideNavProps) => {
         to={subComponents[key].route}
         key={key}
         activeClassName="usa-current"
-        className={key === 'itTools' ? 'nav-group-border' : ''}
+        className={key === 'it-tools' ? 'nav-group-border' : ''}
       >
         {t(`navigation.${key}`)}
       </NavLink>
