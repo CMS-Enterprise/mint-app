@@ -14,7 +14,7 @@ func TestGoSimpleMailService_MockSend(t *testing.T) {
 	fromAddress := "mint-test@cms.gov"
 	toAddresses := []string{"user@test.com"}
 	var ccAddresses []string
-	subject := "Test Subject"
+	subject := "Test Subject 2"
 	contentType := "text/html"
 	body := "Test Email"
 
@@ -25,12 +25,12 @@ func TestGoSimpleMailService_MockSend(t *testing.T) {
 func setupGoSimpleMailServiceTest(t *testing.T) *oddmail.GoSimpleMailService {
 	//mockController := gomock.NewController(t)
 
+	var mailServiceConfig oddmail.GoSimpleMailServiceConfig
+	err := mailServiceConfig.LoadYAML("config/test/emailServiceConfig.yaml")
+	assert.NoError(t, err)
+
 	//nolint:gosec
-	mailServiceConfig := oddmail.GoSimpleMailServiceConfig{
-		Host:      "127.0.0.1",
-		Port:      1025,
-		TLSConfig: &tls.Config{InsecureSkipVerify: true},
-	}
+	mailServiceConfig.TLSConfig = &tls.Config{InsecureSkipVerify: true}
 
 	emailService, err := oddmail.NewGoSimpleMailService(mailServiceConfig)
 	assert.NoError(t, err)

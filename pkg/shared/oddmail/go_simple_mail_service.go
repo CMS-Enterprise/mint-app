@@ -41,17 +41,6 @@ func NewGoSimpleMailService(config GoSimpleMailServiceConfig) (*GoSimpleMailServ
 	}, nil
 }
 
-// Init prepares the GoSimpleMailService to be used based on input configuration
-func (g *GoSimpleMailService) Init(config EmailServiceConfig) error {
-	typedConfig, isConvertible := config.(GoSimpleMailServiceConfig)
-	if !isConvertible {
-		return errors.New("cannot convert config interface to type of GoSimpleMailServiceConfig")
-	}
-
-	g.config = typedConfig
-	return nil
-}
-
 // setEmailBody is a helper method to simplify the process of setting email contentType and body
 func (g GoSimpleMailService) setEmailBody(email *mail.Email, contentType string, body string) error {
 	switch contentType {

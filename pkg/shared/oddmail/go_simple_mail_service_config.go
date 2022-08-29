@@ -2,23 +2,27 @@ package oddmail
 
 import (
 	"crypto/tls"
+	"io/ioutil"
+	"path/filepath"
 	"time"
+
+	"gopkg.in/yaml.v3"
 
 	mail "github.com/xhit/go-simple-mail/v2"
 )
 
 // GoSimpleMailServiceConfig is a configuration structure to define the behavior of a GoSimpleMailService
 type GoSimpleMailServiceConfig struct {
-	Helo           string
-	Host           string
-	Port           int
-	Authentication mail.AuthType
-	Username       string
-	Password       string
-	Encryption     mail.Encryption
-	ConnectTimeout time.Duration
-	SendTimeout    time.Duration
-	KeepAlive      bool
+	Helo           string          `yaml:"helo"`
+	Host           string          `yaml:"host"`
+	Port           int             `yaml:"port"`
+	Authentication mail.AuthType   `yaml:"authentication"`
+	Username       string          `yaml:"username"`
+	Password       string          `yaml:"password"`
+	Encryption     mail.Encryption `yaml:"encryption"`
+	ConnectTimeout time.Duration   `yaml:"connectTimeout"`
+	SendTimeout    time.Duration   `yaml:"sendTimeout"`
+	KeepAlive      bool            `yaml:"keepAlive"`
 	TLSConfig      *tls.Config
 }
 
@@ -75,4 +79,19 @@ func (g GoSimpleMailServiceConfig) GetKeepAlive() bool {
 // GetTLSConfig returns the TLSConfig configuration
 func (g GoSimpleMailServiceConfig) GetTLSConfig() *tls.Config {
 	return g.TLSConfig
+}
+
+// LoadYAML loads configuration from a YAML file
+func (g GoSimpleMailServiceConfig) LoadYAML(filePath string) error {
+	yamlFile, err := ioutil.ReadFile(filepath.Clean(filePath))
+	if err != nil {
+		return err
+	}
+
+	err = yaml.Unmarshal(yamlFile, &g)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }

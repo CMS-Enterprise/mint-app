@@ -6,4 +6,5 @@ type EmailServiceConfig interface {
 	GetPort() int
 	GetUsername() string
 	GetPassword() string
+	LoadYAML(filePath string) error
 }
