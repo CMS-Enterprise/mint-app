@@ -38,6 +38,7 @@ import { NotFoundPartial } from 'views/NotFound';
 
 import TaskListStatus from '../TaskList/_components/TaskListStatus';
 
+import MobileNav from './_components/MobileNav';
 import SideNav from './_components/Sidenav';
 
 import './index.scss';
@@ -51,7 +52,7 @@ export interface subComponentsProps {
   [key: string]: subComponentProps;
 }
 
-type SubpageKey =
+export type SubpageKey =
   | 'model-basics'
   | 'general-characteristics'
   | 'participants-and-providers'
@@ -131,7 +132,7 @@ const ReadOnly = () => {
 
   const subComponents: subComponentsProps = {
     'model-basics': {
-      route: `/models/${modelID}/read-only`,
+      route: `/models/${modelID}/read-only/model-basics`,
       component: <h1>modelBasics</h1>
     },
     'general-characteristics': {
@@ -175,8 +176,6 @@ const ReadOnly = () => {
       component: <h1>crsAndTdls</h1>
     }
   };
-
-  // const subpageKey: SubpageKey = subinfo || 'home';
 
   const subComponent = subComponents[subinfo];
 
@@ -322,6 +321,7 @@ const ReadOnly = () => {
           </Alert>
         )}
       </SectionWrapper>
+      <MobileNav subComponents={subComponents} subinfo={subinfo} />
       <SectionWrapper className="model-plan__body-content">
         <GridContainer>
           <Grid row gap>
