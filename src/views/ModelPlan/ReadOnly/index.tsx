@@ -346,7 +346,7 @@ const ReadOnly = () => {
                         'sticky-nav': !isMobile
                       })}
                     >
-                      <ContactInfo />
+                      <ContactInfo modelID={modelID} />
                     </Grid>
                   </Grid>
                 </GridContainer>
