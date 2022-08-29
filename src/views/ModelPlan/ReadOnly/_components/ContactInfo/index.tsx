@@ -23,7 +23,10 @@ const ContactInfo = ({ modelID }: { modelID: string }) => {
     []) as GetCollaboratorsType[];
 
   return (
-    <div className="model-plan__model-leads__wrapper model-leads padding-y-1">
+    <div
+      className="model-plan__model-leads__wrapper model-leads padding-y-1"
+      data-testid="read-only-model-plan__contact-info"
+    >
       <p className="font-body-xs margin-top-0 margin-bottom-3">
         {h('contactInfo.modelLeads')}
       </p>
