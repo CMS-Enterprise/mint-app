@@ -30,7 +30,9 @@ const MobileNav = ({ subComponents, subinfo }: MobileNavProps) => {
     <div className="read-only-model-plan__subNav-accordion">
       <button
         type="button"
-        className="usa-menu-btn mint-header__basic width-full"
+        className={`usa-menu-btn mint-header__basic width-full ${
+          !isAccordionOpen ? 'bg-primary-dark' : 'bg-primary'
+        }`}
         onClick={() => setIsAccordionOpen(!isAccordionOpen)}
         aria-expanded={isAccordionOpen}
         aria-controls="read-only-model-plan__subNav"
