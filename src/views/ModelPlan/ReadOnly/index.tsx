@@ -314,6 +314,9 @@ const ReadOnly = () => {
           </div>
         </GridContainer>
       </SectionWrapper>
+
+      <MobileNav subComponents={subComponents} subinfo={subinfo} />
+
       <SectionWrapper className="model-plan-alert-wrapper">
         {status !== ModelStatus.CLEARED && status !== ModelStatus.ANNOUNCED && (
           <Alert type="warning" className="margin-bottom-5 desktop:margin-y-3">
@@ -321,7 +324,7 @@ const ReadOnly = () => {
           </Alert>
         )}
       </SectionWrapper>
-      <MobileNav subComponents={subComponents} subinfo={subinfo} />
+
       <SectionWrapper className="model-plan__body-content">
         <GridContainer>
           <Grid row gap>
