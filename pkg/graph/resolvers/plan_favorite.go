@@ -30,11 +30,18 @@ func IsPlanFavorited(logger *zap.Logger, principal authentication.Principal, sto
 func PlanFavoriteCreate(logger *zap.Logger, principal authentication.Principal, store *storage.Store, modelPlandID uuid.UUID) (*models.PlanFavorite, error) {
 
 	favorite := models.PlanFavorite{
-		UserID:      principal.ID(),
-		ModelPlanID: modelPlandID,
+		UserID: principal.ID(),
+		ModelPlanRelation: models.ModelPlanRelation{
+			ModelPlanID: modelPlandID,
+		},
 		BaseStruct: models.BaseStruct{
 			CreatedBy: principal.ID(),
 		},
+	}
+
+	err := BaseStructPreCreate(logger, &favorite, principal, store, false) //you don't need to be a collaborator to favorite a model plan.
+	if err != nil {
+		return nil, err
 	}
 
 	return store.PlanFavoriteCreate(logger, favorite)
@@ -43,6 +50,17 @@ func PlanFavoriteCreate(logger *zap.Logger, principal authentication.Principal, 
 
 //PlanFavoriteDelete deletes a plan favorite record in the database
 func PlanFavoriteDelete(logger *zap.Logger, principal authentication.Principal, store *storage.Store, modelPlandID uuid.UUID) (*models.PlanFavorite, error) {
+
+	existingFavorite, err := store.PlanFavoriteGetByModelIDAndEUA(logger, principal.ID(), modelPlandID)
+
+	if err != nil {
+		return nil, err
+	}
+
+	err = BaseStructPreDelete(logger, existingFavorite, principal, store, false) //you don't need to be a collaborator to favorite a model plan.
+	if err != nil {
+		return nil, err
+	}
 
 	return store.PlanFavoriteDelete(logger, principal.ID(), modelPlandID)
 
