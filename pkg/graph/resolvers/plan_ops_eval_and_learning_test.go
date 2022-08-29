@@ -19,9 +19,7 @@ func (suite *ResolverSuite) TestPlanOpsEvalAndLearningUpdate() {
 		"technicalContactsIdentifiedDetail": "Mrs. Robinson",
 	}
 
-	updater := "UPDT"
-
-	oel, err := PlanOpsEvalAndLearningUpdate(suite.testConfigs.Logger, oelExisting.ID, changes, updater, suite.testConfigs.Store)
+	oel, err := PlanOpsEvalAndLearningUpdate(suite.testConfigs.Logger, oelExisting.ID, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
 	suite.NoError(err)
 
 	suite.Nil(oel.AgencyOrStateHelp)

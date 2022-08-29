@@ -14,7 +14,7 @@ func (suite *ResolverSuite) TestCreatePlanCollaborator() {
 		FullName:    "Clab O' Rater",
 		TeamRole:    models.TeamRoleLeadership,
 	}
-	collaborator, err := CreatePlanCollaborator(suite.testConfigs.Logger, collaboratorInput, suite.testConfigs.UserInfo.EuaUserID, suite.testConfigs.Store)
+	collaborator, err := CreatePlanCollaborator(suite.testConfigs.Logger, collaboratorInput, suite.testConfigs.Principal, suite.testConfigs.Store)
 
 	suite.NoError(err)
 	suite.EqualValues(plan.ID, collaborator.ModelPlanID)
@@ -31,11 +31,11 @@ func (suite *ResolverSuite) TestUpdatePlanCollaborator() {
 	suite.Nil(collaborator.ModifiedBy)
 	suite.Nil(collaborator.ModifiedDts)
 
-	updatedCollaborator, err := UpdatePlanCollaborator(suite.testConfigs.Logger, collaborator.ID, models.TeamRoleEvaluation, "UPDT", suite.testConfigs.Store)
+	updatedCollaborator, err := UpdatePlanCollaborator(suite.testConfigs.Logger, collaborator.ID, models.TeamRoleEvaluation, suite.testConfigs.Principal, suite.testConfigs.Store)
 	suite.NoError(err)
 	suite.NotNil(updatedCollaborator.ModifiedBy)
 	suite.NotNil(updatedCollaborator.ModifiedDts)
-	suite.EqualValues("UPDT", *updatedCollaborator.ModifiedBy)
+	suite.EqualValues(suite.testConfigs.Principal.EUAID, *updatedCollaborator.ModifiedBy)
 	suite.EqualValues("CLAB", updatedCollaborator.EUAUserID)
 	suite.EqualValues("Clab O' Rater", updatedCollaborator.FullName)
 	suite.EqualValues(models.TeamRoleEvaluation, updatedCollaborator.TeamRole)
@@ -44,11 +44,11 @@ func (suite *ResolverSuite) TestUpdatePlanCollaborator() {
 func (suite *ResolverSuite) TestUpdatePlanCollaboratorLastModelLead() {
 	plan := suite.createModelPlan("Plan For Milestones")
 
-	collaborators, err := FetchCollaboratorsByModelPlanID(suite.testConfigs.Logger, &suite.testConfigs.UserInfo.EuaUserID, plan.ID, suite.testConfigs.Store)
+	collaborators, err := FetchCollaboratorsByModelPlanID(suite.testConfigs.Logger, plan.ID, suite.testConfigs.Store)
 	suite.NoError(err)
 
 	collaborator := collaborators[0]
-	updatedPlanCollaborator, err := UpdatePlanCollaborator(suite.testConfigs.Logger, collaborator.ID, models.TeamRoleEvaluation, "UPDT", suite.testConfigs.Store)
+	updatedPlanCollaborator, err := UpdatePlanCollaborator(suite.testConfigs.Logger, collaborator.ID, models.TeamRoleEvaluation, suite.testConfigs.Principal, suite.testConfigs.Store)
 	suite.Error(err)
 	suite.EqualValues("pq: There must be at least one MODEL_LEAD assigned to each model plan", err.Error())
 	suite.Nil(updatedPlanCollaborator)
@@ -58,7 +58,7 @@ func (suite *ResolverSuite) TestFetchCollaboratorsByModelPlanID() {
 	plan := suite.createModelPlan("Plan For Milestones")
 	_ = suite.createPlanCollaborator(plan, "SCND", "Mr. Second Collaborator", models.TeamRoleLeadership)
 
-	collaborators, err := FetchCollaboratorsByModelPlanID(suite.testConfigs.Logger, &suite.testConfigs.UserInfo.EuaUserID, plan.ID, suite.testConfigs.Store)
+	collaborators, err := FetchCollaboratorsByModelPlanID(suite.testConfigs.Logger, plan.ID, suite.testConfigs.Store)
 	suite.NoError(err)
 	suite.Len(collaborators, 2)
 	suite.NotEqual(collaborators[0].ID, collaborators[1].ID) // two different collaborators
@@ -81,7 +81,7 @@ func (suite *ResolverSuite) TestDeletePlanCollaborator() {
 	collaborator := suite.createPlanCollaborator(plan, "SCND", "Mr. Second Collaborator", models.TeamRoleLeadership)
 
 	// Delete the 2nd collaborator
-	deletedCollaborator, err := DeletePlanCollaborator(suite.testConfigs.Logger, collaborator.ID, suite.testConfigs.UserInfo.EuaUserID, suite.testConfigs.Store)
+	deletedCollaborator, err := DeletePlanCollaborator(suite.testConfigs.Logger, collaborator.ID, suite.testConfigs.Principal, suite.testConfigs.Store)
 	suite.NoError(err)
 	suite.EqualValues(deletedCollaborator, collaborator)
 
@@ -94,11 +94,11 @@ func (suite *ResolverSuite) TestDeletePlanCollaborator() {
 func (suite *ResolverSuite) TestDeletePlanCollaboratorLastModelLead() {
 	plan := suite.createModelPlan("Plan For Milestones")
 
-	collaborators, err := FetchCollaboratorsByModelPlanID(suite.testConfigs.Logger, &suite.testConfigs.UserInfo.EuaUserID, plan.ID, suite.testConfigs.Store)
+	collaborators, err := FetchCollaboratorsByModelPlanID(suite.testConfigs.Logger, plan.ID, suite.testConfigs.Store)
 	suite.NoError(err)
 
 	collaborator := collaborators[0]
-	deletedPlanCollaborator, err := DeletePlanCollaborator(suite.testConfigs.Logger, collaborator.ID, "UPDT", suite.testConfigs.Store)
+	deletedPlanCollaborator, err := DeletePlanCollaborator(suite.testConfigs.Logger, collaborator.ID, suite.testConfigs.Principal, suite.testConfigs.Store)
 	suite.Error(err)
 	suite.EqualValues("pq: There must be at least one MODEL_LEAD assigned to each model plan", err.Error())
 	suite.Nil(deletedPlanCollaborator)

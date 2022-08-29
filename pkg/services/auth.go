@@ -16,10 +16,10 @@ func HasRole(ctx context.Context, role model.Role) (bool, error) {
 	switch role {
 	case model.RoleMintUser:
 		if !principal.AllowUSER() {
-			logger.Info("does not have EASi job code")
+			logger.Info("does not have MINT job code")
 			return false, nil
 		}
-		logger.Info("user authorized as EASi user", zap.Bool("Authorized", true))
+		logger.Info("user authorized as MINT user", zap.Bool("Authorized", true))
 		return true, nil
 	case model.RoleMintAssessment:
 		if !principal.AllowASSESSMENT() {

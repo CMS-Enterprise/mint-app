@@ -2,14 +2,12 @@ package models
 
 import (
 	"time"
-
-	"github.com/google/uuid"
 )
 
 // PlanDocument represents a document attached to the plan
 type PlanDocument struct {
 	BaseStruct
-	ModelPlanID uuid.UUID `json:"modelPlanID" db:"model_plan_id"`
+	ModelPlanRelation
 
 	FileType string `json:"fileType" db:"file_type"`
 	Bucket   string `json:"bucket" db:"bucket"`

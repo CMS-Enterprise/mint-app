@@ -4,6 +4,7 @@ import (
 	"github.com/google/uuid"
 	"go.uber.org/zap"
 
+	"github.com/cmsgov/mint-app/pkg/authentication"
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/storage"
 )
@@ -44,7 +45,7 @@ func PlanPaymentsUpdate(
 	store *storage.Store,
 	id uuid.UUID,
 	changes map[string]interface{},
-	principal string,
+	principal authentication.Principal,
 ) (*models.PlanPayments, error) {
 
 	payments, err := store.PlanPaymentsRead(logger, id)
@@ -52,7 +53,7 @@ func PlanPaymentsUpdate(
 		return nil, err
 	}
 
-	err = BaseTaskListSectionPreUpdate(payments, changes, principal)
+	err = BaseTaskListSectionPreUpdate(logger, payments, changes, principal, store)
 	if err != nil {
 		return nil, err
 	}

@@ -77,7 +77,7 @@ func (s *Store) PlanParticipantsAndProvidersGetByID(logger *zap.Logger, id uuid.
 }
 
 // PlanParticipantsAndProvidersGetByModelPlanID returns the providers_and_participants for a given model plan id
-func (s *Store) PlanParticipantsAndProvidersGetByModelPlanID(logger *zap.Logger, principal string, modelPlanID uuid.UUID) (*models.PlanParticipantsAndProviders, error) {
+func (s *Store) PlanParticipantsAndProvidersGetByModelPlanID(logger *zap.Logger, modelPlanID uuid.UUID) (*models.PlanParticipantsAndProviders, error) {
 	gc := models.PlanParticipantsAndProviders{}
 
 	statement, err := s.db.PrepareNamed(planParticipantsAndProvidersGetByModelPlanIDSQL)
@@ -86,8 +86,6 @@ func (s *Store) PlanParticipantsAndProvidersGetByModelPlanID(logger *zap.Logger,
 	}
 
 	arg := map[string]interface{}{
-		"modified_by":   principal,
-		"created_by":    principal,
 		"model_plan_id": modelPlanID,
 	}
 
