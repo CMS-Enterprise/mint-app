@@ -10,20 +10,10 @@ import (
 	"github.com/cmsgov/mint-app/pkg/storage"
 )
 
-//PlanFavoriteCollection returns a list of favorites
-func PlanFavoriteCollection(logger *zap.Logger, principal authentication.Principal, store *storage.Store) ([]*models.PlanFavorite, error) {
-	favorites, err := store.PlanFavoriteCollectionByUser(logger, principal.ID(), false)
-	if err != nil {
-		return nil, err
-	}
-
-	return favorites, err
-}
-
 //IsPlanFavorited checks if a model plan is a favorite.
-func IsPlanFavorited(logger *zap.Logger, principal authentication.Principal, store *storage.Store, modelPlandID uuid.UUID) (bool, error) {
+func IsPlanFavorited(logger *zap.Logger, principal authentication.Principal, store *storage.Store, modelPlanID uuid.UUID) (bool, error) {
 
-	favorite, err := PlanFavoriteGet(logger, principal, store, modelPlandID)
+	favorite, err := PlanFavoriteGet(logger, principal, store, modelPlanID)
 	if err != nil {
 		return false, err
 	}
@@ -61,6 +51,6 @@ func PlanFavoriteDelete(logger *zap.Logger, principal authentication.Principal, 
 //PlanFavoriteGet returns a plan favorite record
 func PlanFavoriteGet(logger *zap.Logger, principal authentication.Principal, store *storage.Store, modelPlandID uuid.UUID) (*models.PlanFavorite, error) {
 
-	return store.PlanFavoriteGet(logger, principal.ID(), modelPlandID)
+	return store.PlanFavoriteGetByModelIDAndEUA(logger, principal.ID(), modelPlandID)
 
 }

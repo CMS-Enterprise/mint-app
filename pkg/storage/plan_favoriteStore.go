@@ -6,7 +6,6 @@ import (
 	"github.com/google/uuid"
 	"go.uber.org/zap"
 
-	"github.com/cmsgov/mint-app/pkg/apperrors"
 	"github.com/cmsgov/mint-app/pkg/models"
 
 	_ "embed"
@@ -18,41 +17,8 @@ var planFavoriteCreateSQL string
 //go:embed SQL/plan_favorite_delete.sql
 var planFavoriteDeleteSQL string
 
-//go:embed SQL/plan_favorite_collection_by_user.sql
-var planFavoriteCollectionByUserSQL string
-
 //go:embed SQL/plan_favorite_get.sql
 var planFavoriteGetSQL string
-
-//PlanFavoriteCollectionByUser returns a list of model plans for a given EUA ID (TODO: Make this go by collaborators, not by createdBy)
-func (s *Store) PlanFavoriteCollectionByUser(logger *zap.Logger, EUAID string, archived bool) ([]*models.PlanFavorite, error) {
-	favorites := []*models.PlanFavorite{}
-
-	stmt, err := s.db.PrepareNamed(planFavoriteCollectionByUserSQL)
-	if err != nil {
-		return nil, err
-	}
-	arg := map[string]interface{}{
-		"user_id": EUAID,
-	}
-
-	err = stmt.Select(&favorites, arg)
-
-	if err != nil {
-		logger.Error(
-			"Failed to fetch plan favorites",
-			zap.Error(err),
-			zap.String("user_id", EUAID),
-		)
-		return nil, &apperrors.QueryError{
-			Err:       err,
-			Model:     EUAID,
-			Operation: apperrors.QueryFetch,
-		}
-	}
-
-	return favorites, nil
-}
 
 //PlanFavoriteCreate creates and returns a plan favorite object
 func (s *Store) PlanFavoriteCreate(logger *zap.Logger, favorite models.PlanFavorite) (*models.PlanFavorite, error) {
@@ -102,8 +68,8 @@ func (s *Store) PlanFavoriteDelete(logger *zap.Logger, EUAID string, planID uuid
 	return &delFavorite, nil
 }
 
-//PlanFavoriteGet returns a plan favorite
-func (s *Store) PlanFavoriteGet(logger *zap.Logger, EUAID string, modelPlanID uuid.UUID) (*models.PlanFavorite, error) {
+//PlanFavoriteGetByModelIDAndEUA returns a plan favorite
+func (s *Store) PlanFavoriteGetByModelIDAndEUA(logger *zap.Logger, EUAID string, modelPlanID uuid.UUID) (*models.PlanFavorite, error) {
 	stmt, err := s.db.PrepareNamed(planFavoriteGetSQL)
 	if err != nil {
 		return nil, err

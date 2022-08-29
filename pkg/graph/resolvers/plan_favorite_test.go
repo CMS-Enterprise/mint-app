@@ -4,23 +4,6 @@ import (
 	"github.com/cmsgov/mint-app/pkg/authentication"
 )
 
-//PlanFavoriteCollection returns a list of favorites
-func (suite *ResolverSuite) TestPlanFavoriteCollection() {
-	princ := &authentication.EUAPrincipal{
-		EUAID:             suite.testConfigs.UserInfo.EuaUserID,
-		JobCodeUSER:       true,
-		JobCodeASSESSMENT: true,
-	}
-	plan := suite.createModelPlan("My Favorite Plan")
-
-	_, err := PlanFavoriteCreate(suite.testConfigs.Logger, princ, suite.testConfigs.Store, plan.ID)
-
-	suite.NoError(err)
-	favCol, err := PlanFavoriteCollection(suite.testConfigs.Logger, princ, suite.testConfigs.Store)
-	suite.NoError(err)
-	suite.Len(favCol, 1)
-}
-
 //IsPlanFavorited checks if a model plan is a favorite.
 func (suite *ResolverSuite) TestIsPlanFavorited() {
 
