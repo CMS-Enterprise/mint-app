@@ -21,7 +21,7 @@ func ModelPlanCreate(logger *zap.Logger, modelName string, store *storage.Store,
 		},
 	}
 
-	err := BaseStructPreCreate(logger, plan, principal, store, false)
+	err := BaseStructPreCreate(logger, plan, principal, store, false) //We don't check access here, because the user can't yet be a collaborator. Collaborators are created after ModelPlan initiation.
 	if err != nil {
 		return nil, err
 	}
