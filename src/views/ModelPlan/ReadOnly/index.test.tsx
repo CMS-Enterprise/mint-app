@@ -101,11 +101,14 @@ describe('Read Only Model Plan Summary', () => {
 
     await waitFor(() => {
       expect(screen.getByTestId('read-only-model-summary')).toBeInTheDocument();
+      expect(
+        screen.getByTestId('read-only-model-plan__contact-info')
+      ).toBeInTheDocument();
     });
     expect(asFragment()).toMatchSnapshot();
   });
 
-  describe.only('Status Tag updates', () => {
+  describe('Status Tag updates', () => {
     it('renders "ICIP complete" tag and alert', async () => {
       mock[0].result.data.modelPlan.status = ModelStatus.ICIP_COMPLETE;
       render(
