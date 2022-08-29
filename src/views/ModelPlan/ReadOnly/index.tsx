@@ -8,10 +8,7 @@ import {
   Grid,
   GridContainer,
   IconArrowBack,
-  IconArrowForward,
   IconExpandMore,
-  IconLaunch,
-  Link,
   SummaryBox
 } from '@trussworks/react-uswds';
 import classnames from 'classnames';
@@ -38,6 +35,7 @@ import { NotFoundPartial } from 'views/NotFound';
 
 import TaskListStatus from '../TaskList/_components/TaskListStatus';
 
+import ContactInfo from './_components/ContactInfo';
 import MobileNav from './_components/MobileNav';
 import SideNav from './_components/Sidenav';
 
@@ -348,50 +346,7 @@ const ReadOnly = () => {
                         'sticky-nav': !isMobile
                       })}
                     >
-                      {/* Setting a ref here to reference the grid width for the fixed side nav */}
-                      <div className="model-plan__model-leads__wrapper model-leads padding-y-1">
-                        <p className="font-body-xs margin-top-0 margin-bottom-3">
-                          {h('contactInfo.modelLeads')}
-                        </p>
-                        <div className="model-lead__member margin-bottom-3">
-                          <h3 className="system-profile__subheader margin-bottom-1">
-                            {/* {getPersonFullName(role)} */}
-                            Jane McModelteam
-                          </h3>
-                          <Link
-                            aria-label={h('contactInfo.sendAnEmail')}
-                            className="line-height-body-5 e"
-                            href="mailto:fakeemail@asdf.com"
-                            target="_blank"
-                          >
-                            {h('contactInfo.sendAnEmail')}
-                            <IconLaunch className="margin-left-05 margin-bottom-2px text-tbottom" />
-                          </Link>
-                        </div>
-                        <div className="model-lead__member margin-bottom-3">
-                          <h3 className="system-profile__subheader margin-bottom-1">
-                            {/* {getPersonFullName(role)} */}
-                            Laura Rodriguez
-                          </h3>
-                          <Link
-                            aria-label={h('contactInfo.sendAnEmail')}
-                            className="line-height-body-5 e"
-                            href="mailto:fakeemail@asdf.com"
-                            target="_blank"
-                          >
-                            {h('contactInfo.sendAnEmail')}
-                            <IconLaunch className="margin-left-05 margin-bottom-2px text-tbottom" />
-                          </Link>
-                        </div>
-                        <UswdsReactLink
-                          aria-label={h('contactInfo.moreTeamMembers')}
-                          className="line-height-body-5 display-flex flex-align-center "
-                          to="/"
-                        >
-                          {h('contactInfo.moreTeamMembers')}
-                          <IconArrowForward className="margin-left-1" />
-                        </UswdsReactLink>
-                      </div>
+                      <ContactInfo />
                     </Grid>
                   </Grid>
                 </GridContainer>
