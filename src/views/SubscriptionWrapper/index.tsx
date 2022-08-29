@@ -96,7 +96,6 @@ const SubscriptionWrapper = ({ children }: SubscriptionWrapperProps) => {
   useEffect(() => {
     if (validModelID && subscribeToMore && taskList) {
       // useLazyQuery hook to fetch existing subscription data on new modelID
-
       getTaskListLocks({ variables: { modelPlanID: modelID } });
 
       if (data) {
