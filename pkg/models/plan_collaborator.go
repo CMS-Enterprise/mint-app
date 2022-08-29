@@ -7,6 +7,7 @@ type PlanCollaborator struct {
 	EUAUserID string   `json:"euaUserId" db:"eua_user_id"`
 	FullName  string   `json:"fullName" db:"full_name"`
 	TeamRole  TeamRole `json:"teamRole" db:"team_role"`
+	Email     string   `json:"email" db:"email"`
 }
 
 // TeamRole represents the role of a team member

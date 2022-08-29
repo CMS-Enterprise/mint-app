@@ -4,3 +4,8 @@ CONSTRAINT CHECK_VALID_EUA_ID CHECK (
 );
 
 CREATE DOMAIN ZERO_STRING AS TEXT CHECK (length(value) > 0);
+
+CREATE DOMAIN EMAIL AS TEXT
+CONSTRAINT CHECK_VALID_EMAIL CHECK (
+    VALUE ~ '^[a-zA-Z0-9.!#$%&''*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$'
+);
