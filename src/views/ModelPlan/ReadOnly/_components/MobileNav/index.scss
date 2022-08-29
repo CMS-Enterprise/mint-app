@@ -16,11 +16,23 @@
 
     &.subNav {
       li {
-        margin-bottom: 0.75rem;
+        margin-bottom: 1rem;
+        line-height: 1.62;
 
         &.subNav__item--group-border {
           border-bottom: 1px solid $mint-blue;
           padding-bottom: 0.75rem;
+        }
+
+        &.subNav__item--back-to-all-models {
+          border-top: 1px solid $mint-blue;
+          padding-top: 2rem;
+          margin-bottom: 0;
+
+          a {
+            color: color('white');
+            text-decoration: underline;
+          }
         }
       }
 

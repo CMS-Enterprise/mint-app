@@ -1,7 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { NavLink } from 'react-router-dom';
-import { IconExpandLess, IconExpandMore } from '@trussworks/react-uswds';
+import {
+  IconArrowBack,
+  IconExpandLess,
+  IconExpandMore
+} from '@trussworks/react-uswds';
 
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 
@@ -16,6 +20,7 @@ interface MobileNavProps {
 
 const MobileNav = ({ subComponents, subinfo }: MobileNavProps) => {
   const { t } = useTranslation('modelSummary');
+  const { t: h } = useTranslation('generalReadOnly');
   const isMobile = useCheckResponsiveScreen('tablet');
   const [isAccordionOpen, setIsAccordionOpen] = useState<boolean>(false);
 
@@ -67,6 +72,12 @@ const MobileNav = ({ subComponents, subinfo }: MobileNavProps) => {
                 </NavLink>
               </li>
             ))}
+            <li className="subNav__item--back-to-all-models">
+              <NavLink to="/models" className="display-flex flex-align-center">
+                <IconArrowBack className="margin-right-1" />
+                {h('back')}
+              </NavLink>
+            </li>
           </ul>
         </div>
       )}
