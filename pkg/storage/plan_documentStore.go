@@ -53,7 +53,9 @@ func (s *Store) PlanDocumentCreate(
 
 	document := models.PlanDocument{
 
-		ModelPlanID:          inputDocument.ModelPlanID,
+		ModelPlanRelation: models.ModelPlanRelation{
+			ModelPlanID: inputDocument.ModelPlanID,
+		},
 		FileType:             inputDocument.FileType,
 		Bucket:               *s3Client.GetBucket(),
 		FileKey:              key,

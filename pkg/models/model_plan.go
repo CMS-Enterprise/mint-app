@@ -1,11 +1,18 @@
 package models
 
+import "github.com/google/uuid"
+
 // ModelPlan is the top-level object for an entire draft model plan
 type ModelPlan struct {
 	BaseStruct
 	ModelName string      `json:"modelName" db:"model_name"`
 	Archived  bool        `json:"archived" db:"archived"`
 	Status    ModelStatus `json:"status" db:"status"`
+}
+
+//GetModelPlanID returns the modelPlanID of the task list section
+func (m ModelPlan) GetModelPlanID() uuid.UUID {
+	return m.ID
 }
 
 // ModelCategory represents the category of a model

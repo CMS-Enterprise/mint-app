@@ -77,7 +77,7 @@ func (s *Store) PlanBeneficiariesGetByID(logger *zap.Logger, id uuid.UUID) (*mod
 }
 
 // PlanBeneficiariesGetByModelPlanID returns the plan general characteristics for a given model plan id
-func (s *Store) PlanBeneficiariesGetByModelPlanID(logger *zap.Logger, principal string, modelPlanID uuid.UUID) (*models.PlanBeneficiaries, error) {
+func (s *Store) PlanBeneficiariesGetByModelPlanID(logger *zap.Logger, modelPlanID uuid.UUID) (*models.PlanBeneficiaries, error) {
 	b := models.PlanBeneficiaries{}
 
 	statement, err := s.db.PrepareNamed(planBeneficiariesGetByModelPlanIDSQL)

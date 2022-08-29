@@ -20,6 +20,21 @@ func (e *UnauthorizedError) Unwrap() error {
 	return e.Err
 }
 
+//NotCollaboratorError is a typed error for when a user is not a collaborator
+type NotCollaboratorError struct {
+	Err error
+}
+
+// Error provides the error as a string
+func (e NotCollaboratorError) Error() string {
+	return fmt.Sprintf("user is not a collaborator: %s", e.Err)
+}
+
+// Unwrap provides the underlying error
+func (e NotCollaboratorError) Unwrap() error {
+	return e.Err
+}
+
 // QueryOperation provides a set of operations that can fail
 type QueryOperation string
 

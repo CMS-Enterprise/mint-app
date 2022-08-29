@@ -4,19 +4,20 @@ import (
 	"github.com/google/uuid"
 	"go.uber.org/zap"
 
+	"github.com/cmsgov/mint-app/pkg/authentication"
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/storage"
 )
 
 //PlanOpsEvalAndLearningUpdate updates a PlanOpsEvalAndLearning buisness object
-func PlanOpsEvalAndLearningUpdate(logger *zap.Logger, id uuid.UUID, changes map[string]interface{}, principal string, store *storage.Store) (*models.PlanOpsEvalAndLearning, error) {
+func PlanOpsEvalAndLearningUpdate(logger *zap.Logger, id uuid.UUID, changes map[string]interface{}, principal authentication.Principal, store *storage.Store) (*models.PlanOpsEvalAndLearning, error) {
 	//Get existing  PlanOpsEvalAndLearning
 	existing, err := store.PlanOpsEvalAndLearningGetByID(logger, id)
 	if err != nil {
 		return nil, err
 	}
 
-	err = BaseTaskListSectionPreUpdate(existing, changes, principal)
+	err = BaseTaskListSectionPreUpdate(logger, existing, changes, principal, store)
 	if err != nil {
 		return nil, err
 	}

@@ -15,9 +15,7 @@ func (suite *ResolverSuite) TestPlanPaymentsUpdate() {
 		"payType":           []string{"CLAIMS_BASED_PAYMENTS"},
 	}
 
-	updater := "UPDT"
-
-	updatedPP, err := PlanPaymentsUpdate(suite.testConfigs.Logger, suite.testConfigs.Store, pp.ID, changes, updater)
+	updatedPP, err := PlanPaymentsUpdate(suite.testConfigs.Logger, suite.testConfigs.Store, pp.ID, changes, suite.testConfigs.Principal)
 
 	suite.NoError(err)
 	suite.EqualValues(plan.ID, pp.ModelPlanID)

@@ -77,7 +77,7 @@ func (s *Store) PlanGeneralCharacteristicsGetByID(logger *zap.Logger, id uuid.UU
 }
 
 // PlanGeneralCharacteristicsGetByModelPlanID returns the plan general characteristics for a given model plan id
-func (s *Store) PlanGeneralCharacteristicsGetByModelPlanID(logger *zap.Logger, principal string, modelPlanID uuid.UUID) (*models.PlanGeneralCharacteristics, error) {
+func (s *Store) PlanGeneralCharacteristicsGetByModelPlanID(logger *zap.Logger, modelPlanID uuid.UUID) (*models.PlanGeneralCharacteristics, error) {
 	gc := models.PlanGeneralCharacteristics{}
 
 	statement, err := s.db.PrepareNamed(planGeneralCharacteristicsGetByModelPlanIDSQL)
@@ -86,8 +86,6 @@ func (s *Store) PlanGeneralCharacteristicsGetByModelPlanID(logger *zap.Logger, p
 	}
 
 	arg := map[string]interface{}{
-		"modified_by":   principal,
-		"created_by":    principal,
 		"model_plan_id": modelPlanID,
 	}
 

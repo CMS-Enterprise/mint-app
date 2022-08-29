@@ -77,7 +77,7 @@ func (s *Store) PlanBasicsGetByID(logger *zap.Logger, id uuid.UUID) (*models.Pla
 }
 
 // PlanBasicsGetByModelPlanID returns the plan basics for a given model plan id
-func (s *Store) PlanBasicsGetByModelPlanID(logger *zap.Logger, principal *string, modelPlanID uuid.UUID) (*models.PlanBasics, error) {
+func (s *Store) PlanBasicsGetByModelPlanID(logger *zap.Logger, modelPlanID uuid.UUID) (*models.PlanBasics, error) {
 	plan := models.PlanBasics{}
 
 	statement, err := s.db.PrepareNamed(planBasicsGetByModelPlanIDSQL)
@@ -86,8 +86,6 @@ func (s *Store) PlanBasicsGetByModelPlanID(logger *zap.Logger, principal *string
 	}
 
 	arg := map[string]interface{}{
-		"modified_by":   principal,
-		"created_by":    principal,
 		"model_plan_id": modelPlanID,
 	}
 
