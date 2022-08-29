@@ -8,7 +8,7 @@ import (
 func (suite *ResolverSuite) TestFetchPlanGeneralCharacteristicsByModelPlanID() {
 	plan := suite.createModelPlan("Plan For General Characteristics") // should create the general characteristics as part of the resolver
 
-	gc, err := FetchPlanGeneralCharacteristicsByModelPlanID(suite.testConfigs.Logger, suite.testConfigs.UserInfo.EuaUserID, plan.ID, suite.testConfigs.Store)
+	gc, err := FetchPlanGeneralCharacteristicsByModelPlanID(suite.testConfigs.Logger, plan.ID, suite.testConfigs.Store)
 
 	suite.NoError(err)
 	suite.EqualValues(plan.ID, gc.ModelPlanID)
@@ -73,7 +73,7 @@ func (suite *ResolverSuite) TestFetchPlanGeneralCharacteristicsByModelPlanID() {
 func (suite *ResolverSuite) TestUpdatePlanGeneralCharacteristics() {
 	plan := suite.createModelPlan("Plan For General Characteristics") // should create the general characteristics as part of the resolver
 
-	gc, err := FetchPlanGeneralCharacteristicsByModelPlanID(suite.testConfigs.Logger, suite.testConfigs.UserInfo.EuaUserID, plan.ID, suite.testConfigs.Store)
+	gc, err := FetchPlanGeneralCharacteristicsByModelPlanID(suite.testConfigs.Logger, plan.ID, suite.testConfigs.Store)
 	suite.NoError(err)
 
 	changes := map[string]interface{}{
@@ -84,10 +84,9 @@ func (suite *ResolverSuite) TestUpdatePlanGeneralCharacteristics() {
 		"alternativePaymentModelTypes": []string{model.AlternativePaymentModelTypeMips.String(), model.AlternativePaymentModelTypeAdvanced.String()},
 		"AlternativePaymentModelNote":  "Has 2 APM types!",
 	}
-	updater := "UPDT"
-	updatedGeneralCharacteristics, err := UpdatePlanGeneralCharacteristics(suite.testConfigs.Logger, gc.ID, changes, updater, suite.testConfigs.Store)
+	updatedGeneralCharacteristics, err := UpdatePlanGeneralCharacteristics(suite.testConfigs.Logger, gc.ID, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
 	suite.NoError(err)
-	suite.EqualValues(updater, *updatedGeneralCharacteristics.ModifiedBy)
+	suite.EqualValues(suite.testConfigs.Principal.EUAID, *updatedGeneralCharacteristics.ModifiedBy)
 
 	// Assert that the updated fields are right
 	suite.True(*updatedGeneralCharacteristics.HasComponentsOrTracks)

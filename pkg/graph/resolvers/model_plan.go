@@ -4,6 +4,7 @@ import (
 	"github.com/google/uuid"
 	"go.uber.org/zap"
 
+	"github.com/cmsgov/mint-app/pkg/authentication"
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/storage"
 )
@@ -11,13 +12,18 @@ import (
 // ModelPlanCreate implements resolver logic to create a model plan
 // TODO Revist this function, as we probably want to add all of these DB entries inthe scope of a single SQL transaction
 // so that we can roll back if there is an error with any of these calls.
-func ModelPlanCreate(logger *zap.Logger, modelName string, store *storage.Store, principalInfo *models.UserInfo) (*models.ModelPlan, error) {
+func ModelPlanCreate(logger *zap.Logger, modelName string, store *storage.Store, principalInfo *models.UserInfo, principal authentication.Principal) (*models.ModelPlan, error) {
 	plan := &models.ModelPlan{
 		ModelName: modelName,
 		Status:    models.ModelStatusPlanDraft,
 		BaseStruct: models.BaseStruct{
 			CreatedBy: principalInfo.EuaUserID,
 		},
+	}
+
+	err := BaseStructPreCreate(logger, plan, principal, store, false) //We don't check access here, because the user can't yet be a collaborator. Collaborators are created after ModelPlan initiation.
+	if err != nil {
+		return nil, err
 	}
 
 	// Create the model plan itself
@@ -28,10 +34,12 @@ func ModelPlanCreate(logger *zap.Logger, modelName string, store *storage.Store,
 
 	// Create an initial collaborator for the plan
 	collab := &models.PlanCollaborator{
-		ModelPlanID: createdPlan.ID,
-		EUAUserID:   principalInfo.EuaUserID,
-		FullName:    principalInfo.CommonName,
-		TeamRole:    models.TeamRoleModelLead,
+		ModelPlanRelation: models.ModelPlanRelation{
+			ModelPlanID: createdPlan.ID,
+		},
+		EUAUserID: principalInfo.EuaUserID,
+		FullName:  principalInfo.CommonName,
+		TeamRole:  models.TeamRoleModelLead,
 		BaseStruct: models.BaseStruct{
 			CreatedBy: principalInfo.EuaUserID,
 		},
@@ -110,14 +118,14 @@ func ModelPlanCreate(logger *zap.Logger, modelName string, store *storage.Store,
 }
 
 // ModelPlanUpdate implements resolver logic to update a model plan
-func ModelPlanUpdate(logger *zap.Logger, id uuid.UUID, changes map[string]interface{}, principal string, store *storage.Store) (*models.ModelPlan, error) {
+func ModelPlanUpdate(logger *zap.Logger, id uuid.UUID, changes map[string]interface{}, principal authentication.Principal, store *storage.Store) (*models.ModelPlan, error) {
 	// Get existing plan
 	existingPlan, err := store.ModelPlanGetByID(logger, id)
 	if err != nil {
 		return nil, err
 	}
 
-	err = BaseStructPreUpdate(existingPlan, changes, principal)
+	err = BaseStructPreUpdate(logger, existingPlan, changes, principal, store, true, true)
 	if err != nil {
 		return nil, err
 	}
@@ -131,19 +139,18 @@ func ModelPlanUpdate(logger *zap.Logger, id uuid.UUID, changes map[string]interf
 }
 
 // ModelPlanGetByID implements resolver logic to get a model plan by its ID
-func ModelPlanGetByID(logger *zap.Logger, principal string, id uuid.UUID, store *storage.Store) (*models.ModelPlan, error) {
+func ModelPlanGetByID(logger *zap.Logger, id uuid.UUID, store *storage.Store) (*models.ModelPlan, error) {
 	plan, err := store.ModelPlanGetByID(logger, id)
 	if err != nil {
 		return nil, err
 	}
-	//TODO add job code authorization Checks?
 
 	return plan, nil
 }
 
 // ModelPlanCollectionByUser implements resolver logic to get a list of model plans by who's a collaborator on them (TODO)
-func ModelPlanCollectionByUser(logger *zap.Logger, principal string, store *storage.Store) ([]*models.ModelPlan, error) {
-	plans, err := store.ModelPlanCollectionByUser(logger, principal, false)
+func ModelPlanCollectionByUser(logger *zap.Logger, principal authentication.Principal, store *storage.Store) ([]*models.ModelPlan, error) {
+	plans, err := store.ModelPlanCollectionByUser(logger, principal.ID(), false)
 	if err != nil {
 		return nil, err
 	}

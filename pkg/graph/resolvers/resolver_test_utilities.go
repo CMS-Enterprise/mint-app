@@ -2,6 +2,7 @@ package resolvers
 
 import (
 	"github.com/cmsgov/mint-app/pkg/appconfig"
+	"github.com/cmsgov/mint-app/pkg/authentication"
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/shared/pubsub"
 
@@ -14,12 +15,13 @@ import (
 
 // TestConfigs is a struct that contains all the dependencies needed to run a test
 type TestConfigs struct {
-	DBConfig storage.DBConfig
-	LDClient *ld.LDClient
-	Logger   *zap.Logger
-	UserInfo *models.UserInfo
-	Store    *storage.Store
-	PubSub   *pubsub.ServicePubSub
+	DBConfig  storage.DBConfig
+	LDClient  *ld.LDClient
+	Logger    *zap.Logger
+	UserInfo  *models.UserInfo
+	Store     *storage.Store
+	PubSub    *pubsub.ServicePubSub
+	Principal *authentication.EUAPrincipal
 }
 
 // GetDefaultTestConfigs returns a TestConfigs struct with all the dependencies needed to run a test
@@ -31,7 +33,7 @@ func GetDefaultTestConfigs() *TestConfigs {
 
 // GetDefaults sets the dependencies for the TestConfigs struct
 func (tc *TestConfigs) GetDefaults() {
-	config, ldClient, logger, userInfo, ps := getTestDependencies()
+	config, ldClient, logger, userInfo, ps, princ := getTestDependencies()
 	store, _ := storage.NewStore(logger, config, ldClient)
 	tc.DBConfig = config
 	tc.LDClient = ldClient
@@ -39,6 +41,8 @@ func (tc *TestConfigs) GetDefaults() {
 	tc.UserInfo = userInfo
 	tc.Store = store
 	tc.PubSub = ps
+
+	tc.Principal = princ
 }
 
 // NewDBConfig returns a DBConfig struct with values from appconfig
@@ -56,7 +60,7 @@ func NewDBConfig() storage.DBConfig {
 	}
 }
 
-func getTestDependencies() (storage.DBConfig, *ld.LDClient, *zap.Logger, *models.UserInfo, *pubsub.ServicePubSub) {
+func getTestDependencies() (storage.DBConfig, *ld.LDClient, *zap.Logger, *models.UserInfo, *pubsub.ServicePubSub, *authentication.EUAPrincipal) {
 	config := NewDBConfig()
 	ldClient, _ := ld.MakeCustomClient("fake", ld.Config{Offline: true}, 0)
 	logger := zap.NewNop()
@@ -67,6 +71,12 @@ func getTestDependencies() (storage.DBConfig, *ld.LDClient, *zap.Logger, *models
 	}
 	ps := pubsub.NewServicePubSub()
 
-	return config, ldClient, logger, userInfo, ps
+	princ := &authentication.EUAPrincipal{
+		EUAID:             userInfo.EuaUserID,
+		JobCodeUSER:       true,
+		JobCodeASSESSMENT: true,
+	}
+
+	return config, ldClient, logger, userInfo, ps, princ
 
 }

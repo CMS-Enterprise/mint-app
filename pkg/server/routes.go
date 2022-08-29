@@ -157,16 +157,18 @@ func (s *Server) routes(
 		ldClient,
 		s.pubsub,
 	)
-	gqlDirectives := generated.DirectiveRoot{HasRole: func(ctx context.Context, obj interface{}, next graphql.Resolver, role model.Role) (res interface{}, err error) {
-		hasRole, err := services.HasRole(ctx, role)
-		if err != nil {
-			return nil, err
-		}
-		if !hasRole {
-			return nil, errors.New("not authorized")
-		}
-		return next(ctx)
-	}}
+	gqlDirectives := generated.DirectiveRoot{
+		HasRole: func(ctx context.Context, obj interface{}, next graphql.Resolver, role model.Role) (res interface{}, err error) {
+			hasRole, err := services.HasRole(ctx, role)
+			if err != nil {
+				return nil, err
+			}
+			if !hasRole {
+				return nil, errors.New("not authorized")
+			}
+			return next(ctx)
+
+		}}
 	gqlConfig := generated.Config{Resolvers: resolver, Directives: gqlDirectives}
 	graphqlServer := handler.NewDefaultServer(generated.NewExecutableSchema(gqlConfig))
 	graphqlServer.Use(extension.FixedComplexityLimit(1000))
