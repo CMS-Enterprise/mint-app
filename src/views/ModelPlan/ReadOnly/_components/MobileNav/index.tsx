@@ -51,7 +51,9 @@ const MobileNav = ({ subComponents, subinfo }: MobileNavProps) => {
             {Object.keys(subComponents).map((key: string) => (
               <li
                 key={key}
-                className={key === 'itTools' ? 'nav-group-border' : ''}
+                className={
+                  key === 'it-tools' ? 'subNav__item--group-border' : ''
+                }
               >
                 <NavLink
                   to={subComponents[key].route}
