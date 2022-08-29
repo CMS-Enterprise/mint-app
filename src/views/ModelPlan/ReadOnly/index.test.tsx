@@ -104,6 +104,9 @@ describe('Read Only Model Plan Summary', () => {
       expect(
         screen.getByTestId('read-only-model-plan__contact-info')
       ).toBeInTheDocument();
+      expect(
+        screen.getByTestId('read-only-side-nav__wrapper')
+      ).toBeInTheDocument();
     });
     expect(asFragment()).toMatchSnapshot();
   });
