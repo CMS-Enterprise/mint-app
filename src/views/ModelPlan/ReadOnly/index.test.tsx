@@ -51,11 +51,11 @@ describe('Read Only Model Plan Summary', () => {
     render(
       <MemoryRouter
         initialEntries={[
-          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/read-only'
+          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/read-only/model-basics'
         ]}
       >
         <MockedProvider mocks={mock} addTypename={false}>
-          <Route path="/models/:modelID/read-only">
+          <Route path="/models/:modelID/read-only/:subinfo">
             <ReadOnly />
           </Route>
         </MockedProvider>
@@ -88,11 +88,11 @@ describe('Read Only Model Plan Summary', () => {
     const { asFragment } = render(
       <MemoryRouter
         initialEntries={[
-          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/read-only'
+          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/read-only/model-basics'
         ]}
       >
         <MockedProvider mocks={mock} addTypename={false}>
-          <Route path="/models/:modelID/read-only">
+          <Route path="/models/:modelID/read-only/:subinfo">
             <ReadOnly />
           </Route>
         </MockedProvider>
@@ -111,11 +111,11 @@ describe('Read Only Model Plan Summary', () => {
       render(
         <MemoryRouter
           initialEntries={[
-            '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/read-only'
+            '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/read-only/model-basics'
           ]}
         >
           <MockedProvider mocks={mock} addTypename={false}>
-            <Route path="/models/:modelID/read-only">
+            <Route path="/models/:modelID/read-only/:subinfo">
               <ReadOnly />
             </Route>
           </MockedProvider>
@@ -135,11 +135,11 @@ describe('Read Only Model Plan Summary', () => {
       render(
         <MemoryRouter
           initialEntries={[
-            '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/read-only'
+            '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/read-only/model-basics'
           ]}
         >
           <MockedProvider mocks={mock} addTypename={false}>
-            <Route path="/models/:modelID/read-only">
+            <Route path="/models/:modelID/read-only/:subinfo">
               <ReadOnly />
             </Route>
           </MockedProvider>

@@ -338,7 +338,6 @@ const ReadOnly = () => {
                   <Grid row gap>
                     {/* Central component */}
                     <Grid desktop={{ col: 8 }}>{subComponent.component}</Grid>
-
                     {/* Contact info sidebar */}
                     <Grid
                       desktop={{ col: 4 }}
