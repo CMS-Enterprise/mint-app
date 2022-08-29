@@ -29,7 +29,10 @@ const SideNav = ({ subComponents }: SideNavProps) => {
   );
 
   return (
-    <div id="read-only-side-nav__wrapper">
+    <div
+      id="read-only-side-nav__wrapper"
+      data-testid="read-only-side-nav__wrapper"
+    >
       <TrussSideNav items={subNavigationLinks} />
     </div>
   );
