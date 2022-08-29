@@ -51,6 +51,7 @@ const ITToolsSummary = ({
         </PageHeading>
         <p className="margin-bottom-3">{t('modal.subHeading')}</p>
         <UswdsReactLink
+          data-testid="return-to-task-list"
           className="margin-right-2 usa-button text-white text-no-underline"
           to={`/models/${modelID}/task-list`}
         >
@@ -119,6 +120,7 @@ const ITToolsSummary = ({
         ) : (
           <Button
             type="button"
+            data-testid={`it-tools-locked-${scrollElememnt}`}
             className="usa-button usa-button--unstyled"
             onClick={() => setModalOpen(true)}
           >

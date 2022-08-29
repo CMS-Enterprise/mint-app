@@ -31,7 +31,7 @@ export enum LockStatus {
 }
 
 type TaskListSectionMapType = {
-  [key: string]: string;
+  [key: string]: TaskListSection;
 };
 
 // Map used to connect url route to Subscription Task List Section
@@ -49,7 +49,7 @@ export const taskListSectionMap: TaskListSectionMapType = {
 // Returns - LOCKED || UNLOCKED || OCCUPYING
 export const findLockedSection = (
   locks: LockSectionType[],
-  route: string,
+  route: TaskListSection,
   userEUA?: string
 ): LockStatus => {
   const foundLockedSection = locks.find(
@@ -85,7 +85,7 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
 
   let lockState: LockStatus;
 
-  const taskListSection = taskListSectionMap[taskListRoute];
+  const taskListSection: TaskListSection = taskListSectionMap[taskListRoute];
 
   const { authState } = useOktaAuth();
 

@@ -20,7 +20,7 @@ type SubscriptionWrapperProps = {
 };
 
 // Updates SubscriptionContext on the addition of lock
-const addLockedSection = (
+export const addLockedSection = (
   locksToUpdate: LockSectionType[] = [],
   lockSection: LockSectionType
 ) => {
@@ -42,7 +42,7 @@ const addLockedSection = (
 };
 
 // Updates SubscriptionContext on the removal of lock
-const removeLockedSection = (
+export const removeLockedSection = (
   locksToUpdate: LockSectionType[] = [],
   lockSection: LockSectionType
 ) => {
