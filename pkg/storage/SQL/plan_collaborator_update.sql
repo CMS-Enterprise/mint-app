@@ -4,6 +4,7 @@ SET
     eua_user_id = :eua_user_id,
     full_name = :full_name,
     team_role = :team_role,
+    email = :email,
     modified_by = :modified_by,
     modified_dts = CURRENT_TIMESTAMP
 WHERE plan_collaborator.id = :id
@@ -13,6 +14,7 @@ model_plan_id,
 eua_user_id,
 full_name,
 team_role,
+email,
 created_by,
 created_dts,
 modified_by,

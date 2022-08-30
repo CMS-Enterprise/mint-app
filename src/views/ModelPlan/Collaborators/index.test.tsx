@@ -22,6 +22,7 @@ describe('Collaborator/Team Member page w/table', () => {
                 id: '61c7b30c-969d-4dd4-b13b-a5065f43be43',
                 modelPlanID: 'f11eb129-2c80-4080-9440-439cbe1a286f',
                 euaUserID: 'ABCD',
+                email: 'jdoe@gmail.com',
                 fullName: 'John Doe',
                 teamRole: 'MODEL_LEAD',
                 createdDts: '2022-10-22T00:00:00Z'
