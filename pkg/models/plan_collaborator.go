@@ -1,6 +1,8 @@
 package models
 
 // PlanCollaborator represents a plan collaborator
+// FullName and Email are stored as a result from the initial CEDAR query that's made when we create the collaborator
+// This _could_ cause drift if either of these values change in CEDAR, but it's unlikely.
 type PlanCollaborator struct {
 	BaseStruct
 	ModelPlanRelation
