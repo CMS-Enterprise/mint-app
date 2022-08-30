@@ -94,7 +94,7 @@ b7aa2c9f-9e38-4e95-92d9-60bd791e8c59	6e224030-09d5-46f7-ad04-4bb851b36eab	{MEDIC
 --
 
 COPY public.plan_collaborator (id, model_plan_id, eua_user_id, full_name, team_role, email, created_by, created_dts, modified_by, modified_dts) FROM stdin;
-e6359211-4cdb-4f4e-9025-9d915dae381e	0186774a-80b0-454c-b69e-c4e949343483	TEST	Test User	MODEL_LEAD	TEST	test@local.fake	2022-08-25 22:41:39.456316+00	\N	\N
+e6359211-4cdb-4f4e-9025-9d915dae381e	0186774a-80b0-454c-b69e-c4e949343483	TEST	Test User	MODEL_LEAD	test@local.fake	TEST	2022-08-25 22:41:39.456316+00	\N	\N
 b49e65fd-4767-4aed-b40e-3e1e5c20be57	53054496-6d1f-47f5-b6a0-1edaf73b935e	MINT	mint Doe	MODEL_LEAD	MINT@local.fake	MINT	2022-06-03 17:41:40.840176+00	\N	\N
 736b1d46-b2ac-4d76-89b2-4a231556b1c5	95399697-8c37-4225-b09d-7ca4fd0ad2b0	MINT	mint Doe	MODEL_LEAD	MINT@local.fake	MINT	2022-06-03 17:41:40.874974+00	\N	\N
 62f0908e-d50f-4b2f-a975-0742f46517a3	95399697-8c37-4225-b09d-7ca4fd0ad2b0	BTAL	Betty Alpha	LEADERSHIP	bAlpha@local.fake	MINT	2022-06-03 17:41:40.903246+00	\N	\N
