@@ -179,15 +179,16 @@ const Discussions = ({
         if (!response?.errors) {
           if (discussionType === 'reply' && reply?.id) {
             handleUpdateDiscussion(reply.id);
+          } else {
+            refetch().then(() => {
+              setInitQuestion(false);
+              setDiscussionType('discussion');
+            });
           }
           setDiscussionStatus('success');
           setDiscussionStatusMessage(
             discussionType === 'question' ? t('success') : t('successAnswer')
           );
-          refetch().then(() => {
-            setInitQuestion(false);
-            setDiscussionType('discussion');
-          });
         }
       })
       .catch(() => {

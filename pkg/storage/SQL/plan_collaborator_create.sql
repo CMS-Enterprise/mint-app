@@ -4,6 +4,7 @@ INSERT INTO plan_collaborator (
     eua_user_id,
     full_name,
     team_role,
+    email,
     created_by,
     modified_by
 )
@@ -13,6 +14,7 @@ VALUES (
     :eua_user_id,
     :full_name,
     :team_role,
+    :email,
     :created_by,
     :modified_by
 )
@@ -22,6 +24,7 @@ model_plan_id,
 eua_user_id,
 full_name,
 team_role,
+email,
 created_by,
 created_dts,
 modified_by,
