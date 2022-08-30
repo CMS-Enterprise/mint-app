@@ -8,7 +8,7 @@ import (
 
 // IBaseTaskListSection returns the embedded BaseTaskListSection
 type IBaseTaskListSection interface {
-	GetBaseTaskListSection() *BaseTaskListSection
+	GetBaseTaskListSection() *baseTaskListSection
 	CalcStatus(TaskStatus) error
 	//methods from BaseStruct
 	GetBaseStruct() *baseStruct
@@ -17,8 +17,8 @@ type IBaseTaskListSection interface {
 	GetModifiedBy() *string
 }
 
-// BaseTaskListSection represents all the shared fields in common to a task list section
-type BaseTaskListSection struct {
+// baseTaskListSection represents all the shared fields in common to a task list section
+type baseTaskListSection struct {
 	baseStruct
 	modelPlanRelation
 	ReadyForReviewBy  *string    `json:"readyForReviewBy" db:"ready_for_review_by"`
@@ -27,24 +27,24 @@ type BaseTaskListSection struct {
 }
 
 // NewBaseTaskListSection makes a task list section by a modelPlanID and euaid
-func NewBaseTaskListSection(modelPlanID uuid.UUID, euaid string) BaseTaskListSection {
+func NewBaseTaskListSection(createdBy string, modelPlanID uuid.UUID) baseTaskListSection {
 
-	return BaseTaskListSection{
+	return baseTaskListSection{
 		modelPlanRelation: NewModelPlanRelation(modelPlanID),
 
 		Status:     TaskReady,
-		baseStruct: NewBaseStruct(euaid),
+		baseStruct: NewBaseStruct(createdBy),
 	}
 
 }
 
 //GetBaseTaskListSection returns the BaseTaskListSection Object embedded in the struct
-func (b *BaseTaskListSection) GetBaseTaskListSection() *BaseTaskListSection {
+func (b *baseTaskListSection) GetBaseTaskListSection() *baseTaskListSection {
 	return b
 }
 
 // CalcStatus updates the TaskStatus if it is in ready, but it has been modified.
-func (b *BaseTaskListSection) CalcStatus(oldStatus TaskStatus) error {
+func (b *baseTaskListSection) CalcStatus(oldStatus TaskStatus) error {
 
 	switch b.Status {
 	case TaskReady:
@@ -71,6 +71,6 @@ func (b *BaseTaskListSection) CalcStatus(oldStatus TaskStatus) error {
 }
 
 //GetModelPlanID returns the modelPlanID of the task list section
-func (b BaseTaskListSection) GetModelPlanID() uuid.UUID {
+func (b baseTaskListSection) GetModelPlanID() uuid.UUID {
 	return b.ModelPlanID
 }

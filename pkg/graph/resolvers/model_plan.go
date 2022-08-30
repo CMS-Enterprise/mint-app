@@ -40,13 +40,10 @@ func ModelPlanCreate(logger *zap.Logger, modelName string, store *storage.Store,
 		return nil, err
 	}
 
-	baseTaskList := models.NewBaseTaskListSection(createdPlan.ID, principalInfo.EuaUserID) //make a taskList status, with status Ready
-	//TODO, should we make a BASE STRUCT FIRST? Then we can pass that to every sub struct
+	baseTaskList := models.NewBaseTaskListSection(principalInfo.EuaUserID, createdPlan.ID) //make a taskList status, with status Ready
 
 	// Create a default plan basics object
-	basics := &models.PlanBasics{
-		BaseTaskListSection: baseTaskList,
-	}
+	basics := models.NewPlanBasics(baseTaskList)
 
 	_, err = store.PlanBasicsCreate(logger, basics)
 	if err != nil {
@@ -54,52 +51,46 @@ func ModelPlanCreate(logger *zap.Logger, modelName string, store *storage.Store,
 	}
 
 	// Create a default plan general characteristics object
-	generalCharacteristics := &models.PlanGeneralCharacteristics{
-		BaseTaskListSection: baseTaskList,
-	}
+	generalCharacteristics := models.NewPlanGeneralCharacteristics(baseTaskList)
+
 	_, err = store.PlanGeneralCharacteristicsCreate(logger, generalCharacteristics)
 	if err != nil {
 		return nil, err
 	}
 	// Create a default Plan Beneficiares object
-	beneficiaries := &models.PlanBeneficiaries{
-		BaseTaskListSection: baseTaskList,
-	}
+	beneficiaries := models.NewPlanBeneficiaries(baseTaskList)
+
 	_, err = store.PlanBeneficiariesCreate(logger, beneficiaries)
 	if err != nil {
 		return nil, err
 	}
 	//Create a default Plan Participants and Providers object
-	participantsAndProviders := &models.PlanParticipantsAndProviders{
-		BaseTaskListSection: baseTaskList,
-	}
+	participantsAndProviders := models.NewPlanParticipantsAndProviders(baseTaskList)
+
 	_, err = store.PlanParticipantsAndProvidersCreate(logger, participantsAndProviders)
 	if err != nil {
 		return nil, err
 	}
 
 	//Create default Plan OpsEvalAndLearning object
-	opsEvalAndLearning := &models.PlanOpsEvalAndLearning{
-		BaseTaskListSection: baseTaskList,
-	}
+	opsEvalAndLearning := models.NewPlanOpsEvalAndLearning(baseTaskList)
+
 	_, err = store.PlanOpsEvalAndLearningCreate(logger, opsEvalAndLearning)
 	if err != nil {
 		return nil, err
 	}
 
 	//Create default PlanPayments object
-	planPayments := &models.PlanPayments{
-		BaseTaskListSection: baseTaskList,
-	}
+	planPayments := models.NewPlanPayments(baseTaskList)
+
 	_, err = store.PlanPaymentsCreate(logger, planPayments)
 	if err != nil {
 		return nil, err
 	}
 
 	//Create default PlanITTools object
-	itTools := &models.PlanITTools{
-		BaseTaskListSection: baseTaskList,
-	}
+	itTools := models.NewPlanITTools(baseTaskList)
+
 	_, err = store.PlanITToolsCreate(logger, itTools)
 	if err != nil {
 		return nil, err

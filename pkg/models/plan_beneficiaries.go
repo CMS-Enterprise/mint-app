@@ -6,7 +6,7 @@ import (
 
 //PlanBeneficiaries represents the beneficiaries section of the model plan task list
 type PlanBeneficiaries struct {
-	BaseTaskListSection
+	baseTaskListSection
 
 	//page 1
 	Beneficiaries                         pq.StringArray  `json:"beneficiaries" db:"beneficiaries"`
@@ -34,4 +34,11 @@ type PlanBeneficiaries struct {
 	BeneficiaryOverlap                 *OverlapType   `json:"beneficiaryOverlap" db:"beneficiary_overlap" statusWeight:"1"`
 	BeneficiaryOverlapNote             *string        `json:"beneficiaryOverlapNote" db:"beneficiary_overlap_note"`
 	PrecedenceRules                    *string        `json:"precedenceRules" db:"precedence_rules"`
+}
+
+//NewPlanBeneficiaries returns a new plan Beneficiaries
+func NewPlanBeneficiaries(tls baseTaskListSection) *PlanBeneficiaries {
+	return &PlanBeneficiaries{
+		baseTaskListSection: tls,
+	}
 }

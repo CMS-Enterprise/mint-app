@@ -6,7 +6,7 @@ import (
 
 // PlanGeneralCharacteristics represents the "general characteristics" section of a plan
 type PlanGeneralCharacteristics struct {
-	BaseTaskListSection
+	baseTaskListSection
 
 	// Page 1
 	IsNewModel                  *bool          `json:"isNewModel" db:"is_new_model" statusWeight:"1"`
@@ -68,4 +68,11 @@ type PlanGeneralCharacteristics struct {
 	WaiversRequired               *bool          `json:"waiversRequired" db:"waivers_required" statusWeight:"1"`
 	WaiversRequiredTypes          pq.StringArray `json:"waiversRequiredTypes" db:"waivers_required_types"`
 	WaiversRequiredNote           *string        `json:"waiversRequiredNote" db:"waivers_required_note"`
+}
+
+//NewPlanGeneralCharacteristics returns a new GeneralCharacteristics object
+func NewPlanGeneralCharacteristics(tls baseTaskListSection) *PlanGeneralCharacteristics {
+	return &PlanGeneralCharacteristics{
+		baseTaskListSection: tls,
+	}
 }
