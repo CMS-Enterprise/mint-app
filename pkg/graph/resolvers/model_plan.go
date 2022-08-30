@@ -40,6 +40,7 @@ func ModelPlanCreate(logger *zap.Logger, modelName string, store *storage.Store,
 		EUAUserID: principalInfo.EuaUserID,
 		FullName:  principalInfo.CommonName,
 		TeamRole:  models.TeamRoleModelLead,
+		Email:     principalInfo.Email.String(),
 		BaseStruct: models.BaseStruct{
 			CreatedBy: principalInfo.EuaUserID,
 		},

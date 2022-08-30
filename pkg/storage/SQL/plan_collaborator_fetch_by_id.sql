@@ -4,6 +4,7 @@ SELECT
     eua_user_id,
     full_name,
     team_role,
+    email,
     created_by,
     created_dts,
     modified_by,

@@ -232,6 +232,7 @@ type ComplexityRoot struct {
 		CreatedBy   func(childComplexity int) int
 		CreatedDts  func(childComplexity int) int
 		EUAUserID   func(childComplexity int) int
+		Email       func(childComplexity int) int
 		FullName    func(childComplexity int) int
 		ID          func(childComplexity int) int
 		ModelPlanID func(childComplexity int) int
@@ -2032,6 +2033,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.PlanCollaborator.EUAUserID(childComplexity), true
+
+	case "PlanCollaborator.email":
+		if e.complexity.PlanCollaborator.Email == nil {
+			break
+		}
+
+		return e.complexity.PlanCollaborator.Email(childComplexity), true
 
 	case "PlanCollaborator.fullName":
 		if e.complexity.PlanCollaborator.FullName == nil {
@@ -5268,6 +5276,7 @@ type PlanCollaborator {
   euaUserID: String!
   fullName: String!
   teamRole: TeamRole!
+  email: String!
   createdBy: String!
   createdDts: Time!
   modifiedBy: String
@@ -5318,6 +5327,7 @@ input PlanCollaboratorCreateInput {
   euaUserID: String!
   fullName: String!
   teamRole: TeamRole!
+  email: String!
 }
 
 """
@@ -10419,6 +10429,8 @@ func (ec *executionContext) fieldContext_ModelPlan_collaborators(ctx context.Con
 				return ec.fieldContext_PlanCollaborator_fullName(ctx, field)
 			case "teamRole":
 				return ec.fieldContext_PlanCollaborator_teamRole(ctx, field)
+			case "email":
+				return ec.fieldContext_PlanCollaborator_email(ctx, field)
 			case "createdBy":
 				return ec.fieldContext_PlanCollaborator_createdBy(ctx, field)
 			case "createdDts":
@@ -11337,6 +11349,8 @@ func (ec *executionContext) fieldContext_Mutation_createPlanCollaborator(ctx con
 				return ec.fieldContext_PlanCollaborator_fullName(ctx, field)
 			case "teamRole":
 				return ec.fieldContext_PlanCollaborator_teamRole(ctx, field)
+			case "email":
+				return ec.fieldContext_PlanCollaborator_email(ctx, field)
 			case "createdBy":
 				return ec.fieldContext_PlanCollaborator_createdBy(ctx, field)
 			case "createdDts":
@@ -11436,6 +11450,8 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanCollaborator(ctx con
 				return ec.fieldContext_PlanCollaborator_fullName(ctx, field)
 			case "teamRole":
 				return ec.fieldContext_PlanCollaborator_teamRole(ctx, field)
+			case "email":
+				return ec.fieldContext_PlanCollaborator_email(ctx, field)
 			case "createdBy":
 				return ec.fieldContext_PlanCollaborator_createdBy(ctx, field)
 			case "createdDts":
@@ -11535,6 +11551,8 @@ func (ec *executionContext) fieldContext_Mutation_deletePlanCollaborator(ctx con
 				return ec.fieldContext_PlanCollaborator_fullName(ctx, field)
 			case "teamRole":
 				return ec.fieldContext_PlanCollaborator_teamRole(ctx, field)
+			case "email":
+				return ec.fieldContext_PlanCollaborator_email(ctx, field)
 			case "createdBy":
 				return ec.fieldContext_PlanCollaborator_createdBy(ctx, field)
 			case "createdDts":
@@ -17050,6 +17068,50 @@ func (ec *executionContext) fieldContext_PlanCollaborator_teamRole(ctx context.C
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type TeamRole does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanCollaborator_email(ctx context.Context, field graphql.CollectedField, obj *models.PlanCollaborator) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanCollaborator_email(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Email, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalNString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanCollaborator_email(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanCollaborator",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
 		},
 	}
 	return fc, nil
@@ -34770,6 +34832,8 @@ func (ec *executionContext) fieldContext_Query_planCollaboratorByID(ctx context.
 				return ec.fieldContext_PlanCollaborator_fullName(ctx, field)
 			case "teamRole":
 				return ec.fieldContext_PlanCollaborator_teamRole(ctx, field)
+			case "email":
+				return ec.fieldContext_PlanCollaborator_email(ctx, field)
 			case "createdBy":
 				return ec.fieldContext_PlanCollaborator_createdBy(ctx, field)
 			case "createdDts":
@@ -37709,7 +37773,7 @@ func (ec *executionContext) unmarshalInputPlanCollaboratorCreateInput(ctx contex
 		asMap[k] = v
 	}
 
-	fieldsInOrder := [...]string{"modelPlanID", "euaUserID", "fullName", "teamRole"}
+	fieldsInOrder := [...]string{"modelPlanID", "euaUserID", "fullName", "teamRole", "email"}
 	for _, k := range fieldsInOrder {
 		v, ok := asMap[k]
 		if !ok {
@@ -37745,6 +37809,14 @@ func (ec *executionContext) unmarshalInputPlanCollaboratorCreateInput(ctx contex
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("teamRole"))
 			it.TeamRole, err = ec.unmarshalNTeamRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐTeamRole(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		case "email":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("email"))
+			it.Email, err = ec.unmarshalNString2string(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -39161,6 +39233,13 @@ func (ec *executionContext) _PlanCollaborator(ctx context.Context, sel ast.Selec
 		case "teamRole":
 
 			out.Values[i] = ec._PlanCollaborator_teamRole(ctx, field, obj)
+
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		case "email":
+
+			out.Values[i] = ec._PlanCollaborator_email(ctx, field, obj)
 
 			if out.Values[i] == graphql.Null {
 				invalids++

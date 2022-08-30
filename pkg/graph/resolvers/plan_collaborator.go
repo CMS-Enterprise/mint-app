@@ -18,6 +18,7 @@ func CreatePlanCollaborator(logger *zap.Logger, input *model.PlanCollaboratorCre
 		},
 		FullName:  input.FullName,
 		TeamRole:  input.TeamRole,
+		Email:     input.Email,
 		EUAUserID: input.EuaUserID,
 		BaseStruct: models.BaseStruct{
 			CreatedBy: principal.ID(),
