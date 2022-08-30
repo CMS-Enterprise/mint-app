@@ -4,10 +4,17 @@ import "github.com/google/uuid"
 
 // ModelPlan is the top-level object for an entire draft model plan
 type ModelPlan struct {
-	BaseStruct
+	baseStruct
 	ModelName string      `json:"modelName" db:"model_name"`
 	Archived  bool        `json:"archived" db:"archived"`
 	Status    ModelStatus `json:"status" db:"status"`
+}
+
+//NewModelPlan returns a new model Plan
+func NewModelPlan(createdBy string) *ModelPlan {
+	return &ModelPlan{
+		baseStruct: NewBaseStruct(createdBy),
+	}
 }
 
 //GetModelPlanID returns the modelPlanID of the task list section

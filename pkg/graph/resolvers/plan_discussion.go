@@ -13,16 +13,10 @@ import (
 
 // CreatePlanDiscussion implements resolver logic to create a plan Discussion object
 func CreatePlanDiscussion(logger *zap.Logger, input *model.PlanDiscussionCreateInput, principal authentication.Principal, store *storage.Store) (*models.PlanDiscussion, error) {
-	planDiscussion := &models.PlanDiscussion{
-		ModelPlanRelation: models.ModelPlanRelation{
-			ModelPlanID: input.ModelPlanID,
-		},
-		Content: input.Content,
-		Status:  models.DiscussionUnAnswered,
-		BaseStruct: models.BaseStruct{
-			CreatedBy: principal.ID(),
-		},
-	}
+	planDiscussion := models.NewPlanDiscussion(principal.ID(), input.ModelPlanID)
+	planDiscussion.Content = input.Content
+	planDiscussion.Status = models.DiscussionUnAnswered
+
 	err := BaseStructPreCreate(logger, planDiscussion, principal, store, true)
 	if err != nil {
 		return nil, err
@@ -66,16 +60,19 @@ func DeletePlanDiscussion(logger *zap.Logger, id uuid.UUID, principal authentica
 
 // CreateDiscussionReply implements resolver logic to create a Discussion reply object
 func CreateDiscussionReply(logger *zap.Logger, input *model.DiscussionReplyCreateInput, principal authentication.Principal, store *storage.Store) (*models.DiscussionReply, error) {
-	discussionReply := &models.DiscussionReply{
-		DiscussionRelation: models.DiscussionRelation{
-			DiscussionID: input.DiscussionID,
-		},
-		Content:    input.Content,
-		Resolution: input.Resolution,
-		BaseStruct: models.BaseStruct{
-			CreatedBy: principal.ID(),
-		},
-	}
+	discussionReply := models.NewDiscussionReply(principal.ID(), input.DiscussionID)
+	discussionReply.Content = input.Content
+	discussionReply.Resolution = input.Resolution
+	// discussionReply := &models.DiscussionReply{
+	// 	DiscussionRelation: models.DiscussionRelation{
+	// 		DiscussionID: input.DiscussionID,
+	// 	},
+	// 	Content:    input.Content,
+	// 	Resolution: input.Resolution,
+	// 	BaseStruct: models.BaseStruct{
+	// 		CreatedBy: principal.ID(),
+	// 	},
+	// }
 
 	err := BaseStructPreCreate(logger, discussionReply, principal, store, true)
 	if err != nil {

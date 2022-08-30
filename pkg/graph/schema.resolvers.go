@@ -198,7 +198,7 @@ func (r *mutationResolver) CreatePlanDocument(ctx context.Context, input model.P
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 
-	document := ConvertToPlanDocumentModel(&input)
+	document := ConvertToPlanDocumentModel(&input, principal)
 	payload, err := resolvers.PlanDocumentCreate(logger, document, input.URL, principal, r.store, r.s3Client)
 
 	return payload, err
@@ -206,18 +206,18 @@ func (r *mutationResolver) CreatePlanDocument(ctx context.Context, input model.P
 
 // UpdatePlanDocument is the resolver for the updatePlanDocument field.
 func (r *mutationResolver) UpdatePlanDocument(ctx context.Context, input model.PlanDocumentInput) (*model.PlanDocumentPayload, error) {
-	document := ConvertToPlanDocumentModel(&input)
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
+	document := ConvertToPlanDocumentModel(&input, principal)
 
 	return resolvers.PlanDocumentUpdate(logger, r.s3Client, document, principal, r.store)
 }
 
 // DeletePlanDocument is the resolver for the deletePlanDocument field.
 func (r *mutationResolver) DeletePlanDocument(ctx context.Context, input model.PlanDocumentInput) (int, error) {
-	document := ConvertToPlanDocumentModel(&input)
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
+	document := ConvertToPlanDocumentModel(&input, principal)
 
 	return resolvers.PlanDocumentDelete(logger, r.s3Client, document, principal, r.store)
 }

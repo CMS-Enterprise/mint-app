@@ -11,7 +11,7 @@ type IBaseTaskListSection interface {
 	GetBaseTaskListSection() *BaseTaskListSection
 	CalcStatus(TaskStatus) error
 	//methods from BaseStruct
-	GetBaseStruct() *BaseStruct
+	GetBaseStruct() *baseStruct
 	GetID() uuid.UUID
 	GetCreatedBy() string
 	GetModifiedBy() *string
@@ -19,8 +19,8 @@ type IBaseTaskListSection interface {
 
 // BaseTaskListSection represents all the shared fields in common to a task list section
 type BaseTaskListSection struct {
-	BaseStruct
-	ModelPlanRelation
+	baseStruct
+	modelPlanRelation
 	ReadyForReviewBy  *string    `json:"readyForReviewBy" db:"ready_for_review_by"`
 	ReadyForReviewDts *time.Time `json:"readyForReviewDts" db:"ready_for_review_dts"`
 	Status            TaskStatus `json:"status" db:"status"`
@@ -30,14 +30,10 @@ type BaseTaskListSection struct {
 func NewBaseTaskListSection(modelPlanID uuid.UUID, euaid string) BaseTaskListSection {
 
 	return BaseTaskListSection{
-		ModelPlanRelation: ModelPlanRelation{
-			ModelPlanID: modelPlanID,
-		},
+		modelPlanRelation: NewModelPlanRelation(modelPlanID),
 
-		Status: TaskReady,
-		BaseStruct: BaseStruct{
-			CreatedBy: euaid,
-		},
+		Status:     TaskReady,
+		baseStruct: NewBaseStruct(euaid),
 	}
 
 }

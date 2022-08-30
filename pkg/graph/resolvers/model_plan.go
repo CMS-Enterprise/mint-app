@@ -13,13 +13,10 @@ import (
 // TODO Revist this function, as we probably want to add all of these DB entries inthe scope of a single SQL transaction
 // so that we can roll back if there is an error with any of these calls.
 func ModelPlanCreate(logger *zap.Logger, modelName string, store *storage.Store, principalInfo *models.UserInfo, principal authentication.Principal) (*models.ModelPlan, error) {
-	plan := &models.ModelPlan{
-		ModelName: modelName,
-		Status:    models.ModelStatusPlanDraft,
-		BaseStruct: models.BaseStruct{
-			CreatedBy: principalInfo.EuaUserID,
-		},
-	}
+
+	plan := models.NewModelPlan(principal.ID())
+	plan.ModelName = modelName
+	plan.Status = models.ModelStatusPlanDraft
 
 	err := BaseStructPreCreate(logger, plan, principal, store, false) //We don't check access here, because the user can't yet be a collaborator. Collaborators are created after ModelPlan initiation.
 	if err != nil {
@@ -33,17 +30,11 @@ func ModelPlanCreate(logger *zap.Logger, modelName string, store *storage.Store,
 	}
 
 	// Create an initial collaborator for the plan
-	collab := &models.PlanCollaborator{
-		ModelPlanRelation: models.ModelPlanRelation{
-			ModelPlanID: createdPlan.ID,
-		},
-		EUAUserID: principalInfo.EuaUserID,
-		FullName:  principalInfo.CommonName,
-		TeamRole:  models.TeamRoleModelLead,
-		BaseStruct: models.BaseStruct{
-			CreatedBy: principalInfo.EuaUserID,
-		},
-	}
+	collab := models.NewPlanCollaborator(principal.ID(), createdPlan.ID)
+	collab.EUAUserID = principalInfo.EuaUserID
+	collab.FullName = principalInfo.CommonName
+	collab.TeamRole = models.TeamRoleModelLead
+
 	_, err = store.PlanCollaboratorCreate(logger, collab)
 	if err != nil {
 		return nil, err

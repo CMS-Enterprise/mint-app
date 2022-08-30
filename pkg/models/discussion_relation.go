@@ -8,11 +8,18 @@ type IDiscussionRelation interface {
 }
 
 //DiscussionRelation is an embedded struct meant to satisify the IDiscussionRelation interface
-type DiscussionRelation struct {
+type discussionRelation struct {
 	DiscussionID uuid.UUID `json:"discussionID" db:"discussion_id"`
 }
 
+//NewDiscussionRelation returns a model plan relation object
+func NewDiscussionRelation(discussionID uuid.UUID) discussionRelation {
+	return discussionRelation{
+		DiscussionID: discussionID,
+	}
+}
+
 //GetDiscussionID returns DiscussionID
-func (d DiscussionRelation) GetDiscussionID() uuid.UUID {
+func (d discussionRelation) GetDiscussionID() uuid.UUID {
 	return d.DiscussionID
 }
