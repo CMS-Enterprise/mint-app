@@ -5312,7 +5312,7 @@ type CurrentUser {
   launchDarkly: LaunchDarklySettings!
 }
 """
-UUIDs are represented using 36 ASCII characters, for example B05859-ADE6-4A67-8969-16EC280C0E1A
+UUIDs are represented using 36 ASCII characters, for example B0511859-ADE6-4A67-8969-16EC280C0E1A
 """
 scalar UUID
 """

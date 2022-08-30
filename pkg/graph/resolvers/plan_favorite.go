@@ -17,11 +17,8 @@ func IsPlanFavorited(logger *zap.Logger, principal authentication.Principal, sto
 	if err != nil {
 		return false, err
 	}
-	isFavorite := false
-	if favorite != nil {
-		isFavorite = true
+	isFavorite := (favorite != nil)
 
-	}
 	return isFavorite, nil
 
 }
