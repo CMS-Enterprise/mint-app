@@ -1,6 +1,11 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Grid, GridContainer, SummaryBox } from '@trussworks/react-uswds';
+import {
+  Alert,
+  Grid,
+  GridContainer,
+  SummaryBox
+} from '@trussworks/react-uswds';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
@@ -36,6 +41,18 @@ const ModelPlan = () => {
               {h('newModelSummaryBox.cta')}
             </UswdsReactLink>
           </SummaryBox>
+        </Grid>
+
+        <Grid className="padding-bottom-6 margin-bottom-4 border-bottom border-base-light">
+          <PageHeading className="margin-bottom-1">
+            {t('following.heading')}
+          </PageHeading>
+          <p className="line-height-body-5 font-body-lg text-light margin-bottom-05 margin-top-0">
+            {t('following.subheading')}
+          </p>
+          <Alert type="info" heading={t('following.alert.heading')}>
+            {t('following.alert.subheading')}
+          </Alert>
         </Grid>
       </GridContainer>
     </MainContent>
