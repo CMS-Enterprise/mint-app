@@ -12,6 +12,8 @@ import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 
+import Table from './ReadOnly/Table';
+
 const ModelPlan = () => {
   const { t } = useTranslation('readOnlyModelPlan');
   const { t: h } = useTranslation('home');
@@ -63,9 +65,10 @@ const ModelPlan = () => {
           <PageHeading className="margin-bottom-1" id="all-models">
             {t('allModels.heading')}
           </PageHeading>
-          <p className="line-height-body-5 text-light margin-bottom-05 margin-top-0">
+          <p className="line-height-body-5 text-light margin-bottom-3 margin-top-0">
             {t('allModels.subheading')}
           </p>
+          <Table />
         </Grid>
       </GridContainer>
     </MainContent>
