@@ -54,6 +54,7 @@ type PlanCollaboratorCreateInput struct {
 	EuaUserID   string          `json:"euaUserID"`
 	FullName    string          `json:"fullName"`
 	TeamRole    models.TeamRole `json:"teamRole"`
+	Email       string          `json:"email"`
 }
 
 // PlanDiscussionCreateInput represents the necessary fields to create a plan discussion

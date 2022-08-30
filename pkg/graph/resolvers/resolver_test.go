@@ -49,12 +49,13 @@ func (suite *ResolverSuite) createDiscussionReply(pd *models.PlanDiscussion, con
 	return dr
 }
 
-func (suite *ResolverSuite) createPlanCollaborator(mp *models.ModelPlan, EUAUserID string, fullName string, teamRole models.TeamRole) *models.PlanCollaborator {
+func (suite *ResolverSuite) createPlanCollaborator(mp *models.ModelPlan, EUAUserID string, fullName string, teamRole models.TeamRole, email string) *models.PlanCollaborator {
 	collaboratorInput := &model.PlanCollaboratorCreateInput{
 		ModelPlanID: mp.ID,
 		EuaUserID:   EUAUserID,
 		FullName:    fullName,
 		TeamRole:    teamRole,
+		Email:       email,
 	}
 	collaborator, err := CreatePlanCollaborator(suite.testConfigs.Logger, collaboratorInput, suite.testConfigs.Principal, suite.testConfigs.Store)
 	suite.NoError(err)

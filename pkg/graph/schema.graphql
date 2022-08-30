@@ -68,6 +68,7 @@ type PlanCollaborator {
   euaUserID: String!
   fullName: String!
   teamRole: TeamRole!
+  email: String!
   createdBy: String!
   createdDts: Time!
   modifiedBy: String
@@ -118,6 +119,7 @@ input PlanCollaboratorCreateInput {
   euaUserID: String!
   fullName: String!
   teamRole: TeamRole!
+  email: String!
 }
 
 """
