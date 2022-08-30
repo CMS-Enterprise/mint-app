@@ -48,7 +48,7 @@ const ModelPlan = () => {
           <PageHeading className="margin-bottom-1">
             {t('following.heading')}
           </PageHeading>
-          <p className="font-body-base line-height-body-5 text-light margin-bottom-05 margin-top-0">
+          <p className="line-height-body-5 text-light margin-bottom-05 margin-top-0">
             {t('following.subheading')}
           </p>
           <Alert type="info" heading={t('following.alert.heading')}>
@@ -60,10 +60,10 @@ const ModelPlan = () => {
           </Alert>
         </Grid>
         <Grid>
-          <PageHeading className="margin-bottom-1">
+          <PageHeading className="margin-bottom-1" id="all-models">
             {t('allModels.heading')}
           </PageHeading>
-          <p className="font-body-base line-height-body-5 text-light margin-bottom-05 margin-top-0">
+          <p className="line-height-body-5 text-light margin-bottom-05 margin-top-0">
             {t('allModels.subheading')}
           </p>
         </Grid>
