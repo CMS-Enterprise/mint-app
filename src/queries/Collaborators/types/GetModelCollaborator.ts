@@ -14,6 +14,7 @@ export interface GetModelCollaborator_planCollaboratorByID {
   id: UUID;
   fullName: string;
   euaUserID: string;
+  email: string;
   teamRole: TeamRole;
 }
 

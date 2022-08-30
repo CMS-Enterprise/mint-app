@@ -7,6 +7,7 @@ export default gql`
         id
         fullName
         euaUserID
+        email
         teamRole
         modelPlanID
         createdDts

@@ -13,6 +13,7 @@ export interface UpdateModelPlanCollaborator_updatePlanCollaborator {
   __typename: "PlanCollaborator";
   fullName: string;
   teamRole: TeamRole;
+  email: string;
   euaUserID: string;
   modelPlanID: UUID;
 }

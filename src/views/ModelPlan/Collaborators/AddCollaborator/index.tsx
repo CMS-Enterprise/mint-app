@@ -67,7 +67,8 @@ const Collaborators = () => {
     data?.planCollaboratorByID ?? ({} as CollaboratorFormType);
 
   const handleUpdateDraftModelPlan = (formikValues?: CollaboratorFormType) => {
-    const { fullName = '', teamRole = '', euaUserID = '' } = formikValues || {};
+    const { fullName = '', teamRole = '', euaUserID = '', email = '' } =
+      formikValues || {};
 
     if (collaboratorId) {
       update({
@@ -90,6 +91,7 @@ const Collaborators = () => {
           input: {
             fullName,
             teamRole,
+            email,
             euaUserID,
             modelPlanID: modelID
           }
@@ -190,6 +192,7 @@ const Collaborators = () => {
                             const foundUser = foundUsers?.userObj[item];
                             setFieldValue('fullName', foundUser?.commonName);
                             setFieldValue('euaUserID', foundUser?.euaUserId);
+                            setFieldValue('email', foundUser?.email);
                           }}
                         >
                           <ComboboxInput
