@@ -9,8 +9,8 @@ const readOnlyModelPlan = {
       'You will receive email notifications when models you’re following are updated.',
     alert: {
       heading: 'You are not following any models yet.',
-      subheading:
-        'Click the star icon (STAR) for any model to add it to this section.'
+      subheadingPartA: 'Click the star icon (',
+      subheadingPartB: ') for any model to add it to this section.'
     }
   },
   allModels: {

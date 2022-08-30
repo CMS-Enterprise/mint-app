@@ -4,6 +4,7 @@ import {
   Alert,
   Grid,
   GridContainer,
+  IconStarOutline,
   SummaryBox
 } from '@trussworks/react-uswds';
 
@@ -51,7 +52,11 @@ const ModelPlan = () => {
             {t('following.subheading')}
           </p>
           <Alert type="info" heading={t('following.alert.heading')}>
-            {t('following.alert.subheading')}
+            <p className="display-flex flex-align-center">
+              {t('following.alert.subheadingPartA')}
+              <IconStarOutline size={3} />
+              {t('following.alert.subheadingPartB')}
+            </p>
           </Alert>
         </Grid>
       </GridContainer>
