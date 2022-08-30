@@ -43,8 +43,7 @@ const ContactInfo = ({ modelID }: { modelID: string }) => {
             <Link
               aria-label={h('contactInfo.sendAnEmail')}
               className="line-height-body-5 e"
-              // TODO Once BE has email, change below
-              href="mailto:fakeemail@asdf.com"
+              href={`mailto:${collaborator.email}`}
               target="_blank"
             >
               {h('contactInfo.sendAnEmail')}
