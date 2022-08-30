@@ -37,7 +37,7 @@ func NewGoSimpleMailService(config GoSimpleMailServiceConfig) (*GoSimpleMailServ
 	return &GoSimpleMailService{
 		smtpServer: smtpServer,
 		smtpClient: smtpClient,
-		config:     config,
+		config:     &config,
 	}, nil
 }
 

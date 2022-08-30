@@ -2,6 +2,7 @@ package testGoSimpleMailService
 
 import (
 	"crypto/tls"
+	"path/filepath"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -22,15 +23,31 @@ func TestGoSimpleMailService_MockSend(t *testing.T) {
 	assert.NoError(t, err)
 }
 
-func setupGoSimpleMailServiceTest(t *testing.T) *oddmail.GoSimpleMailService {
-	//mockController := gomock.NewController(t)
+func TestGoSimpleMailService_LoadConfigFromFile(t *testing.T) {
+	config := loadTestMailServiceConfigFromFile(t)
 
+	assert.Equal(t, "127.0.0.1", config.Host)
+	assert.Equal(t, 1025, config.Port)
+}
+
+func loadTestMailServiceConfigFromFile(t *testing.T) oddmail.GoSimpleMailServiceConfig {
 	var mailServiceConfig oddmail.GoSimpleMailServiceConfig
-	err := mailServiceConfig.LoadYAML("config/test/emailServiceConfig.yaml")
+
+	filePath, err := filepath.Abs("../../../../config/test/emailServiceConfig.yaml")
+	assert.NoError(t, err)
+
+	err = mailServiceConfig.LoadYAML(filePath)
 	assert.NoError(t, err)
 
 	//nolint:gosec
 	mailServiceConfig.TLSConfig = &tls.Config{InsecureSkipVerify: true}
+	return mailServiceConfig
+}
+
+func setupGoSimpleMailServiceTest(t *testing.T) *oddmail.GoSimpleMailService {
+	//mockController := gomock.NewController(t)
+
+	mailServiceConfig := loadTestMailServiceConfigFromFile(t)
 
 	emailService, err := oddmail.NewGoSimpleMailService(mailServiceConfig)
 	assert.NoError(t, err)
