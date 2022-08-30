@@ -45,6 +45,7 @@ type ModelPlan {
   payments: PlanPayments!
   itTools: PlanITTools!
   status: ModelStatus!
+  isFavorite: Boolean!
 }
 
 """
@@ -68,6 +69,7 @@ type PlanCollaborator {
   euaUserID: String!
   fullName: String!
   teamRole: TeamRole!
+  email: String!
   createdBy: String!
   createdDts: Time!
   modifiedBy: String
@@ -118,6 +120,7 @@ input PlanCollaboratorCreateInput {
   euaUserID: String!
   fullName: String!
   teamRole: TeamRole!
+  email: String!
 }
 
 """
@@ -1303,7 +1306,6 @@ input PlanOpsEvalAndLearningChanges @goModel(model: "map[string]interface{}") {
 
     status: TaskStatusInput
 }
-
 """
 NDAInfo represents whether a user has agreed to an NDA or not. If agreed to previously, there will be a datestamp visible
 """
@@ -1312,6 +1314,17 @@ type NDAInfo {
   agreedDts: Time
 }
 
+type PlanFavorite {
+    id: UUID!
+    modelPlanID: UUID!
+    userID: String!
+
+    createdBy: String!
+    createdDts: Time!
+    modifiedBy: String
+    modifiedDts: Time
+
+}
 """
 Query definition for the schema
 """
@@ -1410,6 +1423,12 @@ updatePlanPayments(id: UUID!, changes: PlanPaymentsChanges!): PlanPayments!
 @hasRole(role: MINT_USER)
 
 agreeToNDA(agree: Boolean! = true): NDAInfo!
+@hasRole(role: MINT_USER)
+
+addPlanFavorite(modelPlanID: UUID!): PlanFavorite!
+@hasRole(role: MINT_USER)
+
+deletePlanFavorite(modelPlanID: UUID!): PlanFavorite!
 @hasRole(role: MINT_USER)
 }
 

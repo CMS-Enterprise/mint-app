@@ -89,6 +89,14 @@ func (r *modelPlanResolver) ItTools(ctx context.Context, obj *models.ModelPlan) 
 	return resolvers.PlanITToolsGetByModelPlanID(logger, obj.ID, r.store)
 }
 
+// IsFavorite is the resolver for the isFavorite field.
+func (r *modelPlanResolver) IsFavorite(ctx context.Context, obj *models.ModelPlan) (bool, error) {
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+
+	return resolvers.IsPlanFavorited(logger, principal, r.store, obj.ID)
+}
+
 // CreateModelPlan is the resolver for the createModelPlan field.
 func (r *mutationResolver) CreateModelPlan(ctx context.Context, modelName string) (*models.ModelPlan, error) {
 	logger := appcontext.ZLogger(ctx)
@@ -302,6 +310,20 @@ func (r *mutationResolver) AgreeToNda(ctx context.Context, agree bool) (*model.N
 	logger := appcontext.ZLogger(ctx)
 	principal := appcontext.Principal(ctx)
 	return resolvers.NDAAgreementUpdateOrCreate(logger, agree, principal, r.store)
+}
+
+// AddPlanFavorite is the resolver for the addPlanFavorite field.
+func (r *mutationResolver) AddPlanFavorite(ctx context.Context, modelPlanID uuid.UUID) (*models.PlanFavorite, error) {
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.PlanFavoriteCreate(logger, principal, r.store, modelPlanID)
+}
+
+// DeletePlanFavorite is the resolver for the deletePlanFavorite field.
+func (r *mutationResolver) DeletePlanFavorite(ctx context.Context, modelPlanID uuid.UUID) (*models.PlanFavorite, error) {
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.PlanFavoriteDelete(logger, principal, r.store, modelPlanID)
 }
 
 // CmsCenters is the resolver for the cmsCenters field.

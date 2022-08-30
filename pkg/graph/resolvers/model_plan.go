@@ -34,6 +34,7 @@ func ModelPlanCreate(logger *zap.Logger, modelName string, store *storage.Store,
 	collab.EUAUserID = principalInfo.EuaUserID
 	collab.FullName = principalInfo.CommonName
 	collab.TeamRole = models.TeamRoleModelLead
+	collab.Email = principalInfo.Email.String()
 
 	_, err = store.PlanCollaboratorCreate(logger, collab)
 	if err != nil {

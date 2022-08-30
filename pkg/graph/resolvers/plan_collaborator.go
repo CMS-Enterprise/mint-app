@@ -16,17 +16,7 @@ func CreatePlanCollaborator(logger *zap.Logger, input *model.PlanCollaboratorCre
 	collaborator.FullName = input.FullName
 	collaborator.TeamRole = input.TeamRole
 	collaborator.EUAUserID = input.EuaUserID
-	// collaborator := &models.PlanCollaborator{
-	// 	ModelPlanRelation: models.ModelPlanRelation{
-	// 		ModelPlanID: input.ModelPlanID,
-	// 	},
-	// 	FullName:  input.FullName,
-	// 	TeamRole:  input.TeamRole,
-	// 	EUAUserID: input.EuaUserID,
-	// 	BaseStruct: models.BaseStruct{
-	// 		CreatedBy: principal.ID(),
-	// 	},
-	// }
+	collaborator.Email = input.Email
 
 	err := BaseStructPreCreate(logger, collaborator, principal, store, true)
 	if err != nil {

@@ -5,6 +5,7 @@ export default gql`
     updatePlanCollaborator(id: $id, newRole: $newRole) {
       fullName
       teamRole
+      email
       euaUserID
       modelPlanID
     }
