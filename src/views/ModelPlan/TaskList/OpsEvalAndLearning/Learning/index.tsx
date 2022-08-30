@@ -15,14 +15,17 @@ import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
+import ITToolsWarning from 'components/ITToolsWarning';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
+import ReadyForReview from 'components/ReadyForReview';
 import AutoSave from 'components/shared/AutoSave';
 import CheckboxField from 'components/shared/CheckboxField';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import TextAreaField from 'components/shared/TextAreaField';
+import useScrollElement from 'hooks/useScrollElement';
 import GetLearning from 'queries/OpsEvalAndLearning/GetLearning';
 import {
   GetLearning as GetLearningType,
@@ -31,7 +34,10 @@ import {
 } from 'queries/OpsEvalAndLearning/types/GetLearning';
 import { UpdatePlanOpsEvalAndLearningVariables } from 'queries/OpsEvalAndLearning/types/UpdatePlanOpsEvalAndLearning';
 import UpdatePlanOpsEvalAndLearning from 'queries/OpsEvalAndLearning/UpdatePlanOpsEvalAndLearning';
-import { ModelLearningSystemType } from 'types/graphql-global-types';
+import {
+  ModelLearningSystemType,
+  TaskStatus
+} from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import {
   sortOtherEnum,
@@ -46,7 +52,13 @@ const Learning = () => {
   const { t: h } = useTranslation('draftModelPlan');
   const { modelID } = useParams<{ modelID: string }>();
 
-  const formikRef = useRef<FormikProps<GetLearningFormType>>(null);
+  // Omitting readyForReviewBy and readyForReviewDts from initialValues and getting submitted through Formik
+  type InitialValueType = Omit<
+    GetLearningFormType,
+    'readyForReviewBy' | 'readyForReviewDts'
+  >;
+
+  const formikRef = useRef<FormikProps<InitialValueType>>(null);
   const history = useHistory();
 
   const { data, loading, error } = useQuery<
@@ -65,18 +77,27 @@ const Learning = () => {
     modelLearningSystems,
     modelLearningSystemsOther,
     modelLearningSystemsNote,
-    anticipatedChallenges
+    anticipatedChallenges,
+    readyForReviewBy,
+    readyForReviewDts,
+    status
   } = data?.modelPlan?.opsEvalAndLearning || ({} as GetLearningFormType);
 
   const modelName = data?.modelPlan?.modelName || '';
+
+  const itToolsStarted: boolean =
+    data?.modelPlan.itTools.status !== TaskStatus.READY;
+
+  // If redirected from IT Tools, scrolls to the relevant question
+  useScrollElement(!loading);
 
   const [update] = useMutation<UpdatePlanOpsEvalAndLearningVariables>(
     UpdatePlanOpsEvalAndLearning
   );
 
   const handleFormSubmit = (
-    formikValues: GetLearningFormType,
-    redirect?: 'next' | 'back' | 'task-list'
+    formikValues: InitialValueType,
+    redirect?: 'next' | 'back' | 'task-list' | string
   ) => {
     const { id: updateId, __typename, ...changeValues } = formikValues;
     update({
@@ -93,6 +114,8 @@ const Learning = () => {
             );
           } else if (redirect === 'task-list') {
             history.push(`/models/${modelID}/task-list`);
+          } else if (redirect) {
+            history.push(redirect);
           }
         }
       })
@@ -101,7 +124,7 @@ const Learning = () => {
       });
   };
 
-  const initialValues: GetLearningFormType = {
+  const initialValues: InitialValueType = {
     __typename: 'PlanOpsEvalAndLearning',
     id: id ?? '',
     iddocSupport: iddocSupport ?? null,
@@ -109,7 +132,8 @@ const Learning = () => {
     modelLearningSystems: modelLearningSystems ?? [],
     modelLearningSystemsOther: modelLearningSystemsOther ?? '',
     modelLearningSystemsNote: modelLearningSystemsNote ?? '',
-    anticipatedChallenges: anticipatedChallenges ?? ''
+    anticipatedChallenges: anticipatedChallenges ?? '',
+    status
   };
 
   if ((!loading && error) || (!loading && !data?.modelPlan)) {
@@ -155,8 +179,14 @@ const Learning = () => {
         enableReinitialize
         innerRef={formikRef}
       >
-        {(formikProps: FormikProps<GetLearningFormType>) => {
-          const { errors, handleSubmit, setErrors, values } = formikProps;
+        {(formikProps: FormikProps<InitialValueType>) => {
+          const {
+            errors,
+            handleSubmit,
+            setFieldValue,
+            setErrors,
+            values
+          } = formikProps;
           const flatErrors = flattenErrors(errors);
 
           return (
@@ -193,6 +223,18 @@ const Learning = () => {
                       <legend className="usa-label">
                         {t('learningSystem')}
                       </legend>
+
+                      {itToolsStarted && (
+                        <ITToolsWarning
+                          id="ops-eval-and-learning-learning-systems-warning"
+                          onClick={() =>
+                            handleFormSubmit(
+                              values,
+                              `/models/${modelID}/task-list/it-tools/page-seven`
+                            )
+                          }
+                        />
+                      )}
 
                       <FieldErrorMsg>
                         {flatErrors.modelLearningSystems}
@@ -279,6 +321,16 @@ const Learning = () => {
                     name="anticipatedChallenges"
                   />
                 </FieldGroup>
+
+                <ReadyForReview
+                  id="ops-eval-and-learning-learning-status"
+                  field="status"
+                  sectionName={t('heading')}
+                  status={values.status}
+                  setFieldValue={setFieldValue}
+                  readyForReviewBy={readyForReviewBy}
+                  readyForReviewDts={readyForReviewDts}
+                />
 
                 <div className="margin-top-6 margin-bottom-3">
                   <Button

@@ -52,8 +52,10 @@ func (s *Store) PlanDocumentCreate(
 	}
 
 	document := models.PlanDocument{
-		ID:                   utilityUUID.ValueOrNewUUID(inputDocument.ID),
-		ModelPlanID:          inputDocument.ModelPlanID,
+
+		ModelPlanRelation: models.ModelPlanRelation{
+			ModelPlanID: inputDocument.ModelPlanID,
+		},
 		FileType:             inputDocument.FileType,
 		Bucket:               *s3Client.GetBucket(),
 		FileKey:              key,
@@ -65,12 +67,15 @@ func (s *Store) PlanDocumentCreate(
 		OtherTypeDescription: inputDocument.OtherTypeDescription,
 		OptionalNotes:        inputDocument.OptionalNotes,
 		DeletedAt:            nil,
-		CreatedBy:            principal,
+		BaseStruct: models.BaseStruct{
+			ID:        utilityUUID.ValueOrNewUUID(inputDocument.ID),
+			CreatedBy: principal,
+		},
 	}
 
 	statement, err := s.db.PrepareNamed(planDocumentCreateSQL)
 	if err != nil {
-		return nil, genericmodel.HandleModelCreationError(logger, err, document)
+		return nil, genericmodel.HandleModelCreationError(logger, err, &document)
 	}
 
 	document.ModifiedBy = nil
@@ -78,7 +83,7 @@ func (s *Store) PlanDocumentCreate(
 
 	err = statement.Get(&document, &document)
 	if err != nil {
-		return nil, genericmodel.HandleModelCreationError(logger, err, document)
+		return nil, genericmodel.HandleModelCreationError(logger, err, &document)
 	}
 
 	return &document, nil

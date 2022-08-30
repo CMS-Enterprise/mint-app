@@ -4,12 +4,13 @@ import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
 
 import GetMilestones from 'queries/Basics/GetMilestones';
-import { GetMilestones_modelPlan_milestones as GetMilestonesType } from 'queries/Basics/types/GetMilestones';
+import { GetMilestones_modelPlan_basics as GetMilestonesType } from 'queries/Basics/types/GetMilestones';
+import { TaskStatus } from 'types/graphql-global-types';
 
 import Milestones from './index';
 
 const milestonesMockData: GetMilestonesType = {
-  __typename: 'PlanMilestones',
+  __typename: 'PlanBasics',
   id: '123',
   completeICIP: null,
   clearanceStarts: null,
@@ -22,7 +23,10 @@ const milestonesMockData: GetMilestonesType = {
   wrapUpEnds: null,
   highLevelNote: '',
   phasedIn: null,
-  phasedInNote: ''
+  phasedInNote: '',
+  readyForReviewBy: 'ASDF',
+  readyForReviewDts: '2022-05-12T15:01:39.190679Z',
+  status: TaskStatus.IN_PROGRESS
 };
 
 const mocks = [
@@ -36,7 +40,7 @@ const mocks = [
         modelPlan: {
           id: 'f11eb129-2c80-4080-9440-439cbe1a286f',
           modelName: 'My excellent plan that I just initiated',
-          milestones: milestonesMockData
+          basics: milestonesMockData
         }
       }
     }

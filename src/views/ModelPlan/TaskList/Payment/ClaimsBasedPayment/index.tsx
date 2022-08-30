@@ -18,6 +18,7 @@ import { Field, Form, Formik, FormikProps } from 'formik';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
+import ITToolsWarning from 'components/ITToolsWarning';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import AutoSave from 'components/shared/AutoSave';
@@ -27,6 +28,7 @@ import FieldGroup from 'components/shared/FieldGroup';
 import MultiSelect from 'components/shared/MultiSelect';
 import TextAreaField from 'components/shared/TextAreaField';
 import TextField from 'components/shared/TextField';
+import useScrollElement from 'hooks/useScrollElement';
 import GetClaimsBasedPayment from 'queries/Payments/GetClaimsBasedPayment';
 import {
   GetClaimsBasedPayment as GetClaimsBasedPaymentType,
@@ -35,7 +37,11 @@ import {
 } from 'queries/Payments/types/GetClaimsBasedPayment';
 import { UpdatePaymentsVariables } from 'queries/Payments/types/UpdatePayments';
 import UpdatePayments from 'queries/Payments/UpdatePayments';
-import { ClaimsBasedPayType, PayType } from 'types/graphql-global-types';
+import {
+  ClaimsBasedPayType,
+  PayType,
+  TaskStatus
+} from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import {
   mapMultiSelectOptions,
@@ -62,6 +68,9 @@ const ClaimsBasedPayment = () => {
     }
   });
 
+  // If redirected from IT Tools, scrolls to the relevant question
+  useScrollElement(!loading);
+
   const {
     id,
     payType,
@@ -80,11 +89,14 @@ const ClaimsBasedPayment = () => {
 
   const modelName = data?.modelPlan?.modelName || '';
 
+  const itToolsStarted: boolean =
+    data?.modelPlan.itTools.status !== TaskStatus.READY;
+
   const [update] = useMutation<UpdatePaymentsVariables>(UpdatePayments);
 
   const handleFormSubmit = (
     formikValues: ClaimsBasedPaymentFormType,
-    redirect?: 'next' | 'back' | 'task-list'
+    redirect?: 'next' | 'back' | 'task-list' | string
   ) => {
     const { id: updateId, __typename, ...changeValues } = formikValues;
     update({
@@ -103,6 +115,8 @@ const ClaimsBasedPayment = () => {
             history.push(`/models/${modelID}/task-list/payment`);
           } else if (redirect === 'task-list') {
             history.push(`/models/${modelID}/task-list/`);
+          } else if (redirect) {
+            history.push(redirect);
           }
         }
       })
@@ -295,6 +309,18 @@ const ClaimsBasedPayment = () => {
                         >
                           {t('excludedFromPayment')}
                         </Label>
+                        {itToolsStarted && (
+                          <ITToolsWarning
+                            id="payment-provider-exclusion-ffs-system-warning"
+                            className="margin-top-neg-5"
+                            onClick={() =>
+                              handleFormSubmit(
+                                values,
+                                `/models/${modelID}/task-list/it-tools/page-eight`
+                              )
+                            }
+                          />
+                        )}
                         <FieldErrorMsg>
                           {flatErrors.shouldAnyProvidersExcludedFFSSystems}
                         </FieldErrorMsg>

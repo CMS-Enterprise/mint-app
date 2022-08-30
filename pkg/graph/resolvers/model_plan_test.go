@@ -6,7 +6,7 @@ import (
 
 func (suite *ResolverSuite) TestModelPlanCreate() {
 	planName := "Test Plan"
-	result, err := ModelPlanCreate(suite.testConfigs.Logger, planName, suite.testConfigs.Store, suite.testConfigs.UserInfo)
+	result, err := ModelPlanCreate(suite.testConfigs.Logger, planName, suite.testConfigs.Store, suite.testConfigs.UserInfo, suite.testConfigs.Principal)
 
 	suite.NoError(err)
 	suite.NotNil(result.ID)
@@ -22,34 +22,28 @@ func (suite *ResolverSuite) TestModelPlanUpdate() {
 	plan := suite.createModelPlan("Test Plan")
 
 	changes := map[string]interface{}{
-		"modelName":  "NEW_AND_IMPROVED",
-		"status":     models.ModelStatusIcipComplete,
-		"archived":   true,
-		"cmsCenters": []string{"CMMI", "OTHER"},
-		"cmsOther":   "SOME OTHER CMS CENTER",
-		"cmmiGroups": []string{"PATIENT_CARE_MODELS_GROUP", "SEAMLESS_CARE_MODELS_GROUP"},
+		"modelName": "NEW_AND_IMPROVED",
+		"status":    models.ModelStatusIcipComplete,
+		"archived":  true,
 	}
-	updater := "UPDT"
-	result, err := ModelPlanUpdate(suite.testConfigs.Logger, plan.ID, changes, &updater, suite.testConfigs.Store) // update plan with new user "UPDT"
+	result, err := ModelPlanUpdate(suite.testConfigs.Logger, plan.ID, changes, suite.testConfigs.Principal, suite.testConfigs.Store) // update plan with new user "UPDT"
 
 	suite.NoError(err)
 	suite.EqualValues(plan.ID, result.ID)
 	suite.EqualValues(changes["modelName"], result.ModelName)
 	suite.EqualValues(changes["archived"], result.Archived)
-	suite.EqualValues(changes["cmsCenters"], result.CMSCenters)
-	suite.EqualValues(changes["cmsOther"], *result.CMSOther)
-	suite.EqualValues(changes["cmmiGroups"], result.CMMIGroups)
+
 	suite.EqualValues(changes["status"], result.Status)
 	suite.EqualValues(suite.testConfigs.UserInfo.EuaUserID, result.CreatedBy)
 	suite.NotNil(result.ModifiedBy)
 	suite.NotNil(result.ModifiedDts)
-	suite.EqualValues(updater, *result.ModifiedBy)
+	suite.EqualValues(suite.testConfigs.Principal.EUAID, *result.ModifiedBy)
 }
 
 func (suite *ResolverSuite) TestModelPlanGetByID() {
 	plan := suite.createModelPlan("Test Plan")
 
-	result, err := ModelPlanGetByID(suite.testConfigs.Logger, suite.testConfigs.UserInfo.EuaUserID, plan.ID, suite.testConfigs.Store)
+	result, err := ModelPlanGetByID(suite.testConfigs.Logger, plan.ID, suite.testConfigs.Store)
 
 	suite.NoError(err)
 	suite.EqualValues(plan, result)
@@ -58,7 +52,7 @@ func (suite *ResolverSuite) TestModelPlanGetByID() {
 func (suite *ResolverSuite) TestModelPlanCollectionByUser() {
 	plan := suite.createModelPlan("Test Plan")
 
-	result, err := ModelPlanCollectionByUser(suite.testConfigs.Logger, suite.testConfigs.UserInfo.EuaUserID, suite.testConfigs.Store)
+	result, err := ModelPlanCollectionByUser(suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store)
 
 	suite.NoError(err)
 	suite.NotNil(result)

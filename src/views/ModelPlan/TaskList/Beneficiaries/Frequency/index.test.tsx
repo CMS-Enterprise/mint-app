@@ -5,7 +5,11 @@ import { render, screen, waitFor } from '@testing-library/react';
 
 import getFrequency from 'queries/Beneficiaries/getFrequency';
 import { GetFrequency_modelPlan_beneficiaries as BeneficiaryFrequencyType } from 'queries/Beneficiaries/types/GetFrequency';
-import { FrequencyType, OverlapType } from 'types/graphql-global-types';
+import {
+  FrequencyType,
+  OverlapType,
+  TaskStatus
+} from 'types/graphql-global-types';
 
 import Frequency from './index';
 
@@ -17,7 +21,10 @@ const mockData: BeneficiaryFrequencyType = {
   beneficiarySelectionFrequencyOther: 'Very often',
   beneficiaryOverlap: OverlapType.YES_NO_ISSUES,
   beneficiaryOverlapNote: '',
-  precedenceRules: 'lorem ipsum'
+  precedenceRules: 'lorem ipsum',
+  readyForReviewBy: 'ASDF',
+  readyForReviewDts: '2022-05-12T15:01:39.190679Z',
+  status: TaskStatus.IN_PROGRESS
 };
 
 const beneficiaryMock = [

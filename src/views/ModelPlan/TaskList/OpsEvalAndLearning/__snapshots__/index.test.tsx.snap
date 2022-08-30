@@ -114,6 +114,9 @@ exports[`Model Plan Ops Eval and Learning matches snapshot 1`] = `
       >
         Yes, we will get support from another agenct through IAA
       </label>
+      <p
+        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+      />
     </div>
     <div
       class="mint-checkbox usa-checkbox"
@@ -131,6 +134,9 @@ exports[`Model Plan Ops Eval and Learning matches snapshot 1`] = `
       >
         Yes, we will get ideas from another agency
       </label>
+      <p
+        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+      />
     </div>
     <div
       class="mint-checkbox usa-checkbox"
@@ -148,6 +154,9 @@ exports[`Model Plan Ops Eval and Learning matches snapshot 1`] = `
       >
         Yes, we will partner with states
       </label>
+      <p
+        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+      />
     </div>
     <div
       class="mint-checkbox usa-checkbox"
@@ -165,6 +174,9 @@ exports[`Model Plan Ops Eval and Learning matches snapshot 1`] = `
       >
         Other
       </label>
+      <p
+        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+      />
     </div>
     <div
       class="mint-checkbox usa-checkbox"
@@ -182,6 +194,9 @@ exports[`Model Plan Ops Eval and Learning matches snapshot 1`] = `
       >
         No
       </label>
+      <p
+        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+      />
     </div>
     <div
       class="margin-top-4 margin-bottom-8"
@@ -309,6 +324,28 @@ exports[`Model Plan Ops Eval and Learning matches snapshot 1`] = `
       >
         Do you plan to use a helpdesk?
       </label>
+      <div
+        class="usa-alert usa-alert--warning it-tools-warning"
+        data-testid="alert"
+      >
+        <div
+          class="usa-alert__body"
+        >
+          <p
+            class="usa-alert__text"
+          >
+            Changing your answer to this question may also affect your responses to questions in IT tools.  
+            <button
+              class="usa-button usa-button usa-button--unstyled"
+              data-testid="button"
+              id="ops-eval-and-learning-help-desk-use-warning"
+              type="button"
+            >
+              Go to IT tools.
+            </button>
+          </p>
+        </div>
+      </div>
       <fieldset
         class="usa-fieldset"
         data-testid="fieldset"
@@ -401,6 +438,9 @@ exports[`Model Plan Ops Eval and Learning matches snapshot 1`] = `
       >
         May have separate contractors for different implementation functions
       </label>
+      <p
+        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+      />
     </div>
     <div
       class="mint-checkbox usa-checkbox"
@@ -418,6 +458,9 @@ exports[`Model Plan Ops Eval and Learning matches snapshot 1`] = `
       >
         Do not plan to use an implemenation contractor
       </label>
+      <p
+        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+      />
     </div>
     <div
       class="mint-checkbox usa-checkbox"
@@ -435,6 +478,9 @@ exports[`Model Plan Ops Eval and Learning matches snapshot 1`] = `
       >
         One contractor to support implementation
       </label>
+      <p
+        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+      />
     </div>
     <div
       class="mint-checkbox usa-checkbox"
@@ -452,6 +498,9 @@ exports[`Model Plan Ops Eval and Learning matches snapshot 1`] = `
       >
         Other
       </label>
+      <p
+        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+      />
     </div>
     <div
       class="usa-form-group"
@@ -518,6 +567,28 @@ exports[`Model Plan Ops Eval and Learning matches snapshot 1`] = `
       >
         Are you planning to use IDDOC support?
       </label>
+      <div
+        class="usa-alert usa-alert--warning it-tools-warning"
+        data-testid="alert"
+      >
+        <div
+          class="usa-alert__body"
+        >
+          <p
+            class="usa-alert__text"
+          >
+            Changing your answer to this question may also affect your responses to questions in IT tools.  
+            <button
+              class="usa-button usa-button usa-button--unstyled"
+              data-testid="button"
+              id="ops-eval-and-learning-iddoc-support-warning"
+              type="button"
+            >
+              Go to IT tools.
+            </button>
+          </p>
+        </div>
+      </div>
       <p
         class="text-base margin-y-1"
       >

@@ -99,6 +99,28 @@ exports[`Model Plan Ops Eval and Learning matches snapshot 1`] = `
       What type of evaluation approach are you considering? Select all that apply.
     </legend>
     <div
+      class="usa-alert usa-alert--warning it-tools-warning"
+      data-testid="alert"
+    >
+      <div
+        class="usa-alert__body"
+      >
+        <p
+          class="usa-alert__text"
+        >
+          Changing your answer to this question may also affect your responses to questions in IT tools.  
+          <button
+            class="usa-button usa-button usa-button--unstyled"
+            data-testid="button"
+            id="ops-eval-and-learning-evaluation-approach-warning"
+            type="button"
+          >
+            Go to IT tools.
+          </button>
+        </p>
+      </div>
+    </div>
+    <div
       class="mint-checkbox usa-checkbox"
     >
       <input
@@ -114,6 +136,9 @@ exports[`Model Plan Ops Eval and Learning matches snapshot 1`] = `
       >
         Identify a comparison/match group
       </label>
+      <p
+        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+      />
     </div>
     <div
       class="mint-checkbox usa-checkbox"
@@ -131,6 +156,9 @@ exports[`Model Plan Ops Eval and Learning matches snapshot 1`] = `
       >
         Establish control and intervention groups
       </label>
+      <p
+        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+      />
     </div>
     <div
       class="mint-checkbox usa-checkbox"
@@ -148,6 +176,9 @@ exports[`Model Plan Ops Eval and Learning matches snapshot 1`] = `
       >
         Interrupted time series
       </label>
+      <p
+        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+      />
     </div>
     <div
       class="mint-checkbox usa-checkbox"
@@ -165,6 +196,9 @@ exports[`Model Plan Ops Eval and Learning matches snapshot 1`] = `
       >
         Leverage non-Medicare data (such as Medicaid data, external data sets)
       </label>
+      <p
+        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+      />
     </div>
     <div
       class="mint-checkbox usa-checkbox"
@@ -182,6 +216,9 @@ exports[`Model Plan Ops Eval and Learning matches snapshot 1`] = `
       >
         Other
       </label>
+      <p
+        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+      />
     </div>
     <div
       class="margin-top-4 margin-bottom-8"
@@ -233,6 +270,9 @@ exports[`Model Plan Ops Eval and Learning matches snapshot 1`] = `
       >
         Yes, for evaluation
       </label>
+      <p
+        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+      />
     </div>
     <div
       class="mint-checkbox usa-checkbox"
@@ -250,6 +290,9 @@ exports[`Model Plan Ops Eval and Learning matches snapshot 1`] = `
       >
         Yes, for implementation
       </label>
+      <p
+        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+      />
     </div>
     <div
       class="mint-checkbox usa-checkbox"
@@ -267,6 +310,9 @@ exports[`Model Plan Ops Eval and Learning matches snapshot 1`] = `
       >
         Other
       </label>
+      <p
+        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+      />
     </div>
     <div
       class="mint-checkbox usa-checkbox"
@@ -284,6 +330,9 @@ exports[`Model Plan Ops Eval and Learning matches snapshot 1`] = `
       >
         No
       </label>
+      <p
+        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+      />
     </div>
     <div
       class="margin-top-4 margin-bottom-8"
@@ -325,6 +374,28 @@ exports[`Model Plan Ops Eval and Learning matches snapshot 1`] = `
       >
         What data do you need to monitor the model? Select all that apply.
       </label>
+      <div
+        class="usa-alert usa-alert--warning it-tools-warning"
+        data-testid="alert"
+      >
+        <div
+          class="usa-alert__body"
+        >
+          <p
+            class="usa-alert__text"
+          >
+            Changing your answer to this question may also affect your responses to questions in IT tools.  
+            <button
+              class="usa-button usa-button usa-button--unstyled"
+              data-testid="button"
+              id="ops-eval-and-learning-data-needed-warning"
+              type="button"
+            >
+              Go to IT tools.
+            </button>
+          </p>
+        </div>
+      </div>
       <p
         class="text-base margin-y-1"
       >
@@ -414,8 +485,30 @@ exports[`Model Plan Ops Eval and Learning matches snapshot 1`] = `
         data-testid="label"
         for="ops-eval-and-learning-data-to-send"
       >
-        What data do you need to monitor the model? Select all that apply.
+        What data will you send to participants? Select all that apply.
       </label>
+      <div
+        class="usa-alert usa-alert--warning it-tools-warning"
+        data-testid="alert"
+      >
+        <div
+          class="usa-alert__body"
+        >
+          <p
+            class="usa-alert__text"
+          >
+            Changing your answer to this question may also affect your responses to questions in IT tools.  
+            <button
+              class="usa-button usa-button usa-button--unstyled"
+              data-testid="button"
+              id="ops-eval-and-learning-data-to-send-warning"
+              type="button"
+            >
+              Go to IT tools.
+            </button>
+          </p>
+        </div>
+      </div>
       <div
         class="easi-multiselect position-relative"
         id="ops-eval-and-learning-data-to-send"

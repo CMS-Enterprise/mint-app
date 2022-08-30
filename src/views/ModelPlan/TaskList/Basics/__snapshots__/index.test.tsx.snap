@@ -145,7 +145,7 @@ exports[`Model Plan Documents page matches snapshot 1`] = `
               class="usa-select"
               data-testid="dropdown"
               id="plan-basics-model-category"
-              name="modelCategory"
+              name="basics.modelCategory"
             >
               <option
                 disabled=""
@@ -215,7 +215,7 @@ exports[`Model Plan Documents page matches snapshot 1`] = `
               <input
                 class="usa-checkbox__input"
                 id="new-plan-cmsCenters-CENTER_FOR_CLINICAL_STANDARDS_AND_QUALITY"
-                name="cmsCenters"
+                name="basics.cmsCenters"
                 type="checkbox"
                 value="CENTER_FOR_CLINICAL_STANDARDS_AND_QUALITY"
               />
@@ -225,6 +225,9 @@ exports[`Model Plan Documents page matches snapshot 1`] = `
               >
                 Center for Clinical Standards and Quality (CCSQ)
               </label>
+              <p
+                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+              />
             </div>
             <div
               class="mint-checkbox usa-checkbox"
@@ -232,7 +235,7 @@ exports[`Model Plan Documents page matches snapshot 1`] = `
               <input
                 class="usa-checkbox__input"
                 id="new-plan-cmsCenters-CENTER_FOR_MEDICARE"
-                name="cmsCenters"
+                name="basics.cmsCenters"
                 type="checkbox"
                 value="CENTER_FOR_MEDICARE"
               />
@@ -242,6 +245,9 @@ exports[`Model Plan Documents page matches snapshot 1`] = `
               >
                 Center for Medicare (CM)
               </label>
+              <p
+                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+              />
             </div>
             <div
               class="mint-checkbox usa-checkbox"
@@ -249,7 +255,7 @@ exports[`Model Plan Documents page matches snapshot 1`] = `
               <input
                 class="usa-checkbox__input"
                 id="new-plan-cmsCenters-CENTER_FOR_PROGRAM_INTEGRITY"
-                name="cmsCenters"
+                name="basics.cmsCenters"
                 type="checkbox"
                 value="CENTER_FOR_PROGRAM_INTEGRITY"
               />
@@ -259,6 +265,9 @@ exports[`Model Plan Documents page matches snapshot 1`] = `
               >
                 Center for Program Integrity (CPI)
               </label>
+              <p
+                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+              />
             </div>
             <div
               class="mint-checkbox usa-checkbox"
@@ -266,7 +275,7 @@ exports[`Model Plan Documents page matches snapshot 1`] = `
               <input
                 class="usa-checkbox__input"
                 id="new-plan-cmsCenters-CMMI"
-                name="cmsCenters"
+                name="basics.cmsCenters"
                 type="checkbox"
                 value="CMMI"
               />
@@ -276,6 +285,9 @@ exports[`Model Plan Documents page matches snapshot 1`] = `
               >
                 CMMI
               </label>
+              <p
+                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+              />
             </div>
             <div
               class="mint-checkbox usa-checkbox"
@@ -283,7 +295,7 @@ exports[`Model Plan Documents page matches snapshot 1`] = `
               <input
                 class="usa-checkbox__input"
                 id="new-plan-cmsCenters-FEDERAL_COORDINATED_HEALTH_CARE_OFFICE"
-                name="cmsCenters"
+                name="basics.cmsCenters"
                 type="checkbox"
                 value="FEDERAL_COORDINATED_HEALTH_CARE_OFFICE"
               />
@@ -293,6 +305,9 @@ exports[`Model Plan Documents page matches snapshot 1`] = `
               >
                 Federal Coordinated Health Care
               </label>
+              <p
+                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+              />
             </div>
             <div
               class="mint-checkbox usa-checkbox"
@@ -300,7 +315,7 @@ exports[`Model Plan Documents page matches snapshot 1`] = `
               <input
                 class="usa-checkbox__input"
                 id="new-plan-cmsCenters-OTHER"
-                name="cmsCenters"
+                name="basics.cmsCenters"
                 type="checkbox"
                 value="OTHER"
               />
@@ -310,6 +325,9 @@ exports[`Model Plan Documents page matches snapshot 1`] = `
               >
                 Other
               </label>
+              <p
+                class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+              />
             </div>
           </div>
           <div

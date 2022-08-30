@@ -17,6 +17,7 @@ import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
+import ITToolsWarning from 'components/ITToolsWarning';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import Alert from 'components/shared/Alert';
@@ -26,6 +27,7 @@ import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import MultiSelect from 'components/shared/MultiSelect';
+import useScrollElement from 'hooks/useScrollElement';
 import GetKeyCharacteristics from 'queries/GeneralCharacteristics/GetKeyCharacteristics';
 import {
   GetKeyCharacteristics as GetKeyCharacteristicsType,
@@ -36,7 +38,8 @@ import { UpdatePlanGeneralCharacteristicsVariables } from 'queries/GeneralCharac
 import UpdatePlanGeneralCharacteristics from 'queries/GeneralCharacteristics/UpdatePlanGeneralCharacteristics';
 import {
   AlternativePaymentModelType,
-  KeyCharacteristic
+  KeyCharacteristic,
+  TaskStatus
 } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import {
@@ -83,13 +86,19 @@ const KeyCharacteristics = () => {
     data?.modelPlan?.generalCharacteristics ||
     ({} as KeyCharacteristicsFormType);
 
+  const itToolsStarted: boolean =
+    data?.modelPlan.itTools.status !== TaskStatus.READY;
+
+  // If redirected from IT Tools, scrolls to the relevant question
+  useScrollElement(!loading);
+
   const [update] = useMutation<UpdatePlanGeneralCharacteristicsVariables>(
     UpdatePlanGeneralCharacteristics
   );
 
   const handleFormSubmit = (
     formikValues: KeyCharacteristicsFormType,
-    redirect?: 'next' | 'back' | 'task-list'
+    redirect?: 'next' | 'back' | 'task-list' | string
   ) => {
     const { id: updateId, __typename, ...changeValues } = formikValues;
     update({
@@ -108,6 +117,8 @@ const KeyCharacteristics = () => {
             history.push(`/models/${modelID}/task-list/characteristics`);
           } else if (redirect === 'task-list') {
             history.push(`/models/${modelID}/task-list`);
+          } else if (redirect) {
+            history.push(redirect);
           }
         }
       })
@@ -395,6 +406,17 @@ const KeyCharacteristics = () => {
                       >
                         {t('reviewPlanBids')}
                       </Label>
+                      {itToolsStarted && (
+                        <ITToolsWarning
+                          id="plan-characteristics-collect-bids-warning"
+                          onClick={() =>
+                            handleFormSubmit(
+                              values,
+                              `/models/${modelID}/task-list/it-tools/page-one`
+                            )
+                          }
+                        />
+                      )}
                       <FieldErrorMsg>
                         {flatErrors.collectPlanBids}
                       </FieldErrorMsg>
@@ -441,6 +463,17 @@ const KeyCharacteristics = () => {
                       >
                         {t('manageEnrollment')}
                       </Label>
+                      {itToolsStarted && (
+                        <ITToolsWarning
+                          id="plan-characteristics-manage-enrollment-warning"
+                          onClick={() =>
+                            handleFormSubmit(
+                              values,
+                              `/models/${modelID}/task-list/it-tools/page-one`
+                            )
+                          }
+                        />
+                      )}
                       <FieldErrorMsg>
                         {flatErrors.managePartCDEnrollment}
                       </FieldErrorMsg>
@@ -487,6 +520,17 @@ const KeyCharacteristics = () => {
                       >
                         {t('updatedContact')}
                       </Label>
+                      {itToolsStarted && (
+                        <ITToolsWarning
+                          id="plan-characteristics-contact-updated-warning"
+                          onClick={() =>
+                            handleFormSubmit(
+                              values,
+                              `/models/${modelID}/task-list/it-tools/page-one`
+                            )
+                          }
+                        />
+                      )}
                       <FieldErrorMsg>
                         {flatErrors.planContactUpdated}
                       </FieldErrorMsg>

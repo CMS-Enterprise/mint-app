@@ -4,28 +4,24 @@ import (
 	"github.com/google/uuid"
 	"go.uber.org/zap"
 
+	"github.com/cmsgov/mint-app/pkg/authentication"
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/storage"
 )
 
 //PlanITToolsUpdate updates a plan ITTools buisness object
-func PlanITToolsUpdate(logger *zap.Logger, id uuid.UUID, changes map[string]interface{}, principal string, store *storage.Store) (*models.PlanITTools, error) {
+func PlanITToolsUpdate(logger *zap.Logger, id uuid.UUID, changes map[string]interface{}, principal authentication.Principal, store *storage.Store) (*models.PlanITTools, error) {
 	//Get existing plan ITTools
-	existingITTools, err := store.PlanITToolsGetByID(logger, id)
+	existing, err := store.PlanITToolsGetByID(logger, id)
 	if err != nil {
 		return nil, err
 	}
-	err = ApplyChanges(changes, existingITTools)
-	if err != nil {
-		return nil, err
-	}
-	existingITTools.ModifiedBy = &principal
-	err = existingITTools.CalcStatus()
+	err = BaseTaskListSectionPreUpdate(logger, existing, changes, principal, store)
 	if err != nil {
 		return nil, err
 	}
 
-	retITTools, err := store.PlanITToolsUpdate(logger, existingITTools)
+	retITTools, err := store.PlanITToolsUpdate(logger, existing)
 	return retITTools, err
 
 }

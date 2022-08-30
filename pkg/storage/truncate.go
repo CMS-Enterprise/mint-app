@@ -7,12 +7,12 @@ import (
 // TruncateAllTablesDANGEROUS is a function to reset all tables in the DB. It should only be called within test code.
 func (s *Store) TruncateAllTablesDANGEROUS(logger *zap.Logger) error {
 	tables := `
+	nda_agreement,
     discussion_reply,
     plan_basics,
     plan_collaborator,
     plan_discussion,
     plan_document,
-    plan_milestones,
     plan_general_characteristics,
 	plan_beneficiaries,
 	plan_participants_and_providers,

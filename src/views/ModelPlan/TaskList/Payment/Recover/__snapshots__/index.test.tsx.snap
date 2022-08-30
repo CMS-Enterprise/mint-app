@@ -116,6 +116,28 @@ exports[`Model Plan -- Recover matches snapshot 1`] = `
             >
               Will you recover the payments?
             </label>
+            <div
+              class="usa-alert usa-alert--warning it-tools-warning"
+              data-testid="alert"
+            >
+              <div
+                class="usa-alert__body"
+              >
+                <p
+                  class="usa-alert__text"
+                >
+                  Changing your answer to this question may also affect your responses to questions in IT tools.  
+                  <button
+                    class="usa-button usa-button usa-button--unstyled"
+                    data-testid="button"
+                    id="payment-recover-payment-warning"
+                    type="button"
+                  >
+                    Go to IT tools.
+                  </button>
+                </p>
+              </div>
+            </div>
             <fieldset
               class="usa-fieldset"
               data-testid="fieldset"
@@ -256,6 +278,52 @@ exports[`Model Plan -- Recover matches snapshot 1`] = `
                 >
                   string
                 </textarea>
+              </div>
+            </div>
+          </div>
+          <div
+            class="usa-form-group margin-top-8 margin-bottom-3"
+          >
+            <div
+              class="usa-summary-box bg-white border-base-light padding-2"
+              data-testid="summary-box"
+            >
+              <div
+                class="usa-summary-box__body"
+              >
+                <h3
+                  class="usa-summary-box__heading"
+                />
+                <div
+                  class="usa-summary-box__text"
+                >
+                  <p
+                    class="margin-0"
+                  >
+                    Model Plan status
+                  </p>
+                  <div
+                    class="mint-checkbox usa-checkbox"
+                  >
+                    <input
+                      class="usa-checkbox__input"
+                      data-testid="payment-status"
+                      id="payment-status"
+                      name="status"
+                      type="checkbox"
+                      value="IN_PROGRESS"
+                    />
+                    <label
+                      class="usa-checkbox__label"
+                      for="payment-status"
+                    >
+                      This section of the Model Plan (Payment) is ready for review.
+                    </label>
+                    <p
+                      class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+                    />
+                  </div>
+                </div>
               </div>
             </div>
           </div>

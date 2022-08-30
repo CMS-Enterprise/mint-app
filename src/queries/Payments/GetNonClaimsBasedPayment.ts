@@ -20,6 +20,9 @@ export default gql`
         planningToUseInnovationPaymentContractorNote
         fundingStructure
       }
+      itTools {
+        status
+      }
     }
   }
 `;

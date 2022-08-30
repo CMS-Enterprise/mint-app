@@ -23,6 +23,7 @@ import ModelPlan from 'views/ModelPlan';
 import Collaborators from 'views/ModelPlan/Collaborators';
 import Documents from 'views/ModelPlan/Documents';
 import NewPlan from 'views/ModelPlan/NewPlan';
+import ReadOnly from 'views/ModelPlan/ReadOnly';
 import Status from 'views/ModelPlan/Status';
 import StepsOverview from 'views/ModelPlan/StepsOverview';
 import TaskList from 'views/ModelPlan/TaskList';
@@ -30,10 +31,10 @@ import Basics from 'views/ModelPlan/TaskList/Basics';
 import Beneficiaries from 'views/ModelPlan/TaskList/Beneficiaries';
 import CostEstimate from 'views/ModelPlan/TaskList/CostEstimate';
 import Characteristics from 'views/ModelPlan/TaskList/GeneralCharacteristics';
+import ITTools from 'views/ModelPlan/TaskList/ITTools';
 import OpsEvalAndLearning from 'views/ModelPlan/TaskList/OpsEvalAndLearning';
 import Participants from 'views/ModelPlan/TaskList/ParticipantsAndProviders';
 import Payment from 'views/ModelPlan/TaskList/Payment';
-import Population from 'views/ModelPlan/TaskList/Population';
 import SubmitRequest from 'views/ModelPlan/TaskList/SubmitRequest';
 import NotFound from 'views/NotFound';
 import PrivacyPolicy from 'views/PrivacyPolicy';
@@ -63,8 +64,7 @@ const AppRoutes = () => {
   return (
     <Switch>
       {/* General Routes */}
-      <Redirect exact from="/" to="/models" />
-      <Route path="/models" exact component={Home} />
+      <Route path="/" exact component={Home} />
 
       <Redirect exact from="/login" to="/signin" />
       <Route path="/signin" exact component={Login} />
@@ -72,6 +72,12 @@ const AppRoutes = () => {
 
       {/* Model Routes */}
       <SecureRoute path="/models" exact component={ModelPlan} />
+
+      <SecureRoute
+        path="/models/:modelID/read-only"
+        exact
+        component={ReadOnly}
+      />
 
       <SecureRoute
         path="/models/steps-overview"
@@ -120,8 +126,8 @@ const AppRoutes = () => {
         component={Payment}
       />
       <SecureRoute
-        path="/models/:modelID/task-list/population"
-        component={Population}
+        path="/models/:modelID/task-list/it-tools"
+        component={ITTools}
       />
       <SecureRoute
         path="/models/:modelID/task-list/submit-request"

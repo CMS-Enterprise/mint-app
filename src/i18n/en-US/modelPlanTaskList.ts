@@ -15,6 +15,7 @@ const modelPlanTaskList = {
   },
   sideNav: {
     saveAndExit: 'Save & Exit',
+    view: 'View this Model Plan',
     remove: 'Remove your Model Plan',
     relatedContent: 'Related Content',
     ariaLabelForOverview: 'Open overview for adding a system in a new tab',
@@ -76,13 +77,14 @@ const modelPlanTaskList = {
   },
   taskListButton: {
     start: 'Start',
-    continue: 'Continue'
+    continue: 'Continue',
+    update: 'Update'
   },
   taskListItem: {
     ready: 'Ready to start',
+    readyForReview: 'Ready for review',
     inProgress: 'In progress',
     completed: 'Completed',
-    cannotStart: 'Cannot start yet',
     notNeeded: 'Not needed',
     lastUpdated: 'Last updated:'
   },

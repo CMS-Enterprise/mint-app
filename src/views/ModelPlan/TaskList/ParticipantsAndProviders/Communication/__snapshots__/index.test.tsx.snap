@@ -99,6 +99,28 @@ exports[`Model Plan Communication matches snapshot 1`] = `
       How will you communicate with participants?
     </legend>
     <div
+      class="usa-alert usa-alert--warning it-tools-warning"
+      data-testid="alert"
+    >
+      <div
+        class="usa-alert__body"
+      >
+        <p
+          class="usa-alert__text"
+        >
+          Changing your answer to this question may also affect your responses to questions in IT tools.  
+          <button
+            class="usa-button usa-button usa-button--unstyled"
+            data-testid="button"
+            id="participants-and-providers-communication-method-warning"
+            type="button"
+          >
+            Go to IT tools.
+          </button>
+        </p>
+      </div>
+    </div>
+    <div
       class="mint-checkbox usa-checkbox"
     >
       <input
@@ -114,6 +136,9 @@ exports[`Model Plan Communication matches snapshot 1`] = `
       >
         Manage ongoing communications with participants using an IT tool
       </label>
+      <p
+        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+      />
     </div>
     <div
       class="mint-checkbox usa-checkbox"
@@ -131,6 +156,9 @@ exports[`Model Plan Communication matches snapshot 1`] = `
       >
         Send mass emails to new participants
       </label>
+      <p
+        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+      />
     </div>
     <div
       class="mint-checkbox usa-checkbox"
@@ -148,6 +176,9 @@ exports[`Model Plan Communication matches snapshot 1`] = `
       >
         Other
       </label>
+      <p
+        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+      />
     </div>
     <div
       class="mint-checkbox usa-checkbox"
@@ -165,6 +196,9 @@ exports[`Model Plan Communication matches snapshot 1`] = `
       >
         We are not planning to communicate
       </label>
+      <p
+        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+      />
     </div>
     <div
       class="margin-top-4 margin-bottom-8"

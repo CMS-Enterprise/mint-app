@@ -15,6 +15,12 @@ export default gql`
         anticipateReconcilingPaymentsRetrospectivelyNote
         paymentStartDate
         paymentStartDateNote
+        readyForReviewBy
+        readyForReviewDts
+        status
+      }
+      itTools {
+        status
       }
     }
   }

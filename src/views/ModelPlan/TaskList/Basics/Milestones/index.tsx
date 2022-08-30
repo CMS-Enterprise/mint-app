@@ -19,20 +19,18 @@ import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
+import ReadyForReview from 'components/ReadyForReview';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import GetMilestones from 'queries/Basics/GetMilestones';
 import {
   GetMilestones as GetMilestonesType,
-  GetMilestones_modelPlan_milestones as MilestonesFormType,
+  GetMilestones_modelPlan_basics as MilestonesFormType,
   GetMilestonesVariables
 } from 'queries/Basics/types/GetMilestones';
-import {
-  UpdatePlanMilestones as UpdatePlanMilestonesType,
-  UpdatePlanMilestonesVariables
-} from 'queries/Basics/types/UpdatePlanMilestones';
-import UpdatePlanMilestones from 'queries/Basics/UpdatePlanMilestones';
+import { UpdatePlanBasicsVariables } from 'queries/Basics/types/UpdatePlanBasics';
+import UpdatePlanBasics from 'queries/Basics/UpdatePlanBasics';
 import flattenErrors from 'utils/flattenErrors';
 import planBasicsSchema from 'validations/planBasics';
 import { NotFoundPartial } from 'views/NotFound';
@@ -44,8 +42,14 @@ const Milestones = () => {
   const { t: h } = useTranslation('draftModelPlan');
   const { modelID } = useParams<{ modelID: string }>();
 
+  // Omitting readyForReviewBy and readyForReviewDts from initialValues and getting submitted through Formik
+  type InitialValueType = Omit<
+    MilestonesFormType,
+    'readyForReviewBy' | 'readyForReviewDts'
+  >;
+
   const history = useHistory();
-  const formikRef = useRef<FormikProps<MilestonesFormType>>(null);
+  const formikRef = useRef<FormikProps<InitialValueType>>(null);
 
   const { data, loading, error } = useQuery<
     GetMilestonesType,
@@ -71,16 +75,16 @@ const Milestones = () => {
     highLevelNote,
     wrapUpEnds,
     phasedIn,
-    phasedInNote
-  } = data?.modelPlan?.milestones || ({} as MilestonesFormType);
+    phasedInNote,
+    readyForReviewBy,
+    readyForReviewDts,
+    status
+  } = data?.modelPlan?.basics || ({} as MilestonesFormType);
 
-  const [update] = useMutation<
-    UpdatePlanMilestonesType,
-    UpdatePlanMilestonesVariables
-  >(UpdatePlanMilestones);
+  const [update] = useMutation<UpdatePlanBasicsVariables>(UpdatePlanBasics);
 
   const handleFormSubmit = (
-    formikValues: MilestonesFormType,
+    formikValues: InitialValueType,
     redirect?: 'back' | 'task-list'
   ) => {
     const { id: updateId, __typename, ...changeValues } = formikValues;
@@ -106,8 +110,8 @@ const Milestones = () => {
       });
   };
 
-  const initialValues: MilestonesFormType = {
-    __typename: 'PlanMilestones',
+  const initialValues: InitialValueType = {
+    __typename: 'PlanBasics',
     id: id ?? '',
     completeICIP: completeICIP ?? null,
     clearanceStarts: clearanceStarts ?? null,
@@ -120,7 +124,8 @@ const Milestones = () => {
     wrapUpEnds: wrapUpEnds ?? null,
     highLevelNote: highLevelNote ?? '',
     phasedIn: phasedIn ?? null,
-    phasedInNote: phasedInNote ?? ''
+    phasedInNote: phasedInNote ?? '',
+    status
   };
 
   if ((!loading && error) || (!loading && !data?.modelPlan)) {
@@ -169,7 +174,7 @@ const Milestones = () => {
           validateOnMount={false}
           innerRef={formikRef}
         >
-          {(formikProps: FormikProps<MilestonesFormType>) => {
+          {(formikProps: FormikProps<InitialValueType>) => {
             const {
               errors,
               handleSubmit,
@@ -187,7 +192,7 @@ const Milestones = () => {
               }
               try {
                 setFieldValue(field, new Date(e).toISOString());
-                delete errors[field as keyof MilestonesFormType];
+                delete errors[field as keyof InitialValueType];
               } catch (err) {
                 setFieldError(field, t('validDate'));
               }
@@ -535,6 +540,16 @@ const Milestones = () => {
 
                   <AddNote id="ModelType-phasedInNote" field="phasedInNote" />
 
+                  <ReadyForReview
+                    id="milestones-status"
+                    field="status"
+                    sectionName={t('heading')}
+                    status={values.status}
+                    setFieldValue={setFieldValue}
+                    readyForReviewBy={readyForReviewBy}
+                    readyForReviewDts={readyForReviewDts}
+                  />
+
                   <div className="margin-top-6 margin-bottom-3">
                     <Button
                       type="button"
@@ -566,19 +581,7 @@ const Milestones = () => {
                   <Button
                     type="button"
                     className="usa-button usa-button--unstyled"
-                    onClick={() => {
-                      if (Object.keys(errors).length > 0) {
-                        window.scrollTo(0, 0);
-                      } else {
-                        validateForm().then(err => {
-                          if (Object.keys(err).length > 0) {
-                            window.scrollTo(0, 0);
-                          } else {
-                            handleFormSubmit(values, 'task-list');
-                          }
-                        });
-                      }
-                    }}
+                    onClick={() => handleFormSubmit(values, 'task-list')}
                   >
                     <IconArrowBack className="margin-right-1" aria-hidden />
                     {h('saveAndReturn')}

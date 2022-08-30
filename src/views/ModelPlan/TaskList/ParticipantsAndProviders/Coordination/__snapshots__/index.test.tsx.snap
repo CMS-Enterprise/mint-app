@@ -288,6 +288,9 @@ exports[`Model Plan Coordination matches snapshot 1`] = `
       >
         CCNs
       </label>
+      <p
+        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+      />
     </div>
     <div
       class="mint-checkbox usa-checkbox"
@@ -305,6 +308,9 @@ exports[`Model Plan Coordination matches snapshot 1`] = `
       >
         NPIs
       </label>
+      <p
+        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+      />
     </div>
     <div
       class="mint-checkbox usa-checkbox"
@@ -322,6 +328,9 @@ exports[`Model Plan Coordination matches snapshot 1`] = `
       >
         TINs
       </label>
+      <p
+        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+      />
     </div>
     <div
       class="mint-checkbox usa-checkbox"
@@ -339,6 +348,9 @@ exports[`Model Plan Coordination matches snapshot 1`] = `
       >
         Other
       </label>
+      <p
+        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+      />
     </div>
     <div
       class="margin-left-4"
@@ -375,6 +387,9 @@ exports[`Model Plan Coordination matches snapshot 1`] = `
       >
         No, we will not collect provider identifiers
       </label>
+      <p
+        class="margin-y-1 margin-left-4 line-height-body-3 font-body-2xs"
+      />
     </div>
     <div
       class="margin-top-4 margin-bottom-8"

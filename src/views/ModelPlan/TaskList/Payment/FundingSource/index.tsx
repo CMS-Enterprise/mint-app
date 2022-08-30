@@ -18,6 +18,7 @@ import { Field, Form, Formik, FormikProps } from 'formik';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
+import ITToolsWarning from 'components/ITToolsWarning';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import AutoSave from 'components/shared/AutoSave';
@@ -25,6 +26,7 @@ import CheckboxField from 'components/shared/CheckboxField';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
+import useScrollElement from 'hooks/useScrollElement';
 import GetFunding from 'queries/Payments/GetFunding';
 import {
   GetFunding as GetFundingType,
@@ -37,7 +39,8 @@ import {
   ClaimsBasedPayType,
   FundingSource as FundingSourceEnum,
   PayRecipient,
-  PayType
+  PayType,
+  TaskStatus
 } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import {
@@ -68,6 +71,9 @@ const FundingSource = () => {
     }
   });
 
+  // If redirected from IT Tools, scrolls to the relevant question
+  useScrollElement(!loading);
+
   const {
     id,
     fundingSource,
@@ -88,11 +94,14 @@ const FundingSource = () => {
 
   const modelName = data?.modelPlan?.modelName || '';
 
+  const itToolsStarted: boolean =
+    data?.modelPlan.itTools.status !== TaskStatus.READY;
+
   const [update] = useMutation<UpdatePaymentsVariables>(UpdatePayments);
 
   const handleFormSubmit = (
     formikValues: FundingFormType,
-    redirect?: 'next' | 'back'
+    redirect?: 'next' | 'back' | string
   ) => {
     const { id: updateId, __typename, ...changeValues } = formikValues;
     const hasClaimsBasedPayment = formikValues.payType.includes(
@@ -123,6 +132,8 @@ const FundingSource = () => {
             }
           } else if (redirect === 'back') {
             history.push(`/models/${modelID}/task-list/`);
+          } else if (redirect) {
+            history.push(redirect);
           }
         }
       })
@@ -483,6 +494,17 @@ const FundingSource = () => {
                         <Label htmlFor="payType" className="maxw-none">
                           {t('whatWillYouPay')}
                         </Label>
+                        {itToolsStarted && (
+                          <ITToolsWarning
+                            id="payment-pay-recipients-warning"
+                            onClick={() =>
+                              handleFormSubmit(
+                                values,
+                                `/models/${modelID}/task-list/it-tools/page-eight`
+                              )
+                            }
+                          />
+                        )}
                         <p className="text-base margin-y-1 margin-top-2">
                           {t('whatWillYouPaySubCopy')}
                         </p>

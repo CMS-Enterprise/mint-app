@@ -16,12 +16,14 @@ import { Field, Form, Formik, FormikProps } from 'formik';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
+import ITToolsWarning from 'components/ITToolsWarning';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import AutoSave from 'components/shared/AutoSave';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
+import useScrollElement from 'hooks/useScrollElement';
 import GetPerformance from 'queries/OpsEvalAndLearning/GetPerformance';
 import {
   GetPerformance as GetPerformanceType,
@@ -30,7 +32,10 @@ import {
 } from 'queries/OpsEvalAndLearning/types/GetPerformance';
 import { UpdatePlanOpsEvalAndLearningVariables } from 'queries/OpsEvalAndLearning/types/UpdatePlanOpsEvalAndLearning';
 import UpdatePlanOpsEvalAndLearning from 'queries/OpsEvalAndLearning/UpdatePlanOpsEvalAndLearning';
-import { BenchmarkForPerformanceType } from 'types/graphql-global-types';
+import {
+  BenchmarkForPerformanceType,
+  TaskStatus
+} from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import {
   sortOtherEnum,
@@ -79,13 +84,19 @@ const Performance = () => {
 
   const modelName = data?.modelPlan?.modelName || '';
 
+  const itToolsStarted: boolean =
+    data?.modelPlan.itTools.status !== TaskStatus.READY;
+
+  // If redirected from IT Tools, scrolls to the relevant question
+  useScrollElement(!loading);
+
   const [update] = useMutation<UpdatePlanOpsEvalAndLearningVariables>(
     UpdatePlanOpsEvalAndLearning
   );
 
   const handleFormSubmit = (
     formikValues: PerformanceFormType,
-    redirect?: 'next' | 'back' | 'task-list'
+    redirect?: 'next' | 'back' | 'task-list' | string
   ) => {
     const { id: updateId, __typename, ...changeValues } = formikValues;
     update({
@@ -112,6 +123,8 @@ const Performance = () => {
             }
           } else if (redirect === 'task-list') {
             history.push(`/models/${modelID}/task-list`);
+          } else if (redirect) {
+            history.push(redirect);
           }
         }
       })
@@ -228,6 +241,17 @@ const Performance = () => {
                   <Label htmlFor="ops-eval-and-learning-benchmark-performance">
                     {t('establishBenchmark')}
                   </Label>
+                  {itToolsStarted && (
+                    <ITToolsWarning
+                      id="ops-eval-and-learning-benchmark-performance-warning"
+                      onClick={() =>
+                        handleFormSubmit(
+                          values,
+                          `/models/${modelID}/task-list/it-tools/page-four`
+                        )
+                      }
+                    />
+                  )}
                   <FieldErrorMsg>
                     {flatErrors.benchmarkForPerformance}
                   </FieldErrorMsg>
@@ -264,6 +288,7 @@ const Performance = () => {
                   <Label htmlFor="ops-eval-and-learning-compute-performance">
                     {t('computeScores')}
                   </Label>
+
                   <FieldErrorMsg>
                     {flatErrors.computePerformanceScores}
                   </FieldErrorMsg>
@@ -412,7 +437,17 @@ const Performance = () => {
                   <Label htmlFor="ops-eval-and-learning-appeals">
                     {t('participantAppeal')}
                   </Label>
-
+                  {itToolsStarted && (
+                    <ITToolsWarning
+                      id="ops-eval-and-learning-appeal-performance-warning"
+                      onClick={() =>
+                        handleFormSubmit(
+                          values,
+                          `/models/${modelID}/task-list/it-tools/page-five`
+                        )
+                      }
+                    />
+                  )}
                   <Label
                     htmlFor="ops-eval-and-learning-appeal-performance"
                     className="text-normal margin-top-2"

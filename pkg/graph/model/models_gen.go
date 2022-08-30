@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io"
 	"strconv"
+	"time"
 
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/google/uuid"
@@ -39,6 +40,12 @@ type GeneratePresignedUploadURLPayload struct {
 type LaunchDarklySettings struct {
 	UserKey    string `json:"userKey"`
 	SignedHash string `json:"signedHash"`
+}
+
+// NDAInfo represents whether a user has agreed to an NDA or not. If agreed to previously, there will be a datestamp visible
+type NDAInfo struct {
+	Agreed    bool       `json:"agreed"`
+	AgreedDts *time.Time `json:"agreedDts"`
 }
 
 // PlanCollaboratorCreateInput represents the data required to create a collaborator on a plan
@@ -83,12 +90,55 @@ type TaskListSectionLockStatus struct {
 	ModelPlanID uuid.UUID       `json:"modelPlanID"`
 	Section     TaskListSection `json:"section"`
 	LockedBy    string          `json:"lockedBy"`
-	RefCount    int             `json:"refCount"`
 }
 
 type TaskListSectionLockStatusChanged struct {
 	ChangeType ChangeType                 `json:"changeType"`
 	LockStatus *TaskListSectionLockStatus `json:"lockStatus"`
+	ActionType ActionType                 `json:"actionType"`
+}
+
+type ActionType string
+
+const (
+	// A normal flow action
+	ActionTypeNormal ActionType = "NORMAL"
+	// An administrative action
+	ActionTypeAdmin ActionType = "ADMIN"
+)
+
+var AllActionType = []ActionType{
+	ActionTypeNormal,
+	ActionTypeAdmin,
+}
+
+func (e ActionType) IsValid() bool {
+	switch e {
+	case ActionTypeNormal, ActionTypeAdmin:
+		return true
+	}
+	return false
+}
+
+func (e ActionType) String() string {
+	return string(e)
+}
+
+func (e *ActionType) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = ActionType(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid ActionType", str)
+	}
+	return nil
+}
+
+func (e ActionType) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 
 type AgencyOrStateHelpType string
@@ -2543,19 +2593,19 @@ type Role string
 
 const (
 	// A basic MINT user
-	RoleMintBaseUser Role = "MINT_BASE_USER"
-	// A MINT admin user
-	RoleMintAdminUser Role = "MINT_ADMIN_USER"
+	RoleMintUser Role = "MINT_USER"
+	// A MINT assessment team user
+	RoleMintAssessment Role = "MINT_ASSESSMENT"
 )
 
 var AllRole = []Role{
-	RoleMintBaseUser,
-	RoleMintAdminUser,
+	RoleMintUser,
+	RoleMintAssessment,
 }
 
 func (e Role) IsValid() bool {
 	switch e {
-	case RoleMintBaseUser, RoleMintAdminUser:
+	case RoleMintUser, RoleMintAssessment:
 		return true
 	}
 	return false
@@ -2732,6 +2782,47 @@ func (e *TaskListSection) UnmarshalGQL(v interface{}) error {
 }
 
 func (e TaskListSection) MarshalGQL(w io.Writer) {
+	fmt.Fprint(w, strconv.Quote(e.String()))
+}
+
+type TaskStatusInput string
+
+const (
+	TaskStatusInputInProgress     TaskStatusInput = "IN_PROGRESS"
+	TaskStatusInputReadyForReview TaskStatusInput = "READY_FOR_REVIEW"
+)
+
+var AllTaskStatusInput = []TaskStatusInput{
+	TaskStatusInputInProgress,
+	TaskStatusInputReadyForReview,
+}
+
+func (e TaskStatusInput) IsValid() bool {
+	switch e {
+	case TaskStatusInputInProgress, TaskStatusInputReadyForReview:
+		return true
+	}
+	return false
+}
+
+func (e TaskStatusInput) String() string {
+	return string(e)
+}
+
+func (e *TaskStatusInput) UnmarshalGQL(v interface{}) error {
+	str, ok := v.(string)
+	if !ok {
+		return fmt.Errorf("enums must be strings")
+	}
+
+	*e = TaskStatusInput(str)
+	if !e.IsValid() {
+		return fmt.Errorf("%s is not a valid TaskStatusInput", str)
+	}
+	return nil
+}
+
+func (e TaskStatusInput) MarshalGQL(w io.Writer) {
 	fmt.Fprint(w, strconv.Quote(e.String()))
 }
 

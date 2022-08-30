@@ -49,7 +49,6 @@ func (s *Server) routes(
 	oktaAuthenticationMiddleware := okta.NewOktaAuthenticationMiddleware(
 		handlers.NewHandlerBase(s.logger),
 		jwtVerifier,
-		oktaConfig.AltJobCodes,
 	)
 
 	s.router.Use(
@@ -158,16 +157,18 @@ func (s *Server) routes(
 		ldClient,
 		s.pubsub,
 	)
-	gqlDirectives := generated.DirectiveRoot{HasRole: func(ctx context.Context, obj interface{}, next graphql.Resolver, role model.Role) (res interface{}, err error) {
-		hasRole, err := services.HasRole(ctx, role)
-		if err != nil {
-			return nil, err
-		}
-		if !hasRole {
-			return nil, errors.New("not authorized")
-		}
-		return next(ctx)
-	}}
+	gqlDirectives := generated.DirectiveRoot{
+		HasRole: func(ctx context.Context, obj interface{}, next graphql.Resolver, role model.Role) (res interface{}, err error) {
+			hasRole, err := services.HasRole(ctx, role)
+			if err != nil {
+				return nil, err
+			}
+			if !hasRole {
+				return nil, errors.New("not authorized")
+			}
+			return next(ctx)
+
+		}}
 	gqlConfig := generated.Config{Resolvers: resolver, Directives: gqlDirectives}
 	graphqlServer := handler.NewDefaultServer(generated.NewExecutableSchema(gqlConfig))
 	graphqlServer.Use(extension.FixedComplexityLimit(1000))
@@ -218,19 +219,4 @@ func (s *Server) routes(
 			return nil
 		})
 	}
-	// endpoint for short-lived backfill process
-	// backfillHandler := handlers.NewBackfillHandler(
-	// 	base,
-	// 	services.NewBackfill(
-	// 		serviceConfig,
-	// 		store.FetchSystemIntakeByID,
-	// 		store.FetchSystemIntakeByLifecycleID,
-	// 		store.CreateSystemIntake,
-	// 		store.UpdateSystemIntake,
-	// 		store.CreateNote,
-	// 		services.AuthorizeHasEASiRole,
-	// 	),
-	// )
-	// api.Handle("/backfill", backfillHandler.Handle())
-
 }

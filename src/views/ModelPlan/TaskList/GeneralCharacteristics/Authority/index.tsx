@@ -19,6 +19,7 @@ import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
+import ReadyForReview from 'components/ReadyForReview';
 import AutoSave from 'components/shared/AutoSave';
 import CheckboxField from 'components/shared/CheckboxField';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
@@ -47,7 +48,13 @@ const Authority = () => {
   const { t: h } = useTranslation('draftModelPlan');
   const { modelID } = useParams<{ modelID: string }>();
 
-  const formikRef = useRef<FormikProps<AuthorityFormType>>(null);
+  // Omitting readyForReviewBy and readyForReviewDts from initialValues and getting submitted through Formik
+  type InitialValueType = Omit<
+    AuthorityFormType,
+    'readyForReviewBy' | 'readyForReviewDts'
+  >;
+
+  const formikRef = useRef<FormikProps<InitialValueType>>(null);
   const history = useHistory();
 
   const { data, loading, error } = useQuery<
@@ -71,7 +78,10 @@ const Authority = () => {
     authorityAllowancesNote,
     waiversRequired,
     waiversRequiredTypes,
-    waiversRequiredNote
+    waiversRequiredNote,
+    readyForReviewBy,
+    readyForReviewDts,
+    status
   } = data?.modelPlan?.generalCharacteristics || ({} as AuthorityFormType);
 
   const [update] = useMutation<UpdatePlanGeneralCharacteristicsVariables>(
@@ -79,7 +89,7 @@ const Authority = () => {
   );
 
   const handleFormSubmit = (
-    formikValues: AuthorityFormType,
+    formikValues: InitialValueType,
     redirect?: 'back' | 'task-list'
   ) => {
     const { id: updateId, __typename, ...changeValues } = formikValues;
@@ -105,7 +115,7 @@ const Authority = () => {
       });
   };
 
-  const initialValues: AuthorityFormType = {
+  const initialValues: InitialValueType = {
     __typename: 'PlanGeneralCharacteristics',
     id: id ?? '',
     rulemakingRequired: rulemakingRequired ?? null,
@@ -116,7 +126,8 @@ const Authority = () => {
     authorityAllowancesNote: authorityAllowancesNote ?? '',
     waiversRequired: waiversRequired ?? null,
     waiversRequiredTypes: waiversRequiredTypes ?? [],
-    waiversRequiredNote: waiversRequiredNote ?? ''
+    waiversRequiredNote: waiversRequiredNote ?? '',
+    status
   };
 
   if ((!loading && error) || (!loading && !data?.modelPlan)) {
@@ -162,7 +173,7 @@ const Authority = () => {
         enableReinitialize
         innerRef={formikRef}
       >
-        {(formikProps: FormikProps<AuthorityFormType>) => {
+        {(formikProps: FormikProps<InitialValueType>) => {
           const {
             errors,
             handleSubmit,
@@ -424,6 +435,16 @@ const Authority = () => {
                 <AddNote
                   id="plan-characteristics-waivers-required-note"
                   field="waiversRequiredNote"
+                />
+
+                <ReadyForReview
+                  id="characteristics-status"
+                  field="status"
+                  sectionName={t('heading')}
+                  status={values.status}
+                  setFieldValue={setFieldValue}
+                  readyForReviewBy={readyForReviewBy}
+                  readyForReviewDts={readyForReviewDts}
                 />
 
                 <div className="margin-top-6 margin-bottom-3">

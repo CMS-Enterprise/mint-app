@@ -10,8 +10,8 @@ import (
 
 func (s *ServicesTestSuite) TestHasRole() {
 	fnAuth := HasRole
-	nonAdmin := authentication.EUAPrincipal{EUAID: "FAKE", JobCodeMINT: true, JobCodeADMIN: false}
-	yesADMIN := authentication.EUAPrincipal{EUAID: "FAKE", JobCodeMINT: true, JobCodeADMIN: true}
+	userPrincipal := authentication.EUAPrincipal{EUAID: "FAKE", JobCodeUSER: true, JobCodeASSESSMENT: false}
+	assessmentPrincipal := authentication.EUAPrincipal{EUAID: "FAKE", JobCodeUSER: false, JobCodeASSESSMENT: true}
 
 	testCases := map[string]struct {
 		ctx     context.Context
@@ -22,18 +22,18 @@ func (s *ServicesTestSuite) TestHasRole() {
 			allowed: false,
 		},
 		"non admin": {
-			ctx:     appcontext.WithPrincipal(context.Background(), &nonAdmin),
+			ctx:     appcontext.WithPrincipal(context.Background(), &userPrincipal),
 			allowed: false,
 		},
 		"has admin": {
-			ctx:     appcontext.WithPrincipal(context.Background(), &yesADMIN),
+			ctx:     appcontext.WithPrincipal(context.Background(), &assessmentPrincipal),
 			allowed: true,
 		},
 	}
 
 	for name, tc := range testCases {
 		s.Run(name, func() {
-			ok, err := fnAuth(tc.ctx, model.RoleMintAdminUser)
+			ok, err := fnAuth(tc.ctx, model.RoleMintAssessment)
 			s.NoError(err)
 			s.Equal(tc.allowed, ok)
 		})

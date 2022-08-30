@@ -19,6 +19,7 @@ import { Field, FieldArray, Form, Formik, FormikProps } from 'formik';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
+import ITToolsWarning from 'components/ITToolsWarning';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
@@ -29,6 +30,7 @@ import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import MultiSelect from 'components/shared/MultiSelect';
 import TextAreaField from 'components/shared/TextAreaField';
+import useScrollElement from 'hooks/useScrollElement';
 import GetOpsEvalAndLearning from 'queries/OpsEvalAndLearning/GetOpsEvalAndLearning';
 import {
   GetOpsEvalAndLearning as GetOpsEvalAndLearningType,
@@ -41,7 +43,8 @@ import {
   AgencyOrStateHelpType,
   CcmInvolvmentType,
   ContractorSupportType,
-  StakeholdersType
+  StakeholdersType,
+  TaskStatus
 } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import {
@@ -131,13 +134,19 @@ export const OpsEvalAndLearningContent = () => {
 
   const modelName = data?.modelPlan?.modelName || '';
 
+  const itToolsStarted: boolean =
+    data?.modelPlan.itTools.status !== TaskStatus.READY;
+
+  // If redirected from IT Tools, scrolls to the relevant question
+  useScrollElement(!loading);
+
   const [update] = useMutation<UpdatePlanOpsEvalAndLearningVariables>(
     UpdatePlanOpsEvalAndLearning
   );
 
   const handleFormSubmit = (
     formikValues: OpsEvalAndLearningFormType,
-    redirect?: 'next' | 'back'
+    redirect?: 'next' | 'back' | string
   ) => {
     const { id: updateId, __typename, ...changeValues } = formikValues;
     update({
@@ -160,6 +169,8 @@ export const OpsEvalAndLearningContent = () => {
             }
           } else if (redirect === 'back') {
             history.push(`/models/${modelID}/task-list/`);
+          } else if (redirect) {
+            history.push(redirect);
           }
         }
       })
@@ -398,6 +409,17 @@ export const OpsEvalAndLearningContent = () => {
                   <Label htmlFor="ops-eval-and-learning-help-desk-use">
                     {t('helpDesk')}
                   </Label>
+                  {itToolsStarted && (
+                    <ITToolsWarning
+                      id="ops-eval-and-learning-help-desk-use-warning"
+                      onClick={() =>
+                        handleFormSubmit(
+                          values,
+                          `/models/${modelID}/task-list/it-tools/page-four`
+                        )
+                      }
+                    />
+                  )}
                   <FieldErrorMsg>{flatErrors.helpdeskUse}</FieldErrorMsg>
                   <Fieldset>
                     {[true, false].map(key => (
@@ -529,6 +551,17 @@ export const OpsEvalAndLearningContent = () => {
                   <Label htmlFor="ops-eval-and-learning-iddoc-support">
                     {t('iddocSupport')}
                   </Label>
+                  {itToolsStarted && (
+                    <ITToolsWarning
+                      id="ops-eval-and-learning-iddoc-support-warning"
+                      onClick={() =>
+                        handleFormSubmit(
+                          values,
+                          `/models/${modelID}/task-list/it-tools/page-four`
+                        )
+                      }
+                    />
+                  )}
                   <p className="text-base margin-y-1">
                     {t('iddocSupportInfo')}
                   </p>

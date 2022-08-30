@@ -18,6 +18,7 @@ import { Field, Form, Formik, FormikProps } from 'formik';
 
 import AddNote from 'components/AddNote';
 import AskAQuestion from 'components/AskAQuestion';
+import ITToolsWarning from 'components/ITToolsWarning';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import AutoSave from 'components/shared/AutoSave';
@@ -26,6 +27,7 @@ import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
 import MultiSelect from 'components/shared/MultiSelect';
 import TextAreaField from 'components/shared/TextAreaField';
+import useScrollElement from 'hooks/useScrollElement';
 import GetParticipantOptions from 'queries/ParticipantsAndProviders/GetParticipantOptions';
 import {
   GetParticipantOptions as GetParticipantOptionsType,
@@ -37,7 +39,8 @@ import UpdatePlanParticipantsAndProviders from 'queries/ParticipantsAndProviders
 import {
   ConfidenceType,
   ParticipantSelectionType,
-  RecruitmentType
+  RecruitmentType,
+  TaskStatus
 } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import {
@@ -83,13 +86,19 @@ export const ParticipantOptions = () => {
 
   const modelName = data?.modelPlan?.modelName || '';
 
+  const itToolsStarted: boolean =
+    data?.modelPlan.itTools.status !== TaskStatus.READY;
+
+  // If redirected from IT Tools, scrolls to the relevant question
+  useScrollElement(!loading);
+
   const [update] = useMutation<UpdatePlanParticipantsAndProvidersVariables>(
     UpdatePlanParticipantsAndProviders
   );
 
   const handleFormSubmit = (
     formikValues: ParticipantOptionsFormType,
-    redirect?: 'next' | 'back' | 'task-list'
+    redirect?: 'next' | 'back' | 'task-list' | string
   ) => {
     const { id: updateId, __typename, ...changeValues } = formikValues;
     update({
@@ -110,6 +119,8 @@ export const ParticipantOptions = () => {
             );
           } else if (redirect === 'task-list') {
             history.push(`/models/${modelID}/task-list`);
+          } else if (redirect) {
+            history.push(redirect);
           }
         }
       })
@@ -305,8 +316,19 @@ export const ParticipantOptions = () => {
                   error={!!flatErrors.recruitmentMethod}
                 >
                   <Label htmlFor="participants-and-providers-recruitment-method">
-                    {t('recruitPartifipants')}
+                    {t('recruitParticipants')}
                   </Label>
+                  {itToolsStarted && (
+                    <ITToolsWarning
+                      id="participants-and-providers-recruitment-method-warning"
+                      onClick={() =>
+                        handleFormSubmit(
+                          values,
+                          `/models/${modelID}/task-list/it-tools/page-two`
+                        )
+                      }
+                    />
+                  )}
                   <FieldErrorMsg>{flatErrors.recruitmentMethod}</FieldErrorMsg>
                   <Fieldset>
                     {Object.keys(RecruitmentType)
@@ -364,8 +386,19 @@ export const ParticipantOptions = () => {
                   className="margin-top-4"
                 >
                   <Label htmlFor="participants-and-providers-selection-method">
-                    {t('whoAreParticipants')}
+                    {t('howWillYouSelect')}
                   </Label>
+                  {itToolsStarted && (
+                    <ITToolsWarning
+                      id="participants-and-providers-selection-method-warning"
+                      onClick={() =>
+                        handleFormSubmit(
+                          values,
+                          `/models/${modelID}/task-list/it-tools/page-two`
+                        )
+                      }
+                    />
+                  )}
                   <FieldErrorMsg>{flatErrors.participants}</FieldErrorMsg>
                   <Field
                     as={MultiSelect}

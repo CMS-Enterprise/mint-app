@@ -295,6 +295,28 @@ exports[`Model Plan -- Claims Based Payment matches snapshot 1`] = `
             >
               Should any model providers be excluded from existing Fee-for-Service payment systems?
             </label>
+            <div
+              class="usa-alert usa-alert--warning it-tools-warning margin-top-neg-5"
+              data-testid="alert"
+            >
+              <div
+                class="usa-alert__body"
+              >
+                <p
+                  class="usa-alert__text"
+                >
+                  Changing your answer to this question may also affect your responses to questions in IT tools.  
+                  <button
+                    class="usa-button usa-button usa-button--unstyled"
+                    data-testid="button"
+                    id="payment-provider-exclusion-ffs-system-warning"
+                    type="button"
+                  >
+                    Go to IT tools.
+                  </button>
+                </p>
+              </div>
+            </div>
             <fieldset
               class="usa-fieldset"
               data-testid="fieldset"

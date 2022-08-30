@@ -3,7 +3,7 @@
 // @generated
 // This file was automatically generated and should not be edited.
 
-import { ConfidenceType, RecruitmentType, ParticipantSelectionType } from "./../../../types/graphql-global-types";
+import { ConfidenceType, RecruitmentType, ParticipantSelectionType, TaskStatus } from "./../../../types/graphql-global-types";
 
 // ====================================================
 // GraphQL query operation: GetParticipantOptions
@@ -23,11 +23,17 @@ export interface GetParticipantOptions_modelPlan_participantsAndProviders {
   selectionNote: string | null;
 }
 
+export interface GetParticipantOptions_modelPlan_itTools {
+  __typename: "PlanITTools";
+  status: TaskStatus;
+}
+
 export interface GetParticipantOptions_modelPlan {
   __typename: "ModelPlan";
   id: UUID;
   modelName: string;
   participantsAndProviders: GetParticipantOptions_modelPlan_participantsAndProviders;
+  itTools: GetParticipantOptions_modelPlan_itTools;
 }
 
 export interface GetParticipantOptions {
