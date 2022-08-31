@@ -94,7 +94,6 @@ const Table = () => {
     ];
   }, [t, h]);
 
-  debugger;
   const {
     getTableProps,
     getTableBodyProps,
