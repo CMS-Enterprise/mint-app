@@ -32,6 +32,11 @@ require (
 )
 
 require (
+	github.com/xhit/go-simple-mail/v2 v2.11.0
+	gopkg.in/yaml.v3 v3.0.1
+)
+
+require (
 	github.com/PuerkitoBio/purell v1.1.1 // indirect
 	github.com/PuerkitoBio/urlesc v0.0.0-20170810143723-de5bf2ad4578 // indirect
 	github.com/agnivade/levenshtein v1.1.1 // indirect
@@ -46,6 +51,7 @@ require (
 	github.com/go-openapi/jsonreference v0.19.6 // indirect
 	github.com/go-openapi/loads v0.21.1 // indirect
 	github.com/go-openapi/spec v0.20.4 // indirect
+	github.com/go-test/deep v1.0.8 // indirect
 	github.com/goccy/go-json v0.9.4 // indirect
 	github.com/gorilla/websocket v1.5.0 // indirect
 	github.com/hashicorp/golang-lru v0.5.4 // indirect
@@ -79,7 +85,6 @@ require (
 	github.com/subosito/gotenv v1.3.0 // indirect
 	github.com/toorop/go-dkim v0.0.0-20201103131630-e1cd1a0a5208 // indirect
 	github.com/urfave/cli/v2 v2.8.1 // indirect
-	github.com/xhit/go-simple-mail/v2 v2.11.0 // indirect
 	github.com/xrash/smetrics v0.0.0-20201216005158-039620a65673 // indirect
 	go.mongodb.org/mongo-driver v1.10.0 // indirect
 	go.uber.org/atomic v1.7.0 // indirect
@@ -95,5 +100,4 @@ require (
 	gopkg.in/launchdarkly/go-sdk-events.v1 v1.1.1 // indirect
 	gopkg.in/launchdarkly/go-server-sdk-evaluation.v1 v1.4.1 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
-	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
