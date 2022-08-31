@@ -13,12 +13,52 @@
 const cypressOTP = require('cypress-otp');
 const cypressCodeCovTask = require('@cypress/code-coverage/task');
 const wp = require('@cypress/webpack-preprocessor');
+const apollo = require('@apollo/client');
+const fetch = require('cross-fetch'); // needed to allow apollo-client to make queries from Node environment
+
+const LockTaskListSection = require('../../src/queries/TaskListSubscription/LockTaskListSection')
+  .default;
+
+const cache = new apollo.InMemoryCache();
+
+function createApolloClient(euaId) {
+  const gqlURL =
+    process.env.REACT_APP_GRAPHQL_ADDRESS ||
+    'http://localhost:8085/api/graph/query';
+
+  return new apollo.ApolloClient({
+    cache,
+    link: new apollo.HttpLink({
+      uri: gqlURL,
+      fetch,
+      headers: {
+        // need job code to be able to issue LCID
+        Authorization: `Local {"euaId":"${euaId}", "favorLocalAuth":true, "jobCodes":["MINT_USER"]}`
+      }
+    })
+  });
+}
+
+function lockTaskListSection({ euaId, modelPlanID, section }) {
+  const apolloClient = createApolloClient(euaId);
+  const input = {
+    modelPlanID,
+    section
+  };
+  // need to return this Promise to indicate to Cypress that the task was handled
+  // https://docs.cypress.io/api/commands/task#Usage - "The command will fail if undefined is returned or if the promise is resolved with undefined."
+  return apolloClient.mutate({
+    mutation: LockTaskListSection,
+    variables: input
+  });
+}
 
 module.exports = (on, config) => {
   // `on` is used to hook into various events Cypress emits
   // `config` is the resolved Cypress config
   on('task', {
-    generateOTP: cypressOTP
+    generateOTP: cypressOTP,
+    lockTaskListSection
   });
   cypressCodeCovTask(on, config);
 
@@ -45,7 +85,6 @@ module.exports = (on, config) => {
   newConfig.env.username = process.env.OKTA_TEST_USERNAME;
   newConfig.env.password = process.env.OKTA_TEST_PASSWORD;
   newConfig.env.otpSecret = process.env.OKTA_TEST_SECRET;
-  newConfig.env.systemIntakeApi = `${process.env.REACT_APP_API_ADDRESS}/system_intake`;
 
   return config;
 };
