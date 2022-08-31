@@ -56,8 +56,7 @@ const ContactInfo = ({ modelID }: { modelID: string }) => {
       <UswdsReactLink
         aria-label={h('contactInfo.moreTeamMembers')}
         className="line-height-body-5 display-flex flex-align-center "
-        // TODO: link to the team page once it is created
-        to="/"
+        to={`/models/${modelID}/read-only/team`}
       >
         {h('contactInfo.moreTeamMembers')}
         <IconArrowForward className="margin-left-1" />

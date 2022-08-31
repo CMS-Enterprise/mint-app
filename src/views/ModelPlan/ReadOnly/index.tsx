@@ -333,7 +333,7 @@ const ReadOnly = () => {
             )}
 
             <Grid desktop={{ col: 9 }}>
-              <div id={subinfo ?? ''}>
+              <div id={`read-only-model-plan__${subinfo}-component` ?? ''}>
                 <GridContainer className="padding-left-0 padding-right-0">
                   <Grid row gap>
                     {/* Central component */}
