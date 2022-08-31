@@ -38,70 +38,65 @@ const Table = () => {
     GetAllModelPlans
   );
 
-  const data = (modelPlans ?? []) as AllModelPlansType[];
+  const data = (modelPlans?.modelPlanCollection ?? []) as AllModelPlansType[];
 
-  if (loading) {
-    return <PageLoading />;
-  }
+  const columns = useMemo(() => {
+    return [
+      {
+        Header: t('allModels.tableHeading.modelName'),
+        accessor: 'modelName',
+        Cell: ({ row, value }: any) => {
+          return (
+            <UswdsReactLink to={`/models/${row.original.id}/task-list`}>
+              {value}
+            </UswdsReactLink>
+          );
+        }
+      },
+      {
+        Header: t('allModels.tableHeading.category'),
+        accessor: 'category',
+        Cell: ({ value }: any) => {
+          if (!value) {
+            return <div>{h('noAnswer.tBD')}</div>;
+          }
+          return value;
+        }
+      },
+      {
+        Header: t('allModels.tableHeading.status'),
+        accessor: 'status',
+        Cell: ({ value }: any) => {
+          if (!value) {
+            return <div>{h('noAnswer.tBD')}</div>;
+          }
+          return value;
+        }
+      },
+      {
+        Header: t('allModels.tableHeading.startDate'),
+        accessor: 'startDate',
+        Cell: ({ value }: any) => {
+          if (!value) {
+            return <div>{h('noAnswer.tBD')}</div>;
+          }
+          return value;
+        }
+      },
+      {
+        Header: t('allModels.tableHeading.crsAndTdls'),
+        accessor: 'crsAndTdls',
+        Cell: ({ value }: any) => {
+          if (!value) {
+            return <div>{h('noAnswer.tBD')}</div>;
+          }
+          return value;
+        }
+      }
+    ];
+  }, [t, h]);
 
-  if (error) {
-    return <div>{JSON.stringify(error)}</div>;
-  }
-
-  const columns = [
-    {
-      Header: t('allModels.tableHeading.modelName'),
-      accessor: 'modelName',
-      Cell: ({ row, value }: any) => {
-        return (
-          <UswdsReactLink to={`/models/${row.original.id}/task-list`}>
-            {value}
-          </UswdsReactLink>
-        );
-      }
-    },
-    {
-      Header: t('allModels.tableHeading.category'),
-      accessor: 'category',
-      Cell: ({ value }: any) => {
-        if (!value) {
-          return <div>{h('noAnswer.tBD')}</div>;
-        }
-        return value;
-      }
-    },
-    {
-      Header: t('allModels.tableHeading.status'),
-      accessor: 'status',
-      Cell: ({ value }: any) => {
-        if (!value) {
-          return <div>{h('noAnswer.tBD')}</div>;
-        }
-        return value;
-      }
-    },
-    {
-      Header: t('allModels.tableHeading.startDate'),
-      accessor: 'startDate',
-      Cell: ({ value }: any) => {
-        if (!value) {
-          return <div>{h('noAnswer.tBD')}</div>;
-        }
-        return value;
-      }
-    },
-    {
-      Header: t('allModels.tableHeading.crsAndTdls'),
-      accessor: 'crsAndTdls',
-      Cell: ({ value }: any) => {
-        if (!value) {
-          return <div>{h('noAnswer.tBD')}</div>;
-        }
-        return value;
-      }
-    }
-  ];
-
+  debugger;
   const {
     getTableProps,
     getTableBodyProps,
@@ -130,11 +125,11 @@ const Table = () => {
           );
         }
       },
-      globalFilter: globalTableFilter,
+      globalFilter: useMemo(() => globalTableFilter, []),
       autoResetSortBy: false,
       autoResetPage: false,
       initialState: {
-        sortBy: [{ id: 'modelName', desc: false }],
+        sortBy: useMemo(() => [{ id: 'modelName', asc: true }], []),
         pageIndex: 0
       }
     },
@@ -143,6 +138,14 @@ const Table = () => {
     useSortBy,
     usePagination
   );
+
+  if (loading) {
+    return <PageLoading />;
+  }
+
+  if (error) {
+    return <div>{JSON.stringify(error)}</div>;
+  }
 
   if (data.length === 0) {
     return (
