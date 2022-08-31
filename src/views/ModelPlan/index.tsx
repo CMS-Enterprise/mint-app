@@ -1,5 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { withRouter } from 'react-router-dom';
 import {
   Alert,
   Grid,
@@ -75,4 +76,4 @@ const ModelPlan = () => {
   );
 };
 
-export default ModelPlan;
+export default withRouter(ModelPlan);
