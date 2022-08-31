@@ -83,3 +83,5 @@ services:
       /usr/bin/mc mb --quiet s3local/mint-app-file-uploads/;
       /usr/bin/mc policy set public s3local/mint-app-file-uploads;
       "
+  email:
+    image: dockage/mailcatcher:0.7.1
