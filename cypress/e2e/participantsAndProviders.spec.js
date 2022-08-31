@@ -208,7 +208,7 @@ describe('The Model Plan Participants and Providers Form', () => {
     });
 
     cy.get(
-      '[data-testid="task-list-intake-form-participants-and-providers"]'
-    ).contains('Completed');
+      '[data-testid="task-list-intake-form-participantsAndProviders"]'
+    ).contains('In progress');
   });
 });

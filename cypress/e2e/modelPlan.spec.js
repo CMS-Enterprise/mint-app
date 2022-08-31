@@ -98,10 +98,11 @@ describe('The Model Plan Form', () => {
         /\/models\/.{36}\/task-list\/basics\/overview/
       );
     });
-    cy.get('#ModelType-Voluntary')
-      .first()
-      .check({ force: true })
-      .should('be.checked');
+
+    cy.wait(500);
+
+    cy.get('#ModelType-Voluntary').check({ force: true }).should('be.checked');
+
     cy.contains('button', 'Next').click();
 
     cy.location().should(loc => {
