@@ -23,6 +23,7 @@ func execute() {
 
 func init() {
 	rootCmd.AddCommand(serveCmd)
+	rootCmd.AddCommand(workerCmd)
 	rootCmd.AddCommand(testCmd)
 }
 
