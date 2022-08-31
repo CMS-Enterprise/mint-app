@@ -1,6 +1,6 @@
 # Data Auditing
 
-MINT facilitates multi-user collaboration. As such, it's important to track who is making changes to data, what is being changed, and when the data is being changed. Users will use this information to get a digest of what has changed on models they have favorited in a given time period. This information could potentially be used in the future to correct incorrect information changed by another user.
+MINT facilitates multi-user collaboration. As such, it's important to track who is making changes to data, what is being changed, and when the data is being changed. Users will use this information to get a digest of what has changed on models they have been favorited in a given time period. This information could potentially be used in the future to correct incorrect information changed by another user.
 
 
 ## Considered Alternatives
@@ -9,13 +9,14 @@ MINT facilitates multi-user collaboration. As such, it's important to track who 
 * Full Records of Every Change
 * Partial Version history and current version
 * Store object Delta history, apply changes to show current version
+* [PG Audit](https://www.pgaudit.org/#section_one)
 
 ## Decision Outcome
 
 * Chosen Alternative: Generic Auditing Triggers
 
    * A Generic Audit Trigger creates a standard paradigm for storing data changes works with our current implementation. 
-   * While the initial implemenation might be a bit complex, using the data is fairly straightforward.
+   * While the initial implementation might be a bit complex, using the data is fairly straightforward.
    * Once configured additional tables will be able to use the existing trigger, without the need for additional data. 
 
 
@@ -46,4 +47,9 @@ MINT facilitates multi-user collaboration. As such, it's important to track who 
 
 * `+` DataBase size is smaller than some options
 * `-` Additional complexity querying up to date models.
-* *[...]* <!-- numbers of pros and cons can vary -->
+
+### PG Audit
+
+* `+` Robust supported library
+* `-` More complicated than our use case
+* `-` Difficult to query field level changes
