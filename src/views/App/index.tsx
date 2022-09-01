@@ -36,6 +36,7 @@ import OpsEvalAndLearning from 'views/ModelPlan/TaskList/OpsEvalAndLearning';
 import Participants from 'views/ModelPlan/TaskList/ParticipantsAndProviders';
 import Payment from 'views/ModelPlan/TaskList/Payment';
 import SubmitRequest from 'views/ModelPlan/TaskList/SubmitRequest';
+import NDA from 'views/NDA';
 import NotFound from 'views/NotFound';
 import PrivacyPolicy from 'views/PrivacyPolicy';
 import Sandbox from 'views/Sandbox';
@@ -140,6 +141,8 @@ const AppRoutes = () => {
         path="/models/:modelID/task-list/submit-request"
         component={SubmitRequest}
       />
+
+      <SecureRoute path="/pre-decisional-notice" component={NDA} />
 
       {/* Static Page Routes  */}
       <Route path="/privacy-policy" exact component={PrivacyPolicy} />

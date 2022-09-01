@@ -27,7 +27,7 @@ const Login = () => {
   const onSuccess = (tokens: any) => {
     const referringUri = oktaAuth.getOriginalUri();
     oktaAuth.handleLoginRedirect(tokens).then(() => {
-      history.push(referringUri || '/');
+      history.push(referringUri || '/pre-decisional-notice');
     });
   };
 
