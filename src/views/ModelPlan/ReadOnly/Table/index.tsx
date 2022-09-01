@@ -9,6 +9,7 @@ import {
 } from 'react-table';
 import { useQuery } from '@apollo/client';
 import { Table as UswdsTable } from '@trussworks/react-uswds';
+import { DateTime } from 'luxon';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import PageLoading from 'components/PageLoading';
@@ -78,7 +79,7 @@ const Table = () => {
           if (!value) {
             return <div>{h('noAnswer.tBD')}</div>;
           }
-          return value;
+          return DateTime.fromISO(value).toLocaleString(DateTime.DATE_SHORT);
         }
       },
       {
