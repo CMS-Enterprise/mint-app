@@ -23,7 +23,10 @@ import {
   GetAllModelPlans_modelPlanCollection as AllModelPlansType
 } from 'queries/ReadOnly/types/GetAllModelPlans';
 import globalTableFilter from 'utils/globalTableFilter';
-import { translateModelPlanStatus } from 'utils/modelPlan';
+import {
+  translateModelCategory,
+  translateModelPlanStatus
+} from 'utils/modelPlan';
 import {
   currentTableSortDescription,
   getColumnSortStatus,
@@ -62,7 +65,7 @@ const Table = () => {
           if (!value) {
             return <div>{h('noAnswer.tBD')}</div>;
           }
-          return value;
+          return translateModelCategory(value);
         }
       },
       {
