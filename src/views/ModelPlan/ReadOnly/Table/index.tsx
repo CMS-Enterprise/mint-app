@@ -56,7 +56,7 @@ const Table = () => {
       },
       {
         Header: t('allModels.tableHeading.category'),
-        accessor: 'category',
+        accessor: 'basics.modelCategory',
         Cell: ({ value }: any) => {
           if (!value) {
             return <div>{h('noAnswer.tBD')}</div>;
@@ -73,7 +73,7 @@ const Table = () => {
       },
       {
         Header: t('allModels.tableHeading.startDate'),
-        accessor: 'startDate',
+        accessor: 'basics.applicationsStart',
         Cell: ({ value }: any) => {
           if (!value) {
             return <div>{h('noAnswer.tBD')}</div>;
