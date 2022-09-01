@@ -211,7 +211,7 @@ const Table = () => {
           ))}
         </thead>
         <tbody {...getTableBodyProps()}>
-          {page.map((row, index) => {
+          {page.map(row => {
             prepareRow(row);
             return (
               <tr {...row.getRowProps()}>
@@ -223,8 +223,7 @@ const Table = () => {
                         scope="row"
                         style={{
                           paddingLeft: '0',
-                          borderBottom:
-                            index === page.length - 1 ? 'none' : 'auto'
+                          borderBottom: 'auto'
                         }}
                       >
                         {cell.render('Cell')}
@@ -236,8 +235,7 @@ const Table = () => {
                       {...cell.getCellProps()}
                       style={{
                         paddingLeft: '0',
-                        borderBottom:
-                          index === page.length - 1 ? 'none' : 'auto'
+                        borderBottom: 'auto'
                       }}
                     >
                       {cell.render('Cell')}
