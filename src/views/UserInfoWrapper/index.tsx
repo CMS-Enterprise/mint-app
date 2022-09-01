@@ -1,12 +1,10 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-// import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
-// import { useHistory, useLocation } from 'react-router-dom';
-// import { useLazyQuery } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import { useOktaAuth } from '@okta/okta-react';
 
 import { localAuthStorageKey } from 'constants/localAuth';
-// import GetNDA from 'queries/NDA/GetNDA';
+import GetNDA from 'queries/NDA/GetNDA';
 import { setUser } from 'reducers/authReducer';
 import { isLocalAuthEnabled } from 'utils/auth';
 
@@ -22,14 +20,9 @@ type oktaUserProps = {
 
 const UserInfoWrapper = ({ children }: UserInfoWrapperProps) => {
   const dispatch = useDispatch();
-  // const { pathname } = useLocation();
   const { authState, oktaAuth } = useOktaAuth();
-  // const history = useHistory();
 
-  // const [ndaInfo, { data }] = useLazyQuery(GetNDA);
-  // console.log('hdsfs');
-
-  // const userStore = useSelector((state: RootStateOrAny) => state.auth);
+  const { data } = useQuery(GetNDA);
 
   const storeUserInfo = async () => {
     if (
@@ -38,12 +31,11 @@ const UserInfoWrapper = ({ children }: UserInfoWrapperProps) => {
       JSON.parse(window.localStorage[localAuthStorageKey]).favorLocalAuth
     ) {
       const oktaUser: oktaUserProps = await oktaAuth.getUser();
-      // ndaInfo();
       const user = {
         name: oktaUser.name,
         euaId: oktaUser.euaId || '',
-        groups: oktaUser.groups || []
-        // accepetedNDA: data?.ndaInfo
+        groups: oktaUser.groups || [],
+        acceptedNDA: data?.ndaInfo
       };
       dispatch(setUser(user));
     } else {
@@ -51,8 +43,8 @@ const UserInfoWrapper = ({ children }: UserInfoWrapperProps) => {
         name: authState?.idToken?.claims.name,
         euaId: authState?.idToken?.claims.preferred_username,
         // @ts-ignore
-        groups: authState?.accessToken?.claims.groups || []
-        // accepetedNDA: data?.ndaInfo
+        groups: authState?.accessToken?.claims.groups || [],
+        acceptedNDA: data?.ndaInfo
       };
       dispatch(setUser(user));
     }
@@ -61,12 +53,9 @@ const UserInfoWrapper = ({ children }: UserInfoWrapperProps) => {
   useEffect(() => {
     if (authState?.isAuthenticated) {
       storeUserInfo();
-      // if (!userStore?.acceptedNDA) {
-      //   history.push('/pre-decisional-notice');
-      // }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [authState?.isAuthenticated]);
+  }, [authState?.isAuthenticated, data]);
 
   return <>{children}</>;
 };

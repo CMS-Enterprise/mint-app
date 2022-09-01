@@ -4,7 +4,7 @@ type authReducerState = {
   name: string;
   euaId: string;
   groups: Array<string>;
-  accepetedNDA: boolean;
+  acceptedNDA: boolean;
   isUserSet: boolean;
 };
 
@@ -18,7 +18,7 @@ const initialState: authReducerState = {
   name: '',
   euaId: '',
   groups: [],
-  accepetedNDA: false,
+  acceptedNDA: false,
   isUserSet: false
 };
 

@@ -17,13 +17,15 @@ const NDA = () => {
   const { t } = useTranslation('nda');
   const dispatch = useDispatch();
   const history = useHistory();
-  const user = useSelector((state: RootStateOrAny) => state.auth);
+  const { acceptedNDA, ...user } = useSelector(
+    (state: RootStateOrAny) => state.auth
+  );
 
   const [signNDA] = useMutation(UpdateNDA);
 
   const handleFormSubmit = (formikValues: NDAType) => {
     signNDA().then(response => {
-      dispatch(setUser({ ...user, accepetedNDA: response?.data?.ndaInfo }));
+      dispatch(setUser({ ...user, acceptedNDA: response?.data?.agreeToNDA }));
       history.push('/');
     });
   };
