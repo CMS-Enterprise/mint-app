@@ -8,6 +8,8 @@ describe('Web Socket Connections', () => {
   it('inits a ws connection and locks basics', () => {
     cy.clickPlanTableByName('Empty Plan');
 
+    cy.get('[data-testid="basics"]').should('not.be.disabled');
+
     cy.task('lockTaskListSection', {
       euaId: 'MINT',
       modelPlanID: '53054496-6d1f-47f5-b6a0-1edaf73b935e',
