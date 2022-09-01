@@ -1,6 +1,6 @@
 describe('Discussion Center', () => {
   beforeEach(() => {
-    cy.localLogin({ name: 'MINT' });
+    cy.localLogin({ name: 'MINT', role: 'MINT_USER' });
   });
 
   it('asks a question and answers a question', () => {

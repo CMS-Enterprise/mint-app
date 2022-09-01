@@ -2,7 +2,7 @@ import { aliasQuery } from '../support/graphql-test-utils';
 
 describe.only('The Model Plan IT Tools Form', () => {
   beforeEach(() => {
-    cy.localLogin({ name: 'MINT' });
+    cy.localLogin({ name: 'MINT', role: 'MINT_USER' });
     cy.intercept('POST', 'http://localhost:8085/api/graph/query', req => {
       // Queries
       aliasQuery(req, 'GetITToolPageOne');
