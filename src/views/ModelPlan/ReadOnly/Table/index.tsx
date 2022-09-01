@@ -163,7 +163,7 @@ const Table = () => {
           setGlobalFilter={setGlobalFilter}
           tableID={t('requestsTable.id')}
           tableName={t('requestsTable.title')}
-          className="margin-bottom-4"
+          className="margin-bottom-4 maxw-none grid-col-6"
         />
       </div>
 
