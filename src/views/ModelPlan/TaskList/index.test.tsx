@@ -1,7 +1,9 @@
 import React from 'react';
+import { Provider } from 'react-redux';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
+import configureMockStore from 'redux-mock-store';
 
 import GetModelPlanQuery from 'queries/GetModelPlan';
 import { GetModelPlan_modelPlan as GetModelPlanTypes } from 'queries/types/GetModelPlan';
@@ -10,6 +12,9 @@ import { ModelStatus } from 'types/graphql-global-types';
 import TaskList from './index';
 
 describe('The Model Plan Task List', () => {
+  const mockStore = configureMockStore();
+  const store = mockStore({ auth: { euaId: 'MINT' } });
+
   const modelPlan = {
     __typename: 'ModelPlan',
     id: '6e224030-09d5-46f7-ad04-4bb851b36eab',
@@ -85,11 +90,16 @@ describe('The Model Plan Task List', () => {
 
   it('renders without crashing', async () => {
     render(
-      <MemoryRouter initialEntries={[`/models/${modelPlan.id}/task-list`]}>
-        <MockedProvider mocks={[modelPlanQuery(modelPlan)]} addTypename={false}>
-          <Route path="/models/:modelID/task-list" component={TaskList} />
-        </MockedProvider>
-      </MemoryRouter>
+      <Provider store={store}>
+        <MemoryRouter initialEntries={[`/models/${modelPlan.id}/task-list`]}>
+          <MockedProvider
+            mocks={[modelPlanQuery(modelPlan)]}
+            addTypename={false}
+          >
+            <Route path="/models/:modelID/task-list" component={TaskList} />
+          </MockedProvider>
+        </MemoryRouter>
+      </Provider>
     );
 
     expect(
@@ -100,11 +110,16 @@ describe('The Model Plan Task List', () => {
   it('displays the model plan task list steps', async () => {
     modelPlan.modelName = '';
     render(
-      <MemoryRouter initialEntries={[`/models/${modelPlan.id}/task-list`]}>
-        <MockedProvider mocks={[modelPlanQuery(modelPlan)]} addTypename={false}>
-          <Route path="/models/:modelID/task-list" component={TaskList} />
-        </MockedProvider>
-      </MemoryRouter>
+      <Provider store={store}>
+        <MemoryRouter initialEntries={[`/models/${modelPlan.id}/task-list`]}>
+          <MockedProvider
+            mocks={[modelPlanQuery(modelPlan)]}
+            addTypename={false}
+          >
+            <Route path="/models/:modelID/task-list" component={TaskList} />
+          </MockedProvider>
+        </MemoryRouter>
+      </Provider>
     );
 
     expect(await screen.findByTestId('task-list')).toBeInTheDocument();
@@ -113,11 +128,16 @@ describe('The Model Plan Task List', () => {
   it('displays the model plan name', async () => {
     modelPlan.modelName = "PM Butler's great plan";
     render(
-      <MemoryRouter initialEntries={[`/models/${modelPlan.id}/task-list`]}>
-        <MockedProvider mocks={[modelPlanQuery(modelPlan)]} addTypename={false}>
-          <Route path="/models/:modelID/task-list" component={TaskList} />
-        </MockedProvider>
-      </MemoryRouter>
+      <Provider store={store}>
+        <MemoryRouter initialEntries={[`/models/${modelPlan.id}/task-list`]}>
+          <MockedProvider
+            mocks={[modelPlanQuery(modelPlan)]}
+            addTypename={false}
+          >
+            <Route path="/models/:modelID/task-list" component={TaskList} />
+          </MockedProvider>
+        </MemoryRouter>
+      </Provider>
     );
 
     await waitFor(() => {
@@ -132,14 +152,16 @@ describe('The Model Plan Task List', () => {
       modelPlan.basics.modelCategory = null;
       modelPlan.basics.cmsCenters = [];
       render(
-        <MemoryRouter initialEntries={[`/models/${modelPlan.id}/task-list`]}>
-          <MockedProvider
-            mocks={[modelPlanQuery(modelPlan)]}
-            addTypename={false}
-          >
-            <Route path="/models/:modelID/task-list" component={TaskList} />
-          </MockedProvider>
-        </MemoryRouter>
+        <Provider store={store}>
+          <MemoryRouter initialEntries={[`/models/${modelPlan.id}/task-list`]}>
+            <MockedProvider
+              mocks={[modelPlanQuery(modelPlan)]}
+              addTypename={false}
+            >
+              <Route path="/models/:modelID/task-list" component={TaskList} />
+            </MockedProvider>
+          </MemoryRouter>
+        </Provider>
       );
 
       await waitFor(() => {

@@ -1,5 +1,6 @@
 import React, { Fragment, useContext, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
+import { RootStateOrAny, useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import {
@@ -84,6 +85,8 @@ const TaskList = () => {
   const { t: d } = useTranslation('discussions');
   const { modelID } = useParams<{ modelID: string }>();
   const [isDiscussionOpen, setIsDiscussionOpen] = useState(false);
+
+  const { euaId } = useSelector((state: RootStateOrAny) => state.auth);
 
   const { taskListSectionLocks } = useContext(SubscriptionContext);
 
@@ -338,7 +341,10 @@ const TaskList = () => {
                             </div>
                             <TaskListButton
                               path={t(`numberedList.${key}.path`)}
-                              disabled={!!getTaskListLockedStatus(key)}
+                              disabled={
+                                !!getTaskListLockedStatus(key) &&
+                                getTaskListLockedStatus(key)?.lockedBy !== euaId
+                              }
                               status={taskListSections[key].status}
                             />
                             <TaskListLock
