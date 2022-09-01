@@ -5,6 +5,7 @@ export default gql`
     createPlanCollaborator(input: $input) {
       fullName
       teamRole
+      email
       euaUserID
       modelPlanID
     }

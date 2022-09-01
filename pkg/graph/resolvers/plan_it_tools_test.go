@@ -12,8 +12,7 @@ func (suite *ResolverSuite) TestPlanITToolsUpdate() {
 		"gcPartCDOther": "My test tool",
 	}
 
-	updater := "UPDT"
-	it, err := PlanITToolsUpdate(suite.testConfigs.Logger, itExisting.ID, changes, updater, suite.testConfigs.Store)
+	it, err := PlanITToolsUpdate(suite.testConfigs.Logger, itExisting.ID, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
 	suite.NoError(err)
 
 	// Assert that the updated fields are right

@@ -10,7 +10,7 @@ import (
 func (suite *ResolverSuite) TestPlanBeneficiariesUpdate() {
 	plan := suite.createModelPlan("Plan For Beneficiaries") // should create the beneficiaries as part of the resolver
 
-	b, err := PlanBeneficiariesGetByModelPlanID(suite.testConfigs.Logger, suite.testConfigs.UserInfo.EuaUserID, plan.ID, suite.testConfigs.Store)
+	b, err := PlanBeneficiariesGetByModelPlanID(suite.testConfigs.Logger, plan.ID, suite.testConfigs.Store)
 	suite.NoError(err)
 
 	changes := map[string]interface{}{
@@ -19,12 +19,9 @@ func (suite *ResolverSuite) TestPlanBeneficiariesUpdate() {
 		"beneficiarySelectionMethod":  []string{model.SelectionMethodTypeOther.String(), model.SelectionMethodTypeHistorical.String()},
 		"beneficiarySelectionNote":    "Priority given to provider sign up",
 	}
-
-	updater := "UPDT"
-
-	updatedBeneficiary, err := PlanBeneficiariesUpdate(suite.testConfigs.Logger, b.ID, changes, updater, suite.testConfigs.Store)
+	updatedBeneficiary, err := PlanBeneficiariesUpdate(suite.testConfigs.Logger, b.ID, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
 	suite.NoError(err)
-	suite.EqualValues(updater, *updatedBeneficiary.ModifiedBy)
+	suite.EqualValues(suite.testConfigs.Principal.EUAID, *updatedBeneficiary.ModifiedBy)
 
 	// Assert that the updated fields are right
 	suite.EqualValues(*updatedBeneficiary.TreatDualElligibleDifferent, models.TriYes)
@@ -56,7 +53,7 @@ func (suite *ResolverSuite) TestPlanBeneficiariesUpdate() {
 func (suite *ResolverSuite) TestPlanBeneficiariesGetByModelPlanID() {
 	plan := suite.createModelPlan("Plan For Beneficiaries") // should create the beneficiaries as part of the resolver
 
-	b, err := PlanBeneficiariesGetByModelPlanID(suite.testConfigs.Logger, suite.testConfigs.UserInfo.EuaUserID, plan.ID, suite.testConfigs.Store)
+	b, err := PlanBeneficiariesGetByModelPlanID(suite.testConfigs.Logger, plan.ID, suite.testConfigs.Store)
 	suite.NoError(err)
 
 	suite.EqualValues(plan.ID, b.ModelPlanID)

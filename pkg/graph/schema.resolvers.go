@@ -19,33 +19,29 @@ import (
 // Basics is the resolver for the basics field.
 func (r *modelPlanResolver) Basics(ctx context.Context, obj *models.ModelPlan) (*models.PlanBasics, error) {
 	logger := appcontext.ZLogger(ctx)
-	principal := appcontext.Principal(ctx).ID()
 
-	return resolvers.PlanBasicsGetByModelPlanID(logger, &principal, obj.ID, r.store)
+	return resolvers.PlanBasicsGetByModelPlanID(logger, obj.ID, r.store)
 }
 
 // GeneralCharacteristics is the resolver for the generalCharacteristics field.
 func (r *modelPlanResolver) GeneralCharacteristics(ctx context.Context, obj *models.ModelPlan) (*models.PlanGeneralCharacteristics, error) {
 	logger := appcontext.ZLogger(ctx)
-	principal := appcontext.Principal(ctx).ID()
 
-	return resolvers.FetchPlanGeneralCharacteristicsByModelPlanID(logger, principal, obj.ID, r.store)
+	return resolvers.FetchPlanGeneralCharacteristicsByModelPlanID(logger, obj.ID, r.store)
 }
 
 // ParticipantsAndProviders is the resolver for the participantsAndProviders field.
 func (r *modelPlanResolver) ParticipantsAndProviders(ctx context.Context, obj *models.ModelPlan) (*models.PlanParticipantsAndProviders, error) {
 	logger := appcontext.ZLogger(ctx)
-	principal := appcontext.Principal(ctx).ID()
 
-	return resolvers.PlanParticipantsAndProvidersGetByModelPlanID(logger, principal, obj.ID, r.store)
+	return resolvers.PlanParticipantsAndProvidersGetByModelPlanID(logger, obj.ID, r.store)
 }
 
 // Beneficiaries is the resolver for the beneficiaries field.
 func (r *modelPlanResolver) Beneficiaries(ctx context.Context, obj *models.ModelPlan) (*models.PlanBeneficiaries, error) {
 	logger := appcontext.ZLogger(ctx)
-	principal := appcontext.Principal(ctx).ID()
 
-	return resolvers.PlanBeneficiariesGetByModelPlanID(logger, principal, obj.ID, r.store)
+	return resolvers.PlanBeneficiariesGetByModelPlanID(logger, obj.ID, r.store)
 }
 
 // OpsEvalAndLearning is the resolver for the opsEvalAndLearning field.
@@ -57,10 +53,9 @@ func (r *modelPlanResolver) OpsEvalAndLearning(ctx context.Context, obj *models.
 
 // Collaborators is the resolver for the collaborators field.
 func (r *modelPlanResolver) Collaborators(ctx context.Context, obj *models.ModelPlan) ([]*models.PlanCollaborator, error) {
-	principal := appcontext.Principal(ctx).ID()
 	logger := appcontext.ZLogger(ctx)
 
-	collaborators, err := resolvers.FetchCollaboratorsByModelPlanID(logger, &principal, obj.ID, r.store)
+	collaborators, err := resolvers.FetchCollaboratorsByModelPlanID(logger, obj.ID, r.store)
 
 	return collaborators, err
 }
@@ -94,25 +89,33 @@ func (r *modelPlanResolver) ItTools(ctx context.Context, obj *models.ModelPlan) 
 	return resolvers.PlanITToolsGetByModelPlanID(logger, obj.ID, r.store)
 }
 
+// IsFavorite is the resolver for the isFavorite field.
+func (r *modelPlanResolver) IsFavorite(ctx context.Context, obj *models.ModelPlan) (bool, error) {
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+
+	return resolvers.IsPlanFavorited(logger, principal, r.store, obj.ID)
+}
+
 // CreateModelPlan is the resolver for the createModelPlan field.
 func (r *mutationResolver) CreateModelPlan(ctx context.Context, modelName string) (*models.ModelPlan, error) {
 	logger := appcontext.ZLogger(ctx)
-	principal := appcontext.Principal(ctx).ID()
-	principalInfo, err := r.service.FetchUserInfo(ctx, principal)
+	principal := appcontext.Principal(ctx)
+	principalInfo, err := r.service.FetchUserInfo(ctx, principal.ID())
 	if err != nil { //if can't get user info, use EUAID as commonName
 		tempPrincipalInfo := models.UserInfo{
-			EuaUserID:  principal,
-			CommonName: principal,
+			EuaUserID:  principal.ID(),
+			CommonName: principal.ID(),
 		}
 		principalInfo = &tempPrincipalInfo
 	}
 
-	return resolvers.ModelPlanCreate(logger, modelName, r.store, principalInfo)
+	return resolvers.ModelPlanCreate(logger, modelName, r.store, principalInfo, principal)
 }
 
 // UpdateModelPlan is the resolver for the updateModelPlan field.
 func (r *mutationResolver) UpdateModelPlan(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.ModelPlan, error) {
-	principal := appcontext.Principal(ctx).ID()
+	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 
 	return resolvers.ModelPlanUpdate(logger, id, changes, principal, r.store)
@@ -120,7 +123,7 @@ func (r *mutationResolver) UpdateModelPlan(ctx context.Context, id uuid.UUID, ch
 
 // CreatePlanCollaborator is the resolver for the createPlanCollaborator field.
 func (r *mutationResolver) CreatePlanCollaborator(ctx context.Context, input model.PlanCollaboratorCreateInput) (*models.PlanCollaborator, error) {
-	principal := appcontext.Principal(ctx).ID()
+	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 
 	return resolvers.CreatePlanCollaborator(logger, &input, principal, r.store)
@@ -128,7 +131,7 @@ func (r *mutationResolver) CreatePlanCollaborator(ctx context.Context, input mod
 
 // UpdatePlanCollaborator is the resolver for the updatePlanCollaborator field.
 func (r *mutationResolver) UpdatePlanCollaborator(ctx context.Context, id uuid.UUID, newRole models.TeamRole) (*models.PlanCollaborator, error) {
-	principal := appcontext.Principal(ctx).ID()
+	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 
 	return resolvers.UpdatePlanCollaborator(logger, id, newRole, principal, r.store)
@@ -136,7 +139,7 @@ func (r *mutationResolver) UpdatePlanCollaborator(ctx context.Context, id uuid.U
 
 // DeletePlanCollaborator is the resolver for the deletePlanCollaborator field.
 func (r *mutationResolver) DeletePlanCollaborator(ctx context.Context, id uuid.UUID) (*models.PlanCollaborator, error) {
-	principal := appcontext.Principal(ctx).ID()
+	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 
 	return resolvers.DeletePlanCollaborator(logger, id, principal, r.store)
@@ -144,7 +147,7 @@ func (r *mutationResolver) DeletePlanCollaborator(ctx context.Context, id uuid.U
 
 // UpdatePlanBasics is the resolver for the updatePlanBasics field.
 func (r *mutationResolver) UpdatePlanBasics(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanBasics, error) {
-	principal := appcontext.Principal(ctx).ID()
+	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 
 	return resolvers.UpdatePlanBasics(logger, id, changes, principal, r.store)
@@ -152,7 +155,7 @@ func (r *mutationResolver) UpdatePlanBasics(ctx context.Context, id uuid.UUID, c
 
 // UpdatePlanGeneralCharacteristics is the resolver for the updatePlanGeneralCharacteristics field.
 func (r *mutationResolver) UpdatePlanGeneralCharacteristics(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanGeneralCharacteristics, error) {
-	principal := appcontext.Principal(ctx).ID()
+	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 
 	return resolvers.UpdatePlanGeneralCharacteristics(logger, id, changes, principal, r.store)
@@ -160,28 +163,28 @@ func (r *mutationResolver) UpdatePlanGeneralCharacteristics(ctx context.Context,
 
 // UpdatePlanBeneficiaries is the resolver for the updatePlanBeneficiaries field.
 func (r *mutationResolver) UpdatePlanBeneficiaries(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanBeneficiaries, error) {
-	principal := appcontext.Principal(ctx).ID()
+	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 	return resolvers.PlanBeneficiariesUpdate(logger, id, changes, principal, r.store)
 }
 
 // UpdatePlanParticipantsAndProviders is the resolver for the updatePlanParticipantsAndProviders field.
 func (r *mutationResolver) UpdatePlanParticipantsAndProviders(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanParticipantsAndProviders, error) {
-	principal := appcontext.Principal(ctx).ID()
+	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 	return resolvers.PlanParticipantsAndProvidersUpdate(logger, id, changes, principal, r.store)
 }
 
 // UpdatePlanItTools is the resolver for the updatePlanItTools field.
 func (r *mutationResolver) UpdatePlanItTools(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanITTools, error) {
-	principal := appcontext.Principal(ctx).ID()
+	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 	return resolvers.PlanITToolsUpdate(logger, id, changes, principal, r.store)
 }
 
 // UpdatePlanOpsEvalAndLearning is the resolver for the updatePlanOpsEvalAndLearning field.
 func (r *mutationResolver) UpdatePlanOpsEvalAndLearning(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanOpsEvalAndLearning, error) {
-	principal := appcontext.Principal(ctx).ID()
+	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 	return resolvers.PlanOpsEvalAndLearningUpdate(logger, id, changes, principal, r.store)
 }
@@ -200,7 +203,7 @@ func (r *mutationResolver) GeneratePresignedUploadURL(ctx context.Context, input
 
 // CreatePlanDocument is the resolver for the createPlanDocument field.
 func (r *mutationResolver) CreatePlanDocument(ctx context.Context, input model.PlanDocumentInput) (*model.PlanDocumentPayload, error) {
-	principal := appcontext.Principal(ctx).ID()
+	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 
 	document := ConvertToPlanDocumentModel(&input)
@@ -212,24 +215,24 @@ func (r *mutationResolver) CreatePlanDocument(ctx context.Context, input model.P
 // UpdatePlanDocument is the resolver for the updatePlanDocument field.
 func (r *mutationResolver) UpdatePlanDocument(ctx context.Context, input model.PlanDocumentInput) (*model.PlanDocumentPayload, error) {
 	document := ConvertToPlanDocumentModel(&input)
-	principal := appcontext.Principal(ctx).ID()
+	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 
-	return resolvers.PlanDocumentUpdate(logger, r.s3Client, document, &principal, r.store)
+	return resolvers.PlanDocumentUpdate(logger, r.s3Client, document, principal, r.store)
 }
 
 // DeletePlanDocument is the resolver for the deletePlanDocument field.
 func (r *mutationResolver) DeletePlanDocument(ctx context.Context, input model.PlanDocumentInput) (int, error) {
 	document := ConvertToPlanDocumentModel(&input)
-	principal := appcontext.Principal(ctx).ID()
+	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 
-	return resolvers.PlanDocumentDelete(logger, document, &principal, r.store)
+	return resolvers.PlanDocumentDelete(logger, r.s3Client, document, principal, r.store)
 }
 
 // CreatePlanDiscussion is the resolver for the createPlanDiscussion field.
 func (r *mutationResolver) CreatePlanDiscussion(ctx context.Context, input model.PlanDiscussionCreateInput) (*models.PlanDiscussion, error) {
-	principal := appcontext.Principal(ctx).ID()
+	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 
 	return resolvers.CreatePlanDiscussion(logger, &input, principal, r.store)
@@ -237,7 +240,7 @@ func (r *mutationResolver) CreatePlanDiscussion(ctx context.Context, input model
 
 // UpdatePlanDiscussion is the resolver for the updatePlanDiscussion field.
 func (r *mutationResolver) UpdatePlanDiscussion(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanDiscussion, error) {
-	principal := appcontext.Principal(ctx).ID()
+	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 
 	return resolvers.UpdatePlanDiscussion(logger, id, changes, principal, r.store)
@@ -245,7 +248,7 @@ func (r *mutationResolver) UpdatePlanDiscussion(ctx context.Context, id uuid.UUI
 
 // DeletePlanDiscussion is the resolver for the deletePlanDiscussion field.
 func (r *mutationResolver) DeletePlanDiscussion(ctx context.Context, id uuid.UUID) (*models.PlanDiscussion, error) {
-	principal := appcontext.Principal(ctx).ID()
+	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 
 	return resolvers.DeletePlanDiscussion(logger, id, principal, r.store)
@@ -253,7 +256,7 @@ func (r *mutationResolver) DeletePlanDiscussion(ctx context.Context, id uuid.UUI
 
 // CreateDiscussionReply is the resolver for the createDiscussionReply field.
 func (r *mutationResolver) CreateDiscussionReply(ctx context.Context, input model.DiscussionReplyCreateInput) (*models.DiscussionReply, error) {
-	principal := appcontext.Principal(ctx).ID()
+	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 
 	return resolvers.CreateDiscussionReply(logger, &input, principal, r.store)
@@ -261,7 +264,7 @@ func (r *mutationResolver) CreateDiscussionReply(ctx context.Context, input mode
 
 // UpdateDiscussionReply is the resolver for the updateDiscussionReply field.
 func (r *mutationResolver) UpdateDiscussionReply(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.DiscussionReply, error) {
-	principal := appcontext.Principal(ctx).ID()
+	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 
 	return resolvers.UpdateDiscussionReply(logger, id, changes, principal, r.store)
@@ -269,7 +272,7 @@ func (r *mutationResolver) UpdateDiscussionReply(ctx context.Context, id uuid.UU
 
 // DeleteDiscussionReply is the resolver for the deleteDiscussionReply field.
 func (r *mutationResolver) DeleteDiscussionReply(ctx context.Context, id uuid.UUID) (*models.DiscussionReply, error) {
-	principal := appcontext.Principal(ctx).ID()
+	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 
 	return resolvers.DeleteDiscussionReply(logger, id, principal, r.store)
@@ -297,7 +300,7 @@ func (r *mutationResolver) UnlockAllTaskListSections(ctx context.Context, modelP
 // UpdatePlanPayments is the resolver for the updatePlanPayments field.
 func (r *mutationResolver) UpdatePlanPayments(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanPayments, error) {
 	logger := appcontext.ZLogger(ctx)
-	principal := appcontext.Principal(ctx).ID()
+	principal := appcontext.Principal(ctx)
 
 	return resolvers.PlanPaymentsUpdate(logger, r.store, id, changes, principal)
 }
@@ -307,6 +310,20 @@ func (r *mutationResolver) AgreeToNda(ctx context.Context, agree bool) (*model.N
 	logger := appcontext.ZLogger(ctx)
 	principal := appcontext.Principal(ctx)
 	return resolvers.NDAAgreementUpdateOrCreate(logger, agree, principal, r.store)
+}
+
+// AddPlanFavorite is the resolver for the addPlanFavorite field.
+func (r *mutationResolver) AddPlanFavorite(ctx context.Context, modelPlanID uuid.UUID) (*models.PlanFavorite, error) {
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.PlanFavoriteCreate(logger, principal, r.store, modelPlanID)
+}
+
+// DeletePlanFavorite is the resolver for the deletePlanFavorite field.
+func (r *mutationResolver) DeletePlanFavorite(ctx context.Context, modelPlanID uuid.UUID) (*models.PlanFavorite, error) {
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.PlanFavoriteDelete(logger, principal, r.store, modelPlanID)
 }
 
 // CmsCenters is the resolver for the cmsCenters field.
@@ -714,9 +731,8 @@ func (r *queryResolver) CurrentUser(ctx context.Context) (*model.CurrentUser, er
 // ModelPlan is the resolver for the modelPlan field.
 func (r *queryResolver) ModelPlan(ctx context.Context, id uuid.UUID) (*models.ModelPlan, error) {
 	logger := appcontext.ZLogger(ctx)
-	principal := appcontext.Principal(ctx).ID()
 
-	return resolvers.ModelPlanGetByID(logger, principal, id, r.store)
+	return resolvers.ModelPlanGetByID(logger, id, r.store)
 }
 
 // PlanDocument is the resolver for the planDocument field.
@@ -755,7 +771,7 @@ func (r *queryResolver) ReadPlanDocumentByModelID(ctx context.Context, id uuid.U
 
 // ModelPlanCollection is the resolver for the modelPlanCollection field.
 func (r *queryResolver) ModelPlanCollection(ctx context.Context) ([]*models.ModelPlan, error) {
-	principal := appcontext.Principal(ctx).ID()
+	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 	return resolvers.ModelPlanCollectionByUser(logger, principal, r.store)
 }

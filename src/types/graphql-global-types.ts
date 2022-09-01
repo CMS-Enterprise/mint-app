@@ -718,6 +718,7 @@ export interface PlanCollaboratorCreateInput {
   euaUserID: string;
   fullName: string;
   teamRole: TeamRole;
+  email: string;
 }
 
 /**

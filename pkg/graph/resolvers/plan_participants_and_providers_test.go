@@ -8,7 +8,7 @@ import (
 func (suite *ResolverSuite) TestPlanParticipantsAndProvidersUpdate() {
 	plan := suite.createModelPlan("Plan for Participants and Providers")
 
-	pp, err := PlanParticipantsAndProvidersGetByModelPlanID(suite.testConfigs.Logger, suite.testConfigs.UserInfo.EuaUserID, plan.ID, suite.testConfigs.Store)
+	pp, err := PlanParticipantsAndProvidersGetByModelPlanID(suite.testConfigs.Logger, plan.ID, suite.testConfigs.Store)
 	suite.NoError(err)
 
 	changes := map[string]interface{}{
@@ -17,9 +17,7 @@ func (suite *ResolverSuite) TestPlanParticipantsAndProvidersUpdate() {
 		"estimateConfidence": string(models.ConfidenceSlightly),
 	}
 
-	updater := "UPDT"
-
-	updatedPP, err := PlanParticipantsAndProvidersUpdate(suite.testConfigs.Logger, pp.ID, changes, updater, suite.testConfigs.Store)
+	updatedPP, err := PlanParticipantsAndProvidersUpdate(suite.testConfigs.Logger, pp.ID, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
 	suite.NoError(err)
 
 	suite.Nil(updatedPP.Participants)
@@ -75,7 +73,7 @@ func (suite *ResolverSuite) TestPlanParticipantsAndProvidersGetByModelPlanID() {
 
 	plan := suite.createModelPlan("Plan for Participants and Providers")
 
-	pp, err := PlanParticipantsAndProvidersGetByModelPlanID(suite.testConfigs.Logger, suite.testConfigs.UserInfo.EuaUserID, plan.ID, suite.testConfigs.Store)
+	pp, err := PlanParticipantsAndProvidersGetByModelPlanID(suite.testConfigs.Logger, plan.ID, suite.testConfigs.Store)
 	suite.NoError(err)
 
 	suite.EqualValues(plan.ID, pp.ModelPlanID)

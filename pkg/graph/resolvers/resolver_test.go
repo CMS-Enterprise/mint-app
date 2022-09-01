@@ -23,7 +23,7 @@ func (suite *ResolverSuite) SetupTest() {
 }
 
 func (suite *ResolverSuite) createModelPlan(planName string) *models.ModelPlan {
-	mp, err := ModelPlanCreate(suite.testConfigs.Logger, planName, suite.testConfigs.Store, suite.testConfigs.UserInfo)
+	mp, err := ModelPlanCreate(suite.testConfigs.Logger, planName, suite.testConfigs.Store, suite.testConfigs.UserInfo, suite.testConfigs.Principal)
 	suite.NoError(err)
 	return mp
 }
@@ -33,7 +33,7 @@ func (suite *ResolverSuite) createPlanDiscussion(mp *models.ModelPlan, content s
 		ModelPlanID: mp.ID,
 		Content:     content,
 	}
-	pd, err := CreatePlanDiscussion(suite.testConfigs.Logger, input, suite.testConfigs.UserInfo.EuaUserID, suite.testConfigs.Store)
+	pd, err := CreatePlanDiscussion(suite.testConfigs.Logger, input, suite.testConfigs.Principal, suite.testConfigs.Store)
 	suite.NoError(err)
 	return pd
 }
@@ -44,19 +44,20 @@ func (suite *ResolverSuite) createDiscussionReply(pd *models.PlanDiscussion, con
 		Content:      content,
 		Resolution:   resolution,
 	}
-	dr, err := CreateDiscussionReply(suite.testConfigs.Logger, input, suite.testConfigs.UserInfo.EuaUserID, suite.testConfigs.Store)
+	dr, err := CreateDiscussionReply(suite.testConfigs.Logger, input, suite.testConfigs.Principal, suite.testConfigs.Store)
 	suite.NoError(err)
 	return dr
 }
 
-func (suite *ResolverSuite) createPlanCollaborator(mp *models.ModelPlan, EUAUserID string, fullName string, teamRole models.TeamRole) *models.PlanCollaborator {
+func (suite *ResolverSuite) createPlanCollaborator(mp *models.ModelPlan, EUAUserID string, fullName string, teamRole models.TeamRole, email string) *models.PlanCollaborator {
 	collaboratorInput := &model.PlanCollaboratorCreateInput{
 		ModelPlanID: mp.ID,
 		EuaUserID:   EUAUserID,
 		FullName:    fullName,
 		TeamRole:    teamRole,
+		Email:       email,
 	}
-	collaborator, err := CreatePlanCollaborator(suite.testConfigs.Logger, collaboratorInput, suite.testConfigs.UserInfo.EuaUserID, suite.testConfigs.Store)
+	collaborator, err := CreatePlanCollaborator(suite.testConfigs.Logger, collaboratorInput, suite.testConfigs.Principal, suite.testConfigs.Store)
 	suite.NoError(err)
 	return collaborator
 }

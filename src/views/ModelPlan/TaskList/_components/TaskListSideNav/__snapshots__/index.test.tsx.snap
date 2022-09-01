@@ -14,7 +14,7 @@ exports[`The TaskListSideNavActions matches snapshot 1`] = `
     </a>
     <a
       class="usa-link display-block margin-bottom-1"
-      href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/read-only"
+      href="/models/f11eb129-2c80-4080-9440-439cbe1a286f/read-only/model-basics"
     >
       View this Model Plan
     </a>

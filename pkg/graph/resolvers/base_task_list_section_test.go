@@ -5,18 +5,27 @@ import (
 
 	"github.com/google/uuid"
 	"github.com/stretchr/testify/suite"
+	"go.uber.org/zap"
 
+	"github.com/cmsgov/mint-app/pkg/authentication"
 	"github.com/cmsgov/mint-app/pkg/models"
+	"github.com/cmsgov/mint-app/pkg/storage"
 )
 
 // PreUpdateSuite is the testify suite for the resolver package
 type PreUpdateSuite struct {
 	suite.Suite
+	Principal *authentication.EUAPrincipal
 }
 
 // TestPreUpdateSuite runs the resolver test suite
 func TestPreUpdateSuite(t *testing.T) {
 	css := new(PreUpdateSuite)
+	css.Principal = &authentication.EUAPrincipal{
+		EUAID:             "FAKE",
+		JobCodeUSER:       true,
+		JobCodeASSESSMENT: true,
+	}
 	suite.Run(t, css)
 }
 
@@ -30,7 +39,8 @@ func (suite *PreUpdateSuite) TestBaseTaskListSectionPreUpdate() {
 		"modelType": models.MTVoluntary,
 		"goal":      "Some goal",
 	}
-	err := BaseTaskListSectionPreUpdate(&planBasics, changes, "FAKE")
+
+	err := BaseTaskListSectionPreUpdate(&zap.Logger{}, &planBasics, changes, suite.Principal, &storage.Store{})
 	//0/5 in Progess
 	suite.Nil(err)
 	suite.EqualValues(planBasics.Status, models.TaskInProgress)
@@ -39,7 +49,8 @@ func (suite *PreUpdateSuite) TestBaseTaskListSectionPreUpdate() {
 
 	//1/5 Ready for Review
 	changes["status"] = models.TaskReadyForReview
-	err = BaseTaskListSectionPreUpdate(&planBasics, changes, "REVI")
+	suite.Principal.EUAID = "REVI"
+	err = BaseTaskListSectionPreUpdate(&zap.Logger{}, &planBasics, changes, suite.Principal, &storage.Store{})
 	suite.Nil(err)
 	suite.EqualValues(planBasics.Status, models.TaskReadyForReview)
 	suite.EqualValues(*planBasics.ReadyForReviewBy, "REVI")

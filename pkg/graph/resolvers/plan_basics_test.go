@@ -9,7 +9,7 @@ import (
 func (suite *ResolverSuite) TestPlanBasicsGetByModelPlanID() {
 	plan := suite.createModelPlan("Plan For Basics") // should create the basics as part of the resolver
 
-	basics, err := PlanBasicsGetByModelPlanID(suite.testConfigs.Logger, &suite.testConfigs.UserInfo.EuaUserID, plan.ID, suite.testConfigs.Store)
+	basics, err := PlanBasicsGetByModelPlanID(suite.testConfigs.Logger, plan.ID, suite.testConfigs.Store)
 
 	suite.NoError(err)
 	suite.EqualValues(plan.ID, basics.ModelPlanID)
@@ -43,7 +43,7 @@ func (suite *ResolverSuite) TestPlanBasicsGetByModelPlanID() {
 func (suite *ResolverSuite) TestUpdatePlanBasics() {
 	plan := suite.createModelPlan("Plan For Basics") // should create the milestones as part of the resolver
 
-	basics, err := PlanBasicsGetByModelPlanID(suite.testConfigs.Logger, &suite.testConfigs.UserInfo.EuaUserID, plan.ID, suite.testConfigs.Store)
+	basics, err := PlanBasicsGetByModelPlanID(suite.testConfigs.Logger, plan.ID, suite.testConfigs.Store)
 	suite.NoError(err)
 
 	changes := map[string]interface{}{
@@ -56,12 +56,11 @@ func (suite *ResolverSuite) TestUpdatePlanBasics() {
 		"phasedIn":      true,
 		"highLevelNote": "Some high level note",
 	}
-	updater := "UPDT"
 
-	updatedBasics, err := UpdatePlanBasics(suite.testConfigs.Logger, basics.ID, changes, updater, suite.testConfigs.Store)
+	updatedBasics, err := UpdatePlanBasics(suite.testConfigs.Logger, basics.ID, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
 
 	suite.NoError(err)
-	suite.EqualValues(updater, *updatedBasics.ModifiedBy)
+	suite.EqualValues(suite.testConfigs.Principal.EUAID, *updatedBasics.ModifiedBy)
 	suite.EqualValues(models.TaskInProgress, updatedBasics.Status)
 	suite.EqualValues(models.MTVoluntary, *updatedBasics.ModelType)
 	suite.Nil(updatedBasics.Problem)
