@@ -6,9 +6,9 @@
  */
 
 import React, { useContext, useEffect, useRef, useState } from 'react';
+import { RootStateOrAny, useSelector } from 'react-redux';
 import { Redirect, useHistory, useLocation } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
-import { useOktaAuth } from '@okta/okta-react';
 
 import LockTaskListSection from 'queries/TaskListSubscription/LockTaskListSection';
 import { LockTaskListSectionVariables } from 'queries/TaskListSubscription/types/LockTaskListSection';
@@ -87,7 +87,7 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
 
   const taskListSection: TaskListSection = taskListSectionMap[taskListRoute];
 
-  const { authState } = useOktaAuth();
+  const { euaId } = useSelector((state: RootStateOrAny) => state.auth);
 
   // Get the subscription context - messages (locks, unlocks), loading
   const { taskListSectionLocks, loading } = useContext(SubscriptionContext);
@@ -110,7 +110,7 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
   if (
     taskListSection &&
     taskListSectionLocks &&
-    authState?.euaId &&
+    euaId &&
     !addLockLoading &&
     !removeLockLoading &&
     !locking.current &&
@@ -119,7 +119,7 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
     lockState = findLockedSection(
       taskListSectionLocks,
       taskListSection,
-      authState?.euaId as string
+      euaId as string
     );
   } else {
     lockState = LockStatus.CANT_LOCK;
@@ -182,7 +182,7 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
     prevPath
   ) {
     const lockedSection = taskListSectionLocks.find(
-      (section: LockSectionType) => section.lockedBy === authState?.euaId
+      (section: LockSectionType) => section.lockedBy === euaId
     );
 
     removeLockedSection(lockedSection);
@@ -200,8 +200,7 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
   ) {
     const prevLockedSection = taskListSectionLocks.find(
       (section: LockSectionType) =>
-        section.lockedBy === authState?.euaId &&
-        taskListSection !== section.section
+        section.lockedBy === euaId && taskListSection !== section.section
     );
 
     // If coming from IT Tools
