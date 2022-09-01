@@ -20,6 +20,7 @@ MINT facilitates multi-user collaboration. As such, it's important to track who 
    * Once configured additional tables will be able to use the existing trigger, without the need for additional data. 
 
 
+   Attention will need to be paid to the initial setup of these triggers to ensure we are only storing the minimum amount of data needed. This will ensure that the database does not grow needlessly.
 
 ## Pros and Cons of the Alternatives <!-- optional -->
 
@@ -29,7 +30,7 @@ MINT facilitates multi-user collaboration. As such, it's important to track who 
 * `+` Well used approach
 * `+` Only Changes are stored
 * `+` All changes are captured, no matter if they come from the API or SQL.
-* `+` Existing queries work with this set up
+* `+` Existing data modification work with this set up natively
 * `-` Initial Complexity to set up
 
 ### Full Records of Every Change
