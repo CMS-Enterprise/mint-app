@@ -85,7 +85,7 @@ const TaskListSideNav = ({ modelPlan }: { modelPlan: GetModelPlanType }) => {
           {t('sideNav.saveAndExit')}
         </UswdsReactLink>
         <UswdsReactLink
-          to={`/models/${modelID}/read-only`}
+          to={`/models/${modelID}/read-only/model-basics`}
           className="display-block margin-bottom-1"
         >
           {t('sideNav.view')}
