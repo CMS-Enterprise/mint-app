@@ -22,6 +22,7 @@ import {
   DescriptionTerm
 } from 'components/shared/DescriptionGroup';
 import SectionWrapper from 'components/shared/SectionWrapper';
+import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import GetModelSummary from 'queries/ReadOnly/GetModelSummary';
 import {
   GetModelSummary as GetModelSummaryType,
@@ -34,12 +35,42 @@ import { NotFoundPartial } from 'views/NotFound';
 
 import TaskListStatus from '../TaskList/_components/TaskListStatus';
 
+import ContactInfo from './_components/ContactInfo';
+import MobileNav from './_components/MobileNav';
+import SideNav from './_components/Sidenav';
+
 import './index.scss';
+
+type subComponentProps = {
+  component: React.ReactNode;
+  route: string;
+};
+
+export interface subComponentsProps {
+  [key: string]: subComponentProps;
+}
+
+export type SubpageKey =
+  | 'model-basics'
+  | 'general-characteristics'
+  | 'participants-and-providers'
+  | 'beneficiaries'
+  | 'operations-evaluation-and-learning'
+  | 'payment'
+  | 'it-tools'
+  | 'team'
+  | 'discussions'
+  | 'documents'
+  | 'crs-and-tdl';
 
 const ReadOnly = () => {
   const { t } = useTranslation('modelSummary');
   const { t: h } = useTranslation('generalReadOnly');
-  const { modelID } = useParams<{ modelID: string }>();
+  const isMobile = useCheckResponsiveScreen('tablet');
+  const { modelID, subinfo } = useParams<{
+    modelID: string;
+    subinfo: SubpageKey;
+  }>();
 
   const descriptionRef = React.createRef<HTMLElement>();
   const [
@@ -96,6 +127,55 @@ const ReadOnly = () => {
       index === collaborators.length - 1 ? '' : ', '
     }`;
   });
+
+  const subComponents: subComponentsProps = {
+    'model-basics': {
+      route: `/models/${modelID}/read-only/model-basics`,
+      component: <h1>modelBasics</h1>
+    },
+    'general-characteristics': {
+      route: `/models/${modelID}/read-only/general-characteristics`,
+      component: <h1>generalCharacteristics</h1>
+    },
+    'participants-and-providers': {
+      route: `/models/${modelID}/read-only/participants-and-providers`,
+      component: <h1>participantsAndProviders</h1>
+    },
+    beneficiaries: {
+      route: `/models/${modelID}/read-only/beneficiaries`,
+      component: <h1>beneficiaries</h1>
+    },
+    'operations-evaluation-and-learning': {
+      route: `/models/${modelID}/read-only/operations-evaluation-and-learning`,
+      component: <h1>operationsEvaluationAndLearning</h1>
+    },
+    payment: {
+      route: `/models/${modelID}/read-only/payment`,
+      component: <h1>payment</h1>
+    },
+    'it-tools': {
+      route: `/models/${modelID}/read-only/it-tools`,
+      component: <h1>itTools</h1>
+    },
+    team: {
+      route: `/models/${modelID}/read-only/team`,
+      component: <h1>team</h1>
+    },
+    discussions: {
+      route: `/models/${modelID}/read-only/discussions`,
+      component: <h1>discussions</h1>
+    },
+    documents: {
+      route: `/models/${modelID}/read-only/documents`,
+      component: <h1>documents</h1>
+    },
+    'crs-and-tdl': {
+      route: `/models/${modelID}/read-only/crs-and-tdl`,
+      component: <h1>crsAndTdls</h1>
+    }
+  };
+
+  const subComponent = subComponents[subinfo];
 
   if ((!loading && error) || (!loading && !data?.modelPlan)) {
     return <NotFoundPartial />;
@@ -232,12 +312,47 @@ const ReadOnly = () => {
           </div>
         </GridContainer>
       </SectionWrapper>
+
+      <MobileNav subComponents={subComponents} subinfo={subinfo} />
+
       <SectionWrapper className="model-plan-alert-wrapper">
         {status !== ModelStatus.CLEARED && status !== ModelStatus.ANNOUNCED && (
           <Alert type="warning" className="margin-bottom-5 desktop:margin-y-3">
             {h('alert')}
           </Alert>
         )}
+      </SectionWrapper>
+
+      <SectionWrapper className="model-plan__body-content">
+        <GridContainer>
+          <Grid row gap>
+            {!isMobile && (
+              <Grid desktop={{ col: 3 }} className="padding-right-4 sticky-nav">
+                <SideNav subComponents={subComponents} />
+              </Grid>
+            )}
+
+            <Grid desktop={{ col: 9 }}>
+              <div id={`read-only-model-plan__${subinfo}-component` ?? ''}>
+                <GridContainer className="padding-left-0 padding-right-0">
+                  <Grid row gap>
+                    {/* Central component */}
+                    <Grid desktop={{ col: 8 }}>{subComponent.component}</Grid>
+                    {/* Contact info sidebar */}
+                    <Grid
+                      desktop={{ col: 4 }}
+                      className={classnames({
+                        'sticky-nav': !isMobile
+                      })}
+                    >
+                      <ContactInfo modelID={modelID} />
+                    </Grid>
+                  </Grid>
+                </GridContainer>
+              </div>
+            </Grid>
+          </Grid>
+        </GridContainer>
       </SectionWrapper>
     </MainContent>
   );
