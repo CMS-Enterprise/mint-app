@@ -25,19 +25,4 @@ describe('Read Only Model Plan Overivew', () => {
       expect(screen.getByText('All models')).toBeInTheDocument();
     });
   });
-
-  it('matches snapshot', async () => {
-    const { asFragment } = render(
-      <MemoryRouter initialEntries={['/models']}>
-        <MockedProvider>
-          <Route path="/models">
-            <ModelPlan />
-          </Route>
-        </MockedProvider>
-      </MemoryRouter>
-    );
-    await waitFor(() => {
-      expect(asFragment()).toMatchSnapshot();
-    });
-  });
 });
