@@ -20,7 +20,7 @@ const ModelPlan = () => {
   const { t: h } = useTranslation('home');
 
   return (
-    <MainContent>
+    <MainContent data-testid="model-plan-overview">
       <GridContainer>
         <Grid className="padding-bottom-6 margin-bottom-4 border-bottom border-base-light">
           <PageHeading className="margin-bottom-1">{t('heading')}</PageHeading>
