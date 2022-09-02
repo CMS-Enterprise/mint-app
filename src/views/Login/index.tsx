@@ -33,7 +33,7 @@ const Login = () => {
 
   useEffect(() => {
     if (authState?.isAuthenticated) {
-      history.replace('/');
+      history.replace('/pre-decisional-notice');
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps

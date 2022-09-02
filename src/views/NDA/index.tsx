@@ -3,9 +3,10 @@ import { useTranslation } from 'react-i18next';
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
-import { Button, Checkbox } from '@trussworks/react-uswds';
+import { Button, Checkbox, Grid, GridContainer } from '@trussworks/react-uswds';
 import { Field, Form, Formik, FormikProps } from 'formik';
 
+import MainContent from 'components/MainContent';
 import UpdateNDA from 'queries/NDA/UpdateNDA';
 import { setUser } from 'reducers/authReducer';
 
@@ -31,38 +32,45 @@ const NDA = () => {
   };
 
   return (
-    <>
-      <Formik
-        initialValues={{ agreed: false }}
-        onSubmit={values => {
-          handleFormSubmit(values);
-        }}
-        enableReinitialize
-      >
-        {(formikProps: FormikProps<NDAType>) => {
-          const { values, handleSubmit } = formikProps;
+    <MainContent>
+      <GridContainer>
+        <Grid desktop={{ col: 9 }}>
+          <h1>{t('header')}</h1>
+          <p className="line-height-body-6">{t('body')}</p>
+          <Formik
+            initialValues={{ agreed: false }}
+            onSubmit={values => {
+              handleFormSubmit(values);
+            }}
+            enableReinitialize
+          >
+            {(formikProps: FormikProps<NDAType>) => {
+              const { values, handleSubmit } = formikProps;
 
-          return (
-            <Form
-              onSubmit={e => {
-                handleSubmit(e);
-              }}
-            >
-              <Field
-                as={Checkbox}
-                id="nda-check"
-                name="agreed"
-                label={t('label')}
-              />
+              return (
+                <Form
+                  onSubmit={e => {
+                    handleSubmit(e);
+                  }}
+                >
+                  <Field
+                    as={Checkbox}
+                    id="nda-check"
+                    name="agreed"
+                    className="margin-bottom-4"
+                    label={t('label')}
+                  />
 
-              <Button type="submit" disabled={!values.agreed}>
-                Submit
-              </Button>
-            </Form>
-          );
-        }}
-      </Formik>
-    </>
+                  <Button type="submit" disabled={!values.agreed}>
+                    {t('submit')}
+                  </Button>
+                </Form>
+              );
+            }}
+          </Formik>
+        </Grid>
+      </GridContainer>
+    </MainContent>
   );
 };
 
