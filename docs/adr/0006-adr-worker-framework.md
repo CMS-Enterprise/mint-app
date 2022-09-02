@@ -11,8 +11,11 @@ helps take load and latency off of the application server.
 * [Cadence](https://github.com/uber/cadence)
 
 ## Decision Outcome
-
-* Chosen Alternative:
+### Chosen Alternative: [Faktory](https://github.com/contribsys/faktory)
+* Redis not needed initially.
+* Dedicated worker server.
+* Ease of deploying server to ECS.
+* Paid features are worth the cost.
 
 ## Pros and Cons of the Alternatives <!-- optional -->
 
