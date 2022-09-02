@@ -238,7 +238,7 @@ describe('The Model Plan Form', () => {
       expect(loc.pathname).to.match(/\/models\/.{36}\/task-list/);
     });
 
-    cy.get('[data-testid="tasklist-tag"]').first().contains('Completed');
+    cy.get('[data-testid="tasklist-tag"]').first().contains('In progress');
   });
 
   it('updates model plan status', () => {
