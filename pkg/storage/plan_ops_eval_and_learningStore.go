@@ -24,7 +24,7 @@ var planOpsEvalAndLearningGetByIDSQL string
 //go:embed SQL/plan_ops_eval_and_learning_get_by_model_plan_id.sql
 var planOpsEvalAndLearningGetByModelPlanIDSQL string
 
-//PlanOpsEvalAndLearningCreate creates a new plan providers_and_participants object
+// PlanOpsEvalAndLearningCreate creates a new plan providers_and_participants object
 func (s *Store) PlanOpsEvalAndLearningCreate(logger *zap.Logger, oel *models.PlanOpsEvalAndLearning) (*models.PlanOpsEvalAndLearning, error) {
 	oel.ID = utilityUUID.ValueOrNewUUID(oel.ID)
 

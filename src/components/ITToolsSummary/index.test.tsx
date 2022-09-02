@@ -1,6 +1,9 @@
 import React from 'react';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { render, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+
+import { LockStatus } from 'views/SubscriptionHandler';
 
 import ITToolsSummary from './index';
 
@@ -24,6 +27,7 @@ describe('The ITToolsSummary component', () => {
             answered={managePartCDEnrollment !== null}
             needsTool={questionOneNeedsTools}
             scrollElememnt="managePartCDEnrollment"
+            locked={LockStatus.UNLOCKED}
           />
         </Route>
       </MemoryRouter>
@@ -60,6 +64,7 @@ describe('The ITToolsSummary component', () => {
             needsTool={false} // questionOneNeedsTools as false
             subtext="If you change your answer to “Yes”, you can select tools from the list below."
             scrollElememnt="managePartCDEnrollment"
+            locked={LockStatus.UNLOCKED}
           />
         </Route>
       </MemoryRouter>
@@ -82,6 +87,42 @@ describe('The ITToolsSummary component', () => {
     });
   });
 
+  it('renders a locked modal is task list occupied', async () => {
+    // ReactModel is throwing warning - App element is not defined. Please use `Modal.setAppElement(el)`.  The app is being set within the modal but RTL is not picking up on it
+    // eslint-disable-next-line
+    console.error = jest.fn();
+
+    const { getByTestId } = render(
+      <MemoryRouter
+        initialEntries={[
+          '/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/it-tools/page-one'
+        ]}
+      >
+        <Route path="/models/:modelID/task-list/it-tools/page-one">
+          <ITToolsSummary
+            question="Will you manage Part C/D enrollment?"
+            answers={['Yes']}
+            redirect={`/models/${modelID}/task-list/characteristics/key-characteristics`}
+            answered={false} // managePartCDEnrollment as false
+            needsTool={false} // questionOneNeedsTools as false
+            subtext="If you change your answer to “Yes”, you can select tools from the list below."
+            scrollElememnt="managePartCDEnrollment"
+            locked={LockStatus.LOCKED}
+          />
+        </Route>
+      </MemoryRouter>
+    );
+
+    const lockedButton = getByTestId('it-tools-locked-managePartCDEnrollment');
+    userEvent.click(lockedButton);
+
+    await waitFor(() => {
+      expect(getByTestId('return-to-task-list')).toHaveTextContent(
+        'Return to the task list'
+      );
+    });
+  });
+
   it('matches snapshot', async () => {
     const { asFragment } = render(
       <MemoryRouter
@@ -98,6 +139,7 @@ describe('The ITToolsSummary component', () => {
             needsTool={questionOneNeedsTools}
             subtext="If you change your answer to “Yes”, you can select tools from the list below."
             scrollElememnt="managePartCDEnrollment"
+            locked={LockStatus.UNLOCKED}
           />
         </Route>
       </MemoryRouter>

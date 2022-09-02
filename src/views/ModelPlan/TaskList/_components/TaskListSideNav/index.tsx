@@ -1,38 +1,31 @@
 import React, { useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
-import { useMutation, useQuery } from '@apollo/client';
+import { useMutation } from '@apollo/client';
 import { Button } from '@trussworks/react-uswds';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
 import IconInitial from 'components/shared/IconInitial';
-import ArchiveModelPlan from 'queries/ArchiveModelPlan';
-import GetModelPlanCollaborators from 'queries/Collaborators/GetModelCollaborators';
-import {
-  GetModelCollaborators,
-  GetModelCollaborators_modelPlan_collaborators as GetCollaboratorsType
-} from 'queries/Collaborators/types/GetModelCollaborators';
-import { ArchiveModelPlan as ArchiveModelPlanType } from 'queries/types/ArchiveModelPlan';
+import { GetModelCollaborators_modelPlan_collaborators as GetCollaboratorsType } from 'queries/Collaborators/types/GetModelCollaborators';
 import { GetModelPlan_modelPlan as GetModelPlanType } from 'queries/types/GetModelPlan';
+import { UpdateModelPlanVariables as UpdateModelPlanType } from 'queries/types/UpdateModelPlan';
+import UpdateModelPlan from 'queries/UpdateModelPlan';
 
-const TaskListSideNav = ({ modelPlan }: { modelPlan: GetModelPlanType }) => {
+const TaskListSideNav = ({
+  modelPlan,
+  collaborators
+}: {
+  modelPlan: GetModelPlanType;
+  collaborators: GetCollaboratorsType[];
+}) => {
   const { id: modelID } = modelPlan;
   const history = useHistory();
   const { t } = useTranslation('modelPlanTaskList');
   const [isModalOpen, setModalOpen] = useState(false);
 
-  const { data } = useQuery<GetModelCollaborators>(GetModelPlanCollaborators, {
-    variables: {
-      id: modelID
-    }
-  });
-
-  const collaborators = (data?.modelPlan?.collaborators ??
-    []) as GetCollaboratorsType[];
-
-  const [update] = useMutation<ArchiveModelPlanType>(ArchiveModelPlan);
+  const [update] = useMutation<UpdateModelPlanType>(UpdateModelPlan);
 
   const archiveModelPlan = () => {
     update({

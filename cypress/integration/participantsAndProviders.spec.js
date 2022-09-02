@@ -1,6 +1,6 @@
 describe('The Model Plan Participants and Providers Form', () => {
   beforeEach(() => {
-    cy.localLogin({ name: 'MINT' });
+    cy.localLogin({ name: 'MINT', role: 'MINT_USER' });
   });
 
   it('completes a Model Plan Participants and Providers', () => {

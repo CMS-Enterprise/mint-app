@@ -48,6 +48,7 @@ import {
   translateRecruitmentType
 } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
+import { LockStatus } from 'views/SubscriptionHandler';
 
 import { ITToolsFormComponent } from '..';
 
@@ -80,7 +81,11 @@ const initialModelPlanValues: ModelPlanType = {
   itTools: initialFormValues
 };
 
-const ITToolsPageTwo = () => {
+const ITToolsPageTwo = ({
+  participantsAndProvidersLock
+}: {
+  participantsAndProvidersLock: LockStatus;
+}) => {
   const { t } = useTranslation('itTools');
   const { t: p } = useTranslation('participantsAndProviders');
   const { t: h } = useTranslation('draftModelPlan');
@@ -259,6 +264,7 @@ const ITToolsPageTwo = () => {
                           answered={recruitmentMethod !== null}
                           needsTool={questionOneNeedsTools}
                           subtext={t('loiNeedsAnswer')}
+                          locked={participantsAndProvidersLock}
                           scrollElememnt="recruitmentMethod"
                         />
 
@@ -300,6 +306,7 @@ const ITToolsPageTwo = () => {
                           answered={selectionMethod.length > 0}
                           needsTool={questionTwoNeedsTools}
                           subtext={t('scoringToolNeedsAnswer')}
+                          locked={participantsAndProvidersLock}
                           scrollElememnt="selectionMethod"
                         />
 
@@ -344,6 +351,7 @@ const ITToolsPageTwo = () => {
                           answered={selectionMethod.length > 0}
                           needsTool={questionThreeNeedsTools}
                           subtext={t('contractorNeedsAnswer')}
+                          locked={participantsAndProvidersLock}
                           scrollElememnt="selectionMethod"
                         />
 

@@ -31,6 +31,8 @@ require (
 	gopkg.in/launchdarkly/go-server-sdk.v5 v5.6.0
 )
 
+require github.com/gorilla/websocket v1.5.0
+
 require (
 	github.com/xhit/go-simple-mail/v2 v2.11.0
 	gopkg.in/yaml.v3 v3.0.1
@@ -53,7 +55,6 @@ require (
 	github.com/go-openapi/spec v0.20.4 // indirect
 	github.com/go-test/deep v1.0.8 // indirect
 	github.com/goccy/go-json v0.9.4 // indirect
-	github.com/gorilla/websocket v1.5.0 // indirect
 	github.com/hashicorp/golang-lru v0.5.4 // indirect
 	github.com/hashicorp/hcl v1.0.0 // indirect
 	github.com/inconshreveable/mousetrap v1.0.0 // indirect

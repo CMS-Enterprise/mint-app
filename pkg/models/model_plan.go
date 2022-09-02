@@ -10,7 +10,7 @@ type ModelPlan struct {
 	Status    ModelStatus `json:"status" db:"status"`
 }
 
-//GetModelPlanID returns the modelPlanID of the task list section
+// GetModelPlanID returns the modelPlanID of the task list section
 func (m ModelPlan) GetModelPlanID() uuid.UUID {
 	return m.ID
 }
