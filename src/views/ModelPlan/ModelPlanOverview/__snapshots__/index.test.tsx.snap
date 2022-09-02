@@ -1,0 +1,161 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Read Only Model Plan Overivew matches snapshot 1`] = `
+<DocumentFragment>
+  <main
+    class="mint-main-content"
+    data-testid="model-plan-overview"
+    id="main-content"
+    role="main"
+    tabindex="-1"
+  >
+    <div
+      class="grid-container"
+      data-testid="gridContainer"
+    >
+      <div
+        class="padding-bottom-6 margin-bottom-4 border-bottom border-base-light"
+        data-testid="grid"
+      >
+        <h1
+          aria-live="polite"
+          class="mint-h1 margin-bottom-1"
+          tabindex="-1"
+        >
+          CMMI Models and Demonstrations
+        </h1>
+        <p
+          class="line-height-body-5 font-body-lg text-light margin-bottom-05 margin-top-0"
+        >
+          Here you can find information about all CMMI models and demonstrations.
+        </p>
+        <a
+          class=""
+          href="/models#all-models"
+        >
+          Jump to all models
+        </a>
+        <div
+          class="usa-summary-box bg-base-lightest border-0 radius-0 padding-2 padding-bottom-3 margin-top-3 "
+          data-testid="summary-box"
+        >
+          <div
+            class="usa-summary-box__body"
+          >
+            <h3
+              class="usa-summary-box__heading"
+            />
+            <div
+              class="usa-summary-box__text"
+            >
+              <p
+                class="margin-0 margin-bottom-1"
+              >
+                Have a new model or demonstration?
+              </p>
+              <a
+                class="usa-button usa-button--outline"
+                href="/models/steps-overview"
+              >
+                Start a draft model plan
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="padding-bottom-6 margin-bottom-4 border-bottom border-base-light"
+        data-testid="grid"
+      >
+        <h1
+          aria-live="polite"
+          class="mint-h1 margin-bottom-1"
+          tabindex="-1"
+        >
+          Models you’re following
+        </h1>
+        <p
+          class="line-height-body-5 text-light margin-bottom-05 margin-top-0"
+        >
+          You will receive email notifications when models you’re following are updated.
+        </p>
+        <div
+          class="usa-alert usa-alert--info"
+          data-testid="alert"
+        >
+          <div
+            class="usa-alert__body"
+          >
+            <h4
+              class="usa-alert__heading"
+            >
+              You are not following any models yet.
+            </h4>
+            <p
+              class="usa-alert__text"
+            />
+            <p
+              class="display-flex flex-align-center margin-0"
+            >
+              Click the star icon (
+              <svg
+                class="usa-icon usa-icon--size-3"
+                focusable="false"
+                height="1em"
+                role="img"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="m22 9.24-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"
+                />
+              </svg>
+              ) for any model to add it to this section.
+            </p>
+            <p />
+          </div>
+        </div>
+      </div>
+      <div
+        class=""
+        data-testid="grid"
+      >
+        <h1
+          aria-live="polite"
+          class="mint-h1 margin-bottom-1"
+          id="all-models"
+          tabindex="-1"
+        >
+          All models
+        </h1>
+        <p
+          class="line-height-body-5 text-light margin-bottom-3 margin-top-0"
+        >
+          Follow models that you want to stay up to date on by clicking the star icon.
+        </p>
+        <div
+          class="margin-y-10"
+          data-testid="page-loading"
+        >
+          <div
+            class="text-center"
+          >
+            <span
+              aria-busy="true"
+              aria-valuetext="Loading the page"
+              class="mint-spinner mint-spinner--xl"
+              role="progressbar"
+            />
+          </div>
+          <h1
+            class="margin-top-6 text-center"
+          >
+            Loading the page
+          </h1>
+        </div>
+      </div>
+    </div>
+  </main>
+</DocumentFragment>
+`;
