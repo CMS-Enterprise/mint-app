@@ -19,7 +19,7 @@ var ndaAgreementUpdateSQL string
 //go:embed SQL/nda_agreement_insert.sql
 var ndaAgreementInsertSQL string
 
-//NDAAgreementGetByEUA returns an NDA based on an euaID
+// NDAAgreementGetByEUA returns an NDA based on an euaID
 func (s *Store) NDAAgreementGetByEUA(logger *zap.Logger, euaID string) (*models.NDAAgreement, error) {
 	nda := models.NDAAgreement{}
 
@@ -43,7 +43,7 @@ func (s *Store) NDAAgreementGetByEUA(logger *zap.Logger, euaID string) (*models.
 	return &nda, nil
 }
 
-//NDAAgreementUpdate updates an nda agreement based on userID
+// NDAAgreementUpdate updates an nda agreement based on userID
 func (s *Store) NDAAgreementUpdate(logger *zap.Logger, nda *models.NDAAgreement) (*models.NDAAgreement, error) {
 
 	statement, err := s.db.PrepareNamed(ndaAgreementUpdateSQL)
@@ -60,7 +60,7 @@ func (s *Store) NDAAgreementUpdate(logger *zap.Logger, nda *models.NDAAgreement)
 
 }
 
-//NDAAgreementCreate creates a new nda agreement based on an EUA
+// NDAAgreementCreate creates a new nda agreement based on an EUA
 func (s *Store) NDAAgreementCreate(logger *zap.Logger, nda *models.NDAAgreement) (*models.NDAAgreement, error) {
 
 	nda.ID = utilityUUID.ValueOrNewUUID(nda.ID)

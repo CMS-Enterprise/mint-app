@@ -9,7 +9,7 @@ import (
 	"github.com/cmsgov/mint-app/pkg/storage"
 )
 
-//PlanOpsEvalAndLearningUpdate updates a PlanOpsEvalAndLearning buisness object
+// PlanOpsEvalAndLearningUpdate updates a PlanOpsEvalAndLearning buisness object
 func PlanOpsEvalAndLearningUpdate(logger *zap.Logger, id uuid.UUID, changes map[string]interface{}, principal authentication.Principal, store *storage.Store) (*models.PlanOpsEvalAndLearning, error) {
 	//Get existing  PlanOpsEvalAndLearning
 	existing, err := store.PlanOpsEvalAndLearningGetByID(logger, id)

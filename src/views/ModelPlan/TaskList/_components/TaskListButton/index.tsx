@@ -7,10 +7,11 @@ import { TaskStatus } from 'types/graphql-global-types';
 
 type TaskListButtonProps = {
   path: string;
+  disabled?: boolean;
   status: TaskStatus;
 };
 
-const TaskListButton = ({ path, status }: TaskListButtonProps) => {
+const TaskListButton = ({ path, disabled, status }: TaskListButtonProps) => {
   const { t } = useTranslation('modelPlanTaskList');
   const { modelID } = useParams<{ modelID: string }>();
   const history = useHistory();
@@ -18,7 +19,9 @@ const TaskListButton = ({ path, status }: TaskListButtonProps) => {
   return (
     <Button
       type="button"
+      disabled={disabled}
       data-testid={path}
+      className="margin-bottom-2 width-auto"
       onClick={() => history.push(`/models/${modelID}/task-list/${path}`)}
     >
       {status === 'READY' && t('taskListButton.start')}

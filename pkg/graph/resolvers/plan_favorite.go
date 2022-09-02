@@ -10,7 +10,7 @@ import (
 	"github.com/cmsgov/mint-app/pkg/storage"
 )
 
-//IsPlanFavorited checks if a model plan is a favorite.
+// IsPlanFavorited checks if a model plan is a favorite.
 func IsPlanFavorited(logger *zap.Logger, principal authentication.Principal, store *storage.Store, modelPlanID uuid.UUID) (bool, error) {
 
 	favorite, err := PlanFavoriteGet(logger, principal, store, modelPlanID)
@@ -23,7 +23,7 @@ func IsPlanFavorited(logger *zap.Logger, principal authentication.Principal, sto
 
 }
 
-//PlanFavoriteCreate creates a new plan favorite record in the database
+// PlanFavoriteCreate creates a new plan favorite record in the database
 func PlanFavoriteCreate(logger *zap.Logger, principal authentication.Principal, store *storage.Store, modelPlandID uuid.UUID) (*models.PlanFavorite, error) {
 
 	favorite := models.PlanFavorite{
@@ -45,7 +45,7 @@ func PlanFavoriteCreate(logger *zap.Logger, principal authentication.Principal, 
 
 }
 
-//PlanFavoriteDelete deletes a plan favorite record in the database
+// PlanFavoriteDelete deletes a plan favorite record in the database
 func PlanFavoriteDelete(logger *zap.Logger, principal authentication.Principal, store *storage.Store, modelPlandID uuid.UUID) (*models.PlanFavorite, error) {
 
 	existingFavorite, err := store.PlanFavoriteGetByModelIDAndEUA(logger, principal.ID(), modelPlandID)
@@ -63,7 +63,7 @@ func PlanFavoriteDelete(logger *zap.Logger, principal authentication.Principal, 
 
 }
 
-//PlanFavoriteGet returns a plan favorite record
+// PlanFavoriteGet returns a plan favorite record
 func PlanFavoriteGet(logger *zap.Logger, principal authentication.Principal, store *storage.Store, modelPlandID uuid.UUID) (*models.PlanFavorite, error) {
 
 	return store.PlanFavoriteGetByModelIDAndEUA(logger, principal.ID(), modelPlandID)

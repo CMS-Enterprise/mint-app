@@ -2,7 +2,7 @@ package resolvers
 
 import "github.com/cmsgov/mint-app/pkg/models"
 
-//TestPlanITToolsUpdate tests PlanITToolsUpdate
+// TestPlanITToolsUpdate tests PlanITToolsUpdate
 func (suite *ResolverSuite) TestPlanITToolsUpdate() {
 	plan := suite.createModelPlan("Plan for IT Tools")
 	itExisting, err := PlanITToolsGetByModelPlanID(suite.testConfigs.Logger, plan.ID, suite.testConfigs.Store)

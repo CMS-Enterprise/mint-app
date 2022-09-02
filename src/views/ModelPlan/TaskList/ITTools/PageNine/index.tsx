@@ -48,6 +48,7 @@ import {
   translatePSharedSavingsPlanType
 } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
+import { LockStatus } from 'views/SubscriptionHandler';
 
 import { ITToolsFormComponent } from '..';
 
@@ -81,7 +82,7 @@ const initialModelPlanValues: ModelPlanType = {
   itTools: initialFormValues
 };
 
-const ITToolsPageNine = () => {
+const ITToolsPageNine = ({ paymentsLock }: { paymentsLock: LockStatus }) => {
   const { t } = useTranslation('itTools');
   const { t: p } = useTranslation('payments');
   const { t: h } = useTranslation('draftModelPlan');
@@ -256,6 +257,7 @@ const ITToolsPageNine = () => {
                           answered={payType.length > 0}
                           needsTool={questionOneNeedsTools}
                           subtext={t('nonClaimsNeedsAnswer')}
+                          locked={paymentsLock}
                           scrollElememnt="payType"
                         />
 
@@ -294,6 +296,7 @@ const ITToolsPageNine = () => {
                           answered={nonClaimsPayments.length > 0}
                           needsTool={questionTwoNeedsTools}
                           subtext={t('sharedSavingsNeedsAnswer')}
+                          locked={paymentsLock}
                           scrollElememnt="nonClaimsPayments"
                         />
 
@@ -332,6 +335,7 @@ const ITToolsPageNine = () => {
                           answered={willRecoverPayments !== null}
                           needsTool={questionThreeNeedsTools}
                           subtext={t('yesFFSNeedsAnswer')}
+                          locked={paymentsLock}
                           scrollElememnt="willRecoverPayments"
                         />
 

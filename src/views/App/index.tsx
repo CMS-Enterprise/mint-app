@@ -22,6 +22,7 @@ import Login from 'views/Login';
 import ModelPlan from 'views/ModelPlan';
 import Collaborators from 'views/ModelPlan/Collaborators';
 import Documents from 'views/ModelPlan/Documents';
+import LockedTaskListSection from 'views/ModelPlan/LockedTaskListSection';
 import NewPlan from 'views/ModelPlan/NewPlan';
 import ReadOnly from 'views/ModelPlan/ReadOnly';
 import Status from 'views/ModelPlan/Status';
@@ -41,6 +42,8 @@ import NDAWrapper from 'views/NDAWrapper';
 import NotFound from 'views/NotFound';
 import PrivacyPolicy from 'views/PrivacyPolicy';
 import Sandbox from 'views/Sandbox';
+import SubscriptionHandler from 'views/SubscriptionHandler';
+import SubscriptionWrapper from 'views/SubscriptionWrapper';
 import TermsAndConditions from 'views/TermsAndConditions';
 import TimeOutWrapper from 'views/TimeOutWrapper';
 import UserInfo from 'views/User';
@@ -164,6 +167,12 @@ const AppRoutes = () => {
 
       <Route path="/implicit/callback" component={LoginCallback} />
 
+      {/* Locked Task List Section */}
+      <SecureRoute
+        path="/models/:modelID/locked-task-list-section"
+        component={LockedTaskListSection}
+      />
+
       {/* 404 */}
       <Route path="*" component={NotFound} />
     </Switch>
@@ -186,23 +195,27 @@ const App = () => {
       </button>
       <BrowserRouter>
         <AuthenticationWrapper>
-          <MessageProvider>
-            <FlagsWrapper>
-              <UserInfoWrapper>
-                <NDAWrapper>
-                  <TimeOutWrapper>
-                    <NavContextProvider>
-                      <PageWrapper>
-                        <Header />
-                        <AppRoutes />
-                        <Footer />
-                      </PageWrapper>
-                    </NavContextProvider>
-                  </TimeOutWrapper>
-                </NDAWrapper>
-              </UserInfoWrapper>
-            </FlagsWrapper>
-          </MessageProvider>
+          <SubscriptionWrapper>
+            <SubscriptionHandler>
+              <MessageProvider>
+                <FlagsWrapper>
+                  <UserInfoWrapper>
+                    <NDAWrapper>
+                      <TimeOutWrapper>
+                        <NavContextProvider>
+                          <PageWrapper>
+                            <Header />
+                            <AppRoutes />
+                            <Footer />
+                          </PageWrapper>
+                        </NavContextProvider>
+                      </TimeOutWrapper>
+                    </NDAWrapper>
+                  </UserInfoWrapper>
+                </FlagsWrapper>
+              </MessageProvider>
+            </SubscriptionHandler>
+          </SubscriptionWrapper>
         </AuthenticationWrapper>
       </BrowserRouter>
     </>

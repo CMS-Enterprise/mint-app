@@ -246,6 +246,13 @@ const itTools = {
     'How will you acquire a learning contractor, if any?',
   oelParticipantCollaborationTools:
     'What tools will you use to enable participant-to-participant collaboration?',
+  modal: {
+    heading:
+      'Someone is currently editing the Model Plan section you’re trying to access.',
+    subHeading: 'Please try again later.',
+    return: 'Return to the task list',
+    goBack: 'Go back'
+  },
   warningRedirect:
     'Changing your answer to this question may also affect your responses to questions in IT tools.  ',
   goToITTools: 'Go to IT tools'

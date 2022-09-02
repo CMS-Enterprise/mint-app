@@ -154,13 +154,13 @@ exports[`IT Tools Page four matches snapshot 1`] = `
                   </ul>
                   <p>
                     Want to change your answer? 
-                    <a
-                      class="usa-link"
-                      data-testid="it-tools-redirect-helpdeskUse"
-                      href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/ops-eval-and-learning"
+                    <button
+                      class="usa-button usa-button usa-button--unstyled"
+                      data-testid="it-tools-locked-helpdeskUse"
+                      type="button"
                     >
                       Go to question
-                    </a>
+                    </button>
                     .
                   </p>
                 </div>
@@ -311,13 +311,13 @@ exports[`IT Tools Page four matches snapshot 1`] = `
                   </div>
                   <p>
                     Want to change your answer? 
-                    <a
-                      class="usa-link"
-                      data-testid="it-tools-redirect-iddocSupport"
-                      href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/ops-eval-and-learning"
+                    <button
+                      class="usa-button usa-button usa-button--unstyled"
+                      data-testid="it-tools-locked-iddocSupport"
+                      type="button"
                     >
                       Go to question
-                    </a>
+                    </button>
                     .
                   </p>
                 </div>
@@ -499,13 +499,13 @@ exports[`IT Tools Page four matches snapshot 1`] = `
                   </div>
                   <p>
                     Want to change your answer? 
-                    <a
-                      class="usa-link"
-                      data-testid="it-tools-redirect-benchmarkForPerformance"
-                      href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/ops-eval-and-learning/performance"
+                    <button
+                      class="usa-button usa-button usa-button--unstyled"
+                      data-testid="it-tools-locked-benchmarkForPerformance"
+                      type="button"
                     >
                       Go to question
-                    </a>
+                    </button>
                     .
                   </p>
                 </div>

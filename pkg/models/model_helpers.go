@@ -25,7 +25,7 @@ func ValueOrEmpty(st *string) string {
 	return ""
 }
 
-//ConvertEnums converts a pq.StringArray to specific, castable type
+// ConvertEnums converts a pq.StringArray to specific, castable type
 func ConvertEnums[EnumType ~string](pqGroups pq.StringArray) []EnumType {
 	enumValues := []EnumType{}
 	for _, item := range pqGroups {

@@ -2,6 +2,7 @@ package services
 
 import (
 	"context"
+	"fmt"
 
 	"go.uber.org/zap"
 
@@ -11,6 +12,14 @@ import (
 
 // HasRole authorizes a user as having a given role
 func HasRole(ctx context.Context, role model.Role) (bool, error) {
+	fmt.Println("APP CONTEXT PRINCIPAL", appcontext.Principal(ctx))
+	fmt.Println("APP CONTEXT PRINCIPAL", appcontext.Principal(ctx))
+	fmt.Println("APP CONTEXT PRINCIPAL", appcontext.Principal(ctx))
+	fmt.Println("APP CONTEXT PRINCIPAL", appcontext.Principal(ctx))
+	fmt.Println("APP CONTEXT PRINCIPAL", appcontext.Principal(ctx))
+	fmt.Println("APP CONTEXT PRINCIPAL", appcontext.Principal(ctx))
+	fmt.Println("APP CONTEXT PRINCIPAL", appcontext.Principal(ctx))
+	fmt.Println("APP CONTEXT PRINCIPAL", appcontext.Principal(ctx))
 	logger := appcontext.ZLogger(ctx)
 	principal := appcontext.Principal(ctx)
 	switch role {

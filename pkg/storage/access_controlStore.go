@@ -13,7 +13,7 @@ var checkIfCollaboratorSQL string
 //go:embed SQL/check_if_collaborator_discussion_id.sql
 var checkIfCollaboratorDiscussionIDSQL string
 
-//CheckIfCollaborator returns true if the principal is a collaborator on a model plan.
+// CheckIfCollaborator returns true if the principal is a collaborator on a model plan.
 func (s *Store) CheckIfCollaborator(logger *zap.Logger, principalID string, modelPlanID uuid.UUID) (bool, error) {
 
 	isCollaborator := false
@@ -35,7 +35,7 @@ func (s *Store) CheckIfCollaborator(logger *zap.Logger, principalID string, mode
 
 }
 
-//CheckIfCollaboratorByDiscussionID returns true if the principal is a collaborator on a model plan, by the relation on the plan discussion
+// CheckIfCollaboratorByDiscussionID returns true if the principal is a collaborator on a model plan, by the relation on the plan discussion
 func (s *Store) CheckIfCollaboratorByDiscussionID(logger *zap.Logger, principalID string, discussionID uuid.UUID) (bool, error) { //TODO provie
 
 	isCollaborator := false

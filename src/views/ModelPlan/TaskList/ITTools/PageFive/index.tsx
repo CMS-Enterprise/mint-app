@@ -47,6 +47,7 @@ import {
   translateOelProcessAppealsType
 } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
+import { LockStatus } from 'views/SubscriptionHandler';
 
 import { ITToolsFormComponent } from '..';
 
@@ -83,7 +84,11 @@ const initialModelPlanValues: ModelPlanType = {
   itTools: initialFormValues
 };
 
-const ITToolsPageFive = () => {
+const ITToolsPageFive = ({
+  opsEvalAndLearningLock
+}: {
+  opsEvalAndLearningLock: LockStatus;
+}) => {
   const { t } = useTranslation('itTools');
   const { t: o } = useTranslation('operationsEvaluationAndLearning');
   const { t: h } = useTranslation('draftModelPlan');
@@ -276,6 +281,7 @@ const ITToolsPageFive = () => {
                           }
                           needsTool={questionOneNeedsTools}
                           subtext={t('appealsNeedsAnswer')}
+                          locked={opsEvalAndLearningLock}
                           scrollElememnt="appealPerformance"
                         />
 
@@ -322,6 +328,7 @@ const ITToolsPageFive = () => {
                           answered={evaluationApproaches.length > 0}
                           needsTool={questionTwoNeedsTools}
                           subtext={t('appealsNeedsAnswer')}
+                          locked={opsEvalAndLearningLock}
                           scrollElememnt="evaluationApproaches"
                         />
 
@@ -360,6 +367,7 @@ const ITToolsPageFive = () => {
                           answered={dataNeededForMonitoring.length > 0}
                           needsTool={questionThreeNeedsTools}
                           subtext={t('monitorNeedsAnswer')}
+                          locked={opsEvalAndLearningLock}
                           scrollElememnt="dataNeededForMonitoring"
                         />
 

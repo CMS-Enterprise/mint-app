@@ -49,6 +49,7 @@ import {
   translatePMakeClaimsPaymentsType
 } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
+import { LockStatus } from 'views/SubscriptionHandler';
 
 import { ITToolsFormComponent } from '..';
 
@@ -88,7 +89,13 @@ const initialModelPlanValues: ModelPlanType = {
   itTools: initialFormValues
 };
 
-const ITToolsPageEight = () => {
+const ITToolsPageEight = ({
+  opsEvalAndLearningLock,
+  paymentsLock
+}: {
+  opsEvalAndLearningLock: LockStatus;
+  paymentsLock: LockStatus;
+}) => {
   const { t } = useTranslation('itTools');
   const { t: o } = useTranslation('operationsEvaluationAndLearning');
   const { t: p } = useTranslation('payments');
@@ -262,6 +269,7 @@ const ITToolsPageEight = () => {
                           answered={modelLearningSystems.length > 0}
                           needsTool={questionOneNeedsTools}
                           subtext={t('educateBeneficiariesNeedsAnswer')}
+                          locked={opsEvalAndLearningLock}
                           scrollElememnt="modelLearningSystems"
                         />
 
@@ -302,6 +310,7 @@ const ITToolsPageEight = () => {
                           answered={payType.length > 0}
                           needsTool={questionTwoNeedsTools}
                           subtext={t('ffsNeedsAnswer')}
+                          locked={paymentsLock}
                           scrollElememnt="payType"
                         />
 
@@ -342,6 +351,7 @@ const ITToolsPageEight = () => {
                           }
                           needsTool={questionThreeNeedsTools}
                           subtext={t('yesFFSNeedsAnswer')}
+                          locked={paymentsLock}
                           scrollElememnt="shouldAnyProvidersExcludedFFSSystems"
                         />
 
