@@ -122,7 +122,7 @@ describe('The Model Plan Form', () => {
     cy.get('[data-testid="tasklist-tag"]').first().contains('In progress');
   });
 
-  it.only('completes a Model Plan Basics', () => {
+  it('completes a Model Plan Basics', () => {
     cy.clickPlanTableByName('Empty Plan');
 
     cy.contains('h3', 'Model basics');
