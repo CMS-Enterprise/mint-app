@@ -1,8 +1,10 @@
 const nda = {
   label: 'I have read and accept the statement above.',
   submit: 'Accept and continue to MINT',
+  continue: 'Continue to MINT',
   readMore: 'Read more',
   readLess: 'Read less',
+  accepted: 'Accepted on ',
   header:
     'Pre-Decisional: Information not releasable to the public unless authorized by law.',
   body:
