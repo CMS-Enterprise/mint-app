@@ -7,8 +7,9 @@ import {
   useSortBy,
   useTable
 } from 'react-table';
-import { useQuery } from '@apollo/client';
-import { IconFileDownload, Table as UswdsTable } from '@trussworks/react-uswds';
+import { useApolloClient, useQuery } from '@apollo/client';
+// import { IconFileDownload, Table as UswdsTable } from '@trussworks/react-uswds';
+import { Table as UswdsTable } from '@trussworks/react-uswds';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import PageLoading from 'components/PageLoading';
@@ -22,6 +23,7 @@ import {
   GetModelPlans as GetDraftModelPlansType,
   GetModelPlans_modelPlanCollection as DraftModelPlanType
 } from 'queries/types/GetModelPlans';
+import CsvExportLink from 'utils/export/CsvExportLink';
 import globalTableFilter from 'utils/globalTableFilter';
 import { translateModelPlanStatus } from 'utils/modelPlan';
 import {
@@ -42,6 +44,9 @@ type TableProps = {
 
 const Table = ({ data, hiddenColumns }: TableProps) => {
   const { t } = useTranslation('home');
+
+  // Apollo client for CSV data exporting
+  const client = useApolloClient(); // NJD: This can probably be encapsulated in the exporting utility
 
   const columns = useMemo(() => {
     return [
@@ -166,15 +171,11 @@ const Table = ({ data, hiddenColumns }: TableProps) => {
         />
 
         <div className="flex-align-self-center">
-          <button
-            className="usa-button usa-button--unstyled easi-no-print display-flex margin-bottom-4 text-no-underline"
-            type="button"
-            // onClick={fetchCSV}
-          >
-            <IconFileDownload />
-            &nbsp;
-            <span className="text-underline">{t('downloadCSV')}</span>
-          </button>
+          <CsvExportLink
+            fileName="Really Cool CSV that will definitely have data" // NJD - fix filename
+            client={client}
+            modelIDs={getModelIDs(data)}
+          />
         </div>
       </div>
 
@@ -313,6 +314,17 @@ const DraftModelPlansTable = ({ hiddenColumns }: DraftModelTableProps) => {
   }
 
   return <Table data={data} hiddenColumns={hiddenColumns} />;
+};
+
+// Build array with all model IDs, used to query for all model info
+// NJD: Should this do more then just get model IDs? Should i just pass modelPlanCollection directly into the export utility? will make it non-generic
+const getModelIDs = (modelPlanCollection: DraftModelPlanType[]): string[] => {
+  const modelIDs: string[] = [];
+  for (let i = 0; i < modelPlanCollection.length; i += 1) {
+    modelIDs.push(modelPlanCollection[i].id);
+  }
+
+  return modelIDs;
 };
 
 export default DraftModelPlansTable;
