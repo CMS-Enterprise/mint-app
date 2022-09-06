@@ -4,7 +4,7 @@ import (
 	"time"
 )
 
-//ExistingModel represents an existing innovation model that is already in use
+// ExistingModel represents an existing innovation model that is already in use
 type ExistingModel struct {
 	ID        string `json:"id" db:"id"`
 	ModelName string `json:"modelName" db:"model_name"`

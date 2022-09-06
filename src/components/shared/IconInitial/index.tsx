@@ -1,20 +1,22 @@
 import React from 'react';
 import classNames from 'classnames';
 
+import { getUserInitials } from 'utils/modelPlan';
+
 type IconInitialType = {
   user: string;
   index?: number;
   className?: string;
 };
 
-const IconInitial = ({ user, index = 0, className }: IconInitialType) => {
-  const arrayOfColors = [
-    'bg-accent-cool-lighter',
-    'bg-secondary-lighter',
-    'bg-primary-lighter',
-    'bg-accent-warm-lighter'
-  ];
+export const arrayOfColors: string[] = [
+  'bg-accent-cool-lighter',
+  'bg-secondary-lighter',
+  'bg-primary-lighter',
+  'bg-accent-warm-lighter'
+];
 
+const IconInitial = ({ user, index = 0, className }: IconInitialType) => {
   return (
     <li
       className={classNames(
@@ -28,14 +30,7 @@ const IconInitial = ({ user, index = 0, className }: IconInitialType) => {
           arrayOfColors[index % arrayOfColors.length]
         }`}
       >
-        {/* Takes first letter of first and last name */}
-        {/* i.e. Steve Rogers == SR */}
-        {user
-          ?.match(/(\b\S)?/g)
-          ?.join('')
-          ?.match(/(^\S|\S$)?/g)
-          ?.join('')
-          ?.toUpperCase()}
+        {getUserInitials(user)}
       </div>
       <p className="margin-y-0">{user}</p>
     </li>

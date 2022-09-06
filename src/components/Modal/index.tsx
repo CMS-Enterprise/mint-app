@@ -1,5 +1,6 @@
 import React, { ReactNode, ReactNodeArray } from 'react';
 import ReactModal from 'react-modal';
+import classNames from 'classnames';
 import noScroll from 'no-scroll';
 
 import './index.scss';
@@ -7,13 +8,23 @@ import './index.scss';
 type ModalProps = {
   children: ReactNode | ReactNodeArray;
   isOpen: boolean;
+  className?: string;
+  scroll?: boolean;
   openModal?: () => void;
   closeModal: () => void;
 };
 
-const Modal = ({ children, isOpen, openModal, closeModal }: ModalProps) => {
+const Modal = ({
+  children,
+  isOpen,
+  className,
+  scroll,
+  openModal,
+  closeModal
+}: ModalProps) => {
   const handleOpenModal = () => {
-    noScroll.on();
+    if (!scroll) noScroll.on();
+
     if (openModal) {
       openModal();
     }
@@ -23,7 +34,7 @@ const Modal = ({ children, isOpen, openModal, closeModal }: ModalProps) => {
     <ReactModal
       isOpen={isOpen}
       overlayClassName="mint-modal__overlay"
-      className="mint-modal__content"
+      className={classNames('mint-modal__content', className)}
       onAfterOpen={handleOpenModal}
       onAfterClose={noScroll.off}
       onRequestClose={closeModal}

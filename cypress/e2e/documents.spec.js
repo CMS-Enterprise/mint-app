@@ -1,6 +1,6 @@
 describe('Model Plan Documents', () => {
   beforeEach(() => {
-    cy.localLogin({ name: 'MINT' });
+    cy.localLogin({ name: 'MINT', role: 'MINT_USER' });
   });
 
   it('uploads and removes a document', () => {

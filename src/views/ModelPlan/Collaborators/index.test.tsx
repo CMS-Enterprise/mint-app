@@ -17,6 +17,7 @@ describe('Collaborator/Team Member page w/table', () => {
       result: {
         data: {
           modelPlan: {
+            id: '123',
             collaborators: [
               {
                 id: '61c7b30c-969d-4dd4-b13b-a5065f43be43',

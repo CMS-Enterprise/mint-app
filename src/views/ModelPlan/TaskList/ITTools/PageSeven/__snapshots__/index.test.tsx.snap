@@ -151,13 +151,13 @@ exports[`IT Tools Page seven matches snapshot 1`] = `
                   </ul>
                   <p>
                     Want to change your answer? 
-                    <a
-                      class="usa-link"
-                      data-testid="it-tools-redirect-dataToSendParticicipants"
-                      href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/ops-eval-and-learning/evaluation"
+                    <button
+                      class="usa-button usa-button usa-button--unstyled"
+                      data-testid="it-tools-locked-dataToSendParticicipants"
+                      type="button"
                     >
                       Go to question
-                    </a>
+                    </button>
                     .
                   </p>
                 </div>
@@ -329,13 +329,13 @@ exports[`IT Tools Page seven matches snapshot 1`] = `
                   </div>
                   <p>
                     Want to change your answer? 
-                    <a
-                      class="usa-link"
-                      data-testid="it-tools-redirect-modelLearningSystems"
-                      href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/ops-eval-and-learning/learning"
+                    <button
+                      class="usa-button usa-button usa-button--unstyled"
+                      data-testid="it-tools-locked-modelLearningSystems"
+                      type="button"
                     >
                       Go to question
-                    </a>
+                    </button>
                     .
                   </p>
                 </div>
@@ -489,13 +489,13 @@ exports[`IT Tools Page seven matches snapshot 1`] = `
                   </div>
                   <p>
                     Want to change your answer? 
-                    <a
-                      class="usa-link"
-                      data-testid="it-tools-redirect-modelLearningSystems"
-                      href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/ops-eval-and-learning/learning"
+                    <button
+                      class="usa-button usa-button usa-button--unstyled"
+                      data-testid="it-tools-locked-modelLearningSystems"
+                      type="button"
                     >
                       Go to question
-                    </a>
+                    </button>
                     .
                   </p>
                 </div>
