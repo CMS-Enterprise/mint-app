@@ -47,7 +47,7 @@ const NDA = () => {
           <p className="line-height-body-6">{t('body')}</p>
 
           {acceptedNDA?.agreed && acceptedNDA?.agreedDts ? (
-            <>
+            <div data-testid="accepted-nda">
               <Alert type="success" slim className="margin-y-3">
                 {t('accepted')}
                 {formatDate(acceptedNDA?.agreedDts, 'MM/d/yyyy')}
@@ -59,7 +59,7 @@ const NDA = () => {
               >
                 {t('continue')}
               </UswdsReactLink>
-            </>
+            </div>
           ) : (
             <Formik
               initialValues={{ agreed: false }}
