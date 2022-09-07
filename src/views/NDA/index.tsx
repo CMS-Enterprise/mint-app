@@ -33,10 +33,14 @@ const NDA = () => {
   const [signNDA] = useMutation(UpdateNDA);
 
   const handleFormSubmit = (formikValues: NDAType) => {
-    signNDA().then(response => {
-      dispatch(setUser({ ...user, acceptedNDA: response?.data?.agreeToNDA }));
-      history.push('/');
-    });
+    signNDA()
+      .then(response => {
+        dispatch(setUser({ ...user, acceptedNDA: response?.data?.agreeToNDA }));
+        history.push('/');
+      })
+      .catch(err => {
+        // TODO: No roles assigned error?
+      });
   };
 
   return (
