@@ -42,6 +42,10 @@ Cypress.Commands.add('localLogin', ({ name, role }) => {
   }
   cy.get('[data-testid="LocalAuth-Submit"]').click();
 
+  cy.get('#nda-check').check({ force: true }).should('be.checked');
+
+  cy.get('#nda-submit').click();
+
   cy.url().should('eq', 'http://localhost:3005/');
 });
 

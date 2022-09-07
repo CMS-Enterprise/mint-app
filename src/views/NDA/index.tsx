@@ -85,7 +85,11 @@ const NDA = () => {
                       label={t('label')}
                     />
 
-                    <Button type="submit" disabled={!values.agreed}>
+                    <Button
+                      type="submit"
+                      id="nda-submit"
+                      disabled={!values.agreed}
+                    >
                       {t('submit')}
                     </Button>
                   </Form>
