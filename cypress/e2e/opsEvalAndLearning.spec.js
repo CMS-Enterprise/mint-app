@@ -352,8 +352,8 @@ describe('The Model Plan Ops Eval and Learning Form', () => {
       expect(loc.pathname).to.match(/\/models\/.{36}\/task-list/);
     });
 
-    cy.get(
-      '[data-testid="task-list-intake-form-ops-eval-and-learning"]'
-    ).contains('In progress');
+    cy.get('[data-testid="task-list-intake-form-opsEvalAndLearning"]').contains(
+      'In progress'
+    );
   });
 });

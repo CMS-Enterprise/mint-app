@@ -11,7 +11,7 @@ describe('The Model Plan Form', () => {
     cy.contains('button', 'Remove request').click();
 
     cy.location().should(loc => {
-      expect(loc.pathname).to.eq('/models');
+      expect(loc.pathname).to.eq('/');
     });
 
     cy.get('table').within(() => {
