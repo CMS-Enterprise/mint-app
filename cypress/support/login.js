@@ -30,13 +30,14 @@ Cypress.Commands.add('login', () => {
   cy.url().should('eq', 'http://localhost:3005/');
 });
 
-Cypress.Commands.add('localLogin', ({ name, role }) => {
+Cypress.Commands.add('localLogin', ({ name, role = 'MINT_USER' }) => {
   cy.server();
 
   cy.visit('/login');
 
   cy.get('[data-testid="LocalAuth-Visit"]').click();
   cy.get('[data-testid="LocalAuth-EUA"]').type(name);
+
   if (role) {
     cy.get(`input[value="${role}"]`).check();
   }

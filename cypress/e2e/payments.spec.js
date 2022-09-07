@@ -4,29 +4,7 @@ describe('The Model Plan Payment Form', () => {
   });
 
   it('completes a Model Plan Ops Eval and Learning form', () => {
-    cy.visit('/');
-
-    cy.contains('a', 'Start a draft model plan').click();
-
-    cy.contains('h1', 'Start a new model plan');
-
-    cy.get('[data-testid="continue-link"]').click();
-
-    // General Model Plan Information
-
-    cy.get('#new-plan-model-name')
-      .type('My New Model Plan')
-      .should('have.value', 'My New Model Plan');
-
-    cy.contains('button', 'Next').click();
-
-    cy.location().should(loc => {
-      expect(loc.pathname).to.match(/\/models\/new-plan\/.{36}\/collaborators/);
-    });
-
-    cy.get('[data-testid="continue-to-tasklist"]').click();
-
-    cy.contains('h1', 'Model Plan task list');
+    cy.clickPlanTableByName('Empty Plan');
 
     // Clicks the Payment tasklist item
     cy.get('[data-testid="payment"]').click();
@@ -36,8 +14,6 @@ describe('The Model Plan Payment Form', () => {
     cy.location().should(loc => {
       expect(loc.pathname).to.match(/\/models\/.{36}\/task-list\/payment/);
     });
-
-    cy.get('[data-testid="model-plan-name"]').contains('My New Model Plan');
 
     cy.get('#payment-funding-source-PATIENT_PROTECTION_AFFORDABLE_CARE_ACT')
       .check({ force: true })

@@ -98,10 +98,11 @@ describe('The Model Plan Form', () => {
         /\/models\/.{36}\/task-list\/basics\/overview/
       );
     });
-    cy.get('#ModelType-Voluntary')
-      .first()
-      .check({ force: true })
-      .should('be.checked');
+
+    cy.wait(500);
+
+    cy.get('#ModelType-Voluntary').check({ force: true }).should('be.checked');
+
     cy.contains('button', 'Next').click();
 
     cy.location().should(loc => {
@@ -122,37 +123,15 @@ describe('The Model Plan Form', () => {
   });
 
   it('completes a Model Plan Basics', () => {
-    cy.visit('/');
+    cy.clickPlanTableByName('Empty Plan');
 
-    cy.contains('a', 'Start a draft model plan').click();
-    cy.contains('h1', 'Start a new model plan');
-    cy.get('[data-testid="continue-link"]').click();
-
-    // Creates a new plan
-    cy.get('#new-plan-model-name')
-      .type('Complete Model Basics Plan')
-      .should('have.value', 'Complete Model Basics Plan');
-    cy.contains('button', 'Next').click();
-
-    cy.location().should(loc => {
-      expect(loc.pathname).to.match(/\/models\/new-plan\/.{36}\/collaborators/);
-    });
-    cy.get('[data-testid="continue-to-tasklist"]').click();
-    cy.contains('h1', 'Model Plan task list');
-
-    cy.location().should(loc => {
-      expect(loc.pathname).to.match(/\/models\/.{36}\/task-list/);
-    });
     cy.contains('h3', 'Model basics');
     cy.contains('button', 'Start').click();
 
     cy.location().should(loc => {
       expect(loc.pathname).to.match(/\/models\/.{36}\/task-list\/basics/);
     });
-    cy.get('#plan-basics-model-name').should(
-      'have.value',
-      'Complete Model Basics Plan'
-    );
+
     cy.get('#plan-basics-model-category')
       .select('Demonstration')
       .contains('Demonstration');
@@ -166,10 +145,10 @@ describe('The Model Plan Form', () => {
         /\/models\/.{36}\/task-list\/basics\/overview/
       );
     });
-    cy.get('#ModelType-Voluntary')
-      .first()
-      .check({ force: true })
-      .should('be.checked');
+
+    cy.wait(500);
+
+    cy.get('#ModelType-Voluntary').check({ force: true }).should('be.checked');
 
     cy.get('#ModelType-Problem')
       .first()
@@ -237,7 +216,7 @@ describe('The Model Plan Form', () => {
       expect(loc.pathname).to.match(/\/models\/.{36}\/task-list/);
     });
 
-    cy.get('[data-testid="tasklist-tag"]').first().contains('Completed');
+    cy.get('[data-testid="tasklist-tag"]').first().contains('In progress');
   });
 
   it('updates model plan status', () => {
