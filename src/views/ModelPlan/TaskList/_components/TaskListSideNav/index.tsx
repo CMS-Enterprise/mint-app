@@ -8,10 +8,10 @@ import UswdsReactLink from 'components/LinkWrapper';
 import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
 import IconInitial from 'components/shared/IconInitial';
+import ArchiveModelPlan from 'queries/ArchiveModelPlan';
 import { GetModelCollaborators_modelPlan_collaborators as GetCollaboratorsType } from 'queries/Collaborators/types/GetModelCollaborators';
+import { ArchiveModelPlanVariables } from 'queries/types/ArchiveModelPlan';
 import { GetModelPlan_modelPlan as GetModelPlanType } from 'queries/types/GetModelPlan';
-import { UpdateModelPlanVariables as UpdateModelPlanType } from 'queries/types/UpdateModelPlan';
-import UpdateModelPlan from 'queries/UpdateModelPlan';
 
 const TaskListSideNav = ({
   modelPlan,
@@ -25,7 +25,7 @@ const TaskListSideNav = ({
   const { t } = useTranslation('modelPlanTaskList');
   const [isModalOpen, setModalOpen] = useState(false);
 
-  const [update] = useMutation<UpdateModelPlanType>(UpdateModelPlan);
+  const [update] = useMutation<ArchiveModelPlanVariables>(ArchiveModelPlan);
 
   const archiveModelPlan = () => {
     update({
