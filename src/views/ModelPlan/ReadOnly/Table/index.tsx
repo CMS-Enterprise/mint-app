@@ -174,6 +174,7 @@ const Table = () => {
         filteredRowLength={page.length}
         rowLength={data.length}
         className="margin-bottom-4"
+        showNoResults={false}
       />
       <UswdsTable {...getTableProps()} fullWidth scrollable>
         <caption className="usa-sr-only">{t('requestsTable.caption')}</caption>
@@ -247,8 +248,7 @@ const Table = () => {
           })}
         </tbody>
       </UswdsTable>
-      {console.log(state.globalFilter)}
-      {state.globalFilter && (
+      {state.globalFilter && page.length === 0 && (
         <Alert
           type="warning"
           heading={t('allModels.noResults.heading', {
