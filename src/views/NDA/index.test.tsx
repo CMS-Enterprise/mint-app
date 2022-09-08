@@ -68,7 +68,7 @@ describe('NDA Page', () => {
       auth: {
         acceptedNDA: {
           agreed: true,
-          agreedDts: '2022-07-30T00:00:00Z'
+          agreedDts: '2022-07-30T12:00:00Z'
         }
       }
     });
