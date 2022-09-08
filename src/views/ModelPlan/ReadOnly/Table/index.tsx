@@ -175,7 +175,7 @@ const Table = () => {
         rowLength={data.length}
         className="margin-bottom-4"
       />
-      <UswdsTable bordered={false} {...getTableProps()} fullWidth scrollable>
+      <UswdsTable {...getTableProps()} fullWidth scrollable>
         <caption className="usa-sr-only">{t('requestsTable.caption')}</caption>
         <thead>
           {headerGroups.map(headerGroup => (
@@ -247,6 +247,17 @@ const Table = () => {
           })}
         </tbody>
       </UswdsTable>
+      {console.log(state.globalFilter)}
+      {state.globalFilter && (
+        <Alert
+          type="warning"
+          heading={t('allModels.noResults.heading', {
+            searchTerm: state.globalFilter
+          })}
+        >
+          {t('allModels.noResults.subheading')}
+        </Alert>
+      )}
 
       <TablePagination
         gotoPage={gotoPage}

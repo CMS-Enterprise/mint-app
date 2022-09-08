@@ -23,6 +23,11 @@ const readOnlyModelPlan = {
       status: 'Status',
       startDate: 'Model start date',
       crsAndTdls: 'CRs and TDLs'
+    },
+    noResults: {
+      heading: 'We couldn’t find any matches for "{{-searchTerm}}".',
+      subheading:
+        'Double check your search for typos or try a different search.'
     }
   }
 };
