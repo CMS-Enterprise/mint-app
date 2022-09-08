@@ -1,6 +1,6 @@
 describe('The Model Plan Participants and Providers Form', () => {
   beforeEach(() => {
-    cy.localLogin({ name: 'MINT' });
+    cy.localLogin({ name: 'MINT', role: 'MINT_USER' });
   });
 
   it('completes a Model Plan Participants and Providers', () => {
@@ -208,7 +208,7 @@ describe('The Model Plan Participants and Providers Form', () => {
     });
 
     cy.get(
-      '[data-testid="task-list-intake-form-participants-and-providers"]'
-    ).contains('Completed');
+      '[data-testid="task-list-intake-form-participantsAndProviders"]'
+    ).contains('In progress');
   });
 });

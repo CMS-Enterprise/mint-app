@@ -20,7 +20,7 @@ var planFavoriteDeleteSQL string
 //go:embed SQL/plan_favorite_get.sql
 var planFavoriteGetSQL string
 
-//PlanFavoriteCreate creates and returns a plan favorite object
+// PlanFavoriteCreate creates and returns a plan favorite object
 func (s *Store) PlanFavoriteCreate(logger *zap.Logger, favorite models.PlanFavorite) (*models.PlanFavorite, error) {
 
 	if favorite.ID == uuid.Nil {
@@ -49,7 +49,7 @@ func (s *Store) PlanFavoriteCreate(logger *zap.Logger, favorite models.PlanFavor
 	return &retFavorite, nil
 }
 
-//PlanFavoriteDelete deletes a plan favorite
+// PlanFavoriteDelete deletes a plan favorite
 func (s *Store) PlanFavoriteDelete(logger *zap.Logger, EUAID string, planID uuid.UUID) (*models.PlanFavorite, error) {
 	stmt, err := s.db.PrepareNamed(planFavoriteDeleteSQL)
 	if err != nil {
@@ -68,7 +68,7 @@ func (s *Store) PlanFavoriteDelete(logger *zap.Logger, EUAID string, planID uuid
 	return &delFavorite, nil
 }
 
-//PlanFavoriteGetByModelIDAndEUA returns a plan favorite
+// PlanFavoriteGetByModelIDAndEUA returns a plan favorite
 func (s *Store) PlanFavoriteGetByModelIDAndEUA(logger *zap.Logger, EUAID string, modelPlanID uuid.UUID) (*models.PlanFavorite, error) {
 	stmt, err := s.db.PrepareNamed(planFavoriteGetSQL)
 	if err != nil {

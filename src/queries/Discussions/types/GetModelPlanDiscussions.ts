@@ -31,6 +31,7 @@ export interface GetModelPlanDiscussions_modelPlan_discussions {
 
 export interface GetModelPlanDiscussions_modelPlan {
   __typename: "ModelPlan";
+  id: UUID;
   discussions: GetModelPlanDiscussions_modelPlan_discussions[];
 }
 

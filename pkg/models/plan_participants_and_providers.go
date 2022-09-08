@@ -4,7 +4,7 @@ import (
 	"github.com/lib/pq"
 )
 
-//PlanParticipantsAndProviders represents the tasks list section that handles information around participants and providers
+// PlanParticipantsAndProviders represents the tasks list section that handles information around participants and providers
 type PlanParticipantsAndProviders struct {
 	BaseTaskListSection
 
@@ -65,10 +65,10 @@ type PlanParticipantsAndProviders struct {
 	ProviderOverlapNote            *string        `json:"providerOverlapNote" db:"provider_overlap_note"`
 }
 
-//RecruitmentType represents the possible RecruitmentType options
+// RecruitmentType represents the possible RecruitmentType options
 type RecruitmentType string
 
-//These constants represent the choices for Recruitment Type
+// These constants represent the choices for Recruitment Type
 const (
 	RecruitmentLOI   RecruitmentType = "LOI"
 	RecruitmentRFA   RecruitmentType = "RFA"
@@ -77,10 +77,10 @@ const (
 	RecruitmentNA    RecruitmentType = "NA"
 )
 
-//ParticipantRiskType represents the possible RiskType values
+// ParticipantRiskType represents the possible RiskType values
 type ParticipantRiskType string
 
-//These constants represent the choices for Participant Risk Type
+// These constants represent the choices for Participant Risk Type
 const (
 	RiskTWOSIDED   ParticipantRiskType = "TWO_SIDED"
 	RiskONESIDED   ParticipantRiskType = "ONE_SIDED"

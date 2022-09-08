@@ -44,6 +44,7 @@ import {
   translateGcUpdateContractType
 } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
+import { LockStatus } from 'views/SubscriptionHandler';
 
 import { ITToolsFormComponent } from '..';
 
@@ -77,7 +78,11 @@ const initialModelPlanValues: ModelPlanType = {
   itTools: initialFormValues
 };
 
-const ITToolsPageOne = () => {
+const ITToolsPageOne = ({
+  characteristicsLock
+}: {
+  characteristicsLock: LockStatus;
+}) => {
   const { t } = useTranslation('itTools');
   const { t: c } = useTranslation('generalCharacteristics');
   const { t: h } = useTranslation('draftModelPlan');
@@ -247,6 +252,7 @@ const ITToolsPageOne = () => {
                           answered={managePartCDEnrollment !== null}
                           needsTool={questionOneNeedsTools}
                           subtext={t('yesNeedsAnswer')}
+                          locked={characteristicsLock}
                           scrollElememnt="managePartCDEnrollment"
                         />
 
@@ -287,6 +293,7 @@ const ITToolsPageOne = () => {
                           answered={collectPlanBids !== null}
                           needsTool={questionTwoNeedsTools}
                           subtext={t('yesNeedsAnswer')}
+                          locked={characteristicsLock}
                           scrollElememnt="collectPlanBids"
                         />
 
@@ -327,6 +334,7 @@ const ITToolsPageOne = () => {
                           answered={planContactUpdated !== null}
                           needsTool={questionThreeNeedsTools}
                           subtext={t('yesNeedsAnswer')}
+                          locked={characteristicsLock}
                           scrollElememnt="planContactUpdated"
                         />
 

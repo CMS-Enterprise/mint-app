@@ -1,6 +1,6 @@
 describe('The Collaborator/Team Member Form', () => {
   beforeEach(() => {
-    cy.localLogin({ name: 'MINT' });
+    cy.localLogin({ name: 'MINT', role: 'MINT_USER' });
   });
 
   it('adds a collaborator to model plan', () => {

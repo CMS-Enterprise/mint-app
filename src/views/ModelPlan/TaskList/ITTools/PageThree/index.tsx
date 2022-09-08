@@ -46,6 +46,7 @@ import {
   translatePpManageProviderOverlapType
 } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
+import { LockStatus } from 'views/SubscriptionHandler';
 
 import { ITToolsFormComponent } from '..';
 
@@ -77,7 +78,11 @@ const initialModelPlanValues: ModelPlanType = {
   itTools: initialFormValues
 };
 
-const ITToolsPageThree = () => {
+const ITToolsPageThree = ({
+  participantsAndProvidersLock
+}: {
+  participantsAndProvidersLock: LockStatus;
+}) => {
   const { t } = useTranslation('itTools');
   const { t: p } = useTranslation('participantsAndProviders');
   const { t: b } = useTranslation('beneficiaries');
@@ -252,6 +257,7 @@ const ITToolsPageThree = () => {
                           redirect={`/models/${modelID}/task-list/participants-and-providers/communication`}
                           answered={communicationMethod.length > 0}
                           needsTool={questionOneNeedsTools}
+                          locked={participantsAndProvidersLock}
                           scrollElememnt="communicationMethod"
                         />
 
