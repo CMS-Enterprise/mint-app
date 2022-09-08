@@ -55,9 +55,12 @@ const ModelPlan = () => {
             {t('following.subheading')}
           </p>
           <Alert type="info" heading={t('following.alert.heading')}>
-            <p className="display-flex flex-align-center margin-0">
+            <p className="display-flex flex-align-center flex-wrap margin-0 ">
               {t('following.alert.subheadingPartA')}
-              <IconStarOutline size={3} />
+              <span className="display-flex flex-align-center margin-x-05">
+                (<IconStarOutline size={3} />)
+              </span>
+
               {t('following.alert.subheadingPartB')}
             </p>
           </Alert>
