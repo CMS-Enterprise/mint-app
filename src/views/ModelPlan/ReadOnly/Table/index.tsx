@@ -77,12 +77,19 @@ const Table = () => {
       },
       {
         Header: t('allModels.tableHeading.startDate'),
-        accessor: 'basics.applicationsStart',
+        accessor: ({ basics: { applicationsStart } }: any) => {
+          if (applicationsStart) {
+            return DateTime.fromISO(applicationsStart).toLocaleString(
+              DateTime.DATE_SHORT
+            );
+          }
+          return null;
+        },
         Cell: ({ value }: any) => {
           if (!value) {
             return <div>{h('noAnswer.tBD')}</div>;
           }
-          return DateTime.fromISO(value).toLocaleString(DateTime.DATE_SHORT);
+          return value;
         }
       },
       {
