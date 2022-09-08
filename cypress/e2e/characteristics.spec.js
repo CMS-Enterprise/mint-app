@@ -31,16 +31,18 @@ describe('The Model Plan General Characteristics Form', () => {
       .should('be.checked');
 
     cy.get('#plan-characteristics-resembles-which-model').within(() => {
-      cy.get("input[type='search']")
+      cy.get("input[type='text']")
         .type('advance payment')
         .should('have.value', 'advance payment');
     });
 
-    cy.get('#easi-multiselect__option-1')
-      .check({ force: true })
-      .should('be.checked');
+    cy.get('#option-1').check({ force: true }).should('be.checked');
 
-    cy.get('[data-testid="tag"]').first().contains('Advance Payment ACO Model');
+    cy.get('[data-testid="multiselect-tag--Advance Payment ACO Model"]')
+      .first()
+      .contains('Advance Payment ACO Model');
+
+    cy.clickOutside();
 
     cy.get('#plan-characteristics-resembles-how-model')
       .type('In every way')
@@ -73,16 +75,18 @@ describe('The Model Plan General Characteristics Form', () => {
     );
 
     cy.get('#plan-characteristics-key-characteristics').within(() => {
-      cy.get("input[type='search']")
+      cy.get("input[type='text']")
         .type('payment')
         .should('have.value', 'payment');
     });
 
-    cy.get('#easi-multiselect__option-PAYMENT')
-      .check({ force: true })
-      .should('be.checked');
+    cy.get('#option-PAYMENT').check({ force: true }).should('be.checked');
 
-    cy.get('[data-testid="tag"]').first().contains('Payment Model');
+    cy.get('[data-testid="multiselect-tag--Payment Model"]')
+      .first()
+      .contains('Payment Model');
+
+    cy.clickOutside();
 
     cy.contains('button', 'Next').click();
 
