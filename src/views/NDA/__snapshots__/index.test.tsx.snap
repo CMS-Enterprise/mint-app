@@ -30,6 +30,7 @@ exports[`NDA Page matches snapshot 1`] = `
           <div
             class="usa-alert usa-alert--success usa-alert--slim margin-y-3"
             data-testid="alert"
+            id="nda-alert"
           >
             <div
               class="usa-alert__body"
@@ -43,6 +44,7 @@ exports[`NDA Page matches snapshot 1`] = `
           </div>
           <a
             class="usa-button margin-top-1"
+            data-testid="nda-continue"
             href="/"
           >
             Continue to MINT
