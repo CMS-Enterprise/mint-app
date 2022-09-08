@@ -52,7 +52,7 @@ const NDA = () => {
 
           {acceptedNDA?.agreed && acceptedNDA?.agreedDts ? (
             <div data-testid="accepted-nda">
-              <Alert type="success" slim className="margin-y-3">
+              <Alert type="success" slim className="margin-y-3" id="nda-alert">
                 {t('accepted')}
                 {formatDate(acceptedNDA?.agreedDts, 'MM/d/yyyy')}
               </Alert>
@@ -60,6 +60,7 @@ const NDA = () => {
                 to="/"
                 variant="unstyled"
                 className="usa-button margin-top-1"
+                data-testid="nda-continue"
               >
                 {t('continue')}
               </UswdsReactLink>
