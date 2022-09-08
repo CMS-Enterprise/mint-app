@@ -4,7 +4,7 @@ import (
 	"github.com/cmsgov/mint-app/pkg/models"
 )
 
-//TestPlanOpsEvalAndLearningUpdate tests PlanOpsEvalAndLearningUpdate
+// TestPlanOpsEvalAndLearningUpdate tests PlanOpsEvalAndLearningUpdate
 func (suite *ResolverSuite) TestPlanOpsEvalAndLearningUpdate() {
 
 	plan := suite.createModelPlan("Plan for Ops Eval and Learning")
@@ -118,7 +118,7 @@ func (suite *ResolverSuite) TestPlanOpsEvalAndLearningUpdate() {
 	suite.Nil(oel.AnticipatedChallenges)
 }
 
-//TestPlanOpsEvalAndLearningGetByModelPlanID tests PlanOpsEvalAndLearningGetByModelPlanID
+// TestPlanOpsEvalAndLearningGetByModelPlanID tests PlanOpsEvalAndLearningGetByModelPlanID
 func (suite *ResolverSuite) TestPlanOpsEvalAndLearningGetByModelPlanID() {
 	plan := suite.createModelPlan("Plan for Ops Eval and Learning")
 	oel, err := PlanOpsEvalAndLearningGetByModelPlanID(suite.testConfigs.Logger, plan.ID, suite.testConfigs.Store)

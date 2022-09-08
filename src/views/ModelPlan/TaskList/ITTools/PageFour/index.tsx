@@ -47,6 +47,7 @@ import {
   translateOelPerformanceBenchmarkType
 } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
+import { LockStatus } from 'views/SubscriptionHandler';
 
 import { ITToolsFormComponent } from '..';
 
@@ -80,7 +81,11 @@ const initialModelPlanValues: ModelPlanType = {
   itTools: initialFormValues
 };
 
-const ITToolsPageFour = () => {
+const ITToolsPageFour = ({
+  opsEvalAndLearningLock
+}: {
+  opsEvalAndLearningLock: LockStatus;
+}) => {
   const { t } = useTranslation('itTools');
   const { t: o } = useTranslation('operationsEvaluationAndLearning');
   const { t: h } = useTranslation('draftModelPlan');
@@ -249,6 +254,7 @@ const ITToolsPageFour = () => {
                           answered={helpdeskUse !== null}
                           needsTool={questionOneNeedsTools}
                           subtext={t('yesNeedsAnswer')}
+                          locked={opsEvalAndLearningLock}
                           scrollElememnt="helpdeskUse"
                         />
 
@@ -283,6 +289,7 @@ const ITToolsPageFour = () => {
                           answered={iddocSupport !== null}
                           needsTool={questionTwoNeedsTools}
                           subtext={t('yesNeedsAnswer')}
+                          locked={opsEvalAndLearningLock}
                           scrollElememnt="iddocSupport"
                         />
 
@@ -324,6 +331,7 @@ const ITToolsPageFour = () => {
                           answered={benchmarkForPerformance !== null}
                           needsTool={questionThreeNeedsTools}
                           subtext={t('eitherYesNeedsAnswer')}
+                          locked={opsEvalAndLearningLock}
                           scrollElememnt="benchmarkForPerformance"
                         />
 

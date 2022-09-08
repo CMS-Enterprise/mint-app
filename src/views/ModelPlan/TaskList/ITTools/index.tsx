@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React, { Fragment, useContext } from 'react';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import { Grid, GridContainer, Label, TextInput } from '@trussworks/react-uswds';
 import { Field } from 'formik';
@@ -10,6 +10,11 @@ import CheckboxField from 'components/shared/CheckboxField';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import { sortOtherEnum } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
+import {
+  findLockedSection,
+  taskListSectionMap
+} from 'views/SubscriptionHandler';
+import { SubscriptionContext } from 'views/SubscriptionWrapper';
 
 import ITToolsPageEight from './PageEight';
 import ITToolsPageFive from './PageFive';
@@ -108,6 +113,7 @@ export const ITToolsFormComponent = ({
 };
 
 export const ITTools = () => {
+  const { taskListSectionLocks } = useContext(SubscriptionContext);
   return (
     <MainContent data-testid="model-it-tools">
       <GridContainer>
@@ -121,47 +127,114 @@ export const ITTools = () => {
             <Route
               path="/models/:modelID/task-list/it-tools/page-one"
               exact
-              render={() => <ITToolsPageOne />}
+              render={() => (
+                <ITToolsPageOne
+                  characteristicsLock={findLockedSection(
+                    taskListSectionLocks,
+                    taskListSectionMap.characteristics
+                  )}
+                />
+              )}
             />
             <Route
               path="/models/:modelID/task-list/it-tools/page-two"
               exact
-              render={() => <ITToolsPageTwo />}
+              render={() => (
+                <ITToolsPageTwo
+                  participantsAndProvidersLock={findLockedSection(
+                    taskListSectionLocks,
+                    taskListSectionMap['participants-and-providers']
+                  )}
+                />
+              )}
             />
             <Route
               path="/models/:modelID/task-list/it-tools/page-three"
               exact
-              render={() => <ITToolsPageThree />}
+              render={() => (
+                <ITToolsPageThree
+                  participantsAndProvidersLock={findLockedSection(
+                    taskListSectionLocks,
+                    taskListSectionMap['participants-and-providers']
+                  )}
+                />
+              )}
             />
             <Route
               path="/models/:modelID/task-list/it-tools/page-four"
               exact
-              render={() => <ITToolsPageFour />}
+              render={() => (
+                <ITToolsPageFour
+                  opsEvalAndLearningLock={findLockedSection(
+                    taskListSectionLocks,
+                    taskListSectionMap['ops-eval-and-learning']
+                  )}
+                />
+              )}
             />
             <Route
               path="/models/:modelID/task-list/it-tools/page-five"
               exact
-              render={() => <ITToolsPageFive />}
+              render={() => (
+                <ITToolsPageFive
+                  opsEvalAndLearningLock={findLockedSection(
+                    taskListSectionLocks,
+                    taskListSectionMap['ops-eval-and-learning']
+                  )}
+                />
+              )}
             />
             <Route
               path="/models/:modelID/task-list/it-tools/page-six"
               exact
-              render={() => <ITToolsPageSix />}
+              render={() => (
+                <ITToolsPageSix
+                  opsEvalAndLearningLock={findLockedSection(
+                    taskListSectionLocks,
+                    taskListSectionMap['ops-eval-and-learning']
+                  )}
+                />
+              )}
             />
             <Route
               path="/models/:modelID/task-list/it-tools/page-seven"
               exact
-              render={() => <ITToolsPageSeven />}
+              render={() => (
+                <ITToolsPageSeven
+                  opsEvalAndLearningLock={findLockedSection(
+                    taskListSectionLocks,
+                    taskListSectionMap['ops-eval-and-learning']
+                  )}
+                />
+              )}
             />
             <Route
               path="/models/:modelID/task-list/it-tools/page-eight"
               exact
-              render={() => <ITToolsPageEight />}
+              render={() => (
+                <ITToolsPageEight
+                  opsEvalAndLearningLock={findLockedSection(
+                    taskListSectionLocks,
+                    taskListSectionMap['ops-eval-and-learning']
+                  )}
+                  paymentsLock={findLockedSection(
+                    taskListSectionLocks,
+                    taskListSectionMap['ops-eval-and-learning']
+                  )}
+                />
+              )}
             />
             <Route
               path="/models/:modelID/task-list/it-tools/page-nine"
               exact
-              render={() => <ITToolsPageNine />}
+              render={() => (
+                <ITToolsPageNine
+                  paymentsLock={findLockedSection(
+                    taskListSectionLocks,
+                    taskListSectionMap['ops-eval-and-learning']
+                  )}
+                />
+              )}
             />
             <Route path="*" render={() => <NotFoundPartial />} />
           </Switch>

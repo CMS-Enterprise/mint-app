@@ -7,6 +7,11 @@
 // START Enums and Input Objects
 //==============================================================
 
+export enum ActionType {
+  ADMIN = "ADMIN",
+  NORMAL = "NORMAL",
+}
+
 export enum AgencyOrStateHelpType {
   NO = "NO",
   OTHER = "OTHER",
@@ -90,6 +95,12 @@ export enum CcmInvolvmentType {
   OTHER = "OTHER",
   YES_EVALUATION = "YES_EVALUATION",
   YES__IMPLEMENTATION = "YES__IMPLEMENTATION",
+}
+
+export enum ChangeType {
+  ADDED = "ADDED",
+  REMOVED = "REMOVED",
+  UPDATED = "UPDATED",
 }
 
 export enum ClaimsBasedPayType {
@@ -571,6 +582,16 @@ export enum StakeholdersType {
   PROFESSIONAL_ORGANIZATIONS = "PROFESSIONAL_ORGANIZATIONS",
   PROVIDERS = "PROVIDERS",
   STATES = "STATES",
+}
+
+export enum TaskListSection {
+  BENEFICIARIES = "BENEFICIARIES",
+  GENERAL_CHARACTERISTICS = "GENERAL_CHARACTERISTICS",
+  IT_TOOLS = "IT_TOOLS",
+  MODEL_BASICS = "MODEL_BASICS",
+  OPERATIONS_EVALUATION_AND_LEARNING = "OPERATIONS_EVALUATION_AND_LEARNING",
+  PARTICIPANTS_AND_PROVIDERS = "PARTICIPANTS_AND_PROVIDERS",
+  PAYMENT = "PAYMENT",
 }
 
 export enum TaskStatus {

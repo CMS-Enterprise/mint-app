@@ -20,7 +20,7 @@ func (e *UnauthorizedError) Unwrap() error {
 	return e.Err
 }
 
-//NotCollaboratorError is a typed error for when a user is not a collaborator
+// NotCollaboratorError is a typed error for when a user is not a collaborator
 type NotCollaboratorError struct {
 	Err error
 }

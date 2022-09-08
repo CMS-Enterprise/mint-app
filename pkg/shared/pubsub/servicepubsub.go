@@ -7,6 +7,7 @@ import (
 )
 
 // ServicePubSub is a PubSub service implementation boxing communication by Session
+//
 //goland:noinspection GoNameStartsWithPackageName
 type ServicePubSub struct {
 	sessions SessionMap

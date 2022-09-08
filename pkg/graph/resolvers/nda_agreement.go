@@ -12,7 +12,7 @@ import (
 	"github.com/cmsgov/mint-app/pkg/storage"
 )
 
-//NDAAgreementGetByEUA returns an EUA agreement by eua
+// NDAAgreementGetByEUA returns an EUA agreement by eua
 func NDAAgreementGetByEUA(logger *zap.Logger, principal authentication.Principal, store *storage.Store) (*model.NDAInfo, error) {
 	nda, err := store.NDAAgreementGetByEUA(logger, principal.ID())
 	info := model.NDAInfo{}
@@ -30,7 +30,7 @@ func NDAAgreementGetByEUA(logger *zap.Logger, principal authentication.Principal
 
 }
 
-//NDAAgreementUpdateOrCreate either writes an entry to the nda table, or updates an existing one
+// NDAAgreementUpdateOrCreate either writes an entry to the nda table, or updates an existing one
 func NDAAgreementUpdateOrCreate(logger *zap.Logger, agree bool, principal authentication.Principal, store *storage.Store) (*model.NDAInfo, error) {
 	existing, err := store.NDAAgreementGetByEUA(logger, principal.ID())
 	if err != nil {

@@ -1,6 +1,6 @@
 describe('The Model Plan General Characteristics Form', () => {
   beforeEach(() => {
-    cy.localLogin({ name: 'MINT' });
+    cy.localLogin({ name: 'MINT', role: 'MINT_USER' });
   });
 
   it('completes a Model Plan Characteristics', () => {
@@ -191,11 +191,11 @@ describe('The Model Plan General Characteristics Form', () => {
     cy.contains('button', 'Save and start next Model Plan section').click();
 
     cy.location().should(loc => {
-      expect(loc.pathname).to.match(/\/models\/.{36}\/task-list/);
+      expect(loc.pathname).to.match(/\/models\/.{36}\/task-list$/);
     });
 
-    cy.get('[data-testid="task-list-intake-form-characteristics"]').contains(
-      'Completed'
-    );
+    cy.get(
+      '[data-testid="task-list-intake-form-generalCharacteristics"]'
+    ).contains('In progress');
   });
 });

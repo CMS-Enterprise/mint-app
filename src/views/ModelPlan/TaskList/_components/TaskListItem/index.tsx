@@ -4,18 +4,6 @@ import classnames from 'classnames';
 
 import { TaskStatus } from 'types/graphql-global-types';
 
-type TaskListLastUpdatedProps = {
-  children?: React.ReactNode | React.ReactNodeArray;
-};
-
-export const TaskListLastUpdated = ({ children }: TaskListLastUpdatedProps) => {
-  return (
-    <div className="model-plan-task-list__last-updated-status line-height-body-4 padding-top-1 text-base">
-      {children}
-    </div>
-  );
-};
-
 type TaskListDescriptionProps = {
   children?: React.ReactNode | React.ReactNodeArray;
 };
@@ -33,13 +21,15 @@ type TaskListItemProps = {
   heading: string;
   status: TaskStatus;
   testId: string;
+  lastUpdated?: string | null;
 };
 
 const TaskListItem = ({
   children,
   heading,
   status,
-  testId
+  testId,
+  lastUpdated
 }: TaskListItemProps) => {
   const { t } = useTranslation('modelPlanTaskList');
 
@@ -70,11 +60,19 @@ const TaskListItem = ({
       <div className="width-full">
         <div className="model-plan-task-list__task-row display-flex flex-justify flex-align-start">
           <h3 className="margin-top-0 margin-bottom-1">{heading}</h3>
-          <span
-            data-testid="tasklist-tag"
-            className={`model-plan-task-list__task-tag line-height-5 text-bold ${tagStyle}`}
-          >
-            {tagCopy}
+          <span className="display-flex flex-column flex-align-end">
+            <span
+              data-testid="tasklist-tag"
+              className={`model-plan-task-list__task-tag line-height-5 text-bold ${tagStyle}`}
+            >
+              {tagCopy}
+            </span>
+            <div className="model-plan-task-list__last-updated-status line-height-body-4 text-base">
+              {lastUpdated && (
+                <p className="margin-y-0">{t('taskListItem.lastUpdated')}</p>
+              )}
+              <p className="margin-y-0">{lastUpdated}</p>
+            </div>
           </span>
         </div>
         {children}

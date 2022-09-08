@@ -45,6 +45,7 @@ import {
   translateOelQualityScoresType
 } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
+import { LockStatus } from 'views/SubscriptionHandler';
 
 import { ITToolsFormComponent } from '..';
 
@@ -76,7 +77,11 @@ const initialModelPlanValues: ModelPlanType = {
   itTools: initialFormValues
 };
 
-const ITToolsPageSix = () => {
+const ITToolsPageSix = ({
+  opsEvalAndLearningLock
+}: {
+  opsEvalAndLearningLock: LockStatus;
+}) => {
   const { t } = useTranslation('itTools');
   const { t: o } = useTranslation('operationsEvaluationAndLearning');
   const { t: h } = useTranslation('draftModelPlan');
@@ -260,6 +265,7 @@ const ITToolsPageSix = () => {
                           answered={dataNeededForMonitoring.length > 0}
                           needsTool={questionOneNeedsTools}
                           subtext={t('monitorNeedsAnswer')}
+                          locked={opsEvalAndLearningLock}
                           scrollElememnt="dataNeededForMonitoring"
                         />
 
@@ -298,6 +304,7 @@ const ITToolsPageSix = () => {
                           answered={dataNeededForMonitoring.length > 0}
                           needsTool={questionTwoNeedsTools}
                           subtext={t('claimsNeedsAnswer')}
+                          locked={opsEvalAndLearningLock}
                           scrollElememnt="dataNeededForMonitoring"
                         />
 
@@ -336,6 +343,7 @@ const ITToolsPageSix = () => {
                           answered={dataNeededForMonitoring.length > 0}
                           needsTool={questionThreeNeedsTools}
                           subtext={t('qualityNeedsAnswer')}
+                          locked={opsEvalAndLearningLock}
                           scrollElememnt="dataNeededForMonitoring"
                         />
 

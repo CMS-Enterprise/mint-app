@@ -20,10 +20,10 @@ const (
 	TaskReadyForReview TaskStatus = "READY_FOR_REVIEW"
 )
 
-//TaskSection Represents the possible task sections in the model plan worklist
+// TaskSection Represents the possible task sections in the model plan worklist
 type TaskSection string
 
-//These constants represent the possible values of a TaskSection enum
+// These constants represent the possible values of a TaskSection enum
 const (
 	TsBasics          TaskSection = "BASICS"
 	TsCharacteristics TaskSection = "CHARACTERISTICS"
@@ -47,10 +47,10 @@ const (
 	SelectionOther      FrequencyType = "OTHER"
 )
 
-//ConfidenceType representes the values possible for the amount of confidence in an answer
+// ConfidenceType representes the values possible for the amount of confidence in an answer
 type ConfidenceType string
 
-//These represent Confidence Type Answers
+// These represent Confidence Type Answers
 const (
 	ConfidenceNotAtAll   ConfidenceType = "NOT_AT_ALL"
 	ConfidenceSlightly   ConfidenceType = "SLIGHTLY"
@@ -58,10 +58,10 @@ const (
 	ConfidenceCompletely ConfidenceType = "COMPLETELY"
 )
 
-//OverlapType represents the possible Overlap Type answers
+// OverlapType represents the possible Overlap Type answers
 type OverlapType string
 
-//These constants represent the possible OverLap Type values
+// These constants represent the possible OverLap Type values
 const (
 	OverlapYesNeedPolicies OverlapType = "YES_NEED_POLICIES"
 	OverlapYesNoIssues     OverlapType = "YES_NO_ISSUES"

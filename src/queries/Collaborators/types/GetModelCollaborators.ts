@@ -22,6 +22,7 @@ export interface GetModelCollaborators_modelPlan_collaborators {
 
 export interface GetModelCollaborators_modelPlan {
   __typename: "ModelPlan";
+  id: UUID;
   collaborators: GetModelCollaborators_modelPlan_collaborators[];
 }
 
