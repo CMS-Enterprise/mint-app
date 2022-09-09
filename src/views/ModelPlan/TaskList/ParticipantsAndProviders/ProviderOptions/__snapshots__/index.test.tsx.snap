@@ -264,94 +264,133 @@ exports[`Model Plan ProviderOptions matches snapshot 1`] = `
         Please include details on decision points, timing, and implications of adding them to the model in an additional note.
       </p>
       <div
-        class="easi-multiselect position-relative"
-        id="participants-and-providers-provider-add-method"
+        class="margin-top-1"
       >
         <div
-          class="easi-multiselect__field"
-          role="listbox"
+          class="easi-multiselect usa-combo-box css-b62m3t-container"
+          id="participants-and-providers-provider-add-method"
         >
+          <span
+            class="css-1f43avz-a11yText-A11yText"
+            id="react-select-3-live-region"
+          />
+          <span
+            aria-atomic="false"
+            aria-live="polite"
+            aria-relevant="additions text"
+            class="css-1f43avz-a11yText-A11yText"
+          />
           <div
-            class="usa-select maxw-none padding-0"
+            class=" css-jvusj8-control"
           >
-            <input
-              class="usa-input padding-1 height-full border-0"
-              placeholder="1 selected"
-              type="search"
-              value=""
-            />
             <div
-              class="easi-multiselect__controls"
+              class=" css-319lph-ValueContainer"
             >
               <div
-                class="easi-multiselect__controls-button"
+                class=" css-1hgum8q-placeholder"
+                id="react-select-3-placeholder"
               >
-                <svg
-                  class="usa-icon usa-icon--size-3"
-                  focusable="false"
-                  height="1em"
-                  role="button"
-                  viewBox="0 0 24 24"
-                  width="1em"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M0 0h24v24H0z"
-                    fill="none"
-                  />
-                  <path
-                    d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-                  />
-                </svg>
-                <div
-                  class="width-1px border-right-1px border-base-lighter height-205 margin-left-1"
-                />
+                1 selected
               </div>
               <div
-                class="easi-multiselect__controls-button easi-multiselect__controls-close"
+                class=" css-6j8wv5-Input"
+                data-value=""
+              >
+                <input
+                  aria-autocomplete="list"
+                  aria-expanded="false"
+                  aria-haspopup="true"
+                  autocapitalize="none"
+                  autocomplete="off"
+                  autocorrect="off"
+                  class=""
+                  id="react-select-3-input"
+                  role="combobox"
+                  spellcheck="false"
+                  style="opacity: 1; width: 100%; grid-area: 1 / 2; min-width: 2px; border: 0px; margin: 0px; outline: 0; padding: 0px;"
+                  tabindex="0"
+                  type="text"
+                  value=""
+                />
+              </div>
+            </div>
+            <div
+              class=" css-1hb7zxy-IndicatorsContainer"
+            >
+              <div
+                aria-hidden="true"
+                class=" css-1232v1p-indicatorContainer"
               >
                 <svg
-                  class="usa-icon usa-icon--size-4"
+                  aria-hidden="true"
+                  class="css-tj5bde-Svg"
                   focusable="false"
-                  height="1em"
-                  role="button"
-                  viewBox="0 0 24 24"
-                  width="1em"
-                  xmlns="http://www.w3.org/2000/svg"
+                  height="20"
+                  viewBox="0 0 20 20"
+                  width="20"
                 >
                   <path
-                    d="M0 0h24v24H0z"
-                    fill="none"
+                    d="M14.348 14.849c-0.469 0.469-1.229 0.469-1.697 0l-2.651-3.030-2.651 3.029c-0.469 0.469-1.229 0.469-1.697 0-0.469-0.469-0.469-1.229 0-1.697l2.758-3.15-2.759-3.152c-0.469-0.469-0.469-1.228 0-1.697s1.228-0.469 1.697 0l2.652 3.031 2.651-3.031c0.469-0.469 1.228-0.469 1.697 0s0.469 1.229 0 1.697l-2.758 3.152 2.758 3.15c0.469 0.469 0.469 1.229 0 1.698z"
                   />
+                </svg>
+              </div>
+              <span
+                class=" css-1vtyy7d-indicatorSeparator"
+              />
+              <div
+                aria-hidden="true"
+                class=" css-1232v1p-indicatorContainer"
+              >
+                <svg
+                  aria-hidden="true"
+                  class="css-tj5bde-Svg"
+                  focusable="false"
+                  height="20"
+                  viewBox="0 0 20 20"
+                  width="20"
+                >
                   <path
-                    d="M16.59 8.59 12 13.17 7.41 8.59 6 10l6 6 6-6z"
+                    d="M4.516 7.548c0.436-0.446 1.043-0.481 1.576 0l3.908 3.747 3.908-3.747c0.533-0.481 1.141-0.446 1.574 0 0.436 0.445 0.408 1.197 0 1.615-0.406 0.418-4.695 4.502-4.695 4.502-0.217 0.223-0.502 0.335-0.787 0.335s-0.57-0.112-0.789-0.335c0 0-4.287-4.084-4.695-4.502s-0.436-1.17 0-1.615z"
                   />
                 </svg>
               </div>
             </div>
           </div>
+          <div>
+            <input
+              name="providerAddMethod"
+              type="hidden"
+              value="OTHER"
+            />
+          </div>
         </div>
         <div
-          class="easi-multiselect__selected-list margin-top-3"
+          class="easi-multiselect--selected"
         >
-          Selected participants
+          <h4
+            class="text-normal margin-bottom-1"
+          >
+            Selected participants
+          </h4>
           <ul
-            class="usa-list--unstyled margin-top-1 display-flex flex-justify-start flex-wrap"
+            class="usa-list--unstyled"
           >
             <li
-              class="margin-right-05 margin-y-05"
+              class="margin-bottom-05 margin-right-05 display-inline-block"
             >
               <span
-                class="usa-tag bg-primary-lighter text-ink text-no-uppercase padding-y-1 padding-x-105 display-flex flex-align-center"
-                data-testid="tag"
-                id="easi-multiselect__tag-OTHER"
+                class="usa-tag easi-multiselect--tag padding-x-1 padding-y-1 bg-primary-lighter text-ink display-inline-flex text-no-uppercase flex-align-center"
+                data-testid="multiselect-tag--Other"
+                id="selected-OTHER"
               >
-                Other
+                Other 
                 <svg
-                  class="usa-icon margin-left-1"
+                  aria-label="Remove Other"
+                  class="usa-icon margin-left-05"
                   focusable="false"
                   height="1em"
-                  role="img"
+                  role="button"
+                  tabindex="0"
                   viewBox="0 0 24 24"
                   width="1em"
                   xmlns="http://www.w3.org/2000/svg"
