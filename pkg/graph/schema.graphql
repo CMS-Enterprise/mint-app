@@ -46,6 +46,7 @@ type ModelPlan {
   itTools: PlanITTools!
   status: ModelStatus!
   isFavorite: Boolean!
+  crAndTdls: [CrAndTdl!]
 }
 
 """
@@ -1325,6 +1326,38 @@ type PlanFavorite {
     modifiedDts: Time
 
 }
+
+type CrAndTdl {
+    id: UUID!
+    modelPlanID: UUID!
+
+    idNumber: String!
+    dateInitiated: Time!
+    title: String!
+    optionalComments: String
+
+    createdBy: String!
+    createdDts: Time!
+    modifiedBy: String
+    modifiedDts: Time
+}
+
+input CrAndTdlCreateInput {
+    modelPlanID: UUID!
+
+    idNumber: String!
+    dateInitiated: Time!
+    title: String!
+    optionalComments: String
+}
+
+input CrAndTdlChanges {
+    idNumber: String
+    dateInitiated: Time
+    title: String
+    optionalComments: String
+}
+
 """
 Query definition for the schema
 """
@@ -1429,6 +1462,15 @@ addPlanFavorite(modelPlanID: UUID!): PlanFavorite!
 @hasRole(role: MINT_USER)
 
 deletePlanFavorite(modelPlanID: UUID!): PlanFavorite!
+@hasRole(role: MINT_USER)
+
+createCrAndTdl(input: CrAndTdlCreateInput!): CrAndTdl!
+@hasRole(role: MINT_USER)
+
+updateCrAndTdl(id: UUID!, changes: CrAndTdlChanges!): CrAndTdl!
+@hasRole(role: MINT_USER)
+
+deleteCrAndTdl(id: UUID!): CrAndTdl!
 @hasRole(role: MINT_USER)
 }
 

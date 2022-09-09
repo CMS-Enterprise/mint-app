@@ -5,6 +5,7 @@ package graph
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/google/uuid"
 
@@ -95,6 +96,11 @@ func (r *modelPlanResolver) IsFavorite(ctx context.Context, obj *models.ModelPla
 	logger := appcontext.ZLogger(ctx)
 
 	return resolvers.IsPlanFavorited(logger, principal, r.store, obj.ID)
+}
+
+// CrAndTdls is the resolver for the crAndTdls field.
+func (r *modelPlanResolver) CrAndTdls(ctx context.Context, obj *models.ModelPlan) ([]*model.CrAndTdl, error) {
+	panic(fmt.Errorf("not implemented: CrAndTdls - crAndTdls"))
 }
 
 // CreateModelPlan is the resolver for the createModelPlan field.
@@ -324,6 +330,21 @@ func (r *mutationResolver) DeletePlanFavorite(ctx context.Context, modelPlanID u
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 	return resolvers.PlanFavoriteDelete(logger, principal, r.store, modelPlanID)
+}
+
+// CreateCrAndTdl is the resolver for the createCrAndTdl field.
+func (r *mutationResolver) CreateCrAndTdl(ctx context.Context, input model.CrAndTdlCreateInput) (*model.CrAndTdl, error) {
+	panic(fmt.Errorf("not implemented: CreateCrAndTdl - createCrAndTdl"))
+}
+
+// UpdateCrAndTdl is the resolver for the updateCrAndTdl field.
+func (r *mutationResolver) UpdateCrAndTdl(ctx context.Context, id uuid.UUID, changes model.CrAndTdlChanges) (*model.CrAndTdl, error) {
+	panic(fmt.Errorf("not implemented: UpdateCrAndTdl - updateCrAndTdl"))
+}
+
+// DeleteCrAndTdl is the resolver for the deleteCrAndTdl field.
+func (r *mutationResolver) DeleteCrAndTdl(ctx context.Context, id uuid.UUID) (*model.CrAndTdl, error) {
+	panic(fmt.Errorf("not implemented: DeleteCrAndTdl - deleteCrAndTdl"))
 }
 
 // CmsCenters is the resolver for the cmsCenters field.

@@ -12,6 +12,34 @@ import (
 	"github.com/google/uuid"
 )
 
+type CrAndTdl struct {
+	ID               uuid.UUID  `json:"id"`
+	ModelPlanID      uuid.UUID  `json:"modelPlanID"`
+	IDNumber         string     `json:"idNumber"`
+	DateInitiated    time.Time  `json:"dateInitiated"`
+	Title            string     `json:"title"`
+	OptionalComments *string    `json:"optionalComments"`
+	CreatedBy        string     `json:"createdBy"`
+	CreatedDts       time.Time  `json:"createdDts"`
+	ModifiedBy       *string    `json:"modifiedBy"`
+	ModifiedDts      *time.Time `json:"modifiedDts"`
+}
+
+type CrAndTdlChanges struct {
+	IDNumber         *string    `json:"idNumber"`
+	DateInitiated    *time.Time `json:"dateInitiated"`
+	Title            *string    `json:"title"`
+	OptionalComments *string    `json:"optionalComments"`
+}
+
+type CrAndTdlCreateInput struct {
+	ModelPlanID      uuid.UUID `json:"modelPlanID"`
+	IDNumber         string    `json:"idNumber"`
+	DateInitiated    time.Time `json:"dateInitiated"`
+	Title            string    `json:"title"`
+	OptionalComments *string   `json:"optionalComments"`
+}
+
 // The current user of the application
 type CurrentUser struct {
 	LaunchDarkly *LaunchDarklySettings `json:"launchDarkly"`
