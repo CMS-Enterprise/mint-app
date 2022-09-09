@@ -6,7 +6,7 @@ import (
 	"github.com/lib/pq"
 )
 
-//PlanOpsEvalAndLearning represents the tasks list section that handles information around operations, evaluation, and learning
+// PlanOpsEvalAndLearning represents the tasks list section that handles information around operations, evaluation, and learning
 type PlanOpsEvalAndLearning struct {
 	BaseTaskListSection
 
@@ -122,10 +122,10 @@ type PlanOpsEvalAndLearning struct {
 	AnticipatedChallenges     *string        `json:"anticipatedChallenges" db:"anticipated_challenges" statusWeight:"1"`
 }
 
-//DataStartsType represents the possible DATASTARTSTYPE options
+// DataStartsType represents the possible DATASTARTSTYPE options
 type DataStartsType string
 
-//These constants represent the choices for DATASTARTSTYPE
+// These constants represent the choices for DATASTARTSTYPE
 const (
 	DataStartsApplication DataStartsType = "DURING_APPLICATION_PERIOD"
 	DataStartsShort       DataStartsType = "SHORTLY_BEFORE_THE_START_DATE"
@@ -137,20 +137,20 @@ const (
 	DataStartsOther       DataStartsType = "OTHER"
 )
 
-//BenchmarkForPerformanceType represents the possible BENCHMARKFORPERFORMANCETYPE options
+// BenchmarkForPerformanceType represents the possible BENCHMARKFORPERFORMANCETYPE options
 type BenchmarkForPerformanceType string
 
-//These constants represent the choices for BENCHMARKFORPERFORMANCETYPE
+// These constants represent the choices for BENCHMARKFORPERFORMANCETYPE
 const (
 	BenchmarkReconcile   BenchmarkForPerformanceType = "YES_RECONCILE"
 	BenchmarkReconcileNo BenchmarkForPerformanceType = "YES_NO_RECONCILE"
 	BenchmarkNo          BenchmarkForPerformanceType = "NO"
 )
 
-//DataFullTimeOrIncrementalType represents the possible DATAFULLTIMEORINCREMENTALTYPE options
+// DataFullTimeOrIncrementalType represents the possible DATAFULLTIMEORINCREMENTALTYPE options
 type DataFullTimeOrIncrementalType string
 
-//These constants represent the choices for DATAFULLTIMEORINCREMENTALTYPE
+// These constants represent the choices for DATAFULLTIMEORINCREMENTALTYPE
 const (
 	DataFullTime    DataFullTimeOrIncrementalType = "FULL_TIME"
 	DataIncremental DataFullTimeOrIncrementalType = "INCREMENTAL"

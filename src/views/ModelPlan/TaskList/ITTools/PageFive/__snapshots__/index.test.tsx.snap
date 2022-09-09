@@ -156,13 +156,13 @@ exports[`IT Tools Page five matches snapshot 1`] = `
                   </ul>
                   <p>
                     Want to change your answer? 
-                    <a
-                      class="usa-link"
-                      data-testid="it-tools-redirect-appealPerformance"
-                      href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/ops-eval-and-learning/performance"
+                    <button
+                      class="usa-button usa-button usa-button--unstyled"
+                      data-testid="it-tools-locked-appealPerformance"
+                      type="button"
                     >
                       Go to question
-                    </a>
+                    </button>
                     .
                   </p>
                 </div>
@@ -292,13 +292,13 @@ exports[`IT Tools Page five matches snapshot 1`] = `
                   </div>
                   <p>
                     Want to change your answer? 
-                    <a
-                      class="usa-link"
-                      data-testid="it-tools-redirect-evaluationApproaches"
-                      href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/ops-eval-and-learning/evaluation"
+                    <button
+                      class="usa-button usa-button usa-button--unstyled"
+                      data-testid="it-tools-locked-evaluationApproaches"
+                      type="button"
                     >
                       Go to question
-                    </a>
+                    </button>
                     .
                   </p>
                 </div>
@@ -430,13 +430,13 @@ exports[`IT Tools Page five matches snapshot 1`] = `
                   </div>
                   <p>
                     Want to change your answer? 
-                    <a
-                      class="usa-link"
-                      data-testid="it-tools-redirect-dataNeededForMonitoring"
-                      href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list/ops-eval-and-learning/evaluation"
+                    <button
+                      class="usa-button usa-button usa-button--unstyled"
+                      data-testid="it-tools-locked-dataNeededForMonitoring"
+                      type="button"
                     >
                       Go to question
-                    </a>
+                    </button>
                     .
                   </p>
                 </div>

@@ -26,7 +26,7 @@ func PlanBeneficiariesUpdate(logger *zap.Logger, id uuid.UUID, changes map[strin
 	return retGeneralCharacteristics, err
 }
 
-//PlanBeneficiariesGetByModelPlanID returns a plan Beneficiary buisness object associated with a model plan
+// PlanBeneficiariesGetByModelPlanID returns a plan Beneficiary buisness object associated with a model plan
 func PlanBeneficiariesGetByModelPlanID(logger *zap.Logger, modelPlanID uuid.UUID, store *storage.Store) (*models.PlanBeneficiaries, error) {
 	b, err := store.PlanBeneficiariesGetByModelPlanID(logger, modelPlanID)
 	if err != nil {

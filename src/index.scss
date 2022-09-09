@@ -73,12 +73,20 @@ h5 {
   font-size: size('body', $theme-h5-font-size);
 }
 
+.flex-none {
+  flex: none !important;
+}
+
 .pointer {
   cursor: pointer !important;
 }
 
 .no-pointer {
   pointer-events: none;
+}
+
+button:disabled {
+  cursor: default;
 }
 
 .skipnav {

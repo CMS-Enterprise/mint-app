@@ -4,7 +4,7 @@ import (
 	"time"
 )
 
-//NDAAgreementGetByEUA returns an EUA agreement by eua
+// NDAAgreementGetByEUA returns an EUA agreement by eua
 func (suite *ResolverSuite) TestNDAAgreementGetByEUA() {
 
 	nda, err := NDAAgreementGetByEUA(suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store)
@@ -14,7 +14,7 @@ func (suite *ResolverSuite) TestNDAAgreementGetByEUA() {
 
 }
 
-//NDAAgreementUpdateOrCreate either writes an entry to the nda table, or updates an existing one
+// NDAAgreementUpdateOrCreate either writes an entry to the nda table, or updates an existing one
 func (suite *ResolverSuite) TestNDAAgreementUpdateOrCreate() {
 
 	//1. Create New NDA, don't agree

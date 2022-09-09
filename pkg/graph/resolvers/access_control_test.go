@@ -5,7 +5,7 @@ import (
 	"github.com/cmsgov/mint-app/pkg/authentication"
 )
 
-//ErrorIfNotCollaborator returns an error if the user is not a collaborator. It wraps checks to see if it has a model plan, or Discussion relation, with priority given to ModelPlan
+// ErrorIfNotCollaborator returns an error if the user is not a collaborator. It wraps checks to see if it has a model plan, or Discussion relation, with priority given to ModelPlan
 func (suite *ResolverSuite) TestErrorIfNotCollaborator() {
 	plan := suite.createModelPlan("Test Plan") //plan created by TEST
 

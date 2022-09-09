@@ -11,7 +11,7 @@ import (
 //go:embed SQL/existing_model_collection_get.sql
 var existingModelCollectionGetSQL string
 
-//ExistingModelCollectionGet returns a list of existing models
+// ExistingModelCollectionGet returns a list of existing models
 func (s *Store) ExistingModelCollectionGet(logger *zap.Logger) ([]*models.ExistingModel, error) {
 	existingModels := []*models.ExistingModel{}
 	stmt, err := s.db.PrepareNamed(existingModelCollectionGetSQL)

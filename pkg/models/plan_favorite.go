@@ -1,6 +1,6 @@
 package models
 
-//PlanFavorite represents a relation that shows a model plan has been favorited
+// PlanFavorite represents a relation that shows a model plan has been favorited
 type PlanFavorite struct {
 	BaseStruct
 	ModelPlanRelation
