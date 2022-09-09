@@ -182,7 +182,6 @@ const MultiSelect = ({
           setSelected(selectedOptions);
           onChange(selectedOptions.map(option => option.value));
         }}
-        menuIsOpen
         value={selected}
         controlShouldRenderValue={false}
         placeholder={`${selected.length} selected`}

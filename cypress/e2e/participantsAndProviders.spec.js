@@ -19,22 +19,22 @@ describe('The Model Plan Participants and Providers Form', () => {
     cy.get('[data-testid="model-plan-name"]').contains('for Empty Plan');
 
     cy.get('#participants-and-providers-participants').within(() => {
-      cy.get("input[type='search']").click();
+      cy.get("input[type='text']").click();
     });
 
-    cy.get('#easi-multiselect__option-MEDICARE_PROVIDERS')
+    cy.get('#option-MEDICARE_PROVIDERS')
       .check({ force: true })
       .should('be.checked');
 
-    cy.get('#easi-multiselect__option-STATES')
-      .check({ force: true })
-      .should('be.checked');
+    cy.get('#option-STATES').check({ force: true }).should('be.checked');
 
-    cy.get('#easi-multiselect__option-OTHER')
-      .check({ force: true })
-      .should('be.checked');
+    cy.get('#option-OTHER').check({ force: true }).should('be.checked');
 
-    cy.get('[data-testid="tag"]').first().contains('Medicare providers');
+    cy.clickOutside();
+
+    cy.get('[data-testid="multiselect-tag--Medicare providers"]')
+      .first()
+      .contains('Medicare providers');
 
     cy.get('#participants-and-providers-medicare-type')
       .type('Oncology Providers')
@@ -83,14 +83,14 @@ describe('The Model Plan Participants and Providers Form', () => {
       .should('have.value', 'By phone');
 
     cy.get('#participants-and-providers-selection-method').within(() => {
-      cy.get("input[type='search']").click();
+      cy.get("input[type='text']").click();
     });
 
-    cy.get('#easi-multiselect__option-OTHER')
-      .check({ force: true })
-      .should('be.checked');
+    cy.get('#option-OTHER').check({ force: true }).should('be.checked');
 
-    cy.get('[data-testid="tag"]').first().contains('Other');
+    cy.clickOutside();
+
+    cy.get('[data-testid="multiselect-tag--Other"]').first().contains('Other');
 
     cy.get('#participants-and-providers-selection-other')
       .type('The other participants are cool')
@@ -163,14 +163,14 @@ describe('The Model Plan Participants and Providers Form', () => {
       .should('have.value', 'Every other leap year');
 
     cy.get('#participants-and-providers-provider-add-method').within(() => {
-      cy.get("input[type='search']").click();
+      cy.get("input[type='text']").click();
     });
 
-    cy.get('#easi-multiselect__option-OTHER')
-      .check({ force: true })
-      .should('be.checked');
+    cy.get('#option-OTHER').check({ force: true }).should('be.checked');
 
-    cy.get('[data-testid="tag"]').first().contains('Other');
+    cy.clickOutside();
+
+    cy.get('[data-testid="multiselect-tag--Other"]').first().contains('Other');
 
     cy.get('#participants-and-providers-provider-add-method-other')
       .type('Competitive ball-room dancing, free for all')
