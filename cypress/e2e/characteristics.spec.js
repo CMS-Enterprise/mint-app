@@ -36,7 +36,9 @@ describe('The Model Plan General Characteristics Form', () => {
         .should('have.value', 'advance payment');
     });
 
-    cy.get('#option-1').check({ force: true }).should('be.checked');
+    cy.get('[data-testid="option-1"]')
+      .check({ force: true })
+      .should('be.checked');
 
     cy.get('[data-testid="multiselect-tag--Advance Payment ACO Model"]')
       .first()
@@ -80,7 +82,9 @@ describe('The Model Plan General Characteristics Form', () => {
         .should('have.value', 'payment');
     });
 
-    cy.get('#option-PAYMENT').check({ force: true }).should('be.checked');
+    cy.get('[data-testid="option-PAYMENT"]')
+      .check({ force: true })
+      .should('be.checked');
 
     cy.get('[data-testid="multiselect-tag--Payment Model"]')
       .first()

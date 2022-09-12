@@ -22,13 +22,17 @@ describe('The Model Plan Participants and Providers Form', () => {
       cy.get("input[type='text']").click();
     });
 
-    cy.get('#option-MEDICARE_PROVIDERS')
+    cy.get('[data-testid="option-MEDICARE_PROVIDERS"]')
       .check({ force: true })
       .should('be.checked');
 
-    cy.get('#option-STATES').check({ force: true }).should('be.checked');
+    cy.get('[data-testid="option-STATES"]')
+      .check({ force: true })
+      .should('be.checked');
 
-    cy.get('#option-OTHER').check({ force: true }).should('be.checked');
+    cy.get('[data-testid="option-OTHER"]')
+      .check({ force: true })
+      .should('be.checked');
 
     cy.clickOutside();
 
@@ -86,7 +90,9 @@ describe('The Model Plan Participants and Providers Form', () => {
       cy.get("input[type='text']").click();
     });
 
-    cy.get('#option-OTHER').check({ force: true }).should('be.checked');
+    cy.get('[data-testid="option-OTHER"]')
+      .check({ force: true })
+      .should('be.checked');
 
     cy.clickOutside();
 
@@ -166,7 +172,9 @@ describe('The Model Plan Participants and Providers Form', () => {
       cy.get("input[type='text']").click();
     });
 
-    cy.get('#option-OTHER').check({ force: true }).should('be.checked');
+    cy.get('[data-testid="option-OTHER"]')
+      .check({ force: true })
+      .should('be.checked');
 
     cy.clickOutside();
 

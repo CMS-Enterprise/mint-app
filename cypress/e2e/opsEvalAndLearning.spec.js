@@ -34,7 +34,9 @@ describe('The Model Plan Ops Eval and Learning Form', () => {
       cy.get("input[type='text']").click();
     });
 
-    cy.get('#option-BENEFICIARIES').check({ force: true }).should('be.checked');
+    cy.get('[data-testid="option-BENEFICIARIES"]')
+      .check({ force: true })
+      .should('be.checked');
 
     cy.clickOutside();
 
@@ -229,7 +231,9 @@ describe('The Model Plan Ops Eval and Learning Form', () => {
       cy.get("input[type='text']").click();
     });
 
-    cy.get('#option-OTHER').check({ force: true }).should('be.checked');
+    cy.get('[data-testid="option-OTHER"]')
+      .check({ force: true })
+      .should('be.checked');
 
     cy.clickOutside();
 
@@ -239,7 +243,7 @@ describe('The Model Plan Ops Eval and Learning Form', () => {
       cy.get("input[type='text']").click();
     });
 
-    cy.get('#option-OTHER_MIPS_DATA')
+    cy.get('[data-testid="option-OTHER_MIPS_DATA"]')
       .check({ force: true })
       .should('be.checked');
 
@@ -299,7 +303,9 @@ describe('The Model Plan Ops Eval and Learning Form', () => {
       cy.get("input[type='text']").click();
     });
 
-    cy.get('#option-OTHER').check({ force: true }).should('be.checked');
+    cy.get('[data-testid="option-OTHER"]')
+      .check({ force: true })
+      .should('be.checked');
 
     cy.clickOutside();
 
@@ -315,7 +321,9 @@ describe('The Model Plan Ops Eval and Learning Form', () => {
       cy.get("input[type='text']").click();
     });
 
-    cy.get('#option-OTHER').check({ force: true }).should('be.checked');
+    cy.get('[data-testid="option-OTHER"]')
+      .check({ force: true })
+      .should('be.checked');
 
     cy.clickOutside();
 

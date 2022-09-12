@@ -26,7 +26,8 @@ const Option = (props: OptionProps<MultiSelectOptionProps, true>) => {
     >
       <CheckboxField
         label={data.label}
-        id={`option-${data.value}`}
+        id={innerProps.id!}
+        testid={`option-${data.value}`}
         name={data.value}
         checked={isSelected}
         onChange={() => null}
@@ -61,7 +62,10 @@ const MultiSelectTag = ({
       {handleRemove && (
         <IconClose
           onClick={() => handleRemove(label)}
-          onKeyDown={() => handleRemove(label)}
+          onKeyDown={e => {
+            if (e.key !== 'Tab') return handleRemove(label);
+            return null;
+          }}
           className="margin-left-05"
           tabIndex={0}
           role="button"

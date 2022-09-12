@@ -63,7 +63,7 @@ describe('The Model Plan Payment Form', () => {
       cy.get("input[type='text']").click();
     });
 
-    cy.get('#option-REDUCTIONS_TO_BENEFICIARY_COST_SHARING')
+    cy.get('[data-testid="option-REDUCTIONS_TO_BENEFICIARY_COST_SHARING"]')
       .check({ force: true })
       .should('be.checked');
 
@@ -159,7 +159,7 @@ describe('The Model Plan Payment Form', () => {
       cy.get("input[type='text']").click();
     });
 
-    cy.get('#option-ADVANCED_PAYMENT')
+    cy.get('[data-testid="option-ADVANCED_PAYMENT"]')
       .check({ force: true })
       .should('be.checked');
 
@@ -213,7 +213,9 @@ describe('The Model Plan Payment Form', () => {
       cy.get("input[type='text']").click();
     });
 
-    cy.get('#option-OTHER').check({ force: true }).should('be.checked');
+    cy.get('[data-testid="option-OTHER"]')
+      .check({ force: true })
+      .should('be.checked');
 
     cy.clickOutside();
 
