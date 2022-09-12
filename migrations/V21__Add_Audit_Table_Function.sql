@@ -3,8 +3,6 @@ DECLARE
     _q_txt TEXT;
     include_values BOOLEAN;
     existing_table_id INT;
-    h_old hstore;
-    h_new hstore;
     excluded_cols text[] = ARRAY[]::text[];
 BEGIN
     EXECUTE 'DROP TRIGGER IF EXISTS audit_trigger ON ' || schema_name || '.' || table_name;

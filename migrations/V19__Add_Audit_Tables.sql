@@ -1,5 +1,3 @@
-CREATE SCHEMA audit;
-REVOKE ALL ON SCHEMA audit FROM public;  -- move to earlier migration, and add needed read permissions
 CREATE EXTENSION IF NOT EXISTS hstore;
 
 CREATE TABLE audit.table_config (
