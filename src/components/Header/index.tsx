@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useOktaAuth } from '@okta/okta-react';
 import { IconMenu } from '@trussworks/react-uswds';
 import classnames from 'classnames';
@@ -19,6 +19,7 @@ type HeaderProps = {
 
 export const Header = ({ children }: HeaderProps) => {
   const { authState, oktaAuth } = useOktaAuth();
+  const { pathname } = useLocation();
   const { t } = useTranslation();
   const [userName, setUserName] = useState('');
   const { isMobileSideNavExpanded, setIsMobileSideNavExpanded } = useContext(
@@ -134,7 +135,7 @@ export const Header = ({ children }: HeaderProps) => {
         )}
       </div>
 
-      {authState?.isAuthenticated && (
+      {authState?.isAuthenticated && pathname !== '/pre-decisional-notice' && (
         <NavigationBar
           toggle={setIsMobileSideNavExpanded}
           signout={signout}
