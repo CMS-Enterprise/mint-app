@@ -1351,7 +1351,7 @@ input CrTdlCreateInput {
     optionalComments: String
 }
 
-input CrTdlChanges {
+input CrTdlChanges @goModel(model: "map[string]interface{}") {
     idNumber: String
     dateInitiated: Time
     title: String

@@ -72,8 +72,15 @@ func CrTdlDelete(logger *zap.Logger, id uuid.UUID, principal authentication.Prin
 }
 
 // CrTdlGet returns a cr_tdl record in the database
-func CrTdlGet(logger *zap.Logger, id uuid.UUID, store *storage.Store, modelPlID uuid.UUID) (*models.CrTdl, error) {
+func CrTdlGet(logger *zap.Logger, id uuid.UUID, store *storage.Store) (*models.CrTdl, error) {
 
 	return store.CrTdlGetByID(logger, id)
+
+}
+
+// CrTdlsGetByModelPlanID returns cr_tdl records related to a model plan
+func CrTdlsGetByModelPlanID(logger *zap.Logger, modelPlanID uuid.UUID, store *storage.Store) ([]*models.CrTdl, error) {
+
+	return store.CrTdlsGetByModelPlanID(logger, modelPlanID)
 
 }

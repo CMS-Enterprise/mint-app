@@ -5,7 +5,6 @@ package graph
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/google/uuid"
 
@@ -99,8 +98,9 @@ func (r *modelPlanResolver) IsFavorite(ctx context.Context, obj *models.ModelPla
 }
 
 // CrTdls is the resolver for the crAndTdls field.
-func (r *modelPlanResolver) CrTdls(ctx context.Context, obj *models.ModelPlan) ([]*model.CrTdl, error) {
-	panic(fmt.Errorf("not implemented: CrTdls - crAndTdls"))
+func (r *modelPlanResolver) CrTdls(ctx context.Context, obj *models.ModelPlan) ([]*models.CrTdl, error) {
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.CrTdlsGetByModelPlanID(logger, obj.ID, r.store)
 }
 
 // CreateModelPlan is the resolver for the createModelPlan field.
@@ -333,18 +333,24 @@ func (r *mutationResolver) DeletePlanFavorite(ctx context.Context, modelPlanID u
 }
 
 // CreateCrTdl is the resolver for the createCrTdl field.
-func (r *mutationResolver) CreateCrTdl(ctx context.Context, input model.CrTdlCreateInput) (*model.CrTdl, error) {
-	panic(fmt.Errorf("not implemented: CreateCrTdl - createCrTdl"))
+func (r *mutationResolver) CreateCrTdl(ctx context.Context, input model.CrTdlCreateInput) (*models.CrTdl, error) {
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.CrTdlCreate(logger, &input, principal, r.store)
 }
 
 // UpdateCrTdl is the resolver for the updateCrTdl field.
-func (r *mutationResolver) UpdateCrTdl(ctx context.Context, id uuid.UUID, changes model.CrTdlChanges) (*model.CrTdl, error) {
-	panic(fmt.Errorf("not implemented: UpdateCrTdl - updateCrTdl"))
+func (r *mutationResolver) UpdateCrTdl(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.CrTdl, error) {
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.CrTdlUpdate(logger, id, changes, principal, r.store)
 }
 
 // DeleteCrTdl is the resolver for the deleteCrTdl field.
-func (r *mutationResolver) DeleteCrTdl(ctx context.Context, id uuid.UUID) (*model.CrTdl, error) {
-	panic(fmt.Errorf("not implemented: DeleteCrTdl - deleteCrTdl"))
+func (r *mutationResolver) DeleteCrTdl(ctx context.Context, id uuid.UUID) (*models.CrTdl, error) {
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.CrTdlDelete(logger, id, principal, r.store)
 }
 
 // CmsCenters is the resolver for the cmsCenters field.
