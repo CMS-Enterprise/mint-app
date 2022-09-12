@@ -79,7 +79,7 @@ const Home = () => {
             <UswdsReactLink
               className="usa-button usa-button--outline"
               variant="unstyled"
-              to="/models/steps-overview"
+              to="/models"
             >
               {t('allModels.cta')}
             </UswdsReactLink>
