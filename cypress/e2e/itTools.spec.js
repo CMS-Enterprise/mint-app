@@ -46,12 +46,14 @@ describe.only('The Model Plan IT Tools Form', () => {
     cy.get(`[data-testid="it-tools-redirect-managePartCDEnrollment"]`).click();
 
     cy.get('#plan-characteristics-key-characteristics').within(() => {
-      cy.get("input[type='search']").click();
+      cy.get("input[type='text']").click();
     });
 
-    cy.get('#easi-multiselect__option-PART_D')
+    cy.get('[data-testid="option-PART_D"]')
       .check({ force: true })
       .should('be.checked');
+
+    cy.clickOutside();
 
     cy.get('#plan-characteristics-manage-enrollment')
       .check({ force: true })
@@ -107,7 +109,7 @@ describe.only('The Model Plan IT Tools Form', () => {
     cy.itToolsRedirect(
       '#it-tools-pp-collect-score-review-ARS',
       'it-tools-redirect-selectionMethod',
-      '#easi-multiselect__option-APPLICATION_REVIEW_AND_SCORING_TOOL',
+      '[data-testid="option-APPLICATION_REVIEW_AND_SCORING_TOOL"]',
       '#participants-and-providers-selection-method',
       false,
       '@gqlGetITToolPageTwoQuery',
@@ -117,7 +119,7 @@ describe.only('The Model Plan IT Tools Form', () => {
     cy.itToolsRedirect(
       '#it-tools-pp-app-support-contractor-RMDA',
       'it-tools-redirect-selectionMethod',
-      '#easi-multiselect__option-APPLICATION_SUPPORT_CONTRACTOR',
+      '[data-testid="option-APPLICATION_SUPPORT_CONTRACTOR"]',
       '#participants-and-providers-selection-method',
       false,
       '@gqlGetITToolPageTwoQuery',
@@ -222,7 +224,7 @@ describe.only('The Model Plan IT Tools Form', () => {
     cy.itToolsRedirect(
       '#it-tools-oel-collect-data-CCW',
       'it-tools-redirect-dataNeededForMonitoring',
-      '#easi-multiselect__option-SITE_VISITS',
+      '[data-testid="option-SITE_VISITS"]',
       '#ops-eval-and-learning-data-needed',
       false,
       '@gqlGetITToolPageFiveQuery',
@@ -242,7 +244,7 @@ describe.only('The Model Plan IT Tools Form', () => {
     cy.itToolsRedirect(
       '#it-tools-oel-obtain-data-CCW',
       'it-tools-redirect-dataNeededForMonitoring',
-      '#easi-multiselect__option-ENCOUNTER_DATA',
+      '[data-testid="option-ENCOUNTER_DATA"]',
       '#ops-eval-and-learning-data-needed',
       false,
       '@gqlGetITToolPageSixQuery',
@@ -252,7 +254,7 @@ describe.only('The Model Plan IT Tools Form', () => {
     cy.itToolsRedirect(
       '#it-tools-oel-claims-based-measure-CCW',
       'it-tools-redirect-dataNeededForMonitoring',
-      '#easi-multiselect__option-QUALITY_CLAIMS_BASED_MEASURES',
+      '[data-testid="option-QUALITY_CLAIMS_BASED_MEASURES"]',
       '#ops-eval-and-learning-data-needed',
       false,
       '@gqlGetITToolPageSixQuery',
@@ -280,7 +282,7 @@ describe.only('The Model Plan IT Tools Form', () => {
     cy.itToolsRedirect(
       '#it-tools-oel-send-reports-IDOS',
       'it-tools-redirect-dataToSendParticicipants',
-      '#easi-multiselect__option-BASELINE_HISTORICAL_DATA',
+      '[data-testid="option-BASELINE_HISTORICAL_DATA"]',
       '#ops-eval-and-learning-data-to-send',
       false,
       '@gqlGetITToolPageSevenQuery',
@@ -373,7 +375,7 @@ describe.only('The Model Plan IT Tools Form', () => {
     cy.itToolsRedirect(
       '#it-tools-p-shared-savings-RMADA',
       'it-tools-redirect-nonClaimsPayments',
-      '#easi-multiselect__option-SHARED_SAVINGS',
+      '[data-testid="option-SHARED_SAVINGS"]',
       '#payment-nonclaims-payments',
       false,
       '@gqlGetITToolPageNineQuery',

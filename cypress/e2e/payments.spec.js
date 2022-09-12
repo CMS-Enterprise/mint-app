@@ -15,6 +15,8 @@ describe('The Model Plan Payment Form', () => {
       expect(loc.pathname).to.match(/\/models\/.{36}\/task-list\/payment/);
     });
 
+    cy.wait(500);
+
     cy.get('#payment-funding-source-PATIENT_PROTECTION_AFFORDABLE_CARE_ACT')
       .check({ force: true })
       .should('be.checked');
@@ -58,10 +60,10 @@ describe('The Model Plan Payment Form', () => {
     cy.wait(500);
 
     cy.get('#payment-pay-claims').within(() => {
-      cy.get("input[type='search']").click();
+      cy.get("input[type='text']").click();
     });
 
-    cy.get('#easi-multiselect__option-REDUCTIONS_TO_BENEFICIARY_COST_SHARING')
+    cy.get('[data-testid="option-REDUCTIONS_TO_BENEFICIARY_COST_SHARING"]')
       .check({ force: true })
       .should('be.checked');
 
@@ -154,12 +156,14 @@ describe('The Model Plan Payment Form', () => {
     cy.wait(500);
 
     cy.get('#payment-nonclaims-payments').within(() => {
-      cy.get("input[type='search']").click();
+      cy.get("input[type='text']").click();
     });
 
-    cy.get('#easi-multiselect__option-ADVANCED_PAYMENT')
+    cy.get('[data-testid="option-ADVANCED_PAYMENT"]')
       .check({ force: true })
       .should('be.checked');
+
+    cy.clickOutside();
 
     cy.get('#payment-nonclaims-payments-owner')
       .type('I am the owner')
@@ -206,12 +210,14 @@ describe('The Model Plan Payment Form', () => {
       .should('have.value', 'Payment Funding Structure');
 
     cy.get('#payment-frequency-payments').within(() => {
-      cy.get("input[type='search']").click();
+      cy.get("input[type='text']").click();
     });
 
-    cy.get('#easi-multiselect__option-OTHER')
+    cy.get('[data-testid="option-OTHER"]')
       .check({ force: true })
       .should('be.checked');
+
+    cy.clickOutside();
 
     cy.get('#payment-frequency-payments-other')
       .type('Payment Frequency Payments Other')
