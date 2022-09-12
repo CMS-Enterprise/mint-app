@@ -61,7 +61,7 @@ type DirectiveRoot struct {
 }
 
 type ComplexityRoot struct {
-	CrAndTdl struct {
+	CrTdl struct {
 		CreatedBy        func(childComplexity int) int
 		CreatedDts       func(childComplexity int) int
 		DateInitiated    func(childComplexity int) int
@@ -125,7 +125,7 @@ type ComplexityRoot struct {
 		Basics                   func(childComplexity int) int
 		Beneficiaries            func(childComplexity int) int
 		Collaborators            func(childComplexity int) int
-		CrAndTdls                func(childComplexity int) int
+		CrTdls                func(childComplexity int) int
 		CreatedBy                func(childComplexity int) int
 		CreatedDts               func(childComplexity int) int
 		Discussions              func(childComplexity int) int
@@ -146,13 +146,13 @@ type ComplexityRoot struct {
 	Mutation struct {
 		AddPlanFavorite                    func(childComplexity int, modelPlanID uuid.UUID) int
 		AgreeToNda                         func(childComplexity int, agree bool) int
-		CreateCrAndTdl                     func(childComplexity int, input model.CrAndTdlCreateInput) int
+		CreateCrTdl                        func(childComplexity int, input model.CrTdlCreateInput) int
 		CreateDiscussionReply              func(childComplexity int, input model.DiscussionReplyCreateInput) int
 		CreateModelPlan                    func(childComplexity int, modelName string) int
 		CreatePlanCollaborator             func(childComplexity int, input model.PlanCollaboratorCreateInput) int
 		CreatePlanDiscussion               func(childComplexity int, input model.PlanDiscussionCreateInput) int
 		CreatePlanDocument                 func(childComplexity int, input model.PlanDocumentInput) int
-		DeleteCrAndTdl                     func(childComplexity int, id uuid.UUID) int
+		DeleteCrTdl                        func(childComplexity int, id uuid.UUID) int
 		DeleteDiscussionReply              func(childComplexity int, id uuid.UUID) int
 		DeletePlanCollaborator             func(childComplexity int, id uuid.UUID) int
 		DeletePlanDiscussion               func(childComplexity int, id uuid.UUID) int
@@ -162,7 +162,7 @@ type ComplexityRoot struct {
 		LockTaskListSection                func(childComplexity int, modelPlanID uuid.UUID, section model.TaskListSection) int
 		UnlockAllTaskListSections          func(childComplexity int, modelPlanID uuid.UUID) int
 		UnlockTaskListSection              func(childComplexity int, modelPlanID uuid.UUID, section model.TaskListSection) int
-		UpdateCrAndTdl                     func(childComplexity int, id uuid.UUID, changes model.CrAndTdlChanges) int
+		UpdateCrTdl                        func(childComplexity int, id uuid.UUID, changes model.CrTdlChanges) int
 		UpdateDiscussionReply              func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
 		UpdateModelPlan                    func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
 		UpdatePlanBasics                   func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
@@ -750,7 +750,7 @@ type ModelPlanResolver interface {
 	ItTools(ctx context.Context, obj *models.ModelPlan) (*models.PlanITTools, error)
 
 	IsFavorite(ctx context.Context, obj *models.ModelPlan) (bool, error)
-	CrAndTdls(ctx context.Context, obj *models.ModelPlan) ([]*model.CrAndTdl, error)
+	CrTdls(ctx context.Context, obj *models.ModelPlan) ([]*model.CrTdl, error)
 }
 type MutationResolver interface {
 	CreateModelPlan(ctx context.Context, modelName string) (*models.ModelPlan, error)
@@ -781,9 +781,9 @@ type MutationResolver interface {
 	AgreeToNda(ctx context.Context, agree bool) (*model.NDAInfo, error)
 	AddPlanFavorite(ctx context.Context, modelPlanID uuid.UUID) (*models.PlanFavorite, error)
 	DeletePlanFavorite(ctx context.Context, modelPlanID uuid.UUID) (*models.PlanFavorite, error)
-	CreateCrAndTdl(ctx context.Context, input model.CrAndTdlCreateInput) (*model.CrAndTdl, error)
-	UpdateCrAndTdl(ctx context.Context, id uuid.UUID, changes model.CrAndTdlChanges) (*model.CrAndTdl, error)
-	DeleteCrAndTdl(ctx context.Context, id uuid.UUID) (*model.CrAndTdl, error)
+	CreateCrTdl(ctx context.Context, input model.CrTdlCreateInput) (*model.CrTdl, error)
+	UpdateCrTdl(ctx context.Context, id uuid.UUID, changes model.CrTdlChanges) (*model.CrTdl, error)
+	DeleteCrTdl(ctx context.Context, id uuid.UUID) (*model.CrTdl, error)
 }
 type PlanBasicsResolver interface {
 	CmsCenters(ctx context.Context, obj *models.PlanBasics) ([]model.CMSCenter, error)
@@ -962,75 +962,75 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 	_ = ec
 	switch typeName + "." + field {
 
-	case "CrAndTdl.createdBy":
-		if e.complexity.CrAndTdl.CreatedBy == nil {
+	case "CrTdl.createdBy":
+		if e.complexity.CrTdl.CreatedBy == nil {
 			break
 		}
 
-		return e.complexity.CrAndTdl.CreatedBy(childComplexity), true
+		return e.complexity.CrTdl.CreatedBy(childComplexity), true
 
-	case "CrAndTdl.createdDts":
-		if e.complexity.CrAndTdl.CreatedDts == nil {
+	case "CrTdl.createdDts":
+		if e.complexity.CrTdl.CreatedDts == nil {
 			break
 		}
 
-		return e.complexity.CrAndTdl.CreatedDts(childComplexity), true
+		return e.complexity.CrTdl.CreatedDts(childComplexity), true
 
-	case "CrAndTdl.dateInitiated":
-		if e.complexity.CrAndTdl.DateInitiated == nil {
+	case "CrTdl.dateInitiated":
+		if e.complexity.CrTdl.DateInitiated == nil {
 			break
 		}
 
-		return e.complexity.CrAndTdl.DateInitiated(childComplexity), true
+		return e.complexity.CrTdl.DateInitiated(childComplexity), true
 
-	case "CrAndTdl.id":
-		if e.complexity.CrAndTdl.ID == nil {
+	case "CrTdl.id":
+		if e.complexity.CrTdl.ID == nil {
 			break
 		}
 
-		return e.complexity.CrAndTdl.ID(childComplexity), true
+		return e.complexity.CrTdl.ID(childComplexity), true
 
-	case "CrAndTdl.idNumber":
-		if e.complexity.CrAndTdl.IDNumber == nil {
+	case "CrTdl.idNumber":
+		if e.complexity.CrTdl.IDNumber == nil {
 			break
 		}
 
-		return e.complexity.CrAndTdl.IDNumber(childComplexity), true
+		return e.complexity.CrTdl.IDNumber(childComplexity), true
 
-	case "CrAndTdl.modelPlanID":
-		if e.complexity.CrAndTdl.ModelPlanID == nil {
+	case "CrTdl.modelPlanID":
+		if e.complexity.CrTdl.ModelPlanID == nil {
 			break
 		}
 
-		return e.complexity.CrAndTdl.ModelPlanID(childComplexity), true
+		return e.complexity.CrTdl.ModelPlanID(childComplexity), true
 
-	case "CrAndTdl.modifiedBy":
-		if e.complexity.CrAndTdl.ModifiedBy == nil {
+	case "CrTdl.modifiedBy":
+		if e.complexity.CrTdl.ModifiedBy == nil {
 			break
 		}
 
-		return e.complexity.CrAndTdl.ModifiedBy(childComplexity), true
+		return e.complexity.CrTdl.ModifiedBy(childComplexity), true
 
-	case "CrAndTdl.modifiedDts":
-		if e.complexity.CrAndTdl.ModifiedDts == nil {
+	case "CrTdl.modifiedDts":
+		if e.complexity.CrTdl.ModifiedDts == nil {
 			break
 		}
 
-		return e.complexity.CrAndTdl.ModifiedDts(childComplexity), true
+		return e.complexity.CrTdl.ModifiedDts(childComplexity), true
 
-	case "CrAndTdl.optionalComments":
-		if e.complexity.CrAndTdl.OptionalComments == nil {
+	case "CrTdl.optionalComments":
+		if e.complexity.CrTdl.OptionalComments == nil {
 			break
 		}
 
-		return e.complexity.CrAndTdl.OptionalComments(childComplexity), true
+		return e.complexity.CrTdl.OptionalComments(childComplexity), true
 
-	case "CrAndTdl.title":
-		if e.complexity.CrAndTdl.Title == nil {
+	case "CrTdl.title":
+		if e.complexity.CrTdl.Title == nil {
 			break
 		}
 
-		return e.complexity.CrAndTdl.Title(childComplexity), true
+		return e.complexity.CrTdl.Title(childComplexity), true
 
 	case "CurrentUser.launchDarkly":
 		if e.complexity.CurrentUser.LaunchDarkly == nil {
@@ -1278,11 +1278,11 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		return e.complexity.ModelPlan.Collaborators(childComplexity), true
 
 	case "ModelPlan.crAndTdls":
-		if e.complexity.ModelPlan.CrAndTdls == nil {
+		if e.complexity.ModelPlan.CrTdls == nil {
 			break
 		}
 
-		return e.complexity.ModelPlan.CrAndTdls(childComplexity), true
+		return e.complexity.ModelPlan.CrTdls(childComplexity), true
 
 	case "ModelPlan.createdBy":
 		if e.complexity.ModelPlan.CreatedBy == nil {
@@ -1413,17 +1413,17 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Mutation.AgreeToNda(childComplexity, args["agree"].(bool)), true
 
-	case "Mutation.createCrAndTdl":
-		if e.complexity.Mutation.CreateCrAndTdl == nil {
+	case "Mutation.createCrTdl":
+		if e.complexity.Mutation.CreateCrTdl == nil {
 			break
 		}
 
-		args, err := ec.field_Mutation_createCrAndTdl_args(context.TODO(), rawArgs)
+		args, err := ec.field_Mutation_createCrTdl_args(context.TODO(), rawArgs)
 		if err != nil {
 			return 0, false
 		}
 
-		return e.complexity.Mutation.CreateCrAndTdl(childComplexity, args["input"].(model.CrAndTdlCreateInput)), true
+		return e.complexity.Mutation.CreateCrTdl(childComplexity, args["input"].(model.CrTdlCreateInput)), true
 
 	case "Mutation.createDiscussionReply":
 		if e.complexity.Mutation.CreateDiscussionReply == nil {
@@ -1485,17 +1485,17 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Mutation.CreatePlanDocument(childComplexity, args["input"].(model.PlanDocumentInput)), true
 
-	case "Mutation.deleteCrAndTdl":
-		if e.complexity.Mutation.DeleteCrAndTdl == nil {
+	case "Mutation.deleteCrTdl":
+		if e.complexity.Mutation.DeleteCrTdl == nil {
 			break
 		}
 
-		args, err := ec.field_Mutation_deleteCrAndTdl_args(context.TODO(), rawArgs)
+		args, err := ec.field_Mutation_deleteCrTdl_args(context.TODO(), rawArgs)
 		if err != nil {
 			return 0, false
 		}
 
-		return e.complexity.Mutation.DeleteCrAndTdl(childComplexity, args["id"].(uuid.UUID)), true
+		return e.complexity.Mutation.DeleteCrTdl(childComplexity, args["id"].(uuid.UUID)), true
 
 	case "Mutation.deleteDiscussionReply":
 		if e.complexity.Mutation.DeleteDiscussionReply == nil {
@@ -1605,17 +1605,17 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Mutation.UnlockTaskListSection(childComplexity, args["modelPlanID"].(uuid.UUID), args["section"].(model.TaskListSection)), true
 
-	case "Mutation.updateCrAndTdl":
-		if e.complexity.Mutation.UpdateCrAndTdl == nil {
+	case "Mutation.updateCrTdl":
+		if e.complexity.Mutation.UpdateCrTdl == nil {
 			break
 		}
 
-		args, err := ec.field_Mutation_updateCrAndTdl_args(context.TODO(), rawArgs)
+		args, err := ec.field_Mutation_updateCrTdl_args(context.TODO(), rawArgs)
 		if err != nil {
 			return 0, false
 		}
 
-		return e.complexity.Mutation.UpdateCrAndTdl(childComplexity, args["id"].(uuid.UUID), args["changes"].(model.CrAndTdlChanges)), true
+		return e.complexity.Mutation.UpdateCrTdl(childComplexity, args["id"].(uuid.UUID), args["changes"].(model.CrTdlChanges)), true
 
 	case "Mutation.updateDiscussionReply":
 		if e.complexity.Mutation.UpdateDiscussionReply == nil {
@@ -5354,8 +5354,8 @@ func (e *executableSchema) Exec(ctx context.Context) graphql.ResponseHandler {
 	rc := graphql.GetOperationContext(ctx)
 	ec := executionContext{rc, e}
 	inputUnmarshalMap := graphql.BuildUnmarshalerMap(
-		ec.unmarshalInputCrAndTdlChanges,
-		ec.unmarshalInputCrAndTdlCreateInput,
+		ec.unmarshalInputCrTdlChanges,
+		ec.unmarshalInputCrTdlCreateInput,
 		ec.unmarshalInputDiscussionReplyCreateInput,
 		ec.unmarshalInputGeneratePresignedUploadURLInput,
 		ec.unmarshalInputPlanCollaboratorCreateInput,
@@ -5487,7 +5487,7 @@ type ModelPlan {
   itTools: PlanITTools!
   status: ModelStatus!
   isFavorite: Boolean!
-  crAndTdls: [CrAndTdl!]
+  crAndTdls: [CrTdl!]
 }
 
 """
@@ -6768,7 +6768,7 @@ type PlanFavorite {
 
 }
 
-type CrAndTdl {
+type CrTdl {
     id: UUID!
     modelPlanID: UUID!
 
@@ -6783,7 +6783,7 @@ type CrAndTdl {
     modifiedDts: Time
 }
 
-input CrAndTdlCreateInput {
+input CrTdlCreateInput {
     modelPlanID: UUID!
 
     idNumber: String!
@@ -6792,7 +6792,7 @@ input CrAndTdlCreateInput {
     optionalComments: String
 }
 
-input CrAndTdlChanges {
+input CrTdlChanges {
     idNumber: String
     dateInitiated: Time
     title: String
@@ -6905,13 +6905,13 @@ addPlanFavorite(modelPlanID: UUID!): PlanFavorite!
 deletePlanFavorite(modelPlanID: UUID!): PlanFavorite!
 @hasRole(role: MINT_USER)
 
-createCrAndTdl(input: CrAndTdlCreateInput!): CrAndTdl!
+createCrTdl(input: CrTdlCreateInput!): CrTdl!
 @hasRole(role: MINT_USER)
 
-updateCrAndTdl(id: UUID!, changes: CrAndTdlChanges!): CrAndTdl!
+updateCrTdl(id: UUID!, changes: CrTdlChanges!): CrTdl!
 @hasRole(role: MINT_USER)
 
-deleteCrAndTdl(id: UUID!): CrAndTdl!
+deleteCrTdl(id: UUID!): CrTdl!
 @hasRole(role: MINT_USER)
 }
 
@@ -7599,13 +7599,13 @@ func (ec *executionContext) field_Mutation_agreeToNDA_args(ctx context.Context, 
 	return args, nil
 }
 
-func (ec *executionContext) field_Mutation_createCrAndTdl_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+func (ec *executionContext) field_Mutation_createCrTdl_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
-	var arg0 model.CrAndTdlCreateInput
+	var arg0 model.CrTdlCreateInput
 	if tmp, ok := rawArgs["input"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
-		arg0, err = ec.unmarshalNCrAndTdlCreateInput2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCrAndTdlCreateInput(ctx, tmp)
+		arg0, err = ec.unmarshalNCrTdlCreateInput2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCrTdlCreateInput(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -7689,7 +7689,7 @@ func (ec *executionContext) field_Mutation_createPlanDocument_args(ctx context.C
 	return args, nil
 }
 
-func (ec *executionContext) field_Mutation_deleteCrAndTdl_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+func (ec *executionContext) field_Mutation_deleteCrTdl_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
 	var arg0 uuid.UUID
@@ -7857,7 +7857,7 @@ func (ec *executionContext) field_Mutation_unlockTaskListSection_args(ctx contex
 	return args, nil
 }
 
-func (ec *executionContext) field_Mutation_updateCrAndTdl_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+func (ec *executionContext) field_Mutation_updateCrTdl_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
 	var arg0 uuid.UUID
@@ -7869,10 +7869,10 @@ func (ec *executionContext) field_Mutation_updateCrAndTdl_args(ctx context.Conte
 		}
 	}
 	args["id"] = arg0
-	var arg1 model.CrAndTdlChanges
+	var arg1 model.CrTdlChanges
 	if tmp, ok := rawArgs["changes"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("changes"))
-		arg1, err = ec.unmarshalNCrAndTdlChanges2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCrAndTdlChanges(ctx, tmp)
+		arg1, err = ec.unmarshalNCrTdlChanges2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCrTdlChanges(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -8363,8 +8363,8 @@ func (ec *executionContext) field___Type_fields_args(ctx context.Context, rawArg
 
 // region    **************************** field.gotpl *****************************
 
-func (ec *executionContext) _CrAndTdl_id(ctx context.Context, field graphql.CollectedField, obj *model.CrAndTdl) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_CrAndTdl_id(ctx, field)
+func (ec *executionContext) _CrTdl_id(ctx context.Context, field graphql.CollectedField, obj *model.CrTdl) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_CrTdl_id(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -8394,9 +8394,9 @@ func (ec *executionContext) _CrAndTdl_id(ctx context.Context, field graphql.Coll
 	return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_CrAndTdl_id(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_CrTdl_id(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
-		Object:     "CrAndTdl",
+		Object:     "CrTdl",
 		Field:      field,
 		IsMethod:   false,
 		IsResolver: false,
@@ -8407,8 +8407,8 @@ func (ec *executionContext) fieldContext_CrAndTdl_id(ctx context.Context, field 
 	return fc, nil
 }
 
-func (ec *executionContext) _CrAndTdl_modelPlanID(ctx context.Context, field graphql.CollectedField, obj *model.CrAndTdl) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_CrAndTdl_modelPlanID(ctx, field)
+func (ec *executionContext) _CrTdl_modelPlanID(ctx context.Context, field graphql.CollectedField, obj *model.CrTdl) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_CrTdl_modelPlanID(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -8438,9 +8438,9 @@ func (ec *executionContext) _CrAndTdl_modelPlanID(ctx context.Context, field gra
 	return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_CrAndTdl_modelPlanID(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_CrTdl_modelPlanID(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
-		Object:     "CrAndTdl",
+		Object:     "CrTdl",
 		Field:      field,
 		IsMethod:   false,
 		IsResolver: false,
@@ -8451,8 +8451,8 @@ func (ec *executionContext) fieldContext_CrAndTdl_modelPlanID(ctx context.Contex
 	return fc, nil
 }
 
-func (ec *executionContext) _CrAndTdl_idNumber(ctx context.Context, field graphql.CollectedField, obj *model.CrAndTdl) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_CrAndTdl_idNumber(ctx, field)
+func (ec *executionContext) _CrTdl_idNumber(ctx context.Context, field graphql.CollectedField, obj *model.CrTdl) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_CrTdl_idNumber(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -8482,9 +8482,9 @@ func (ec *executionContext) _CrAndTdl_idNumber(ctx context.Context, field graphq
 	return ec.marshalNString2string(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_CrAndTdl_idNumber(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_CrTdl_idNumber(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
-		Object:     "CrAndTdl",
+		Object:     "CrTdl",
 		Field:      field,
 		IsMethod:   false,
 		IsResolver: false,
@@ -8495,8 +8495,8 @@ func (ec *executionContext) fieldContext_CrAndTdl_idNumber(ctx context.Context, 
 	return fc, nil
 }
 
-func (ec *executionContext) _CrAndTdl_dateInitiated(ctx context.Context, field graphql.CollectedField, obj *model.CrAndTdl) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_CrAndTdl_dateInitiated(ctx, field)
+func (ec *executionContext) _CrTdl_dateInitiated(ctx context.Context, field graphql.CollectedField, obj *model.CrTdl) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_CrTdl_dateInitiated(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -8526,9 +8526,9 @@ func (ec *executionContext) _CrAndTdl_dateInitiated(ctx context.Context, field g
 	return ec.marshalNTime2timeᚐTime(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_CrAndTdl_dateInitiated(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_CrTdl_dateInitiated(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
-		Object:     "CrAndTdl",
+		Object:     "CrTdl",
 		Field:      field,
 		IsMethod:   false,
 		IsResolver: false,
@@ -8539,8 +8539,8 @@ func (ec *executionContext) fieldContext_CrAndTdl_dateInitiated(ctx context.Cont
 	return fc, nil
 }
 
-func (ec *executionContext) _CrAndTdl_title(ctx context.Context, field graphql.CollectedField, obj *model.CrAndTdl) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_CrAndTdl_title(ctx, field)
+func (ec *executionContext) _CrTdl_title(ctx context.Context, field graphql.CollectedField, obj *model.CrTdl) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_CrTdl_title(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -8570,9 +8570,9 @@ func (ec *executionContext) _CrAndTdl_title(ctx context.Context, field graphql.C
 	return ec.marshalNString2string(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_CrAndTdl_title(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_CrTdl_title(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
-		Object:     "CrAndTdl",
+		Object:     "CrTdl",
 		Field:      field,
 		IsMethod:   false,
 		IsResolver: false,
@@ -8583,8 +8583,8 @@ func (ec *executionContext) fieldContext_CrAndTdl_title(ctx context.Context, fie
 	return fc, nil
 }
 
-func (ec *executionContext) _CrAndTdl_optionalComments(ctx context.Context, field graphql.CollectedField, obj *model.CrAndTdl) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_CrAndTdl_optionalComments(ctx, field)
+func (ec *executionContext) _CrTdl_optionalComments(ctx context.Context, field graphql.CollectedField, obj *model.CrTdl) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_CrTdl_optionalComments(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -8611,9 +8611,9 @@ func (ec *executionContext) _CrAndTdl_optionalComments(ctx context.Context, fiel
 	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_CrAndTdl_optionalComments(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_CrTdl_optionalComments(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
-		Object:     "CrAndTdl",
+		Object:     "CrTdl",
 		Field:      field,
 		IsMethod:   false,
 		IsResolver: false,
@@ -8624,8 +8624,8 @@ func (ec *executionContext) fieldContext_CrAndTdl_optionalComments(ctx context.C
 	return fc, nil
 }
 
-func (ec *executionContext) _CrAndTdl_createdBy(ctx context.Context, field graphql.CollectedField, obj *model.CrAndTdl) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_CrAndTdl_createdBy(ctx, field)
+func (ec *executionContext) _CrTdl_createdBy(ctx context.Context, field graphql.CollectedField, obj *model.CrTdl) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_CrTdl_createdBy(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -8655,9 +8655,9 @@ func (ec *executionContext) _CrAndTdl_createdBy(ctx context.Context, field graph
 	return ec.marshalNString2string(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_CrAndTdl_createdBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_CrTdl_createdBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
-		Object:     "CrAndTdl",
+		Object:     "CrTdl",
 		Field:      field,
 		IsMethod:   false,
 		IsResolver: false,
@@ -8668,8 +8668,8 @@ func (ec *executionContext) fieldContext_CrAndTdl_createdBy(ctx context.Context,
 	return fc, nil
 }
 
-func (ec *executionContext) _CrAndTdl_createdDts(ctx context.Context, field graphql.CollectedField, obj *model.CrAndTdl) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_CrAndTdl_createdDts(ctx, field)
+func (ec *executionContext) _CrTdl_createdDts(ctx context.Context, field graphql.CollectedField, obj *model.CrTdl) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_CrTdl_createdDts(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -8699,9 +8699,9 @@ func (ec *executionContext) _CrAndTdl_createdDts(ctx context.Context, field grap
 	return ec.marshalNTime2timeᚐTime(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_CrAndTdl_createdDts(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_CrTdl_createdDts(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
-		Object:     "CrAndTdl",
+		Object:     "CrTdl",
 		Field:      field,
 		IsMethod:   false,
 		IsResolver: false,
@@ -8712,8 +8712,8 @@ func (ec *executionContext) fieldContext_CrAndTdl_createdDts(ctx context.Context
 	return fc, nil
 }
 
-func (ec *executionContext) _CrAndTdl_modifiedBy(ctx context.Context, field graphql.CollectedField, obj *model.CrAndTdl) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_CrAndTdl_modifiedBy(ctx, field)
+func (ec *executionContext) _CrTdl_modifiedBy(ctx context.Context, field graphql.CollectedField, obj *model.CrTdl) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_CrTdl_modifiedBy(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -8740,9 +8740,9 @@ func (ec *executionContext) _CrAndTdl_modifiedBy(ctx context.Context, field grap
 	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_CrAndTdl_modifiedBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_CrTdl_modifiedBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
-		Object:     "CrAndTdl",
+		Object:     "CrTdl",
 		Field:      field,
 		IsMethod:   false,
 		IsResolver: false,
@@ -8753,8 +8753,8 @@ func (ec *executionContext) fieldContext_CrAndTdl_modifiedBy(ctx context.Context
 	return fc, nil
 }
 
-func (ec *executionContext) _CrAndTdl_modifiedDts(ctx context.Context, field graphql.CollectedField, obj *model.CrAndTdl) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_CrAndTdl_modifiedDts(ctx, field)
+func (ec *executionContext) _CrTdl_modifiedDts(ctx context.Context, field graphql.CollectedField, obj *model.CrTdl) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_CrTdl_modifiedDts(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -8781,9 +8781,9 @@ func (ec *executionContext) _CrAndTdl_modifiedDts(ctx context.Context, field gra
 	return ec.marshalOTime2ᚖtimeᚐTime(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_CrAndTdl_modifiedDts(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_CrTdl_modifiedDts(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
-		Object:     "CrAndTdl",
+		Object:     "CrTdl",
 		Field:      field,
 		IsMethod:   false,
 		IsResolver: false,
@@ -11907,7 +11907,7 @@ func (ec *executionContext) _ModelPlan_crAndTdls(ctx context.Context, field grap
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.ModelPlan().CrAndTdls(rctx, obj)
+		return ec.resolvers.ModelPlan().CrTdls(rctx, obj)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -11916,9 +11916,9 @@ func (ec *executionContext) _ModelPlan_crAndTdls(ctx context.Context, field grap
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.([]*model.CrAndTdl)
+	res := resTmp.([]*model.CrTdl)
 	fc.Result = res
-	return ec.marshalOCrAndTdl2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCrAndTdlᚄ(ctx, field.Selections, res)
+	return ec.marshalOCrTdl2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCrTdlᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_ModelPlan_crAndTdls(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -11930,27 +11930,27 @@ func (ec *executionContext) fieldContext_ModelPlan_crAndTdls(ctx context.Context
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			switch field.Name {
 			case "id":
-				return ec.fieldContext_CrAndTdl_id(ctx, field)
+				return ec.fieldContext_CrTdl_id(ctx, field)
 			case "modelPlanID":
-				return ec.fieldContext_CrAndTdl_modelPlanID(ctx, field)
+				return ec.fieldContext_CrTdl_modelPlanID(ctx, field)
 			case "idNumber":
-				return ec.fieldContext_CrAndTdl_idNumber(ctx, field)
+				return ec.fieldContext_CrTdl_idNumber(ctx, field)
 			case "dateInitiated":
-				return ec.fieldContext_CrAndTdl_dateInitiated(ctx, field)
+				return ec.fieldContext_CrTdl_dateInitiated(ctx, field)
 			case "title":
-				return ec.fieldContext_CrAndTdl_title(ctx, field)
+				return ec.fieldContext_CrTdl_title(ctx, field)
 			case "optionalComments":
-				return ec.fieldContext_CrAndTdl_optionalComments(ctx, field)
+				return ec.fieldContext_CrTdl_optionalComments(ctx, field)
 			case "createdBy":
-				return ec.fieldContext_CrAndTdl_createdBy(ctx, field)
+				return ec.fieldContext_CrTdl_createdBy(ctx, field)
 			case "createdDts":
-				return ec.fieldContext_CrAndTdl_createdDts(ctx, field)
+				return ec.fieldContext_CrTdl_createdDts(ctx, field)
 			case "modifiedBy":
-				return ec.fieldContext_CrAndTdl_modifiedBy(ctx, field)
+				return ec.fieldContext_CrTdl_modifiedBy(ctx, field)
 			case "modifiedDts":
-				return ec.fieldContext_CrAndTdl_modifiedDts(ctx, field)
+				return ec.fieldContext_CrTdl_modifiedDts(ctx, field)
 			}
-			return nil, fmt.Errorf("no field named %q was found under type CrAndTdl", field.Name)
+			return nil, fmt.Errorf("no field named %q was found under type CrTdl", field.Name)
 		},
 	}
 	return fc, nil
@@ -15378,8 +15378,8 @@ func (ec *executionContext) fieldContext_Mutation_deletePlanFavorite(ctx context
 	return fc, nil
 }
 
-func (ec *executionContext) _Mutation_createCrAndTdl(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Mutation_createCrAndTdl(ctx, field)
+func (ec *executionContext) _Mutation_createCrTdl(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Mutation_createCrTdl(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -15393,7 +15393,7 @@ func (ec *executionContext) _Mutation_createCrAndTdl(ctx context.Context, field 
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		directive0 := func(rctx context.Context) (interface{}, error) {
 			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Mutation().CreateCrAndTdl(rctx, fc.Args["input"].(model.CrAndTdlCreateInput))
+			return ec.resolvers.Mutation().CreateCrTdl(rctx, fc.Args["input"].(model.CrTdlCreateInput))
 		}
 		directive1 := func(ctx context.Context) (interface{}, error) {
 			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
@@ -15413,10 +15413,10 @@ func (ec *executionContext) _Mutation_createCrAndTdl(ctx context.Context, field 
 		if tmp == nil {
 			return nil, nil
 		}
-		if data, ok := tmp.(*model.CrAndTdl); ok {
+		if data, ok := tmp.(*model.CrTdl); ok {
 			return data, nil
 		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/graph/model.CrAndTdl`, tmp)
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/graph/model.CrTdl`, tmp)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -15428,12 +15428,12 @@ func (ec *executionContext) _Mutation_createCrAndTdl(ctx context.Context, field 
 		}
 		return graphql.Null
 	}
-	res := resTmp.(*model.CrAndTdl)
+	res := resTmp.(*model.CrTdl)
 	fc.Result = res
-	return ec.marshalNCrAndTdl2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCrAndTdl(ctx, field.Selections, res)
+	return ec.marshalNCrTdl2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCrTdl(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Mutation_createCrAndTdl(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Mutation_createCrTdl(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Mutation",
 		Field:      field,
@@ -15442,27 +15442,27 @@ func (ec *executionContext) fieldContext_Mutation_createCrAndTdl(ctx context.Con
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			switch field.Name {
 			case "id":
-				return ec.fieldContext_CrAndTdl_id(ctx, field)
+				return ec.fieldContext_CrTdl_id(ctx, field)
 			case "modelPlanID":
-				return ec.fieldContext_CrAndTdl_modelPlanID(ctx, field)
+				return ec.fieldContext_CrTdl_modelPlanID(ctx, field)
 			case "idNumber":
-				return ec.fieldContext_CrAndTdl_idNumber(ctx, field)
+				return ec.fieldContext_CrTdl_idNumber(ctx, field)
 			case "dateInitiated":
-				return ec.fieldContext_CrAndTdl_dateInitiated(ctx, field)
+				return ec.fieldContext_CrTdl_dateInitiated(ctx, field)
 			case "title":
-				return ec.fieldContext_CrAndTdl_title(ctx, field)
+				return ec.fieldContext_CrTdl_title(ctx, field)
 			case "optionalComments":
-				return ec.fieldContext_CrAndTdl_optionalComments(ctx, field)
+				return ec.fieldContext_CrTdl_optionalComments(ctx, field)
 			case "createdBy":
-				return ec.fieldContext_CrAndTdl_createdBy(ctx, field)
+				return ec.fieldContext_CrTdl_createdBy(ctx, field)
 			case "createdDts":
-				return ec.fieldContext_CrAndTdl_createdDts(ctx, field)
+				return ec.fieldContext_CrTdl_createdDts(ctx, field)
 			case "modifiedBy":
-				return ec.fieldContext_CrAndTdl_modifiedBy(ctx, field)
+				return ec.fieldContext_CrTdl_modifiedBy(ctx, field)
 			case "modifiedDts":
-				return ec.fieldContext_CrAndTdl_modifiedDts(ctx, field)
+				return ec.fieldContext_CrTdl_modifiedDts(ctx, field)
 			}
-			return nil, fmt.Errorf("no field named %q was found under type CrAndTdl", field.Name)
+			return nil, fmt.Errorf("no field named %q was found under type CrTdl", field.Name)
 		},
 	}
 	defer func() {
@@ -15472,15 +15472,15 @@ func (ec *executionContext) fieldContext_Mutation_createCrAndTdl(ctx context.Con
 		}
 	}()
 	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_createCrAndTdl_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+	if fc.Args, err = ec.field_Mutation_createCrTdl_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return
 	}
 	return fc, nil
 }
 
-func (ec *executionContext) _Mutation_updateCrAndTdl(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Mutation_updateCrAndTdl(ctx, field)
+func (ec *executionContext) _Mutation_updateCrTdl(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Mutation_updateCrTdl(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -15494,7 +15494,7 @@ func (ec *executionContext) _Mutation_updateCrAndTdl(ctx context.Context, field 
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		directive0 := func(rctx context.Context) (interface{}, error) {
 			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Mutation().UpdateCrAndTdl(rctx, fc.Args["id"].(uuid.UUID), fc.Args["changes"].(model.CrAndTdlChanges))
+			return ec.resolvers.Mutation().UpdateCrTdl(rctx, fc.Args["id"].(uuid.UUID), fc.Args["changes"].(model.CrTdlChanges))
 		}
 		directive1 := func(ctx context.Context) (interface{}, error) {
 			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
@@ -15514,10 +15514,10 @@ func (ec *executionContext) _Mutation_updateCrAndTdl(ctx context.Context, field 
 		if tmp == nil {
 			return nil, nil
 		}
-		if data, ok := tmp.(*model.CrAndTdl); ok {
+		if data, ok := tmp.(*model.CrTdl); ok {
 			return data, nil
 		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/graph/model.CrAndTdl`, tmp)
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/graph/model.CrTdl`, tmp)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -15529,12 +15529,12 @@ func (ec *executionContext) _Mutation_updateCrAndTdl(ctx context.Context, field 
 		}
 		return graphql.Null
 	}
-	res := resTmp.(*model.CrAndTdl)
+	res := resTmp.(*model.CrTdl)
 	fc.Result = res
-	return ec.marshalNCrAndTdl2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCrAndTdl(ctx, field.Selections, res)
+	return ec.marshalNCrTdl2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCrTdl(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Mutation_updateCrAndTdl(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Mutation_updateCrTdl(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Mutation",
 		Field:      field,
@@ -15543,27 +15543,27 @@ func (ec *executionContext) fieldContext_Mutation_updateCrAndTdl(ctx context.Con
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			switch field.Name {
 			case "id":
-				return ec.fieldContext_CrAndTdl_id(ctx, field)
+				return ec.fieldContext_CrTdl_id(ctx, field)
 			case "modelPlanID":
-				return ec.fieldContext_CrAndTdl_modelPlanID(ctx, field)
+				return ec.fieldContext_CrTdl_modelPlanID(ctx, field)
 			case "idNumber":
-				return ec.fieldContext_CrAndTdl_idNumber(ctx, field)
+				return ec.fieldContext_CrTdl_idNumber(ctx, field)
 			case "dateInitiated":
-				return ec.fieldContext_CrAndTdl_dateInitiated(ctx, field)
+				return ec.fieldContext_CrTdl_dateInitiated(ctx, field)
 			case "title":
-				return ec.fieldContext_CrAndTdl_title(ctx, field)
+				return ec.fieldContext_CrTdl_title(ctx, field)
 			case "optionalComments":
-				return ec.fieldContext_CrAndTdl_optionalComments(ctx, field)
+				return ec.fieldContext_CrTdl_optionalComments(ctx, field)
 			case "createdBy":
-				return ec.fieldContext_CrAndTdl_createdBy(ctx, field)
+				return ec.fieldContext_CrTdl_createdBy(ctx, field)
 			case "createdDts":
-				return ec.fieldContext_CrAndTdl_createdDts(ctx, field)
+				return ec.fieldContext_CrTdl_createdDts(ctx, field)
 			case "modifiedBy":
-				return ec.fieldContext_CrAndTdl_modifiedBy(ctx, field)
+				return ec.fieldContext_CrTdl_modifiedBy(ctx, field)
 			case "modifiedDts":
-				return ec.fieldContext_CrAndTdl_modifiedDts(ctx, field)
+				return ec.fieldContext_CrTdl_modifiedDts(ctx, field)
 			}
-			return nil, fmt.Errorf("no field named %q was found under type CrAndTdl", field.Name)
+			return nil, fmt.Errorf("no field named %q was found under type CrTdl", field.Name)
 		},
 	}
 	defer func() {
@@ -15573,15 +15573,15 @@ func (ec *executionContext) fieldContext_Mutation_updateCrAndTdl(ctx context.Con
 		}
 	}()
 	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_updateCrAndTdl_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+	if fc.Args, err = ec.field_Mutation_updateCrTdl_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return
 	}
 	return fc, nil
 }
 
-func (ec *executionContext) _Mutation_deleteCrAndTdl(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Mutation_deleteCrAndTdl(ctx, field)
+func (ec *executionContext) _Mutation_deleteCrTdl(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Mutation_deleteCrTdl(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -15595,7 +15595,7 @@ func (ec *executionContext) _Mutation_deleteCrAndTdl(ctx context.Context, field 
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		directive0 := func(rctx context.Context) (interface{}, error) {
 			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Mutation().DeleteCrAndTdl(rctx, fc.Args["id"].(uuid.UUID))
+			return ec.resolvers.Mutation().DeleteCrTdl(rctx, fc.Args["id"].(uuid.UUID))
 		}
 		directive1 := func(ctx context.Context) (interface{}, error) {
 			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
@@ -15615,10 +15615,10 @@ func (ec *executionContext) _Mutation_deleteCrAndTdl(ctx context.Context, field 
 		if tmp == nil {
 			return nil, nil
 		}
-		if data, ok := tmp.(*model.CrAndTdl); ok {
+		if data, ok := tmp.(*model.CrTdl); ok {
 			return data, nil
 		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/graph/model.CrAndTdl`, tmp)
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/graph/model.CrTdl`, tmp)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -15630,12 +15630,12 @@ func (ec *executionContext) _Mutation_deleteCrAndTdl(ctx context.Context, field 
 		}
 		return graphql.Null
 	}
-	res := resTmp.(*model.CrAndTdl)
+	res := resTmp.(*model.CrTdl)
 	fc.Result = res
-	return ec.marshalNCrAndTdl2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCrAndTdl(ctx, field.Selections, res)
+	return ec.marshalNCrTdl2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCrTdl(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Mutation_deleteCrAndTdl(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Mutation_deleteCrTdl(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Mutation",
 		Field:      field,
@@ -15644,27 +15644,27 @@ func (ec *executionContext) fieldContext_Mutation_deleteCrAndTdl(ctx context.Con
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			switch field.Name {
 			case "id":
-				return ec.fieldContext_CrAndTdl_id(ctx, field)
+				return ec.fieldContext_CrTdl_id(ctx, field)
 			case "modelPlanID":
-				return ec.fieldContext_CrAndTdl_modelPlanID(ctx, field)
+				return ec.fieldContext_CrTdl_modelPlanID(ctx, field)
 			case "idNumber":
-				return ec.fieldContext_CrAndTdl_idNumber(ctx, field)
+				return ec.fieldContext_CrTdl_idNumber(ctx, field)
 			case "dateInitiated":
-				return ec.fieldContext_CrAndTdl_dateInitiated(ctx, field)
+				return ec.fieldContext_CrTdl_dateInitiated(ctx, field)
 			case "title":
-				return ec.fieldContext_CrAndTdl_title(ctx, field)
+				return ec.fieldContext_CrTdl_title(ctx, field)
 			case "optionalComments":
-				return ec.fieldContext_CrAndTdl_optionalComments(ctx, field)
+				return ec.fieldContext_CrTdl_optionalComments(ctx, field)
 			case "createdBy":
-				return ec.fieldContext_CrAndTdl_createdBy(ctx, field)
+				return ec.fieldContext_CrTdl_createdBy(ctx, field)
 			case "createdDts":
-				return ec.fieldContext_CrAndTdl_createdDts(ctx, field)
+				return ec.fieldContext_CrTdl_createdDts(ctx, field)
 			case "modifiedBy":
-				return ec.fieldContext_CrAndTdl_modifiedBy(ctx, field)
+				return ec.fieldContext_CrTdl_modifiedBy(ctx, field)
 			case "modifiedDts":
-				return ec.fieldContext_CrAndTdl_modifiedDts(ctx, field)
+				return ec.fieldContext_CrTdl_modifiedDts(ctx, field)
 			}
-			return nil, fmt.Errorf("no field named %q was found under type CrAndTdl", field.Name)
+			return nil, fmt.Errorf("no field named %q was found under type CrTdl", field.Name)
 		},
 	}
 	defer func() {
@@ -15674,7 +15674,7 @@ func (ec *executionContext) fieldContext_Mutation_deleteCrAndTdl(ctx context.Con
 		}
 	}()
 	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_deleteCrAndTdl_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+	if fc.Args, err = ec.field_Mutation_deleteCrTdl_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return
 	}
@@ -39399,8 +39399,8 @@ func (ec *executionContext) fieldContext___Type_specifiedByURL(ctx context.Conte
 
 // region    **************************** input.gotpl *****************************
 
-func (ec *executionContext) unmarshalInputCrAndTdlChanges(ctx context.Context, obj interface{}) (model.CrAndTdlChanges, error) {
-	var it model.CrAndTdlChanges
+func (ec *executionContext) unmarshalInputCrTdlChanges(ctx context.Context, obj interface{}) (model.CrTdlChanges, error) {
+	var it model.CrTdlChanges
 	asMap := map[string]interface{}{}
 	for k, v := range obj.(map[string]interface{}) {
 		asMap[k] = v
@@ -39451,8 +39451,8 @@ func (ec *executionContext) unmarshalInputCrAndTdlChanges(ctx context.Context, o
 	return it, nil
 }
 
-func (ec *executionContext) unmarshalInputCrAndTdlCreateInput(ctx context.Context, obj interface{}) (model.CrAndTdlCreateInput, error) {
-	var it model.CrAndTdlCreateInput
+func (ec *executionContext) unmarshalInputCrTdlCreateInput(ctx context.Context, obj interface{}) (model.CrTdlCreateInput, error) {
+	var it model.CrTdlCreateInput
 	asMap := map[string]interface{}{}
 	for k, v := range obj.(map[string]interface{}) {
 		asMap[k] = v
@@ -39827,76 +39827,76 @@ func (ec *executionContext) unmarshalInputPlanDocumentParameters(ctx context.Con
 
 // region    **************************** object.gotpl ****************************
 
-var crAndTdlImplementors = []string{"CrAndTdl"}
+var crAndTdlImplementors = []string{"CrTdl"}
 
-func (ec *executionContext) _CrAndTdl(ctx context.Context, sel ast.SelectionSet, obj *model.CrAndTdl) graphql.Marshaler {
+func (ec *executionContext) _CrTdl(ctx context.Context, sel ast.SelectionSet, obj *model.CrTdl) graphql.Marshaler {
 	fields := graphql.CollectFields(ec.OperationContext, sel, crAndTdlImplementors)
 	out := graphql.NewFieldSet(fields)
 	var invalids uint32
 	for i, field := range fields {
 		switch field.Name {
 		case "__typename":
-			out.Values[i] = graphql.MarshalString("CrAndTdl")
+			out.Values[i] = graphql.MarshalString("CrTdl")
 		case "id":
 
-			out.Values[i] = ec._CrAndTdl_id(ctx, field, obj)
+			out.Values[i] = ec._CrTdl_id(ctx, field, obj)
 
 			if out.Values[i] == graphql.Null {
 				invalids++
 			}
 		case "modelPlanID":
 
-			out.Values[i] = ec._CrAndTdl_modelPlanID(ctx, field, obj)
+			out.Values[i] = ec._CrTdl_modelPlanID(ctx, field, obj)
 
 			if out.Values[i] == graphql.Null {
 				invalids++
 			}
 		case "idNumber":
 
-			out.Values[i] = ec._CrAndTdl_idNumber(ctx, field, obj)
+			out.Values[i] = ec._CrTdl_idNumber(ctx, field, obj)
 
 			if out.Values[i] == graphql.Null {
 				invalids++
 			}
 		case "dateInitiated":
 
-			out.Values[i] = ec._CrAndTdl_dateInitiated(ctx, field, obj)
+			out.Values[i] = ec._CrTdl_dateInitiated(ctx, field, obj)
 
 			if out.Values[i] == graphql.Null {
 				invalids++
 			}
 		case "title":
 
-			out.Values[i] = ec._CrAndTdl_title(ctx, field, obj)
+			out.Values[i] = ec._CrTdl_title(ctx, field, obj)
 
 			if out.Values[i] == graphql.Null {
 				invalids++
 			}
 		case "optionalComments":
 
-			out.Values[i] = ec._CrAndTdl_optionalComments(ctx, field, obj)
+			out.Values[i] = ec._CrTdl_optionalComments(ctx, field, obj)
 
 		case "createdBy":
 
-			out.Values[i] = ec._CrAndTdl_createdBy(ctx, field, obj)
+			out.Values[i] = ec._CrTdl_createdBy(ctx, field, obj)
 
 			if out.Values[i] == graphql.Null {
 				invalids++
 			}
 		case "createdDts":
 
-			out.Values[i] = ec._CrAndTdl_createdDts(ctx, field, obj)
+			out.Values[i] = ec._CrTdl_createdDts(ctx, field, obj)
 
 			if out.Values[i] == graphql.Null {
 				invalids++
 			}
 		case "modifiedBy":
 
-			out.Values[i] = ec._CrAndTdl_modifiedBy(ctx, field, obj)
+			out.Values[i] = ec._CrTdl_modifiedBy(ctx, field, obj)
 
 		case "modifiedDts":
 
-			out.Values[i] = ec._CrAndTdl_modifiedDts(ctx, field, obj)
+			out.Values[i] = ec._CrTdl_modifiedDts(ctx, field, obj)
 
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
@@ -40747,28 +40747,28 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 			if out.Values[i] == graphql.Null {
 				invalids++
 			}
-		case "createCrAndTdl":
+		case "createCrTdl":
 
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_createCrAndTdl(ctx, field)
+				return ec._Mutation_createCrTdl(ctx, field)
 			})
 
 			if out.Values[i] == graphql.Null {
 				invalids++
 			}
-		case "updateCrAndTdl":
+		case "updateCrTdl":
 
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_updateCrAndTdl(ctx, field)
+				return ec._Mutation_updateCrTdl(ctx, field)
 			})
 
 			if out.Values[i] == graphql.Null {
 				invalids++
 			}
-		case "deleteCrAndTdl":
+		case "deleteCrTdl":
 
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_deleteCrAndTdl(ctx, field)
+				return ec._Mutation_deleteCrTdl(ctx, field)
 			})
 
 			if out.Values[i] == graphql.Null {
@@ -45930,27 +45930,27 @@ func (ec *executionContext) marshalNContractorSupportType2ᚕgithubᚗcomᚋcmsg
 	return ret
 }
 
-func (ec *executionContext) marshalNCrAndTdl2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCrAndTdl(ctx context.Context, sel ast.SelectionSet, v model.CrAndTdl) graphql.Marshaler {
-	return ec._CrAndTdl(ctx, sel, &v)
+func (ec *executionContext) marshalNCrTdl2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCrTdl(ctx context.Context, sel ast.SelectionSet, v model.CrTdl) graphql.Marshaler {
+	return ec._CrTdl(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalNCrAndTdl2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCrAndTdl(ctx context.Context, sel ast.SelectionSet, v *model.CrAndTdl) graphql.Marshaler {
+func (ec *executionContext) marshalNCrTdl2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCrTdl(ctx context.Context, sel ast.SelectionSet, v *model.CrTdl) graphql.Marshaler {
 	if v == nil {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
 			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
 		}
 		return graphql.Null
 	}
-	return ec._CrAndTdl(ctx, sel, v)
+	return ec._CrTdl(ctx, sel, v)
 }
 
-func (ec *executionContext) unmarshalNCrAndTdlChanges2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCrAndTdlChanges(ctx context.Context, v interface{}) (model.CrAndTdlChanges, error) {
-	res, err := ec.unmarshalInputCrAndTdlChanges(ctx, v)
+func (ec *executionContext) unmarshalNCrTdlChanges2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCrTdlChanges(ctx context.Context, v interface{}) (model.CrTdlChanges, error) {
+	res, err := ec.unmarshalInputCrTdlChanges(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
-func (ec *executionContext) unmarshalNCrAndTdlCreateInput2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCrAndTdlCreateInput(ctx context.Context, v interface{}) (model.CrAndTdlCreateInput, error) {
-	res, err := ec.unmarshalInputCrAndTdlCreateInput(ctx, v)
+func (ec *executionContext) unmarshalNCrTdlCreateInput2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCrTdlCreateInput(ctx context.Context, v interface{}) (model.CrTdlCreateInput, error) {
+	res, err := ec.unmarshalInputCrTdlCreateInput(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
@@ -51420,7 +51420,7 @@ func (ec *executionContext) marshalOContractorSupportType2ᚕgithubᚗcomᚋcmsg
 	return ret
 }
 
-func (ec *executionContext) marshalOCrAndTdl2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCrAndTdlᚄ(ctx context.Context, sel ast.SelectionSet, v []*model.CrAndTdl) graphql.Marshaler {
+func (ec *executionContext) marshalOCrTdl2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCrTdlᚄ(ctx context.Context, sel ast.SelectionSet, v []*model.CrTdl) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
@@ -51447,7 +51447,7 @@ func (ec *executionContext) marshalOCrAndTdl2ᚕᚖgithubᚗcomᚋcmsgovᚋmint�
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalNCrAndTdl2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCrAndTdl(ctx, sel, v[i])
+			ret[i] = ec.marshalNCrTdl2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐCrTdl(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)

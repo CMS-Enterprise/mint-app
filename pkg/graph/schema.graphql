@@ -46,7 +46,7 @@ type ModelPlan {
   itTools: PlanITTools!
   status: ModelStatus!
   isFavorite: Boolean!
-  crAndTdls: [CrAndTdl!]
+  crTdls: [CrTdl!]
 }
 
 """
@@ -1327,7 +1327,7 @@ type PlanFavorite {
 
 }
 
-type CrAndTdl {
+type CrTdl {
     id: UUID!
     modelPlanID: UUID!
 
@@ -1342,7 +1342,7 @@ type CrAndTdl {
     modifiedDts: Time
 }
 
-input CrAndTdlCreateInput {
+input CrTdlCreateInput {
     modelPlanID: UUID!
 
     idNumber: String!
@@ -1351,7 +1351,7 @@ input CrAndTdlCreateInput {
     optionalComments: String
 }
 
-input CrAndTdlChanges {
+input CrTdlChanges {
     idNumber: String
     dateInitiated: Time
     title: String
@@ -1464,13 +1464,13 @@ addPlanFavorite(modelPlanID: UUID!): PlanFavorite!
 deletePlanFavorite(modelPlanID: UUID!): PlanFavorite!
 @hasRole(role: MINT_USER)
 
-createCrAndTdl(input: CrAndTdlCreateInput!): CrAndTdl!
+createCrTdl(input: CrTdlCreateInput!): CrTdl!
 @hasRole(role: MINT_USER)
 
-updateCrAndTdl(id: UUID!, changes: CrAndTdlChanges!): CrAndTdl!
+updateCrTdl(id: UUID!, changes: CrTdlChanges!): CrTdl!
 @hasRole(role: MINT_USER)
 
-deleteCrAndTdl(id: UUID!): CrAndTdl!
+deleteCrTdl(id: UUID!): CrTdl!
 @hasRole(role: MINT_USER)
 }
 

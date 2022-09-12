@@ -12,7 +12,7 @@ import (
 	"github.com/google/uuid"
 )
 
-type CrAndTdl struct {
+type CrTdl struct {
 	ID               uuid.UUID  `json:"id"`
 	ModelPlanID      uuid.UUID  `json:"modelPlanID"`
 	IDNumber         string     `json:"idNumber"`
@@ -25,14 +25,14 @@ type CrAndTdl struct {
 	ModifiedDts      *time.Time `json:"modifiedDts"`
 }
 
-type CrAndTdlChanges struct {
+type CrTdlChanges struct {
 	IDNumber         *string    `json:"idNumber"`
 	DateInitiated    *time.Time `json:"dateInitiated"`
 	Title            *string    `json:"title"`
 	OptionalComments *string    `json:"optionalComments"`
 }
 
-type CrAndTdlCreateInput struct {
+type CrTdlCreateInput struct {
 	ModelPlanID      uuid.UUID `json:"modelPlanID"`
 	IDNumber         string    `json:"idNumber"`
 	DateInitiated    time.Time `json:"dateInitiated"`

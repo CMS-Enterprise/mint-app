@@ -1,4 +1,4 @@
-CREATE TABLE cr_and_tdl (
+CREATE TABLE cr_tdl (
     id UUID PRIMARY KEY NOT NULL,
     model_plan_id UUID NOT NULL, --foreign key to model plan
     id_number ZERO_STRING NOT NULL,
