@@ -71,6 +71,19 @@ const Home = () => {
           <div className="tablet:grid-col-12">
             <DraftModelPlansTable />
           </div>
+          <SummaryBox
+            heading=""
+            className="bg-base-lightest border-0 radius-0 padding-2 padding-bottom-3"
+          >
+            <p className="margin-0 margin-bottom-1">{t('allModels.copy')}</p>
+            <UswdsReactLink
+              className="usa-button usa-button--outline"
+              variant="unstyled"
+              to="/models/steps-overview"
+            >
+              {t('allModels.cta')}
+            </UswdsReactLink>
+          </SummaryBox>
         </div>
       );
     }
