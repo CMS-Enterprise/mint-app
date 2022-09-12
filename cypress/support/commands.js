@@ -26,3 +26,4 @@
 import './login';
 import './model-plan-by-name';
 import './itToolsRedirect';
+import './clickOutside';
