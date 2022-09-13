@@ -1,32 +1,76 @@
 import React from 'react';
-import CsvDownloader from 'react-csv-downloader';
 import { useTranslation } from 'react-i18next';
 import { useLazyQuery } from '@apollo/client';
+// @ts-ignore
+import { Parser, transforms } from 'json2csv';
 
 import GetModelPlans from 'queries/GetModelPlans';
-import { GetModelPlans as ModelPlansType } from 'queries/types/GetModelPlans';
+import {
+  GetModelPlans as GetModelPlansType,
+  GetModelPlans_modelPlanCollection as ModelPlanType
+} from 'queries/types/GetModelPlans';
 
-type ExportProps = {
-  fileName: string;
+const fields = [
+  // {
+  //   label: t('modelName'),
+  //   value: 'modelName'
+  // },
+  'modelName',
+  'modifiedDts',
+  'status',
+  'id',
+  'createdBy',
+  'createdDts',
+  'collaborators.fullName',
+  'collaborators.id',
+  'collaborators.teamRole',
+  'discussions.status',
+  'discussions.replies.resolution'
+];
+const unwindFields = ['collaborators', 'discussions', 'discussions.replies'];
+
+const csvFormatter = (csvData: ModelPlanType[]) => {
+  try {
+    const transform = [
+      transforms.unwind({ paths: unwindFields, blankOut: true })
+      // transforms.flatten('__')
+    ];
+    const parser = new Parser({
+      fields,
+      transforms: transform
+    });
+    const csv = parser.parse(csvData);
+    downloadFile(csv);
+  } catch (err) {
+    // TODO: Download error handling
+  }
 };
 
-export const CsvExportLink = ({
-  fileName
-}: ExportProps): React.ReactElement => {
+const downloadFile = (data: string) => {
+  const element = document.createElement('a');
+  const file = new Blob([data], {
+    type: 'text/csv'
+  });
+  element.href = URL.createObjectURL(file);
+  element.download = 'modelPlans.csv';
+  document.body.appendChild(element);
+  element.click();
+};
+
+export const CsvExportLink = (): React.ReactElement => {
   const { t } = useTranslation('home');
-  const [fetchModelCSVData] = useLazyQuery<ModelPlansType>(GetModelPlans);
+  const [fetchModelCSVData] = useLazyQuery<GetModelPlansType>(GetModelPlans);
 
   const fetchData = async () => {
     const modelPlans = await fetchModelCSVData();
-    // TODO: Formatting response to flatten nested fields, etc
-    return (modelPlans?.data?.modelPlanCollection as []) || [];
+    csvFormatter(modelPlans?.data?.modelPlanCollection || []);
   };
 
   return (
     <div>
-      <CsvDownloader datas={fetchData} filename={fileName}>
+      <button type="button" onClick={() => fetchData()}>
         {t('downloadCSV')}
-      </CsvDownloader>
+      </button>
     </div>
   );
 };
