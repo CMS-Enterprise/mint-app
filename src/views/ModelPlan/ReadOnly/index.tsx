@@ -132,7 +132,7 @@ const ReadOnly = () => {
   const subComponents: subComponentsProps = {
     'model-basics': {
       route: `/models/${modelID}/read-only/model-basics`,
-      component: <ReadOnlyModelBasics />
+      component: <ReadOnlyModelBasics modelID={modelID} />
     },
     'general-characteristics': {
       route: `/models/${modelID}/read-only/general-characteristics`,
