@@ -13,8 +13,8 @@ CREATE TABLE cr_tdl (
     modified_dts TIMESTAMP WITH TIME ZONE
 
 );
-ALTER TABLE cr_and_tdl
-ADD CONSTRAINT fk_cr_and_tdl FOREIGN KEY (model_plan_id)
+ALTER TABLE cr_tdl
+ADD CONSTRAINT fk_cr_tdl FOREIGN KEY (model_plan_id)
 REFERENCES public.model_plan (id) MATCH SIMPLE
 ON UPDATE NO ACTION
 ON DELETE NO ACTION;
