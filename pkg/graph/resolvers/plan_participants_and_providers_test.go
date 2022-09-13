@@ -4,7 +4,7 @@ import (
 	"github.com/cmsgov/mint-app/pkg/models"
 )
 
-//TestPlanParticipantsAndProvidersUpdate tests PlanParticipantsAndProvidersUpdate
+// TestPlanParticipantsAndProvidersUpdate tests PlanParticipantsAndProvidersUpdate
 func (suite *ResolverSuite) TestPlanParticipantsAndProvidersUpdate() {
 	plan := suite.createModelPlan("Plan for Participants and Providers")
 

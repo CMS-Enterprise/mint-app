@@ -10,7 +10,7 @@ import (
 	"github.com/cmsgov/mint-app/pkg/storage"
 )
 
-//IsPlanFavorited checks if a model plan is a favorite.
+// IsPlanFavorited checks if a model plan is a favorite.
 func IsPlanFavorited(logger *zap.Logger, principal authentication.Principal, store *storage.Store, modelPlanID uuid.UUID) (bool, error) {
 
 	favorite, err := PlanFavoriteGet(logger, principal, store, modelPlanID)
@@ -55,7 +55,7 @@ func PlanFavoriteDelete(logger *zap.Logger, principal authentication.Principal, 
 
 }
 
-//PlanFavoriteGet returns a plan favorite record
+// PlanFavoriteGet returns a plan favorite record
 func PlanFavoriteGet(logger *zap.Logger, principal authentication.Principal, store *storage.Store, modelPlandID uuid.UUID) (*models.PlanFavorite, error) {
 
 	return store.PlanFavoriteGetByModelIDAndEUA(logger, principal.ID(), modelPlandID)

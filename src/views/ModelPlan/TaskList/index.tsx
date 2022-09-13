@@ -1,5 +1,6 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useContext, useState } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
+import { RootStateOrAny, useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import {
@@ -19,7 +20,13 @@ import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import Divider from 'components/shared/Divider';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
+import GetModelPlanCollaborators from 'queries/Collaborators/GetModelCollaborators';
+import {
+  GetModelCollaborators,
+  GetModelCollaborators_modelPlan_collaborators as GetCollaboratorsType
+} from 'queries/Collaborators/types/GetModelCollaborators';
 import GetModelPlan from 'queries/GetModelPlan';
+import { TaskListSubscription_onLockTaskListSectionContext_lockStatus as LockSectionType } from 'queries/TaskListSubscription/types/TaskListSubscription';
 import {
   GetModelPlan as GetModelPlanType,
   GetModelPlan_modelPlan as GetModelPlanTypes,
@@ -32,17 +39,16 @@ import {
   GetModelPlan_modelPlan_payments as PaymentsType,
   GetModelPlanVariables
 } from 'queries/types/GetModelPlan';
-import { TaskStatus } from 'types/graphql-global-types';
+import { TaskListSection } from 'types/graphql-global-types';
 import { formatDate } from 'utils/date';
 import { getUnansweredQuestions } from 'utils/modelPlan';
+import { SubscriptionContext } from 'views/SubscriptionWrapper';
 
 import Discussions from '../Discussions';
 
 import TaskListButton from './_components/TaskListButton';
-import TaskListItem, {
-  TaskListDescription,
-  TaskListLastUpdated
-} from './_components/TaskListItem';
+import TaskListItem, { TaskListDescription } from './_components/TaskListItem';
+import TaskListLock from './_components/TaskListLock';
 import TaskListSideNav from './_components/TaskListSideNav';
 import TaskListStatus from './_components/TaskListStatus';
 
@@ -59,12 +65,30 @@ type TaskListSectionsType = {
     | ITToolsType;
 };
 
+type TaskListSectionMapType = {
+  [key: string]: string;
+};
+
+const taskListSectionMap: TaskListSectionMapType = {
+  basics: TaskListSection.MODEL_BASICS,
+  beneficiaries: TaskListSection.BENEFICIARIES,
+  generalCharacteristics: TaskListSection.GENERAL_CHARACTERISTICS,
+  itTools: TaskListSection.IT_TOOLS,
+  opsEvalAndLearning: TaskListSection.OPERATIONS_EVALUATION_AND_LEARNING,
+  participantsAndProviders: TaskListSection.PARTICIPANTS_AND_PROVIDERS,
+  payments: TaskListSection.PAYMENT
+};
+
 const TaskList = () => {
   const { t } = useTranslation('modelPlanTaskList');
   const { t: h } = useTranslation('draftModelPlan');
   const { t: d } = useTranslation('discussions');
   const { modelID } = useParams<{ modelID: string }>();
   const [isDiscussionOpen, setIsDiscussionOpen] = useState(false);
+
+  const { euaId } = useSelector((state: RootStateOrAny) => state.auth);
+
+  const { taskListSectionLocks } = useContext(SubscriptionContext);
 
   const { data, loading, error } = useQuery<
     GetModelPlanType,
@@ -91,6 +115,18 @@ const TaskList = () => {
     itTools
   } = modelPlan;
 
+  const { data: collaboratorData } = useQuery<GetModelCollaborators>(
+    GetModelPlanCollaborators,
+    {
+      variables: {
+        id: modelID
+      }
+    }
+  );
+
+  const collaborators = (collaboratorData?.modelPlan?.collaborators ??
+    []) as GetCollaboratorsType[];
+
   const taskListSections: TaskListSectionsType = {
     basics,
     generalCharacteristics,
@@ -104,6 +140,14 @@ const TaskList = () => {
   const { unansweredQuestions, answeredQuestions } = getUnansweredQuestions(
     discussions
   );
+
+  const getTaskListLockedStatus = (
+    section: string
+  ): LockSectionType | undefined => {
+    return taskListSectionLocks.find(
+      sectionLock => sectionLock.section === taskListSectionMap[section]
+    );
+  };
 
   const dicussionBanner = () => {
     return (
@@ -189,6 +233,7 @@ const TaskList = () => {
             />
           </ErrorAlert>
         )}
+        {loading && <div className="height-viewport" />}
         {!loading && data && (
           <Grid row gap>
             <Grid desktop={{ col: 9 }}>
@@ -278,6 +323,13 @@ const TaskList = () => {
                             key={key}
                             testId={`task-list-intake-form-${key}`}
                             heading={t(`numberedList.${key}.heading`)}
+                            lastUpdated={
+                              taskListSections[key].modifiedDts &&
+                              formatDate(
+                                taskListSections[key].modifiedDts!,
+                                'MM/d/yyyy'
+                              )
+                            }
                             status={taskListSections[key].status}
                           >
                             <div className="model-plan-task-list__task-row display-flex flex-justify flex-align-start">
@@ -286,26 +338,21 @@ const TaskList = () => {
                                   {t(`numberedList.${key}.copy`)}
                                 </p>
                               </TaskListDescription>
-
-                              {taskListSections[key].status !==
-                                TaskStatus.READY && (
-                                <TaskListLastUpdated>
-                                  <p className="margin-y-0">
-                                    {t('taskListItem.lastUpdated')}
-                                  </p>
-                                  <p className="margin-y-0">
-                                    {taskListSections[key].modifiedDts &&
-                                      formatDate(
-                                        taskListSections[key].modifiedDts!,
-                                        'MM/d/yyyy'
-                                      )}
-                                  </p>
-                                </TaskListLastUpdated>
-                              )}
                             </div>
                             <TaskListButton
                               path={t(`numberedList.${key}.path`)}
+                              disabled={
+                                !!getTaskListLockedStatus(key) &&
+                                getTaskListLockedStatus(key)?.lockedBy !== euaId
+                              }
                               status={taskListSections[key].status}
+                            />
+                            <TaskListLock
+                              collaborator={collaborators.find(
+                                collaborator =>
+                                  collaborator.euaUserID ===
+                                  getTaskListLockedStatus(key)?.lockedBy
+                              )}
                             />
                           </TaskListItem>
                           {key !== 'itTools' && (
@@ -319,7 +366,12 @@ const TaskList = () => {
               )}
             </Grid>
             <Grid desktop={{ col: 3 }}>
-              {data && <TaskListSideNav modelPlan={modelPlan} />}
+              {data && (
+                <TaskListSideNav
+                  modelPlan={modelPlan}
+                  collaborators={collaborators}
+                />
+              )}
             </Grid>
           </Grid>
         )}

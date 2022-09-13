@@ -47,6 +47,7 @@ import {
   translateOelSendReportsType
 } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
+import { LockStatus } from 'views/SubscriptionHandler';
 
 import { ITToolsFormComponent } from '..';
 
@@ -79,7 +80,11 @@ const initialModelPlanValues: ModelPlanType = {
   itTools: initialFormValues
 };
 
-const ITToolsPageSeven = () => {
+const ITToolsPageSeven = ({
+  opsEvalAndLearningLock
+}: {
+  opsEvalAndLearningLock: LockStatus;
+}) => {
   const { t } = useTranslation('itTools');
   const { t: o } = useTranslation('operationsEvaluationAndLearning');
   const { t: h } = useTranslation('draftModelPlan');
@@ -265,6 +270,7 @@ const ITToolsPageSeven = () => {
                           answered={dataToSendParticicipants.length > 0}
                           needsTool={questionOneNeedsTools}
                           subtext={t('sendDataNeedsAnswer')}
+                          locked={opsEvalAndLearningLock}
                           scrollElememnt="dataToSendParticicipants"
                         />
 
@@ -303,6 +309,7 @@ const ITToolsPageSeven = () => {
                           answered={modelLearningSystems.length > 0}
                           needsTool={questionTwoNeedsTools}
                           subtext={t('learningNeedsAnswer')}
+                          locked={opsEvalAndLearningLock}
                           scrollElememnt="modelLearningSystems"
                         />
 
@@ -341,6 +348,7 @@ const ITToolsPageSeven = () => {
                           answered={modelLearningSystems.length > 0}
                           needsTool={questionThreeNeedsTools}
                           subtext={t('participantNeedsAnswer')}
+                          locked={opsEvalAndLearningLock}
                           scrollElememnt="modelLearningSystems"
                         />
 

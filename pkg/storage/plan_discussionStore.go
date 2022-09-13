@@ -63,7 +63,7 @@ func (s *Store) PlanDiscussionCreate(logger *zap.Logger, discussion *models.Plan
 	return discussion, nil
 }
 
-//DiscussionReplyCreate creates a discussion reply
+// DiscussionReplyCreate creates a discussion reply
 func (s *Store) DiscussionReplyCreate(logger *zap.Logger, reply *models.DiscussionReply) (*models.DiscussionReply, error) {
 	reply.ID = utilityUUID.ValueOrNewUUID(reply.ID)
 
@@ -80,7 +80,7 @@ func (s *Store) DiscussionReplyCreate(logger *zap.Logger, reply *models.Discussi
 	return reply, nil
 }
 
-//DiscussionReplyCollectionByDiscusionID returns all Discussion repilies related to a plan discussion
+// DiscussionReplyCollectionByDiscusionID returns all Discussion repilies related to a plan discussion
 func (s *Store) DiscussionReplyCollectionByDiscusionID(logger *zap.Logger, discussionID uuid.UUID) ([]*models.DiscussionReply, error) {
 	replies := []*models.DiscussionReply{}
 
@@ -108,7 +108,7 @@ func (s *Store) DiscussionReplyCollectionByDiscusionID(logger *zap.Logger, discu
 	return replies, nil
 }
 
-//PlanDiscussionCollectionByModelPlanID returns all plan discussion objects related to a model plan
+// PlanDiscussionCollectionByModelPlanID returns all plan discussion objects related to a model plan
 func (s *Store) PlanDiscussionCollectionByModelPlanID(logger *zap.Logger, modelPlanID uuid.UUID) ([]*models.PlanDiscussion, error) {
 	discusions := []*models.PlanDiscussion{}
 

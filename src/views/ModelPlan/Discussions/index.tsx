@@ -185,6 +185,7 @@ const Discussions = ({
               setDiscussionType('discussion');
             });
           }
+
           setDiscussionStatus('success');
           setDiscussionStatusMessage(
             discussionType === 'question' ? t('success') : t('successAnswer')

@@ -89,7 +89,23 @@ const modelPlanTaskList = {
     lastUpdated: 'Last updated:'
   },
   errorHeading: 'Failed to fetch model plan',
-  errorMessage: 'Please try again'
+  errorMessage: 'Please try again',
+  locked: ' is editing this section. You may access it when they’re done.',
+  lockedHeading:
+    'Someone is currently editing the Model Plan section you’re trying to access.',
+  lockedSubheading: 'Please try again later.',
+  returnToTaskList: 'Return to the task list',
+  breadCrumbState: {
+    basics: 'Model basics',
+    beneficiaries: 'Beneficiaries',
+    characteristics: 'General characteristics',
+    'it-tools': 'IT tools',
+    'ops-eval-and-learning': 'Operation, evaluation, and learning',
+    'participants-and-providers': 'Participants and providers',
+    payment: 'payment'
+  },
+  lockErrorHeading: 'Sorry, an has error occured.',
+  lockErrorInfo: 'Please return to the task list and try again.'
 };
 
 export default modelPlanTaskList;

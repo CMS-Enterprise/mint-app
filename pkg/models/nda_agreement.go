@@ -2,7 +2,7 @@ package models
 
 import "time"
 
-//NDAAgreement represents an NDAAgreement saved in the database
+// NDAAgreement represents an NDAAgreement saved in the database
 type NDAAgreement struct {
 	baseStruct
 	UserID    string     `json:"userID" db:"user_id"`

@@ -13,7 +13,7 @@ import (
 	"github.com/cmsgov/mint-app/pkg/storage"
 )
 
-//ErrorIfNotCollaborator returns an error if the user is not a collaborator. It wraps checks to see if it has a model plan, or Discussion relation, with priority given to ModelPlan
+// ErrorIfNotCollaborator returns an error if the user is not a collaborator. It wraps checks to see if it has a model plan, or Discussion relation, with priority given to ModelPlan
 func ErrorIfNotCollaborator(obj interface{}, logger *zap.Logger, principal authentication.Principal, store *storage.Store) error {
 
 	modelPlanRelation, hasModelPlanRelation := obj.(models.IModelPlanRelation)
@@ -51,7 +51,7 @@ func ErrorIfNotCollaborator(obj interface{}, logger *zap.Logger, principal authe
 	return nil
 }
 
-//IsCollaboratorModelPlanID handles the logic to asses if a user has permission to update an object by virtue of being a collaborator.
+// IsCollaboratorModelPlanID handles the logic to asses if a user has permission to update an object by virtue of being a collaborator.
 // Users with the Assessment role are automatically allowed access to update all records.
 func IsCollaboratorModelPlanID(logger *zap.Logger, principal authentication.Principal, store *storage.Store, modelPlanID uuid.UUID) (bool, error) {
 
@@ -69,7 +69,7 @@ func IsCollaboratorModelPlanID(logger *zap.Logger, principal authentication.Prin
 
 }
 
-//IsCollaboratorByDiscussionID handles the logic to asses if a user has permission to update an object by virtue of being a collaborator.
+// IsCollaboratorByDiscussionID handles the logic to asses if a user has permission to update an object by virtue of being a collaborator.
 // Users with the Assessment role are automatically allowed access to update all records.
 func IsCollaboratorByDiscussionID(logger *zap.Logger, principal authentication.Principal, store *storage.Store, discussionID uuid.UUID) (bool, error) {
 	if principal.AllowASSESSMENT() {

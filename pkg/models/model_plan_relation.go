@@ -2,7 +2,7 @@ package models
 
 import "github.com/google/uuid"
 
-//IModelPlanRelation is an interface that represents models that are related to a model plan.
+// IModelPlanRelation is an interface that represents models that are related to a model plan.
 type IModelPlanRelation interface {
 	GetModelPlanID() uuid.UUID
 }

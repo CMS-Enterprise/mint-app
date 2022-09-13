@@ -1,5 +1,5 @@
 Cypress.Commands.add('clickPlanTableByName', name => {
-  cy.visit('/models');
+  cy.visit('/');
 
   cy.get('[data-testid="table"] a').contains(name).click();
   cy.location().should(loc => {

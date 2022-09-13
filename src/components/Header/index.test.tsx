@@ -1,6 +1,7 @@
 import React from 'react';
 import { act } from 'react-dom/test-utils';
 import { MemoryRouter } from 'react-router-dom';
+import { render, waitFor } from '@testing-library/react';
 import { mount, shallow } from 'enzyme';
 
 import { Header } from './index';
@@ -23,14 +24,24 @@ jest.mock('@okta/okta-react', () => ({
 
 describe('The Header component', () => {
   it('renders without crashing', () => {
-    shallow(<Header />);
+    shallow(
+      <MemoryRouter initialEntries={['/']}>
+        <Header />
+      </MemoryRouter>
+    );
   });
 
   describe('When logged in', () => {
-    it('displays a login button', () => {
-      const component = shallow(<Header />);
-      expect(component.text().includes('Sign Out')).toBe(true);
-      expect(component.text().includes('Sign In')).toBe(false);
+    it('displays a login button', async () => {
+      const { getByTestId } = render(
+        <MemoryRouter initialEntries={['/pre-decisional-notice']}>
+          <Header />
+        </MemoryRouter>
+      );
+
+      await waitFor(() => {
+        expect(getByTestId('signout-link')).toHaveTextContent('Sign Out');
+      });
     });
 
     xit('displays the users name', async done => {

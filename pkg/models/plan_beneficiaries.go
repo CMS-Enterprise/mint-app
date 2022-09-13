@@ -4,7 +4,7 @@ import (
 	"github.com/lib/pq"
 )
 
-//PlanBeneficiaries represents the beneficiaries section of the model plan task list
+// PlanBeneficiaries represents the beneficiaries section of the model plan task list
 type PlanBeneficiaries struct {
 	baseTaskListSection
 

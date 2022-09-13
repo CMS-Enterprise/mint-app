@@ -2,7 +2,7 @@ package models
 
 import "github.com/google/uuid"
 
-//IDiscussionRelation is an interface that represents models that are related to a discussion.
+// IDiscussionRelation is an interface that represents models that are related to a discussion.
 type IDiscussionRelation interface {
 	GetDiscussionID() uuid.UUID
 }

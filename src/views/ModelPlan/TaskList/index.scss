@@ -33,5 +33,12 @@
 
   &__last-updated-status {
     text-align: right;
+    position: absolute;
+    margin-top: 2rem;
+    @media screen and (max-width: $desktop) {
+      position: relative !important;
+      margin-top: .5rem !important;
+      margin-bottom: 1rem !important;
+    }
   }
 }
