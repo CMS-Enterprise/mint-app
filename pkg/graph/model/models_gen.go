@@ -12,14 +12,6 @@ import (
 	"github.com/google/uuid"
 )
 
-type CrTdlCreateInput struct {
-	ModelPlanID      uuid.UUID `json:"modelPlanID"`
-	IDNumber         string    `json:"idNumber"`
-	DateInitiated    time.Time `json:"dateInitiated"`
-	Title            string    `json:"title"`
-	OptionalComments *string   `json:"optionalComments"`
-}
-
 // The current user of the application
 type CurrentUser struct {
 	LaunchDarkly *LaunchDarklySettings `json:"launchDarkly"`
@@ -63,6 +55,14 @@ type PlanCollaboratorCreateInput struct {
 	FullName    string          `json:"fullName"`
 	TeamRole    models.TeamRole `json:"teamRole"`
 	Email       string          `json:"email"`
+}
+
+type PlanCrTdlCreateInput struct {
+	ModelPlanID      uuid.UUID `json:"modelPlanID"`
+	IDNumber         string    `json:"idNumber"`
+	DateInitiated    time.Time `json:"dateInitiated"`
+	Title            string    `json:"title"`
+	OptionalComments *string   `json:"optionalComments"`
 }
 
 // PlanDiscussionCreateInput represents the necessary fields to create a plan discussion
