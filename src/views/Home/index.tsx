@@ -97,9 +97,9 @@ const Home = () => {
     return (
       <>
         <NDABanner />
-        <div className="grid-container">
+        <GridContainer>
           <WelcomeText />
-        </div>
+        </GridContainer>
       </>
     );
   };
