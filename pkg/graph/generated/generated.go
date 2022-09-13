@@ -112,6 +112,7 @@ type ComplexityRoot struct {
 		Basics                   func(childComplexity int) int
 		Beneficiaries            func(childComplexity int) int
 		Collaborators            func(childComplexity int) int
+		CrTdls                   func(childComplexity int) int
 		CreatedBy                func(childComplexity int) int
 		CreatedDts               func(childComplexity int) int
 		Discussions              func(childComplexity int) int
@@ -126,7 +127,6 @@ type ComplexityRoot struct {
 		OpsEvalAndLearning       func(childComplexity int) int
 		ParticipantsAndProviders func(childComplexity int) int
 		Payments                 func(childComplexity int) int
-		PlanCrTdls               func(childComplexity int) int
 		Status                   func(childComplexity int) int
 	}
 
@@ -750,7 +750,7 @@ type ModelPlanResolver interface {
 	ItTools(ctx context.Context, obj *models.ModelPlan) (*models.PlanITTools, error)
 
 	IsFavorite(ctx context.Context, obj *models.ModelPlan) (bool, error)
-	PlanCrTdls(ctx context.Context, obj *models.ModelPlan) ([]*models.PlanCrTdl, error)
+	CrTdls(ctx context.Context, obj *models.ModelPlan) ([]*models.PlanCrTdl, error)
 }
 type MutationResolver interface {
 	CreateModelPlan(ctx context.Context, modelName string) (*models.ModelPlan, error)
@@ -1207,6 +1207,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.ModelPlan.Collaborators(childComplexity), true
 
+	case "ModelPlan.crTdls":
+		if e.complexity.ModelPlan.CrTdls == nil {
+			break
+		}
+
+		return e.complexity.ModelPlan.CrTdls(childComplexity), true
+
 	case "ModelPlan.createdBy":
 		if e.complexity.ModelPlan.CreatedBy == nil {
 			break
@@ -1304,13 +1311,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.ModelPlan.Payments(childComplexity), true
-
-	case "ModelPlan.planCrTdls":
-		if e.complexity.ModelPlan.PlanCrTdls == nil {
-			break
-		}
-
-		return e.complexity.ModelPlan.PlanCrTdls(childComplexity), true
 
 	case "ModelPlan.status":
 		if e.complexity.ModelPlan.Status == nil {
@@ -5486,7 +5486,7 @@ type ModelPlan {
   itTools: PlanITTools!
   status: ModelStatus!
   isFavorite: Boolean!
-  planCrTdls: [PlanCrTdl!]
+  crTdls: [PlanCrTdl!]
 }
 
 """
@@ -11461,8 +11461,8 @@ func (ec *executionContext) fieldContext_ModelPlan_isFavorite(ctx context.Contex
 	return fc, nil
 }
 
-func (ec *executionContext) _ModelPlan_planCrTdls(ctx context.Context, field graphql.CollectedField, obj *models.ModelPlan) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_ModelPlan_planCrTdls(ctx, field)
+func (ec *executionContext) _ModelPlan_crTdls(ctx context.Context, field graphql.CollectedField, obj *models.ModelPlan) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_ModelPlan_crTdls(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -11475,7 +11475,7 @@ func (ec *executionContext) _ModelPlan_planCrTdls(ctx context.Context, field gra
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.ModelPlan().PlanCrTdls(rctx, obj)
+		return ec.resolvers.ModelPlan().CrTdls(rctx, obj)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -11489,7 +11489,7 @@ func (ec *executionContext) _ModelPlan_planCrTdls(ctx context.Context, field gra
 	return ec.marshalOPlanCrTdl2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanCrTdlᚄ(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_ModelPlan_planCrTdls(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_ModelPlan_crTdls(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "ModelPlan",
 		Field:      field,
@@ -11625,8 +11625,8 @@ func (ec *executionContext) fieldContext_Mutation_createModelPlan(ctx context.Co
 				return ec.fieldContext_ModelPlan_status(ctx, field)
 			case "isFavorite":
 				return ec.fieldContext_ModelPlan_isFavorite(ctx, field)
-			case "planCrTdls":
-				return ec.fieldContext_ModelPlan_planCrTdls(ctx, field)
+			case "crTdls":
+				return ec.fieldContext_ModelPlan_crTdls(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type ModelPlan", field.Name)
 		},
@@ -11746,8 +11746,8 @@ func (ec *executionContext) fieldContext_Mutation_updateModelPlan(ctx context.Co
 				return ec.fieldContext_ModelPlan_status(ctx, field)
 			case "isFavorite":
 				return ec.fieldContext_ModelPlan_isFavorite(ctx, field)
-			case "planCrTdls":
-				return ec.fieldContext_ModelPlan_planCrTdls(ctx, field)
+			case "crTdls":
+				return ec.fieldContext_ModelPlan_crTdls(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type ModelPlan", field.Name)
 		},
@@ -36011,8 +36011,8 @@ func (ec *executionContext) fieldContext_Query_modelPlan(ctx context.Context, fi
 				return ec.fieldContext_ModelPlan_status(ctx, field)
 			case "isFavorite":
 				return ec.fieldContext_ModelPlan_isFavorite(ctx, field)
-			case "planCrTdls":
-				return ec.fieldContext_ModelPlan_planCrTdls(ctx, field)
+			case "crTdls":
+				return ec.fieldContext_ModelPlan_crTdls(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type ModelPlan", field.Name)
 		},
@@ -36351,8 +36351,8 @@ func (ec *executionContext) fieldContext_Query_modelPlanCollection(ctx context.C
 				return ec.fieldContext_ModelPlan_status(ctx, field)
 			case "isFavorite":
 				return ec.fieldContext_ModelPlan_isFavorite(ctx, field)
-			case "planCrTdls":
-				return ec.fieldContext_ModelPlan_planCrTdls(ctx, field)
+			case "crTdls":
+				return ec.fieldContext_ModelPlan_crTdls(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type ModelPlan", field.Name)
 		},
@@ -40313,7 +40313,7 @@ func (ec *executionContext) _ModelPlan(ctx context.Context, sel ast.SelectionSet
 				return innerFunc(ctx)
 
 			})
-		case "planCrTdls":
+		case "crTdls":
 			field := field
 
 			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
@@ -40322,7 +40322,7 @@ func (ec *executionContext) _ModelPlan(ctx context.Context, sel ast.SelectionSet
 						ec.Error(ctx, ec.Recover(ctx, r))
 					}
 				}()
-				res = ec._ModelPlan_planCrTdls(ctx, field, obj)
+				res = ec._ModelPlan_crTdls(ctx, field, obj)
 				return res
 			}
 

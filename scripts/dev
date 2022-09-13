@@ -349,7 +349,7 @@ namespace :db do
       dump()
     else
       if !file.start_with?("/") #files that start with / are fully qualified path names
-        file = "scripts/data/"+file+".sql"        
+        file = "scripts/data/"+file+".sql"
       end
      dump(file)
     end
@@ -360,10 +360,10 @@ namespace :db do
     file = args.to_a[0]
 
     if file == nil
-      seed()    
+      seed()
     else
       if !file.start_with?("/") #files that start with / are fully qualified path names
-        file = "scripts/data/"+file+".sql"        
+        file = "scripts/data/"+file+".sql"
       end
      seed(file)
     end
@@ -377,17 +377,17 @@ namespace :db do
     `docker-compose run --entrypoint="mc tag set 's3local/mint-app-file-uploads/b23d964c-3e44-426b-8dcb-aa979adc07a2.pdf' 'av-status=CLEAN'" minio_mc`
     `docker-compose run --entrypoint="mc tag set 's3local/mint-app-file-uploads/25c81e5a-4940-45fe-85c7-fcbe37a3c317.pdf' 'av-status=INFECTED'" minio_mc`
   end
-  
+
   def seed(db_file_path = "scripts/data/local-db.sql" )
     command = "psql < " + db_file_path + " > /dev/null"
-    
+
     resp = sh(command, verbose: false)
 
   end
   def dump(db_file_path = "scripts/data/local-db.sql" )
-    
+
     command = "pg_dump -T *.*flyway* -T *.*existing_model --data-only postgres > " +db_file_path
-    
+
     resp = sh(command, verbose: false)
 
   end
@@ -412,6 +412,7 @@ namespace :db do
     plan_payments,
     plan_it_tools,
     plan_favorite,
+    plan_cr_tdl,
     model_plan"
 
     puts "Cleaning database..."
