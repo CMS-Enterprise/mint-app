@@ -28,7 +28,7 @@ const ReadOnlySection = ({
       {!list ? (
         <p className="margin-y-0 font-sans-md line-height-sans-4">{copy}</p>
       ) : (
-        <ul className="margin-y-0">
+        <ul className="margin-y-0 padding-left-3">
           {listItems!.map(item => (
             <li className="font-sans-md line-height-sans-4">{item}</li>
           ))}
