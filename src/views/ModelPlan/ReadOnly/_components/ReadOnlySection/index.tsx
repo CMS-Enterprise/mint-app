@@ -19,6 +19,7 @@ const ReadOnlySection = ({
   const { t } = useTranslation('basics');
   const sectionName = heading.toLowerCase().replaceAll(' ', '-');
 
+  // If component is not a list, render a basics component
   if (!list) {
     return (
       <div
@@ -36,6 +37,7 @@ const ReadOnlySection = ({
     );
   }
 
+  // If component is a list, render a more complicated list component
   return (
     <div
       className={`read-only-section read-only-section--${sectionName} margin-bottom-3 ${
