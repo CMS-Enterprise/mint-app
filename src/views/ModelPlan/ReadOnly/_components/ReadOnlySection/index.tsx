@@ -6,7 +6,7 @@ type ReadOnlySectionProps = {
   copy?: string | null | undefined;
   heading: string;
   list?: boolean;
-  listItems?: string[];
+  listItems?: string[] | undefined;
 };
 
 const ReadOnlySection = ({
@@ -34,12 +34,16 @@ const ReadOnlySection = ({
         </p>
       ) : (
         <ul className="margin-y-0 padding-left-3">
-          {listItems!.map(item => (
-            <li className="font-sans-md line-height-sans-4">{item}</li>
-          ))}
+          {!listItems
+            ? t('na')
+            : listItems?.map(item => (
+                <li className="font-sans-md line-height-sans-4">{item}</li>
+              ))}
         </ul>
       )}
     </div>
+
+    // TODO: Ask Natasha how does Other show on page
   );
 };
 
