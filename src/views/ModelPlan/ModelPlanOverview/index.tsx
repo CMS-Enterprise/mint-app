@@ -11,10 +11,10 @@ import {
 
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
+import NDABanner from 'components/NDABanner';
 import PageHeading from 'components/PageHeading';
 
 import Table from '../ReadOnly/Table';
-import NDABanner from 'components/NDABanner';
 
 const ModelPlan = () => {
   const { t } = useTranslation('readOnlyModelPlan');
