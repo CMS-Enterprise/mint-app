@@ -26,11 +26,15 @@ Cypress.Commands.add(
 
     if (multiselect) {
       cy.get(multiselect).within(() => {
-        cy.get("input[type='search']").click();
+        cy.get("input[type='text']").click({ force: true });
       });
     }
 
     cy.get(elementToCheck).check({ force: true }).should('be.checked');
+
+    if (multiselect) {
+      cy.clickOutside();
+    }
 
     cy.get(warningRedirect).first().click();
 
