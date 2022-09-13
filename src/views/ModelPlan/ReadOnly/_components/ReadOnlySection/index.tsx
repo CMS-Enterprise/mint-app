@@ -1,8 +1,9 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 
 type ReadOnlySectionProps = {
   className?: string;
-  copy?: string;
+  copy?: string | null | undefined;
   heading: string;
   list?: boolean;
   listItems?: string[];
@@ -15,6 +16,7 @@ const ReadOnlySection = ({
   list,
   listItems
 }: ReadOnlySectionProps) => {
+  const { t } = useTranslation('basics');
   const sectionName = heading.toLowerCase().replaceAll(' ', '-');
 
   return (
@@ -27,7 +29,9 @@ const ReadOnlySection = ({
         {heading}
       </p>
       {!list ? (
-        <p className="margin-y-0 font-sans-md line-height-sans-4">{copy}</p>
+        <p className="margin-y-0 font-sans-md line-height-sans-4">
+          {copy ?? t('na')}
+        </p>
       ) : (
         <ul className="margin-y-0 padding-left-3">
           {listItems!.map(item => (
