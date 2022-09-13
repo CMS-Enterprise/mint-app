@@ -16,6 +16,7 @@ const ReadOnlySection = ({
   listItems
 }: ReadOnlySectionProps) => {
   const sectionName = heading.toLowerCase().replaceAll(' ', '-');
+
   return (
     <div
       className={`read-only-section read-only-section--${sectionName} margin-bottom-3 ${
