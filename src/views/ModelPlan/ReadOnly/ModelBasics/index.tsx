@@ -10,10 +10,12 @@ const ReadOnlyModelBasics = ({ modelID }: { modelID: string }) => {
   const loremIpsum = ['Lorem1', 'Lorem2'];
 
   return (
-    <div className="read-only-model-plan--model-basics romp">
-      <div className="romp__heading">
-        <h2>Model Basics</h2>
-        <span>In Progress</span>
+    <div className="read-only-model-plan--model-basics">
+      <div className="display-flex flex-justify">
+        <h2 className="margin-top-0 margin-bottom-4">Model Basics</h2>
+        <span className="model-plan-task-list__task-tag line-height-5 text-bold">
+          In Progress
+        </span>
       </div>
 
       <ReadOnlySection heading="Previous Name" list listItems={loremIpsum} />
