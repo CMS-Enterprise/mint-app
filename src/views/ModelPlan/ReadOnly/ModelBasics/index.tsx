@@ -4,7 +4,12 @@ import { useQuery } from '@apollo/client';
 
 import GetAllBasics from 'queries/ReadOnly/GetAllBasics';
 import { GetAllBasics as GetAllBasicsTypes } from 'queries/ReadOnly/types/GetAllBasics';
-import { translateModelCategory } from 'utils/modelPlan';
+import {
+  translateCmmiGroups,
+  translateCmsCenter,
+  translateModelCategory,
+  translateModelType
+} from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
 
 import ReadOnlySection from '../_components/ReadOnlySection';
@@ -40,7 +45,7 @@ const ReadOnlyModelBasics = ({ modelID }: { modelID: string }) => {
     highLevelNote,
     phasedIn,
     phasedInNote
-  } = data?.modelPlan?.basics;
+  } = data?.modelPlan!.basics || {};
 
   const loremIpsum = ['Lorem1', 'Lorem2'];
 
@@ -61,8 +66,26 @@ const ReadOnlyModelBasics = ({ modelID }: { modelID: string }) => {
 
       <ReadOnlySection
         heading={t('modelCategory')}
-        copy={translateModelCategory(modelCategory)}
+        copy={modelCategory ? translateModelCategory(modelCategory) : t('na')}
       />
+
+      {/* <ReadOnlySection
+        heading={t('cmsComponent')}
+        list
+        listItems={cmsCenters.map(translateCmsCenter)}
+      />
+
+      <ReadOnlySection
+        heading={t('cmmiGroup')}
+        list
+        listItems={cmmiGroups.map(translateCmmiGroups)}
+      />
+
+      <ReadOnlySection
+        heading={t('modelType')}
+        copy={translateModelType(modelType)}
+      /> */}
+
       <div className="romp__model-category">model Cateogry</div>
 
       <div className="romp__cms-component-cmmi-group">
