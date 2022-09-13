@@ -11,7 +11,7 @@ DECLARE
     fkey_f TEXT;
     created_by_f TEXT;
     modified_by_f TEXT;
-
+    h_changed HSTORE;
     unchanged_keys text[] = ARRAY[]::text[];
 BEGIN
 
@@ -39,13 +39,14 @@ BEGIN
     h_new= hstore(NEW.*);
 
     audit_row = ROW (
-    nextval('audit.change_id_seq'), --id
+    nextval('audit.change_id_seq'), --id ---TODO make this happen after the check to skip, we don't want to increment the series otherwise
         table_id, --table_id
         NEW.id, --primary_key
         NULL, --foreign_key
         substring(TG_OP,1,1), --action
         NULL, --old
         NULL, --new
+        NULL, --fields
         NEW.modified_by, --modified_by
         CURRENT_TIMESTAMP --modified_dts
     );
@@ -56,6 +57,24 @@ BEGIN
         audit_row.new =  (h_new - h_old) - excluded_cols; --remove matching values and excluded columns
         unchanged_keys = akeys(h_old - akeys(audit_row.new));
         audit_row.old = h_old - unchanged_keys; --remove any key not in new
+
+        WITH NEWval AS
+        (
+            SELECT (EACH(audit_row.new)).*
+            FROM audit_row
+        )
+        ,RESULTSet AS 
+        (
+            SELECT 
+            NEWval.key AS field,
+            NEWval.value AS new,
+            audit_row.old -> NEWval.key AS old
+
+            FROM NEWval
+        )
+        SELECT jsonb_object_agg(field,to_jsonb(r))
+        INTO audit_row.fields
+            FROM RESULTSet r;
         IF audit_row.new = hstore('') THEN
             -- All changed fields are ignored. Skip this update.
             RETURN NULL;
