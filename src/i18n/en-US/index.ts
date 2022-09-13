@@ -11,6 +11,7 @@ import participantsAndProviders from './draftModelPlan/participantsAndProviders'
 import payments from './draftModelPlan/payments';
 import generalReadOnly from './readOnly/generalReadOnly';
 import modelSummary from './readOnly/modelSummary';
+import readOnlyModelPlan from './readOnly/readOnlyModelPlan';
 import accessibilityStatement from './accessibilityStatement';
 import auth from './auth';
 import cookies from './cookies';
@@ -53,7 +54,8 @@ const enUS = {
   tableAndPagination,
   termsAndConditions,
   generalReadOnly,
-  modelSummary
+  modelSummary,
+  readOnlyModelPlan
 };
 
 export default enUS;

@@ -10,6 +10,7 @@ type TableResultsProps = {
   pageSize: number;
   filteredRowLength: number;
   rowLength: number;
+  showNoResults?: boolean;
 };
 
 const displayResult = (searchTerm: FilterValue) =>
@@ -28,7 +29,8 @@ const TableResults = ({
   pageIndex,
   pageSize,
   filteredRowLength,
-  rowLength
+  rowLength,
+  showNoResults = true
 }: TableResultsProps) => {
   const { t } = useTranslation('tableAndPagination');
 
@@ -44,11 +46,13 @@ const TableResults = ({
     <div className={classnames(className)} data-testid="page-results">
       <span>
         {rows === 0 ? (
-          <div>
-            {t('tableAndPagination:results.noResults')}{' '}
-            {/* Displays the search input even if there are no results */}
-            {displayResult(globalFilter)}
-          </div>
+          showNoResults && (
+            <div>
+              {t('tableAndPagination:results.noResults')}{' '}
+              {/* Displays the search input even if there are no results */}
+              {displayResult(globalFilter)}
+            </div>
+          )
         ) : (
           <div>
             <Trans i18nKey="tableAndPagination:results.results">

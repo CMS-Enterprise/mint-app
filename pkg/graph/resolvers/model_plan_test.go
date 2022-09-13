@@ -52,7 +52,7 @@ func (suite *ResolverSuite) TestModelPlanGetByID() {
 func (suite *ResolverSuite) TestModelPlanCollectionByUser() {
 	plan := suite.createModelPlan("Test Plan")
 
-	result, err := ModelPlanCollectionByUser(suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store)
+	result, err := ModelPlanCollection(suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store)
 
 	suite.NoError(err)
 	suite.NotNil(result)
