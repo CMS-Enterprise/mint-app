@@ -4,6 +4,7 @@ import (
 	"go.uber.org/zap"
 
 	"github.com/cmsgov/mint-app/pkg/authentication"
+	"github.com/cmsgov/mint-app/pkg/graph/model"
 	"github.com/cmsgov/mint-app/pkg/graph/resolvers"
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/storage"
@@ -11,8 +12,8 @@ import (
 
 func createModelPlan(store *storage.Store, logger *zap.Logger, modelName string, euaID string) *models.ModelPlan {
 	userInfo := &models.UserInfo{
-		CommonName: "Seeder",
-		Email:      "seeder@local.fake",
+		CommonName: "mint Doe",
+		Email:      "mDoe@local.fake",
 		EuaUserID:  euaID,
 	}
 	princ := &authentication.EUAPrincipal{
@@ -38,4 +39,37 @@ func updateModelPlan(store *storage.Store, logger *zap.Logger, mp *models.ModelP
 		panic(err)
 	}
 	return updated
+}
+
+func updatePlanBasics(store *storage.Store, logger *zap.Logger, mp *models.ModelPlan, changes map[string]interface{}) *models.PlanBasics {
+	princ := &authentication.EUAPrincipal{
+		EUAID:             mp.CreatedBy,
+		JobCodeUSER:       true,
+		JobCodeASSESSMENT: false,
+	}
+
+	basics, err := resolvers.PlanBasicsGetByModelPlanID(logger, mp.ID, store)
+	if err != nil {
+		panic(err)
+	}
+
+	updated, err := resolvers.UpdatePlanBasics(logger, basics.ID, changes, princ, store)
+	if err != nil {
+		panic(err)
+	}
+	return updated
+}
+
+func addPlanCollaborator(store *storage.Store, logger *zap.Logger, mp *models.ModelPlan, input *model.PlanCollaboratorCreateInput) *models.PlanCollaborator {
+	princ := &authentication.EUAPrincipal{
+		EUAID:             mp.CreatedBy,
+		JobCodeUSER:       true,
+		JobCodeASSESSMENT: false,
+	}
+
+	collaborator, err := resolvers.CreatePlanCollaborator(logger, input, princ, store)
+	if err != nil {
+		panic(err)
+	}
+	return collaborator
 }
