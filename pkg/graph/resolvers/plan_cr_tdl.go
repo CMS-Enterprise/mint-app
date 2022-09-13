@@ -27,7 +27,7 @@ func PlanCrTdlCreate(logger *zap.Logger, input *model.PlanCrTdlCreateInput, prin
 		},
 	}
 
-	err := BaseStructPreCreate(logger, &planCrTdl, principal, store, false) //you don't need to be a collaborator to favorite a model plan.
+	err := BaseStructPreCreate(logger, &planCrTdl, principal, store, true)
 	if err != nil {
 		return nil, err
 	}

@@ -4,7 +4,9 @@ INSERT INTO plan_cr_tdl(
     id_number,
     date_initiated,
     title,
-    optional_comments
+    optional_comments,
+    created_by,
+    modified_by
 )
 VALUES (
     :id,
@@ -12,7 +14,9 @@ VALUES (
     :id_number,
     :date_initiated,
     :title,
-    :optional_comments
+    :optional_comments,
+    :created_by,
+    :modified_by
 )
 RETURNING
 id,
