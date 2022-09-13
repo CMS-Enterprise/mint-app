@@ -1,18 +1,57 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
+import { useQuery } from '@apollo/client';
+
+import GetAllBasics from 'queries/ReadOnly/GetAllBasics';
+import { GetAllBasics as GetAllBasicsTypes } from 'queries/ReadOnly/types/GetAllBasics';
+import { translateModelCategory } from 'utils/modelPlan';
+import { NotFoundPartial } from 'views/NotFound';
 
 import ReadOnlySection from '../_components/ReadOnlySection';
 
 const ReadOnlyModelBasics = ({ modelID }: { modelID: string }) => {
-  const { t } = useTranslation('modelSummary');
-  const { t: h } = useTranslation('basics');
+  const { t } = useTranslation('basics');
+
+  const { data, loading, error } = useQuery<GetAllBasicsTypes>(GetAllBasics, {
+    variables: {
+      id: modelID
+    }
+  });
+
+  const {
+    modelCategory,
+    cmsCenters,
+    cmsOther,
+    cmmiGroups,
+    modelType,
+    problem,
+    goal,
+    testInterventions,
+    note,
+    completeICIP,
+    clearanceStarts,
+    clearanceEnds,
+    announced,
+    applicationsStart,
+    applicationsEnd,
+    performancePeriodStarts,
+    performancePeriodEnds,
+    wrapUpEnds,
+    highLevelNote,
+    phasedIn,
+    phasedInNote
+  } = data?.modelPlan?.basics;
 
   const loremIpsum = ['Lorem1', 'Lorem2'];
+
+  if ((!loading && error) || (!loading && !data?.modelPlan)) {
+    return <NotFoundPartial />;
+  }
 
   return (
     <div className="read-only-model-plan--model-basics">
       <div className="display-flex flex-justify">
-        <h2 className="margin-top-0 margin-bottom-4">Model Basics</h2>
+        <h2 className="margin-top-0 margin-bottom-4">{t('heading')}</h2>
         <span className="model-plan-task-list__task-tag line-height-5 text-bold">
           In Progress
         </span>
@@ -21,8 +60,8 @@ const ReadOnlyModelBasics = ({ modelID }: { modelID: string }) => {
       <ReadOnlySection heading="Previous Name" list listItems={loremIpsum} />
 
       <ReadOnlySection
-        heading="Model Category"
-        copy="Lorem ipsum dolor sit amet."
+        heading={t('modelCategory')}
+        copy={translateModelCategory(modelCategory)}
       />
       <div className="romp__model-category">model Cateogry</div>
 
