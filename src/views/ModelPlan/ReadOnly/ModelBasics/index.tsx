@@ -16,6 +16,7 @@ import ReadOnlySection from '../_components/ReadOnlySection';
 
 const ReadOnlyModelBasics = ({ modelID }: { modelID: string }) => {
   const { t } = useTranslation('basics');
+  const { t: h } = useTranslation('draftModelPlan');
 
   const { data, loading, error } = useQuery<GetAllBasicsTypes>(GetAllBasics, {
     variables: {
@@ -66,24 +67,24 @@ const ReadOnlyModelBasics = ({ modelID }: { modelID: string }) => {
 
       <ReadOnlySection
         heading={t('modelCategory')}
-        copy={modelCategory ? translateModelCategory(modelCategory) : t('na')}
+        copy={modelCategory && translateModelCategory(modelCategory)}
       />
 
-      {/* <ReadOnlySection
+      <ReadOnlySection
         heading={t('cmsComponent')}
         list
-        listItems={cmsCenters && cmsCenters.map(translateCmsCenter)}
-      /> */}
+        listItems={cmsCenters?.map(translateCmsCenter)}
+      />
 
-      {/* <ReadOnlySection
+      <ReadOnlySection
         heading={t('cmmiGroup')}
         list
-        listItems={cmmiGroups && cmmiGroups.map(translateCmmiGroups)}
-      /> */}
+        listItems={cmmiGroups?.map(translateCmmiGroups)}
+      />
 
       <ReadOnlySection
         heading={t('modelType')}
-        copy={modelType ? translateModelType(modelType) : t('na')}
+        copy={modelType && translateModelType(modelType)}
       />
 
       <ReadOnlySection heading={t('problem')} copy={problem} />
@@ -93,6 +94,11 @@ const ReadOnlyModelBasics = ({ modelID }: { modelID: string }) => {
         copy={testInterventions}
       />
       <ReadOnlySection heading={t('notes')} copy={note} />
+      <ReadOnlySection
+        heading={t('tightTimeline')}
+        copy={phasedIn ? h('yes') : h('no')}
+      />
+      <ReadOnlySection heading={t('notes')} copy={phasedInNote} />
     </div>
   );
 };
