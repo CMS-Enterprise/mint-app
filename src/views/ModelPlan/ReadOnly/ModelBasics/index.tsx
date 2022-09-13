@@ -72,35 +72,27 @@ const ReadOnlyModelBasics = ({ modelID }: { modelID: string }) => {
       {/* <ReadOnlySection
         heading={t('cmsComponent')}
         list
-        listItems={cmsCenters.map(translateCmsCenter)}
-      />
+        listItems={cmsCenters && cmsCenters.map(translateCmsCenter)}
+      /> */}
 
-      <ReadOnlySection
+      {/* <ReadOnlySection
         heading={t('cmmiGroup')}
         list
-        listItems={cmmiGroups.map(translateCmmiGroups)}
-      />
+        listItems={cmmiGroups && cmmiGroups.map(translateCmmiGroups)}
+      /> */}
 
       <ReadOnlySection
         heading={t('modelType')}
-        copy={translateModelType(modelType)}
-      /> */}
+        copy={modelType ? translateModelType(modelType) : t('na')}
+      />
 
-      <div className="romp__model-category">model Cateogry</div>
-
-      <div className="romp__cms-component-cmmi-group">
-        <div className="romp__cms-component">CMMI</div>
-        <div className="romp__cmmi-group">CMMI Group</div>
-      </div>
-
-      <div className="romp__model-type">yes</div>
-      <div className="romp__problem">yes</div>
-      <div className="romp__goal">yes</div>
-      <div className="romp__test-interventions">yes</div>
-      <div className="romp__notes">yes</div>
-
-      <div className="romp__tight-timeline">Yes</div>
-      <div className="romp__tight-timeline-notes">yes</div>
+      <ReadOnlySection heading={t('problem')} copy={problem} />
+      <ReadOnlySection heading={t('goal')} copy={goal} />
+      <ReadOnlySection
+        heading={t('testInterventions')}
+        copy={testInterventions}
+      />
+      <ReadOnlySection heading={t('notes')} copy={note} />
     </div>
   );
 };
