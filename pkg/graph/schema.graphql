@@ -46,6 +46,7 @@ type ModelPlan {
   itTools: PlanITTools!
   status: ModelStatus!
   isFavorite: Boolean!
+  isCollaborator: Boolean!
 }
 
 """

@@ -1,0 +1,15 @@
+import { gql } from '@apollo/client';
+
+export default gql`
+  query GetAllModelPlans {
+    modelPlanCollection {
+      id
+      modelName
+      status
+      basics {
+        applicationsStart
+        modelCategory
+      }
+    }
+  }
+`;

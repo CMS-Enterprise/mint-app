@@ -2,7 +2,12 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { Alert, SummaryBox } from '@trussworks/react-uswds';
+import {
+  Alert,
+  Grid,
+  GridContainer,
+  SummaryBox
+} from '@trussworks/react-uswds';
 import classnames from 'classnames';
 import { useFlags } from 'launchdarkly-react-client-sdk';
 
@@ -32,15 +37,13 @@ const Home = () => {
       return (
         <>
           <NDABanner collapsable />
-          <div className="grid-container">
+          <GridContainer>
             {message && (
-              <div className="grid-container margin-top-6">
-                <Alert type="success" slim role="alert">
-                  {message}
-                </Alert>
-              </div>
+              <Alert type="success" slim role="alert" className="margin-top-6">
+                {message}
+              </Alert>
             )}
-            <div className="tablet:grid-col-12">
+            <Grid>
               <PageHeading>{t('title')}</PageHeading>
               <p className="line-height-body-5 font-body-lg text-light margin-bottom-6">
                 {t('subheading')}
@@ -70,20 +73,33 @@ const Home = () => {
                     : t('requestsTable.basic.heading')}
                 </h2>
               </div>
-            </div>
-            <div className="tablet:grid-col-12">
               <DraftModelPlansTable />
-            </div>
-          </div>
+              <SummaryBox
+                heading=""
+                className="bg-base-lightest border-0 radius-0 padding-2 padding-bottom-3 margin-top-6"
+              >
+                <p className="margin-0 margin-bottom-1">
+                  {t('allModels.copy')}
+                </p>
+                <UswdsReactLink
+                  className="usa-button usa-button--outline"
+                  variant="unstyled"
+                  to="/models"
+                >
+                  {t('allModels.cta')}
+                </UswdsReactLink>
+              </SummaryBox>
+            </Grid>
+          </GridContainer>
         </>
       );
     }
     return (
       <>
         <NDABanner />
-        <div className="grid-container">
+        <GridContainer>
           <WelcomeText />
-        </div>
+        </GridContainer>
       </>
     );
   };
