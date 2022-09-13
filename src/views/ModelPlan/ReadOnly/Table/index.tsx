@@ -22,7 +22,6 @@ import {
   GetAllModelPlans as GetAllModelPlansType,
   GetAllModelPlans_modelPlanCollection as AllModelPlansType
 } from 'queries/ReadOnly/types/GetAllModelPlans';
-import { ModelCategory, ModelStatus } from 'types/graphql-global-types';
 import globalTableFilter from 'utils/globalTableFilter';
 import {
   translateModelCategory,
@@ -51,13 +50,7 @@ const Table = () => {
       {
         Header: t('allModels.tableHeading.modelName'),
         accessor: 'modelName',
-        Cell: ({
-          row,
-          value
-        }: {
-          row: { original: { id: string } };
-          value: string;
-        }) => {
+        Cell: ({ row, value }: any) => {
           return (
             <UswdsReactLink to={`/models/${row.original.id}/task-list`}>
               {value}
@@ -68,7 +61,7 @@ const Table = () => {
       {
         Header: t('allModels.tableHeading.category'),
         accessor: 'basics.modelCategory',
-        Cell: ({ value }: { value: ModelCategory }) => {
+        Cell: ({ value }: any) => {
           if (!value) {
             return <div>{h('noAnswer.tBD')}</div>;
           }
@@ -77,20 +70,16 @@ const Table = () => {
       },
       {
         Header: t('allModels.tableHeading.status'),
-        accessor: ({ status }: { status: string }) => {
+        accessor: ({ status }: any) => {
           return translateModelPlanStatus(status);
         },
-        Cell: ({ value }: { value: ModelStatus }) => {
+        Cell: ({ value }: any) => {
           return value;
         }
       },
       {
         Header: t('allModels.tableHeading.startDate'),
-        accessor: ({
-          basics: { applicationsStart }
-        }: {
-          basics: { applicationsStart: string };
-        }) => {
+        accessor: ({ basics: { applicationsStart } }: any) => {
           if (applicationsStart) {
             return DateTime.fromISO(applicationsStart).toLocaleString(
               DateTime.DATE_SHORT
@@ -98,7 +87,7 @@ const Table = () => {
           }
           return null;
         },
-        Cell: ({ value }: { value: string }) => {
+        Cell: ({ value }: any) => {
           if (!value) {
             return <div>{h('noAnswer.tBD')}</div>;
           }
@@ -108,7 +97,7 @@ const Table = () => {
       {
         Header: t('allModels.tableHeading.crsAndTdls'),
         accessor: 'crsAndTdls',
-        Cell: ({ value }: { value: string }) => {
+        Cell: ({ value }: any) => {
           if (!value) {
             return <div>{h('noAnswer.tBD')}</div>;
           }
