@@ -9,9 +9,6 @@ import (
 	"go.uber.org/zap"
 
 	"github.com/cmsgov/mint-app/pkg/appconfig"
-	"github.com/cmsgov/mint-app/pkg/authentication"
-	"github.com/cmsgov/mint-app/pkg/graph/resolvers"
-	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/storage"
 
 	ld "gopkg.in/launchdarkly/go-server-sdk.v5"
@@ -64,29 +61,16 @@ func getResolverDependencies(config *viper.Viper) (*storage.Store, *zap.Logger) 
 
 }
 
-func seedModelPlan(store *storage.Store, logger *zap.Logger, modelName string, euaID string) *models.ModelPlan {
-	userInfo := &models.UserInfo{
-		CommonName: "Seeder",
-		Email:      "seeder@local.fake",
-		EuaUserID:  euaID,
-	}
-	princ := &authentication.EUAPrincipal{
-		EUAID:             userInfo.EuaUserID,
-		JobCodeUSER:       true,
-		JobCodeASSESSMENT: false,
-	}
-	plan, err := resolvers.ModelPlanCreate(logger, modelName, store, userInfo, princ)
-	if err != nil {
-		panic(err)
-	}
-	return plan
-}
-
 func seedData(config *viper.Viper) {
+	// Get dependencies for resolvers (store and logger)
 	store, logger := getResolverDependencies(config)
 
-	for i := 0; i < 5; i++ {
-		seedModelPlan(store, logger, fmt.Sprint("Awesome Seed #", i), "MINT")
-	}
+	// Seed an empty plan
+	createModelPlan(store, logger, "Empty Plan", "MINT")
 
+	// Seed a plan that should be archived
+	archivedPlan := createModelPlan(store, logger, "Archived Plan", "MINT")
+	updateModelPlan(store, logger, archivedPlan, map[string]interface{}{
+		"archived": true,
+	})
 }
