@@ -4,8 +4,8 @@ import (
 	"time"
 )
 
-// CrTdl represents CRs and TDLs related to a model plan
-type CrTdl struct {
+// PlanCrTdl represents CRs and TDLs related to a model plan
+type PlanCrTdl struct {
 	BaseStruct
 	ModelPlanRelation
 	IDNumber         string     `json:"idNumber" db:"id_number"`

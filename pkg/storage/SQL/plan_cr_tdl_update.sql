@@ -1,4 +1,4 @@
-UPDATE cr_tdl
+UPDATE plan_cr_tdl
 SET
     model_plan_id = :model_plan_id,
     id_number = :id_number,

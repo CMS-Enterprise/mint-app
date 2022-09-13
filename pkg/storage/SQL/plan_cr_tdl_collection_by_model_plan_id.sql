@@ -9,5 +9,5 @@ SELECT
     created_dts,
     modified_by,
     modified_dts
-FROM cr_tdl
+FROM plan_cr_tdl
 WHERE model_plan_id = :model_plan_id

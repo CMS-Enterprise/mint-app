@@ -1,4 +1,4 @@
-CREATE TABLE cr_tdl (
+CREATE TABLE plan_cr_tdl (
     id UUID PRIMARY KEY NOT NULL,
     model_plan_id UUID NOT NULL, --foreign key to model plan
     id_number ZERO_STRING NOT NULL,
@@ -13,8 +13,8 @@ CREATE TABLE cr_tdl (
     modified_dts TIMESTAMP WITH TIME ZONE
 
 );
-ALTER TABLE cr_tdl
-ADD CONSTRAINT fk_cr_tdl FOREIGN KEY (model_plan_id)
+ALTER TABLE plan_cr_tdl
+ADD CONSTRAINT fk_cr_tdl_plan FOREIGN KEY (model_plan_id)
 REFERENCES public.model_plan (id) MATCH SIMPLE
 ON UPDATE NO ACTION
 ON DELETE NO ACTION;

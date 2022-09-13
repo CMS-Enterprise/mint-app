@@ -46,7 +46,7 @@ type ModelPlan {
   itTools: PlanITTools!
   status: ModelStatus!
   isFavorite: Boolean!
-  crTdls: [CrTdl!]
+  planCrTdls: [PlanCrTdl!]
 }
 
 """
@@ -1327,7 +1327,7 @@ type PlanFavorite {
 
 }
 
-type CrTdl {
+type PlanCrTdl {
     id: UUID!
     modelPlanID: UUID!
 
@@ -1342,7 +1342,7 @@ type CrTdl {
     modifiedDts: Time
 }
 
-input CrTdlCreateInput {
+input PlanCrTdlCreateInput {
     modelPlanID: UUID!
 
     idNumber: String!
@@ -1351,7 +1351,7 @@ input CrTdlCreateInput {
     optionalComments: String
 }
 
-input CrTdlChanges @goModel(model: "map[string]interface{}") {
+input PlanCrTdlChanges @goModel(model: "map[string]interface{}") {
     idNumber: String
     dateInitiated: Time
     title: String
@@ -1464,13 +1464,13 @@ addPlanFavorite(modelPlanID: UUID!): PlanFavorite!
 deletePlanFavorite(modelPlanID: UUID!): PlanFavorite!
 @hasRole(role: MINT_USER)
 
-createCrTdl(input: CrTdlCreateInput!): CrTdl!
+createPlanCrTdl(input: PlanCrTdlCreateInput!): PlanCrTdl!
 @hasRole(role: MINT_USER)
 
-updateCrTdl(id: UUID!, changes: CrTdlChanges!): CrTdl!
+updatePlanCrTdl(id: UUID!, changes: PlanCrTdlChanges!): PlanCrTdl!
 @hasRole(role: MINT_USER)
 
-deleteCrTdl(id: UUID!): CrTdl!
+deletePlanCrTdl(id: UUID!): PlanCrTdl!
 @hasRole(role: MINT_USER)
 }
 
