@@ -38,6 +38,7 @@ import TaskListStatus from '../TaskList/_components/TaskListStatus';
 import ContactInfo from './_components/ContactInfo';
 import MobileNav from './_components/MobileNav';
 import SideNav from './_components/Sidenav';
+import ReadOnlyModelBasics from './ModelBasics';
 
 import './index.scss';
 
@@ -131,7 +132,7 @@ const ReadOnly = () => {
   const subComponents: subComponentsProps = {
     'model-basics': {
       route: `/models/${modelID}/read-only/model-basics`,
-      component: <h1>modelBasics</h1>
+      component: <ReadOnlyModelBasics />
     },
     'general-characteristics': {
       route: `/models/${modelID}/read-only/general-characteristics`,
