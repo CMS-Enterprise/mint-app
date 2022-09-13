@@ -8,5 +8,6 @@ SELECT
     created_by,
     created_dts,
     modified_by,
-    modified_dts;
-FROM cr_tdl WHERE id = :id;
+    modified_dts
+FROM cr_tdl
+WHERE id = :id

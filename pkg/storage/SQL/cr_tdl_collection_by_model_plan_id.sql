@@ -8,5 +8,6 @@ SELECT
     created_by,
     created_dts,
     modified_by,
-    modified_dts;
-FROM cr_tdl WHERE model_plan_id = :model_plan_id;
+    modified_dts
+FROM cr_tdl
+WHERE model_plan_id = :model_plan_id
