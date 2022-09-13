@@ -22,6 +22,7 @@ import header from './header';
 import home from './home';
 import modelPlan from './modelPlan';
 import modelPlanTaskList from './modelPlanTaskList';
+import nda from './nda';
 import privacyPolicy from './privacyPolicy';
 import tableAndPagination from './tableAndPagination';
 import termsAndConditions from './termsAndConditions';
@@ -44,6 +45,7 @@ const enUS = {
   itTools,
   modelPlan,
   modelPlanTaskList,
+  nda,
   newModel,
   operationsEvaluationAndLearning,
   participantsAndProviders,

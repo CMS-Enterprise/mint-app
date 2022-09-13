@@ -37,6 +37,8 @@ import OpsEvalAndLearning from 'views/ModelPlan/TaskList/OpsEvalAndLearning';
 import Participants from 'views/ModelPlan/TaskList/ParticipantsAndProviders';
 import Payment from 'views/ModelPlan/TaskList/Payment';
 import SubmitRequest from 'views/ModelPlan/TaskList/SubmitRequest';
+import NDA from 'views/NDA';
+import NDAWrapper from 'views/NDAWrapper';
 import NotFound from 'views/NotFound';
 import PrivacyPolicy from 'views/PrivacyPolicy';
 import Sandbox from 'views/Sandbox';
@@ -144,6 +146,8 @@ const AppRoutes = () => {
         component={SubmitRequest}
       />
 
+      <SecureRoute path="/pre-decisional-notice" component={NDA} />
+
       {/* Static Page Routes  */}
       <Route path="/privacy-policy" exact component={PrivacyPolicy} />
       <Route path="/cookies" exact component={Cookies} />
@@ -196,15 +200,17 @@ const App = () => {
               <MessageProvider>
                 <FlagsWrapper>
                   <UserInfoWrapper>
-                    <TimeOutWrapper>
-                      <NavContextProvider>
-                        <PageWrapper>
-                          <Header />
-                          <AppRoutes />
-                          <Footer />
-                        </PageWrapper>
-                      </NavContextProvider>
-                    </TimeOutWrapper>
+                    <NDAWrapper>
+                      <TimeOutWrapper>
+                        <NavContextProvider>
+                          <PageWrapper>
+                            <Header />
+                            <AppRoutes />
+                            <Footer />
+                          </PageWrapper>
+                        </NavContextProvider>
+                      </TimeOutWrapper>
+                    </NDAWrapper>
                   </UserInfoWrapper>
                 </FlagsWrapper>
               </MessageProvider>

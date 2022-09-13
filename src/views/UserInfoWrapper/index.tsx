@@ -1,8 +1,10 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+import { useQuery } from '@apollo/client';
 import { useOktaAuth } from '@okta/okta-react';
 
 import { localAuthStorageKey } from 'constants/localAuth';
+import GetNDA from 'queries/NDA/GetNDA';
 import { setUser } from 'reducers/authReducer';
 import { isLocalAuthEnabled } from 'utils/auth';
 
@@ -20,6 +22,8 @@ const UserInfoWrapper = ({ children }: UserInfoWrapperProps) => {
   const dispatch = useDispatch();
   const { authState, oktaAuth } = useOktaAuth();
 
+  const { data } = useQuery(GetNDA);
+
   const storeUserInfo = async () => {
     if (
       isLocalAuthEnabled() &&
@@ -30,7 +34,8 @@ const UserInfoWrapper = ({ children }: UserInfoWrapperProps) => {
       const user = {
         name: oktaUser.name,
         euaId: oktaUser.euaId || '',
-        groups: oktaUser.groups || []
+        groups: oktaUser.groups || [],
+        acceptedNDA: data?.ndaInfo
       };
       dispatch(setUser(user));
     } else {
@@ -38,7 +43,8 @@ const UserInfoWrapper = ({ children }: UserInfoWrapperProps) => {
         name: authState?.idToken?.claims.name,
         euaId: authState?.idToken?.claims.preferred_username,
         // @ts-ignore
-        groups: authState?.accessToken?.claims.groups || []
+        groups: authState?.accessToken?.claims.groups || [],
+        acceptedNDA: data?.ndaInfo
       };
       dispatch(setUser(user));
     }
@@ -49,7 +55,7 @@ const UserInfoWrapper = ({ children }: UserInfoWrapperProps) => {
       storeUserInfo();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [authState?.isAuthenticated]);
+  }, [authState?.isAuthenticated, data]);
 
   return <>{children}</>;
 };

@@ -30,7 +30,7 @@ const DevLogin = () => {
       favorLocalAuth: true
     };
     localStorage.setItem(localAuthStorageKey, JSON.stringify(value));
-    window.location.href = '/';
+    window.location.href = '/pre-decisional-notice';
   };
 
   return (
