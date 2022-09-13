@@ -14,6 +14,7 @@ import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 
 import Table from '../ReadOnly/Table';
+import NDABanner from 'components/NDABanner';
 
 const ModelPlan = () => {
   const { t } = useTranslation('readOnlyModelPlan');
@@ -21,6 +22,7 @@ const ModelPlan = () => {
 
   return (
     <MainContent data-testid="model-plan-overview">
+      <NDABanner collapsable className="margin-top-0" />
       <GridContainer>
         <Grid className="padding-bottom-6 margin-bottom-4 border-bottom border-base-light">
           <PageHeading className="margin-bottom-1">{t('heading')}</PageHeading>
