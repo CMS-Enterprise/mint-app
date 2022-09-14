@@ -37,16 +37,16 @@ const FavoriteCard = ({
     >
       <div>
         <div className="bookmark__header easi-header__basic">
-          <div className="display-flex">
+          <div className="display-flex bookmark__title">
             <Button
               onClick={() => removeFavorite(id, 'removeFavorite')}
               type="button"
-              className="margin-right-2 width-2"
+              className="margin-right-2 width-auto"
               unstyled
             >
               <IconStar size={5} />
             </Button>
-            <h3 className="bookmark__title margin-top-0 margin-bottom-1 margin-x-2">
+            <h3 className="bookmark__title margin-0">
               <UswdsReactLink to={`/models/${id}/task-list`}>
                 {modelName}
               </UswdsReactLink>

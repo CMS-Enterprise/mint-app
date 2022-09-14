@@ -16,7 +16,6 @@ import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import NDABanner from 'components/NDABanner';
 import PageHeading from 'components/PageHeading';
-import PageLoading from 'components/PageLoading';
 import AddPlanFavorite from 'queries/Favorite/AddPlanFavorite';
 import DeletePlanFavorite from 'queries/Favorite/DeletePlanFavorite';
 import { AddPlanFavoriteVariables } from 'queries/Favorite/types/AddPlanFavorite';
@@ -35,7 +34,7 @@ const ModelPlan = () => {
   const { t } = useTranslation('readOnlyModelPlan');
   const { t: h } = useTranslation('home');
 
-  const { error, loading, data, refetch } = useQuery<GetAllModelPlansType>(
+  const { error, data, refetch } = useQuery<GetAllModelPlansType>(
     GetAllModelPlans
   );
 
@@ -139,9 +138,8 @@ const ModelPlan = () => {
           <p className="line-height-body-5 text-light margin-bottom-3 margin-top-0">
             {t('allModels.subheading')}
           </p>
-          {loading && <PageLoading />}
           {error && <div>{JSON.stringify(error)}</div>}
-          {!loading && !error && (
+          {!error && (
             <Table data={modelPlans} updateFavorite={handleUpdateFavorite} />
           )}
         </Grid>

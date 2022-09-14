@@ -67,7 +67,7 @@ const TaskListStatus = ({
               className="display-flex flex-align-center"
             >
               {icon && <IconEdit className="margin-right-1" />}
-              {updateLabel ?? t('update')}
+              {updateLabel && t('update')}
             </UswdsReactLink>
           </div>
         </Grid>

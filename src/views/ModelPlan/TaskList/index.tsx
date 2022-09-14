@@ -260,6 +260,7 @@ const TaskList = () => {
                   <TaskListStatus
                     modelID={modelID}
                     status={status}
+                    updateLabel
                     statusLabel
                   />
                   {dicussionBanner()}

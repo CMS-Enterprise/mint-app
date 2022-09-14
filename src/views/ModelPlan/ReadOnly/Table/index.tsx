@@ -14,6 +14,7 @@ import {
   IconStarOutline,
   Table as UswdsTable
 } from '@trussworks/react-uswds';
+import classNames from 'classnames';
 import { DateTime } from 'luxon';
 
 import UswdsReactLink from 'components/LinkWrapper';
@@ -49,18 +50,14 @@ const Table = ({ data, updateFavorite }: ModelPlansTableProps) => {
     return [
       {
         Header: <IconStarOutline size={3} />,
-        accessor: 'id',
-        id: 'systemId',
+        accessor: 'isFavorite',
         disableGlobalFilter: true,
-        // sortType: (rowOne, rowTwo, columnName) => {
-        //   const rowOneElem = rowOne.values[columnName];
-        //   return bookmarkIdSet.has(rowOneElem) ? 1 : -1;
-        // },
         Cell: ({ row }: { row: Row<AllModelPlansType> }) => {
           return row.original.isFavorite ? (
             <Button
               onClick={() => updateFavorite(row.original.id, 'removeFavorite')}
               type="button"
+              className="display-block"
               unstyled
             >
               <IconStar size={3} />
@@ -69,6 +66,7 @@ const Table = ({ data, updateFavorite }: ModelPlansTableProps) => {
             <Button
               onClick={() => updateFavorite(row.original.id, 'addFavorite')}
               type="button"
+              className="display-block"
               unstyled
             >
               <IconStarOutline size={3} className="text-gray-30" />
@@ -134,7 +132,7 @@ const Table = ({ data, updateFavorite }: ModelPlansTableProps) => {
         }
       }
     ];
-  }, [t, h]);
+  }, [t, h, updateFavorite]);
 
   const {
     getTableProps,
@@ -226,16 +224,18 @@ const Table = ({ data, updateFavorite }: ModelPlansTableProps) => {
                     padding: index === 0 ? '0' : 'auto',
                     paddingTop: index === 0 ? '0rem' : 'auto',
                     paddingLeft: '0',
-                    paddingBottom: '.5rem'
+                    paddingBottom: index === 0 ? '0rem' : '.5rem'
                   }}
                 >
                   <button
-                    className="usa-button usa-button--unstyled"
+                    className={classNames('usa-button usa-button--unstyled', {
+                      'margin-top-1': index === 0
+                    })}
                     type="button"
                     {...column.getSortByToggleProps()}
                   >
                     {column.render('Header')}
-                    {getHeaderSortIcon(column)}
+                    {getHeaderSortIcon(column, index === 0)}
                   </button>
                 </th>
               ))}
