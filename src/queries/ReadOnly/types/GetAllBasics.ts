@@ -32,12 +32,6 @@ export interface GetAllBasics_modelPlan_basics {
   highLevelNote: string | null;
   phasedIn: boolean | null;
   phasedInNote: string | null;
-  createdBy: string;
-  createdDts: Time;
-  modifiedBy: string | null;
-  modifiedDts: Time | null;
-  readyForReviewBy: string | null;
-  readyForReviewDts: Time | null;
   status: TaskStatus;
 }
 

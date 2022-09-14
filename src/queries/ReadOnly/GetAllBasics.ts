@@ -25,12 +25,6 @@ export default gql`
         highLevelNote
         phasedIn
         phasedInNote
-        createdBy
-        createdDts
-        modifiedBy
-        modifiedDts
-        readyForReviewBy
-        readyForReviewDts
         status
       }
     }
