@@ -3,7 +3,7 @@
 --
 
 -- Dumped from database version 11.12 (Debian 11.12-1.pgdg90+1)
--- Dumped by pg_dump version 14.1
+-- Dumped by pg_dump version 14.4
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -103,6 +103,17 @@ e5540130-9d15-4cbd-82ec-d8d924dfc513	9371fdb5-3b05-4f58-aeec-f3f1739a8ab4	MINT	m
 38a59d7a-fc37-4bda-acec-ffd44bf8b4d2	6e224030-09d5-46f7-ad04-4bb851b36eab	PBLR	PM Butler	MODEL_LEAD	pmButler@candykingdom.fake	MINT	2022-06-03 20:58:45.560727+00	MINT	2022-06-03 20:59:28.411263+00
 f1b90915-c863-405a-b4ad-4558e01791f0	6e224030-09d5-46f7-ad04-4bb851b36eab	MINT	mint Doe	LEADERSHIP	MINT@local.fake	MINT	2022-06-03 19:32:24.408045+00	MINT	2022-06-03 20:59:34.235474+00
 2cd9fc52-294c-49cb-b78a-3e4a551b07c9	12897703-dac0-4e65-be7f-4907232eb176	MINT	mint Doe	MODEL_LEAD	MINT@local.fake	MINT	2022-06-06 13:10:45.722141+00	\N	\N
+\.
+
+
+--
+-- Data for Name: plan_cr_tdl; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY public.plan_cr_tdl (id, model_plan_id, id_number, date_initiated, title, optional_comments, created_by, created_dts, modified_by, modified_dts) FROM stdin;
+f6d69c87-ca8f-4753-802c-9c96ec7be440	6e224030-09d5-46f7-ad04-4bb851b36eab	123-456	2022-09-13 00:00:00	My new CR	optionalComments	MINT	2022-09-14 13:28:36.103224+00	\N	\N
+989cb8d9-b1a4-424e-a721-571cf9ed8320	6e224030-09d5-46f7-ad04-4bb851b36eab	654-321	2022-09-13 00:00:00	My new TDL	optionalComments	MINT	2022-09-14 13:28:58.48231+00	\N	\N
+0b629418-6098-4495-857e-db5719f1e846	6e224030-09d5-46f7-ad04-4bb851b36eab	TDL-321	2022-09-13 00:00:00	My awesome TDL	optionalComments	MINT	2022-09-14 13:29:09.17264+00	\N	\N
 \.
 
 
