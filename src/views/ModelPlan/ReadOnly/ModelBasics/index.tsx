@@ -9,7 +9,10 @@ import {
 
 import SectionWrapper from 'components/shared/SectionWrapper';
 import GetAllBasics from 'queries/ReadOnly/GetAllBasics';
-import { GetAllBasics as GetAllBasicsTypes } from 'queries/ReadOnly/types/GetAllBasics';
+import {
+  GetAllBasics as GetAllBasicsTypes,
+  GetAllBasics_modelPlan_basics as BasicsTypes
+} from 'queries/ReadOnly/types/GetAllBasics';
 import { formatDate } from 'utils/date';
 import {
   translateCmmiGroups,
@@ -34,6 +37,10 @@ const ReadOnlyModelBasics = ({ modelID }: { modelID: string }) => {
     }
   });
 
+  if ((!loading && error) || (!loading && !data?.modelPlan)) {
+    return <NotFoundPartial />;
+  }
+
   const {
     modelCategory,
     cmsCenters,
@@ -56,17 +63,13 @@ const ReadOnlyModelBasics = ({ modelID }: { modelID: string }) => {
     phasedIn,
     phasedInNote,
     status
-  } = data?.modelPlan!.basics || {};
-
-  if ((!loading && error) || (!loading && !data?.modelPlan)) {
-    return <NotFoundPartial />;
-  }
+  }: BasicsTypes = data!.modelPlan.basics;
 
   return (
     <div className="read-only-model-plan--model-basics">
       <div className="display-flex flex-justify flex-align-start">
         <h2 className="margin-top-0 margin-bottom-4">{t('heading')}</h2>
-        {status && <TaskListStatusTag status={status} />}
+        <TaskListStatusTag status={status} />
       </div>
 
       {/* <ReadOnlySection heading="Previous Name" list listItems={loremIpsum} /> */}
@@ -81,7 +84,7 @@ const ReadOnlyModelBasics = ({ modelID }: { modelID: string }) => {
           <ReadOnlySection
             heading={t('cmsComponent')}
             list
-            listItems={cmsCenters?.map(translateCmsCenter)}
+            listItems={cmsCenters.map(translateCmsCenter)}
             copy={cmsOther}
           />
         </div>
@@ -89,7 +92,7 @@ const ReadOnlyModelBasics = ({ modelID }: { modelID: string }) => {
           <ReadOnlySection
             heading={t('cmmiGroup')}
             list
-            listItems={cmmiGroups?.map(translateCmmiGroups)}
+            listItems={cmmiGroups.map(translateCmmiGroups)}
           />
         </div>
       </div>
