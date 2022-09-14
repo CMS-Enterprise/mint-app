@@ -31,12 +31,14 @@ describe('The Model Plan Ops Eval and Learning Form', () => {
       .should('have.value', 'Department of Motor Vehicles');
 
     cy.get('#ops-eval-and-learning-stakeholders').within(() => {
-      cy.get("input[type='search']").click();
+      cy.get("input[type='text']").click();
     });
 
-    cy.get('#easi-multiselect__option-BENEFICIARIES')
+    cy.get('[data-testid="option-BENEFICIARIES"]')
       .check({ force: true })
       .should('be.checked');
+
+    cy.clickOutside();
 
     cy.get('#ops-eval-and-learning-help-desk-use-true')
       .check({ force: true })
@@ -226,24 +228,30 @@ describe('The Model Plan Ops Eval and Learning Form', () => {
       .should('have.value', 'yes for other advice as needed');
 
     cy.get('#ops-eval-and-learning-data-needed').within(() => {
-      cy.get("input[type='search']").click();
+      cy.get("input[type='text']").click();
     });
 
-    cy.get('#easi-multiselect__option-OTHER')
+    cy.get('[data-testid="option-OTHER"]')
       .check({ force: true })
       .should('be.checked');
 
-    cy.get('[data-testid="tag"]').first().contains('Other');
+    cy.clickOutside();
+
+    cy.get('[data-testid="multiselect-tag--Other"]').first().contains('Other');
 
     cy.get('#ops-eval-and-learning-data-to-send').within(() => {
-      cy.get("input[type='search']").click();
+      cy.get("input[type='text']").click();
     });
 
-    cy.get('#easi-multiselect__option-OTHER_MIPS_DATA')
+    cy.get('[data-testid="option-OTHER_MIPS_DATA"]')
       .check({ force: true })
       .should('be.checked');
 
-    cy.get('[data-testid="tag"]').first().contains('Other');
+    cy.clickOutside();
+
+    cy.get('[data-testid="multiselect-tag--Other-MIPS data"]')
+      .first()
+      .contains('Other');
 
     cy.get('#ops-eval-and-learning-share-cclf-data-true')
       .check({ force: true })
@@ -292,14 +300,16 @@ describe('The Model Plan Ops Eval and Learning Form', () => {
       .should('have.value', 'the next leap year');
 
     cy.get('#ops-eval-and-learning-data-sharing-frequency').within(() => {
-      cy.get("input[type='search']").click();
+      cy.get("input[type='text']").click();
     });
 
-    cy.get('#easi-multiselect__option-OTHER')
+    cy.get('[data-testid="option-OTHER"]')
       .check({ force: true })
       .should('be.checked');
 
-    cy.get('[data-testid="tag"]').first().contains('Other');
+    cy.clickOutside();
+
+    cy.get('[data-testid="multiselect-tag--Other"]').first().contains('Other');
 
     cy.get('#ops-eval-and-learning-data-collection-starts').select('Other');
 
@@ -308,14 +318,16 @@ describe('The Model Plan Ops Eval and Learning Form', () => {
       .should('have.value', 'the next leap year again');
 
     cy.get('#ops-eval-and-learning-data-collection-frequency').within(() => {
-      cy.get("input[type='search']").click();
+      cy.get("input[type='text']").click();
     });
 
-    cy.get('#easi-multiselect__option-OTHER')
+    cy.get('[data-testid="option-OTHER"]')
       .check({ force: true })
       .should('be.checked');
 
-    cy.get('[data-testid="tag"]').first().contains('Other');
+    cy.clickOutside();
+
+    cy.get('[data-testid="multiselect-tag--Other"]').first().contains('Other');
 
     cy.get('#ops-eval-and-learning-data-reporting-starts').select('Other');
 
