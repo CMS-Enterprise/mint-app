@@ -50,27 +50,17 @@ const ReadOnlySection = ({
       <ul className="margin-y-0 padding-left-3">
         {listItems ? (
           listItems?.map(item => (
-            <>
-              <li
-                key={`${sectionName}--${item}`}
-                className="font-sans-md line-height-sans-4"
-              >
-                {item}
-              </li>
+            <React.Fragment key={`${sectionName}--${item}`}>
+              <li className="font-sans-md line-height-sans-4">{item}</li>
               {item === 'Other' && (
-                <ul key={`${sectionName}--${copy}`}>
+                <ul>
                   <li className="font-sans-md line-height-sans-4">{copy}</li>
                 </ul>
               )}
-            </>
+            </React.Fragment>
           ))
         ) : (
-          <li
-            key={`${sectionName}--no-answer`}
-            className="font-sans-md line-height-sans-4"
-          >
-            {t('na')}
-          </li>
+          <li className="font-sans-md line-height-sans-4">{t('na')}</li>
         )}
       </ul>
     </div>
