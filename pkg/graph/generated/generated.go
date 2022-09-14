@@ -119,6 +119,7 @@ type ComplexityRoot struct {
 		Documents                func(childComplexity int) int
 		GeneralCharacteristics   func(childComplexity int) int
 		ID                       func(childComplexity int) int
+		IsCollaborator           func(childComplexity int) int
 		IsFavorite               func(childComplexity int) int
 		ItTools                  func(childComplexity int) int
 		ModelName                func(childComplexity int) int
@@ -750,6 +751,7 @@ type ModelPlanResolver interface {
 	ItTools(ctx context.Context, obj *models.ModelPlan) (*models.PlanITTools, error)
 
 	IsFavorite(ctx context.Context, obj *models.ModelPlan) (bool, error)
+	IsCollaborator(ctx context.Context, obj *models.ModelPlan) (bool, error)
 	CrTdls(ctx context.Context, obj *models.ModelPlan) ([]*models.PlanCrTdl, error)
 }
 type MutationResolver interface {
@@ -1255,6 +1257,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.ModelPlan.ID(childComplexity), true
+
+	case "ModelPlan.isCollaborator":
+		if e.complexity.ModelPlan.IsCollaborator == nil {
+			break
+		}
+
+		return e.complexity.ModelPlan.IsCollaborator(childComplexity), true
 
 	case "ModelPlan.isFavorite":
 		if e.complexity.ModelPlan.IsFavorite == nil {
@@ -5486,6 +5495,7 @@ type ModelPlan {
   itTools: PlanITTools!
   status: ModelStatus!
   isFavorite: Boolean!
+  isCollaborator: Boolean!
   crTdls: [PlanCrTdl!]!
 }
 
@@ -11461,6 +11471,50 @@ func (ec *executionContext) fieldContext_ModelPlan_isFavorite(ctx context.Contex
 	return fc, nil
 }
 
+func (ec *executionContext) _ModelPlan_isCollaborator(ctx context.Context, field graphql.CollectedField, obj *models.ModelPlan) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_ModelPlan_isCollaborator(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.ModelPlan().IsCollaborator(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(bool)
+	fc.Result = res
+	return ec.marshalNBoolean2bool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_ModelPlan_isCollaborator(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "ModelPlan",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _ModelPlan_crTdls(ctx context.Context, field graphql.CollectedField, obj *models.ModelPlan) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_ModelPlan_crTdls(ctx, field)
 	if err != nil {
@@ -11628,6 +11682,8 @@ func (ec *executionContext) fieldContext_Mutation_createModelPlan(ctx context.Co
 				return ec.fieldContext_ModelPlan_status(ctx, field)
 			case "isFavorite":
 				return ec.fieldContext_ModelPlan_isFavorite(ctx, field)
+			case "isCollaborator":
+				return ec.fieldContext_ModelPlan_isCollaborator(ctx, field)
 			case "crTdls":
 				return ec.fieldContext_ModelPlan_crTdls(ctx, field)
 			}
@@ -11749,6 +11805,8 @@ func (ec *executionContext) fieldContext_Mutation_updateModelPlan(ctx context.Co
 				return ec.fieldContext_ModelPlan_status(ctx, field)
 			case "isFavorite":
 				return ec.fieldContext_ModelPlan_isFavorite(ctx, field)
+			case "isCollaborator":
+				return ec.fieldContext_ModelPlan_isCollaborator(ctx, field)
 			case "crTdls":
 				return ec.fieldContext_ModelPlan_crTdls(ctx, field)
 			}
@@ -36014,6 +36072,8 @@ func (ec *executionContext) fieldContext_Query_modelPlan(ctx context.Context, fi
 				return ec.fieldContext_ModelPlan_status(ctx, field)
 			case "isFavorite":
 				return ec.fieldContext_ModelPlan_isFavorite(ctx, field)
+			case "isCollaborator":
+				return ec.fieldContext_ModelPlan_isCollaborator(ctx, field)
 			case "crTdls":
 				return ec.fieldContext_ModelPlan_crTdls(ctx, field)
 			}
@@ -36354,6 +36414,8 @@ func (ec *executionContext) fieldContext_Query_modelPlanCollection(ctx context.C
 				return ec.fieldContext_ModelPlan_status(ctx, field)
 			case "isFavorite":
 				return ec.fieldContext_ModelPlan_isFavorite(ctx, field)
+			case "isCollaborator":
+				return ec.fieldContext_ModelPlan_isCollaborator(ctx, field)
 			case "crTdls":
 				return ec.fieldContext_ModelPlan_crTdls(ctx, field)
 			}
@@ -40306,6 +40368,26 @@ func (ec *executionContext) _ModelPlan(ctx context.Context, sel ast.SelectionSet
 					}
 				}()
 				res = ec._ModelPlan_isFavorite(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&invalids, 1)
+				}
+				return res
+			}
+
+			out.Concurrently(i, func() graphql.Marshaler {
+				return innerFunc(ctx)
+
+			})
+		case "isCollaborator":
+			field := field
+
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._ModelPlan_isCollaborator(ctx, field, obj)
 				if res == graphql.Null {
 					atomic.AddUint32(&invalids, 1)
 				}

@@ -97,6 +97,14 @@ func (r *modelPlanResolver) IsFavorite(ctx context.Context, obj *models.ModelPla
 	return resolvers.IsPlanFavorited(logger, principal, r.store, obj.ID)
 }
 
+// IsCollaborator is the resolver for the isCollaborator field.
+func (r *modelPlanResolver) IsCollaborator(ctx context.Context, obj *models.ModelPlan) (bool, error) {
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+
+	return resolvers.IsPlanCollaborator(logger, principal, r.store, obj.ID)
+}
+
 // CrTdls is the resolver for the crTdls field.
 func (r *modelPlanResolver) CrTdls(ctx context.Context, obj *models.ModelPlan) ([]*models.PlanCrTdl, error) {
 	logger := appcontext.ZLogger(ctx)
@@ -800,7 +808,7 @@ func (r *queryResolver) ReadPlanDocumentByModelID(ctx context.Context, id uuid.U
 func (r *queryResolver) ModelPlanCollection(ctx context.Context) ([]*models.ModelPlan, error) {
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
-	return resolvers.ModelPlanCollectionByUser(logger, principal, r.store)
+	return resolvers.ModelPlanCollection(logger, principal, r.store)
 }
 
 // ExistingModelCollection is the resolver for the existingModelCollection field.
