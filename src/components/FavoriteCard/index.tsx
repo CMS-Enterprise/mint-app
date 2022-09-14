@@ -73,15 +73,19 @@ const FavoriteCard = ({
           <Grid desktop={{ col: 4 }}>
             <p className="margin-bottom-0">{t(`${type}:favorite.startDate`)}</p>
             <p className="text-bold margin-top-0 margin-bottom-0">
-              {basics.applicationsStart
-                ? formatDate(basics.applicationsStart)
-                : ''}
+              {basics.applicationsStart ? (
+                formatDate(basics.applicationsStart)
+              ) : (
+                <i>{t('favorite.toBeDetermined')}</i>
+              )}
             </p>
           </Grid>
           <Grid desktop={{ col: 4 }}>
             <p className="margin-bottom-0">{t(`${type}:favorite.cRTDLs`)}</p>
             {/* TODO: Fill with CR TDL data */}
-            <p className="text-bold margin-top-0 margin-bottom-0">CR 1234</p>
+            <p className="text-bold margin-top-0 margin-bottom-0">
+              {'CR 1234' || <i>{t('favorite.noneEntered')}</i>}
+            </p>
           </Grid>
         </Grid>
       </div>

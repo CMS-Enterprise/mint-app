@@ -29,7 +29,9 @@ const modelPlan = {
   favorite: {
     modelLead: 'Model lead(s)',
     startDate: 'Start date',
-    cRTDLs: 'CRs and TDLs'
+    cRTDLs: 'CRs and TDLs',
+    toBeDetermined: 'To be determined',
+    noneEntered: 'None entered'
   },
   stepsOverview: {
     heading: 'Start a new model plan',

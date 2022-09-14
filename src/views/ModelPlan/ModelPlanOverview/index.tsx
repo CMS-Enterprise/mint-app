@@ -4,14 +4,13 @@ import { withRouter } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
 import {
   Alert,
-  CardGroup,
   Grid,
   GridContainer,
   IconStarOutline,
   SummaryBox
 } from '@trussworks/react-uswds';
 
-import FavoriteCard from 'components/FavoriteCard';
+import FavoritesTable from 'components/FavoriteCard/table';
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import NDABanner from 'components/NDABanner';
@@ -105,15 +104,10 @@ const ModelPlan = () => {
           </p>
 
           {favorites.length ? (
-            <CardGroup className="margin-bottom-3">
-              {favorites.map(modelPlan => (
-                <FavoriteCard
-                  key={modelPlan.id}
-                  modelPlan={modelPlan}
-                  removeFavorite={handleUpdateFavorite}
-                />
-              ))}
-            </CardGroup>
+            <FavoritesTable
+              favorites={favorites}
+              removeFavorite={handleUpdateFavorite}
+            />
           ) : (
             <Alert
               type="info"
