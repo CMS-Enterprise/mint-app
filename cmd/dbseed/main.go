@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"os"
 
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -16,24 +15,28 @@ import (
 	ld "gopkg.in/launchdarkly/go-server-sdk.v5"
 )
 
-var rootCmd = &cobra.Command{
-	Use:   "dbseed",
-	Short: "Seed the DB",
-	Long:  "Seeds the Database with Model Plans and associated data",
-	Run: func(cmd *cobra.Command, args []string) {
-		config := viper.New()
-		config.AutomaticEnv()
-		seedData(config)
-	},
-}
-
+// The main entrypoint for the dbseed command.
+// Invoke with "go run cmd/dbseed"
 func main() {
-	if err := rootCmd.Execute(); err != nil {
-		fmt.Println(err)
-		os.Exit(1)
+	var rootCmd = &cobra.Command{
+		Use:   "dbseed",
+		Short: "Seed the DB",
+		Long:  "Seeds the Database with Model Plans and associated data",
+		Run: func(cmd *cobra.Command, args []string) {
+			config := viper.New()
+			config.AutomaticEnv()
+			seedData(config)
+		},
+	}
+
+	err := rootCmd.Execute()
+	if err != nil {
+		panic(err)
 	}
 }
 
+// getResolverDependencies takes a Viper config and returns a Store and Logger object to be used
+// by various resolver functions.
 func getResolverDependencies(config *viper.Viper) (*storage.Store, *zap.Logger) {
 	logger, err := zap.NewProduction()
 	if err != nil {
@@ -63,6 +66,9 @@ func getResolverDependencies(config *viper.Viper) (*storage.Store, *zap.Logger) 
 
 }
 
+// seedData gets resolver dependencies and calls wrapped resolver functions to seed data.
+// If you want to add more seeded data, or edit seeded data, this is the function to edit!
+// NOTE: Some of this data _is_ relied on by Cypress tests, but most of it is freely editable.
 func seedData(config *viper.Viper) {
 	// Get dependencies for resolvers (store and logger)
 	store, logger := getResolverDependencies(config)
