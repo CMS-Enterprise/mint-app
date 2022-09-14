@@ -10,7 +10,8 @@ describe('The Read Only Section', () => {
   };
   const defaultListProps = {
     heading: 'React Testing is Great',
-    copy: 'Lorem ipsum dolor sit amet.'
+    list: true,
+    listItems: ['Center for Medicare (CM)', 'Spiderman']
   };
 
   it('renders non-list component without crashing', async () => {
@@ -24,6 +25,6 @@ describe('The Read Only Section', () => {
     render(<ReadOnlySection {...defaultListProps} />);
 
     expect(screen.getByText(defaultListProps.heading)).toBeInTheDocument();
-    expect(screen.getByText(defaultListProps.copy)).toBeInTheDocument();
+    expect(screen.getByText(defaultListProps.listItems[0])).toBeInTheDocument();
   });
 });
