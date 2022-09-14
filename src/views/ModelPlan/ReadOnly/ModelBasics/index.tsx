@@ -104,7 +104,6 @@ const ReadOnlyModelBasics = ({ modelID }: { modelID: string }) => {
       />
       <ReadOnlySection heading={t('notes')} copy={note} />
 
-      {/* TODO: TIMELINE */}
       <SectionWrapper className="read-only-model-plan__timeline--wrapper border-y-1px border-base-light margin-top-6 margin-bottom-4 padding-top-4 padding-bottom-2">
         <h3 className="margin-top-0 margin-bottom-4">
           {t('highLevelTimeline')}
