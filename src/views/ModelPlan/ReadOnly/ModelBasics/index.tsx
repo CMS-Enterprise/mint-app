@@ -17,6 +17,7 @@ import {
   translateModelCategory,
   translateModelType
 } from 'utils/modelPlan';
+import { TaskListStatusTag } from 'views/ModelPlan/TaskList/_components/TaskListItem';
 import { NotFoundPartial } from 'views/NotFound';
 
 import ReadOnlySection from '../_components/ReadOnlySection';
@@ -53,7 +54,8 @@ const ReadOnlyModelBasics = ({ modelID }: { modelID: string }) => {
     performancePeriodEnds,
     wrapUpEnds,
     phasedIn,
-    phasedInNote
+    phasedInNote,
+    status
   } = data?.modelPlan!.basics || {};
 
   if ((!loading && error) || (!loading && !data?.modelPlan)) {
@@ -62,11 +64,9 @@ const ReadOnlyModelBasics = ({ modelID }: { modelID: string }) => {
 
   return (
     <div className="read-only-model-plan--model-basics">
-      <div className="display-flex flex-justify">
+      <div className="display-flex flex-justify flex-align-start">
         <h2 className="margin-top-0 margin-bottom-4">{t('heading')}</h2>
-        <span className="model-plan-task-list__task-tag line-height-5 text-bold">
-          In Progress
-        </span>
+        {status && <TaskListStatusTag status={status} />}
       </div>
 
       {/* <ReadOnlySection heading="Previous Name" list listItems={loremIpsum} /> */}
