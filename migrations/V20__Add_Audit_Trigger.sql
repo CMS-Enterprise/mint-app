@@ -61,7 +61,7 @@ BEGIN
         WITH NEWval AS
         (
             SELECT (EACH(audit_row.new)).*
-            FROM audit_row
+            --FROM audit_row
         )
         ,RESULTSet AS 
         (
@@ -72,7 +72,7 @@ BEGIN
 
             FROM NEWval
         )
-        SELECT jsonb_object_agg(field,to_jsonb(r))
+        SELECT jsonb_object_agg(field,(to_jsonb(r) - 'field'))
         INTO audit_row.fields
             FROM RESULTSet r;
         IF audit_row.new = hstore('') THEN
