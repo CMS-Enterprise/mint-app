@@ -78,18 +78,23 @@ const ReadOnlyModelBasics = ({ modelID }: { modelID: string }) => {
         copy={modelCategory && translateModelCategory(modelCategory)}
       />
 
-      <ReadOnlySection
-        heading={t('cmsComponent')}
-        list
-        listItems={cmsCenters?.map(translateCmsCenter)}
-        copy={cmsOther}
-      />
-
-      <ReadOnlySection
-        heading={t('cmmiGroup')}
-        list
-        listItems={cmmiGroups?.map(translateCmmiGroups)}
-      />
+      <div className="desktop:display-flex flex-justify">
+        <div className="desktop:width-card-lg">
+          <ReadOnlySection
+            heading={t('cmsComponent')}
+            list
+            listItems={cmsCenters?.map(translateCmsCenter)}
+            copy={cmsOther}
+          />
+        </div>
+        <div className="desktop:width-card-lg">
+          <ReadOnlySection
+            heading={t('cmmiGroup')}
+            list
+            listItems={cmmiGroups?.map(translateCmmiGroups)}
+          />
+        </div>
+      </div>
 
       <ReadOnlySection
         heading={t('modelType')}
