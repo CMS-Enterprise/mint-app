@@ -3,10 +3,10 @@ import { useTranslation } from 'react-i18next';
 
 type ReadOnlySectionProps = {
   className?: string;
-  copy?: string | null | undefined;
+  copy?: string | null;
   heading: string;
   list?: boolean;
-  listItems?: string[] | undefined;
+  listItems?: string[];
 };
 
 const ReadOnlySection = ({
@@ -64,8 +64,6 @@ const ReadOnlySection = ({
         )}
       </ul>
     </div>
-
-    // TODO: Ask Natasha how does Other show on page
   );
 };
 
