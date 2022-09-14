@@ -110,7 +110,7 @@ f1b90915-c863-405a-b4ad-4558e01791f0	6e224030-09d5-46f7-ad04-4bb851b36eab	MINT	m
 -- Data for Name: plan_cr_tdl; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.plan_cr_tdl (id, model_plan_id, id_number, date_initiated, title, optional_comments, created_by, created_dts, modified_by, modified_dts) FROM stdin;
+COPY public.plan_cr_tdl (id, model_plan_id, id_number, date_initiated, title, note, created_by, created_dts, modified_by, modified_dts) FROM stdin;
 f6d69c87-ca8f-4753-802c-9c96ec7be440	6e224030-09d5-46f7-ad04-4bb851b36eab	123-456	2022-09-13 00:00:00	My new CR	optionalComments	MINT	2022-09-14 13:28:36.103224+00	\N	\N
 989cb8d9-b1a4-424e-a721-571cf9ed8320	6e224030-09d5-46f7-ad04-4bb851b36eab	654-321	2022-09-13 00:00:00	My new TDL	optionalComments	MINT	2022-09-14 13:28:58.48231+00	\N	\N
 0b629418-6098-4495-857e-db5719f1e846	6e224030-09d5-46f7-ad04-4bb851b36eab	TDL-321	2022-09-13 00:00:00	My awesome TDL	optionalComments	MINT	2022-09-14 13:29:09.17264+00	\N	\N

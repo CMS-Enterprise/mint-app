@@ -58,11 +58,11 @@ type PlanCollaboratorCreateInput struct {
 }
 
 type PlanCrTdlCreateInput struct {
-	ModelPlanID      uuid.UUID `json:"modelPlanID"`
-	IDNumber         string    `json:"idNumber"`
-	DateInitiated    time.Time `json:"dateInitiated"`
-	Title            string    `json:"title"`
-	OptionalComments *string   `json:"optionalComments"`
+	ModelPlanID   uuid.UUID `json:"modelPlanID"`
+	IDNumber      string    `json:"idNumber"`
+	DateInitiated time.Time `json:"dateInitiated"`
+	Title         string    `json:"title"`
+	Note          *string   `json:"note"`
 }
 
 // PlanDiscussionCreateInput represents the necessary fields to create a plan discussion

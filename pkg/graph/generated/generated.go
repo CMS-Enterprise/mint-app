@@ -250,16 +250,16 @@ type ComplexityRoot struct {
 	}
 
 	PlanCrTdl struct {
-		CreatedBy        func(childComplexity int) int
-		CreatedDts       func(childComplexity int) int
-		DateInitiated    func(childComplexity int) int
-		ID               func(childComplexity int) int
-		IDNumber         func(childComplexity int) int
-		ModelPlanID      func(childComplexity int) int
-		ModifiedBy       func(childComplexity int) int
-		ModifiedDts      func(childComplexity int) int
-		OptionalComments func(childComplexity int) int
-		Title            func(childComplexity int) int
+		CreatedBy     func(childComplexity int) int
+		CreatedDts    func(childComplexity int) int
+		DateInitiated func(childComplexity int) int
+		ID            func(childComplexity int) int
+		IDNumber      func(childComplexity int) int
+		ModelPlanID   func(childComplexity int) int
+		ModifiedBy    func(childComplexity int) int
+		ModifiedDts   func(childComplexity int) int
+		Note          func(childComplexity int) int
+		Title         func(childComplexity int) int
 	}
 
 	PlanDiscussion struct {
@@ -2260,12 +2260,12 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.PlanCrTdl.ModifiedDts(childComplexity), true
 
-	case "PlanCrTdl.optionalComments":
-		if e.complexity.PlanCrTdl.OptionalComments == nil {
+	case "PlanCrTdl.note":
+		if e.complexity.PlanCrTdl.Note == nil {
 			break
 		}
 
-		return e.complexity.PlanCrTdl.OptionalComments(childComplexity), true
+		return e.complexity.PlanCrTdl.Note(childComplexity), true
 
 	case "PlanCrTdl.title":
 		if e.complexity.PlanCrTdl.Title == nil {
@@ -6784,7 +6784,7 @@ type PlanCrTdl {
     idNumber: String!
     dateInitiated: Time!
     title: String!
-    optionalComments: String
+    note: String
 
     createdBy: String!
     createdDts: Time!
@@ -6798,14 +6798,14 @@ input PlanCrTdlCreateInput {
     idNumber: String!
     dateInitiated: Time!
     title: String!
-    optionalComments: String
+    note: String
 }
 
 input PlanCrTdlChanges @goModel(model: "map[string]interface{}") {
     idNumber: String
     dateInitiated: Time
     title: String
-    optionalComments: String
+    note: String
 }
 
 """
@@ -11564,8 +11564,8 @@ func (ec *executionContext) fieldContext_ModelPlan_crTdls(ctx context.Context, f
 				return ec.fieldContext_PlanCrTdl_dateInitiated(ctx, field)
 			case "title":
 				return ec.fieldContext_PlanCrTdl_title(ctx, field)
-			case "optionalComments":
-				return ec.fieldContext_PlanCrTdl_optionalComments(ctx, field)
+			case "note":
+				return ec.fieldContext_PlanCrTdl_note(ctx, field)
 			case "createdBy":
 				return ec.fieldContext_PlanCrTdl_createdBy(ctx, field)
 			case "createdDts":
@@ -15080,8 +15080,8 @@ func (ec *executionContext) fieldContext_Mutation_createPlanCrTdl(ctx context.Co
 				return ec.fieldContext_PlanCrTdl_dateInitiated(ctx, field)
 			case "title":
 				return ec.fieldContext_PlanCrTdl_title(ctx, field)
-			case "optionalComments":
-				return ec.fieldContext_PlanCrTdl_optionalComments(ctx, field)
+			case "note":
+				return ec.fieldContext_PlanCrTdl_note(ctx, field)
 			case "createdBy":
 				return ec.fieldContext_PlanCrTdl_createdBy(ctx, field)
 			case "createdDts":
@@ -15181,8 +15181,8 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanCrTdl(ctx context.Co
 				return ec.fieldContext_PlanCrTdl_dateInitiated(ctx, field)
 			case "title":
 				return ec.fieldContext_PlanCrTdl_title(ctx, field)
-			case "optionalComments":
-				return ec.fieldContext_PlanCrTdl_optionalComments(ctx, field)
+			case "note":
+				return ec.fieldContext_PlanCrTdl_note(ctx, field)
 			case "createdBy":
 				return ec.fieldContext_PlanCrTdl_createdBy(ctx, field)
 			case "createdDts":
@@ -15282,8 +15282,8 @@ func (ec *executionContext) fieldContext_Mutation_deletePlanCrTdl(ctx context.Co
 				return ec.fieldContext_PlanCrTdl_dateInitiated(ctx, field)
 			case "title":
 				return ec.fieldContext_PlanCrTdl_title(ctx, field)
-			case "optionalComments":
-				return ec.fieldContext_PlanCrTdl_optionalComments(ctx, field)
+			case "note":
+				return ec.fieldContext_PlanCrTdl_note(ctx, field)
 			case "createdBy":
 				return ec.fieldContext_PlanCrTdl_createdBy(ctx, field)
 			case "createdDts":
@@ -18551,8 +18551,8 @@ func (ec *executionContext) fieldContext_PlanCrTdl_title(ctx context.Context, fi
 	return fc, nil
 }
 
-func (ec *executionContext) _PlanCrTdl_optionalComments(ctx context.Context, field graphql.CollectedField, obj *models.PlanCrTdl) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanCrTdl_optionalComments(ctx, field)
+func (ec *executionContext) _PlanCrTdl_note(ctx context.Context, field graphql.CollectedField, obj *models.PlanCrTdl) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanCrTdl_note(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -18565,7 +18565,7 @@ func (ec *executionContext) _PlanCrTdl_optionalComments(ctx context.Context, fie
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.OptionalComments, nil
+		return obj.Note, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -18579,7 +18579,7 @@ func (ec *executionContext) _PlanCrTdl_optionalComments(ctx context.Context, fie
 	return ec.marshalOString2string(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_PlanCrTdl_optionalComments(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_PlanCrTdl_note(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "PlanCrTdl",
 		Field:      field,
@@ -39622,7 +39622,7 @@ func (ec *executionContext) unmarshalInputPlanCrTdlCreateInput(ctx context.Conte
 		asMap[k] = v
 	}
 
-	fieldsInOrder := [...]string{"modelPlanID", "idNumber", "dateInitiated", "title", "optionalComments"}
+	fieldsInOrder := [...]string{"modelPlanID", "idNumber", "dateInitiated", "title", "note"}
 	for _, k := range fieldsInOrder {
 		v, ok := asMap[k]
 		if !ok {
@@ -39661,11 +39661,11 @@ func (ec *executionContext) unmarshalInputPlanCrTdlCreateInput(ctx context.Conte
 			if err != nil {
 				return it, err
 			}
-		case "optionalComments":
+		case "note":
 			var err error
 
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("optionalComments"))
-			it.OptionalComments, err = ec.unmarshalOString2ᚖstring(ctx, v)
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("note"))
+			it.Note, err = ec.unmarshalOString2ᚖstring(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -41276,9 +41276,9 @@ func (ec *executionContext) _PlanCrTdl(ctx context.Context, sel ast.SelectionSet
 			if out.Values[i] == graphql.Null {
 				invalids++
 			}
-		case "optionalComments":
+		case "note":
 
-			out.Values[i] = ec._PlanCrTdl_optionalComments(ctx, field, obj)
+			out.Values[i] = ec._PlanCrTdl_note(ctx, field, obj)
 
 		case "createdBy":
 

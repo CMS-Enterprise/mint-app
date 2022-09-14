@@ -4,7 +4,7 @@ SET
     id_number = :id_number,
     date_initiated = :date_initiated,
     title = :title,
-    optional_comments = :optional_comments,
+    note = :note,
     modified_by = :modified_by,
     modified_dts = CURRENT_TIMESTAMP
 WHERE id = :id
@@ -14,7 +14,7 @@ model_plan_id,
 id_number,
 date_initiated,
 title,
-optional_comments,
+note,
 created_by,
 created_dts,
 modified_by,

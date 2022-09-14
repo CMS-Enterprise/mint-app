@@ -63,13 +63,13 @@ func (suite *ResolverSuite) createPlanCollaborator(mp *models.ModelPlan, EUAUser
 	return collaborator
 }
 
-func (suite *ResolverSuite) createPlanCrTdl(mp *models.ModelPlan, idNumber string, dateInitated time.Time, title string, optionalComments string) *models.PlanCrTdl {
+func (suite *ResolverSuite) createPlanCrTdl(mp *models.ModelPlan, idNumber string, dateInitated time.Time, title string, note string) *models.PlanCrTdl {
 	input := &model.PlanCrTdlCreateInput{
-		ModelPlanID:      mp.ID,
-		IDNumber:         idNumber,
-		DateInitiated:    dateInitated,
-		Title:            title,
-		OptionalComments: &optionalComments,
+		ModelPlanID:   mp.ID,
+		IDNumber:      idNumber,
+		DateInitiated: dateInitated,
+		Title:         title,
+		Note:          &note,
 	}
 	crTdl, err := PlanCrTdlCreate(suite.testConfigs.Logger, input, suite.testConfigs.Principal, suite.testConfigs.Store)
 	suite.NoError(err)

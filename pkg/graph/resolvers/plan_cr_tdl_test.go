@@ -17,14 +17,14 @@ func (suite *ResolverSuite) TestPlanCrTdlCreate() {
 	}
 	plan := suite.createModelPlan("My Plan")
 	dateInitiated := time.Now()
-	optionalComments := "My comments"
+	note := "My comments"
 
 	input := &model.PlanCrTdlCreateInput{
-		ModelPlanID:      plan.ID,
-		IDNumber:         "123-456",
-		DateInitiated:    dateInitiated,
-		Title:            "My CR",
-		OptionalComments: &optionalComments,
+		ModelPlanID:   plan.ID,
+		IDNumber:      "123-456",
+		DateInitiated: dateInitiated,
+		Title:         "My CR",
+		Note:          &note,
 	}
 
 	crTdl, err := PlanCrTdlCreate(suite.testConfigs.Logger, input, princ, suite.testConfigs.Store)
@@ -33,7 +33,7 @@ func (suite *ResolverSuite) TestPlanCrTdlCreate() {
 	suite.EqualValues(crTdl.ModelPlanID, plan.ID)
 	suite.EqualValues(crTdl.IDNumber, "123-456")
 	suite.EqualValues(crTdl.Title, "My CR")
-	suite.EqualValues(crTdl.OptionalComments, optionalComments)
+	suite.EqualValues(crTdl.Note, note)
 
 }
 
@@ -49,9 +49,9 @@ func (suite *ResolverSuite) TestPlanCrTdlUpdate() {
 	crTdl := suite.createPlanCrTdl(plan, "123-456", time.Now(), "My CR", "My comments")
 
 	changes := map[string]interface{}{
-		"title":            "My new title",
-		"idNumber":         "654-321",
-		"optionalComments": "new comments",
+		"title":    "My new title",
+		"idNumber": "654-321",
+		"note":     "new comments",
 	}
 
 	result, err := PlanCrTdlUpdate(suite.testConfigs.Logger, crTdl.ID, changes, princ, suite.testConfigs.Store)
@@ -61,7 +61,7 @@ func (suite *ResolverSuite) TestPlanCrTdlUpdate() {
 	suite.EqualValues(crTdl.ModelPlanID, result.ModelPlanID)
 	suite.EqualValues(result.Title, changes["title"])
 	suite.EqualValues(result.IDNumber, changes["idNumber"])
-	suite.EqualValues(result.OptionalComments, changes["optionalComments"])
+	suite.EqualValues(result.Note, changes["note"])
 }
 
 // TestPlanCrTdlDelete tests deleting a plan_cr_tdl record in the database

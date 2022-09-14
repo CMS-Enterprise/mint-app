@@ -15,10 +15,10 @@ import (
 func PlanCrTdlCreate(logger *zap.Logger, input *model.PlanCrTdlCreateInput, principal authentication.Principal, store *storage.Store) (*models.PlanCrTdl, error) {
 
 	planCrTdl := models.PlanCrTdl{
-		IDNumber:         input.IDNumber,
-		DateInitiated:    &input.DateInitiated,
-		Title:            input.Title,
-		OptionalComments: *input.OptionalComments,
+		IDNumber:      input.IDNumber,
+		DateInitiated: &input.DateInitiated,
+		Title:         input.Title,
+		Note:          *input.Note,
 		ModelPlanRelation: models.ModelPlanRelation{
 			ModelPlanID: input.ModelPlanID,
 		},

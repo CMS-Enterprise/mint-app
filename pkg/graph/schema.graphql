@@ -1335,7 +1335,7 @@ type PlanCrTdl {
     idNumber: String!
     dateInitiated: Time!
     title: String!
-    optionalComments: String
+    note: String
 
     createdBy: String!
     createdDts: Time!
@@ -1349,14 +1349,14 @@ input PlanCrTdlCreateInput {
     idNumber: String!
     dateInitiated: Time!
     title: String!
-    optionalComments: String
+    note: String
 }
 
 input PlanCrTdlChanges @goModel(model: "map[string]interface{}") {
     idNumber: String
     dateInitiated: Time
     title: String
-    optionalComments: String
+    note: String
 }
 
 """

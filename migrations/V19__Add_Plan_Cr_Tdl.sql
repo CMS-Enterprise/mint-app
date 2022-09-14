@@ -4,7 +4,7 @@ CREATE TABLE plan_cr_tdl (
     id_number ZERO_STRING NOT NULL,
     date_initiated TIMESTAMP NOT NULL,
     title ZERO_STRING NOT NULL,
-    optional_comments TEXT,
+    note TEXT,
 
     --META DATA
     created_by EUA_ID NOT NULL,
