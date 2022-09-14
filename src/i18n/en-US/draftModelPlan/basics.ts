@@ -51,6 +51,7 @@ const basics = {
   applicationPeriod: 'Application period',
   applicationStartDate: 'Application start date',
   applicationEndDate: 'Application end date',
+  perforamncePeriod: 'Performance period',
   performanceStartDate: 'Performance start date',
   performanceEndDate: 'Performance end date',
   demonstrationPerformance: 'Demonstration or model period of performance',
