@@ -1,24 +1,67 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { withRouter } from 'react-router-dom';
+import { useMutation, useQuery } from '@apollo/client';
 import {
   Alert,
+  CardGroup,
   Grid,
   GridContainer,
   IconStarOutline,
   SummaryBox
 } from '@trussworks/react-uswds';
 
+import FavoriteCard from 'components/FavoriteCard';
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import NDABanner from 'components/NDABanner';
 import PageHeading from 'components/PageHeading';
+import PageLoading from 'components/PageLoading';
+import AddPlanFavorite from 'queries/Favorite/AddPlanFavorite';
+import DeletePlanFavorite from 'queries/Favorite/DeletePlanFavorite';
+import { AddPlanFavoriteVariables } from 'queries/Favorite/types/AddPlanFavorite';
+import { DeletePlanFavoriteVariables } from 'queries/Favorite/types/DeletePlanFavorite';
+import GetAllModelPlans from 'queries/ReadOnly/GetAllModelPlans';
+import {
+  GetAllModelPlans as GetAllModelPlansType,
+  GetAllModelPlans_modelPlanCollection as AllModelPlansType
+} from 'queries/ReadOnly/types/GetAllModelPlans';
 
 import Table from '../ReadOnly/Table';
+
+export type UpdateFavoriteProps = 'addFavorite' | 'removeFavorite';
 
 const ModelPlan = () => {
   const { t } = useTranslation('readOnlyModelPlan');
   const { t: h } = useTranslation('home');
+
+  const { error, loading, data, refetch } = useQuery<GetAllModelPlansType>(
+    GetAllModelPlans
+  );
+
+  const modelPlans = (data?.modelPlanCollection ?? []) as AllModelPlansType[];
+
+  const [addMutate] = useMutation<AddPlanFavoriteVariables>(AddPlanFavorite);
+
+  const [removeMutate] = useMutation<DeletePlanFavoriteVariables>(
+    DeletePlanFavorite
+  );
+
+  const favoriteMutations = {
+    removeFavorite: removeMutate,
+    addFavorite: addMutate
+  };
+
+  const handleUpdateFavorite = (
+    modelPlanID: string,
+    type: UpdateFavoriteProps
+  ) => {
+    favoriteMutations[type]({
+      variables: {
+        modelPlanID
+      }
+    }).then(refetch);
+  };
 
   return (
     <MainContent data-testid="model-plan-overview">
@@ -56,6 +99,20 @@ const ModelPlan = () => {
           <p className="line-height-body-5 text-light margin-bottom-05 margin-top-0">
             {t('following.subheading')}
           </p>
+
+          <CardGroup className="margin-bottom-3">
+            {modelPlans.map(
+              modelPlan =>
+                modelPlan.isFavorite && (
+                  <FavoriteCard
+                    key={modelPlan.id}
+                    modelPlan={modelPlan}
+                    removeFavorite={handleUpdateFavorite}
+                  />
+                )
+            )}
+          </CardGroup>
+
           <Alert type="info" heading={t('following.alert.heading')}>
             <span className="display-flex flex-align-center flex-wrap margin-0 ">
               {t('following.alert.subheadingPartA')}
@@ -74,7 +131,11 @@ const ModelPlan = () => {
           <p className="line-height-body-5 text-light margin-bottom-3 margin-top-0">
             {t('allModels.subheading')}
           </p>
-          <Table />
+          {loading && <PageLoading />}
+          {error && <div>{JSON.stringify(error)}</div>}
+          {!loading && !error && (
+            <Table data={modelPlans} updateFavorite={handleUpdateFavorite} />
+          )}
         </Grid>
       </GridContainer>
     </MainContent>

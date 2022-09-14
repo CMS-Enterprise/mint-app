@@ -1,27 +1,27 @@
 import React, { useMemo } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
+  Row,
   useFilters,
   useGlobalFilter,
   usePagination,
   useSortBy,
   useTable
 } from 'react-table';
-import { useQuery } from '@apollo/client';
-import { Table as UswdsTable } from '@trussworks/react-uswds';
+import {
+  Button,
+  IconStar,
+  IconStarOutline,
+  Table as UswdsTable
+} from '@trussworks/react-uswds';
 import { DateTime } from 'luxon';
 
 import UswdsReactLink from 'components/LinkWrapper';
-import PageLoading from 'components/PageLoading';
 import Alert from 'components/shared/Alert';
 import GlobalClientFilter from 'components/TableFilter';
 import TablePagination from 'components/TablePagination';
 import TableResults from 'components/TableResults';
-import GetAllModelPlans from 'queries/ReadOnly/GetAllModelPlans';
-import {
-  GetAllModelPlans as GetAllModelPlansType,
-  GetAllModelPlans_modelPlanCollection as AllModelPlansType
-} from 'queries/ReadOnly/types/GetAllModelPlans';
+import { GetAllModelPlans_modelPlanCollection as AllModelPlansType } from 'queries/ReadOnly/types/GetAllModelPlans';
 import globalTableFilter from 'utils/globalTableFilter';
 import {
   translateModelCategory,
@@ -33,20 +33,49 @@ import {
   getHeaderSortIcon,
   sortColumnValues
 } from 'utils/tableSort';
+import { UpdateFavoriteProps } from 'views/ModelPlan/ModelPlanOverview';
 
-const Table = () => {
+type ModelPlansTableProps = {
+  data: AllModelPlansType[];
+  updateFavorite: (modelPlanID: string, type: UpdateFavoriteProps) => void;
+};
+
+const Table = ({ data, updateFavorite }: ModelPlansTableProps) => {
   const { t } = useTranslation('readOnlyModelPlan');
   const { t: h } = useTranslation('modelSummary');
   const { t: f } = useTranslation('home');
 
-  const { error, loading, data: modelPlans } = useQuery<GetAllModelPlansType>(
-    GetAllModelPlans
-  );
-
-  const data = (modelPlans?.modelPlanCollection ?? []) as AllModelPlansType[];
-
   const columns = useMemo(() => {
     return [
+      {
+        Header: <IconStarOutline size={3} />,
+        accessor: 'id',
+        id: 'systemId',
+        disableGlobalFilter: true,
+        // sortType: (rowOne, rowTwo, columnName) => {
+        //   const rowOneElem = rowOne.values[columnName];
+        //   return bookmarkIdSet.has(rowOneElem) ? 1 : -1;
+        // },
+        Cell: ({ row }: { row: Row<AllModelPlansType> }) => {
+          return row.original.isFavorite ? (
+            <Button
+              onClick={() => updateFavorite(row.original.id, 'removeFavorite')}
+              type="button"
+              unstyled
+            >
+              <IconStar size={3} />
+            </Button>
+          ) : (
+            <Button
+              onClick={() => updateFavorite(row.original.id, 'addFavorite')}
+              type="button"
+              unstyled
+            >
+              <IconStarOutline size={3} className="text-gray-30" />
+            </Button>
+          );
+        }
+      },
       {
         Header: t('allModels.tableHeading.modelName'),
         accessor: 'modelName',
@@ -149,14 +178,6 @@ const Table = () => {
     usePagination
   );
 
-  if (loading) {
-    return <PageLoading />;
-  }
-
-  if (error) {
-    return <div>{JSON.stringify(error)}</div>;
-  }
-
   if (data.length === 0) {
     return (
       <Alert type="info" heading={f('requestsTable.empty.heading')}>
@@ -197,14 +218,15 @@ const Table = () => {
                   className="table-header"
                   scope="col"
                   style={{
-                    minWidth: '138px',
+                    minWidth: index === 0 ? '50px' : '138px',
                     width:
-                      ((index === 0 || index === 1) && '286px') ||
-                      (index === 2 && '175px') ||
+                      ((index === 1 || index === 2) && '286px') ||
+                      (index === 3 && '175px') ||
                       '',
+                    padding: index === 0 ? '0' : 'auto',
+                    paddingTop: index === 0 ? '0rem' : 'auto',
                     paddingLeft: '0',
-                    paddingBottom: '.5rem',
-                    position: 'relative'
+                    paddingBottom: '.5rem'
                   }}
                 >
                   <button
