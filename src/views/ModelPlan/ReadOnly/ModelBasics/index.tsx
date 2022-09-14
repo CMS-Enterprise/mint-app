@@ -1,9 +1,16 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useQuery } from '@apollo/client';
+import {
+  ProcessList,
+  ProcessListHeading,
+  ProcessListItem
+} from '@trussworks/react-uswds';
 
+import SectionWrapper from 'components/shared/SectionWrapper';
 import GetAllBasics from 'queries/ReadOnly/GetAllBasics';
 import { GetAllBasics as GetAllBasicsTypes } from 'queries/ReadOnly/types/GetAllBasics';
+import { formatDate } from 'utils/date';
 import {
   translateCmmiGroups,
   translateCmsCenter,
@@ -45,7 +52,6 @@ const ReadOnlyModelBasics = ({ modelID }: { modelID: string }) => {
     performancePeriodStarts,
     performancePeriodEnds,
     wrapUpEnds,
-    highLevelNote,
     phasedIn,
     phasedInNote
   } = data?.modelPlan!.basics || {};
@@ -76,6 +82,7 @@ const ReadOnlyModelBasics = ({ modelID }: { modelID: string }) => {
         heading={t('cmsComponent')}
         list
         listItems={cmsCenters?.map(translateCmsCenter)}
+        copy={cmsOther}
       />
 
       <ReadOnlySection
@@ -96,6 +103,39 @@ const ReadOnlyModelBasics = ({ modelID }: { modelID: string }) => {
         copy={testInterventions}
       />
       <ReadOnlySection heading={t('notes')} copy={note} />
+
+      {/* TODO: TIMELINE */}
+      <SectionWrapper className="read-only-model-plan__timeline--wrapper border-y-1px border-base-light margin-y-6 padding-y-6">
+        <h3 className="margin-top-0 margin-bottom-4">
+          {t('highLevelTimeline')}
+        </h3>
+        <ProcessList className="read-only-model-plan__timeline">
+          <ProcessListItem className="read-only-model-plan__timeline__list-item">
+            <ProcessListHeading
+              type="p"
+              className="font-body-sm line-height-sans-4"
+            >
+              {t('completeICIP')}
+            </ProcessListHeading>
+            <p className="margin-y-0 font-body-md line-height-sans-4">
+              {completeICIP ? formatDate(completeICIP, 'MM/dd/yyyy') : t('na')}
+            </p>
+          </ProcessListItem>
+
+          <ProcessListItem className="read-only-model-plan__timeline__list-item">
+            <ProcessListHeading
+              type="p"
+              className="font-body-sm line-height-sans-4"
+            >
+              {t('completeICIP')}
+            </ProcessListHeading>
+            <p className="margin-y-0 font-body-md line-height-sans-4">
+              {completeICIP ? formatDate(completeICIP, 'MM/dd/yyyy') : t('na')}
+            </p>
+          </ProcessListItem>
+        </ProcessList>
+      </SectionWrapper>
+
       <ReadOnlySection
         heading={t('tightTimeline')}
         copy={phasedIn ? h('yes') : h('no')}
