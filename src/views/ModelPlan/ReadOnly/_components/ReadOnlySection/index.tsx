@@ -2,7 +2,6 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 
 type ReadOnlySectionProps = {
-  className?: string;
   copy?: string | null;
   heading: string;
   list?: boolean;
@@ -10,7 +9,6 @@ type ReadOnlySectionProps = {
 };
 
 const ReadOnlySection = ({
-  className,
   copy,
   heading,
   list,
@@ -23,9 +21,7 @@ const ReadOnlySection = ({
   if (!list) {
     return (
       <div
-        className={`read-only-section read-only-section--${sectionName} margin-bottom-3 ${
-          className ?? ''
-        }`}
+        className={`read-only-section read-only-section--${sectionName} margin-bottom-3`}
       >
         <p className="text-bold margin-y-0 font-body-sm line-height-sans-4">
           {heading}
@@ -40,9 +36,7 @@ const ReadOnlySection = ({
   // If component is a list, render a more complicated list component
   return (
     <div
-      className={`read-only-section read-only-section--${sectionName} margin-bottom-3 ${
-        className ?? ''
-      }`}
+      className={`read-only-section read-only-section--${sectionName} margin-bottom-3`}
     >
       <p className="text-bold margin-y-0 font-sans-md line-height-sans-4">
         {heading}
