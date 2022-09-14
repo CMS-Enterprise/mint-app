@@ -41,6 +41,8 @@ const ModelPlan = () => {
 
   const modelPlans = (data?.modelPlanCollection ?? []) as AllModelPlansType[];
 
+  const favorites = modelPlans.filter(modelPlan => modelPlan.isFavorite);
+
   const [addMutate] = useMutation<AddPlanFavoriteVariables>(AddPlanFavorite);
 
   const [removeMutate] = useMutation<DeletePlanFavoriteVariables>(
@@ -92,37 +94,43 @@ const ModelPlan = () => {
           </SummaryBox>
         </Grid>
 
-        <Grid className="padding-bottom-6 margin-bottom-4 border-bottom border-base-light">
+        <Grid
+          desktop={{ col: 12 }}
+          className="padding-bottom-2 margin-bottom-4 border-bottom border-base-light"
+        >
           <PageHeading className="margin-bottom-1">
             {t('following.heading')}
           </PageHeading>
-          <p className="line-height-body-5 text-light margin-bottom-05 margin-top-0">
+          <p className="line-height-body-5 text-light margin-bottom-05 margin-top-0 margin-bottom-3">
             {t('following.subheading')}
           </p>
 
-          <CardGroup className="margin-bottom-3">
-            {modelPlans.map(
-              modelPlan =>
-                modelPlan.isFavorite && (
-                  <FavoriteCard
-                    key={modelPlan.id}
-                    modelPlan={modelPlan}
-                    removeFavorite={handleUpdateFavorite}
-                  />
-                )
-            )}
-          </CardGroup>
+          {favorites.length ? (
+            <CardGroup className="margin-bottom-3">
+              {favorites.map(modelPlan => (
+                <FavoriteCard
+                  key={modelPlan.id}
+                  modelPlan={modelPlan}
+                  removeFavorite={handleUpdateFavorite}
+                />
+              ))}
+            </CardGroup>
+          ) : (
+            <Alert
+              type="info"
+              heading={t('following.alert.heading')}
+              className="margin-bottom-2"
+            >
+              <span className="display-flex flex-align-center flex-wrap margin-0 ">
+                {t('following.alert.subheadingPartA')}
+                <span className="display-flex flex-align-center margin-x-05">
+                  (<IconStarOutline size={3} />)
+                </span>
 
-          <Alert type="info" heading={t('following.alert.heading')}>
-            <span className="display-flex flex-align-center flex-wrap margin-0 ">
-              {t('following.alert.subheadingPartA')}
-              <span className="display-flex flex-align-center margin-x-05">
-                (<IconStarOutline size={3} />)
+                {t('following.alert.subheadingPartB')}
               </span>
-
-              {t('following.alert.subheadingPartB')}
-            </span>
-          </Alert>
+            </Alert>
+          )}
         </Grid>
         <Grid>
           <PageHeading className="margin-bottom-1" id="all-models">

@@ -306,7 +306,8 @@ const ReadOnly = () => {
               readOnly
               modelID={modelID}
               status={status}
-              updateLabel={h('updateStatus')}
+              statusLabel
+              updateLabel
               modifiedDts={modifiedDts ?? ''}
             />
           </div>
