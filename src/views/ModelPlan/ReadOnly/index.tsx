@@ -38,7 +38,7 @@ import TaskListStatus from '../TaskList/_components/TaskListStatus';
 import ContactInfo from './_components/ContactInfo';
 import MobileNav from './_components/MobileNav';
 import SideNav from './_components/Sidenav';
-import ReadOnlyModelBasics from './ModelBasics';
+import ReadOnlyModelBasics from './ModelBasics/index';
 
 import './index.scss';
 
