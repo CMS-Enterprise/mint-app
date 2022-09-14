@@ -105,7 +105,7 @@ const ReadOnlyModelBasics = ({ modelID }: { modelID: string }) => {
       <ReadOnlySection heading={t('notes')} copy={note} />
 
       {/* TODO: TIMELINE */}
-      <SectionWrapper className="read-only-model-plan__timeline--wrapper border-y-1px border-base-light margin-y-6 padding-y-6">
+      <SectionWrapper className="read-only-model-plan__timeline--wrapper border-y-1px border-base-light margin-top-6 margin-bottom-4 padding-top-4 padding-bottom-2">
         <h3 className="margin-top-0 margin-bottom-4">
           {t('highLevelTimeline')}
         </h3>
@@ -127,10 +127,133 @@ const ReadOnlyModelBasics = ({ modelID }: { modelID: string }) => {
               type="p"
               className="font-body-sm line-height-sans-4"
             >
-              {t('completeICIP')}
+              {t('clearance')}
+            </ProcessListHeading>
+            <div className="display-flex">
+              <div className="width-card-lg">
+                <ProcessListHeading
+                  type="p"
+                  className="font-body-sm line-height-sans-4"
+                >
+                  {t('clearanceStartDate')}
+                </ProcessListHeading>
+                <p className="margin-y-0 font-body-md line-height-sans-4">
+                  {clearanceStarts
+                    ? formatDate(clearanceStarts, 'MM/dd/yyyy')
+                    : t('na')}
+                </p>
+              </div>
+              <div className="width-card-lg">
+                <ProcessListHeading
+                  type="p"
+                  className="font-body-sm line-height-sans-4"
+                >
+                  {t('clearanceEndDate')}
+                </ProcessListHeading>
+                <p className="margin-y-0 font-body-md line-height-sans-4">
+                  {clearanceEnds
+                    ? formatDate(clearanceEnds, 'MM/dd/yyyy')
+                    : t('na')}
+                </p>
+              </div>
+            </div>
+          </ProcessListItem>
+
+          <ProcessListItem className="read-only-model-plan__timeline__list-item">
+            <ProcessListHeading
+              type="p"
+              className="font-body-sm line-height-sans-4"
+            >
+              {t('annouceModel')}
             </ProcessListHeading>
             <p className="margin-y-0 font-body-md line-height-sans-4">
-              {completeICIP ? formatDate(completeICIP, 'MM/dd/yyyy') : t('na')}
+              {announced ? formatDate(announced, 'MM/dd/yyyy') : t('na')}
+            </p>
+          </ProcessListItem>
+
+          <ProcessListItem className="read-only-model-plan__timeline__list-item">
+            <ProcessListHeading
+              type="p"
+              className="font-body-sm line-height-sans-4"
+            >
+              {t('applicationPeriod')}
+            </ProcessListHeading>
+            <div className="display-flex">
+              <div className="width-card-lg">
+                <ProcessListHeading
+                  type="p"
+                  className="font-body-sm line-height-sans-4"
+                >
+                  {t('applicationStartDate')}
+                </ProcessListHeading>
+                <p className="margin-y-0 font-body-md line-height-sans-4">
+                  {applicationsStart
+                    ? formatDate(applicationsStart, 'MM/dd/yyyy')
+                    : t('na')}
+                </p>
+              </div>
+              <div className="width-card-lg">
+                <ProcessListHeading
+                  type="p"
+                  className="font-body-sm line-height-sans-4"
+                >
+                  {t('applicationEndDate')}
+                </ProcessListHeading>
+                <p className="margin-y-0 font-body-md line-height-sans-4">
+                  {applicationsEnd
+                    ? formatDate(applicationsEnd, 'MM/dd/yyyy')
+                    : t('na')}
+                </p>
+              </div>
+            </div>
+          </ProcessListItem>
+
+          <ProcessListItem className="read-only-model-plan__timeline__list-item">
+            <ProcessListHeading
+              type="p"
+              className="font-body-sm line-height-sans-4"
+            >
+              {t('perforamncePeriod')}
+            </ProcessListHeading>
+            <div className="display-flex">
+              <div className="width-card-lg">
+                <ProcessListHeading
+                  type="p"
+                  className="font-body-sm line-height-sans-4"
+                >
+                  {t('performanceStartDate')}
+                </ProcessListHeading>
+                <p className="margin-y-0 font-body-md line-height-sans-4">
+                  {performancePeriodStarts
+                    ? formatDate(performancePeriodStarts, 'MM/dd/yyyy')
+                    : t('na')}
+                </p>
+              </div>
+              <div className="width-card-lg">
+                <ProcessListHeading
+                  type="p"
+                  className="font-body-sm line-height-sans-4"
+                >
+                  {t('performanceEndDate')}
+                </ProcessListHeading>
+                <p className="margin-y-0 font-body-md line-height-sans-4">
+                  {performancePeriodEnds
+                    ? formatDate(performancePeriodEnds, 'MM/dd/yyyy')
+                    : t('na')}
+                </p>
+              </div>
+            </div>
+          </ProcessListItem>
+
+          <ProcessListItem className="read-only-model-plan__timeline__list-item">
+            <ProcessListHeading
+              type="p"
+              className="font-body-sm line-height-sans-4"
+            >
+              {t('modelWrapUp')}
+            </ProcessListHeading>
+            <p className="margin-y-0 font-body-md line-height-sans-4">
+              {wrapUpEnds ? formatDate(wrapUpEnds, 'MM/dd/yyyy') : t('na')}
             </p>
           </ProcessListItem>
         </ProcessList>
