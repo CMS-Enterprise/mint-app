@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { Row, usePagination, useTable } from 'react-table';
+import { Row, useFlexLayout, usePagination, useTable } from 'react-table';
 import { CardGroup, Table as UswdsTable } from '@trussworks/react-uswds';
 
 import TablePagination from 'components/TablePagination';
@@ -59,7 +59,8 @@ const FavoritesTable = ({
         pageSize: 3
       }
     },
-    usePagination
+    usePagination,
+    useFlexLayout
   );
 
   return (
