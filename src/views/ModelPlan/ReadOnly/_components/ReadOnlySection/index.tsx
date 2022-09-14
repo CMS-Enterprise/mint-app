@@ -47,7 +47,7 @@ const ReadOnlySection = ({
             <React.Fragment key={`${sectionName}--${item}`}>
               <li className="font-sans-md line-height-sans-4">{item}</li>
               {item === 'Other' && (
-                <ul>
+                <ul data-testid="other-entry">
                   <li className="font-sans-md line-height-sans-4">{copy}</li>
                 </ul>
               )}

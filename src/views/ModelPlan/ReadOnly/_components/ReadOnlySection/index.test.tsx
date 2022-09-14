@@ -27,10 +27,11 @@ describe('The Read Only Section', () => {
 
   describe('As a List Component', () => {
     const defaultListProps = {
-      heading: 'React Testing is Great',
+      heading: 'Lorem ipsum dolor sit amet',
       list: true,
-      listItems: ['Center for Medicare (CM)', 'Spiderman']
+      listItems: ['Center for Medicare (CM)', 'CMMI']
     };
+
     it('renders without crashing', async () => {
       render(<ReadOnlySection {...defaultListProps} />);
 
@@ -38,6 +39,20 @@ describe('The Read Only Section', () => {
       expect(
         screen.getByText(defaultListProps.listItems[0])
       ).toBeInTheDocument();
+    });
+
+    it('renders Other entry', async () => {
+      render(
+        <ReadOnlySection
+          {...defaultListProps}
+          listItems={['Other']}
+          copy="Lorem ipsum dolor sit amet."
+        />
+      );
+
+      expect(screen.getByText(defaultListProps.heading)).toBeInTheDocument();
+      expect(screen.getByText('Other')).toBeInTheDocument();
+      expect(screen.getByTestId('other-entry')).toBeInTheDocument();
     });
   });
 });
