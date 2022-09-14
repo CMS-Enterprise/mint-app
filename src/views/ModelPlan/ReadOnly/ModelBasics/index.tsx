@@ -14,6 +14,8 @@ import { NotFoundPartial } from 'views/NotFound';
 
 import ReadOnlySection from '../_components/ReadOnlySection';
 
+import './index.scss';
+
 const ReadOnlyModelBasics = ({ modelID }: { modelID: string }) => {
   const { t } = useTranslation('basics');
   const { t: h } = useTranslation('draftModelPlan');
