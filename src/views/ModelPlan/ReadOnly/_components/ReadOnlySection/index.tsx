@@ -51,16 +51,26 @@ const ReadOnlySection = ({
         {listItems ? (
           listItems?.map(item => (
             <>
-              <li className="font-sans-md line-height-sans-4">{item}</li>
+              <li
+                key={`${sectionName}--${item}`}
+                className="font-sans-md line-height-sans-4"
+              >
+                {item}
+              </li>
               {item === 'Other' && (
-                <ul>
+                <ul key={`${sectionName}--${copy}`}>
                   <li className="font-sans-md line-height-sans-4">{copy}</li>
                 </ul>
               )}
             </>
           ))
         ) : (
-          <li className="font-sans-md line-height-sans-4">{t('na')}</li>
+          <li
+            key={`${sectionName}--no-answer`}
+            className="font-sans-md line-height-sans-4"
+          >
+            {t('na')}
+          </li>
         )}
       </ul>
     </div>
