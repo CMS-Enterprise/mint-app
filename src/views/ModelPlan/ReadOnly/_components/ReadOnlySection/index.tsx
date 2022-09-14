@@ -27,10 +27,10 @@ const ReadOnlySection = ({
           className ?? ''
         }`}
       >
-        <p className="text-bold margin-y-0 font-sans-md line-height-sans-4">
+        <p className="text-bold margin-y-0 font-body-sm line-height-sans-4">
           {heading}
         </p>
-        <p className="margin-y-0 font-sans-md line-height-sans-4">
+        <p className="margin-y-0 font-body-md line-height-sans-4">
           {copy ?? t('na')}
         </p>
       </div>
