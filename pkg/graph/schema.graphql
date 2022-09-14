@@ -46,7 +46,7 @@ type ModelPlan {
   itTools: PlanITTools!
   status: ModelStatus!
   isFavorite: Boolean!
-  crTdls: [PlanCrTdl!]
+  crTdls: [PlanCrTdl!]!
 }
 
 """

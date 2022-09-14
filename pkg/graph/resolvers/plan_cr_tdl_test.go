@@ -105,4 +105,8 @@ func (suite *ResolverSuite) TestPlanCrTdlsGetByModelPlanID() {
 	suite.NoError(err)
 	suite.Len(result, 2)
 
+	emptyPlan := suite.createModelPlan("My Empty Plan")
+	emptyResult, errEmpty := PlanCrTdlsGetByModelPlanID(suite.testConfigs.Logger, emptyPlan.ID, suite.testConfigs.Store)
+	suite.NoError(errEmpty)
+	suite.Len(emptyResult, 0)
 }
