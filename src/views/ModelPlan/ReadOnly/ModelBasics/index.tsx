@@ -128,8 +128,8 @@ const ReadOnlyModelBasics = ({ modelID }: { modelID: string }) => {
             >
               {t('clearance')}
             </ProcessListHeading>
-            <div className="display-flex">
-              <div className="width-card-lg">
+            <div className="mobile-lg:display-flex">
+              <div className="width-card-lg margin-bottom-2 mobile-lg:margin-bottom-0">
                 <ProcessListHeading
                   type="p"
                   className="font-body-sm line-height-sans-4"
@@ -142,7 +142,7 @@ const ReadOnlyModelBasics = ({ modelID }: { modelID: string }) => {
                     : t('na')}
                 </p>
               </div>
-              <div className="width-card-lg">
+              <div className="width-card-lg margin-bottom-2 mobile-lg:margin-bottom-0">
                 <ProcessListHeading
                   type="p"
                   className="font-body-sm line-height-sans-4"
@@ -177,8 +177,8 @@ const ReadOnlyModelBasics = ({ modelID }: { modelID: string }) => {
             >
               {t('applicationPeriod')}
             </ProcessListHeading>
-            <div className="display-flex">
-              <div className="width-card-lg">
+            <div className="mobile-lg:display-flex">
+              <div className="width-card-lg margin-bottom-2 mobile-lg:margin-bottom-0">
                 <ProcessListHeading
                   type="p"
                   className="font-body-sm line-height-sans-4"
@@ -191,7 +191,7 @@ const ReadOnlyModelBasics = ({ modelID }: { modelID: string }) => {
                     : t('na')}
                 </p>
               </div>
-              <div className="width-card-lg">
+              <div className="width-card-lg margin-bottom-2 mobile-lg:margin-bottom-0">
                 <ProcessListHeading
                   type="p"
                   className="font-body-sm line-height-sans-4"
@@ -214,8 +214,8 @@ const ReadOnlyModelBasics = ({ modelID }: { modelID: string }) => {
             >
               {t('perforamncePeriod')}
             </ProcessListHeading>
-            <div className="display-flex">
-              <div className="width-card-lg">
+            <div className="mobile-lg:display-flex">
+              <div className="width-card-lg margin-bottom-2 mobile-lg:margin-bottom-0">
                 <ProcessListHeading
                   type="p"
                   className="font-body-sm line-height-sans-4"
@@ -228,7 +228,7 @@ const ReadOnlyModelBasics = ({ modelID }: { modelID: string }) => {
                     : t('na')}
                 </p>
               </div>
-              <div className="width-card-lg">
+              <div className="width-card-lg margin-bottom-2 mobile-lg:margin-bottom-0">
                 <ProcessListHeading
                   type="p"
                   className="font-body-sm line-height-sans-4"
