@@ -56,8 +56,6 @@ const ReadOnlyModelBasics = ({ modelID }: { modelID: string }) => {
     phasedInNote
   } = data?.modelPlan!.basics || {};
 
-  const loremIpsum = ['Lorem1', 'Lorem2'];
-
   if ((!loading && error) || (!loading && !data?.modelPlan)) {
     return <NotFoundPartial />;
   }
@@ -71,7 +69,7 @@ const ReadOnlyModelBasics = ({ modelID }: { modelID: string }) => {
         </span>
       </div>
 
-      <ReadOnlySection heading="Previous Name" list listItems={loremIpsum} />
+      {/* <ReadOnlySection heading="Previous Name" list listItems={loremIpsum} /> */}
 
       <ReadOnlySection
         heading={t('modelCategory')}
