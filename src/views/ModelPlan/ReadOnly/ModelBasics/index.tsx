@@ -63,7 +63,10 @@ const ReadOnlyModelBasics = ({ modelID }: { modelID: string }) => {
   } = data?.modelPlan?.basics || {};
 
   return (
-    <div className="read-only-model-plan--model-basics">
+    <div
+      className="read-only-model-plan--model-basics"
+      data-testid="read-only-model-plan--model-basics"
+    >
       <div className="display-flex flex-justify flex-align-start">
         <h2 className="margin-top-0 margin-bottom-4">{t('heading')}</h2>
         {status && <TaskListStatusTag status={status} />}

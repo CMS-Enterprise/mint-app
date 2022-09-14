@@ -1,0 +1,371 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Model Plan Documents page matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="read-only-model-plan--model-basics"
+    data-testid="read-only-model-plan--model-basics"
+  >
+    <div
+      class="display-flex flex-justify flex-align-start"
+    >
+      <h2
+        class="margin-top-0 margin-bottom-4"
+      >
+        Model basics
+      </h2>
+    </div>
+    <div
+      class="read-only-section read-only-section--model-category margin-bottom-3"
+    >
+      <p
+        class="text-bold margin-y-0 font-body-sm line-height-sans-4"
+      >
+        Model category
+      </p>
+      <p
+        class="margin-y-0 font-body-md line-height-sans-4"
+      >
+        No answer entered
+      </p>
+    </div>
+    <div
+      class="desktop:display-flex flex-justify"
+    >
+      <div
+        class="desktop:width-card-lg"
+      >
+        <div
+          class="read-only-section read-only-section--cms-component margin-bottom-3"
+        >
+          <p
+            class="text-bold margin-y-0 font-sans-md line-height-sans-4"
+          >
+            CMS component
+          </p>
+          <ul
+            class="margin-y-0 padding-left-3"
+          >
+            <li
+              class="font-sans-md line-height-sans-4"
+            >
+              No answer entered
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div
+        class="desktop:width-card-lg"
+      >
+        <div
+          class="read-only-section read-only-section--cmmi-group margin-bottom-3"
+        >
+          <p
+            class="text-bold margin-y-0 font-sans-md line-height-sans-4"
+          >
+            CMMI Group
+          </p>
+          <ul
+            class="margin-y-0 padding-left-3"
+          >
+            <li
+              class="font-sans-md line-height-sans-4"
+            >
+              No answer entered
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div
+      class="read-only-section read-only-section--model-type margin-bottom-3"
+    >
+      <p
+        class="text-bold margin-y-0 font-body-sm line-height-sans-4"
+      >
+        Model Type
+      </p>
+      <p
+        class="margin-y-0 font-body-md line-height-sans-4"
+      >
+        No answer entered
+      </p>
+    </div>
+    <div
+      class="read-only-section read-only-section--problem margin-bottom-3"
+    >
+      <p
+        class="text-bold margin-y-0 font-body-sm line-height-sans-4"
+      >
+        Problem
+      </p>
+      <p
+        class="margin-y-0 font-body-md line-height-sans-4"
+      >
+        No answer entered
+      </p>
+    </div>
+    <div
+      class="read-only-section read-only-section--goal margin-bottom-3"
+    >
+      <p
+        class="text-bold margin-y-0 font-body-sm line-height-sans-4"
+      >
+        Goal
+      </p>
+      <p
+        class="margin-y-0 font-body-md line-height-sans-4"
+      >
+        No answer entered
+      </p>
+    </div>
+    <div
+      class="read-only-section read-only-section--test-interventions margin-bottom-3"
+    >
+      <p
+        class="text-bold margin-y-0 font-body-sm line-height-sans-4"
+      >
+        Test Interventions
+      </p>
+      <p
+        class="margin-y-0 font-body-md line-height-sans-4"
+      >
+        No answer entered
+      </p>
+    </div>
+    <div
+      class="read-only-section read-only-section--notes margin-bottom-3"
+    >
+      <p
+        class="text-bold margin-y-0 font-body-sm line-height-sans-4"
+      >
+        Notes
+      </p>
+      <p
+        class="margin-y-0 font-body-md line-height-sans-4"
+      >
+        No answer entered
+      </p>
+    </div>
+    <div
+      class="mint-section read-only-model-plan__timeline--wrapper border-y-1px border-base-light margin-top-6 margin-bottom-4 padding-top-4 padding-bottom-2"
+      data-testid="section-wrapper"
+    >
+      <h3
+        class="margin-top-0 margin-bottom-4"
+      >
+        High level timeline
+      </h3>
+      <ol
+        class="usa-process-list read-only-model-plan__timeline"
+      >
+        <li
+          class="usa-process-list__item read-only-model-plan__timeline__list-item"
+        >
+          <p
+            class="usa-process-list__heading font-body-sm line-height-sans-4"
+            data-testid="processListHeading"
+          >
+            Complete ICIP
+          </p>
+          <p
+            class="margin-y-0 font-body-md line-height-sans-4"
+          >
+            No answer entered
+          </p>
+        </li>
+        <li
+          class="usa-process-list__item read-only-model-plan__timeline__list-item"
+        >
+          <p
+            class="usa-process-list__heading font-body-sm line-height-sans-4"
+            data-testid="processListHeading"
+          >
+            Clearance
+          </p>
+          <div
+            class="mobile-lg:display-flex"
+          >
+            <div
+              class="width-card-lg margin-bottom-2 mobile-lg:margin-bottom-0"
+            >
+              <p
+                class="usa-process-list__heading font-body-sm line-height-sans-4"
+                data-testid="processListHeading"
+              >
+                Clearance start date
+              </p>
+              <p
+                class="margin-y-0 font-body-md line-height-sans-4"
+              >
+                No answer entered
+              </p>
+            </div>
+            <div
+              class="width-card-lg margin-bottom-2 mobile-lg:margin-bottom-0"
+            >
+              <p
+                class="usa-process-list__heading font-body-sm line-height-sans-4"
+                data-testid="processListHeading"
+              >
+                Clearance end date
+              </p>
+              <p
+                class="margin-y-0 font-body-md line-height-sans-4"
+              >
+                No answer entered
+              </p>
+            </div>
+          </div>
+        </li>
+        <li
+          class="usa-process-list__item read-only-model-plan__timeline__list-item"
+        >
+          <p
+            class="usa-process-list__heading font-body-sm line-height-sans-4"
+            data-testid="processListHeading"
+          >
+            Announce model
+          </p>
+          <p
+            class="margin-y-0 font-body-md line-height-sans-4"
+          >
+            No answer entered
+          </p>
+        </li>
+        <li
+          class="usa-process-list__item read-only-model-plan__timeline__list-item"
+        >
+          <p
+            class="usa-process-list__heading font-body-sm line-height-sans-4"
+            data-testid="processListHeading"
+          >
+            Application period
+          </p>
+          <div
+            class="mobile-lg:display-flex"
+          >
+            <div
+              class="width-card-lg margin-bottom-2 mobile-lg:margin-bottom-0"
+            >
+              <p
+                class="usa-process-list__heading font-body-sm line-height-sans-4"
+                data-testid="processListHeading"
+              >
+                Application start date
+              </p>
+              <p
+                class="margin-y-0 font-body-md line-height-sans-4"
+              >
+                No answer entered
+              </p>
+            </div>
+            <div
+              class="width-card-lg margin-bottom-2 mobile-lg:margin-bottom-0"
+            >
+              <p
+                class="usa-process-list__heading font-body-sm line-height-sans-4"
+                data-testid="processListHeading"
+              >
+                Application end date
+              </p>
+              <p
+                class="margin-y-0 font-body-md line-height-sans-4"
+              >
+                No answer entered
+              </p>
+            </div>
+          </div>
+        </li>
+        <li
+          class="usa-process-list__item read-only-model-plan__timeline__list-item"
+        >
+          <p
+            class="usa-process-list__heading font-body-sm line-height-sans-4"
+            data-testid="processListHeading"
+          >
+            Performance period
+          </p>
+          <div
+            class="mobile-lg:display-flex"
+          >
+            <div
+              class="width-card-lg margin-bottom-2 mobile-lg:margin-bottom-0"
+            >
+              <p
+                class="usa-process-list__heading font-body-sm line-height-sans-4"
+                data-testid="processListHeading"
+              >
+                Performance start date
+              </p>
+              <p
+                class="margin-y-0 font-body-md line-height-sans-4"
+              >
+                No answer entered
+              </p>
+            </div>
+            <div
+              class="width-card-lg margin-bottom-2 mobile-lg:margin-bottom-0"
+            >
+              <p
+                class="usa-process-list__heading font-body-sm line-height-sans-4"
+                data-testid="processListHeading"
+              >
+                Performance end date
+              </p>
+              <p
+                class="margin-y-0 font-body-md line-height-sans-4"
+              >
+                No answer entered
+              </p>
+            </div>
+          </div>
+        </li>
+        <li
+          class="usa-process-list__item read-only-model-plan__timeline__list-item"
+        >
+          <p
+            class="usa-process-list__heading font-body-sm line-height-sans-4"
+            data-testid="processListHeading"
+          >
+            Model wrap-up end date
+          </p>
+          <p
+            class="margin-y-0 font-body-md line-height-sans-4"
+          >
+            No answer entered
+          </p>
+        </li>
+      </ol>
+    </div>
+    <div
+      class="read-only-section read-only-section--if-timelines-are-tight,-might-there-be-pieces-of-the-model-that-can-be-phased-in-over-time? margin-bottom-3"
+    >
+      <p
+        class="text-bold margin-y-0 font-body-sm line-height-sans-4"
+      >
+        If timelines are tight, might there be pieces of the model that can be phased in over time?
+      </p>
+      <p
+        class="margin-y-0 font-body-md line-height-sans-4"
+      >
+        No
+      </p>
+    </div>
+    <div
+      class="read-only-section read-only-section--notes margin-bottom-3"
+    >
+      <p
+        class="text-bold margin-y-0 font-body-sm line-height-sans-4"
+      >
+        Notes
+      </p>
+      <p
+        class="margin-y-0 font-body-md line-height-sans-4"
+      >
+        No answer entered
+      </p>
+    </div>
+  </div>
+</DocumentFragment>
+`;
