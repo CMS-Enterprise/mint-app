@@ -363,7 +363,7 @@ exports[`Model Plan Documents page matches snapshot 1`] = `
       </ol>
     </div>
     <div
-      class="read-only-section read-only-section--if-timelines-are-tight-might-there-be-pieces-of-the-model-that-can-be-phased-in-over-time margin-bottom-3"
+      class="read-only-section read-only-section--if-timelines-are-tight--might-there-be-pieces-of-the-model-that-can-be-phased-in-over-time margin-bottom-3"
     >
       <p
         class="text-bold margin-y-0 font-body-sm line-height-sans-4"

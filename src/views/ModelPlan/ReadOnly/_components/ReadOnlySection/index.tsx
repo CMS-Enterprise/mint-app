@@ -21,8 +21,8 @@ const ReadOnlySection = ({
   const { t } = useTranslation('basics');
   const sectionName = heading
     .toLowerCase()
-    .replace(/\W/g, '-')
-    .replace(/.-$/g, '');
+    .replace(/\W*$/g, '')
+    .replace(/\W/g, '-');
 
   const renderCopyOrList = () => {
     if (!list || listItems.length === 0) {
