@@ -174,6 +174,25 @@ const ReadOnlyGeneralCharacteristics = ({ modelID }: { modelID: string }) => {
           copy={planContactUpdated ? h('yes') : h('no')}
         />
       </div>
+
+      <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
+        <div className="desktop:display-flex flex-justify">
+          <div className="desktop:width-card-lg">
+            <ReadOnlySection
+              heading={t('careCoordination')}
+              copy={careCoordinationInvolved ? h('yes') : h('no')}
+            />
+          </div>
+          {careCoordinationInvolved && (
+            <div className="desktop:width-card-lg">
+              <ReadOnlySection
+                heading={h('howSo')}
+                copy={careCoordinationInvolvedDescription}
+              />
+            </div>
+          )}
+        </div>
+      </div>
     </div>
   );
 };
