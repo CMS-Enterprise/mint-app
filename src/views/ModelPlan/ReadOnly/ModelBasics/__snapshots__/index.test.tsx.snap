@@ -32,15 +32,7 @@ exports[`Read Only Model Plan Summary -- Model Basics matches snapshot 1`] = `
       <p
         class="margin-y-0 font-body-md line-height-sans-4"
       >
-<<<<<<< HEAD
-        <em
-          class="text-base"
-        >
-          No answer entered
-        </em>
-=======
         Primary Care Transformation
->>>>>>> EASI-2217/Read-Only-Model-Basics--FE
       </p>
     </div>
     <div
@@ -57,17 +49,12 @@ exports[`Read Only Model Plan Summary -- Model Basics matches snapshot 1`] = `
           >
             CMS component
           </p>
-          <p
-            class="margin-y-0 font-body-md line-height-sans-4"
+          <ul
+            class="margin-y-0 padding-left-3"
           >
-            <em
-              class="text-base"
+            <li
+              class="font-sans-md line-height-sans-4"
             >
-<<<<<<< HEAD
-              No answer entered
-            </em>
-          </p>
-=======
               Center for Medicare (CM)
             </li>
             <li
@@ -85,7 +72,6 @@ exports[`Read Only Model Plan Summary -- Model Basics matches snapshot 1`] = `
               </li>
             </ul>
           </ul>
->>>>>>> EASI-2217/Read-Only-Model-Basics--FE
         </div>
       </div>
       <div
@@ -99,17 +85,12 @@ exports[`Read Only Model Plan Summary -- Model Basics matches snapshot 1`] = `
           >
             CMMI Group
           </p>
-          <p
-            class="margin-y-0 font-body-md line-height-sans-4"
+          <ul
+            class="margin-y-0 padding-left-3"
           >
-            <em
-              class="text-base"
+            <li
+              class="font-sans-md line-height-sans-4"
             >
-<<<<<<< HEAD
-              No answer entered
-            </em>
-          </p>
-=======
               State Innovations Group (SIG)
             </li>
             <li
@@ -118,7 +99,6 @@ exports[`Read Only Model Plan Summary -- Model Basics matches snapshot 1`] = `
               Policy and Programs Group (PPG)
             </li>
           </ul>
->>>>>>> EASI-2217/Read-Only-Model-Basics--FE
         </div>
       </div>
     </div>
@@ -133,15 +113,7 @@ exports[`Read Only Model Plan Summary -- Model Basics matches snapshot 1`] = `
       <p
         class="margin-y-0 font-body-md line-height-sans-4"
       >
-<<<<<<< HEAD
-        <em
-          class="text-base"
-        >
-          No answer entered
-        </em>
-=======
         Mandatory
->>>>>>> EASI-2217/Read-Only-Model-Basics--FE
       </p>
     </div>
     <div
@@ -155,15 +127,7 @@ exports[`Read Only Model Plan Summary -- Model Basics matches snapshot 1`] = `
       <p
         class="margin-y-0 font-body-md line-height-sans-4"
       >
-<<<<<<< HEAD
-        <em
-          class="text-base"
-        >
-          No answer entered
-        </em>
-=======
         There is not enough candy
->>>>>>> EASI-2217/Read-Only-Model-Basics--FE
       </p>
     </div>
     <div
@@ -177,15 +141,7 @@ exports[`Read Only Model Plan Summary -- Model Basics matches snapshot 1`] = `
       <p
         class="margin-y-0 font-body-md line-height-sans-4"
       >
-<<<<<<< HEAD
-        <em
-          class="text-base"
-        >
-          No answer entered
-        </em>
-=======
         To get more candy
->>>>>>> EASI-2217/Read-Only-Model-Basics--FE
       </p>
     </div>
     <div
@@ -199,15 +155,7 @@ exports[`Read Only Model Plan Summary -- Model Basics matches snapshot 1`] = `
       <p
         class="margin-y-0 font-body-md line-height-sans-4"
       >
-<<<<<<< HEAD
-        <em
-          class="text-base"
-        >
-          No answer entered
-        </em>
-=======
         The great candy machine
->>>>>>> EASI-2217/Read-Only-Model-Basics--FE
       </p>
     </div>
     <div
@@ -221,15 +169,7 @@ exports[`Read Only Model Plan Summary -- Model Basics matches snapshot 1`] = `
       <p
         class="margin-y-0 font-body-md line-height-sans-4"
       >
-<<<<<<< HEAD
-        <em
-          class="text-base"
-        >
-          No answer entered
-        </em>
-=======
         The machine doesn't work yet
->>>>>>> EASI-2217/Read-Only-Model-Basics--FE
       </p>
     </div>
     <div
@@ -448,15 +388,7 @@ exports[`Read Only Model Plan Summary -- Model Basics matches snapshot 1`] = `
       <p
         class="margin-y-0 font-body-md line-height-sans-4"
       >
-<<<<<<< HEAD
-        <em
-          class="text-base"
-        >
-          No answer entered
-        </em>
-=======
         This can't be phased in
->>>>>>> EASI-2217/Read-Only-Model-Basics--FE
       </p>
     </div>
   </div>
