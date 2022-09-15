@@ -27,7 +27,7 @@ const ReadOnlySection = ({
           {heading}
         </p>
         <p className="margin-y-0 font-body-md line-height-sans-4">
-          {copy ?? t('na')}
+          {copy || <em className="text-base">{t('na')}</em>}
         </p>
       </div>
     );
