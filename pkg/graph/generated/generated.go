@@ -18574,9 +18574,9 @@ func (ec *executionContext) _PlanCrTdl_note(ctx context.Context, field graphql.C
 	if resTmp == nil {
 		return graphql.Null
 	}
-	res := resTmp.(string)
+	res := resTmp.(*string)
 	fc.Result = res
-	return ec.marshalOString2string(ctx, field.Selections, res)
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_PlanCrTdl_note(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {

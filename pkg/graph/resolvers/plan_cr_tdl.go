@@ -18,7 +18,7 @@ func PlanCrTdlCreate(logger *zap.Logger, input *model.PlanCrTdlCreateInput, prin
 		IDNumber:      input.IDNumber,
 		DateInitiated: &input.DateInitiated,
 		Title:         input.Title,
-		Note:          *input.Note,
+		Note:          input.Note,
 		ModelPlanRelation: models.ModelPlanRelation{
 			ModelPlanID: input.ModelPlanID,
 		},
