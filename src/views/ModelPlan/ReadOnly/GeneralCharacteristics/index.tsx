@@ -286,10 +286,16 @@ const ReadOnlyGeneralCharacteristics = ({ modelID }: { modelID: string }) => {
         />
 
         <ReadOnlySection
-          heading={t('agreementTypes')}
+          heading={t('agreementType')}
           list
           listItems={agreementTypes?.map(translateAgreementTypes)}
           listOtherItem={agreementTypesOther}
+        />
+
+        <ReadOnlySection
+          heading={t('moreParticipation')}
+          copy={multiplePatricipationAgreementsNeeded ? h('yes') : h('no')}
+          notes={multiplePatricipationAgreementsNeededNote}
         />
       </div>
     </div>
