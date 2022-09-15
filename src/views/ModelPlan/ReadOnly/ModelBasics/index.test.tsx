@@ -105,6 +105,9 @@ describe('Model Plan Documents page', () => {
       expect(
         screen.getByTestId('read-only-model-plan--model-basics')
       ).toBeInTheDocument();
+      expect(screen.getByTestId('other-entry')).toHaveTextContent(
+        'The Center for Awesomeness'
+      );
     });
 
     expect(asFragment()).toMatchSnapshot();
