@@ -9,6 +9,7 @@ export default gql`
         resemblesExistingModel
         resemblesExistingModelWhich
         resemblesExistingModelHow
+        resemblesExistingModelNote
         hasComponentsOrTracks
         hasComponentsOrTracksDiffer
         hasComponentsOrTracksNote
