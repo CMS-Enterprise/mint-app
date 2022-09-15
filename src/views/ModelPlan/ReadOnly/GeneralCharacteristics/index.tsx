@@ -122,6 +122,13 @@ const ReadOnlyGeneralCharacteristics = ({ modelID }: { modelID: string }) => {
           copy={resemblesExistingModelHow}
         />
 
+        {resemblesExistingModelNote && (
+          <ReadOnlySection
+            heading={t('basics:notes')}
+            copy={resemblesExistingModelNote}
+          />
+        )}
+
         <ReadOnlySection
           heading={t('differentComponents')}
           copy={hasComponentsOrTracks ? h('yes') : h('no')}
@@ -136,6 +143,13 @@ const ReadOnlyGeneralCharacteristics = ({ modelID }: { modelID: string }) => {
           heading={t('tracksDiffer')}
           copy={hasComponentsOrTracksDiffer}
         />
+
+        {hasComponentsOrTracksNote && (
+          <ReadOnlySection
+            heading={t('basics:notes')}
+            copy={hasComponentsOrTracksNote}
+          />
+        )}
       </div>
 
       <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
@@ -152,6 +166,13 @@ const ReadOnlyGeneralCharacteristics = ({ modelID }: { modelID: string }) => {
           )}
         />
 
+        {alternativePaymentModelNote && (
+          <ReadOnlySection
+            heading={t('basics:notes')}
+            copy={alternativePaymentModelNote}
+          />
+        )}
+
         <ReadOnlySection
           heading={t('keyCharacteristicsQuestion')}
           list
@@ -159,20 +180,48 @@ const ReadOnlyGeneralCharacteristics = ({ modelID }: { modelID: string }) => {
           copy={keyCharacteristicsOther}
         />
 
+        {keyCharacteristicsNote && (
+          <ReadOnlySection
+            heading={t('basics:notes')}
+            copy={keyCharacteristicsNote}
+          />
+        )}
+
         <ReadOnlySection
           heading={t('reviewPlanBids')}
           copy={collectPlanBids ? h('yes') : h('no')}
         />
+
+        {collectPlanBidsNote && (
+          <ReadOnlySection
+            heading={t('basics:notes')}
+            copy={collectPlanBidsNote}
+          />
+        )}
 
         <ReadOnlySection
           heading={t('manageEnrollment')}
           copy={managePartCDEnrollment ? h('yes') : h('no')}
         />
 
+        {managePartCDEnrollmentNote && (
+          <ReadOnlySection
+            heading={t('basics:notes')}
+            copy={managePartCDEnrollmentNote}
+          />
+        )}
+
         <ReadOnlySection
           heading={t('updatedContact')}
           copy={planContactUpdated ? h('yes') : h('no')}
         />
+
+        {planContactUpdatedNote && (
+          <ReadOnlySection
+            heading={t('basics:notes')}
+            copy={planContactUpdatedNote}
+          />
+        )}
       </div>
 
       <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
@@ -192,6 +241,12 @@ const ReadOnlyGeneralCharacteristics = ({ modelID }: { modelID: string }) => {
             </div>
           )}
         </div>
+        {careCoordinationInvolvedNote && (
+          <ReadOnlySection
+            heading={t('basics:notes')}
+            copy={careCoordinationInvolvedNote}
+          />
+        )}
 
         <div className="desktop:display-flex flex-justify">
           <div className="desktop:width-card-lg">
