@@ -64,7 +64,7 @@ const mocks = [
   }
 ];
 
-describe('Model Plan Documents page', () => {
+describe('Read Only Model Plan Summary -- Model Basics', () => {
   it('renders without errors', async () => {
     render(
       <MemoryRouter
