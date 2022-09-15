@@ -19,7 +19,10 @@ const ReadOnlySection = ({
   notes
 }: ReadOnlySectionProps) => {
   const { t } = useTranslation('basics');
-  const sectionName = heading.toLowerCase().replaceAll(' ', '-');
+  const sectionName = heading
+    .toLowerCase()
+    .replace(/\W/g, '-')
+    .replace(/.-$/g, '');
 
   const renderCopyOrList = () => {
     if (!list || listItems.length === 0) {
