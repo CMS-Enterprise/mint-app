@@ -35,7 +35,9 @@ const ReadOnlySection = ({
               <li className="font-sans-md line-height-sans-4">{item}</li>
               {item === 'Other' && (
                 <ul data-testid="other-entry">
-                  <li className="font-sans-md line-height-sans-4">{copy}</li>
+                  <li className="font-sans-md line-height-sans-4">
+                    {copy || <em className="text-base">{t('na')}</em>}
+                  </li>
                 </ul>
               )}
             </React.Fragment>
