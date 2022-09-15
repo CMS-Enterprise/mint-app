@@ -69,3 +69,8 @@ func FetchCollaboratorByID(logger *zap.Logger, id uuid.UUID, store *storage.Stor
 	collaborator, err := store.PlanCollaboratorFetchByID(id)
 	return collaborator, err
 }
+
+// IsPlanCollaborator checks if a user is a collaborator on model plan is a favorite.
+func IsPlanCollaborator(logger *zap.Logger, principal authentication.Principal, store *storage.Store, modelPlanID uuid.UUID) (bool, error) {
+	return store.CheckIfCollaborator(logger, principal.ID(), modelPlanID)
+}

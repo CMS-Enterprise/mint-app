@@ -10,13 +10,19 @@ describe('Web Socket Connections', () => {
 
     cy.get('[data-testid="basics"]').should('not.be.disabled');
 
-    cy.task('lockTaskListSection', {
-      euaId: 'KR14',
-      modelPlanID: '53054496-6d1f-47f5-b6a0-1edaf73b935e',
-      section: TaskListSection.MODEL_BASICS
+    cy.location().then(location => {
+      cy.wrap(location.pathname.split('/')[2]).as('modelPlanID');
     });
 
-    cy.get('[data-testid="basics"]').should('be.disabled');
+    cy.get('@modelPlanID').then(modelPlanID => {
+      cy.task('lockTaskListSection', {
+        euaId: 'KR14',
+        modelPlanID,
+        section: TaskListSection.MODEL_BASICS
+      });
+
+      cy.get('[data-testid="basics"]').should('be.disabled');
+    });
   });
 
   it('tries to edit an occupied section', () => {
@@ -26,13 +32,12 @@ describe('Web Socket Connections', () => {
       cy.wrap(location.pathname.split('/')[2]).as('modelPlanID');
     });
 
-    cy.task('lockTaskListSection', {
-      euaId: 'ABCD',
-      modelPlanID: '53054496-6d1f-47f5-b6a0-1edaf73b935e',
-      section: TaskListSection.PAYMENT
-    });
-
     cy.get('@modelPlanID').then(modelPlanID => {
+      cy.task('lockTaskListSection', {
+        euaId: 'ABCD',
+        modelPlanID,
+        section: TaskListSection.PAYMENT
+      });
       cy.visit(`/models/${modelPlanID}/task-list/payment`);
     });
 

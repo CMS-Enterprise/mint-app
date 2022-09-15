@@ -131,9 +131,9 @@ func ModelPlanGetByID(logger *zap.Logger, id uuid.UUID, store *storage.Store) (*
 	return plan, nil
 }
 
-// ModelPlanCollectionByUser implements resolver logic to get a list of model plans by who's a collaborator on them (TODO)
-func ModelPlanCollectionByUser(logger *zap.Logger, principal authentication.Principal, store *storage.Store) ([]*models.ModelPlan, error) {
-	plans, err := store.ModelPlanCollectionByUser(logger, principal.ID(), false)
+// ModelPlanCollection implements resolver logic to get a list of model plans by who's a collaborator on them (TODO)
+func ModelPlanCollection(logger *zap.Logger, principal authentication.Principal, store *storage.Store) ([]*models.ModelPlan, error) {
+	plans, err := store.ModelPlanCollection(logger, false)
 	if err != nil {
 		return nil, err
 	}
