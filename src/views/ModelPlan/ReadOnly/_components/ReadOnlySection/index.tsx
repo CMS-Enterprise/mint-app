@@ -13,14 +13,14 @@ const ReadOnlySection = ({
   copy,
   heading,
   list,
-  listItems,
+  listItems = [],
   notes
 }: ReadOnlySectionProps) => {
   const { t } = useTranslation('basics');
   const sectionName = heading.toLowerCase().replaceAll(' ', '-');
 
   const renderCopyOrList = () => {
-    if (!list) {
+    if (!list || listItems.length === 0) {
       return (
         <p className="margin-y-0 font-body-md line-height-sans-4">
           {copy || <em className="text-base">{t('na')}</em>}
@@ -29,22 +29,18 @@ const ReadOnlySection = ({
     }
     return (
       <ul className="margin-y-0 padding-left-3">
-        {listItems ? (
-          listItems?.map(item => (
-            <React.Fragment key={`${sectionName}--${item}`}>
-              <li className="font-sans-md line-height-sans-4">{item}</li>
-              {item === 'Other' && (
-                <ul data-testid="other-entry">
-                  <li className="font-sans-md line-height-sans-4">
-                    {copy || <em className="text-base">{t('na')}</em>}
-                  </li>
-                </ul>
-              )}
-            </React.Fragment>
-          ))
-        ) : (
-          <li className="font-sans-md line-height-sans-4">{t('na')}</li>
-        )}
+        {listItems.map(item => (
+          <React.Fragment key={`${sectionName}--${item}`}>
+            <li className="font-sans-md line-height-sans-4">{item}</li>
+            {item === 'Other' && (
+              <ul data-testid="other-entry">
+                <li className="font-sans-md line-height-sans-4">
+                  {copy || <em className="text-base">{t('na')}</em>}
+                </li>
+              </ul>
+            )}
+          </React.Fragment>
+        ))}
       </ul>
     );
   };
