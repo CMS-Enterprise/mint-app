@@ -57,6 +57,7 @@ const Table = ({ data, updateFavorite }: ModelPlansTableProps) => {
             <Button
               onClick={() => updateFavorite(row.original.id, 'removeFavorite')}
               type="button"
+              data-testid={row.original.id}
               className="display-block"
               unstyled
             >
@@ -66,6 +67,7 @@ const Table = ({ data, updateFavorite }: ModelPlansTableProps) => {
             <Button
               onClick={() => updateFavorite(row.original.id, 'addFavorite')}
               type="button"
+              data-testid={row.original.id}
               className="display-block"
               unstyled
             >

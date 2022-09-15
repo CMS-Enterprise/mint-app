@@ -32,7 +32,7 @@ const FavoriteCard = ({
 
   return (
     <Card
-      data-testid="single-bookmark-card"
+      data-testid={modelName}
       className={classnames('grid-col-12', className)}
     >
       <div>
