@@ -38,10 +38,8 @@ func main() {
 // getResolverDependencies takes a Viper config and returns a Store and Logger object to be used
 // by various resolver functions.
 func getResolverDependencies(config *viper.Viper) (*storage.Store, *zap.Logger) {
-	logger, err := zap.NewProduction()
-	if err != nil {
-		panic(err)
-	}
+	logger := zap.NewNop()
+
 	dbConfig := storage.DBConfig{
 		Host:           config.GetString(appconfig.DBHostConfigKey),
 		Port:           config.GetString(appconfig.DBPortConfigKey),
