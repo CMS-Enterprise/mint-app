@@ -4,7 +4,10 @@ import { useQuery } from '@apollo/client';
 
 import GetAllGeneralCharacteristics from 'queries/ReadOnly/GetAllGeneralCharacteristics';
 import { GetAllGeneralCharacteristics as GetAllGeneralCharacteristicsTypes } from 'queries/ReadOnly/types/GetAllGeneralCharacteristics';
-import { translateAlternativePaymentTypes } from 'utils/modelPlan';
+import {
+  translateAlternativePaymentTypes,
+  translateKeyCharacteristics
+} from 'utils/modelPlan';
 import { TaskListStatusTag } from 'views/ModelPlan/TaskList/_components/TaskListItem';
 import { NotFoundPartial } from 'views/NotFound';
 
@@ -147,6 +150,28 @@ const ReadOnlyGeneralCharacteristics = ({ modelID }: { modelID: string }) => {
           listItems={alternativePaymentModelTypes?.map(
             translateAlternativePaymentTypes
           )}
+        />
+
+        <ReadOnlySection
+          heading={t('keyCharacteristicsQuestion')}
+          list
+          listItems={keyCharacteristics?.map(translateKeyCharacteristics)}
+          copy={keyCharacteristicsOther}
+        />
+
+        <ReadOnlySection
+          heading={t('reviewPlanBids')}
+          copy={collectPlanBids ? h('yes') : h('no')}
+        />
+
+        <ReadOnlySection
+          heading={t('manageEnrollment')}
+          copy={managePartCDEnrollment ? h('yes') : h('no')}
+        />
+
+        <ReadOnlySection
+          heading={t('updatedContact')}
+          copy={planContactUpdated ? h('yes') : h('no')}
         />
       </div>
     </div>
