@@ -87,3 +87,20 @@ func addPlanCollaborator(store *storage.Store, logger *zap.Logger, mp *models.Mo
 	}
 	return collaborator
 }
+
+// crTdlCreate is a wrapper for resolvers.PlanCrTdlCreate
+// It will panic if an error occurs, rather than bubbling the error up
+// It will always add the CR/TDL object with the principal value of the Model Plan's "createdBy"
+func addCrTdl(store *storage.Store, logger *zap.Logger, mp *models.ModelPlan, input *model.PlanCrTdlCreateInput) *models.PlanCrTdl {
+	princ := &authentication.EUAPrincipal{
+		EUAID:             mp.CreatedBy,
+		JobCodeUSER:       true,
+		JobCodeASSESSMENT: false,
+	}
+
+	collaborator, err := resolvers.PlanCrTdlCreate(logger, input, princ, store)
+	if err != nil {
+		panic(err)
+	}
+	return collaborator
+}

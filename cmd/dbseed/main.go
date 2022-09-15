@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"time"
 
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -95,6 +96,24 @@ func seedData(config *viper.Viper) {
 		FullName:    "Betty Alpha",
 		TeamRole:    models.TeamRoleLeadership,
 		Email:       "bAlpha@local.fake",
+	})
+
+	// Seed a plan with CRs / TDLs
+	planWithCrTDLs := createModelPlan(store, logger, "Plan With CRs and TDLs", "MINT")
+	addCrTdl(store, logger, planWithCrTDLs, &model.PlanCrTdlCreateInput{
+		ModelPlanID:   planWithCrTDLs.ID,
+		IDNumber:      "CR-123",
+		DateInitiated: time.Now(),
+		Title:         "My CR",
+		Note:          nil,
+	})
+	tdlNote := "My TDL note"
+	addCrTdl(store, logger, planWithCrTDLs, &model.PlanCrTdlCreateInput{
+		ModelPlanID:   planWithCrTDLs.ID,
+		IDNumber:      "TDL-123",
+		DateInitiated: time.Now(),
+		Title:         "My TDL",
+		Note:          &tdlNote,
 	})
 
 	// Seed a plan that is already archived
