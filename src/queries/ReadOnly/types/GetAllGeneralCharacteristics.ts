@@ -6,10 +6,10 @@
 import { AlternativePaymentModelType, KeyCharacteristic, GeographyType, GeographyApplication, AgreementType, AuthorityAllowance, WaiverType, TaskStatus } from "./../../../types/graphql-global-types";
 
 // ====================================================
-// GraphQL query operation: GetAllGenernalCharacteristics
+// GraphQL query operation: GetAllGeneralCharacteristics
 // ====================================================
 
-export interface GetAllGenernalCharacteristics_modelPlan_generalCharacteristics {
+export interface GetAllGeneralCharacteristics_modelPlan_generalCharacteristics {
   __typename: "PlanGeneralCharacteristics";
   isNewModel: boolean | null;
   existingModel: string | null;
@@ -65,15 +65,15 @@ export interface GetAllGenernalCharacteristics_modelPlan_generalCharacteristics 
   status: TaskStatus;
 }
 
-export interface GetAllGenernalCharacteristics_modelPlan {
+export interface GetAllGeneralCharacteristics_modelPlan {
   __typename: "ModelPlan";
-  generalCharacteristics: GetAllGenernalCharacteristics_modelPlan_generalCharacteristics;
+  generalCharacteristics: GetAllGeneralCharacteristics_modelPlan_generalCharacteristics;
 }
 
-export interface GetAllGenernalCharacteristics {
-  modelPlan: GetAllGenernalCharacteristics_modelPlan;
+export interface GetAllGeneralCharacteristics {
+  modelPlan: GetAllGeneralCharacteristics_modelPlan;
 }
 
-export interface GetAllGenernalCharacteristicsVariables {
+export interface GetAllGeneralCharacteristicsVariables {
   id: UUID;
 }

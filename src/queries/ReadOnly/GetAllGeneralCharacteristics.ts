@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client';
 
 export default gql`
-  query GetAllGenernalCharacteristics($id: UUID!) {
+  query GetAllGeneralCharacteristics($id: UUID!) {
     modelPlan(id: $id) {
       generalCharacteristics {
         isNewModel
