@@ -19,50 +19,43 @@ const ReadOnlySection = ({
   const { t } = useTranslation('basics');
   const sectionName = heading.toLowerCase().replaceAll(' ', '-');
 
-  // If component is not a list, render a basics component
-  if (!list) {
+  const renderCopyOrList = () => {
+    if (!list) {
+      return (
+        <p className="margin-y-0 font-body-md line-height-sans-4">
+          {copy || <em className="text-base">{t('na')}</em>}
+        </p>
+      );
+    }
     return (
-      <>
-        <div
-          className={`read-only-section read-only-section--${sectionName} margin-bottom-3`}
-        >
-          <p className="text-bold margin-y-0 font-body-sm line-height-sans-4">
-            {heading}
-          </p>
-          <p className="margin-y-0 font-body-md line-height-sans-4">
-            {copy || <em className="text-base">{t('na')}</em>}
-          </p>
-        </div>
-        {notes && <ReadOnlySection heading={t('notes')} copy={notes} />}
-      </>
+      <ul className="margin-y-0 padding-left-3">
+        {listItems ? (
+          listItems?.map(item => (
+            <React.Fragment key={`${sectionName}--${item}`}>
+              <li className="font-sans-md line-height-sans-4">{item}</li>
+              {item === 'Other' && (
+                <ul data-testid="other-entry">
+                  <li className="font-sans-md line-height-sans-4">{copy}</li>
+                </ul>
+              )}
+            </React.Fragment>
+          ))
+        ) : (
+          <li className="font-sans-md line-height-sans-4">{t('na')}</li>
+        )}
+      </ul>
     );
-  }
+  };
 
-  // If component is a list, render a more complicated list component
   return (
     <>
       <div
         className={`read-only-section read-only-section--${sectionName} margin-bottom-3`}
       >
-        <p className="text-bold margin-y-0 font-sans-md line-height-sans-4">
+        <p className="text-bold margin-y-0 font-body-sm line-height-sans-4">
           {heading}
         </p>
-        <ul className="margin-y-0 padding-left-3">
-          {listItems ? (
-            listItems?.map(item => (
-              <React.Fragment key={`${sectionName}--${item}`}>
-                <li className="font-sans-md line-height-sans-4">{item}</li>
-                {item === 'Other' && (
-                  <ul data-testid="other-entry">
-                    <li className="font-sans-md line-height-sans-4">{copy}</li>
-                  </ul>
-                )}
-              </React.Fragment>
-            ))
-          ) : (
-            <li className="font-sans-md line-height-sans-4">{t('na')}</li>
-          )}
-        </ul>
+        {renderCopyOrList()}
       </div>
       {notes && <ReadOnlySection heading={t('notes')} copy={notes} />}
     </>
