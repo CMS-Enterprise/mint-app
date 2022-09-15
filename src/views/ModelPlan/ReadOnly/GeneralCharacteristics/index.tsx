@@ -192,6 +192,40 @@ const ReadOnlyGeneralCharacteristics = ({ modelID }: { modelID: string }) => {
             </div>
           )}
         </div>
+
+        <div className="desktop:display-flex flex-justify">
+          <div className="desktop:width-card-lg">
+            <ReadOnlySection
+              heading={t('additionalServices')}
+              copy={additionalServicesInvolved ? h('yes') : h('no')}
+            />
+          </div>
+          {additionalServicesInvolved && (
+            <div className="desktop:width-card-lg">
+              <ReadOnlySection
+                heading={h('howSo')}
+                copy={additionalServicesInvolvedDescription}
+              />
+            </div>
+          )}
+        </div>
+
+        <div className="desktop:display-flex flex-justify">
+          <div className="desktop:width-card-lg">
+            <ReadOnlySection
+              heading={t('communityInvolved')}
+              copy={communityPartnersInvolved ? h('yes') : h('no')}
+            />
+          </div>
+          {communityPartnersInvolved && (
+            <div className="desktop:width-card-lg">
+              <ReadOnlySection
+                heading={h('howSo')}
+                copy={communityPartnersInvolvedDescription}
+              />
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
