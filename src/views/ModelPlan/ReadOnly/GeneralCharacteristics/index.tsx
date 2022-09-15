@@ -160,50 +160,26 @@ const ReadOnlyGeneralCharacteristics = ({ modelID }: { modelID: string }) => {
           list
           listItems={keyCharacteristics?.map(translateKeyCharacteristics)}
           copy={keyCharacteristicsOther}
+          notes={keyCharacteristicsNote}
         />
-
-        {keyCharacteristicsNote && (
-          <ReadOnlySection
-            heading={t('basics:notes')}
-            copy={keyCharacteristicsNote}
-          />
-        )}
 
         <ReadOnlySection
           heading={t('reviewPlanBids')}
           copy={collectPlanBids ? h('yes') : h('no')}
+          notes={collectPlanBidsNote}
         />
-
-        {collectPlanBidsNote && (
-          <ReadOnlySection
-            heading={t('basics:notes')}
-            copy={collectPlanBidsNote}
-          />
-        )}
 
         <ReadOnlySection
           heading={t('manageEnrollment')}
           copy={managePartCDEnrollment ? h('yes') : h('no')}
+          notes={managePartCDEnrollmentNote}
         />
-
-        {managePartCDEnrollmentNote && (
-          <ReadOnlySection
-            heading={t('basics:notes')}
-            copy={managePartCDEnrollmentNote}
-          />
-        )}
 
         <ReadOnlySection
           heading={t('updatedContact')}
           copy={planContactUpdated ? h('yes') : h('no')}
+          notes={planContactUpdatedNote}
         />
-
-        {planContactUpdatedNote && (
-          <ReadOnlySection
-            heading={t('basics:notes')}
-            copy={planContactUpdatedNote}
-          />
-        )}
       </div>
 
       <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
