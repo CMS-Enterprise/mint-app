@@ -61,7 +61,6 @@ BEGIN
         WITH NEWval AS
         (
             SELECT (EACH(audit_row.new)).*
-            --FROM audit_row
         )
         ,RESULTSet AS 
         (

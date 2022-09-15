@@ -33,6 +33,3 @@ CREATE TABLE audit.change (
 );
 ALTER TABLE audit.change
 ADD CONSTRAINT fk_change_table FOREIGN KEY (table_id) REFERENCES audit.table_config (id) MATCH SIMPLE ON UPDATE NO ACTION ON DELETE NO ACTION;
-
-
-REVOKE ALL ON audit.change FROM public;

@@ -1325,6 +1325,25 @@ type PlanFavorite {
     modifiedDts: Time
 
 }
+
+type AuditChange {
+id: Int!
+primaryKey: UUID!
+foreignKey: UUID
+fields: [AuditField!]!
+modifiedBy: String
+modifiedDts: Time
+}
+
+# type AuditFields {
+#   AuditField[]
+
+# }
+
+type AuditField {
+  old: String
+  new: String
+}
 """
 Query definition for the schema
 """
@@ -1341,6 +1360,7 @@ type Query {
   taskListSectionLocks(modelPlanID: UUID!): [TaskListSectionLockStatus!]!
   planPayments(id: UUID!): PlanPayments!
   ndaInfo: NDAInfo!
+  auditChanges(tableName: String!, primaryKey: UUID!): [AuditChange!]!
 }
 
 """
