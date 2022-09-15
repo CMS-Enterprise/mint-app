@@ -64,7 +64,7 @@ const mocks = [
   }
 ];
 
-describe('Model Plan Documents page', () => {
+describe('Read Only Model Plan Summary -- Model Basics', () => {
   it('renders without errors', async () => {
     render(
       <MemoryRouter
@@ -102,7 +102,14 @@ describe('Model Plan Documents page', () => {
       </MemoryRouter>
     );
     await waitFor(() => {
-      expect(asFragment()).toMatchSnapshot();
+      expect(
+        screen.getByTestId('read-only-model-plan--model-basics')
+      ).toBeInTheDocument();
+      expect(screen.getByTestId('other-entry')).toHaveTextContent(
+        'The Center for Awesomeness'
+      );
     });
+
+    expect(asFragment()).toMatchSnapshot();
   });
 });
