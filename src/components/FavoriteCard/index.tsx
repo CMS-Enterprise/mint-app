@@ -74,7 +74,11 @@ const FavoriteCard = ({
                 .filter(
                   collaborator => collaborator.teamRole === TeamRole.MODEL_LEAD
                 )
-                .map(collaborator => collaborator.fullName)}
+                .map((collaborator, index) =>
+                  index === collaborators.length - 1
+                    ? collaborator.fullName
+                    : `${collaborator.fullName}, `
+                )}
             </p>
           </Grid>
           <Grid desktop={{ col: 4 }}>
