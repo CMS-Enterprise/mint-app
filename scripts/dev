@@ -366,6 +366,7 @@ namespace :db do
     plan_payments,
     plan_it_tools,
     plan_favorite,
+    plan_cr_tdl,
     model_plan"
 
     puts "Cleaning database..."
