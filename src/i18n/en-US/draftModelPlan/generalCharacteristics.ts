@@ -19,6 +19,7 @@ const generalCharacteristics = {
   forQPP: 'For the Quality Payment Program (QPP)',
   keyCharacteristics:
     'What are the model key characteristics? Select all that apply.',
+  keyCharacteristicsQuestion: 'What are the model key characteristics?',
   modelAPMType: 'What type of APM model?',
   apmTypes: {
     regularAPM: 'Regular APM',
