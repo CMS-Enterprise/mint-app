@@ -107,6 +107,7 @@ type FavoriteIconProps = {
   updateFavorite: (modelPlanID: string, type: UpdateFavoriteProps) => void;
 };
 
+// Icon favorite tag/toggle for readonly summary box
 export const FavoriteIcon = ({
   className,
   modelPlanID,

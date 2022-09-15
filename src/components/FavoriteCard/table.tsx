@@ -13,6 +13,12 @@ type ModelPlansTableProps = {
   removeFavorite: (modelPlanID: string, type: UpdateFavoriteProps) => void;
 };
 
+/**
+ * Creating a bare table to house favorite cards
+ * Utilizing pagination if more than three favories
+ * Possbility for sort functionality in future
+ * */
+
 const FavoritesTable = ({
   favorites,
   removeFavorite

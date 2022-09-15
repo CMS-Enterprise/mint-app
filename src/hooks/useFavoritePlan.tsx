@@ -5,6 +5,8 @@ import DeletePlanFavorite from 'queries/Favorite/DeletePlanFavorite';
 import { AddPlanFavoriteVariables } from 'queries/Favorite/types/AddPlanFavorite';
 import { DeletePlanFavoriteVariables } from 'queries/Favorite/types/DeletePlanFavorite';
 
+// Custom hook to house the multiple mutations needed for toggling favorites
+
 export default function useFavoritePlan() {
   const [addMutate] = useMutation<AddPlanFavoriteVariables>(AddPlanFavorite);
 
