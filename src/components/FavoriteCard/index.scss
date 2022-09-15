@@ -32,6 +32,13 @@
         overflow: hidden;
     }
 
+    &__tag {
+        text-transform: none !important;
+        &__icon {
+            top: .1em !important;
+        }
+    }
+
 }
 
 #main-content .usa-card {

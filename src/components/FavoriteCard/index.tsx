@@ -1,6 +1,13 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button, Card, Grid, IconStar } from '@trussworks/react-uswds';
+import {
+  Button,
+  Card,
+  Grid,
+  IconStar,
+  IconStarOutline,
+  Tag
+} from '@trussworks/react-uswds';
 import classnames from 'classnames';
 
 import UswdsReactLink from 'components/LinkWrapper';
@@ -90,6 +97,43 @@ const FavoriteCard = ({
         </Grid>
       </div>
     </Card>
+  );
+};
+
+type FavoriteIconProps = {
+  className?: string;
+  isFavorite: boolean;
+  modelPlanID: string;
+  updateFavorite: (modelPlanID: string, type: UpdateFavoriteProps) => void;
+};
+
+export const FavoriteIcon = ({
+  className,
+  modelPlanID,
+  isFavorite,
+  updateFavorite
+}: FavoriteIconProps) => {
+  const { t } = useTranslation('modelPlan');
+
+  return (
+    <div className={classnames('pointer', className)}>
+      <Tag
+        className="text-primary bg-white bookmark__tag padding-1 padding-x-105"
+        onClick={() =>
+          isFavorite
+            ? updateFavorite(modelPlanID, 'removeFavorite')
+            : updateFavorite(modelPlanID, 'addFavorite')
+        }
+      >
+        {isFavorite ? (
+          <IconStar className="margin-right-05 bookmark__tag__icon" />
+        ) : (
+          <IconStarOutline className="margin-right-05 bookmark__tag__icon" />
+        )}
+
+        {isFavorite ? t('favorite.following') : t('favorite.follow')}
+      </Tag>
+    </div>
   );
 };
 

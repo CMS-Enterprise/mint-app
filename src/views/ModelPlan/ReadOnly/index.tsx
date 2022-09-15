@@ -13,6 +13,7 @@ import {
 } from '@trussworks/react-uswds';
 import classnames from 'classnames';
 
+import { FavoriteIcon } from 'components/FavoriteCard';
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
@@ -23,6 +24,7 @@ import {
 } from 'components/shared/DescriptionGroup';
 import SectionWrapper from 'components/shared/SectionWrapper';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
+import useFavoritePlan from 'hooks/useFavoritePlan';
 import GetModelSummary from 'queries/ReadOnly/GetModelSummary';
 import {
   GetModelSummary as GetModelSummaryType,
@@ -33,6 +35,7 @@ import { formatDate } from 'utils/date';
 import { translateKeyCharacteristics } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
 
+import { UpdateFavoriteProps } from '../ModelPlanOverview';
 import TaskListStatus from '../TaskList/_components/TaskListStatus';
 
 import ContactInfo from './_components/ContactInfo';
@@ -91,7 +94,7 @@ const ReadOnly = () => {
     }
   });
 
-  const { data, loading, error } = useQuery<GetModelSummaryType>(
+  const { data, loading, error, refetch } = useQuery<GetModelSummaryType>(
     GetModelSummary,
     {
       variables: {
@@ -100,8 +103,23 @@ const ReadOnly = () => {
     }
   );
 
+  const favoriteMutations = useFavoritePlan();
+
+  const handleUpdateFavorite = (
+    modelPlanID: string,
+    type: UpdateFavoriteProps
+  ) => {
+    favoriteMutations[type]({
+      variables: {
+        modelPlanID
+      }
+    }).then(refetch);
+  };
+
   const {
+    id,
     modelName,
+    isFavorite,
     modifiedDts,
     status,
     basics,
@@ -192,13 +210,21 @@ const ReadOnly = () => {
         data-testid="read-only-model-summary"
       >
         <GridContainer>
-          <UswdsReactLink
-            to="/models"
-            className="display-flex flex-align-center margin-bottom-3"
-          >
-            <IconArrowBack className="text-primary margin-right-1" />
-            {h('back')}
-          </UswdsReactLink>
+          <div className="display-flex flex-justify">
+            <UswdsReactLink
+              to="/models"
+              className="display-flex flex-align-center margin-bottom-3"
+            >
+              <IconArrowBack className="text-primary margin-right-1" />
+              {h('back')}
+            </UswdsReactLink>
+
+            <FavoriteIcon
+              isFavorite={isFavorite}
+              modelPlanID={id}
+              updateFavorite={handleUpdateFavorite}
+            />
+          </div>
 
           <PageHeading className="margin-0 line-height-sans-2">
             {modelName}

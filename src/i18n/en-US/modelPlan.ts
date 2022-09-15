@@ -31,7 +31,9 @@ const modelPlan = {
     startDate: 'Start date',
     cRTDLs: 'CRs and TDLs',
     toBeDetermined: 'To be determined',
-    noneEntered: 'None entered'
+    noneEntered: 'None entered',
+    follow: 'Follow',
+    following: 'Following'
   },
   stepsOverview: {
     heading: 'Start a new model plan',

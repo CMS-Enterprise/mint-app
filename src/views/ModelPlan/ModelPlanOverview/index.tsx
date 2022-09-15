@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { withRouter } from 'react-router-dom';
-import { useMutation, useQuery } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import {
   Alert,
   Grid,
@@ -15,10 +15,7 @@ import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import NDABanner from 'components/NDABanner';
 import PageHeading from 'components/PageHeading';
-import AddPlanFavorite from 'queries/Favorite/AddPlanFavorite';
-import DeletePlanFavorite from 'queries/Favorite/DeletePlanFavorite';
-import { AddPlanFavoriteVariables } from 'queries/Favorite/types/AddPlanFavorite';
-import { DeletePlanFavoriteVariables } from 'queries/Favorite/types/DeletePlanFavorite';
+import useFavoritePlan from 'hooks/useFavoritePlan';
 import GetAllModelPlans from 'queries/ReadOnly/GetAllModelPlans';
 import {
   GetAllModelPlans as GetAllModelPlansType,
@@ -41,16 +38,7 @@ const ModelPlan = () => {
 
   const favorites = modelPlans.filter(modelPlan => modelPlan.isFavorite);
 
-  const [addMutate] = useMutation<AddPlanFavoriteVariables>(AddPlanFavorite);
-
-  const [removeMutate] = useMutation<DeletePlanFavoriteVariables>(
-    DeletePlanFavorite
-  );
-
-  const favoriteMutations = {
-    removeFavorite: removeMutate,
-    addFavorite: addMutate
-  };
+  const favoriteMutations = useFavoritePlan();
 
   const handleUpdateFavorite = (
     modelPlanID: string,

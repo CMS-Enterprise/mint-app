@@ -4,7 +4,7 @@ exports[`FavoriteCard matches the snapshot 1`] = `
 <DocumentFragment>
   <li
     class="usa-card grid-col-12"
-    data-testid="single-bookmark-card"
+    data-testid="Plan For General Characteristics"
   >
     <div
       class="usa-card__container"
