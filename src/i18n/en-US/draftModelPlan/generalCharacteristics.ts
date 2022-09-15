@@ -78,6 +78,7 @@ const generalCharacteristics = {
   ruleMakingInfo:
     'Which rule do you anticipate using and what is the target date of display for that regulation?',
   waiverTypes: 'Which types of waivers are required? Select all that apply.',
+  waiverTypesQuestion: 'Which types of waivers are required?',
   fraudAndAbuse: 'Fraud and Abuse',
   fraudAndAbuseNote: '(Note: Federal Waiver team writes)',
   programPayment: 'Program/payment',
