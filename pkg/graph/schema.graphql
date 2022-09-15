@@ -23,6 +23,12 @@ Time values are represented as strings using RFC3339 format, for example 2019-10
 """
 scalar Time
 
+
+"""
+Maps an arbitrary GraphQL value to a map[string]interface{} Go type.
+"""
+scalar Map
+
 """
 ModelPlan represent the data point for plans about a model. It is the central data type in the application
 """
@@ -1330,7 +1336,8 @@ type AuditChange {
 id: Int!
 primaryKey: UUID!
 foreignKey: UUID
-fields: [AuditField!]!
+fields: Map!
+# fields: Map[AuditField!]!
 modifiedBy: String
 modifiedDts: Time
 }
@@ -1340,10 +1347,10 @@ modifiedDts: Time
 
 # }
 
-type AuditField {
-  old: String
-  new: String
-}
+# type AuditField {
+#   old: String
+#   new: String
+# }
 """
 Query definition for the schema
 """

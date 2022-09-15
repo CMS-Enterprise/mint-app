@@ -35,6 +35,21 @@ func (a AuditFields) Value() (driver.Value, error) {
 	return j, err
 }
 
+// ToInterface returns the audit fields as a generic map[string]interface{}
+func (a *AuditFields) ToInterface() (map[string]interface{}, error) {
+	retVal := map[string]interface{}{}
+
+	bytes, err := json.Marshal(a)
+	if err != nil {
+		return nil, err
+	}
+	err = json.Unmarshal(bytes, &retVal)
+	if err != nil {
+		return nil, err
+	}
+	return retVal, err
+}
+
 // Scan implements the scanner interface so we can translate the JSONb from the db to an object in GO
 func (a *AuditFields) Scan(src interface{}) error {
 	if src == nil {

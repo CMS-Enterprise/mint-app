@@ -5,7 +5,6 @@ package graph
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/google/uuid"
 
@@ -18,28 +17,8 @@ import (
 )
 
 // Fields is the resolver for the fields field.
-func (r *auditChangeResolver) Fields(ctx context.Context, obj *models.AuditChange) ([]*models.AuditField, error) {
-	//TODO RETURN
-	return nil, nil
-	// return obj.Fields, nil
-	// change, err := json.Marshal(obj.Fields)
-
-	// return change.String(), err
-
-	// return obj.Fields, nil
-
-	//TODO revisit this
-	// panic(fmt.Errorf("not implemented: Fields - fields"))
-}
-
-// Old is the resolver for the old field.
-func (r *auditFieldResolver) Old(ctx context.Context, obj *models.AuditField) (*string, error) {
-	panic(fmt.Errorf("not implemented: Old - old"))
-}
-
-// New is the resolver for the new field.
-func (r *auditFieldResolver) New(ctx context.Context, obj *models.AuditField) (*string, error) {
-	panic(fmt.Errorf("not implemented: New - new"))
+func (r *auditChangeResolver) Fields(ctx context.Context, obj *models.AuditChange) (map[string]interface{}, error) {
+	return obj.Fields.ToInterface()
 }
 
 // Basics is the resolver for the basics field.
@@ -871,9 +850,6 @@ func (r *userInfoResolver) Email(ctx context.Context, obj *models.UserInfo) (str
 // AuditChange returns generated.AuditChangeResolver implementation.
 func (r *Resolver) AuditChange() generated.AuditChangeResolver { return &auditChangeResolver{r} }
 
-// AuditField returns generated.AuditFieldResolver implementation.
-func (r *Resolver) AuditField() generated.AuditFieldResolver { return &auditFieldResolver{r} }
-
 // ModelPlan returns generated.ModelPlanResolver implementation.
 func (r *Resolver) ModelPlan() generated.ModelPlanResolver { return &modelPlanResolver{r} }
 
@@ -927,7 +903,6 @@ func (r *Resolver) Subscription() generated.SubscriptionResolver { return &subsc
 func (r *Resolver) UserInfo() generated.UserInfoResolver { return &userInfoResolver{r} }
 
 type auditChangeResolver struct{ *Resolver }
-type auditFieldResolver struct{ *Resolver }
 type modelPlanResolver struct{ *Resolver }
 type mutationResolver struct{ *Resolver }
 type planBasicsResolver struct{ *Resolver }

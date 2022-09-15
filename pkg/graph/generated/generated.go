@@ -41,7 +41,6 @@ type Config struct {
 
 type ResolverRoot interface {
 	AuditChange() AuditChangeResolver
-	AuditField() AuditFieldResolver
 	ModelPlan() ModelPlanResolver
 	Mutation() MutationResolver
 	PlanBasics() PlanBasicsResolver
@@ -70,11 +69,6 @@ type ComplexityRoot struct {
 		ModifiedBy  func(childComplexity int) int
 		ModifiedDts func(childComplexity int) int
 		PrimaryKey  func(childComplexity int) int
-	}
-
-	AuditField struct {
-		New func(childComplexity int) int
-		Old func(childComplexity int) int
 	}
 
 	CurrentUser struct {
@@ -738,11 +732,7 @@ type ComplexityRoot struct {
 }
 
 type AuditChangeResolver interface {
-	Fields(ctx context.Context, obj *models.AuditChange) ([]*models.AuditField, error)
-}
-type AuditFieldResolver interface {
-	Old(ctx context.Context, obj *models.AuditField) (*string, error)
-	New(ctx context.Context, obj *models.AuditField) (*string, error)
+	Fields(ctx context.Context, obj *models.AuditChange) (map[string]interface{}, error)
 }
 type ModelPlanResolver interface {
 	Basics(ctx context.Context, obj *models.ModelPlan) (*models.PlanBasics, error)
@@ -1007,20 +997,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.AuditChange.PrimaryKey(childComplexity), true
-
-	case "AuditField.new":
-		if e.complexity.AuditField.New == nil {
-			break
-		}
-
-		return e.complexity.AuditField.New(childComplexity), true
-
-	case "AuditField.old":
-		if e.complexity.AuditField.Old == nil {
-			break
-		}
-
-		return e.complexity.AuditField.Old(childComplexity), true
 
 	case "CurrentUser.launchDarkly":
 		if e.complexity.CurrentUser.LaunchDarkly == nil {
@@ -5421,6 +5397,12 @@ Time values are represented as strings using RFC3339 format, for example 2019-10
 """
 scalar Time
 
+
+"""
+Maps an arbitrary GraphQL value to a map[string]interface{} Go type.
+"""
+scalar Map
+
 """
 ModelPlan represent the data point for plans about a model. It is the central data type in the application
 """
@@ -6728,7 +6710,8 @@ type AuditChange {
 id: Int!
 primaryKey: UUID!
 foreignKey: UUID
-fields: [AuditField!]!
+fields: Map!
+# fields: Map[AuditField!]!
 modifiedBy: String
 modifiedDts: Time
 }
@@ -6738,10 +6721,10 @@ modifiedDts: Time
 
 # }
 
-type AuditField {
-  old: String
-  new: String
-}
+# type AuditField {
+#   old: String
+#   new: String
+# }
 """
 Query definition for the schema
 """
@@ -8423,9 +8406,9 @@ func (ec *executionContext) _AuditChange_fields(ctx context.Context, field graph
 		}
 		return graphql.Null
 	}
-	res := resTmp.([]*models.AuditField)
+	res := resTmp.(map[string]interface{})
 	fc.Result = res
-	return ec.marshalNAuditField2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐAuditFieldᚄ(ctx, field.Selections, res)
+	return ec.marshalNMap2map(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_AuditChange_fields(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -8435,13 +8418,7 @@ func (ec *executionContext) fieldContext_AuditChange_fields(ctx context.Context,
 		IsMethod:   true,
 		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "old":
-				return ec.fieldContext_AuditField_old(ctx, field)
-			case "new":
-				return ec.fieldContext_AuditField_new(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type AuditField", field.Name)
+			return nil, errors.New("field of type Map does not have child fields")
 		},
 	}
 	return fc, nil
@@ -8524,88 +8501,6 @@ func (ec *executionContext) fieldContext_AuditChange_modifiedDts(ctx context.Con
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type Time does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _AuditField_old(ctx context.Context, field graphql.CollectedField, obj *models.AuditField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_AuditField_old(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.AuditField().Old(rctx, obj)
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		return graphql.Null
-	}
-	res := resTmp.(*string)
-	fc.Result = res
-	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_AuditField_old(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "AuditField",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type String does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _AuditField_new(ctx context.Context, field graphql.CollectedField, obj *models.AuditField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_AuditField_new(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.AuditField().New(rctx, obj)
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		return graphql.Null
-	}
-	res := resTmp.(*string)
-	fc.Result = res
-	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_AuditField_new(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "AuditField",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type String does not have child fields")
 		},
 	}
 	return fc, nil
@@ -39294,61 +39189,6 @@ func (ec *executionContext) _AuditChange(ctx context.Context, sel ast.SelectionS
 	return out
 }
 
-var auditFieldImplementors = []string{"AuditField"}
-
-func (ec *executionContext) _AuditField(ctx context.Context, sel ast.SelectionSet, obj *models.AuditField) graphql.Marshaler {
-	fields := graphql.CollectFields(ec.OperationContext, sel, auditFieldImplementors)
-	out := graphql.NewFieldSet(fields)
-	var invalids uint32
-	for i, field := range fields {
-		switch field.Name {
-		case "__typename":
-			out.Values[i] = graphql.MarshalString("AuditField")
-		case "old":
-			field := field
-
-			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._AuditField_old(ctx, field, obj)
-				return res
-			}
-
-			out.Concurrently(i, func() graphql.Marshaler {
-				return innerFunc(ctx)
-
-			})
-		case "new":
-			field := field
-
-			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._AuditField_new(ctx, field, obj)
-				return res
-			}
-
-			out.Concurrently(i, func() graphql.Marshaler {
-				return innerFunc(ctx)
-
-			})
-		default:
-			panic("unknown field " + strconv.Quote(field.Name))
-		}
-	}
-	out.Dispatch()
-	if invalids > 0 {
-		return graphql.Null
-	}
-	return out
-}
-
 var currentUserImplementors = []string{"CurrentUser"}
 
 func (ec *executionContext) _CurrentUser(ctx context.Context, sel ast.SelectionSet, obj *model.CurrentUser) graphql.Marshaler {
@@ -44804,60 +44644,6 @@ func (ec *executionContext) marshalNAuditChange2ᚖgithubᚗcomᚋcmsgovᚋmint�
 	return ec._AuditChange(ctx, sel, v)
 }
 
-func (ec *executionContext) marshalNAuditField2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐAuditFieldᚄ(ctx context.Context, sel ast.SelectionSet, v []*models.AuditField) graphql.Marshaler {
-	ret := make(graphql.Array, len(v))
-	var wg sync.WaitGroup
-	isLen1 := len(v) == 1
-	if !isLen1 {
-		wg.Add(len(v))
-	}
-	for i := range v {
-		i := i
-		fc := &graphql.FieldContext{
-			Index:  &i,
-			Result: &v[i],
-		}
-		ctx := graphql.WithFieldContext(ctx, fc)
-		f := func(i int) {
-			defer func() {
-				if r := recover(); r != nil {
-					ec.Error(ctx, ec.Recover(ctx, r))
-					ret = nil
-				}
-			}()
-			if !isLen1 {
-				defer wg.Done()
-			}
-			ret[i] = ec.marshalNAuditField2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐAuditField(ctx, sel, v[i])
-		}
-		if isLen1 {
-			f(i)
-		} else {
-			go f(i)
-		}
-
-	}
-	wg.Wait()
-
-	for _, e := range ret {
-		if e == graphql.Null {
-			return graphql.Null
-		}
-	}
-
-	return ret
-}
-
-func (ec *executionContext) marshalNAuditField2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐAuditField(ctx context.Context, sel ast.SelectionSet, v *models.AuditField) graphql.Marshaler {
-	if v == nil {
-		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
-			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
-		}
-		return graphql.Null
-	}
-	return ec._AuditField(ctx, sel, v)
-}
-
 func (ec *executionContext) unmarshalNAuthorityAllowance2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐAuthorityAllowance(ctx context.Context, v interface{}) (model.AuthorityAllowance, error) {
 	var res model.AuthorityAllowance
 	err := res.UnmarshalGQL(v)
@@ -46453,6 +46239,27 @@ func (ec *executionContext) marshalNLaunchDarklySettings2ᚖgithubᚗcomᚋcmsgo
 		return graphql.Null
 	}
 	return ec._LaunchDarklySettings(ctx, sel, v)
+}
+
+func (ec *executionContext) unmarshalNMap2map(ctx context.Context, v interface{}) (map[string]interface{}, error) {
+	res, err := graphql.UnmarshalMap(v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalNMap2map(ctx context.Context, sel ast.SelectionSet, v map[string]interface{}) graphql.Marshaler {
+	if v == nil {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
+		return graphql.Null
+	}
+	res := graphql.MarshalMap(v)
+	if res == graphql.Null {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
+	}
+	return res
 }
 
 func (ec *executionContext) unmarshalNModelLearningSystemType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐModelLearningSystemType(ctx context.Context, v interface{}) (model.ModelLearningSystemType, error) {
