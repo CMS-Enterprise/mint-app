@@ -84,9 +84,9 @@ const ModelPlan = () => {
           desktop={{ col: 12 }}
           className="padding-bottom-2 margin-bottom-4 border-bottom border-base-light"
         >
-          <PageHeading className="margin-bottom-1">
+          <div className="margin-bottom-1 font-heading-2xl text-bold">
             {t('following.heading')}
-          </PageHeading>
+          </div>
           <p className="line-height-body-5 text-light margin-bottom-05 margin-top-0 margin-bottom-3">
             {t('following.subheading')}
           </p>
@@ -114,9 +114,12 @@ const ModelPlan = () => {
           )}
         </Grid>
         <Grid>
-          <PageHeading className="margin-bottom-1" id="all-models">
+          <div
+            className="margin-bottom-1 font-heading-2xl text-bold"
+            id="all-models"
+          >
             {t('allModels.heading')}
-          </PageHeading>
+          </div>
           <p className="line-height-body-5 text-light margin-bottom-3 margin-top-0">
             {t('allModels.subheading')}
           </p>
