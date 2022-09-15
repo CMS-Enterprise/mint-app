@@ -4,6 +4,7 @@ import { useQuery } from '@apollo/client';
 
 import GetAllGeneralCharacteristics from 'queries/ReadOnly/GetAllGeneralCharacteristics';
 import { GetAllGeneralCharacteristics as GetAllGeneralCharacteristicsTypes } from 'queries/ReadOnly/types/GetAllGeneralCharacteristics';
+import { translateAlternativePaymentTypes } from 'utils/modelPlan';
 import { TaskListStatusTag } from 'views/ModelPlan/TaskList/_components/TaskListItem';
 import { NotFoundPartial } from 'views/NotFound';
 
@@ -91,43 +92,63 @@ const ReadOnlyGeneralCharacteristics = ({ modelID }: { modelID: string }) => {
         {status && <TaskListStatusTag status={status} />}
       </div>
 
-      <ReadOnlySection
-        heading={t('isNewModel')}
-        copy={isNewModel ? t('newModel') : t('newTrack')}
-      />
+      <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
+        <ReadOnlySection
+          heading={t('isNewModel')}
+          copy={isNewModel ? t('newModel') : t('newTrack')}
+        />
 
-      <ReadOnlySection heading={t('whichExistingModel')} copy={existingModel} />
+        <ReadOnlySection
+          heading={t('whichExistingModel')}
+          copy={existingModel}
+        />
 
-      <ReadOnlySection
-        heading={t('resembleModel')}
-        copy={resemblesExistingModel ? h('yes') : h('no')}
-      />
+        <ReadOnlySection
+          heading={t('resembleModel')}
+          copy={resemblesExistingModel ? h('yes') : h('no')}
+        />
 
-      <ReadOnlySection
-        heading={t('modelResemblance')}
-        list
-        listItems={resemblesExistingModelWhich}
-      />
+        <ReadOnlySection
+          heading={t('modelResemblance')}
+          list
+          listItems={resemblesExistingModelWhich}
+        />
 
-      <ReadOnlySection
-        heading={t('waysResembleModel')}
-        copy={resemblesExistingModelHow}
-      />
+        <ReadOnlySection
+          heading={t('waysResembleModel')}
+          copy={resemblesExistingModelHow}
+        />
 
-      <ReadOnlySection
-        heading={t('differentComponents')}
-        copy={hasComponentsOrTracks ? h('yes') : h('no')}
-      />
+        <ReadOnlySection
+          heading={t('differentComponents')}
+          copy={hasComponentsOrTracks ? h('yes') : h('no')}
+        />
 
-      <ReadOnlySection
-        heading={t('differentComponents')}
-        copy={hasComponentsOrTracks ? h('yes') : h('no')}
-      />
+        <ReadOnlySection
+          heading={t('differentComponents')}
+          copy={hasComponentsOrTracks ? h('yes') : h('no')}
+        />
 
-      <ReadOnlySection
-        heading={t('tracksDiffer')}
-        copy={hasComponentsOrTracksDiffer}
-      />
+        <ReadOnlySection
+          heading={t('tracksDiffer')}
+          copy={hasComponentsOrTracksDiffer}
+        />
+      </div>
+
+      <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
+        <ReadOnlySection
+          heading={t('modelAPM')}
+          copy={alternativePaymentModel ? h('yes') : h('no')}
+        />
+
+        <ReadOnlySection
+          heading={t('modelAPMType')}
+          list
+          listItems={alternativePaymentModelTypes?.map(
+            translateAlternativePaymentTypes
+          )}
+        />
+      </div>
     </div>
   );
 };
