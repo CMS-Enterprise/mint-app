@@ -14,6 +14,12 @@ exports[`Read Only Model Plan Summary -- General Characteristics matches snapsho
       >
         General characteristics
       </h2>
+      <span
+        class="model-plan-task-list__task-tag line-height-5 text-bold bg-warning"
+        data-testid="tasklist-tag"
+      >
+        In progress
+      </span>
     </div>
     <div
       class="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light"
@@ -29,7 +35,7 @@ exports[`Read Only Model Plan Summary -- General Characteristics matches snapsho
         <p
           class="margin-y-0 font-body-md line-height-sans-4"
         >
-          New track of an existing model
+          New model
         </p>
       </div>
       <div
@@ -43,11 +49,7 @@ exports[`Read Only Model Plan Summary -- General Characteristics matches snapsho
         <p
           class="margin-y-0 font-body-md line-height-sans-4"
         >
-          <em
-            class="text-base"
-          >
-            No answer entered
-          </em>
+          Accountable Care Organizations (ACOs): General Information
         </p>
       </div>
       <div
@@ -61,7 +63,7 @@ exports[`Read Only Model Plan Summary -- General Characteristics matches snapsho
         <p
           class="margin-y-0 font-body-md line-height-sans-4"
         >
-          No
+          Yes
         </p>
       </div>
       <div
@@ -98,6 +100,20 @@ exports[`Read Only Model Plan Summary -- General Characteristics matches snapsho
           >
             No answer entered
           </em>
+        </p>
+      </div>
+      <div
+        class="read-only-section read-only-section--notes margin-bottom-3"
+      >
+        <p
+          class="text-bold margin-y-0 font-body-sm line-height-sans-4"
+        >
+          Notes
+        </p>
+        <p
+          class="margin-y-0 font-body-md line-height-sans-4"
+        >
+          THIS IS A NEW NOTE
         </p>
       </div>
       <div
@@ -161,7 +177,7 @@ exports[`Read Only Model Plan Summary -- General Characteristics matches snapsho
         <p
           class="margin-y-0 font-body-md line-height-sans-4"
         >
-          No
+          Yes
         </p>
       </div>
       <div
@@ -172,14 +188,33 @@ exports[`Read Only Model Plan Summary -- General Characteristics matches snapsho
         >
           What type of APM model?
         </p>
+        <ul
+          class="margin-y-0 padding-left-3"
+        >
+          <li
+            class="font-sans-md line-height-sans-4"
+          >
+            Regular APM
+          </li>
+          <li
+            class="font-sans-md line-height-sans-4"
+          >
+            MIPS APM
+          </li>
+        </ul>
+      </div>
+      <div
+        class="read-only-section read-only-section--notes margin-bottom-3"
+      >
+        <p
+          class="text-bold margin-y-0 font-body-sm line-height-sans-4"
+        >
+          Notes
+        </p>
         <p
           class="margin-y-0 font-body-md line-height-sans-4"
         >
-          <em
-            class="text-base"
-          >
-            No answer entered
-          </em>
+          asdfasdfasdfasdf asdf asdf asdf asdf 
         </p>
       </div>
       <div
@@ -190,14 +225,56 @@ exports[`Read Only Model Plan Summary -- General Characteristics matches snapsho
         >
           What are the model key characteristics?
         </p>
+        <ul
+          class="margin-y-0 padding-left-3"
+        >
+          <li
+            class="font-sans-md line-height-sans-4"
+          >
+            Population-based Model
+          </li>
+          <li
+            class="font-sans-md line-height-sans-4"
+          >
+            Payment Model
+          </li>
+          <li
+            class="font-sans-md line-height-sans-4"
+          >
+            Serivce Delivery Model
+          </li>
+          <li
+            class="font-sans-md line-height-sans-4"
+          >
+            Other
+          </li>
+          <ul
+            data-testid="other-entry"
+          >
+            <li
+              class="font-sans-md line-height-sans-4"
+            >
+              <em
+                class="text-base"
+              >
+                No answer entered
+              </em>
+            </li>
+          </ul>
+        </ul>
+      </div>
+      <div
+        class="read-only-section read-only-section--notes margin-bottom-3"
+      >
+        <p
+          class="text-bold margin-y-0 font-body-sm line-height-sans-4"
+        >
+          Notes
+        </p>
         <p
           class="margin-y-0 font-body-md line-height-sans-4"
         >
-          <em
-            class="text-base"
-          >
-            No answer entered
-          </em>
+          test
         </p>
       </div>
       <div
@@ -285,7 +362,25 @@ exports[`Read Only Model Plan Summary -- General Characteristics matches snapsho
             <p
               class="margin-y-0 font-body-md line-height-sans-4"
             >
-              No
+              Yes
+            </p>
+          </div>
+        </div>
+        <div
+          class="desktop:width-card-lg"
+        >
+          <div
+            class="read-only-section read-only-section--how-so margin-bottom-3"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4"
+            >
+              How so?
+            </p>
+            <p
+              class="margin-y-0 font-body-md line-height-sans-4"
+            >
+              Lots of additional services
             </p>
           </div>
         </div>
@@ -307,10 +402,44 @@ exports[`Read Only Model Plan Summary -- General Characteristics matches snapsho
             <p
               class="margin-y-0 font-body-md line-height-sans-4"
             >
-              No
+              Yes
             </p>
           </div>
         </div>
+        <div
+          class="desktop:width-card-lg"
+        >
+          <div
+            class="read-only-section read-only-section--how-so margin-bottom-3"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4"
+            >
+              How so?
+            </p>
+            <p
+              class="margin-y-0 font-body-md line-height-sans-4"
+            >
+              Are community partners involved?
+
+
+            </p>
+          </div>
+        </div>
+      </div>
+      <div
+        class="read-only-section read-only-section--notes margin-bottom-3"
+      >
+        <p
+          class="text-bold margin-y-0 font-body-sm line-height-sans-4"
+        >
+          Notes
+        </p>
+        <p
+          class="margin-y-0 font-body-md line-height-sans-4"
+        >
+          frwegqergqgrqwg planContactUpdatedNote
+        </p>
       </div>
     </div>
     <div
@@ -433,7 +562,25 @@ exports[`Read Only Model Plan Summary -- General Characteristics matches snapsho
             <p
               class="margin-y-0 font-body-md line-height-sans-4"
             >
-              No
+              Yes
+            </p>
+          </div>
+        </div>
+        <div
+          class="desktop:width-card-lg"
+        >
+          <div
+            class="read-only-section read-only-section--which-rule-do-you-anticipate-using-and-what-is-the-target-date-of-display-for-that-regulation margin-bottom-3"
+          >
+            <p
+              class="text-bold margin-y-0 font-body-sm line-height-sans-4"
+            >
+              Which rule do you anticipate using and what is the target date of display for that regulation?
+            </p>
+            <p
+              class="margin-y-0 font-body-md line-height-sans-4"
+            >
+              Lots of rules
             </p>
           </div>
         </div>

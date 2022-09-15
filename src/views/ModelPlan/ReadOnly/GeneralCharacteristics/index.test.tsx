@@ -113,9 +113,9 @@ describe('Read Only Model Plan Summary -- General Characteristics', () => {
     );
 
     await waitFor(() => {
-      expect(
-        screen.getByTestId('read-only-model-plan--general-characteristics')
-      ).toBeInTheDocument();
+      expect(screen.getByTestId('tasklist-tag')).toHaveTextContent(
+        'In progress'
+      );
       expect(
         screen.getByText(
           'Accountable Care Organizations (ACOs): General Information'
@@ -138,8 +138,13 @@ describe('Read Only Model Plan Summary -- General Characteristics', () => {
       </MemoryRouter>
     );
     await waitFor(() => {
+      expect(screen.getByTestId('tasklist-tag')).toHaveTextContent(
+        'In progress'
+      );
       expect(
-        screen.getByTestId('read-only-model-plan--general-characteristics')
+        screen.getByText(
+          'Accountable Care Organizations (ACOs): General Information'
+        )
       ).toBeInTheDocument();
       expect(asFragment()).toMatchSnapshot();
     });
