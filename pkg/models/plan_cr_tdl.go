@@ -11,5 +11,5 @@ type PlanCrTdl struct {
 	IDNumber      string     `json:"idNumber" db:"id_number"`
 	DateInitiated *time.Time `json:"dateInitiated" db:"date_initiated"`
 	Title         string     `json:"title" db:"title"`
-	Note          string     `json:"note" db:"note"`
+	Note          *string    `json:"note" db:"note"`
 }

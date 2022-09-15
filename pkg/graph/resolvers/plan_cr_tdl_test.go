@@ -33,7 +33,7 @@ func (suite *ResolverSuite) TestPlanCrTdlCreate() {
 	suite.EqualValues(crTdl.ModelPlanID, plan.ID)
 	suite.EqualValues(crTdl.IDNumber, "123-456")
 	suite.EqualValues(crTdl.Title, "My CR")
-	suite.EqualValues(crTdl.Note, note)
+	suite.EqualValues(*crTdl.Note, note)
 
 }
 
@@ -61,7 +61,7 @@ func (suite *ResolverSuite) TestPlanCrTdlUpdate() {
 	suite.EqualValues(crTdl.ModelPlanID, result.ModelPlanID)
 	suite.EqualValues(result.Title, changes["title"])
 	suite.EqualValues(result.IDNumber, changes["idNumber"])
-	suite.EqualValues(result.Note, changes["note"])
+	suite.EqualValues(*result.Note, changes["note"])
 }
 
 // TestPlanCrTdlDelete tests deleting a plan_cr_tdl record in the database
