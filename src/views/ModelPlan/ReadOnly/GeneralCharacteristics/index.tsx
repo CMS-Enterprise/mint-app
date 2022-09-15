@@ -120,14 +120,8 @@ const ReadOnlyGeneralCharacteristics = ({ modelID }: { modelID: string }) => {
         <ReadOnlySection
           heading={t('waysResembleModel')}
           copy={resemblesExistingModelHow}
+          notes={resemblesExistingModelNote}
         />
-
-        {resemblesExistingModelNote && (
-          <ReadOnlySection
-            heading={t('basics:notes')}
-            copy={resemblesExistingModelNote}
-          />
-        )}
 
         <ReadOnlySection
           heading={t('differentComponents')}
@@ -142,14 +136,8 @@ const ReadOnlyGeneralCharacteristics = ({ modelID }: { modelID: string }) => {
         <ReadOnlySection
           heading={t('tracksDiffer')}
           copy={hasComponentsOrTracksDiffer}
+          notes={hasComponentsOrTracksNote}
         />
-
-        {hasComponentsOrTracksNote && (
-          <ReadOnlySection
-            heading={t('basics:notes')}
-            copy={hasComponentsOrTracksNote}
-          />
-        )}
       </div>
 
       <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
@@ -164,14 +152,8 @@ const ReadOnlyGeneralCharacteristics = ({ modelID }: { modelID: string }) => {
           listItems={alternativePaymentModelTypes?.map(
             translateAlternativePaymentTypes
           )}
+          notes={alternativePaymentModelNote}
         />
-
-        {alternativePaymentModelNote && (
-          <ReadOnlySection
-            heading={t('basics:notes')}
-            copy={alternativePaymentModelNote}
-          />
-        )}
 
         <ReadOnlySection
           heading={t('keyCharacteristicsQuestion')}
