@@ -26,7 +26,11 @@ exports[`Model Plan Documents page matches snapshot 1`] = `
       <p
         class="margin-y-0 font-body-md line-height-sans-4"
       >
-        No answer entered
+        <em
+          class="text-base"
+        >
+          No answer entered
+        </em>
       </p>
     </div>
     <div
@@ -39,19 +43,19 @@ exports[`Model Plan Documents page matches snapshot 1`] = `
           class="read-only-section read-only-section--cms-component margin-bottom-3"
         >
           <p
-            class="text-bold margin-y-0 font-sans-md line-height-sans-4"
+            class="text-bold margin-y-0 font-body-sm line-height-sans-4"
           >
             CMS component
           </p>
-          <ul
-            class="margin-y-0 padding-left-3"
+          <p
+            class="margin-y-0 font-body-md line-height-sans-4"
           >
-            <li
-              class="font-sans-md line-height-sans-4"
+            <em
+              class="text-base"
             >
               No answer entered
-            </li>
-          </ul>
+            </em>
+          </p>
         </div>
       </div>
       <div
@@ -61,19 +65,19 @@ exports[`Model Plan Documents page matches snapshot 1`] = `
           class="read-only-section read-only-section--cmmi-group margin-bottom-3"
         >
           <p
-            class="text-bold margin-y-0 font-sans-md line-height-sans-4"
+            class="text-bold margin-y-0 font-body-sm line-height-sans-4"
           >
             CMMI Group
           </p>
-          <ul
-            class="margin-y-0 padding-left-3"
+          <p
+            class="margin-y-0 font-body-md line-height-sans-4"
           >
-            <li
-              class="font-sans-md line-height-sans-4"
+            <em
+              class="text-base"
             >
               No answer entered
-            </li>
-          </ul>
+            </em>
+          </p>
         </div>
       </div>
     </div>
@@ -88,7 +92,11 @@ exports[`Model Plan Documents page matches snapshot 1`] = `
       <p
         class="margin-y-0 font-body-md line-height-sans-4"
       >
-        No answer entered
+        <em
+          class="text-base"
+        >
+          No answer entered
+        </em>
       </p>
     </div>
     <div
@@ -102,7 +110,11 @@ exports[`Model Plan Documents page matches snapshot 1`] = `
       <p
         class="margin-y-0 font-body-md line-height-sans-4"
       >
-        No answer entered
+        <em
+          class="text-base"
+        >
+          No answer entered
+        </em>
       </p>
     </div>
     <div
@@ -116,7 +128,11 @@ exports[`Model Plan Documents page matches snapshot 1`] = `
       <p
         class="margin-y-0 font-body-md line-height-sans-4"
       >
-        No answer entered
+        <em
+          class="text-base"
+        >
+          No answer entered
+        </em>
       </p>
     </div>
     <div
@@ -130,7 +146,11 @@ exports[`Model Plan Documents page matches snapshot 1`] = `
       <p
         class="margin-y-0 font-body-md line-height-sans-4"
       >
-        No answer entered
+        <em
+          class="text-base"
+        >
+          No answer entered
+        </em>
       </p>
     </div>
     <div
@@ -144,7 +164,11 @@ exports[`Model Plan Documents page matches snapshot 1`] = `
       <p
         class="margin-y-0 font-body-md line-height-sans-4"
       >
-        No answer entered
+        <em
+          class="text-base"
+        >
+          No answer entered
+        </em>
       </p>
     </div>
     <div
@@ -339,7 +363,7 @@ exports[`Model Plan Documents page matches snapshot 1`] = `
       </ol>
     </div>
     <div
-      class="read-only-section read-only-section--if-timelines-are-tight,-might-there-be-pieces-of-the-model-that-can-be-phased-in-over-time? margin-bottom-3"
+      class="read-only-section read-only-section--if-timelines-are-tight-might-there-be-pieces-of-the-model-that-can-be-phased-in-over-time margin-bottom-3"
     >
       <p
         class="text-bold margin-y-0 font-body-sm line-height-sans-4"
@@ -363,7 +387,11 @@ exports[`Model Plan Documents page matches snapshot 1`] = `
       <p
         class="margin-y-0 font-body-md line-height-sans-4"
       >
-        No answer entered
+        <em
+          class="text-base"
+        >
+          No answer entered
+        </em>
       </p>
     </div>
   </div>
