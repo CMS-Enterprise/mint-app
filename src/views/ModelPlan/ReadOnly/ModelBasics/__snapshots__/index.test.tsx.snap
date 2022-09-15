@@ -14,6 +14,12 @@ exports[`Model Plan Documents page matches snapshot 1`] = `
       >
         Model basics
       </h2>
+      <span
+        class="model-plan-task-list__task-tag line-height-5 text-bold bg-warning"
+        data-testid="tasklist-tag"
+      >
+        In progress
+      </span>
     </div>
     <div
       class="read-only-section read-only-section--model-category margin-bottom-3"
@@ -26,7 +32,7 @@ exports[`Model Plan Documents page matches snapshot 1`] = `
       <p
         class="margin-y-0 font-body-md line-height-sans-4"
       >
-        No answer entered
+        Primary Care Transformation
       </p>
     </div>
     <div
@@ -49,8 +55,22 @@ exports[`Model Plan Documents page matches snapshot 1`] = `
             <li
               class="font-sans-md line-height-sans-4"
             >
-              No answer entered
+              Center for Medicare (CM)
             </li>
+            <li
+              class="font-sans-md line-height-sans-4"
+            >
+              Other
+            </li>
+            <ul
+              data-testid="other-entry"
+            >
+              <li
+                class="font-sans-md line-height-sans-4"
+              >
+                The Center for Awesomeness
+              </li>
+            </ul>
           </ul>
         </div>
       </div>
@@ -71,7 +91,12 @@ exports[`Model Plan Documents page matches snapshot 1`] = `
             <li
               class="font-sans-md line-height-sans-4"
             >
-              No answer entered
+              State Innovations Group (SIG)
+            </li>
+            <li
+              class="font-sans-md line-height-sans-4"
+            >
+              Policy and Programs Group (PPG)
             </li>
           </ul>
         </div>
@@ -88,7 +113,7 @@ exports[`Model Plan Documents page matches snapshot 1`] = `
       <p
         class="margin-y-0 font-body-md line-height-sans-4"
       >
-        No answer entered
+        Mandatory
       </p>
     </div>
     <div
@@ -102,7 +127,7 @@ exports[`Model Plan Documents page matches snapshot 1`] = `
       <p
         class="margin-y-0 font-body-md line-height-sans-4"
       >
-        No answer entered
+        There is not enough candy
       </p>
     </div>
     <div
@@ -116,7 +141,7 @@ exports[`Model Plan Documents page matches snapshot 1`] = `
       <p
         class="margin-y-0 font-body-md line-height-sans-4"
       >
-        No answer entered
+        To get more candy
       </p>
     </div>
     <div
@@ -130,7 +155,7 @@ exports[`Model Plan Documents page matches snapshot 1`] = `
       <p
         class="margin-y-0 font-body-md line-height-sans-4"
       >
-        No answer entered
+        The great candy machine
       </p>
     </div>
     <div
@@ -144,7 +169,7 @@ exports[`Model Plan Documents page matches snapshot 1`] = `
       <p
         class="margin-y-0 font-body-md line-height-sans-4"
       >
-        No answer entered
+        The machine doesn't work yet
       </p>
     </div>
     <div
@@ -171,7 +196,7 @@ exports[`Model Plan Documents page matches snapshot 1`] = `
           <p
             class="margin-y-0 font-body-md line-height-sans-4"
           >
-            No answer entered
+            06/03/2022
           </p>
         </li>
         <li
@@ -198,7 +223,7 @@ exports[`Model Plan Documents page matches snapshot 1`] = `
               <p
                 class="margin-y-0 font-body-md line-height-sans-4"
               >
-                No answer entered
+                06/03/2022
               </p>
             </div>
             <div
@@ -213,7 +238,7 @@ exports[`Model Plan Documents page matches snapshot 1`] = `
               <p
                 class="margin-y-0 font-body-md line-height-sans-4"
               >
-                No answer entered
+                06/03/2022
               </p>
             </div>
           </div>
@@ -230,7 +255,7 @@ exports[`Model Plan Documents page matches snapshot 1`] = `
           <p
             class="margin-y-0 font-body-md line-height-sans-4"
           >
-            No answer entered
+            06/03/2022
           </p>
         </li>
         <li
@@ -257,7 +282,7 @@ exports[`Model Plan Documents page matches snapshot 1`] = `
               <p
                 class="margin-y-0 font-body-md line-height-sans-4"
               >
-                No answer entered
+                06/03/2022
               </p>
             </div>
             <div
@@ -272,7 +297,7 @@ exports[`Model Plan Documents page matches snapshot 1`] = `
               <p
                 class="margin-y-0 font-body-md line-height-sans-4"
               >
-                No answer entered
+                06/03/2022
               </p>
             </div>
           </div>
@@ -301,7 +326,7 @@ exports[`Model Plan Documents page matches snapshot 1`] = `
               <p
                 class="margin-y-0 font-body-md line-height-sans-4"
               >
-                No answer entered
+                06/03/2022
               </p>
             </div>
             <div
@@ -316,7 +341,7 @@ exports[`Model Plan Documents page matches snapshot 1`] = `
               <p
                 class="margin-y-0 font-body-md line-height-sans-4"
               >
-                No answer entered
+                06/03/2022
               </p>
             </div>
           </div>
@@ -333,7 +358,7 @@ exports[`Model Plan Documents page matches snapshot 1`] = `
           <p
             class="margin-y-0 font-body-md line-height-sans-4"
           >
-            No answer entered
+            06/03/2022
           </p>
         </li>
       </ol>
@@ -363,7 +388,7 @@ exports[`Model Plan Documents page matches snapshot 1`] = `
       <p
         class="margin-y-0 font-body-md line-height-sans-4"
       >
-        No answer entered
+        This can't be phased in
       </p>
     </div>
   </div>
