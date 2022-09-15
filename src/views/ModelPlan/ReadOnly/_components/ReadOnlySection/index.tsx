@@ -6,13 +6,15 @@ type ReadOnlySectionProps = {
   heading: string;
   list?: boolean;
   listItems?: string[];
+  notes?: string;
 };
 
 const ReadOnlySection = ({
   copy,
   heading,
   list,
-  listItems
+  listItems,
+  notes
 }: ReadOnlySectionProps) => {
   const { t } = useTranslation('basics');
   const sectionName = heading.toLowerCase().replaceAll(' ', '-');
