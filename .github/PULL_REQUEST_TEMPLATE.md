@@ -22,7 +22,7 @@
 - [ ] Met the ticket's acceptance criteria, or will meet them in a subsequent PR.
 - [ ] Added or updated tests for backend resolvers or other functions as needed.
 - [ ] Added or updated client tests for new components, parent components, functions, or e2e tests as necessary.
-- [ ] Tested user-facing changes with voice-over and the [rotor menu](https://support.apple.com/guide/voiceover/with-the-voiceover-rotor-mchlp2719/mac)
+- [ ] Updated the [Postman Collection](../MINT.postman_collection.json) if necessary.
 
 
 ## PR Reviewer Guidelines
