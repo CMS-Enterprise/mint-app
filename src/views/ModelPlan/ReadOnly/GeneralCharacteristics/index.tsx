@@ -7,9 +7,11 @@ import { GetAllGeneralCharacteristics as GetAllGeneralCharacteristicsTypes } fro
 import {
   translateAgreementTypes,
   translateAlternativePaymentTypes,
+  translateAuthorityAllowance,
   translateGeographyApplication,
   translateGeographyTypes,
-  translateKeyCharacteristics
+  translateKeyCharacteristics,
+  translateWaiverTypes
 } from 'utils/modelPlan';
 import { TaskListStatusTag } from 'views/ModelPlan/TaskList/_components/TaskListItem';
 import { NotFoundPartial } from 'views/NotFound';
@@ -297,6 +299,64 @@ const ReadOnlyGeneralCharacteristics = ({ modelID }: { modelID: string }) => {
           copy={multiplePatricipationAgreementsNeeded ? h('yes') : h('no')}
           notes={multiplePatricipationAgreementsNeededNote}
         />
+      </div>
+      <div className="margin-bottom-4 padding-bottom-2">
+        <div className="desktop:display-flex flex-justify">
+          <div className="desktop:width-card-lg">
+            <ReadOnlySection
+              heading={t('rulemakingRequired')}
+              copy={rulemakingRequired ? h('yes') : h('no')}
+            />
+          </div>
+
+          {rulemakingRequired && (
+            <div className="desktop:width-card-lg">
+              <ReadOnlySection
+                heading={t('ruleMakingInfo')}
+                copy={rulemakingRequiredDescription}
+              />
+            </div>
+          )}
+        </div>
+        {rulemakingRequiredNote && (
+          <ReadOnlySection
+            heading={t('basics:notes')}
+            copy={rulemakingRequiredNote}
+          />
+        )}
+
+        <ReadOnlySection
+          heading={t('authorityAllowed')}
+          list
+          listItems={authorityAllowances?.map(translateAuthorityAllowance)}
+          listOtherItem={authorityAllowancesOther}
+          notes={authorityAllowancesNote}
+        />
+
+        <div className="desktop:display-flex flex-justify">
+          <div className="desktop:width-card-lg">
+            <ReadOnlySection
+              heading={t('waiversRequired')}
+              copy={waiversRequired ? h('yes') : h('no')}
+            />
+          </div>
+
+          {waiversRequired && (
+            <div className="desktop:width-card-lg">
+              <ReadOnlySection
+                heading={t('waiverTypesQuestion')}
+                list
+                listItems={waiversRequiredTypes?.map(translateWaiverTypes)}
+              />
+            </div>
+          )}
+        </div>
+        {waiversRequiredNote && (
+          <ReadOnlySection
+            heading={t('basics:notes')}
+            copy={waiversRequiredNote}
+          />
+        )}
       </div>
     </div>
   );
