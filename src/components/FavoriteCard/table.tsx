@@ -24,7 +24,7 @@ const FavoritesTable = ({
         disableGlobalFilter: true,
         Cell: ({ row }: { row: Row<AllModelPlansType> }) => {
           return (
-            <CardGroup className="margin-bottom-3">
+            <CardGroup>
               <FavoriteCard
                 key={row.original.id}
                 modelPlan={row.original}
@@ -84,19 +84,21 @@ const FavoritesTable = ({
         </tbody>
       </UswdsTable>
 
-      <TablePagination
-        gotoPage={gotoPage}
-        previousPage={previousPage}
-        nextPage={nextPage}
-        canNextPage={canNextPage}
-        pageIndex={state.pageIndex}
-        pageOptions={pageOptions}
-        canPreviousPage={canPreviousPage}
-        pageCount={pageCount}
-        pageSize={state.pageSize}
-        setPageSize={setPageSize}
-        page={[]}
-      />
+      {favorites.length > 3 && (
+        <TablePagination
+          gotoPage={gotoPage}
+          previousPage={previousPage}
+          nextPage={nextPage}
+          canNextPage={canNextPage}
+          pageIndex={state.pageIndex}
+          pageOptions={pageOptions}
+          canPreviousPage={canPreviousPage}
+          pageCount={pageCount}
+          pageSize={state.pageSize}
+          setPageSize={setPageSize}
+          page={[]}
+        />
+      )}
     </div>
   );
 };
