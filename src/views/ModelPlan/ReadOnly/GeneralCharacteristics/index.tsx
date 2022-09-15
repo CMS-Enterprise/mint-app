@@ -5,6 +5,7 @@ import { useQuery } from '@apollo/client';
 import GetAllGeneralCharacteristics from 'queries/ReadOnly/GetAllGeneralCharacteristics';
 import { GetAllGeneralCharacteristics as GetAllGeneralCharacteristicsTypes } from 'queries/ReadOnly/types/GetAllGeneralCharacteristics';
 import {
+  translateAgreementTypes,
   translateAlternativePaymentTypes,
   translateGeographyApplication,
   translateGeographyTypes,
@@ -161,7 +162,7 @@ const ReadOnlyGeneralCharacteristics = ({ modelID }: { modelID: string }) => {
           heading={t('keyCharacteristicsQuestion')}
           list
           listItems={keyCharacteristics?.map(translateKeyCharacteristics)}
-          copy={keyCharacteristicsOther}
+          listOtherItem={keyCharacteristicsOther}
           notes={keyCharacteristicsNote}
         />
 
@@ -265,7 +266,7 @@ const ReadOnlyGeneralCharacteristics = ({ modelID }: { modelID: string }) => {
           heading={t('geographyType')}
           list
           listItems={geographiesTargetedTypes?.map(translateGeographyTypes)}
-          copy={geographiesTargetedTypesOther}
+          listOtherItem={geographiesTargetedTypesOther}
         />
 
         <ReadOnlySection
@@ -274,8 +275,21 @@ const ReadOnlyGeneralCharacteristics = ({ modelID }: { modelID: string }) => {
           listItems={geographiesTargetedAppliedTo?.map(
             translateGeographyApplication
           )}
-          copy={geographiesTargetedAppliedToOther}
+          listOtherItem={geographiesTargetedAppliedToOther}
           notes={geographiesTargetedNote}
+        />
+
+        <ReadOnlySection
+          heading={t('participationOptions')}
+          copy={participationOptions ? h('yes') : h('no')}
+          notes={participationOptionsNote}
+        />
+
+        <ReadOnlySection
+          heading={t('agreementTypes')}
+          list
+          listItems={agreementTypes?.map(translateAgreementTypes)}
+          listOtherItem={agreementTypesOther}
         />
       </div>
     </div>

@@ -6,6 +6,7 @@ type ReadOnlySectionProps = {
   heading: string;
   list?: boolean;
   listItems?: string[];
+  listOtherItem?: string | null;
   notes?: string | null;
 };
 
@@ -14,6 +15,7 @@ const ReadOnlySection = ({
   heading,
   list,
   listItems = [],
+  listOtherItem,
   notes
 }: ReadOnlySectionProps) => {
   const { t } = useTranslation('basics');
@@ -35,7 +37,7 @@ const ReadOnlySection = ({
             {item === 'Other' && (
               <ul data-testid="other-entry">
                 <li className="font-sans-md line-height-sans-4">
-                  {copy || <em className="text-base">{t('na')}</em>}
+                  {listOtherItem || <em className="text-base">{t('na')}</em>}
                 </li>
               </ul>
             )}
