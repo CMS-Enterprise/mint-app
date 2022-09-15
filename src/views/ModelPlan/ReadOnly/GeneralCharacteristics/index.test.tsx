@@ -17,7 +17,7 @@ const modelID = 'f11eb129-2c80-4080-9440-439cbe1a286f';
 
 const mockData: GetAllGeneralCharacteristicsTypes = {
   __typename: 'PlanGeneralCharacteristics',
-  isNewModel: false,
+  isNewModel: true,
   existingModel: 'Accountable Care Organizations (ACOs): General Information',
   resemblesExistingModel: true,
   resemblesExistingModelWhich: [],
@@ -115,6 +115,11 @@ describe('Read Only Model Plan Summary -- General Characteristics', () => {
     await waitFor(() => {
       expect(
         screen.getByTestId('read-only-model-plan--general-characteristics')
+      ).toBeInTheDocument();
+      expect(
+        screen.getByText(
+          'Accountable Care Organizations (ACOs): General Information'
+        )
       ).toBeInTheDocument();
     });
   });
