@@ -57,6 +57,14 @@ type PlanCollaboratorCreateInput struct {
 	Email       string          `json:"email"`
 }
 
+type PlanCrTdlCreateInput struct {
+	ModelPlanID   uuid.UUID `json:"modelPlanID"`
+	IDNumber      string    `json:"idNumber"`
+	DateInitiated time.Time `json:"dateInitiated"`
+	Title         string    `json:"title"`
+	Note          *string   `json:"note"`
+}
+
 // PlanDiscussionCreateInput represents the necessary fields to create a plan discussion
 type PlanDiscussionCreateInput struct {
 	ModelPlanID uuid.UUID `json:"modelPlanID"`
