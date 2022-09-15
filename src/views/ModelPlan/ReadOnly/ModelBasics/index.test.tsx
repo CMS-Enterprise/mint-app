@@ -102,7 +102,11 @@ describe('Model Plan Documents page', () => {
       </MemoryRouter>
     );
     await waitFor(() => {
-      expect(asFragment()).toMatchSnapshot();
+      expect(
+        screen.getByTestId('read-only-model-plan--model-basics')
+      ).toBeInTheDocument();
     });
+
+    expect(asFragment()).toMatchSnapshot();
   });
 });
