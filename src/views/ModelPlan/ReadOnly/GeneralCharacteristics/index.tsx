@@ -222,6 +222,12 @@ const ReadOnlyGeneralCharacteristics = ({ modelID }: { modelID: string }) => {
             </div>
           )}
         </div>
+        {additionalServicesInvolvedNote && (
+          <ReadOnlySection
+            heading={t('basics:notes')}
+            copy={additionalServicesInvolvedNote}
+          />
+        )}
 
         <div className="desktop:display-flex flex-justify">
           <div className="desktop:width-card-lg">
@@ -239,6 +245,12 @@ const ReadOnlyGeneralCharacteristics = ({ modelID }: { modelID: string }) => {
             </div>
           )}
         </div>
+        {communityPartnersInvolvedNote && (
+          <ReadOnlySection
+            heading={t('basics:notes')}
+            copy={communityPartnersInvolvedNote}
+          />
+        )}
       </div>
     </div>
   );
