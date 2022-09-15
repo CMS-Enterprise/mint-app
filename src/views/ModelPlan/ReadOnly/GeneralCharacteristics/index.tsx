@@ -6,6 +6,8 @@ import GetAllGeneralCharacteristics from 'queries/ReadOnly/GetAllGeneralCharacte
 import { GetAllGeneralCharacteristics as GetAllGeneralCharacteristicsTypes } from 'queries/ReadOnly/types/GetAllGeneralCharacteristics';
 import {
   translateAlternativePaymentTypes,
+  translateGeographyApplication,
+  translateGeographyTypes,
   translateKeyCharacteristics
 } from 'utils/modelPlan';
 import { TaskListStatusTag } from 'views/ModelPlan/TaskList/_components/TaskListItem';
@@ -251,6 +253,30 @@ const ReadOnlyGeneralCharacteristics = ({ modelID }: { modelID: string }) => {
             copy={communityPartnersInvolvedNote}
           />
         )}
+      </div>
+
+      <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
+        <ReadOnlySection
+          heading={t('specificGeographies')}
+          copy={geographiesTargeted ? h('yes') : h('no')}
+        />
+
+        <ReadOnlySection
+          heading={t('geographyType')}
+          list
+          listItems={geographiesTargetedTypes?.map(translateGeographyTypes)}
+          copy={geographiesTargetedTypesOther}
+        />
+
+        <ReadOnlySection
+          heading={t('geographyApplied')}
+          list
+          listItems={geographiesTargetedAppliedTo?.map(
+            translateGeographyApplication
+          )}
+          copy={geographiesTargetedAppliedToOther}
+          notes={geographiesTargetedNote}
+        />
       </div>
     </div>
   );
