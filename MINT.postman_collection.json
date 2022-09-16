@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "260d4497-2ceb-4e79-a021-91086498cdc8",
+		"_postman_id": "9cabe86e-d72e-4e03-80da-85b3701a33b1",
 		"name": "MINT",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "12341016"
@@ -683,6 +683,74 @@
 			]
 		},
 		{
+			"name": "CRs and TDLs",
+			"item": [
+				{
+					"name": "Create CR/TDL",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation createPlanCrTdl ($input: PlanCrTdlCreateInput!) {\n    createPlanCrTdl (input: $input) {\n        id\n        modelPlanID\n        idNumber\n        dateInitiated\n        title\n        note\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n    }\n}",
+								"variables": "{\n  \"input\": {\n    \"modelPlanID\": \"\",\n    \"idNumber\": \"\",\n    \"dateInitiated\": \"\",\n    \"title\": \"\",\n    \"note\": \"\"\n  }\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update CR/TDL",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation updatePlanCrTdl ($id: UUID!, $changes: PlanCrTdlChanges!) {\n    updatePlanCrTdl (id: $id, changes: $changes) {\n        id\n        modelPlanID\n        idNumber\n        dateInitiated\n        title\n        note\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n    }\n}",
+								"variables": "{\n  \"id\": \"\",\n  \"changes\": {\n    \"idNumber\": \"\",\n    \"dateInitiated\": \"\",\n    \"title\": \"\",\n    \"note\": \"\"\n  }\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete CR/TDL",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation deletePlanCrTdl ($id: UUID!) {\n    deletePlanCrTdl (id: $id) {\n        id\n        modelPlanID\n        idNumber\n        dateInitiated\n        title\n        note\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n    }\n}",
+								"variables": "{\n  \"id\": \"\"\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "Subscriptions / Task List Locking",
 			"item": [
 				{
@@ -871,7 +939,7 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query currentUser {\n\n}",
+								"query": "query currentUser {\n    currentUser{\n        launchDarkly {\n            userKey\n        }\n    }\n}",
 								"variables": "{}"
 							}
 						},
