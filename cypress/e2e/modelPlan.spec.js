@@ -264,4 +264,19 @@ describe('The Model Plan Form', () => {
     });
     cy.get('.mint-tag').contains('Cleared');
   });
+
+  it('favorites and unfavorites a model plan', () => {
+    cy.visit('/models');
+
+    cy.get('[data-testid="53054496-6d1f-47f5-b6a0-1edaf73b935e"]').click();
+
+    cy.get('[data-testid="Empty Plan"]').contains('Empty Plan');
+
+    cy.get('[data-testid="Empty Plan"] button').click();
+
+    cy.get('[data-testid="53054496-6d1f-47f5-b6a0-1edaf73b935e"] svg').should(
+      'have.class',
+      'text-gray-30'
+    );
+  });
 });

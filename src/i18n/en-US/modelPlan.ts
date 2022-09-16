@@ -26,6 +26,15 @@ const modelPlan = {
     updateButton: 'Update status',
     return: 'Don’t update status and return to task list'
   },
+  favorite: {
+    modelLead: 'Model lead(s)',
+    startDate: 'Start date',
+    cRTDLs: 'CRs and TDLs',
+    toBeDetermined: 'To be determined',
+    noneEntered: 'None entered',
+    follow: 'Follow',
+    following: 'Following'
+  },
   stepsOverview: {
     heading: 'Start a new model plan',
     getStartedButton: 'Get started',
