@@ -27,9 +27,11 @@ export interface GetModelSummary_modelPlan_collaborators {
 
 export interface GetModelSummary_modelPlan {
   __typename: "ModelPlan";
+  id: UUID;
   modelName: string;
   modifiedDts: Time | null;
   status: ModelStatus;
+  isFavorite: boolean;
   basics: GetModelSummary_modelPlan_basics;
   generalCharacteristics: GetModelSummary_modelPlan_generalCharacteristics;
   collaborators: GetModelSummary_modelPlan_collaborators[];
