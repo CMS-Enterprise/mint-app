@@ -4,7 +4,6 @@ import { Provider } from 'react-redux';
 import {
   ApolloClient,
   ApolloProvider,
-  HttpLink,
   InMemoryCache,
   split
 } from '@apollo/client';
@@ -60,7 +59,7 @@ function getAuthHeader(targetUrl: string) {
 /**
  * Setup client for GraphQL
  */
-const httpLink = new HttpLink({
+const uploadLink = createUploadLink({
   uri: process.env.REACT_APP_GRAPHQL_ADDRESS
 });
 
@@ -82,10 +81,6 @@ const wsLink = new WebSocketLink(
   })
 );
 
-const uploadLink = createUploadLink({
-  uri: process.env.REACT_APP_GRAPHQL_ADDRESS
-});
-
 // The split function takes three parameters:
 //
 // * A function that's called for each operation to execute
@@ -100,7 +95,7 @@ const splitLink = split(
     );
   },
   wsLink,
-  authLink.concat(httpLink).concat(uploadLink)
+  authLink.concat(uploadLink)
 );
 
 const typePolicies = {};

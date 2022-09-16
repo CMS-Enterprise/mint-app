@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { useParams } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { Button, Label } from '@trussworks/react-uswds';
 // import axios from 'axios';
@@ -15,7 +15,7 @@ import FieldGroup from 'components/shared/FieldGroup';
 import { RadioField } from 'components/shared/RadioField';
 import TextAreaField from 'components/shared/TextAreaField';
 import TextField from 'components/shared/TextField';
-// import useMessage from 'hooks/useMessage';
+import useMessage from 'hooks/useMessage';
 // import CreateModelPlanDocument from 'queries/Documents/CreateModelPlanDocument';
 // import GetGeneratedPresignedUploadURL from 'queries/Documents/GetGeneratedPresignedUploadURL';
 // import {
@@ -33,9 +33,9 @@ import { DocumentUploadValidationSchema } from 'validations/documentUploadSchema
 
 const DocumentUpload = () => {
   const { modelID } = useParams<{ modelID: string }>();
-  // const history = useHistory();
+  const history = useHistory();
   const { t } = useTranslation('documents');
-  // const { showMessageOnNextPage } = useMessage();
+  const { showMessageOnNextPage } = useMessage();
 
   // const [s3URL, setS3URL] = useState('');
   // const [
@@ -44,18 +44,14 @@ const DocumentUpload = () => {
   // ] = useMutation<GetGeneratedPresignedUploadURLType>(
   //   GetGeneratedPresignedUploadURL
   // );
-  const [upFile] = useMutation<UploadNewPlanDocumentType>(
+  const [upFile, upFileStatus] = useMutation<UploadNewPlanDocumentType>(
     UploadNewPlanDocument
   );
+
   // const [createDocument, createDocumentStatus] = useMutation<
   //   CreateModelPlanDocumentType,
   //   CreateModelPlanDocumentVariables
   // >(CreateModelPlanDocument);
-
-  // const [
-  //   isErrorGeneratingPresignedUrl,
-  //   setErrorGeneratingPresignedUrl
-  // ] = useState(false);
 
   // Generates s3URL for uploading document
   // const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -88,8 +84,6 @@ const DocumentUpload = () => {
     const { file } = values;
 
     if (file && file.name && file.size >= 0 && file.type) {
-      console.log('FILE AHH');
-      console.log(file);
       upFile({
         variables: {
           input: {
@@ -98,54 +92,31 @@ const DocumentUpload = () => {
             documentType: values.documentType
           }
         }
-      });
-      // const options = {
-      //   headers: {
-      //     'Content-Type': file.type
-      //   }
-      // };
-      // axios.put(s3URL, values.file, options).then(() => {
-      //   createDocument({
-      //     variables: {
-      //       input: {
-      //         modelPlanID: modelID,
-      //         url: s3URL,
-      //         documentParameters: {
-      //           fileSize: file.size,
-      //           fileName: file.name,
-      //           fileType: file.type,
-      //           documentType: values.documentType,
-      //           otherTypeDescription: values.otherTypeDescription,
-      //           optionalNotes: values.optionalNotes
-      //         }
-      //       }
-      //     }
-      //   })
-      //     .then(response => {
-      //       if (!response.errors) {
-      //         showMessageOnNextPage(
-      //           <>
-      //             <Alert
-      //               type="success"
-      //               slim
-      //               data-testid="mandatory-fields-alert"
-      //               className="margin-y-4"
-      //             >
-      //               <span className="mandatory-fields-alert__text">
-      //                 {t('documentUploadSuccess', {
-      //                   documentName: file.name
-      //                 })}
-      //               </span>
-      //             </Alert>
-      //           </>
-      //         );
-      //         history.push(`/models/${modelID}/documents`);
-      //       }
-      //     })
-      //     .catch(e => {
-      //       setErrorGeneratingPresignedUrl(true);
-      //     });
-      // });
+      })
+        .then(response => {
+          if (!response.errors) {
+            showMessageOnNextPage(
+              <>
+                <Alert
+                  type="success"
+                  slim
+                  data-testid="mandatory-fields-alert"
+                  className="margin-y-4"
+                >
+                  <span className="mandatory-fields-alert__text">
+                    {t('documentUploadSuccess', {
+                      documentName: file.name
+                    })}
+                  </span>
+                </Alert>
+              </>
+            );
+            history.push(`/models/${modelID}/documents`);
+          }
+        })
+        .catch(e => {
+          // TODO: Patrick
+        });
     }
   };
 
@@ -193,19 +164,14 @@ const DocumentUpload = () => {
                   })}
                 </ErrorAlert>
               )}
-              {/* {isErrorGeneratingPresignedUrl && (
-                <Alert type="error" heading={t('uploadError.heading')}>
-                  {t('uploadError.body')}
-                </Alert>
-              )} */}
-              {/* {createDocumentStatus.error && (
+              {upFileStatus.error && (
                 <ErrorAlert heading="Error uploading document">
                   <ErrorAlertMessage
-                    message={createDocumentStatus.error.message}
+                    message={upFileStatus.error.message}
                     errorKey="accessibilityRequest"
                   />
                 </ErrorAlert>
-              )} */}
+              )}
               <div>
                 <Form
                   onSubmit={e => {
