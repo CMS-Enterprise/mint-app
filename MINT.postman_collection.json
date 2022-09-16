@@ -707,6 +707,27 @@
 					"response": []
 				},
 				{
+					"name": "Get CR/TDL by ID",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query crTdl ($id: UUID!) {\n    crTdl (id: $id) {\n        id\n        modelPlanID\n        idNumber\n        dateInitiated\n        title\n        note\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n    }\n}",
+								"variables": "{\n  \"id\": \"\"\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "Update CR/TDL",
 					"request": {
 						"method": "POST",
