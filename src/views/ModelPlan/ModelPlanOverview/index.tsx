@@ -1,6 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { withRouter } from 'react-router-dom';
+import { useQuery } from '@apollo/client';
 import {
   Alert,
   Grid,
@@ -9,16 +10,46 @@ import {
   SummaryBox
 } from '@trussworks/react-uswds';
 
+import FavoritesTable from 'components/FavoriteCard/table';
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import NDABanner from 'components/NDABanner';
 import PageHeading from 'components/PageHeading';
+import useFavoritePlan from 'hooks/useFavoritePlan';
+import GetAllModelPlans from 'queries/ReadOnly/GetAllModelPlans';
+import {
+  GetAllModelPlans as GetAllModelPlansType,
+  GetAllModelPlans_modelPlanCollection as AllModelPlansType
+} from 'queries/ReadOnly/types/GetAllModelPlans';
 
 import Table from '../ReadOnly/Table';
+
+export type UpdateFavoriteProps = 'addFavorite' | 'removeFavorite';
 
 const ModelPlan = () => {
   const { t } = useTranslation('readOnlyModelPlan');
   const { t: h } = useTranslation('home');
+
+  const { error, data, refetch } = useQuery<GetAllModelPlansType>(
+    GetAllModelPlans
+  );
+
+  const modelPlans = (data?.modelPlanCollection ?? []) as AllModelPlansType[];
+
+  const favorites = modelPlans.filter(modelPlan => modelPlan.isFavorite);
+
+  const favoriteMutations = useFavoritePlan();
+
+  const handleUpdateFavorite = (
+    modelPlanID: string,
+    type: UpdateFavoriteProps
+  ) => {
+    favoriteMutations[type]({
+      variables: {
+        modelPlanID
+      }
+    }).then(refetch);
+  };
 
   return (
     <MainContent data-testid="model-plan-overview">
@@ -49,32 +80,53 @@ const ModelPlan = () => {
           </SummaryBox>
         </Grid>
 
-        <Grid className="padding-bottom-6 margin-bottom-4 border-bottom border-base-light">
-          <PageHeading className="margin-bottom-1">
+        <Grid
+          desktop={{ col: 12 }}
+          className="padding-bottom-2 margin-bottom-4 border-bottom border-base-light"
+        >
+          <div className="margin-bottom-1 font-heading-2xl text-bold">
             {t('following.heading')}
-          </PageHeading>
-          <p className="line-height-body-5 text-light margin-bottom-05 margin-top-0">
+          </div>
+          <p className="line-height-body-5 text-light margin-bottom-05 margin-top-0 margin-bottom-3">
             {t('following.subheading')}
           </p>
-          <Alert type="info" heading={t('following.alert.heading')}>
-            <span className="display-flex flex-align-center flex-wrap margin-0 ">
-              {t('following.alert.subheadingPartA')}
-              <span className="display-flex flex-align-center margin-x-05">
-                (<IconStarOutline size={3} />)
-              </span>
 
-              {t('following.alert.subheadingPartB')}
-            </span>
-          </Alert>
+          {favorites.length ? (
+            <FavoritesTable
+              favorites={favorites}
+              removeFavorite={handleUpdateFavorite}
+            />
+          ) : (
+            <Alert
+              type="info"
+              heading={t('following.alert.heading')}
+              className="margin-bottom-2"
+            >
+              <span className="display-flex flex-align-center flex-wrap margin-0 ">
+                {t('following.alert.subheadingPartA')}
+                <span className="display-flex flex-align-center margin-x-05">
+                  (<IconStarOutline size={3} />)
+                </span>
+
+                {t('following.alert.subheadingPartB')}
+              </span>
+            </Alert>
+          )}
         </Grid>
         <Grid>
-          <PageHeading className="margin-bottom-1" id="all-models">
+          <div
+            className="margin-bottom-1 font-heading-2xl text-bold"
+            id="all-models"
+          >
             {t('allModels.heading')}
-          </PageHeading>
+          </div>
           <p className="line-height-body-5 text-light margin-bottom-3 margin-top-0">
             {t('allModels.subheading')}
           </p>
-          <Table />
+          {error && <div>{JSON.stringify(error)}</div>}
+          {!error && (
+            <Table data={modelPlans} updateFavorite={handleUpdateFavorite} />
+          )}
         </Grid>
       </GridContainer>
     </MainContent>
