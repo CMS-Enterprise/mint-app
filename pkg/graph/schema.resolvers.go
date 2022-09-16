@@ -97,6 +97,20 @@ func (r *modelPlanResolver) IsFavorite(ctx context.Context, obj *models.ModelPla
 	return resolvers.IsPlanFavorited(logger, principal, r.store, obj.ID)
 }
 
+// IsCollaborator is the resolver for the isCollaborator field.
+func (r *modelPlanResolver) IsCollaborator(ctx context.Context, obj *models.ModelPlan) (bool, error) {
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+
+	return resolvers.IsPlanCollaborator(logger, principal, r.store, obj.ID)
+}
+
+// CrTdls is the resolver for the crTdls field.
+func (r *modelPlanResolver) CrTdls(ctx context.Context, obj *models.ModelPlan) ([]*models.PlanCrTdl, error) {
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.PlanCrTdlsGetByModelPlanID(logger, obj.ID, r.store)
+}
+
 // CreateModelPlan is the resolver for the createModelPlan field.
 func (r *mutationResolver) CreateModelPlan(ctx context.Context, modelName string) (*models.ModelPlan, error) {
 	logger := appcontext.ZLogger(ctx)
@@ -324,6 +338,27 @@ func (r *mutationResolver) DeletePlanFavorite(ctx context.Context, modelPlanID u
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 	return resolvers.PlanFavoriteDelete(logger, principal, r.store, modelPlanID)
+}
+
+// CreatePlanCrTdl is the resolver for the createPlanCrTdl field.
+func (r *mutationResolver) CreatePlanCrTdl(ctx context.Context, input model.PlanCrTdlCreateInput) (*models.PlanCrTdl, error) {
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.PlanCrTdlCreate(logger, &input, principal, r.store)
+}
+
+// UpdatePlanCrTdl is the resolver for the updatePlanCrTdl field.
+func (r *mutationResolver) UpdatePlanCrTdl(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanCrTdl, error) {
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.PlanCrTdlUpdate(logger, id, changes, principal, r.store)
+}
+
+// DeletePlanCrTdl is the resolver for the deletePlanCrTdl field.
+func (r *mutationResolver) DeletePlanCrTdl(ctx context.Context, id uuid.UUID) (*models.PlanCrTdl, error) {
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.PlanCrTdlDelete(logger, id, principal, r.store)
 }
 
 // CmsCenters is the resolver for the cmsCenters field.
@@ -773,7 +808,7 @@ func (r *queryResolver) ReadPlanDocumentByModelID(ctx context.Context, id uuid.U
 func (r *queryResolver) ModelPlanCollection(ctx context.Context) ([]*models.ModelPlan, error) {
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
-	return resolvers.ModelPlanCollectionByUser(logger, principal, r.store)
+	return resolvers.ModelPlanCollection(logger, principal, r.store)
 }
 
 // ExistingModelCollection is the resolver for the existingModelCollection field.
@@ -815,6 +850,12 @@ func (r *queryResolver) NdaInfo(ctx context.Context) (*model.NDAInfo, error) {
 	logger := appcontext.ZLogger(ctx)
 	principal := appcontext.Principal(ctx)
 	return resolvers.NDAAgreementGetByEUA(logger, principal, r.store)
+}
+
+// CrTdl is the resolver for the crTdl field.
+func (r *queryResolver) CrTdl(ctx context.Context, id uuid.UUID) (*models.PlanCrTdl, error) {
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.PlanCrTdlGet(logger, id, r.store)
 }
 
 // OnTaskListSectionLocksChanged is the resolver for the onTaskListSectionLocksChanged field.

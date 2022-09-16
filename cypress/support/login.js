@@ -27,10 +27,13 @@ Cypress.Commands.add('login', () => {
       });
     }
   });
-  cy.url().should('eq', 'http://localhost:3005/');
+
+  // TODO: Once EUA roles are added to Okta test account, accept the NDA and verify home page location
+
+  cy.url().should('eq', 'http://localhost:3005/pre-decisional-notice');
 });
 
-Cypress.Commands.add('localLogin', ({ name, role = 'MINT_USER' }) => {
+Cypress.Commands.add('localLogin', ({ name, role = 'MINT_USER', nda }) => {
   cy.server();
 
   cy.visit('/login');
@@ -42,6 +45,16 @@ Cypress.Commands.add('localLogin', ({ name, role = 'MINT_USER' }) => {
     cy.get(`input[value="${role}"]`).check();
   }
   cy.get('[data-testid="LocalAuth-Submit"]').click();
+
+  if (!nda) {
+    cy.get('#nda-check').check({ force: true }).should('be.checked');
+
+    cy.get('#nda-submit').click();
+  } else {
+    cy.get('#nda-alert').should('contain.text', 'Accepted on');
+
+    cy.get('[data-testid="nda-continue"]').click();
+  }
 
   cy.url().should('eq', 'http://localhost:3005/');
 });

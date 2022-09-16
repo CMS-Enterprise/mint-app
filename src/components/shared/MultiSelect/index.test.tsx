@@ -1,6 +1,5 @@
 import React from 'react';
-import { render } from '@testing-library/react';
-import { shallow } from 'enzyme';
+import { render, screen } from '@testing-library/react';
 
 import MultiSelect from './index';
 
@@ -10,27 +9,30 @@ const options = [
   { label: 'Blue', value: 'blue' }
 ];
 
-describe('The MultiSelect component', () => {
+describe('RelatedArticle', () => {
   it('matches the snapshot', () => {
     const { asFragment } = render(
       <MultiSelect
-        options={options}
-        initialValues={['red']}
+        id="test-multiSelect"
+        name="testMultiSelect"
         onChange={() => null}
+        options={options}
       />
     );
     expect(asFragment()).toMatchSnapshot();
   });
 
-  it('renders tag for initial selected values', () => {
-    const component = shallow(
+  it('correctly renders initial values', () => {
+    render(
       <MultiSelect
-        options={options}
-        initialValues={['red']}
+        id="test-multiSelect"
+        name="testMultiSelect"
         onChange={() => null}
+        options={options}
+        initialValues={['red', 'blue']}
       />
     );
-
-    expect(component.find('#easi-multiselect__tag-red').exists()).toEqual(true);
+    expect(screen.getByTestId('multiselect-tag--Red')).toBeInTheDocument();
+    expect(screen.getByTestId('multiselect-tag--Blue')).toBeInTheDocument();
   });
 });

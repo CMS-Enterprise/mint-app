@@ -13,6 +13,10 @@ const home = {
     copy: 'Have a new model or demonstration?',
     cta: 'Start a draft model plan'
   },
+  allModels: {
+    copy: 'Don’t see the model you’re looking for?',
+    cta: 'View all models'
+  },
   downloadCSV: 'Download all plans as CSV',
   requestsTable: {
     basic: {

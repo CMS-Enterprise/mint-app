@@ -60,6 +60,7 @@
     "react-redux": "^7.1.1",
     "react-router-dom": "^5.1.2",
     "react-scripts": "^4.0.3",
+    "react-select": "^5.4.0",
     "react-table": "^7.5.1",
     "redux": "^4.0.4",
     "redux-actions": "^2.6.5",
@@ -75,7 +76,7 @@
     "yup": "^0.32.8"
   },
   "scripts": {
-    "start": "craco -r @cypress/instrument-cra start",
+    "start": "craco start",
     "build": "CI=true craco build",
     "build:ts": "tsc",
     "test": "craco test",
@@ -111,7 +112,6 @@
     ]
   },
   "devDependencies": {
-    "@cypress/instrument-cra": "^1.4.0",
     "@cypress/webpack-preprocessor": "^5.12.2",
     "@storybook/addon-actions": "^6.3.1",
     "@storybook/addon-controls": "^6.3.1",

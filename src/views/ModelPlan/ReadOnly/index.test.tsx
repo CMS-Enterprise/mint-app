@@ -12,6 +12,8 @@ import ReadOnly from './index';
 
 const mockData: GetModelSummaryTypes = {
   __typename: 'ModelPlan',
+  id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905',
+  isFavorite: false,
   modelName: 'Testing Model Summary',
   modifiedDts: '2022-08-27T04:00:00Z',
   status: ModelStatus.PLAN_DRAFT,
@@ -38,7 +40,6 @@ const mock = [
     result: {
       data: {
         modelPlan: {
-          id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905',
           ...mockData
         }
       }
@@ -129,7 +130,7 @@ describe('Read Only Model Plan Summary', () => {
       );
 
       await waitFor(() => {
-        expect(screen.getByTestId('tag').textContent).toContain(
+        expect(screen.getAllByTestId('tag')[1].textContent).toContain(
           'ICIP complete'
         );
         expect(screen.getByTestId('alert')).toBeInTheDocument();
@@ -153,7 +154,9 @@ describe('Read Only Model Plan Summary', () => {
       );
 
       await waitFor(() => {
-        expect(screen.getByTestId('tag').textContent).toContain('Cleared');
+        expect(screen.getAllByTestId('tag')[1].textContent).toContain(
+          'Cleared'
+        );
         expect(screen.queryByTestId('alert')).toBeNull();
       });
     });
