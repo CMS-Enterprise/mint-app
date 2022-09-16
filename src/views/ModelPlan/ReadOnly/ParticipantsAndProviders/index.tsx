@@ -7,12 +7,23 @@ import {
   GetAllParticipants as GetAllParticipantsTypes,
   GetAllParticipants_modelPlan_participantsAndProviders as ParticipantsAndProvidersTypes
 } from 'queries/ReadOnly/types/GetAllParticipants';
-import { RecruitmentType } from 'types/graphql-global-types';
 import {
+  FrequencyType,
+  OverlapType,
+  RecruitmentType
+} from 'types/graphql-global-types';
+import {
+  translateCommunicationType,
   translateConfidenceType,
+  translateFrequencyType,
+  translateOverlapType,
+  translateParticipantIDType,
   translateParticipantSelectiontType,
   translateParticipantsType,
-  translateRecruitmentType
+  translateProviderAddType,
+  translateProviderLeaveType,
+  translateRecruitmentType,
+  translateRiskType
 } from 'utils/modelPlan';
 import { TaskListStatusTag } from 'views/ModelPlan/TaskList/_components/TaskListItem';
 import { NotFoundPartial } from 'views/NotFound';
@@ -163,6 +174,134 @@ const ReadOnlyParticipantsAndProviders = ({ modelID }: { modelID: string }) => {
           listOtherItem={selectionOther}
           notes={selectionNote}
         />
+      </div>
+
+      <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
+        <ReadOnlySection
+          heading={t('participantCommunication')}
+          list
+          listItems={communicationMethod?.map(translateCommunicationType)}
+          listOtherItem={communicationMethodOther}
+          notes={communicationNote}
+        />
+
+        <div className="desktop:display-flex flex-justify">
+          <div className="desktop:width-card-lg">
+            <ReadOnlySection
+              heading={t('assumeRisk')}
+              copy={participantAssumeRisk ? h('yes') : h('no')}
+            />
+          </div>
+          {participantAssumeRisk && (
+            <div className="desktop:width-card-lg">
+              <ReadOnlySection
+                heading={t('riskType')}
+                copy={riskType && translateRiskType(riskType)}
+                listOtherItem={riskOther}
+              />
+            </div>
+          )}
+        </div>
+        {riskNote && (
+          <ReadOnlySection heading={t('basics:notes')} copy={riskNote} />
+        )}
+
+        <ReadOnlySection
+          heading={t('changeRisk')}
+          copy={willRiskChange ? h('yes') : h('no')}
+          notes={willRiskChangeNote}
+        />
+      </div>
+
+      <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
+        <ReadOnlySection
+          heading={t('workCoordination')}
+          copy={coordinateWork ? h('yes') : h('no')}
+          notes={coordinateWorkNote}
+        />
+
+        <div className="desktop:display-flex flex-justify">
+          <div className="desktop:width-card-lg">
+            <ReadOnlySection
+              heading={t('gainsharing')}
+              copy={gainsharePayments ? h('yes') : h('no')}
+            />
+          </div>
+          {gainsharePayments && (
+            <div className="desktop:width-card-lg">
+              <ReadOnlySection
+                heading={t('trackPayments')}
+                copy={gainsharePaymentsTrack ? h('yes') : h('no')}
+              />
+            </div>
+          )}
+        </div>
+        {gainsharePaymentsNote && (
+          <ReadOnlySection
+            heading={t('basics:notes')}
+            copy={gainsharePaymentsNote}
+          />
+        )}
+
+        <ReadOnlySection
+          heading={t('collectTINs')}
+          list
+          listItems={participantsIds?.map(translateParticipantIDType)}
+          listOtherItem={participantsIdsOther}
+          notes={participantsIDSNote}
+        />
+      </div>
+
+      <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
+        {/* If "Other", then display "Other — Lorem ipsum." */}
+        {/* Else just display content, i.e. "LOI (Letter of interest)" */}
+        <ReadOnlySection
+          heading={t('frequency')}
+          copy={
+            providerAdditionFrequency &&
+            (providerAdditionFrequency === FrequencyType.OTHER
+              ? `${translateRecruitmentType(
+                  providerAdditionFrequency
+                )} \u2014  ${providerAdditionFrequencyOther}`
+              : translateRecruitmentType(providerAdditionFrequency))
+          }
+          notes={providerAdditionFrequencyNote}
+        />
+
+        <ReadOnlySection
+          heading={t('decideProvidersQuestion')}
+          list
+          listItems={providerAddMethod?.map(translateProviderAddType)}
+          listOtherItem={providerAddMethodOther}
+          notes={providerAddMethodNote}
+        />
+
+        <ReadOnlySection
+          heading={t('canProvidersLeaveQuestion')}
+          list
+          listItems={providerLeaveMethod?.map(translateProviderLeaveType)}
+          listOtherItem={providerLeaveMethodOther}
+          notes={providerLeaveMethodNote}
+        />
+
+        <ReadOnlySection
+          heading={t('overlap')}
+          copy={providerOverlap && translateOverlapType(providerOverlap)}
+        />
+
+        {providerOverlap !== OverlapType.NO && (
+          <ReadOnlySection
+            heading={t('overlapInfo')}
+            copy={providerOverlapHierarchy}
+          />
+        )}
+
+        {providerOverlapNote && (
+          <ReadOnlySection
+            heading={t('basics:notes')}
+            copy={providerOverlapNote}
+          />
+        )}
       </div>
     </div>
   );
