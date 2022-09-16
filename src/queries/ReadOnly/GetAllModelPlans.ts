@@ -6,9 +6,15 @@ export default gql`
       id
       modelName
       status
+      isFavorite
       basics {
         applicationsStart
         modelCategory
+        goal
+      }
+      collaborators {
+        fullName
+        teamRole
       }
     }
   }

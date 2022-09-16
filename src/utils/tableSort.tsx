@@ -5,6 +5,7 @@ import {
   IconExpandMore,
   IconUnfoldMore
 } from '@trussworks/react-uswds';
+import classNames from 'classnames';
 import { DateTime } from 'luxon';
 
 export type sortColumnProps = null | string | number | DateTime;
@@ -25,8 +26,13 @@ export const getColumnSortStatus = <T extends {}>(
 };
 
 // Returns header sort icon based on sort status
-export const getHeaderSortIcon = <T extends {}>(column: HeaderGroup<T>) => {
-  const sharedClassName = 'margin-left-05 position-absolute';
+export const getHeaderSortIcon = <T extends {}>(
+  column: HeaderGroup<T>,
+  icon: boolean
+) => {
+  const sharedClassName = classNames('margin-left-05 position-absolute', {
+    'margin-top-05': icon
+  });
   if (!column.isSorted) {
     return (
       <IconUnfoldMore className={sharedClassName} data-testid="caret--sort" />
