@@ -1336,6 +1336,7 @@ type AuditChange {
 id: Int!
 primaryKey: UUID!
 foreignKey: UUID
+action: String!
 fields: Map!
 # fields: Map[AuditField!]!
 modifiedBy: String

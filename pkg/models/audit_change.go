@@ -14,9 +14,10 @@ type AuditChange struct {
 	ID          int         `json:"id" db:"id"`
 	PrimaryKey  uuid.UUID   `json:"primaryKey" db:"primary_key"`
 	ForeignKey  uuid.UUID   `json:"foreignKey" db:"foreign_key"`
+	Action      string      `json:"action" db:"action"`
+	Fields      AuditFields `json:"fields" db:"fields"`
 	ModifiedBy  *string     `json:"modifiedBy" db:"modified_by"`
 	ModifiedDts *time.Time  `json:"modifiedDts" db:"modified_dts"`
-	Fields      AuditFields `json:"fields" db:"fields"`
 }
 
 // AuditFields is a map of changes by field name from the database
