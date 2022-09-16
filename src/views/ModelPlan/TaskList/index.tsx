@@ -32,6 +32,8 @@ import {
   GetModelPlan_modelPlan as GetModelPlanTypes,
   GetModelPlan_modelPlan_basics as BasicsType,
   GetModelPlan_modelPlan_beneficiaries as BeneficiariesType,
+  GetModelPlan_modelPlan_crTdls as CRTDLType,
+  GetModelPlan_modelPlan_documents as DocumentType,
   GetModelPlan_modelPlan_generalCharacteristics as GeneralCharacteristicsType,
   GetModelPlan_modelPlan_itTools as ITToolsType,
   GetModelPlan_modelPlan_opsEvalAndLearning as OpsEvalAndLearningType,
@@ -106,6 +108,7 @@ const TaskList = () => {
     basics,
     discussions,
     documents,
+    crTdls,
     status,
     generalCharacteristics,
     participantsAndProviders,
@@ -263,60 +266,20 @@ const TaskList = () => {
                     updateLabel
                     statusLabel
                   />
+
                   {dicussionBanner()}
-                  <SummaryBox
-                    heading=""
-                    className="bg-base-lightest border-0 radius-0 padding-2"
-                  >
-                    {documents?.length > 0 ? (
-                      <>
-                        <p
-                          className="margin-0 margin-bottom-1"
-                          data-testid="document-items"
-                        >
-                          <strong>{documents.length} </strong>
-                          <Trans i18nKey="modelPlanTaskList:summaryBox.existingDocuments">
-                            indexZero {documents.length > 1 ? 's' : ''} indexOne
-                          </Trans>
-                          {modelName}
-                        </p>
-                        <Grid row gap>
-                          <Grid tablet={{ col: 4 }}>
-                            <UswdsReactLink
-                              variant="unstyled"
-                              className="margin-right-4"
-                              to={`/models/${modelID}/documents`}
-                            >
-                              {t('summaryBox.viewAll')}
-                            </UswdsReactLink>
-                          </Grid>
-                          <Grid tablet={{ col: 4 }}>
-                            <UswdsReactLink
-                              variant="unstyled"
-                              to={`/models/${modelID}/documents/add-document`}
-                            >
-                              {t('summaryBox.uploadAnother')}
-                            </UswdsReactLink>
-                          </Grid>
-                        </Grid>
-                      </>
-                    ) : (
-                      <>
-                        <p className="margin-0 margin-bottom-1">
-                          <Trans i18nKey="modelPlanTaskList:summaryBox.copy">
-                            indexZero {modelName} indexTwo
-                          </Trans>
-                        </p>
-                        <UswdsReactLink
-                          className="usa-button usa-button--outline"
-                          variant="unstyled"
-                          to={`/models/${modelID}/documents`}
-                        >
-                          {t('summaryBox.cta')}
-                        </UswdsReactLink>
-                      </>
-                    )}
-                  </SummaryBox>
+
+                  {/* Document and CR TDL Banners */}
+                  <Grid row gap={2}>
+                    <Grid desktop={{ col: 6 }} className="margin-top-2">
+                      <DocumentBanner documents={documents} modelID={modelID} />
+                    </Grid>
+
+                    <Grid desktop={{ col: 6 }} className="margin-top-2">
+                      <CRTDLBanner crTdls={crTdls} modelID={modelID} />
+                    </Grid>
+                  </Grid>
+
                   <ol
                     data-testid="task-list"
                     className="model-plan-task-list__task-list model-plan-task-list__task-list--primary margin-top-6 margin-bottom-0 padding-left-0"
@@ -382,6 +345,137 @@ const TaskList = () => {
         )}
       </GridContainer>
     </MainContent>
+  );
+};
+
+type DocumentBannerType = {
+  documents: DocumentType[];
+  modelID: string;
+};
+
+// Document component for rendering document summary
+const DocumentBanner = ({ documents, modelID }: DocumentBannerType) => {
+  const { t } = useTranslation('modelPlanTaskList');
+
+  return (
+    <SummaryBox
+      heading=""
+      className="bg-base-lightest border-0 radius-0 padding-2"
+    >
+      <h3 className="margin-0">
+        {t('modelPlanTaskList:documentSummaryBox.heading')}
+      </h3>
+      {documents?.length > 0 ? (
+        <>
+          <p
+            className="margin-0 padding-bottom-1 padding-top-05"
+            data-testid="document-items"
+          >
+            <strong>{documents.length} </strong>
+            <Trans i18nKey="modelPlanTaskList:documentSummaryBox.existingDocuments">
+              indexZero {documents.length > 1 ? 's' : ''}
+            </Trans>
+          </p>
+
+          <UswdsReactLink
+            variant="unstyled"
+            className="margin-right-4 display-block margin-bottom-1"
+            to={`/models/${modelID}/documents`}
+          >
+            {t('documentSummaryBox.viewAll')}
+          </UswdsReactLink>
+
+          <UswdsReactLink
+            variant="unstyled"
+            to={`/models/${modelID}/documents/add-document`}
+          >
+            {t('documentSummaryBox.uploadAnother')}
+          </UswdsReactLink>
+        </>
+      ) : (
+        <>
+          <p className="margin-0 margin-bottom-1">
+            <Trans i18nKey="modelPlanTaskList:documentSummaryBox.copy">
+              indexZero
+            </Trans>
+          </p>
+          <UswdsReactLink
+            className="usa-button usa-button--outline"
+            variant="unstyled"
+            to={`/models/${modelID}/documents`}
+          >
+            {t('documentSummaryBox.cta')}
+          </UswdsReactLink>
+        </>
+      )}
+    </SummaryBox>
+  );
+};
+
+type CRTDLBannerType = {
+  crTdls: CRTDLType[];
+  modelID: string;
+};
+
+// CRTDL component for rendering CRTDL summary
+const CRTDLBanner = ({ crTdls, modelID }: CRTDLBannerType) => {
+  const { t } = useTranslation('modelPlanTaskList');
+
+  return (
+    <SummaryBox
+      heading=""
+      className="bg-base-lightest border-0 radius-0 padding-2"
+    >
+      <h3 className="margin-0">
+        {t('modelPlanTaskList:crTDLsSummaryBox.heading')}
+      </h3>
+      {crTdls?.length > 0 ? (
+        <>
+          <p
+            className="margin-0 padding-bottom-1 padding-top-05"
+            data-testid="cr-tdl-items"
+          >
+            {crTdls.map(
+              (crtdl, index) =>
+                index < 2 &&
+                `${crtdl.idNumber}${index !== crTdls.length - 1 ? ',' : ''} `
+            )}
+            {crTdls.length > 3 &&
+              `+${crTdls.length - 3} ${t('crTDLsSummaryBox.more')}`}{' '}
+          </p>
+
+          <UswdsReactLink
+            variant="unstyled"
+            className="margin-right-4 display-block margin-bottom-1"
+            to={`/models/${modelID}/cr-and-tdl`}
+          >
+            {t('crTDLsSummaryBox.viewAll')}
+          </UswdsReactLink>
+
+          <UswdsReactLink
+            variant="unstyled"
+            to={`/models/${modelID}/documents/add-cr-tdl`}
+          >
+            {t('crTDLsSummaryBox.uploadAnother')}
+          </UswdsReactLink>
+        </>
+      ) : (
+        <>
+          <p className="margin-0 margin-bottom-1">
+            <Trans i18nKey="modelPlanTaskList:crTDLsSummaryBox.copy">
+              indexZero
+            </Trans>
+          </p>
+          <UswdsReactLink
+            className="usa-button usa-button--outline"
+            variant="unstyled"
+            to={`/models/${modelID}/cr-and-tdl`}
+          >
+            {t('crTDLsSummaryBox.add')}
+          </UswdsReactLink>
+        </>
+      )}
+    </SummaryBox>
   );
 };
 
