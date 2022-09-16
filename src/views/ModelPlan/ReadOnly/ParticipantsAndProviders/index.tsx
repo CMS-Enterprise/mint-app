@@ -3,10 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useQuery } from '@apollo/client';
 
 import GetAllParticipants from 'queries/ReadOnly/GetAllParticipants';
-import {
-  GetAllParticipants as GetAllParticipantsTypes,
-  GetAllParticipants_modelPlan_participantsAndProviders as ParticipantsAndProvidersTypes
-} from 'queries/ReadOnly/types/GetAllParticipants';
+import { GetAllParticipants as GetAllParticipantsTypes } from 'queries/ReadOnly/types/GetAllParticipants';
 import {
   FrequencyType,
   OverlapType,
@@ -15,7 +12,6 @@ import {
 import {
   translateCommunicationType,
   translateConfidenceType,
-  translateFrequencyType,
   translateOverlapType,
   translateParticipantIDType,
   translateParticipantSelectiontType,
