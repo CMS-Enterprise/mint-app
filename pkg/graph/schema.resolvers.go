@@ -5,6 +5,7 @@ package graph
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/google/uuid"
 
@@ -224,6 +225,21 @@ func (r *mutationResolver) CreatePlanDocument(ctx context.Context, input model.P
 	payload, err := resolvers.PlanDocumentCreate(logger, document, input.URL, principal, r.store, r.s3Client)
 
 	return payload, err
+}
+
+// UploadNewPlanDocument is the resolver for the uploadNewPlanDocument field.
+func (r *mutationResolver) UploadNewPlanDocument(ctx context.Context, input model.PlanDocumentBEInput) (*models.PlanDocument, error) {
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+
+	fmt.Println("REREEERER")
+	fmt.Println("REREEERER")
+	fmt.Println("REREEERER")
+	fmt.Println("REREEERER")
+
+	planDocument, err := resolvers.PlanDocumentNewUpload(logger, input, principal, r.store, r.s3Client)
+
+	return planDocument, err
 }
 
 // UpdatePlanDocument is the resolver for the updatePlanDocument field.

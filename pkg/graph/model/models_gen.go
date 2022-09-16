@@ -8,6 +8,7 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/99designs/gqlgen/graphql"
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/google/uuid"
 )
@@ -69,6 +70,15 @@ type PlanCrTdlCreateInput struct {
 type PlanDiscussionCreateInput struct {
 	ModelPlanID uuid.UUID `json:"modelPlanID"`
 	Content     string    `json:"content"`
+}
+
+// PlanDocumentBEInput
+type PlanDocumentBEInput struct {
+	ModelPlanID          uuid.UUID           `json:"modelPlanID"`
+	FileData             graphql.Upload      `json:"fileData"`
+	DocumentType         models.DocumentType `json:"documentType"`
+	OtherTypeDescription *string             `json:"otherTypeDescription"`
+	OptionalNotes        *string             `json:"optionalNotes"`
 }
 
 // PlanDocumentInput represents the data required to create, modify, or delete a document on a plan

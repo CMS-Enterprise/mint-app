@@ -24,6 +24,12 @@ Time values are represented as strings using RFC3339 format, for example 2019-10
 scalar Time
 
 """
+https://gqlgen.com/reference/file-upload/
+Represents a multipart file upload
+"""
+scalar Upload
+
+"""
 ModelPlan represent the data point for plans about a model. It is the central data type in the application
 """
 type ModelPlan {
@@ -162,6 +168,18 @@ type PlanDocument {
   createdDts: Time!
   modifiedBy: String
   modifiedDts: Time
+}
+
+
+"""
+PlanDocumentBEInput
+"""
+input PlanDocumentBEInput {
+  modelPlanID: UUID!
+  fileData: Upload!
+  documentType: DocumentType!
+  otherTypeDescription: String
+  optionalNotes: String
 }
 
 """
@@ -1418,6 +1436,9 @@ generatePresignedUploadURL(input: GeneratePresignedUploadURLInput!): GeneratePre
 @hasRole(role: MINT_USER)
 
 createPlanDocument(input: PlanDocumentInput!): PlanDocumentPayload!
+@hasRole(role: MINT_USER)
+
+uploadNewPlanDocument(input: PlanDocumentBEInput!): PlanDocument!
 @hasRole(role: MINT_USER)
 
 updatePlanDocument(input: PlanDocumentInput!): PlanDocumentPayload!

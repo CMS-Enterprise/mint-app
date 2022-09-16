@@ -11,6 +11,7 @@ import {
 import { setContext } from '@apollo/client/link/context';
 import { WebSocketLink } from '@apollo/client/link/ws';
 import { getMainDefinition } from '@apollo/client/utilities';
+import { createUploadLink } from 'apollo-upload-client';
 import axios from 'axios';
 import { detect } from 'detect-browser';
 import { SubscriptionClient } from 'subscriptions-transport-ws';
@@ -81,6 +82,10 @@ const wsLink = new WebSocketLink(
   })
 );
 
+const uploadLink = createUploadLink({
+  uri: process.env.REACT_APP_GRAPHQL_ADDRESS
+});
+
 // The split function takes three parameters:
 //
 // * A function that's called for each operation to execute
@@ -95,7 +100,7 @@ const splitLink = split(
     );
   },
   wsLink,
-  authLink.concat(httpLink)
+  authLink.concat(httpLink).concat(uploadLink)
 );
 
 const typePolicies = {};

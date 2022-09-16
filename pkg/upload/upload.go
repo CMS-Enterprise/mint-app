@@ -1,6 +1,8 @@
 package upload
 
 import (
+	"fmt"
+	"io"
 	"mime"
 	"net/url"
 	"os"
@@ -16,6 +18,7 @@ import (
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/s3"
 	"github.com/aws/aws-sdk-go/service/s3/s3iface"
+	"github.com/aws/aws-sdk-go/service/s3/s3manager"
 
 	"github.com/cmsgov/mint-app/pkg/appconfig"
 )
@@ -142,4 +145,27 @@ func (c S3Client) TagValueForKey(key string, tagName string) (string, error) {
 // GetBucket returns a *string containing the S3 Bucket as defined by the S3Configuration
 func (c S3Client) GetBucket() *string {
 	return aws.String(c.config.Bucket)
+}
+
+// UploadFile
+func (c S3Client) UploadFile(file io.Reader) error {
+	uploader := s3manager.NewUploaderWithClient(c.client)
+
+	result, err := uploader.Upload(&s3manager.UploadInput{
+		Bucket: aws.String(c.config.Bucket),
+		Key:    aws.String("someStringGUID"),
+		Body:   file,
+	})
+	if err != nil {
+		return err
+	}
+
+	fmt.Println("RESULT")
+	fmt.Println("RESULT")
+	fmt.Println(result)
+	fmt.Println("RESULT")
+	fmt.Println("RESULT")
+
+	return nil
+	// return aws.String(c.config.Bucket)
 }

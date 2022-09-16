@@ -48,6 +48,16 @@ func PlanDocumentCreate(
 	return createDocumentPayload(s3Client, document)
 }
 
+// PlanDocumentNewUpload is the new upload resolver that do it all on the backend. IT DO!
+// TODO Fix the shitty name
+func PlanDocumentNewUpload(logger *zap.Logger, input model.PlanDocumentBEInput, principal authentication.Principal, store *storage.Store, s3Client *upload.S3Client) (*models.PlanDocument, error) {
+	err := s3Client.UploadFile(input.FileData.File)
+	if err != nil {
+		return &models.PlanDocument{}, err
+	}
+	return &models.PlanDocument{}, nil
+}
+
 // PlanDocumentRead implements resolver logic to fetch a plan document object by ID
 func PlanDocumentRead(logger *zap.Logger, store *storage.Store, s3Client *upload.S3Client, id uuid.UUID) (*models.PlanDocument, error) {
 	document, err := store.PlanDocumentRead(logger, s3Client, id)

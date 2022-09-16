@@ -740,6 +740,17 @@ export interface PlanDiscussionCreateInput {
 }
 
 /**
+ * PlanDocumentBEInput
+ */
+export interface PlanDocumentBEInput {
+  modelPlanID: UUID;
+  fileData: Upload;
+  documentType: DocumentType;
+  otherTypeDescription?: string | null;
+  optionalNotes?: string | null;
+}
+
+/**
  * PlanDocumentInput represents the data required to create, modify, or delete a document on a plan
  */
 export interface PlanDocumentInput {
