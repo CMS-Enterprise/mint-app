@@ -721,6 +721,13 @@ export interface PlanCollaboratorCreateInput {
   email: string;
 }
 
+export interface PlanCrTdlChanges {
+  idNumber?: string | null;
+  dateInitiated?: Time | null;
+  title?: string | null;
+  note?: string | null;
+}
+
 /**
  * PlanDiscussionChanges represents the possible changes you can make to a plan discussion when updating it.
  * Fields explicitly set with NULL will be unset, and omitted fields will be left unchanged.
