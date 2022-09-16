@@ -63,16 +63,6 @@ func CreateDiscussionReply(logger *zap.Logger, input *model.DiscussionReplyCreat
 	discussionReply := models.NewDiscussionReply(principal.ID(), input.DiscussionID)
 	discussionReply.Content = input.Content
 	discussionReply.Resolution = input.Resolution
-	// discussionReply := &models.DiscussionReply{
-	// 	DiscussionRelation: models.DiscussionRelation{
-	// 		DiscussionID: input.DiscussionID,
-	// 	},
-	// 	Content:    input.Content,
-	// 	Resolution: input.Resolution,
-	// 	BaseStruct: models.BaseStruct{
-	// 		CreatedBy: principal.ID(),
-	// 	},
-	// }
 
 	err := BaseStructPreCreate(logger, discussionReply, principal, store, true)
 	if err != nil {

@@ -20,19 +20,6 @@ func PlanCrTdlCreate(logger *zap.Logger, input *model.PlanCrTdlCreateInput, prin
 	planCrTdl.Title = input.Title
 	planCrTdl.Note = input.Note
 
-	// planCrTdl := models.PlanCrTdl{
-	// 	IDNumber:      input.IDNumber,
-	// 	DateInitiated: &input.DateInitiated,
-	// 	Title:         input.Title,
-	// 	Note:          input.Note,
-	// 	ModelPlanRelation: models.ModelPlanRelation{
-	// 		ModelPlanID: input.ModelPlanID,
-	// 	},
-	// 	BaseStruct: models.BaseStruct{
-	// 		CreatedBy: principal.ID(),
-	// 	},
-	// }
-
 	err := BaseStructPreCreate(logger, planCrTdl, principal, store, true)
 	if err != nil {
 		return nil, err
