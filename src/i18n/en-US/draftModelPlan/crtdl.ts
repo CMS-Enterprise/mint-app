@@ -1,11 +1,12 @@
 const crtdl = {
-  heading: 'Documents',
+  heading: 'CR and TDLs',
   subheading: 'for <1>{{modelName}}</1>',
   breadcrumb: 'Model Plan task list',
   breadcrumb2: 'Upload Document',
   description:
-    'Upload any documents relevant to your Model Plan.  This could include recent concept documents, policy papers, or any additional model background information.',
-  addADocument: 'Add a document',
+    'Add, manage, and update any known Change Requests (CRs) and Technical Direction Letters (TDLs) associated with your model. More information about each CR or TDL can be found in Enterprise Electronic Change Information Management Portal (ECHIMP). If you need access to ECHIMP, please contact the Model Assessment team at ',
+  emailContact: '[email]@cms.hhs.gov.',
+  addCRTDL: 'Add a CR or TDL',
   documentTable: {
     name: 'File Name',
     type: 'Document Type',

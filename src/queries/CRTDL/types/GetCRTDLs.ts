@@ -20,6 +20,7 @@ export interface GetCRTDLs_modelPlan_crTdls {
 export interface GetCRTDLs_modelPlan {
   __typename: "ModelPlan";
   id: UUID;
+  modelName: string;
   crTdls: GetCRTDLs_modelPlan_crTdls[];
 }
 

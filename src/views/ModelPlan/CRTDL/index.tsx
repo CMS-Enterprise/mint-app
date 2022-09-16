@@ -8,7 +8,8 @@ import {
   BreadcrumbLink,
   Grid,
   GridContainer,
-  IconArrowBack
+  IconArrowBack,
+  Link as TrussLink
 } from '@trussworks/react-uswds';
 
 import UswdsReactLink from 'components/LinkWrapper';
@@ -97,6 +98,9 @@ export const CRTDLContent = () => {
 
           <p className="margin-bottom-2 font-body-md line-height-body-4">
             {t('description')}
+            <TrussLink href="[email]@cms.hhs.gov">
+              {t('emailContact')}
+            </TrussLink>
           </p>
 
           <UswdsReactLink
@@ -114,7 +118,7 @@ export const CRTDLContent = () => {
             variant="unstyled"
             to={`/models/${modelID}/crtdls/add-crtdl`}
           >
-            {t('addACRTDL')}
+            {t('addCRTDL')}
           </UswdsReactLink>
 
           <PlanCRTDLsTable

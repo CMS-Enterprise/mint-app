@@ -4,6 +4,7 @@ export default gql`
   query GetCRTDLs($id: UUID!) {
     modelPlan(id: $id) {
       id
+      modelName
       crTdls {
         id
         modelPlanID
