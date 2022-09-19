@@ -7,6 +7,13 @@ const crtdl = {
     'Add, manage, and update any known Change Requests (CRs) and Technical Direction Letters (TDLs) associated with your model. More information about each CR or TDL can be found in Enterprise Electronic Change Information Management Portal (ECHIMP). If you need access to ECHIMP, please contact the Model Assessment team at ',
   emailContact: '[email]@cms.hhs.gov.',
   addCRTDL: 'Add a CR or TDL',
+  updateCRTDL: 'Update a CR or TDL',
+  addRedirect: 'Don’t add a CR or TDL and return to previous page',
+  updateRedirect: 'Don’t update CR or TDL and return to previous page',
+  createDescription:
+    'Add any known Change Requests (CRs) and Technical Direction Letters (TDLs) associated with your model.',
+  updateDescription:
+    'Update this Change Request (CR) or Technical Direction Letters (TDL) that is associated with your model.',
   crtdlsTable: {
     idNumber: 'ID number',
     date: 'Date initiatied',
