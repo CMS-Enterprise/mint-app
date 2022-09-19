@@ -43,6 +43,7 @@ import MobileNav from './_components/MobileNav';
 import SideNav from './_components/Sidenav';
 import ReadOnlyGeneralCharacteristics from './GeneralCharacteristics/index';
 import ReadOnlyModelBasics from './ModelBasics/index';
+import ReadOnlyParticipantsAndProviders from './ParticipantsAndProviders/index';
 
 import './index.scss';
 
@@ -159,7 +160,7 @@ const ReadOnly = () => {
     },
     'participants-and-providers': {
       route: `/models/${modelID}/read-only/participants-and-providers`,
-      component: <h1>participantsAndProviders</h1>
+      component: <ReadOnlyParticipantsAndProviders modelID={modelID} />
     },
     beneficiaries: {
       route: `/models/${modelID}/read-only/beneficiaries`,
