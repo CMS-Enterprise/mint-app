@@ -468,7 +468,7 @@ const CRTDLBanner = ({ crTdls, modelID, expand }: CRTDLBannerType) => {
 
           <UswdsReactLink
             variant="unstyled"
-            to={`/models/${modelID}/documents/add-cr-tdl`}
+            to={`/models/${modelID}/cr-and-tdl/add-cr-and-tdl`}
           >
             {t('crTDLsSummaryBox.uploadAnother')}
           </UswdsReactLink>
@@ -483,7 +483,7 @@ const CRTDLBanner = ({ crTdls, modelID, expand }: CRTDLBannerType) => {
           <UswdsReactLink
             className="usa-button usa-button--outline"
             variant="unstyled"
-            to={`/models/${modelID}/cr-and-tdl`}
+            to={`/models/${modelID}/cr-and-tdl/add-cr-and-tdl`}
           >
             {t('crTDLsSummaryBox.add')}
           </UswdsReactLink>

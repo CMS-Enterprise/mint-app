@@ -206,11 +206,11 @@ const Table = ({
       {
         Header: t('crtdlsTable.actions'),
         accessor: 'id',
-        Cell: ({ row, value }: any) => {
+        Cell: ({ row }: any) => {
           return (
             <>
               <UswdsReactLink
-                to={`/models/${modelID}/cr-and-tdl/${row.original.id}/add-cr-and-tdl`}
+                to={`/models/${modelID}/cr-and-tdl/add-cr-and-tdl/${row.original.id}`}
                 className="margin-right-2"
               >
                 {t('crtdlsTable.edit')}

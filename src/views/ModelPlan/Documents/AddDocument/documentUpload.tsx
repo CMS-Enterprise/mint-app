@@ -206,7 +206,6 @@ const DocumentUpload = () => {
                       id="FileUpload-File"
                       name="file"
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                        console.log(e.currentTarget?.files?.[0]);
                         onChange(e);
                         setFieldValue('file', e.currentTarget?.files?.[0]);
                       }}
