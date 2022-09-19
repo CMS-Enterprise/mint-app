@@ -43,7 +43,7 @@ import MobileNav from './_components/MobileNav';
 import SideNav from './_components/Sidenav';
 import ReadOnlyGeneralCharacteristics from './GeneralCharacteristics/index';
 import ReadOnlyModelBasics from './ModelBasics/index';
-import ReadOnlyParticipantsAndProviders from './ParticipantsAndProviders';
+import ReadOnlyParticipantsAndProviders from './ParticipantsAndProviders/index';
 
 import './index.scss';
 
