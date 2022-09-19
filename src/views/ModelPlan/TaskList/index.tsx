@@ -272,11 +272,19 @@ const TaskList = () => {
                   {/* Document and CR TDL Banners */}
                   <Grid row gap={2}>
                     <Grid desktop={{ col: 6 }} className="margin-top-2">
-                      <DocumentBanner documents={documents} modelID={modelID} />
+                      <DocumentBanner
+                        documents={documents}
+                        modelID={modelID}
+                        expand={documents.length || crTdls.length}
+                      />
                     </Grid>
 
                     <Grid desktop={{ col: 6 }} className="margin-top-2">
-                      <CRTDLBanner crTdls={crTdls} modelID={modelID} />
+                      <CRTDLBanner
+                        crTdls={crTdls}
+                        modelID={modelID}
+                        expand={documents.length || crTdls.length}
+                      />
                     </Grid>
                   </Grid>
 
@@ -351,16 +359,19 @@ const TaskList = () => {
 type DocumentBannerType = {
   documents: DocumentType[];
   modelID: string;
+  expand: boolean;
 };
 
 // Document component for rendering document summary
-const DocumentBanner = ({ documents, modelID }: DocumentBannerType) => {
+const DocumentBanner = ({ documents, modelID, expand }: DocumentBannerType) => {
   const { t } = useTranslation('modelPlanTaskList');
 
   return (
     <SummaryBox
       heading=""
-      className="bg-base-lightest border-0 radius-0 padding-2"
+      className={classNames('bg-base-lightest border-0 radius-0 padding-2', {
+        'model-plan-task-list__min-card': expand
+      })}
     >
       <h3 className="margin-0">
         {t('modelPlanTaskList:documentSummaryBox.heading')}
@@ -415,16 +426,19 @@ const DocumentBanner = ({ documents, modelID }: DocumentBannerType) => {
 type CRTDLBannerType = {
   crTdls: CRTDLType[];
   modelID: string;
+  expand: boolean;
 };
 
 // CRTDL component for rendering CRTDL summary
-const CRTDLBanner = ({ crTdls, modelID }: CRTDLBannerType) => {
+const CRTDLBanner = ({ crTdls, modelID, expand }: CRTDLBannerType) => {
   const { t } = useTranslation('modelPlanTaskList');
 
   return (
     <SummaryBox
       heading=""
-      className="bg-base-lightest border-0 radius-0 padding-2"
+      className={classNames('bg-base-lightest border-0 radius-0 padding-2', {
+        'model-plan-task-list__min-card': expand
+      })}
     >
       <h3 className="margin-0">
         {t('modelPlanTaskList:crTDLsSummaryBox.heading')}

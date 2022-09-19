@@ -18,15 +18,15 @@ import PageHeading from 'components/PageHeading';
 import Alert from 'components/shared/Alert';
 import Expire from 'components/shared/Expire';
 import useMessage from 'hooks/useMessage';
-import GetCRDTLs from 'queries/CRTDL/GetCRDTLs';
+import GetModelPlanBase from 'queries/GetModelPlanBase';
 import {
-  GetCRTDLs as GetCRTDLsType,
-  GetCRTDLs_modelPlan_crTdls as CRTDLType,
-  GetCRTDLsVariables
-} from 'queries/CRTDL/types/GetCRTDLs';
+  GetModelPlanBase as GetModelPlanBaseType,
+  GetModelPlanBase_modelPlan as ModelPlanType,
+  GetModelPlanBaseVariables
+} from 'queries/types/GetModelPlanBase';
 import NotFound from 'views/NotFound';
 
-// import AddCRTDL from './AddCRTDL';
+import AddCRTDL from './AddCRTDL';
 import PlanCRTDLsTable from './table';
 
 type CRTDLStatusType = 'success' | 'error';
@@ -39,13 +39,16 @@ export const CRTDLContent = () => {
   const [crtdlMessage, setCRTDLMessage] = useState('');
   const [crtdlStatus, setCRTDLStatus] = useState<CRTDLStatusType>('error');
 
-  const { data } = useQuery<GetCRTDLsType, GetCRTDLsVariables>(GetCRDTLs, {
-    variables: {
-      id: modelID
+  const { data } = useQuery<GetModelPlanBaseType, GetModelPlanBaseVariables>(
+    GetModelPlanBase,
+    {
+      variables: {
+        id: modelID
+      }
     }
-  });
+  );
 
-  const modelPlan = data?.modelPlan || ({} as CRTDLType);
+  const modelPlan = data?.modelPlan || ({} as ModelPlanType);
 
   return (
     <MainContent data-testid="model-crtdls">
@@ -141,11 +144,11 @@ const CRTDLs = () => {
         exact
         render={() => <CRTDLContent />}
       />
-      {/* <Route
-        path="/models/:modelID/cr-and-tdl/add-cr-and-tdl"
+      <Route
+        path="/models/:modelID/cr-and-tdl/:crTDLID/add-cr-and-tdl"
         exact
         render={() => <AddCRTDL />}
-      /> */}
+      />
 
       {/* 404 */}
       <Route path="*" render={() => <NotFound />} />

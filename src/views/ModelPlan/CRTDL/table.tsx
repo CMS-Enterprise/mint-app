@@ -1,14 +1,19 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useFilters, usePagination, useSortBy, useTable } from 'react-table';
-import { useQuery } from '@apollo/client';
-import { Table as UswdsTable } from '@trussworks/react-uswds';
+import { useMutation, useQuery } from '@apollo/client';
+import { Button, Table as UswdsTable } from '@trussworks/react-uswds';
+import { DateTime } from 'luxon';
 
-// import { DateTime } from 'luxon';
-// import Modal from 'components/Modal';
+import UswdsReactLink from 'components/LinkWrapper';
+import Modal from 'components/Modal';
+import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
+import TablePagination from 'components/TablePagination';
+import DeleteCRTDL from 'queries/CRTDL/DeleteCRTDL';
 import GetCRDTLs from 'queries/CRTDL/GetCRDTLs';
+import { DeleteCRTDLVariables } from 'queries/CRTDL/types/DeleteCRTDL';
 import {
   GetCRTDLs as GetCRTDLsType,
   GetCRTDLs_modelPlan_crTdls as CDTRLType
@@ -50,6 +55,8 @@ const CRTDLTable = ({
 
   const crtdls = (data?.modelPlan?.crTdls ?? []) as CDTRLType[];
 
+  const modelName = data?.modelPlan.modelName;
+
   if (loading) {
     return <PageLoading />;
   }
@@ -72,6 +79,8 @@ const CRTDLTable = ({
   return (
     <Table
       data={crtdls}
+      modelID={modelID}
+      modelName={modelName}
       hiddenColumns={hiddenColumns}
       refetch={refetchCRTDLs}
       setCRTDLMessage={setCRTDLMessage}
@@ -84,6 +93,8 @@ export default CRTDLTable;
 
 type TableProps = {
   data: CDTRLType[];
+  modelID: string;
+  modelName?: string;
   hiddenColumns?: string[];
   refetch: () => any | undefined;
   setCRTDLMessage: (value: string) => void;
@@ -92,146 +103,151 @@ type TableProps = {
 
 const Table = ({
   data,
+  modelID,
+  modelName,
   hiddenColumns,
   refetch,
   setCRTDLMessage,
   setCRTDLStatus
 }: TableProps) => {
   const { t } = useTranslation('crtdl');
-  //   const client = useApolloClient();
-  //   const [isModalOpen, setModalOpen] = useState(false);
-  //   const [fileToRemove, setFileToRemove] = useState<PlanCRTDLByModelIDType>(
-  //     {} as PlanCRTDLByModelIDType
-  //   );
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [crtdlToRemove, setCRTDLToRemove] = useState<CDTRLType>(
+    {} as CDTRLType
+  );
 
-  //   const [mutate] = useMutation<DeleteModelPlanCRTDLVariables>(
-  //     DeleteModelPlanCRTDL
-  //   );
+  const [deleteCRTDL] = useMutation<DeleteCRTDLVariables>(DeleteCRTDL);
 
-  //   const handleDelete = useMemo(() => {
-  //     return (file: PlanCRTDLByModelIDType) => {
-  //       mutate({
-  //         variables: {
-  //           // TODO - update inout variables pending BE changes to delete by ID only
-  //           input: {
-  //             id: file.id,
-  //             modelPlanID: file.modelPlanID,
-  //             crtdlsParameters: {
-  //               fileSize: file.fileSize
-  //             },
-  //             url: ''
-  //           }
-  //         }
-  //       })
-  //         .then(response => {
-  //           if (response?.errors) {
-  //             setCRTDLMessage(
-  //               t('removeCRTDLFail', {
-  //                 crtdlsName: file.fileName
-  //               })
-  //             );
-  //             setCRTDLStatus('error');
-  //           } else {
-  //             setCRTDLMessage(
-  //               t('removeCRTDLSuccess', {
-  //                 crtdlsName: file.fileName
-  //               })
-  //             );
-  //             setCRTDLStatus('success');
-  //             refetch();
-  //           }
-  //         })
-  //         .catch(() => {
-  //           setCRTDLMessage(
-  //             t('removeCRTDLFail', {
-  //               crtdlsName: file.fileName
-  //             })
-  //           );
-  //           setCRTDLStatus('error');
-  //         });
-  //     };
-  //   }, [mutate, refetch, t, setCRTDLMessage, setCRTDLStatus]);
+  const handleDelete = useMemo(() => {
+    return (crtdl: CDTRLType) => {
+      deleteCRTDL({
+        variables: {
+          id: crtdl.id
+        }
+      })
+        .then((response: any) => {
+          if (response?.errors) {
+            setCRTDLMessage(
+              t('removeCRTDLModal.removeCRTDLFail', {
+                crtdl: crtdl.idNumber
+              })
+            );
+            setCRTDLStatus('error');
+          } else {
+            setCRTDLMessage(
+              t('removeCRTDLModal.removeCRTDLSuccess', {
+                crtdl: crtdl.idNumber,
+                modelName
+              })
+            );
+            setCRTDLStatus('success');
+            refetch();
+          }
+        })
+        .catch(() => {
+          setCRTDLMessage(
+            t('removeCRTDLModal.removeCRTDLFail', {
+              crtdl: crtdl.idNumber
+            })
+          );
+          setCRTDLStatus('error');
+        });
+    };
+  }, [deleteCRTDL, refetch, t, setCRTDLMessage, setCRTDLStatus, modelName]);
 
-  //   const renderModal = () => {
-  //     return (
-  //       <Modal isOpen={isModalOpen} closeModal={() => setModalOpen(false)}>
-  //         <PageHeading headingLevel="h2" className="margin-top-0">
-  //           {t('removeCRTDLModal.header', {
-  //             crtdlsName: fileToRemove.fileName
-  //           })}
-  //         </PageHeading>
-  //         <p>{t('removeCRTDLModal.warning')}</p>
-  //         <Button
-  //           type="button"
-  //           className="margin-right-4"
-  //           onClick={() => handleDelete(fileToRemove)}
-  //         >
-  //           {t('removeCRTDLModal.confirm')}
-  //         </Button>
-  //         <Button type="button" unstyled onClick={() => setModalOpen(false)}>
-  //           {t('removeCRTDLModal.cancel')}
-  //         </Button>
-  //       </Modal>
-  //     );
-  //   };
-
-  //   const handleDownload = useMemo(() => {
-  //     return (file: PlanCRTDLByModelIDType) => {
-  //       if (!file.fileName || !file.fileType) return;
-  //       downloadFile({
-  //         client,
-  //         fileID: file.id,
-  //         fileType: file.fileType,
-  //         fileName: file.fileName,
-  //         query: GetPlanCRTDLDownloadURL,
-  //         queryType: 'planCRTDLDownloadURL',
-  //         urlKey: 'presignedURL'
-  //       })
-  //         .then((downloadURL: string) => {}) // TODO: Returning download URL for cypress testing
-  //         .catch((error: any) => {
-  //           if (error) {
-  //             setCRTDLMessage(error);
-  //             setCRTDLStatus('error');
-  //           }
-  //         });
-  //     };
-  //   }, [client, setCRTDLMessage, setCRTDLStatus]);
+  const renderModal = () => {
+    return (
+      <Modal isOpen={isModalOpen} closeModal={() => setModalOpen(false)}>
+        <PageHeading headingLevel="h2" className="margin-top-0">
+          {t('removeCRTDLModal.header', {
+            crtdl: crtdlToRemove.idNumber
+          })}
+        </PageHeading>
+        <p>{t('removeCRTDLModal.warning')}</p>
+        <Button
+          type="button"
+          className="margin-right-4"
+          onClick={() => handleDelete(crtdlToRemove)}
+        >
+          {t('removeCRTDLModal.confirm')}
+        </Button>
+        <Button type="button" unstyled onClick={() => setModalOpen(false)}>
+          {t('removeCRTDLModal.cancel')}
+        </Button>
+      </Modal>
+    );
+  };
 
   const columns = useMemo(() => {
     return [
       {
-        Header: t('crtdlsTable.name'),
+        Header: t<string>('crtdlsTable.idNumber'),
+        accessor: 'idNumber'
+      },
+      {
+        Header: t<string>('crtdlsTable.date'),
+        accessor: ({ dateInitiated }: any) => {
+          if (dateInitiated) {
+            return DateTime.fromISO(dateInitiated).toLocaleString(
+              DateTime.DATE_SHORT
+            );
+          }
+          return null;
+        }
+      },
+      {
+        Header: t<string>('crtdlsTable.title'),
         accessor: 'title'
       },
       {
-        Header: t('crtdlsTable.type'),
-        accessor: 'idNumber'
-        // Cell: ({ row, value }: any) => {
-        //   if (value !== 'OTHER') {
-        //     return translateCRTDLType(value);
-        //   }
-        //   return row.original.otherType;
-        // }
-      },
-      {
-        Header: t('crtdlsTable.notes'),
-        accessor: 'dateInitiated'
-      },
-      {
-        Header: t('crtdlsTable.uploadDate'),
+        Header: t<string>('crtdlsTable.notes'),
         accessor: 'note'
-        // Cell: ({ value }: any) => {
-        //   return DateTime.fromISO(value).toLocaleString(DateTime.DATE_SHORT);
-        // }
+      },
+      {
+        Header: t('crtdlsTable.actions'),
+        accessor: 'id',
+        Cell: ({ row, value }: any) => {
+          return (
+            <>
+              <UswdsReactLink
+                to={`/models/${modelID}/cr-and-tdl/${row.original.id}/add-cr-and-tdl`}
+                className="margin-right-2"
+              >
+                {t('crtdlsTable.edit')}
+              </UswdsReactLink>
+              <Button
+                type="button"
+                unstyled
+                className="text-red"
+                data-testid="remove-cr-tdl"
+                onClick={() => {
+                  setModalOpen(true);
+                  setCRTDLToRemove(row.original);
+                }}
+              >
+                {t('crtdlsTable.remove')}
+              </Button>
+            </>
+          );
+        }
       }
     ];
-  }, [t]);
+  }, [t, modelID]);
 
   const {
     getTableProps,
     getTableBodyProps,
     headerGroups,
+    canPreviousPage,
+    canNextPage,
+    pageOptions,
+    pageCount,
+    gotoPage,
+    nextPage,
+    previousPage,
+    setPageSize,
     page,
+    state,
     prepareRow
   } = useTable(
     {
@@ -249,7 +265,7 @@ const Table = ({
       autoResetSortBy: false,
       autoResetPage: false,
       initialState: {
-        sortBy: useMemo(() => [{ id: 'modelName', asc: true }], []),
+        sortBy: useMemo(() => [{ id: 'idNumber', asc: true }], []),
         pageIndex: 0
       }
     },
@@ -260,7 +276,7 @@ const Table = ({
 
   return (
     <div className="model-plan-table" data-testid="cr-tdl-table">
-      {/* {renderModal()} */}
+      {renderModal()}
       <UswdsTable bordered={false} {...getTableProps()} fullWidth scrollable>
         <caption className="usa-sr-only">{t('requestsTable.caption')}</caption>
         <thead>
@@ -339,6 +355,22 @@ const Table = ({
           })}
         </tbody>
       </UswdsTable>
+
+      {data.length > 10 && (
+        <TablePagination
+          gotoPage={gotoPage}
+          previousPage={previousPage}
+          nextPage={nextPage}
+          canNextPage={canNextPage}
+          pageIndex={state.pageIndex}
+          pageOptions={pageOptions}
+          canPreviousPage={canPreviousPage}
+          pageCount={pageCount}
+          pageSize={state.pageSize}
+          setPageSize={setPageSize}
+          page={[]}
+        />
+      )}
 
       <div
         className="usa-sr-only usa-table__announcement-region"
