@@ -85,7 +85,7 @@ const ReadOnlyModelBasics = ({ modelID }: { modelID: string }) => {
             heading={t('cmsComponent')}
             list
             listItems={cmsCenters?.map(translateCmsCenter)}
-            copy={cmsOther}
+            listOtherItem={cmsOther}
           />
         </div>
         <div className="desktop:width-card-lg">
