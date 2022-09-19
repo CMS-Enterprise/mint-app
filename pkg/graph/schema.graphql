@@ -1375,6 +1375,7 @@ type Query {
   taskListSectionLocks(modelPlanID: UUID!): [TaskListSectionLockStatus!]!
   planPayments(id: UUID!): PlanPayments!
   ndaInfo: NDAInfo!
+  crTdl(id: UUID!): PlanCrTdl!
 }
 
 """
