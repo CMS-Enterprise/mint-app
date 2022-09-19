@@ -852,6 +852,12 @@ func (r *queryResolver) NdaInfo(ctx context.Context) (*model.NDAInfo, error) {
 	return resolvers.NDAAgreementGetByEUA(logger, principal, r.store)
 }
 
+// CrTdl is the resolver for the crTdl field.
+func (r *queryResolver) CrTdl(ctx context.Context, id uuid.UUID) (*models.PlanCrTdl, error) {
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.PlanCrTdlGet(logger, id, r.store)
+}
+
 // OnTaskListSectionLocksChanged is the resolver for the onTaskListSectionLocksChanged field.
 func (r *subscriptionResolver) OnTaskListSectionLocksChanged(ctx context.Context, modelPlanID uuid.UUID) (<-chan *model.TaskListSectionLockStatusChanged, error) {
 	principal := appcontext.Principal(ctx).ID()

@@ -12,6 +12,7 @@ const participantsAndProviders = {
   providerInfo:
     'Providers are organizations/indviduals that work with the Participants and deliver care or services to the beneficiaries impacted by our model.',
   whoAreParticipants: 'Who are the particpants? Select all that apply.',
+  whoAreParticipantsQuestion: 'Who are the particpants?',
   participantTypes: {
     medicareProviders: 'Medicare providers',
     entities: 'Entities (e.g., ACO, Direct Contracting Entity)',
@@ -65,6 +66,7 @@ const participantsAndProviders = {
     other: 'Other'
   },
   howWillYouSelect: 'How will you select participants? Select all that appy.',
+  howWillYouSelectQuestion: 'How will you select participants?',
   selectOtions: {
     reviewApplications: 'Model team will review applications',
     solicitSupport: 'Solicit support for CMII staff',
@@ -125,6 +127,7 @@ const participantsAndProviders = {
   },
   decideProviders:
     'How will you decide to add providers? Select all that apply.',
+  decideProvidersQuestion: 'How will you decide to add providers?',
   decideProvidersInfo:
     'Please include details on decision points, timing, and implications of adding them to the model in an additional note.',
   decideProvidersOptions: {
@@ -142,6 +145,7 @@ const participantsAndProviders = {
   decideProvidersDescribe:
     'Please describe the other method for deciding which providers to add.',
   canProvidersLeave: 'Can providers leave the model? Select all that apply.',
+  canProvidersLeaveQuestion: 'Can providers leave the model?',
   canProvidersLeaveInfo:
     'Please include details on decision points, timing, and implications of leaving the model in an additional note.',
   canProvidersLeaveOptions: {
