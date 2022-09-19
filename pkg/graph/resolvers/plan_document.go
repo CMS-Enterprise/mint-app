@@ -12,49 +12,44 @@ import (
 	"github.com/cmsgov/mint-app/pkg/upload"
 )
 
-func createDocumentPayload(s3Client *upload.S3Client, document *models.PlanDocument) (*model.PlanDocumentPayload, error) {
-	presignedURL, urlErr := s3Client.NewGetPresignedURL(document.FileKey)
-	if urlErr != nil {
-		return nil, urlErr
+// PlanDocumentNewUpload is the new upload resolver that do it all on the backend. IT DO!
+// TODO Fix the shitty name
+func PlanDocumentNewUpload(logger *zap.Logger, input model.PlanDocumentInput, principal authentication.Principal, store *storage.Store, s3Client *upload.S3Client) (*models.PlanDocument, error) {
+	document := &models.PlanDocument{
+		BaseStruct: models.BaseStruct{
+			CreatedBy: principal.ID(),
+		},
+		ModelPlanRelation: models.ModelPlanRelation{
+			ModelPlanID: input.ModelPlanID,
+		},
+		FileType:             input.FileData.ContentType,
+		Bucket:               *s3Client.GetBucket(),
+		FileKey:              uuid.NewString(),
+		VirusScanned:         false,
+		VirusClean:           false,
+		FileName:             input.FileData.Filename,
+		FileSize:             int(input.FileData.Size),
+		DocumentType:         input.DocumentType,
+		OtherTypeDescription: input.OtherTypeDescription,
+		OptionalNotes:        input.OptionalNotes,
+		DeletedAt:            nil,
 	}
-
-	payload := model.PlanDocumentPayload{
-		Document:     document,
-		PresignedURL: presignedURL,
-	}
-
-	return &payload, nil
-}
-
-// PlanDocumentCreate implements resolver logic to create a plan document object
-func PlanDocumentCreate(
-	logger *zap.Logger,
-	document *models.PlanDocument,
-	documentURL *string,
-	principal authentication.Principal,
-	store *storage.Store,
-	s3Client *upload.S3Client) (*model.PlanDocumentPayload, error) {
 
 	err := BaseStructPreCreate(logger, document, principal, store, true)
 	if err != nil {
 		return nil, err
 	}
 
-	document, err = store.PlanDocumentCreate(logger, principal.ID(), document, documentURL, s3Client)
+	err = s3Client.UploadFile(input.FileData.File, document.FileKey)
+	if err != nil {
+		return &models.PlanDocument{}, err
+	}
+
+	document, err = store.PlanDocumentCreate(logger, principal.ID(), document, s3Client)
 	if err != nil {
 		return nil, genericmodel.HandleModelUpdateError(logger, err, document)
 	}
 
-	return createDocumentPayload(s3Client, document)
-}
-
-// PlanDocumentNewUpload is the new upload resolver that do it all on the backend. IT DO!
-// TODO Fix the shitty name
-func PlanDocumentNewUpload(logger *zap.Logger, input model.PlanDocumentBEInput, principal authentication.Principal, store *storage.Store, s3Client *upload.S3Client) (*models.PlanDocument, error) {
-	err := s3Client.UploadFile(input.FileData.File)
-	if err != nil {
-		return &models.PlanDocument{}, err
-	}
 	return &models.PlanDocument{}, nil
 }
 
@@ -76,29 +71,6 @@ func PlanDocumentsReadByModelPlanID(logger *zap.Logger, id uuid.UUID, store *sto
 	}
 
 	return documents, nil
-}
-
-// PlanDocumentUpdate implements resolver logic to update a plan milestones object
-func PlanDocumentUpdate(logger *zap.Logger, s3Client *upload.S3Client, input *models.PlanDocument, principal authentication.Principal, store *storage.Store) (*model.PlanDocumentPayload, error) {
-
-	existingdoc, err := store.PlanDocumentRead(logger, s3Client, input.ID)
-	if err != nil {
-		return nil, err
-	}
-	input.ModelPlanID = existingdoc.ModelPlanID
-
-	err = BaseStructPreUpdate(logger, input, nil, principal, store, false, true)
-	if err != nil {
-		return nil, err
-	}
-	// //TODO convert to use Apply Changes and Base Struct pre-update
-
-	document, err := store.PlanDocumentUpdate(logger, input)
-	if err != nil {
-		return nil, genericmodel.HandleModelUpdateError(logger, err, input)
-	}
-
-	return createDocumentPayload(s3Client, document)
 }
 
 // PlanDocumentDelete implements resolver logic to update a plan document object

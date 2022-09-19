@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client';
 
 export default gql`
-  mutation UploadNewPlanDocument($input: PlanDocumentBEInput!) {
+  mutation UploadNewPlanDocument($input: PlanDocumentInput!) {
     uploadNewPlanDocument(input: $input) {
       id
     }

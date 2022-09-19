@@ -635,15 +635,6 @@ export interface DiscussionReplyCreateInput {
 }
 
 /**
- * Input associated with a document to be uploaded
- */
-export interface GeneratePresignedUploadURLInput {
-  fileName: string;
-  mimeType: string;
-  size: number;
-}
-
-/**
  * ModelPlanChanges represents the possible changes you can make to a model plan when updating it.
  * Fields explicitly set with NULL will be unset, and omitted fields will be left unchanged.
  * https: // gqlgen.com/reference/changesets/
@@ -740,34 +731,12 @@ export interface PlanDiscussionCreateInput {
 }
 
 /**
- * PlanDocumentBEInput
+ * PlanDocumentInput
  */
-export interface PlanDocumentBEInput {
+export interface PlanDocumentInput {
   modelPlanID: UUID;
   fileData: Upload;
   documentType: DocumentType;
-  otherTypeDescription?: string | null;
-  optionalNotes?: string | null;
-}
-
-/**
- * PlanDocumentInput represents the data required to create, modify, or delete a document on a plan
- */
-export interface PlanDocumentInput {
-  id?: UUID | null;
-  modelPlanID: UUID;
-  documentParameters: PlanDocumentParameters;
-  url?: string | null;
-}
-
-/**
- * PlanDocumentCreateParameters represents the specific data required to create or modify a document on a plan
- */
-export interface PlanDocumentParameters {
-  fileName?: string | null;
-  fileSize: number;
-  fileType?: string | null;
-  documentType?: DocumentType | null;
   otherTypeDescription?: string | null;
   optionalNotes?: string | null;
 }

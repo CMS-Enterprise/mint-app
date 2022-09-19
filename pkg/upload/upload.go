@@ -1,7 +1,6 @@
 package upload
 
 import (
-	"fmt"
 	"io"
 	"mime"
 	"net/url"
@@ -147,25 +146,18 @@ func (c S3Client) GetBucket() *string {
 	return aws.String(c.config.Bucket)
 }
 
-// UploadFile
-func (c S3Client) UploadFile(file io.Reader) error {
+// UploadFile uploads a io.Reader to the bucket configured in the S3Client
+func (c S3Client) UploadFile(file io.Reader, key string) error {
 	uploader := s3manager.NewUploaderWithClient(c.client)
 
-	result, err := uploader.Upload(&s3manager.UploadInput{
+	_, err := uploader.Upload(&s3manager.UploadInput{
 		Bucket: aws.String(c.config.Bucket),
-		Key:    aws.String("someStringGUID"),
+		Key:    aws.String(key),
 		Body:   file,
 	})
 	if err != nil {
 		return err
 	}
 
-	fmt.Println("RESULT")
-	fmt.Println("RESULT")
-	fmt.Println(result)
-	fmt.Println("RESULT")
-	fmt.Println("RESULT")
-
 	return nil
-	// return aws.String(c.config.Bucket)
 }

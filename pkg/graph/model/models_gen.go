@@ -25,18 +25,6 @@ type DiscussionReplyCreateInput struct {
 	Resolution   bool      `json:"resolution"`
 }
 
-// Input associated with a document to be uploaded
-type GeneratePresignedUploadURLInput struct {
-	FileName string `json:"fileName"`
-	MimeType string `json:"mimeType"`
-	Size     int    `json:"size"`
-}
-
-// URL generated for a document to be uploaded
-type GeneratePresignedUploadURLPayload struct {
-	URL *string `json:"url"`
-}
-
 // The current user's Launch Darkly key
 type LaunchDarklySettings struct {
 	UserKey    string `json:"userKey"`
@@ -72,37 +60,13 @@ type PlanDiscussionCreateInput struct {
 	Content     string    `json:"content"`
 }
 
-// PlanDocumentBEInput
-type PlanDocumentBEInput struct {
+// PlanDocumentInput
+type PlanDocumentInput struct {
 	ModelPlanID          uuid.UUID           `json:"modelPlanID"`
 	FileData             graphql.Upload      `json:"fileData"`
 	DocumentType         models.DocumentType `json:"documentType"`
 	OtherTypeDescription *string             `json:"otherTypeDescription"`
 	OptionalNotes        *string             `json:"optionalNotes"`
-}
-
-// PlanDocumentInput represents the data required to create, modify, or delete a document on a plan
-type PlanDocumentInput struct {
-	ID                 *uuid.UUID              `json:"id"`
-	ModelPlanID        uuid.UUID               `json:"modelPlanID"`
-	DocumentParameters *PlanDocumentParameters `json:"documentParameters"`
-	URL                *string                 `json:"url"`
-}
-
-// PlanDocumentCreateParameters represents the specific data required to create or modify a document on a plan
-type PlanDocumentParameters struct {
-	FileName             *string              `json:"fileName"`
-	FileSize             int                  `json:"fileSize"`
-	FileType             *string              `json:"fileType"`
-	DocumentType         *models.DocumentType `json:"documentType"`
-	OtherTypeDescription *string              `json:"otherTypeDescription"`
-	OptionalNotes        *string              `json:"optionalNotes"`
-}
-
-// PlanDocumentPayload represents the response to a document request
-type PlanDocumentPayload struct {
-	Document     *models.PlanDocument `json:"document"`
-	PresignedURL *string              `json:"presignedURL"`
 }
 
 type TaskListSectionLockStatus struct {

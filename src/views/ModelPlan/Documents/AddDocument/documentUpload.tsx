@@ -24,7 +24,7 @@ import useMessage from 'hooks/useMessage';
 // } from 'queries/Documents/types/CreateModelPlanDocument';
 // import { GeneratePresignedUploadURL as GetGeneratedPresignedUploadURLType } from 'queries/Documents/types/GeneratePresignedUploadURL';
 import { UploadNewPlanDocument as UploadNewPlanDocumentType } from 'queries/Documents/types/UploadNewPlanDocument';
-import UploadNewPlanDocument from 'queries/Documents/Up';
+import UploadNewPlanDocument from 'queries/Documents/UploadNewPlanDocument';
 import { FileUploadForm } from 'types/files';
 import { DocumentType } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
