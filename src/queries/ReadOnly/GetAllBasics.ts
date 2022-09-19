@@ -3,7 +3,9 @@ import { gql } from '@apollo/client';
 export default gql`
   query GetAllBasics($id: UUID!) {
     modelPlan(id: $id) {
+      id
       basics {
+        id
         modelCategory
         cmsCenters
         cmsOther
