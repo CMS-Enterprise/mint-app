@@ -11,10 +11,14 @@ type ModelPlan struct {
 }
 
 //NewModelPlan returns a new model Plan
-func NewModelPlan(createdBy string) *ModelPlan {
+func NewModelPlan(createdBy string, modelName string) *ModelPlan {
 	return &ModelPlan{
+		ModelName:  modelName,
 		baseStruct: NewBaseStruct(createdBy),
+		Archived:   false,
+		Status:     ModelStatusPlanDraft,
 	}
+
 }
 
 //GetModelPlanID returns the modelPlanID of the task list section
