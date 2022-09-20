@@ -9796,11 +9796,6 @@ file-loader@^6.2.0:
     loader-utils "^2.0.0"
     schema-utils "^3.0.0"
 
-file-saver@^2.0.2:
-  version "2.0.5"
-  resolved "https://registry.yarnpkg.com/file-saver/-/file-saver-2.0.5.tgz#d61cfe2ce059f414d899e9dd6d4107ee25670c38"
-  integrity sha512-P9bmyZ3h/PRG+Nzga+rbdI4OEpNDzAVyy74uVO9ATgzLK6VtAsYybF/+TOCvrc0MO793d6+42lLyZTw7/ArVzA==
-
 file-system-cache@^1.0.5:
   version "1.0.5"
   resolved "https://registry.yarnpkg.com/file-system-cache/-/file-system-cache-1.0.5.tgz#84259b36a2bbb8d3d6eb1021d3132ffe64cfff4f"
@@ -16020,13 +16015,6 @@ react-colorful@^5.1.2:
   version "5.2.2"
   resolved "https://registry.yarnpkg.com/react-colorful/-/react-colorful-5.2.2.tgz#0a69d0648db47e51359d343854d83d250a742243"
   integrity sha512-Xdb1Rl6lZ5SMdNBH59eE0lGqR1g2LVD8IgPlw0WeMDrOC65lYI8fgMEwj/0dDpVRVMh5qp73ciISDst/t2O2iQ==
-
-react-csv-downloader@^2.8.0:
-  version "2.8.0"
-  resolved "https://registry.yarnpkg.com/react-csv-downloader/-/react-csv-downloader-2.8.0.tgz#439e2cfe1f6bfb6797e4e9bd5f24cd80fb9c3164"
-  integrity sha512-ito/4SsgLP5bxn+TYweGr+Vf/hIDhxlnJRfzyPf06jyW5oP2G5ZqyPCX6JrwcDQdKINu7OeuElb3ZRGQg8br6A==
-  dependencies:
-    file-saver "^2.0.2"
 
 react-dev-utils@^11.0.3:
   version "11.0.4"
