@@ -208,7 +208,7 @@ func (r *mutationResolver) UploadNewPlanDocument(ctx context.Context, input mode
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 
-	planDocument, err := resolvers.PlanDocumentNewUpload(logger, input, principal, r.store, r.s3Client)
+	planDocument, err := resolvers.PlanDocumentCreate(logger, input, principal, r.store, r.s3Client)
 	return planDocument, err
 }
 

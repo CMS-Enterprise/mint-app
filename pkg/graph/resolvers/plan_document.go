@@ -12,9 +12,8 @@ import (
 	"github.com/cmsgov/mint-app/pkg/upload"
 )
 
-// PlanDocumentNewUpload is the new upload resolver that do it all on the backend. IT DO!
-// TODO Fix the shitty name
-func PlanDocumentNewUpload(logger *zap.Logger, input model.PlanDocumentInput, principal authentication.Principal, store *storage.Store, s3Client *upload.S3Client) (*models.PlanDocument, error) {
+// PlanDocumentCreate implements resolver logic to upload the specified file to S3 and create a matching plan document entity in the database.
+func PlanDocumentCreate(logger *zap.Logger, input model.PlanDocumentInput, principal authentication.Principal, store *storage.Store, s3Client *upload.S3Client) (*models.PlanDocument, error) {
 	document := &models.PlanDocument{
 		BaseStruct: models.BaseStruct{
 			CreatedBy: principal.ID(),
