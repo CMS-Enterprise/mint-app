@@ -7,7 +7,7 @@ import {
   useSortBy,
   useTable
 } from 'react-table';
-import { useApolloClient, useQuery } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 // import { IconFileDownload, Table as UswdsTable } from '@trussworks/react-uswds';
 import { Table as UswdsTable } from '@trussworks/react-uswds';
 
@@ -44,9 +44,6 @@ type TableProps = {
 
 const Table = ({ data, hiddenColumns }: TableProps) => {
   const { t } = useTranslation('home');
-
-  // Apollo client for CSV data exporting
-  const client = useApolloClient(); // NJD: This can probably be encapsulated in the exporting utility
 
   const columns = useMemo(() => {
     return [
@@ -171,11 +168,7 @@ const Table = ({ data, hiddenColumns }: TableProps) => {
         />
 
         <div className="flex-align-self-center">
-          <CsvExportLink
-            fileName="Really Cool CSV that will definitely have data" // NJD - fix filename
-            client={client}
-            modelIDs={getModelIDs(data)}
-          />
+          <CsvExportLink />
         </div>
       </div>
 
@@ -314,17 +307,6 @@ const DraftModelPlansTable = ({ hiddenColumns }: DraftModelTableProps) => {
   }
 
   return <Table data={data} hiddenColumns={hiddenColumns} />;
-};
-
-// Build array with all model IDs, used to query for all model info
-// NJD: Should this do more then just get model IDs? Should i just pass modelPlanCollection directly into the export utility? will make it non-generic
-const getModelIDs = (modelPlanCollection: DraftModelPlanType[]): string[] => {
-  const modelIDs: string[] = [];
-  for (let i = 0; i < modelPlanCollection.length; i += 1) {
-    modelIDs.push(modelPlanCollection[i].id);
-  }
-
-  return modelIDs;
 };
 
 export default DraftModelPlansTable;
