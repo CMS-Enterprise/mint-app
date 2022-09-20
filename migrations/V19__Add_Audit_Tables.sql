@@ -8,7 +8,8 @@ CREATE TABLE audit.table_config (
     modified_by_field TEXT NOT NULL DEFAULT 'modified_by',
     pkey_field TEXT NOT NULL DEFAULT 'id',
     fkey_field TEXT,
-    ignored_fields TEXT,
+    ignored_fields TEXT[],
+    insert_fields TEXT[],
     --META DATA
     created_by EUA_ID NOT NULL,
     created_dts TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
