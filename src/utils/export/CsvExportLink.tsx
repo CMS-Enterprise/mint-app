@@ -24,7 +24,7 @@ const csvFormatter = (csvData: AllModelPlansType[]) => {
     const csv = parser.parse(csvData);
     downloadFile(csv);
   } catch (err) {
-    // TODO: add error handling: display a modal/message if things fail?
+    // TODO: add more robust error handling: display a modal/message if download fails?
     console.error(err); // eslint-disable-line
   }
 };
