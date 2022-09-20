@@ -16,6 +16,35 @@ export const TaskListDescription = ({ children }: TaskListDescriptionProps) => {
   );
 };
 
+export const TaskListStatusTag = ({ status }: { status: TaskStatus }) => {
+  const { t } = useTranslation('modelPlanTaskList');
+
+  let tagStyle;
+  let tagCopy;
+  switch (status) {
+    case 'IN_PROGRESS':
+      tagCopy = t('taskListItem.inProgress');
+      tagStyle = 'bg-warning';
+      break;
+    case 'READY_FOR_REVIEW':
+      tagCopy = t('taskListItem.readyForReview');
+      tagStyle = 'bg-success-dark text-white';
+      break;
+    default:
+      tagCopy = t('taskListItem.ready');
+      tagStyle = 'bg-accent-cool';
+  }
+
+  return (
+    <span
+      data-testid="tasklist-tag"
+      className={`model-plan-task-list__task-tag line-height-5 text-bold ${tagStyle}`}
+    >
+      {tagCopy}
+    </span>
+  );
+};
+
 type TaskListItemProps = {
   children?: React.ReactNode | React.ReactNodeArray;
   heading: string;
@@ -39,34 +68,13 @@ const TaskListItem = ({
     'padding-bottom-4'
   );
 
-  let tagStyle;
-  let tagCopy;
-  switch (status) {
-    case 'IN_PROGRESS':
-      tagCopy = t('taskListItem.inProgress');
-      tagStyle = 'bg-warning';
-      break;
-    case 'READY_FOR_REVIEW':
-      tagCopy = t('taskListItem.readyForReview');
-      tagStyle = 'bg-success-dark text-white';
-      break;
-    default:
-      tagCopy = t('taskListItem.ready');
-      tagStyle = 'bg-accent-cool';
-  }
-
   return (
     <li className={taskListItemClasses} data-testid={testId}>
       <div className="width-full">
         <div className="model-plan-task-list__task-row display-flex flex-justify flex-align-start">
           <h3 className="margin-top-0 margin-bottom-1">{heading}</h3>
           <span className="display-flex flex-column flex-align-end">
-            <span
-              data-testid="tasklist-tag"
-              className={`model-plan-task-list__task-tag line-height-5 text-bold ${tagStyle}`}
-            >
-              {tagCopy}
-            </span>
+            <TaskListStatusTag status={status} />
             <div className="model-plan-task-list__last-updated-status line-height-body-4 text-base">
               {lastUpdated && (
                 <p className="margin-y-0">{t('taskListItem.lastUpdated')}</p>
