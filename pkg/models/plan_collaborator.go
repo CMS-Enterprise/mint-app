@@ -15,8 +15,12 @@ type PlanCollaborator struct {
 }
 
 // NewPlanCollaborator returns a plan collaborator object
-func NewPlanCollaborator(createdBy string, modelPlanID uuid.UUID) *PlanCollaborator {
+func NewPlanCollaborator(createdBy string, modelPlanID uuid.UUID, euaUserID string, fullName string, teamRole TeamRole, email string) *PlanCollaborator {
 	return &PlanCollaborator{
+		EUAUserID:         euaUserID,
+		FullName:          fullName,
+		TeamRole:          teamRole,
+		Email:             email,
 		modelPlanRelation: NewModelPlanRelation(modelPlanID),
 		baseStruct:        NewBaseStruct(createdBy),
 	}

@@ -12,11 +12,7 @@ import (
 
 // CreatePlanCollaborator implements resolver logic to create a plan collaborator
 func CreatePlanCollaborator(logger *zap.Logger, input *model.PlanCollaboratorCreateInput, principal authentication.Principal, store *storage.Store) (*models.PlanCollaborator, error) {
-	collaborator := models.NewPlanCollaborator(principal.ID(), input.ModelPlanID)
-	collaborator.FullName = input.FullName
-	collaborator.TeamRole = input.TeamRole
-	collaborator.EUAUserID = input.EuaUserID
-	collaborator.Email = input.Email
+	collaborator := models.NewPlanCollaborator(principal.ID(), input.ModelPlanID, input.EuaUserID, input.FullName, input.TeamRole, input.Email)
 
 	err := BaseStructPreCreate(logger, collaborator, principal, store, true)
 	if err != nil {

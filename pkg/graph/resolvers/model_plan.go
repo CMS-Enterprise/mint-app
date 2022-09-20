@@ -28,11 +28,7 @@ func ModelPlanCreate(logger *zap.Logger, modelName string, store *storage.Store,
 	}
 
 	// Create an initial collaborator for the plan
-	collab := models.NewPlanCollaborator(principal.ID(), createdPlan.ID)
-	collab.EUAUserID = principalInfo.EuaUserID
-	collab.FullName = principalInfo.CommonName
-	collab.TeamRole = models.TeamRoleModelLead
-	collab.Email = principalInfo.Email.String()
+	collab := models.NewPlanCollaborator(principal.ID(), createdPlan.ID, principalInfo.EuaUserID, principalInfo.CommonName, models.TeamRoleModelLead, principalInfo.Email.String())
 
 	_, err = store.PlanCollaboratorCreate(logger, collab)
 	if err != nil {
