@@ -11,8 +11,10 @@ type PlanDiscussion struct {
 }
 
 //NewPlanDiscussion returns a New PlanDiscussion
-func NewPlanDiscussion(createdBy string, modelPlanID uuid.UUID) *PlanDiscussion {
+func NewPlanDiscussion(createdBy string, modelPlanID uuid.UUID, content string) *PlanDiscussion {
 	return &PlanDiscussion{
+		Content:           content,
+		Status:            DiscussionUnAnswered,
 		modelPlanRelation: NewModelPlanRelation(modelPlanID),
 		baseStruct:        NewBaseStruct(createdBy),
 	}
@@ -27,8 +29,10 @@ type DiscussionReply struct {
 }
 
 //NewDiscussionReply returns a new Discussion Reply
-func NewDiscussionReply(createdBy string, discussionID uuid.UUID) *DiscussionReply {
+func NewDiscussionReply(createdBy string, discussionID uuid.UUID, content string, resolution bool) *DiscussionReply {
 	return &DiscussionReply{
+		Content:            content,
+		Resolution:         resolution,
 		discussionRelation: NewDiscussionRelation(discussionID),
 		baseStruct:         NewBaseStruct(createdBy),
 	}
