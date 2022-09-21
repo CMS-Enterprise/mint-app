@@ -32,6 +32,7 @@ import {
 import { UpdatePlanBasicsVariables } from 'queries/Basics/types/UpdatePlanBasics';
 import UpdatePlanBasics from 'queries/Basics/UpdatePlanBasics';
 import flattenErrors from 'utils/flattenErrors';
+import sanitizeStatus from 'utils/status';
 import planBasicsSchema from 'validations/planBasics';
 import { NotFoundPartial } from 'views/NotFound';
 
@@ -125,7 +126,7 @@ const Milestones = () => {
     highLevelNote: highLevelNote ?? '',
     phasedIn: phasedIn ?? null,
     phasedInNote: phasedInNote ?? '',
-    status
+    status: sanitizeStatus(status)
   };
 
   if ((!loading && error) || (!loading && !data?.modelPlan)) {
