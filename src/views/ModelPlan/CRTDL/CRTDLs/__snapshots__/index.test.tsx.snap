@@ -67,7 +67,7 @@ exports[`Model Plan CR and TDL page matches snapshot 1`] = `
           class="margin-top-0 margin-bottom-2 font-body-lg"
           data-testid="model-plan-name"
         >
-          for 
+          for My Plan
         </p>
         <p
           class="margin-bottom-2 font-body-md line-height-body-4"
@@ -116,24 +116,26 @@ exports[`Model Plan CR and TDL page matches snapshot 1`] = `
           Add a CR or TDL
         </a>
         <div
-          class="margin-y-10"
-          data-testid="page-loading"
+          class="usa-alert usa-alert--error margin-top-3"
+          data-testid="formik-validation-errors"
+          role="alert"
         >
           <div
-            class="text-center"
+            class="usa-alert__body"
           >
-            <span
-              aria-busy="true"
-              aria-valuetext="Loading the page"
-              class="mint-spinner mint-spinner--xl"
-              role="progressbar"
-            />
+            <h3
+              class="usa-alert__heading"
+              tabindex="-1"
+            >
+              There is a problem
+            </h3>
+            <button
+              class="usa-error-message usa-alert__text mint-error-alert__message"
+              type="button"
+            >
+              Failed to fetch Model Plan CRs and TDLs
+            </button>
           </div>
-          <h1
-            class="margin-top-6 text-center"
-          >
-            Loading the page
-          </h1>
         </div>
       </div>
     </div>

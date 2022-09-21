@@ -222,6 +222,7 @@ const AddCRTDL = () => {
                               as={TextInput}
                               error={!!flatErrors.idNumber}
                               id="cr-tdl-id-number"
+                              data-testid="cr-tdl-id-number"
                               maxLength={50}
                               name="idNumber"
                             />
@@ -248,6 +249,7 @@ const AddCRTDL = () => {
                                   as={DatePicker}
                                   error={+!!flatErrors.dateInitiated}
                                   id="cr-tdl-date-initiated"
+                                  data-testid="cr-tdl-date-initiated"
                                   maxLength={50}
                                   name="dateInitiated"
                                   defaultValue={crtdl.dateInitiated}
@@ -268,15 +270,14 @@ const AddCRTDL = () => {
                             scrollElement="title"
                             error={!!flatErrors.title}
                           >
-                            <Label htmlFor="cr-tdl-id-title">
-                              {t('title')}
-                            </Label>
+                            <Label htmlFor="cr-tdl-title">{t('title')}</Label>
 
                             <FieldErrorMsg>{flatErrors.title}</FieldErrorMsg>
                             <Field
                               as={TextInput}
                               error={!!flatErrors.title}
-                              id="cr-tdl-id-title"
+                              id="cr-tdl-title"
+                              data-testid="cr-tdl-title"
                               maxLength={50}
                               name="title"
                             />
@@ -296,6 +297,7 @@ const AddCRTDL = () => {
                               className="height-15"
                               error={flatErrors.note}
                               id="cr-tdl-note"
+                              data-testid="cr-tdl-note"
                               value={values.note || ''}
                               name="note"
                             />

@@ -16,7 +16,7 @@ describe('Model Plan CRsand TDLs', () => {
       .type('10/26/2028')
       .should('have.value', '10/26/2028');
 
-    cy.get('#cr-tdl-id-title')
+    cy.get('#cr-tdl-title')
       .type('Change request')
       .should('have.value', 'Change request');
 

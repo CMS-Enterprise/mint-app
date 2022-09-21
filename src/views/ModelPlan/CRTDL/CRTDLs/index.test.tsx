@@ -9,17 +9,19 @@ import { TaskStatus } from 'types/graphql-global-types';
 
 import CRTDL from '..';
 
+const modelID = 'f11eb129-2c80-4080-9440-439cbe1a286f';
+
 const mocks = [
   {
     request: {
       query: GetModelPlanBase,
-      variables: { id: 'f11eb129-2c80-4080-9440-439cbe1a286f' }
+      variables: { id: modelID }
     },
     result: {
       data: {
         modelPlan: {
           __typename: 'ModelPlan',
-          id: 'f11eb129-2c80-4080-9440-439cbe1a286f',
+          id: modelID,
           modelName: 'My Plan',
           modifiedDts: '',
           status: TaskStatus.IN_PROGRESS
@@ -31,12 +33,8 @@ const mocks = [
 
 describe('Model Plan CR and TDL page', () => {
   it('matches snapshot', async () => {
-    const { asFragment } = render(
-      <MemoryRouter
-        initialEntries={[
-          '/models/f11eb129-2c80-4080-9440-439cbe1a286f/cr-and-tdl'
-        ]}
-      >
+    const { asFragment, getByTestId } = render(
+      <MemoryRouter initialEntries={[`/models/${modelID}/cr-and-tdl`]}>
         <MockedProvider mocks={mocks} addTypename={false}>
           <MessageProvider>
             <Route path="/models/:modelID/cr-and-tdl">
@@ -46,6 +44,11 @@ describe('Model Plan CR and TDL page', () => {
         </MockedProvider>
       </MemoryRouter>
     );
+
+    await waitFor(() => {
+      expect(getByTestId('model-plan-name')).toHaveTextContent('My Plan');
+    });
+
     await waitFor(() => {
       expect(asFragment()).toMatchSnapshot();
     });
