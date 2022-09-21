@@ -134,6 +134,7 @@ type ComplexityRoot struct {
 		ModelName                func(childComplexity int) int
 		ModifiedBy               func(childComplexity int) int
 		ModifiedDts              func(childComplexity int) int
+		NameHistory              func(childComplexity int) int
 		OpsEvalAndLearning       func(childComplexity int) int
 		ParticipantsAndProviders func(childComplexity int) int
 		Payments                 func(childComplexity int) int
@@ -748,6 +749,7 @@ type ModelPlanResolver interface {
 	ItTools(ctx context.Context, obj *models.ModelPlan) (*models.PlanITTools, error)
 
 	IsFavorite(ctx context.Context, obj *models.ModelPlan) (bool, error)
+	NameHistory(ctx context.Context, obj *models.ModelPlan) ([]*models.AuditChange, error)
 }
 type MutationResolver interface {
 	CreateModelPlan(ctx context.Context, modelName string) (*models.ModelPlan, error)
@@ -1327,6 +1329,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.ModelPlan.ModifiedDts(childComplexity), true
+
+	case "ModelPlan.nameHistory":
+		if e.complexity.ModelPlan.NameHistory == nil {
+			break
+		}
+
+		return e.complexity.ModelPlan.NameHistory(childComplexity), true
 
 	case "ModelPlan.opsEvalAndLearning":
 		if e.complexity.ModelPlan.OpsEvalAndLearning == nil {
@@ -5434,6 +5443,7 @@ type ModelPlan {
   itTools: PlanITTools!
   status: ModelStatus!
   isFavorite: Boolean!
+  nameHistory: [AuditChange!]!
 }
 
 """
@@ -11658,6 +11668,66 @@ func (ec *executionContext) fieldContext_ModelPlan_isFavorite(ctx context.Contex
 	return fc, nil
 }
 
+func (ec *executionContext) _ModelPlan_nameHistory(ctx context.Context, field graphql.CollectedField, obj *models.ModelPlan) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_ModelPlan_nameHistory(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.ModelPlan().NameHistory(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.([]*models.AuditChange)
+	fc.Result = res
+	return ec.marshalNAuditChange2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐAuditChangeᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_ModelPlan_nameHistory(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "ModelPlan",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_AuditChange_id(ctx, field)
+			case "primaryKey":
+				return ec.fieldContext_AuditChange_primaryKey(ctx, field)
+			case "foreignKey":
+				return ec.fieldContext_AuditChange_foreignKey(ctx, field)
+			case "action":
+				return ec.fieldContext_AuditChange_action(ctx, field)
+			case "fields":
+				return ec.fieldContext_AuditChange_fields(ctx, field)
+			case "modifiedBy":
+				return ec.fieldContext_AuditChange_modifiedBy(ctx, field)
+			case "modifiedDts":
+				return ec.fieldContext_AuditChange_modifiedDts(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type AuditChange", field.Name)
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _Mutation_createModelPlan(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_Mutation_createModelPlan(ctx, field)
 	if err != nil {
@@ -11759,6 +11829,8 @@ func (ec *executionContext) fieldContext_Mutation_createModelPlan(ctx context.Co
 				return ec.fieldContext_ModelPlan_status(ctx, field)
 			case "isFavorite":
 				return ec.fieldContext_ModelPlan_isFavorite(ctx, field)
+			case "nameHistory":
+				return ec.fieldContext_ModelPlan_nameHistory(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type ModelPlan", field.Name)
 		},
@@ -11878,6 +11950,8 @@ func (ec *executionContext) fieldContext_Mutation_updateModelPlan(ctx context.Co
 				return ec.fieldContext_ModelPlan_status(ctx, field)
 			case "isFavorite":
 				return ec.fieldContext_ModelPlan_isFavorite(ctx, field)
+			case "nameHistory":
+				return ec.fieldContext_ModelPlan_nameHistory(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type ModelPlan", field.Name)
 		},
@@ -35407,6 +35481,8 @@ func (ec *executionContext) fieldContext_Query_modelPlan(ctx context.Context, fi
 				return ec.fieldContext_ModelPlan_status(ctx, field)
 			case "isFavorite":
 				return ec.fieldContext_ModelPlan_isFavorite(ctx, field)
+			case "nameHistory":
+				return ec.fieldContext_ModelPlan_nameHistory(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type ModelPlan", field.Name)
 		},
@@ -35745,6 +35821,8 @@ func (ec *executionContext) fieldContext_Query_modelPlanCollection(ctx context.C
 				return ec.fieldContext_ModelPlan_status(ctx, field)
 			case "isFavorite":
 				return ec.fieldContext_ModelPlan_isFavorite(ctx, field)
+			case "nameHistory":
+				return ec.fieldContext_ModelPlan_nameHistory(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type ModelPlan", field.Name)
 		},
@@ -39780,6 +39858,26 @@ func (ec *executionContext) _ModelPlan(ctx context.Context, sel ast.SelectionSet
 					}
 				}()
 				res = ec._ModelPlan_isFavorite(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&invalids, 1)
+				}
+				return res
+			}
+
+			out.Concurrently(i, func() graphql.Marshaler {
+				return innerFunc(ctx)
+
+			})
+		case "nameHistory":
+			field := field
+
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._ModelPlan_nameHistory(ctx, field, obj)
 				if res == graphql.Null {
 					atomic.AddUint32(&invalids, 1)
 				}

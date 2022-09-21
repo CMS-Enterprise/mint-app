@@ -158,3 +158,22 @@ func ModelPlanCollectionByUser(logger *zap.Logger, principal authentication.Prin
 
 	return plans, err
 }
+
+// ModelPlanNameHistory returns a slice of AuditChanges, with the only values returned being the model_name field
+func ModelPlanNameHistory(logger *zap.Logger, modelPlanID uuid.UUID, store *storage.Store) ([]*models.AuditChange, error) {
+	fieldName := "model_name"
+	changes, err := store.AuditChangeCollectionByIDAndTableAndField(logger, "model_plan", modelPlanID, fieldName)
+	for i := 0; i < len(changes); i++ {
+
+		nameField := changes[i].Fields[fieldName]
+		changes[i].Fields = models.AuditFields{
+			fieldName: nameField,
+		}
+
+	}
+	if err != nil {
+		return nil, err
+	}
+
+	return changes, nil
+}

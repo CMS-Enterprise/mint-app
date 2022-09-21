@@ -52,6 +52,7 @@ type ModelPlan {
   itTools: PlanITTools!
   status: ModelStatus!
   isFavorite: Boolean!
+  nameHistory: [AuditChange!]!
 }
 
 """
