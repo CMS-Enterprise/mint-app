@@ -133,7 +133,7 @@ const Learning = () => {
     modelLearningSystemsOther: modelLearningSystemsOther ?? '',
     modelLearningSystemsNote: modelLearningSystemsNote ?? '',
     anticipatedChallenges: anticipatedChallenges ?? '',
-    status
+    status: status === TaskStatus.READY ? TaskStatus.IN_PROGRESS : status
   };
 
   if ((!loading && error) || (!loading && !data?.modelPlan)) {

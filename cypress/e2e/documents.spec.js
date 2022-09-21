@@ -8,15 +8,6 @@ describe('Model Plan Documents', () => {
 
     cy.contains('a', 'Upload a document').click();
 
-    cy.contains('h1', 'Documents');
-
-    cy.get('[data-testid="no-documents"]').contains(
-      'p',
-      'No documents uploaded'
-    );
-
-    cy.contains('a', 'Add a document').click();
-
     cy.contains('h1', 'Upload a document');
 
     // select document
@@ -59,8 +50,6 @@ describe('Model Plan Documents', () => {
 
     cy.get('[data-testid="document-items"]').contains('strong', '1');
 
-    cy.get('[data-testid="document-items"]').contains(
-      'document uploaded for Empty Plan'
-    );
+    cy.get('[data-testid="document-items"]').contains('document uploaded');
   });
 });

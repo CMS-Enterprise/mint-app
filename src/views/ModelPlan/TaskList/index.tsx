@@ -1,4 +1,10 @@
-import React, { Fragment, useContext, useState } from 'react';
+import React, {
+  Dispatch,
+  Fragment,
+  SetStateAction,
+  useContext,
+  useState
+} from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { RootStateOrAny, useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
@@ -25,6 +31,7 @@ import {
   GetModelCollaborators,
   GetModelCollaborators_modelPlan_collaborators as GetCollaboratorsType
 } from 'queries/Collaborators/types/GetModelCollaborators';
+import { GetModelPlanDiscussions_modelPlan_discussions as DiscussionType } from 'queries/Discussions/types/GetModelPlanDiscussions';
 import GetModelPlan from 'queries/GetModelPlan';
 import { TaskListSubscription_onLockTaskListSectionContext_lockStatus as LockSectionType } from 'queries/TaskListSubscription/types/TaskListSubscription';
 import {
@@ -84,7 +91,6 @@ const taskListSectionMap: TaskListSectionMapType = {
 const TaskList = () => {
   const { t } = useTranslation('modelPlanTaskList');
   const { t: h } = useTranslation('draftModelPlan');
-  const { t: d } = useTranslation('discussions');
   const { modelID } = useParams<{ modelID: string }>();
   const [isDiscussionOpen, setIsDiscussionOpen] = useState(false);
 
@@ -152,62 +158,6 @@ const TaskList = () => {
     );
   };
 
-  const dicussionBanner = () => {
-    return (
-      <SummaryBox
-        heading={d('heading')}
-        className="bg-primary-lighter border-0 radius-0 padding-2"
-      >
-        <div
-          className={classNames('margin-top-1', {
-            'mint-header__basic': discussions?.length > 0
-          })}
-        >
-          {discussions?.length > 0 ? (
-            <>
-              <div>
-                <IconAnnouncement />{' '}
-                {unansweredQuestions > 0 && (
-                  <>
-                    <strong>{unansweredQuestions}</strong> {d('unanswered')}
-                    {unansweredQuestions > 1 && 's'}{' '}
-                  </>
-                )}
-                {answeredQuestions > 0 && (
-                  <>
-                    {unansweredQuestions > 0 && 'and '}
-                    <strong>{answeredQuestions}</strong> {d('answered')}
-                    {answeredQuestions > 1 && 's'}
-                  </>
-                )}
-              </div>
-              <Button
-                type="button"
-                unstyled
-                onClick={() => setIsDiscussionOpen(true)}
-              >
-                {d('viewDiscussions')}
-              </Button>
-            </>
-          ) : (
-            <>
-              {d('noDiscussions')}
-              <Button
-                className="line-height-body-5 test-withdraw-request"
-                type="button"
-                unstyled
-                onClick={() => setIsDiscussionOpen(true)}
-              >
-                {d('askAQuestionLink')}{' '}
-              </Button>{' '}
-              {d('toGetStarted')}
-            </>
-          )}
-        </div>
-      </SummaryBox>
-    );
-  };
-
   return (
     <MainContent
       className="model-plan-task-list"
@@ -252,6 +202,7 @@ const TaskList = () => {
                     {h('for')} {modelName}
                   </p>
 
+                  {/* Discussion modal */}
                   {isDiscussionOpen && (
                     <Discussions
                       modelID={modelID}
@@ -267,7 +218,12 @@ const TaskList = () => {
                     statusLabel
                   />
 
-                  {dicussionBanner()}
+                  <DicussionBanner
+                    discussions={discussions}
+                    unansweredQuestions={unansweredQuestions}
+                    answeredQuestions={answeredQuestions}
+                    setIsDiscussionOpen={setIsDiscussionOpen}
+                  />
 
                   {/* Document and CR TDL Banners */}
                   <Grid row gap={2}>
@@ -275,7 +231,7 @@ const TaskList = () => {
                       <DocumentBanner
                         documents={documents}
                         modelID={modelID}
-                        expand={documents.length || crTdls.length}
+                        expand={!!documents.length || !!crTdls.length}
                       />
                     </Grid>
 
@@ -283,7 +239,7 @@ const TaskList = () => {
                       <CRTDLBanner
                         crTdls={crTdls}
                         modelID={modelID}
-                        expand={documents.length || crTdls.length}
+                        expand={!!documents.length || !!crTdls.length}
                       />
                     </Grid>
                   </Grid>
@@ -356,6 +312,77 @@ const TaskList = () => {
   );
 };
 
+type DiscussionBannerType = {
+  discussions: DiscussionType[];
+  unansweredQuestions: number;
+  answeredQuestions: number;
+  setIsDiscussionOpen: Dispatch<SetStateAction<boolean>>;
+};
+
+// Banner to display discussion information and launch discussion center
+const DicussionBanner = ({
+  discussions,
+  unansweredQuestions,
+  answeredQuestions,
+  setIsDiscussionOpen
+}: DiscussionBannerType) => {
+  const { t: d } = useTranslation('discussions');
+
+  return (
+    <SummaryBox
+      heading={d('heading')}
+      className="bg-primary-lighter border-0 radius-0 padding-2"
+    >
+      <div
+        className={classNames('margin-top-1', {
+          'mint-header__basic': discussions?.length > 0
+        })}
+      >
+        {discussions?.length > 0 ? (
+          <>
+            <div>
+              <IconAnnouncement />{' '}
+              {unansweredQuestions > 0 && (
+                <>
+                  <strong>{unansweredQuestions}</strong> {d('unanswered')}
+                  {unansweredQuestions > 1 && 's'}{' '}
+                </>
+              )}
+              {answeredQuestions > 0 && (
+                <>
+                  {unansweredQuestions > 0 && 'and '}
+                  <strong>{answeredQuestions}</strong> {d('answered')}
+                  {answeredQuestions > 1 && 's'}
+                </>
+              )}
+            </div>
+            <Button
+              type="button"
+              unstyled
+              onClick={() => setIsDiscussionOpen(true)}
+            >
+              {d('viewDiscussions')}
+            </Button>
+          </>
+        ) : (
+          <>
+            {d('noDiscussions')}
+            <Button
+              className="line-height-body-5 test-withdraw-request"
+              type="button"
+              unstyled
+              onClick={() => setIsDiscussionOpen(true)}
+            >
+              {d('askAQuestionLink')}{' '}
+            </Button>{' '}
+            {d('toGetStarted')}
+          </>
+        )}
+      </div>
+    </SummaryBox>
+  );
+};
+
 type DocumentBannerType = {
   documents: DocumentType[];
   modelID: string;
@@ -376,6 +403,7 @@ const DocumentBanner = ({ documents, modelID, expand }: DocumentBannerType) => {
       <h3 className="margin-0">
         {t('modelPlanTaskList:documentSummaryBox.heading')}
       </h3>
+
       {documents?.length > 0 ? (
         <>
           <p
@@ -410,10 +438,11 @@ const DocumentBanner = ({ documents, modelID, expand }: DocumentBannerType) => {
               indexZero
             </Trans>
           </p>
+
           <UswdsReactLink
             className="usa-button usa-button--outline"
             variant="unstyled"
-            to={`/models/${modelID}/documents`}
+            to={`/models/${modelID}/documents/add-document`}
           >
             {t('documentSummaryBox.cta')}
           </UswdsReactLink>
@@ -443,6 +472,7 @@ const CRTDLBanner = ({ crTdls, modelID, expand }: CRTDLBannerType) => {
       <h3 className="margin-0">
         {t('modelPlanTaskList:crTDLsSummaryBox.heading')}
       </h3>
+
       {crTdls?.length > 0 ? (
         <>
           <p
@@ -480,6 +510,7 @@ const CRTDLBanner = ({ crTdls, modelID, expand }: CRTDLBannerType) => {
               indexZero
             </Trans>
           </p>
+
           <UswdsReactLink
             className="usa-button usa-button--outline"
             variant="unstyled"
