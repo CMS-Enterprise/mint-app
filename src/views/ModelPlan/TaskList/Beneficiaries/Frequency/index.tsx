@@ -35,17 +35,14 @@ import {
 } from 'queries/Beneficiaries/types/GetFrequency';
 import { UpdateModelPlanBeneficiariesVariables } from 'queries/Beneficiaries/types/UpdateModelPlanBeneficiaries';
 import UpdateModelPlanBeneficiaries from 'queries/Beneficiaries/UpdateModelPlanBeneficiaries';
-import {
-  FrequencyType,
-  OverlapType,
-  TaskStatus
-} from 'types/graphql-global-types';
+import { FrequencyType, OverlapType } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import {
   sortOtherEnum,
   translateFrequencyType,
   translateOverlapType
 } from 'utils/modelPlan';
+import sanitizeStatus from 'utils/status';
 import { NotFoundPartial } from 'views/NotFound';
 
 const Frequency = () => {
@@ -127,7 +124,7 @@ const Frequency = () => {
     beneficiaryOverlap: beneficiaryOverlap ?? null,
     beneficiaryOverlapNote: beneficiaryOverlapNote ?? '',
     precedenceRules: precedenceRules ?? '',
-    status: status === TaskStatus.READY ? TaskStatus.IN_PROGRESS : status
+    status: sanitizeStatus(status)
   };
 
   if ((!loading && error) || (!loading && !data?.modelPlan)) {
