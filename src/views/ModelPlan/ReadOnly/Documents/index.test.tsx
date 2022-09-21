@@ -5,7 +5,7 @@ import { render, screen, waitFor } from '@testing-library/react';
 
 import { MessageProvider } from 'hooks/useMessage';
 import GetPlanDocumentByModelID from 'queries/Documents/GetPlanDocumentByModelID';
-import { GetModelPlanDocumentByModelID_readPlanDocumentByModelID as DocumentByModelIDArrayTypes } from 'queries/Documents/types/GetModelPlanDocumentByModelID';
+import { DocumentType } from 'types/graphql-global-types';
 
 import ReadOnlyDocuments from './index';
 
@@ -27,14 +27,14 @@ const mocks = [
             fileType: null,
             bucket: null,
             fileKey: null,
-            virusScanned: null,
-            virusClean: null,
+            virusScanned: true,
+            virusClean: true,
             fileName: null,
-            fileSize: null,
-            documentType: null,
+            fileSize: 123,
+            documentType: DocumentType.MARKET_RESEARCH,
             otherType: null,
             optionalNotes: null,
-            createdDts: null
+            createdDts: '2022-05-12T15:01:39.190679Z'
           }
         ]
       }
@@ -43,6 +43,27 @@ const mocks = [
 ];
 
 describe('Model Plan Documents page', () => {
+  it('renders without errors', async () => {
+    render(
+      <MemoryRouter initialEntries={[`/models/${modelID}/read-only/documents`]}>
+        <MockedProvider mocks={mocks} addTypename={false}>
+          <MessageProvider>
+            <Route path="/models/:modelID/read-only/documents">
+              <ReadOnlyDocuments modelID={modelID} />
+            </Route>
+          </MessageProvider>
+        </MockedProvider>
+      </MemoryRouter>
+    );
+
+    await waitFor(() => {
+      expect(screen.getByText('Documents')).toBeInTheDocument();
+      expect(
+        screen.getByTestId('model-plan-documents-table')
+      ).toBeInTheDocument();
+    });
+  });
+
   it('matches snapshot', async () => {
     const { asFragment } = render(
       <MemoryRouter initialEntries={[`/models/${modelID}/read-only/documents`]}>
@@ -57,7 +78,9 @@ describe('Model Plan Documents page', () => {
     );
     await waitFor(() => {
       expect(screen.getByText('Documents')).toBeInTheDocument();
-      expect(screen.getByTestId('no-documents')).toBeInTheDocument();
+      expect(
+        screen.getByTestId('model-plan-documents-table')
+      ).toBeInTheDocument();
       expect(asFragment()).toMatchSnapshot();
     });
   });
