@@ -10,7 +10,7 @@ type ModelPlan struct {
 	Status    ModelStatus `json:"status" db:"status"`
 }
 
-//NewModelPlan returns a new model Plan
+// NewModelPlan returns a new unarchived model plan with a default status of ModelStatusPlanDraft
 func NewModelPlan(createdBy string, modelName string) *ModelPlan {
 	return &ModelPlan{
 		ModelName:  modelName,

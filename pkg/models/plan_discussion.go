@@ -10,7 +10,7 @@ type PlanDiscussion struct {
 	Status  DiscussionStatus `json:"status" db:"status"`
 }
 
-//NewPlanDiscussion returns a New PlanDiscussion
+//NewPlanDiscussion returns a New PlanDiscussion with a status of UNANSWERED
 func NewPlanDiscussion(createdBy string, modelPlanID uuid.UUID, content string) *PlanDiscussion {
 	return &PlanDiscussion{
 		Content:           content,
