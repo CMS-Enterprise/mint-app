@@ -44,6 +44,7 @@ import {
   TaskStatus
 } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
+import sanitizeStatus from 'utils/status';
 import { NotFoundPartial } from 'views/NotFound';
 
 import { renderCurrentPage, renderTotalPages } from '..';
@@ -151,7 +152,7 @@ const Recover = () => {
       anticipateReconcilingPaymentsRetrospectivelyNote ?? '',
     paymentStartDate: paymentStartDate ?? '',
     paymentStartDateNote: paymentStartDateNote ?? '',
-    status
+    status: sanitizeStatus(status)
   };
 
   if ((!loading && error) || (!loading && !data?.modelPlan)) {
