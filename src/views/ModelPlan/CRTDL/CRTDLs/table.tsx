@@ -204,7 +204,7 @@ const Table = ({
         accessor: 'note'
       },
       {
-        Header: t('crtdlsTable.actions'),
+        Header: t<string>('crtdlsTable.actions'),
         accessor: 'id',
         Cell: ({ row }: any) => {
           return (
