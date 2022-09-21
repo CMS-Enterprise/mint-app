@@ -44,7 +44,6 @@ const IDDOC = () => {
   const { t: h } = useTranslation('draftModelPlan');
   const { modelID } = useParams<{ modelID: string }>();
   const [dateInPast, setDateInPast] = useState(false);
-  const [dateLoaded, setDateLoaded] = useState(false);
 
   const formikRef = useRef<FormikProps<IDDOCFormType>>(null);
   const history = useHistory();
@@ -107,17 +106,12 @@ const IDDOC = () => {
       });
   };
 
-  // TODO: Figure out why the form doesn't rerender once a date value is fetched - delay works for now
-  // Loading var passed from GQL does not seem to accurately identify a completed payload for date
   useEffect(() => {
-    setTimeout(() => {
-      setDateLoaded(true);
-      if (draftIcdDueDate && new Date() > new Date(draftIcdDueDate)) {
-        setDateInPast(true);
-      } else {
-        setDateInPast(false);
-      }
-    }, 250);
+    if (draftIcdDueDate && new Date() > new Date(draftIcdDueDate)) {
+      setDateInPast(true);
+    } else {
+      setDateInPast(false);
+    }
   }, [draftIcdDueDate]);
 
   const initialValues: IDDOCFormType = {
@@ -367,7 +361,7 @@ const IDDOC = () => {
                   />
                 </FieldGroup>
 
-                {!loading && dateLoaded && (
+                {!loading && (
                   <FieldGroup
                     scrollElement="draftIcdDueDate"
                     error={!!flatErrors.draftIcdDueDate}
@@ -390,7 +384,7 @@ const IDDOC = () => {
                         id="ops-eval-and-learning-icd-due-date"
                         maxLength={50}
                         name="draftIcdDueDate"
-                        defaultValue={values.draftIcdDueDate}
+                        defaultValue={draftIcdDueDate}
                         onBlur={(e: React.ChangeEvent<HTMLInputElement>) => {
                           handleOnBlur(e, 'draftIcdDueDate');
                         }}
