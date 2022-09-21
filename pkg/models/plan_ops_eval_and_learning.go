@@ -8,7 +8,7 @@ import (
 
 // PlanOpsEvalAndLearning represents the tasks list section that handles information around operations, evaluation, and learning
 type PlanOpsEvalAndLearning struct {
-	BaseTaskListSection
+	baseTaskListSection
 
 	//Page 1
 	AgencyOrStateHelp      pq.StringArray `json:"agencyOrStateHelp" db:"agency_or_state_help"`
@@ -155,3 +155,10 @@ const (
 	DataFullTime    DataFullTimeOrIncrementalType = "FULL_TIME"
 	DataIncremental DataFullTimeOrIncrementalType = "INCREMENTAL"
 )
+
+//NewPlanOpsEvalAndLearning returns a new ops Eval and Learning object
+func NewPlanOpsEvalAndLearning(tls baseTaskListSection) *PlanOpsEvalAndLearning {
+	return &PlanOpsEvalAndLearning{
+		baseTaskListSection: tls,
+	}
+}

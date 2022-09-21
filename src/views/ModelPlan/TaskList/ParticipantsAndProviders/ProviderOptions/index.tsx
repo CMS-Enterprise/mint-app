@@ -107,11 +107,16 @@ export const ProviderOptions = () => {
     formikValues: InitialValueType,
     redirect?: 'back' | 'task-list'
   ) => {
-    const { id: updateId, __typename, ...changeValues } = formikValues;
+    const {
+      id: updateId,
+      __typename,
+      status: inputStatus,
+      ...changeValues
+    } = formikValues;
     update({
       variables: {
         id,
-        changes: changeValues
+        changes: { ...changeValues, status: sanitizeStatus(inputStatus) }
       }
     })
       .then(response => {
@@ -145,7 +150,7 @@ export const ProviderOptions = () => {
     providerOverlap: providerOverlap ?? null,
     providerOverlapHierarchy: providerOverlapHierarchy ?? '',
     providerOverlapNote: providerOverlapNote ?? '',
-    status: sanitizeStatus(status)
+    status
   };
 
   if ((!loading && error) || (!loading && !data?.modelPlan)) {

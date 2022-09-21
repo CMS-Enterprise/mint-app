@@ -3,7 +3,6 @@ package storage
 import (
 	"database/sql"
 	_ "embed"
-	"net/url"
 
 	"golang.org/x/sync/errgroup"
 
@@ -41,52 +40,23 @@ func (s *Store) PlanDocumentCreate(
 	documentURL *string,
 	s3Client *upload.S3Client) (*models.PlanDocument, error) {
 
-	parsedURL, urlErr := url.Parse(*documentURL)
-	if urlErr != nil {
-		return nil, urlErr
-	}
-
-	key, keyErr := s3Client.KeyFromURL(parsedURL)
-	if keyErr != nil {
-		return nil, keyErr
-	}
-
-	document := models.PlanDocument{
-
-		ModelPlanRelation: models.ModelPlanRelation{
-			ModelPlanID: inputDocument.ModelPlanID,
-		},
-		FileType:             inputDocument.FileType,
-		Bucket:               *s3Client.GetBucket(),
-		FileKey:              key,
-		VirusScanned:         false,
-		VirusClean:           false,
-		FileName:             inputDocument.FileName,
-		FileSize:             inputDocument.FileSize,
-		DocumentType:         inputDocument.DocumentType,
-		OtherTypeDescription: inputDocument.OtherTypeDescription,
-		OptionalNotes:        inputDocument.OptionalNotes,
-		DeletedAt:            nil,
-		BaseStruct: models.BaseStruct{
-			ID:        utilityUUID.ValueOrNewUUID(inputDocument.ID),
-			CreatedBy: principal,
-		},
-	}
+	inputDocument.ID = utilityUUID.ValueOrNewUUID(inputDocument.ID)
+	retDoc := models.PlanDocument{}
 
 	statement, err := s.db.PrepareNamed(planDocumentCreateSQL)
 	if err != nil {
-		return nil, genericmodel.HandleModelCreationError(logger, err, &document)
+		return nil, genericmodel.HandleModelCreationError(logger, err, inputDocument)
 	}
 
-	document.ModifiedBy = nil
-	document.ModifiedDts = nil
+	inputDocument.ModifiedBy = nil
+	inputDocument.ModifiedDts = nil
 
-	err = statement.Get(&document, &document)
+	err = statement.Get(&retDoc, &inputDocument)
 	if err != nil {
-		return nil, genericmodel.HandleModelCreationError(logger, err, &document)
+		return nil, genericmodel.HandleModelCreationError(logger, err, &retDoc)
 	}
 
-	return &document, nil
+	return &retDoc, nil
 }
 
 // PlanDocumentRead reads a plan document object by id
