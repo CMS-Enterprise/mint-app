@@ -2,12 +2,14 @@ package models
 
 import (
 	"time"
+
+	"github.com/google/uuid"
 )
 
 // PlanDocument represents a document attached to the plan
 type PlanDocument struct {
-	BaseStruct
-	ModelPlanRelation
+	baseStruct
+	modelPlanRelation
 
 	FileType string `json:"fileType" db:"file_type"`
 	Bucket   string `json:"bucket" db:"bucket"`
@@ -23,4 +25,18 @@ type PlanDocument struct {
 	OptionalNotes        *string      `json:"optionalNotes" db:"optional_notes"`
 
 	DeletedAt *time.Time `json:"deletedAt" db:"deleted_at"`
+}
+
+//NewPlanDocument returns a new Plan Document
+func NewPlanDocument(createdBy string, modelPlanID uuid.UUID) *PlanDocument {
+	return &PlanDocument{
+		modelPlanRelation:    NewModelPlanRelation(modelPlanID),
+		baseStruct:           NewBaseStruct(createdBy),
+		VirusScanned:         false,
+		VirusClean:           false,
+		FileSize:             0,
+		OtherTypeDescription: nil,
+		OptionalNotes:        nil,
+		DeletedAt:            nil,
+	}
 }

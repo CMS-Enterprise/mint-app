@@ -3,7 +3,9 @@ import { gql } from '@apollo/client';
 export default gql`
   query GetAllParticipants($id: UUID!) {
     modelPlan(id: $id) {
+      id
       participantsAndProviders {
+        id
         participants
         medicareProviderType
         statesEngagement

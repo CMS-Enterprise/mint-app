@@ -72,6 +72,7 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
   // Gets the modelID and tasklist section route from any location within the application
   const { pathname } = useLocation();
   const modelID = pathname.split('/')[2];
+  const taskList = pathname.split('/')[3] === 'task-list';
   const taskListRoute = pathname.split('/')[4];
 
   const history = useHistory();
@@ -191,6 +192,7 @@ const SubscriptionHandler = ({ children }: SubscriptionHandlerProps) => {
   // Checks to see if section should be locked and calls mutation to add lock
   if (
     lockState === LockStatus.UNLOCKED &&
+    taskList &&
     taskListSection &&
     validModelID &&
     !addLockLoading &&

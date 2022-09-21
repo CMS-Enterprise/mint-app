@@ -11,6 +11,7 @@ import { ParticipantsType, ConfidenceType, RecruitmentType, ParticipantSelection
 
 export interface GetAllParticipants_modelPlan_participantsAndProviders {
   __typename: "PlanParticipantsAndProviders";
+  id: UUID;
   participants: ParticipantsType[];
   medicareProviderType: string | null;
   statesEngagement: string | null;
@@ -62,6 +63,7 @@ export interface GetAllParticipants_modelPlan_participantsAndProviders {
 
 export interface GetAllParticipants_modelPlan {
   __typename: "ModelPlan";
+  id: UUID;
   participantsAndProviders: GetAllParticipants_modelPlan_participantsAndProviders;
 }
 

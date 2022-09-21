@@ -25,6 +25,7 @@ const modelID = 'f11eb129-2c80-4080-9440-439cbe1a286f';
 
 const mockData: GetAllParticipantsTypes = {
   __typename: 'PlanParticipantsAndProviders',
+  id: '123',
   participants: [
     ParticipantsType.MEDICAID_PROVIDERS,
     ParticipantsType.STATES,

@@ -28,6 +28,7 @@ export interface GetAllModelPlans_modelPlanCollection {
   modelName: string;
   status: ModelStatus;
   isFavorite: boolean;
+  isCollaborator: boolean;
   basics: GetAllModelPlans_modelPlanCollection_basics;
   collaborators: GetAllModelPlans_modelPlanCollection_collaborators[];
 }

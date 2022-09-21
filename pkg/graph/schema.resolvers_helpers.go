@@ -1,23 +1,14 @@
 package graph
 
 import (
+	"github.com/cmsgov/mint-app/pkg/authentication"
 	"github.com/cmsgov/mint-app/pkg/graph/model"
 	"github.com/cmsgov/mint-app/pkg/models"
 )
 
 // ConvertToPlanDocumentModel takes an auto-generated model plan input and converts it to a hand-written one
-func ConvertToPlanDocumentModel(input *model.PlanDocumentInput) *models.PlanDocument {
-	documentModel := models.PlanDocument{
-		ModelPlanRelation: models.ModelPlanRelation{
-			ModelPlanID: input.ModelPlanID,
-		},
-		VirusScanned:         false,
-		VirusClean:           false,
-		FileSize:             0,
-		OtherTypeDescription: nil,
-		OptionalNotes:        nil,
-		DeletedAt:            nil,
-	}
+func ConvertToPlanDocumentModel(input *model.PlanDocumentInput, principal authentication.Principal) *models.PlanDocument {
+	documentModel := models.NewPlanDocument(principal.ID(), input.ModelPlanID)
 
 	if input.ID != nil {
 		documentModel.ID = *input.ID
@@ -47,5 +38,5 @@ func ConvertToPlanDocumentModel(input *model.PlanDocumentInput) *models.PlanDocu
 		documentModel.FileSize = input.DocumentParameters.FileSize
 	}
 
-	return &documentModel
+	return documentModel
 }

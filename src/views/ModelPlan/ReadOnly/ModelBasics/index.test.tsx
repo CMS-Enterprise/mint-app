@@ -18,6 +18,7 @@ import ReadOnlyModelBasics from './index';
 
 const basicMockData: GetAllBasicsTypes = {
   __typename: 'PlanBasics',
+  id: '123',
   modelCategory: ModelCategory.PRIMARY_CARE_TRANSFORMATION,
   cmsCenters: [CMSCenter.CENTER_FOR_MEDICARE, CMSCenter.OTHER],
   cmsOther: 'The Center for Awesomeness',
