@@ -705,7 +705,7 @@ type ComplexityRoot struct {
 		CurrentUser               func(childComplexity int) int
 		ExistingModelCollection   func(childComplexity int) int
 		ModelPlan                 func(childComplexity int, id uuid.UUID) int
-		ModelPlanCollection       func(childComplexity int) int
+		ModelPlanCollection       func(childComplexity int, includeAll bool) int
 		NdaInfo                   func(childComplexity int) int
 		PlanCollaboratorByID      func(childComplexity int, id uuid.UUID) int
 		PlanDocument              func(childComplexity int, id uuid.UUID) int
@@ -934,7 +934,7 @@ type QueryResolver interface {
 	PlanDocument(ctx context.Context, id uuid.UUID) (*models.PlanDocument, error)
 	PlanDocumentDownloadURL(ctx context.Context, id uuid.UUID) (*model.PlanDocumentPayload, error)
 	ReadPlanDocumentByModelID(ctx context.Context, id uuid.UUID) ([]*models.PlanDocument, error)
-	ModelPlanCollection(ctx context.Context) ([]*models.ModelPlan, error)
+	ModelPlanCollection(ctx context.Context, includeAll bool) ([]*models.ModelPlan, error)
 	ExistingModelCollection(ctx context.Context) ([]*models.ExistingModel, error)
 	CedarPersonsByCommonName(ctx context.Context, commonName string) ([]*models.UserInfo, error)
 	PlanCollaboratorByID(ctx context.Context, id uuid.UUID) (*models.PlanCollaborator, error)
@@ -5201,7 +5201,12 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			break
 		}
 
-		return e.complexity.Query.ModelPlanCollection(childComplexity), true
+		args, err := ec.field_Query_modelPlanCollection_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Query.ModelPlanCollection(childComplexity, args["includeAll"].(bool)), true
 
 	case "Query.ndaInfo":
 		if e.complexity.Query.NdaInfo == nil {
@@ -6831,7 +6836,7 @@ type Query {
   planDocument(id: UUID!): PlanDocument!
   planDocumentDownloadURL(id: UUID!): PlanDocumentPayload!
   readPlanDocumentByModelID(id: UUID!): [PlanDocument!]!
-  modelPlanCollection: [ModelPlan!]!
+  modelPlanCollection(includeAll: Boolean! = false): [ModelPlan!]!
   existingModelCollection: [ExistingModel!]!
   cedarPersonsByCommonName(commonName: String!): [UserInfo!]!
   planCollaboratorByID(id: UUID!): PlanCollaborator!
@@ -8226,6 +8231,21 @@ func (ec *executionContext) field_Query_crTdl_args(ctx context.Context, rawArgs 
 		}
 	}
 	args["id"] = arg0
+	return args, nil
+}
+
+func (ec *executionContext) field_Query_modelPlanCollection_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 bool
+	if tmp, ok := rawArgs["includeAll"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("includeAll"))
+		arg0, err = ec.unmarshalNBoolean2bool(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["includeAll"] = arg0
 	return args, nil
 }
 
@@ -36381,7 +36401,7 @@ func (ec *executionContext) _Query_modelPlanCollection(ctx context.Context, fiel
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Query().ModelPlanCollection(rctx)
+		return ec.resolvers.Query().ModelPlanCollection(rctx, fc.Args["includeAll"].(bool))
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -36451,6 +36471,17 @@ func (ec *executionContext) fieldContext_Query_modelPlanCollection(ctx context.C
 			}
 			return nil, fmt.Errorf("no field named %q was found under type ModelPlan", field.Name)
 		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Query_modelPlanCollection_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return
 	}
 	return fc, nil
 }
