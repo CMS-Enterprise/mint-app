@@ -805,10 +805,10 @@ func (r *queryResolver) ReadPlanDocumentByModelID(ctx context.Context, id uuid.U
 }
 
 // ModelPlanCollection is the resolver for the modelPlanCollection field.
-func (r *queryResolver) ModelPlanCollection(ctx context.Context) ([]*models.ModelPlan, error) {
+func (r *queryResolver) ModelPlanCollection(ctx context.Context, includeAll bool) ([]*models.ModelPlan, error) {
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
-	return resolvers.ModelPlanCollection(logger, principal, r.store)
+	return resolvers.ModelPlanCollection(logger, principal, r.store, includeAll)
 }
 
 // ExistingModelCollection is the resolver for the existingModelCollection field.
