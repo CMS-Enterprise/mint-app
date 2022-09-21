@@ -4,6 +4,7 @@ import (
 	_ "embed"
 
 	"github.com/google/uuid"
+	"github.com/jmoiron/sqlx"
 	"go.uber.org/zap"
 
 	"github.com/cmsgov/mint-app/pkg/models"
@@ -23,6 +24,9 @@ var planBasicsGetByIDSQL string
 
 //go:embed SQL/plan_basics_get_by_model_plan_id.sql
 var planBasicsGetByModelPlanIDSQL string
+
+//go:embed SQL/plan_basics_get_by_model_plan_id_LOADER.sql
+var planBasicsGetByModelPlanIDLoaderSQL string
 
 // PlanBasicsCreate creates a new plan basics
 func (s *Store) PlanBasicsCreate(logger *zap.Logger, basics *models.PlanBasics) (*models.PlanBasics, error) {
@@ -78,7 +82,7 @@ func (s *Store) PlanBasicsGetByID(logger *zap.Logger, id uuid.UUID) (*models.Pla
 
 // PlanBasicsGetByModelPlanID returns the plan basics for a given model plan id
 func (s *Store) PlanBasicsGetByModelPlanID(logger *zap.Logger, modelPlanID uuid.UUID) (*models.PlanBasics, error) {
-	plan := models.PlanBasics{}
+	plan := models.PlanBasics{} //TOOD use new data loader query instead.
 
 	statement, err := s.db.PrepareNamed(planBasicsGetByModelPlanIDSQL)
 	if err != nil {
@@ -96,4 +100,23 @@ func (s *Store) PlanBasicsGetByModelPlanID(logger *zap.Logger, modelPlanID uuid.
 	}
 
 	return &plan, nil
+}
+
+// PlanBasicsGetByModelPlanIDLOADER returns the plan basics for a slice of model plan ids
+func (s *Store) PlanBasicsGetByModelPlanIDLOADER(logger *zap.Logger, modelPlanIDSlice []uuid.UUID) ([]*models.PlanBasics, error) {
+	basicSlice := []*models.PlanBasics{} //TOOD use new data loader query instead.
+
+	query, args, err := sqlx.In(planBasicsGetByModelPlanIDLoaderSQL, modelPlanIDSlice)
+	if err != nil {
+		return nil, err
+	}
+	query = s.db.Rebind(query)
+
+	err = s.db.Select(&basicSlice, query, args...)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return basicSlice, nil
 }
