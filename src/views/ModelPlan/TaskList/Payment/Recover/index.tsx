@@ -102,11 +102,16 @@ const Recover = () => {
     formikValues: InitialValueType,
     redirect?: 'back' | 'task-list' | string
   ) => {
-    const { id: updateId, __typename, ...changeValues } = formikValues;
+    const {
+      id: updateId,
+      __typename,
+      status: inputStatus,
+      ...changeValues
+    } = formikValues;
     update({
       variables: {
         id: updateId,
-        changes: changeValues
+        changes: { ...changeValues, status: sanitizeStatus(inputStatus) }
       }
     })
       .then(response => {
@@ -146,7 +151,7 @@ const Recover = () => {
       anticipateReconcilingPaymentsRetrospectivelyNote ?? '',
     paymentStartDate: paymentStartDate ?? '',
     paymentStartDateNote: paymentStartDateNote ?? '',
-    status: sanitizeStatus(status)
+    status
   };
 
   if ((!loading && error) || (!loading && !data?.modelPlan)) {
