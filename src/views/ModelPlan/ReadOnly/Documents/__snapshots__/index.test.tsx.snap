@@ -1,0 +1,40 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Model Plan Documents page matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="read-only-model-plan--documents"
+    data-testid="read-only-model-plan--documents"
+  >
+    <div
+      class="display-flex flex-justify flex-align-start"
+    >
+      <h2
+        class="margin-top-0 margin-bottom-4"
+      >
+        Documents
+      </h2>
+    </div>
+    <div
+      class="margin-y-10"
+      data-testid="page-loading"
+    >
+      <div
+        class="text-center"
+      >
+        <span
+          aria-busy="true"
+          aria-valuetext="Loading the page"
+          class="mint-spinner mint-spinner--xl"
+          role="progressbar"
+        />
+      </div>
+      <h1
+        class="margin-top-6 text-center"
+      >
+        Loading the page
+      </h1>
+    </div>
+  </div>
+</DocumentFragment>
+`;
