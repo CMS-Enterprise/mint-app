@@ -88,11 +88,16 @@ const Milestones = () => {
     formikValues: InitialValueType,
     redirect?: 'back' | 'task-list'
   ) => {
-    const { id: updateId, __typename, ...changeValues } = formikValues;
+    const {
+      id: updateId,
+      __typename,
+      status: inputStatus,
+      ...changeValues
+    } = formikValues;
     update({
       variables: {
         id: updateId,
-        changes: changeValues
+        changes: { ...changeValues, status: sanitizeStatus(inputStatus) }
       }
     })
       .then(response => {
@@ -126,7 +131,7 @@ const Milestones = () => {
     highLevelNote: highLevelNote ?? '',
     phasedIn: phasedIn ?? null,
     phasedInNote: phasedInNote ?? '',
-    status: sanitizeStatus(status)
+    status
   };
 
   if ((!loading && error) || (!loading && !data?.modelPlan)) {

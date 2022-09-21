@@ -1,10 +1,12 @@
 // Util functions for status of Model plan and task list sections
 
-import { TaskStatus } from 'types/graphql-global-types';
+import { TaskStatus, TaskStatusInput } from 'types/graphql-global-types';
 
 // Util function for prepping TaskStatus for mutation input of TaskStatusInput
-const sanitizeStatus = (status: TaskStatus): TaskStatus => {
-  return status === TaskStatus.READY ? TaskStatus.IN_PROGRESS : status;
+const sanitizeStatus = (status: TaskStatus): TaskStatusInput => {
+  return status === TaskStatus.READY
+    ? TaskStatusInput.IN_PROGRESS
+    : TaskStatusInput[status];
 };
 
 export default sanitizeStatus;
