@@ -43,6 +43,7 @@ import {
   sortOtherEnum,
   translateModelLearningSystemType
 } from 'utils/modelPlan';
+import sanitizeStatus from 'utils/status';
 import { NotFoundPartial } from 'views/NotFound';
 
 import { isCCWInvolvement, renderCurrentPage, renderTotalPages } from '..';
@@ -133,7 +134,7 @@ const Learning = () => {
     modelLearningSystemsOther: modelLearningSystemsOther ?? '',
     modelLearningSystemsNote: modelLearningSystemsNote ?? '',
     anticipatedChallenges: anticipatedChallenges ?? '',
-    status
+    status: sanitizeStatus(status)
   };
 
   if ((!loading && error) || (!loading && !data?.modelPlan)) {

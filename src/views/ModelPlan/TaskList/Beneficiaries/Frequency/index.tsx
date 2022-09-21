@@ -42,6 +42,7 @@ import {
   translateFrequencyType,
   translateOverlapType
 } from 'utils/modelPlan';
+import sanitizeStatus from 'utils/status';
 import { NotFoundPartial } from 'views/NotFound';
 
 const Frequency = () => {
@@ -123,7 +124,7 @@ const Frequency = () => {
     beneficiaryOverlap: beneficiaryOverlap ?? null,
     beneficiaryOverlapNote: beneficiaryOverlapNote ?? '',
     precedenceRules: precedenceRules ?? '',
-    status
+    status: sanitizeStatus(status)
   };
 
   if ((!loading && error) || (!loading && !data?.modelPlan)) {

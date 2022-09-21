@@ -44,6 +44,7 @@ import {
   TaskStatus
 } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
+import sanitizeStatus from 'utils/status';
 import { NotFoundPartial } from 'views/NotFound';
 
 import { renderCurrentPage, renderTotalPages } from '..';
@@ -53,7 +54,6 @@ const Recover = () => {
   const { t: h } = useTranslation('draftModelPlan');
   const { modelID } = useParams<{ modelID: string }>();
   const [dateInPast, setDateInPast] = useState(false);
-  const [dateLoaded, setDateLoaded] = useState(false);
 
   // Omitting readyForReviewBy and readyForReviewDts from initialValues and getting submitted through Formik
   type InitialValueType = Omit<
@@ -125,17 +125,12 @@ const Recover = () => {
       });
   };
 
-  // TODO: Figure out why the form doesn't rerender once a date value is fetched - delay works for now
-  // Loading var passed from GQL does not seem to accurately identify a completed payload for date
   useEffect(() => {
-    setTimeout(() => {
-      setDateLoaded(true);
-      if (paymentStartDate && new Date() > new Date(paymentStartDate)) {
-        setDateInPast(true);
-      } else {
-        setDateInPast(false);
-      }
-    }, 250);
+    if (paymentStartDate && new Date() > new Date(paymentStartDate)) {
+      setDateInPast(true);
+    } else {
+      setDateInPast(false);
+    }
   }, [paymentStartDate]);
 
   const initialValues: InitialValueType = {
@@ -151,7 +146,7 @@ const Recover = () => {
       anticipateReconcilingPaymentsRetrospectivelyNote ?? '',
     paymentStartDate: paymentStartDate ?? '',
     paymentStartDateNote: paymentStartDateNote ?? '',
-    status
+    status: sanitizeStatus(status)
   };
 
   if ((!loading && error) || (!loading && !data?.modelPlan)) {
@@ -360,7 +355,7 @@ const Recover = () => {
                         />
                       </FieldGroup>
 
-                      {!loading && dateLoaded && (
+                      {!loading && (
                         <FieldGroup
                           scrollElement="paymentStartDate"
                           error={!!flatErrors.paymentStartDate}
@@ -388,7 +383,7 @@ const Recover = () => {
                               id="payment-payment-start-date"
                               maxLength={50}
                               name="paymentStartDate"
-                              defaultValue={values.paymentStartDate}
+                              defaultValue={paymentStartDate}
                               onBlur={(
                                 e: React.ChangeEvent<HTMLInputElement>
                               ) => {

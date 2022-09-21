@@ -8,7 +8,7 @@ import (
 
 // PlanBasics represents the "plan basics" section of a plan
 type PlanBasics struct {
-	BaseTaskListSection
+	baseTaskListSection
 
 	ModelCategory *ModelCategory `json:"modelCategory" db:"model_category"`
 	CMSCenters    pq.StringArray `json:"cmsCenters" db:"cms_centers"`
@@ -35,6 +35,13 @@ type PlanBasics struct {
 	HighLevelNote           *string    `json:"highLevelNote" db:"high_level_note"`
 	PhasedIn                *bool      `json:"phasedIn" db:"phased_in" statusWeight:"1"` //default to false
 	PhasedInNote            *string    `json:"phasedInNote" db:"phased_in_note"`
+}
+
+// NewPlanBasics returns a new plan basics object
+func NewPlanBasics(tls baseTaskListSection) *PlanBasics {
+	return &PlanBasics{
+		baseTaskListSection: tls,
+	}
 }
 
 // ModelType is an enum that represents the basic type of a model

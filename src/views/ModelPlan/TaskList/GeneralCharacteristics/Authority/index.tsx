@@ -41,6 +41,7 @@ import {
   translateAuthorityAllowance,
   translateWaiverTypes
 } from 'utils/modelPlan';
+import sanitizeStatus from 'utils/status';
 import { NotFoundPartial } from 'views/NotFound';
 
 const Authority = () => {
@@ -127,7 +128,7 @@ const Authority = () => {
     waiversRequired: waiversRequired ?? null,
     waiversRequiredTypes: waiversRequiredTypes ?? [],
     waiversRequiredNote: waiversRequiredNote ?? '',
-    status
+    status: sanitizeStatus(status)
   };
 
   if ((!loading && error) || (!loading && !data?.modelPlan)) {
