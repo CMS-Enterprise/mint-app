@@ -11,6 +11,7 @@ import { AlternativePaymentModelType, KeyCharacteristic, GeographyType, Geograph
 
 export interface GetAllGeneralCharacteristics_modelPlan_generalCharacteristics {
   __typename: "PlanGeneralCharacteristics";
+  id: UUID;
   isNewModel: boolean | null;
   existingModel: string | null;
   resemblesExistingModel: boolean | null;
@@ -67,6 +68,7 @@ export interface GetAllGeneralCharacteristics_modelPlan_generalCharacteristics {
 
 export interface GetAllGeneralCharacteristics_modelPlan {
   __typename: "ModelPlan";
+  id: UUID;
   generalCharacteristics: GetAllGeneralCharacteristics_modelPlan_generalCharacteristics;
 }
 
