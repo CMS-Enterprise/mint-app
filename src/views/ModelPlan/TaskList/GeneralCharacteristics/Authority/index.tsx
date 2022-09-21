@@ -34,7 +34,11 @@ import {
 } from 'queries/GeneralCharacteristics/types/GetAuthority';
 import { UpdatePlanGeneralCharacteristicsVariables } from 'queries/GeneralCharacteristics/types/UpdatePlanGeneralCharacteristics';
 import UpdatePlanGeneralCharacteristics from 'queries/GeneralCharacteristics/UpdatePlanGeneralCharacteristics';
-import { AuthorityAllowance, WaiverType } from 'types/graphql-global-types';
+import {
+  AuthorityAllowance,
+  TaskStatus,
+  WaiverType
+} from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import {
   sortOtherEnum,
@@ -127,7 +131,7 @@ const Authority = () => {
     waiversRequired: waiversRequired ?? null,
     waiversRequiredTypes: waiversRequiredTypes ?? [],
     waiversRequiredNote: waiversRequiredNote ?? '',
-    status
+    status: status === TaskStatus.READY ? TaskStatus.IN_PROGRESS : status
   };
 
   if ((!loading && error) || (!loading && !data?.modelPlan)) {

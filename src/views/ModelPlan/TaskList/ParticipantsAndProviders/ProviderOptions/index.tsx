@@ -39,7 +39,8 @@ import {
   FrequencyType,
   OverlapType,
   ProviderAddType,
-  ProviderLeaveType
+  ProviderLeaveType,
+  TaskStatus
 } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import {
@@ -144,7 +145,7 @@ export const ProviderOptions = () => {
     providerOverlap: providerOverlap ?? null,
     providerOverlapHierarchy: providerOverlapHierarchy ?? '',
     providerOverlapNote: providerOverlapNote ?? '',
-    status
+    status: status === TaskStatus.READY ? TaskStatus.IN_PROGRESS : status
   };
 
   if ((!loading && error) || (!loading && !data?.modelPlan)) {

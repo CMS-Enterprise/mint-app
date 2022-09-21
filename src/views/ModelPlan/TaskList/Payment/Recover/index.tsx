@@ -151,7 +151,7 @@ const Recover = () => {
       anticipateReconcilingPaymentsRetrospectivelyNote ?? '',
     paymentStartDate: paymentStartDate ?? '',
     paymentStartDateNote: paymentStartDateNote ?? '',
-    status
+    status: status === TaskStatus.READY ? TaskStatus.IN_PROGRESS : status
   };
 
   if ((!loading && error) || (!loading && !data?.modelPlan)) {

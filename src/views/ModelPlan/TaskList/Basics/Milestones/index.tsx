@@ -31,6 +31,7 @@ import {
 } from 'queries/Basics/types/GetMilestones';
 import { UpdatePlanBasicsVariables } from 'queries/Basics/types/UpdatePlanBasics';
 import UpdatePlanBasics from 'queries/Basics/UpdatePlanBasics';
+import { TaskStatus } from 'types/graphql-global-types';
 import flattenErrors from 'utils/flattenErrors';
 import planBasicsSchema from 'validations/planBasics';
 import { NotFoundPartial } from 'views/NotFound';
@@ -125,7 +126,7 @@ const Milestones = () => {
     highLevelNote: highLevelNote ?? '',
     phasedIn: phasedIn ?? null,
     phasedInNote: phasedInNote ?? '',
-    status
+    status: status === TaskStatus.READY ? TaskStatus.IN_PROGRESS : status
   };
 
   if ((!loading && error) || (!loading && !data?.modelPlan)) {
