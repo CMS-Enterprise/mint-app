@@ -6,6 +6,9 @@ import (
 	"net/url"
 	"testing"
 
+	"github.com/cmsgov/mint-app/pkg/email"
+	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
+
 	"github.com/cmsgov/mint-app/pkg/shared/pubsub"
 
 	"github.com/99designs/gqlgen/client"
@@ -23,7 +26,6 @@ import (
 	ld "gopkg.in/launchdarkly/go-server-sdk.v5"
 
 	"github.com/cmsgov/mint-app/pkg/appconfig"
-	"github.com/cmsgov/mint-app/pkg/email"
 	"github.com/cmsgov/mint-app/pkg/graph/generated"
 	"github.com/cmsgov/mint-app/pkg/graph/model"
 	"github.com/cmsgov/mint-app/pkg/local"
@@ -129,17 +131,15 @@ func TestGraphQLTestSuite(t *testing.T) {
 	mockClient := mockS3Client{}
 	s3Client := upload.NewS3ClientUsingClient(&mockClient, s3Config)
 
-	// set up Email Client
-	emailConfig := email.Config{
-		URLHost:           config.GetString(appconfig.ClientHostKey),
-		URLScheme:         config.GetString(appconfig.ClientProtocolKey),
-		TemplateDirectory: config.GetString(appconfig.EmailTemplateDirectoryKey),
-	}
-	localSender := local.NewSender()
-	emailClient, err := email.NewClient(emailConfig, localSender)
-	if err != nil {
-		t.FailNow()
-	}
+	emailServiceConfig := oddmail.GoSimpleMailServiceConfig{}
+	err = emailServiceConfig.LoadYAML("../../config/data/emailServiceConfig.yaml")
+	assert.NoError(t, err)
+
+	emailService, err := oddmail.NewGoSimpleMailService(emailServiceConfig)
+	assert.NoError(t, err)
+
+	emailTemplateService, err := email.NewTemplateService()
+	assert.NoError(t, err)
 
 	cedarLdapClient := local.NewCedarLdapClient(logger)
 
@@ -151,7 +151,7 @@ func TestGraphQLTestSuite(t *testing.T) {
 	resolverService.FetchUserInfo = cedarLdapClient.FetchUserInfo
 
 	ps := pubsub.NewServicePubSub()
-	resolver := NewResolver(store, resolverService, &s3Client, &emailClient, ldClient, ps)
+	resolver := NewResolver(store, resolverService, &s3Client, emailService, emailTemplateService, ldClient, ps)
 	schema := generated.NewExecutableSchema(generated.Config{Resolvers: resolver, Directives: directives})
 	graphQLClient := client.New(handler.NewDefaultServer(schema))
 

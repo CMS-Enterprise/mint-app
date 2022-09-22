@@ -57,7 +57,14 @@ func (suite *ResolverSuite) createPlanCollaborator(mp *models.ModelPlan, EUAUser
 		TeamRole:    teamRole,
 		Email:       email,
 	}
-	collaborator, err := CreatePlanCollaborator(suite.testConfigs.Logger, collaboratorInput, suite.testConfigs.Principal, suite.testConfigs.Store)
+	collaborator, err := CreatePlanCollaborator(
+		suite.testConfigs.Logger,
+		&suite.testConfigs.EmailService,
+		suite.testConfigs.EmailTemplateService,
+		collaboratorInput,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+	)
 	suite.NoError(err)
 	return collaborator
 }

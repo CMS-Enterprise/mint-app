@@ -15,7 +15,14 @@ func (suite *ResolverSuite) TestCreatePlanCollaborator() {
 		TeamRole:    models.TeamRoleLeadership,
 		Email:       "clab@rater.com",
 	}
-	collaborator, err := CreatePlanCollaborator(suite.testConfigs.Logger, collaboratorInput, suite.testConfigs.Principal, suite.testConfigs.Store)
+	collaborator, err := CreatePlanCollaborator(
+		suite.testConfigs.Logger,
+		&suite.testConfigs.EmailService,
+		suite.testConfigs.EmailTemplateService,
+		collaboratorInput,
+		suite.testConfigs.Principal,
+		suite.testConfigs.Store,
+	)
 
 	suite.NoError(err)
 	suite.EqualValues(plan.ID, collaborator.ModelPlanID)

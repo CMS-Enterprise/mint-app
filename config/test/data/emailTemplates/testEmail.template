@@ -1,0 +1,7 @@
+<html>
+  <head>Test Email</head>
+  <body>
+    <p>This is a test email.</p>
+    <p><i>Created on {.Date}</i></p>
+  </body>
+</html>

@@ -6,7 +6,6 @@ import (
 
 	"github.com/cmsgov/mint-app/pkg/appconfig"
 	"github.com/cmsgov/mint-app/pkg/appses"
-	"github.com/cmsgov/mint-app/pkg/email"
 	"github.com/cmsgov/mint-app/pkg/flags"
 	"github.com/cmsgov/mint-app/pkg/storage"
 	"github.com/cmsgov/mint-app/pkg/upload"
@@ -39,21 +38,6 @@ func (s Server) NewDBConfig() storage.DBConfig {
 		Password:       s.Config.GetString(appconfig.DBPasswordConfigKey),
 		SSLMode:        s.Config.GetString(appconfig.DBSSLModeConfigKey),
 		MaxConnections: s.Config.GetInt(appconfig.DBMaxConnections),
-	}
-}
-
-// NewEmailConfig returns a new email.Config and checks required fields
-func (s Server) NewEmailConfig() email.Config {
-	s.checkRequiredConfig(appconfig.GRTEmailKey)
-	s.checkRequiredConfig(appconfig.AccessibilityTeamEmailKey)
-	s.checkRequiredConfig(appconfig.ClientHostKey)
-	s.checkRequiredConfig(appconfig.ClientProtocolKey)
-	s.checkRequiredConfig(appconfig.EmailTemplateDirectoryKey)
-
-	return email.Config{
-		URLHost:           s.Config.GetString(appconfig.ClientHostKey),
-		URLScheme:         s.Config.GetString(appconfig.ClientProtocolKey),
-		TemplateDirectory: s.Config.GetString(appconfig.EmailTemplateDirectoryKey),
 	}
 }
 

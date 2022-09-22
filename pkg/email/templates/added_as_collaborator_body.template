@@ -1,0 +1,17 @@
+<html>
+  <title>
+    <h1>
+      <b>MINT</b>
+    </h1>
+    The Model Innovation Tool
+  </title>
+
+  <body>
+    <p>You've been added as a collaborator on {{.ModelName}} in MINT.</p>
+
+    <p><a href={{.ModelURL}}>Start collaborating now</a></p>
+
+    <hr/>
+    You're automatically following this model. To stop receiving notifications about this model, <a href={{.UnfollowURL}}>unfollow it</a>.
+  </body>
+</html>
