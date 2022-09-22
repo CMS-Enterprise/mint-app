@@ -49,7 +49,7 @@ func (s *Store) PlanDocumentCreate(
 		return nil, genericmodel.HandleModelCreationError(logger, err, inputDocument)
 	}
 
-	err = statement.Get(inputDocument, retDoc)
+	err = statement.Get(retDoc, inputDocument)
 	if err != nil {
 		return nil, genericmodel.HandleModelCreationError(logger, err, retDoc)
 	}
