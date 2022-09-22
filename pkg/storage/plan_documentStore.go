@@ -43,18 +43,18 @@ func (s *Store) PlanDocumentCreate(
 	inputDocument.ModifiedBy = nil
 	inputDocument.ModifiedDts = nil
 
-	document := models.PlanDocument{}
+	retDoc := &models.PlanDocument{}
 	statement, err := s.db.PrepareNamed(planDocumentCreateSQL)
 	if err != nil {
-		return nil, genericmodel.HandleModelCreationError(logger, err, &document)
+		return nil, genericmodel.HandleModelCreationError(logger, err, inputDocument)
 	}
 
-	err = statement.Get(inputDocument, &document)
+	err = statement.Get(inputDocument, retDoc)
 	if err != nil {
-		return nil, genericmodel.HandleModelCreationError(logger, err, &document)
+		return nil, genericmodel.HandleModelCreationError(logger, err, retDoc)
 	}
 
-	return &document, nil
+	return retDoc, nil
 }
 
 // PlanDocumentRead reads a plan document object by id

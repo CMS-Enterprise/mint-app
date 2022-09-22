@@ -282,6 +282,107 @@ exports[`Model Plan -- Recover matches snapshot 1`] = `
             </div>
           </div>
           <div
+            class="usa-form-group margin-top-4"
+            data-scroll="paymentStartDate"
+          >
+            <label
+              class="usa-label maxw-none"
+              data-testid="label"
+              for="paymentStartDate"
+            >
+              When will payments start? (Enter an approximate date)
+            </label>
+            <p
+              class="text-normal margin-bottom-1 margin-top-0"
+            >
+              Note: If you are unsure of an approximate date, please select the first day of the approximate month.
+            </p>
+            <div
+              class="usa-hint"
+              id="appointment-date-hint"
+            >
+              mm/dd/yyyy
+            </div>
+            <div
+              class="width-card-lg position-relative"
+            >
+              <div
+                class="usa-date-picker usa-date-picker--initialized"
+                data-testid="date-picker"
+              >
+                <input
+                  aria-hidden="true"
+                  class="usa-input usa-sr-only usa-date-picker__internal-input"
+                  data-testid="date-picker-internal-input"
+                  maxlength="50"
+                  name="paymentStartDate"
+                  readonly=""
+                  tabindex="-1"
+                  type="text"
+                  value=""
+                />
+                <div
+                  class="usa-date-picker__wrapper"
+                  tabindex="-1"
+                >
+                  <input
+                    class="usa-input usa-date-picker__external-input"
+                    data-testid="date-picker-external-input"
+                    id="payment-payment-start-date"
+                    maxlength="50"
+                    type="text"
+                    value=""
+                  />
+                  <button
+                    aria-haspopup="true"
+                    aria-label="Toggle calendar"
+                    class="usa-date-picker__button"
+                    data-testid="date-picker-button"
+                    type="button"
+                  >
+                     
+                  </button>
+                  <div
+                    aria-modal="true"
+                    class="usa-date-picker__calendar"
+                    data-testid="date-picker-calendar"
+                    hidden=""
+                    role="dialog"
+                    style="top: 0px;"
+                  />
+                  <div
+                    aria-live="polite"
+                    class="usa-sr-only usa-date-picker__status"
+                    data-testid="date-picker-status"
+                    role="status"
+                  />
+                </div>
+              </div>
+            </div>
+            <div
+              class="margin-top-4 margin-bottom-8"
+            >
+              <div
+                class="usa-form-group"
+              >
+                <label
+                  class="usa-label"
+                  for="payment-payment-start-date-note"
+                >
+                  Notes
+                </label>
+                <textarea
+                  class="usa-textarea height-15"
+                  data-testid="payment-payment-start-date-note"
+                  id="payment-payment-start-date-note"
+                  name="paymentStartDateNote"
+                >
+                  string
+                </textarea>
+              </div>
+            </div>
+          </div>
+          <div
             class="usa-form-group margin-top-8 margin-bottom-3"
           >
             <div

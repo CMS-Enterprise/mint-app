@@ -348,6 +348,17 @@ export const translateSelectionMethodType = (type: string) => {
   }
 };
 
+export const translateModelType = (type: string) => {
+  switch (type) {
+    case 'VOLUNTARY':
+      return i18next.t('basics:voluntary');
+    case 'MANDATORY':
+      return i18next.t('basics:mandatory');
+    default:
+      return '';
+  }
+};
+
 export const translateSourceOptions = (type: string) => {
   switch (type) {
     case 'PATIENT_PROTECTION_AFFORDABLE_CARE_ACT':

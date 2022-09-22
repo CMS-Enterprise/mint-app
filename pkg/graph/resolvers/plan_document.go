@@ -14,25 +14,15 @@ import (
 
 // PlanDocumentCreate implements resolver logic to upload the specified file to S3 and create a matching plan document entity in the database.
 func PlanDocumentCreate(logger *zap.Logger, input model.PlanDocumentInput, principal authentication.Principal, store *storage.Store, s3Client *upload.S3Client) (*models.PlanDocument, error) {
-	document := &models.PlanDocument{
-		BaseStruct: models.BaseStruct{
-			CreatedBy: principal.ID(),
-		},
-		ModelPlanRelation: models.ModelPlanRelation{
-			ModelPlanID: input.ModelPlanID,
-		},
-		FileType:             input.FileData.ContentType,
-		Bucket:               *s3Client.GetBucket(),
-		FileKey:              uuid.NewString(),
-		VirusScanned:         false,
-		VirusClean:           false,
-		FileName:             input.FileData.Filename,
-		FileSize:             int(input.FileData.Size),
-		DocumentType:         input.DocumentType,
-		OtherTypeDescription: input.OtherTypeDescription,
-		OptionalNotes:        input.OptionalNotes,
-		DeletedAt:            nil,
-	}
+	document := models.NewPlanDocument(principal.ID(), input.ModelPlanID)
+	document.FileType = input.FileData.ContentType
+	document.Bucket = *s3Client.GetBucket()
+	document.FileKey = uuid.NewString()
+	document.FileName = input.FileData.Filename
+	document.FileSize = int(input.FileData.Size)
+	document.DocumentType = input.DocumentType
+	document.OtherTypeDescription = input.OtherTypeDescription
+	document.OptionalNotes = input.OptionalNotes
 
 	err := BaseStructPreCreate(logger, document, principal, store, true)
 	if err != nil {
@@ -73,11 +63,8 @@ func PlanDocumentsReadByModelPlanID(logger *zap.Logger, id uuid.UUID, store *sto
 }
 
 // PlanDocumentDelete implements resolver logic to update a plan document object
-func PlanDocumentDelete(logger *zap.Logger, s3Client *upload.S3Client, input *models.PlanDocument, principal authentication.Principal, store *storage.Store) (int, error) {
-	euaid := principal.ID()
-	input.ModifiedBy = &euaid
-
-	existingdoc, err := store.PlanDocumentRead(logger, s3Client, input.ID)
+func PlanDocumentDelete(logger *zap.Logger, s3Client *upload.S3Client, id uuid.UUID, principal authentication.Principal, store *storage.Store) (int, error) {
+	existingdoc, err := store.PlanDocumentRead(logger, s3Client, id)
 	if err != nil {
 		return 0, err
 	}
@@ -86,7 +73,7 @@ func PlanDocumentDelete(logger *zap.Logger, s3Client *upload.S3Client, input *mo
 		return 0, err
 	}
 
-	sqlResult, err := store.PlanDocumentDelete(logger, input.ID)
+	sqlResult, err := store.PlanDocumentDelete(logger, id)
 	if err != nil {
 		return 0, err
 	}

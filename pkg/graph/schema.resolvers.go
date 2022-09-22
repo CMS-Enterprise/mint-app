@@ -213,13 +213,11 @@ func (r *mutationResolver) UploadNewPlanDocument(ctx context.Context, input mode
 }
 
 // DeletePlanDocument is the resolver for the deletePlanDocument field.
-func (r *mutationResolver) DeletePlanDocument(ctx context.Context, input model.PlanDocumentInput) (int, error) {
-	// document := ConvertToPlanDocumentModel(&input)
-	// principal := appcontext.Principal(ctx)
-	// logger := appcontext.ZLogger(ctx)
+func (r *mutationResolver) DeletePlanDocument(ctx context.Context, id uuid.UUID) (int, error) {
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
 
-	// return resolvers.PlanDocumentDelete(logger, r.s3Client, document, principal, r.store)
-	return 0, nil
+	return resolvers.PlanDocumentDelete(logger, r.s3Client, id, principal, r.store)
 }
 
 // CreatePlanDiscussion is the resolver for the createPlanDiscussion field.
@@ -773,10 +771,10 @@ func (r *queryResolver) PlanDocument(ctx context.Context, id uuid.UUID) (*models
 }
 
 // ModelPlanCollection is the resolver for the modelPlanCollection field.
-func (r *queryResolver) ModelPlanCollection(ctx context.Context) ([]*models.ModelPlan, error) {
+func (r *queryResolver) ModelPlanCollection(ctx context.Context, includeAll bool) ([]*models.ModelPlan, error) {
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
-	return resolvers.ModelPlanCollection(logger, principal, r.store)
+	return resolvers.ModelPlanCollection(logger, principal, r.store, includeAll)
 }
 
 // ExistingModelCollection is the resolver for the existingModelCollection field.
