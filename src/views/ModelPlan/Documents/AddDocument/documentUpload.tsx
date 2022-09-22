@@ -43,7 +43,9 @@ const DocumentUpload = () => {
           input: {
             modelPlanID: modelID,
             fileData: file,
-            documentType: values.documentType
+            documentType: values.documentType,
+            otherTypeDescription: values.otherTypeDescription,
+            optionalNotes: values.optionalNotes
           }
         }
       })
