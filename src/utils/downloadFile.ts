@@ -3,57 +3,23 @@ import axios from 'axios';
 import i18next from 'i18next';
 
 type DownloadDocumentType = {
-  client: any;
-  fileID: string;
   fileType: string;
   fileName: string;
-  query: any;
-  queryType: string;
-  urlKey: string;
+  downloadURL: string;
 };
 
 // Util for on demand download of file
 const downloadFile = ({
-  client, // graphQL client
-  fileID,
   fileType,
   fileName,
-  query, // gql query for download url
-  queryType, // return query type
-  urlKey // key of returned field of file url
+  downloadURL
 }: DownloadDocumentType) => {
-  return fetchDownloadURL(client, fileID, query, queryType)
-    .then((downloadURL: any) => {
-      return downloadDocumentFromURL(downloadURL[urlKey], fileName, fileType)
-        .then(() => {
-          return downloadURL[urlKey];
-        })
-        .catch(error => {
-          throw error;
-        });
+  return downloadDocumentFromURL(downloadURL, fileName, fileType)
+    .then(() => {
+      return downloadURL;
     })
-    .catch((error: any) => {
+    .catch(error => {
       throw error;
-    });
-};
-
-// GQL fetch of download URL by document ID
-const fetchDownloadURL = (
-  client: any,
-  id: string,
-  query: any,
-  queryType: string
-) => {
-  return client
-    .query({
-      query,
-      variables: { id }
-    })
-    .then((result: any) => {
-      return result.data[queryType];
-    })
-    .catch(() => {
-      throw i18next.t('documents:urlFail');
     });
 };
 

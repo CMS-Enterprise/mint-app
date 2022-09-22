@@ -1,12 +1,10 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory, useParams } from 'react-router-dom';
 import { useMutation } from '@apollo/client';
 import { Button, Label } from '@trussworks/react-uswds';
-// import axios from 'axios';
 import { Field, Form, Formik, FormikProps } from 'formik';
 
-// import { isUndefined } from 'lodash';
 import FileUpload from 'components/FileUpload';
 import Alert from 'components/shared/Alert';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
@@ -16,13 +14,6 @@ import { RadioField } from 'components/shared/RadioField';
 import TextAreaField from 'components/shared/TextAreaField';
 import TextField from 'components/shared/TextField';
 import useMessage from 'hooks/useMessage';
-// import CreateModelPlanDocument from 'queries/Documents/CreateModelPlanDocument';
-// import GetGeneratedPresignedUploadURL from 'queries/Documents/GetGeneratedPresignedUploadURL';
-// import {
-//   CreateModelPlanDocument as CreateModelPlanDocumentType,
-//   CreateModelPlanDocumentVariables
-// } from 'queries/Documents/types/CreateModelPlanDocument';
-// import { GeneratePresignedUploadURL as GetGeneratedPresignedUploadURLType } from 'queries/Documents/types/GeneratePresignedUploadURL';
 import { UploadNewPlanDocument as UploadNewPlanDocumentType } from 'queries/Documents/types/UploadNewPlanDocument';
 import UploadNewPlanDocument from 'queries/Documents/UploadNewPlanDocument';
 import { FileUploadForm } from 'types/files';
@@ -36,55 +27,18 @@ const DocumentUpload = () => {
   const history = useHistory();
   const { t } = useTranslation('documents');
   const { showMessageOnNextPage } = useMessage();
+  const formikRef = useRef<FormikProps<FileUploadForm>>(null);
 
-  // const [s3URL, setS3URL] = useState('');
-  // const [
-  //   generateURL,
-  //   generateURLStatus
-  // ] = useMutation<GetGeneratedPresignedUploadURLType>(
-  //   GetGeneratedPresignedUploadURL
-  // );
-  const [upFile, upFileStatus] = useMutation<UploadNewPlanDocumentType>(
+  const [uploadFile, uploadFileStatus] = useMutation<UploadNewPlanDocumentType>(
     UploadNewPlanDocument
   );
-
-  // const [createDocument, createDocumentStatus] = useMutation<
-  //   CreateModelPlanDocumentType,
-  //   CreateModelPlanDocumentVariables
-  // >(CreateModelPlanDocument);
-
-  // Generates s3URL for uploading document
-  // const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   const file = event?.currentTarget?.files?.[0];
-  //   if (!file) {
-  //     return;
-  //   }
-  //   generateURL({
-  //     variables: {
-  //       input: {
-  //         fileName: file.name,
-  //         mimeType: file.type,
-  //         size: file.size
-  //       }
-  //     }
-  //   })
-  //     .then(result => {
-  //       const url = result.data?.generatePresignedUploadURL?.url;
-  //       if (!generateURLStatus.error && !isUndefined(url)) {
-  //         setS3URL(url || '');
-  //       }
-  //     })
-  //     .catch(() => {
-  //       setErrorGeneratingPresignedUrl(true);
-  //     });
-  // };
 
   // Uploads the document to s3 bucket and create document on BE
   const onSubmit = (values: FileUploadForm) => {
     const { file } = values;
 
     if (file && file.name && file.size >= 0 && file.type) {
-      upFile({
+      uploadFile({
         variables: {
           input: {
             modelPlanID: modelID,
@@ -114,8 +68,8 @@ const DocumentUpload = () => {
             history.push(`/models/${modelID}/documents`);
           }
         })
-        .catch(e => {
-          // TODO: Patrick
+        .catch(errors => {
+          formikRef?.current?.setErrors(errors);
         });
     }
   };
@@ -164,10 +118,10 @@ const DocumentUpload = () => {
                   })}
                 </ErrorAlert>
               )}
-              {upFileStatus.error && (
+              {uploadFileStatus.error && (
                 <ErrorAlert heading="Error uploading document">
                   <ErrorAlertMessage
-                    message={upFileStatus.error.message}
+                    message={uploadFileStatus.error.message}
                     errorKey="accessibilityRequest"
                   />
                 </ErrorAlert>
@@ -302,11 +256,7 @@ const DocumentUpload = () => {
                       type="submit"
                       onClick={() => setErrors({})}
                       disabled={
-                        isSubmitting ||
-                        // generateURLStatus.loading ||
-                        // createDocumentStatus.loading ||
-                        !values.documentType ||
-                        !values.file
+                        isSubmitting || !values.documentType || !values.file
                       }
                       data-testid="upload-document"
                     >
