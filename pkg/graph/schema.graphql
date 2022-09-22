@@ -1368,7 +1368,7 @@ type Query {
   planDocument(id: UUID!): PlanDocument!
   planDocumentDownloadURL(id: UUID!): PlanDocumentPayload!
   readPlanDocumentByModelID(id: UUID!): [PlanDocument!]!
-  modelPlanCollection: [ModelPlan!]!
+  modelPlanCollection(includeAll: Boolean! = false): [ModelPlan!]!
   existingModelCollection: [ExistingModel!]!
   cedarPersonsByCommonName(commonName: String!): [UserInfo!]!
   planCollaboratorByID(id: UUID!): PlanCollaborator!

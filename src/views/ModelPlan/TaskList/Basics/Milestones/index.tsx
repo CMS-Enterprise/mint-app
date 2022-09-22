@@ -32,6 +32,7 @@ import {
 import { UpdatePlanBasicsVariables } from 'queries/Basics/types/UpdatePlanBasics';
 import UpdatePlanBasics from 'queries/Basics/UpdatePlanBasics';
 import flattenErrors from 'utils/flattenErrors';
+import sanitizeStatus from 'utils/status';
 import planBasicsSchema from 'validations/planBasics';
 import { NotFoundPartial } from 'views/NotFound';
 
@@ -87,11 +88,16 @@ const Milestones = () => {
     formikValues: InitialValueType,
     redirect?: 'back' | 'task-list'
   ) => {
-    const { id: updateId, __typename, ...changeValues } = formikValues;
+    const {
+      id: updateId,
+      __typename,
+      status: inputStatus,
+      ...changeValues
+    } = formikValues;
     update({
       variables: {
         id: updateId,
-        changes: changeValues
+        changes: { ...changeValues, status: sanitizeStatus(inputStatus) }
       }
     })
       .then(response => {
@@ -245,7 +251,7 @@ const Milestones = () => {
                       id="Milestone-completeICIP"
                       maxLength={50}
                       name="completeICIP"
-                      defaultValue={values.completeICIP}
+                      defaultValue={completeICIP}
                       onBlur={(e: any) =>
                         handleOnBlur(e.target.value, 'completeICIP')
                       }
@@ -280,7 +286,7 @@ const Milestones = () => {
                         id="Milestone-clearanceStarts"
                         maxLength={50}
                         name="clearanceStarts"
-                        defaultValue={values.clearanceStarts}
+                        defaultValue={clearanceStarts}
                         onBlur={(e: any) =>
                           handleOnBlur(e.target.value, 'clearanceStarts')
                         }
@@ -308,7 +314,7 @@ const Milestones = () => {
                         id="Milestone-clearanceEnds"
                         maxLength={50}
                         name="clearanceEnds"
-                        defaultValue={values.clearanceEnds}
+                        defaultValue={clearanceEnds}
                         onBlur={(e: any) =>
                           handleOnBlur(e.target.value, 'clearanceEnds')
                         }
@@ -334,7 +340,7 @@ const Milestones = () => {
                       id="Milestone-announced"
                       maxLength={50}
                       name="announced"
-                      defaultValue={values.announced}
+                      defaultValue={announced}
                       onBlur={(e: any) =>
                         handleOnBlur(e.target.value, 'announced')
                       }
@@ -369,7 +375,7 @@ const Milestones = () => {
                         id="Milestone-applicationsStart"
                         maxLength={50}
                         name="applicationsStart"
-                        defaultValue={values.applicationsStart}
+                        defaultValue={applicationsStart}
                         onBlur={(e: any) =>
                           handleOnBlur(e.target.value, 'applicationsStart')
                         }
@@ -399,7 +405,7 @@ const Milestones = () => {
                         id="Milestone-applicationsEnd"
                         maxLength={50}
                         name="applicationsEnd"
-                        defaultValue={values.applicationsEnd}
+                        defaultValue={applicationsEnd}
                         onBlur={(e: any) =>
                           handleOnBlur(e.target.value, 'applicationsEnd')
                         }
@@ -435,7 +441,7 @@ const Milestones = () => {
                         id="Milestone-performancePeriodStarts"
                         maxLength={50}
                         name="performancePeriodStarts"
-                        defaultValue={values.performancePeriodStarts}
+                        defaultValue={performancePeriodStarts}
                         onBlur={(e: any) =>
                           handleOnBlur(
                             e.target.value,
@@ -467,7 +473,7 @@ const Milestones = () => {
                         id="Milestone-performancePeriodEnds"
                         maxLength={50}
                         name="performancePeriodEnds"
-                        defaultValue={values.performancePeriodEnds}
+                        defaultValue={performancePeriodEnds}
                         onBlur={(e: any) =>
                           handleOnBlur(e.target.value, 'performancePeriodEnds')
                         }
@@ -493,7 +499,7 @@ const Milestones = () => {
                       id="Milestone-wrapUpEnds"
                       maxLength={50}
                       name="wrapUpEnds"
-                      defaultValue={values.wrapUpEnds}
+                      defaultValue={wrapUpEnds}
                       onBlur={(e: any) =>
                         handleOnBlur(e.target.value, 'wrapUpEnds')
                       }

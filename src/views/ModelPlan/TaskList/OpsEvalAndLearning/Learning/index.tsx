@@ -43,6 +43,7 @@ import {
   sortOtherEnum,
   translateModelLearningSystemType
 } from 'utils/modelPlan';
+import sanitizeStatus from 'utils/status';
 import { NotFoundPartial } from 'views/NotFound';
 
 import { isCCWInvolvement, renderCurrentPage, renderTotalPages } from '..';
@@ -99,11 +100,16 @@ const Learning = () => {
     formikValues: InitialValueType,
     redirect?: 'next' | 'back' | 'task-list' | string
   ) => {
-    const { id: updateId, __typename, ...changeValues } = formikValues;
+    const {
+      id: updateId,
+      __typename,
+      status: inputStatus,
+      ...changeValues
+    } = formikValues;
     update({
       variables: {
         id: updateId,
-        changes: changeValues
+        changes: { ...changeValues, status: sanitizeStatus(inputStatus) }
       }
     })
       .then(response => {

@@ -6,7 +6,7 @@ import (
 
 // PlanITTools represents a Plan IT Tools model
 type PlanITTools struct {
-	BaseTaskListSection
+	baseTaskListSection
 
 	//Page 1
 	GcPartCD              pq.StringArray `json:"gcPartCD" db:"gc_part_c_d"`
@@ -99,4 +99,11 @@ type PlanITTools struct {
 	PRecoverPayments      pq.StringArray `json:"pRecoverPayments" db:"p_recover_payments"`
 	PRecoverPaymentsOther *string        `json:"pRecoverPaymentsOther" db:"p_recover_payments_other"`
 	PRecoverPaymentsNote  *string        `json:"pRecoverPaymentsNote" db:"p_recover_payments_note"`
+}
+
+//NewPlanITTools returns a new PlanITTools object
+func NewPlanITTools(tls baseTaskListSection) *PlanITTools {
+	return &PlanITTools{
+		baseTaskListSection: tls,
+	}
 }

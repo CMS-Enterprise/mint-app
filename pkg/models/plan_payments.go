@@ -131,7 +131,7 @@ const (
 
 // PlanPayments defines the data associated with a plan payments model
 type PlanPayments struct {
-	BaseTaskListSection
+	baseTaskListSection
 
 	// Page 1
 	FundingSource                   pq.StringArray `json:"fundingSource" db:"funding_source" statusWeight:"1"`
@@ -205,4 +205,11 @@ type PlanPayments struct {
 	AnticipateReconcilingPaymentsRetrospectivelyNote *string    `json:"anticipateReconcilingPaymentsRetrospectivelyNote" db:"anticipate_reconciling_payments_retrospectively_note"`
 	PaymentStartDate                                 *time.Time `json:"paymentStartDate" db:"payment_start_date" statusWeight:"1"`
 	PaymentStartDateNote                             *string    `json:"paymentStartDateNote" db:"payment_start_date_note"`
+}
+
+//NewPlanPayments returns a new PlanPayments object
+func NewPlanPayments(tls baseTaskListSection) *PlanPayments {
+	return &PlanPayments{
+		baseTaskListSection: tls,
+	}
 }

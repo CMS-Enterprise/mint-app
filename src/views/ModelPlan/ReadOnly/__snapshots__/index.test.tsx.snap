@@ -483,9 +483,44 @@ exports[`Read Only Model Plan Summary matches snapshot 1`] = `
                     class="desktop:grid-col-8"
                     data-testid="grid"
                   >
-                    <h1>
-                      modelBasics
-                    </h1>
+                    <div
+                      class="margin-y-7"
+                    >
+                      <h1
+                        aria-live="polite"
+                        class="mint-h1"
+                        tabindex="-1"
+                      >
+                        This page cannot be found.
+                      </h1>
+                      <p>
+                        Here is a list of things you could try to check and fix:
+                      </p>
+                      <ul
+                        class="mint-not-found__error_suggestions"
+                      >
+                        <li>
+                          Please check if the address you typed in is correct.
+                        </li>
+                        <li>
+                          If you've typed the address correctly, check the spelling.
+                        </li>
+                        <li>
+                          If you've copied and pasted the address, check that you've copied the entire address.
+                        </li>
+                      </ul>
+                      <p
+                        class="margin-bottom-5"
+                      >
+                        If none of the above have solved the problem, please return to the home page and try again.
+                      </p>
+                      <a
+                        class="usa-button"
+                        href="/"
+                      >
+                        Go back to the home page
+                      </a>
+                    </div>
                   </div>
                   <div
                     class="desktop:grid-col-4 sticky-nav"

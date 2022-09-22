@@ -8,47 +8,43 @@ import (
 
 // IBaseTaskListSection returns the embedded BaseTaskListSection
 type IBaseTaskListSection interface {
-	GetBaseTaskListSection() *BaseTaskListSection
+	GetBaseTaskListSection() *baseTaskListSection
 	CalcStatus(TaskStatus) error
 	//methods from BaseStruct
-	GetBaseStruct() *BaseStruct
+	GetBaseStruct() *baseStruct
 	GetID() uuid.UUID
 	GetCreatedBy() string
 	GetModifiedBy() *string
 }
 
-// BaseTaskListSection represents all the shared fields in common to a task list section
-type BaseTaskListSection struct {
-	BaseStruct
-	ModelPlanRelation
+// baseTaskListSection represents all the shared fields in common to a task list section
+type baseTaskListSection struct {
+	baseStruct
+	modelPlanRelation
 	ReadyForReviewBy  *string    `json:"readyForReviewBy" db:"ready_for_review_by"`
 	ReadyForReviewDts *time.Time `json:"readyForReviewDts" db:"ready_for_review_dts"`
 	Status            TaskStatus `json:"status" db:"status"`
 }
 
 // NewBaseTaskListSection makes a task list section by a modelPlanID and euaid
-func NewBaseTaskListSection(modelPlanID uuid.UUID, euaid string) BaseTaskListSection {
+func NewBaseTaskListSection(createdBy string, modelPlanID uuid.UUID) baseTaskListSection {
 
-	return BaseTaskListSection{
-		ModelPlanRelation: ModelPlanRelation{
-			ModelPlanID: modelPlanID,
-		},
+	return baseTaskListSection{
+		modelPlanRelation: NewModelPlanRelation(modelPlanID),
 
-		Status: TaskReady,
-		BaseStruct: BaseStruct{
-			CreatedBy: euaid,
-		},
+		Status:     TaskReady,
+		baseStruct: NewBaseStruct(createdBy),
 	}
 
 }
 
-// GetBaseTaskListSection returns the BaseTaskListSection Object embedded in the struct
-func (b *BaseTaskListSection) GetBaseTaskListSection() *BaseTaskListSection {
+//GetBaseTaskListSection returns the BaseTaskListSection Object embedded in the struct
+func (b *baseTaskListSection) GetBaseTaskListSection() *baseTaskListSection {
 	return b
 }
 
 // CalcStatus updates the TaskStatus if it is in ready, but it has been modified.
-func (b *BaseTaskListSection) CalcStatus(oldStatus TaskStatus) error {
+func (b *baseTaskListSection) CalcStatus(oldStatus TaskStatus) error {
 
 	switch b.Status {
 	case TaskReady:
@@ -74,7 +70,7 @@ func (b *BaseTaskListSection) CalcStatus(oldStatus TaskStatus) error {
 	return nil
 }
 
-// GetModelPlanID returns the modelPlanID of the task list section
-func (b BaseTaskListSection) GetModelPlanID() uuid.UUID {
+//GetModelPlanID returns the modelPlanID of the task list section
+func (b baseTaskListSection) GetModelPlanID() uuid.UUID {
 	return b.ModelPlanID
 }
