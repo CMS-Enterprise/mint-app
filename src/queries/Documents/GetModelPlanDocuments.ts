@@ -14,6 +14,7 @@ export default gql`
         documentType
         createdDts
         optionalNotes
+        otherType
       }
     }
   }

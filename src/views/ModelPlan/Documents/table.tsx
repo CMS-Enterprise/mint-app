@@ -253,6 +253,8 @@ const Table = ({
     ];
   }, [t, handleDownload]);
 
+  console.log(columns);
+
   const {
     getTableProps,
     getTableBodyProps,

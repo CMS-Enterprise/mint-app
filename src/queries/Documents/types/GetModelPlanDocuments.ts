@@ -20,6 +20,7 @@ export interface GetModelPlanDocuments_modelPlan_documents {
   documentType: DocumentType;
   createdDts: Time;
   optionalNotes: string | null;
+  otherType: string | null;
 }
 
 export interface GetModelPlanDocuments_modelPlan {
