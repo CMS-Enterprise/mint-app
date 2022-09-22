@@ -14,7 +14,7 @@ func TestGoSimpleMailService_LoadConfigFromFile(t *testing.T) {
 	config := loadTestMailServiceConfigFromFile(t)
 
 	assert.Equal(t, "127.0.0.1", config.Host)
-	assert.Equal(t, 1025, config.Port)
+	assert.Equal(t, 1030, config.Port)
 }
 
 func loadTestMailServiceConfigFromFile(t *testing.T) oddmail.GoSimpleMailServiceConfig {
