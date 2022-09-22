@@ -16,6 +16,10 @@ export default gql`
         fullName
         teamRole
       }
+      crTdls {
+        id
+        idNumber
+      }
     }
   }
 `;
