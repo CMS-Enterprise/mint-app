@@ -150,6 +150,8 @@ jobs:
         run: |
           scripts/dev down
           scripts/dev up
+      - name: Clear NPM modules
+        run: rm -rf node_modules
       - name: Run Cypress tests
         uses: cypress-io/github-action@v4
       - name: Docker Compose Down
