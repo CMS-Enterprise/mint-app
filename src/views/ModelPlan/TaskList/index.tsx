@@ -257,7 +257,12 @@ const TaskList = () => {
                     />
                   )}
 
-                  <TaskListStatus modelID={modelID} status={status} />
+                  <TaskListStatus
+                    modelID={modelID}
+                    status={status}
+                    updateLabel
+                    statusLabel
+                  />
                   {dicussionBanner()}
                   <SummaryBox
                     heading=""

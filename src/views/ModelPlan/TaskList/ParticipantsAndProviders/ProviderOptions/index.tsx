@@ -50,6 +50,7 @@ import {
   translateProviderAddType,
   translateProviderLeaveType
 } from 'utils/modelPlan';
+import sanitizeStatus from 'utils/status';
 import { NotFoundPartial } from 'views/NotFound';
 
 export const ProviderOptions = () => {
@@ -106,11 +107,16 @@ export const ProviderOptions = () => {
     formikValues: InitialValueType,
     redirect?: 'back' | 'task-list'
   ) => {
-    const { id: updateId, __typename, ...changeValues } = formikValues;
+    const {
+      id: updateId,
+      __typename,
+      status: inputStatus,
+      ...changeValues
+    } = formikValues;
     update({
       variables: {
         id,
-        changes: changeValues
+        changes: { ...changeValues, status: sanitizeStatus(inputStatus) }
       }
     })
       .then(response => {

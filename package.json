@@ -6,7 +6,7 @@
     "@apollo/client": "^3.6.9",
     "@babel/plugin-syntax-class-properties": "^7.12.13",
     "@craco/craco": "^6.0.0",
-    "@cypress/code-coverage": "^3.9.9",
+    "@cypress/code-coverage": "^3.10.0",
     "@okta/okta-auth-js": "^6.1.0",
     "@okta/okta-react": "^6.4.2",
     "@okta/okta-signin-widget": "^6.0.1",
@@ -60,6 +60,7 @@
     "react-redux": "^7.1.1",
     "react-router-dom": "^5.1.2",
     "react-scripts": "^4.0.3",
+    "react-select": "^5.4.0",
     "react-table": "^7.5.1",
     "redux": "^4.0.4",
     "redux-actions": "^2.6.5",
@@ -75,7 +76,7 @@
     "yup": "^0.32.8"
   },
   "scripts": {
-    "start": "craco -r @cypress/instrument-cra start",
+    "start": "craco start",
     "build": "CI=true craco build",
     "build:ts": "tsc",
     "test": "craco test",
@@ -111,8 +112,7 @@
     ]
   },
   "devDependencies": {
-    "@cypress/instrument-cra": "^1.1.0",
-    "@cypress/webpack-preprocessor": "^5.4.1",
+    "@cypress/webpack-preprocessor": "^5.12.2",
     "@storybook/addon-actions": "^6.3.1",
     "@storybook/addon-controls": "^6.3.1",
     "@storybook/addon-essentials": "^6.3.1",
@@ -125,7 +125,7 @@
     "@types/json2csv": "^5.0.3",
     "@wojtekmaj/enzyme-adapter-react-17": "^0.6.2",
     "babel-loader": "8.1.0",
-    "cypress": "7.7.0",
+    "cypress": "^10.7.0",
     "cypress-otp": "^1.0.2",
     "enzyme": "^3.10.0",
     "eslint": "^7.11.0",

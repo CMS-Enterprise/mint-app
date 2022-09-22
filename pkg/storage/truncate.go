@@ -20,6 +20,7 @@ func (s *Store) TruncateAllTablesDANGEROUS(logger *zap.Logger) error {
 	plan_payments,
 	plan_it_tools,
 	plan_favorite,
+	plan_cr_tdl,
     model_plan
 	`
 

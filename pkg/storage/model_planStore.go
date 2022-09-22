@@ -25,8 +25,11 @@ var modelPlanUpdateSQL string
 //go:embed SQL/model_plan_get_by_id.sql
 var modelPlanGetByIDSQL string
 
-//go:embed SQL/model_plan_collection_by_user.sql
-var modelPlanCollectionByUserSQL string
+//go:embed SQL/model_plan_collection.sql
+var modelPlanCollectionSQL string
+
+//go:embed SQL/model_plan_collection_by_collaborator.sql
+var modelPlanCollectionByCollaboratorSQL string
 
 //go:embed SQL/model_plan_delete_by_id.sql
 var modelPlanDeleteByID string
@@ -123,29 +126,58 @@ func (s *Store) ModelPlanGetByID(logger *zap.Logger, id uuid.UUID) (*models.Mode
 
 }
 
-// ModelPlanCollectionByUser returns a list of model plans for a given EUA ID (TODO: Make this go by collaborators, not by createdBy)
-func (s *Store) ModelPlanCollectionByUser(logger *zap.Logger, EUAID string, archived bool) ([]*models.ModelPlan, error) {
+// ModelPlanCollection returns a list of all model plans (whether or not you're a collaborator)
+func (s *Store) ModelPlanCollection(logger *zap.Logger, archived bool) ([]*models.ModelPlan, error) {
 	modelPlans := []*models.ModelPlan{}
 
-	stmt, err := s.db.PrepareNamed(modelPlanCollectionByUserSQL)
+	stmt, err := s.db.PrepareNamed(modelPlanCollectionSQL)
 	if err != nil {
 		return nil, err
 	}
-	arg := map[string]interface{}{"euaID": EUAID,
+	arg := map[string]interface{}{
 		"archived": archived,
 	}
 
-	err = stmt.Select(&modelPlans, arg) //this returns more than one
+	err = stmt.Select(&modelPlans, arg)
 
 	if err != nil {
 		logger.Error(
 			"Failed to fetch model plans",
 			zap.Error(err),
-			zap.String("euaID", EUAID),
 		)
 		return nil, &apperrors.QueryError{
 			Err:       err,
-			Model:     EUAID,
+			Model:     models.ModelPlan{},
+			Operation: apperrors.QueryFetch,
+		}
+	}
+
+	return modelPlans, nil
+}
+
+// ModelPlanCollectionCollaboratorOnly returns a list of all model plans for which the euaID supplied is a collaborator.
+func (s *Store) ModelPlanCollectionCollaboratorOnly(logger *zap.Logger, archived bool, euaID string) ([]*models.ModelPlan, error) {
+	modelPlans := []*models.ModelPlan{}
+
+	stmt, err := s.db.PrepareNamed(modelPlanCollectionByCollaboratorSQL)
+	if err != nil {
+		return nil, err
+	}
+	arg := map[string]interface{}{
+		"archived": archived,
+		"euaID":    euaID,
+	}
+
+	err = stmt.Select(&modelPlans, arg)
+
+	if err != nil {
+		logger.Error(
+			"Failed to fetch model plans",
+			zap.Error(err),
+		)
+		return nil, &apperrors.QueryError{
+			Err:       err,
+			Model:     models.ModelPlan{},
 			Operation: apperrors.QueryFetch,
 		}
 	}

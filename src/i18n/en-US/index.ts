@@ -11,6 +11,7 @@ import participantsAndProviders from './draftModelPlan/participantsAndProviders'
 import payments from './draftModelPlan/payments';
 import generalReadOnly from './readOnly/generalReadOnly';
 import modelSummary from './readOnly/modelSummary';
+import readOnlyModelPlan from './readOnly/readOnlyModelPlan';
 import accessibilityStatement from './accessibilityStatement';
 import auth from './auth';
 import cookies from './cookies';
@@ -21,6 +22,7 @@ import header from './header';
 import home from './home';
 import modelPlan from './modelPlan';
 import modelPlanTaskList from './modelPlanTaskList';
+import nda from './nda';
 import privacyPolicy from './privacyPolicy';
 import tableAndPagination from './tableAndPagination';
 import termsAndConditions from './termsAndConditions';
@@ -43,6 +45,7 @@ const enUS = {
   itTools,
   modelPlan,
   modelPlanTaskList,
+  nda,
   newModel,
   operationsEvaluationAndLearning,
   participantsAndProviders,
@@ -51,7 +54,8 @@ const enUS = {
   tableAndPagination,
   termsAndConditions,
   generalReadOnly,
-  modelSummary
+  modelSummary,
+  readOnlyModelPlan
 };
 
 export default enUS;
