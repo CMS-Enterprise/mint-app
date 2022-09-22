@@ -16,6 +16,12 @@ services:
 
     depends_on:
       - db
+
+  faktory:
+    image: contribsys/faktory:latest
+    ports:
+      - 0.0.0.0:7419:7419
+      - 0.0.0.0:7420:7420
   mint:
     environment:
       - CEDAR_API_KEY
