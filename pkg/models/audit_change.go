@@ -9,6 +9,15 @@ import (
 	"github.com/google/uuid"
 )
 
+// SortDirection represents ASC or DESC for sort directions
+type SortDirection string
+
+// these constants represent the values that the SortDirection enum can take
+const (
+	SortAsc  SortDirection = "ASC"
+	SortDesc SortDirection = "DESC"
+)
+
 // AuditChange represents a change to a table row in the database
 type AuditChange struct {
 	ID          int         `json:"id" db:"id"`
@@ -65,45 +74,5 @@ func (a *AuditFields) Scan(src interface{}) error {
 		return err
 	}
 
-	// var i interface{}
-	// err := json.Unmarshal(source, &i)
-	// if err != nil {
-	// 	return err
-	// }
-	// // audit := AuditFields{}
-
-	// if err != nil {
-	// 	fmt.Println("oh well, nice try")
-	// }
-	// attempt := map[string](map[sting])
-
-	// *a, ok = i.(map[string]AuditField)
-	// // *a, ok = i.(AuditFields)
-	// if !ok {
-	// 	return errors.New("type assertion .(map[string]AuditField{}) failed")
-	// }
-
 	return nil
 }
-
-// func (a *AuditField) Scan(src interface{}) error {
-
-// 	if src == nil {
-// 		return nil //TODO fix this
-// 	}
-// 	source, ok := src.([]byte)
-// 	if !ok {
-// 		return errors.New("type assertion .([]byte) failed")
-// 	}
-// 	var i interface{}
-// 	err := json.Unmarshal(source, &i)
-// 	if err != nil {
-// 		return err
-// 	}
-// 	*a, ok = i.(AuditField)
-// 	if !ok {
-// 		return errors.New("type assertion .(map[string]AuditField{}) failed")
-// 	}
-
-// 	return nil
-// }

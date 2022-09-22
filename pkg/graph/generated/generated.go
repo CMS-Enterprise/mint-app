@@ -134,7 +134,7 @@ type ComplexityRoot struct {
 		ModelName                func(childComplexity int) int
 		ModifiedBy               func(childComplexity int) int
 		ModifiedDts              func(childComplexity int) int
-		NameHistory              func(childComplexity int) int
+		NameHistory              func(childComplexity int, sort models.SortDirection) int
 		OpsEvalAndLearning       func(childComplexity int) int
 		ParticipantsAndProviders func(childComplexity int) int
 		Payments                 func(childComplexity int) int
@@ -749,7 +749,7 @@ type ModelPlanResolver interface {
 	ItTools(ctx context.Context, obj *models.ModelPlan) (*models.PlanITTools, error)
 
 	IsFavorite(ctx context.Context, obj *models.ModelPlan) (bool, error)
-	NameHistory(ctx context.Context, obj *models.ModelPlan) ([]*models.AuditChange, error)
+	NameHistory(ctx context.Context, obj *models.ModelPlan, sort models.SortDirection) ([]string, error)
 }
 type MutationResolver interface {
 	CreateModelPlan(ctx context.Context, modelName string) (*models.ModelPlan, error)
@@ -1335,7 +1335,12 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			break
 		}
 
-		return e.complexity.ModelPlan.NameHistory(childComplexity), true
+		args, err := ec.field_ModelPlan_nameHistory_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.ModelPlan.NameHistory(childComplexity, args["sort"].(models.SortDirection)), true
 
 	case "ModelPlan.opsEvalAndLearning":
 		if e.complexity.ModelPlan.OpsEvalAndLearning == nil {
@@ -5420,6 +5425,10 @@ Maps an arbitrary GraphQL value to a map[string]interface{} Go type.
 """
 scalar Map
 
+enum SortDirection {
+  ASC
+  DESC
+}
 """
 ModelPlan represent the data point for plans about a model. It is the central data type in the application
 """
@@ -5443,7 +5452,7 @@ type ModelPlan {
   itTools: PlanITTools!
   status: ModelStatus!
   isFavorite: Boolean!
-  nameHistory: [AuditChange!]!
+  nameHistory(sort: SortDirection! = DESC): [String!]!
 }
 
 """
@@ -7503,6 +7512,21 @@ func (ec *executionContext) dir_hasRole_args(ctx context.Context, rawArgs map[st
 		}
 	}
 	args["role"] = arg0
+	return args, nil
+}
+
+func (ec *executionContext) field_ModelPlan_nameHistory_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 models.SortDirection
+	if tmp, ok := rawArgs["sort"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("sort"))
+		arg0, err = ec.unmarshalNSortDirection2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐSortDirection(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["sort"] = arg0
 	return args, nil
 }
 
@@ -11682,7 +11706,7 @@ func (ec *executionContext) _ModelPlan_nameHistory(ctx context.Context, field gr
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.ModelPlan().NameHistory(rctx, obj)
+		return ec.resolvers.ModelPlan().NameHistory(rctx, obj, fc.Args["sort"].(models.SortDirection))
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -11694,9 +11718,9 @@ func (ec *executionContext) _ModelPlan_nameHistory(ctx context.Context, field gr
 		}
 		return graphql.Null
 	}
-	res := resTmp.([]*models.AuditChange)
+	res := resTmp.([]string)
 	fc.Result = res
-	return ec.marshalNAuditChange2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐAuditChangeᚄ(ctx, field.Selections, res)
+	return ec.marshalNString2ᚕstringᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) fieldContext_ModelPlan_nameHistory(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
@@ -11706,24 +11730,19 @@ func (ec *executionContext) fieldContext_ModelPlan_nameHistory(ctx context.Conte
 		IsMethod:   true,
 		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "id":
-				return ec.fieldContext_AuditChange_id(ctx, field)
-			case "primaryKey":
-				return ec.fieldContext_AuditChange_primaryKey(ctx, field)
-			case "foreignKey":
-				return ec.fieldContext_AuditChange_foreignKey(ctx, field)
-			case "action":
-				return ec.fieldContext_AuditChange_action(ctx, field)
-			case "fields":
-				return ec.fieldContext_AuditChange_fields(ctx, field)
-			case "modifiedBy":
-				return ec.fieldContext_AuditChange_modifiedBy(ctx, field)
-			case "modifiedDts":
-				return ec.fieldContext_AuditChange_modifiedDts(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type AuditChange", field.Name)
+			return nil, errors.New("field of type String does not have child fields")
 		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_ModelPlan_nameHistory_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return
 	}
 	return fc, nil
 }
@@ -49371,6 +49390,22 @@ func (ec *executionContext) marshalNSelectionMethodType2ᚕgithubᚗcomᚋcmsgov
 	}
 
 	return ret
+}
+
+func (ec *executionContext) unmarshalNSortDirection2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐSortDirection(ctx context.Context, v interface{}) (models.SortDirection, error) {
+	tmp, err := graphql.UnmarshalString(v)
+	res := models.SortDirection(tmp)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalNSortDirection2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐSortDirection(ctx context.Context, sel ast.SelectionSet, v models.SortDirection) graphql.Marshaler {
+	res := graphql.MarshalString(string(v))
+	if res == graphql.Null {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
+	}
+	return res
 }
 
 func (ec *executionContext) unmarshalNStakeholdersType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐStakeholdersType(ctx context.Context, v interface{}) (model.StakeholdersType, error) {

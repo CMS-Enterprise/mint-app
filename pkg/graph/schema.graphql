@@ -29,6 +29,10 @@ Maps an arbitrary GraphQL value to a map[string]interface{} Go type.
 """
 scalar Map
 
+enum SortDirection {
+  ASC
+  DESC
+}
 """
 ModelPlan represent the data point for plans about a model. It is the central data type in the application
 """
@@ -52,7 +56,7 @@ type ModelPlan {
   itTools: PlanITTools!
   status: ModelStatus!
   isFavorite: Boolean!
-  nameHistory: [AuditChange!]!
+  nameHistory(sort: SortDirection! = DESC): [String!]!
 }
 
 """

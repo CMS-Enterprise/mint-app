@@ -103,10 +103,10 @@ func (r *modelPlanResolver) IsFavorite(ctx context.Context, obj *models.ModelPla
 }
 
 // NameHistory is the resolver for the nameHistory field.
-func (r *modelPlanResolver) NameHistory(ctx context.Context, obj *models.ModelPlan) ([]*models.AuditChange, error) {
+func (r *modelPlanResolver) NameHistory(ctx context.Context, obj *models.ModelPlan, sort models.SortDirection) ([]string, error) {
 	logger := appcontext.ZLogger(ctx)
 
-	return resolvers.ModelPlanNameHistory(logger, obj.ID, r.store)
+	return resolvers.ModelPlanNameHistory(logger, obj.ID, sort, r.store)
 }
 
 // CreateModelPlan is the resolver for the createModelPlan field.
