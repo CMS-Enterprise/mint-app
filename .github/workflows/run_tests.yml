@@ -127,81 +127,69 @@ jobs:
           ./scripts/github-action-announce-broken-branch
 
   e2e_tests:
-    if: ${{ false }} # Disabled until we can pull images to test from ECR
+    # if: ${{ false }} # Disabled until we can pull images to test from ECR
     runs-on: ubuntu-latest
     steps:
       - name: Check out code
         uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
         with:
           ref: ${{ env.GIT_HASH }}
-      - name: Set up node
-        uses: actions/setup-node@2fddd8803e2f5c9604345a0b591c3020ee971a93
-        with:
-          node-version: ${{ env.EASI_APP_NODE_VERSION }}
-      - name: Get yarn cache directory path
-        id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn cache dir)"
-      - name: Configure yarn cache
-        uses: actions/cache@a7c34adf76222e77931dedbf4a45b2e4648ced19
-        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
-        with:
-          path: |
-            ${{ steps.yarn-cache-dir-path.outputs.dir }}
-            ./node_modules
-          key: v1-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            v1-yarn-
-      - name: Build frontend code
-        env:
-          REACT_APP_API_ADDRESS: http://easi:8080/api/v1
-          REACT_APP_GRAPHQL_ADDRESS: http://easi:8080/api/graph/query
-          REACT_APP_APP_ENV: test
-          REACT_APP_OKTA_CLIENT_ID: 0oad9awvebnsMwWNa297
-          REACT_APP_OKTA_DOMAIN: https://test.idp.idm.cms.gov
-          REACT_APP_OKTA_SERVER_ID: ausd980kt2CBBzStG297
-          REACT_APP_OKTA_ISSUER: https://test.idp.idm.cms.gov/oauth2/ausd980kt2CBBzStG297
-          REACT_APP_OKTA_REDIRECT_URI: http://localhost:3005/implicit/callback
-          REACT_APP_LOCAL_AUTH_ENABLED: true
-        run: yarn run build
       - name: Login to Docker Hub
         uses: docker/login-action@49ed152c8eca782a232dede0303416e8f356c37b
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@67fbcbb121271f7775d2e7715933280b06314838
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-west-2
-      - name: Login to Amazon ECR
-        id: login-ecr
-        uses: aws-actions/amazon-ecr-login@9149ade017c57f86dea2f76a01f8b2d5bd06b10f
-      - name: Run e2e cypress tests
-        env:
-          APP_ENV: test
-          AWS_SES_SOURCE_ARN: ${{ secrets.AWS_SES_SOURCE_ARN }}
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          OKTA_TEST_PASSWORD: ${{ secrets.OKTA_TEST_PASSWORD }}
-          OKTA_TEST_SECRET: ${{ secrets.OKTA_TEST_SECRET }}
-          OKTA_TEST_USERNAME: ${{ secrets.OKTA_TEST_USERNAME }}
+
+      - name: Set env vars with direnv
+        uses: HatsuneMiku3939/direnv-action@v1
+      - name: Get docker images
+        run: docker-compose pull
+      - name: Docker Layer Caching
+        uses: satackey/action-docker-layer-caching@v0.0.11
+      - name: Run backend server tests
         run: |
-          ./scripts/run-cypress-test-docker
-      - name: Upload cypress videos
-        if: ${{ always() }}
-        uses: actions/upload-artifact@3cea5372237819ed00197afe530f5a7ea3e805c8
-        with:
-          name: cypress-videos
-          path: cypress/videos
-          retention-days: 14
-      - name: Upload cypress screenshots
-        if: ${{ always() }}
-        uses: actions/upload-artifact@3cea5372237819ed00197afe530f5a7ea3e805c8
-        with:
-          name: cypress-screenshots
-          path: cypress/screenshots
-          if-no-files-found: ignore
-          retention-days: 14
+          scripts/dev down
+          scripts/dev up:backend
+          scripts/dev test:go
+      - name: Docker Compose Down
+        if: always() # Always spin down the container
+        run: |
+          scripts/dev down
+
+      # - name: Configure AWS credentials
+      #   uses: aws-actions/configure-aws-credentials@67fbcbb121271f7775d2e7715933280b06314838
+      #   with:
+      #     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      #     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      #     aws-region: us-west-2
+      # - name: Login to Amazon ECR
+      #   id: login-ecr
+      #   uses: aws-actions/amazon-ecr-login@9149ade017c57f86dea2f76a01f8b2d5bd06b10f
+      # - name: Run e2e cypress tests
+      #   env:
+      #     APP_ENV: test
+      #     AWS_SES_SOURCE_ARN: ${{ secrets.AWS_SES_SOURCE_ARN }}
+      #     ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+      #     OKTA_TEST_PASSWORD: ${{ secrets.OKTA_TEST_PASSWORD }}
+      #     OKTA_TEST_SECRET: ${{ secrets.OKTA_TEST_SECRET }}
+      #     OKTA_TEST_USERNAME: ${{ secrets.OKTA_TEST_USERNAME }}
+      #   run: |
+      #     ./scripts/run-cypress-test-docker
+      # - name: Upload cypress videos
+      #   if: ${{ always() }}
+      #   uses: actions/upload-artifact@3cea5372237819ed00197afe530f5a7ea3e805c8
+      #   with:
+      #     name: cypress-videos
+      #     path: cypress/videos
+      #     retention-days: 14
+      # - name: Upload cypress screenshots
+      #   if: ${{ always() }}
+      #   uses: actions/upload-artifact@3cea5372237819ed00197afe530f5a7ea3e805c8
+      #   with:
+      #     name: cypress-screenshots
+      #     path: cypress/screenshots
+      #     if-no-files-found: ignore
+      #     retention-days: 14
       - name: Announce failure
         if: ${{ failure() }}
         run: |
