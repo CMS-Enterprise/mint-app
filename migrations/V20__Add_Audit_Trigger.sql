@@ -15,6 +15,7 @@ DECLARE
     h_changed HSTORE;
     h_changedOld HSTORE;
     unchanged_keys text[] = ARRAY[]::text[];
+    diff_keys text[] = ARRAY[]::text[];
     changeJSON JSONB;
 BEGIN
 
@@ -43,7 +44,15 @@ BEGIN
 
     h_new= hstore(NEW.*);
     h_old= hstore(OLD.*);
-    h_changed = (h_new - h_old) - excluded_cols; --remove matching values and excluded columns
+
+    diff_keys = (akeys(h_new - insert_cols)); --these are the keys to subract from all the keys on insert or deleted
+    IF TG_OP = 'INSERT' OR TG_OP = 'DELETE' THEN
+        h_changed = (h_new -h_old) -diff_keys; --remove matching values, and only  show specific columns for insert /delete
+    ELSE
+        h_changed = (h_new - h_old) - excluded_cols; --remove matching values and excluded columns
+    END If;
+
+
     unchanged_keys = akeys(h_old - akeys(h_changed));
     h_changedOld = h_old - unchanged_keys;
 
