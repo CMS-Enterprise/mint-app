@@ -146,11 +146,12 @@ jobs:
         run: docker-compose pull
       - name: Docker Layer Caching
         uses: satackey/action-docker-layer-caching@v0.0.11
-      - name: Run backend server tests
+      - name: Start backend and frontend containers
         run: |
           scripts/dev down
-          scripts/dev up:backend
-          scripts/dev test:go
+          scripts/dev up
+      - name: Run Cypress tests
+        uses: cypress-io/github-action@v4
       - name: Docker Compose Down
         if: always() # Always spin down the container
         run: |
