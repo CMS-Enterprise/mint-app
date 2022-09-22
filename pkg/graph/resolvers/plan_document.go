@@ -15,15 +15,7 @@ import (
 
 // PlanDocumentCreate implements resolver logic to upload the specified file to S3 and create a matching plan document entity in the database.
 func PlanDocumentCreate(logger *zap.Logger, input model.PlanDocumentInput, principal authentication.Principal, store *storage.Store, s3Client *upload.S3Client) (*models.PlanDocument, error) {
-	document := models.NewPlanDocument(principal.ID(), input.ModelPlanID)
-	document.FileType = input.FileData.ContentType
-	document.Bucket = *s3Client.GetBucket()
-	document.FileKey = uuid.NewString()
-	document.FileName = input.FileData.Filename
-	document.FileSize = int(input.FileData.Size)
-	document.DocumentType = input.DocumentType
-	document.OtherTypeDescription = zero.StringFromPtr(input.OtherTypeDescription)
-	document.OptionalNotes = zero.StringFromPtr(input.OptionalNotes)
+	document := models.NewPlanDocument(principal.ID(), input.ModelPlanID, input.FileData.ContentType, *s3Client.GetBucket(), uuid.NewString(), input.FileData.Filename, int(input.FileData.Size), input.DocumentType, zero.StringFromPtr(input.OtherTypeDescription), zero.StringFromPtr(input.OptionalNotes))
 
 	err := BaseStructPreCreate(logger, document, principal, store, true)
 	if err != nil {
