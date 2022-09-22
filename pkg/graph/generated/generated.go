@@ -789,7 +789,7 @@ type PlanDiscussionResolver interface {
 }
 type PlanDocumentResolver interface {
 	OtherType(ctx context.Context, obj *models.PlanDocument) (*string, error)
-
+	OptionalNotes(ctx context.Context, obj *models.PlanDocument) (*string, error)
 	DownloadURL(ctx context.Context, obj *models.PlanDocument) (*string, error)
 }
 type PlanGeneralCharacteristicsResolver interface {
@@ -19364,7 +19364,7 @@ func (ec *executionContext) _PlanDocument_optionalNotes(ctx context.Context, fie
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.OptionalNotes, nil
+		return ec.resolvers.PlanDocument().OptionalNotes(rctx, obj)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -19382,8 +19382,8 @@ func (ec *executionContext) fieldContext_PlanDocument_optionalNotes(ctx context.
 	fc = &graphql.FieldContext{
 		Object:     "PlanDocument",
 		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
+		IsMethod:   true,
+		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type String does not have child fields")
 		},
@@ -40915,9 +40915,22 @@ func (ec *executionContext) _PlanDocument(ctx context.Context, sel ast.Selection
 
 			})
 		case "optionalNotes":
+			field := field
 
-			out.Values[i] = ec._PlanDocument_optionalNotes(ctx, field, obj)
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._PlanDocument_optionalNotes(ctx, field, obj)
+				return res
+			}
 
+			out.Concurrently(i, func() graphql.Marshaler {
+				return innerFunc(ctx)
+
+			})
 		case "downloadUrl":
 			field := field
 

@@ -2,6 +2,7 @@ package resolvers
 
 import (
 	"github.com/google/uuid"
+	"github.com/guregu/null/zero"
 	"go.uber.org/zap"
 
 	"github.com/cmsgov/mint-app/pkg/authentication"
@@ -21,8 +22,8 @@ func PlanDocumentCreate(logger *zap.Logger, input model.PlanDocumentInput, princ
 	document.FileName = input.FileData.Filename
 	document.FileSize = int(input.FileData.Size)
 	document.DocumentType = input.DocumentType
-	document.OtherTypeDescription = input.OtherTypeDescription
-	document.OptionalNotes = input.OptionalNotes
+	document.OtherTypeDescription = zero.StringFromPtr(input.OtherTypeDescription)
+	document.OptionalNotes = zero.StringFromPtr(input.OptionalNotes)
 
 	err := BaseStructPreCreate(logger, document, principal, store, true)
 	if err != nil {

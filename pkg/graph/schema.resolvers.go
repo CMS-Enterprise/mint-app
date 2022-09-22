@@ -370,7 +370,12 @@ func (r *planDiscussionResolver) Replies(ctx context.Context, obj *models.PlanDi
 
 // OtherType is the resolver for the otherType field.
 func (r *planDocumentResolver) OtherType(ctx context.Context, obj *models.PlanDocument) (*string, error) {
-	return obj.OtherTypeDescription, nil
+	return obj.OtherTypeDescription.Ptr(), nil
+}
+
+// OptionalNotes is the resolver for the optionalNotes field.
+func (r *planDocumentResolver) OptionalNotes(ctx context.Context, obj *models.PlanDocument) (*string, error) {
+	return obj.OptionalNotes.Ptr(), nil
 }
 
 // DownloadURL is the resolver for the downloadUrl field.
