@@ -61,7 +61,7 @@ const Table = ({ data, updateFavorite }: ModelPlansTableProps) => {
               className="display-block"
               unstyled
             >
-              <IconStar size={3} />
+              <IconStar data-cy="favorited" size={3} />
             </Button>
           ) : (
             <Button
@@ -71,7 +71,11 @@ const Table = ({ data, updateFavorite }: ModelPlansTableProps) => {
               className="display-block"
               unstyled
             >
-              <IconStarOutline size={3} className="text-gray-30" />
+              <IconStarOutline
+                data-cy="unfavorited"
+                size={3}
+                className="text-gray-30"
+              />
             </Button>
           );
         }
