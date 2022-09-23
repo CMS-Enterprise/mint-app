@@ -36,10 +36,3 @@ BEGIN
 
 END
 $body$ LANGUAGE plpgsql;
-
-
-SELECT audit.audit_table('public', 'plan_basics', 'id', 'model_plan_id', '{created_by,created_dts,modified_by,modified_dts}'::TEXT[], '{}'::TEXT[]);
-
-
-
-SELECT audit.audit_table('public', 'model_plan', 'id', NULL, '{created_by,created_dts,modified_by,modified_dts}'::TEXT[], '{model_name}'::TEXT[]);
