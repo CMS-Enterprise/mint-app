@@ -268,15 +268,12 @@ describe('The Model Plan Form', () => {
   it('favorites and unfavorites a model plan', () => {
     cy.visit('/models');
 
-    cy.get('[data-testid="53054496-6d1f-47f5-b6a0-1edaf73b935e"]').click();
-
-    cy.get('[data-testid="Empty Plan"]').contains('Empty Plan');
-
-    cy.get('[data-testid="Empty Plan"] button').click();
-
-    cy.get('[data-testid="53054496-6d1f-47f5-b6a0-1edaf73b935e"] svg').should(
-      'have.class',
-      'text-gray-30'
+    cy.contains('tr', 'Empty Plan').find(
+      'th button svg[data-cy="unfavorited"]'
     );
+
+    cy.contains('tr', 'Empty Plan').find('th button').click();
+
+    cy.contains('tr', 'Empty Plan').find('th button svg[data-cy="favorited"]');
   });
 });
