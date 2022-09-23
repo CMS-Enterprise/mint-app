@@ -6,10 +6,10 @@
 import { ModelCategory, CMSCenter, CMMIGroup, ModelType, TaskStatus, BeneficiariesType, TriStateAnswer, FrequencyType, OverlapType, ConfidenceType, SelectionMethodType, DiscussionStatus, TeamRole, AuthorityAllowance, WaiverType, AlternativePaymentModelType, KeyCharacteristic, GeographyType, GeographyApplication, AgreementType, GcPartCDType, GcCollectBidsType, GcUpdateContractType, PpToAdvertiseType, PpCollectScoreReviewType, PpAppSupportContractorType, PpCommunicateWithParticipantType, PpManageProviderOverlapType, BManageBeneficiaryOverlapType, OelHelpdeskSupportType, OelManageAcoType, OelPerformanceBenchmarkType, OelProcessAppealsType, OelEvaluationContractorType, OelCollectDataType, OelObtainDataType, OelClaimsBasedMeasuresType, OelQualityScoresType, OelSendReportsType, OelLearningContractorType, OelParticipantCollaborationType, OelEducateBeneficiariesType, PMakeClaimsPaymentsType, PInformFfsType, PNonClaimsBasedPaymentsType, PSharedSavingsPlanType, PRecoverPaymentsType, CcmInvolvmentType, DataStartsType, DataFrequencyType, EvaluationApproachType, DataForMonitoringType, DataToSendParticipantsType, DataFullTimeOrIncrementalType, MonitoringFileType, ModelLearningSystemType, AgencyOrStateHelpType, StakeholdersType, ContractorSupportType, BenchmarkForPerformanceType, ParticipantCommunicationType, ParticipantRiskType, ParticipantsIDType, RecruitmentType, ParticipantSelectionType, ParticipantsType, ProviderAddType, ProviderLeaveType, PayType, ClaimsBasedPayType, ComplexityCalculationLevelType, AnticipatedPaymentFrequencyType, FundingSource, PayRecipient, NonClaimsBasedPayType, ModelStatus } from "./../../types/graphql-global-types";
 
 // ====================================================
-// GraphQL query operation: GetAllModelPlans
+// GraphQL query operation: GetAllModelData
 // ====================================================
 
-export interface GetAllModelPlans_modelPlanCollection_basics {
+export interface GetAllModelData_modelPlanCollection_basics {
   __typename: "PlanBasics";
   id: UUID;
   modelCategory: ModelCategory | null;
@@ -42,7 +42,7 @@ export interface GetAllModelPlans_modelPlanCollection_basics {
   status: TaskStatus;
 }
 
-export interface GetAllModelPlans_modelPlanCollection_beneficiaries {
+export interface GetAllModelData_modelPlanCollection_beneficiaries {
   __typename: "PlanBeneficiaries";
   id: UUID;
   beneficiaries: BeneficiariesType[];
@@ -71,7 +71,7 @@ export interface GetAllModelPlans_modelPlanCollection_beneficiaries {
   beneficiarySelectionMethod: SelectionMethodType[];
 }
 
-export interface GetAllModelPlans_modelPlanCollection_discussions_replies {
+export interface GetAllModelData_modelPlanCollection_discussions_replies {
   __typename: "DiscussionReply";
   id: UUID;
   discussionID: UUID;
@@ -81,17 +81,17 @@ export interface GetAllModelPlans_modelPlanCollection_discussions_replies {
   resolution: boolean | null;
 }
 
-export interface GetAllModelPlans_modelPlanCollection_discussions {
+export interface GetAllModelData_modelPlanCollection_discussions {
   __typename: "PlanDiscussion";
   id: UUID;
   content: string | null;
   createdBy: string;
   createdDts: Time;
   status: DiscussionStatus;
-  replies: GetAllModelPlans_modelPlanCollection_discussions_replies[];
+  replies: GetAllModelData_modelPlanCollection_discussions_replies[];
 }
 
-export interface GetAllModelPlans_modelPlanCollection_collaborators {
+export interface GetAllModelData_modelPlanCollection_collaborators {
   __typename: "PlanCollaborator";
   id: UUID;
   fullName: string;
@@ -102,7 +102,7 @@ export interface GetAllModelPlans_modelPlanCollection_collaborators {
   createdDts: Time;
 }
 
-export interface GetAllModelPlans_modelPlanCollection_generalCharacteristics {
+export interface GetAllModelData_modelPlanCollection_generalCharacteristics {
   __typename: "PlanGeneralCharacteristics";
   id: UUID;
   rulemakingRequired: boolean | null;
@@ -161,7 +161,7 @@ export interface GetAllModelPlans_modelPlanCollection_generalCharacteristics {
   multiplePatricipationAgreementsNeededNote: string | null;
 }
 
-export interface GetAllModelPlans_modelPlanCollection_itTools {
+export interface GetAllModelData_modelPlanCollection_itTools {
   __typename: "PlanITTools";
   id: UUID;
   gcPartCD: GcPartCDType[];
@@ -247,7 +247,7 @@ export interface GetAllModelPlans_modelPlanCollection_itTools {
   pRecoverPaymentsNote: string | null;
 }
 
-export interface GetAllModelPlans_modelPlanCollection_opsEvalAndLearning {
+export interface GetAllModelData_modelPlanCollection_opsEvalAndLearning {
   __typename: "PlanOpsEvalAndLearning";
   id: UUID;
   ccmInvolvment: CcmInvolvmentType[];
@@ -348,7 +348,7 @@ export interface GetAllModelPlans_modelPlanCollection_opsEvalAndLearning {
   appealNote: string | null;
 }
 
-export interface GetAllModelPlans_modelPlanCollection_participantsAndProviders {
+export interface GetAllModelData_modelPlanCollection_participantsAndProviders {
   __typename: "PlanParticipantsAndProviders";
   id: UUID;
   communicationMethod: ParticipantCommunicationType[];
@@ -402,7 +402,7 @@ export interface GetAllModelPlans_modelPlanCollection_participantsAndProviders {
   status: TaskStatus;
 }
 
-export interface GetAllModelPlans_modelPlanCollection_payments {
+export interface GetAllModelData_modelPlanCollection_payments {
   __typename: "PlanPayments";
   id: UUID;
   payType: PayType[];
@@ -469,7 +469,7 @@ export interface GetAllModelPlans_modelPlanCollection_payments {
   status: TaskStatus;
 }
 
-export interface GetAllModelPlans_modelPlanCollection {
+export interface GetAllModelData_modelPlanCollection {
   __typename: "ModelPlan";
   id: UUID;
   modelName: string;
@@ -478,18 +478,18 @@ export interface GetAllModelPlans_modelPlanCollection {
   createdDts: Time;
   modifiedBy: string | null;
   modifiedDts: Time | null;
-  basics: GetAllModelPlans_modelPlanCollection_basics;
-  beneficiaries: GetAllModelPlans_modelPlanCollection_beneficiaries;
-  discussions: GetAllModelPlans_modelPlanCollection_discussions[];
-  collaborators: GetAllModelPlans_modelPlanCollection_collaborators[];
-  generalCharacteristics: GetAllModelPlans_modelPlanCollection_generalCharacteristics;
-  itTools: GetAllModelPlans_modelPlanCollection_itTools;
-  opsEvalAndLearning: GetAllModelPlans_modelPlanCollection_opsEvalAndLearning;
-  participantsAndProviders: GetAllModelPlans_modelPlanCollection_participantsAndProviders;
-  payments: GetAllModelPlans_modelPlanCollection_payments;
+  basics: GetAllModelData_modelPlanCollection_basics;
+  beneficiaries: GetAllModelData_modelPlanCollection_beneficiaries;
+  discussions: GetAllModelData_modelPlanCollection_discussions[];
+  collaborators: GetAllModelData_modelPlanCollection_collaborators[];
+  generalCharacteristics: GetAllModelData_modelPlanCollection_generalCharacteristics;
+  itTools: GetAllModelData_modelPlanCollection_itTools;
+  opsEvalAndLearning: GetAllModelData_modelPlanCollection_opsEvalAndLearning;
+  participantsAndProviders: GetAllModelData_modelPlanCollection_participantsAndProviders;
+  payments: GetAllModelData_modelPlanCollection_payments;
   status: ModelStatus;
 }
 
-export interface GetAllModelPlans {
-  modelPlanCollection: GetAllModelPlans_modelPlanCollection[];
+export interface GetAllModelData {
+  modelPlanCollection: GetAllModelData_modelPlanCollection[];
 }

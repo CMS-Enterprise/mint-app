@@ -4,15 +4,15 @@ import { useLazyQuery } from '@apollo/client';
 import { IconFileDownload } from '@trussworks/react-uswds';
 import { Parser, transforms } from 'json2csv';
 
-import GetAllModelPlans from 'queries/GetAllModelPlans';
+import GetAllModelPlans from 'queries/GetAllModelData';
 import {
-  GetAllModelPlans as GetAllModelPlansType,
-  GetAllModelPlans_modelPlanCollection as AllModelPlansType
-} from 'queries/types/GetAllModelPlans';
+  GetAllModelData as GetAllModelDataType,
+  GetAllModelData_modelPlanCollection as AllModelDataType
+} from 'queries/types/GetAllModelData';
 
 import { csvFields, fieldsToUnwind } from './CsvData';
 
-const csvFormatter = (csvData: AllModelPlansType[]) => {
+const csvFormatter = (csvData: AllModelDataType[]) => {
   try {
     const transform = [
       transforms.unwind({ paths: fieldsToUnwind, blankOut: true })
@@ -44,7 +44,7 @@ const downloadFile = (data: string) => {
 export const CsvExportLink = (): React.ReactElement => {
   const { t } = useTranslation('home');
 
-  const [fetchModelCSVData] = useLazyQuery<GetAllModelPlansType>(
+  const [fetchModelCSVData] = useLazyQuery<GetAllModelDataType>(
     GetAllModelPlans
   );
 
