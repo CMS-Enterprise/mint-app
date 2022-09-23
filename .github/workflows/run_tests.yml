@@ -68,6 +68,13 @@ jobs:
         run: docker-compose pull
       - name: Docker Layer Caching
         uses: satackey/action-docker-layer-caching@v0.0.11
+        # Why does this step need to be done, you ask?
+        # docker-compose, by default, allows referenceing other containers in the same network by name, i.e. "minio:9005".
+        # Since the tests are being run outside docker, we need to ensure that the host "minio" is reachable, just like it is in the container.
+        # There's probably a better way to ensure that discrepencies like this don't occur, but this is what is easiest to implement right now, and hey...
+        # Who doesn't like reading a comment like this?
+      - name: Add "minio" to /etc/hosts
+        run: sudo scripts/dev hosts:install
       - name: Run backend server tests
         run: |
           scripts/dev down
