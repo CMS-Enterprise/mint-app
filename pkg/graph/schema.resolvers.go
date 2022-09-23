@@ -208,7 +208,7 @@ func (r *mutationResolver) UploadNewPlanDocument(ctx context.Context, input mode
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 
-	planDocument, err := resolvers.PlanDocumentCreate(logger, input, principal, r.store, r.s3Client)
+	planDocument, err := resolvers.PlanDocumentCreate(logger, &input, principal, r.store, r.s3Client)
 	return planDocument, err
 }
 
@@ -380,14 +380,7 @@ func (r *planDocumentResolver) OptionalNotes(ctx context.Context, obj *models.Pl
 
 // DownloadURL is the resolver for the downloadUrl field.
 func (r *planDocumentResolver) DownloadURL(ctx context.Context, obj *models.PlanDocument) (*string, error) {
-	logger := appcontext.ZLogger(ctx)
-
-	document, err := resolvers.PlanDocumentRead(logger, r.store, r.s3Client, obj.ID)
-	if err != nil {
-		return nil, err
-	}
-
-	url, err := r.s3Client.NewGetPresignedURL(document.FileKey)
+	url, err := r.s3Client.NewGetPresignedURL(obj.FileKey)
 	if err != nil {
 		return nil, err
 	}

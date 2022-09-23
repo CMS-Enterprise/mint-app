@@ -14,7 +14,7 @@ func (suite *ResolverSuite) TestPlanDocumentCreate() {
 
 	reader := bytes.NewReader([]byte("Some test file contents"))
 
-	input := model.PlanDocumentInput{
+	input := &model.PlanDocumentInput{
 		ModelPlanID: plan.ID,
 		FileData: graphql.Upload{
 			File:        reader,
@@ -50,7 +50,7 @@ func (suite *ResolverSuite) TestPlanDocumentCreateOtherType() {
 	otherTypeDescription := "Dog Document (A document about a dog)"
 	optionalNotes := "The dog's name is mortimer. Keep that in mind while reading"
 
-	input := model.PlanDocumentInput{
+	input := &model.PlanDocumentInput{
 		ModelPlanID: plan.ID,
 		FileData: graphql.Upload{
 			File:        reader,

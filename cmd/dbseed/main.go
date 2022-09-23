@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/guregu/null/zero"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	"go.uber.org/zap"
@@ -12,6 +13,7 @@ import (
 	"github.com/cmsgov/mint-app/pkg/graph/model"
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/storage"
+	"github.com/cmsgov/mint-app/pkg/upload"
 
 	ld "gopkg.in/launchdarkly/go-server-sdk.v5"
 )
@@ -38,9 +40,17 @@ func main() {
 
 // getResolverDependencies takes a Viper config and returns a Store and Logger object to be used
 // by various resolver functions.
-func getResolverDependencies(config *viper.Viper) (*storage.Store, *zap.Logger) {
+func getResolverDependencies(config *viper.Viper) (*storage.Store, *zap.Logger, *upload.S3Client) {
+	// Create the logger
 	logger := zap.NewNop()
 
+	// Create LD Client, which is required for creating the store
+	ldClient, err := ld.MakeCustomClient("fake", ld.Config{Offline: true}, 0)
+	if err != nil {
+		panic(err)
+	}
+
+	// Create the DB Config & Store
 	dbConfig := storage.DBConfig{
 		Host:           config.GetString(appconfig.DBHostConfigKey),
 		Port:           config.GetString(appconfig.DBPortConfigKey),
@@ -50,18 +60,22 @@ func getResolverDependencies(config *viper.Viper) (*storage.Store, *zap.Logger) 
 		SSLMode:        config.GetString(appconfig.DBSSLModeConfigKey),
 		MaxConnections: config.GetInt(appconfig.DBMaxConnections),
 	}
-	ldClient, err := ld.MakeCustomClient("fake", ld.Config{Offline: true}, 0)
-	if err != nil {
-		panic(err)
-	}
-
 	store, err := storage.NewStore(logger, dbConfig, ldClient)
 	if err != nil {
 		fmt.Printf("Failed to get new database: %v", err)
 		panic(err)
 	}
 
-	return store, logger
+	// Create S3 client
+	s3Cfg := upload.Config{
+		Bucket:  config.GetString(appconfig.AWSS3FileUploadBucket),
+		Region:  config.GetString(appconfig.AWSRegion),
+		IsLocal: true,
+	}
+
+	s3Client := upload.NewS3Client(s3Cfg)
+
+	return store, logger, &s3Client
 
 }
 
@@ -70,7 +84,7 @@ func getResolverDependencies(config *viper.Viper) (*storage.Store, *zap.Logger) 
 // NOTE: Some of this data _is_ relied on by Cypress tests, but most of it is freely editable.
 func seedData(config *viper.Viper) {
 	// Get dependencies for resolvers (store and logger)
-	store, logger := getResolverDependencies(config)
+	store, logger, s3Client := getResolverDependencies(config)
 
 	// Seed an empty plan
 	createModelPlan(store, logger, "Empty Plan", "MINT")
@@ -121,4 +135,10 @@ func seedData(config *viper.Viper) {
 	updateModelPlan(store, logger, archivedPlan, map[string]interface{}{
 		"archived": true,
 	})
+
+	// Seed a plan with some documents
+	planWithDocuments := createModelPlan(store, logger, "Plan with Documents", "MINT")
+	_ = planDocumentCreate(store, logger, s3Client, planWithDocuments, "File (Unscanned)", "cmd/dbseed/data/sample.pdf", "application/pdf", models.DocumentTypeConceptPaper, nil, nil, false, false)
+	_ = planDocumentCreate(store, logger, s3Client, planWithDocuments, "File (Scanned - No Virus)", "cmd/dbseed/data/sample.pdf", "application/pdf", models.DocumentTypeMarketResearch, nil, zero.StringFrom("Company Presentation").Ptr(), true, false)
+	_ = planDocumentCreate(store, logger, s3Client, planWithDocuments, "File (Scanned - Virus Found)", "cmd/dbseed/data/sample.pdf", "application/pdf", models.DocumentTypeOther, zero.StringFrom("Trojan Horse").Ptr(), nil, true, true)
 }
