@@ -24,6 +24,12 @@ Time values are represented as strings using RFC3339 format, for example 2019-10
 scalar Time
 
 """
+https://gqlgen.com/reference/file-upload/
+Represents a multipart file upload
+"""
+scalar Upload
+
+"""
 ModelPlan represent the data point for plans about a model. It is the central data type in the application
 """
 type ModelPlan {
@@ -126,22 +132,6 @@ input PlanCollaboratorCreateInput {
 }
 
 """
-Input associated with a document to be uploaded
-"""
-input GeneratePresignedUploadURLInput {
-  fileName: String!
-  mimeType: String!
-  size: Int!
-}
-
-"""
-URL generated for a document to be uploaded
-"""
-type GeneratePresignedUploadURLPayload {
-  url: String
-}
-
-"""
 PlanDocument represents a document on a plan
 """
 type PlanDocument {
@@ -157,6 +147,7 @@ type PlanDocument {
   documentType: DocumentType!
   otherType: String
   optionalNotes: String
+  downloadUrl: String
   deletedAt: Time
   createdBy: String!
   createdDts: Time!
@@ -164,34 +155,16 @@ type PlanDocument {
   modifiedDts: Time
 }
 
+
 """
-PlanDocumentInput represents the data required to create, modify, or delete a document on a plan
+PlanDocumentInput
 """
 input PlanDocumentInput {
-  id: UUID
   modelPlanID: UUID!
-  documentParameters: PlanDocumentParameters!
-  url: String
-}
-
-"""
-PlanDocumentCreateParameters represents the specific data required to create or modify a document on a plan
-"""
-input PlanDocumentParameters {
-  fileName: String
-  fileSize: Int!
-  fileType: String
-  documentType: DocumentType
+  fileData: Upload!
+  documentType: DocumentType!
   otherTypeDescription: String
   optionalNotes: String
-}
-
-"""
-PlanDocumentPayload represents the response to a document request
-"""
-type PlanDocumentPayload {
-  document: PlanDocument
-  presignedURL: String
 }
 
 """
@@ -1366,8 +1339,6 @@ type Query {
   currentUser: CurrentUser!
   modelPlan(id: UUID!): ModelPlan!
   planDocument(id: UUID!): PlanDocument!
-  planDocumentDownloadURL(id: UUID!): PlanDocumentPayload!
-  readPlanDocumentByModelID(id: UUID!): [PlanDocument!]!
   modelPlanCollection(includeAll: Boolean! = false): [ModelPlan!]!
   existingModelCollection: [ExistingModel!]!
   cedarPersonsByCommonName(commonName: String!): [UserInfo!]!
@@ -1415,16 +1386,10 @@ updatePlanItTools(id: UUID!, changes:PlanITToolsChanges!): PlanITTools!
 updatePlanOpsEvalAndLearning(id: UUID!, changes: PlanOpsEvalAndLearningChanges!): PlanOpsEvalAndLearning!
 @hasRole(role: MINT_USER)
 
-generatePresignedUploadURL(input: GeneratePresignedUploadURLInput!): GeneratePresignedUploadURLPayload!
+uploadNewPlanDocument(input: PlanDocumentInput!): PlanDocument!
 @hasRole(role: MINT_USER)
 
-createPlanDocument(input: PlanDocumentInput!): PlanDocumentPayload!
-@hasRole(role: MINT_USER)
-
-updatePlanDocument(input: PlanDocumentInput!): PlanDocumentPayload!
-@hasRole(role: MINT_USER)
-
-deletePlanDocument(input: PlanDocumentInput!): Int!
+deletePlanDocument(id: UUID!): Int!
 @hasRole(role: MINT_USER)
 
 createPlanDiscussion(input: PlanDiscussionCreateInput!): PlanDiscussion!
