@@ -45,6 +45,6 @@ func NewPlanDocument(createdBy string, modelPlanID uuid.UUID, fileType string, b
 		// Defaults
 		VirusScanned: false,
 		VirusClean:   false,
-		DeletedAt:    nil,
+		DeletedAt:    nil, //TODO: What does this field even do?
 	}
 }

@@ -32,7 +32,7 @@ func PlanDocumentCreate(logger *zap.Logger, input model.PlanDocumentInput, princ
 		return nil, genericmodel.HandleModelUpdateError(logger, err, document)
 	}
 
-	return &models.PlanDocument{}, nil
+	return document, nil
 }
 
 // PlanDocumentRead implements resolver logic to fetch a plan document object by ID
