@@ -74,7 +74,7 @@ jobs:
         # There's probably a better way to ensure that discrepencies like this don't occur, but this is what is easiest to implement right now, and hey...
         # Who doesn't like reading a comment like this?
       - name: Add "minio" to /etc/hosts
-        run: sudo scripts/dev hosts:install
+        run: sudo echo "127.0.0.1 minio" | sudo tee -a /etc/hosts
       - name: Run backend server tests
         run: |
           scripts/dev down
