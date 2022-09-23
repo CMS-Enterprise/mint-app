@@ -37,26 +37,24 @@ func (s *Store) PlanDocumentCreate(
 	logger *zap.Logger,
 	principal string,
 	inputDocument *models.PlanDocument,
-	documentURL *string,
 	s3Client *upload.S3Client) (*models.PlanDocument, error) {
 
 	inputDocument.ID = utilityUUID.ValueOrNewUUID(inputDocument.ID)
-	retDoc := models.PlanDocument{}
+	inputDocument.ModifiedBy = nil
+	inputDocument.ModifiedDts = nil
 
+	retDoc := &models.PlanDocument{}
 	statement, err := s.db.PrepareNamed(planDocumentCreateSQL)
 	if err != nil {
 		return nil, genericmodel.HandleModelCreationError(logger, err, inputDocument)
 	}
 
-	inputDocument.ModifiedBy = nil
-	inputDocument.ModifiedDts = nil
-
-	err = statement.Get(&retDoc, &inputDocument)
+	err = statement.Get(retDoc, inputDocument)
 	if err != nil {
-		return nil, genericmodel.HandleModelCreationError(logger, err, &retDoc)
+		return nil, genericmodel.HandleModelCreationError(logger, err, retDoc)
 	}
 
-	return &retDoc, nil
+	return retDoc, nil
 }
 
 // PlanDocumentRead reads a plan document object by id

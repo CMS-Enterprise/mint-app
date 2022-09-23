@@ -203,45 +203,21 @@ func (r *mutationResolver) UpdatePlanOpsEvalAndLearning(ctx context.Context, id 
 	return resolvers.PlanOpsEvalAndLearningUpdate(logger, id, changes, principal, r.store)
 }
 
-// GeneratePresignedUploadURL is the resolver for the generatePresignedUploadURL field.
-func (r *mutationResolver) GeneratePresignedUploadURL(ctx context.Context, input model.GeneratePresignedUploadURLInput) (*model.GeneratePresignedUploadURLPayload, error) {
-	url, err := r.s3Client.NewPutPresignedURL(input.MimeType)
-	if err != nil {
-		return nil, err
-	}
-
-	return &model.GeneratePresignedUploadURLPayload{
-		URL: &url.URL,
-	}, nil
-}
-
-// CreatePlanDocument is the resolver for the createPlanDocument field.
-func (r *mutationResolver) CreatePlanDocument(ctx context.Context, input model.PlanDocumentInput) (*model.PlanDocumentPayload, error) {
+// UploadNewPlanDocument is the resolver for the uploadNewPlanDocument field.
+func (r *mutationResolver) UploadNewPlanDocument(ctx context.Context, input model.PlanDocumentInput) (*models.PlanDocument, error) {
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 
-	document := ConvertToPlanDocumentModel(&input, principal)
-	payload, err := resolvers.PlanDocumentCreate(logger, document, input.URL, principal, r.store, r.s3Client)
-
-	return payload, err
-}
-
-// UpdatePlanDocument is the resolver for the updatePlanDocument field.
-func (r *mutationResolver) UpdatePlanDocument(ctx context.Context, input model.PlanDocumentInput) (*model.PlanDocumentPayload, error) {
-	principal := appcontext.Principal(ctx)
-	logger := appcontext.ZLogger(ctx)
-	document := ConvertToPlanDocumentModel(&input, principal)
-
-	return resolvers.PlanDocumentUpdate(logger, r.s3Client, document, principal, r.store)
+	planDocument, err := resolvers.PlanDocumentCreate(logger, &input, principal, r.store, r.s3Client)
+	return planDocument, err
 }
 
 // DeletePlanDocument is the resolver for the deletePlanDocument field.
-func (r *mutationResolver) DeletePlanDocument(ctx context.Context, input model.PlanDocumentInput) (int, error) {
+func (r *mutationResolver) DeletePlanDocument(ctx context.Context, id uuid.UUID) (int, error) {
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
-	document := ConvertToPlanDocumentModel(&input, principal)
 
-	return resolvers.PlanDocumentDelete(logger, r.s3Client, document, principal, r.store)
+	return resolvers.PlanDocumentDelete(logger, r.s3Client, id, principal, r.store)
 }
 
 // CreatePlanDiscussion is the resolver for the createPlanDiscussion field.
@@ -394,7 +370,22 @@ func (r *planDiscussionResolver) Replies(ctx context.Context, obj *models.PlanDi
 
 // OtherType is the resolver for the otherType field.
 func (r *planDocumentResolver) OtherType(ctx context.Context, obj *models.PlanDocument) (*string, error) {
-	return obj.OtherTypeDescription, nil
+	return obj.OtherTypeDescription.Ptr(), nil
+}
+
+// OptionalNotes is the resolver for the optionalNotes field.
+func (r *planDocumentResolver) OptionalNotes(ctx context.Context, obj *models.PlanDocument) (*string, error) {
+	return obj.OptionalNotes.Ptr(), nil
+}
+
+// DownloadURL is the resolver for the downloadUrl field.
+func (r *planDocumentResolver) DownloadURL(ctx context.Context, obj *models.PlanDocument) (*string, error) {
+	url, err := r.s3Client.NewGetPresignedURL(obj.FileKey)
+	if err != nil {
+		return nil, err
+	}
+
+	return url, nil
 }
 
 // ResemblesExistingModelWhich is the resolver for the resemblesExistingModelWhich field.
@@ -775,33 +766,6 @@ func (r *queryResolver) PlanDocument(ctx context.Context, id uuid.UUID) (*models
 	logger := appcontext.ZLogger(ctx)
 
 	return resolvers.PlanDocumentRead(logger, r.store, r.s3Client, id)
-}
-
-// PlanDocumentDownloadURL is the resolver for the planDocumentDownloadURL field.
-func (r *queryResolver) PlanDocumentDownloadURL(ctx context.Context, id uuid.UUID) (*model.PlanDocumentPayload, error) {
-	logger := appcontext.ZLogger(ctx)
-
-	document, err := resolvers.PlanDocumentRead(logger, r.store, r.s3Client, id)
-	if err != nil {
-		return nil, err
-	}
-
-	url, err := r.s3Client.NewGetPresignedURL(document.FileKey)
-	if err != nil {
-		return nil, err
-	}
-
-	return &model.PlanDocumentPayload{
-		Document:     document,
-		PresignedURL: url,
-	}, nil
-}
-
-// ReadPlanDocumentByModelID is the resolver for the readPlanDocumentByModelID field.
-func (r *queryResolver) ReadPlanDocumentByModelID(ctx context.Context, id uuid.UUID) ([]*models.PlanDocument, error) {
-	logger := appcontext.ZLogger(ctx)
-
-	return resolvers.PlanDocumentsReadByModelPlanID(logger, id, r.store, r.s3Client)
 }
 
 // ModelPlanCollection is the resolver for the modelPlanCollection field.

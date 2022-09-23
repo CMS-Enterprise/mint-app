@@ -20,6 +20,7 @@ declare global {
   // Defining globally here for FE to recognize generated types.
    type UUID = string;
    type Time = string;
+   type Upload = File;
 
    interface Window {
     Cypress: any;
