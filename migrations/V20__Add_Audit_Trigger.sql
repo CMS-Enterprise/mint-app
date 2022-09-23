@@ -13,8 +13,6 @@ DECLARE
     created_by_f TEXT;
     modified_by_f TEXT;
     h_changed HSTORE;
-    h_changedOld HSTORE;
-    unchanged_keys text[] = ARRAY[]::text[];
     diff_keys text[] = ARRAY[]::text[];
     changeJSON JSONB;
 BEGIN
@@ -52,10 +50,6 @@ BEGIN
         h_changed = (h_new - h_old) - excluded_cols; --remove matching values and excluded columns
     END If;
 
-
-    unchanged_keys = akeys(h_old - akeys(h_changed));
-    h_changedOld = h_old - unchanged_keys;
-
     IF TG_OP = 'UPDATE' AND h_changed = hstore('') THEN
        RETURN NULL;
     END IF;  -- All changed fields are ignored. Skip this update.
@@ -68,47 +62,29 @@ BEGIN
             SELECT 
             NEWval.key AS field,
             NEWval.value AS new,
-            h_changedOld -> NEWval.key AS old --TODO, do we even need to get just these values if we are displaying in this way?
-
+            h_old -> NEWval.key AS old 
             FROM NEWval
         )
         SELECT jsonb_object_agg(field,(to_jsonb(r) - 'field'))
         INTO changeJSON
-        -- INTO audit_row.fields
             FROM RESULTSet r;
     audit_row = ROW (
-    nextval('audit.change_id_seq'), --id ---TODO make this happen after the check to skip, we don't want to increment the series otherwise
+    nextval('audit.change_id_seq'), --id
         table_id, --table_id
-        NEW.id, --primary_key
-        NULL, --foreign_key
+        h_new -> pkey_f, --primary_key
+        h_new -> fkey_f, --foreign_key
         substring(TG_OP,1,1), --action
-        NULL, --old
-        NULL, --new
         changeJSON, --fields
         NEW.modified_by, --modified_by
         CURRENT_TIMESTAMP --modified_dts
     );
-    IF (TG_OP = 'UPDATE' AND TG_LEVEL = 'ROW') THEN
-        audit_row.primary_key = h_new -> pkey_f;
-        audit_row.foreign_key = h_new -> fkey_f;
-        -- audit_row.new =  h_changed; --remove matching values and excluded columns
-
-        -- audit_row.old = h_changedOld; --remove any key not in new
-        -- audit_row.fields = changeJSON;
-
-
-
-    ELSIF (TG_OP = 'DELETE' AND TG_LEVEL = 'ROW') THEN
-        audit_row.modified_by = OLD.modified_by; --Should this be the case?
-        audit_row.primary_key = h_old -> pkey_f;
+    IF (TG_OP = 'DELETE' AND TG_LEVEL = 'ROW') THEN
+        audit_row.modified_by = 'UNKN'; --We don't have the context of who deleted the row
+        audit_row.primary_key = h_old -> pkey_f; --New is null
         audit_row.foreign_key = h_old -> fkey_f;
-        -- audit_row.old = hstore(OLD.*) - excluded_cols;
     ELSIF (TG_OP = 'INSERT' AND TG_LEVEL = 'ROW') THEN
-        audit_row.primary_key = h_new -> pkey_f;
-        audit_row.foreign_key = h_new -> fkey_f;
         audit_row.modified_by = NEW.created_by;
         audit_row.modified_dts = NEW.created_dts;
-        -- audit_row.new = hstore(NEW.*) - excluded_cols;
     END IF;
 
     INSERT INTO audit.change VALUES(audit_row.*);

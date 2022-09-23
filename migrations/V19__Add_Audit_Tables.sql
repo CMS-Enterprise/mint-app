@@ -24,9 +24,6 @@ CREATE TABLE audit.change (
     primary_key UUID NOT NULL,
     foreign_key UUID,
     action TEXT NOT NULL CHECK (action IN ('I', 'D', 'U', 'T')),
-    -- field_name TEXT NOT NULL,
-    old HSTORE,
-    new HSTORE, -- Should we just have time stamp and user?
     fields JSONB,
     modified_by EUA_ID NOT NULL,
     modified_dts TIMESTAMP WITH TIME ZONE NOT NULL

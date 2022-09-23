@@ -70,6 +70,7 @@ type ComplexityRoot struct {
 		ModifiedBy  func(childComplexity int) int
 		ModifiedDts func(childComplexity int) int
 		PrimaryKey  func(childComplexity int) int
+		TableName   func(childComplexity int) int
 	}
 
 	CurrentUser struct {
@@ -1007,6 +1008,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.AuditChange.PrimaryKey(childComplexity), true
+
+	case "AuditChange.tableName":
+		if e.complexity.AuditChange.TableName == nil {
+			break
+		}
+
+		return e.complexity.AuditChange.TableName(childComplexity), true
 
 	case "CurrentUser.launchDarkly":
 		if e.complexity.CurrentUser.LaunchDarkly == nil {
@@ -6737,9 +6745,9 @@ type AuditChange {
 id: Int!
 primaryKey: UUID!
 foreignKey: UUID
+tableName: String!
 action: String!
 fields: Map!
-# fields: Map[AuditField!]!
 modifiedBy: String
 modifiedDts: Time
 }
@@ -8418,6 +8426,50 @@ func (ec *executionContext) fieldContext_AuditChange_foreignKey(ctx context.Cont
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type UUID does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _AuditChange_tableName(ctx context.Context, field graphql.CollectedField, obj *models.AuditChange) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_AuditChange_tableName(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.TableName, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalNString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_AuditChange_tableName(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "AuditChange",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
 		},
 	}
 	return fc, nil
@@ -36424,6 +36476,8 @@ func (ec *executionContext) fieldContext_Query_auditChanges(ctx context.Context,
 				return ec.fieldContext_AuditChange_primaryKey(ctx, field)
 			case "foreignKey":
 				return ec.fieldContext_AuditChange_foreignKey(ctx, field)
+			case "tableName":
+				return ec.fieldContext_AuditChange_tableName(ctx, field)
 			case "action":
 				return ec.fieldContext_AuditChange_action(ctx, field)
 			case "fields":
@@ -39302,6 +39356,13 @@ func (ec *executionContext) _AuditChange(ctx context.Context, sel ast.SelectionS
 
 			out.Values[i] = ec._AuditChange_foreignKey(ctx, field, obj)
 
+		case "tableName":
+
+			out.Values[i] = ec._AuditChange_tableName(ctx, field, obj)
+
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&invalids, 1)
+			}
 		case "action":
 
 			out.Values[i] = ec._AuditChange_action(ctx, field, obj)

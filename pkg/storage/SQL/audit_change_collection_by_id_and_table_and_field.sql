@@ -2,6 +2,7 @@ SELECT
     audit.change.id,
     audit.change.primary_key,
     audit.change.foreign_key,
+    audit.table_config.name AS table_name,
     audit.change.action,
     audit.change.fields,
     audit.change.modified_by,
