@@ -18,7 +18,6 @@ const csvFormatter = (csvData: AllModelDataType[]) => {
       transforms.unwind({ paths: fieldsToUnwind, blankOut: true })
     ];
     const parser = new Parser({
-      // csvFields,
       fields: csvFields,
       transforms: transform
     });
@@ -55,10 +54,13 @@ export const CsvExportLink = (): React.ReactElement => {
 
   return (
     <div>
-      <button type="button" onClick={() => fetchData()}>
+      <button
+        type="button"
+        className="usa-button usa-button--unstyled"
+        onClick={() => fetchData()}
+      >
         <IconFileDownload />
-        &nbsp;
-        {t('downloadCSV')}
+        <span className="padding-left-1">{t('downloadCSV')}</span>
       </button>
     </div>
   );

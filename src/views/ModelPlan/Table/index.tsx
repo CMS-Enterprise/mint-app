@@ -8,7 +8,6 @@ import {
   useTable
 } from 'react-table';
 import { useQuery } from '@apollo/client';
-// import { IconFileDownload, Table as UswdsTable } from '@trussworks/react-uswds';
 import { Table as UswdsTable } from '@trussworks/react-uswds';
 
 import UswdsReactLink from 'components/LinkWrapper';
