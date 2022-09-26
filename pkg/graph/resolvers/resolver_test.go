@@ -2,6 +2,7 @@ package resolvers
 
 import (
 	"testing"
+	"time"
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/suite"
@@ -67,6 +68,19 @@ func (suite *ResolverSuite) createPlanCollaborator(mp *models.ModelPlan, EUAUser
 	)
 	suite.NoError(err)
 	return collaborator
+}
+
+func (suite *ResolverSuite) createPlanCrTdl(mp *models.ModelPlan, idNumber string, dateInitated time.Time, title string, note string) *models.PlanCrTdl {
+	input := &model.PlanCrTdlCreateInput{
+		ModelPlanID:   mp.ID,
+		IDNumber:      idNumber,
+		DateInitiated: dateInitated,
+		Title:         title,
+		Note:          &note,
+	}
+	crTdl, err := PlanCrTdlCreate(suite.testConfigs.Logger, input, suite.testConfigs.Principal, suite.testConfigs.Store)
+	suite.NoError(err)
+	return crTdl
 }
 
 // TestResolverSuite runs the resolver test suite

@@ -1,6 +1,7 @@
 package resolvers
 
 import (
+	"github.com/cmsgov/mint-app/pkg/authentication"
 	"github.com/cmsgov/mint-app/pkg/graph/model"
 	"github.com/cmsgov/mint-app/pkg/models"
 )
@@ -110,4 +111,22 @@ func (suite *ResolverSuite) TestDeletePlanCollaboratorLastModelLead() {
 	suite.Error(err)
 	suite.EqualValues("pq: There must be at least one MODEL_LEAD assigned to each model plan", err.Error())
 	suite.Nil(deletedPlanCollaborator)
+}
+
+func (suite *ResolverSuite) TestIsPlanCollaborator() {
+
+	plan := suite.createModelPlan("Plan For Milestones")
+	isCollab, err := IsPlanCollaborator(suite.testConfigs.Logger, suite.testConfigs.Principal, suite.testConfigs.Store, plan.ID)
+	suite.NoError(err)
+	suite.EqualValues(true, isCollab)
+
+	assessment := authentication.EUAPrincipal{
+		EUAID:             "FAIL",
+		JobCodeASSESSMENT: true,
+		JobCodeUSER:       true,
+	}
+
+	isCollabFalseCase, err := IsPlanCollaborator(suite.testConfigs.Logger, &assessment, suite.testConfigs.Store, plan.ID)
+	suite.NoError(err)
+	suite.EqualValues(false, isCollabFalseCase)
 }

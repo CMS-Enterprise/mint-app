@@ -9,6 +9,7 @@ import (
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
 	"github.com/cmsgov/mint-app/pkg/shared/pubsub"
+	"github.com/cmsgov/mint-app/pkg/upload"
 
 	"go.uber.org/zap"
 	ld "gopkg.in/launchdarkly/go-server-sdk.v5"
@@ -26,6 +27,7 @@ type TestConfigs struct {
 	Logger               *zap.Logger
 	UserInfo             *models.UserInfo
 	Store                *storage.Store
+	S3Client             *upload.S3Client
 	PubSub               *pubsub.ServicePubSub
 	Principal            *authentication.EUAPrincipal
 }
@@ -35,6 +37,18 @@ func GetDefaultTestConfigs() *TestConfigs {
 	tc := TestConfigs{}
 	tc.GetDefaults()
 	return &tc
+}
+
+func createS3Client() upload.S3Client {
+	config := testhelpers.NewConfig()
+
+	s3Cfg := upload.Config{
+		Bucket:  config.GetString(appconfig.AWSS3FileUploadBucket),
+		Region:  config.GetString(appconfig.AWSRegion),
+		IsLocal: true,
+	}
+
+	return upload.NewS3Client(s3Cfg)
 }
 
 // GetDefaults sets the dependencies for the TestConfigs struct
@@ -50,7 +64,7 @@ func (tc *TestConfigs) GetDefaults() {
 
 	// Set up Oddball email Service
 	emailServiceConfig := oddmail.GoSimpleMailServiceConfig{}
-	err = emailServiceConfig.LoadYAML("../../config/data/emailServiceConfig.yaml")
+	err = emailServiceConfig.LoadYAML("../../../config/test/emailServiceConfig.yaml")
 	if err != nil {
 		panic(fmt.Sprintf("Failed to load an email service configuration: %v", zap.Error(err)))
 	}
@@ -61,6 +75,7 @@ func (tc *TestConfigs) GetDefaults() {
 		panic(fmt.Sprintf("Failed to create an email service: %v", zap.Error(err)))
 	}
 
+	s3Client := createS3Client()
 	tc.DBConfig = config
 	tc.LDClient = ldClient
 	tc.EmailService = emailService
@@ -68,6 +83,7 @@ func (tc *TestConfigs) GetDefaults() {
 	tc.Logger = logger
 	tc.UserInfo = userInfo
 	tc.Store = store
+	tc.S3Client = &s3Client
 	tc.PubSub = ps
 
 	tc.Principal = princ

@@ -97,6 +97,20 @@ func (r *modelPlanResolver) IsFavorite(ctx context.Context, obj *models.ModelPla
 	return resolvers.IsPlanFavorited(logger, principal, r.store, obj.ID)
 }
 
+// IsCollaborator is the resolver for the isCollaborator field.
+func (r *modelPlanResolver) IsCollaborator(ctx context.Context, obj *models.ModelPlan) (bool, error) {
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+
+	return resolvers.IsPlanCollaborator(logger, principal, r.store, obj.ID)
+}
+
+// CrTdls is the resolver for the crTdls field.
+func (r *modelPlanResolver) CrTdls(ctx context.Context, obj *models.ModelPlan) ([]*models.PlanCrTdl, error) {
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.PlanCrTdlsGetByModelPlanID(logger, obj.ID, r.store)
+}
+
 // CreateModelPlan is the resolver for the createModelPlan field.
 func (r *mutationResolver) CreateModelPlan(ctx context.Context, modelName string) (*models.ModelPlan, error) {
 	logger := appcontext.ZLogger(ctx)
@@ -189,45 +203,21 @@ func (r *mutationResolver) UpdatePlanOpsEvalAndLearning(ctx context.Context, id 
 	return resolvers.PlanOpsEvalAndLearningUpdate(logger, id, changes, principal, r.store)
 }
 
-// GeneratePresignedUploadURL is the resolver for the generatePresignedUploadURL field.
-func (r *mutationResolver) GeneratePresignedUploadURL(ctx context.Context, input model.GeneratePresignedUploadURLInput) (*model.GeneratePresignedUploadURLPayload, error) {
-	url, err := r.s3Client.NewPutPresignedURL(input.MimeType)
-	if err != nil {
-		return nil, err
-	}
-
-	return &model.GeneratePresignedUploadURLPayload{
-		URL: &url.URL,
-	}, nil
-}
-
-// CreatePlanDocument is the resolver for the createPlanDocument field.
-func (r *mutationResolver) CreatePlanDocument(ctx context.Context, input model.PlanDocumentInput) (*model.PlanDocumentPayload, error) {
+// UploadNewPlanDocument is the resolver for the uploadNewPlanDocument field.
+func (r *mutationResolver) UploadNewPlanDocument(ctx context.Context, input model.PlanDocumentInput) (*models.PlanDocument, error) {
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 
-	document := ConvertToPlanDocumentModel(&input)
-	payload, err := resolvers.PlanDocumentCreate(logger, document, input.URL, principal, r.store, r.s3Client)
-
-	return payload, err
-}
-
-// UpdatePlanDocument is the resolver for the updatePlanDocument field.
-func (r *mutationResolver) UpdatePlanDocument(ctx context.Context, input model.PlanDocumentInput) (*model.PlanDocumentPayload, error) {
-	document := ConvertToPlanDocumentModel(&input)
-	principal := appcontext.Principal(ctx)
-	logger := appcontext.ZLogger(ctx)
-
-	return resolvers.PlanDocumentUpdate(logger, r.s3Client, document, principal, r.store)
+	planDocument, err := resolvers.PlanDocumentCreate(logger, &input, principal, r.store, r.s3Client)
+	return planDocument, err
 }
 
 // DeletePlanDocument is the resolver for the deletePlanDocument field.
-func (r *mutationResolver) DeletePlanDocument(ctx context.Context, input model.PlanDocumentInput) (int, error) {
-	document := ConvertToPlanDocumentModel(&input)
+func (r *mutationResolver) DeletePlanDocument(ctx context.Context, id uuid.UUID) (int, error) {
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 
-	return resolvers.PlanDocumentDelete(logger, r.s3Client, document, principal, r.store)
+	return resolvers.PlanDocumentDelete(logger, r.s3Client, id, principal, r.store)
 }
 
 // CreatePlanDiscussion is the resolver for the createPlanDiscussion field.
@@ -326,6 +316,27 @@ func (r *mutationResolver) DeletePlanFavorite(ctx context.Context, modelPlanID u
 	return resolvers.PlanFavoriteDelete(logger, principal, r.store, modelPlanID)
 }
 
+// CreatePlanCrTdl is the resolver for the createPlanCrTdl field.
+func (r *mutationResolver) CreatePlanCrTdl(ctx context.Context, input model.PlanCrTdlCreateInput) (*models.PlanCrTdl, error) {
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.PlanCrTdlCreate(logger, &input, principal, r.store)
+}
+
+// UpdatePlanCrTdl is the resolver for the updatePlanCrTdl field.
+func (r *mutationResolver) UpdatePlanCrTdl(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanCrTdl, error) {
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.PlanCrTdlUpdate(logger, id, changes, principal, r.store)
+}
+
+// DeletePlanCrTdl is the resolver for the deletePlanCrTdl field.
+func (r *mutationResolver) DeletePlanCrTdl(ctx context.Context, id uuid.UUID) (*models.PlanCrTdl, error) {
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.PlanCrTdlDelete(logger, id, principal, r.store)
+}
+
 // CmsCenters is the resolver for the cmsCenters field.
 func (r *planBasicsResolver) CmsCenters(ctx context.Context, obj *models.PlanBasics) ([]model.CMSCenter, error) {
 	cmsCenters := models.ConvertEnums[model.CMSCenter](obj.CMSCenters)
@@ -359,7 +370,22 @@ func (r *planDiscussionResolver) Replies(ctx context.Context, obj *models.PlanDi
 
 // OtherType is the resolver for the otherType field.
 func (r *planDocumentResolver) OtherType(ctx context.Context, obj *models.PlanDocument) (*string, error) {
-	return obj.OtherTypeDescription, nil
+	return obj.OtherTypeDescription.Ptr(), nil
+}
+
+// OptionalNotes is the resolver for the optionalNotes field.
+func (r *planDocumentResolver) OptionalNotes(ctx context.Context, obj *models.PlanDocument) (*string, error) {
+	return obj.OptionalNotes.Ptr(), nil
+}
+
+// DownloadURL is the resolver for the downloadUrl field.
+func (r *planDocumentResolver) DownloadURL(ctx context.Context, obj *models.PlanDocument) (*string, error) {
+	url, err := r.s3Client.NewGetPresignedURL(obj.FileKey)
+	if err != nil {
+		return nil, err
+	}
+
+	return url, nil
 }
 
 // ResemblesExistingModelWhich is the resolver for the resemblesExistingModelWhich field.
@@ -742,38 +768,11 @@ func (r *queryResolver) PlanDocument(ctx context.Context, id uuid.UUID) (*models
 	return resolvers.PlanDocumentRead(logger, r.store, r.s3Client, id)
 }
 
-// PlanDocumentDownloadURL is the resolver for the planDocumentDownloadURL field.
-func (r *queryResolver) PlanDocumentDownloadURL(ctx context.Context, id uuid.UUID) (*model.PlanDocumentPayload, error) {
-	logger := appcontext.ZLogger(ctx)
-
-	document, err := resolvers.PlanDocumentRead(logger, r.store, r.s3Client, id)
-	if err != nil {
-		return nil, err
-	}
-
-	url, err := r.s3Client.NewGetPresignedURL(document.FileKey)
-	if err != nil {
-		return nil, err
-	}
-
-	return &model.PlanDocumentPayload{
-		Document:     document,
-		PresignedURL: url,
-	}, nil
-}
-
-// ReadPlanDocumentByModelID is the resolver for the readPlanDocumentByModelID field.
-func (r *queryResolver) ReadPlanDocumentByModelID(ctx context.Context, id uuid.UUID) ([]*models.PlanDocument, error) {
-	logger := appcontext.ZLogger(ctx)
-
-	return resolvers.PlanDocumentsReadByModelPlanID(logger, id, r.store, r.s3Client)
-}
-
 // ModelPlanCollection is the resolver for the modelPlanCollection field.
-func (r *queryResolver) ModelPlanCollection(ctx context.Context) ([]*models.ModelPlan, error) {
+func (r *queryResolver) ModelPlanCollection(ctx context.Context, includeAll bool) ([]*models.ModelPlan, error) {
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
-	return resolvers.ModelPlanCollectionByUser(logger, principal, r.store)
+	return resolvers.ModelPlanCollection(logger, principal, r.store, includeAll)
 }
 
 // ExistingModelCollection is the resolver for the existingModelCollection field.
@@ -815,6 +814,12 @@ func (r *queryResolver) NdaInfo(ctx context.Context) (*model.NDAInfo, error) {
 	logger := appcontext.ZLogger(ctx)
 	principal := appcontext.Principal(ctx)
 	return resolvers.NDAAgreementGetByEUA(logger, principal, r.store)
+}
+
+// CrTdl is the resolver for the crTdl field.
+func (r *queryResolver) CrTdl(ctx context.Context, id uuid.UUID) (*models.PlanCrTdl, error) {
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.PlanCrTdlGet(logger, id, r.store)
 }
 
 // OnTaskListSectionLocksChanged is the resolver for the onTaskListSectionLocksChanged field.

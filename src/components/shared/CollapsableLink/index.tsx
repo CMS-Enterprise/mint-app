@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import {
   Button,
+  IconExpandLess,
   IconExpandMore,
-  IconNavigateNext,
   IconVisibilityOff,
   IconVisiblity
 } from '@trussworks/react-uswds';
@@ -17,6 +17,7 @@ type CollapsableLinkProps = {
   closeLabel?: string;
   styleLeftBar?: boolean;
   eyeIcon?: boolean;
+  iconPosition?: 'left' | 'right';
   startOpen?: boolean;
   labelPosition?: 'top' | 'bottom';
 };
@@ -29,6 +30,7 @@ const CollapsableLink = ({
   closeLabel,
   styleLeftBar = true,
   eyeIcon,
+  iconPosition,
   startOpen = false,
   labelPosition = 'top'
 }: CollapsableLinkProps) => {
@@ -46,8 +48,15 @@ const CollapsableLink = ({
   };
 
   const renderCaret = () => {
-    return isOpen ? <IconExpandMore /> : <IconNavigateNext />;
+    return isOpen ? (
+      <IconExpandLess className="top-05" />
+    ) : (
+      <IconExpandMore className="top-05" />
+    );
   };
+
+  const expandIcon = eyeIcon ? renderEyeIcon() : renderCaret();
+  const selectedLabel = isOpen ? closeLabel || label : label;
 
   const collapseButton: React.ReactNode = (
     <Button
@@ -59,8 +68,8 @@ const CollapsableLink = ({
       unstyled
       data-testid="collapsable-link"
     >
-      {eyeIcon ? renderEyeIcon() : renderCaret()}
-      {isOpen ? closeLabel || label : label}
+      {iconPosition === 'left' ? selectedLabel : expandIcon}
+      {iconPosition === 'left' ? expandIcon : selectedLabel}
     </Button>
   );
   return (

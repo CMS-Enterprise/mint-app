@@ -13,13 +13,8 @@ import (
 // TODO Revist this function, as we probably want to add all of these DB entries inthe scope of a single SQL transaction
 // so that we can roll back if there is an error with any of these calls.
 func ModelPlanCreate(logger *zap.Logger, modelName string, store *storage.Store, principalInfo *models.UserInfo, principal authentication.Principal) (*models.ModelPlan, error) {
-	plan := &models.ModelPlan{
-		ModelName: modelName,
-		Status:    models.ModelStatusPlanDraft,
-		BaseStruct: models.BaseStruct{
-			CreatedBy: principalInfo.EuaUserID,
-		},
-	}
+
+	plan := models.NewModelPlan(principal.ID(), modelName)
 
 	err := BaseStructPreCreate(logger, plan, principal, store, false) //We don't check access here, because the user can't yet be a collaborator. Collaborators are created after ModelPlan initiation.
 	if err != nil {
@@ -33,30 +28,17 @@ func ModelPlanCreate(logger *zap.Logger, modelName string, store *storage.Store,
 	}
 
 	// Create an initial collaborator for the plan
-	collab := &models.PlanCollaborator{
-		ModelPlanRelation: models.ModelPlanRelation{
-			ModelPlanID: createdPlan.ID,
-		},
-		EUAUserID: principalInfo.EuaUserID,
-		FullName:  principalInfo.CommonName,
-		TeamRole:  models.TeamRoleModelLead,
-		Email:     principalInfo.Email.String(),
-		BaseStruct: models.BaseStruct{
-			CreatedBy: principalInfo.EuaUserID,
-		},
-	}
+	collab := models.NewPlanCollaborator(principal.ID(), createdPlan.ID, principalInfo.EuaUserID, principalInfo.CommonName, models.TeamRoleModelLead, principalInfo.Email.String())
+
 	_, err = store.PlanCollaboratorCreate(logger, collab)
 	if err != nil {
 		return nil, err
 	}
 
-	baseTaskList := models.NewBaseTaskListSection(createdPlan.ID, principalInfo.EuaUserID) //make a taskList status, with status Ready
-	//TODO, should we make a BASE STRUCT FIRST? Then we can pass that to every sub struct
+	baseTaskList := models.NewBaseTaskListSection(principalInfo.EuaUserID, createdPlan.ID) //make a taskList status, with status Ready
 
 	// Create a default plan basics object
-	basics := &models.PlanBasics{
-		BaseTaskListSection: baseTaskList,
-	}
+	basics := models.NewPlanBasics(baseTaskList)
 
 	_, err = store.PlanBasicsCreate(logger, basics)
 	if err != nil {
@@ -64,52 +46,46 @@ func ModelPlanCreate(logger *zap.Logger, modelName string, store *storage.Store,
 	}
 
 	// Create a default plan general characteristics object
-	generalCharacteristics := &models.PlanGeneralCharacteristics{
-		BaseTaskListSection: baseTaskList,
-	}
+	generalCharacteristics := models.NewPlanGeneralCharacteristics(baseTaskList)
+
 	_, err = store.PlanGeneralCharacteristicsCreate(logger, generalCharacteristics)
 	if err != nil {
 		return nil, err
 	}
 	// Create a default Plan Beneficiares object
-	beneficiaries := &models.PlanBeneficiaries{
-		BaseTaskListSection: baseTaskList,
-	}
+	beneficiaries := models.NewPlanBeneficiaries(baseTaskList)
+
 	_, err = store.PlanBeneficiariesCreate(logger, beneficiaries)
 	if err != nil {
 		return nil, err
 	}
 	//Create a default Plan Participants and Providers object
-	participantsAndProviders := &models.PlanParticipantsAndProviders{
-		BaseTaskListSection: baseTaskList,
-	}
+	participantsAndProviders := models.NewPlanParticipantsAndProviders(baseTaskList)
+
 	_, err = store.PlanParticipantsAndProvidersCreate(logger, participantsAndProviders)
 	if err != nil {
 		return nil, err
 	}
 
 	//Create default Plan OpsEvalAndLearning object
-	opsEvalAndLearning := &models.PlanOpsEvalAndLearning{
-		BaseTaskListSection: baseTaskList,
-	}
+	opsEvalAndLearning := models.NewPlanOpsEvalAndLearning(baseTaskList)
+
 	_, err = store.PlanOpsEvalAndLearningCreate(logger, opsEvalAndLearning)
 	if err != nil {
 		return nil, err
 	}
 
 	//Create default PlanPayments object
-	planPayments := &models.PlanPayments{
-		BaseTaskListSection: baseTaskList,
-	}
+	planPayments := models.NewPlanPayments(baseTaskList)
+
 	_, err = store.PlanPaymentsCreate(logger, planPayments)
 	if err != nil {
 		return nil, err
 	}
 
 	//Create default PlanITTools object
-	itTools := &models.PlanITTools{
-		BaseTaskListSection: baseTaskList,
-	}
+	itTools := models.NewPlanITTools(baseTaskList)
+
 	_, err = store.PlanITToolsCreate(logger, itTools)
 	if err != nil {
 		return nil, err
@@ -149,12 +125,18 @@ func ModelPlanGetByID(logger *zap.Logger, id uuid.UUID, store *storage.Store) (*
 	return plan, nil
 }
 
-// ModelPlanCollectionByUser implements resolver logic to get a list of model plans by who's a collaborator on them (TODO)
-func ModelPlanCollectionByUser(logger *zap.Logger, principal authentication.Principal, store *storage.Store) ([]*models.ModelPlan, error) {
-	plans, err := store.ModelPlanCollectionByUser(logger, principal.ID(), false)
+// ModelPlanCollection implements resolver logic to get a list of model plans by who's a collaborator on them (TODO)
+func ModelPlanCollection(logger *zap.Logger, principal authentication.Principal, store *storage.Store, includeAll bool) ([]*models.ModelPlan, error) {
+	var modelPlans []*models.ModelPlan
+	var err error
+	if includeAll {
+		modelPlans, err = store.ModelPlanCollection(logger, false)
+	} else {
+		modelPlans, err = store.ModelPlanCollectionCollaboratorOnly(logger, false, principal.ID())
+	}
 	if err != nil {
 		return nil, err
 	}
 
-	return plans, err
+	return modelPlans, err
 }

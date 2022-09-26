@@ -1,171 +1,219 @@
-import React, { useEffect, useRef, useState } from 'react';
-import {
-  Checkbox,
-  IconClose,
-  IconExpandMore,
-  Tag
-} from '@trussworks/react-uswds';
+import React, { CSSProperties, useEffect, useState } from 'react';
+import Select, { MultiValue, OptionProps } from 'react-select';
+import { IconClose, Tag } from '@trussworks/react-uswds';
 import classNames from 'classnames';
+
+import color from 'utils/uswdsColor';
+
+import CheckboxField from '../CheckboxField';
 
 import './index.scss';
 
-type OptionProp = {
+type MultiSelectOptionProps = {
   value: string;
   label: string;
 };
 
-type OptionsProps = {
-  options: OptionProp[];
-  selected: string[];
-  optionClick: (option: string) => void;
-};
-
-const Options = ({ options, selected, optionClick }: OptionsProps) => {
+const Option = (props: OptionProps<MultiSelectOptionProps, true>) => {
+  const { data, isSelected, innerProps, innerRef, isFocused } = props;
   return (
-    <ul className="easi-multiselect__options usa-list--unstyled padding-y-05 border-1px border-top-0 maxh-card overflow-scroll position-absolute right-0 left-0 z-top bg-white">
-      {options.map(option => {
-        return (
-          <Checkbox
-            className="padding-left-1 padding-y-05 hover:bg-base-lightest"
-            key={option.value}
-            defaultChecked={selected.includes(option.value)}
-            id={`easi-multiselect__option-${option.value}`}
-            name={`easi-multiselect-${option.value}`}
-            label={option.label}
-            onChange={() => optionClick(option.value)}
-          />
-        );
+    <div
+      {...innerProps}
+      ref={innerRef}
+      className={classNames('usa-combo-box__list-option', {
+        'usa-combo-box__list-option--focused': isFocused
       })}
-    </ul>
+    >
+      <CheckboxField
+        label={data.label}
+        id={innerProps.id!}
+        testid={`option-${data.value}`}
+        name={data.value}
+        checked={isSelected}
+        onChange={() => null}
+        onBlur={() => null}
+        value={data.value}
+      />
+    </div>
   );
 };
 
-type MultiSelectProps = {
+const MultiSelectTag = ({
+  id,
+  label,
+  className,
+  handleRemove
+}: {
+  id: string;
+  label: string;
   className?: string;
-  id?: string;
-  options: OptionProp[];
-  selectedLabel?: string;
-  onChange: (value: string[]) => void;
-  initialValues: string[];
+  handleRemove?: (value: string) => void;
+}) => {
+  return (
+    <Tag
+      id={id}
+      data-testid={`multiselect-tag--${label}`}
+      className={classNames(
+        'easi-multiselect--tag padding-x-1 padding-y-1 bg-primary-lighter text-ink display-inline-flex text-no-uppercase flex-align-center',
+        className
+      )}
+    >
+      {label}{' '}
+      {handleRemove && (
+        <IconClose
+          onClick={() => handleRemove(label)}
+          onKeyDown={e => {
+            if (e.key !== 'Tab') return handleRemove(label);
+            return null;
+          }}
+          className="margin-left-05"
+          tabIndex={0}
+          role="button"
+          aria-label={`Remove ${label}`}
+        />
+      )}
+    </Tag>
+  );
 };
 
-export default function MultiSelect({
-  className,
+const MultiSelect = ({
   id,
+  name,
+  selectedLabel,
   options,
-  selectedLabel = 'Selected options',
   onChange,
-  initialValues
-}: MultiSelectProps) {
-  const [searchValue, setSearchValue] = useState('');
+  initialValues,
+  className
+}: {
+  id: string;
+  name: string;
+  selectedLabel?: string;
+  options: MultiSelectOptionProps[];
+  onChange: (values: string[]) => void;
+  initialValues?: string[];
+  className?: string;
+}) => {
+  const [selected, setSelected] = useState<MultiValue<MultiSelectOptionProps>>(
+    initialValues
+      ? options.filter(option => initialValues.includes(option.value))
+      : []
+  );
 
-  const [selected, setSelected] = useState<string[]>(initialValues);
-  const [active, setActive] = useState(false);
-
-  const selectRef = useRef<HTMLInputElement>(null);
-
-  const optionClick = (option: string) => {
-    if (selected.includes(option)) {
-      setSelected(selected.filter(selectedOption => selectedOption !== option));
-    } else {
-      setSelected([...selected, option]);
-    }
-  };
-
-  const filterSearchResults = () => {
-    const searchIndex = (option: string) => {
-      return option.toLowerCase().search(searchValue.toLowerCase());
-    };
-    return options
-      .filter(option => searchIndex(option.label) > -1)
-      .sort((a, b) => searchIndex(a.label) - searchIndex(b.label));
-  };
+  const [originalOptions] = useState<MultiValue<MultiSelectOptionProps>>([
+    ...options
+  ]);
 
   useEffect(() => {
-    function handleClickOutside(e: MouseEvent) {
-      if (selectRef.current && !selectRef.current.contains(e.target as Node)) {
-        setActive(false);
-        setSearchValue('');
+    setSelected(
+      initialValues
+        ? originalOptions.filter(option => initialValues.includes(option.value))
+        : []
+    );
+  }, [initialValues, originalOptions]);
+
+  const customStyles: {
+    [index: string]: (
+      provided: CSSProperties,
+      state: { isFocused: boolean }
+    ) => CSSProperties;
+  } = {
+    control: (provided, state) => ({
+      ...provided,
+      borderColor: color('base-dark'),
+      outline: state.isFocused ? `.25rem solid ${color('blue-vivid-40')}` : '',
+      borderRadius: 0,
+      transition: 'none',
+      '&:hover': {
+        borderColor: color('base-dark'),
+        cursor: 'text'
       }
-    }
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [selectRef]);
-
-  useEffect(() => {
-    onChange(selected);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selected]);
-
-  useEffect(() => {
-    setSelected(initialValues);
-  }, [initialValues]);
-
-  const findOptions = (key: string) => {
-    return options.find(option => option.value === key);
+    }),
+    dropdownIndicator: provided => ({
+      ...provided,
+      color: color('base'),
+      '&:hover': {
+        color: color('base'),
+        cursor: 'pointer'
+      },
+      '> svg': {
+        width: '26px',
+        height: '26px'
+      }
+    }),
+    clearIndicator: provided => ({
+      ...provided,
+      color: color('base'),
+      '&:hover': {
+        color: color('base'),
+        cursor: 'pointer'
+      },
+      '> svg': {
+        width: '26px',
+        height: '26px'
+      }
+    }),
+    indicatorSeparator: provided => ({
+      ...provided,
+      marginTop: '10px',
+      marginBottom: '10px'
+    }),
+    placeholder: provided => ({
+      ...provided,
+      lineHeight: '1rem'
+    }),
+    menu: provided => ({
+      ...provided,
+      marginTop: '0px',
+      borderRadius: 0,
+      border: `1px solid ${color('base-dark')}`,
+      borderTop: 'none',
+      boxShadow: 'none'
+    })
   };
 
   return (
-    <div
-      className={classNames('easi-multiselect position-relative', className)}
-      id={id}
-    >
-      <div className="easi-multiselect__field" role="listbox" ref={selectRef}>
-        <div className="usa-select maxw-none padding-0">
-          <input
-            type="search"
-            className="usa-input padding-1 height-full border-0"
-            value={searchValue}
-            placeholder={`${selected.length} selected`}
-            onClick={() => setActive(true)}
-            onChange={e => setSearchValue(e.target.value)}
-          />
-          <div className="easi-multiselect__controls">
-            {selected.length > 0 && (
-              <div className="easi-multiselect__controls-button">
-                <IconClose
-                  onClick={() => setSelected([])}
-                  size={3}
-                  role="button"
-                />
-                <div className="width-1px border-right-1px border-base-lighter height-205 margin-left-1" />
-              </div>
-            )}
-            <div className="easi-multiselect__controls-button easi-multiselect__controls-close">
-              <IconExpandMore
-                onClick={() => setActive(!active)}
-                size={4}
-                role="button"
-              />
-            </div>
-          </div>
-        </div>
-        {active && (
-          <Options
-            options={searchValue ? filterSearchResults() : options}
-            selected={selected}
-            optionClick={optionClick}
-          />
-        )}
-      </div>
+    <div className="margin-top-1">
+      <Select
+        id={id}
+        name={name}
+        className={classNames('easi-multiselect usa-combo-box', className)}
+        options={options}
+        components={{ Option }}
+        isMulti
+        hideSelectedOptions={false}
+        closeMenuOnSelect={false}
+        onChange={selectedOptions => {
+          setSelected(selectedOptions);
+          onChange(selectedOptions.map(option => option.value));
+        }}
+        value={selected}
+        controlShouldRenderValue={false}
+        placeholder={`${selected.length} selected`}
+        styles={customStyles}
+      />
       {selected.length > 0 && (
-        <div className="easi-multiselect__selected-list margin-top-3">
-          {selectedLabel}
-          <ul className="usa-list--unstyled margin-top-1 display-flex flex-justify-start flex-wrap">
-            {selected.map(option => (
-              <li key={option} className="margin-right-05 margin-y-05">
-                <Tag
-                  className="bg-primary-lighter text-ink text-no-uppercase padding-y-1 padding-x-105 display-flex flex-align-center"
-                  id={`easi-multiselect__tag-${findOptions(option)?.value}`}
-                >
-                  {findOptions(option)?.label}
-                  <IconClose
-                    className="margin-left-1"
-                    onClick={() => optionClick(option)}
-                  />
-                </Tag>
+        <div className="easi-multiselect--selected">
+          <h4 className="text-normal margin-bottom-1">
+            {selectedLabel || 'Selected options'}
+          </h4>
+          <ul className="usa-list--unstyled">
+            {selected.map(({ value, label }) => (
+              <li
+                className="margin-bottom-05 margin-right-05 display-inline-block"
+                key={value}
+              >
+                <MultiSelectTag
+                  id={`selected-${value}`}
+                  key={value}
+                  label={label}
+                  handleRemove={() => {
+                    const updatedValues = selected.filter(
+                      option => option.value !== value
+                    );
+                    setSelected(updatedValues);
+                    onChange(updatedValues.map(option => option.value));
+                  }}
+                />
               </li>
             ))}
           </ul>
@@ -173,4 +221,6 @@ export default function MultiSelect({
       )}
     </div>
   );
-}
+};
+
+export default MultiSelect;

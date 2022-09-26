@@ -36,6 +36,8 @@ func NewTemplateService() (*TemplateService, error) {
 
 // Load caches all email templates which will be used by the template service
 func (t *TemplateService) Load() error {
+	t.emailTemplates = make(map[string]*emailTemplates.EmailTemplate)
+
 	err := t.loadEmailTemplate(AddedAsCollaboratorTemplateName, addedAsCollaboratorSubjectTemplate, addedAsCollaboratorBodyTemplate)
 	if err != nil {
 		return err

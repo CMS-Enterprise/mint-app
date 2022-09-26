@@ -11,7 +11,6 @@
 // This function is called when a project is opened or re-opened (e.g. due to
 // the project's config changing)
 const cypressOTP = require('cypress-otp');
-const cypressCodeCovTask = require('@cypress/code-coverage/task');
 const wp = require('@cypress/webpack-preprocessor');
 const apollo = require('@apollo/client');
 const fetch = require('cross-fetch'); // needed to allow apollo-client to make queries from Node environment
@@ -60,7 +59,6 @@ module.exports = (on, config) => {
     generateOTP: cypressOTP,
     lockTaskListSection
   });
-  cypressCodeCovTask(on, config);
 
   const options = {
     webpackOptions: {
