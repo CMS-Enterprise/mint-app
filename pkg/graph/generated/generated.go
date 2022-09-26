@@ -110,10 +110,6 @@ type ComplexityRoot struct {
 		URL                           func(childComplexity int) int
 	}
 
-	GeneratePresignedUploadURLPayload struct {
-		URL func(childComplexity int) int
-	}
-
 	LaunchDarklySettings struct {
 		SignedHash func(childComplexity int) int
 		UserKey    func(childComplexity int) int
@@ -124,12 +120,14 @@ type ComplexityRoot struct {
 		Basics                   func(childComplexity int) int
 		Beneficiaries            func(childComplexity int) int
 		Collaborators            func(childComplexity int) int
+		CrTdls                   func(childComplexity int) int
 		CreatedBy                func(childComplexity int) int
 		CreatedDts               func(childComplexity int) int
 		Discussions              func(childComplexity int) int
 		Documents                func(childComplexity int) int
 		GeneralCharacteristics   func(childComplexity int) int
 		ID                       func(childComplexity int) int
+		IsCollaborator           func(childComplexity int) int
 		IsFavorite               func(childComplexity int) int
 		ItTools                  func(childComplexity int) int
 		ModelName                func(childComplexity int) int
@@ -148,14 +146,14 @@ type ComplexityRoot struct {
 		CreateDiscussionReply              func(childComplexity int, input model.DiscussionReplyCreateInput) int
 		CreateModelPlan                    func(childComplexity int, modelName string) int
 		CreatePlanCollaborator             func(childComplexity int, input model.PlanCollaboratorCreateInput) int
+		CreatePlanCrTdl                    func(childComplexity int, input model.PlanCrTdlCreateInput) int
 		CreatePlanDiscussion               func(childComplexity int, input model.PlanDiscussionCreateInput) int
-		CreatePlanDocument                 func(childComplexity int, input model.PlanDocumentInput) int
 		DeleteDiscussionReply              func(childComplexity int, id uuid.UUID) int
 		DeletePlanCollaborator             func(childComplexity int, id uuid.UUID) int
+		DeletePlanCrTdl                    func(childComplexity int, id uuid.UUID) int
 		DeletePlanDiscussion               func(childComplexity int, id uuid.UUID) int
-		DeletePlanDocument                 func(childComplexity int, input model.PlanDocumentInput) int
+		DeletePlanDocument                 func(childComplexity int, id uuid.UUID) int
 		DeletePlanFavorite                 func(childComplexity int, modelPlanID uuid.UUID) int
-		GeneratePresignedUploadURL         func(childComplexity int, input model.GeneratePresignedUploadURLInput) int
 		LockTaskListSection                func(childComplexity int, modelPlanID uuid.UUID, section model.TaskListSection) int
 		UnlockAllTaskListSections          func(childComplexity int, modelPlanID uuid.UUID) int
 		UnlockTaskListSection              func(childComplexity int, modelPlanID uuid.UUID, section model.TaskListSection) int
@@ -164,13 +162,14 @@ type ComplexityRoot struct {
 		UpdatePlanBasics                   func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
 		UpdatePlanBeneficiaries            func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
 		UpdatePlanCollaborator             func(childComplexity int, id uuid.UUID, newRole models.TeamRole) int
+		UpdatePlanCrTdl                    func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
 		UpdatePlanDiscussion               func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
-		UpdatePlanDocument                 func(childComplexity int, input model.PlanDocumentInput) int
 		UpdatePlanGeneralCharacteristics   func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
 		UpdatePlanItTools                  func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
 		UpdatePlanOpsEvalAndLearning       func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
 		UpdatePlanParticipantsAndProviders func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
 		UpdatePlanPayments                 func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
+		UploadNewPlanDocument              func(childComplexity int, input model.PlanDocumentInput) int
 	}
 
 	NDAInfo struct {
@@ -257,6 +256,19 @@ type ComplexityRoot struct {
 		TeamRole    func(childComplexity int) int
 	}
 
+	PlanCrTdl struct {
+		CreatedBy     func(childComplexity int) int
+		CreatedDts    func(childComplexity int) int
+		DateInitiated func(childComplexity int) int
+		ID            func(childComplexity int) int
+		IDNumber      func(childComplexity int) int
+		ModelPlanID   func(childComplexity int) int
+		ModifiedBy    func(childComplexity int) int
+		ModifiedDts   func(childComplexity int) int
+		Note          func(childComplexity int) int
+		Title         func(childComplexity int) int
+	}
+
 	PlanDiscussion struct {
 		Content     func(childComplexity int) int
 		CreatedBy   func(childComplexity int) int
@@ -275,6 +287,7 @@ type ComplexityRoot struct {
 		CreatedDts    func(childComplexity int) int
 		DeletedAt     func(childComplexity int) int
 		DocumentType  func(childComplexity int) int
+		DownloadURL   func(childComplexity int) int
 		FileKey       func(childComplexity int) int
 		FileName      func(childComplexity int) int
 		FileSize      func(childComplexity int) int
@@ -287,11 +300,6 @@ type ComplexityRoot struct {
 		OtherType     func(childComplexity int) int
 		VirusClean    func(childComplexity int) int
 		VirusScanned  func(childComplexity int) int
-	}
-
-	PlanDocumentPayload struct {
-		Document     func(childComplexity int) int
-		PresignedURL func(childComplexity int) int
 	}
 
 	PlanFavorite struct {
@@ -695,19 +703,18 @@ type ComplexityRoot struct {
 	}
 
 	Query struct {
-		AuditChanges              func(childComplexity int, tableName string, primaryKey uuid.UUID) int
-		CedarPersonsByCommonName  func(childComplexity int, commonName string) int
-		CurrentUser               func(childComplexity int) int
-		ExistingModelCollection   func(childComplexity int) int
-		ModelPlan                 func(childComplexity int, id uuid.UUID) int
-		ModelPlanCollection       func(childComplexity int) int
-		NdaInfo                   func(childComplexity int) int
-		PlanCollaboratorByID      func(childComplexity int, id uuid.UUID) int
-		PlanDocument              func(childComplexity int, id uuid.UUID) int
-		PlanDocumentDownloadURL   func(childComplexity int, id uuid.UUID) int
-		PlanPayments              func(childComplexity int, id uuid.UUID) int
-		ReadPlanDocumentByModelID func(childComplexity int, id uuid.UUID) int
-		TaskListSectionLocks      func(childComplexity int, modelPlanID uuid.UUID) int
+		AuditChanges             func(childComplexity int, tableName string, primaryKey uuid.UUID) int
+		CedarPersonsByCommonName func(childComplexity int, commonName string) int
+		CrTdl                    func(childComplexity int, id uuid.UUID) int
+		CurrentUser              func(childComplexity int) int
+		ExistingModelCollection  func(childComplexity int) int
+		ModelPlan                func(childComplexity int, id uuid.UUID) int
+		ModelPlanCollection      func(childComplexity int, includeAll bool) int
+		NdaInfo                  func(childComplexity int) int
+		PlanCollaboratorByID     func(childComplexity int, id uuid.UUID) int
+		PlanDocument             func(childComplexity int, id uuid.UUID) int
+		PlanPayments             func(childComplexity int, id uuid.UUID) int
+		TaskListSectionLocks     func(childComplexity int, modelPlanID uuid.UUID) int
 	}
 
 	Subscription struct {
@@ -750,6 +757,8 @@ type ModelPlanResolver interface {
 	ItTools(ctx context.Context, obj *models.ModelPlan) (*models.PlanITTools, error)
 
 	IsFavorite(ctx context.Context, obj *models.ModelPlan) (bool, error)
+	IsCollaborator(ctx context.Context, obj *models.ModelPlan) (bool, error)
+	CrTdls(ctx context.Context, obj *models.ModelPlan) ([]*models.PlanCrTdl, error)
 	NameHistory(ctx context.Context, obj *models.ModelPlan, sort models.SortDirection) ([]string, error)
 }
 type MutationResolver interface {
@@ -764,10 +773,8 @@ type MutationResolver interface {
 	UpdatePlanParticipantsAndProviders(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanParticipantsAndProviders, error)
 	UpdatePlanItTools(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanITTools, error)
 	UpdatePlanOpsEvalAndLearning(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanOpsEvalAndLearning, error)
-	GeneratePresignedUploadURL(ctx context.Context, input model.GeneratePresignedUploadURLInput) (*model.GeneratePresignedUploadURLPayload, error)
-	CreatePlanDocument(ctx context.Context, input model.PlanDocumentInput) (*model.PlanDocumentPayload, error)
-	UpdatePlanDocument(ctx context.Context, input model.PlanDocumentInput) (*model.PlanDocumentPayload, error)
-	DeletePlanDocument(ctx context.Context, input model.PlanDocumentInput) (int, error)
+	UploadNewPlanDocument(ctx context.Context, input model.PlanDocumentInput) (*models.PlanDocument, error)
+	DeletePlanDocument(ctx context.Context, id uuid.UUID) (int, error)
 	CreatePlanDiscussion(ctx context.Context, input model.PlanDiscussionCreateInput) (*models.PlanDiscussion, error)
 	UpdatePlanDiscussion(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanDiscussion, error)
 	DeletePlanDiscussion(ctx context.Context, id uuid.UUID) (*models.PlanDiscussion, error)
@@ -781,6 +788,9 @@ type MutationResolver interface {
 	AgreeToNda(ctx context.Context, agree bool) (*model.NDAInfo, error)
 	AddPlanFavorite(ctx context.Context, modelPlanID uuid.UUID) (*models.PlanFavorite, error)
 	DeletePlanFavorite(ctx context.Context, modelPlanID uuid.UUID) (*models.PlanFavorite, error)
+	CreatePlanCrTdl(ctx context.Context, input model.PlanCrTdlCreateInput) (*models.PlanCrTdl, error)
+	UpdatePlanCrTdl(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanCrTdl, error)
+	DeletePlanCrTdl(ctx context.Context, id uuid.UUID) (*models.PlanCrTdl, error)
 }
 type PlanBasicsResolver interface {
 	CmsCenters(ctx context.Context, obj *models.PlanBasics) ([]model.CMSCenter, error)
@@ -797,6 +807,8 @@ type PlanDiscussionResolver interface {
 }
 type PlanDocumentResolver interface {
 	OtherType(ctx context.Context, obj *models.PlanDocument) (*string, error)
+	OptionalNotes(ctx context.Context, obj *models.PlanDocument) (*string, error)
+	DownloadURL(ctx context.Context, obj *models.PlanDocument) (*string, error)
 }
 type PlanGeneralCharacteristicsResolver interface {
 	ResemblesExistingModelWhich(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]string, error)
@@ -926,15 +938,14 @@ type QueryResolver interface {
 	CurrentUser(ctx context.Context) (*model.CurrentUser, error)
 	ModelPlan(ctx context.Context, id uuid.UUID) (*models.ModelPlan, error)
 	PlanDocument(ctx context.Context, id uuid.UUID) (*models.PlanDocument, error)
-	PlanDocumentDownloadURL(ctx context.Context, id uuid.UUID) (*model.PlanDocumentPayload, error)
-	ReadPlanDocumentByModelID(ctx context.Context, id uuid.UUID) ([]*models.PlanDocument, error)
-	ModelPlanCollection(ctx context.Context) ([]*models.ModelPlan, error)
+	ModelPlanCollection(ctx context.Context, includeAll bool) ([]*models.ModelPlan, error)
 	ExistingModelCollection(ctx context.Context) ([]*models.ExistingModel, error)
 	CedarPersonsByCommonName(ctx context.Context, commonName string) ([]*models.UserInfo, error)
 	PlanCollaboratorByID(ctx context.Context, id uuid.UUID) (*models.PlanCollaborator, error)
 	TaskListSectionLocks(ctx context.Context, modelPlanID uuid.UUID) ([]*model.TaskListSectionLockStatus, error)
 	PlanPayments(ctx context.Context, id uuid.UUID) (*models.PlanPayments, error)
 	NdaInfo(ctx context.Context) (*model.NDAInfo, error)
+	CrTdl(ctx context.Context, id uuid.UUID) (*models.PlanCrTdl, error)
 	AuditChanges(ctx context.Context, tableName string, primaryKey uuid.UUID) ([]*models.AuditChange, error)
 }
 type SubscriptionResolver interface {
@@ -1212,13 +1223,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.ExistingModel.URL(childComplexity), true
 
-	case "GeneratePresignedUploadURLPayload.url":
-		if e.complexity.GeneratePresignedUploadURLPayload.URL == nil {
-			break
-		}
-
-		return e.complexity.GeneratePresignedUploadURLPayload.URL(childComplexity), true
-
 	case "LaunchDarklySettings.signedHash":
 		if e.complexity.LaunchDarklySettings.SignedHash == nil {
 			break
@@ -1261,6 +1265,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.ModelPlan.Collaborators(childComplexity), true
 
+	case "ModelPlan.crTdls":
+		if e.complexity.ModelPlan.CrTdls == nil {
+			break
+		}
+
+		return e.complexity.ModelPlan.CrTdls(childComplexity), true
+
 	case "ModelPlan.createdBy":
 		if e.complexity.ModelPlan.CreatedBy == nil {
 			break
@@ -1302,6 +1313,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.ModelPlan.ID(childComplexity), true
+
+	case "ModelPlan.isCollaborator":
+		if e.complexity.ModelPlan.IsCollaborator == nil {
+			break
+		}
+
+		return e.complexity.ModelPlan.IsCollaborator(childComplexity), true
 
 	case "ModelPlan.isFavorite":
 		if e.complexity.ModelPlan.IsFavorite == nil {
@@ -1438,6 +1456,18 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Mutation.CreatePlanCollaborator(childComplexity, args["input"].(model.PlanCollaboratorCreateInput)), true
 
+	case "Mutation.createPlanCrTdl":
+		if e.complexity.Mutation.CreatePlanCrTdl == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_createPlanCrTdl_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Mutation.CreatePlanCrTdl(childComplexity, args["input"].(model.PlanCrTdlCreateInput)), true
+
 	case "Mutation.createPlanDiscussion":
 		if e.complexity.Mutation.CreatePlanDiscussion == nil {
 			break
@@ -1449,18 +1479,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Mutation.CreatePlanDiscussion(childComplexity, args["input"].(model.PlanDiscussionCreateInput)), true
-
-	case "Mutation.createPlanDocument":
-		if e.complexity.Mutation.CreatePlanDocument == nil {
-			break
-		}
-
-		args, err := ec.field_Mutation_createPlanDocument_args(context.TODO(), rawArgs)
-		if err != nil {
-			return 0, false
-		}
-
-		return e.complexity.Mutation.CreatePlanDocument(childComplexity, args["input"].(model.PlanDocumentInput)), true
 
 	case "Mutation.deleteDiscussionReply":
 		if e.complexity.Mutation.DeleteDiscussionReply == nil {
@@ -1486,6 +1504,18 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Mutation.DeletePlanCollaborator(childComplexity, args["id"].(uuid.UUID)), true
 
+	case "Mutation.deletePlanCrTdl":
+		if e.complexity.Mutation.DeletePlanCrTdl == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_deletePlanCrTdl_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Mutation.DeletePlanCrTdl(childComplexity, args["id"].(uuid.UUID)), true
+
 	case "Mutation.deletePlanDiscussion":
 		if e.complexity.Mutation.DeletePlanDiscussion == nil {
 			break
@@ -1508,7 +1538,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			return 0, false
 		}
 
-		return e.complexity.Mutation.DeletePlanDocument(childComplexity, args["input"].(model.PlanDocumentInput)), true
+		return e.complexity.Mutation.DeletePlanDocument(childComplexity, args["id"].(uuid.UUID)), true
 
 	case "Mutation.deletePlanFavorite":
 		if e.complexity.Mutation.DeletePlanFavorite == nil {
@@ -1521,18 +1551,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Mutation.DeletePlanFavorite(childComplexity, args["modelPlanID"].(uuid.UUID)), true
-
-	case "Mutation.generatePresignedUploadURL":
-		if e.complexity.Mutation.GeneratePresignedUploadURL == nil {
-			break
-		}
-
-		args, err := ec.field_Mutation_generatePresignedUploadURL_args(context.TODO(), rawArgs)
-		if err != nil {
-			return 0, false
-		}
-
-		return e.complexity.Mutation.GeneratePresignedUploadURL(childComplexity, args["input"].(model.GeneratePresignedUploadURLInput)), true
 
 	case "Mutation.lockTaskListSection":
 		if e.complexity.Mutation.LockTaskListSection == nil {
@@ -1630,6 +1648,18 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Mutation.UpdatePlanCollaborator(childComplexity, args["id"].(uuid.UUID), args["newRole"].(models.TeamRole)), true
 
+	case "Mutation.updatePlanCrTdl":
+		if e.complexity.Mutation.UpdatePlanCrTdl == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_updatePlanCrTdl_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Mutation.UpdatePlanCrTdl(childComplexity, args["id"].(uuid.UUID), args["changes"].(map[string]interface{})), true
+
 	case "Mutation.updatePlanDiscussion":
 		if e.complexity.Mutation.UpdatePlanDiscussion == nil {
 			break
@@ -1641,18 +1671,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Mutation.UpdatePlanDiscussion(childComplexity, args["id"].(uuid.UUID), args["changes"].(map[string]interface{})), true
-
-	case "Mutation.updatePlanDocument":
-		if e.complexity.Mutation.UpdatePlanDocument == nil {
-			break
-		}
-
-		args, err := ec.field_Mutation_updatePlanDocument_args(context.TODO(), rawArgs)
-		if err != nil {
-			return 0, false
-		}
-
-		return e.complexity.Mutation.UpdatePlanDocument(childComplexity, args["input"].(model.PlanDocumentInput)), true
 
 	case "Mutation.updatePlanGeneralCharacteristics":
 		if e.complexity.Mutation.UpdatePlanGeneralCharacteristics == nil {
@@ -1713,6 +1731,18 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Mutation.UpdatePlanPayments(childComplexity, args["id"].(uuid.UUID), args["changes"].(map[string]interface{})), true
+
+	case "Mutation.uploadNewPlanDocument":
+		if e.complexity.Mutation.UploadNewPlanDocument == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_uploadNewPlanDocument_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Mutation.UploadNewPlanDocument(childComplexity, args["input"].(model.PlanDocumentInput)), true
 
 	case "NDAInfo.agreed":
 		if e.complexity.NDAInfo.Agreed == nil {
@@ -2218,6 +2248,76 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.PlanCollaborator.TeamRole(childComplexity), true
 
+	case "PlanCrTdl.createdBy":
+		if e.complexity.PlanCrTdl.CreatedBy == nil {
+			break
+		}
+
+		return e.complexity.PlanCrTdl.CreatedBy(childComplexity), true
+
+	case "PlanCrTdl.createdDts":
+		if e.complexity.PlanCrTdl.CreatedDts == nil {
+			break
+		}
+
+		return e.complexity.PlanCrTdl.CreatedDts(childComplexity), true
+
+	case "PlanCrTdl.dateInitiated":
+		if e.complexity.PlanCrTdl.DateInitiated == nil {
+			break
+		}
+
+		return e.complexity.PlanCrTdl.DateInitiated(childComplexity), true
+
+	case "PlanCrTdl.id":
+		if e.complexity.PlanCrTdl.ID == nil {
+			break
+		}
+
+		return e.complexity.PlanCrTdl.ID(childComplexity), true
+
+	case "PlanCrTdl.idNumber":
+		if e.complexity.PlanCrTdl.IDNumber == nil {
+			break
+		}
+
+		return e.complexity.PlanCrTdl.IDNumber(childComplexity), true
+
+	case "PlanCrTdl.modelPlanID":
+		if e.complexity.PlanCrTdl.ModelPlanID == nil {
+			break
+		}
+
+		return e.complexity.PlanCrTdl.ModelPlanID(childComplexity), true
+
+	case "PlanCrTdl.modifiedBy":
+		if e.complexity.PlanCrTdl.ModifiedBy == nil {
+			break
+		}
+
+		return e.complexity.PlanCrTdl.ModifiedBy(childComplexity), true
+
+	case "PlanCrTdl.modifiedDts":
+		if e.complexity.PlanCrTdl.ModifiedDts == nil {
+			break
+		}
+
+		return e.complexity.PlanCrTdl.ModifiedDts(childComplexity), true
+
+	case "PlanCrTdl.note":
+		if e.complexity.PlanCrTdl.Note == nil {
+			break
+		}
+
+		return e.complexity.PlanCrTdl.Note(childComplexity), true
+
+	case "PlanCrTdl.title":
+		if e.complexity.PlanCrTdl.Title == nil {
+			break
+		}
+
+		return e.complexity.PlanCrTdl.Title(childComplexity), true
+
 	case "PlanDiscussion.content":
 		if e.complexity.PlanDiscussion.Content == nil {
 			break
@@ -2316,6 +2416,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.PlanDocument.DocumentType(childComplexity), true
 
+	case "PlanDocument.downloadUrl":
+		if e.complexity.PlanDocument.DownloadURL == nil {
+			break
+		}
+
+		return e.complexity.PlanDocument.DownloadURL(childComplexity), true
+
 	case "PlanDocument.fileKey":
 		if e.complexity.PlanDocument.FileKey == nil {
 			break
@@ -2399,20 +2506,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.PlanDocument.VirusScanned(childComplexity), true
-
-	case "PlanDocumentPayload.document":
-		if e.complexity.PlanDocumentPayload.Document == nil {
-			break
-		}
-
-		return e.complexity.PlanDocumentPayload.Document(childComplexity), true
-
-	case "PlanDocumentPayload.presignedURL":
-		if e.complexity.PlanDocumentPayload.PresignedURL == nil {
-			break
-		}
-
-		return e.complexity.PlanDocumentPayload.PresignedURL(childComplexity), true
 
 	case "PlanFavorite.createdBy":
 		if e.complexity.PlanFavorite.CreatedBy == nil {
@@ -5112,6 +5205,18 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Query.CedarPersonsByCommonName(childComplexity, args["commonName"].(string)), true
 
+	case "Query.crTdl":
+		if e.complexity.Query.CrTdl == nil {
+			break
+		}
+
+		args, err := ec.field_Query_crTdl_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Query.CrTdl(childComplexity, args["id"].(uuid.UUID)), true
+
 	case "Query.currentUser":
 		if e.complexity.Query.CurrentUser == nil {
 			break
@@ -5143,7 +5248,12 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			break
 		}
 
-		return e.complexity.Query.ModelPlanCollection(childComplexity), true
+		args, err := ec.field_Query_modelPlanCollection_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Query.ModelPlanCollection(childComplexity, args["includeAll"].(bool)), true
 
 	case "Query.ndaInfo":
 		if e.complexity.Query.NdaInfo == nil {
@@ -5176,18 +5286,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Query.PlanDocument(childComplexity, args["id"].(uuid.UUID)), true
 
-	case "Query.planDocumentDownloadURL":
-		if e.complexity.Query.PlanDocumentDownloadURL == nil {
-			break
-		}
-
-		args, err := ec.field_Query_planDocumentDownloadURL_args(context.TODO(), rawArgs)
-		if err != nil {
-			return 0, false
-		}
-
-		return e.complexity.Query.PlanDocumentDownloadURL(childComplexity, args["id"].(uuid.UUID)), true
-
 	case "Query.planPayments":
 		if e.complexity.Query.PlanPayments == nil {
 			break
@@ -5199,18 +5297,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Query.PlanPayments(childComplexity, args["id"].(uuid.UUID)), true
-
-	case "Query.readPlanDocumentByModelID":
-		if e.complexity.Query.ReadPlanDocumentByModelID == nil {
-			break
-		}
-
-		args, err := ec.field_Query_readPlanDocumentByModelID_args(context.TODO(), rawArgs)
-		if err != nil {
-			return 0, false
-		}
-
-		return e.complexity.Query.ReadPlanDocumentByModelID(childComplexity, args["id"].(uuid.UUID)), true
 
 	case "Query.taskListSectionLocks":
 		if e.complexity.Query.TaskListSectionLocks == nil {
@@ -5320,11 +5406,10 @@ func (e *executableSchema) Exec(ctx context.Context) graphql.ResponseHandler {
 	ec := executionContext{rc, e}
 	inputUnmarshalMap := graphql.BuildUnmarshalerMap(
 		ec.unmarshalInputDiscussionReplyCreateInput,
-		ec.unmarshalInputGeneratePresignedUploadURLInput,
 		ec.unmarshalInputPlanCollaboratorCreateInput,
+		ec.unmarshalInputPlanCrTdlCreateInput,
 		ec.unmarshalInputPlanDiscussionCreateInput,
 		ec.unmarshalInputPlanDocumentInput,
-		ec.unmarshalInputPlanDocumentParameters,
 	)
 	first := true
 
@@ -5438,6 +5523,12 @@ enum SortDirection {
   DESC
 }
 """
+https://gqlgen.com/reference/file-upload/
+Represents a multipart file upload
+"""
+scalar Upload
+
+"""
 ModelPlan represent the data point for plans about a model. It is the central data type in the application
 """
 type ModelPlan {
@@ -5460,6 +5551,8 @@ type ModelPlan {
   itTools: PlanITTools!
   status: ModelStatus!
   isFavorite: Boolean!
+  isCollaborator: Boolean!
+  crTdls: [PlanCrTdl!]!
   nameHistory(sort: SortDirection! = DESC): [String!]!
 }
 
@@ -5539,22 +5632,6 @@ input PlanCollaboratorCreateInput {
 }
 
 """
-Input associated with a document to be uploaded
-"""
-input GeneratePresignedUploadURLInput {
-  fileName: String!
-  mimeType: String!
-  size: Int!
-}
-
-"""
-URL generated for a document to be uploaded
-"""
-type GeneratePresignedUploadURLPayload {
-  url: String
-}
-
-"""
 PlanDocument represents a document on a plan
 """
 type PlanDocument {
@@ -5570,6 +5647,7 @@ type PlanDocument {
   documentType: DocumentType!
   otherType: String
   optionalNotes: String
+  downloadUrl: String
   deletedAt: Time
   createdBy: String!
   createdDts: Time!
@@ -5577,34 +5655,16 @@ type PlanDocument {
   modifiedDts: Time
 }
 
+
 """
-PlanDocumentInput represents the data required to create, modify, or delete a document on a plan
+PlanDocumentInput
 """
 input PlanDocumentInput {
-  id: UUID
   modelPlanID: UUID!
-  documentParameters: PlanDocumentParameters!
-  url: String
-}
-
-"""
-PlanDocumentCreateParameters represents the specific data required to create or modify a document on a plan
-"""
-input PlanDocumentParameters {
-  fileName: String
-  fileSize: Int!
-  fileType: String
-  documentType: DocumentType
+  fileData: Upload!
+  documentType: DocumentType!
   otherTypeDescription: String
   optionalNotes: String
-}
-
-"""
-PlanDocumentPayload represents the response to a document request
-"""
-type PlanDocumentPayload {
-  document: PlanDocument
-  presignedURL: String
 }
 
 """
@@ -6741,6 +6801,38 @@ type PlanFavorite {
 
 }
 
+type PlanCrTdl {
+    id: UUID!
+    modelPlanID: UUID!
+
+    idNumber: String!
+    dateInitiated: Time!
+    title: String!
+    note: String
+
+    createdBy: String!
+    createdDts: Time!
+    modifiedBy: String
+    modifiedDts: Time
+}
+
+input PlanCrTdlCreateInput {
+    modelPlanID: UUID!
+
+    idNumber: String!
+    dateInitiated: Time!
+    title: String!
+    note: String
+}
+
+input PlanCrTdlChanges @goModel(model: "map[string]interface{}") {
+    idNumber: String
+    dateInitiated: Time
+    title: String
+    note: String
+}
+
+
 type AuditChange {
 id: Int!
 primaryKey: UUID!
@@ -6768,15 +6860,14 @@ type Query {
   currentUser: CurrentUser!
   modelPlan(id: UUID!): ModelPlan!
   planDocument(id: UUID!): PlanDocument!
-  planDocumentDownloadURL(id: UUID!): PlanDocumentPayload!
-  readPlanDocumentByModelID(id: UUID!): [PlanDocument!]!
-  modelPlanCollection: [ModelPlan!]!
+  modelPlanCollection(includeAll: Boolean! = false): [ModelPlan!]!
   existingModelCollection: [ExistingModel!]!
   cedarPersonsByCommonName(commonName: String!): [UserInfo!]!
   planCollaboratorByID(id: UUID!): PlanCollaborator!
   taskListSectionLocks(modelPlanID: UUID!): [TaskListSectionLockStatus!]!
   planPayments(id: UUID!): PlanPayments!
   ndaInfo: NDAInfo!
+  crTdl(id: UUID!): PlanCrTdl!
   auditChanges(tableName: String!, primaryKey: UUID!): [AuditChange!]!
 }
 
@@ -6817,16 +6908,10 @@ updatePlanItTools(id: UUID!, changes:PlanITToolsChanges!): PlanITTools!
 updatePlanOpsEvalAndLearning(id: UUID!, changes: PlanOpsEvalAndLearningChanges!): PlanOpsEvalAndLearning!
 @hasRole(role: MINT_USER)
 
-generatePresignedUploadURL(input: GeneratePresignedUploadURLInput!): GeneratePresignedUploadURLPayload!
+uploadNewPlanDocument(input: PlanDocumentInput!): PlanDocument!
 @hasRole(role: MINT_USER)
 
-createPlanDocument(input: PlanDocumentInput!): PlanDocumentPayload!
-@hasRole(role: MINT_USER)
-
-updatePlanDocument(input: PlanDocumentInput!): PlanDocumentPayload!
-@hasRole(role: MINT_USER)
-
-deletePlanDocument(input: PlanDocumentInput!): Int!
+deletePlanDocument(id: UUID!): Int!
 @hasRole(role: MINT_USER)
 
 createPlanDiscussion(input: PlanDiscussionCreateInput!): PlanDiscussion!
@@ -6866,6 +6951,15 @@ addPlanFavorite(modelPlanID: UUID!): PlanFavorite!
 @hasRole(role: MINT_USER)
 
 deletePlanFavorite(modelPlanID: UUID!): PlanFavorite!
+@hasRole(role: MINT_USER)
+
+createPlanCrTdl(input: PlanCrTdlCreateInput!): PlanCrTdl!
+@hasRole(role: MINT_USER)
+
+updatePlanCrTdl(id: UUID!, changes: PlanCrTdlChanges!): PlanCrTdl!
+@hasRole(role: MINT_USER)
+
+deletePlanCrTdl(id: UUID!): PlanCrTdl!
 @hasRole(role: MINT_USER)
 }
 
@@ -7613,13 +7707,13 @@ func (ec *executionContext) field_Mutation_createPlanCollaborator_args(ctx conte
 	return args, nil
 }
 
-func (ec *executionContext) field_Mutation_createPlanDiscussion_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+func (ec *executionContext) field_Mutation_createPlanCrTdl_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
-	var arg0 model.PlanDiscussionCreateInput
+	var arg0 model.PlanCrTdlCreateInput
 	if tmp, ok := rawArgs["input"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
-		arg0, err = ec.unmarshalNPlanDiscussionCreateInput2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐPlanDiscussionCreateInput(ctx, tmp)
+		arg0, err = ec.unmarshalNPlanCrTdlCreateInput2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐPlanCrTdlCreateInput(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -7628,13 +7722,13 @@ func (ec *executionContext) field_Mutation_createPlanDiscussion_args(ctx context
 	return args, nil
 }
 
-func (ec *executionContext) field_Mutation_createPlanDocument_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+func (ec *executionContext) field_Mutation_createPlanDiscussion_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
-	var arg0 model.PlanDocumentInput
+	var arg0 model.PlanDiscussionCreateInput
 	if tmp, ok := rawArgs["input"]; ok {
 		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
-		arg0, err = ec.unmarshalNPlanDocumentInput2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐPlanDocumentInput(ctx, tmp)
+		arg0, err = ec.unmarshalNPlanDiscussionCreateInput2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐPlanDiscussionCreateInput(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -7673,6 +7767,21 @@ func (ec *executionContext) field_Mutation_deletePlanCollaborator_args(ctx conte
 	return args, nil
 }
 
+func (ec *executionContext) field_Mutation_deletePlanCrTdl_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 uuid.UUID
+	if tmp, ok := rawArgs["id"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("id"))
+		arg0, err = ec.unmarshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["id"] = arg0
+	return args, nil
+}
+
 func (ec *executionContext) field_Mutation_deletePlanDiscussion_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
@@ -7691,15 +7800,15 @@ func (ec *executionContext) field_Mutation_deletePlanDiscussion_args(ctx context
 func (ec *executionContext) field_Mutation_deletePlanDocument_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
-	var arg0 model.PlanDocumentInput
-	if tmp, ok := rawArgs["input"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
-		arg0, err = ec.unmarshalNPlanDocumentInput2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐPlanDocumentInput(ctx, tmp)
+	var arg0 uuid.UUID
+	if tmp, ok := rawArgs["id"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("id"))
+		arg0, err = ec.unmarshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
 	}
-	args["input"] = arg0
+	args["id"] = arg0
 	return args, nil
 }
 
@@ -7715,21 +7824,6 @@ func (ec *executionContext) field_Mutation_deletePlanFavorite_args(ctx context.C
 		}
 	}
 	args["modelPlanID"] = arg0
-	return args, nil
-}
-
-func (ec *executionContext) field_Mutation_generatePresignedUploadURL_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
-	var err error
-	args := map[string]interface{}{}
-	var arg0 model.GeneratePresignedUploadURLInput
-	if tmp, ok := rawArgs["input"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
-		arg0, err = ec.unmarshalNGeneratePresignedUploadURLInput2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐGeneratePresignedUploadURLInput(ctx, tmp)
-		if err != nil {
-			return nil, err
-		}
-	}
-	args["input"] = arg0
 	return args, nil
 }
 
@@ -7916,6 +8010,30 @@ func (ec *executionContext) field_Mutation_updatePlanCollaborator_args(ctx conte
 	return args, nil
 }
 
+func (ec *executionContext) field_Mutation_updatePlanCrTdl_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 uuid.UUID
+	if tmp, ok := rawArgs["id"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("id"))
+		arg0, err = ec.unmarshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["id"] = arg0
+	var arg1 map[string]interface{}
+	if tmp, ok := rawArgs["changes"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("changes"))
+		arg1, err = ec.unmarshalNPlanCrTdlChanges2map(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["changes"] = arg1
+	return args, nil
+}
+
 func (ec *executionContext) field_Mutation_updatePlanDiscussion_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
@@ -7937,21 +8055,6 @@ func (ec *executionContext) field_Mutation_updatePlanDiscussion_args(ctx context
 		}
 	}
 	args["changes"] = arg1
-	return args, nil
-}
-
-func (ec *executionContext) field_Mutation_updatePlanDocument_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
-	var err error
-	args := map[string]interface{}{}
-	var arg0 model.PlanDocumentInput
-	if tmp, ok := rawArgs["input"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
-		arg0, err = ec.unmarshalNPlanDocumentInput2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐPlanDocumentInput(ctx, tmp)
-		if err != nil {
-			return nil, err
-		}
-	}
-	args["input"] = arg0
 	return args, nil
 }
 
@@ -8075,6 +8178,21 @@ func (ec *executionContext) field_Mutation_updatePlanPayments_args(ctx context.C
 	return args, nil
 }
 
+func (ec *executionContext) field_Mutation_uploadNewPlanDocument_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 model.PlanDocumentInput
+	if tmp, ok := rawArgs["input"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("input"))
+		arg0, err = ec.unmarshalNPlanDocumentInput2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐPlanDocumentInput(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["input"] = arg0
+	return args, nil
+}
+
 func (ec *executionContext) field_Query___type_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
@@ -8129,6 +8247,36 @@ func (ec *executionContext) field_Query_cedarPersonsByCommonName_args(ctx contex
 	return args, nil
 }
 
+func (ec *executionContext) field_Query_crTdl_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 uuid.UUID
+	if tmp, ok := rawArgs["id"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("id"))
+		arg0, err = ec.unmarshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["id"] = arg0
+	return args, nil
+}
+
+func (ec *executionContext) field_Query_modelPlanCollection_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 bool
+	if tmp, ok := rawArgs["includeAll"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("includeAll"))
+		arg0, err = ec.unmarshalNBoolean2bool(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["includeAll"] = arg0
+	return args, nil
+}
+
 func (ec *executionContext) field_Query_modelPlan_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
@@ -8159,21 +8307,6 @@ func (ec *executionContext) field_Query_planCollaboratorByID_args(ctx context.Co
 	return args, nil
 }
 
-func (ec *executionContext) field_Query_planDocumentDownloadURL_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
-	var err error
-	args := map[string]interface{}{}
-	var arg0 uuid.UUID
-	if tmp, ok := rawArgs["id"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("id"))
-		arg0, err = ec.unmarshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, tmp)
-		if err != nil {
-			return nil, err
-		}
-	}
-	args["id"] = arg0
-	return args, nil
-}
-
 func (ec *executionContext) field_Query_planDocument_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
@@ -8190,21 +8323,6 @@ func (ec *executionContext) field_Query_planDocument_args(ctx context.Context, r
 }
 
 func (ec *executionContext) field_Query_planPayments_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
-	var err error
-	args := map[string]interface{}{}
-	var arg0 uuid.UUID
-	if tmp, ok := rawArgs["id"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("id"))
-		arg0, err = ec.unmarshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, tmp)
-		if err != nil {
-			return nil, err
-		}
-	}
-	args["id"] = arg0
-	return args, nil
-}
-
-func (ec *executionContext) field_Query_readPlanDocumentByModelID_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
 	var arg0 uuid.UUID
@@ -9823,47 +9941,6 @@ func (ec *executionContext) fieldContext_ExistingModel_modifiedDts(ctx context.C
 	return fc, nil
 }
 
-func (ec *executionContext) _GeneratePresignedUploadURLPayload_url(ctx context.Context, field graphql.CollectedField, obj *model.GeneratePresignedUploadURLPayload) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_GeneratePresignedUploadURLPayload_url(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.URL, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		return graphql.Null
-	}
-	res := resTmp.(*string)
-	fc.Result = res
-	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_GeneratePresignedUploadURLPayload_url(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "GeneratePresignedUploadURLPayload",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type String does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
 func (ec *executionContext) _LaunchDarklySettings_userKey(ctx context.Context, field graphql.CollectedField, obj *model.LaunchDarklySettings) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_LaunchDarklySettings_userKey(ctx, field)
 	if err != nil {
@@ -11167,6 +11244,8 @@ func (ec *executionContext) fieldContext_ModelPlan_documents(ctx context.Context
 				return ec.fieldContext_PlanDocument_otherType(ctx, field)
 			case "optionalNotes":
 				return ec.fieldContext_PlanDocument_optionalNotes(ctx, field)
+			case "downloadUrl":
+				return ec.fieldContext_PlanDocument_downloadUrl(ctx, field)
 			case "deletedAt":
 				return ec.fieldContext_PlanDocument_deletedAt(ctx, field)
 			case "createdBy":
@@ -11744,6 +11823,116 @@ func (ec *executionContext) fieldContext_ModelPlan_isFavorite(ctx context.Contex
 	return fc, nil
 }
 
+func (ec *executionContext) _ModelPlan_isCollaborator(ctx context.Context, field graphql.CollectedField, obj *models.ModelPlan) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_ModelPlan_isCollaborator(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.ModelPlan().IsCollaborator(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(bool)
+	fc.Result = res
+	return ec.marshalNBoolean2bool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_ModelPlan_isCollaborator(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "ModelPlan",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _ModelPlan_crTdls(ctx context.Context, field graphql.CollectedField, obj *models.ModelPlan) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_ModelPlan_crTdls(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.ModelPlan().CrTdls(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.([]*models.PlanCrTdl)
+	fc.Result = res
+	return ec.marshalNPlanCrTdl2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanCrTdlᚄ(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_ModelPlan_crTdls(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "ModelPlan",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_PlanCrTdl_id(ctx, field)
+			case "modelPlanID":
+				return ec.fieldContext_PlanCrTdl_modelPlanID(ctx, field)
+			case "idNumber":
+				return ec.fieldContext_PlanCrTdl_idNumber(ctx, field)
+			case "dateInitiated":
+				return ec.fieldContext_PlanCrTdl_dateInitiated(ctx, field)
+			case "title":
+				return ec.fieldContext_PlanCrTdl_title(ctx, field)
+			case "note":
+				return ec.fieldContext_PlanCrTdl_note(ctx, field)
+			case "createdBy":
+				return ec.fieldContext_PlanCrTdl_createdBy(ctx, field)
+			case "createdDts":
+				return ec.fieldContext_PlanCrTdl_createdDts(ctx, field)
+			case "modifiedBy":
+				return ec.fieldContext_PlanCrTdl_modifiedBy(ctx, field)
+			case "modifiedDts":
+				return ec.fieldContext_PlanCrTdl_modifiedDts(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type PlanCrTdl", field.Name)
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _ModelPlan_nameHistory(ctx context.Context, field graphql.CollectedField, obj *models.ModelPlan) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_ModelPlan_nameHistory(ctx, field)
 	if err != nil {
@@ -11900,6 +12089,10 @@ func (ec *executionContext) fieldContext_Mutation_createModelPlan(ctx context.Co
 				return ec.fieldContext_ModelPlan_status(ctx, field)
 			case "isFavorite":
 				return ec.fieldContext_ModelPlan_isFavorite(ctx, field)
+			case "isCollaborator":
+				return ec.fieldContext_ModelPlan_isCollaborator(ctx, field)
+			case "crTdls":
+				return ec.fieldContext_ModelPlan_crTdls(ctx, field)
 			case "nameHistory":
 				return ec.fieldContext_ModelPlan_nameHistory(ctx, field)
 			}
@@ -12021,6 +12214,10 @@ func (ec *executionContext) fieldContext_Mutation_updateModelPlan(ctx context.Co
 				return ec.fieldContext_ModelPlan_status(ctx, field)
 			case "isFavorite":
 				return ec.fieldContext_ModelPlan_isFavorite(ctx, field)
+			case "isCollaborator":
+				return ec.fieldContext_ModelPlan_isCollaborator(ctx, field)
+			case "crTdls":
+				return ec.fieldContext_ModelPlan_crTdls(ctx, field)
 			case "nameHistory":
 				return ec.fieldContext_ModelPlan_nameHistory(ctx, field)
 			}
@@ -13564,8 +13761,8 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanOpsEvalAndLearning(c
 	return fc, nil
 }
 
-func (ec *executionContext) _Mutation_generatePresignedUploadURL(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Mutation_generatePresignedUploadURL(ctx, field)
+func (ec *executionContext) _Mutation_uploadNewPlanDocument(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Mutation_uploadNewPlanDocument(ctx, field)
 	if err != nil {
 		return graphql.Null
 	}
@@ -13579,7 +13776,7 @@ func (ec *executionContext) _Mutation_generatePresignedUploadURL(ctx context.Con
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		directive0 := func(rctx context.Context) (interface{}, error) {
 			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Mutation().GeneratePresignedUploadURL(rctx, fc.Args["input"].(model.GeneratePresignedUploadURLInput))
+			return ec.resolvers.Mutation().UploadNewPlanDocument(rctx, fc.Args["input"].(model.PlanDocumentInput))
 		}
 		directive1 := func(ctx context.Context) (interface{}, error) {
 			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
@@ -13599,10 +13796,10 @@ func (ec *executionContext) _Mutation_generatePresignedUploadURL(ctx context.Con
 		if tmp == nil {
 			return nil, nil
 		}
-		if data, ok := tmp.(*model.GeneratePresignedUploadURLPayload); ok {
+		if data, ok := tmp.(*models.PlanDocument); ok {
 			return data, nil
 		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/graph/model.GeneratePresignedUploadURLPayload`, tmp)
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.PlanDocument`, tmp)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -13614,12 +13811,12 @@ func (ec *executionContext) _Mutation_generatePresignedUploadURL(ctx context.Con
 		}
 		return graphql.Null
 	}
-	res := resTmp.(*model.GeneratePresignedUploadURLPayload)
+	res := resTmp.(*models.PlanDocument)
 	fc.Result = res
-	return ec.marshalNGeneratePresignedUploadURLPayload2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐGeneratePresignedUploadURLPayload(ctx, field.Selections, res)
+	return ec.marshalNPlanDocument2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanDocument(ctx, field.Selections, res)
 }
 
-func (ec *executionContext) fieldContext_Mutation_generatePresignedUploadURL(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+func (ec *executionContext) fieldContext_Mutation_uploadNewPlanDocument(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
 	fc = &graphql.FieldContext{
 		Object:     "Mutation",
 		Field:      field,
@@ -13627,10 +13824,44 @@ func (ec *executionContext) fieldContext_Mutation_generatePresignedUploadURL(ctx
 		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			switch field.Name {
-			case "url":
-				return ec.fieldContext_GeneratePresignedUploadURLPayload_url(ctx, field)
+			case "id":
+				return ec.fieldContext_PlanDocument_id(ctx, field)
+			case "modelPlanID":
+				return ec.fieldContext_PlanDocument_modelPlanID(ctx, field)
+			case "fileType":
+				return ec.fieldContext_PlanDocument_fileType(ctx, field)
+			case "bucket":
+				return ec.fieldContext_PlanDocument_bucket(ctx, field)
+			case "fileKey":
+				return ec.fieldContext_PlanDocument_fileKey(ctx, field)
+			case "virusScanned":
+				return ec.fieldContext_PlanDocument_virusScanned(ctx, field)
+			case "virusClean":
+				return ec.fieldContext_PlanDocument_virusClean(ctx, field)
+			case "fileName":
+				return ec.fieldContext_PlanDocument_fileName(ctx, field)
+			case "fileSize":
+				return ec.fieldContext_PlanDocument_fileSize(ctx, field)
+			case "documentType":
+				return ec.fieldContext_PlanDocument_documentType(ctx, field)
+			case "otherType":
+				return ec.fieldContext_PlanDocument_otherType(ctx, field)
+			case "optionalNotes":
+				return ec.fieldContext_PlanDocument_optionalNotes(ctx, field)
+			case "downloadUrl":
+				return ec.fieldContext_PlanDocument_downloadUrl(ctx, field)
+			case "deletedAt":
+				return ec.fieldContext_PlanDocument_deletedAt(ctx, field)
+			case "createdBy":
+				return ec.fieldContext_PlanDocument_createdBy(ctx, field)
+			case "createdDts":
+				return ec.fieldContext_PlanDocument_createdDts(ctx, field)
+			case "modifiedBy":
+				return ec.fieldContext_PlanDocument_modifiedBy(ctx, field)
+			case "modifiedDts":
+				return ec.fieldContext_PlanDocument_modifiedDts(ctx, field)
 			}
-			return nil, fmt.Errorf("no field named %q was found under type GeneratePresignedUploadURLPayload", field.Name)
+			return nil, fmt.Errorf("no field named %q was found under type PlanDocument", field.Name)
 		},
 	}
 	defer func() {
@@ -13640,177 +13871,7 @@ func (ec *executionContext) fieldContext_Mutation_generatePresignedUploadURL(ctx
 		}
 	}()
 	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_generatePresignedUploadURL_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Mutation_createPlanDocument(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Mutation_createPlanDocument(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		directive0 := func(rctx context.Context) (interface{}, error) {
-			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Mutation().CreatePlanDocument(rctx, fc.Args["input"].(model.PlanDocumentInput))
-		}
-		directive1 := func(ctx context.Context) (interface{}, error) {
-			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
-			if err != nil {
-				return nil, err
-			}
-			if ec.directives.HasRole == nil {
-				return nil, errors.New("directive hasRole is not implemented")
-			}
-			return ec.directives.HasRole(ctx, nil, directive0, role)
-		}
-
-		tmp, err := directive1(rctx)
-		if err != nil {
-			return nil, graphql.ErrorOnPath(ctx, err)
-		}
-		if tmp == nil {
-			return nil, nil
-		}
-		if data, ok := tmp.(*model.PlanDocumentPayload); ok {
-			return data, nil
-		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/graph/model.PlanDocumentPayload`, tmp)
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(*model.PlanDocumentPayload)
-	fc.Result = res
-	return ec.marshalNPlanDocumentPayload2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐPlanDocumentPayload(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_Mutation_createPlanDocument(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Mutation",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "document":
-				return ec.fieldContext_PlanDocumentPayload_document(ctx, field)
-			case "presignedURL":
-				return ec.fieldContext_PlanDocumentPayload_presignedURL(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type PlanDocumentPayload", field.Name)
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_createPlanDocument_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Mutation_updatePlanDocument(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Mutation_updatePlanDocument(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		directive0 := func(rctx context.Context) (interface{}, error) {
-			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Mutation().UpdatePlanDocument(rctx, fc.Args["input"].(model.PlanDocumentInput))
-		}
-		directive1 := func(ctx context.Context) (interface{}, error) {
-			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
-			if err != nil {
-				return nil, err
-			}
-			if ec.directives.HasRole == nil {
-				return nil, errors.New("directive hasRole is not implemented")
-			}
-			return ec.directives.HasRole(ctx, nil, directive0, role)
-		}
-
-		tmp, err := directive1(rctx)
-		if err != nil {
-			return nil, graphql.ErrorOnPath(ctx, err)
-		}
-		if tmp == nil {
-			return nil, nil
-		}
-		if data, ok := tmp.(*model.PlanDocumentPayload); ok {
-			return data, nil
-		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/graph/model.PlanDocumentPayload`, tmp)
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(*model.PlanDocumentPayload)
-	fc.Result = res
-	return ec.marshalNPlanDocumentPayload2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐPlanDocumentPayload(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_Mutation_updatePlanDocument(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Mutation",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "document":
-				return ec.fieldContext_PlanDocumentPayload_document(ctx, field)
-			case "presignedURL":
-				return ec.fieldContext_PlanDocumentPayload_presignedURL(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type PlanDocumentPayload", field.Name)
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_updatePlanDocument_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+	if fc.Args, err = ec.field_Mutation_uploadNewPlanDocument_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return
 	}
@@ -13832,7 +13893,7 @@ func (ec *executionContext) _Mutation_deletePlanDocument(ctx context.Context, fi
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		directive0 := func(rctx context.Context) (interface{}, error) {
 			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Mutation().DeletePlanDocument(rctx, fc.Args["input"].(model.PlanDocumentInput))
+			return ec.resolvers.Mutation().DeletePlanDocument(rctx, fc.Args["id"].(uuid.UUID))
 		}
 		directive1 := func(ctx context.Context) (interface{}, error) {
 			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
@@ -15215,6 +15276,309 @@ func (ec *executionContext) fieldContext_Mutation_deletePlanFavorite(ctx context
 	}()
 	ctx = graphql.WithFieldContext(ctx, fc)
 	if fc.Args, err = ec.field_Mutation_deletePlanFavorite_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Mutation_createPlanCrTdl(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Mutation_createPlanCrTdl(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		directive0 := func(rctx context.Context) (interface{}, error) {
+			ctx = rctx // use context from middleware stack in children
+			return ec.resolvers.Mutation().CreatePlanCrTdl(rctx, fc.Args["input"].(model.PlanCrTdlCreateInput))
+		}
+		directive1 := func(ctx context.Context) (interface{}, error) {
+			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
+			if err != nil {
+				return nil, err
+			}
+			if ec.directives.HasRole == nil {
+				return nil, errors.New("directive hasRole is not implemented")
+			}
+			return ec.directives.HasRole(ctx, nil, directive0, role)
+		}
+
+		tmp, err := directive1(rctx)
+		if err != nil {
+			return nil, graphql.ErrorOnPath(ctx, err)
+		}
+		if tmp == nil {
+			return nil, nil
+		}
+		if data, ok := tmp.(*models.PlanCrTdl); ok {
+			return data, nil
+		}
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.PlanCrTdl`, tmp)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*models.PlanCrTdl)
+	fc.Result = res
+	return ec.marshalNPlanCrTdl2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanCrTdl(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Mutation_createPlanCrTdl(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_PlanCrTdl_id(ctx, field)
+			case "modelPlanID":
+				return ec.fieldContext_PlanCrTdl_modelPlanID(ctx, field)
+			case "idNumber":
+				return ec.fieldContext_PlanCrTdl_idNumber(ctx, field)
+			case "dateInitiated":
+				return ec.fieldContext_PlanCrTdl_dateInitiated(ctx, field)
+			case "title":
+				return ec.fieldContext_PlanCrTdl_title(ctx, field)
+			case "note":
+				return ec.fieldContext_PlanCrTdl_note(ctx, field)
+			case "createdBy":
+				return ec.fieldContext_PlanCrTdl_createdBy(ctx, field)
+			case "createdDts":
+				return ec.fieldContext_PlanCrTdl_createdDts(ctx, field)
+			case "modifiedBy":
+				return ec.fieldContext_PlanCrTdl_modifiedBy(ctx, field)
+			case "modifiedDts":
+				return ec.fieldContext_PlanCrTdl_modifiedDts(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type PlanCrTdl", field.Name)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_createPlanCrTdl_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Mutation_updatePlanCrTdl(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Mutation_updatePlanCrTdl(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		directive0 := func(rctx context.Context) (interface{}, error) {
+			ctx = rctx // use context from middleware stack in children
+			return ec.resolvers.Mutation().UpdatePlanCrTdl(rctx, fc.Args["id"].(uuid.UUID), fc.Args["changes"].(map[string]interface{}))
+		}
+		directive1 := func(ctx context.Context) (interface{}, error) {
+			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
+			if err != nil {
+				return nil, err
+			}
+			if ec.directives.HasRole == nil {
+				return nil, errors.New("directive hasRole is not implemented")
+			}
+			return ec.directives.HasRole(ctx, nil, directive0, role)
+		}
+
+		tmp, err := directive1(rctx)
+		if err != nil {
+			return nil, graphql.ErrorOnPath(ctx, err)
+		}
+		if tmp == nil {
+			return nil, nil
+		}
+		if data, ok := tmp.(*models.PlanCrTdl); ok {
+			return data, nil
+		}
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.PlanCrTdl`, tmp)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*models.PlanCrTdl)
+	fc.Result = res
+	return ec.marshalNPlanCrTdl2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanCrTdl(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Mutation_updatePlanCrTdl(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_PlanCrTdl_id(ctx, field)
+			case "modelPlanID":
+				return ec.fieldContext_PlanCrTdl_modelPlanID(ctx, field)
+			case "idNumber":
+				return ec.fieldContext_PlanCrTdl_idNumber(ctx, field)
+			case "dateInitiated":
+				return ec.fieldContext_PlanCrTdl_dateInitiated(ctx, field)
+			case "title":
+				return ec.fieldContext_PlanCrTdl_title(ctx, field)
+			case "note":
+				return ec.fieldContext_PlanCrTdl_note(ctx, field)
+			case "createdBy":
+				return ec.fieldContext_PlanCrTdl_createdBy(ctx, field)
+			case "createdDts":
+				return ec.fieldContext_PlanCrTdl_createdDts(ctx, field)
+			case "modifiedBy":
+				return ec.fieldContext_PlanCrTdl_modifiedBy(ctx, field)
+			case "modifiedDts":
+				return ec.fieldContext_PlanCrTdl_modifiedDts(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type PlanCrTdl", field.Name)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_updatePlanCrTdl_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Mutation_deletePlanCrTdl(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Mutation_deletePlanCrTdl(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		directive0 := func(rctx context.Context) (interface{}, error) {
+			ctx = rctx // use context from middleware stack in children
+			return ec.resolvers.Mutation().DeletePlanCrTdl(rctx, fc.Args["id"].(uuid.UUID))
+		}
+		directive1 := func(ctx context.Context) (interface{}, error) {
+			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
+			if err != nil {
+				return nil, err
+			}
+			if ec.directives.HasRole == nil {
+				return nil, errors.New("directive hasRole is not implemented")
+			}
+			return ec.directives.HasRole(ctx, nil, directive0, role)
+		}
+
+		tmp, err := directive1(rctx)
+		if err != nil {
+			return nil, graphql.ErrorOnPath(ctx, err)
+		}
+		if tmp == nil {
+			return nil, nil
+		}
+		if data, ok := tmp.(*models.PlanCrTdl); ok {
+			return data, nil
+		}
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.PlanCrTdl`, tmp)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*models.PlanCrTdl)
+	fc.Result = res
+	return ec.marshalNPlanCrTdl2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanCrTdl(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Mutation_deletePlanCrTdl(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_PlanCrTdl_id(ctx, field)
+			case "modelPlanID":
+				return ec.fieldContext_PlanCrTdl_modelPlanID(ctx, field)
+			case "idNumber":
+				return ec.fieldContext_PlanCrTdl_idNumber(ctx, field)
+			case "dateInitiated":
+				return ec.fieldContext_PlanCrTdl_dateInitiated(ctx, field)
+			case "title":
+				return ec.fieldContext_PlanCrTdl_title(ctx, field)
+			case "note":
+				return ec.fieldContext_PlanCrTdl_note(ctx, field)
+			case "createdBy":
+				return ec.fieldContext_PlanCrTdl_createdBy(ctx, field)
+			case "createdDts":
+				return ec.fieldContext_PlanCrTdl_createdDts(ctx, field)
+			case "modifiedBy":
+				return ec.fieldContext_PlanCrTdl_modifiedBy(ctx, field)
+			case "modifiedDts":
+				return ec.fieldContext_PlanCrTdl_modifiedDts(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type PlanCrTdl", field.Name)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Mutation_deletePlanCrTdl_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return
 	}
@@ -18242,6 +18606,437 @@ func (ec *executionContext) fieldContext_PlanCollaborator_modifiedDts(ctx contex
 	return fc, nil
 }
 
+func (ec *executionContext) _PlanCrTdl_id(ctx context.Context, field graphql.CollectedField, obj *models.PlanCrTdl) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanCrTdl_id(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ID, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(uuid.UUID)
+	fc.Result = res
+	return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanCrTdl_id(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanCrTdl",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type UUID does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanCrTdl_modelPlanID(ctx context.Context, field graphql.CollectedField, obj *models.PlanCrTdl) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanCrTdl_modelPlanID(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ModelPlanID, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(uuid.UUID)
+	fc.Result = res
+	return ec.marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanCrTdl_modelPlanID(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanCrTdl",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type UUID does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanCrTdl_idNumber(ctx context.Context, field graphql.CollectedField, obj *models.PlanCrTdl) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanCrTdl_idNumber(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.IDNumber, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalNString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanCrTdl_idNumber(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanCrTdl",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanCrTdl_dateInitiated(ctx context.Context, field graphql.CollectedField, obj *models.PlanCrTdl) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanCrTdl_dateInitiated(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.DateInitiated, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*time.Time)
+	fc.Result = res
+	return ec.marshalNTime2ᚖtimeᚐTime(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanCrTdl_dateInitiated(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanCrTdl",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Time does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanCrTdl_title(ctx context.Context, field graphql.CollectedField, obj *models.PlanCrTdl) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanCrTdl_title(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Title, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalNString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanCrTdl_title(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanCrTdl",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanCrTdl_note(ctx context.Context, field graphql.CollectedField, obj *models.PlanCrTdl) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanCrTdl_note(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.Note, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanCrTdl_note(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanCrTdl",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanCrTdl_createdBy(ctx context.Context, field graphql.CollectedField, obj *models.PlanCrTdl) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanCrTdl_createdBy(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.CreatedBy, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(string)
+	fc.Result = res
+	return ec.marshalNString2string(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanCrTdl_createdBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanCrTdl",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanCrTdl_createdDts(ctx context.Context, field graphql.CollectedField, obj *models.PlanCrTdl) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanCrTdl_createdDts(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.CreatedDts, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(time.Time)
+	fc.Result = res
+	return ec.marshalNTime2timeᚐTime(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanCrTdl_createdDts(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanCrTdl",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Time does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanCrTdl_modifiedBy(ctx context.Context, field graphql.CollectedField, obj *models.PlanCrTdl) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanCrTdl_modifiedBy(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ModifiedBy, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanCrTdl_modifiedBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanCrTdl",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanCrTdl_modifiedDts(ctx context.Context, field graphql.CollectedField, obj *models.PlanCrTdl) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanCrTdl_modifiedDts(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.ModifiedDts, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*time.Time)
+	fc.Result = res
+	return ec.marshalOTime2ᚖtimeᚐTime(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanCrTdl_modifiedDts(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanCrTdl",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Time does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _PlanDiscussion_id(ctx context.Context, field graphql.CollectedField, obj *models.PlanDiscussion) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_PlanDiscussion_id(ctx, field)
 	if err != nil {
@@ -19142,7 +19937,7 @@ func (ec *executionContext) _PlanDocument_optionalNotes(ctx context.Context, fie
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return obj.OptionalNotes, nil
+		return ec.resolvers.PlanDocument().OptionalNotes(rctx, obj)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -19160,8 +19955,49 @@ func (ec *executionContext) fieldContext_PlanDocument_optionalNotes(ctx context.
 	fc = &graphql.FieldContext{
 		Object:     "PlanDocument",
 		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanDocument_downloadUrl(ctx context.Context, field graphql.CollectedField, obj *models.PlanDocument) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanDocument_downloadUrl(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.PlanDocument().DownloadURL(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanDocument_downloadUrl(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanDocument",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type String does not have child fields")
 		},
@@ -19375,124 +20211,6 @@ func (ec *executionContext) fieldContext_PlanDocument_modifiedDts(ctx context.Co
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type Time does not have child fields")
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _PlanDocumentPayload_document(ctx context.Context, field graphql.CollectedField, obj *model.PlanDocumentPayload) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanDocumentPayload_document(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.Document, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		return graphql.Null
-	}
-	res := resTmp.(*models.PlanDocument)
-	fc.Result = res
-	return ec.marshalOPlanDocument2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanDocument(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_PlanDocumentPayload_document(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "PlanDocumentPayload",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "id":
-				return ec.fieldContext_PlanDocument_id(ctx, field)
-			case "modelPlanID":
-				return ec.fieldContext_PlanDocument_modelPlanID(ctx, field)
-			case "fileType":
-				return ec.fieldContext_PlanDocument_fileType(ctx, field)
-			case "bucket":
-				return ec.fieldContext_PlanDocument_bucket(ctx, field)
-			case "fileKey":
-				return ec.fieldContext_PlanDocument_fileKey(ctx, field)
-			case "virusScanned":
-				return ec.fieldContext_PlanDocument_virusScanned(ctx, field)
-			case "virusClean":
-				return ec.fieldContext_PlanDocument_virusClean(ctx, field)
-			case "fileName":
-				return ec.fieldContext_PlanDocument_fileName(ctx, field)
-			case "fileSize":
-				return ec.fieldContext_PlanDocument_fileSize(ctx, field)
-			case "documentType":
-				return ec.fieldContext_PlanDocument_documentType(ctx, field)
-			case "otherType":
-				return ec.fieldContext_PlanDocument_otherType(ctx, field)
-			case "optionalNotes":
-				return ec.fieldContext_PlanDocument_optionalNotes(ctx, field)
-			case "deletedAt":
-				return ec.fieldContext_PlanDocument_deletedAt(ctx, field)
-			case "createdBy":
-				return ec.fieldContext_PlanDocument_createdBy(ctx, field)
-			case "createdDts":
-				return ec.fieldContext_PlanDocument_createdDts(ctx, field)
-			case "modifiedBy":
-				return ec.fieldContext_PlanDocument_modifiedBy(ctx, field)
-			case "modifiedDts":
-				return ec.fieldContext_PlanDocument_modifiedDts(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type PlanDocument", field.Name)
-		},
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _PlanDocumentPayload_presignedURL(ctx context.Context, field graphql.CollectedField, obj *model.PlanDocumentPayload) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_PlanDocumentPayload_presignedURL(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.PresignedURL, nil
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		return graphql.Null
-	}
-	res := resTmp.(*string)
-	fc.Result = res
-	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_PlanDocumentPayload_presignedURL(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "PlanDocumentPayload",
-		Field:      field,
-		IsMethod:   false,
-		IsResolver: false,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			return nil, errors.New("field of type String does not have child fields")
 		},
 	}
 	return fc, nil
@@ -35552,6 +36270,10 @@ func (ec *executionContext) fieldContext_Query_modelPlan(ctx context.Context, fi
 				return ec.fieldContext_ModelPlan_status(ctx, field)
 			case "isFavorite":
 				return ec.fieldContext_ModelPlan_isFavorite(ctx, field)
+			case "isCollaborator":
+				return ec.fieldContext_ModelPlan_isCollaborator(ctx, field)
+			case "crTdls":
+				return ec.fieldContext_ModelPlan_crTdls(ctx, field)
 			case "nameHistory":
 				return ec.fieldContext_ModelPlan_nameHistory(ctx, field)
 			}
@@ -35635,6 +36357,8 @@ func (ec *executionContext) fieldContext_Query_planDocument(ctx context.Context,
 				return ec.fieldContext_PlanDocument_otherType(ctx, field)
 			case "optionalNotes":
 				return ec.fieldContext_PlanDocument_optionalNotes(ctx, field)
+			case "downloadUrl":
+				return ec.fieldContext_PlanDocument_downloadUrl(ctx, field)
 			case "deletedAt":
 				return ec.fieldContext_PlanDocument_deletedAt(ctx, field)
 			case "createdBy":
@@ -35663,158 +36387,6 @@ func (ec *executionContext) fieldContext_Query_planDocument(ctx context.Context,
 	return fc, nil
 }
 
-func (ec *executionContext) _Query_planDocumentDownloadURL(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Query_planDocumentDownloadURL(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Query().PlanDocumentDownloadURL(rctx, fc.Args["id"].(uuid.UUID))
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(*model.PlanDocumentPayload)
-	fc.Result = res
-	return ec.marshalNPlanDocumentPayload2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐPlanDocumentPayload(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_Query_planDocumentDownloadURL(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Query",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "document":
-				return ec.fieldContext_PlanDocumentPayload_document(ctx, field)
-			case "presignedURL":
-				return ec.fieldContext_PlanDocumentPayload_presignedURL(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type PlanDocumentPayload", field.Name)
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Query_planDocumentDownloadURL_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Query_readPlanDocumentByModelID(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Query_readPlanDocumentByModelID(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Query().ReadPlanDocumentByModelID(rctx, fc.Args["id"].(uuid.UUID))
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.([]*models.PlanDocument)
-	fc.Result = res
-	return ec.marshalNPlanDocument2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanDocumentᚄ(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_Query_readPlanDocumentByModelID(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Query",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "id":
-				return ec.fieldContext_PlanDocument_id(ctx, field)
-			case "modelPlanID":
-				return ec.fieldContext_PlanDocument_modelPlanID(ctx, field)
-			case "fileType":
-				return ec.fieldContext_PlanDocument_fileType(ctx, field)
-			case "bucket":
-				return ec.fieldContext_PlanDocument_bucket(ctx, field)
-			case "fileKey":
-				return ec.fieldContext_PlanDocument_fileKey(ctx, field)
-			case "virusScanned":
-				return ec.fieldContext_PlanDocument_virusScanned(ctx, field)
-			case "virusClean":
-				return ec.fieldContext_PlanDocument_virusClean(ctx, field)
-			case "fileName":
-				return ec.fieldContext_PlanDocument_fileName(ctx, field)
-			case "fileSize":
-				return ec.fieldContext_PlanDocument_fileSize(ctx, field)
-			case "documentType":
-				return ec.fieldContext_PlanDocument_documentType(ctx, field)
-			case "otherType":
-				return ec.fieldContext_PlanDocument_otherType(ctx, field)
-			case "optionalNotes":
-				return ec.fieldContext_PlanDocument_optionalNotes(ctx, field)
-			case "deletedAt":
-				return ec.fieldContext_PlanDocument_deletedAt(ctx, field)
-			case "createdBy":
-				return ec.fieldContext_PlanDocument_createdBy(ctx, field)
-			case "createdDts":
-				return ec.fieldContext_PlanDocument_createdDts(ctx, field)
-			case "modifiedBy":
-				return ec.fieldContext_PlanDocument_modifiedBy(ctx, field)
-			case "modifiedDts":
-				return ec.fieldContext_PlanDocument_modifiedDts(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type PlanDocument", field.Name)
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Query_readPlanDocumentByModelID_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return
-	}
-	return fc, nil
-}
-
 func (ec *executionContext) _Query_modelPlanCollection(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_Query_modelPlanCollection(ctx, field)
 	if err != nil {
@@ -35829,7 +36401,7 @@ func (ec *executionContext) _Query_modelPlanCollection(ctx context.Context, fiel
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Query().ModelPlanCollection(rctx)
+		return ec.resolvers.Query().ModelPlanCollection(rctx, fc.Args["includeAll"].(bool))
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -35892,11 +36464,26 @@ func (ec *executionContext) fieldContext_Query_modelPlanCollection(ctx context.C
 				return ec.fieldContext_ModelPlan_status(ctx, field)
 			case "isFavorite":
 				return ec.fieldContext_ModelPlan_isFavorite(ctx, field)
+			case "isCollaborator":
+				return ec.fieldContext_ModelPlan_isCollaborator(ctx, field)
+			case "crTdls":
+				return ec.fieldContext_ModelPlan_crTdls(ctx, field)
 			case "nameHistory":
 				return ec.fieldContext_ModelPlan_nameHistory(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type ModelPlan", field.Name)
 		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Query_modelPlanCollection_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return
 	}
 	return fc, nil
 }
@@ -36427,6 +37014,83 @@ func (ec *executionContext) fieldContext_Query_ndaInfo(ctx context.Context, fiel
 			}
 			return nil, fmt.Errorf("no field named %q was found under type NDAInfo", field.Name)
 		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _Query_crTdl(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_Query_crTdl(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Query().CrTdl(rctx, fc.Args["id"].(uuid.UUID))
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(*models.PlanCrTdl)
+	fc.Result = res
+	return ec.marshalNPlanCrTdl2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanCrTdl(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_Query_crTdl(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "Query",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			switch field.Name {
+			case "id":
+				return ec.fieldContext_PlanCrTdl_id(ctx, field)
+			case "modelPlanID":
+				return ec.fieldContext_PlanCrTdl_modelPlanID(ctx, field)
+			case "idNumber":
+				return ec.fieldContext_PlanCrTdl_idNumber(ctx, field)
+			case "dateInitiated":
+				return ec.fieldContext_PlanCrTdl_dateInitiated(ctx, field)
+			case "title":
+				return ec.fieldContext_PlanCrTdl_title(ctx, field)
+			case "note":
+				return ec.fieldContext_PlanCrTdl_note(ctx, field)
+			case "createdBy":
+				return ec.fieldContext_PlanCrTdl_createdBy(ctx, field)
+			case "createdDts":
+				return ec.fieldContext_PlanCrTdl_createdDts(ctx, field)
+			case "modifiedBy":
+				return ec.fieldContext_PlanCrTdl_modifiedBy(ctx, field)
+			case "modifiedDts":
+				return ec.fieldContext_PlanCrTdl_modifiedDts(ctx, field)
+			}
+			return nil, fmt.Errorf("no field named %q was found under type PlanCrTdl", field.Name)
+		},
+	}
+	defer func() {
+		if r := recover(); r != nil {
+			err = ec.Recover(ctx, r)
+			ec.Error(ctx, err)
+		}
+	}()
+	ctx = graphql.WithFieldContext(ctx, fc)
+	if fc.Args, err = ec.field_Query_crTdl_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
+		ec.Error(ctx, err)
+		return
 	}
 	return fc, nil
 }
@@ -39060,50 +39724,6 @@ func (ec *executionContext) unmarshalInputDiscussionReplyCreateInput(ctx context
 	return it, nil
 }
 
-func (ec *executionContext) unmarshalInputGeneratePresignedUploadURLInput(ctx context.Context, obj interface{}) (model.GeneratePresignedUploadURLInput, error) {
-	var it model.GeneratePresignedUploadURLInput
-	asMap := map[string]interface{}{}
-	for k, v := range obj.(map[string]interface{}) {
-		asMap[k] = v
-	}
-
-	fieldsInOrder := [...]string{"fileName", "mimeType", "size"}
-	for _, k := range fieldsInOrder {
-		v, ok := asMap[k]
-		if !ok {
-			continue
-		}
-		switch k {
-		case "fileName":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("fileName"))
-			it.FileName, err = ec.unmarshalNString2string(ctx, v)
-			if err != nil {
-				return it, err
-			}
-		case "mimeType":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("mimeType"))
-			it.MimeType, err = ec.unmarshalNString2string(ctx, v)
-			if err != nil {
-				return it, err
-			}
-		case "size":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("size"))
-			it.Size, err = ec.unmarshalNInt2int(ctx, v)
-			if err != nil {
-				return it, err
-			}
-		}
-	}
-
-	return it, nil
-}
-
 func (ec *executionContext) unmarshalInputPlanCollaboratorCreateInput(ctx context.Context, obj interface{}) (model.PlanCollaboratorCreateInput, error) {
 	var it model.PlanCollaboratorCreateInput
 	asMap := map[string]interface{}{}
@@ -39164,6 +39784,66 @@ func (ec *executionContext) unmarshalInputPlanCollaboratorCreateInput(ctx contex
 	return it, nil
 }
 
+func (ec *executionContext) unmarshalInputPlanCrTdlCreateInput(ctx context.Context, obj interface{}) (model.PlanCrTdlCreateInput, error) {
+	var it model.PlanCrTdlCreateInput
+	asMap := map[string]interface{}{}
+	for k, v := range obj.(map[string]interface{}) {
+		asMap[k] = v
+	}
+
+	fieldsInOrder := [...]string{"modelPlanID", "idNumber", "dateInitiated", "title", "note"}
+	for _, k := range fieldsInOrder {
+		v, ok := asMap[k]
+		if !ok {
+			continue
+		}
+		switch k {
+		case "modelPlanID":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("modelPlanID"))
+			it.ModelPlanID, err = ec.unmarshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		case "idNumber":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("idNumber"))
+			it.IDNumber, err = ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		case "dateInitiated":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("dateInitiated"))
+			it.DateInitiated, err = ec.unmarshalNTime2timeᚐTime(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		case "title":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("title"))
+			it.Title, err = ec.unmarshalNString2string(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		case "note":
+			var err error
+
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("note"))
+			it.Note, err = ec.unmarshalOString2ᚖstring(ctx, v)
+			if err != nil {
+				return it, err
+			}
+		}
+	}
+
+	return it, nil
+}
+
 func (ec *executionContext) unmarshalInputPlanDiscussionCreateInput(ctx context.Context, obj interface{}) (model.PlanDiscussionCreateInput, error) {
 	var it model.PlanDiscussionCreateInput
 	asMap := map[string]interface{}{}
@@ -39207,21 +39887,13 @@ func (ec *executionContext) unmarshalInputPlanDocumentInput(ctx context.Context,
 		asMap[k] = v
 	}
 
-	fieldsInOrder := [...]string{"id", "modelPlanID", "documentParameters", "url"}
+	fieldsInOrder := [...]string{"modelPlanID", "fileData", "documentType", "otherTypeDescription", "optionalNotes"}
 	for _, k := range fieldsInOrder {
 		v, ok := asMap[k]
 		if !ok {
 			continue
 		}
 		switch k {
-		case "id":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("id"))
-			it.ID, err = ec.unmarshalOUUID2ᚖgithubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, v)
-			if err != nil {
-				return it, err
-			}
 		case "modelPlanID":
 			var err error
 
@@ -39230,63 +39902,11 @@ func (ec *executionContext) unmarshalInputPlanDocumentInput(ctx context.Context,
 			if err != nil {
 				return it, err
 			}
-		case "documentParameters":
+		case "fileData":
 			var err error
 
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("documentParameters"))
-			it.DocumentParameters, err = ec.unmarshalNPlanDocumentParameters2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐPlanDocumentParameters(ctx, v)
-			if err != nil {
-				return it, err
-			}
-		case "url":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("url"))
-			it.URL, err = ec.unmarshalOString2ᚖstring(ctx, v)
-			if err != nil {
-				return it, err
-			}
-		}
-	}
-
-	return it, nil
-}
-
-func (ec *executionContext) unmarshalInputPlanDocumentParameters(ctx context.Context, obj interface{}) (model.PlanDocumentParameters, error) {
-	var it model.PlanDocumentParameters
-	asMap := map[string]interface{}{}
-	for k, v := range obj.(map[string]interface{}) {
-		asMap[k] = v
-	}
-
-	fieldsInOrder := [...]string{"fileName", "fileSize", "fileType", "documentType", "otherTypeDescription", "optionalNotes"}
-	for _, k := range fieldsInOrder {
-		v, ok := asMap[k]
-		if !ok {
-			continue
-		}
-		switch k {
-		case "fileName":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("fileName"))
-			it.FileName, err = ec.unmarshalOString2ᚖstring(ctx, v)
-			if err != nil {
-				return it, err
-			}
-		case "fileSize":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("fileSize"))
-			it.FileSize, err = ec.unmarshalNInt2int(ctx, v)
-			if err != nil {
-				return it, err
-			}
-		case "fileType":
-			var err error
-
-			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("fileType"))
-			it.FileType, err = ec.unmarshalOString2ᚖstring(ctx, v)
+			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("fileData"))
+			it.FileData, err = ec.unmarshalNUpload2githubᚗcomᚋ99designsᚋgqlgenᚋgraphqlᚐUpload(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -39294,7 +39914,7 @@ func (ec *executionContext) unmarshalInputPlanDocumentParameters(ctx context.Con
 			var err error
 
 			ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("documentType"))
-			it.DocumentType, err = ec.unmarshalODocumentType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDocumentType(ctx, v)
+			it.DocumentType, err = ec.unmarshalNDocumentType2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDocumentType(ctx, v)
 			if err != nil {
 				return it, err
 			}
@@ -39596,31 +40216,6 @@ func (ec *executionContext) _ExistingModel(ctx context.Context, sel ast.Selectio
 		case "modifiedDts":
 
 			out.Values[i] = ec._ExistingModel_modifiedDts(ctx, field, obj)
-
-		default:
-			panic("unknown field " + strconv.Quote(field.Name))
-		}
-	}
-	out.Dispatch()
-	if invalids > 0 {
-		return graphql.Null
-	}
-	return out
-}
-
-var generatePresignedUploadURLPayloadImplementors = []string{"GeneratePresignedUploadURLPayload"}
-
-func (ec *executionContext) _GeneratePresignedUploadURLPayload(ctx context.Context, sel ast.SelectionSet, obj *model.GeneratePresignedUploadURLPayload) graphql.Marshaler {
-	fields := graphql.CollectFields(ec.OperationContext, sel, generatePresignedUploadURLPayloadImplementors)
-	out := graphql.NewFieldSet(fields)
-	var invalids uint32
-	for i, field := range fields {
-		switch field.Name {
-		case "__typename":
-			out.Values[i] = graphql.MarshalString("GeneratePresignedUploadURLPayload")
-		case "url":
-
-			out.Values[i] = ec._GeneratePresignedUploadURLPayload_url(ctx, field, obj)
 
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
@@ -39948,6 +40543,46 @@ func (ec *executionContext) _ModelPlan(ctx context.Context, sel ast.SelectionSet
 				return innerFunc(ctx)
 
 			})
+		case "isCollaborator":
+			field := field
+
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._ModelPlan_isCollaborator(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&invalids, 1)
+				}
+				return res
+			}
+
+			out.Concurrently(i, func() graphql.Marshaler {
+				return innerFunc(ctx)
+
+			})
+		case "crTdls":
+			field := field
+
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._ModelPlan_crTdls(ctx, field, obj)
+				if res == graphql.Null {
+					atomic.AddUint32(&invalids, 1)
+				}
+				return res
+			}
+
+			out.Concurrently(i, func() graphql.Marshaler {
+				return innerFunc(ctx)
+
+			})
 		case "nameHistory":
 			field := field
 
@@ -40097,28 +40732,10 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 			if out.Values[i] == graphql.Null {
 				invalids++
 			}
-		case "generatePresignedUploadURL":
+		case "uploadNewPlanDocument":
 
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_generatePresignedUploadURL(ctx, field)
-			})
-
-			if out.Values[i] == graphql.Null {
-				invalids++
-			}
-		case "createPlanDocument":
-
-			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_createPlanDocument(ctx, field)
-			})
-
-			if out.Values[i] == graphql.Null {
-				invalids++
-			}
-		case "updatePlanDocument":
-
-			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_updatePlanDocument(ctx, field)
+				return ec._Mutation_uploadNewPlanDocument(ctx, field)
 			})
 
 			if out.Values[i] == graphql.Null {
@@ -40245,6 +40862,33 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
 				return ec._Mutation_deletePlanFavorite(ctx, field)
+			})
+
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		case "createPlanCrTdl":
+
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_createPlanCrTdl(ctx, field)
+			})
+
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		case "updatePlanCrTdl":
+
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_updatePlanCrTdl(ctx, field)
+			})
+
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		case "deletePlanCrTdl":
+
+			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
+				return ec._Mutation_deletePlanCrTdl(ctx, field)
 			})
 
 			if out.Values[i] == graphql.Null {
@@ -40754,6 +41398,88 @@ func (ec *executionContext) _PlanCollaborator(ctx context.Context, sel ast.Selec
 	return out
 }
 
+var planCrTdlImplementors = []string{"PlanCrTdl"}
+
+func (ec *executionContext) _PlanCrTdl(ctx context.Context, sel ast.SelectionSet, obj *models.PlanCrTdl) graphql.Marshaler {
+	fields := graphql.CollectFields(ec.OperationContext, sel, planCrTdlImplementors)
+	out := graphql.NewFieldSet(fields)
+	var invalids uint32
+	for i, field := range fields {
+		switch field.Name {
+		case "__typename":
+			out.Values[i] = graphql.MarshalString("PlanCrTdl")
+		case "id":
+
+			out.Values[i] = ec._PlanCrTdl_id(ctx, field, obj)
+
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		case "modelPlanID":
+
+			out.Values[i] = ec._PlanCrTdl_modelPlanID(ctx, field, obj)
+
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		case "idNumber":
+
+			out.Values[i] = ec._PlanCrTdl_idNumber(ctx, field, obj)
+
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		case "dateInitiated":
+
+			out.Values[i] = ec._PlanCrTdl_dateInitiated(ctx, field, obj)
+
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		case "title":
+
+			out.Values[i] = ec._PlanCrTdl_title(ctx, field, obj)
+
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		case "note":
+
+			out.Values[i] = ec._PlanCrTdl_note(ctx, field, obj)
+
+		case "createdBy":
+
+			out.Values[i] = ec._PlanCrTdl_createdBy(ctx, field, obj)
+
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		case "createdDts":
+
+			out.Values[i] = ec._PlanCrTdl_createdDts(ctx, field, obj)
+
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		case "modifiedBy":
+
+			out.Values[i] = ec._PlanCrTdl_modifiedBy(ctx, field, obj)
+
+		case "modifiedDts":
+
+			out.Values[i] = ec._PlanCrTdl_modifiedDts(ctx, field, obj)
+
+		default:
+			panic("unknown field " + strconv.Quote(field.Name))
+		}
+	}
+	out.Dispatch()
+	if invalids > 0 {
+		return graphql.Null
+	}
+	return out
+}
+
 var planDiscussionImplementors = []string{"PlanDiscussion"}
 
 func (ec *executionContext) _PlanDiscussion(ctx context.Context, sel ast.SelectionSet, obj *models.PlanDiscussion) graphql.Marshaler {
@@ -40940,9 +41666,39 @@ func (ec *executionContext) _PlanDocument(ctx context.Context, sel ast.Selection
 
 			})
 		case "optionalNotes":
+			field := field
 
-			out.Values[i] = ec._PlanDocument_optionalNotes(ctx, field, obj)
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._PlanDocument_optionalNotes(ctx, field, obj)
+				return res
+			}
 
+			out.Concurrently(i, func() graphql.Marshaler {
+				return innerFunc(ctx)
+
+			})
+		case "downloadUrl":
+			field := field
+
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._PlanDocument_downloadUrl(ctx, field, obj)
+				return res
+			}
+
+			out.Concurrently(i, func() graphql.Marshaler {
+				return innerFunc(ctx)
+
+			})
 		case "deletedAt":
 
 			out.Values[i] = ec._PlanDocument_deletedAt(ctx, field, obj)
@@ -40968,35 +41724,6 @@ func (ec *executionContext) _PlanDocument(ctx context.Context, sel ast.Selection
 		case "modifiedDts":
 
 			out.Values[i] = ec._PlanDocument_modifiedDts(ctx, field, obj)
-
-		default:
-			panic("unknown field " + strconv.Quote(field.Name))
-		}
-	}
-	out.Dispatch()
-	if invalids > 0 {
-		return graphql.Null
-	}
-	return out
-}
-
-var planDocumentPayloadImplementors = []string{"PlanDocumentPayload"}
-
-func (ec *executionContext) _PlanDocumentPayload(ctx context.Context, sel ast.SelectionSet, obj *model.PlanDocumentPayload) graphql.Marshaler {
-	fields := graphql.CollectFields(ec.OperationContext, sel, planDocumentPayloadImplementors)
-	out := graphql.NewFieldSet(fields)
-	var invalids uint32
-	for i, field := range fields {
-		switch field.Name {
-		case "__typename":
-			out.Values[i] = graphql.MarshalString("PlanDocumentPayload")
-		case "document":
-
-			out.Values[i] = ec._PlanDocumentPayload_document(ctx, field, obj)
-
-		case "presignedURL":
-
-			out.Values[i] = ec._PlanDocumentPayload_presignedURL(ctx, field, obj)
 
 		default:
 			panic("unknown field " + strconv.Quote(field.Name))
@@ -43798,52 +44525,6 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 			out.Concurrently(i, func() graphql.Marshaler {
 				return rrm(innerCtx)
 			})
-		case "planDocumentDownloadURL":
-			field := field
-
-			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._Query_planDocumentDownloadURL(ctx, field)
-				if res == graphql.Null {
-					atomic.AddUint32(&invalids, 1)
-				}
-				return res
-			}
-
-			rrm := func(ctx context.Context) graphql.Marshaler {
-				return ec.OperationContext.RootResolverMiddleware(ctx, innerFunc)
-			}
-
-			out.Concurrently(i, func() graphql.Marshaler {
-				return rrm(innerCtx)
-			})
-		case "readPlanDocumentByModelID":
-			field := field
-
-			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._Query_readPlanDocumentByModelID(ctx, field)
-				if res == graphql.Null {
-					atomic.AddUint32(&invalids, 1)
-				}
-				return res
-			}
-
-			rrm := func(ctx context.Context) graphql.Marshaler {
-				return ec.OperationContext.RootResolverMiddleware(ctx, innerFunc)
-			}
-
-			out.Concurrently(i, func() graphql.Marshaler {
-				return rrm(innerCtx)
-			})
 		case "modelPlanCollection":
 			field := field
 
@@ -43992,6 +44673,29 @@ func (ec *executionContext) _Query(ctx context.Context, sel ast.SelectionSet) gr
 					}
 				}()
 				res = ec._Query_ndaInfo(ctx, field)
+				if res == graphql.Null {
+					atomic.AddUint32(&invalids, 1)
+				}
+				return res
+			}
+
+			rrm := func(ctx context.Context) graphql.Marshaler {
+				return ec.OperationContext.RootResolverMiddleware(ctx, innerFunc)
+			}
+
+			out.Concurrently(i, func() graphql.Marshaler {
+				return rrm(innerCtx)
+			})
+		case "crTdl":
+			field := field
+
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._Query_crTdl(ctx, field)
 				if res == graphql.Null {
 					atomic.AddUint32(&invalids, 1)
 				}
@@ -46222,25 +46926,6 @@ func (ec *executionContext) marshalNGcUpdateContractType2ᚕgithubᚗcomᚋcmsgo
 	}
 
 	return ret
-}
-
-func (ec *executionContext) unmarshalNGeneratePresignedUploadURLInput2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐGeneratePresignedUploadURLInput(ctx context.Context, v interface{}) (model.GeneratePresignedUploadURLInput, error) {
-	res, err := ec.unmarshalInputGeneratePresignedUploadURLInput(ctx, v)
-	return res, graphql.ErrorOnPath(ctx, err)
-}
-
-func (ec *executionContext) marshalNGeneratePresignedUploadURLPayload2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐGeneratePresignedUploadURLPayload(ctx context.Context, sel ast.SelectionSet, v model.GeneratePresignedUploadURLPayload) graphql.Marshaler {
-	return ec._GeneratePresignedUploadURLPayload(ctx, sel, &v)
-}
-
-func (ec *executionContext) marshalNGeneratePresignedUploadURLPayload2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐGeneratePresignedUploadURLPayload(ctx context.Context, sel ast.SelectionSet, v *model.GeneratePresignedUploadURLPayload) graphql.Marshaler {
-	if v == nil {
-		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
-			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
-		}
-		return graphql.Null
-	}
-	return ec._GeneratePresignedUploadURLPayload(ctx, sel, v)
 }
 
 func (ec *executionContext) unmarshalNGeographyApplication2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐGeographyApplication(ctx context.Context, v interface{}) (model.GeographyApplication, error) {
@@ -48622,6 +49307,73 @@ func (ec *executionContext) unmarshalNPlanCollaboratorCreateInput2githubᚗcom�
 	return res, graphql.ErrorOnPath(ctx, err)
 }
 
+func (ec *executionContext) marshalNPlanCrTdl2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanCrTdl(ctx context.Context, sel ast.SelectionSet, v models.PlanCrTdl) graphql.Marshaler {
+	return ec._PlanCrTdl(ctx, sel, &v)
+}
+
+func (ec *executionContext) marshalNPlanCrTdl2ᚕᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanCrTdlᚄ(ctx context.Context, sel ast.SelectionSet, v []*models.PlanCrTdl) graphql.Marshaler {
+	ret := make(graphql.Array, len(v))
+	var wg sync.WaitGroup
+	isLen1 := len(v) == 1
+	if !isLen1 {
+		wg.Add(len(v))
+	}
+	for i := range v {
+		i := i
+		fc := &graphql.FieldContext{
+			Index:  &i,
+			Result: &v[i],
+		}
+		ctx := graphql.WithFieldContext(ctx, fc)
+		f := func(i int) {
+			defer func() {
+				if r := recover(); r != nil {
+					ec.Error(ctx, ec.Recover(ctx, r))
+					ret = nil
+				}
+			}()
+			if !isLen1 {
+				defer wg.Done()
+			}
+			ret[i] = ec.marshalNPlanCrTdl2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanCrTdl(ctx, sel, v[i])
+		}
+		if isLen1 {
+			f(i)
+		} else {
+			go f(i)
+		}
+
+	}
+	wg.Wait()
+
+	for _, e := range ret {
+		if e == graphql.Null {
+			return graphql.Null
+		}
+	}
+
+	return ret
+}
+
+func (ec *executionContext) marshalNPlanCrTdl2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanCrTdl(ctx context.Context, sel ast.SelectionSet, v *models.PlanCrTdl) graphql.Marshaler {
+	if v == nil {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
+		return graphql.Null
+	}
+	return ec._PlanCrTdl(ctx, sel, v)
+}
+
+func (ec *executionContext) unmarshalNPlanCrTdlChanges2map(ctx context.Context, v interface{}) (map[string]interface{}, error) {
+	return v.(map[string]interface{}), nil
+}
+
+func (ec *executionContext) unmarshalNPlanCrTdlCreateInput2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐPlanCrTdlCreateInput(ctx context.Context, v interface{}) (model.PlanCrTdlCreateInput, error) {
+	res, err := ec.unmarshalInputPlanCrTdlCreateInput(ctx, v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
 func (ec *executionContext) marshalNPlanDiscussion2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanDiscussion(ctx context.Context, sel ast.SelectionSet, v models.PlanDiscussion) graphql.Marshaler {
 	return ec._PlanDiscussion(ctx, sel, &v)
 }
@@ -48750,25 +49502,6 @@ func (ec *executionContext) marshalNPlanDocument2ᚖgithubᚗcomᚋcmsgovᚋmint
 func (ec *executionContext) unmarshalNPlanDocumentInput2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐPlanDocumentInput(ctx context.Context, v interface{}) (model.PlanDocumentInput, error) {
 	res, err := ec.unmarshalInputPlanDocumentInput(ctx, v)
 	return res, graphql.ErrorOnPath(ctx, err)
-}
-
-func (ec *executionContext) unmarshalNPlanDocumentParameters2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐPlanDocumentParameters(ctx context.Context, v interface{}) (*model.PlanDocumentParameters, error) {
-	res, err := ec.unmarshalInputPlanDocumentParameters(ctx, v)
-	return &res, graphql.ErrorOnPath(ctx, err)
-}
-
-func (ec *executionContext) marshalNPlanDocumentPayload2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐPlanDocumentPayload(ctx context.Context, sel ast.SelectionSet, v model.PlanDocumentPayload) graphql.Marshaler {
-	return ec._PlanDocumentPayload(ctx, sel, &v)
-}
-
-func (ec *executionContext) marshalNPlanDocumentPayload2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐPlanDocumentPayload(ctx context.Context, sel ast.SelectionSet, v *model.PlanDocumentPayload) graphql.Marshaler {
-	if v == nil {
-		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
-			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
-		}
-		return graphql.Null
-	}
-	return ec._PlanDocumentPayload(ctx, sel, v)
 }
 
 func (ec *executionContext) marshalNPlanFavorite2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanFavorite(ctx context.Context, sel ast.SelectionSet, v models.PlanFavorite) graphql.Marshaler {
@@ -49712,6 +50445,27 @@ func (ec *executionContext) marshalNTime2timeᚐTime(ctx context.Context, sel as
 	return res
 }
 
+func (ec *executionContext) unmarshalNTime2ᚖtimeᚐTime(ctx context.Context, v interface{}) (*time.Time, error) {
+	res, err := graphql.UnmarshalTime(v)
+	return &res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalNTime2ᚖtimeᚐTime(ctx context.Context, sel ast.SelectionSet, v *time.Time) graphql.Marshaler {
+	if v == nil {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
+		return graphql.Null
+	}
+	res := graphql.MarshalTime(*v)
+	if res == graphql.Null {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
+	}
+	return res
+}
+
 func (ec *executionContext) unmarshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx context.Context, v interface{}) (uuid.UUID, error) {
 	res, err := models.UnmarshalUUID(v)
 	return res, graphql.ErrorOnPath(ctx, err)
@@ -49719,6 +50473,21 @@ func (ec *executionContext) unmarshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(c
 
 func (ec *executionContext) marshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx context.Context, sel ast.SelectionSet, v uuid.UUID) graphql.Marshaler {
 	res := models.MarshalUUID(v)
+	if res == graphql.Null {
+		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
+			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
+		}
+	}
+	return res
+}
+
+func (ec *executionContext) unmarshalNUpload2githubᚗcomᚋ99designsᚋgqlgenᚋgraphqlᚐUpload(ctx context.Context, v interface{}) (graphql.Upload, error) {
+	res, err := graphql.UnmarshalUpload(v)
+	return res, graphql.ErrorOnPath(ctx, err)
+}
+
+func (ec *executionContext) marshalNUpload2githubᚗcomᚋ99designsᚋgqlgenᚋgraphqlᚐUpload(ctx context.Context, sel ast.SelectionSet, v graphql.Upload) graphql.Marshaler {
+	res := graphql.MarshalUpload(v)
 	if res == graphql.Null {
 		if !graphql.HasFieldError(ctx, graphql.GetFieldContext(ctx)) {
 			ec.Errorf(ctx, "the requested element is null which the schema does not allow")
@@ -51231,23 +52000,6 @@ func (ec *executionContext) unmarshalODiscussionStatus2ᚖgithubᚗcomᚋcmsgov�
 }
 
 func (ec *executionContext) marshalODiscussionStatus2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDiscussionStatus(ctx context.Context, sel ast.SelectionSet, v *models.DiscussionStatus) graphql.Marshaler {
-	if v == nil {
-		return graphql.Null
-	}
-	res := graphql.MarshalString(string(*v))
-	return res
-}
-
-func (ec *executionContext) unmarshalODocumentType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDocumentType(ctx context.Context, v interface{}) (*models.DocumentType, error) {
-	if v == nil {
-		return nil, nil
-	}
-	tmp, err := graphql.UnmarshalString(v)
-	res := models.DocumentType(tmp)
-	return &res, graphql.ErrorOnPath(ctx, err)
-}
-
-func (ec *executionContext) marshalODocumentType2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐDocumentType(ctx context.Context, sel ast.SelectionSet, v *models.DocumentType) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
@@ -53756,13 +54508,6 @@ func (ec *executionContext) marshalOPayType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑap
 	return ret
 }
 
-func (ec *executionContext) marshalOPlanDocument2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐPlanDocument(ctx context.Context, sel ast.SelectionSet, v *models.PlanDocument) graphql.Marshaler {
-	if v == nil {
-		return graphql.Null
-	}
-	return ec._PlanDocument(ctx, sel, v)
-}
-
 func (ec *executionContext) unmarshalOPpAppSupportContractorType2ᚕgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐPpAppSupportContractorTypeᚄ(ctx context.Context, v interface{}) ([]model.PpAppSupportContractorType, error) {
 	if v == nil {
 		return nil, nil
@@ -54503,22 +55248,6 @@ func (ec *executionContext) unmarshalOUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(c
 
 func (ec *executionContext) marshalOUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx context.Context, sel ast.SelectionSet, v uuid.UUID) graphql.Marshaler {
 	res := models.MarshalUUID(v)
-	return res
-}
-
-func (ec *executionContext) unmarshalOUUID2ᚖgithubᚗcomᚋgoogleᚋuuidᚐUUID(ctx context.Context, v interface{}) (*uuid.UUID, error) {
-	if v == nil {
-		return nil, nil
-	}
-	res, err := models.UnmarshalUUID(v)
-	return &res, graphql.ErrorOnPath(ctx, err)
-}
-
-func (ec *executionContext) marshalOUUID2ᚖgithubᚗcomᚋgoogleᚋuuidᚐUUID(ctx context.Context, sel ast.SelectionSet, v *uuid.UUID) graphql.Marshaler {
-	if v == nil {
-		return graphql.Null
-	}
-	res := models.MarshalUUID(*v)
 	return res
 }
 

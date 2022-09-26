@@ -31,16 +31,16 @@ func TestPreUpdateSuite(t *testing.T) {
 
 // BaseTaskListSectionPreUpdate applies incoming changes from to a TaskList Section, and validates it's status
 func (suite *PreUpdateSuite) TestBaseTaskListSectionPreUpdate() {
-	taskList := models.NewBaseTaskListSection(uuid.UUID{}, "FAKE")
-	planBasics := models.PlanBasics{
-		BaseTaskListSection: taskList,
-	}
+	taskList := models.NewBaseTaskListSection("FAKE", uuid.UUID{})
+
+	planBasics := models.NewPlanBasics(taskList)
+
 	changes := map[string]interface{}{
 		"modelType": models.MTVoluntary,
 		"goal":      "Some goal",
 	}
 
-	err := BaseTaskListSectionPreUpdate(&zap.Logger{}, &planBasics, changes, suite.Principal, &storage.Store{})
+	err := BaseTaskListSectionPreUpdate(&zap.Logger{}, planBasics, changes, suite.Principal, &storage.Store{})
 	//0/5 in Progess
 	suite.Nil(err)
 	suite.EqualValues(planBasics.Status, models.TaskInProgress)
@@ -50,7 +50,7 @@ func (suite *PreUpdateSuite) TestBaseTaskListSectionPreUpdate() {
 	//1/5 Ready for Review
 	changes["status"] = models.TaskReadyForReview
 	suite.Principal.EUAID = "REVI"
-	err = BaseTaskListSectionPreUpdate(&zap.Logger{}, &planBasics, changes, suite.Principal, &storage.Store{})
+	err = BaseTaskListSectionPreUpdate(&zap.Logger{}, planBasics, changes, suite.Principal, &storage.Store{})
 	suite.Nil(err)
 	suite.EqualValues(planBasics.Status, models.TaskReadyForReview)
 	suite.EqualValues(*planBasics.ReadyForReviewBy, "REVI")

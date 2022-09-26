@@ -27,13 +27,13 @@ const Login = () => {
   const onSuccess = (tokens: any) => {
     const referringUri = oktaAuth.getOriginalUri();
     oktaAuth.handleLoginRedirect(tokens).then(() => {
-      history.push(referringUri || '/');
+      history.push(referringUri || '/pre-decisional-notice');
     });
   };
 
   useEffect(() => {
     if (authState?.isAuthenticated) {
-      history.replace('/');
+      history.replace('/pre-decisional-notice');
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps

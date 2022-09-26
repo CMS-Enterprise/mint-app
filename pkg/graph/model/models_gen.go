@@ -8,6 +8,7 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/99designs/gqlgen/graphql"
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/google/uuid"
 )
@@ -22,18 +23,6 @@ type DiscussionReplyCreateInput struct {
 	DiscussionID uuid.UUID `json:"discussionID"`
 	Content      string    `json:"content"`
 	Resolution   bool      `json:"resolution"`
-}
-
-// Input associated with a document to be uploaded
-type GeneratePresignedUploadURLInput struct {
-	FileName string `json:"fileName"`
-	MimeType string `json:"mimeType"`
-	Size     int    `json:"size"`
-}
-
-// URL generated for a document to be uploaded
-type GeneratePresignedUploadURLPayload struct {
-	URL *string `json:"url"`
 }
 
 // The current user's Launch Darkly key
@@ -57,34 +46,27 @@ type PlanCollaboratorCreateInput struct {
 	Email       string          `json:"email"`
 }
 
+type PlanCrTdlCreateInput struct {
+	ModelPlanID   uuid.UUID `json:"modelPlanID"`
+	IDNumber      string    `json:"idNumber"`
+	DateInitiated time.Time `json:"dateInitiated"`
+	Title         string    `json:"title"`
+	Note          *string   `json:"note"`
+}
+
 // PlanDiscussionCreateInput represents the necessary fields to create a plan discussion
 type PlanDiscussionCreateInput struct {
 	ModelPlanID uuid.UUID `json:"modelPlanID"`
 	Content     string    `json:"content"`
 }
 
-// PlanDocumentInput represents the data required to create, modify, or delete a document on a plan
+// PlanDocumentInput
 type PlanDocumentInput struct {
-	ID                 *uuid.UUID              `json:"id"`
-	ModelPlanID        uuid.UUID               `json:"modelPlanID"`
-	DocumentParameters *PlanDocumentParameters `json:"documentParameters"`
-	URL                *string                 `json:"url"`
-}
-
-// PlanDocumentCreateParameters represents the specific data required to create or modify a document on a plan
-type PlanDocumentParameters struct {
-	FileName             *string              `json:"fileName"`
-	FileSize             int                  `json:"fileSize"`
-	FileType             *string              `json:"fileType"`
-	DocumentType         *models.DocumentType `json:"documentType"`
-	OtherTypeDescription *string              `json:"otherTypeDescription"`
-	OptionalNotes        *string              `json:"optionalNotes"`
-}
-
-// PlanDocumentPayload represents the response to a document request
-type PlanDocumentPayload struct {
-	Document     *models.PlanDocument `json:"document"`
-	PresignedURL *string              `json:"presignedURL"`
+	ModelPlanID          uuid.UUID           `json:"modelPlanID"`
+	FileData             graphql.Upload      `json:"fileData"`
+	DocumentType         models.DocumentType `json:"documentType"`
+	OtherTypeDescription *string             `json:"otherTypeDescription"`
+	OptionalNotes        *string             `json:"optionalNotes"`
 }
 
 type TaskListSectionLockStatus struct {

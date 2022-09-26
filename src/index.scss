@@ -105,13 +105,13 @@ button:disabled {
   }
 }
 
-#main-content {
+#main-content  {
   outline: none;
   border-top: 0;
 
   table {
     tr {
-      p {
+      p :not(#favorite-table){
           margin: 0;
       }
 

@@ -12,18 +12,7 @@ import (
 
 // CreatePlanCollaborator implements resolver logic to create a plan collaborator
 func CreatePlanCollaborator(logger *zap.Logger, input *model.PlanCollaboratorCreateInput, principal authentication.Principal, store *storage.Store) (*models.PlanCollaborator, error) {
-	collaborator := &models.PlanCollaborator{
-		ModelPlanRelation: models.ModelPlanRelation{
-			ModelPlanID: input.ModelPlanID,
-		},
-		FullName:  input.FullName,
-		TeamRole:  input.TeamRole,
-		Email:     input.Email,
-		EUAUserID: input.EuaUserID,
-		BaseStruct: models.BaseStruct{
-			CreatedBy: principal.ID(),
-		},
-	}
+	collaborator := models.NewPlanCollaborator(principal.ID(), input.ModelPlanID, input.EuaUserID, input.FullName, input.TeamRole, input.Email)
 
 	err := BaseStructPreCreate(logger, collaborator, principal, store, true)
 	if err != nil {
@@ -75,4 +64,9 @@ func FetchCollaboratorsByModelPlanID(logger *zap.Logger, modelPlanID uuid.UUID, 
 func FetchCollaboratorByID(logger *zap.Logger, id uuid.UUID, store *storage.Store) (*models.PlanCollaborator, error) {
 	collaborator, err := store.PlanCollaboratorFetchByID(id)
 	return collaborator, err
+}
+
+// IsPlanCollaborator checks if a user is a collaborator on model plan is a favorite.
+func IsPlanCollaborator(logger *zap.Logger, principal authentication.Principal, store *storage.Store, modelPlanID uuid.UUID) (bool, error) {
+	return store.CheckIfCollaborator(logger, principal.ID(), modelPlanID)
 }

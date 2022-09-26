@@ -26,29 +26,56 @@ exports[`Read Only Model Plan Summary matches snapshot 1`] = `
             class="grid-container"
             data-testid="gridContainer"
           >
-            <a
-              class="usa-link display-flex flex-align-center margin-bottom-3"
-              href="/models"
+            <div
+              class="display-flex flex-justify"
             >
-              <svg
-                class="usa-icon text-primary margin-right-1"
-                focusable="false"
-                height="1em"
-                role="img"
-                viewBox="0 0 24 24"
-                width="1em"
-                xmlns="http://www.w3.org/2000/svg"
+              <a
+                class="usa-link display-flex flex-align-center margin-bottom-3"
+                href="/models"
               >
-                <path
-                  d="M0 0h24v24H0z"
-                  fill="none"
-                />
-                <path
-                  d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
-                />
-              </svg>
-              Back to all models
-            </a>
+                <svg
+                  class="usa-icon text-primary margin-right-1"
+                  focusable="false"
+                  height="1em"
+                  role="img"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M0 0h24v24H0z"
+                    fill="none"
+                  />
+                  <path
+                    d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"
+                  />
+                </svg>
+                Back to all models
+              </a>
+              <div
+                class="pointer"
+              >
+                <span
+                  class="usa-tag text-primary bg-white bookmark__tag padding-1 padding-x-105"
+                  data-testid="tag"
+                >
+                  <svg
+                    class="usa-icon margin-right-05 bookmark__tag__icon"
+                    focusable="false"
+                    height="1em"
+                    role="img"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="m22 9.24-7.19-.62L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21 12 17.27 18.18 21l-1.63-7.03L22 9.24zM12 15.4l-3.76 2.27 1-4.28-3.32-2.88 4.38-.38L12 6.1l1.71 4.04 4.38.38-3.32 2.88 1 4.28L12 15.4z"
+                    />
+                  </svg>
+                  Follow
+                </span>
+              </div>
+            </div>
             <h1
               aria-live="polite"
               class="mint-h1 margin-0 line-height-sans-2"
@@ -182,8 +209,7 @@ exports[`Read Only Model Plan Summary matches snapshot 1`] = `
           class="padding-y-1"
         >
           <div
-            class="grid-container padding-0"
-            data-testid="gridContainer"
+            class="padding-0"
           >
             <div
               class="grid-row"
@@ -239,7 +265,7 @@ exports[`Read Only Model Plan Summary matches snapshot 1`] = `
                         d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a.996.996 0 0 0 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"
                       />
                     </svg>
-                    Update this Model Plan
+                    Update
                   </a>
                 </div>
               </div>
@@ -457,9 +483,44 @@ exports[`Read Only Model Plan Summary matches snapshot 1`] = `
                     class="desktop:grid-col-8"
                     data-testid="grid"
                   >
-                    <h1>
-                      modelBasics
-                    </h1>
+                    <div
+                      class="margin-y-7"
+                    >
+                      <h1
+                        aria-live="polite"
+                        class="mint-h1"
+                        tabindex="-1"
+                      >
+                        This page cannot be found.
+                      </h1>
+                      <p>
+                        Here is a list of things you could try to check and fix:
+                      </p>
+                      <ul
+                        class="mint-not-found__error_suggestions"
+                      >
+                        <li>
+                          Please check if the address you typed in is correct.
+                        </li>
+                        <li>
+                          If you've typed the address correctly, check the spelling.
+                        </li>
+                        <li>
+                          If you've copied and pasted the address, check that you've copied the entire address.
+                        </li>
+                      </ul>
+                      <p
+                        class="margin-bottom-5"
+                      >
+                        If none of the above have solved the problem, please return to the home page and try again.
+                      </p>
+                      <a
+                        class="usa-button"
+                        href="/"
+                      >
+                        Go back to the home page
+                      </a>
+                    </div>
                   </div>
                   <div
                     class="desktop:grid-col-4 sticky-nav"
