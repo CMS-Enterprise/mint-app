@@ -33,19 +33,13 @@ import {
 } from 'queries/Basics/types/GetMilestones';
 import { UpdatePlanBasicsVariables } from 'queries/Basics/types/UpdatePlanBasics';
 import UpdatePlanBasics from 'queries/Basics/UpdatePlanBasics';
+import { isDateInPast } from 'utils/date';
 import flattenErrors from 'utils/flattenErrors';
 import sanitizeStatus from 'utils/status';
 import planBasicsSchema from 'validations/planBasics';
 import { NotFoundPartial } from 'views/NotFound';
 
 import './index.scss';
-
-const isDateInPast = (date: string | null): boolean => {
-  if (date && new Date() > new Date(date)) {
-    return true;
-  }
-  return false;
-};
 
 const Milestones = () => {
   const { t } = useTranslation('basics');
@@ -203,6 +197,7 @@ const Milestones = () => {
 
             const handleOnBlur = (e: string, field: string) => {
               if (e === '') {
+                setFieldValue(field, null);
                 return;
               }
               try {

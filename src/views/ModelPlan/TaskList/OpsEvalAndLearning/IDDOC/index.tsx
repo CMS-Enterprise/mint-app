@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useRef, useState } from 'react';
+import React, { Fragment, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
@@ -34,6 +34,7 @@ import {
 } from 'queries/OpsEvalAndLearning/types/GetIDDOC';
 import { UpdatePlanOpsEvalAndLearningVariables } from 'queries/OpsEvalAndLearning/types/UpdatePlanOpsEvalAndLearning';
 import UpdatePlanOpsEvalAndLearning from 'queries/OpsEvalAndLearning/UpdatePlanOpsEvalAndLearning';
+import { isDateInPast } from 'utils/date';
 import flattenErrors from 'utils/flattenErrors';
 import { NotFoundPartial } from 'views/NotFound';
 
@@ -43,7 +44,6 @@ const IDDOC = () => {
   const { t } = useTranslation('operationsEvaluationAndLearning');
   const { t: h } = useTranslation('draftModelPlan');
   const { modelID } = useParams<{ modelID: string }>();
-  const [dateInPast, setDateInPast] = useState(false);
 
   const formikRef = useRef<FormikProps<IDDOCFormType>>(null);
   const history = useHistory();
@@ -105,14 +105,6 @@ const IDDOC = () => {
         formikRef?.current?.setErrors(errors);
       });
   };
-
-  useEffect(() => {
-    if (draftIcdDueDate && new Date() > new Date(draftIcdDueDate)) {
-      setDateInPast(true);
-    } else {
-      setDateInPast(false);
-    }
-  }, [draftIcdDueDate]);
 
   const initialValues: IDDOCFormType = {
     __typename: 'PlanOpsEvalAndLearning',
@@ -189,18 +181,10 @@ const IDDOC = () => {
           ) => {
             if (e.target.value === '') {
               setFieldValue(field, null);
-              if (e.target.id !== '') {
-                setDateInPast(false);
-              }
               return;
             }
             try {
               setFieldValue(field, new Date(e.target.value).toISOString());
-              if (new Date() > new Date(e.target.value)) {
-                setDateInPast(true);
-              } else {
-                setDateInPast(false);
-              }
               delete errors[field as keyof IDDOCFormType];
             } catch (err) {
               setFieldError(field, t('validDate'));
@@ -389,12 +373,12 @@ const IDDOC = () => {
                           handleOnBlur(e, 'draftIcdDueDate');
                         }}
                       />
-                      {dateInPast && (
+                      {isDateInPast(values.draftIcdDueDate) && (
                         <DatePickerWarning label={h('dateWarning')} />
                       )}
                     </div>
 
-                    {dateInPast && (
+                    {isDateInPast(values.draftIcdDueDate) && (
                       <Alert type="warning" className="margin-top-4">
                         {h('dateWarning')}
                       </Alert>

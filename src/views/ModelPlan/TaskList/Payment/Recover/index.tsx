@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
@@ -43,6 +43,7 @@ import {
   PayType,
   TaskStatus
 } from 'types/graphql-global-types';
+import { isDateInPast } from 'utils/date';
 import flattenErrors from 'utils/flattenErrors';
 import sanitizeStatus from 'utils/status';
 import { NotFoundPartial } from 'views/NotFound';
@@ -53,7 +54,6 @@ const Recover = () => {
   const { t } = useTranslation('payments');
   const { t: h } = useTranslation('draftModelPlan');
   const { modelID } = useParams<{ modelID: string }>();
-  const [dateInPast, setDateInPast] = useState(false);
 
   // Omitting readyForReviewBy and readyForReviewDts from initialValues and getting submitted through Formik
   type InitialValueType = Omit<
@@ -129,14 +129,6 @@ const Recover = () => {
         formikRef?.current?.setErrors(errors);
       });
   };
-
-  useEffect(() => {
-    if (paymentStartDate && new Date() > new Date(paymentStartDate)) {
-      setDateInPast(true);
-    } else {
-      setDateInPast(false);
-    }
-  }, [paymentStartDate]);
 
   const initialValues: InitialValueType = {
     __typename: 'PlanPayments',
@@ -216,18 +208,10 @@ const Recover = () => {
           ) => {
             if (e.target.value === '') {
               setFieldValue(field, null);
-              if (e.target.id !== '') {
-                setDateInPast(false);
-              }
               return;
             }
             try {
               setFieldValue(field, new Date(e.target.value).toISOString());
-              if (new Date() > new Date(e.target.value)) {
-                setDateInPast(true);
-              } else {
-                setDateInPast(false);
-              }
               delete errors[field as keyof InitialValueType];
             } catch (err) {
               setFieldError(field, t('validDate'));
@@ -395,11 +379,11 @@ const Recover = () => {
                                 handleOnBlur(e, 'paymentStartDate');
                               }}
                             />
-                            {dateInPast && (
+                            {isDateInPast(values.paymentStartDate) && (
                               <DatePickerWarning label={h('dateWarning')} />
                             )}
                           </div>
-                          {dateInPast && (
+                          {isDateInPast(values.paymentStartDate) && (
                             <Alert type="warning" className="margin-top-4">
                               {h('dateWarning')}
                             </Alert>
