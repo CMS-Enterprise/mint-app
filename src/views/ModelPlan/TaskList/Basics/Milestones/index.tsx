@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
 import {
+  Alert,
   Breadcrumb,
   BreadcrumbBar,
   BreadcrumbLink,
@@ -20,6 +21,7 @@ import AskAQuestion from 'components/AskAQuestion';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import ReadyForReview from 'components/ReadyForReview';
+import DatePickerWarning from 'components/shared/DatePickerWarning';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
@@ -37,6 +39,13 @@ import planBasicsSchema from 'validations/planBasics';
 import { NotFoundPartial } from 'views/NotFound';
 
 import './index.scss';
+
+const isDateInPast = (date: string | null): boolean => {
+  if (date && new Date() > new Date(date)) {
+    return true;
+  }
+  return false;
+};
 
 const Milestones = () => {
   const { t } = useTranslation('basics');
@@ -245,18 +254,29 @@ const Milestones = () => {
                       {h('datePlaceholder')}
                     </div>
                     <FieldErrorMsg>{flatErrors.completeICIP}</FieldErrorMsg>
-                    <Field
-                      as={DatePicker}
-                      error={+!!flatErrors.completeICIP}
-                      id="Milestone-completeICIP"
-                      maxLength={50}
-                      name="completeICIP"
-                      defaultValue={completeICIP}
-                      onBlur={(e: any) =>
-                        handleOnBlur(e.target.value, 'completeICIP')
-                      }
-                    />
+                    <div className="position-relative">
+                      <Field
+                        as={DatePicker}
+                        error={+!!flatErrors.completeICIP}
+                        id="Milestone-completeICIP"
+                        maxLength={50}
+                        name="completeICIP"
+                        defaultValue={completeICIP}
+                        onBlur={(e: any) =>
+                          handleOnBlur(e.target.value, 'completeICIP')
+                        }
+                      />
+                      {isDateInPast(values.completeICIP) && (
+                        <DatePickerWarning label={h('dateWarning')} />
+                      )}
+                    </div>
                   </FieldGroup>
+
+                  {isDateInPast(values.completeICIP) && (
+                    <Alert type="warning" className="margin-top-4">
+                      {h('dateWarning')}
+                    </Alert>
+                  )}
 
                   <legend className="usa-label margin-bottom-1">
                     {t('clearance')}
@@ -280,17 +300,22 @@ const Milestones = () => {
                       <FieldErrorMsg>
                         {flatErrors.clearanceStarts}
                       </FieldErrorMsg>
-                      <Field
-                        as={DatePicker}
-                        error={+!!flatErrors.clearanceStarts}
-                        id="Milestone-clearanceStarts"
-                        maxLength={50}
-                        name="clearanceStarts"
-                        defaultValue={clearanceStarts}
-                        onBlur={(e: any) =>
-                          handleOnBlur(e.target.value, 'clearanceStarts')
-                        }
-                      />
+                      <div className="position-relative">
+                        <Field
+                          as={DatePicker}
+                          error={+!!flatErrors.clearanceStarts}
+                          id="Milestone-clearanceStarts"
+                          maxLength={50}
+                          name="clearanceStarts"
+                          defaultValue={clearanceStarts}
+                          onBlur={(e: any) =>
+                            handleOnBlur(e.target.value, 'clearanceStarts')
+                          }
+                        />
+                        {isDateInPast(values.clearanceStarts) && (
+                          <DatePickerWarning label={h('dateWarning')} />
+                        )}
+                      </div>
                     </FieldGroup>
 
                     <FieldGroup
@@ -308,19 +333,31 @@ const Milestones = () => {
                         {h('datePlaceholder')}
                       </div>
                       <FieldErrorMsg>{flatErrors.clearanceEnds}</FieldErrorMsg>
-                      <Field
-                        as={DatePicker}
-                        error={+!!flatErrors.clearanceEnds}
-                        id="Milestone-clearanceEnds"
-                        maxLength={50}
-                        name="clearanceEnds"
-                        defaultValue={clearanceEnds}
-                        onBlur={(e: any) =>
-                          handleOnBlur(e.target.value, 'clearanceEnds')
-                        }
-                      />
+                      <div className="position-relative">
+                        <Field
+                          as={DatePicker}
+                          error={+!!flatErrors.clearanceEnds}
+                          id="Milestone-clearanceEnds"
+                          maxLength={50}
+                          name="clearanceEnds"
+                          defaultValue={clearanceEnds}
+                          onBlur={(e: any) =>
+                            handleOnBlur(e.target.value, 'clearanceEnds')
+                          }
+                        />
+                        {isDateInPast(values.clearanceEnds) && (
+                          <DatePickerWarning label={h('dateWarning')} />
+                        )}
+                      </div>
                     </FieldGroup>
                   </div>
+
+                  {(isDateInPast(values.clearanceStarts) ||
+                    isDateInPast(values.clearanceEnds)) && (
+                    <Alert type="warning" className="margin-top-4">
+                      {h('dateWarning')}
+                    </Alert>
+                  )}
 
                   <FieldGroup
                     scrollElement="announced"
@@ -334,18 +371,29 @@ const Milestones = () => {
                       {h('datePlaceholder')}
                     </div>
                     <FieldErrorMsg>{flatErrors.announced}</FieldErrorMsg>
-                    <Field
-                      as={DatePicker}
-                      error={+!!flatErrors.announced}
-                      id="Milestone-announced"
-                      maxLength={50}
-                      name="announced"
-                      defaultValue={announced}
-                      onBlur={(e: any) =>
-                        handleOnBlur(e.target.value, 'announced')
-                      }
-                    />
+                    <div className="position-relative">
+                      <Field
+                        as={DatePicker}
+                        error={+!!flatErrors.announced}
+                        id="Milestone-announced"
+                        maxLength={50}
+                        name="announced"
+                        defaultValue={announced}
+                        onBlur={(e: any) =>
+                          handleOnBlur(e.target.value, 'announced')
+                        }
+                      />
+                      {isDateInPast(values.announced) && (
+                        <DatePickerWarning label={h('dateWarning')} />
+                      )}
+                    </div>
                   </FieldGroup>
+
+                  {isDateInPast(values.announced) && (
+                    <Alert type="warning" className="margin-top-4">
+                      {h('dateWarning')}
+                    </Alert>
+                  )}
 
                   <legend className="usa-label margin-bottom-1">
                     {t('applicationPeriod')}
@@ -369,17 +417,22 @@ const Milestones = () => {
                       <FieldErrorMsg>
                         {flatErrors.applicationsStart}
                       </FieldErrorMsg>
-                      <Field
-                        as={DatePicker}
-                        error={+!!flatErrors.applicationsStart}
-                        id="Milestone-applicationsStart"
-                        maxLength={50}
-                        name="applicationsStart"
-                        defaultValue={applicationsStart}
-                        onBlur={(e: any) =>
-                          handleOnBlur(e.target.value, 'applicationsStart')
-                        }
-                      />
+                      <div className="position-relative">
+                        <Field
+                          as={DatePicker}
+                          error={+!!flatErrors.applicationsStart}
+                          id="Milestone-applicationsStart"
+                          maxLength={50}
+                          name="applicationsStart"
+                          defaultValue={applicationsStart}
+                          onBlur={(e: any) =>
+                            handleOnBlur(e.target.value, 'applicationsStart')
+                          }
+                        />
+                        {isDateInPast(values.applicationsStart) && (
+                          <DatePickerWarning label={h('dateWarning')} />
+                        )}
+                      </div>
                     </FieldGroup>
 
                     <FieldGroup
@@ -399,19 +452,31 @@ const Milestones = () => {
                       <FieldErrorMsg>
                         {flatErrors.applicationsEnd}
                       </FieldErrorMsg>
-                      <Field
-                        as={DatePicker}
-                        error={+!!flatErrors.applicationsEnd}
-                        id="Milestone-applicationsEnd"
-                        maxLength={50}
-                        name="applicationsEnd"
-                        defaultValue={applicationsEnd}
-                        onBlur={(e: any) =>
-                          handleOnBlur(e.target.value, 'applicationsEnd')
-                        }
-                      />
+                      <div className="position-relative">
+                        <Field
+                          as={DatePicker}
+                          error={+!!flatErrors.applicationsEnd}
+                          id="Milestone-applicationsEnd"
+                          maxLength={50}
+                          name="applicationsEnd"
+                          defaultValue={applicationsEnd}
+                          onBlur={(e: any) =>
+                            handleOnBlur(e.target.value, 'applicationsEnd')
+                          }
+                        />
+                        {isDateInPast(values.applicationsEnd) && (
+                          <DatePickerWarning label={h('dateWarning')} />
+                        )}
+                      </div>
                     </FieldGroup>
                   </div>
+
+                  {(isDateInPast(values.applicationsStart) ||
+                    isDateInPast(values.applicationsEnd)) && (
+                    <Alert type="warning" className="margin-top-4">
+                      {h('dateWarning')}
+                    </Alert>
+                  )}
 
                   <legend className="usa-label margin-bottom-1">
                     {t('demonstrationPerformance')}
@@ -435,21 +500,27 @@ const Milestones = () => {
                       <FieldErrorMsg>
                         {flatErrors.performancePeriodStarts}
                       </FieldErrorMsg>
-                      <Field
-                        as={DatePicker}
-                        error={+!!flatErrors.performancePeriodStarts}
-                        id="Milestone-performancePeriodStarts"
-                        maxLength={50}
-                        name="performancePeriodStarts"
-                        defaultValue={performancePeriodStarts}
-                        onBlur={(e: any) =>
-                          handleOnBlur(
-                            e.target.value,
-                            'performancePeriodStarts'
-                          )
-                        }
-                      />
+                      <div className="position-relative">
+                        <Field
+                          as={DatePicker}
+                          error={+!!flatErrors.performancePeriodStarts}
+                          id="Milestone-performancePeriodStarts"
+                          maxLength={50}
+                          name="performancePeriodStarts"
+                          defaultValue={performancePeriodStarts}
+                          onBlur={(e: any) =>
+                            handleOnBlur(
+                              e.target.value,
+                              'performancePeriodStarts'
+                            )
+                          }
+                        />
+                        {isDateInPast(values.performancePeriodStarts) && (
+                          <DatePickerWarning label={h('dateWarning')} />
+                        )}
+                      </div>
                     </FieldGroup>
+
                     <FieldGroup
                       scrollElement="performancePeriodEnds"
                       error={!!flatErrors.performancePeriodEnds}
@@ -467,19 +538,34 @@ const Milestones = () => {
                       <FieldErrorMsg>
                         {flatErrors.performancePeriodEnds}
                       </FieldErrorMsg>
-                      <Field
-                        as={DatePicker}
-                        error={+!!flatErrors.performancePeriodEnds}
-                        id="Milestone-performancePeriodEnds"
-                        maxLength={50}
-                        name="performancePeriodEnds"
-                        defaultValue={performancePeriodEnds}
-                        onBlur={(e: any) =>
-                          handleOnBlur(e.target.value, 'performancePeriodEnds')
-                        }
-                      />
+                      <div className="position-relative">
+                        <Field
+                          as={DatePicker}
+                          error={+!!flatErrors.performancePeriodEnds}
+                          id="Milestone-performancePeriodEnds"
+                          maxLength={50}
+                          name="performancePeriodEnds"
+                          defaultValue={performancePeriodEnds}
+                          onBlur={(e: any) =>
+                            handleOnBlur(
+                              e.target.value,
+                              'performancePeriodEnds'
+                            )
+                          }
+                        />
+                        {isDateInPast(values.performancePeriodEnds) && (
+                          <DatePickerWarning label={h('dateWarning')} />
+                        )}
+                      </div>
                     </FieldGroup>
                   </div>
+
+                  {(isDateInPast(values.performancePeriodStarts) ||
+                    isDateInPast(values.performancePeriodEnds)) && (
+                    <Alert type="warning" className="margin-top-4">
+                      {h('dateWarning')}
+                    </Alert>
+                  )}
 
                   <FieldGroup
                     scrollElement="wrapUpEnds"
@@ -493,18 +579,29 @@ const Milestones = () => {
                       {h('datePlaceholder')}
                     </div>
                     <FieldErrorMsg>{flatErrors.wrapUpEnds}</FieldErrorMsg>
-                    <Field
-                      as={DatePicker}
-                      error={+!!flatErrors.wrapUpEnds}
-                      id="Milestone-wrapUpEnds"
-                      maxLength={50}
-                      name="wrapUpEnds"
-                      defaultValue={wrapUpEnds}
-                      onBlur={(e: any) =>
-                        handleOnBlur(e.target.value, 'wrapUpEnds')
-                      }
-                    />
+                    <div className="position-relative">
+                      <Field
+                        as={DatePicker}
+                        error={+!!flatErrors.wrapUpEnds}
+                        id="Milestone-wrapUpEnds"
+                        maxLength={50}
+                        name="wrapUpEnds"
+                        defaultValue={wrapUpEnds}
+                        onBlur={(e: any) =>
+                          handleOnBlur(e.target.value, 'wrapUpEnds')
+                        }
+                      />
+                      {isDateInPast(values.wrapUpEnds) && (
+                        <DatePickerWarning label={h('dateWarning')} />
+                      )}
+                    </div>
                   </FieldGroup>
+
+                  {isDateInPast(values.wrapUpEnds) && (
+                    <Alert type="warning" className="margin-top-4">
+                      {h('dateWarning')}
+                    </Alert>
+                  )}
 
                   <AddNote id="ModelType-HighLevelNote" field="highLevelNote" />
 
