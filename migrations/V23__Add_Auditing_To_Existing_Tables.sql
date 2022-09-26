@@ -22,5 +22,6 @@ SELECT audit.audit_table('public', 'plan_participants_and_providers', 'id', 'mod
 
 SELECT audit.audit_table('public', 'plan_payments', 'id', 'model_plan_id', '{created_by,created_dts,modified_by,modified_dts}'::TEXT[], '{}'::TEXT[]);
 
+SELECT audit.audit_table('public', 'plan_cr_tdl', 'id', 'model_plan_id', '{created_by,created_dts,modified_by,modified_dts}'::TEXT[], '{}'::TEXT[]);
 
 --Leaving out existing_model, nda_agreement, and plan_favorite
