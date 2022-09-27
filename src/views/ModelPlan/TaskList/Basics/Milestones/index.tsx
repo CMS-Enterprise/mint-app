@@ -8,7 +8,6 @@ import {
   BreadcrumbBar,
   BreadcrumbLink,
   Button,
-  DatePicker,
   Fieldset,
   IconArrowBack,
   Label,
@@ -21,7 +20,7 @@ import AskAQuestion from 'components/AskAQuestion';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import ReadyForReview from 'components/ReadyForReview';
-import DatePickerWarning from 'components/shared/DatePickerWarning';
+import MINTDatePicker from 'components/shared/DatePicker';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
@@ -195,13 +194,16 @@ const Milestones = () => {
             } = formikProps;
             const flatErrors = flattenErrors(errors);
 
-            const handleOnBlur = (e: string, field: string) => {
-              if (e === '') {
+            const handleOnBlur = (
+              e: React.ChangeEvent<HTMLInputElement>,
+              field: string
+            ) => {
+              if (e.target.value === '') {
                 setFieldValue(field, null);
                 return;
               }
               try {
-                setFieldValue(field, new Date(e).toISOString());
+                setFieldValue(field, new Date(e.target.value).toISOString());
                 delete errors[field as keyof InitialValueType];
               } catch (err) {
                 setFieldError(field, t('validDate'));
@@ -237,233 +239,99 @@ const Milestones = () => {
                   <PageHeading headingLevel="h3" className="margin-bottom-4">
                     {t('highLevelTimeline')}
                   </PageHeading>
-                  <FieldGroup
-                    scrollElement="completeICIP"
-                    error={!!flatErrors.completeICIP}
-                    className="margin-top-0 width-card-lg"
-                  >
-                    <Label htmlFor="Milestone-completeICIP">
-                      {t('completeICIP')}
-                    </Label>
-                    <div className="usa-hint" id="appointment-date-hint">
-                      {h('datePlaceholder')}
-                    </div>
-                    <FieldErrorMsg>{flatErrors.completeICIP}</FieldErrorMsg>
-                    <div className="position-relative">
-                      <Field
-                        as={DatePicker}
-                        error={+!!flatErrors.completeICIP}
-                        id="Milestone-completeICIP"
-                        maxLength={50}
-                        name="completeICIP"
-                        defaultValue={completeICIP}
-                        onBlur={(e: any) =>
-                          handleOnBlur(e.target.value, 'completeICIP')
-                        }
-                      />
-                      {isDateInPast(values.completeICIP) && (
-                        <DatePickerWarning label={h('dateWarning')} />
-                      )}
-                    </div>
-                  </FieldGroup>
 
-                  {isDateInPast(values.completeICIP) && (
-                    <Alert type="warning" className="margin-top-4">
-                      {h('dateWarning')}
-                    </Alert>
-                  )}
+                  <MINTDatePicker
+                    fieldName="completeICIP"
+                    id="Milestone-completeICIP"
+                    label={t('completeICIP')}
+                    placeHolder
+                    handleOnBlur={handleOnBlur}
+                    formikValue={values.completeICIP}
+                    value={completeICIP}
+                    error={flatErrors.completeICIP}
+                  />
 
-                  <legend className="usa-label margin-bottom-1">
+                  <legend className="usa-label margin-bottom-neg-2">
                     {t('clearance')}
                   </legend>
 
                   <div className="fieldGroup__wrapper">
-                    <FieldGroup
-                      scrollElement="clearanceStarts"
-                      error={!!flatErrors.clearanceStarts}
-                      className="margin-top-0 width-card-lg"
-                    >
-                      <label
-                        htmlFor="Milestone-clearanceStarts"
-                        className="usa-legend margin-top-0"
-                      >
-                        {t('clearanceStartDate')}
-                      </label>
-                      <div className="usa-hint" id="appointment-date-hint">
-                        {h('datePlaceholder')}
-                      </div>
-                      <FieldErrorMsg>
-                        {flatErrors.clearanceStarts}
-                      </FieldErrorMsg>
-                      <div className="position-relative">
-                        <Field
-                          as={DatePicker}
-                          error={+!!flatErrors.clearanceStarts}
-                          id="Milestone-clearanceStarts"
-                          maxLength={50}
-                          name="clearanceStarts"
-                          defaultValue={clearanceStarts}
-                          onBlur={(e: any) =>
-                            handleOnBlur(e.target.value, 'clearanceStarts')
-                          }
-                        />
-                        {isDateInPast(values.clearanceStarts) && (
-                          <DatePickerWarning label={h('dateWarning')} />
-                        )}
-                      </div>
-                    </FieldGroup>
+                    <MINTDatePicker
+                      fieldName="clearanceStarts"
+                      id="Milestone-clearanceStarts"
+                      label={t('clearanceStartDate')}
+                      boldLabel={false}
+                      placeHolder
+                      handleOnBlur={handleOnBlur}
+                      formikValue={values.clearanceStarts}
+                      value={clearanceStarts}
+                      error={flatErrors.clearanceStarts}
+                      warning={false}
+                    />
 
-                    <FieldGroup
-                      scrollElement="clearanceEnds"
-                      error={!!flatErrors.clearanceEnds}
-                      className="margin-top-0 width-card-lg"
-                    >
-                      <label
-                        htmlFor="Milestone-clearanceEnds"
-                        className="usa-legend margin-top-0"
-                      >
-                        {t('clearanceEndDate')}
-                      </label>
-                      <div className="usa-hint" id="appointment-date-hint">
-                        {h('datePlaceholder')}
-                      </div>
-                      <FieldErrorMsg>{flatErrors.clearanceEnds}</FieldErrorMsg>
-                      <div className="position-relative">
-                        <Field
-                          as={DatePicker}
-                          error={+!!flatErrors.clearanceEnds}
-                          id="Milestone-clearanceEnds"
-                          maxLength={50}
-                          name="clearanceEnds"
-                          defaultValue={clearanceEnds}
-                          onBlur={(e: any) =>
-                            handleOnBlur(e.target.value, 'clearanceEnds')
-                          }
-                        />
-                        {isDateInPast(values.clearanceEnds) && (
-                          <DatePickerWarning label={h('dateWarning')} />
-                        )}
-                      </div>
-                    </FieldGroup>
+                    <MINTDatePicker
+                      fieldName="clearanceEnds"
+                      id="Milestone-clearanceEnds"
+                      label={t('clearanceEndDate')}
+                      boldLabel={false}
+                      placeHolder
+                      handleOnBlur={handleOnBlur}
+                      formikValue={values.clearanceEnds}
+                      value={clearanceEnds}
+                      error={flatErrors.clearanceEnds}
+                      warning={false}
+                    />
                   </div>
 
-                  {(isDateInPast(values.clearanceStarts) ||
-                    isDateInPast(values.clearanceEnds)) && (
+                  {(isDateInPast(values.clearanceEnds) ||
+                    isDateInPast(values.clearanceStarts)) && (
                     <Alert type="warning" className="margin-top-4">
                       {h('dateWarning')}
                     </Alert>
                   )}
 
-                  <FieldGroup
-                    scrollElement="announced"
-                    error={!!flatErrors.announced}
+                  <MINTDatePicker
+                    fieldName="announced"
                     className="margin-top-4 width-card-lg"
-                  >
-                    <Label htmlFor="Milestone-announced">
-                      {t('annouceModel')}
-                    </Label>
-                    <div className="usa-hint" id="appointment-date-hint">
-                      {h('datePlaceholder')}
-                    </div>
-                    <FieldErrorMsg>{flatErrors.announced}</FieldErrorMsg>
-                    <div className="position-relative">
-                      <Field
-                        as={DatePicker}
-                        error={+!!flatErrors.announced}
-                        id="Milestone-announced"
-                        maxLength={50}
-                        name="announced"
-                        defaultValue={announced}
-                        onBlur={(e: any) =>
-                          handleOnBlur(e.target.value, 'announced')
-                        }
-                      />
-                      {isDateInPast(values.announced) && (
-                        <DatePickerWarning label={h('dateWarning')} />
-                      )}
-                    </div>
-                  </FieldGroup>
+                    id="Milestone-announced"
+                    label={t('annouceModel')}
+                    placeHolder
+                    handleOnBlur={handleOnBlur}
+                    formikValue={values.announced}
+                    value={announced}
+                    error={flatErrors.announced}
+                  />
 
-                  {isDateInPast(values.announced) && (
-                    <Alert type="warning" className="margin-top-4">
-                      {h('dateWarning')}
-                    </Alert>
-                  )}
-
-                  <legend className="usa-label margin-bottom-1">
+                  <legend className="usa-label margin-bottom-neg-2">
                     {t('applicationPeriod')}
                   </legend>
 
                   <div className="fieldGroup__wrapper">
-                    <FieldGroup
-                      scrollElement="applicationsStart"
-                      error={!!flatErrors.applicationsStart}
-                      className="margin-top-0 width-card-lg"
-                    >
-                      <label
-                        htmlFor="Milestone-applicationsStart"
-                        className="usa-legend margin-top-0"
-                      >
-                        {t('applicationStartDate')}
-                      </label>
-                      <div className="usa-hint" id="appointment-date-hint">
-                        {h('datePlaceholder')}
-                      </div>
-                      <FieldErrorMsg>
-                        {flatErrors.applicationsStart}
-                      </FieldErrorMsg>
-                      <div className="position-relative">
-                        <Field
-                          as={DatePicker}
-                          error={+!!flatErrors.applicationsStart}
-                          id="Milestone-applicationsStart"
-                          maxLength={50}
-                          name="applicationsStart"
-                          defaultValue={applicationsStart}
-                          onBlur={(e: any) =>
-                            handleOnBlur(e.target.value, 'applicationsStart')
-                          }
-                        />
-                        {isDateInPast(values.applicationsStart) && (
-                          <DatePickerWarning label={h('dateWarning')} />
-                        )}
-                      </div>
-                    </FieldGroup>
+                    <MINTDatePicker
+                      fieldName="applicationsStart"
+                      id="Milestone-applicationsStart"
+                      label={t('applicationStartDate')}
+                      boldLabel={false}
+                      placeHolder
+                      handleOnBlur={handleOnBlur}
+                      formikValue={values.applicationsStart}
+                      value={applicationsStart}
+                      error={flatErrors.applicationsStart}
+                      warning={false}
+                    />
 
-                    <FieldGroup
-                      scrollElement="applicationsEnd"
-                      error={!!flatErrors.applicationsEnd}
-                      className="margin-top-0 width-card-lg"
-                    >
-                      <label
-                        htmlFor="Milestone-applicationsEnd"
-                        className="usa-legend margin-top-0"
-                      >
-                        {t('applicationEndDate')}
-                      </label>
-                      <div className="usa-hint" id="appointment-date-hint">
-                        {h('datePlaceholder')}
-                      </div>
-                      <FieldErrorMsg>
-                        {flatErrors.applicationsEnd}
-                      </FieldErrorMsg>
-                      <div className="position-relative">
-                        <Field
-                          as={DatePicker}
-                          error={+!!flatErrors.applicationsEnd}
-                          id="Milestone-applicationsEnd"
-                          maxLength={50}
-                          name="applicationsEnd"
-                          defaultValue={applicationsEnd}
-                          onBlur={(e: any) =>
-                            handleOnBlur(e.target.value, 'applicationsEnd')
-                          }
-                        />
-                        {isDateInPast(values.applicationsEnd) && (
-                          <DatePickerWarning label={h('dateWarning')} />
-                        )}
-                      </div>
-                    </FieldGroup>
+                    <MINTDatePicker
+                      fieldName="applicationsEnd"
+                      id="Milestone-applicationsEnd"
+                      label={t('applicationEndDate')}
+                      boldLabel={false}
+                      placeHolder
+                      handleOnBlur={handleOnBlur}
+                      formikValue={values.applicationsEnd}
+                      value={applicationsEnd}
+                      error={flatErrors.applicationsEnd}
+                      warning={false}
+                    />
                   </div>
 
                   {(isDateInPast(values.applicationsStart) ||
@@ -473,86 +341,36 @@ const Milestones = () => {
                     </Alert>
                   )}
 
-                  <legend className="usa-label margin-bottom-1">
+                  <legend className="usa-label margin-bottom-neg-2">
                     {t('demonstrationPerformance')}
                   </legend>
 
                   <div className="fieldGroup__wrapper">
-                    <FieldGroup
-                      scrollElement="performancePeriodStarts"
-                      error={!!flatErrors.performancePeriodStarts}
-                      className="margin-top-0 width-card-lg"
-                    >
-                      <label
-                        htmlFor="Milestone-performancePeriodStarts"
-                        className="usa-legend margin-top-0"
-                      >
-                        {t('performanceStartDate')}
-                      </label>
-                      <div className="usa-hint" id="appointment-date-hint">
-                        {h('datePlaceholder')}
-                      </div>
-                      <FieldErrorMsg>
-                        {flatErrors.performancePeriodStarts}
-                      </FieldErrorMsg>
-                      <div className="position-relative">
-                        <Field
-                          as={DatePicker}
-                          error={+!!flatErrors.performancePeriodStarts}
-                          id="Milestone-performancePeriodStarts"
-                          maxLength={50}
-                          name="performancePeriodStarts"
-                          defaultValue={performancePeriodStarts}
-                          onBlur={(e: any) =>
-                            handleOnBlur(
-                              e.target.value,
-                              'performancePeriodStarts'
-                            )
-                          }
-                        />
-                        {isDateInPast(values.performancePeriodStarts) && (
-                          <DatePickerWarning label={h('dateWarning')} />
-                        )}
-                      </div>
-                    </FieldGroup>
+                    <MINTDatePicker
+                      fieldName="performancePeriodStarts"
+                      id="Milestone-performancePeriodStarts"
+                      label={t('performanceStartDate')}
+                      boldLabel={false}
+                      placeHolder
+                      handleOnBlur={handleOnBlur}
+                      formikValue={values.performancePeriodStarts}
+                      value={performancePeriodStarts}
+                      error={flatErrors.performancePeriodStarts}
+                      warning={false}
+                    />
 
-                    <FieldGroup
-                      scrollElement="performancePeriodEnds"
-                      error={!!flatErrors.performancePeriodEnds}
-                      className="margin-top-0 width-card-lg"
-                    >
-                      <label
-                        htmlFor="Milestone-performancePeriodEnds"
-                        className="usa-legend margin-top-0"
-                      >
-                        {t('performanceEndDate')}
-                      </label>
-                      <div className="usa-hint" id="appointment-date-hint">
-                        {h('datePlaceholder')}
-                      </div>
-                      <FieldErrorMsg>
-                        {flatErrors.performancePeriodEnds}
-                      </FieldErrorMsg>
-                      <div className="position-relative">
-                        <Field
-                          as={DatePicker}
-                          error={+!!flatErrors.performancePeriodEnds}
-                          id="Milestone-performancePeriodEnds"
-                          maxLength={50}
-                          name="performancePeriodEnds"
-                          defaultValue={performancePeriodEnds}
-                          onBlur={(e: any) =>
-                            handleOnBlur(
-                              e.target.value,
-                              'performancePeriodEnds'
-                            )
-                          }
-                        />
-                        {isDateInPast(values.performancePeriodEnds) && (
-                          <DatePickerWarning label={h('dateWarning')} />
-                        )}
-                      </div>
-                    </FieldGroup>
+                    <MINTDatePicker
+                      fieldName="performancePeriodEnds"
+                      id="Milestone-performancePeriodEnds"
+                      label={t('performanceEndDate')}
+                      boldLabel={false}
+                      placeHolder
+                      handleOnBlur={handleOnBlur}
+                      formikValue={values.performancePeriodEnds}
+                      value={performancePeriodEnds}
+                      error={flatErrors.performancePeriodEnds}
+                      warning={false}
+                    />
                   </div>
 
                   {(isDateInPast(values.performancePeriodStarts) ||
@@ -562,41 +380,17 @@ const Milestones = () => {
                     </Alert>
                   )}
 
-                  <FieldGroup
-                    scrollElement="wrapUpEnds"
-                    error={!!flatErrors.wrapUpEnds}
-                    className="margin-top-4  width-card-lg"
-                  >
-                    <Label htmlFor="Milestone-wrapUpEnds">
-                      {t('modelWrapUp')}
-                    </Label>
-                    <div className="usa-hint" id="appointment-date-hint">
-                      {h('datePlaceholder')}
-                    </div>
-                    <FieldErrorMsg>{flatErrors.wrapUpEnds}</FieldErrorMsg>
-                    <div className="position-relative">
-                      <Field
-                        as={DatePicker}
-                        error={+!!flatErrors.wrapUpEnds}
-                        id="Milestone-wrapUpEnds"
-                        maxLength={50}
-                        name="wrapUpEnds"
-                        defaultValue={wrapUpEnds}
-                        onBlur={(e: any) =>
-                          handleOnBlur(e.target.value, 'wrapUpEnds')
-                        }
-                      />
-                      {isDateInPast(values.wrapUpEnds) && (
-                        <DatePickerWarning label={h('dateWarning')} />
-                      )}
-                    </div>
-                  </FieldGroup>
-
-                  {isDateInPast(values.wrapUpEnds) && (
-                    <Alert type="warning" className="margin-top-4">
-                      {h('dateWarning')}
-                    </Alert>
-                  )}
+                  <MINTDatePicker
+                    fieldName="wrapUpEnds"
+                    className="margin-top-4 width-card-lg"
+                    id="Milestone-wrapUpEnds"
+                    label={t('annouceModel')}
+                    placeHolder
+                    handleOnBlur={handleOnBlur}
+                    formikValue={values.wrapUpEnds}
+                    value={wrapUpEnds}
+                    error={flatErrors.wrapUpEnds}
+                  />
 
                   <AddNote id="ModelType-HighLevelNote" field="highLevelNote" />
 

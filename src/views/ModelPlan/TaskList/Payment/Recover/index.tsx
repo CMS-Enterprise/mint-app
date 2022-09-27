@@ -3,12 +3,10 @@ import { Trans, useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
 import {
-  Alert,
   Breadcrumb,
   BreadcrumbBar,
   BreadcrumbLink,
   Button,
-  DatePicker,
   Fieldset,
   Grid,
   GridContainer,
@@ -25,7 +23,7 @@ import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import ReadyForReview from 'components/ReadyForReview';
 import AutoSave from 'components/shared/AutoSave';
-import DatePickerWarning from 'components/shared/DatePickerWarning';
+import MINTDatePicker from 'components/shared/DatePicker';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
@@ -43,7 +41,6 @@ import {
   PayType,
   TaskStatus
 } from 'types/graphql-global-types';
-import { isDateInPast } from 'utils/date';
 import flattenErrors from 'utils/flattenErrors';
 import sanitizeStatus from 'utils/status';
 import { NotFoundPartial } from 'views/NotFound';
@@ -345,55 +342,25 @@ const Recover = () => {
                       </FieldGroup>
 
                       {!loading && (
-                        <FieldGroup
-                          scrollElement="paymentStartDate"
-                          error={!!flatErrors.paymentStartDate}
-                          className="margin-top-4"
-                        >
-                          <Label
-                            htmlFor="paymentStartDate"
-                            className="maxw-none"
-                          >
-                            {t('paymentStartDate')}
-                          </Label>
-                          <p className="text-normal margin-bottom-1 margin-top-0">
-                            {t('paymentStartDateSubcopy')}
-                          </p>
-                          <div className="usa-hint" id="appointment-date-hint">
-                            {h('datePlaceholder')}
-                          </div>
-                          <FieldErrorMsg>
-                            {flatErrors.paymentStartDate}
-                          </FieldErrorMsg>
-                          <div className="width-card-lg position-relative">
-                            <Field
-                              as={DatePicker}
-                              error={!!flatErrors.paymentStartDate}
-                              id="payment-payment-start-date"
-                              maxLength={50}
-                              name="paymentStartDate"
-                              defaultValue={paymentStartDate}
-                              onBlur={(
-                                e: React.ChangeEvent<HTMLInputElement>
-                              ) => {
-                                handleOnBlur(e, 'paymentStartDate');
-                              }}
-                            />
-                            {isDateInPast(values.paymentStartDate) && (
-                              <DatePickerWarning label={h('dateWarning')} />
-                            )}
-                          </div>
-                          {isDateInPast(values.paymentStartDate) && (
-                            <Alert type="warning" className="margin-top-4">
-                              {h('dateWarning')}
-                            </Alert>
-                          )}
+                        <>
+                          <MINTDatePicker
+                            fieldName="paymentStartDate"
+                            id="payment-payment-start-date"
+                            className="margin-top-6"
+                            label={t('paymentStartDate')}
+                            subLabel={t('paymentStartDateSubcopy')}
+                            placeHolder
+                            handleOnBlur={handleOnBlur}
+                            formikValue={values.paymentStartDate}
+                            value={paymentStartDate}
+                            error={flatErrors.paymentStartDate}
+                          />
 
                           <AddNote
                             id="payment-payment-start-date-note"
                             field="paymentStartDateNote"
                           />
-                        </FieldGroup>
+                        </>
                       )}
 
                       <ReadyForReview

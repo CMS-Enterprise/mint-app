@@ -3,12 +3,10 @@ import { useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
 import {
-  Alert,
   Breadcrumb,
   BreadcrumbBar,
   BreadcrumbLink,
   Button,
-  DatePicker,
   Fieldset,
   IconArrowBack,
   Label,
@@ -22,7 +20,7 @@ import AskAQuestion from 'components/AskAQuestion';
 import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import AutoSave from 'components/shared/AutoSave';
-import DatePickerWarning from 'components/shared/DatePickerWarning';
+import MINTDatePicker from 'components/shared/DatePicker';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
@@ -34,7 +32,6 @@ import {
 } from 'queries/OpsEvalAndLearning/types/GetIDDOC';
 import { UpdatePlanOpsEvalAndLearningVariables } from 'queries/OpsEvalAndLearning/types/UpdatePlanOpsEvalAndLearning';
 import UpdatePlanOpsEvalAndLearning from 'queries/OpsEvalAndLearning/UpdatePlanOpsEvalAndLearning';
-import { isDateInPast } from 'utils/date';
 import flattenErrors from 'utils/flattenErrors';
 import { NotFoundPartial } from 'views/NotFound';
 
@@ -346,49 +343,24 @@ const IDDOC = () => {
                 </FieldGroup>
 
                 {!loading && (
-                  <FieldGroup
-                    scrollElement="draftIcdDueDate"
-                    error={!!flatErrors.draftIcdDueDate}
-                    className="margin-top-6 width-half"
-                  >
-                    <label
-                      htmlFor="ops-eval-and-learning-icd-due-date"
-                      className="text-bold"
-                    >
-                      {t('draftIDC')}
-                    </label>
-                    <div className="usa-hint margin-y-1">
-                      {h('datePlaceholder')}
-                    </div>
-                    <FieldErrorMsg>{flatErrors.draftIcdDueDate}</FieldErrorMsg>
-                    <div className="width-card-lg position-relative">
-                      <Field
-                        as={DatePicker}
-                        error={+!!flatErrors.draftIcdDueDate}
-                        id="ops-eval-and-learning-icd-due-date"
-                        maxLength={50}
-                        name="draftIcdDueDate"
-                        defaultValue={draftIcdDueDate}
-                        onBlur={(e: React.ChangeEvent<HTMLInputElement>) => {
-                          handleOnBlur(e, 'draftIcdDueDate');
-                        }}
-                      />
-                      {isDateInPast(values.draftIcdDueDate) && (
-                        <DatePickerWarning label={h('dateWarning')} />
-                      )}
-                    </div>
-
-                    {isDateInPast(values.draftIcdDueDate) && (
-                      <Alert type="warning" className="margin-top-4">
-                        {h('dateWarning')}
-                      </Alert>
-                    )}
+                  <>
+                    <MINTDatePicker
+                      fieldName="draftIcdDueDate"
+                      id="ops-eval-and-learning-icd-due-date"
+                      className="margin-top-6"
+                      label={t('draftIDC')}
+                      placeHolder
+                      handleOnBlur={handleOnBlur}
+                      formikValue={values.draftIcdDueDate}
+                      value={draftIcdDueDate}
+                      error={flatErrors.draftIcdDueDate}
+                    />
 
                     <AddNote
                       id="ops-eval-and-learning-icd-due-date-note"
                       field="icdNote"
                     />
-                  </FieldGroup>
+                  </>
                 )}
 
                 <div className="margin-top-6 margin-bottom-3">
