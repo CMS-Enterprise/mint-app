@@ -9,6 +9,7 @@ import {
 } from '@trussworks/react-uswds';
 
 import SectionWrapper from 'components/shared/SectionWrapper';
+import teamRoles from 'constants/enums/teamRoles';
 import GetModelPlanCollaborators from 'queries/Collaborators/GetModelCollaborators';
 import {
   GetModelCollaborators,
@@ -22,7 +23,7 @@ const TeamGroupings = ({
   role,
   collaborators
 }: {
-  role: TeamRole;
+  role: string;
   collaborators: CollaboratorsType[];
 }) => {
   const { t } = useTranslation('generalReadOnly');
@@ -78,15 +79,28 @@ const ReadOnlyTeamInfo = ({ modelID }: { modelID: string }) => {
   const collaborators = (data?.modelPlan?.collaborators ??
     []) as CollaboratorsType[];
 
+  const sortModelLeadFirst = [
+    ...Object.keys(teamRoles).filter(c => c === 'MODEL_LEAD'),
+    ...Object.keys(teamRoles).filter(c => c !== 'MODEL_LEAD')
+  ];
+
   return (
     <div
       className="read-only-model-plan--team-info"
       data-testid="read-only-model-plan--team-info"
     >
-      {collaborators.map(c => {
-        return (
-          <TeamGroupings role={c.teamRole} collaborators={collaborators} />
-        );
+      {sortModelLeadFirst.map((role, index) => {
+        if (collaborators.filter(c => c.teamRole === role).length !== 0) {
+          return (
+            <TeamGroupings
+              // eslint-disable-next-line react/no-array-index-key
+              key={index}
+              role={role}
+              collaborators={collaborators}
+            />
+          );
+        }
+        return '';
       })}
     </div>
   );
