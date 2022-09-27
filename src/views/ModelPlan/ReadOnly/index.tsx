@@ -30,7 +30,7 @@ import {
   GetModelSummary as GetModelSummaryType,
   GetModelSummary_modelPlan as GetModelSummaryTypes
 } from 'queries/ReadOnly/types/GetModelSummary';
-import { ModelStatus } from 'types/graphql-global-types';
+import { ModelStatus, TeamRole } from 'types/graphql-global-types';
 import { formatDate } from 'utils/date';
 import { translateKeyCharacteristics } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
@@ -144,11 +144,13 @@ const ReadOnly = () => {
     }
   );
 
-  const formattedModelLeads = collaborators?.map((collaborator, index) => {
-    return `${collaborator.fullName}${
-      index === collaborators.length - 1 ? '' : ', '
-    }`;
-  });
+  const formattedModelLeads = collaborators
+    ?.filter(c => c.teamRole === TeamRole.MODEL_LEAD)
+    .map((collaborator, index) => {
+      return `${collaborator.fullName}${
+        index === collaborators.length - 1 ? '' : ', '
+      }`;
+    });
 
   const subComponents: subComponentsProps = {
     'model-basics': {
