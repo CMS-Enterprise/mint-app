@@ -3,7 +3,6 @@ import { useTranslation } from 'react-i18next';
 import { useQuery } from '@apollo/client';
 import {
   Card,
-  CardBody,
   CardHeader,
   IconMailOutline,
   Link
