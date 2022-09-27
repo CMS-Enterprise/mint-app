@@ -4,7 +4,8 @@ import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
 
 import { MessageProvider } from 'hooks/useMessage';
-import GetPlanDocumentByModelID from 'queries/Documents/GetPlanDocumentByModelID';
+import GetModelPlanDocuments from 'queries/Documents/GetModelPlanDocuments';
+// import GetPlanDocumentByModelID from 'queries/Documents/GetPlanDocumentByModelID';
 import { DocumentType } from 'types/graphql-global-types';
 
 import ReadOnlyDocuments from './index';
@@ -14,29 +15,34 @@ const modelID = 'f11eb129-2c80-4080-9440-439cbe1a286f';
 const mocks = [
   {
     request: {
-      query: GetPlanDocumentByModelID,
+      query: GetModelPlanDocuments,
       variables: { id: modelID }
     },
     result: {
       data: {
-        readPlanDocumentByModelID: [
-          {
-            __typename: 'PlanDocument',
-            id: '123',
-            modelPlanID: modelID,
-            fileType: null,
-            bucket: null,
-            fileKey: null,
-            virusScanned: true,
-            virusClean: true,
-            fileName: null,
-            fileSize: 123,
-            documentType: DocumentType.MARKET_RESEARCH,
-            otherType: null,
-            optionalNotes: null,
-            createdDts: '2022-05-12T15:01:39.190679Z'
-          }
-        ]
+        modelPlan: {
+          __typename: 'ModelPlan',
+          id: modelID,
+          documents: [
+            {
+              __typename: 'PlanDocument',
+              id: '123',
+              modelPlanID: modelID,
+              fileType: null,
+              bucket: null,
+              fileKey: null,
+              virusScanned: true,
+              virusClean: true,
+              fileName: null,
+              fileSize: 123,
+              downloadUrl: null,
+              documentType: DocumentType.MARKET_RESEARCH,
+              otherType: null,
+              optionalNotes: null,
+              createdDts: '2022-05-12T15:01:39.190679Z'
+            }
+          ]
+        }
       }
     }
   }
