@@ -45,7 +45,7 @@ const ContactInfo = ({ modelID }: { modelID: string }) => {
               </h3>
               <Link
                 aria-label={h('contactInfo.sendAnEmail')}
-                className="line-height-body-5 e"
+                className="line-height-body-5"
                 href={`mailto:${collaborator.email}`}
                 target="_blank"
               >
