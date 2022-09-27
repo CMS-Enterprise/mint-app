@@ -22,6 +22,12 @@ export interface GetAllModelPlans_modelPlanCollection_collaborators {
   teamRole: TeamRole;
 }
 
+export interface GetAllModelPlans_modelPlanCollection_crTdls {
+  __typename: "PlanCrTdl";
+  id: UUID;
+  idNumber: string;
+}
+
 export interface GetAllModelPlans_modelPlanCollection {
   __typename: "ModelPlan";
   id: UUID;
@@ -31,6 +37,7 @@ export interface GetAllModelPlans_modelPlanCollection {
   isCollaborator: boolean;
   basics: GetAllModelPlans_modelPlanCollection_basics;
   collaborators: GetAllModelPlans_modelPlanCollection_collaborators[];
+  crTdls: GetAllModelPlans_modelPlanCollection_crTdls[];
 }
 
 export interface GetAllModelPlans {

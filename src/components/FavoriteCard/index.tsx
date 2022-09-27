@@ -35,7 +35,9 @@ const FavoriteCard = ({
 }: FavoriteCardProps) => {
   const { t } = useTranslation('modelPlan');
 
-  const { id, modelName, basics, collaborators, status } = modelPlan;
+  const { id, modelName, basics, collaborators, crTdls, status } = modelPlan;
+
+  const crtdlIDs = crTdls.map(crtdl => crtdl.idNumber);
 
   return (
     <Card
@@ -95,7 +97,11 @@ const FavoriteCard = ({
             <p className="margin-bottom-0">{t(`${type}:favorite.cRTDLs`)}</p>
             {/* TODO: Fill with CR TDL data */}
             <p className="text-bold margin-top-0 margin-bottom-0">
-              {'CR 1234' || <i>{t('favorite.noneEntered')}</i>}
+              {crtdlIDs.length ? (
+                crtdlIDs.join(', ')
+              ) : (
+                <i>{t('favorite.noneEntered')}</i>
+              )}
             </p>
           </Grid>
         </Grid>
