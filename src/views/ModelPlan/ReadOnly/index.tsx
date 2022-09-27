@@ -44,6 +44,7 @@ import SideNav from './_components/Sidenav';
 import ReadOnlyGeneralCharacteristics from './GeneralCharacteristics/index';
 import ReadOnlyModelBasics from './ModelBasics/index';
 import ReadOnlyParticipantsAndProviders from './ParticipantsAndProviders/index';
+import ReadOnlyTeamInfo from './Team';
 
 import './index.scss';
 
@@ -180,7 +181,7 @@ const ReadOnly = () => {
     },
     team: {
       route: `/models/${modelID}/read-only/team`,
-      component: <h1>team</h1>
+      component: <ReadOnlyTeamInfo modelID={modelID} />
     },
     discussions: {
       route: `/models/${modelID}/read-only/discussions`,
