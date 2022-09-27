@@ -28,7 +28,7 @@ require (
 	go.uber.org/zap v1.23.0
 	golang.org/x/sync v0.0.0-20220722155255-886fb9371eb4
 	gopkg.in/launchdarkly/go-sdk-common.v2 v2.5.1
-	gopkg.in/launchdarkly/go-server-sdk.v5 v5.6.0
+	gopkg.in/launchdarkly/go-server-sdk.v5 v5.10.0
 )
 
 require github.com/gorilla/websocket v1.5.0
@@ -99,6 +99,6 @@ require (
 	gopkg.in/ini.v1 v1.66.4 // indirect
 	gopkg.in/launchdarkly/go-jsonstream.v1 v1.0.1 // indirect
 	gopkg.in/launchdarkly/go-sdk-events.v1 v1.1.1 // indirect
-	gopkg.in/launchdarkly/go-server-sdk-evaluation.v1 v1.4.1 // indirect
+	gopkg.in/launchdarkly/go-server-sdk-evaluation.v1 v1.5.0 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 )
