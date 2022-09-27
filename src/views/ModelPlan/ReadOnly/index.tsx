@@ -148,7 +148,10 @@ const ReadOnly = () => {
     ?.filter(c => c.teamRole === TeamRole.MODEL_LEAD)
     .map((collaborator, index) => {
       return `${collaborator.fullName}${
-        index === collaborators.length - 1 ? '' : ', '
+        index ===
+        collaborators.filter(c => c.teamRole === TeamRole.MODEL_LEAD).length - 1
+          ? ''
+          : ', '
       }`;
     });
 
