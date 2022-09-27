@@ -282,18 +282,18 @@ exports[`Model Plan -- Recover matches snapshot 1`] = `
             </div>
           </div>
           <div
-            class="usa-form-group margin-top-4"
+            class="usa-form-group margin-top-6"
             data-scroll="paymentStartDate"
           >
             <label
-              class="usa-label maxw-none"
+              class="usa-label usa-legend margin-top-0"
               data-testid="label"
-              for="paymentStartDate"
+              for="payment-payment-start-date"
             >
               When will payments start? (Enter an approximate date)
             </label>
             <p
-              class="text-normal margin-bottom-1 margin-top-0"
+              class="text-normal margin-bottom-1 margin-top-0 "
             >
               Note: If you are unsure of an approximate date, please select the first day of the approximate month.
             </p>
@@ -314,6 +314,7 @@ exports[`Model Plan -- Recover matches snapshot 1`] = `
                   aria-hidden="true"
                   class="usa-input usa-sr-only usa-date-picker__internal-input"
                   data-testid="date-picker-internal-input"
+                  error="0"
                   maxlength="50"
                   name="paymentStartDate"
                   readonly=""
@@ -328,6 +329,7 @@ exports[`Model Plan -- Recover matches snapshot 1`] = `
                   <input
                     class="usa-input usa-date-picker__external-input"
                     data-testid="date-picker-external-input"
+                    error="0"
                     id="payment-payment-start-date"
                     maxlength="50"
                     type="text"
@@ -359,27 +361,27 @@ exports[`Model Plan -- Recover matches snapshot 1`] = `
                 </div>
               </div>
             </div>
+          </div>
+          <div
+            class="margin-top-4 margin-bottom-8"
+          >
             <div
-              class="margin-top-4 margin-bottom-8"
+              class="usa-form-group"
             >
-              <div
-                class="usa-form-group"
+              <label
+                class="usa-label"
+                for="payment-payment-start-date-note"
               >
-                <label
-                  class="usa-label"
-                  for="payment-payment-start-date-note"
-                >
-                  Notes
-                </label>
-                <textarea
-                  class="usa-textarea height-15"
-                  data-testid="payment-payment-start-date-note"
-                  id="payment-payment-start-date-note"
-                  name="paymentStartDateNote"
-                >
-                  string
-                </textarea>
-              </div>
+                Notes
+              </label>
+              <textarea
+                class="usa-textarea height-15"
+                data-testid="payment-payment-start-date-note"
+                id="payment-payment-start-date-note"
+                name="paymentStartDateNote"
+              >
+                string
+              </textarea>
             </div>
           </div>
           <div
