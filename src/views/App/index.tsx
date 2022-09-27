@@ -20,6 +20,7 @@ import FlagsWrapper from 'views/FlagsWrapper';
 import Home from 'views/Home';
 import Login from 'views/Login';
 import Collaborators from 'views/ModelPlan/Collaborators';
+import CRTDL from 'views/ModelPlan/CRTDL';
 import Documents from 'views/ModelPlan/Documents';
 import LockedTaskListSection from 'views/ModelPlan/LockedTaskListSection';
 import ModelPlan from 'views/ModelPlan/ModelPlanOverview';
@@ -103,6 +104,7 @@ const AppRoutes = () => {
         component={Collaborators}
       />
       <SecureRoute path="/models/:modelID/documents" component={Documents} />
+      <SecureRoute path="/models/:modelID/cr-and-tdl" component={CRTDL} />
       <SecureRoute path="/models/:modelID/status" exact component={Status} />
       <SecureRoute
         path="/models/:modelID/task-list"

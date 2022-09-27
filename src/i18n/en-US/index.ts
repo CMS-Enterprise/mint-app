@@ -1,5 +1,6 @@
 import basics from './draftModelPlan/basics';
 import beneficiaries from './draftModelPlan/beneficiaries';
+import crtdl from './draftModelPlan/crtdl';
 import discussions from './draftModelPlan/discussions';
 import documents from './draftModelPlan/documents';
 import draftModelPlan from './draftModelPlan/draftModelPlan';
@@ -33,6 +34,7 @@ const enUS = {
   basics,
   beneficiaries,
   cookies,
+  crtdl,
   discussions,
   documents,
   draftModelPlan,

@@ -22,6 +22,12 @@ export interface GetModelPlan_modelPlan_documents {
   fileName: string;
 }
 
+export interface GetModelPlan_modelPlan_crTdls {
+  __typename: "PlanCrTdl";
+  id: UUID;
+  idNumber: string;
+}
+
 export interface GetModelPlan_modelPlan_discussions_replies {
   __typename: "DiscussionReply";
   id: UUID;
@@ -111,6 +117,7 @@ export interface GetModelPlan_modelPlan {
   status: ModelStatus;
   basics: GetModelPlan_modelPlan_basics;
   documents: GetModelPlan_modelPlan_documents[];
+  crTdls: GetModelPlan_modelPlan_crTdls[];
   discussions: GetModelPlan_modelPlan_discussions[];
   generalCharacteristics: GetModelPlan_modelPlan_generalCharacteristics;
   participantsAndProviders: GetModelPlan_modelPlan_participantsAndProviders;
