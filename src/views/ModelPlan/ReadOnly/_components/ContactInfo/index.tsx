@@ -9,6 +9,7 @@ import {
   GetModelCollaborators,
   GetModelCollaborators_modelPlan_collaborators as GetCollaboratorsType
 } from 'queries/Collaborators/types/GetModelCollaborators';
+import { TeamRole } from 'types/graphql-global-types';
 
 const ContactInfo = ({ modelID }: { modelID: string }) => {
   const { t: h } = useTranslation('generalReadOnly');
@@ -31,27 +32,29 @@ const ContactInfo = ({ modelID }: { modelID: string }) => {
         {h('contactInfo.modelLeads')}
       </p>
 
-      {collaborators.map(collaborator => {
-        return (
-          <div
-            key={collaborator.euaUserID}
-            className="model-lead__member margin-bottom-3"
-          >
-            <h3 className="system-profile__subheader margin-bottom-1">
-              {collaborator.fullName}
-            </h3>
-            <Link
-              aria-label={h('contactInfo.sendAnEmail')}
-              className="line-height-body-5 e"
-              href={`mailto:${collaborator.email}`}
-              target="_blank"
+      {collaborators
+        .filter(collaborator => collaborator.teamRole === TeamRole.MODEL_LEAD)
+        .map(collaborator => {
+          return (
+            <div
+              key={collaborator.euaUserID}
+              className="model-lead__member margin-bottom-3"
             >
-              {h('contactInfo.sendAnEmail')}
-              <IconLaunch className="margin-left-05 margin-bottom-2px text-tbottom" />
-            </Link>
-          </div>
-        );
-      })}
+              <h3 className="system-profile__subheader margin-bottom-1">
+                {collaborator.fullName}
+              </h3>
+              <Link
+                aria-label={h('contactInfo.sendAnEmail')}
+                className="line-height-body-5 e"
+                href={`mailto:${collaborator.email}`}
+                target="_blank"
+              >
+                {h('contactInfo.sendAnEmail')}
+                <IconLaunch className="margin-left-05 margin-bottom-2px text-tbottom" />
+              </Link>
+            </div>
+          );
+        })}
 
       <UswdsReactLink
         aria-label={h('contactInfo.moreTeamMembers')}
