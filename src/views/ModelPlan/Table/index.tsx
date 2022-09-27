@@ -217,7 +217,7 @@ const Table = ({ data, hiddenColumns }: TableProps) => {
                       {...column.getSortByToggleProps()}
                     >
                       {column.render('Header')}
-                      {getHeaderSortIcon(column)}
+                      {getHeaderSortIcon(column, false)}
                     </button>
                   </th>
                 ))}

@@ -6,12 +6,21 @@ const modelPlanTaskList = {
   subheading: 'for <1>{{modelName}}</1>',
   status: 'Status:',
   update: 'Update',
-  summaryBox: {
-    copy: 'There are no documents uploaded for <1>{{modelName}}</1>.',
-    existingDocuments: 'document<1>{{plural}}</1> uploaded for ',
+  documentSummaryBox: {
+    heading: 'Documents',
+    copy: 'There are no documents uploaded',
+    existingDocuments: 'document<1>{{plural}}</1> uploaded',
     cta: 'Upload a document',
     viewAll: 'View all model documents',
     uploadAnother: 'Upload another document'
+  },
+  crTDLsSummaryBox: {
+    heading: 'CRs and TDLs',
+    copy: 'There are no CRs or TDLs added.',
+    add: 'Add a CR or TDL',
+    viewAll: 'Manage CRs and TDLs',
+    uploadAnother: 'Add another CR or TDL',
+    more: ' more'
   },
   sideNav: {
     saveAndExit: 'Save & Exit',
