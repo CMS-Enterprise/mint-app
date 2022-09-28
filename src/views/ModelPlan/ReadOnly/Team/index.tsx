@@ -19,6 +19,8 @@ import { TeamRole } from 'types/graphql-global-types';
 import { translateTeamRole } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
 
+import './index.scss';
+
 const TeamGroupings = ({
   role,
   collaborators
@@ -28,7 +30,7 @@ const TeamGroupings = ({
 }) => {
   const { t } = useTranslation('generalReadOnly');
   return (
-    <SectionWrapper className="padding-bottom-3 border-bottom-1px border-base-light margin-bottom-4">
+    <SectionWrapper className="team-groupings--section-wrapper padding-bottom-3 border-base-light margin-bottom-4">
       <h2 className="margin-top-0 margin-bottom-4">
         {role === TeamRole.MODEL_LEAD
           ? t('contactInfo.modelLeads')
@@ -39,6 +41,7 @@ const TeamGroupings = ({
         .map(collaborator => {
           return (
             <Card
+              key={collaborator.id}
               containerProps={{
                 className: 'radius-md padding-2 margin-bottom-3 margin-x-0'
               }}

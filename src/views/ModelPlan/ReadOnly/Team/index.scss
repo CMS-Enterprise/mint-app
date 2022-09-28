@@ -1,0 +1,6 @@
+.team-groupings--section-wrapper {
+  border-bottom: 1px solid color($theme-color-base-light);
+  &:last-child {
+    border-bottom: 0;
+  }
+}
