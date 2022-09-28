@@ -1,10 +1,5 @@
 import * as Yup from 'yup';
 
-const datePickerSchema = Yup.date()
-  .nullable()
-  .notRequired()
-  .min(new Date(), 'Date cannot be in the past');
-
 const planBasicsSchema = {
   pageOneSchema: Yup.object().shape({
     modelName: Yup.string().trim().required('Enter the Model Name'),
@@ -77,15 +72,6 @@ const planBasicsSchema = {
   }),
 
   pageThreeSchema: Yup.object().shape({
-    completeICIP: datePickerSchema,
-    clearanceStarts: datePickerSchema,
-    clearanceEnds: datePickerSchema,
-    announced: datePickerSchema,
-    applicationsStart: datePickerSchema,
-    applicationsEnd: datePickerSchema,
-    performancePeriodStarts: datePickerSchema,
-    performancePeriodEnds: datePickerSchema,
-    wrapUpEnds: datePickerSchema,
     phasedIn: Yup.boolean().nullable().required('Please answer question')
   })
 };

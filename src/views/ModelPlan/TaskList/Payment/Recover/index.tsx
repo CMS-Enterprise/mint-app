@@ -1,14 +1,12 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useRef } from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import { Link, useHistory, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
 import {
-  Alert,
   Breadcrumb,
   BreadcrumbBar,
   BreadcrumbLink,
   Button,
-  DatePicker,
   Fieldset,
   Grid,
   GridContainer,
@@ -25,7 +23,7 @@ import PageHeading from 'components/PageHeading';
 import PageNumber from 'components/PageNumber';
 import ReadyForReview from 'components/ReadyForReview';
 import AutoSave from 'components/shared/AutoSave';
-import DatePickerWarning from 'components/shared/DatePickerWarning';
+import MINTDatePicker from 'components/shared/DatePicker';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import FieldErrorMsg from 'components/shared/FieldErrorMsg';
 import FieldGroup from 'components/shared/FieldGroup';
@@ -53,7 +51,6 @@ const Recover = () => {
   const { t } = useTranslation('payments');
   const { t: h } = useTranslation('draftModelPlan');
   const { modelID } = useParams<{ modelID: string }>();
-  const [dateInPast, setDateInPast] = useState(false);
 
   // Omitting readyForReviewBy and readyForReviewDts from initialValues and getting submitted through Formik
   type InitialValueType = Omit<
@@ -129,14 +126,6 @@ const Recover = () => {
         formikRef?.current?.setErrors(errors);
       });
   };
-
-  useEffect(() => {
-    if (paymentStartDate && new Date() > new Date(paymentStartDate)) {
-      setDateInPast(true);
-    } else {
-      setDateInPast(false);
-    }
-  }, [paymentStartDate]);
 
   const initialValues: InitialValueType = {
     __typename: 'PlanPayments',
@@ -216,18 +205,10 @@ const Recover = () => {
           ) => {
             if (e.target.value === '') {
               setFieldValue(field, null);
-              if (e.target.id !== '') {
-                setDateInPast(false);
-              }
               return;
             }
             try {
               setFieldValue(field, new Date(e.target.value).toISOString());
-              if (new Date() > new Date(e.target.value)) {
-                setDateInPast(true);
-              } else {
-                setDateInPast(false);
-              }
               delete errors[field as keyof InitialValueType];
             } catch (err) {
               setFieldError(field, t('validDate'));
@@ -361,55 +342,25 @@ const Recover = () => {
                       </FieldGroup>
 
                       {!loading && (
-                        <FieldGroup
-                          scrollElement="paymentStartDate"
-                          error={!!flatErrors.paymentStartDate}
-                          className="margin-top-4"
-                        >
-                          <Label
-                            htmlFor="paymentStartDate"
-                            className="maxw-none"
-                          >
-                            {t('paymentStartDate')}
-                          </Label>
-                          <p className="text-normal margin-bottom-1 margin-top-0">
-                            {t('paymentStartDateSubcopy')}
-                          </p>
-                          <div className="usa-hint" id="appointment-date-hint">
-                            {h('datePlaceholder')}
-                          </div>
-                          <FieldErrorMsg>
-                            {flatErrors.paymentStartDate}
-                          </FieldErrorMsg>
-                          <div className="width-card-lg position-relative">
-                            <Field
-                              as={DatePicker}
-                              error={!!flatErrors.paymentStartDate}
-                              id="payment-payment-start-date"
-                              maxLength={50}
-                              name="paymentStartDate"
-                              defaultValue={paymentStartDate}
-                              onBlur={(
-                                e: React.ChangeEvent<HTMLInputElement>
-                              ) => {
-                                handleOnBlur(e, 'paymentStartDate');
-                              }}
-                            />
-                            {dateInPast && (
-                              <DatePickerWarning label={h('dateWarning')} />
-                            )}
-                          </div>
-                          {dateInPast && (
-                            <Alert type="warning" className="margin-top-4">
-                              {h('dateWarning')}
-                            </Alert>
-                          )}
+                        <>
+                          <MINTDatePicker
+                            fieldName="paymentStartDate"
+                            id="payment-payment-start-date"
+                            className="margin-top-6"
+                            label={t('paymentStartDate')}
+                            subLabel={t('paymentStartDateSubcopy')}
+                            placeHolder
+                            handleOnBlur={handleOnBlur}
+                            formikValue={values.paymentStartDate}
+                            value={paymentStartDate}
+                            error={flatErrors.paymentStartDate}
+                          />
 
                           <AddNote
                             id="payment-payment-start-date-note"
                             field="paymentStartDateNote"
                           />
-                        </FieldGroup>
+                        </>
                       )}
 
                       <ReadyForReview
