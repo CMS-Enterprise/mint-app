@@ -18,6 +18,19 @@ export const translateBoolean = (type: boolean) => {
   }
 };
 
+export const translateTriStateAnswer = (type: string) => {
+  switch (type) {
+    case 'YES':
+      return i18next.t('draftModelPlan:yes');
+    case 'NO':
+      return i18next.t('draftModelPlan:no');
+    case 'TBD':
+      return i18next.t('beneficiaries:beneficiariesOptions.na');
+    default:
+      return '';
+  }
+};
+
 export const translateTeamRole = (teamRole: string) => {
   switch (teamRole) {
     case 'EVALUATION':

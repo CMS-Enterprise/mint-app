@@ -4,13 +4,14 @@ import { useQuery } from '@apollo/client';
 
 import GetAllBeneficiaries from 'queries/ReadOnly/GetAllBeneficiaries';
 import { GetAllBeneficiaries as AllBeneficiariesTypes } from 'queries/ReadOnly/types/GetAllBeneficiaries';
-import { FrequencyType } from 'types/graphql-global-types';
+import { FrequencyType, TriStateAnswer } from 'types/graphql-global-types';
 import {
   translateBeneficiariesType,
   translateConfidenceType,
   translateFrequencyType,
   translateOverlapType,
-  translateSelectionMethodType
+  translateSelectionMethodType,
+  translateTriStateAnswer
 } from 'utils/modelPlan';
 import { TaskListStatusTag } from 'views/ModelPlan/TaskList/_components/TaskListItem';
 import { NotFoundPartial } from 'views/NotFound';
@@ -81,15 +82,20 @@ const ReadOnlyBeneficiaries = ({ modelID }: { modelID: string }) => {
         <div className="desktop:display-flex flex-justify">
           <div
             className={
-              treatDualElligibleDifferent ? 'desktop:width-card-lg' : ''
+              treatDualElligibleDifferent === TriStateAnswer.YES
+                ? 'desktop:width-card-lg'
+                : ''
             }
           >
             <ReadOnlySection
               heading={t('dualEligibility')}
-              copy={treatDualElligibleDifferent ? h('yes') : h('no')}
+              copy={
+                treatDualElligibleDifferent &&
+                translateTriStateAnswer(treatDualElligibleDifferent)
+              }
             />
           </div>
-          {treatDualElligibleDifferent && (
+          {treatDualElligibleDifferent === TriStateAnswer.YES && (
             <div className="desktop:width-card-lg">
               <ReadOnlySection
                 heading={h('howSo')}
@@ -108,15 +114,20 @@ const ReadOnlyBeneficiaries = ({ modelID }: { modelID: string }) => {
         <div className="desktop:display-flex flex-justify">
           <div
             className={
-              excludeCertainCharacteristics ? 'desktop:width-card-lg' : ''
+              excludeCertainCharacteristics === TriStateAnswer.YES
+                ? 'desktop:width-card-lg'
+                : ''
             }
           >
             <ReadOnlySection
               heading={t('excluded')}
-              copy={excludeCertainCharacteristics ? h('yes') : h('no')}
+              copy={
+                excludeCertainCharacteristics &&
+                translateTriStateAnswer(excludeCertainCharacteristics)
+              }
             />
           </div>
-          {excludeCertainCharacteristics && (
+          {excludeCertainCharacteristics === TriStateAnswer.YES && (
             <div className="desktop:width-card-lg">
               <ReadOnlySection
                 heading={t('excludedNestedQuestion')}
