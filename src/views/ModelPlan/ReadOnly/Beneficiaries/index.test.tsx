@@ -68,7 +68,7 @@ const mocks = [
   }
 ];
 
-describe('Read Only Model Plan Summary -- Participants And Providers', () => {
+describe('Read Only Model Plan Summary -- Beneficiaries', () => {
   it('renders without errors', async () => {
     render(
       <MemoryRouter
