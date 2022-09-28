@@ -1345,14 +1345,14 @@ input PlanCrTdlChanges @goModel(model: "map[string]interface{}") {
 
 
 type AuditChange {
-id: Int!
-primaryKey: UUID!
-foreignKey: UUID
-tableName: String!
-action: String!
-fields: Map!
-modifiedBy: String
-modifiedDts: Time
+  id: Int!
+  primaryKey: UUID!
+  foreignKey: UUID
+  tableName: String!
+  action: String!
+  fields: Map!
+  modifiedBy: String
+  modifiedDts: Time
 }
 
 # type AuditFields {
