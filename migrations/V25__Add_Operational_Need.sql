@@ -1,7 +1,7 @@
 CREATE TABLE operational_need (
     id UUID PRIMARY KEY NOT NULL,
     model_plan_id UUID NOT NULL, --foreign key to model plan
-    need_type INT, --TODO should be required.
+    need_type INT NOT NULL, --TODO should be required.
     need_other TEXT,
 
     --TODO add fields
@@ -26,3 +26,6 @@ ADD CONSTRAINT fk_need_possible_need FOREIGN KEY (need_type)
 REFERENCES public.possible_operational_need (id) MATCH SIMPLE
 ON UPDATE NO ACTION
 ON DELETE NO ACTION;
+
+ALTER TABLE operational_need
+ADD CONSTRAINT unique_need_per_plan UNIQUE (model_plan_id, need_type); --TODO update this, this will only allow one other type... Maybe leave other out?

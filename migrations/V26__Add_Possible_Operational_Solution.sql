@@ -1,6 +1,7 @@
 CREATE TABLE possible_operational_solution (
     id SERIAL PRIMARY KEY NOT NULL,
-    name ZERO_STRING NOT NULL,
+    full_name ZERO_STRING NOT NULL,
+    short_name ZERO_STRING NOT NULL,
 
     --TODO add fields
     -- default LINKING TABLE TO default POCS

@@ -1,7 +1,7 @@
 CREATE TABLE possible_operational_need (
     id SERIAL PRIMARY KEY NOT NULL, -- instead of UUID
-    full_name TEXT NOT NULL, --foreign key to model plan
-    short_name TEXT NOT NULL,
+    full_name ZERO_STRING NOT NULL,
+    short_name ZERO_STRING NOT NULL,
 
 
     --TODO add fields

@@ -1,8 +1,25 @@
+CREATE TYPE OP_SOLUTION_STATUS AS ENUM (
+    'NOT_STARTED',
+    'ONBOARDING',
+    'BACKLOG',
+    'IN_PROGRESS',
+    'COMPLETED',
+    'AT_RISK'
+);
+
+
 CREATE TABLE operational_solution (
     id UUID PRIMARY KEY NOT NULL,
     operational_need_id UUID NOT NULL, --foreign key to model plan
     solution_type INT,
     solution_other TEXT,
+
+    poc_name TEXT,
+    poc_email EMAIL,
+
+    must_start_dts TIMESTAMP WITH TIME ZONE,
+    must_finish_dts TIMESTAMP WITH TIME ZONE,
+    status OP_SOLUTION_STATUS NOT NULL DEFAULT 'NOT_STARTED',
 
     --TODO add fields
 
