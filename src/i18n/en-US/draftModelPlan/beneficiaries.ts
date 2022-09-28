@@ -38,6 +38,7 @@ const beneficiaries = {
   },
   chooseBeneficiaries:
     'How will you choose beneficiaries? Select all that apply.',
+  chooseBeneficiariesQuestion: 'How will you choose beneficiaries?',
   selectionMethod: {
     historical: 'Historical claims',
     prospective: 'Assign/capture - prospective',
