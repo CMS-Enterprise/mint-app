@@ -19,6 +19,7 @@ import Cookies from 'views/Cookies';
 import FlagsWrapper from 'views/FlagsWrapper';
 import Home from 'views/Home';
 import Login from 'views/Login';
+import ModelAccessWrapper from 'views/ModelAccessWrapper';
 import Collaborators from 'views/ModelPlan/Collaborators';
 import CRTDL from 'views/ModelPlan/CRTDL';
 import Documents from 'views/ModelPlan/Documents';
@@ -203,15 +204,17 @@ const App = () => {
                 <FlagsWrapper>
                   <UserInfoWrapper>
                     <NDAWrapper>
-                      <TimeOutWrapper>
-                        <NavContextProvider>
-                          <PageWrapper>
-                            <Header />
-                            <AppRoutes />
-                            <Footer />
-                          </PageWrapper>
-                        </NavContextProvider>
-                      </TimeOutWrapper>
+                      <ModelAccessWrapper>
+                        <TimeOutWrapper>
+                          <NavContextProvider>
+                            <PageWrapper>
+                              <Header />
+                              <AppRoutes />
+                              <Footer />
+                            </PageWrapper>
+                          </NavContextProvider>
+                        </TimeOutWrapper>
+                      </ModelAccessWrapper>
                     </NDAWrapper>
                   </UserInfoWrapper>
                 </FlagsWrapper>
