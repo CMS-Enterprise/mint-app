@@ -80,6 +80,7 @@ const PlanDocumentsTable = ({
       refetch={refetchDocuments}
       setDocumentMessage={setDocumentMessage}
       setDocumentStatus={setDocumentStatus}
+      isCollaborator={data?.modelPlan.isCollaborator}
     />
   );
 };
@@ -92,6 +93,7 @@ type TableProps = {
   refetch: () => any | undefined;
   setDocumentMessage: (value: string) => void;
   setDocumentStatus: (value: DocumentStatusType) => void;
+  isCollaborator?: boolean;
 };
 
 const Table = ({
@@ -99,7 +101,8 @@ const Table = ({
   hiddenColumns,
   refetch,
   setDocumentMessage,
-  setDocumentStatus
+  setDocumentStatus,
+  isCollaborator
 }: TableProps) => {
   const { t } = useTranslation('documents');
   const [isModalOpen, setModalOpen] = useState(false);
@@ -230,18 +233,20 @@ const Table = ({
                 >
                   {t('documentTable.view')}
                 </Button>
-                <Button
-                  type="button"
-                  unstyled
-                  className="text-red"
-                  data-testid="remove-document"
-                  onClick={() => {
-                    setModalOpen(true);
-                    setFileToRemove(row.original);
-                  }}
-                >
-                  {t('documentTable.remove')}
-                </Button>
+                {isCollaborator && (
+                  <Button
+                    type="button"
+                    unstyled
+                    className="text-red"
+                    data-testid="remove-document"
+                    onClick={() => {
+                      setModalOpen(true);
+                      setFileToRemove(row.original);
+                    }}
+                  >
+                    {t('documentTable.remove')}
+                  </Button>
+                )}
               </>
             ) : (
               t('documentTable.virusFound')
