@@ -2,6 +2,7 @@ const beneficiaries = {
   heading: 'Beneficiaries',
   beneficiaries:
     'Who are the beneficiaries of this model? Select all that apply.',
+  beneficiariesQuestion: 'Who are the beneficiaries of this model?',
   beneficiariesOther:
     'Please describe the other groups this model will impact.',
   beneficiariesOptions: {
