@@ -23,6 +23,7 @@ const mocks = [
         modelPlan: {
           __typename: 'ModelPlan',
           id: modelID,
+          isCollaborator: true,
           documents: [
             {
               __typename: 'PlanDocument',
