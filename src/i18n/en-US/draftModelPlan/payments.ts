@@ -5,16 +5,20 @@ const payments = {
     'If there’s a question or field that is not applicable to your model or you don’t currently know the answer, you may leave it blank. If you need help, ask a question below.',
   fundingSource:
     'What will be the funding source for payments? Select all that apply.',
+  fundingSourceQuestion: 'What will be the funding source for payments?',
   sourceOptions: {
     ppaca: 'Patient Protection Affordable Care Act (Sec 3021)',
     trustFund: 'Trust Fund',
     other: 'Other'
   },
   whichType: 'Which type?',
+  whichFundingType: 'Which type of trust fund?',
   validDate: 'Please use a valid date format',
   otherSourceOption: 'Please describe the funding source.',
   reconciliation:
     'What is the funding source for reconciliation or other expenditures? Select all that apply.',
+  reconciliationQuestion:
+    'What is the funding source for reconciliation or other expenditures?',
   attachments: 'Attachments',
   addADocument: 'Add a document',
   documentTable: {
