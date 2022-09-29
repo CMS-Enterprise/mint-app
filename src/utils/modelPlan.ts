@@ -38,7 +38,9 @@ export const translateTeamRole = (teamRole: string) => {
   }
 };
 
-export const translateComplexityLevel = (key: string) => {
+export const translateComplexityLevel = (
+  key: ComplexityCalculationLevelType
+) => {
   switch (key) {
     case ComplexityCalculationLevelType.LOW:
       return i18next.t('payments:complexityLevel.low');
