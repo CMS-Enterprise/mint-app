@@ -11,6 +11,7 @@ import { ClaimsBasedPayType, PayType } from 'types/graphql-global-types';
 import {
   translateBoolean,
   translateClaimsBasedPayType,
+  translateComplexityLevel,
   translateNonClaimsBasedPayType,
   translatePayRecipient,
   translatePayType,
@@ -388,8 +389,12 @@ const ReadOnlyPayments = ({ modelID }: { modelID: string }) => {
 
       <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
         <ReadOnlySection
-          heading={t('fundingStructure')}
-          copy={fundingStructure}
+          heading={t('expectedCalculationComplexityLevel')}
+          copy={
+            expectedCalculationComplexityLevel === null
+              ? null
+              : translateComplexityLevel(expectedCalculationComplexityLevel)
+          }
         />
       </div>
     </div>
