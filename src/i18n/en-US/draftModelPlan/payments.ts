@@ -34,6 +34,7 @@ const payments = {
   paymentPreference:
     'Is there a preference that model participants be paid outside of or within the existing claims systems?',
   whoWillYouPay: 'Who will you pay? Select all that apply.',
+  whoWillYouPayQuestion: 'Who will you pay?',
   whoWillYouPayOptions: {
     providers: 'Providers',
     beneficiaries: 'Beneficiaries',

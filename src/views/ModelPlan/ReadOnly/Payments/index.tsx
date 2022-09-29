@@ -7,7 +7,11 @@ import {
   GetAllPayments as GetModelPlanPaymentType,
   GetAllPayments_modelPlan_payments as PaymentTypes
 } from 'queries/ReadOnly/types/GetAllPayments';
-import { translateSourceOptions } from 'utils/modelPlan';
+import {
+  translatePayRecipient,
+  translatePayType,
+  translateSourceOptions
+} from 'utils/modelPlan';
 import { TaskListStatusTag } from 'views/ModelPlan/TaskList/_components/TaskListItem';
 import { NotFoundPartial } from 'views/NotFound';
 
@@ -146,6 +150,21 @@ const ReadOnlyPayments = ({ modelID }: { modelID: string }) => {
             copy={fundingSourceRNote}
           />
         )}
+
+        <ReadOnlySection
+          heading={t('whoWillYouPayQuestion')}
+          list
+          listItems={payRecipients?.map(translatePayRecipient)}
+          listOtherItem={payRecipientsOtherSpecification}
+          notes={payRecipientsNote}
+        />
+
+        <ReadOnlySection
+          heading={t('whatWillYouPay')}
+          list
+          listItems={payType?.map(translatePayType)}
+          notes={payTypeNote}
+        />
       </div>
     </div>
   );
