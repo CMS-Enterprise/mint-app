@@ -84,7 +84,7 @@ const ReadOnlyModelBasics = ({ modelID }: { modelID: string }) => {
           <ReadOnlySection
             heading={t('cmsComponent')}
             list
-            listItems={cmsCenters?.map(translateCmsCenter)}
+            listItems={cmsCenters.map(translateCmsCenter)}
             listOtherItem={cmsOther}
           />
         </div>
@@ -92,7 +92,7 @@ const ReadOnlyModelBasics = ({ modelID }: { modelID: string }) => {
           <ReadOnlySection
             heading={t('cmmiGroup')}
             list
-            listItems={cmmiGroups?.map(translateCmmiGroups)}
+            listItems={cmmiGroups.map(translateCmmiGroups)}
           />
         </div>
       </div>
