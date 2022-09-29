@@ -8,6 +8,7 @@ import {
   GetAllPayments_modelPlan_payments as PaymentTypes
 } from 'queries/ReadOnly/types/GetAllPayments';
 import { ClaimsBasedPayType, PayType } from 'types/graphql-global-types';
+import { formatDate } from 'utils/date';
 import {
   translateAnticipatedPaymentFrequencyType,
   translateBoolean,
@@ -439,6 +440,40 @@ const ReadOnlyPayments = ({ modelID }: { modelID: string }) => {
           listItems={anticipatedPaymentFrequency.map(
             translateAnticipatedPaymentFrequencyType
           )}
+          listOtherItem={anticipatedPaymentFrequencyOther}
+          notes={anticipatedPaymentFrequencyNote}
+        />
+      </div>
+
+      <div className="margin-bottom-4 padding-bottom-2">
+        <ReadOnlySection
+          heading={t('willRecoverPayments')}
+          copy={
+            willRecoverPayments === null
+              ? null
+              : translateBoolean(willRecoverPayments)
+          }
+          notes={willRecoverPaymentsNote}
+        />
+
+        <ReadOnlySection
+          heading={t('anticipateReconcilingPaymentsRetrospectively')}
+          copy={
+            anticipateReconcilingPaymentsRetrospectively === null
+              ? null
+              : translateBoolean(anticipateReconcilingPaymentsRetrospectively)
+          }
+          notes={anticipateReconcilingPaymentsRetrospectivelyNote}
+        />
+
+        <ReadOnlySection
+          heading={t('paymentStartDateQuestion')}
+          copy={
+            paymentStartDate
+              ? formatDate(paymentStartDate, 'MM/dd/yyyy')
+              : t('na')
+          }
+          notes={paymentStartDateNote}
         />
       </div>
     </div>

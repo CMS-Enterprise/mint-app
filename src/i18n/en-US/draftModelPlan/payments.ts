@@ -257,6 +257,7 @@ const payments = {
     'Do you anticipate reconciling payments retrospectively?',
   anticipateReconcilingPaymentsRetrospectivelyNote: '',
   paymentStartDate: 'When will payments start? (Enter an approximate date)',
+  paymentStartDateQuestion: 'When will payments start?',
   paymentStartDateSubcopy:
     'Note: If you are unsure of an approximate date, please select the first day of the approximate month.'
 };
