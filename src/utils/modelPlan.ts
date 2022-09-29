@@ -462,9 +462,7 @@ export const translateNonClaimsBasedPayType = (type: string) => {
   }
 };
 
-export const translateAnticipatedPaymentFrequencyType = (
-  type: AnticipatedPaymentFrequencyType | string
-) => {
+export const translateAnticipatedPaymentFrequencyType = (type: string) => {
   switch (type) {
     case 'ANNUALLY':
       return i18next.t('payments:anticipatedPaymentFrequencyOptions.annually');
