@@ -467,11 +467,7 @@ const ReadOnlyPayments = ({ modelID }: { modelID: string }) => {
 
         <ReadOnlySection
           heading={t('paymentStartDateQuestion')}
-          copy={
-            paymentStartDate
-              ? formatDate(paymentStartDate, 'MM/dd/yyyy')
-              : t('na')
-          }
+          copy={paymentStartDate && formatDate(paymentStartDate, 'MM/dd/yyyy')}
           notes={paymentStartDateNote}
         />
       </div>
