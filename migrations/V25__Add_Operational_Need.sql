@@ -2,7 +2,7 @@ CREATE TABLE operational_need (
     id UUID PRIMARY KEY NOT NULL,
     model_plan_id UUID NOT NULL, --foreign key to model plan
     need_type INT, --TODO should be required.
-    need_other TEXT,
+    need_other ZERO_STRING,
 
     --TODO add fields
     needed BOOLEAN DEFAULT TRUE,

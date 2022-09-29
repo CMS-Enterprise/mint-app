@@ -12,9 +12,9 @@ CREATE TABLE operational_solution (
     id UUID PRIMARY KEY NOT NULL,
     operational_need_id UUID NOT NULL, --foreign key to model plan
     solution_type INT,
-    solution_other TEXT,
+    solution_other ZERO_STRING,
 
-    poc_name TEXT,
+    poc_name ZERO_STRING,
     poc_email EMAIL,
 
     must_start_dts TIMESTAMP WITH TIME ZONE,
