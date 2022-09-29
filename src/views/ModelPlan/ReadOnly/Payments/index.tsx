@@ -395,7 +395,42 @@ const ReadOnlyPayments = ({ modelID }: { modelID: string }) => {
               ? null
               : translateComplexityLevel(expectedCalculationComplexityLevel)
           }
+          notes={expectedCalculationComplexityLevelNote}
         />
+
+        <div className="desktop:display-flex flex-justify">
+          <div
+            className={
+              affectsMedicareSecondaryPayerClaims ? 'desktop:width-card-lg' : ''
+            }
+          >
+            <ReadOnlySection
+              heading={t('canParticipantsSelectBetweenPaymentMechanisms')}
+              copy={
+                canParticipantsSelectBetweenPaymentMechanisms === null
+                  ? null
+                  : translateBoolean(
+                      canParticipantsSelectBetweenPaymentMechanisms
+                    )
+              }
+              notes={canParticipantsSelectBetweenPaymentMechanismsNote}
+            />
+          </div>
+          {canParticipantsSelectBetweenPaymentMechanisms && (
+            <div className="desktop:width-card-lg">
+              <ReadOnlySection
+                heading={h('howSo')}
+                copy={canParticipantsSelectBetweenPaymentMechanismsHow}
+              />
+            </div>
+          )}
+        </div>
+        {canParticipantsSelectBetweenPaymentMechanismsNote && (
+          <ReadOnlySection
+            heading={t('basics:notes')}
+            copy={canParticipantsSelectBetweenPaymentMechanismsNote}
+          />
+        )}
       </div>
     </div>
   );
