@@ -9,6 +9,7 @@ import {
 } from 'queries/ReadOnly/types/GetAllPayments';
 import { ClaimsBasedPayType, PayType } from 'types/graphql-global-types';
 import {
+  translateAnticipatedPaymentFrequencyType,
   translateBoolean,
   translateClaimsBasedPayType,
   translateComplexityLevel,
@@ -431,6 +432,13 @@ const ReadOnlyPayments = ({ modelID }: { modelID: string }) => {
             copy={canParticipantsSelectBetweenPaymentMechanismsNote}
           />
         )}
+
+        <ReadOnlySection
+          heading={t('anticipatedPaymentFrequency')}
+          copy={translateAnticipatedPaymentFrequencyType(
+            anticipatedPaymentFrequency
+          )}
+        />
       </div>
     </div>
   );
