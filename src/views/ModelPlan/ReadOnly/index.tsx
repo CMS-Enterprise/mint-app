@@ -112,6 +112,10 @@ const ReadOnly = () => {
 
   const favoriteMutations = useFavoritePlan();
 
+  if ((!loading && error) || (!loading && !data) || data === undefined) {
+    return <NotFoundPartial />;
+  }
+
   const handleUpdateFavorite = (
     modelPlanID: string,
     type: UpdateFavoriteProps
@@ -132,15 +136,15 @@ const ReadOnly = () => {
     basics,
     generalCharacteristics,
     collaborators
-  } = data?.modelPlan || ({} as GetModelSummaryTypes);
+  } = data.modelPlan;
 
   const formattedApplicationStartDate =
-    basics?.applicationsStart && formatDate(basics?.applicationsStart);
+    basics.applicationsStart && formatDate(basics.applicationsStart);
 
-  const formattedKeyCharacteristics = generalCharacteristics?.keyCharacteristics.map(
+  const formattedKeyCharacteristics = generalCharacteristics.keyCharacteristics.map(
     (item, index) => {
       return `${translateKeyCharacteristics(item)}${
-        index === generalCharacteristics?.keyCharacteristics.length - 1
+        index === generalCharacteristics.keyCharacteristics.length - 1
           ? ''
           : ', '
       }`;
@@ -148,7 +152,7 @@ const ReadOnly = () => {
   );
 
   const formattedModelLeads = collaborators
-    ?.filter(c => c.teamRole === TeamRole.MODEL_LEAD)
+    .filter(c => c.teamRole === TeamRole.MODEL_LEAD)
     .map((collaborator, index) => {
       return `${collaborator.fullName}${
         index ===
@@ -207,10 +211,6 @@ const ReadOnly = () => {
 
   const subComponent = subComponents[subinfo];
 
-  if ((!loading && error) || (!loading && !data?.modelPlan)) {
-    return <NotFoundPartial />;
-  }
-
   return (
     <MainContent
       className="model-plan-read-only"
@@ -249,7 +249,7 @@ const ReadOnly = () => {
             labelPosition="bottom"
             closeLabel={h('hideSummary')}
             styleLeftBar={false}
-            id={`${modelName?.replace(/\s+/g, '-').toLowerCase()}--description`}
+            id={`${modelName.replace(/\s+/g, '-').toLowerCase()}--description`}
             label={h('showSummary')}
           >
             <div
@@ -262,7 +262,7 @@ const ReadOnly = () => {
               )}
             >
               <DescriptionDefinition
-                definition={basics?.goal ?? ''}
+                definition={basics.goal ?? ''}
                 ref={descriptionRef}
                 dataTestId="read-only-model-summary__description"
                 className="font-body-lg line-height-body-5 text-light"
@@ -296,7 +296,7 @@ const ReadOnly = () => {
                 <DescriptionTerm
                   className="font-body-lg line-height-sans-2 margin-bottom-0"
                   term={
-                    generalCharacteristics?.keyCharacteristics.length !== 0
+                    generalCharacteristics.keyCharacteristics.length !== 0
                       ? formattedKeyCharacteristics
                       : t('noAnswer.noneEntered')
                   }
