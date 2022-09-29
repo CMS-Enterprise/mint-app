@@ -7,6 +7,7 @@ import {
   GetAllPayments as GetModelPlanPaymentType,
   GetAllPayments_modelPlan_payments as PaymentTypes
 } from 'queries/ReadOnly/types/GetAllPayments';
+import { PayType } from 'types/graphql-global-types';
 import {
   translatePayRecipient,
   translatePayType,
@@ -166,6 +167,18 @@ const ReadOnlyPayments = ({ modelID }: { modelID: string }) => {
           notes={payTypeNote}
         />
       </div>
+
+      {payType.includes(PayType.CLAIMS_BASED_PAYMENTS) && (
+        <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
+          <h3>{t('whatWillYouPayOptions.claims')}</h3>
+        </div>
+      )}
+
+      {payType.includes(PayType.NON_CLAIMS_BASED_PAYMENTS) && (
+        <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
+          <h3>{t('whatWillYouPayOptions.nonClaims')}</h3>
+        </div>
+      )}
     </div>
   );
 };
