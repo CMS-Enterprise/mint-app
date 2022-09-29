@@ -435,8 +435,9 @@ const ReadOnlyPayments = ({ modelID }: { modelID: string }) => {
 
         <ReadOnlySection
           heading={t('anticipatedPaymentFrequency')}
-          copy={translateAnticipatedPaymentFrequencyType(
-            anticipatedPaymentFrequency
+          list
+          listItems={anticipatedPaymentFrequency.map(
+            translateAnticipatedPaymentFrequencyType
           )}
         />
       </div>
