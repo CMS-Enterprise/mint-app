@@ -12,6 +12,7 @@ import GetAllBasics from 'queries/ReadOnly/GetAllBasics';
 import { GetAllBasics as GetAllBasicsTypes } from 'queries/ReadOnly/types/GetAllBasics';
 import { formatDate } from 'utils/date';
 import {
+  translateBoolean,
   translateCmmiGroups,
   translateCmsCenter,
   translateModelCategory,
@@ -261,9 +262,9 @@ const ReadOnlyModelBasics = ({ modelID }: { modelID: string }) => {
 
       <ReadOnlySection
         heading={t('tightTimeline')}
-        copy={phasedIn ? h('yes') : h('no')}
+        copy={phasedIn !== null ? translateBoolean(phasedIn) : null}
+        notes={phasedInNote}
       />
-      <ReadOnlySection heading={t('notes')} copy={phasedInNote} />
     </div>
   );
 };
