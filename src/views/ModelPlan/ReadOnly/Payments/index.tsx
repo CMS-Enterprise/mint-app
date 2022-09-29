@@ -40,7 +40,6 @@ const ReadOnlyPayments = ({ modelID }: { modelID: string }) => {
   if ((!loading && error) || (!loading && !data) || data === undefined) {
     return <NotFoundPartial />;
   }
-  // debugger;
 
   const {
     fundingSource,
