@@ -280,6 +280,59 @@ const ReadOnlyPayments = ({ modelID }: { modelID: string }) => {
         </div>
       )}
 
+      {payClaims.includes(
+        ClaimsBasedPayType.REDUCTIONS_TO_BENEFICIARY_COST_SHARING
+      ) && (
+        <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
+          <h3>{t('beneficaryCostSharingQuestions')}</h3>
+
+          <ReadOnlySection
+            heading={t('beneficiaryCostSharingLevelAndHandling')}
+            copy={beneficiaryCostSharingLevelAndHandling}
+          />
+
+          <div className="desktop:display-flex flex-justify">
+            <div
+              className={
+                waiveBeneficiaryCostSharingForAnyServices
+                  ? 'desktop:width-card-lg'
+                  : ''
+              }
+            >
+              <ReadOnlySection
+                heading={t('waiveBeneficiaryCostSharingForAnyServices')}
+                copy={
+                  waiveBeneficiaryCostSharingForAnyServices === null
+                    ? null
+                    : translateBoolean(
+                        waiveBeneficiaryCostSharingForAnyServices
+                      )
+                }
+              />
+            </div>
+            {waiveBeneficiaryCostSharingForAnyServices && (
+              <div className="desktop:width-card-lg">
+                <ReadOnlySection
+                  heading={t('waiveBeneficiaryCostSharingServiceSpecification')}
+                  copy={waiveBeneficiaryCostSharingServiceSpecification}
+                />
+              </div>
+            )}
+          </div>
+          {waiveBeneficiaryCostSharingForAnyServices && (
+            <ReadOnlySection
+              heading={t('waiverOnlyAppliesPartOfPayment')}
+              copy={
+                waiverOnlyAppliesPartOfPayment === null
+                  ? null
+                  : translateBoolean(waiverOnlyAppliesPartOfPayment)
+              }
+              notes={waiveBeneficiaryCostSharingNote}
+            />
+          )}
+        </div>
+      )}
+
       {payType.includes(PayType.NON_CLAIMS_BASED_PAYMENTS) && (
         <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
           <h3>{t('whatWillYouPayOptions.nonClaims')}</h3>
