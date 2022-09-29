@@ -3,10 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useQuery } from '@apollo/client';
 
 import GetAllPayments from 'queries/ReadOnly/GetAllPayments';
-import {
-  GetAllPayments as GetModelPlanPaymentType,
-  GetAllPayments_modelPlan_payments as PaymentTypes
-} from 'queries/ReadOnly/types/GetAllPayments';
+import { GetAllPayments as GetModelPlanPaymentType } from 'queries/ReadOnly/types/GetAllPayments';
 import { ClaimsBasedPayType, PayType } from 'types/graphql-global-types';
 import { formatDate } from 'utils/date';
 import {
@@ -102,7 +99,7 @@ const ReadOnlyPayments = ({ modelID }: { modelID: string }) => {
     paymentStartDate,
     paymentStartDateNote,
     status
-  }: PaymentTypes = data.modelPlan.payments;
+  } = data.modelPlan.payments;
 
   return (
     <div

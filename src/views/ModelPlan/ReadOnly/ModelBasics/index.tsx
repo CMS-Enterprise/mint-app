@@ -34,7 +34,7 @@ const ReadOnlyModelBasics = ({ modelID }: { modelID: string }) => {
     }
   });
 
-  if ((!loading && error) || (!loading && !data?.modelPlan)) {
+  if ((!loading && error) || (!loading && !data) || data === undefined) {
     return <NotFoundPartial />;
   }
 
@@ -60,7 +60,7 @@ const ReadOnlyModelBasics = ({ modelID }: { modelID: string }) => {
     phasedIn,
     phasedInNote,
     status
-  } = data?.modelPlan?.basics || {};
+  } = data.modelPlan.basics;
 
   return (
     <div
@@ -69,7 +69,7 @@ const ReadOnlyModelBasics = ({ modelID }: { modelID: string }) => {
     >
       <div className="display-flex flex-justify flex-align-start">
         <h2 className="margin-top-0 margin-bottom-4">{t('heading')}</h2>
-        {status && <TaskListStatusTag status={status} />}
+        <TaskListStatusTag status={status} />
       </div>
 
       {/* <ReadOnlySection heading="Previous Name" list listItems={loremIpsum} /> */}

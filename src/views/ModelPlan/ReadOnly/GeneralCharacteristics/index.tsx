@@ -31,7 +31,7 @@ const ReadOnlyGeneralCharacteristics = ({ modelID }: { modelID: string }) => {
     }
   );
 
-  if ((!loading && error) || (!loading && !data?.modelPlan)) {
+  if ((!loading && error) || (!loading && !data) || data === undefined) {
     return <NotFoundPartial />;
   }
 
@@ -88,7 +88,7 @@ const ReadOnlyGeneralCharacteristics = ({ modelID }: { modelID: string }) => {
     waiversRequiredTypes,
     waiversRequiredNote,
     status
-  } = data?.modelPlan?.generalCharacteristics || {};
+  } = data.modelPlan.generalCharacteristics;
 
   return (
     <div
