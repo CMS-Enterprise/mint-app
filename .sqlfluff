@@ -13,6 +13,11 @@ exclude_rules = L014, L016
 # https://docs.sqlfluff.com/en/stable/rules.html#sqlfluff.core.rules.Rule_L010
 capitalisation_policy = upper
 
+[sqlfluff:rules:L031]
+# Avoid table aliases in from clauses and join conditions.
+# https://docs.sqlfluff.com/en/stable/rules.html#sqlfluff.rules.Rule_L031
+force_enable = False
+
 [sqlfluff:rules:L040]
 # Inconsistent capitalisation of boolean/null literal.
 # https://docs.sqlfluff.com/en/stable/rules.html#sqlfluff.core.rules.Rule_L040
