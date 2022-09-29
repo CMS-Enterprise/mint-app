@@ -2,7 +2,6 @@ import i18next from 'i18next';
 
 import { GetModelPlan_modelPlan_discussions as DiscussionType } from 'queries/types/GetModelPlan';
 import {
-  AnticipatedPaymentFrequencyType,
   ComplexityCalculationLevelType,
   DocumentType
 } from 'types/graphql-global-types';
