@@ -26,10 +26,7 @@ import SectionWrapper from 'components/shared/SectionWrapper';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
 import useFavoritePlan from 'hooks/useFavoritePlan';
 import GetModelSummary from 'queries/ReadOnly/GetModelSummary';
-import {
-  GetModelSummary as GetModelSummaryType,
-  GetModelSummary_modelPlan as GetModelSummaryTypes
-} from 'queries/ReadOnly/types/GetModelSummary';
+import { GetModelSummary as GetModelSummaryType } from 'queries/ReadOnly/types/GetModelSummary';
 import { ModelStatus, TeamRole } from 'types/graphql-global-types';
 import { formatDate } from 'utils/date';
 import { translateKeyCharacteristics } from 'utils/modelPlan';
