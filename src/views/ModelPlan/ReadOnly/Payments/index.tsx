@@ -7,8 +7,11 @@ import {
   GetAllPayments as GetModelPlanPaymentType,
   GetAllPayments_modelPlan_payments as PaymentTypes
 } from 'queries/ReadOnly/types/GetAllPayments';
+import { translateSourceOptions } from 'utils/modelPlan';
 import { TaskListStatusTag } from 'views/ModelPlan/TaskList/_components/TaskListItem';
 import { NotFoundPartial } from 'views/NotFound';
+
+import ReadOnlySection from '../_components/ReadOnlySection';
 
 const ReadOnlyPayments = ({ modelID }: { modelID: string }) => {
   const { t } = useTranslation('payments');
@@ -99,6 +102,50 @@ const ReadOnlyPayments = ({ modelID }: { modelID: string }) => {
       <div className="display-flex flex-justify flex-align-start">
         <h2 className="margin-top-0 margin-bottom-4">{t('heading')}</h2>
         <TaskListStatusTag status={status} />
+      </div>
+
+      <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
+        <ReadOnlySection
+          heading={t('fundingSourceQuestion')}
+          list
+          listItems={fundingSource?.map(translateSourceOptions)}
+          listOtherItem={fundingSourceOther}
+        />
+
+        {fundingSourceTrustFund && (
+          <ReadOnlySection
+            heading={t('whichFundingType')}
+            copy={fundingSourceTrustFund}
+          />
+        )}
+
+        {fundingSourceNote && (
+          <ReadOnlySection
+            heading={t('basics:notes')}
+            copy={fundingSourceNote}
+          />
+        )}
+
+        <ReadOnlySection
+          heading={t('reconciliationQuestion')}
+          list
+          listItems={fundingSourceR?.map(translateSourceOptions)}
+          listOtherItem={fundingSourceROther}
+        />
+
+        {fundingSourceRTrustFund && (
+          <ReadOnlySection
+            heading={t('whichFundingType')}
+            copy={fundingSourceRTrustFund}
+          />
+        )}
+
+        {fundingSourceRNote && (
+          <ReadOnlySection
+            heading={t('basics:notes')}
+            copy={fundingSourceRNote}
+          />
+        )}
       </div>
     </div>
   );
