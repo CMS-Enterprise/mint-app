@@ -1,7 +1,7 @@
 CREATE TABLE operational_need (
     id UUID PRIMARY KEY NOT NULL,
     model_plan_id UUID NOT NULL, --foreign key to model plan
-    need_type INT NOT NULL, --TODO should be required.
+    need_type INT, --TODO should be required.
     need_other TEXT,
 
     --TODO add fields
@@ -29,3 +29,5 @@ ON DELETE NO ACTION;
 
 ALTER TABLE operational_need
 ADD CONSTRAINT unique_need_per_plan UNIQUE (model_plan_id, need_type); --TODO update this, this will only allow one other type... Maybe leave other out?
+
+--TODO add constraint for either need type or Other filled out
