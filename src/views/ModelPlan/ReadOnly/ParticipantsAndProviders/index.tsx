@@ -10,6 +10,7 @@ import {
   RecruitmentType
 } from 'types/graphql-global-types';
 import {
+  translateBooleanOrNull,
   translateCommunicationType,
   translateConfidenceType,
   translateOverlapType,
@@ -28,7 +29,6 @@ import ReadOnlySection from '../_components/ReadOnlySection';
 
 const ReadOnlyParticipantsAndProviders = ({ modelID }: { modelID: string }) => {
   const { t } = useTranslation('participantsAndProviders');
-  const { t: h } = useTranslation('draftModelPlan');
 
   const { data, loading, error } = useQuery<GetAllParticipantsTypes>(
     GetAllParticipants,
@@ -39,7 +39,7 @@ const ReadOnlyParticipantsAndProviders = ({ modelID }: { modelID: string }) => {
     }
   );
 
-  if ((!loading && error) || (!loading && !data?.modelPlan)) {
+  if ((!loading && error) || (!loading && !data) || data === undefined) {
     return <NotFoundPartial />;
   }
 
@@ -91,7 +91,7 @@ const ReadOnlyParticipantsAndProviders = ({ modelID }: { modelID: string }) => {
     providerOverlapHierarchy,
     providerOverlapNote,
     status
-  } = data?.modelPlan.participantsAndProviders || {};
+  } = data.modelPlan.participantsAndProviders;
 
   return (
     <div
@@ -100,14 +100,14 @@ const ReadOnlyParticipantsAndProviders = ({ modelID }: { modelID: string }) => {
     >
       <div className="display-flex flex-justify flex-align-start">
         <h2 className="margin-top-0 margin-bottom-4">{t('heading')}</h2>
-        {status && <TaskListStatusTag status={status} />}
+        <TaskListStatusTag status={status} />
       </div>
 
       <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
         <ReadOnlySection
           heading={t('whoAreParticipantsQuestion')}
           list
-          listItems={participants?.map(translateParticipantsType)}
+          listItems={participants.map(translateParticipantsType)}
           listOtherItem={participantsOther}
           notes={participantsNote}
         />
@@ -124,7 +124,7 @@ const ReadOnlyParticipantsAndProviders = ({ modelID }: { modelID: string }) => {
 
         <ReadOnlySection
           heading={t('participantsCMMI')}
-          copy={participantsCurrentlyInModels ? h('yes') : h('no')}
+          copy={translateBooleanOrNull(participantsCurrentlyInModels)}
           notes={participantsCurrentlyInModelsNote}
         />
 
@@ -166,7 +166,7 @@ const ReadOnlyParticipantsAndProviders = ({ modelID }: { modelID: string }) => {
         <ReadOnlySection
           heading={t('howWillYouSelectQuestion')}
           list
-          listItems={selectionMethod?.map(translateParticipantSelectiontType)}
+          listItems={selectionMethod.map(translateParticipantSelectiontType)}
           listOtherItem={selectionOther}
           notes={selectionNote}
         />
@@ -176,7 +176,7 @@ const ReadOnlyParticipantsAndProviders = ({ modelID }: { modelID: string }) => {
         <ReadOnlySection
           heading={t('participantCommunication')}
           list
-          listItems={communicationMethod?.map(translateCommunicationType)}
+          listItems={communicationMethod.map(translateCommunicationType)}
           listOtherItem={communicationMethodOther}
           notes={communicationNote}
         />
@@ -185,7 +185,7 @@ const ReadOnlyParticipantsAndProviders = ({ modelID }: { modelID: string }) => {
           <div className="desktop:width-card-lg">
             <ReadOnlySection
               heading={t('assumeRisk')}
-              copy={participantAssumeRisk ? h('yes') : h('no')}
+              copy={translateBooleanOrNull(participantAssumeRisk)}
             />
           </div>
           {participantAssumeRisk && (
@@ -204,7 +204,7 @@ const ReadOnlyParticipantsAndProviders = ({ modelID }: { modelID: string }) => {
 
         <ReadOnlySection
           heading={t('changeRisk')}
-          copy={willRiskChange ? h('yes') : h('no')}
+          copy={translateBooleanOrNull(willRiskChange)}
           notes={willRiskChangeNote}
         />
       </div>
@@ -212,7 +212,7 @@ const ReadOnlyParticipantsAndProviders = ({ modelID }: { modelID: string }) => {
       <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
         <ReadOnlySection
           heading={t('workCoordination')}
-          copy={coordinateWork ? h('yes') : h('no')}
+          copy={translateBooleanOrNull(coordinateWork)}
           notes={coordinateWorkNote}
         />
 
@@ -220,14 +220,14 @@ const ReadOnlyParticipantsAndProviders = ({ modelID }: { modelID: string }) => {
           <div className="desktop:width-card-lg">
             <ReadOnlySection
               heading={t('gainsharing')}
-              copy={gainsharePayments ? h('yes') : h('no')}
+              copy={translateBooleanOrNull(gainsharePayments)}
             />
           </div>
           {gainsharePayments && (
             <div className="desktop:width-card-lg">
               <ReadOnlySection
                 heading={t('trackPayments')}
-                copy={gainsharePaymentsTrack ? h('yes') : h('no')}
+                copy={translateBooleanOrNull(gainsharePaymentsTrack)}
               />
             </div>
           )}
@@ -242,7 +242,7 @@ const ReadOnlyParticipantsAndProviders = ({ modelID }: { modelID: string }) => {
         <ReadOnlySection
           heading={t('collectTINs')}
           list
-          listItems={participantsIds?.map(translateParticipantIDType)}
+          listItems={participantsIds.map(translateParticipantIDType)}
           listOtherItem={participantsIdsOther}
           notes={participantsIDSNote}
         />
@@ -267,7 +267,7 @@ const ReadOnlyParticipantsAndProviders = ({ modelID }: { modelID: string }) => {
         <ReadOnlySection
           heading={t('decideProvidersQuestion')}
           list
-          listItems={providerAddMethod?.map(translateProviderAddType)}
+          listItems={providerAddMethod.map(translateProviderAddType)}
           listOtherItem={providerAddMethodOther}
           notes={providerAddMethodNote}
         />
@@ -275,7 +275,7 @@ const ReadOnlyParticipantsAndProviders = ({ modelID }: { modelID: string }) => {
         <ReadOnlySection
           heading={t('canProvidersLeaveQuestion')}
           list
-          listItems={providerLeaveMethod?.map(translateProviderLeaveType)}
+          listItems={providerLeaveMethod.map(translateProviderLeaveType)}
           listOtherItem={providerLeaveMethodOther}
           notes={providerLeaveMethodNote}
         />
