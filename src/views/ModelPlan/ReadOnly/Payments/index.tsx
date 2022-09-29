@@ -11,6 +11,7 @@ import { ClaimsBasedPayType, PayType } from 'types/graphql-global-types';
 import {
   translateBoolean,
   translateClaimsBasedPayType,
+  translateNonClaimsBasedPayType,
   translatePayRecipient,
   translatePayType,
   translateSourceOptions
@@ -280,64 +281,117 @@ const ReadOnlyPayments = ({ modelID }: { modelID: string }) => {
         </div>
       )}
 
-      {payClaims.includes(
-        ClaimsBasedPayType.REDUCTIONS_TO_BENEFICIARY_COST_SHARING
-      ) && (
-        <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
-          <h3>{t('beneficaryCostSharingQuestions')}</h3>
+      {payType.includes(PayType.CLAIMS_BASED_PAYMENTS) &&
+        payClaims.includes(
+          ClaimsBasedPayType.REDUCTIONS_TO_BENEFICIARY_COST_SHARING
+        ) && (
+          <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
+            <h3>{t('beneficaryCostSharingQuestions')}</h3>
 
-          <ReadOnlySection
-            heading={t('beneficiaryCostSharingLevelAndHandling')}
-            copy={beneficiaryCostSharingLevelAndHandling}
-          />
+            <ReadOnlySection
+              heading={t('beneficiaryCostSharingLevelAndHandling')}
+              copy={beneficiaryCostSharingLevelAndHandling}
+            />
 
-          <div className="desktop:display-flex flex-justify">
-            <div
-              className={
-                waiveBeneficiaryCostSharingForAnyServices
-                  ? 'desktop:width-card-lg'
-                  : ''
-              }
-            >
-              <ReadOnlySection
-                heading={t('waiveBeneficiaryCostSharingForAnyServices')}
-                copy={
-                  waiveBeneficiaryCostSharingForAnyServices === null
-                    ? null
-                    : translateBoolean(
-                        waiveBeneficiaryCostSharingForAnyServices
-                      )
+            <div className="desktop:display-flex flex-justify">
+              <div
+                className={
+                  waiveBeneficiaryCostSharingForAnyServices
+                    ? 'desktop:width-card-lg'
+                    : ''
                 }
-              />
-            </div>
-            {waiveBeneficiaryCostSharingForAnyServices && (
-              <div className="desktop:width-card-lg">
+              >
                 <ReadOnlySection
-                  heading={t('waiveBeneficiaryCostSharingServiceSpecification')}
-                  copy={waiveBeneficiaryCostSharingServiceSpecification}
+                  heading={t('waiveBeneficiaryCostSharingForAnyServices')}
+                  copy={
+                    waiveBeneficiaryCostSharingForAnyServices === null
+                      ? null
+                      : translateBoolean(
+                          waiveBeneficiaryCostSharingForAnyServices
+                        )
+                  }
                 />
               </div>
+              {waiveBeneficiaryCostSharingForAnyServices && (
+                <div className="desktop:width-card-lg">
+                  <ReadOnlySection
+                    heading={t(
+                      'waiveBeneficiaryCostSharingServiceSpecification'
+                    )}
+                    copy={waiveBeneficiaryCostSharingServiceSpecification}
+                  />
+                </div>
+              )}
+            </div>
+            {waiveBeneficiaryCostSharingForAnyServices && (
+              <ReadOnlySection
+                heading={t('waiverOnlyAppliesPartOfPayment')}
+                copy={
+                  waiverOnlyAppliesPartOfPayment === null
+                    ? null
+                    : translateBoolean(waiverOnlyAppliesPartOfPayment)
+                }
+                notes={waiveBeneficiaryCostSharingNote}
+              />
             )}
           </div>
-          {waiveBeneficiaryCostSharingForAnyServices && (
-            <ReadOnlySection
-              heading={t('waiverOnlyAppliesPartOfPayment')}
-              copy={
-                waiverOnlyAppliesPartOfPayment === null
-                  ? null
-                  : translateBoolean(waiverOnlyAppliesPartOfPayment)
-              }
-              notes={waiveBeneficiaryCostSharingNote}
-            />
-          )}
-        </div>
-      )}
+        )}
 
       {payType.includes(PayType.NON_CLAIMS_BASED_PAYMENTS) && (
         <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
           <h3>{t('whatWillYouPayOptions.nonClaims')}</h3>
+
+          <ReadOnlySection
+            heading={t('nonClaimsPayments')}
+            list
+            listItems={nonClaimsPayments?.map(translateNonClaimsBasedPayType)}
+            listOtherItem={nonClaimsPaymentOther}
+          />
+
+          <ReadOnlySection
+            heading={t('paymentCalculationOwner')}
+            copy={paymentCalculationOwner}
+          />
+
+          <ReadOnlySection
+            heading={t('numberPaymentsPerPayCycle')}
+            copy={numberPaymentsPerPayCycle}
+            notes={numberPaymentsPerPayCycleNote}
+          />
+
+          <ReadOnlySection
+            heading={t('sharedSystemsInvolvedAdditionalClaimPayment')}
+            copy={
+              sharedSystemsInvolvedAdditionalClaimPayment === null
+                ? null
+                : translateBoolean(sharedSystemsInvolvedAdditionalClaimPayment)
+            }
+            notes={sharedSystemsInvolvedAdditionalClaimPaymentNote}
+          />
+
+          <ReadOnlySection
+            heading={t('planningToUseInnovationPaymentContractor')}
+            copy={
+              planningToUseInnovationPaymentContractor === null
+                ? null
+                : translateBoolean(planningToUseInnovationPaymentContractor)
+            }
+            notes={planningToUseInnovationPaymentContractorNote}
+          />
+
+          <ReadOnlySection
+            heading={t('fundingStructure')}
+            copy={fundingStructure}
+          />
         </div>
       )}
+
+      <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
+        <ReadOnlySection
+          heading={t('fundingStructure')}
+          copy={fundingStructure}
+        />
+      </div>
     </div>
   );
 };
