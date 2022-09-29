@@ -75,12 +75,11 @@ const ReadOnlyTeamInfo = ({ modelID }: { modelID: string }) => {
     }
   );
 
-  if ((!loading && error) || (!loading && !data?.modelPlan)) {
+  if ((!loading && error) || (!loading && !data) || data === undefined) {
     return <NotFoundPartial />;
   }
 
-  const collaborators = (data?.modelPlan?.collaborators ??
-    []) as CollaboratorsType[];
+  const collaborators = data.modelPlan.collaborators as CollaboratorsType[];
 
   const sortModelLeadFirst = [
     ...Object.keys(teamRoles).filter(c => c === 'MODEL_LEAD'),
