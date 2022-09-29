@@ -189,9 +189,9 @@ const ReadOnlyPayments = ({ modelID }: { modelID: string }) => {
           <ReadOnlySection
             heading={t('excludedFromPayment')}
             copy={
-              shouldAnyProvidersExcludedFFSSystems
-                ? translateBoolean(shouldAnyProvidersExcludedFFSSystems)
-                : t('na')
+              shouldAnyProvidersExcludedFFSSystems === null
+                ? null
+                : translateBoolean(shouldAnyProvidersExcludedFFSSystems)
             }
             notes={shouldAnyProviderExcludedFFSSystemsNote}
           />
@@ -199,9 +199,9 @@ const ReadOnlyPayments = ({ modelID }: { modelID: string }) => {
           <ReadOnlySection
             heading={t('chageMedicareFeeSchedule')}
             copy={
-              changesMedicarePhysicianFeeSchedule
-                ? translateBoolean(changesMedicarePhysicianFeeSchedule)
-                : t('na')
+              changesMedicarePhysicianFeeSchedule === null
+                ? null
+                : translateBoolean(changesMedicarePhysicianFeeSchedule)
             }
             notes={changesMedicarePhysicianFeeScheduleNote}
           />
@@ -217,9 +217,9 @@ const ReadOnlyPayments = ({ modelID }: { modelID: string }) => {
               <ReadOnlySection
                 heading={t('modelAffect')}
                 copy={
-                  affectsMedicareSecondaryPayerClaims
-                    ? translateBoolean(affectsMedicareSecondaryPayerClaims)
-                    : t('na')
+                  affectsMedicareSecondaryPayerClaims === null
+                    ? null
+                    : translateBoolean(affectsMedicareSecondaryPayerClaims)
                 }
               />
             </div>
@@ -247,9 +247,9 @@ const ReadOnlyPayments = ({ modelID }: { modelID: string }) => {
           <ReadOnlySection
             heading={t('ancitipateCreatingDependencies')}
             copy={
-              creatingDependenciesBetweenServices
-                ? translateBoolean(creatingDependenciesBetweenServices)
-                : t('na')
+              creatingDependenciesBetweenServices === null
+                ? null
+                : translateBoolean(creatingDependenciesBetweenServices)
             }
             notes={creatingDependenciesBetweenServicesNote}
           />
@@ -257,9 +257,9 @@ const ReadOnlyPayments = ({ modelID }: { modelID: string }) => {
           <ReadOnlySection
             heading={t('needsClaimsDataCollection')}
             copy={
-              needsClaimsDataCollection
-                ? translateBoolean(needsClaimsDataCollection)
-                : t('na')
+              needsClaimsDataCollection === null
+                ? null
+                : translateBoolean(needsClaimsDataCollection)
             }
             notes={needsClaimsDataCollectionNote}
           />
@@ -267,18 +267,18 @@ const ReadOnlyPayments = ({ modelID }: { modelID: string }) => {
           <ReadOnlySection
             heading={t('thirdParty')}
             copy={
-              providingThirdPartyFile
-                ? translateBoolean(providingThirdPartyFile)
-                : t('na')
+              providingThirdPartyFile === null
+                ? null
+                : translateBoolean(providingThirdPartyFile)
             }
           />
 
           <ReadOnlySection
             heading={t('isContractorAwareTestDataRequirements')}
             copy={
-              isContractorAwareTestDataRequirements
-                ? translateBoolean(isContractorAwareTestDataRequirements)
-                : t('na')
+              isContractorAwareTestDataRequirements === null
+                ? null
+                : translateBoolean(isContractorAwareTestDataRequirements)
             }
           />
         </div>
@@ -307,11 +307,11 @@ const ReadOnlyPayments = ({ modelID }: { modelID: string }) => {
                 <ReadOnlySection
                   heading={t('waiveBeneficiaryCostSharingForAnyServices')}
                   copy={
-                    waiveBeneficiaryCostSharingForAnyServices
-                      ? translateBoolean(
+                    waiveBeneficiaryCostSharingForAnyServices === null
+                      ? null
+                      : translateBoolean(
                           waiveBeneficiaryCostSharingForAnyServices
                         )
-                      : t('na')
                   }
                 />
               </div>
@@ -330,9 +330,9 @@ const ReadOnlyPayments = ({ modelID }: { modelID: string }) => {
               <ReadOnlySection
                 heading={t('waiverOnlyAppliesPartOfPayment')}
                 copy={
-                  waiverOnlyAppliesPartOfPayment
-                    ? translateBoolean(waiverOnlyAppliesPartOfPayment)
-                    : t('na')
+                  waiverOnlyAppliesPartOfPayment === null
+                    ? null
+                    : translateBoolean(waiverOnlyAppliesPartOfPayment)
                 }
                 notes={waiveBeneficiaryCostSharingNote}
               />
@@ -365,9 +365,9 @@ const ReadOnlyPayments = ({ modelID }: { modelID: string }) => {
           <ReadOnlySection
             heading={t('sharedSystemsInvolvedAdditionalClaimPayment')}
             copy={
-              sharedSystemsInvolvedAdditionalClaimPayment
-                ? translateBoolean(sharedSystemsInvolvedAdditionalClaimPayment)
-                : t('na')
+              sharedSystemsInvolvedAdditionalClaimPayment === null
+                ? null
+                : translateBoolean(sharedSystemsInvolvedAdditionalClaimPayment)
             }
             notes={sharedSystemsInvolvedAdditionalClaimPaymentNote}
           />
@@ -375,9 +375,9 @@ const ReadOnlyPayments = ({ modelID }: { modelID: string }) => {
           <ReadOnlySection
             heading={t('planningToUseInnovationPaymentContractor')}
             copy={
-              planningToUseInnovationPaymentContractor
-                ? translateBoolean(planningToUseInnovationPaymentContractor)
-                : t('na')
+              planningToUseInnovationPaymentContractor === null
+                ? null
+                : translateBoolean(planningToUseInnovationPaymentContractor)
             }
             notes={planningToUseInnovationPaymentContractorNote}
           />
@@ -393,9 +393,9 @@ const ReadOnlyPayments = ({ modelID }: { modelID: string }) => {
         <ReadOnlySection
           heading={t('expectedCalculationComplexityLevel')}
           copy={
-            expectedCalculationComplexityLevel
-              ? translateComplexityLevel(expectedCalculationComplexityLevel)
-              : t('na')
+            expectedCalculationComplexityLevel === null
+              ? null
+              : translateComplexityLevel(expectedCalculationComplexityLevel)
           }
           notes={expectedCalculationComplexityLevelNote}
         />
@@ -409,11 +409,11 @@ const ReadOnlyPayments = ({ modelID }: { modelID: string }) => {
             <ReadOnlySection
               heading={t('canParticipantsSelectBetweenPaymentMechanisms')}
               copy={
-                canParticipantsSelectBetweenPaymentMechanisms
-                  ? translateBoolean(
+                canParticipantsSelectBetweenPaymentMechanisms === null
+                  ? null
+                  : translateBoolean(
                       canParticipantsSelectBetweenPaymentMechanisms
                     )
-                  : t('na')
               }
               notes={canParticipantsSelectBetweenPaymentMechanismsNote}
             />
@@ -449,9 +449,9 @@ const ReadOnlyPayments = ({ modelID }: { modelID: string }) => {
         <ReadOnlySection
           heading={t('willRecoverPayments')}
           copy={
-            willRecoverPayments
-              ? translateBoolean(willRecoverPayments)
-              : t('na')
+            willRecoverPayments === null
+              ? null
+              : translateBoolean(willRecoverPayments)
           }
           notes={willRecoverPaymentsNote}
         />
@@ -459,9 +459,9 @@ const ReadOnlyPayments = ({ modelID }: { modelID: string }) => {
         <ReadOnlySection
           heading={t('anticipateReconcilingPaymentsRetrospectively')}
           copy={
-            anticipateReconcilingPaymentsRetrospectively
-              ? translateBoolean(anticipateReconcilingPaymentsRetrospectively)
-              : t('na')
+            anticipateReconcilingPaymentsRetrospectively === null
+              ? null
+              : translateBoolean(anticipateReconcilingPaymentsRetrospectively)
           }
           notes={anticipateReconcilingPaymentsRetrospectivelyNote}
         />
