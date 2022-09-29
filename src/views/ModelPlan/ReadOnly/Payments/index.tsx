@@ -7,8 +7,10 @@ import {
   GetAllPayments as GetModelPlanPaymentType,
   GetAllPayments_modelPlan_payments as PaymentTypes
 } from 'queries/ReadOnly/types/GetAllPayments';
-import { PayType } from 'types/graphql-global-types';
+import { ClaimsBasedPayType, PayType } from 'types/graphql-global-types';
 import {
+  translateBoolean,
+  translateClaimsBasedPayType,
   translatePayRecipient,
   translatePayType,
   translateSourceOptions
@@ -171,6 +173,110 @@ const ReadOnlyPayments = ({ modelID }: { modelID: string }) => {
       {payType.includes(PayType.CLAIMS_BASED_PAYMENTS) && (
         <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
           <h3>{t('whatWillYouPayOptions.claims')}</h3>
+
+          <ReadOnlySection
+            heading={t('selectClaims')}
+            list
+            listItems={payClaims?.map(translateClaimsBasedPayType)}
+            listOtherItem={payClaimsOther}
+            notes={payClaimsNote}
+          />
+
+          <ReadOnlySection
+            heading={t('excludedFromPayment')}
+            copy={
+              shouldAnyProvidersExcludedFFSSystems === null
+                ? null
+                : translateBoolean(shouldAnyProvidersExcludedFFSSystems)
+            }
+            notes={shouldAnyProviderExcludedFFSSystemsNote}
+          />
+
+          <ReadOnlySection
+            heading={t('chageMedicareFeeSchedule')}
+            copy={
+              changesMedicarePhysicianFeeSchedule === null
+                ? null
+                : translateBoolean(changesMedicarePhysicianFeeSchedule)
+            }
+            notes={changesMedicarePhysicianFeeScheduleNote}
+          />
+
+          <div className="desktop:display-flex flex-justify">
+            <div
+              className={
+                affectsMedicareSecondaryPayerClaims
+                  ? 'desktop:width-card-lg'
+                  : ''
+              }
+            >
+              <ReadOnlySection
+                heading={t('modelAffect')}
+                copy={
+                  affectsMedicareSecondaryPayerClaims === null
+                    ? null
+                    : translateBoolean(affectsMedicareSecondaryPayerClaims)
+                }
+              />
+            </div>
+            {affectsMedicareSecondaryPayerClaims && (
+              <div className="desktop:width-card-lg">
+                <ReadOnlySection
+                  heading={h('howSo')}
+                  copy={affectsMedicareSecondaryPayerClaimsHow}
+                />
+              </div>
+            )}
+          </div>
+          {affectsMedicareSecondaryPayerClaimsNote && (
+            <ReadOnlySection
+              heading={t('basics:notes')}
+              copy={affectsMedicareSecondaryPayerClaimsNote}
+            />
+          )}
+
+          <ReadOnlySection
+            heading={t('affectCurrentPolicy')}
+            copy={payModelDifferentiation}
+          />
+
+          <ReadOnlySection
+            heading={t('ancitipateCreatingDependencies')}
+            copy={
+              creatingDependenciesBetweenServices === null
+                ? null
+                : translateBoolean(creatingDependenciesBetweenServices)
+            }
+            notes={creatingDependenciesBetweenServicesNote}
+          />
+
+          <ReadOnlySection
+            heading={t('needsClaimsDataCollection')}
+            copy={
+              needsClaimsDataCollection === null
+                ? null
+                : translateBoolean(needsClaimsDataCollection)
+            }
+            notes={needsClaimsDataCollectionNote}
+          />
+
+          <ReadOnlySection
+            heading={t('thirdParty')}
+            copy={
+              providingThirdPartyFile === null
+                ? null
+                : translateBoolean(providingThirdPartyFile)
+            }
+          />
+
+          <ReadOnlySection
+            heading={t('isContractorAwareTestDataRequirements')}
+            copy={
+              isContractorAwareTestDataRequirements === null
+                ? null
+                : translateBoolean(isContractorAwareTestDataRequirements)
+            }
+          />
         </div>
       )}
 
