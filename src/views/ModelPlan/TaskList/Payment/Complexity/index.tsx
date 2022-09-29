@@ -43,7 +43,8 @@ import {
 import flattenErrors from 'utils/flattenErrors';
 import {
   mapMultiSelectOptions,
-  translateAnticipatedPaymentFrequencyType
+  translateAnticipatedPaymentFrequencyType,
+  translateComplexityLevel
 } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
 
@@ -162,19 +163,6 @@ const Complexity = () => {
     return <NotFoundPartial />;
   }
 
-  const complexityLevelLabel = (key: string) => {
-    switch (key) {
-      case ComplexityCalculationLevelType.LOW:
-        return t('complexityLevel.low');
-      case ComplexityCalculationLevelType.MIDDLE:
-        return t('complexityLevel.middle');
-      case ComplexityCalculationLevelType.HIGH:
-        return t('complexityLevel.high');
-      default:
-        return '';
-    }
-  };
-
   return (
     <>
       <BreadcrumbBar variant="wrap">
@@ -280,7 +268,7 @@ const Complexity = () => {
                               id={`payment-complexity-${key}`}
                               data-testid={`payment-complexity-${key}`}
                               name="expectedCalculationComplexityLevel"
-                              label={complexityLevelLabel(key)}
+                              label={translateComplexityLevel(key)}
                               value={key}
                               checked={
                                 values.expectedCalculationComplexityLevel ===

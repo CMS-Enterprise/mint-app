@@ -1,0 +1,71 @@
+import { gql } from '@apollo/client';
+
+export default gql`
+  query GetAllPayments($id: UUID!) {
+    modelPlan(id: $id) {
+      id
+      payments {
+        fundingSource
+        fundingSourceTrustFund
+        fundingSourceOther
+        fundingSourceNote
+        fundingSourceR
+        fundingSourceRTrustFund
+        fundingSourceROther
+        fundingSourceRNote
+        payRecipients
+        payRecipientsOtherSpecification
+        payRecipientsNote
+        payType
+        payTypeNote
+        payClaims
+        payClaimsOther
+        payClaimsNote
+        shouldAnyProvidersExcludedFFSSystems
+        shouldAnyProviderExcludedFFSSystemsNote
+        changesMedicarePhysicianFeeSchedule
+        changesMedicarePhysicianFeeScheduleNote
+        affectsMedicareSecondaryPayerClaims
+        affectsMedicareSecondaryPayerClaimsHow
+        affectsMedicareSecondaryPayerClaimsNote
+        payModelDifferentiation
+        creatingDependenciesBetweenServices
+        creatingDependenciesBetweenServicesNote
+        needsClaimsDataCollection
+        needsClaimsDataCollectionNote
+        providingThirdPartyFile
+        isContractorAwareTestDataRequirements
+        beneficiaryCostSharingLevelAndHandling
+        waiveBeneficiaryCostSharingForAnyServices
+        waiveBeneficiaryCostSharingServiceSpecification
+        waiverOnlyAppliesPartOfPayment
+        waiveBeneficiaryCostSharingNote
+        nonClaimsPayments
+        nonClaimsPaymentOther
+        paymentCalculationOwner
+        numberPaymentsPerPayCycle
+        numberPaymentsPerPayCycleNote
+        sharedSystemsInvolvedAdditionalClaimPayment
+        sharedSystemsInvolvedAdditionalClaimPaymentNote
+        planningToUseInnovationPaymentContractor
+        planningToUseInnovationPaymentContractorNote
+        fundingStructure
+        expectedCalculationComplexityLevel
+        expectedCalculationComplexityLevelNote
+        canParticipantsSelectBetweenPaymentMechanisms
+        canParticipantsSelectBetweenPaymentMechanismsHow
+        canParticipantsSelectBetweenPaymentMechanismsNote
+        anticipatedPaymentFrequency
+        anticipatedPaymentFrequencyOther
+        anticipatedPaymentFrequencyNote
+        willRecoverPayments
+        willRecoverPaymentsNote
+        anticipateReconcilingPaymentsRetrospectively
+        anticipateReconcilingPaymentsRetrospectivelyNote
+        paymentStartDate
+        paymentStartDateNote
+        status
+      }
+    }
+  }
+`;
