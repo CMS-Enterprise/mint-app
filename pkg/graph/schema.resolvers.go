@@ -5,6 +5,7 @@ package graph
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/google/uuid"
 
@@ -109,6 +110,11 @@ func (r *modelPlanResolver) IsCollaborator(ctx context.Context, obj *models.Mode
 func (r *modelPlanResolver) CrTdls(ctx context.Context, obj *models.ModelPlan) ([]*models.PlanCrTdl, error) {
 	logger := appcontext.ZLogger(ctx)
 	return resolvers.PlanCrTdlsGetByModelPlanID(logger, obj.ID, r.store)
+}
+
+// OperationalNeeds is the resolver for the operationalNeeds field.
+func (r *modelPlanResolver) OperationalNeeds(ctx context.Context, obj *models.ModelPlan) ([]*models.OperationalNeed, error) {
+	panic(fmt.Errorf("not implemented: OperationalNeeds - operationalNeeds"))
 }
 
 // CreateModelPlan is the resolver for the createModelPlan field.
@@ -335,6 +341,11 @@ func (r *mutationResolver) DeletePlanCrTdl(ctx context.Context, id uuid.UUID) (*
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 	return resolvers.PlanCrTdlDelete(logger, id, principal, r.store)
+}
+
+// Solutions is the resolver for the solutions field.
+func (r *operationalNeedResolver) Solutions(ctx context.Context, obj *models.OperationalNeed) ([]*models.OperationalSolution, error) {
+	panic(fmt.Errorf("not implemented: Solutions - solutions"))
 }
 
 // CmsCenters is the resolver for the cmsCenters field.
@@ -847,6 +858,11 @@ func (r *Resolver) ModelPlan() generated.ModelPlanResolver { return &modelPlanRe
 // Mutation returns generated.MutationResolver implementation.
 func (r *Resolver) Mutation() generated.MutationResolver { return &mutationResolver{r} }
 
+// OperationalNeed returns generated.OperationalNeedResolver implementation.
+func (r *Resolver) OperationalNeed() generated.OperationalNeedResolver {
+	return &operationalNeedResolver{r}
+}
+
 // PlanBasics returns generated.PlanBasicsResolver implementation.
 func (r *Resolver) PlanBasics() generated.PlanBasicsResolver { return &planBasicsResolver{r} }
 
@@ -895,6 +911,7 @@ func (r *Resolver) UserInfo() generated.UserInfoResolver { return &userInfoResol
 
 type modelPlanResolver struct{ *Resolver }
 type mutationResolver struct{ *Resolver }
+type operationalNeedResolver struct{ *Resolver }
 type planBasicsResolver struct{ *Resolver }
 type planBeneficiariesResolver struct{ *Resolver }
 type planDiscussionResolver struct{ *Resolver }

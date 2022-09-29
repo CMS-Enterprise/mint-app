@@ -54,6 +54,7 @@ type ModelPlan {
   isFavorite: Boolean!
   isCollaborator: Boolean!
   crTdls: [PlanCrTdl!]!
+  operationalNeeds: [OperationalNeed!]!
 }
 
 """
@@ -1332,6 +1333,40 @@ input PlanCrTdlChanges @goModel(model: "map[string]interface{}") {
     note: String
 }
 
+type OperationalNeed {
+    id: UUID!
+    modelPlanID: UUID!
+
+    needType: Int
+    needOther: String
+    needed: Boolean!
+    solutions: [OperationalSolution!]!
+
+
+    createdBy: String!
+    createdDts: Time!
+    modifiedBy: String
+    modifiedDts: Time
+}
+
+type OperationalSolution {
+    id: UUID!
+    operationalNeedID: UUID!
+
+    solutionType: Int
+    solutionOther: String
+    pocName: String     
+    pocOther: String
+    mustStartDts: Time!
+    mustFinishDts: Time!
+    status: OpSolutionStatus!
+
+    createdBy: String!
+    createdDts: Time!
+    modifiedBy: String
+    modifiedDts: Time
+}
+
 """
 Query definition for the schema
 """
@@ -2036,6 +2071,15 @@ enum AnticipatedPaymentFrequencyType {
   WEEKLY
   DAILY
   OTHER
+}
+
+enum OpSolutionStatus {
+  NOT_STARTED
+  ONBOARDING
+  BACKLOG
+  IN_PROGRESS
+  COMPLETED
+  AT_RISK
 }
 
 directive @hasRole(role: Role!) on FIELD_DEFINITION
