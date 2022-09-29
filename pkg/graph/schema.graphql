@@ -1341,6 +1341,9 @@ type OperationalNeed {
     needOther: String
     needed: Boolean!
     solutions: [OperationalSolution!]!
+    needTypeFullName: String!
+    needTypeShortName: String!
+
 
 
     createdBy: String!

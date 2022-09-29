@@ -114,7 +114,8 @@ func (r *modelPlanResolver) CrTdls(ctx context.Context, obj *models.ModelPlan) (
 
 // OperationalNeeds is the resolver for the operationalNeeds field.
 func (r *modelPlanResolver) OperationalNeeds(ctx context.Context, obj *models.ModelPlan) ([]*models.OperationalNeed, error) {
-	panic(fmt.Errorf("not implemented: OperationalNeeds - operationalNeeds"))
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.OperationalNeedCollectionGetByModelPlanID(logger, obj.ID, r.store)
 }
 
 // CreateModelPlan is the resolver for the createModelPlan field.
@@ -345,7 +346,8 @@ func (r *mutationResolver) DeletePlanCrTdl(ctx context.Context, id uuid.UUID) (*
 
 // Solutions is the resolver for the solutions field.
 func (r *operationalNeedResolver) Solutions(ctx context.Context, obj *models.OperationalNeed) ([]*models.OperationalSolution, error) {
-	panic(fmt.Errorf("not implemented: Solutions - solutions"))
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.OperationalSolutionCollectionGetByOperationalNeedID(logger, obj.ID, r.store)
 }
 
 // CmsCenters is the resolver for the cmsCenters field.
@@ -924,3 +926,16 @@ type planPaymentsResolver struct{ *Resolver }
 type queryResolver struct{ *Resolver }
 type subscriptionResolver struct{ *Resolver }
 type userInfoResolver struct{ *Resolver }
+
+// !!! WARNING !!!
+// The code below was going to be deleted when updating resolvers. It has been copied here so you have
+// one last chance to move it out of harms way if you want. There are two reasons this happens:
+//  - When renaming or deleting a resolver the old code will be put in here. You can safely delete
+//    it when you're done.
+//  - You have helper methods in this file. Move them out to keep these resolver files clean.
+func (r *operationalNeedResolver) NeedTypeFullName(ctx context.Context, obj *models.OperationalNeed) (string, error) {
+	panic(fmt.Errorf("not implemented: NeedTypeFullName - needTypeFullName"))
+}
+func (r *operationalNeedResolver) NeedTypeShortName(ctx context.Context, obj *models.OperationalNeed) (string, error) {
+	panic(fmt.Errorf("not implemented: NeedTypeShortName - needTypeShortName"))
+}
