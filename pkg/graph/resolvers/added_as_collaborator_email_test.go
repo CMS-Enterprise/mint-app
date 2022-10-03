@@ -20,16 +20,6 @@ func (s *ResolverSuite) TestAddedAsCollaboratorEmail() {
 		Email:       "clab@rater.com",
 	}
 
-	_, err := CreatePlanCollaborator(
-		s.testConfigs.Logger,
-		s.testConfigs.EmailService,
-		s.testConfigs.EmailTemplateService,
-		collaboratorInput,
-		s.testConfigs.Principal,
-		s.testConfigs.Store,
-	)
-	assert.NoError(s.T(), err)
-
 	addCollabTemplate, err := s.testConfigs.EmailTemplateService.GetEmailTemplate(email.AddedAsCollaboratorTemplateName)
 	assert.NoError(s.T(), err)
 
@@ -51,5 +41,15 @@ func (s *ResolverSuite) TestAddedAsCollaboratorEmail() {
 		gomock.Eq(executedSubject),
 		gomock.Any(),
 		gomock.Eq(executedBody),
+	).Times(1)
+
+	_, err = CreatePlanCollaborator(
+		s.testConfigs.Logger,
+		s.testConfigs.EmailService,
+		s.testConfigs.EmailTemplateService,
+		collaboratorInput,
+		s.testConfigs.Principal,
+		s.testConfigs.Store,
 	)
+	assert.NoError(s.T(), err)
 }
