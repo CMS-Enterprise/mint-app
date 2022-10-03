@@ -100,7 +100,7 @@ func (s *Server) routes(
 
 	// Set up Oddball email Service
 	emailServiceConfig := oddmail.GoSimpleMailServiceConfig{}
-	err = emailServiceConfig.LoadYAML("../../config/data/emailServiceConfig.yaml")
+	err = emailServiceConfig.LoadYAML("config/emailServiceConfig.yaml")
 	if err != nil {
 		s.logger.Fatal("Failed to load an email service configuration", zap.Error(err))
 	}

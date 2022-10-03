@@ -18,7 +18,7 @@ func (suite *ResolverSuite) TestCreatePlanCollaborator() {
 	}
 	collaborator, err := CreatePlanCollaborator(
 		suite.testConfigs.Logger,
-		&suite.testConfigs.EmailService,
+		suite.testConfigs.EmailService,
 		suite.testConfigs.EmailTemplateService,
 		collaboratorInput,
 		suite.testConfigs.Principal,

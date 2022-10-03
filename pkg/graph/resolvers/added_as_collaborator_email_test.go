@@ -1,28 +1,55 @@
 package resolvers
 
 import (
-	"github.com/google/uuid"
+	"github.com/golang/mock/gomock"
 	"github.com/stretchr/testify/assert"
 
+	"github.com/cmsgov/mint-app/pkg/email"
 	"github.com/cmsgov/mint-app/pkg/graph/model"
 	"github.com/cmsgov/mint-app/pkg/models"
 )
 
 func (s *ResolverSuite) TestAddedAsCollaboratorEmail() {
-	input := model.PlanCollaboratorCreateInput{
-		ModelPlanID: uuid.MustParse("ce3405a0-3399-4e3a-88d7-3cfc613d2905"),
-		EuaUserID:   "FAKE",
-		FullName:    "Nota Person",
-		TeamRole:    models.TeamRoleLearning,
-		Email:       "contact.tbrooks@gmail.com",
+	plan := s.createModelPlan("Plan For Milestones")
+
+	collaboratorInput := &model.PlanCollaboratorCreateInput{
+		ModelPlanID: plan.ID,
+		EuaUserID:   "CLAB",
+		FullName:    "Clab O' Rater",
+		TeamRole:    models.TeamRoleLeadership,
+		Email:       "clab@rater.com",
 	}
 
 	_, err := CreatePlanCollaborator(
 		s.testConfigs.Logger,
-		&s.testConfigs.EmailService,
+		s.testConfigs.EmailService,
 		s.testConfigs.EmailTemplateService,
-		&input,
+		collaboratorInput,
 		s.testConfigs.Principal,
-		s.testConfigs.Store)
+		s.testConfigs.Store,
+	)
 	assert.NoError(s.T(), err)
+
+	addCollabTemplate, err := s.testConfigs.EmailTemplateService.GetEmailTemplate(email.AddedAsCollaboratorTemplateName)
+	assert.NoError(s.T(), err)
+
+	executedSubject, err := addCollabTemplate.GetExecutedSubject(email.AddedAsCollaboratorSubjectContent{
+		ModelName: plan.ModelName,
+	})
+	assert.NoError(s.T(), err)
+
+	executedBody, err := addCollabTemplate.GetExecutedBody(email.AddedAsCollaboratorBodyContent{
+		ModelName: plan.ModelName,
+		ModelID:   plan.ID.String(),
+	})
+	assert.NoError(s.T(), err)
+
+	s.testConfigs.EmailService.EXPECT().Send(
+		gomock.Eq(email.DefaultSender),
+		gomock.Eq(collaboratorInput.Email),
+		gomock.Any(),
+		gomock.Eq(executedSubject),
+		gomock.Any(),
+		gomock.Eq(executedBody),
+	)
 }

@@ -2,6 +2,9 @@ package resolvers
 
 import (
 	"fmt"
+	"testing"
+
+	"github.com/golang/mock/gomock"
 
 	"github.com/cmsgov/mint-app/pkg/appconfig"
 	"github.com/cmsgov/mint-app/pkg/authentication"
@@ -22,7 +25,7 @@ import (
 type TestConfigs struct {
 	DBConfig             storage.DBConfig
 	LDClient             *ld.LDClient
-	EmailService         oddmail.EmailService
+	EmailService         oddmail.MockEmailService
 	EmailTemplateService *email.TemplateService
 	Logger               *zap.Logger
 	UserInfo             *models.UserInfo
@@ -33,9 +36,9 @@ type TestConfigs struct {
 }
 
 // GetDefaultTestConfigs returns a TestConfigs struct with all the dependencies needed to run a test
-func GetDefaultTestConfigs() *TestConfigs {
+func GetDefaultTestConfigs(t *testing.T) *TestConfigs {
 	tc := TestConfigs{}
-	tc.GetDefaults()
+	tc.GetDefaults(t)
 	return &tc
 }
 
@@ -52,7 +55,12 @@ func createS3Client() upload.S3Client {
 }
 
 // GetDefaults sets the dependencies for the TestConfigs struct
-func (tc *TestConfigs) GetDefaults() {
+func (tc *TestConfigs) GetDefaults(t *testing.T) {
+	mockController := gomock.NewController(t)
+	defer mockController.Finish()
+
+	mockEmailService := *oddmail.NewMockEmailService(mockController)
+
 	config, ldClient, logger, userInfo, ps, princ := getTestDependencies()
 	store, _ := storage.NewStore(logger, config, ldClient)
 
@@ -62,23 +70,28 @@ func (tc *TestConfigs) GetDefaults() {
 		panic(fmt.Sprintf("Failed to create an email template service: %v", zap.Error(err)))
 	}
 
-	// Set up Oddball email Service
-	emailServiceConfig := oddmail.GoSimpleMailServiceConfig{}
-	err = emailServiceConfig.LoadYAML("../../../config/test/emailServiceConfig.yaml")
+	err = emailTemplateService.Load()
 	if err != nil {
-		panic(fmt.Sprintf("Failed to load an email service configuration: %v", zap.Error(err)))
+		panic(fmt.Sprintf("Failed to load an email template service: %v", zap.Error(err)))
 	}
 
-	var emailService *oddmail.GoSimpleMailService
-	emailService, err = oddmail.NewGoSimpleMailService(emailServiceConfig)
-	if err != nil {
-		panic(fmt.Sprintf("Failed to create an email service: %v", zap.Error(err)))
-	}
+	// Set up Oddball email Service
+	//emailServiceConfig := oddmail.GoSimpleMailServiceConfig{}
+	//err = emailServiceConfig.LoadYAML("../../../config/test/emailServiceConfig.yaml")
+	//if err != nil {
+	//	panic(fmt.Sprintf("Failed to load an email service configuration: %v", zap.Error(err)))
+	//}
+
+	//var emailService *oddmail.GoSimpleMailService
+	//emailService, err = oddmail.NewGoSimpleMailService(emailServiceConfig)
+	//if err != nil {
+	//	panic(fmt.Sprintf("Failed to create an email service: %v", zap.Error(err)))
+	//}
 
 	s3Client := createS3Client()
 	tc.DBConfig = config
 	tc.LDClient = ldClient
-	tc.EmailService = emailService
+	tc.EmailService = mockEmailService
 	tc.EmailTemplateService = emailTemplateService
 	tc.Logger = logger
 	tc.UserInfo = userInfo

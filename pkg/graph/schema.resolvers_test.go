@@ -132,7 +132,7 @@ func TestGraphQLTestSuite(t *testing.T) {
 	s3Client := upload.NewS3ClientUsingClient(&mockClient, s3Config)
 
 	emailServiceConfig := oddmail.GoSimpleMailServiceConfig{}
-	err = emailServiceConfig.LoadYAML("../../config/data/emailServiceConfig.yaml")
+	err = emailServiceConfig.LoadYAML("config/test/emailServiceConfig.yaml")
 	assert.NoError(t, err)
 
 	emailService, err := oddmail.NewGoSimpleMailService(emailServiceConfig)
@@ -151,7 +151,7 @@ func TestGraphQLTestSuite(t *testing.T) {
 	resolverService.FetchUserInfo = cedarLdapClient.FetchUserInfo
 
 	ps := pubsub.NewServicePubSub()
-	resolver := NewResolver(store, resolverService, &s3Client, emailService, emailTemplateService, ldClient, ps)
+	resolver := NewResolver(store, resolverService, &s3Client, *emailService, emailTemplateService, ldClient, ps)
 	schema := generated.NewExecutableSchema(generated.Config{Resolvers: resolver, Directives: directives})
 	graphQLClient := client.New(handler.NewDefaultServer(schema))
 

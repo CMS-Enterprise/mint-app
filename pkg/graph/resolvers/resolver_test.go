@@ -60,7 +60,7 @@ func (suite *ResolverSuite) createPlanCollaborator(mp *models.ModelPlan, EUAUser
 	}
 	collaborator, err := CreatePlanCollaborator(
 		suite.testConfigs.Logger,
-		&suite.testConfigs.EmailService,
+		suite.testConfigs.EmailService,
 		suite.testConfigs.EmailTemplateService,
 		collaboratorInput,
 		suite.testConfigs.Principal,
@@ -86,6 +86,6 @@ func (suite *ResolverSuite) createPlanCrTdl(mp *models.ModelPlan, idNumber strin
 // TestResolverSuite runs the resolver test suite
 func TestResolverSuite(t *testing.T) {
 	rs := new(ResolverSuite)
-	rs.testConfigs = GetDefaultTestConfigs()
+	rs.testConfigs = GetDefaultTestConfigs(t)
 	suite.Run(t, rs)
 }

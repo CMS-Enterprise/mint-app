@@ -67,3 +67,8 @@ services:
       - LICENSE_KEY
     volumes:
       - ./../mint-infra-modules/lambda/prince/build:/var/task:ro,delegated
+  email:
+    image: dockage/mailcatcher:0.7.1
+    ports:
+      - "1085:1080"
+      - "1030:1025"

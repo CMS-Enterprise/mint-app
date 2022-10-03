@@ -39,6 +39,8 @@ WORKDIR /mint/
 
 COPY --from=build /mint/bin/mint .
 COPY --from=build /mint/pkg/email/templates ./templates
+COPY --from=build /mint/config/emailServiceConfig.yaml /config/emailServiceConfig.yaml
+COPY --from=build /mint/config/test/emailServiceConfig.yaml /config/test/emailServiceConfig.yaml
 COPY --from=build /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs
 
 ARG ARG_APPLICATION_VERSION

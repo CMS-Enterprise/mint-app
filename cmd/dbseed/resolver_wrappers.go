@@ -5,6 +5,9 @@ import (
 	"os"
 	"path/filepath"
 
+	"github.com/cmsgov/mint-app/pkg/email"
+	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
+
 	"go.uber.org/zap"
 
 	"github.com/99designs/gqlgen/graphql"
@@ -79,9 +82,9 @@ func updatePlanBasics(store *storage.Store, logger *zap.Logger, mp *models.Model
 // addPlanCollaborator is a wrapper for resolvers.CreatePlanCollaborator
 // It will panic if an error occurs, rather than bubbling the error up
 // It will always add the collaborator object with the principal value of the Model Plan's "createdBy"
-/*func addPlanCollaborator(
+func addPlanCollaborator(
 	store *storage.Store,
-	emailService *oddmail.EmailService,
+	emailService oddmail.EmailService,
 	emailTemplateService *email.TemplateService,
 	logger *zap.Logger,
 	mp *models.ModelPlan,
@@ -105,7 +108,7 @@ func updatePlanBasics(store *storage.Store, logger *zap.Logger, mp *models.Model
 		panic(err)
 	}
 	return collaborator
-}*/
+}
 
 // crTdlCreate is a wrapper for resolvers.PlanCrTdlCreate
 // It will panic if an error occurs, rather than bubbling the error up

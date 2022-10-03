@@ -7,7 +7,6 @@ type AddedAsCollaboratorSubjectContent struct {
 
 // AddedAsCollaboratorBodyContent defines the parameters necessary for the corresponding email body
 type AddedAsCollaboratorBodyContent struct {
-	ModelName   string
-	ModelURL    string
-	UnfollowURL string
+	ModelName string
+	ModelID   string
 }

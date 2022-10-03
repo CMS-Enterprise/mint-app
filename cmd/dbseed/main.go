@@ -5,6 +5,10 @@ import (
 	"time"
 
 	"github.com/guregu/null/zero"
+
+	"github.com/cmsgov/mint-app/pkg/email"
+	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
+
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 	"go.uber.org/zap"
@@ -40,7 +44,13 @@ func main() {
 
 // getResolverDependencies takes a Viper config and returns a Store and Logger object to be used
 // by various resolver functions.
-func getResolverDependencies(config *viper.Viper) (*storage.Store, *zap.Logger, *upload.S3Client) {
+func getResolverDependencies(config *viper.Viper) (
+	*storage.Store,
+	*zap.Logger,
+	*upload.S3Client,
+	oddmail.EmailService,
+	*email.TemplateService,
+) {
 	// Create the logger
 	logger := zap.NewNop()
 
@@ -75,8 +85,7 @@ func getResolverDependencies(config *viper.Viper) (*storage.Store, *zap.Logger, 
 
 	s3Client := upload.NewS3Client(s3Cfg)
 
-	return store, logger, &s3Client
-
+	return store, logger, &s3Client, nil, nil
 }
 
 // seedData gets resolver dependencies and calls wrapped resolver functions to seed data.
@@ -84,7 +93,7 @@ func getResolverDependencies(config *viper.Viper) (*storage.Store, *zap.Logger, 
 // NOTE: Some of this data _is_ relied on by Cypress tests, but most of it is freely editable.
 func seedData(config *viper.Viper) {
 	// Get dependencies for resolvers (store and logger)
-	store, logger, s3Client := getResolverDependencies(config)
+	store, logger, s3Client, _, _ := getResolverDependencies(config)
 
 	// Seed an empty plan
 	createModelPlan(store, logger, "Empty Plan", "MINT")
@@ -103,15 +112,20 @@ func seedData(config *viper.Viper) {
 	})
 
 	// Seed a plan with collaborators
-	// TODO: TOM!! RESTORE THIS TEST!! DO IT!!
-	/*planWithCollaborators := createModelPlan(store, logger, "Plan With Collaborators", "MINT")
-	addPlanCollaborator(store, logger, planWithCollaborators, &model.PlanCollaboratorCreateInput{
-		ModelPlanID: planWithCollaborators.ID,
-		EuaUserID:   "BTAL",
-		FullName:    "Betty Alpha",
-		TeamRole:    models.TeamRoleLeadership,
-		Email:       "bAlpha@local.fake",
-	})*/
+	planWithCollaborators := createModelPlan(store, logger, "Plan With Collaborators", "MINT")
+	addPlanCollaborator(
+		store,
+		nil,
+		nil,
+		logger,
+		planWithCollaborators,
+		&model.PlanCollaboratorCreateInput{
+			ModelPlanID: planWithCollaborators.ID,
+			EuaUserID:   "BTAL",
+			FullName:    "Betty Alpha",
+			TeamRole:    models.TeamRoleLeadership,
+			Email:       "bAlpha@local.fake",
+		})
 
 	// Seed a plan with CRs / TDLs
 	planWithCrTDLs := createModelPlan(store, logger, "Plan With CRs and TDLs", "MINT")

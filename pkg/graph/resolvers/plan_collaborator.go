@@ -16,7 +16,7 @@ import (
 // CreatePlanCollaborator implements resolver logic to create a plan collaborator
 func CreatePlanCollaborator(
 	logger *zap.Logger,
-	emailService *oddmail.EmailService,
+	emailService oddmail.EmailService,
 	emailTemplateService *email.TemplateService,
 	input *model.PlanCollaboratorCreateInput,
 	principal authentication.Principal,
@@ -46,11 +46,15 @@ func CreatePlanCollaborator(
 }
 
 func sendCollaboratorAddedEmail(
-	emailService *oddmail.EmailService,
+	emailService oddmail.EmailService,
 	emailTemplateService *email.TemplateService,
 	receiverEmail string,
 	modelPlan *models.ModelPlan,
 ) error {
+	if emailService == nil || emailTemplateService == nil {
+		return nil
+	}
+
 	emailTemplate, err := emailTemplateService.GetEmailTemplate(email.AddedAsCollaboratorTemplateName)
 	if err != nil {
 		return err
@@ -64,16 +68,15 @@ func sendCollaboratorAddedEmail(
 	}
 
 	emailBody, err := emailTemplate.GetExecutedBody(email.AddedAsCollaboratorBodyContent{
-		ModelName:   modelPlan.ModelName,
-		ModelURL:    "MODEL URL",
-		UnfollowURL: "UNFOLLOW URL",
+		ModelName: modelPlan.ModelName,
+		ModelID:   modelPlan.GetModelPlanID().String(),
 	})
 	if err != nil {
 		return err
 	}
 
 	senderEmail := email.DefaultSender
-	err = (*emailService).Send(senderEmail, []string{receiverEmail}, nil, emailSubject, "text/html", emailBody)
+	err = emailService.Send(senderEmail, []string{receiverEmail}, nil, emailSubject, "text/html", emailBody)
 	if err != nil {
 		return err
 	}
