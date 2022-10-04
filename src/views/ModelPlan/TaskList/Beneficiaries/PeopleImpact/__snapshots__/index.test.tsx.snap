@@ -37,7 +37,7 @@ exports[`Model Plan Beneficiaries matches snapshot 1`] = `
         aria-current="page"
         class="usa-breadcrumb__list-item usa-current"
       >
-        breadcrumb
+        Beneficiaries
       </li>
     </ol>
   </nav>
@@ -173,7 +173,7 @@ exports[`Model Plan Beneficiaries matches snapshot 1`] = `
                 <input
                   class="usa-radio__input"
                   id="beneficiaries-impact-confidence-COMPLETELY"
-                  name="beneficiaries-impact-estimateConfidence"
+                  name="participantsCurrentlyInModels"
                   type="radio"
                   value="COMPLETELY"
                 />
@@ -191,7 +191,7 @@ exports[`Model Plan Beneficiaries matches snapshot 1`] = `
                 <input
                   class="usa-radio__input"
                   id="beneficiaries-impact-confidence-FAIRLY"
-                  name="beneficiaries-impact-estimateConfidence"
+                  name="participantsCurrentlyInModels"
                   type="radio"
                   value="FAIRLY"
                 />
@@ -209,7 +209,7 @@ exports[`Model Plan Beneficiaries matches snapshot 1`] = `
                 <input
                   class="usa-radio__input"
                   id="beneficiaries-impact-confidence-NOT_AT_ALL"
-                  name="beneficiaries-impact-estimateConfidence"
+                  name="participantsCurrentlyInModels"
                   type="radio"
                   value="NOT_AT_ALL"
                 />
@@ -227,7 +227,7 @@ exports[`Model Plan Beneficiaries matches snapshot 1`] = `
                 <input
                   class="usa-radio__input"
                   id="beneficiaries-impact-confidence-SLIGHTLY"
-                  name="beneficiaries-impact-estimateConfidence"
+                  name="participantsCurrentlyInModels"
                   type="radio"
                   value="SLIGHTLY"
                 />
@@ -368,12 +368,12 @@ exports[`Model Plan Beneficiaries matches snapshot 1`] = `
                 </div>
                 <div>
                   <input
-                    name="beneficiaries-chooseBeneficiaries"
+                    name="beneficiarySelectionMethod"
                     type="hidden"
                     value="HISTORICAL"
                   />
                   <input
-                    name="beneficiaries-chooseBeneficiaries"
+                    name="beneficiarySelectionMethod"
                     type="hidden"
                     value="OTHER"
                   />
