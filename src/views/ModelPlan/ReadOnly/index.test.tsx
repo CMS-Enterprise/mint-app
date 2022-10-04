@@ -5,7 +5,11 @@ import { render, screen, waitFor, within } from '@testing-library/react';
 
 import GetModelSummary from 'queries/ReadOnly/GetModelSummary';
 import { GetModelSummary_modelPlan as GetModelSummaryTypes } from 'queries/ReadOnly/types/GetModelSummary';
-import { KeyCharacteristic, ModelStatus } from 'types/graphql-global-types';
+import {
+  KeyCharacteristic,
+  ModelStatus,
+  TeamRole
+} from 'types/graphql-global-types';
 import { translateKeyCharacteristics } from 'utils/modelPlan';
 
 import ReadOnly from './index';
@@ -27,7 +31,11 @@ const mockData: GetModelSummaryTypes = {
     keyCharacteristics: [KeyCharacteristic.EPISODE_BASED]
   },
   collaborators: [
-    { __typename: 'PlanCollaborator', fullName: 'First Collaborator' }
+    {
+      __typename: 'PlanCollaborator',
+      fullName: 'First Collaborator',
+      teamRole: TeamRole.MODEL_LEAD
+    }
   ]
 };
 
