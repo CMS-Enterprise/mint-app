@@ -138,7 +138,7 @@ func TestGraphQLTestSuite(t *testing.T) {
 	emailService, err := oddmail.NewGoSimpleMailService(emailServiceConfig)
 	assert.NoError(t, err)
 
-	emailTemplateService, err := email.NewTemplateService()
+	emailTemplateService, err := email.NewTemplateServiceImpl()
 	assert.NoError(t, err)
 
 	cedarLdapClient := local.NewCedarLdapClient(logger)

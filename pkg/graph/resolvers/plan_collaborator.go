@@ -17,7 +17,7 @@ import (
 func CreatePlanCollaborator(
 	logger *zap.Logger,
 	emailService oddmail.EmailService,
-	emailTemplateService *email.TemplateService,
+	emailTemplateService email.TemplateService,
 	input *model.PlanCollaboratorCreateInput,
 	principal authentication.Principal,
 	store *storage.Store) (*models.PlanCollaborator, error) {
@@ -47,7 +47,7 @@ func CreatePlanCollaborator(
 
 func sendCollaboratorAddedEmail(
 	emailService oddmail.EmailService,
-	emailTemplateService *email.TemplateService,
+	emailTemplateService email.TemplateService,
 	receiverEmail string,
 	modelPlan *models.ModelPlan,
 ) error {

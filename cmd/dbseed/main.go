@@ -49,7 +49,7 @@ func getResolverDependencies(config *viper.Viper) (
 	*zap.Logger,
 	*upload.S3Client,
 	oddmail.EmailService,
-	*email.TemplateService,
+	email.TemplateService,
 ) {
 	// Create the logger
 	logger := zap.NewNop()

@@ -1,13 +1,17 @@
 package resolvers
 
 import (
+	"github.com/golang/mock/gomock"
+
 	"github.com/cmsgov/mint-app/pkg/authentication"
+	"github.com/cmsgov/mint-app/pkg/email"
 	"github.com/cmsgov/mint-app/pkg/graph/model"
 	"github.com/cmsgov/mint-app/pkg/models"
 )
 
 func (suite *ResolverSuite) TestCreatePlanCollaborator() {
-	plan := suite.createModelPlan("Plan For Milestones")
+	planName := "Plan For Milestones"
+	plan := suite.createModelPlan(planName)
 
 	collaboratorInput := &model.PlanCollaboratorCreateInput{
 		ModelPlanID: plan.ID,
@@ -16,6 +20,27 @@ func (suite *ResolverSuite) TestCreatePlanCollaborator() {
 		TeamRole:    models.TeamRoleLeadership,
 		Email:       "clab@rater.com",
 	}
+
+	testTemplate, expectedSubject, expectedBody := createAddedAsCollaboratorTemplateCacheHelper(planName, plan)
+
+	suite.testConfigs.EmailTemplateService.
+		EXPECT().
+		GetEmailTemplate(gomock.Eq(email.AddedAsCollaboratorTemplateName)).
+		Return(testTemplate, nil).
+		Times(1)
+
+	suite.testConfigs.EmailService.
+		EXPECT().
+		Send(
+			gomock.Eq(email.DefaultSender),
+			gomock.Eq([]string{collaboratorInput.Email}),
+			gomock.Any(),
+			gomock.Eq(expectedSubject),
+			gomock.Any(),
+			gomock.Eq(expectedBody),
+		).
+		Times(1)
+
 	collaborator, err := CreatePlanCollaborator(
 		suite.testConfigs.Logger,
 		suite.testConfigs.EmailService,

@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"testing"
 
+	"github.com/cmsgov/mint-app/pkg/shared/emailTemplates"
+
 	"github.com/golang/mock/gomock"
 
 	"github.com/cmsgov/mint-app/pkg/appconfig"
@@ -25,8 +27,8 @@ import (
 type TestConfigs struct {
 	DBConfig             storage.DBConfig
 	LDClient             *ld.LDClient
-	EmailService         oddmail.MockEmailService
-	EmailTemplateService *email.TemplateService
+	EmailService         *oddmail.MockEmailService
+	EmailTemplateService *email.MockTemplateService
 	Logger               *zap.Logger
 	UserInfo             *models.UserInfo
 	Store                *storage.Store
@@ -59,21 +61,17 @@ func (tc *TestConfigs) GetDefaults(t *testing.T) {
 	mockController := gomock.NewController(t)
 	defer mockController.Finish()
 
-	mockEmailService := *oddmail.NewMockEmailService(mockController)
+	mockEmailService := oddmail.NewMockEmailService(mockController)
+	mockEmailTemplateService := email.NewMockTemplateService(mockController)
 
 	config, ldClient, logger, userInfo, ps, princ := getTestDependencies()
 	store, _ := storage.NewStore(logger, config, ldClient)
 
 	// set up Email Template Service
-	emailTemplateService, err := email.NewTemplateService()
+	/*emailTemplateService, err := email.NewTemplateServiceImpl()
 	if err != nil {
 		panic(fmt.Sprintf("Failed to create an email template service: %v", zap.Error(err)))
-	}
-
-	err = emailTemplateService.Load()
-	if err != nil {
-		panic(fmt.Sprintf("Failed to load an email template service: %v", zap.Error(err)))
-	}
+	}*/
 
 	// Set up Oddball email Service
 	//emailServiceConfig := oddmail.GoSimpleMailServiceConfig{}
@@ -92,7 +90,7 @@ func (tc *TestConfigs) GetDefaults(t *testing.T) {
 	tc.DBConfig = config
 	tc.LDClient = ldClient
 	tc.EmailService = mockEmailService
-	tc.EmailTemplateService = emailTemplateService
+	tc.EmailTemplateService = mockEmailTemplateService
 	tc.Logger = logger
 	tc.UserInfo = userInfo
 	tc.Store = store
@@ -135,5 +133,21 @@ func getTestDependencies() (storage.DBConfig, *ld.LDClient, *zap.Logger, *models
 	}
 
 	return config, ldClient, logger, userInfo, ps, princ
+}
 
+func createAddedAsCollaboratorTemplateCacheHelper(
+	planName string,
+	plan *models.ModelPlan) (*emailTemplates.EmailTemplate, string, string) {
+	templateCache := emailTemplates.NewTemplateCache()
+	_ = templateCache.LoadTemplateFromString("testSubject", "{{.ModelName}}")
+	_ = templateCache.LoadTemplateFromString("testBody", "{{.ModelName}} {{.ModelID}}")
+	testTemplate := emailTemplates.NewEmailTemplate(
+		templateCache,
+		"testSubject",
+		"testBody",
+	)
+
+	expectedSubject := planName
+	expectedBody := fmt.Sprintf("%s %s", planName, plan.ID.String())
+	return testTemplate, expectedSubject, expectedBody
 }

@@ -93,7 +93,7 @@ func (s *Server) routes(
 	}
 
 	// set up Email Template Service
-	emailTemplateService, err := email.NewTemplateService()
+	emailTemplateService, err := email.NewTemplateServiceImpl()
 	if err != nil {
 		s.logger.Fatal("Failed to create an email template service", zap.Error(err))
 	}

@@ -30,7 +30,7 @@ type Resolver struct {
 	service              ResolverService
 	s3Client             *upload.S3Client
 	emailService         oddmail.EmailService
-	emailTemplateService *email.TemplateService
+	emailTemplateService email.TemplateService
 	ldClient             *ldclient.LDClient
 	pubsub               pubsub.PubSub
 }
@@ -50,7 +50,7 @@ func NewResolver(
 	service ResolverService,
 	s3Client *upload.S3Client,
 	emailService oddmail.EmailService,
-	emailTemplateService *email.TemplateService,
+	emailTemplateService email.TemplateService,
 	ldClient *ldclient.LDClient,
 	pubsub pubsub.PubSub,
 ) *Resolver {

@@ -85,7 +85,7 @@ func updatePlanBasics(store *storage.Store, logger *zap.Logger, mp *models.Model
 func addPlanCollaborator(
 	store *storage.Store,
 	emailService oddmail.EmailService,
-	emailTemplateService *email.TemplateService,
+	emailTemplateService email.TemplateService,
 	logger *zap.Logger,
 	mp *models.ModelPlan,
 	input *model.PlanCollaboratorCreateInput,

@@ -16,15 +16,15 @@ var addedAsCollaboratorSubjectTemplate string
 //go:embed templates/added_as_collaborator_body.template
 var addedAsCollaboratorBodyTemplate string
 
-// TemplateService is an implementation-specific structure loading all resources necessary for server execution
-type TemplateService struct {
+// TemplateServiceImpl is an implementation-specific structure loading all resources necessary for server execution
+type TemplateServiceImpl struct {
 	templateCache  *emailTemplates.TemplateCache
 	emailTemplates map[string]*emailTemplates.EmailTemplate
 }
 
-// NewTemplateService is a constructor for TemplateService
-func NewTemplateService() (*TemplateService, error) {
-	service := &TemplateService{templateCache: emailTemplates.NewTemplateCache()}
+// NewTemplateServiceImpl is a constructor for TemplateServiceImpl
+func NewTemplateServiceImpl() (*TemplateServiceImpl, error) {
+	service := &TemplateServiceImpl{templateCache: emailTemplates.NewTemplateCache()}
 
 	err := service.Load()
 	if err != nil {
@@ -35,7 +35,7 @@ func NewTemplateService() (*TemplateService, error) {
 }
 
 // Load caches all email templates which will be used by the template service
-func (t *TemplateService) Load() error {
+func (t *TemplateServiceImpl) Load() error {
 	t.emailTemplates = make(map[string]*emailTemplates.EmailTemplate)
 
 	err := t.loadEmailTemplate(AddedAsCollaboratorTemplateName, addedAsCollaboratorSubjectTemplate, addedAsCollaboratorBodyTemplate)
@@ -46,7 +46,7 @@ func (t *TemplateService) Load() error {
 	return nil
 }
 
-func (t *TemplateService) loadEmailTemplate(emailTemplateName string, subjectTemplate string, bodyTemplate string) error {
+func (t *TemplateServiceImpl) loadEmailTemplate(emailTemplateName string, subjectTemplate string, bodyTemplate string) error {
 	_, emailTemplateExists := t.emailTemplates[emailTemplateName]
 	if emailTemplateExists {
 		return fmt.Errorf("email template %s already exists", emailTemplateName)
@@ -71,7 +71,7 @@ func (t *TemplateService) loadEmailTemplate(emailTemplateName string, subjectTem
 }
 
 // GetEmailTemplate fetches an emailTemplates.EmailTemplate by name from the emailTemplates.TemplateCache
-func (t *TemplateService) GetEmailTemplate(emailTemplateName string) (*emailTemplates.EmailTemplate, error) {
+func (t *TemplateServiceImpl) GetEmailTemplate(emailTemplateName string) (*emailTemplates.EmailTemplate, error) {
 	emailTemplate, emailTemplateExists := t.emailTemplates[emailTemplateName]
 
 	if !emailTemplateExists {
