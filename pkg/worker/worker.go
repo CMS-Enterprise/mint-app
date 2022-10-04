@@ -16,5 +16,14 @@ func Work() {
 	// e.g. mgr.Register("SomeJob", someFunc)
 
 	mgr.Run()
-
 }
+
+/*
+	Put registered functions here:
+	e.g.
+	func someFunc(ctx context.Context, args ...interface{}) error {
+		help := faktory_worker.HelperFor(ctx)
+		time.Sleep(1 * time.Second)
+		return nil
+	}
+*/

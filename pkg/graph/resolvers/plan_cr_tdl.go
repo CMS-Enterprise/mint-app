@@ -67,7 +67,6 @@ func PlanCrTdlDelete(logger *zap.Logger, id uuid.UUID, principal authentication.
 func PlanCrTdlGet(logger *zap.Logger, id uuid.UUID, store *storage.Store) (*models.PlanCrTdl, error) {
 	result, err := store.PlanCrTdlGetByID(logger, id)
 	return result, err
-
 }
 
 // PlanCrTdlsGetByModelPlanID returns plan_cr_tdl records related to a model plan
