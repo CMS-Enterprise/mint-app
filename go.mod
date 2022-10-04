@@ -34,7 +34,7 @@ require (
 require github.com/gorilla/websocket v1.5.0
 
 require (
-	github.com/xhit/go-simple-mail/v2 v2.11.0
+	github.com/xhit/go-simple-mail/v2 v2.12.0
 	gopkg.in/yaml.v3 v3.0.1
 )
 
