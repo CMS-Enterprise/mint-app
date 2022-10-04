@@ -16,6 +16,11 @@ import (
 	"github.com/cmsgov/mint-app/pkg/models"
 )
 
+// Fields is the resolver for the fields field.
+func (r *auditChangeResolver) Fields(ctx context.Context, obj *models.AuditChange) (map[string]interface{}, error) {
+	return obj.Fields.ToInterface()
+}
+
 // Basics is the resolver for the basics field.
 func (r *modelPlanResolver) Basics(ctx context.Context, obj *models.ModelPlan) (*models.PlanBasics, error) {
 	logger := appcontext.ZLogger(ctx)
@@ -109,6 +114,13 @@ func (r *modelPlanResolver) IsCollaborator(ctx context.Context, obj *models.Mode
 func (r *modelPlanResolver) CrTdls(ctx context.Context, obj *models.ModelPlan) ([]*models.PlanCrTdl, error) {
 	logger := appcontext.ZLogger(ctx)
 	return resolvers.PlanCrTdlsGetByModelPlanID(logger, obj.ID, r.store)
+}
+
+// NameHistory is the resolver for the nameHistory field.
+func (r *modelPlanResolver) NameHistory(ctx context.Context, obj *models.ModelPlan, sort models.SortDirection) ([]string, error) {
+	logger := appcontext.ZLogger(ctx)
+
+	return resolvers.ModelPlanNameHistory(logger, obj.ID, sort, r.store)
 }
 
 // CreateModelPlan is the resolver for the createModelPlan field.
@@ -822,6 +834,12 @@ func (r *queryResolver) CrTdl(ctx context.Context, id uuid.UUID) (*models.PlanCr
 	return resolvers.PlanCrTdlGet(logger, id, r.store)
 }
 
+// AuditChanges is the resolver for the auditChanges field.
+func (r *queryResolver) AuditChanges(ctx context.Context, tableName string, primaryKey uuid.UUID) ([]*models.AuditChange, error) {
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.AuditChangeCollectionByIDAndTable(logger, tableName, primaryKey, r.store)
+}
+
 // OnTaskListSectionLocksChanged is the resolver for the onTaskListSectionLocksChanged field.
 func (r *subscriptionResolver) OnTaskListSectionLocksChanged(ctx context.Context, modelPlanID uuid.UUID) (<-chan *model.TaskListSectionLockStatusChanged, error) {
 	principal := appcontext.Principal(ctx).ID()
@@ -840,6 +858,9 @@ func (r *subscriptionResolver) OnLockTaskListSectionContext(ctx context.Context,
 func (r *userInfoResolver) Email(ctx context.Context, obj *models.UserInfo) (string, error) {
 	return string(obj.Email), nil
 }
+
+// AuditChange returns generated.AuditChangeResolver implementation.
+func (r *Resolver) AuditChange() generated.AuditChangeResolver { return &auditChangeResolver{r} }
 
 // ModelPlan returns generated.ModelPlanResolver implementation.
 func (r *Resolver) ModelPlan() generated.ModelPlanResolver { return &modelPlanResolver{r} }
@@ -893,6 +914,7 @@ func (r *Resolver) Subscription() generated.SubscriptionResolver { return &subsc
 // UserInfo returns generated.UserInfoResolver implementation.
 func (r *Resolver) UserInfo() generated.UserInfoResolver { return &userInfoResolver{r} }
 
+type auditChangeResolver struct{ *Resolver }
 type modelPlanResolver struct{ *Resolver }
 type mutationResolver struct{ *Resolver }
 type planBasicsResolver struct{ *Resolver }
