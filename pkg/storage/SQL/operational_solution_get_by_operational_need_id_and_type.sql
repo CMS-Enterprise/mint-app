@@ -16,5 +16,4 @@ SELECT
     OpSol.modified_dts
 FROM operational_solution AS OpSol
 LEFT JOIN possible_operational_solution AS pOpSol on OpSol.solution_type = pOpSol.id
-WHERE OpSol.operational_need_id = :operational_need_id
-ORDER BY OpSol.solution_type ASC;
+WHERE OpSol.operational_need_id = :operational_need_id AND pOpSol.short_name = :solution_type;
