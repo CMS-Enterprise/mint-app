@@ -6,6 +6,12 @@ BEGIN
   RAISE NOTICE 'not creating role crud -- it already exists';
 END
 $do$;
+CREATE SCHEMA audit;
+REVOKE ALL ON SCHEMA audit FROM public;
+REVOKE ALL ON SCHEMA audit FROM crud;
+GRANT SELECT, TRIGGER ON ALL TABLES IN SCHEMA AUDIT TO crud;
+ALTER DEFAULT PRIVILEGES IN SCHEMA audit GRANT SELECT ON TABLES TO crud;
+GRANT USAGE ON SCHEMA audit TO crud;
 
 -- Modify existing tables and sequences.
 GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO crud;

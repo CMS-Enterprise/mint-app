@@ -91,3 +91,33 @@ func (suite *ResolverSuite) TestModelPlanCollection() {
 	suite.NotNil(result)
 	suite.Len(result, 4)
 }
+
+func (suite *ResolverSuite) TestModelPlanNameHistory() {
+
+	modelNames := []string{"Plan For History0", "Plan For History1", "Plan For History2", "Plan For History3"}
+
+	plan := suite.createModelPlan(modelNames[0])
+
+	for i := 1; i < len(modelNames); i++ {
+		changes := map[string]interface{}{
+			"modelName": modelNames[i],
+		}
+		_, err := ModelPlanUpdate(suite.testConfigs.Logger, plan.ID, changes, GetDefaultTestConfigs().Principal, suite.testConfigs.Store)
+		suite.NoError(err)
+	}
+
+	historyAsc, err := ModelPlanNameHistory(suite.testConfigs.Logger, plan.ID, models.SortAsc, suite.testConfigs.Store)
+	suite.NoError(err)
+	suite.EqualValues(modelNames, historyAsc)
+
+	//Reverse the order of the strings
+	last := len(modelNames) - 1
+	for i := 0; i < len(modelNames)/2; i++ {
+		modelNames[i], modelNames[last-i] = modelNames[last-i], modelNames[i]
+	}
+
+	historyDesc, err := ModelPlanNameHistory(suite.testConfigs.Logger, plan.ID, models.SortDesc, suite.testConfigs.Store)
+	suite.NoError(err)
+	suite.EqualValues(modelNames, historyDesc)
+
+}

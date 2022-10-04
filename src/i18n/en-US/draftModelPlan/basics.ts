@@ -61,7 +61,8 @@ const basics = {
     'If timelines are tight, might there be pieces of the model that can be phased in over time?',
   tightTimelineInfo:
     'That is, the basic model would start at the earliest possible date but additional facets could be phased in at a later quarter.',
-  na: 'No answer entered'
+  na: 'No answer entered',
+  otherNotSpecificed: 'Other not specified'
 };
 
 export default basics;
