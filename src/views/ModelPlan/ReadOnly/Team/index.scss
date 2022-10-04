@@ -1,0 +1,9 @@
+.team-groupings--section-wrapper {
+  border-bottom: 1px solid color($theme-color-base-light);
+
+  @media screen and (min-width: $desktop) {
+    &:last-child {
+      border-bottom: 0;
+    }
+  }
+}

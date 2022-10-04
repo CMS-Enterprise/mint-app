@@ -30,7 +30,7 @@ import {
   GetModelSummary as GetModelSummaryType,
   GetModelSummary_modelPlan as GetModelSummaryTypes
 } from 'queries/ReadOnly/types/GetModelSummary';
-import { ModelStatus } from 'types/graphql-global-types';
+import { ModelStatus, TeamRole } from 'types/graphql-global-types';
 import { formatDate } from 'utils/date';
 import { translateKeyCharacteristics } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
@@ -46,6 +46,7 @@ import ReadOnlyModelBasics from './ModelBasics/index';
 import ReadOnlyParticipantsAndProviders from './ParticipantsAndProviders/index';
 import ReadOnlyBeneficiaries from './Beneficiaries';
 import ReadOnlyDocuments from './Documents';
+import ReadOnlyTeamInfo from './Team';
 
 import './index.scss';
 
@@ -145,11 +146,16 @@ const ReadOnly = () => {
     }
   );
 
-  const formattedModelLeads = collaborators?.map((collaborator, index) => {
-    return `${collaborator.fullName}${
-      index === collaborators.length - 1 ? '' : ', '
-    }`;
-  });
+  const formattedModelLeads = collaborators
+    ?.filter(c => c.teamRole === TeamRole.MODEL_LEAD)
+    .map((collaborator, index) => {
+      return `${collaborator.fullName}${
+        index ===
+        collaborators.filter(c => c.teamRole === TeamRole.MODEL_LEAD).length - 1
+          ? ''
+          : ', '
+      }`;
+    });
 
   const subComponents: subComponentsProps = {
     'model-basics': {
@@ -182,7 +188,7 @@ const ReadOnly = () => {
     },
     team: {
       route: `/models/${modelID}/read-only/team`,
-      component: <h1>team</h1>
+      component: <ReadOnlyTeamInfo modelID={modelID} />
     },
     discussions: {
       route: `/models/${modelID}/read-only/discussions`,
