@@ -1,5 +1,6 @@
 const beneficiaries = {
   heading: 'Beneficiaries',
+  breadcrumb: 'Beneficiaries',
   beneficiaries:
     'Who are the beneficiaries of this model? Select all that apply.',
   beneficiariesQuestion: 'Who are the beneficiaries of this model?',

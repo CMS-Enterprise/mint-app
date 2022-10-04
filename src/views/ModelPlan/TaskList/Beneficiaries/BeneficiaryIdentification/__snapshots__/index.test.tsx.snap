@@ -37,7 +37,7 @@ exports[`Model Plan Beneficiaries matches snapshot 1`] = `
         aria-current="page"
         class="usa-breadcrumb__list-item usa-current"
       >
-        breadcrumb
+        Beneficiaries
       </li>
     </ol>
   </nav>
@@ -387,8 +387,10 @@ exports[`Model Plan Beneficiaries matches snapshot 1`] = `
                   class="usa-textarea height-15"
                   data-testid="beneficiaries-dual-eligibility-how"
                   id="beneficiaries-dual-eligibility-how"
-                  name="beneficiaries-dual-eligibility-how"
-                />
+                  name="treatDualElligibleDifferentHow"
+                >
+                  This is how
+                </textarea>
               </div>
               <div
                 class="usa-radio"
@@ -498,8 +500,10 @@ exports[`Model Plan Beneficiaries matches snapshot 1`] = `
                   class="usa-textarea height-15"
                   data-testid="beneficiaries-exclude-criteria"
                   id="beneficiaries-exclude-criteria"
-                  name="beneficiaries-exclude-criteria"
-                />
+                  name="excludeCertainCharacteristicsCriteria"
+                >
+                  Exclude
+                </textarea>
               </div>
               <div
                 class="usa-radio"
