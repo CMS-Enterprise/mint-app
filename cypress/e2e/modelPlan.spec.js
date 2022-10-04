@@ -264,4 +264,16 @@ describe('The Model Plan Form', () => {
     });
     cy.get('.mint-tag').contains('Cleared');
   });
+
+  it('favorites and unfavorites a model plan', () => {
+    cy.visit('/models');
+
+    cy.contains('tr', 'Empty Plan').find(
+      'th button svg[data-cy="unfavorited"]'
+    );
+
+    cy.contains('tr', 'Empty Plan').find('th button').click();
+
+    cy.contains('tr', 'Empty Plan').find('th button svg[data-cy="favorited"]');
+  });
 });

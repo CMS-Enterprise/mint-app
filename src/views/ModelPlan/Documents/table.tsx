@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useFilters, usePagination, useSortBy, useTable } from 'react-table';
-import { useApolloClient, useMutation, useQuery } from '@apollo/client';
+import { useMutation, useQuery } from '@apollo/client';
 import { Button, Table as UswdsTable } from '@trussworks/react-uswds';
 import { DateTime } from 'luxon';
 
@@ -10,13 +10,13 @@ import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import DeleteModelPlanDocument from 'queries/Documents/DeleteModelPlanDocument';
-import GetPlanDocumentByModelID from 'queries/Documents/GetPlanDocumentByModelID';
-import GetPlanDocumentDownloadURL from 'queries/Documents/GetPlanDocumentDownloadURL';
+import GetModelPlanDocuments from 'queries/Documents/GetModelPlanDocuments';
 import { DeleteModelPlanDocumentVariables } from 'queries/Documents/types/DeleteModelPlanDocument';
 import {
-  GetModelPlanDocumentByModelID as GetModelPlanDocumentByModelIDType,
-  GetModelPlanDocumentByModelID_readPlanDocumentByModelID as PlanDocumentByModelIDType
-} from 'queries/Documents/types/GetModelPlanDocumentByModelID';
+  GetModelPlanDocuments as GetModelPlanDocumentsType,
+  GetModelPlanDocuments_modelPlan_documents as DocumentType,
+  GetModelPlanDocumentsVariables
+} from 'queries/Documents/types/GetModelPlanDocuments';
 import downloadFile from 'utils/downloadFile';
 import globalTableFilter from 'utils/globalTableFilter';
 import { translateDocumentType } from 'utils/modelPlan';
@@ -43,19 +43,16 @@ const PlanDocumentsTable = ({
   setDocumentStatus
 }: PlanDocumentsTableProps) => {
   const { t } = useTranslation('documents');
-  const {
-    error,
-    loading,
-    data: documents,
-    refetch: refetchDocuments
-  } = useQuery<GetModelPlanDocumentByModelIDType>(GetPlanDocumentByModelID, {
+  const { error, loading, data, refetch: refetchDocuments } = useQuery<
+    GetModelPlanDocumentsType,
+    GetModelPlanDocumentsVariables
+  >(GetModelPlanDocuments, {
     variables: {
       id: modelID
     }
   });
 
-  const data = (documents?.readPlanDocumentByModelID ??
-    []) as PlanDocumentByModelIDType[];
+  const documents = data?.modelPlan?.documents || ([] as DocumentType[]);
 
   if (loading) {
     return <PageLoading />;
@@ -78,11 +75,12 @@ const PlanDocumentsTable = ({
 
   return (
     <Table
-      data={data}
+      data={documents}
       hiddenColumns={hiddenColumns}
       refetch={refetchDocuments}
       setDocumentMessage={setDocumentMessage}
       setDocumentStatus={setDocumentStatus}
+      isCollaborator={data?.modelPlan.isCollaborator}
     />
   );
 };
@@ -90,11 +88,12 @@ const PlanDocumentsTable = ({
 export default PlanDocumentsTable;
 
 type TableProps = {
-  data: PlanDocumentByModelIDType[];
+  data: DocumentType[];
   hiddenColumns?: string[];
   refetch: () => any | undefined;
   setDocumentMessage: (value: string) => void;
   setDocumentStatus: (value: DocumentStatusType) => void;
+  isCollaborator?: boolean;
 };
 
 const Table = ({
@@ -102,13 +101,13 @@ const Table = ({
   hiddenColumns,
   refetch,
   setDocumentMessage,
-  setDocumentStatus
+  setDocumentStatus,
+  isCollaborator
 }: TableProps) => {
   const { t } = useTranslation('documents');
-  const client = useApolloClient();
   const [isModalOpen, setModalOpen] = useState(false);
-  const [fileToRemove, setFileToRemove] = useState<PlanDocumentByModelIDType>(
-    {} as PlanDocumentByModelIDType
+  const [fileToRemove, setFileToRemove] = useState<DocumentType>(
+    {} as DocumentType
   );
 
   const [mutate] = useMutation<DeleteModelPlanDocumentVariables>(
@@ -116,18 +115,10 @@ const Table = ({
   );
 
   const handleDelete = useMemo(() => {
-    return (file: PlanDocumentByModelIDType) => {
+    return (file: DocumentType) => {
       mutate({
         variables: {
-          // TODO - update inout variables pending BE changes to delete by ID only
-          input: {
-            id: file.id,
-            modelPlanID: file.modelPlanID,
-            documentParameters: {
-              fileSize: file.fileSize
-            },
-            url: ''
-          }
+          id: file.id
         }
       })
         .then(response => {
@@ -183,18 +174,14 @@ const Table = ({
   };
 
   const handleDownload = useMemo(() => {
-    return (file: PlanDocumentByModelIDType) => {
+    return (file: DocumentType) => {
       if (!file.fileName || !file.fileType) return;
       downloadFile({
-        client,
-        fileID: file.id,
         fileType: file.fileType,
         fileName: file.fileName,
-        query: GetPlanDocumentDownloadURL,
-        queryType: 'planDocumentDownloadURL',
-        urlKey: 'presignedURL'
+        downloadURL: file.downloadUrl!
       })
-        .then((downloadURL: string) => {}) // TODO: Returning download URL for cypress testing
+        .then()
         .catch((error: any) => {
           if (error) {
             setDocumentMessage(error);
@@ -202,7 +189,7 @@ const Table = ({
           }
         });
     };
-  }, [client, setDocumentMessage, setDocumentStatus]);
+  }, [setDocumentMessage, setDocumentStatus]);
 
   const columns = useMemo(() => {
     return [
@@ -246,18 +233,20 @@ const Table = ({
                 >
                   {t('documentTable.view')}
                 </Button>
-                <Button
-                  type="button"
-                  unstyled
-                  className="text-red"
-                  data-testid="remove-document"
-                  onClick={() => {
-                    setModalOpen(true);
-                    setFileToRemove(row.original);
-                  }}
-                >
-                  {t('documentTable.remove')}
-                </Button>
+                {isCollaborator && (
+                  <Button
+                    type="button"
+                    unstyled
+                    className="text-red"
+                    data-testid="remove-document"
+                    onClick={() => {
+                      setModalOpen(true);
+                      setFileToRemove(row.original);
+                    }}
+                  >
+                    {t('documentTable.remove')}
+                  </Button>
+                )}
               </>
             ) : (
               t('documentTable.virusFound')
@@ -330,7 +319,7 @@ const Table = ({
                       {...column.getSortByToggleProps()}
                     >
                       {column.render('Header')}
-                      {getHeaderSortIcon(column)}
+                      {getHeaderSortIcon(column, false)}
                     </button>
                   </th>
                 ))}

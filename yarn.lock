@@ -2,7 +2,7 @@
 # yarn lockfile v1
 
 
-"@apollo/client@^3.6.9":
+"@apollo/client@^3.6.6", "@apollo/client@^3.6.9":
   version "3.6.9"
   resolved "https://registry.yarnpkg.com/@apollo/client/-/client-3.6.9.tgz#ad0ee2e3a3c92dbed4acd6917b6158a492739d94"
   integrity sha512-Y1yu8qa2YeaCUBVuw08x8NHenFi0sw2I3KCu7Kw9mDSu86HmmtHJkCAifKVrN2iPgDTW/BbP3EpSV8/EQCcxZA==
@@ -3578,6 +3578,15 @@
   resolved "https://registry.yarnpkg.com/@trussworks/react-uswds/-/react-uswds-2.8.0.tgz#f9ccd642db6ee01b18a1abeb190a5473d471ecf7"
   integrity sha512-M8TPJobIzU4fGy+pMXurrVd5Ak+sjj0BCIrtxggSSLPMKscgtvVndAdY5uBZ/UHGkx4IaV0vskvTPvX7PH82bw==
 
+"@types/apollo-upload-client@^17.0.1":
+  version "17.0.1"
+  resolved "https://registry.yarnpkg.com/@types/apollo-upload-client/-/apollo-upload-client-17.0.1.tgz#7aca38e160097162024d7b427d66168c3874ab1d"
+  integrity sha512-8+JEhQdfDcauKnRhpedDAhlJoSD9hv+AJwYF3GvG7SusoGzHuoWlOsJbQXK1p1n+WJYHD4BNAZ+HtpGeIVMrpw==
+  dependencies:
+    "@apollo/client" "^3.6.6"
+    "@types/extract-files" "*"
+    graphql "14 - 16"
+
 "@types/aria-query@^4.2.0":
   version "4.2.1"
   resolved "https://registry.yarnpkg.com/@types/aria-query/-/aria-query-4.2.1.tgz#78b5433344e2f92e8b306c06a5622c50c245bf6b"
@@ -3671,6 +3680,11 @@
   resolved "https://registry.yarnpkg.com/@types/estree/-/estree-0.0.39.tgz#e177e699ee1b8c22d23174caaa7422644389509f"
   integrity sha512-EYNwp3bU+98cpU4lAWYYL7Zz+2gryWH1qbdDTidVd6hkiR6weksdbMadyXKXNPEkQFhXM+hVO9ZygomHXp+AIw==
 
+"@types/extract-files@*":
+  version "8.1.1"
+  resolved "https://registry.yarnpkg.com/@types/extract-files/-/extract-files-8.1.1.tgz#11b67e795ad2c8b483431e8d4f190db2fd22944b"
+  integrity sha512-dMJJqBqyhsfJKuK7p7HyyNmki7qj1AlwhUKWx6KrU7i1K2T2SPsUsSUTWFmr/sEM1q8rfR8j5IyUmYrDbrhfjQ==
+
 "@types/glob-base@^0.3.0":
   version "0.3.0"
   resolved "https://registry.yarnpkg.com/@types/glob-base/-/glob-base-0.3.0.tgz#a581d688347e10e50dd7c17d6f2880a10354319d"
@@ -3752,6 +3766,13 @@
   version "7.0.7"
   resolved "https://registry.yarnpkg.com/@types/json-schema/-/json-schema-7.0.7.tgz#98a993516c859eb0d5c4c8f098317a9ea68db9ad"
   integrity sha512-cxWFQVseBm6O9Gbw1IWb8r6OS4OhSt3hPZLkFApLjM8TEXROBuQGLAH2i2gZpcXdLBIrpXuTDhH7Vbm1iXmNGA==
+
+"@types/json2csv@^5.0.3":
+  version "5.0.3"
+  resolved "https://registry.yarnpkg.com/@types/json2csv/-/json2csv-5.0.3.tgz#759514772a90e35b08c10808dedeaf52248af418"
+  integrity sha512-ZJEv6SzhPhgpBpxZU4n/TZekbZqI4EcyXXRwms1lAITG2kIAtj85PfNYafUOY1zy8bWs5ujaub0GU4copaA0sw==
+  dependencies:
+    "@types/node" "*"
 
 "@types/json5@^0.0.29":
   version "0.0.29"
@@ -4884,6 +4905,13 @@ apollo-server-errors@^2.0.2:
   version "2.4.2"
   resolved "https://registry.yarnpkg.com/apollo-server-errors/-/apollo-server-errors-2.4.2.tgz#1128738a1d14da989f58420896d70524784eabe5"
   integrity sha512-FeGxW3Batn6sUtX3OVVUm7o56EgjxDlmgpTLNyWcLb0j6P8mw9oLNyAm3B+deHA4KNdNHO5BmHS2g1SJYjqPCQ==
+
+apollo-upload-client@^17.0.0:
+  version "17.0.0"
+  resolved "https://registry.yarnpkg.com/apollo-upload-client/-/apollo-upload-client-17.0.0.tgz#d9baaff8d14e54510de9f2855b487e75ca63b392"
+  integrity sha512-pue33bWVbdlXAGFPkgz53TTmxVMrKeQr0mdRcftNY+PoHIdbGZD0hoaXHvO6OePJAkFz7OiCFUf98p1G/9+Ykw==
+  dependencies:
+    extract-files "^11.0.0"
 
 apollo-utilities@^1.3.0:
   version "1.3.4"
@@ -6636,7 +6664,7 @@ commander@^5.1.0:
   resolved "https://registry.yarnpkg.com/commander/-/commander-5.1.0.tgz#46abbd1652f8e059bddaef99bbdcb2ad9cf179ae"
   integrity sha512-P0CysNDQ7rtVw4QIQtm+MRxV66vKFSvlsQvGYXZWR3qFU0jlMKHZZZgw8e+8DSah4UDKMqnknRDQz+xuQXQ/Zg==
 
-commander@^6.2.1:
+commander@^6.1.0, commander@^6.2.1:
   version "6.2.1"
   resolved "https://registry.yarnpkg.com/commander/-/commander-6.2.1.tgz#0792eb682dfbc325999bb2b84fddddba110ac73c"
   integrity sha512-U7VdrJFnJgo4xjrHpTzu0yrHPGImdsmD95ZlgYSEajAn2JKzDhDTPG9kBTefmObL2w/ngeZnilk+OV9CG3d7UA==
@@ -8817,6 +8845,11 @@ extglob@^2.0.4:
     snapdragon "^0.8.1"
     to-regex "^3.0.1"
 
+extract-files@^11.0.0:
+  version "11.0.0"
+  resolved "https://registry.yarnpkg.com/extract-files/-/extract-files-11.0.0.tgz#b72d428712f787eef1f5193aff8ab5351ca8469a"
+  integrity sha512-FuoE1qtbJ4bBVvv94CC7s0oTnKUGvQs+Rjf1L2SJFfS+HTVVjhPFtehPdQ0JiGPqVNfSSZvL5yzHHQq2Z4WNhQ==
+
 extract-stack@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/extract-stack/-/extract-stack-1.0.0.tgz#b97acaf9441eea2332529624b732fc5a1c8165fa"
@@ -9761,6 +9794,11 @@ graphql-tag@^2.12.6:
   integrity sha512-FdSNcu2QQcWnM2VNvSCCDCVS5PpPqpzgFT8+GXzqJuoDd0CBncxCY278u4mhRO7tMgo2JjgJA5aZ+nWSQ/Z+xg==
   dependencies:
     tslib "^2.1.0"
+
+"graphql@14 - 16":
+  version "16.6.0"
+  resolved "https://registry.yarnpkg.com/graphql/-/graphql-16.6.0.tgz#c2dcffa4649db149f6282af726c8c83f1c7c5fdb"
+  integrity sha512-KPIBPDlW7NxrbT/eh4qPXz5FiFdL5UbaA0XUNz2Rp3Z3hqBSkbj0GVjwFDztsWVauZUWsbKHgMg++sk8UX0bkw==
 
 "graphql@14.0.2 - 14.2.0 || ^14.3.1 || ^15.0.0":
   version "15.4.0"
@@ -11789,6 +11827,15 @@ json-stringify-safe@^5.0.1, json-stringify-safe@~5.0.1:
   resolved "https://registry.yarnpkg.com/json-stringify-safe/-/json-stringify-safe-5.0.1.tgz#1296a2d58fd45f19a0f6ce01d65701e2c735b6eb"
   integrity sha1-Epai1Y/UXxmg9s4B1lcB4sc1tus=
 
+json2csv@^5.0.7:
+  version "5.0.7"
+  resolved "https://registry.yarnpkg.com/json2csv/-/json2csv-5.0.7.tgz#f3a583c25abd9804be873e495d1e65ad8d1b54ae"
+  integrity sha512-YRZbUnyaJZLZUJSRi2G/MqahCyRv9n/ds+4oIetjDF3jWQA7AG7iSeKTiZiCNqtMZM7HDyt0e/W6lEnoGEmMGA==
+  dependencies:
+    commander "^6.1.0"
+    jsonparse "^1.3.1"
+    lodash.get "^4.4.2"
+
 json2mq@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/json2mq/-/json2mq-0.2.0.tgz#b637bd3ba9eabe122c83e9720483aeb10d2c904a"
@@ -11837,6 +11884,16 @@ jsonfile@^6.0.1:
     universalify "^2.0.0"
   optionalDependencies:
     graceful-fs "^4.1.6"
+
+jsonify@~0.0.0:
+  version "0.0.0"
+  resolved "https://registry.yarnpkg.com/jsonify/-/jsonify-0.0.0.tgz#2c74b6ee41d93ca51b7b5aaee8f503631d252a73"
+  integrity sha1-LHS27kHZPKUbe1qu6PUDYx0lKnM=
+
+jsonparse@^1.2.0, jsonparse@^1.3.1:
+  version "1.3.1"
+  resolved "https://registry.yarnpkg.com/jsonparse/-/jsonparse-1.3.1.tgz#3f4dae4a91fac315f71062f8521cc239f1366280"
+  integrity sha1-P02uSpH6wxX3EGL4UhzCOfE2YoA=
 
 jsonpath-plus@^6.0.1:
   version "6.0.1"
@@ -12185,7 +12242,7 @@ lodash.flattendeep@^4.4.0:
   resolved "https://registry.yarnpkg.com/lodash.flattendeep/-/lodash.flattendeep-4.4.0.tgz#fb030917f86a3134e5bc9bec0d69e0013ddfedb2"
   integrity sha1-+wMJF/hqMTTlvJvsDWngAT3f7bI=
 
-lodash.get@^4:
+lodash.get@^4, lodash.get@^4.4.2:
   version "4.4.2"
   resolved "https://registry.yarnpkg.com/lodash.get/-/lodash.get-4.4.2.tgz#2d177f652fa31e939b4438d5341499dfa3825e99"
   integrity sha1-LRd/ZS+jHpObRDjVNBSZ36OCXpk=
@@ -15046,11 +15103,6 @@ react-colorful@^5.1.2:
   version "5.2.2"
   resolved "https://registry.yarnpkg.com/react-colorful/-/react-colorful-5.2.2.tgz#0a69d0648db47e51359d343854d83d250a742243"
   integrity sha512-Xdb1Rl6lZ5SMdNBH59eE0lGqR1g2LVD8IgPlw0WeMDrOC65lYI8fgMEwj/0dDpVRVMh5qp73ciISDst/t2O2iQ==
-
-react-csv@^2.0.3:
-  version "2.0.3"
-  resolved "https://registry.yarnpkg.com/react-csv/-/react-csv-2.0.3.tgz#f5d17a3c71107d9bcbe580049350200debdc042a"
-  integrity sha512-exyAdFLAxtuM4wNwLYrlKyPYLiJ7e0mv9tqPAd3kq+k1CiJFtznevR3yP0icv5q/y200w+lzNgi7TQn1Wrhu0w==
 
 react-dev-utils@^11.0.3:
   version "11.0.4"

@@ -5,13 +5,19 @@ import { render, screen, waitFor, within } from '@testing-library/react';
 
 import GetModelSummary from 'queries/ReadOnly/GetModelSummary';
 import { GetModelSummary_modelPlan as GetModelSummaryTypes } from 'queries/ReadOnly/types/GetModelSummary';
-import { KeyCharacteristic, ModelStatus } from 'types/graphql-global-types';
+import {
+  KeyCharacteristic,
+  ModelStatus,
+  TeamRole
+} from 'types/graphql-global-types';
 import { translateKeyCharacteristics } from 'utils/modelPlan';
 
 import ReadOnly from './index';
 
 const mockData: GetModelSummaryTypes = {
   __typename: 'ModelPlan',
+  id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905',
+  isFavorite: false,
   modelName: 'Testing Model Summary',
   modifiedDts: '2022-08-27T04:00:00Z',
   status: ModelStatus.PLAN_DRAFT,
@@ -25,7 +31,11 @@ const mockData: GetModelSummaryTypes = {
     keyCharacteristics: [KeyCharacteristic.EPISODE_BASED]
   },
   collaborators: [
-    { __typename: 'PlanCollaborator', fullName: 'First Collaborator' }
+    {
+      __typename: 'PlanCollaborator',
+      fullName: 'First Collaborator',
+      teamRole: TeamRole.MODEL_LEAD
+    }
   ]
 };
 
@@ -38,7 +48,6 @@ const mock = [
     result: {
       data: {
         modelPlan: {
-          id: 'ce3405a0-3399-4e3a-88d7-3cfc613d2905',
           ...mockData
         }
       }
@@ -129,7 +138,7 @@ describe('Read Only Model Plan Summary', () => {
       );
 
       await waitFor(() => {
-        expect(screen.getByTestId('tag').textContent).toContain(
+        expect(screen.getAllByTestId('tag')[1].textContent).toContain(
           'ICIP complete'
         );
         expect(screen.getByTestId('alert')).toBeInTheDocument();
@@ -153,7 +162,9 @@ describe('Read Only Model Plan Summary', () => {
       );
 
       await waitFor(() => {
-        expect(screen.getByTestId('tag').textContent).toContain('Cleared');
+        expect(screen.getAllByTestId('tag')[1].textContent).toContain(
+          'Cleared'
+        );
         expect(screen.queryByTestId('alert')).toBeNull();
       });
     });

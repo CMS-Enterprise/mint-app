@@ -13,6 +13,7 @@ import {
 } from '@trussworks/react-uswds';
 import classnames from 'classnames';
 
+import { FavoriteIcon } from 'components/FavoriteCard';
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
@@ -23,21 +24,28 @@ import {
 } from 'components/shared/DescriptionGroup';
 import SectionWrapper from 'components/shared/SectionWrapper';
 import useCheckResponsiveScreen from 'hooks/useCheckMobile';
+import useFavoritePlan from 'hooks/useFavoritePlan';
 import GetModelSummary from 'queries/ReadOnly/GetModelSummary';
 import {
   GetModelSummary as GetModelSummaryType,
   GetModelSummary_modelPlan as GetModelSummaryTypes
 } from 'queries/ReadOnly/types/GetModelSummary';
-import { ModelStatus } from 'types/graphql-global-types';
+import { ModelStatus, TeamRole } from 'types/graphql-global-types';
 import { formatDate } from 'utils/date';
 import { translateKeyCharacteristics } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
 
+import { UpdateFavoriteProps } from '../ModelPlanOverview';
 import TaskListStatus from '../TaskList/_components/TaskListStatus';
 
 import ContactInfo from './_components/ContactInfo';
 import MobileNav from './_components/MobileNav';
 import SideNav from './_components/Sidenav';
+import ReadOnlyGeneralCharacteristics from './GeneralCharacteristics/index';
+import ReadOnlyModelBasics from './ModelBasics/index';
+import ReadOnlyParticipantsAndProviders from './ParticipantsAndProviders/index';
+import ReadOnlyDocuments from './Documents';
+import ReadOnlyTeamInfo from './Team';
 
 import './index.scss';
 
@@ -91,7 +99,7 @@ const ReadOnly = () => {
     }
   });
 
-  const { data, loading, error } = useQuery<GetModelSummaryType>(
+  const { data, loading, error, refetch } = useQuery<GetModelSummaryType>(
     GetModelSummary,
     {
       variables: {
@@ -100,8 +108,23 @@ const ReadOnly = () => {
     }
   );
 
+  const favoriteMutations = useFavoritePlan();
+
+  const handleUpdateFavorite = (
+    modelPlanID: string,
+    type: UpdateFavoriteProps
+  ) => {
+    favoriteMutations[type]({
+      variables: {
+        modelPlanID
+      }
+    }).then(refetch);
+  };
+
   const {
+    id,
     modelName,
+    isFavorite,
     modifiedDts,
     status,
     basics,
@@ -122,24 +145,29 @@ const ReadOnly = () => {
     }
   );
 
-  const formattedModelLeads = collaborators?.map((collaborator, index) => {
-    return `${collaborator.fullName}${
-      index === collaborators.length - 1 ? '' : ', '
-    }`;
-  });
+  const formattedModelLeads = collaborators
+    ?.filter(c => c.teamRole === TeamRole.MODEL_LEAD)
+    .map((collaborator, index) => {
+      return `${collaborator.fullName}${
+        index ===
+        collaborators.filter(c => c.teamRole === TeamRole.MODEL_LEAD).length - 1
+          ? ''
+          : ', '
+      }`;
+    });
 
   const subComponents: subComponentsProps = {
     'model-basics': {
       route: `/models/${modelID}/read-only/model-basics`,
-      component: <h1>modelBasics</h1>
+      component: <ReadOnlyModelBasics modelID={modelID} />
     },
     'general-characteristics': {
       route: `/models/${modelID}/read-only/general-characteristics`,
-      component: <h1>generalCharacteristics</h1>
+      component: <ReadOnlyGeneralCharacteristics modelID={modelID} />
     },
     'participants-and-providers': {
       route: `/models/${modelID}/read-only/participants-and-providers`,
-      component: <h1>participantsAndProviders</h1>
+      component: <ReadOnlyParticipantsAndProviders modelID={modelID} />
     },
     beneficiaries: {
       route: `/models/${modelID}/read-only/beneficiaries`,
@@ -159,7 +187,7 @@ const ReadOnly = () => {
     },
     team: {
       route: `/models/${modelID}/read-only/team`,
-      component: <h1>team</h1>
+      component: <ReadOnlyTeamInfo modelID={modelID} />
     },
     discussions: {
       route: `/models/${modelID}/read-only/discussions`,
@@ -167,7 +195,7 @@ const ReadOnly = () => {
     },
     documents: {
       route: `/models/${modelID}/read-only/documents`,
-      component: <h1>documents</h1>
+      component: <ReadOnlyDocuments modelID={modelID} />
     },
     'crs-and-tdl': {
       route: `/models/${modelID}/read-only/crs-and-tdl`,
@@ -192,13 +220,21 @@ const ReadOnly = () => {
         data-testid="read-only-model-summary"
       >
         <GridContainer>
-          <UswdsReactLink
-            to="/models"
-            className="display-flex flex-align-center margin-bottom-3"
-          >
-            <IconArrowBack className="text-primary margin-right-1" />
-            {h('back')}
-          </UswdsReactLink>
+          <div className="display-flex flex-justify">
+            <UswdsReactLink
+              to="/models"
+              className="display-flex flex-align-center margin-bottom-3"
+            >
+              <IconArrowBack className="text-primary margin-right-1" />
+              {h('back')}
+            </UswdsReactLink>
+
+            <FavoriteIcon
+              isFavorite={isFavorite}
+              modelPlanID={id}
+              updateFavorite={handleUpdateFavorite}
+            />
+          </div>
 
           <PageHeading className="margin-0 line-height-sans-2">
             {modelName}
@@ -306,7 +342,8 @@ const ReadOnly = () => {
               readOnly
               modelID={modelID}
               status={status}
-              updateLabel={h('updateStatus')}
+              statusLabel
+              updateLabel
               modifiedDts={modifiedDts ?? ''}
             />
           </div>
@@ -337,12 +374,15 @@ const ReadOnly = () => {
                 <GridContainer className="padding-left-0 padding-right-0">
                   <Grid row gap>
                     {/* Central component */}
-                    <Grid desktop={{ col: 8 }}>{subComponent.component}</Grid>
+                    <Grid desktop={{ col: subinfo === 'documents' ? 12 : 8 }}>
+                      {subComponent.component}
+                    </Grid>
                     {/* Contact info sidebar */}
                     <Grid
                       desktop={{ col: 4 }}
                       className={classnames({
-                        'sticky-nav': !isMobile
+                        'sticky-nav': !isMobile,
+                        'desktop:display-none': subinfo === 'documents'
                       })}
                     >
                       <ContactInfo modelID={modelID} />

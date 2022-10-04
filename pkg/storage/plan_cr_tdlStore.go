@@ -28,7 +28,7 @@ var planCrTdlGetSQL string
 var planCrTdlCollectionByModelPlanIDSQL string
 
 // PlanCrTdlCreate creates  returns a plan_cr_tdl object
-func (s *Store) PlanCrTdlCreate(logger *zap.Logger, planCrTdl models.PlanCrTdl) (*models.PlanCrTdl, error) {
+func (s *Store) PlanCrTdlCreate(logger *zap.Logger, planCrTdl *models.PlanCrTdl) (*models.PlanCrTdl, error) {
 
 	if planCrTdl.ID == uuid.Nil {
 		planCrTdl.ID = uuid.New()

@@ -40,7 +40,7 @@ jobs:
         with:
           ref: ${{ env.GIT_HASH }}
       - name: Configure go cache
-        uses: actions/cache@a7c34adf76222e77931dedbf4a45b2e4648ced19
+        uses: actions/cache@ac8075791e805656e71b4ba23325ace9e3421120
         with:
           path: |
             ~/go/pkg/mod
@@ -48,7 +48,7 @@ jobs:
           restore-keys: |
             v1-go-
       - name: Set up go
-        uses: actions/setup-go@84cbf8094393cdc5fe1fe1671ff2647332956b1a
+        uses: actions/setup-go@268d8c0ca0432bb2cf416faae41297df9d262d7f
         with:
           go-version: ${{ env.EASI_APP_GO_VERSION }}
       - name: Login to Docker Hub
@@ -68,6 +68,13 @@ jobs:
         run: docker-compose pull
       - name: Docker Layer Caching
         uses: satackey/action-docker-layer-caching@v0.0.11
+        # Why does this step need to be done, you ask?
+        # docker-compose, by default, allows referenceing other containers in the same network by name, i.e. "minio:9005".
+        # Since the tests are being run outside docker, we need to ensure that the host "minio" is reachable, just like it is in the container.
+        # There's probably a better way to ensure that discrepencies like this don't occur, but this is what is easiest to implement right now, and hey...
+        # Who doesn't like reading a comment like this?
+      - name: Add "minio" to /etc/hosts
+        run: sudo echo "127.0.0.1 minio" | sudo tee -a /etc/hosts
       - name: Run backend server tests
         run: |
           scripts/dev down
@@ -142,7 +149,7 @@ jobs:
         id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn cache dir)"
       - name: Configure yarn cache
-        uses: actions/cache@a7c34adf76222e77931dedbf4a45b2e4648ced19
+        uses: actions/cache@ac8075791e805656e71b4ba23325ace9e3421120
         id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
         with:
           path: |
@@ -219,11 +226,11 @@ jobs:
         with:
           node-version: ${{ env.EASI_APP_NODE_VERSION }}
       - name: Set up go
-        uses: actions/setup-go@84cbf8094393cdc5fe1fe1671ff2647332956b1a
+        uses: actions/setup-go@268d8c0ca0432bb2cf416faae41297df9d262d7f
         with:
           go-version: ${{ env.EASI_APP_GO_VERSION }}
       - name: Configure go cache
-        uses: actions/cache@a7c34adf76222e77931dedbf4a45b2e4648ced19
+        uses: actions/cache@ac8075791e805656e71b4ba23325ace9e3421120
         with:
           path: |
             ~/go/pkg/mod
@@ -234,7 +241,7 @@ jobs:
         id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn cache dir)"
       - name: Configure yarn cache
-        uses: actions/cache@a7c34adf76222e77931dedbf4a45b2e4648ced19
+        uses: actions/cache@ac8075791e805656e71b4ba23325ace9e3421120
         id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
         with:
           path: |
@@ -274,7 +281,7 @@ jobs:
         id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn cache dir)"
       - name: Configure yarn cache
-        uses: actions/cache@a7c34adf76222e77931dedbf4a45b2e4648ced19
+        uses: actions/cache@ac8075791e805656e71b4ba23325ace9e3421120
         id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
         with:
           path: |
@@ -307,7 +314,7 @@ jobs:
         id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn cache dir)"
       - name: Configure yarn cache
-        uses: actions/cache@a7c34adf76222e77931dedbf4a45b2e4648ced19 # v2.1.6
+        uses: actions/cache@ac8075791e805656e71b4ba23325ace9e3421120 # v2.1.6
         id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
         with:
           path: |

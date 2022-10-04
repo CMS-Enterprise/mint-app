@@ -71,7 +71,7 @@ services:
       - LAMBDA_ENDPOINT=http://prince:9001
       - MINIO_ACCESS_KEY=minioadmin
       - MINIO_SECRET_KEY=minioadmin
-      - MINIO_ADDRESS=http://minio:9005
+      - MINIO_ADDRESS
       - SERVER_CERT
       - SERVER_KEY
       - USE_TLS
@@ -102,7 +102,7 @@ services:
   email:
     image: dockage/mailcatcher:0.7.1
     ports:
-      - "1080:1080"
-      - "1025:1025"
+      - "1085:1080"
+      - "1030:1025"
 volumes:
   faktory:

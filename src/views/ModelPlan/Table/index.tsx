@@ -8,7 +8,7 @@ import {
   useTable
 } from 'react-table';
 import { useQuery } from '@apollo/client';
-import { IconFileDownload, Table as UswdsTable } from '@trussworks/react-uswds';
+import { Table as UswdsTable } from '@trussworks/react-uswds';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import PageLoading from 'components/PageLoading';
@@ -22,6 +22,7 @@ import {
   GetModelPlans as GetDraftModelPlansType,
   GetModelPlans_modelPlanCollection as DraftModelPlanType
 } from 'queries/types/GetModelPlans';
+import CsvExportLink from 'utils/export/CsvExportLink';
 import globalTableFilter from 'utils/globalTableFilter';
 import { translateModelPlanStatus } from 'utils/modelPlan';
 import {
@@ -166,15 +167,7 @@ const Table = ({ data, hiddenColumns }: TableProps) => {
         />
 
         <div className="flex-align-self-center">
-          <button
-            className="usa-button usa-button--unstyled easi-no-print display-flex margin-bottom-4 text-no-underline"
-            type="button"
-            // onClick={fetchCSV}
-          >
-            <IconFileDownload />
-            &nbsp;
-            <span className="text-underline">{t('downloadCSV')}</span>
-          </button>
+          <CsvExportLink />
         </div>
       </div>
 
@@ -217,7 +210,7 @@ const Table = ({ data, hiddenColumns }: TableProps) => {
                       {...column.getSortByToggleProps()}
                     >
                       {column.render('Header')}
-                      {getHeaderSortIcon(column)}
+                      {getHeaderSortIcon(column, false)}
                     </button>
                   </th>
                 ))}
