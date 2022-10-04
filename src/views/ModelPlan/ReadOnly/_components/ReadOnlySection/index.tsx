@@ -40,7 +40,9 @@ const ReadOnlySection = ({
             {item === 'Other' && (
               <ul data-testid="other-entry">
                 <li className="font-sans-md line-height-sans-4">
-                  {listOtherItem || <em className="text-base">{t('na')}</em>}
+                  {listOtherItem || (
+                    <em className="text-base">{t('otherNotSpecificed')}</em>
+                  )}
                 </li>
               </ul>
             )}
