@@ -344,6 +344,13 @@ func (r *mutationResolver) DeletePlanCrTdl(ctx context.Context, id uuid.UUID) (*
 	return resolvers.PlanCrTdlDelete(logger, id, principal, r.store)
 }
 
+// AddOrUpdateOperationalNeed is the resolver for the addOrUpdateOperationalNeed field.
+func (r *mutationResolver) AddOrUpdateOperationalNeed(ctx context.Context, modelPlanID uuid.UUID, needType string, changes map[string]interface{}) (*models.OperationalNeed, error) {
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.OperationalNeedInsertOrUpdate(logger, modelPlanID, needType, changes, principal, r.store)
+}
+
 // Solutions is the resolver for the solutions field.
 func (r *operationalNeedResolver) Solutions(ctx context.Context, obj *models.OperationalNeed) ([]*models.OperationalSolution, error) {
 	logger := appcontext.ZLogger(ctx)
