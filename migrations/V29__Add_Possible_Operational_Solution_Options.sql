@@ -1,6 +1,6 @@
 -- INSERT INTO "public"."possible_operational_solution"("id", "full_name", "short_name", "created_by") VALUES(1, 'Other', 'OTHER', 'MINT');
-INSERT INTO "public"."possible_operational_solution"("id", "full_name", "short_name", "created_by") VALUES(1, 'Medicare Advantage Prescription Drug System (MARx)', 'TBD', 'MINT');
-INSERT INTO "public"."possible_operational_solution"("id", "full_name", "short_name", "created_by") VALUES(2, 'Health Plan Management System (HPMS)', 'TBD', 'MINT');
+INSERT INTO "public"."possible_operational_solution"("id", "full_name", "short_name", "created_by") VALUES(1, 'Medicare Advantage Prescription Drug System (MARx)', 'MARX', 'MINT');
+INSERT INTO "public"."possible_operational_solution"("id", "full_name", "short_name", "created_by") VALUES(2, 'Health Plan Management System (HPMS)', 'HPMS', 'MINT');
 INSERT INTO "public"."possible_operational_solution"("id", "full_name", "short_name", "created_by") VALUES(3, 'Salesforce', 'TBD', 'MINT');
 INSERT INTO "public"."possible_operational_solution"("id", "full_name", "short_name", "created_by") VALUES(4, 'Grant Solutions', 'TBD', 'MINT');
 INSERT INTO "public"."possible_operational_solution"("id", "full_name", "short_name", "created_by") VALUES(5, 'Salesforce Request for Application (RFA)', 'TBD', 'MINT');

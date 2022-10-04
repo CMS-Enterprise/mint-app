@@ -15,7 +15,7 @@ import (
 var operationalNeedCollectionByModelPlanIDSQL string
 
 //go:embed SQL/operational_need_get_by_model_plan_id_and_type.sql
-var operationalNeedCollectionByModelPlanIDAndTypeSQL string
+var operationalNeedGetByModelPlanIDAndTypeSQL string
 
 //go:embed SQL/operational_need_insert_or_update.sql
 var operationalNeedInsertOrUpdateSQL string
@@ -46,7 +46,7 @@ func (s *Store) OperationalNeedCollectionGetByModelPlanID(logger *zap.Logger, mo
 func (s *Store) OperationalNeedGetByModelPlanIDAndType(logger *zap.Logger, modelPlanID uuid.UUID, needType string) (*models.OperationalNeed, error) {
 	need := models.OperationalNeed{}
 
-	stmt, err := s.db.PrepareNamed(operationalNeedCollectionByModelPlanIDAndTypeSQL)
+	stmt, err := s.db.PrepareNamed(operationalNeedGetByModelPlanIDAndTypeSQL)
 	if err != nil {
 		return nil, err
 	}
@@ -57,7 +57,7 @@ func (s *Store) OperationalNeedGetByModelPlanIDAndType(logger *zap.Logger, model
 		"need_type":     needType,
 	}
 
-	err = stmt.Get(&need, arg) //this returns more than one
+	err = stmt.Get(&need, arg)
 
 	if err != nil {
 		if err != nil {
@@ -78,14 +78,6 @@ func (s *Store) OperationalNeedInsertOrUpdate(logger *zap.Logger, need *models.O
 	}
 	need.ID = utilityUUID.ValueOrNewUUID(need.ID)
 	need.NeedTypeShortName = needTypeKey // This will set the need type id IN the db
-
-	// var needInstance models.OperationalNeed = *need
-	// arg, err := models.StructToMapDBTag(needInstance) //THIS NEEDS TO MAKE A MAP USING DB field names, not regular field names
-	if err != nil {
-		return nil, genericmodel.HandleModelUpdateError(logger, err, need)
-	}
-
-	// arg["need_type_key"] = needTypeKey
 
 	err = statement.Get(need, need)
 	if err != nil {

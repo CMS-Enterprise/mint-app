@@ -1361,17 +1361,28 @@ type OperationalSolution {
     operationalNeedID: UUID!
 
     solutionType: Int
+    solutionTypeFullName: String!
+    solutionTypeShortName: String!
     solutionOther: String
     pocName: String     
-    pocOther: String
-    mustStartDts: Time!
-    mustFinishDts: Time!
+    pocEmail: String
+    mustStartDts: Time
+    mustFinishDts: Time
     status: OpSolutionStatus!
 
     createdBy: String!
     createdDts: Time!
     modifiedBy: String
     modifiedDts: Time
+}
+
+input OperationalSolutionChanges @goModel(model: "map[string]interface{}"){
+    solutionOther: String # Is this valid?
+    pocName: String     
+    pocEmail: String
+    mustStartDts: Time
+    mustFinishDts: Time
+    status: OpSolutionStatus
 }
 
 """
@@ -1483,6 +1494,9 @@ deletePlanCrTdl(id: UUID!): PlanCrTdl!
 @hasRole(role: MINT_USER)
 
 addOrUpdateOperationalNeed(modelPlanID: UUID!, needType: String! changes: OperationalNeedChanges!): OperationalNeed! #Maybe just pass the values.
+@hasRole(role: MINT_USER)
+
+addOrUpdateOperationalSolution(operationalNeedID: UUID!, solutionType: String! changes: OperationalSolutionChanges!): OperationalSolution! #Maybe just pass the values.
 @hasRole(role: MINT_USER)
 }
 

@@ -42,3 +42,7 @@ ADD CONSTRAINT fk_solution_possible_solution FOREIGN KEY (solution_type)
 REFERENCES public.possible_operational_solution (id) MATCH SIMPLE
 ON UPDATE NO ACTION
 ON DELETE NO ACTION;
+
+
+ALTER TABLE operational_solution
+ADD CONSTRAINT unique_solution_per_need UNIQUE (operational_need_id, solution_type); --TODO update this, this will only allow one other type... Maybe leave other out?
