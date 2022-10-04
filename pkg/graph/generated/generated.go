@@ -6844,15 +6844,6 @@ type AuditChange {
   modifiedDts: Time
 }
 
-# type AuditFields {
-#   AuditField[]
-
-# }
-
-# type AuditField {
-#   old: String
-#   new: String
-# }
 """
 Query definition for the schema
 """
