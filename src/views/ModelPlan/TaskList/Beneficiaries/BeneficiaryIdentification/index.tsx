@@ -332,7 +332,7 @@ const BeneficiaryIdentification = () => {
                                 }
                                 id="beneficiaries-dual-eligibility-how"
                                 data-testid="beneficiaries-dual-eligibility-how"
-                                name="beneficiaries-dual-eligibility-how"
+                                name="treatDualElligibleDifferentHow"
                               />
                             </FieldGroup>
                           )}
@@ -435,7 +435,7 @@ const BeneficiaryIdentification = () => {
                                 }
                                 id="beneficiaries-exclude-criteria"
                                 data-testid="beneficiaries-exclude-criteria"
-                                name="beneficiaries-exclude-criteria"
+                                name="excludeCertainCharacteristicsCriteria"
                               />
                             </FieldGroup>
                           )}
