@@ -33,7 +33,6 @@ func PlanCrTdlCreate(logger *zap.Logger, input *model.PlanCrTdlCreateInput, prin
 	}
 
 	return store.PlanCrTdlCreate(logger, planCrTdl)
-
 }
 
 // PlanCrTdlUpdate updates a plan_cr_tdl record in the database

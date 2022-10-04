@@ -19,9 +19,16 @@ services:
 
   faktory:
     image: contribsys/faktory:latest
+    command: /faktory -b :7419 -w :7420 -e production
     ports:
-      - 0.0.0.0:7419:7419
-      - 0.0.0.0:7420:7420
+      - 7419:7419
+      - 7420:7420
+    environment:
+      - FAKTORY_PASSWORD
+    volumes:
+      - faktory:/var/lib/faktory
+    restart: always
+
   mint:
     environment:
       - CEDAR_API_KEY
@@ -68,6 +75,9 @@ services:
       - SERVER_CERT
       - SERVER_KEY
       - USE_TLS
+      - FAKTORY_PROVIDER=FAKTORY_URL
+      - FAKTORY_URL=tcp://:${FAKTORY_PASSWORD}@faktory:7419
+
     depends_on:
       db_migrate:
         condition: service_completed_successfully # Only start if migrations completed successfully
@@ -94,3 +104,5 @@ services:
     ports:
       - "1080:1080"
       - "1025:1025"
+volumes:
+  faktory:
