@@ -4,6 +4,7 @@ export default gql`
   query GetModelPlanDocuments($id: UUID!) {
     modelPlan(id: $id) {
       id
+      isCollaborator
       documents {
         id
         virusScanned
