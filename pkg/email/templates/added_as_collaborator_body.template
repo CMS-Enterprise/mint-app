@@ -9,9 +9,9 @@
   <body>
     <p>You've been added as a collaborator on {{.ModelName}} in MINT.</p>
 
-    <p><a href="http://mint.cms.gov/models/{{.ModelID}}/task-list"">Start collaborating now</a></p>
+    <p><a href="http://mint.cms.gov/models/{{.ModelID}}/task-list">Start collaborating now</a></p>
 
     <hr/>
-    You're automatically following this model. To stop receiving notifications about this model, <a href="http://mint.cms.gov/unfollow/?modelID={{.ModelID}}>unfollow it</a>.
+    You're automatically following this model. To stop receiving notifications about this model, <a href="http://mint.cms.gov/unfollow/?modelID={{.ModelID}}">unfollow it</a>.
   </body>
 </html>
