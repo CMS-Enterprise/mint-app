@@ -79,12 +79,11 @@ const AppRoutes = () => {
       {/* Model Routes */}
       <SecureRoute path="/models" exact component={ModelPlan} />
 
-      <SecureRoute
-        path="/models/:modelID/read-only"
+      <Redirect
         exact
-        component={ReadOnly}
+        from="/models/:modelID/read-only/"
+        to="/models/:modelID/read-only/model-basics"
       />
-
       <SecureRoute
         path="/models/:modelID/read-only/:subinfo"
         exact
