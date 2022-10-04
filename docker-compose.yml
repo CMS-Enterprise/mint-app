@@ -16,19 +16,6 @@ services:
 
     depends_on:
       - db
-
-  faktory:
-    image: contribsys/faktory:latest
-    command: /faktory -b :7419 -w :7420 -e production
-    ports:
-      - 7419:7419
-      - 7420:7420
-    environment:
-      - FAKTORY_PASSWORD
-    volumes:
-      - faktory:/var/lib/faktory
-    restart: always
-
   mint:
     environment:
       - CEDAR_API_KEY
@@ -104,5 +91,16 @@ services:
     ports:
       - "1085:1080"
       - "1030:1025"
+  faktory:
+    image: contribsys/faktory:latest
+    command: /faktory -b :7419 -w :7420 -e production
+    ports:
+      - 7419:7419
+      - 7420:7420
+    environment:
+      - FAKTORY_PASSWORD
+    volumes:
+      - faktory:/var/lib/faktory
+    restart: always
 volumes:
   faktory:

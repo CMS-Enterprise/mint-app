@@ -8,8 +8,6 @@ import (
 
 	ldclient "gopkg.in/launchdarkly/go-server-sdk.v5"
 
-	faktory "github.com/contribsys/faktory/client"
-
 	"github.com/cmsgov/mint-app/pkg/email"
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/storage"
@@ -26,13 +24,12 @@ import (
 
 // Resolver is a resolver.
 type Resolver struct {
-	store         *storage.Store
-	service       ResolverService
-	s3Client      *upload.S3Client
-	emailClient   *email.Client
-	ldClient      *ldclient.LDClient
-	pubsub        pubsub.PubSub
-	faktoryClient *faktory.Client
+	store       *storage.Store
+	service     ResolverService
+	s3Client    *upload.S3Client
+	emailClient *email.Client
+	ldClient    *ldclient.LDClient
+	pubsub      pubsub.PubSub
 }
 
 // ResolverService holds service methods for use in resolvers
@@ -52,7 +49,6 @@ func NewResolver(
 	emailClient *email.Client,
 	ldClient *ldclient.LDClient,
 	pubsub pubsub.PubSub,
-	faktoryClient *faktory.Client,
 ) *Resolver {
-	return &Resolver{store: store, service: service, s3Client: s3Client, emailClient: emailClient, ldClient: ldClient, pubsub: pubsub, faktoryClient: faktoryClient}
+	return &Resolver{store: store, service: service, s3Client: s3Client, emailClient: emailClient, ldClient: ldClient, pubsub: pubsub}
 }

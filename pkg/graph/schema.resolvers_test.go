@@ -7,7 +7,6 @@ import (
 	"testing"
 
 	"github.com/cmsgov/mint-app/pkg/shared/pubsub"
-	"github.com/cmsgov/mint-app/pkg/worker"
 
 	"github.com/99designs/gqlgen/client"
 	"github.com/99designs/gqlgen/graphql"
@@ -152,13 +151,7 @@ func TestGraphQLTestSuite(t *testing.T) {
 	resolverService.FetchUserInfo = cedarLdapClient.FetchUserInfo
 
 	ps := pubsub.NewServicePubSub()
-
-	faktoryWorker, err := worker.NewClient()
-	if err != nil {
-		t.FailNow()
-	}
-
-	resolver := NewResolver(store, resolverService, &s3Client, &emailClient, ldClient, ps, faktoryWorker)
+	resolver := NewResolver(store, resolverService, &s3Client, &emailClient, ldClient, ps)
 	schema := generated.NewExecutableSchema(generated.Config{Resolvers: resolver, Directives: directives})
 	graphQLClient := client.New(handler.NewDefaultServer(schema))
 

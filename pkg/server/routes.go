@@ -40,7 +40,6 @@ import (
 	"github.com/cmsgov/mint-app/pkg/services"
 	"github.com/cmsgov/mint-app/pkg/storage"
 	"github.com/cmsgov/mint-app/pkg/upload"
-	"github.com/cmsgov/mint-app/pkg/worker"
 )
 
 func (s *Server) routes(
@@ -151,12 +150,6 @@ func (s *Server) routes(
 
 	// gql.Use(requirePrincipalMiddleware)
 
-	// Setup Faktory Client
-	faktoryClient, err := worker.NewClient()
-	if err != nil {
-		s.logger.Fatal("Failed to create faktory client", zap.Error(err))
-	}
-
 	resolver := graph.NewResolver(
 		store,
 		graph.ResolverService{
@@ -167,7 +160,6 @@ func (s *Server) routes(
 		&emailClient,
 		ldClient,
 		s.pubsub,
-		faktoryClient,
 	)
 	gqlDirectives := generated.DirectiveRoot{
 		HasRole: func(ctx context.Context, obj interface{}, next graphql.Resolver, role model.Role) (res interface{}, err error) {
