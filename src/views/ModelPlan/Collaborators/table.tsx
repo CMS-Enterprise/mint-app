@@ -150,7 +150,7 @@ const CollaboratorsTable = ({
                     {...column.getSortByToggleProps()}
                   >
                     {column.render('Header')}
-                    {getHeaderSortIcon(column)}
+                    {getHeaderSortIcon(column, false)}
                   </button>
                 </th>
               ))}

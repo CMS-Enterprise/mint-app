@@ -22,6 +22,13 @@ const mockModel: ModelPlanType = {
     goal: 'The goal',
     __typename: 'PlanBasics'
   },
+  crTdls: [
+    {
+      __typename: 'PlanCrTdl',
+      id: '123',
+      idNumber: 'CR 123'
+    }
+  ],
   collaborators: [
     {
       fullName: 'Test User',
