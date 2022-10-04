@@ -45,6 +45,7 @@ import ReadOnlyGeneralCharacteristics from './GeneralCharacteristics/index';
 import ReadOnlyModelBasics from './ModelBasics/index';
 import ReadOnlyParticipantsAndProviders from './ParticipantsAndProviders/index';
 import ReadOnlyBeneficiaries from './Beneficiaries';
+import ReadOnlyDocuments from './Documents';
 
 import './index.scss';
 
@@ -189,7 +190,7 @@ const ReadOnly = () => {
     },
     documents: {
       route: `/models/${modelID}/read-only/documents`,
-      component: <h1>documents</h1>
+      component: <ReadOnlyDocuments modelID={modelID} />
     },
     'crs-and-tdl': {
       route: `/models/${modelID}/read-only/crs-and-tdl`,
@@ -368,12 +369,15 @@ const ReadOnly = () => {
                 <GridContainer className="padding-left-0 padding-right-0">
                   <Grid row gap>
                     {/* Central component */}
-                    <Grid desktop={{ col: 8 }}>{subComponent.component}</Grid>
+                    <Grid desktop={{ col: subinfo === 'documents' ? 12 : 8 }}>
+                      {subComponent.component}
+                    </Grid>
                     {/* Contact info sidebar */}
                     <Grid
                       desktop={{ col: 4 }}
                       className={classnames({
-                        'sticky-nav': !isMobile
+                        'sticky-nav': !isMobile,
+                        'desktop:display-none': subinfo === 'documents'
                       })}
                     >
                       <ContactInfo modelID={modelID} />
