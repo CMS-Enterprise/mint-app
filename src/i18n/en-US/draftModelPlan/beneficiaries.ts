@@ -1,7 +1,9 @@
 const beneficiaries = {
   heading: 'Beneficiaries',
+  breadcrumb: 'Beneficiaries',
   beneficiaries:
     'Who are the beneficiaries of this model? Select all that apply.',
+  beneficiariesQuestion: 'Who are the beneficiaries of this model?',
   beneficiariesOther:
     'Please describe the other groups this model will impact.',
   beneficiariesOptions: {
@@ -37,6 +39,7 @@ const beneficiaries = {
   },
   chooseBeneficiaries:
     'How will you choose beneficiaries? Select all that apply.',
+  chooseBeneficiariesQuestion: 'How will you choose beneficiaries?',
   selectionMethod: {
     historical: 'Historical claims',
     prospective: 'Assign/capture - prospective',
