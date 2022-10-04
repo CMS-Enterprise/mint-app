@@ -44,8 +44,8 @@ import SideNav from './_components/Sidenav';
 import ReadOnlyGeneralCharacteristics from './GeneralCharacteristics/index';
 import ReadOnlyModelBasics from './ModelBasics/index';
 import ReadOnlyParticipantsAndProviders from './ParticipantsAndProviders/index';
-import ReadOnlyTeamInfo from './Team';
 import ReadOnlyDocuments from './Documents';
+import ReadOnlyTeamInfo from './Team';
 
 import './index.scss';
 
