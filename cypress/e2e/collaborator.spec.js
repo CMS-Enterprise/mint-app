@@ -94,3 +94,33 @@ describe('The Collaborator/Team Member Form', () => {
     });
   });
 });
+
+describe('The Collaborator Acces Control', () => {
+  it('attempts to enter a model plan where not a collaborator', () => {
+    cy.localLogin({ name: 'ABCD', role: 'MINT_USER' });
+
+    cy.visit('/models');
+
+    cy.get('[data-testid="table"] a')
+      .contains('Empty Plan')
+      .then($el => {
+        cy.wrap($el.attr('href')).as('modelPlanURL');
+      });
+
+    cy.get('[data-testid="table"] a').contains('Empty Plan').click();
+
+    cy.location().should(loc => {
+      expect(loc.pathname).to.match(/\/models\/.{36}\/read-only\/model-basics/);
+    });
+
+    cy.get('@modelPlanURL').then(modelPlanURL => {
+      const taskList = modelPlanURL.replace('read-only', 'task-list');
+      cy.visit(taskList);
+      cy.location().should(loc => {
+        expect(loc.pathname).to.match(
+          /\/models\/.{36}\/read-only\/model-basics/
+        );
+      });
+    });
+  });
+});
