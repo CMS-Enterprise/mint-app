@@ -76,7 +76,7 @@ func sendCollaboratorAddedEmail(
 		return err
 	}
 
-	err = emailService.Send(email.DefaultSender, []string{"tom.brooks@oddball.io" /*receiverEmail*/}, nil, emailSubject, "text/html", emailBody)
+	err = emailService.Send(email.DefaultSender, []string{receiverEmail}, nil, emailSubject, "text/html", emailBody)
 	if err != nil {
 		return err
 	}
