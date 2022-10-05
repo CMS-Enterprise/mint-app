@@ -1,6 +1,8 @@
 package worker
 
 import (
+	"fmt"
+
 	faktory_worker "github.com/contribsys/faktory_worker_go"
 )
 
@@ -15,14 +17,19 @@ func Work() {
 	// register jobs here
 	// e.g. mgr.Register("SomeJob", someFunc)
 
-	mgr.Run()
+	err := mgr.Run()
+	if err != nil {
+		fmt.Println(err)
+	}
 }
 
 /*
-	Put registered functions here:
-	e.g.
+Put registered functions here:
+e.g.
+
 	func someFunc(ctx context.Context, args ...interface{}) error {
 		help := faktory_worker.HelperFor(ctx)
+		log.Printf("Working on job %s\n", help.Jid())
 		time.Sleep(1 * time.Second)
 		return nil
 	}
