@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { RootStateOrAny, useSelector } from 'react-redux';
-import { Link, useHistory, useParams } from 'react-router-dom';
+import { Link, Route, Switch, useHistory, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
 import {
   Breadcrumb,
@@ -28,7 +28,9 @@ import {
   GetModelCollaborators,
   GetModelCollaborators_modelPlan_collaborators as GetCollaboratorsType
 } from 'queries/Collaborators/types/GetModelCollaborators';
+import NotFound from 'views/NotFound';
 
+import AddCollaborator from './AddCollaborator';
 import CollaboratorsTable from './table';
 
 // Checking if there is only one collaborator with role of MODEL_LEAD - can't edit or remove if so
@@ -61,7 +63,7 @@ const SuccessRemovalMessage = ({
   );
 };
 
-const Collaborators = () => {
+export const CollaboratorsContent = () => {
   const { modelID } = useParams<{ modelID: string }>();
   const { t: h } = useTranslation('draftModelPlan');
   const { t } = useTranslation('newModel');
@@ -189,7 +191,7 @@ const Collaborators = () => {
             <UswdsReactLink
               className="usa-button margin-bottom-2"
               variant="unstyled"
-              to={`/models/new-plan/${modelID}/add-collaborator`}
+              to={`/models/${modelID}/collaborators/add-collaborator`}
             >
               {t('addTeamMemberButton')}
             </UswdsReactLink>
@@ -221,6 +223,26 @@ const Collaborators = () => {
         </Grid>
       </GridContainer>
     </MainContent>
+  );
+};
+
+const Collaborators = () => {
+  return (
+    <Switch>
+      <Route
+        path="/models/:modelID/collaborators"
+        exact
+        render={() => <CollaboratorsContent />}
+      />
+      <Route
+        path="/models/:modelID/collaborators/add-collaborator/:collaboratorId?"
+        exact
+        render={() => <AddCollaborator />}
+      />
+
+      {/* 404 */}
+      <Route path="*" render={() => <NotFound />} />
+    </Switch>
   );
 };
 
