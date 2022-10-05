@@ -68,6 +68,7 @@ func sendCollaboratorAddedEmail(
 	}
 
 	emailBody, err := emailTemplate.GetExecutedBody(email.AddedAsCollaboratorBodyContent{
+		Host:      email.GetHostName(),
 		ModelName: modelPlan.ModelName,
 		ModelID:   modelPlan.GetModelPlanID().String(),
 	})
@@ -75,8 +76,7 @@ func sendCollaboratorAddedEmail(
 		return err
 	}
 
-	senderEmail := email.DefaultSender
-	err = emailService.Send(senderEmail, []string{receiverEmail}, nil, emailSubject, "text/html", emailBody)
+	err = emailService.Send(email.DefaultSender, []string{"tom.brooks@oddball.io" /*receiverEmail*/}, nil, emailSubject, "text/html", emailBody)
 	if err != nil {
 		return err
 	}
