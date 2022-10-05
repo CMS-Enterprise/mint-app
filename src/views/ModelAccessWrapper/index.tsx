@@ -2,7 +2,7 @@
  * Model Plan Collaborator Access Wrapper
  * Contol access to editor routes is user is not a collaborator on a model plan
  * Reroutes to readonly routes if not collaborator
- * MODEL_ASSESSMENT role is granted edit access to everything
+ * MINT_ASSESSMENT role is granted edit access to everything
  */
 
 import React, { useEffect } from 'react';
