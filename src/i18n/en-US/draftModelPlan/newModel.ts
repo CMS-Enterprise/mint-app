@@ -1,6 +1,7 @@
 const newModel = {
   heading: 'Model name',
   breadcrumb: 'Start a new Model Plan',
+  teamBreadcrumb: 'Add model team members',
   modeName: 'What is the name of your model?',
   modelNameInfo:
     'This is not a permanent name. If needed, you may update it later.',
@@ -38,12 +39,24 @@ const newModel = {
     'Don’t edit a team member and return to the previous page',
   addAnotherMember: 'Add another team member',
   modal: {
-    heading: 'Are you sure you want to remove ',
+    heading: 'Are you sure you want to remove {{-collaborator}}?',
     subheading:
       'This team member will not be able to accesss this model plan after they have been removed.',
     confirm: 'Yes, remove team member',
     no: 'No, keep team member',
     remove: 'Remove'
+  },
+  selfModal: {
+    heading: 'Are you sure you want to remove yourself?',
+    subheading:
+      'You will not be able to access this Model Plan after you have been removed.',
+    confirm: 'Remove yourself',
+    no: 'Keep yourself'
+  },
+  success: {
+    heading: 'Success! You have removed yourself from {{-modelName}}.',
+    message:
+      'If you need to access the Model Plan in the future, please contact a member of the model team or the Model Assessment Team.'
   }
 };
 
