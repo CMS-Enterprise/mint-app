@@ -776,31 +776,6 @@ func (r *planPaymentsResolver) AnticipatedPaymentFrequency(ctx context.Context, 
 	return models.ConvertEnums[models.AnticipatedPaymentFrequencyType](obj.AnticipatedPaymentFrequency), nil
 }
 
-// ID is the resolver for the id field.
-func (r *possibleOperationalNeedResolver) ID(ctx context.Context, obj *models.PossibleOperationalNeed) (uuid.UUID, error) {
-	panic(fmt.Errorf("not implemented: ID - id"))
-}
-
-// NeedType is the resolver for the needType field.
-func (r *possibleOperationalNeedResolver) NeedType(ctx context.Context, obj *models.PossibleOperationalNeed) (*int, error) {
-	panic(fmt.Errorf("not implemented: NeedType - needType"))
-}
-
-// Solutions is the resolver for the solutions field.
-func (r *possibleOperationalNeedResolver) Solutions(ctx context.Context, obj *models.PossibleOperationalNeed) ([]*models.OperationalSolution, error) {
-	panic(fmt.Errorf("not implemented: Solutions - solutions"))
-}
-
-// NeedTypeFullName is the resolver for the needTypeFullName field.
-func (r *possibleOperationalNeedResolver) NeedTypeFullName(ctx context.Context, obj *models.PossibleOperationalNeed) (string, error) {
-	panic(fmt.Errorf("not implemented: NeedTypeFullName - needTypeFullName"))
-}
-
-// NeedTypeShortName is the resolver for the needTypeShortName field.
-func (r *possibleOperationalNeedResolver) NeedTypeShortName(ctx context.Context, obj *models.PossibleOperationalNeed) (string, error) {
-	panic(fmt.Errorf("not implemented: NeedTypeShortName - needTypeShortName"))
-}
-
 // CurrentUser is the resolver for the currentUser field.
 func (r *queryResolver) CurrentUser(ctx context.Context) (*model.CurrentUser, error) {
 	ldUser := flags.Principal(ctx)
@@ -951,11 +926,6 @@ func (r *Resolver) PlanParticipantsAndProviders() generated.PlanParticipantsAndP
 // PlanPayments returns generated.PlanPaymentsResolver implementation.
 func (r *Resolver) PlanPayments() generated.PlanPaymentsResolver { return &planPaymentsResolver{r} }
 
-// PossibleOperationalNeed returns generated.PossibleOperationalNeedResolver implementation.
-func (r *Resolver) PossibleOperationalNeed() generated.PossibleOperationalNeedResolver {
-	return &possibleOperationalNeedResolver{r}
-}
-
 // Query returns generated.QueryResolver implementation.
 func (r *Resolver) Query() generated.QueryResolver { return &queryResolver{r} }
 
@@ -977,20 +947,6 @@ type planITToolsResolver struct{ *Resolver }
 type planOpsEvalAndLearningResolver struct{ *Resolver }
 type planParticipantsAndProvidersResolver struct{ *Resolver }
 type planPaymentsResolver struct{ *Resolver }
-type possibleOperationalNeedResolver struct{ *Resolver }
 type queryResolver struct{ *Resolver }
 type subscriptionResolver struct{ *Resolver }
 type userInfoResolver struct{ *Resolver }
-
-// !!! WARNING !!!
-// The code below was going to be deleted when updating resolvers. It has been copied here so you have
-// one last chance to move it out of harms way if you want. There are two reasons this happens:
-//  - When renaming or deleting a resolver the old code will be put in here. You can safely delete
-//    it when you're done.
-//  - You have helper methods in this file. Move them out to keep these resolver files clean.
-func (r *operationalNeedResolver) NeedTypeFullName(ctx context.Context, obj *models.OperationalNeed) (string, error) {
-	panic(fmt.Errorf("not implemented: NeedTypeFullName - needTypeFullName"))
-}
-func (r *operationalNeedResolver) NeedTypeShortName(ctx context.Context, obj *models.OperationalNeed) (string, error) {
-	panic(fmt.Errorf("not implemented: NeedTypeShortName - needTypeShortName"))
-}

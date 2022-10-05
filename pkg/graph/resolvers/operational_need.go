@@ -19,11 +19,17 @@ func OperationalNeedCollectionGetByModelPlanID(logger *zap.Logger, modelPlanID u
 // OperationalNeedsGetByModelPlanID returns possible and existing OperationalNeeds associated to a model plan
 func OperationalNeedsGetByModelPlanID(logger *zap.Logger, modelPlanID uuid.UUID, store *storage.Store) (*model.OperationalNeeds, error) {
 	opNeeds := model.OperationalNeeds{}
-	needs, err := store.OperationalNeedAndPossibleCollectionGetByModelPlanID(logger, modelPlanID)
+	needs, err := store.OperationalNeedCollectionGetByModelPlanID(logger, modelPlanID)
 	if err != nil {
 		return nil, err
 	}
 	opNeeds.Needs = needs
+
+	posNeeds, err := store.PossibleOperationalNeedCollectionGetByModelPlanID(logger, modelPlanID)
+	if err != nil {
+		return nil, err
+	}
+	opNeeds.PossibleNeeds = posNeeds
 	// result, err := store.OperationalNeedGetByModelPlanID(logger,modelPlanID);
 	return &opNeeds, nil
 }

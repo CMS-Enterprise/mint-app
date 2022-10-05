@@ -14,6 +14,9 @@ import (
 //go:embed SQL/operational_need_and_possible_collection_get_by_model_plan_id.sql
 var operationalNeedAndPossibleCollectionByModelPlanIDSQL string
 
+//go:embed SQL/operational_need_collection_get_by_model_plan_id.sql
+var operationalNeedCollectionByModelPlanIDSQL string
+
 //go:embed SQL/operational_need_get_by_model_plan_id_and_type.sql
 var operationalNeedGetByModelPlanIDAndTypeSQL string
 
@@ -25,6 +28,28 @@ func (s *Store) OperationalNeedAndPossibleCollectionGetByModelPlanID(logger *zap
 	needs := []*models.OperationalNeed{}
 
 	stmt, err := s.db.PrepareNamed(operationalNeedAndPossibleCollectionByModelPlanIDSQL)
+	if err != nil {
+		return nil, err
+	}
+
+	arg := map[string]interface{}{
+
+		"model_plan_id": modelPlanID,
+	}
+
+	err = stmt.Select(&needs, arg) //this returns more than one
+
+	if err != nil {
+		return nil, err
+	}
+	return needs, nil
+}
+
+// OperationalNeedCollectionGetByModelPlanID returns possible and existing OperationalNeeds associated to a model plan
+func (s *Store) OperationalNeedCollectionGetByModelPlanID(logger *zap.Logger, modelPlanID uuid.UUID) ([]*models.OperationalNeed, error) {
+	needs := []*models.OperationalNeed{}
+
+	stmt, err := s.db.PrepareNamed(operationalNeedCollectionByModelPlanIDSQL)
 	if err != nil {
 		return nil, err
 	}

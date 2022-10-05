@@ -81,20 +81,15 @@ type OperationalNeed {
 }
 
 type PossibleOperationalNeed {
-    id: UUID!
-    # modelPlanID: UUID!
+    id: Int!
+    # solutions: [PossibleOperationalSolution!]!
+    fullName: String!
+    shortName: String!
 
-    needType: Int
-    # needOther: String
-    # needed: Boolean!
-    solutions: [OperationalSolution!]!
-    needTypeFullName: String!
-    needTypeShortName: String!
-
-    # createdBy: String!
-    # createdDts: Time!
-    # modifiedBy: String
-    # modifiedDts: Time
+    createdBy: String!
+    createdDts: Time!
+    modifiedBy: String
+    modifiedDts: Time
 }
 
 """
