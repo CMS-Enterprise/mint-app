@@ -11,8 +11,8 @@ import (
 	_ "embed"
 )
 
-//go:embed SQL/operational_need_collection_get_by_model_plan_id.sql
-var operationalNeedCollectionByModelPlanIDSQL string
+//go:embed SQL/operational_need_and_possible_collection_get_by_model_plan_id.sql
+var operationalNeedAndPossibleCollectionByModelPlanIDSQL string
 
 //go:embed SQL/operational_need_get_by_model_plan_id_and_type.sql
 var operationalNeedGetByModelPlanIDAndTypeSQL string
@@ -20,11 +20,11 @@ var operationalNeedGetByModelPlanIDAndTypeSQL string
 //go:embed SQL/operational_need_insert_or_update.sql
 var operationalNeedInsertOrUpdateSQL string
 
-// OperationalNeedCollectionGetByModelPlanID returns possible and existing OperationalNeeds associated to a model plan
-func (s *Store) OperationalNeedCollectionGetByModelPlanID(logger *zap.Logger, modelPlanID uuid.UUID) ([]*models.OperationalNeed, error) {
+// OperationalNeedAndPossibleCollectionGetByModelPlanID returns possible and existing OperationalNeeds associated to a model plan
+func (s *Store) OperationalNeedAndPossibleCollectionGetByModelPlanID(logger *zap.Logger, modelPlanID uuid.UUID) ([]*models.OperationalNeed, error) {
 	needs := []*models.OperationalNeed{}
 
-	stmt, err := s.db.PrepareNamed(operationalNeedCollectionByModelPlanIDSQL)
+	stmt, err := s.db.PrepareNamed(operationalNeedAndPossibleCollectionByModelPlanIDSQL)
 	if err != nil {
 		return nil, err
 	}

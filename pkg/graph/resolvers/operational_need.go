@@ -5,6 +5,7 @@ import (
 	"go.uber.org/zap"
 
 	"github.com/cmsgov/mint-app/pkg/authentication"
+	"github.com/cmsgov/mint-app/pkg/graph/model"
 	"github.com/cmsgov/mint-app/pkg/models"
 	"github.com/cmsgov/mint-app/pkg/storage"
 )
@@ -12,7 +13,19 @@ import (
 // OperationalNeedCollectionGetByModelPlanID returns possible and existing OperationalNeeds associated to a model plan
 func OperationalNeedCollectionGetByModelPlanID(logger *zap.Logger, modelPlanID uuid.UUID, store *storage.Store) ([]*models.OperationalNeed, error) {
 	// result, err := store.OperationalNeedGetByModelPlanID(logger,modelPlanID);
-	return store.OperationalNeedCollectionGetByModelPlanID(logger, modelPlanID)
+	return store.OperationalNeedAndPossibleCollectionGetByModelPlanID(logger, modelPlanID)
+}
+
+// OperationalNeedsGetByModelPlanID returns possible and existing OperationalNeeds associated to a model plan
+func OperationalNeedsGetByModelPlanID(logger *zap.Logger, modelPlanID uuid.UUID, store *storage.Store) (*model.OperationalNeeds, error) {
+	opNeeds := model.OperationalNeeds{}
+	needs, err := store.OperationalNeedAndPossibleCollectionGetByModelPlanID(logger, modelPlanID)
+	if err != nil {
+		return nil, err
+	}
+	opNeeds.Needs = needs
+	// result, err := store.OperationalNeedGetByModelPlanID(logger,modelPlanID);
+	return &opNeeds, nil
 }
 
 // OperationalNeedInsertOrUpdate either inserts or updates an operational need depending on if it exists or notalready

@@ -37,6 +37,11 @@ type NDAInfo struct {
 	AgreedDts *time.Time `json:"agreedDts"`
 }
 
+type OperationalNeeds struct {
+	Needs         []*models.OperationalNeed         `json:"needs"`
+	PossibleNeeds []*models.PossibleOperationalNeed `json:"possibleNeeds"`
+}
+
 // PlanCollaboratorCreateInput represents the data required to create a collaborator on a plan
 type PlanCollaboratorCreateInput struct {
 	ModelPlanID uuid.UUID       `json:"modelPlanID"`

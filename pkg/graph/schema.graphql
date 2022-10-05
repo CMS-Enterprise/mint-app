@@ -54,7 +54,47 @@ type ModelPlan {
   isFavorite: Boolean!
   isCollaborator: Boolean!
   crTdls: [PlanCrTdl!]!
-  operationalNeeds: [OperationalNeed!]!
+  # operationalNeeds: [OperationalNeed!]!
+  operationalNeeds: OperationalNeeds
+}
+
+type OperationalNeeds {
+  needs: [OperationalNeed!]!
+  possibleNeeds: [PossibleOperationalNeed!]!
+}
+
+type OperationalNeed {
+    id: UUID!
+    modelPlanID: UUID!
+
+    needType: Int
+    needOther: String
+    needed: Boolean!
+    solutions: [OperationalSolution!]!
+    needTypeFullName: String!
+    needTypeShortName: String!
+
+    createdBy: String!
+    createdDts: Time!
+    modifiedBy: String
+    modifiedDts: Time
+}
+
+type PossibleOperationalNeed {
+    id: UUID!
+    # modelPlanID: UUID!
+
+    needType: Int
+    # needOther: String
+    # needed: Boolean!
+    solutions: [OperationalSolution!]!
+    needTypeFullName: String!
+    needTypeShortName: String!
+
+    # createdBy: String!
+    # createdDts: Time!
+    # modifiedBy: String
+    # modifiedDts: Time
 }
 
 """
@@ -1333,22 +1373,6 @@ input PlanCrTdlChanges @goModel(model: "map[string]interface{}") {
     note: String
 }
 
-type OperationalNeed {
-    id: UUID!
-    modelPlanID: UUID!
-
-    needType: Int
-    needOther: String
-    needed: Boolean!
-    solutions: [OperationalSolution!]!
-    needTypeFullName: String!
-    needTypeShortName: String!
-
-    createdBy: String!
-    createdDts: Time!
-    modifiedBy: String
-    modifiedDts: Time
-}
 input OperationalNeedChanges @goModel(model: "map[string]interface{}"){
     
     needOther: String
@@ -1494,6 +1518,12 @@ deletePlanCrTdl(id: UUID!): PlanCrTdl!
 @hasRole(role: MINT_USER)
 
 addOrUpdateOperationalNeed(modelPlanID: UUID!, needType: String! changes: OperationalNeedChanges!): OperationalNeed! #Maybe just pass the values.
+@hasRole(role: MINT_USER)
+
+addCustomOperationalNeed(modelPlanID: UUID!, fullName: String!, needed: Boolean! = true): OperationalNeed! #Maybe just pass the values.
+@hasRole(role: MINT_USER)
+
+updateCustomOperationalNeed(needID: UUID!, changes: OperationalNeedChanges): OperationalNeed! #Maybe just pass the values.
 @hasRole(role: MINT_USER)
 
 addOrUpdateOperationalSolution(operationalNeedID: UUID!, solutionType: String! changes: OperationalSolutionChanges!): OperationalSolution! #Maybe just pass the values.

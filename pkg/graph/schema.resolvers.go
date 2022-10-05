@@ -113,9 +113,9 @@ func (r *modelPlanResolver) CrTdls(ctx context.Context, obj *models.ModelPlan) (
 }
 
 // OperationalNeeds is the resolver for the operationalNeeds field.
-func (r *modelPlanResolver) OperationalNeeds(ctx context.Context, obj *models.ModelPlan) ([]*models.OperationalNeed, error) {
+func (r *modelPlanResolver) OperationalNeeds(ctx context.Context, obj *models.ModelPlan) (*model.OperationalNeeds, error) {
 	logger := appcontext.ZLogger(ctx)
-	return resolvers.OperationalNeedCollectionGetByModelPlanID(logger, obj.ID, r.store)
+	return resolvers.OperationalNeedsGetByModelPlanID(logger, obj.ID, r.store)
 }
 
 // CreateModelPlan is the resolver for the createModelPlan field.
@@ -349,6 +349,16 @@ func (r *mutationResolver) AddOrUpdateOperationalNeed(ctx context.Context, model
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 	return resolvers.OperationalNeedInsertOrUpdate(logger, modelPlanID, needType, changes, principal, r.store)
+}
+
+// AddCustomOperationalNeed is the resolver for the addCustomOperationalNeed field.
+func (r *mutationResolver) AddCustomOperationalNeed(ctx context.Context, modelPlanID uuid.UUID, fullName string, needed bool) (*models.OperationalNeed, error) {
+	panic(fmt.Errorf("not implemented: AddCustomOperationalNeed - addCustomOperationalNeed"))
+}
+
+// UpdateCustomOperationalNeed is the resolver for the updateCustomOperationalNeed field.
+func (r *mutationResolver) UpdateCustomOperationalNeed(ctx context.Context, needID uuid.UUID, changes map[string]interface{}) (*models.OperationalNeed, error) {
+	panic(fmt.Errorf("not implemented: UpdateCustomOperationalNeed - updateCustomOperationalNeed"))
 }
 
 // AddOrUpdateOperationalSolution is the resolver for the addOrUpdateOperationalSolution field.
@@ -766,6 +776,31 @@ func (r *planPaymentsResolver) AnticipatedPaymentFrequency(ctx context.Context, 
 	return models.ConvertEnums[models.AnticipatedPaymentFrequencyType](obj.AnticipatedPaymentFrequency), nil
 }
 
+// ID is the resolver for the id field.
+func (r *possibleOperationalNeedResolver) ID(ctx context.Context, obj *models.PossibleOperationalNeed) (uuid.UUID, error) {
+	panic(fmt.Errorf("not implemented: ID - id"))
+}
+
+// NeedType is the resolver for the needType field.
+func (r *possibleOperationalNeedResolver) NeedType(ctx context.Context, obj *models.PossibleOperationalNeed) (*int, error) {
+	panic(fmt.Errorf("not implemented: NeedType - needType"))
+}
+
+// Solutions is the resolver for the solutions field.
+func (r *possibleOperationalNeedResolver) Solutions(ctx context.Context, obj *models.PossibleOperationalNeed) ([]*models.OperationalSolution, error) {
+	panic(fmt.Errorf("not implemented: Solutions - solutions"))
+}
+
+// NeedTypeFullName is the resolver for the needTypeFullName field.
+func (r *possibleOperationalNeedResolver) NeedTypeFullName(ctx context.Context, obj *models.PossibleOperationalNeed) (string, error) {
+	panic(fmt.Errorf("not implemented: NeedTypeFullName - needTypeFullName"))
+}
+
+// NeedTypeShortName is the resolver for the needTypeShortName field.
+func (r *possibleOperationalNeedResolver) NeedTypeShortName(ctx context.Context, obj *models.PossibleOperationalNeed) (string, error) {
+	panic(fmt.Errorf("not implemented: NeedTypeShortName - needTypeShortName"))
+}
+
 // CurrentUser is the resolver for the currentUser field.
 func (r *queryResolver) CurrentUser(ctx context.Context) (*model.CurrentUser, error) {
 	ldUser := flags.Principal(ctx)
@@ -916,6 +951,11 @@ func (r *Resolver) PlanParticipantsAndProviders() generated.PlanParticipantsAndP
 // PlanPayments returns generated.PlanPaymentsResolver implementation.
 func (r *Resolver) PlanPayments() generated.PlanPaymentsResolver { return &planPaymentsResolver{r} }
 
+// PossibleOperationalNeed returns generated.PossibleOperationalNeedResolver implementation.
+func (r *Resolver) PossibleOperationalNeed() generated.PossibleOperationalNeedResolver {
+	return &possibleOperationalNeedResolver{r}
+}
+
 // Query returns generated.QueryResolver implementation.
 func (r *Resolver) Query() generated.QueryResolver { return &queryResolver{r} }
 
@@ -937,6 +977,7 @@ type planITToolsResolver struct{ *Resolver }
 type planOpsEvalAndLearningResolver struct{ *Resolver }
 type planParticipantsAndProvidersResolver struct{ *Resolver }
 type planPaymentsResolver struct{ *Resolver }
+type possibleOperationalNeedResolver struct{ *Resolver }
 type queryResolver struct{ *Resolver }
 type subscriptionResolver struct{ *Resolver }
 type userInfoResolver struct{ *Resolver }
