@@ -10,12 +10,12 @@ INSERT INTO operational_need(
 SELECT
     :id AS id, -- could do gen_random_uuid()
     :model_plan_id AS model_plan_id,
-    possible_operational_need.id AS need_type,
+    (SELECT possible_operational_need.id FROM possible_operational_need WHERE possible_operational_need.short_name = :need_type_short_name) AS need_type,
     :need_other AS need_other,
     :needed AS needed,
     :created_by AS created_by,
     CURRENT_TIMESTAMP AS created_dts
-FROM possible_operational_need WHERE possible_operational_need.short_name = :need_type_short_name
+
 ON CONFLICT(model_plan_id, need_type) DO -- If there is already a record for this, 
 UPDATE
 SET
