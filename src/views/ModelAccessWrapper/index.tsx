@@ -2,9 +2,11 @@
  * Model Plan Collaborator Access Wrapper
  * Contol access to editor routes is user is not a collaborator on a model plan
  * Reroutes to readonly routes if not collaborator
+ * MODEL_ASSESSMENT role is granted edit access to everything
  */
 
 import React, { useEffect } from 'react';
+import { RootStateOrAny, useSelector } from 'react-redux';
 import { useHistory, useLocation } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 
@@ -14,6 +16,7 @@ import {
   GetIsCollaboratorVariables
 } from 'queries/Collaborators/types/GetIsCollaborator';
 import { isUUID } from 'utils/modelPlan';
+import { isAssessment } from 'utils/user';
 
 type ModelAccessWrapperProps = {
   children: React.ReactNode;
@@ -25,6 +28,10 @@ const ModelAccessWrapper = ({ children }: ModelAccessWrapperProps) => {
 
   const modelID: string | undefined = pathname.split('/')[2];
   const validModelID: boolean = isUUID(modelID);
+
+  // Get groups to check is user has MINT_ASSESSMENT role
+  // If so, has full access to both task-list and read-only
+  const { groups } = useSelector((state: RootStateOrAny) => state.auth);
 
   // Checking if user's location is readonly
   // Everything with a modelID and not under the parent 'read-only' route is considered editable
@@ -41,9 +48,16 @@ const ModelAccessWrapper = ({ children }: ModelAccessWrapperProps) => {
 
   const isCollaborator: boolean = data?.modelPlan?.isCollaborator || false;
 
-  // Not collaborator and attempting to access edit routes, reroute to readonly
+  // If not a collaborator/assessment team and attempting to access edit routes, reroute to readonly
   useEffect(() => {
-    if (!isCollaborator && !loading && modelID && validModelID && !readOnly) {
+    if (
+      !isCollaborator &&
+      !loading &&
+      modelID &&
+      validModelID &&
+      !readOnly &&
+      !isAssessment(groups)
+    ) {
       history.replace(`/models/${modelID}/read-only/model-basics`);
     }
   }, [
@@ -53,7 +67,8 @@ const ModelAccessWrapper = ({ children }: ModelAccessWrapperProps) => {
     loading,
     modelID,
     validModelID,
-    readOnly
+    readOnly,
+    groups
   ]);
 
   return <>{children}</>;
