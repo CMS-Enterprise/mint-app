@@ -170,7 +170,7 @@ const ReadOnlyPayments = ({ modelID }: { modelID: string }) => {
         />
       </div>
 
-      {payType && payType?.includes(PayType.CLAIMS_BASED_PAYMENTS) && (
+      {payType?.includes(PayType.CLAIMS_BASED_PAYMENTS) && (
         <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
           <h3>{t('whatWillYouPayOptions.claims')}</h3>
 
@@ -254,10 +254,8 @@ const ReadOnlyPayments = ({ modelID }: { modelID: string }) => {
         </div>
       )}
 
-      {payType &&
-        payType.includes(PayType.CLAIMS_BASED_PAYMENTS) &&
-        payClaims &&
-        payClaims.includes(
+      {payType?.includes(PayType.CLAIMS_BASED_PAYMENTS) &&
+        payClaims?.includes(
           ClaimsBasedPayType.REDUCTIONS_TO_BENEFICIARY_COST_SHARING
         ) && (
           <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
@@ -304,7 +302,7 @@ const ReadOnlyPayments = ({ modelID }: { modelID: string }) => {
           </div>
         )}
 
-      {payType && payType.includes(PayType.NON_CLAIMS_BASED_PAYMENTS) && (
+      {payType?.includes(PayType.NON_CLAIMS_BASED_PAYMENTS) && (
         <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">
           <h3>{t('whatWillYouPayOptions.nonClaims')}</h3>
 
