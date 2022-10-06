@@ -21,7 +21,7 @@ export const translateBoolean = (type: boolean) => {
   }
 };
 
-export const translateBooleanOrNull = (type: boolean | null) => {
+export const translateBooleanOrNull = (type: boolean | null | undefined) => {
   switch (type) {
     case true:
       return i18next.t('draftModelPlan:yes');
@@ -31,6 +31,17 @@ export const translateBooleanOrNull = (type: boolean | null) => {
       return null;
     default:
       return '';
+  }
+};
+
+export const translateNewModel = (type: boolean | null | undefined) => {
+  switch (type) {
+    case true:
+      return i18next.t('generalCharacteristics:newModel');
+    case false:
+      return i18next.t('generalCharacteristics:newTrack');
+    default:
+      return null;
   }
 };
 
