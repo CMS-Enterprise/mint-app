@@ -45,6 +45,7 @@ import ReadOnlyGeneralCharacteristics from './GeneralCharacteristics/index';
 import ReadOnlyModelBasics from './ModelBasics/index';
 import ReadOnlyParticipantsAndProviders from './ParticipantsAndProviders/index';
 import ReadOnlyBeneficiaries from './Beneficiaries';
+import ReadOnlyDiscussions from './Discussions';
 import ReadOnlyDocuments from './Documents';
 import ReadOnlyPayments from './Payments';
 import ReadOnlyTeamInfo from './Team';
@@ -193,7 +194,7 @@ const ReadOnly = () => {
     },
     discussions: {
       route: `/models/${modelID}/read-only/discussions`,
-      component: <h1>discussions</h1>
+      component: <ReadOnlyDiscussions modelID={modelID} />
     },
     documents: {
       route: `/models/${modelID}/read-only/documents`,
