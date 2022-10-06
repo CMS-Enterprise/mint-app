@@ -16,7 +16,7 @@ func OperationalSolutionCollectionGetByOperationalNeedID(logger *zap.Logger, ope
 }
 
 // OperationalSolutionInsertOrUpdate either inserts or updates an operational Solution depending on if it exists or notalready
-func OperationalSolutionInsertOrUpdate(logger *zap.Logger, operationNeedID uuid.UUID, solutionType string, changes map[string]interface{}, principal authentication.Principal, store *storage.Store) (*models.OperationalSolution, error) {
+func OperationalSolutionInsertOrUpdate(logger *zap.Logger, operationNeedID uuid.UUID, solutionType models.OperationalSolutionKey, changes map[string]interface{}, principal authentication.Principal, store *storage.Store) (*models.OperationalSolution, error) {
 
 	existing, err := store.OperationalSolutionGetByOperationNeedIDAndType(logger, operationNeedID, solutionType)
 	if err != nil {

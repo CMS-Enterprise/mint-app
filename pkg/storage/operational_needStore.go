@@ -68,7 +68,7 @@ func (s *Store) OperationalNeedCollectionGetByModelPlanID(logger *zap.Logger, mo
 }
 
 // OperationalNeedGetByModelPlanIDAndType existing OperationalNeed associated to a model plan by id and type
-func (s *Store) OperationalNeedGetByModelPlanIDAndType(logger *zap.Logger, modelPlanID uuid.UUID, needType string) (*models.OperationalNeed, error) {
+func (s *Store) OperationalNeedGetByModelPlanIDAndType(logger *zap.Logger, modelPlanID uuid.UUID, needType models.OperationalNeedKey) (*models.OperationalNeed, error) {
 	need := models.OperationalNeed{}
 
 	stmt, err := s.db.PrepareNamed(operationalNeedGetByModelPlanIDAndTypeSQL)
@@ -96,7 +96,7 @@ func (s *Store) OperationalNeedGetByModelPlanIDAndType(logger *zap.Logger, model
 }
 
 // OperationalNeedInsertOrUpdate either inserts or updates an operational need in the DB
-func (s *Store) OperationalNeedInsertOrUpdate(logger *zap.Logger, need *models.OperationalNeed, needTypeKey string) (*models.OperationalNeed, error) {
+func (s *Store) OperationalNeedInsertOrUpdate(logger *zap.Logger, need *models.OperationalNeed, needTypeKey models.OperationalNeedKey) (*models.OperationalNeed, error) {
 	statement, err := s.db.PrepareNamed(operationalNeedInsertOrUpdateSQL)
 	if err != nil {
 		return nil, genericmodel.HandleModelUpdateError(logger, err, need)

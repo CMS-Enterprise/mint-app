@@ -13,7 +13,7 @@ INSERT INTO "public"."possible_operational_solution"("id", "full_name", "short_n
 INSERT INTO "public"."possible_operational_solution"("id", "full_name", "short_name", "created_by") VALUES(13, 'Through a contractor', 'THROUGH_A_CONTRACTOR', 'MINT');
 INSERT INTO "public"."possible_operational_solution"("id", "full_name", "short_name", "created_by") VALUES(14, 'Accountable Care Organization Operating System (ACO-OS)', 'ACO_OS', 'MINT');
 INSERT INTO "public"."possible_operational_solution"("id", "full_name", "short_name", "created_by") VALUES(15, 'Accountable Care Organization User Interface (ACO UI)', 'ACO_UI', 'MINT');
-INSERT INTO "public"."possible_operational_solution"("id", "full_name", "short_name", "created_by") VALUES(16, '4innovation (4i)', '4I', 'MINT');
+INSERT INTO "public"."possible_operational_solution"("id", "full_name", "short_name", "created_by") VALUES(16, '4innovation (4i)', 'INNOVATION', 'MINT');
 INSERT INTO "public"."possible_operational_solution"("id", "full_name", "short_name", "created_by") VALUES(17, 'Integrated Data Repository (IDR)', 'IDR', 'MINT');
 INSERT INTO "public"."possible_operational_solution"("id", "full_name", "short_name", "created_by") VALUES(18, 'Chronic Conditions Warehouse (CCW)', 'CCW', 'MINT');
 INSERT INTO "public"."possible_operational_solution"("id", "full_name", "short_name", "created_by") VALUES(19, 'Medicare Appeal System', 'MEDICARE_APPEAL_SYSTEM', 'MINT');

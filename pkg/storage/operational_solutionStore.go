@@ -43,7 +43,7 @@ func (s *Store) OperationalSolutionCollectionGetByOperationalNeedID(logger *zap.
 }
 
 // OperationalSolutionGetByOperationNeedIDAndType returns an operational solution that matches by operational need an solutionType
-func (s *Store) OperationalSolutionGetByOperationNeedIDAndType(logger *zap.Logger, operationNeedID uuid.UUID, solutionType string) (*models.OperationalSolution, error) {
+func (s *Store) OperationalSolutionGetByOperationNeedIDAndType(logger *zap.Logger, operationNeedID uuid.UUID, solutionType models.OperationalSolutionKey) (*models.OperationalSolution, error) {
 	solution := models.OperationalSolution{}
 
 	stmt, err := s.db.PrepareNamed(operationalSolutionGetByOperationalNeedIDAndTypeSQL)
@@ -69,7 +69,7 @@ func (s *Store) OperationalSolutionGetByOperationNeedIDAndType(logger *zap.Logge
 }
 
 // OperationalSolutionInsertOrUpdate either inserts or updates an operational solution if it already exists
-func (s *Store) OperationalSolutionInsertOrUpdate(logger *zap.Logger, solution *models.OperationalSolution, solutionTypeKey string) (*models.OperationalSolution, error) {
+func (s *Store) OperationalSolutionInsertOrUpdate(logger *zap.Logger, solution *models.OperationalSolution, solutionTypeKey models.OperationalSolutionKey) (*models.OperationalSolution, error) {
 	statement, err := s.db.PrepareNamed(operationalSolutionInsertOrUpdateSQL)
 	if err != nil {
 		return nil, genericmodel.HandleModelUpdateError(logger, err, solution)

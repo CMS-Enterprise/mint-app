@@ -72,7 +72,7 @@ type OperationalNeed {
     needed: Boolean!
     solutions: [OperationalSolution!]!
     needTypeFullName: String!
-    needTypeShortName: String!
+    needTypeShortName: OperationalNeedKey!
 
     createdBy: String!
     createdDts: Time!
@@ -84,7 +84,7 @@ type PossibleOperationalNeed {
     id: Int!
     # solutions: [PossibleOperationalSolution!]!
     fullName: String!
-    shortName: String!
+    shortName: OperationalNeedKey!
 
     createdBy: String!
     createdDts: Time!
@@ -1381,7 +1381,7 @@ type OperationalSolution {
 
     solutionType: Int
     solutionTypeFullName: String!
-    solutionTypeShortName: String!
+    solutionTypeShortName: OperationalSolutionKey!
     solutionOther: String
     pocName: String     
     pocEmail: String
@@ -1512,7 +1512,7 @@ updatePlanCrTdl(id: UUID!, changes: PlanCrTdlChanges!): PlanCrTdl!
 deletePlanCrTdl(id: UUID!): PlanCrTdl!
 @hasRole(role: MINT_USER)
 
-addOrUpdateOperationalNeed(modelPlanID: UUID!, needType: String! changes: OperationalNeedChanges!): OperationalNeed! #Maybe just pass the values.
+addOrUpdateOperationalNeed(modelPlanID: UUID!, needType: OperationalNeedKey! changes: OperationalNeedChanges!): OperationalNeed! #Maybe just pass the values.
 @hasRole(role: MINT_USER)
 
 addCustomOperationalNeed(modelPlanID: UUID!, fullName: String!, needed: Boolean! = true): OperationalNeed! #Maybe just pass the values.
@@ -1521,7 +1521,7 @@ addCustomOperationalNeed(modelPlanID: UUID!, fullName: String!, needed: Boolean!
 updateCustomOperationalNeed(needID: UUID!, changes: OperationalNeedChanges): OperationalNeed! #Maybe just pass the values.
 @hasRole(role: MINT_USER)
 
-addOrUpdateOperationalSolution(operationalNeedID: UUID!, solutionType: String! changes: OperationalSolutionChanges!): OperationalSolution! #Maybe just pass the values.
+addOrUpdateOperationalSolution(operationalNeedID: UUID!, solutionType: OperationalSolutionKey! changes: OperationalSolutionChanges!): OperationalSolution! #Maybe just pass the values.
 @hasRole(role: MINT_USER)
 }
 
@@ -2131,6 +2131,76 @@ enum OpSolutionStatus {
   AT_RISK
 }
 
+enum OperationalNeedKey{
+  OTHER
+  MANAGE_CD
+  REV_COL_BIDS
+  UPDATE_CONTRACT
+  ADVERTISE_MODEL
+  COL_REV_SCORE_APP
+  APP_SUPPORT_CON
+  COMM_W_PART
+  MANAGE_PROV_OVERLAP
+  MANAGE_BEN_OVERLAP
+  HELPDESK_SUPPORT
+  IDDOC_SUPPORT
+  ESTABLISH_BENCH
+  PROCESS_PART_APPEALS
+  ACQUIRE_AN_EVAL_CONT
+  DATA_TO_MONITOR
+  DATA_TO_SUPPORT_EVAL
+  CLAIMS_BASED_MEASURES
+  QUALITY_PERFORMANCE_SCORES
+  SEND_REPDATA_TO_PART
+  ACQUIRE_A_LEARN_CONT
+  PART_TO_PART_COLLAB
+  EDUCATE_BENEF
+  ADJUST_FFS_CLAIMS
+  MANAGE_FFS_EXCL_PAYMENTS
+  MAKE_NON_CLAIMS_BASED_PAYMENTS
+  COMPUTE_SHARED_SAVINGS_PAYMENT
+  RECOVER_PAYMENTS
+}
+
+enum OperationalSolutionKey{
+  OTHER
+  MARX
+  HPMS
+  SALESFORCE
+  GRANT_SOLUTIONS
+  RFA
+  ARS
+  RMADA
+  OUTLOOK_MAILBOX
+  GOVDELIVERY
+  SALESFORCE_PORTAL
+  MDM
+  CBOSC
+  THROUGH_A_CONTRACTOR
+  ACO_OS
+  ACO_UI
+  INNOVATION
+  IDR
+  CCW
+  MEDICARE_APPEAL_SYSTEM
+  IDOS
+  ISP
+  ANOTHER_CONTRACTOR
+  EXISTING_CMS_DATA_AND_PROCESS
+  NEW_CMMI_PROCESS
+  OTHER_NEW_PROCESS
+  INTERNAL_STAFF
+  CROSS_MODEL_CONTRACT
+  CONNECT
+  OC
+  SHARED_SYSTEMS
+  HIGLAS
+  FFS_COMPETENCY_CENTER
+  APPS
+  IPC
+  MAC
+  RMADA_CONTRACTOR
+}
 directive @hasRole(role: Role!) on FIELD_DEFINITION
 
 # https://gqlgen.com/config/#inline-config-with-directives

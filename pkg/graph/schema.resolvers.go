@@ -345,7 +345,7 @@ func (r *mutationResolver) DeletePlanCrTdl(ctx context.Context, id uuid.UUID) (*
 }
 
 // AddOrUpdateOperationalNeed is the resolver for the addOrUpdateOperationalNeed field.
-func (r *mutationResolver) AddOrUpdateOperationalNeed(ctx context.Context, modelPlanID uuid.UUID, needType string, changes map[string]interface{}) (*models.OperationalNeed, error) {
+func (r *mutationResolver) AddOrUpdateOperationalNeed(ctx context.Context, modelPlanID uuid.UUID, needType models.OperationalNeedKey, changes map[string]interface{}) (*models.OperationalNeed, error) {
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 	return resolvers.OperationalNeedInsertOrUpdate(logger, modelPlanID, needType, changes, principal, r.store)
@@ -362,7 +362,7 @@ func (r *mutationResolver) UpdateCustomOperationalNeed(ctx context.Context, need
 }
 
 // AddOrUpdateOperationalSolution is the resolver for the addOrUpdateOperationalSolution field.
-func (r *mutationResolver) AddOrUpdateOperationalSolution(ctx context.Context, operationalNeedID uuid.UUID, solutionType string, changes map[string]interface{}) (*models.OperationalSolution, error) {
+func (r *mutationResolver) AddOrUpdateOperationalSolution(ctx context.Context, operationalNeedID uuid.UUID, solutionType models.OperationalSolutionKey, changes map[string]interface{}) (*models.OperationalSolution, error) {
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
 	return resolvers.OperationalSolutionInsertOrUpdate(logger, operationalNeedID, solutionType, changes, principal, r.store)

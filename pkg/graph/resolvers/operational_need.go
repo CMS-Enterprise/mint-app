@@ -35,7 +35,7 @@ func OperationalNeedsGetByModelPlanID(logger *zap.Logger, modelPlanID uuid.UUID,
 }
 
 // OperationalNeedInsertOrUpdate either inserts or updates an operational need depending on if it exists or notalready
-func OperationalNeedInsertOrUpdate(logger *zap.Logger, modelPlanID uuid.UUID, needType string, changes map[string]interface{}, principal authentication.Principal, store *storage.Store) (*models.OperationalNeed, error) {
+func OperationalNeedInsertOrUpdate(logger *zap.Logger, modelPlanID uuid.UUID, needType models.OperationalNeedKey, changes map[string]interface{}, principal authentication.Principal, store *storage.Store) (*models.OperationalNeed, error) {
 
 	existing, err := store.OperationalNeedGetByModelPlanIDAndType(logger, modelPlanID, needType)
 	if err != nil {
