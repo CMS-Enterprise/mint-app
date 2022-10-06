@@ -21,7 +21,7 @@ describe('The Model Plan Form', () => {
     cy.contains('button', 'Next').click();
 
     cy.location().should(loc => {
-      expect(loc.pathname).to.match(/\/models\/new-plan\/.{36}\/collaborators/);
+      expect(loc.pathname).to.match(/\/models\/.{36}\/collaborators/);
     });
 
     cy.get('[data-testid="continue-to-tasklist"]').click();
@@ -43,7 +43,7 @@ describe('The Model Plan Form', () => {
     cy.contains('button', 'Next').click();
 
     cy.location().should(loc => {
-      expect(loc.pathname).to.match(/\/models\/new-plan\/.{36}\/collaborators/);
+      expect(loc.pathname).to.match(/\/models\/.{36}\/collaborators/);
     });
     cy.get('[data-testid="continue-to-tasklist"]').click();
     cy.contains('h1', 'Model Plan task list');
@@ -233,7 +233,7 @@ describe('The Model Plan Form', () => {
     cy.contains('button', 'Next').click();
 
     cy.location().should(loc => {
-      expect(loc.pathname).to.match(/\/models\/new-plan\/.{36}\/collaborators/);
+      expect(loc.pathname).to.match(/\/models\/.{36}\/collaborators/);
     });
     cy.get('[data-testid="continue-to-tasklist"]').click();
 

@@ -79,7 +79,7 @@ const Collaborators = () => {
       })
         .then(response => {
           if (!response?.errors) {
-            history.push(`/models/new-plan/${modelID}/collaborators`);
+            history.push(`/models/${modelID}/collaborators`);
           }
         })
         .catch(errors => {
@@ -99,7 +99,7 @@ const Collaborators = () => {
       })
         .then(response => {
           if (!response?.errors) {
-            history.push(`/models/new-plan/${modelID}/collaborators`);
+            history.push(`/models/${modelID}/collaborators`);
           }
         })
         .catch(errors => {
@@ -298,7 +298,7 @@ const Collaborators = () => {
               );
             }}
           </Formik>
-          <UswdsReactLink to={`/models/new-plan/${modelID}/collaborators`}>
+          <UswdsReactLink to={`/models/${modelID}/collaborators`}>
             <span>&larr; </span>{' '}
             {!collaboratorId
               ? t('dontAddTeamMember')
