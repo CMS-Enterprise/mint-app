@@ -40,11 +40,22 @@ const downloadFile = (data: string) => {
   element.click();
 };
 
-export const CsvExportLink = (): React.ReactElement => {
+type CsvExportLinkType = {
+  includeAll: boolean;
+};
+
+export const CsvExportLink = ({
+  includeAll
+}: CsvExportLinkType): React.ReactElement => {
   const { t } = useTranslation('home');
 
   const [fetchModelCSVData] = useLazyQuery<GetAllModelDataType>(
-    GetAllModelPlans
+    GetAllModelPlans,
+    {
+      variables: {
+        includeAll
+      }
+    }
   );
 
   const fetchData = async () => {

@@ -493,3 +493,7 @@ export interface GetAllModelData_modelPlanCollection {
 export interface GetAllModelData {
   modelPlanCollection: GetAllModelData_modelPlanCollection[];
 }
+
+export interface GetAllModelDataVariables {
+  includeAll: boolean;
+}

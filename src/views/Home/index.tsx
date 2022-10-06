@@ -2,12 +2,7 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import {
-  Alert,
-  Grid,
-  GridContainer,
-  SummaryBox
-} from '@trussworks/react-uswds';
+import { Grid, GridContainer, SummaryBox } from '@trussworks/react-uswds';
 import classnames from 'classnames';
 import { useFlags } from 'launchdarkly-react-client-sdk';
 
@@ -38,11 +33,8 @@ const Home = () => {
         <>
           <NDABanner collapsable />
           <GridContainer>
-            {message && (
-              <Alert type="success" slim role="alert" className="margin-top-6">
-                {message}
-              </Alert>
-            )}
+            {message && message}
+
             <Grid>
               <PageHeading>{t('title')}</PageHeading>
               <p className="line-height-body-5 font-body-lg text-light margin-bottom-6">
@@ -73,7 +65,9 @@ const Home = () => {
                     : t('requestsTable.basic.heading')}
                 </h2>
               </div>
-              <DraftModelPlansTable />
+              <DraftModelPlansTable
+                isAssessment={user.isAssessment(userGroups, flags)}
+              />
               <SummaryBox
                 heading=""
                 className="bg-base-lightest border-0 radius-0 padding-2 padding-bottom-3 margin-top-6"

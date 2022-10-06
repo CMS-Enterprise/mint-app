@@ -42,3 +42,7 @@ export interface GetModelPlans_modelPlanCollection {
 export interface GetModelPlans {
   modelPlanCollection: GetModelPlans_modelPlanCollection[];
 }
+
+export interface GetModelPlansVariables {
+  includeAll: boolean;
+}

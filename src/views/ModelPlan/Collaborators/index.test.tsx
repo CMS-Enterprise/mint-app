@@ -1,11 +1,24 @@
 import React from 'react';
+import { Provider } from 'react-redux';
 import { MemoryRouter, Route } from 'react-router-dom';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
+import configureMockStore from 'redux-mock-store';
 
+import { ASSESSMENT } from 'constants/jobCodes';
+import { MessageProvider } from 'hooks/useMessage';
 import GetModelPlanCollaborators from 'queries/Collaborators/GetModelCollaborators';
 
-import Collaborators from './index';
+import { CollaboratorsContent } from './index';
+
+const mockAuthReducer = {
+  isUserSet: true,
+  groups: [ASSESSMENT],
+  euaId: 'ABCD'
+};
+
+const mockStore = configureMockStore();
+const store = mockStore({ auth: mockAuthReducer });
 
 describe('Collaborator/Team Member page w/table', () => {
   const mocks = [
@@ -18,6 +31,7 @@ describe('Collaborator/Team Member page w/table', () => {
         data: {
           modelPlan: {
             id: '123',
+            modelName: 'My Model',
             collaborators: [
               {
                 id: '61c7b30c-969d-4dd4-b13b-a5065f43be43',
@@ -38,13 +52,17 @@ describe('Collaborator/Team Member page w/table', () => {
     render(
       <MemoryRouter
         initialEntries={[
-          'models/new-plan/f11eb129-2c80-4080-9440-439cbe1a286f/collaborators'
+          'models/f11eb129-2c80-4080-9440-439cbe1a286f/collaborators'
         ]}
       >
         <MockedProvider mocks={mocks} addTypename={false}>
-          <Route path="models/new-plan/:modelID/collaborators">
-            <Collaborators />
-          </Route>
+          <Provider store={store}>
+            <MessageProvider>
+              <Route path="models/:modelID/collaborators">
+                <CollaboratorsContent />
+              </Route>
+            </MessageProvider>
+          </Provider>
         </MockedProvider>
       </MemoryRouter>
     );
@@ -64,13 +82,17 @@ describe('Collaborator/Team Member page w/table', () => {
     const { asFragment } = render(
       <MemoryRouter
         initialEntries={[
-          'models/new-plan/f11eb129-2c80-4080-9440-439cbe1a286f/collaborators'
+          'models/f11eb129-2c80-4080-9440-439cbe1a286f/collaborators'
         ]}
       >
         <MockedProvider mocks={mocks} addTypename={false}>
-          <Route path="models/new-plan/:modelID/collaborators">
-            <Collaborators />
-          </Route>
+          <Provider store={store}>
+            <MessageProvider>
+              <Route path="models/:modelID/collaborators">
+                <CollaboratorsContent />
+              </Route>
+            </MessageProvider>
+          </Provider>
         </MockedProvider>
       </MemoryRouter>
     );

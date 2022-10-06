@@ -101,7 +101,6 @@ const AppRoutes = () => {
       <SecureRoute path="/models/new-plan" component={NewPlan} />
       <SecureRoute
         path="/models/:modelID/collaborators"
-        exact
         component={Collaborators}
       />
       <SecureRoute path="/models/:modelID/documents" component={Documents} />
