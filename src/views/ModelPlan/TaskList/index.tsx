@@ -164,9 +164,9 @@ const TaskList = () => {
       className="model-plan-task-list"
       data-testid="model-plan-task-list"
     >
+      <ModelSubNav link="read-only" />
       <GridContainer>
         <Grid desktop={{ col: 12 }}>
-          <ModelSubNav />
           <BreadcrumbBar variant="wrap">
             <Breadcrumb>
               <BreadcrumbLink asCustom={Link} to="/">

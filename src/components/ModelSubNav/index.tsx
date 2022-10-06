@@ -1,38 +1,30 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 
-export const navLinks = () => [
-  {
-    link: '/',
-    label: 'home'
-  },
-  {
-    link: '/models',
-    label: 'models'
-  },
-  {
-    link: '/help',
-    label: 'help'
-  }
-];
+import UswdsReactLink from 'components/LinkWrapper';
 
-const ModelSubNav = () => {
+type ModelSubNavProps = {
+  link: 'task-list' | 'read-only';
+  modelID: string;
+};
+
+const ModelSubNav = ({ link, modelID }: ModelSubNavProps) => {
   const { t } = useTranslation('header');
 
   return (
     <nav
-      aria-label={t('subHeader.body')}
+      aria-label={t('subHeader.label')}
       data-testid="sub-navigation-bar"
-      className="border-top-light"
+      className="position-sticky z-100 top-0 bg-primary-darker text-white padding-105"
     >
       <div className="grid-container">
-        {t('subHeader.link')}
-        {/* <PrimaryNav
-          onClick={() => toggle(false)}
-          mobileExpanded={mobile}
-          aria-label="Primary navigation"
-          items={navItems}
-        /> */}
+        {t('subHeader.body')}{' '}
+        <UswdsReactLink
+          to={`/models/${modelID}/${link}`}
+          className="text-white text-bold"
+        >
+          {t('subHeader.link')}
+        </UswdsReactLink>
       </div>
     </nav>
   );

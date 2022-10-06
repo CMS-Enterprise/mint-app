@@ -11,6 +11,7 @@ const header = {
   systems: 'Systems',
   sandbox: 'Sandbox',
   subHeader: {
+    label: 'Navigation toggle between task list and overview',
     body: 'Want to view a shareable version of this Model Plan?',
     link: 'Go to the Model Plan read view'
   }
