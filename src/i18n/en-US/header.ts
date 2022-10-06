@@ -9,7 +9,11 @@ const header = {
   signIn: 'Sign In',
   signOut: 'Sign Out',
   systems: 'Systems',
-  sandbox: 'Sandbox'
+  sandbox: 'Sandbox',
+  subHeader: {
+    body: 'Want to view a shareable version of this Model Plan?',
+    link: 'Go to the Model Plan read view'
+  }
 };
 
 export default header;
