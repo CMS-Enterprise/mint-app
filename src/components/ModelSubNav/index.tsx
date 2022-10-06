@@ -18,17 +18,21 @@ const ModelSubNav = ({ link, modelID }: ModelSubNavProps) => {
       data-testid="sub-navigation-bar"
       className="position-sticky z-100 top-0 bg-primary-darker text-white padding-105"
     >
-      <div className="grid-container">
+      <div className="grid-container" data-testid="sub-navigation-text">
         {link === 'read-only'
           ? t('subHeader.taskListBody')
           : t('subHeader.readOnlyBody')}{' '}
         <UswdsReactLink
           to={`/models/${modelID}/${link}`}
+          data-testid="sub-navigation-link"
           className="text-white text-bold display-inline-flex margin-left-05"
         >
-          {link === 'read-only'
-            ? t('subHeader.taskListLink')
-            : t('subHeader.readOnlyLink')}{' '}
+          <div data-testid="sub-navigation-link-text">
+            {' '}
+            {link === 'read-only'
+              ? t('subHeader.taskListLink')
+              : t('subHeader.readOnlyLink')}{' '}
+          </div>
           <IconArrowForward className="text-white margin-left-1" />
         </UswdsReactLink>
       </div>
