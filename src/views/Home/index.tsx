@@ -33,7 +33,7 @@ const Home = () => {
         <>
           <NDABanner collapsable />
           <GridContainer>
-            {message && message}
+            {message}
 
             <Grid>
               <PageHeading>{t('title')}</PageHeading>

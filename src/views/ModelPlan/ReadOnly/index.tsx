@@ -16,6 +16,7 @@ import classnames from 'classnames';
 import { FavoriteIcon } from 'components/FavoriteCard';
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
+import ModelSubNav from 'components/ModelSubNav';
 import PageHeading from 'components/PageHeading';
 import CollapsableLink from 'components/shared/CollapsableLink';
 import {
@@ -216,9 +217,10 @@ const ReadOnly = () => {
       className="model-plan-read-only"
       data-testid="model-plan-read-only"
     >
+      <ModelSubNav modelID={modelID} link="task-list" />
       <SummaryBox
         heading=""
-        className="padding-y-6 border-0 bg-primary-lighter"
+        className="padding-y-6 border-0 bg-primary-lighter margin-top-0"
         data-testid="read-only-model-summary"
       >
         <GridContainer>
