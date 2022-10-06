@@ -6851,7 +6851,7 @@ type Query {
   currentUser: CurrentUser!
   modelPlan(id: UUID!): ModelPlan!
   planDocument(id: UUID!): PlanDocument!
-  modelPlanCollection(includeAll: Boolean! = false): [ModelPlan!]!
+  modelPlanCollection(includeAll: Boolean!): [ModelPlan!]!
   existingModelCollection: [ExistingModel!]!
   cedarPersonsByCommonName(commonName: String!): [UserInfo!]!
   planCollaboratorByID(id: UUID!): PlanCollaborator!
