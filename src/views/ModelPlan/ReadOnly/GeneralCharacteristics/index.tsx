@@ -108,10 +108,12 @@ const ReadOnlyGeneralCharacteristics = ({ modelID }: { modelID: string }) => {
           copy={translateNewModel(isNewModel)}
         />
 
-        <ReadOnlySection
-          heading={t('whichExistingModel')}
-          copy={existingModel}
-        />
+        {!isNewModel && (
+          <ReadOnlySection
+            heading={t('whichExistingModel')}
+            copy={existingModel}
+          />
+        )}
 
         <ReadOnlySection
           heading={t('resembleModel')}
