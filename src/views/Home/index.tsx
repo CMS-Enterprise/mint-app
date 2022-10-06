@@ -73,7 +73,9 @@ const Home = () => {
                     : t('requestsTable.basic.heading')}
                 </h2>
               </div>
-              <DraftModelPlansTable />
+              <DraftModelPlansTable
+                isAssessment={user.isAssessment(userGroups, flags)}
+              />
               <SummaryBox
                 heading=""
                 className="bg-base-lightest border-0 radius-0 padding-2 padding-bottom-3 margin-top-6"
