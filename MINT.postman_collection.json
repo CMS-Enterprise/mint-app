@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "8d2821ca-e485-4358-bea0-58db4b47d8de",
+		"_postman_id": "a5cd6241-63b7-4f2a-b183-8801172232ec",
 		"name": "MINT",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "20320964"
+		"_exporter_id": "12341016"
 	},
 	"item": [
 		{
@@ -28,32 +28,7 @@
 							]
 						}
 					},
-					"response": [
-						{
-							"name": "Create Model Plan",
-							"originalRequest": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "graphql",
-									"graphql": {
-										"query": "mutation createModelPlan ($modelName: String!) {\n    createModelPlan (modelName: $modelName) {\n        id\n        modelName\n        archived\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        status\n        isFavorite\n        isCollaborator\n    }\n}",
-										"variables": "{\n  \"modelName\": \"Hooray\"\n}"
-									}
-								},
-								"url": {
-									"raw": "{{url}}",
-									"host": [
-										"{{url}}"
-									]
-								}
-							},
-							"_postman_previewlanguage": null,
-							"header": null,
-							"cookie": [],
-							"body": null
-						}
-					]
+					"response": []
 				},
 				{
 					"name": "Update Model Plan",
@@ -105,8 +80,8 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query modelPlanCollection {\n    modelPlanCollection {\n        id\n        modelName\n        archived\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        status\n        isFavorite\n        isCollaborator\n    }\n}",
-								"variables": "{}"
+								"query": "query modelPlanCollection($includeAll: Boolean!) {\n    modelPlanCollection(includeAll: $includeAll) {\n        id\n        modelName\n        archived\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        status\n        isFavorite\n        isCollaborator\n    }\n}",
+								"variables": "{\n    \"includeAll\": true\n}"
 							}
 						},
 						"url": {
@@ -1134,34 +1109,7 @@
 							]
 						}
 					},
-					"response": [
-						{
-							"name": "GetAuditChanges",
-							"originalRequest": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "graphql",
-									"graphql": {
-										"query": "query auditChanges{\n  auditChanges(tableName: \"model_plan\",primaryKey: \"eb719f40-579a-4c26-9331-b6c71e0fdd37\")\n   {\n        id\n        primaryKey\n        foreignKey\n        tableName\n        action\n        fields\n        modifiedBy\n        modifiedDts\n  }\n}",
-										"variables": "{\n  \"tableName\": \"model_plan\",\n  \"primaryKey\":\"c748e1bb-f70b-4964-983a-66da135da9b8\"\n}"
-									}
-								},
-								"url": {
-									"raw": "{{url}}",
-									"host": [
-										"{{url}}"
-									]
-								}
-							},
-							"status": "OK",
-							"code": 200,
-							"_postman_previewlanguage": "json",
-							"header": null,
-							"cookie": [],
-							"body": "{\n    \"data\": {\n        \"auditChanges\": [\n            {\n                \"id\": 4293,\n                \"primaryKey\": \"c748e1bb-f70b-4964-983a-66da135da9b8\",\n                \"foreignKey\": \"00000000-0000-0000-0000-000000000000\",\n                \"tableName\": \"model_plan\",\n                \"action\": \"I\",\n                \"fields\": {\n                    \"model_name\": {\n                        \"new\": \"Hooray\",\n                        \"old\": null\n                    }\n                },\n                \"modifiedBy\": \"MINT\",\n                \"modifiedDts\": \"2022-09-26T22:14:25.440893Z\"\n            }\n        ]\n    }\n}"
-						}
-					]
+					"response": []
 				},
 				{
 					"name": "ModelPlanGet(NameHistory)",
@@ -1197,32 +1145,7 @@
 							]
 						}
 					},
-					"response": [
-						{
-							"name": "ModelPlanGet(NameHistory)",
-							"originalRequest": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "graphql",
-									"graphql": {
-										"query": "query ModelPlan($id:UUID!){\n  \n  modelPlan(id:$id){\n    id\n    modelName\n    nameHistory\n\n  }\n  \n  \n}",
-										"variables": "{\n    \"id\": \"\"\n}"
-									}
-								},
-								"url": {
-									"raw": "{{url}}",
-									"host": [
-										"{{url}}"
-									]
-								}
-							},
-							"_postman_previewlanguage": null,
-							"header": null,
-							"cookie": [],
-							"body": null
-						}
-					]
+					"response": []
 				}
 			]
 		}

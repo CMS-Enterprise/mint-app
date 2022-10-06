@@ -43,6 +43,7 @@ const mocks = [
       data: {
         modelPlan: {
           id: modelID,
+          modelName: 'My Model',
           collaborators: mockData
         }
       }
