@@ -1,0 +1,11 @@
+.assessment-container {
+    border-radius: 50%;
+
+    @media screen and (max-width: $mobile) {
+        flex: none !important;
+    }
+}
+
+.assessment-icon {
+    top: 3px;
+}
