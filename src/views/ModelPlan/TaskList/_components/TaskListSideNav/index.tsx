@@ -74,6 +74,9 @@ const TaskListSideNav = ({
         className="sidenav-actions border-top-05 border-primary-lighter padding-top-2 margin-top-2"
         data-testid="sidenav-actions"
       >
+        <UswdsReactLink to="/" className="display-block margin-bottom-1">
+          {t('sideNav.saveAndExit')}
+        </UswdsReactLink>
         <Button
           className="line-height-body-5 test-withdraw-request"
           type="button"
