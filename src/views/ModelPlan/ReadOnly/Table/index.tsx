@@ -85,7 +85,9 @@ const Table = ({ data, updateFavorite }: ModelPlansTableProps) => {
         accessor: 'modelName',
         Cell: ({ row, value }: any) => {
           return (
-            <UswdsReactLink to={`/models/${row.original.id}/task-list`}>
+            <UswdsReactLink
+              to={`/models/${row.original.id}/read-only/model-basics`}
+            >
               {value}
             </UswdsReactLink>
           );

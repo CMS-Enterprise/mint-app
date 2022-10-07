@@ -30,7 +30,7 @@ import {
   GetModelSummary as GetModelSummaryType,
   GetModelSummary_modelPlan as GetModelSummaryTypes
 } from 'queries/ReadOnly/types/GetModelSummary';
-import { ModelStatus } from 'types/graphql-global-types';
+import { ModelStatus, TeamRole } from 'types/graphql-global-types';
 import { formatDate } from 'utils/date';
 import { translateKeyCharacteristics } from 'utils/modelPlan';
 import { NotFoundPartial } from 'views/NotFound';
@@ -44,6 +44,10 @@ import SideNav from './_components/Sidenav';
 import ReadOnlyGeneralCharacteristics from './GeneralCharacteristics/index';
 import ReadOnlyModelBasics from './ModelBasics/index';
 import ReadOnlyParticipantsAndProviders from './ParticipantsAndProviders/index';
+import ReadOnlyBeneficiaries from './Beneficiaries';
+import ReadOnlyDocuments from './Documents';
+import ReadOnlyPayments from './Payments';
+import ReadOnlyTeamInfo from './Team';
 
 import './index.scss';
 
@@ -143,11 +147,16 @@ const ReadOnly = () => {
     }
   );
 
-  const formattedModelLeads = collaborators?.map((collaborator, index) => {
-    return `${collaborator.fullName}${
-      index === collaborators.length - 1 ? '' : ', '
-    }`;
-  });
+  const formattedModelLeads = collaborators
+    ?.filter(c => c.teamRole === TeamRole.MODEL_LEAD)
+    .map((collaborator, index) => {
+      return `${collaborator.fullName}${
+        index ===
+        collaborators.filter(c => c.teamRole === TeamRole.MODEL_LEAD).length - 1
+          ? ''
+          : ', '
+      }`;
+    });
 
   const subComponents: subComponentsProps = {
     'model-basics': {
@@ -164,7 +173,7 @@ const ReadOnly = () => {
     },
     beneficiaries: {
       route: `/models/${modelID}/read-only/beneficiaries`,
-      component: <h1>beneficiaries</h1>
+      component: <ReadOnlyBeneficiaries modelID={modelID} />
     },
     'operations-evaluation-and-learning': {
       route: `/models/${modelID}/read-only/operations-evaluation-and-learning`,
@@ -172,7 +181,7 @@ const ReadOnly = () => {
     },
     payment: {
       route: `/models/${modelID}/read-only/payment`,
-      component: <h1>payment</h1>
+      component: <ReadOnlyPayments modelID={modelID} />
     },
     'it-tools': {
       route: `/models/${modelID}/read-only/it-tools`,
@@ -180,7 +189,7 @@ const ReadOnly = () => {
     },
     team: {
       route: `/models/${modelID}/read-only/team`,
-      component: <h1>team</h1>
+      component: <ReadOnlyTeamInfo modelID={modelID} />
     },
     discussions: {
       route: `/models/${modelID}/read-only/discussions`,
@@ -188,7 +197,7 @@ const ReadOnly = () => {
     },
     documents: {
       route: `/models/${modelID}/read-only/documents`,
-      component: <h1>documents</h1>
+      component: <ReadOnlyDocuments modelID={modelID} />
     },
     'crs-and-tdl': {
       route: `/models/${modelID}/read-only/crs-and-tdl`,
@@ -367,12 +376,15 @@ const ReadOnly = () => {
                 <GridContainer className="padding-left-0 padding-right-0">
                   <Grid row gap>
                     {/* Central component */}
-                    <Grid desktop={{ col: 8 }}>{subComponent.component}</Grid>
+                    <Grid desktop={{ col: subinfo === 'documents' ? 12 : 8 }}>
+                      {subComponent.component}
+                    </Grid>
                     {/* Contact info sidebar */}
                     <Grid
                       desktop={{ col: 4 }}
                       className={classnames({
-                        'sticky-nav': !isMobile
+                        'sticky-nav': !isMobile,
+                        'desktop:display-none': subinfo === 'documents'
                       })}
                     >
                       <ContactInfo modelID={modelID} />

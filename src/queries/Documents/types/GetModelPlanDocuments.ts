@@ -26,6 +26,7 @@ export interface GetModelPlanDocuments_modelPlan_documents {
 export interface GetModelPlanDocuments_modelPlan {
   __typename: "ModelPlan";
   id: UUID;
+  isCollaborator: boolean;
   documents: GetModelPlanDocuments_modelPlan_documents[];
 }
 

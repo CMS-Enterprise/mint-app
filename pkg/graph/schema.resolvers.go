@@ -17,6 +17,11 @@ import (
 	"github.com/cmsgov/mint-app/pkg/models"
 )
 
+// Fields is the resolver for the fields field.
+func (r *auditChangeResolver) Fields(ctx context.Context, obj *models.AuditChange) (map[string]interface{}, error) {
+	return obj.Fields.ToInterface()
+}
+
 // Basics is the resolver for the basics field.
 func (r *modelPlanResolver) Basics(ctx context.Context, obj *models.ModelPlan) (*models.PlanBasics, error) {
 	logger := appcontext.ZLogger(ctx)
@@ -110,6 +115,13 @@ func (r *modelPlanResolver) IsCollaborator(ctx context.Context, obj *models.Mode
 func (r *modelPlanResolver) CrTdls(ctx context.Context, obj *models.ModelPlan) ([]*models.PlanCrTdl, error) {
 	logger := appcontext.ZLogger(ctx)
 	return resolvers.PlanCrTdlsGetByModelPlanID(logger, obj.ID, r.store)
+}
+
+// NameHistory is the resolver for the nameHistory field.
+func (r *modelPlanResolver) NameHistory(ctx context.Context, obj *models.ModelPlan, sort models.SortDirection) ([]string, error) {
+	logger := appcontext.ZLogger(ctx)
+
+	return resolvers.ModelPlanNameHistory(logger, obj.ID, sort, r.store)
 }
 
 // OperationalNeeds is the resolver for the operationalNeeds field.
@@ -776,6 +788,11 @@ func (r *planPaymentsResolver) AnticipatedPaymentFrequency(ctx context.Context, 
 	return models.ConvertEnums[models.AnticipatedPaymentFrequencyType](obj.AnticipatedPaymentFrequency), nil
 }
 
+// NameHistory is the resolver for the nameHistory field.
+func (r *possibleOperationalNeedResolver) NameHistory(ctx context.Context, obj *models.PossibleOperationalNeed, sort models.SortDirection) ([]string, error) {
+	panic(fmt.Errorf("not implemented: NameHistory - nameHistory"))
+}
+
 // CurrentUser is the resolver for the currentUser field.
 func (r *queryResolver) CurrentUser(ctx context.Context) (*model.CurrentUser, error) {
 	ldUser := flags.Principal(ctx)
@@ -859,6 +876,12 @@ func (r *queryResolver) CrTdl(ctx context.Context, id uuid.UUID) (*models.PlanCr
 	return resolvers.PlanCrTdlGet(logger, id, r.store)
 }
 
+// AuditChanges is the resolver for the auditChanges field.
+func (r *queryResolver) AuditChanges(ctx context.Context, tableName string, primaryKey uuid.UUID) ([]*models.AuditChange, error) {
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.AuditChangeCollectionByIDAndTable(logger, tableName, primaryKey, r.store)
+}
+
 // OnTaskListSectionLocksChanged is the resolver for the onTaskListSectionLocksChanged field.
 func (r *subscriptionResolver) OnTaskListSectionLocksChanged(ctx context.Context, modelPlanID uuid.UUID) (<-chan *model.TaskListSectionLockStatusChanged, error) {
 	principal := appcontext.Principal(ctx).ID()
@@ -877,6 +900,9 @@ func (r *subscriptionResolver) OnLockTaskListSectionContext(ctx context.Context,
 func (r *userInfoResolver) Email(ctx context.Context, obj *models.UserInfo) (string, error) {
 	return string(obj.Email), nil
 }
+
+// AuditChange returns generated.AuditChangeResolver implementation.
+func (r *Resolver) AuditChange() generated.AuditChangeResolver { return &auditChangeResolver{r} }
 
 // ModelPlan returns generated.ModelPlanResolver implementation.
 func (r *Resolver) ModelPlan() generated.ModelPlanResolver { return &modelPlanResolver{r} }
@@ -926,6 +952,11 @@ func (r *Resolver) PlanParticipantsAndProviders() generated.PlanParticipantsAndP
 // PlanPayments returns generated.PlanPaymentsResolver implementation.
 func (r *Resolver) PlanPayments() generated.PlanPaymentsResolver { return &planPaymentsResolver{r} }
 
+// PossibleOperationalNeed returns generated.PossibleOperationalNeedResolver implementation.
+func (r *Resolver) PossibleOperationalNeed() generated.PossibleOperationalNeedResolver {
+	return &possibleOperationalNeedResolver{r}
+}
+
 // Query returns generated.QueryResolver implementation.
 func (r *Resolver) Query() generated.QueryResolver { return &queryResolver{r} }
 
@@ -935,6 +966,7 @@ func (r *Resolver) Subscription() generated.SubscriptionResolver { return &subsc
 // UserInfo returns generated.UserInfoResolver implementation.
 func (r *Resolver) UserInfo() generated.UserInfoResolver { return &userInfoResolver{r} }
 
+type auditChangeResolver struct{ *Resolver }
 type modelPlanResolver struct{ *Resolver }
 type mutationResolver struct{ *Resolver }
 type operationalNeedResolver struct{ *Resolver }
@@ -947,6 +979,7 @@ type planITToolsResolver struct{ *Resolver }
 type planOpsEvalAndLearningResolver struct{ *Resolver }
 type planParticipantsAndProvidersResolver struct{ *Resolver }
 type planPaymentsResolver struct{ *Resolver }
+type possibleOperationalNeedResolver struct{ *Resolver }
 type queryResolver struct{ *Resolver }
 type subscriptionResolver struct{ *Resolver }
 type userInfoResolver struct{ *Resolver }

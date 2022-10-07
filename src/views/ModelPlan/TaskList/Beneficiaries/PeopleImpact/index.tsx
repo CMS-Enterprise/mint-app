@@ -284,7 +284,7 @@ const PeopleImpact = () => {
                               as={Radio}
                               key={key}
                               id={`beneficiaries-impact-confidence-${key}`}
-                              name="beneficiaries-impact-estimateConfidence"
+                              name="participantsCurrentlyInModels"
                               label={translateConfidenceType(key)}
                               value={key}
                               checked={values.estimateConfidence === key}
@@ -315,7 +315,7 @@ const PeopleImpact = () => {
                         <Field
                           as={MultiSelect}
                           id="beneficiaries-chooseBeneficiaries"
-                          name="beneficiaries-chooseBeneficiaries"
+                          name="beneficiarySelectionMethod"
                           options={mappedSelectionMethodType}
                           selectedLabel={t('selectedMethods')}
                           onChange={(value: string[] | []) => {

@@ -17,6 +17,10 @@ export default gql`
         id
         fileName
       }
+      crTdls {
+        id
+        idNumber
+      }
       discussions {
         id
         content

@@ -26,9 +26,6 @@ import flattenErrors from 'utils/flattenErrors';
 import NewModelPlanValidationSchema from 'validations/newModelPlan';
 import NotFound from 'views/NotFound';
 
-import Collaborators from '../Collaborators';
-import AddCollaborator from '../Collaborators/AddCollaborator';
-
 const NewPlanContent = () => {
   const { t: h } = useTranslation('draftModelPlan');
   const { t } = useTranslation('newModel');
@@ -44,7 +41,7 @@ const NewPlanContent = () => {
     }).then(response => {
       if (!response?.errors) {
         const { id } = response?.data?.createModelPlan;
-        history.push(`/models/new-plan/${id}/collaborators`);
+        history.push(`/models/${id}/collaborators`);
       }
     });
   };
@@ -157,14 +154,6 @@ const NewPlan = () => {
     <Switch>
       {/* New Plan Pages */}
       <Route path="/models/new-plan" exact render={() => <NewPlanContent />} />
-      <Route
-        path="/models/new-plan/:modelID/collaborators"
-        render={() => <Collaborators />}
-      />
-      <Route
-        path="/models/new-plan/:modelID/add-collaborator/:collaboratorId?"
-        render={() => <AddCollaborator />}
-      />
 
       {/* 404 */}
       <Route path="*" render={() => <NotFound />} />

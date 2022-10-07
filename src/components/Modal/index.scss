@@ -6,7 +6,7 @@
     left: 0;
     right: 0;
     background-color: rgba(0, 0, 0, 0.6);
-    z-index: 400;
+    z-index: 400;    
   }
 
   &__content {
@@ -20,6 +20,7 @@
     z-index: 1;
     font-size: 1.375em;
     line-height: 1.6em;
+    border-radius: .5rem;
 
     @media screen and (min-width: $tablet) {
       width: 668px;
