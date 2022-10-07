@@ -13,10 +13,6 @@ describe('The ModelSubNav component', () => {
         </Route>
       </MemoryRouter>
     );
-    expect(getByTestId('sub-navigation-link')).toHaveAttribute(
-      'href',
-      '/models/123/read-only'
-    );
     expect(getByTestId('sub-navigation-link-text')).toHaveTextContent(
       'Go to the Model Plan read view'
     );
@@ -32,10 +28,6 @@ describe('The ModelSubNav component', () => {
           <ModelSubNav modelID="123" link="task-list" />
         </Route>
       </MemoryRouter>
-    );
-    expect(getByTestId('sub-navigation-link')).toHaveAttribute(
-      'href',
-      '/models/123/task-list'
     );
     expect(getByTestId('sub-navigation-link-text')).toHaveTextContent(
       'Go to the Model Plan task list'

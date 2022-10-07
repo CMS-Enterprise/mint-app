@@ -11,42 +11,48 @@ exports[`Read Only Model Plan Summary matches snapshot 1`] = `
   >
     <nav
       aria-label="Navigation toggle between task list and overview"
-      class="position-sticky z-100 top-0 bg-primary-darker text-white padding-105"
+      class="position-sticky z-100 top-0 bg-primary-darker text-white padding-105 sub-nav"
       data-testid="sub-navigation-bar"
     >
       <div
-        class="grid-container"
-        data-testid="sub-navigation-text"
+        aria-label="Navigation toggle between task list and overview"
+        class="pointer"
+        data-testid="sub-navigation-link"
+        role="link"
+        tabindex="0"
       >
-        Need to update this information?  
-        <a
-          class="usa-link text-white text-bold display-inline-flex margin-left-05"
-          data-testid="sub-navigation-link"
-          href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list"
+        <div
+          class="grid-container"
+          data-testid="sub-navigation-text"
         >
+          Need to update this information?  
           <div
-            data-testid="sub-navigation-link-text"
+            class="text-white text-bold display-inline-flex margin-left-05"
           >
-             Go to the Model Plan task list 
+            <div
+              data-testid="sub-navigation-link-text"
+            >
+               Go to the Model Plan task list 
+            </div>
+            <svg
+              class="usa-icon text-white margin-left-1 right-icon"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M0 0h24v24H0z"
+                fill="none"
+              />
+              <path
+                d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+              />
+            </svg>
           </div>
-          <svg
-            class="usa-icon text-white margin-left-1"
-            focusable="false"
-            height="1em"
-            role="img"
-            viewBox="0 0 24 24"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M0 0h24v24H0z"
-              fill="none"
-            />
-            <path
-              d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
-            />
-          </svg>
-        </a>
+        </div>
       </div>
     </nav>
     <div
