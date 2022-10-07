@@ -3,6 +3,7 @@ SELECT
     model_plan_id,
     content,
     status,
+    is_assessment,
     created_by,
     created_dts,
     modified_by,

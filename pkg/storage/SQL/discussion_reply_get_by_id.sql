@@ -3,6 +3,7 @@ SELECT
     discussion_id,
     content,
     resolution,
+    is_assessment,
     created_by,
     created_dts,
     modified_by,
