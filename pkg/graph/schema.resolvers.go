@@ -365,11 +365,17 @@ func (r *mutationResolver) AddOrUpdateOperationalNeed(ctx context.Context, model
 
 // AddCustomOperationalNeed is the resolver for the addCustomOperationalNeed field.
 func (r *mutationResolver) AddCustomOperationalNeed(ctx context.Context, modelPlanID uuid.UUID, fullName string, needed bool) (*models.OperationalNeed, error) {
-	panic(fmt.Errorf("not implemented: AddCustomOperationalNeed - addCustomOperationalNeed"))
+	changes := map[string]interface{}{
+		"needOther": fullName,
+		"needed":    needed,
+	}
+
+	return r.AddOrUpdateOperationalNeed(ctx, modelPlanID, models.OpNKOther, changes) //TODO should we add it's own resolver? and remove the other resolver?
 }
 
 // UpdateCustomOperationalNeed is the resolver for the updateCustomOperationalNeed field.
 func (r *mutationResolver) UpdateCustomOperationalNeed(ctx context.Context, needID uuid.UUID, changes map[string]interface{}) (*models.OperationalNeed, error) {
+	//TODO should we make this use the traditional update by ID method?
 	panic(fmt.Errorf("not implemented: UpdateCustomOperationalNeed - updateCustomOperationalNeed"))
 }
 
@@ -381,9 +387,10 @@ func (r *mutationResolver) AddOrUpdateOperationalSolution(ctx context.Context, o
 }
 
 // Solutions is the resolver for the solutions field.
-func (r *operationalNeedResolver) Solutions(ctx context.Context, obj *models.OperationalNeed) ([]*models.OperationalSolution, error) {
+func (r *operationalNeedResolver) Solutions(ctx context.Context, obj *models.OperationalNeed) (*model.OperationalSolutions, error) {
 	logger := appcontext.ZLogger(ctx)
-	return resolvers.OperationalSolutionCollectionGetByOperationalNeedID(logger, obj.ID, r.store)
+	return resolvers.OperationaSolutionsGetByOPNeed(logger, obj, r.store)
+	// return resolvers.OperationalSolutionCollectionGetByOperationalNeedID(logger, obj.ID, r.store)
 }
 
 // CmsCenters is the resolver for the cmsCenters field.
@@ -788,9 +795,10 @@ func (r *planPaymentsResolver) AnticipatedPaymentFrequency(ctx context.Context, 
 	return models.ConvertEnums[models.AnticipatedPaymentFrequencyType](obj.AnticipatedPaymentFrequency), nil
 }
 
-// NameHistory is the resolver for the nameHistory field.
-func (r *possibleOperationalNeedResolver) NameHistory(ctx context.Context, obj *models.PossibleOperationalNeed, sort models.SortDirection) ([]string, error) {
-	panic(fmt.Errorf("not implemented: NameHistory - nameHistory"))
+// PossibleSolutions is the resolver for the possibleSolutions field.
+func (r *possibleOperationalNeedResolver) PossibleSolutions(ctx context.Context, obj *models.PossibleOperationalNeed) ([]*models.PossibleOperationalSolution, error) {
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.PossibleOperationalSolutionCollectionGetByNeedType(logger, obj.ShortName, r.store)
 }
 
 // CurrentUser is the resolver for the currentUser field.

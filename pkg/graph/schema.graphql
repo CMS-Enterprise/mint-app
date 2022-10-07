@@ -72,6 +72,10 @@ type OperationalNeeds {
   needs: [OperationalNeed!]!
   possibleNeeds: [PossibleOperationalNeed!]!
 }
+type OperationalSolutions {
+  solutions: [OperationalSolution!]!
+  possibleSolutions: [PossibleOperationalSolution!]!
+}
 
 type OperationalNeed {
     id: UUID!
@@ -80,7 +84,8 @@ type OperationalNeed {
     needType: Int
     needOther: String
     needed: Boolean!
-    solutions: [OperationalSolution!]!
+    # solutions: [OperationalSolution!]!
+    solutions: OperationalSolutions
     needTypeFullName: String!
     needTypeShortName: OperationalNeedKey!
 
@@ -92,7 +97,7 @@ type OperationalNeed {
 
 type PossibleOperationalNeed {
     id: Int!
-    # solutions: [PossibleOperationalSolution!]!
+    possibleSolutions: [PossibleOperationalSolution!]!
     fullName: String!
     shortName: OperationalNeedKey!
 
@@ -100,7 +105,16 @@ type PossibleOperationalNeed {
     createdDts: Time!
     modifiedBy: String
     modifiedDts: Time
-  nameHistory(sort: SortDirection! = DESC): [String!]!
+}
+type PossibleOperationalSolution {
+    id: Int!
+    fullName: String!
+    shortName: OperationalSolutionKey!
+
+    createdBy: String!
+    createdDts: Time!
+    modifiedBy: String
+    modifiedDts: Time
 }
 
 """
