@@ -281,7 +281,7 @@ const TaskList = () => {
                             />
                             <TaskListLock
                               isAssessment={
-                                getTaskListLockedStatus(key)?.isAssessment
+                                !!getTaskListLockedStatus(key)?.isAssessment
                               }
                               collaborator={collaborators.find(
                                 collaborator =>
