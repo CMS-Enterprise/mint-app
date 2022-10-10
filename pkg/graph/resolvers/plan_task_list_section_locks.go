@@ -6,6 +6,7 @@ import (
 
 	"github.com/google/uuid"
 
+	"github.com/cmsgov/mint-app/pkg/authentication"
 	"github.com/cmsgov/mint-app/pkg/graph/model"
 	"github.com/cmsgov/mint-app/pkg/graph/model/subscribers"
 	"github.com/cmsgov/mint-app/pkg/models/pubsubevents"
@@ -77,7 +78,7 @@ func (p PlanTaskListSectionLocksResolverImplementation) SubscribeTaskListSection
 }
 
 // LockTaskListSection will lock the provided task list section on the provided model
-func (p PlanTaskListSectionLocksResolverImplementation) LockTaskListSection(ps pubsub.PubSub, modelPlanID uuid.UUID, section model.TaskListSection, principal string) (bool, error) {
+func (p PlanTaskListSectionLocksResolverImplementation) LockTaskListSection(ps pubsub.PubSub, modelPlanID uuid.UUID, section model.TaskListSection, principal authentication.Principal) (bool, error) {
 
 	modelLocks, foundModelLocks := planTaskListSessionLocks.modelSections[modelPlanID]
 	if !foundModelLocks {
@@ -86,14 +87,15 @@ func (p PlanTaskListSectionLocksResolverImplementation) LockTaskListSection(ps p
 	}
 
 	lockStatus, sectionWasLocked := modelLocks[section]
-	if sectionWasLocked && lockStatus.LockedBy != principal {
+	if sectionWasLocked && lockStatus.LockedBy != principal.ID() {
 		return false, fmt.Errorf("failed to lock section [%v], already locked by [%v]", lockStatus.Section, lockStatus.LockedBy)
 	}
 
 	status := model.TaskListSectionLockStatus{
-		ModelPlanID: modelPlanID,
-		Section:     section,
-		LockedBy:    principal,
+		ModelPlanID:  modelPlanID,
+		Section:      section,
+		LockedBy:     principal.ID(),
+		IsAssessment: principal.AllowASSESSMENT(),
 	}
 
 	planTaskListSessionLocks.Lock()
@@ -207,7 +209,7 @@ func OnLockTaskListSectionContext(ps pubsub.PubSub, modelPlanID uuid.UUID, princ
 }
 
 // LockTaskListSection is a convenience relay method to call the corresponding method on a resolver implementation
-func LockTaskListSection(ps pubsub.PubSub, modelPlanID uuid.UUID, section model.TaskListSection, principal string) (bool, error) {
+func LockTaskListSection(ps pubsub.PubSub, modelPlanID uuid.UUID, section model.TaskListSection, principal authentication.Principal) (bool, error) {
 	return NewPlanTaskListSectionLocksResolverImplementation().LockTaskListSection(ps, modelPlanID, section, principal)
 }
 
