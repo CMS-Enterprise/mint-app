@@ -38,7 +38,7 @@ require (
 	gopkg.in/yaml.v3 v3.0.1
 )
 
-require github.com/contribsys/faktory v1.6.0 // indirect
+require github.com/contribsys/faktory v1.6.0
 
 require (
 	github.com/PuerkitoBio/purell v1.1.1 // indirect
