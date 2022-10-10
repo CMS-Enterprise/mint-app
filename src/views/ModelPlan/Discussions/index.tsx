@@ -80,6 +80,9 @@ const Discussions = ({
     }
   });
 
+  // Used to map EUA ids to full name
+  const collaborators = data?.modelPlan?.collaborators || [];
+
   const discussions = useMemo(() => {
     return data?.modelPlan?.discussions || ([] as DiscussionType[]);
   }, [data?.modelPlan?.discussions]);
@@ -366,7 +369,11 @@ const Discussions = ({
           </div>
         ) : (
           <IconInitial
-            user={discussion.createdBy}
+            user={
+              collaborators.find(
+                collaborator => collaborator.euaUserID === discussion.createdBy
+              )?.fullName || ''
+            }
             index={index}
             className="margin-bottom-2"
           />

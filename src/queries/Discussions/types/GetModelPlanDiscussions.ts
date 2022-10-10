@@ -9,6 +9,13 @@ import { DiscussionStatus } from "./../../../types/graphql-global-types";
 // GraphQL query operation: GetModelPlanDiscussions
 // ====================================================
 
+export interface GetModelPlanDiscussions_modelPlan_collaborators {
+  __typename: "PlanCollaborator";
+  id: UUID;
+  euaUserID: string;
+  fullName: string;
+}
+
 export interface GetModelPlanDiscussions_modelPlan_discussions_replies {
   __typename: "DiscussionReply";
   id: UUID;
@@ -34,6 +41,7 @@ export interface GetModelPlanDiscussions_modelPlan_discussions {
 export interface GetModelPlanDiscussions_modelPlan {
   __typename: "ModelPlan";
   id: UUID;
+  collaborators: GetModelPlanDiscussions_modelPlan_collaborators[];
   discussions: GetModelPlanDiscussions_modelPlan_discussions[];
 }
 
