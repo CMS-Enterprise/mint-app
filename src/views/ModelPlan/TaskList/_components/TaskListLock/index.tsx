@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import { IconStar } from '@trussworks/react-uswds';
 
+import AssessmentIcon from 'components/shared/AssessmentIcon';
 import { arrayOfColors } from 'components/shared/IconInitial';
 import { GetModelCollaborators_modelPlan_collaborators as GetCollaboratorsType } from 'queries/Collaborators/types/GetModelCollaborators';
 import { getUserInitials } from 'utils/modelPlan';
@@ -25,9 +25,7 @@ const TaskListLock = ({ collaborator, isAssessment }: TaskListLockProps) => {
       {(collaborator || isAssessment) && (
         <div className="display-inline-flex">
           {isAssessment ? (
-            <div className="assessment-container width-4 height-4 display-flex flex-justify-center bg-primary margin-right-1">
-              <IconStar size={3} className="assessment-icon text-white" />
-            </div>
+            <AssessmentIcon size={3} />
           ) : (
             <div
               className={`display-flex flex-align-center flex-justify-center circle-4 margin-right-1 flex-none ${

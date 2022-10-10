@@ -20,6 +20,7 @@ import * as Yup from 'yup';
 import PageHeading from 'components/PageHeading';
 import PageLoading from 'components/PageLoading';
 import Alert from 'components/shared/Alert';
+import AssessmentIcon from 'components/shared/AssessmentIcon';
 import Divider from 'components/shared/Divider';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
 import Expire from 'components/shared/Expire';
@@ -356,11 +357,20 @@ const Discussions = ({
   ) => (
     <div className="mint-discussions__single-discussion" key={discussion.id}>
       <div className="display-flex">
-        <IconInitial
-          user={discussion.createdBy}
-          index={index}
-          className="margin-bottom-2"
-        />
+        {discussion.isAssessment ? (
+          <div className="display-flex flex-align-center">
+            <AssessmentIcon size={3} />{' '}
+            <span>
+              {t('assessment')} | {discussion.createdBy}
+            </span>
+          </div>
+        ) : (
+          <IconInitial
+            user={discussion.createdBy}
+            index={index}
+            className="margin-bottom-2"
+          />
+        )}
         <span className="margin-left-2 margin-top-05 text-base">
           {getTimeElapsed(discussion.createdDts)
             ? getTimeElapsed(discussion.createdDts) + t('ago')

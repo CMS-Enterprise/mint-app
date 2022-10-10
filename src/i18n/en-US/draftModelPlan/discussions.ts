@@ -33,7 +33,8 @@ const discussions = {
     'There are no answered questions yet. When a question is answered, it will appear here with the response.',
   noUanswered:
     'There are no unanswered questions. Ask a question using the link above.',
-  ariaLabel: 'Discussion Center Modal'
+  ariaLabel: 'Discussion Center Modal',
+  assessment: 'Model Assessment Team'
 };
 
 export default discussions;

@@ -10,10 +10,12 @@ export default gql`
         createdBy
         createdDts
         status
+        isAssessment
         replies {
           id
           discussionID
           content
+          isAssessment
           createdBy
           createdDts
           resolution

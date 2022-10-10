@@ -14,6 +14,7 @@ export interface GetModelPlanDiscussions_modelPlan_discussions_replies {
   id: UUID;
   discussionID: UUID;
   content: string | null;
+  isAssessment: boolean;
   createdBy: string;
   createdDts: Time;
   resolution: boolean | null;
@@ -26,6 +27,7 @@ export interface GetModelPlanDiscussions_modelPlan_discussions {
   createdBy: string;
   createdDts: Time;
   status: DiscussionStatus;
+  isAssessment: boolean;
   replies: GetModelPlanDiscussions_modelPlan_discussions_replies[];
 }
 
