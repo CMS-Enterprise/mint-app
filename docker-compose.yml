@@ -62,8 +62,7 @@ services:
       - SERVER_CERT
       - SERVER_KEY
       - USE_TLS
-      - FAKTORY_PROVIDER=FAKTORY_URL
-      - FAKTORY_URL=tcp://:${FAKTORY_PASSWORD}@faktory:7419
+      - FAKTORY_URL
 
     depends_on:
       db_migrate:
