@@ -2,7 +2,7 @@ package models
 
 import "github.com/google/uuid"
 
-//PlanDiscussion represents a discussion that a user has about a model plan
+// PlanDiscussion represents a discussion that a user has about a model plan
 type PlanDiscussion struct {
 	baseStruct
 	modelPlanRelation
@@ -10,7 +10,7 @@ type PlanDiscussion struct {
 	Status  DiscussionStatus `json:"status" db:"status"`
 }
 
-//NewPlanDiscussion returns a New PlanDiscussion with a status of UNANSWERED
+// NewPlanDiscussion returns a New PlanDiscussion with a status of UNANSWERED
 func NewPlanDiscussion(createdBy string, modelPlanID uuid.UUID, content string) *PlanDiscussion {
 	return &PlanDiscussion{
 		Content:           content,
@@ -20,7 +20,7 @@ func NewPlanDiscussion(createdBy string, modelPlanID uuid.UUID, content string) 
 	}
 }
 
-//DiscussionReply represents a comment that was made on the PlanDiscussion
+// DiscussionReply represents a comment that was made on the PlanDiscussion
 type DiscussionReply struct {
 	baseStruct
 	discussionRelation
@@ -28,7 +28,7 @@ type DiscussionReply struct {
 	Resolution bool   `json:"resolution" db:"resolution"` //default to false
 }
 
-//NewDiscussionReply returns a new Discussion Reply
+// NewDiscussionReply returns a new Discussion Reply
 func NewDiscussionReply(createdBy string, discussionID uuid.UUID, content string, resolution bool) *DiscussionReply {
 	return &DiscussionReply{
 		Content:            content,
@@ -38,7 +38,7 @@ func NewDiscussionReply(createdBy string, discussionID uuid.UUID, content string
 	}
 }
 
-//DiscussionStatus is an enum that represents the status of a Discussion
+// DiscussionStatus is an enum that represents the status of a Discussion
 type DiscussionStatus string
 
 // These constants represent the possible values of a DiscussionStatus
