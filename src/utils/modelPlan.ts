@@ -21,6 +21,30 @@ export const translateBoolean = (type: boolean) => {
   }
 };
 
+export const translateBooleanOrNull = (type: boolean | null | undefined) => {
+  switch (type) {
+    case true:
+      return i18next.t('draftModelPlan:yes');
+    case false:
+      return i18next.t('draftModelPlan:no');
+    case null:
+      return null;
+    default:
+      return '';
+  }
+};
+
+export const translateNewModel = (type: boolean | null | undefined) => {
+  switch (type) {
+    case true:
+      return i18next.t('generalCharacteristics:newModel');
+    case false:
+      return i18next.t('generalCharacteristics:newTrack');
+    default:
+      return null;
+  }
+};
+
 export const translateTriStateAnswer = (type: string) => {
   switch (type) {
     case 'YES':
