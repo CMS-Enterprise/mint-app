@@ -207,7 +207,7 @@ type PlanPayments struct {
 	PaymentStartDateNote                             *string    `json:"paymentStartDateNote" db:"payment_start_date_note"`
 }
 
-//NewPlanPayments returns a new PlanPayments object
+// NewPlanPayments returns a new PlanPayments object
 func NewPlanPayments(tls baseTaskListSection) *PlanPayments {
 	return &PlanPayments{
 		baseTaskListSection: tls,

@@ -38,7 +38,7 @@ func NewBaseTaskListSection(createdBy string, modelPlanID uuid.UUID) baseTaskLis
 
 }
 
-//GetBaseTaskListSection returns the BaseTaskListSection Object embedded in the struct
+// GetBaseTaskListSection returns the BaseTaskListSection Object embedded in the struct
 func (b *baseTaskListSection) GetBaseTaskListSection() *baseTaskListSection {
 	return b
 }
@@ -70,7 +70,7 @@ func (b *baseTaskListSection) CalcStatus(oldStatus TaskStatus) error {
 	return nil
 }
 
-//GetModelPlanID returns the modelPlanID of the task list section
+// GetModelPlanID returns the modelPlanID of the task list section
 func (b baseTaskListSection) GetModelPlanID() uuid.UUID {
 	return b.ModelPlanID
 }
