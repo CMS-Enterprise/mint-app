@@ -80,6 +80,8 @@ const Discussions = ({
     }
   });
 
+  console.log(data);
+
   // Used to map EUA ids to full name
   const collaborators = data?.modelPlan?.collaborators || [];
 
