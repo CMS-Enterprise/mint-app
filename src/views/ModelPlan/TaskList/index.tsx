@@ -282,6 +282,9 @@ const TaskList = () => {
                               status={taskListSections[key].status}
                             />
                             <TaskListLock
+                              isAssessment={
+                                !!getTaskListLockedStatus(key)?.isAssessment
+                              }
                               collaborator={collaborators.find(
                                 collaborator =>
                                   collaborator.euaUserID ===

@@ -129,6 +129,7 @@ type TaskListSectionLockStatus {
   modelPlanID: UUID!
   section: TaskListSection!
   lockedBy: String!
+  isAssessment: Boolean!
 }
 
 """
