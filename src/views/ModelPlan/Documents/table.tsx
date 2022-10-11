@@ -256,7 +256,7 @@ const Table = ({
         }
       }
     ];
-  }, [t, handleDownload]);
+  }, [t, handleDownload, isCollaborator]);
 
   const {
     getTableProps,

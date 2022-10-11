@@ -23,6 +23,16 @@ Time values are represented as strings using RFC3339 format, for example 2019-10
 """
 scalar Time
 
+
+"""
+Maps an arbitrary GraphQL value to a map[string]interface{} Go type.
+"""
+scalar Map
+
+enum SortDirection {
+  ASC
+  DESC
+}
 """
 https://gqlgen.com/reference/file-upload/
 Represents a multipart file upload
@@ -54,6 +64,7 @@ type ModelPlan {
   isFavorite: Boolean!
   isCollaborator: Boolean!
   crTdls: [PlanCrTdl!]!
+  nameHistory(sort: SortDirection! = DESC): [String!]!
 }
 
 """
@@ -118,6 +129,7 @@ type TaskListSectionLockStatus {
   modelPlanID: UUID!
   section: TaskListSection!
   lockedBy: String!
+  isAssessment: Boolean!
 }
 
 """
@@ -1332,6 +1344,18 @@ input PlanCrTdlChanges @goModel(model: "map[string]interface{}") {
     note: String
 }
 
+
+type AuditChange {
+  id: Int!
+  primaryKey: UUID!
+  foreignKey: UUID
+  tableName: String!
+  action: String!
+  fields: Map!
+  modifiedBy: String
+  modifiedDts: Time
+}
+
 """
 Query definition for the schema
 """
@@ -1339,7 +1363,7 @@ type Query {
   currentUser: CurrentUser!
   modelPlan(id: UUID!): ModelPlan!
   planDocument(id: UUID!): PlanDocument!
-  modelPlanCollection(includeAll: Boolean! = false): [ModelPlan!]!
+  modelPlanCollection(includeAll: Boolean!): [ModelPlan!]!
   existingModelCollection: [ExistingModel!]!
   cedarPersonsByCommonName(commonName: String!): [UserInfo!]!
   planCollaboratorByID(id: UUID!): PlanCollaborator!
@@ -1347,6 +1371,7 @@ type Query {
   planPayments(id: UUID!): PlanPayments!
   ndaInfo: NDAInfo!
   crTdl(id: UUID!): PlanCrTdl!
+  auditChanges(tableName: String!, primaryKey: UUID!): [AuditChange!]!
 }
 
 """

@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "8d2821ca-e485-4358-bea0-58db4b47d8de",
+		"_postman_id": "a5cd6241-63b7-4f2a-b183-8801172232ec",
 		"name": "MINT",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "20320964"
+		"_exporter_id": "12341016"
 	},
 	"item": [
 		{
@@ -28,32 +28,7 @@
 							]
 						}
 					},
-					"response": [
-						{
-							"name": "Create Model Plan",
-							"originalRequest": {
-								"method": "POST",
-								"header": [],
-								"body": {
-									"mode": "graphql",
-									"graphql": {
-										"query": "mutation createModelPlan ($modelName: String!) {\n    createModelPlan (modelName: $modelName) {\n        id\n        modelName\n        archived\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        status\n        isFavorite\n        isCollaborator\n    }\n}",
-										"variables": "{\n  \"modelName\": \"Hooray\"\n}"
-									}
-								},
-								"url": {
-									"raw": "{{url}}",
-									"host": [
-										"{{url}}"
-									]
-								}
-							},
-							"_postman_previewlanguage": null,
-							"header": null,
-							"cookie": [],
-							"body": null
-						}
-					]
+					"response": []
 				},
 				{
 					"name": "Update Model Plan",
@@ -105,8 +80,8 @@
 						"body": {
 							"mode": "graphql",
 							"graphql": {
-								"query": "query modelPlanCollection {\n    modelPlanCollection {\n        id\n        modelName\n        archived\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        status\n        isFavorite\n        isCollaborator\n    }\n}",
-								"variables": "{}"
+								"query": "query modelPlanCollection($includeAll: Boolean!) {\n    modelPlanCollection(includeAll: $includeAll) {\n        id\n        modelName\n        archived\n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts\n        status\n        isFavorite\n        isCollaborator\n    }\n}",
+								"variables": "{\n    \"includeAll\": true\n}"
 							}
 						},
 						"url": {
@@ -1105,6 +1080,68 @@
 								"api",
 								"graph",
 								"query"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Audit",
+			"item": [
+				{
+					"name": "GetAuditChanges",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query auditChanges($tableName: String!, $primaryKey: UUID!){\n  auditChanges(tableName: $tableName,primaryKey: $primaryKey)\n   {\n        id\n        primaryKey\n        foreignKey\n        tableName\n        action\n        fields\n        modifiedBy\n        modifiedDts\n  }\n}",
+								"variables": "{\n  \"tableName\": \"\",\n  \"primaryKey\":\"\"\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ModelPlanGet(NameHistory)",
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "Local {\"EUAID\":\"ABCD\",\"favorLocalAuth\":true}",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "Authorization",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query ModelPlan($id:UUID!,$sort: SortDirection!){\n  \n  modelPlan(id:$id){\n    id\n    modelName\n    nameHistory(sort: $sort)\n\n  }\n  \n  \n}",
+								"variables": "{\n    \"id\": \"\",\n    \"sort\": \"\"\n}"
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
 							]
 						}
 					},

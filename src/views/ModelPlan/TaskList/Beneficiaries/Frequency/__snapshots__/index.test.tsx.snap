@@ -37,7 +37,7 @@ exports[`Model Plan Beneficiaries matches snapshot 1`] = `
         aria-current="page"
         class="usa-breadcrumb__list-item usa-current"
       >
-        breadcrumb
+        Beneficiaries
       </li>
     </ol>
   </nav>
@@ -127,7 +127,7 @@ exports[`Model Plan Beneficiaries matches snapshot 1`] = `
                 <input
                   class="usa-radio__input"
                   id="beneficiaries-beneficiarySelectionFrequency-ANNUALLY"
-                  name="beneficiaries-beneficiarySelectionFrequency"
+                  name="beneficiarySelectionFrequency"
                   type="radio"
                   value="ANNUALLY"
                 />
@@ -145,7 +145,7 @@ exports[`Model Plan Beneficiaries matches snapshot 1`] = `
                 <input
                   class="usa-radio__input"
                   id="beneficiaries-beneficiarySelectionFrequency-BIANNUALLY"
-                  name="beneficiaries-beneficiarySelectionFrequency"
+                  name="beneficiarySelectionFrequency"
                   type="radio"
                   value="BIANNUALLY"
                 />
@@ -163,7 +163,7 @@ exports[`Model Plan Beneficiaries matches snapshot 1`] = `
                 <input
                   class="usa-radio__input"
                   id="beneficiaries-beneficiarySelectionFrequency-MONTHLY"
-                  name="beneficiaries-beneficiarySelectionFrequency"
+                  name="beneficiarySelectionFrequency"
                   type="radio"
                   value="MONTHLY"
                 />
@@ -181,7 +181,7 @@ exports[`Model Plan Beneficiaries matches snapshot 1`] = `
                 <input
                   class="usa-radio__input"
                   id="beneficiaries-beneficiarySelectionFrequency-QUARTERLY"
-                  name="beneficiaries-beneficiarySelectionFrequency"
+                  name="beneficiarySelectionFrequency"
                   type="radio"
                   value="QUARTERLY"
                 />
@@ -199,7 +199,7 @@ exports[`Model Plan Beneficiaries matches snapshot 1`] = `
                 <input
                   class="usa-radio__input"
                   id="beneficiaries-beneficiarySelectionFrequency-ROLLING"
-                  name="beneficiaries-beneficiarySelectionFrequency"
+                  name="beneficiarySelectionFrequency"
                   type="radio"
                   value="ROLLING"
                 />
@@ -217,7 +217,7 @@ exports[`Model Plan Beneficiaries matches snapshot 1`] = `
                 <input
                   class="usa-radio__input"
                   id="beneficiaries-beneficiarySelectionFrequency-OTHER"
-                  name="beneficiaries-beneficiarySelectionFrequency"
+                  name="beneficiarySelectionFrequency"
                   type="radio"
                   value="OTHER"
                 />

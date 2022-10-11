@@ -10,11 +10,11 @@ describe('Adding a collaborator page', () => {
     const { asFragment } = render(
       <MemoryRouter
         initialEntries={[
-          'models/new-plan/f11eb129-2c80-4080-9440-439cbe1a286f/add-collaborator'
+          'models/f11eb129-2c80-4080-9440-439cbe1a286f/collaborators/add-collaborator'
         ]}
       >
         <MockedProvider>
-          <Route path="models/new-plan/:modelID/add-collaborator">
+          <Route path="models/:modelID/collaborators/add-collaborator">
             <AddCollaborator />
           </Route>
         </MockedProvider>

@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link, useParams } from 'react-router-dom';
+import { RootStateOrAny, useSelector } from 'react-redux';
+import { Link, Route, Switch, useHistory, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
 import {
   Breadcrumb,
@@ -16,6 +17,7 @@ import MainContent from 'components/MainContent';
 import Modal from 'components/Modal';
 import PageHeading from 'components/PageHeading';
 import Alert from 'components/shared/Alert';
+import useMessage from 'hooks/useMessage';
 import DeleteModelPlanCollaborator from 'queries/Collaborators/DeleteModelPlanCollaborator';
 import GetModelPlanCollaborators from 'queries/Collaborators/GetModelCollaborators';
 import {
@@ -26,7 +28,9 @@ import {
   GetModelCollaborators,
   GetModelCollaborators_modelPlan_collaborators as GetCollaboratorsType
 } from 'queries/Collaborators/types/GetModelCollaborators';
+import NotFound from 'views/NotFound';
 
+import AddCollaborator from './AddCollaborator';
 import CollaboratorsTable from './table';
 
 // Checking if there is only one collaborator with role of MODEL_LEAD - can't edit or remove if so
@@ -37,16 +41,47 @@ const isLastModelLead = (collaborators: GetCollaboratorsType[]) => {
   return !(modelLeads.length > 1);
 };
 
-const Collaborators = () => {
+const SuccessRemovalMessage = ({
+  modelName
+}: {
+  modelName: string | undefined;
+}) => {
+  const { t } = useTranslation('newModel');
+  return (
+    <Alert
+      type="success"
+      data-testid="mandatory-fields-alert"
+      className="margin-y-4"
+      heading={t('success.heading', {
+        modelName
+      })}
+    >
+      <span className="mandatory-fields-alert__text">
+        {t('success.message')}
+      </span>
+    </Alert>
+  );
+};
+
+export const CollaboratorsContent = () => {
   const { modelID } = useParams<{ modelID: string }>();
   const { t: h } = useTranslation('draftModelPlan');
   const { t } = useTranslation('newModel');
+
+  const history = useHistory();
+
+  const { showMessageOnNextPage } = useMessage();
+
   const [isModalOpen, setModalOpen] = useState(false);
   const [isLastLead, setIsLastLead] = useState(false);
+
   const [
     removeCollaborator,
     setRemoveCollaborator
   ] = useState<ModelPlanCollaboratorType>();
+
+  // Current user's EUA id - to warn about removing yourself from model plan
+  const { euaId } = useSelector((state: RootStateOrAny) => state.auth);
 
   const [mutate] = useMutation<DeleteModelPlanCollaboratorType>(
     DeleteModelPlanCollaborator
@@ -81,7 +116,14 @@ const Collaborators = () => {
       .then(response => {
         if (!response?.errors) {
           setModalOpen(false);
-          refetch();
+          if (collaborator.euaUserID === euaId) {
+            showMessageOnNextPage(
+              <SuccessRemovalMessage modelName={data?.modelPlan?.modelName} />
+            );
+            history.push('/');
+          } else {
+            refetch();
+          }
         }
       })
       .catch(errors => {
@@ -91,13 +133,20 @@ const Collaborators = () => {
   };
 
   // Modal control for removing a collaborator
+  // Conditional rendering if attempting to remove yourself from model plan
   const RemoveCollaborator = () => {
+    // i18n key for conditionally rendering text
+    const selfOrCollaborator: string =
+      removeCollaborator?.euaUserID === euaId ? 'selfModal' : 'modal';
+
     return (
       <Modal isOpen={isModalOpen} closeModal={() => setModalOpen(false)}>
         <PageHeading headingLevel="h2" className="margin-top-0">
-          {t('modal.heading')} {removeCollaborator?.fullName}?
+          {t(`${selfOrCollaborator}.heading`, {
+            collaborator: removeCollaborator?.fullName
+          })}
         </PageHeading>
-        <p>{t('modal.subheading')}</p>
+        <p>{t(`${selfOrCollaborator}.subheading`)}</p>
         <Button
           type="button"
           className="margin-right-4"
@@ -105,10 +154,10 @@ const Collaborators = () => {
             removeCollaborator && handleRemoveCollaborator(removeCollaborator)
           }
         >
-          {t('modal.confirm')}
+          {t(`${selfOrCollaborator}.confirm`)}
         </Button>
         <Button type="button" unstyled onClick={() => setModalOpen(false)}>
-          {t('modal.no')}
+          {t(`${selfOrCollaborator}.no`)}
         </Button>
       </Modal>
     );
@@ -130,7 +179,7 @@ const Collaborators = () => {
                   <span>{h('home')}</span>
                 </BreadcrumbLink>
               </Breadcrumb>
-              <Breadcrumb current>{t('breadcrumb')}</Breadcrumb>
+              <Breadcrumb current>{t('teamBreadcrumb')}</Breadcrumb>
             </BreadcrumbBar>
             <PageHeading className="margin-top-4 margin-bottom-2">
               {t('headingTeamMembers')}
@@ -142,7 +191,7 @@ const Collaborators = () => {
             <UswdsReactLink
               className="usa-button margin-bottom-2"
               variant="unstyled"
-              to={`/models/new-plan/${modelID}/add-collaborator`}
+              to={`/models/${modelID}/collaborators/add-collaborator`}
             >
               {t('addTeamMemberButton')}
             </UswdsReactLink>
@@ -174,6 +223,26 @@ const Collaborators = () => {
         </Grid>
       </GridContainer>
     </MainContent>
+  );
+};
+
+const Collaborators = () => {
+  return (
+    <Switch>
+      <Route
+        path="/models/:modelID/collaborators"
+        exact
+        render={() => <CollaboratorsContent />}
+      />
+      <Route
+        path="/models/:modelID/collaborators/add-collaborator/:collaboratorId?"
+        exact
+        render={() => <AddCollaborator />}
+      />
+
+      {/* 404 */}
+      <Route path="*" render={() => <NotFound />} />
+    </Switch>
   );
 };
 

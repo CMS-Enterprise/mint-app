@@ -18,7 +18,7 @@ const modelID = 'f11eb129-2c80-4080-9440-439cbe1a286f';
 const mockData: GetAllGeneralCharacteristicsTypes = {
   __typename: 'PlanGeneralCharacteristics',
   id: '123',
-  isNewModel: true,
+  isNewModel: false,
   existingModel: 'Accountable Care Organizations (ACOs): General Information',
   resemblesExistingModel: true,
   resemblesExistingModelWhich: [],
@@ -32,7 +32,7 @@ const mockData: GetAllGeneralCharacteristicsTypes = {
     AlternativePaymentModelType.REGULAR,
     AlternativePaymentModelType.MIPS
   ],
-  alternativePaymentModelNote: 'asdfasdfasdfasdf asdf asdf asdf asdf ',
+  alternativePaymentModelNote: 'asdfasd',
   keyCharacteristics: [
     KeyCharacteristic.POPULATION_BASED,
     KeyCharacteristic.PAYMENT,

@@ -39,9 +39,10 @@ import './index.scss';
 type TableProps = {
   data: DraftModelPlanType[];
   hiddenColumns?: string[];
+  showDownloadButton: boolean;
 };
 
-const Table = ({ data, hiddenColumns }: TableProps) => {
+const Table = ({ data, hiddenColumns, showDownloadButton }: TableProps) => {
   const { t } = useTranslation('home');
 
   const columns = useMemo(() => {
@@ -166,9 +167,11 @@ const Table = ({ data, hiddenColumns }: TableProps) => {
           className="margin-bottom-4"
         />
 
-        <div className="flex-align-self-center">
-          <CsvExportLink />
-        </div>
+        {showDownloadButton && (
+          <div className="flex-align-self-center">
+            <CsvExportLink includeAll />
+          </div>
+        )}
       </div>
 
       <TableResults
@@ -288,11 +291,16 @@ const Table = ({ data, hiddenColumns }: TableProps) => {
 
 type DraftModelTableProps = {
   hiddenColumns?: string[];
+  isAssessment: boolean;
 };
 
-const DraftModelPlansTable = ({ hiddenColumns }: DraftModelTableProps) => {
+const DraftModelPlansTable = ({
+  hiddenColumns,
+  isAssessment
+}: DraftModelTableProps) => {
   const { error, loading, data: modelPlans } = useQuery<GetDraftModelPlansType>(
-    GetDraftModelPlans
+    GetDraftModelPlans,
+    { variables: { includeAll: isAssessment } }
   );
 
   const data = (modelPlans?.modelPlanCollection ?? []) as DraftModelPlanType[];
@@ -305,7 +313,13 @@ const DraftModelPlansTable = ({ hiddenColumns }: DraftModelTableProps) => {
     return <div>{JSON.stringify(error)}</div>;
   }
 
-  return <Table data={data} hiddenColumns={hiddenColumns} />;
+  return (
+    <Table
+      data={data}
+      hiddenColumns={hiddenColumns}
+      showDownloadButton={isAssessment}
+    />
+  );
 };
 
 export default DraftModelPlansTable;

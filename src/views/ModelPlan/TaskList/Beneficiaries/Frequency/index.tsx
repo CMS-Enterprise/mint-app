@@ -233,7 +233,7 @@ const Frequency = () => {
                                 <Field
                                   as={Radio}
                                   id={`beneficiaries-beneficiarySelectionFrequency-${key}`}
-                                  name="beneficiaries-beneficiarySelectionFrequency"
+                                  name="beneficiarySelectionFrequency"
                                   label={translateFrequencyType(key)}
                                   value={key}
                                   checked={

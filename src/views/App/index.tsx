@@ -19,6 +19,7 @@ import Cookies from 'views/Cookies';
 import FlagsWrapper from 'views/FlagsWrapper';
 import Home from 'views/Home';
 import Login from 'views/Login';
+import ModelAccessWrapper from 'views/ModelAccessWrapper';
 import Collaborators from 'views/ModelPlan/Collaborators';
 import CRTDL from 'views/ModelPlan/CRTDL';
 import Documents from 'views/ModelPlan/Documents';
@@ -79,10 +80,10 @@ const AppRoutes = () => {
       {/* Model Routes */}
       <SecureRoute path="/models" exact component={ModelPlan} />
 
-      <SecureRoute
-        path="/models/:modelID/read-only"
+      <Redirect
         exact
-        component={ReadOnly}
+        from="/models/:modelID/read-only"
+        to="/models/:modelID/read-only/model-basics"
       />
 
       <SecureRoute
@@ -100,7 +101,6 @@ const AppRoutes = () => {
       <SecureRoute path="/models/new-plan" component={NewPlan} />
       <SecureRoute
         path="/models/:modelID/collaborators"
-        exact
         component={Collaborators}
       />
       <SecureRoute path="/models/:modelID/documents" component={Documents} />
@@ -203,15 +203,17 @@ const App = () => {
                 <FlagsWrapper>
                   <UserInfoWrapper>
                     <NDAWrapper>
-                      <TimeOutWrapper>
-                        <NavContextProvider>
-                          <PageWrapper>
-                            <Header />
-                            <AppRoutes />
-                            <Footer />
-                          </PageWrapper>
-                        </NavContextProvider>
-                      </TimeOutWrapper>
+                      <ModelAccessWrapper>
+                        <TimeOutWrapper>
+                          <NavContextProvider>
+                            <PageWrapper>
+                              <Header />
+                              <AppRoutes />
+                              <Footer />
+                            </PageWrapper>
+                          </NavContextProvider>
+                        </TimeOutWrapper>
+                      </ModelAccessWrapper>
                     </NDAWrapper>
                   </UserInfoWrapper>
                 </FlagsWrapper>

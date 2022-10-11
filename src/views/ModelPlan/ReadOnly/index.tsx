@@ -44,7 +44,9 @@ import SideNav from './_components/Sidenav';
 import ReadOnlyGeneralCharacteristics from './GeneralCharacteristics/index';
 import ReadOnlyModelBasics from './ModelBasics/index';
 import ReadOnlyParticipantsAndProviders from './ParticipantsAndProviders/index';
+import ReadOnlyBeneficiaries from './Beneficiaries';
 import ReadOnlyDocuments from './Documents';
+import ReadOnlyPayments from './Payments';
 import ReadOnlyTeamInfo from './Team';
 
 import './index.scss';
@@ -171,7 +173,7 @@ const ReadOnly = () => {
     },
     beneficiaries: {
       route: `/models/${modelID}/read-only/beneficiaries`,
-      component: <h1>beneficiaries</h1>
+      component: <ReadOnlyBeneficiaries modelID={modelID} />
     },
     'operations-evaluation-and-learning': {
       route: `/models/${modelID}/read-only/operations-evaluation-and-learning`,
@@ -179,7 +181,7 @@ const ReadOnly = () => {
     },
     payment: {
       route: `/models/${modelID}/read-only/payment`,
-      component: <h1>payment</h1>
+      component: <ReadOnlyPayments modelID={modelID} />
     },
     'it-tools': {
       route: `/models/${modelID}/read-only/it-tools`,

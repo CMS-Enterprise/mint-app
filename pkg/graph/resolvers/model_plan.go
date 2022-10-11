@@ -1,6 +1,8 @@
 package resolvers
 
 import (
+	"fmt"
+
 	"github.com/google/uuid"
 	"go.uber.org/zap"
 
@@ -139,4 +141,25 @@ func ModelPlanCollection(logger *zap.Logger, principal authentication.Principal,
 	}
 
 	return modelPlans, err
+}
+
+// ModelPlanNameHistory returns a slice of AuditChanges, with the only values returned being the model_name field
+func ModelPlanNameHistory(logger *zap.Logger, modelPlanID uuid.UUID, sortDir models.SortDirection, store *storage.Store) ([]string, error) {
+	fieldName := "model_name"
+
+	changes, err := store.AuditChangeCollectionByIDAndTableAndField(logger, "model_plan", modelPlanID, fieldName, sortDir)
+	nameHistory := make([]string, len(changes)) // more efficient than appending
+	for i := 0; i < len(changes); i++ {
+
+		nameField := changes[i].Fields[fieldName]
+		name := fmt.Sprintf("%s", nameField.New)
+
+		nameHistory[i] = name
+
+	}
+	if err != nil {
+		return nil, err
+	}
+
+	return nameHistory, nil
 }
