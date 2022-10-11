@@ -35,7 +35,7 @@ exports[`Read Only Model Plan Summary -- General Characteristics matches snapsho
         <p
           class="margin-y-0 font-body-md line-height-sans-4"
         >
-          New model
+          New track of an existing model
         </p>
       </div>
       <div
@@ -214,7 +214,7 @@ exports[`Read Only Model Plan Summary -- General Characteristics matches snapsho
         <p
           class="margin-y-0 font-body-md line-height-sans-4"
         >
-          asdfasdfasdfasdf asdf asdf asdf asdf 
+          asdfasd
         </p>
       </div>
       <div
@@ -288,7 +288,11 @@ exports[`Read Only Model Plan Summary -- General Characteristics matches snapsho
         <p
           class="margin-y-0 font-body-md line-height-sans-4"
         >
-          No
+          <em
+            class="text-base"
+          >
+            No answer entered
+          </em>
         </p>
       </div>
       <div
@@ -302,7 +306,11 @@ exports[`Read Only Model Plan Summary -- General Characteristics matches snapsho
         <p
           class="margin-y-0 font-body-md line-height-sans-4"
         >
-          No
+          <em
+            class="text-base"
+          >
+            No answer entered
+          </em>
         </p>
       </div>
       <div
@@ -316,7 +324,11 @@ exports[`Read Only Model Plan Summary -- General Characteristics matches snapsho
         <p
           class="margin-y-0 font-body-md line-height-sans-4"
         >
-          No
+          <em
+            class="text-base"
+          >
+            No answer entered
+          </em>
         </p>
       </div>
     </div>
@@ -538,7 +550,11 @@ exports[`Read Only Model Plan Summary -- General Characteristics matches snapsho
         <p
           class="margin-y-0 font-body-md line-height-sans-4"
         >
-          No
+          <em
+            class="text-base"
+          >
+            No answer entered
+          </em>
         </p>
       </div>
     </div>

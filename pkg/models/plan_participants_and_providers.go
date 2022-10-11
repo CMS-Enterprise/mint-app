@@ -88,7 +88,7 @@ const (
 	RiskOTHER      ParticipantRiskType = "OTHER"
 )
 
-//NewPlanParticipantsAndProviders returns a new plan Beneficiaries
+// NewPlanParticipantsAndProviders returns a new plan Beneficiaries
 func NewPlanParticipantsAndProviders(tls baseTaskListSection) *PlanParticipantsAndProviders {
 	return &PlanParticipantsAndProviders{
 		baseTaskListSection: tls,

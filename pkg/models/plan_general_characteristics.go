@@ -70,7 +70,7 @@ type PlanGeneralCharacteristics struct {
 	WaiversRequiredNote           *string        `json:"waiversRequiredNote" db:"waivers_required_note"`
 }
 
-//NewPlanGeneralCharacteristics returns a new GeneralCharacteristics object
+// NewPlanGeneralCharacteristics returns a new GeneralCharacteristics object
 func NewPlanGeneralCharacteristics(tls baseTaskListSection) *PlanGeneralCharacteristics {
 	return &PlanGeneralCharacteristics{
 		baseTaskListSection: tls,
