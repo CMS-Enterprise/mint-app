@@ -62,17 +62,17 @@ const modelPlan = {
       second: {
         heading: 'Upload any existing model documentation',
         description:
-          'Add additional details to your model plan by uploading additional documents such as [DOCUMENT EXAMPLES].'
+          'Add additional details to your Model Plan by uploading documents such as a concept paper, draft ICIP, or other related materials.'
       },
       third: {
         heading: 'Iterate on your draft model plan',
         description:
-          'Work with the Model Intake Team and other administrative teams to Iterate on model requirements such as cost and budget estimates.'
+          'Work with the Model Assessment Team and other administrative teams to iterate on model requirements.'
       },
       fourth: {
-        heading: 'Finalize your model',
+        heading: 'Finalize your Model Plan and prepare for clearance',
         description:
-          'Review all forms and confirm with the Model Intake Team that your model is ready for internal clearance processes.'
+          'Review all sections of your Model Plan and confirm that your model is ready for internal clearance processes and matches your clearance documentation.'
       }
     }
   }

@@ -135,7 +135,7 @@ exports[`The Model Plan Steps Overview static page matches the snapshot 1`] = `
             Upload any existing model documentation
           </h3>
           <p>
-            Add additional details to your model plan by uploading additional documents such as [DOCUMENT EXAMPLES].
+            Add additional details to your Model Plan by uploading documents such as a concept paper, draft ICIP, or other related materials.
           </p>
         </li>
         <li
@@ -148,7 +148,7 @@ exports[`The Model Plan Steps Overview static page matches the snapshot 1`] = `
             Iterate on your draft model plan
           </h3>
           <p>
-            Work with the Model Intake Team and other administrative teams to Iterate on model requirements such as cost and budget estimates.
+            Work with the Model Assessment Team and other administrative teams to iterate on model requirements.
           </p>
         </li>
       </ol>
@@ -166,10 +166,10 @@ exports[`The Model Plan Steps Overview static page matches the snapshot 1`] = `
             className="usa-process-list__heading"
             data-testid="processListHeading"
           >
-            Finalize your model
+            Finalize your Model Plan and prepare for clearance
           </h3>
           <p>
-            Review all forms and confirm with the Model Intake Team that your model is ready for internal clearance processes.
+            Review all sections of your Model Plan and confirm that your model is ready for internal clearance processes and matches your clearance documentation.
           </p>
         </li>
       </ol>
