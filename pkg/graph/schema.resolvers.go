@@ -363,6 +363,14 @@ func (r *mutationResolver) AddOrUpdateOperationalNeed(ctx context.Context, model
 	return resolvers.OperationalNeedInsertOrUpdate(logger, modelPlanID, needType, changes, principal, r.store)
 }
 
+// AddOrUpdateCustomOperationalNeed is the resolver for the addOrUpdateCustomOperationalNeed field.
+func (r *mutationResolver) AddOrUpdateCustomOperationalNeed(ctx context.Context, modelPlanID uuid.UUID, customNeedType string, needed bool) (*models.OperationalNeed, error) {
+	// principal := appcontext.Principal(ctx)
+	// logger := appcontext.ZLogger(ctx)
+	// return resolvers.OperationalNeedInsertOrUpdateCustom()
+	return nil, nil
+}
+
 // AddCustomOperationalNeed is the resolver for the addCustomOperationalNeed field.
 func (r *mutationResolver) AddCustomOperationalNeed(ctx context.Context, modelPlanID uuid.UUID, fullName string, needed bool) (*models.OperationalNeed, error) {
 	changes := map[string]interface{}{

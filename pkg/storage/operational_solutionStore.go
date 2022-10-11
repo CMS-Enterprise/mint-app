@@ -15,7 +15,7 @@ import (
 var operationalSolutionCollectionGetByOperationalNeedIDSQL string
 
 //go:embed SQL/operational_solution_and_possible_get_by_operational_need_id_and_type.sql
-var operationalSolutionAndPossibleGetByOperationalNeedIDSQL string
+// var operationalSolutionAndPossibleGetByOperationalNeedIDSQL string
 
 //go:embed SQL/operational_solution_get_by_operational_need_id_and_type.sql
 var operationalSolutionGetByOperationalNeedIDAndTypeSQL string
@@ -27,8 +27,8 @@ var operationalSolutionInsertOrUpdateSQL string
 func (s *Store) OperationalSolutionCollectionGetByOperationalNeedID(logger *zap.Logger, operationalNeedID uuid.UUID) ([]*models.OperationalSolution, error) {
 	solutions := []*models.OperationalSolution{}
 
-	// stmt, err := s.db.PrepareNamed(operationalSolutionCollectionGetByOperationalNeedIDSQL)
-	stmt, err := s.db.PrepareNamed(operationalSolutionAndPossibleGetByOperationalNeedIDSQL)
+	stmt, err := s.db.PrepareNamed(operationalSolutionCollectionGetByOperationalNeedIDSQL)
+	// stmt, err := s.db.PrepareNamed(operationalSolutionAndPossibleGetByOperationalNeedIDSQL)
 	if err != nil {
 		return nil, err
 	}

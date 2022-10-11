@@ -1553,10 +1553,13 @@ deletePlanCrTdl(id: UUID!): PlanCrTdl!
 addOrUpdateOperationalNeed(modelPlanID: UUID!, needType: OperationalNeedKey! changes: OperationalNeedChanges!): OperationalNeed! #Maybe just pass the values.
 @hasRole(role: MINT_USER)
 
-addCustomOperationalNeed(modelPlanID: UUID!, fullName: String!, needed: Boolean! = true): OperationalNeed! #Maybe just pass the values.
+addOrUpdateCustomOperationalNeed(modelPlanID: UUID!, customNeedType: String! needed: Boolean!): OperationalNeed! #Maybe just pass the values.
 @hasRole(role: MINT_USER)
 
-updateCustomOperationalNeed(needID: UUID!, changes: OperationalNeedChanges): OperationalNeed! #Maybe just pass the values.
+addCustomOperationalNeed(modelPlanID: UUID!, fullName: String!, needed: Boolean! = true): OperationalNeed! 
+@hasRole(role: MINT_USER)
+
+updateCustomOperationalNeed(needID: UUID!, changes: OperationalNeedChanges): OperationalNeed! 
 @hasRole(role: MINT_USER)
 
 addOrUpdateOperationalSolution(operationalNeedID: UUID!, solutionType: OperationalSolutionKey! changes: OperationalSolutionChanges!): OperationalSolution! #Maybe just pass the values.

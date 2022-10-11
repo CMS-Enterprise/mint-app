@@ -53,3 +53,8 @@ func OperationalNeedInsertOrUpdate(logger *zap.Logger, modelPlanID uuid.UUID, ne
 	return store.OperationalNeedInsertOrUpdate(logger, existing, needType)
 
 }
+
+// OperationalNeedInsertOrUpdateCustom adds or updates a Custom Operational Need
+func OperationalNeedInsertOrUpdateCustom(logger *zap.Logger, modelPlanID uuid.UUID, needType models.OperationalNeedKey, changes map[string]interface{}, principal authentication.Principal, store *storage.Store) (*models.OperationalNeed, error) {
+	return nil, nil
+}

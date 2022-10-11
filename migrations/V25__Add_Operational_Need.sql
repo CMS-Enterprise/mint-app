@@ -1,13 +1,12 @@
 CREATE TABLE operational_need (
     id UUID PRIMARY KEY NOT NULL,
     model_plan_id UUID NOT NULL, --foreign key to model plan
-    need_type INT, --TODO should be required.
+    need_type INT,
     need_other ZERO_STRING,
 
-    --TODO add fields
     needed BOOLEAN DEFAULT TRUE,
 
-    --META DATA
+
     created_by EUA_ID NOT NULL,
     created_dts TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
     modified_by EUA_ID,
@@ -30,4 +29,8 @@ ON DELETE NO ACTION;
 ALTER TABLE operational_need
 ADD CONSTRAINT unique_need_per_plan UNIQUE (model_plan_id, need_type); --TODO update this, this will only allow one other type... Maybe leave other out?
 
---TODO add constraint for either need type or Other filled out
+ALTER TABLE operational_need
+ADD CONSTRAINT unique_need_other_per_plan UNIQUE (model_plan_id, need_other); --TODO add constraint for either need type or Other filled out
+
+ALTER TABLE operational_need
+ADD CONSTRAINT need_type_null_if_other CHECK (need_type IS NULL OR need_other IS NULL);
