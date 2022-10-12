@@ -11,12 +11,32 @@ import Discussions from './index';
 const discussionResult = {
   modelPlan: {
     __typename: 'ModelPlan',
+    collaborators: [
+      {
+        __typename: 'PlanCollaborator',
+        id: '123',
+        euaUserID: 'TIDA',
+        fullName: 'John Doe'
+      },
+      {
+        __typename: 'PlanCollaborator',
+        id: '123',
+        euaUserID: 'JFCS',
+        fullName: 'Jane Doe'
+      },
+      {
+        __typename: 'PlanCollaborator',
+        id: '123',
+        euaUserID: 'UISX',
+        fullName: 'Jack Doe'
+      }
+    ],
     discussions: [
       {
         __typename: 'PlanDiscussion',
         id: '123',
         content: 'This is a question.',
-        createdBy: 'John Doe',
+        createdBy: 'TIDA',
         createdDts: '2022-05-12T15:01:39.190679Z',
         status: 'UNANSWERED',
         replies: []
@@ -25,7 +45,7 @@ const discussionResult = {
         __typename: 'PlanDiscussion',
         id: '456',
         content: 'This is a second question.',
-        createdBy: 'Jane Doe',
+        createdBy: 'JFCS',
         createdDts: '2022-05-12T15:01:39.190679Z',
         status: 'ANSWERED',
         replies: [
@@ -35,7 +55,7 @@ const discussionResult = {
             resolution: true,
             id: 'abc',
             content: 'This is an answer.',
-            createdBy: 'Jack Doe',
+            createdBy: 'UISX',
             createdDts: '2022-05-12T15:01:39.190679Z'
           }
         ]
