@@ -17,16 +17,21 @@ const ReadOnlyDiscussions = ({ modelID }: { modelID: string }) => {
         <h2 className="margin-top-0 margin-bottom-4">{t('heading')}</h2>
       </div>
 
-      <Discussions
+      {/* <Discussions
         modelID={modelID}
         isOpen={isDiscussionOpen}
         closeModal={() => setIsDiscussionOpen(false)}
-      />
+      /> */}
       <DiscussionModalWrapper
-        modelID={modelID}
         isOpen={isDiscussionOpen}
         closeModal={() => setIsDiscussionOpen(false)}
-      />
+      >
+        <Discussions
+          modelID={modelID}
+          isOpen={isDiscussionOpen}
+          closeModal={() => setIsDiscussionOpen(false)}
+        />
+      </DiscussionModalWrapper>
     </div>
   );
 };
