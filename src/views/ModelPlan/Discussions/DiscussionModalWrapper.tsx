@@ -4,14 +4,15 @@ import ReactModal from 'react-modal';
 import { Grid, GridContainer, IconClose } from '@trussworks/react-uswds';
 import noScroll from 'no-scroll';
 
-import { DiscussionsProps } from '.';
-
-interface DiscussionModalWrapperProps extends DiscussionsProps {
+type DiscussionModalWrapperProps = {
+  isOpen: boolean;
+  askAQuestion?: boolean;
+  openModal?: () => void;
+  closeModal: () => void;
   children: React.ReactNode | React.ReactNodeArray;
-}
+};
 
 const DiscussionModalWrapper = ({
-  modelID,
   isOpen,
   askAQuestion,
   openModal,
