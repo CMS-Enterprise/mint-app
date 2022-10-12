@@ -41,10 +41,12 @@ const modelPlan = {
     summaryBox: {
       copy: 'Use this service to:',
       listItem: {
-        add:
-          'add a new Innovation Model request and kick off the model clearance process',
+        start:
+          'start a new Model Plan to analyze the operational and implementation needs of the model',
         upload:
-          'upload and access documents related to your model request, like concept documents or policy papers'
+          'upload and access documents related to your model request, like concept documents or policy papers',
+        track:
+          'track the IT solutions the model will use and track its status through implementation'
       },
       email:
         'If you have any questions, you can reach the [CMMI POC Team] at: <1>[email]@cms.hhs.gov</1>.'
@@ -70,6 +72,11 @@ const modelPlan = {
           'Work with the Model Assessment Team and other administrative teams to iterate on model requirements.'
       },
       fourth: {
+        heading: 'Track your IT solutions',
+        description:
+          'Work with your IT Lead or BSG to determine which IT solutions your model will use for the operational needs. Then, track the implementation status of those solutions to stay organized throughout the process.'
+      },
+      fifth: {
         heading: 'Finalize your Model Plan and prepare for clearance',
         description:
           'Review all sections of your Model Plan and confirm that your model is ready for internal clearance processes and matches your clearance documentation.'

@@ -11,7 +11,7 @@ const home = {
   ],
   newModelSummaryBox: {
     copy: 'Have a new model or demonstration?',
-    cta: 'Start a draft model plan'
+    cta: 'Start a new Model Plan'
   },
   allModels: {
     copy: 'Don’t see the model you’re looking for?',
