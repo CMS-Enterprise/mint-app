@@ -5,7 +5,6 @@ package graph
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/google/uuid"
 
@@ -357,34 +356,17 @@ func (r *mutationResolver) DeletePlanCrTdl(ctx context.Context, id uuid.UUID) (*
 }
 
 // AddOrUpdateOperationalNeed is the resolver for the addOrUpdateOperationalNeed field.
-func (r *mutationResolver) AddOrUpdateOperationalNeed(ctx context.Context, modelPlanID uuid.UUID, needType models.OperationalNeedKey, changes map[string]interface{}) (*models.OperationalNeed, error) {
+func (r *mutationResolver) AddOrUpdateOperationalNeed(ctx context.Context, modelPlanID uuid.UUID, needType models.OperationalNeedKey, needed bool) (*models.OperationalNeed, error) {
 	principal := appcontext.Principal(ctx)
 	logger := appcontext.ZLogger(ctx)
-	return resolvers.OperationalNeedInsertOrUpdate(logger, modelPlanID, needType, changes, principal, r.store)
+	return resolvers.OperationalNeedInsertOrUpdate(logger, modelPlanID, needType, needed, principal, r.store)
 }
 
 // AddOrUpdateCustomOperationalNeed is the resolver for the addOrUpdateCustomOperationalNeed field.
 func (r *mutationResolver) AddOrUpdateCustomOperationalNeed(ctx context.Context, modelPlanID uuid.UUID, customNeedType string, needed bool) (*models.OperationalNeed, error) {
-	// principal := appcontext.Principal(ctx)
-	// logger := appcontext.ZLogger(ctx)
-	// return resolvers.OperationalNeedInsertOrUpdateCustom()
-	return nil, nil
-}
-
-// AddCustomOperationalNeed is the resolver for the addCustomOperationalNeed field.
-func (r *mutationResolver) AddCustomOperationalNeed(ctx context.Context, modelPlanID uuid.UUID, fullName string, needed bool) (*models.OperationalNeed, error) {
-	changes := map[string]interface{}{
-		"needOther": fullName,
-		"needed":    needed,
-	}
-
-	return r.AddOrUpdateOperationalNeed(ctx, modelPlanID, models.OpNKOther, changes) //TODO should we add it's own resolver? and remove the other resolver?
-}
-
-// UpdateCustomOperationalNeed is the resolver for the updateCustomOperationalNeed field.
-func (r *mutationResolver) UpdateCustomOperationalNeed(ctx context.Context, needID uuid.UUID, changes map[string]interface{}) (*models.OperationalNeed, error) {
-	//TODO should we make this use the traditional update by ID method?
-	panic(fmt.Errorf("not implemented: UpdateCustomOperationalNeed - updateCustomOperationalNeed"))
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.OperationalNeedInsertOrUpdateCustom(logger, modelPlanID, customNeedType, needed, principal, r.store)
 }
 
 // AddOrUpdateOperationalSolution is the resolver for the addOrUpdateOperationalSolution field.

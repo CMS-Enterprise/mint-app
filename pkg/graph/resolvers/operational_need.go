@@ -35,7 +35,7 @@ func OperationalNeedsGetByModelPlanID(logger *zap.Logger, modelPlanID uuid.UUID,
 }
 
 // OperationalNeedInsertOrUpdate either inserts or updates an operational need depending on if it exists or notalready
-func OperationalNeedInsertOrUpdate(logger *zap.Logger, modelPlanID uuid.UUID, needType models.OperationalNeedKey, changes map[string]interface{}, principal authentication.Principal, store *storage.Store) (*models.OperationalNeed, error) {
+func OperationalNeedInsertOrUpdate(logger *zap.Logger, modelPlanID uuid.UUID, needType models.OperationalNeedKey, needed bool, principal authentication.Principal, store *storage.Store) (*models.OperationalNeed, error) {
 
 	existing, err := store.OperationalNeedGetByModelPlanIDAndType(logger, modelPlanID, needType)
 	if err != nil {
@@ -43,6 +43,9 @@ func OperationalNeedInsertOrUpdate(logger *zap.Logger, modelPlanID uuid.UUID, ne
 	}
 	if existing == nil {
 		existing = models.NewOperationalNeed(principal.ID(), modelPlanID)
+	}
+	changes := map[string]interface{}{
+		"needed": needed,
 	}
 
 	err = BaseStructPreUpdate(logger, existing, changes, principal, store, true, true)
@@ -55,6 +58,24 @@ func OperationalNeedInsertOrUpdate(logger *zap.Logger, modelPlanID uuid.UUID, ne
 }
 
 // OperationalNeedInsertOrUpdateCustom adds or updates a Custom Operational Need
-func OperationalNeedInsertOrUpdateCustom(logger *zap.Logger, modelPlanID uuid.UUID, needType models.OperationalNeedKey, changes map[string]interface{}, principal authentication.Principal, store *storage.Store) (*models.OperationalNeed, error) {
-	return nil, nil
+func OperationalNeedInsertOrUpdateCustom(logger *zap.Logger, modelPlanID uuid.UUID, customNeedType string, needed bool, principal authentication.Principal, store *storage.Store) (*models.OperationalNeed, error) {
+
+	existing, err := store.OperationalNeedGetByModelPlanIDAndOtherType(logger, modelPlanID, customNeedType)
+	if err != nil {
+		return nil, err
+	}
+	if existing == nil {
+		existing = models.NewOperationalNeed(principal.ID(), modelPlanID)
+	}
+	changes := map[string]interface{}{
+		"needed": needed,
+	}
+
+	err = BaseStructPreUpdate(logger, existing, changes, principal, store, true, true)
+	if err != nil {
+		return nil, err
+	}
+
+	return store.OperationalNeedInsertOrUpdateOther(logger, existing, customNeedType)
+
 }

@@ -33,4 +33,6 @@ ALTER TABLE operational_need
 ADD CONSTRAINT unique_need_other_per_plan UNIQUE (model_plan_id, need_other); --TODO add constraint for either need type or Other filled out
 
 ALTER TABLE operational_need
-ADD CONSTRAINT need_type_null_if_other CHECK (need_type IS NULL OR need_other IS NULL);
+ADD CONSTRAINT need_type_null_if_other CHECK ((need_type IS NULL OR need_other IS NULL) AND NOT (need_type IS NULL AND need_other IS NULL) );
+
+--TODO need a check that when need_type is null, need other is not

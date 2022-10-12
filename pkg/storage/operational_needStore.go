@@ -20,8 +20,14 @@ var operationalNeedCollectionByModelPlanIDSQL string
 //go:embed SQL/operational_need_get_by_model_plan_id_and_type.sql
 var operationalNeedGetByModelPlanIDAndTypeSQL string
 
+//go:embed SQL/operational_need_get_by_model_plan_id_and_other_type.sql
+var operationalNeedGetByModelPlanIDAndOtherTypeSQL string
+
 //go:embed SQL/operational_need_insert_or_update.sql
 var operationalNeedInsertOrUpdateSQL string
+
+//go:embed SQL/operational_need_insert_or_update_other.sql
+var operationalNeedInsertOrUpdateOtherSQL string
 
 // OperationalNeedAndPossibleCollectionGetByModelPlanID returns possible and existing OperationalNeeds associated to a model plan
 func (s *Store) OperationalNeedAndPossibleCollectionGetByModelPlanID(logger *zap.Logger, modelPlanID uuid.UUID) ([]*models.OperationalNeed, error) {
@@ -95,6 +101,34 @@ func (s *Store) OperationalNeedGetByModelPlanIDAndType(logger *zap.Logger, model
 	return &need, nil
 }
 
+// OperationalNeedGetByModelPlanIDAndOtherType existing OperationalNeed associated to a model plan by id and custom type
+func (s *Store) OperationalNeedGetByModelPlanIDAndOtherType(logger *zap.Logger, modelPlanID uuid.UUID, customNeedType string) (*models.OperationalNeed, error) {
+	need := models.OperationalNeed{}
+
+	stmt, err := s.db.PrepareNamed(operationalNeedGetByModelPlanIDAndOtherTypeSQL)
+	if err != nil {
+		return nil, err
+	}
+
+	arg := map[string]interface{}{
+
+		"model_plan_id": modelPlanID,
+		"need_other":    customNeedType,
+	}
+
+	err = stmt.Get(&need, arg)
+
+	if err != nil {
+		if err != nil {
+			if err.Error() == "sql: no rows in result set" { //EXPECT THERE TO BE NULL results, don't treat this as an error
+				return nil, nil
+			}
+		}
+		return nil, err
+	}
+	return &need, nil
+}
+
 // OperationalNeedInsertOrUpdate either inserts or updates an operational need in the DB
 func (s *Store) OperationalNeedInsertOrUpdate(logger *zap.Logger, need *models.OperationalNeed, needTypeKey models.OperationalNeedKey) (*models.OperationalNeed, error) {
 	statement, err := s.db.PrepareNamed(operationalNeedInsertOrUpdateSQL)
@@ -103,6 +137,23 @@ func (s *Store) OperationalNeedInsertOrUpdate(logger *zap.Logger, need *models.O
 	}
 	need.ID = utilityUUID.ValueOrNewUUID(need.ID)
 	need.NeedTypeShortName = needTypeKey // This will set the need type id IN the db
+
+	err = statement.Get(need, need)
+	if err != nil {
+		return nil, genericmodel.HandleModelUpdateError(logger, err, need) //this could be either update or insert..
+	}
+	return need, err
+
+}
+
+// OperationalNeedInsertOrUpdateOther either inserts or updates a custom operational need in the DB
+func (s *Store) OperationalNeedInsertOrUpdateOther(logger *zap.Logger, need *models.OperationalNeed, customNeedType string) (*models.OperationalNeed, error) {
+	statement, err := s.db.PrepareNamed(operationalNeedInsertOrUpdateOtherSQL)
+	if err != nil {
+		return nil, genericmodel.HandleModelUpdateError(logger, err, need)
+	}
+	need.ID = utilityUUID.ValueOrNewUUID(need.ID)
+	need.NeedOther = &customNeedType // This will set the need type id IN the db
 
 	err = statement.Get(need, need)
 	if err != nil {

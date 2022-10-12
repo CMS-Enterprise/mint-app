@@ -14,9 +14,6 @@ import (
 //go:embed SQL/operational_solution_collection_get_by_operational_need_id.sql
 var operationalSolutionCollectionGetByOperationalNeedIDSQL string
 
-//go:embed SQL/operational_solution_and_possible_get_by_operational_need_id_and_type.sql
-// var operationalSolutionAndPossibleGetByOperationalNeedIDSQL string
-
 //go:embed SQL/operational_solution_get_by_operational_need_id_and_type.sql
 var operationalSolutionGetByOperationalNeedIDAndTypeSQL string
 

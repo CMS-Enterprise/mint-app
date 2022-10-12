@@ -144,9 +144,8 @@ type ComplexityRoot struct {
 	}
 
 	Mutation struct {
-		AddCustomOperationalNeed           func(childComplexity int, modelPlanID uuid.UUID, fullName string, needed bool) int
 		AddOrUpdateCustomOperationalNeed   func(childComplexity int, modelPlanID uuid.UUID, customNeedType string, needed bool) int
-		AddOrUpdateOperationalNeed         func(childComplexity int, modelPlanID uuid.UUID, needType models.OperationalNeedKey, changes map[string]interface{}) int
+		AddOrUpdateOperationalNeed         func(childComplexity int, modelPlanID uuid.UUID, needType models.OperationalNeedKey, needed bool) int
 		AddOrUpdateOperationalSolution     func(childComplexity int, operationalNeedID uuid.UUID, solutionType models.OperationalSolutionKey, changes map[string]interface{}) int
 		AddPlanFavorite                    func(childComplexity int, modelPlanID uuid.UUID) int
 		AgreeToNda                         func(childComplexity int, agree bool) int
@@ -164,7 +163,6 @@ type ComplexityRoot struct {
 		LockTaskListSection                func(childComplexity int, modelPlanID uuid.UUID, section model.TaskListSection) int
 		UnlockAllTaskListSections          func(childComplexity int, modelPlanID uuid.UUID) int
 		UnlockTaskListSection              func(childComplexity int, modelPlanID uuid.UUID, section model.TaskListSection) int
-		UpdateCustomOperationalNeed        func(childComplexity int, needID uuid.UUID, changes map[string]interface{}) int
 		UpdateDiscussionReply              func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
 		UpdateModelPlan                    func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
 		UpdatePlanBasics                   func(childComplexity int, id uuid.UUID, changes map[string]interface{}) int
@@ -864,10 +862,8 @@ type MutationResolver interface {
 	CreatePlanCrTdl(ctx context.Context, input model.PlanCrTdlCreateInput) (*models.PlanCrTdl, error)
 	UpdatePlanCrTdl(ctx context.Context, id uuid.UUID, changes map[string]interface{}) (*models.PlanCrTdl, error)
 	DeletePlanCrTdl(ctx context.Context, id uuid.UUID) (*models.PlanCrTdl, error)
-	AddOrUpdateOperationalNeed(ctx context.Context, modelPlanID uuid.UUID, needType models.OperationalNeedKey, changes map[string]interface{}) (*models.OperationalNeed, error)
+	AddOrUpdateOperationalNeed(ctx context.Context, modelPlanID uuid.UUID, needType models.OperationalNeedKey, needed bool) (*models.OperationalNeed, error)
 	AddOrUpdateCustomOperationalNeed(ctx context.Context, modelPlanID uuid.UUID, customNeedType string, needed bool) (*models.OperationalNeed, error)
-	AddCustomOperationalNeed(ctx context.Context, modelPlanID uuid.UUID, fullName string, needed bool) (*models.OperationalNeed, error)
-	UpdateCustomOperationalNeed(ctx context.Context, needID uuid.UUID, changes map[string]interface{}) (*models.OperationalNeed, error)
 	AddOrUpdateOperationalSolution(ctx context.Context, operationalNeedID uuid.UUID, solutionType models.OperationalSolutionKey, changes map[string]interface{}) (*models.OperationalSolution, error)
 }
 type OperationalNeedResolver interface {
@@ -1487,18 +1483,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.ModelPlan.Status(childComplexity), true
 
-	case "Mutation.addCustomOperationalNeed":
-		if e.complexity.Mutation.AddCustomOperationalNeed == nil {
-			break
-		}
-
-		args, err := ec.field_Mutation_addCustomOperationalNeed_args(context.TODO(), rawArgs)
-		if err != nil {
-			return 0, false
-		}
-
-		return e.complexity.Mutation.AddCustomOperationalNeed(childComplexity, args["modelPlanID"].(uuid.UUID), args["fullName"].(string), args["needed"].(bool)), true
-
 	case "Mutation.addOrUpdateCustomOperationalNeed":
 		if e.complexity.Mutation.AddOrUpdateCustomOperationalNeed == nil {
 			break
@@ -1521,7 +1505,7 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 			return 0, false
 		}
 
-		return e.complexity.Mutation.AddOrUpdateOperationalNeed(childComplexity, args["modelPlanID"].(uuid.UUID), args["needType"].(models.OperationalNeedKey), args["changes"].(map[string]interface{})), true
+		return e.complexity.Mutation.AddOrUpdateOperationalNeed(childComplexity, args["modelPlanID"].(uuid.UUID), args["needType"].(models.OperationalNeedKey), args["needed"].(bool)), true
 
 	case "Mutation.addOrUpdateOperationalSolution":
 		if e.complexity.Mutation.AddOrUpdateOperationalSolution == nil {
@@ -1726,18 +1710,6 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Mutation.UnlockTaskListSection(childComplexity, args["modelPlanID"].(uuid.UUID), args["section"].(model.TaskListSection)), true
-
-	case "Mutation.updateCustomOperationalNeed":
-		if e.complexity.Mutation.UpdateCustomOperationalNeed == nil {
-			break
-		}
-
-		args, err := ec.field_Mutation_updateCustomOperationalNeed_args(context.TODO(), rawArgs)
-		if err != nil {
-			return 0, false
-		}
-
-		return e.complexity.Mutation.UpdateCustomOperationalNeed(childComplexity, args["needID"].(uuid.UUID), args["changes"].(map[string]interface{})), true
 
 	case "Mutation.updateDiscussionReply":
 		if e.complexity.Mutation.UpdateDiscussionReply == nil {
@@ -7367,12 +7339,12 @@ type AuditChange {
   modifiedDts: Time
 }
 
-input OperationalNeedChanges @goModel(model: "map[string]interface{}"){
+# input OperationalNeedChanges @goModel(model: "map[string]interface{}"){
     
-    needOther: String
-    needed: Boolean!
+#     needOther: String
+#     needed: Boolean!
 
-}
+# }
 
 type OperationalSolution {
     id: UUID!
@@ -7512,17 +7484,12 @@ updatePlanCrTdl(id: UUID!, changes: PlanCrTdlChanges!): PlanCrTdl!
 deletePlanCrTdl(id: UUID!): PlanCrTdl!
 @hasRole(role: MINT_USER)
 
-addOrUpdateOperationalNeed(modelPlanID: UUID!, needType: OperationalNeedKey! changes: OperationalNeedChanges!): OperationalNeed! #Maybe just pass the values.
+addOrUpdateOperationalNeed(modelPlanID: UUID!, needType: OperationalNeedKey! needed: Boolean!): OperationalNeed! #TODO --> Don't include other here since 
 @hasRole(role: MINT_USER)
 
 addOrUpdateCustomOperationalNeed(modelPlanID: UUID!, customNeedType: String! needed: Boolean!): OperationalNeed! #Maybe just pass the values.
 @hasRole(role: MINT_USER)
 
-addCustomOperationalNeed(modelPlanID: UUID!, fullName: String!, needed: Boolean! = true): OperationalNeed! 
-@hasRole(role: MINT_USER)
-
-updateCustomOperationalNeed(needID: UUID!, changes: OperationalNeedChanges): OperationalNeed! 
-@hasRole(role: MINT_USER)
 
 addOrUpdateOperationalSolution(operationalNeedID: UUID!, solutionType: OperationalSolutionKey! changes: OperationalSolutionChanges!): OperationalSolution! #Maybe just pass the values.
 @hasRole(role: MINT_USER)
@@ -8276,39 +8243,6 @@ func (ec *executionContext) field_ModelPlan_nameHistory_args(ctx context.Context
 	return args, nil
 }
 
-func (ec *executionContext) field_Mutation_addCustomOperationalNeed_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
-	var err error
-	args := map[string]interface{}{}
-	var arg0 uuid.UUID
-	if tmp, ok := rawArgs["modelPlanID"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("modelPlanID"))
-		arg0, err = ec.unmarshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, tmp)
-		if err != nil {
-			return nil, err
-		}
-	}
-	args["modelPlanID"] = arg0
-	var arg1 string
-	if tmp, ok := rawArgs["fullName"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("fullName"))
-		arg1, err = ec.unmarshalNString2string(ctx, tmp)
-		if err != nil {
-			return nil, err
-		}
-	}
-	args["fullName"] = arg1
-	var arg2 bool
-	if tmp, ok := rawArgs["needed"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("needed"))
-		arg2, err = ec.unmarshalNBoolean2bool(ctx, tmp)
-		if err != nil {
-			return nil, err
-		}
-	}
-	args["needed"] = arg2
-	return args, nil
-}
-
 func (ec *executionContext) field_Mutation_addOrUpdateCustomOperationalNeed_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
 	args := map[string]interface{}{}
@@ -8363,15 +8297,15 @@ func (ec *executionContext) field_Mutation_addOrUpdateOperationalNeed_args(ctx c
 		}
 	}
 	args["needType"] = arg1
-	var arg2 map[string]interface{}
-	if tmp, ok := rawArgs["changes"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("changes"))
-		arg2, err = ec.unmarshalNOperationalNeedChanges2map(ctx, tmp)
+	var arg2 bool
+	if tmp, ok := rawArgs["needed"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("needed"))
+		arg2, err = ec.unmarshalNBoolean2bool(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
 	}
-	args["changes"] = arg2
+	args["needed"] = arg2
 	return args, nil
 }
 
@@ -8663,30 +8597,6 @@ func (ec *executionContext) field_Mutation_unlockTaskListSection_args(ctx contex
 		}
 	}
 	args["section"] = arg1
-	return args, nil
-}
-
-func (ec *executionContext) field_Mutation_updateCustomOperationalNeed_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
-	var err error
-	args := map[string]interface{}{}
-	var arg0 uuid.UUID
-	if tmp, ok := rawArgs["needID"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("needID"))
-		arg0, err = ec.unmarshalNUUID2githubᚗcomᚋgoogleᚋuuidᚐUUID(ctx, tmp)
-		if err != nil {
-			return nil, err
-		}
-	}
-	args["needID"] = arg0
-	var arg1 map[string]interface{}
-	if tmp, ok := rawArgs["changes"]; ok {
-		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("changes"))
-		arg1, err = ec.unmarshalOOperationalNeedChanges2map(ctx, tmp)
-		if err != nil {
-			return nil, err
-		}
-	}
-	args["changes"] = arg1
 	return args, nil
 }
 
@@ -16451,7 +16361,7 @@ func (ec *executionContext) _Mutation_addOrUpdateOperationalNeed(ctx context.Con
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		directive0 := func(rctx context.Context) (interface{}, error) {
 			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Mutation().AddOrUpdateOperationalNeed(rctx, fc.Args["modelPlanID"].(uuid.UUID), fc.Args["needType"].(models.OperationalNeedKey), fc.Args["changes"].(map[string]interface{}))
+			return ec.resolvers.Mutation().AddOrUpdateOperationalNeed(rctx, fc.Args["modelPlanID"].(uuid.UUID), fc.Args["needType"].(models.OperationalNeedKey), fc.Args["needed"].(bool))
 		}
 		directive1 := func(ctx context.Context) (interface{}, error) {
 			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
@@ -16640,216 +16550,6 @@ func (ec *executionContext) fieldContext_Mutation_addOrUpdateCustomOperationalNe
 	}()
 	ctx = graphql.WithFieldContext(ctx, fc)
 	if fc.Args, err = ec.field_Mutation_addOrUpdateCustomOperationalNeed_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Mutation_addCustomOperationalNeed(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Mutation_addCustomOperationalNeed(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		directive0 := func(rctx context.Context) (interface{}, error) {
-			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Mutation().AddCustomOperationalNeed(rctx, fc.Args["modelPlanID"].(uuid.UUID), fc.Args["fullName"].(string), fc.Args["needed"].(bool))
-		}
-		directive1 := func(ctx context.Context) (interface{}, error) {
-			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
-			if err != nil {
-				return nil, err
-			}
-			if ec.directives.HasRole == nil {
-				return nil, errors.New("directive hasRole is not implemented")
-			}
-			return ec.directives.HasRole(ctx, nil, directive0, role)
-		}
-
-		tmp, err := directive1(rctx)
-		if err != nil {
-			return nil, graphql.ErrorOnPath(ctx, err)
-		}
-		if tmp == nil {
-			return nil, nil
-		}
-		if data, ok := tmp.(*models.OperationalNeed); ok {
-			return data, nil
-		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.OperationalNeed`, tmp)
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(*models.OperationalNeed)
-	fc.Result = res
-	return ec.marshalNOperationalNeed2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐOperationalNeed(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_Mutation_addCustomOperationalNeed(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Mutation",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "id":
-				return ec.fieldContext_OperationalNeed_id(ctx, field)
-			case "modelPlanID":
-				return ec.fieldContext_OperationalNeed_modelPlanID(ctx, field)
-			case "needType":
-				return ec.fieldContext_OperationalNeed_needType(ctx, field)
-			case "needOther":
-				return ec.fieldContext_OperationalNeed_needOther(ctx, field)
-			case "needed":
-				return ec.fieldContext_OperationalNeed_needed(ctx, field)
-			case "solutions":
-				return ec.fieldContext_OperationalNeed_solutions(ctx, field)
-			case "needTypeFullName":
-				return ec.fieldContext_OperationalNeed_needTypeFullName(ctx, field)
-			case "needTypeShortName":
-				return ec.fieldContext_OperationalNeed_needTypeShortName(ctx, field)
-			case "createdBy":
-				return ec.fieldContext_OperationalNeed_createdBy(ctx, field)
-			case "createdDts":
-				return ec.fieldContext_OperationalNeed_createdDts(ctx, field)
-			case "modifiedBy":
-				return ec.fieldContext_OperationalNeed_modifiedBy(ctx, field)
-			case "modifiedDts":
-				return ec.fieldContext_OperationalNeed_modifiedDts(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type OperationalNeed", field.Name)
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_addCustomOperationalNeed_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
-		ec.Error(ctx, err)
-		return
-	}
-	return fc, nil
-}
-
-func (ec *executionContext) _Mutation_updateCustomOperationalNeed(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
-	fc, err := ec.fieldContext_Mutation_updateCustomOperationalNeed(ctx, field)
-	if err != nil {
-		return graphql.Null
-	}
-	ctx = graphql.WithFieldContext(ctx, fc)
-	defer func() {
-		if r := recover(); r != nil {
-			ec.Error(ctx, ec.Recover(ctx, r))
-			ret = graphql.Null
-		}
-	}()
-	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		directive0 := func(rctx context.Context) (interface{}, error) {
-			ctx = rctx // use context from middleware stack in children
-			return ec.resolvers.Mutation().UpdateCustomOperationalNeed(rctx, fc.Args["needID"].(uuid.UUID), fc.Args["changes"].(map[string]interface{}))
-		}
-		directive1 := func(ctx context.Context) (interface{}, error) {
-			role, err := ec.unmarshalNRole2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐRole(ctx, "MINT_USER")
-			if err != nil {
-				return nil, err
-			}
-			if ec.directives.HasRole == nil {
-				return nil, errors.New("directive hasRole is not implemented")
-			}
-			return ec.directives.HasRole(ctx, nil, directive0, role)
-		}
-
-		tmp, err := directive1(rctx)
-		if err != nil {
-			return nil, graphql.ErrorOnPath(ctx, err)
-		}
-		if tmp == nil {
-			return nil, nil
-		}
-		if data, ok := tmp.(*models.OperationalNeed); ok {
-			return data, nil
-		}
-		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/cmsgov/mint-app/pkg/models.OperationalNeed`, tmp)
-	})
-	if err != nil {
-		ec.Error(ctx, err)
-		return graphql.Null
-	}
-	if resTmp == nil {
-		if !graphql.HasFieldError(ctx, fc) {
-			ec.Errorf(ctx, "must not be null")
-		}
-		return graphql.Null
-	}
-	res := resTmp.(*models.OperationalNeed)
-	fc.Result = res
-	return ec.marshalNOperationalNeed2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐOperationalNeed(ctx, field.Selections, res)
-}
-
-func (ec *executionContext) fieldContext_Mutation_updateCustomOperationalNeed(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
-	fc = &graphql.FieldContext{
-		Object:     "Mutation",
-		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
-		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
-			switch field.Name {
-			case "id":
-				return ec.fieldContext_OperationalNeed_id(ctx, field)
-			case "modelPlanID":
-				return ec.fieldContext_OperationalNeed_modelPlanID(ctx, field)
-			case "needType":
-				return ec.fieldContext_OperationalNeed_needType(ctx, field)
-			case "needOther":
-				return ec.fieldContext_OperationalNeed_needOther(ctx, field)
-			case "needed":
-				return ec.fieldContext_OperationalNeed_needed(ctx, field)
-			case "solutions":
-				return ec.fieldContext_OperationalNeed_solutions(ctx, field)
-			case "needTypeFullName":
-				return ec.fieldContext_OperationalNeed_needTypeFullName(ctx, field)
-			case "needTypeShortName":
-				return ec.fieldContext_OperationalNeed_needTypeShortName(ctx, field)
-			case "createdBy":
-				return ec.fieldContext_OperationalNeed_createdBy(ctx, field)
-			case "createdDts":
-				return ec.fieldContext_OperationalNeed_createdDts(ctx, field)
-			case "modifiedBy":
-				return ec.fieldContext_OperationalNeed_modifiedBy(ctx, field)
-			case "modifiedDts":
-				return ec.fieldContext_OperationalNeed_modifiedDts(ctx, field)
-			}
-			return nil, fmt.Errorf("no field named %q was found under type OperationalNeed", field.Name)
-		},
-	}
-	defer func() {
-		if r := recover(); r != nil {
-			err = ec.Recover(ctx, r)
-			ec.Error(ctx, err)
-		}
-	}()
-	ctx = graphql.WithFieldContext(ctx, fc)
-	if fc.Args, err = ec.field_Mutation_updateCustomOperationalNeed_args(ctx, field.ArgumentMap(ec.Variables)); err != nil {
 		ec.Error(ctx, err)
 		return
 	}
@@ -44402,24 +44102,6 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 			if out.Values[i] == graphql.Null {
 				invalids++
 			}
-		case "addCustomOperationalNeed":
-
-			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_addCustomOperationalNeed(ctx, field)
-			})
-
-			if out.Values[i] == graphql.Null {
-				invalids++
-			}
-		case "updateCustomOperationalNeed":
-
-			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
-				return ec._Mutation_updateCustomOperationalNeed(ctx, field)
-			})
-
-			if out.Values[i] == graphql.Null {
-				invalids++
-			}
 		case "addOrUpdateOperationalSolution":
 
 			out.Values[i] = ec.OperationContext.RootResolverMiddleware(innerCtx, func(ctx context.Context) (res graphql.Marshaler) {
@@ -52447,10 +52129,6 @@ func (ec *executionContext) marshalNOperationalNeed2ᚖgithubᚗcomᚋcmsgovᚋm
 	return ec._OperationalNeed(ctx, sel, v)
 }
 
-func (ec *executionContext) unmarshalNOperationalNeedChanges2map(ctx context.Context, v interface{}) (map[string]interface{}, error) {
-	return v.(map[string]interface{}), nil
-}
-
 func (ec *executionContext) unmarshalNOperationalNeedKey2githubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋmodelsᚐOperationalNeedKey(ctx context.Context, v interface{}) (models.OperationalNeedKey, error) {
 	tmp, err := graphql.UnmarshalString(v)
 	res := models.OperationalNeedKey(tmp)
@@ -57990,13 +57668,6 @@ func (ec *executionContext) marshalOOpSolutionStatus2ᚖgithubᚗcomᚋcmsgovᚋ
 	}
 	res := graphql.MarshalString(string(*v))
 	return res
-}
-
-func (ec *executionContext) unmarshalOOperationalNeedChanges2map(ctx context.Context, v interface{}) (map[string]interface{}, error) {
-	if v == nil {
-		return nil, nil
-	}
-	return v.(map[string]interface{}), nil
 }
 
 func (ec *executionContext) marshalOOperationalNeeds2ᚖgithubᚗcomᚋcmsgovᚋmintᚑappᚋpkgᚋgraphᚋmodelᚐOperationalNeeds(ctx context.Context, sel ast.SelectionSet, v *model.OperationalNeeds) graphql.Marshaler {
