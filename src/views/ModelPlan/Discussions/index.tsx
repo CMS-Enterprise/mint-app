@@ -1,20 +1,16 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import ReactModal from 'react-modal';
 import { useMutation, useQuery } from '@apollo/client';
 import {
   Accordion,
   Button,
   Grid,
-  GridContainer,
   IconAnnouncement,
-  IconClose,
   Label,
   Textarea
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { Field, Form, Formik, FormikProps } from 'formik';
-import noScroll from 'no-scroll';
 import * as Yup from 'yup';
 
 import PageHeading from 'components/PageHeading';
@@ -46,6 +42,8 @@ import { DiscussionStatus } from 'types/graphql-global-types';
 import { getTimeElapsed } from 'utils/date';
 import flattenErrors from 'utils/flattenErrors';
 import { getUnansweredQuestions, sortRepliesByDate } from 'utils/modelPlan';
+
+import DiscussionModalWrapper from './DiscussionModalWrapper';
 
 import './index.scss';
 
@@ -146,13 +144,6 @@ const Discussions = ({
     return status === 'ANSWERED'
       ? questionCount.answeredQuestions > 0
       : questionCount.unansweredQuestions > 0;
-  };
-
-  const handleOpenModal = () => {
-    noScroll.on();
-    if (openModal) {
-      openModal();
-    }
   };
 
   const handleCreateDiscussion = (formikValues: DicussionFormPropTypes) => {
@@ -562,39 +553,17 @@ const Discussions = ({
   };
 
   return (
-    <ReactModal
+    <DiscussionModalWrapper
+      modelID={modelID}
       isOpen={isOpen}
-      overlayClassName="mint-discussions__overlay overflow-y-scroll"
-      className="mint-discussions__content"
-      onAfterOpen={handleOpenModal}
-      onAfterClose={noScroll.off}
-      onRequestClose={closeModal}
-      shouldCloseOnOverlayClick
-      contentLabel={t('ariaLabel')}
-      appElement={document.getElementById('root')! as HTMLElement}
+      closeModal={() => closeModal()}
     >
-      <div data-testid="discussion-modal">
-        <div className="mint-discussions__x-button-container display-flex text-base flex-align-center">
-          <button
-            type="button"
-            data-testid="close-discussions"
-            className="mint-discussions__x-button margin-right-2"
-            aria-label="Close Modal"
-            onClick={closeModal}
-          >
-            <IconClose size={4} className="text-base" />
-          </button>
-          <h4 className="margin-0">{t('modalHeading')}</h4>
-        </div>
-        <GridContainer className="padding-y-8">
-          {loading && !discussions ? (
-            <PageLoading />
-          ) : (
-            <Grid desktop={{ col: 12 }}>{chooseRenderMethod()}</Grid>
-          )}
-        </GridContainer>
-      </div>
-    </ReactModal>
+      {loading && !discussions ? (
+        <PageLoading />
+      ) : (
+        <Grid desktop={{ col: 12 }}>{chooseRenderMethod()}</Grid>
+      )}
+    </DiscussionModalWrapper>
   );
 };
 
