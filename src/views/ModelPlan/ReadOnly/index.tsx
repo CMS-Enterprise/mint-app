@@ -340,12 +340,10 @@ const ReadOnly = () => {
         <GridContainer>
           <div className="padding-y-1">
             <TaskListStatus
-              icon
               readOnly
               modelID={modelID}
               status={status}
               statusLabel
-              updateLabel
               modifiedDts={modifiedDts ?? ''}
             />
           </div>
