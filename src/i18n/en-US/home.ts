@@ -4,7 +4,7 @@ const home = {
     'The place to collaborate on new CMMI models and demonstrations and access resources to assist with your model plans.',
   signIn: 'Sign in to start',
   mintPurpose: 'You can use MINT to:',
-  startNow: 'Start a draft model plan',
+  startNow: 'Start a new Model Plan',
   mintTasks: [
     'collaborate on requirements for new CMMI models and demonstrations',
     'access resources to help you complete your model plans'
