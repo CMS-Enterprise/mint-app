@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Button, IconAnnouncement } from '@trussworks/react-uswds';
 
 import Discussions from 'views/ModelPlan/Discussions';
+import DiscussionModalWrapper from 'views/ModelPlan/Discussions/DiscussionModalWrapper';
 
 type AskAQuestionType = {
   modelID: string;
@@ -15,12 +16,16 @@ const AskAQuestion = ({ modelID }: AskAQuestionType) => {
   return (
     <>
       {isDiscussionOpen && (
-        <Discussions
-          modelID={modelID}
-          askAQuestion
+        <DiscussionModalWrapper
           isOpen={isDiscussionOpen}
           closeModal={() => setIsDiscussionOpen(false)}
-        />
+        >
+          <Discussions
+            modelID={modelID}
+            askAQuestion
+            closeModal={() => setIsDiscussionOpen(false)}
+          />
+        </DiscussionModalWrapper>
       )}
       <div
         className="padding-2 bg-primary-lighter display-flex"
