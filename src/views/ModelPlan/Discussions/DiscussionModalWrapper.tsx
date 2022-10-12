@@ -1,12 +1,11 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
 import ReactModal from 'react-modal';
-import { Grid, GridContainer, IconClose } from '@trussworks/react-uswds';
+import { GridContainer, IconClose } from '@trussworks/react-uswds';
 import noScroll from 'no-scroll';
 
 type DiscussionModalWrapperProps = {
   isOpen: boolean;
-  askAQuestion?: boolean;
   openModal?: () => void;
   closeModal: () => void;
   children: React.ReactNode | React.ReactNodeArray;
@@ -14,13 +13,11 @@ type DiscussionModalWrapperProps = {
 
 const DiscussionModalWrapper = ({
   isOpen,
-  askAQuestion,
   openModal,
   closeModal,
   children
 }: DiscussionModalWrapperProps) => {
   const { t } = useTranslation('discussions');
-  // const { t: h } = useTranslation('draftModelPlan');
 
   const handleOpenModal = () => {
     noScroll.on();
@@ -54,15 +51,7 @@ const DiscussionModalWrapper = ({
           </button>
           <h4 className="margin-0">{t('modalHeading')}</h4>
         </div>
-        <GridContainer className="padding-y-8">
-          {children}
-          {/* {!discussions ? (
-            <PageLoading />
-          ) : (
-            <Grid desktop={{ col: 12 }}>{chooseRenderMethod()}</Grid>
-          )} */}
-          <h1>Hello World</h1>
-        </GridContainer>
+        <GridContainer className="padding-y-8">{children}</GridContainer>
       </div>
     </ReactModal>
   );
