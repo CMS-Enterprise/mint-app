@@ -8102,7 +8102,7 @@ enum OpSolutionStatus {
 }
 
 enum OperationalNeedKey{
-  OTHER
+  # OTHER
   MANAGE_CD
   REV_COL_BIDS
   UPDATE_CONTRACT
@@ -8133,7 +8133,7 @@ enum OperationalNeedKey{
 }
 
 enum OperationalSolutionKey{
-  OTHER
+  # OTHER
   MARX
   HPMS
   SALESFORCE
