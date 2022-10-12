@@ -10,7 +10,7 @@ CREATE TYPE OP_SOLUTION_STATUS AS ENUM (
 
 CREATE TABLE operational_solution (
     id UUID PRIMARY KEY NOT NULL,
-    operational_need_id UUID NOT NULL, --foreign key to model plan
+    operational_need_id UUID NOT NULL, --foreign key to operational need
     solution_type INT,
     solution_other ZERO_STRING,
 
@@ -20,8 +20,6 @@ CREATE TABLE operational_solution (
     must_start_dts TIMESTAMP WITH TIME ZONE,
     must_finish_dts TIMESTAMP WITH TIME ZONE,
     status OP_SOLUTION_STATUS NOT NULL DEFAULT 'NOT_STARTED',
-
-    --TODO add fields
 
     --META DATA
     created_by EUA_ID NOT NULL,
@@ -45,4 +43,10 @@ ON DELETE NO ACTION;
 
 
 ALTER TABLE operational_solution
-ADD CONSTRAINT unique_solution_per_need UNIQUE (operational_need_id, solution_type); --TODO update this, this will only allow one other type... Maybe leave other out?
+ADD CONSTRAINT unique_solution_per_need UNIQUE (operational_need_id, solution_type); -- 1 solution type per need
+
+ALTER TABLE operational_solution
+ADD CONSTRAINT unique_solution_other_per_plan UNIQUE (operational_need_id, solution_other); -- 1 specifc custom solution per model
+
+ALTER TABLE operational_solution
+ADD CONSTRAINT solution_type_null_if_other CHECK (solution_type IS NULL OR solution_other IS NULL); -- Can't be a custom type and a specifc type at the same time
