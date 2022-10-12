@@ -3,6 +3,7 @@ INSERT INTO plan_discussion(
     model_plan_id,
     content,
     status,
+    is_assessment,
     created_by,
     modified_by
 )
@@ -11,6 +12,7 @@ VALUES (
     :model_plan_id,
     :content,
     :status,
+    :is_assessment,
     :created_by,
     :modified_by
 )
@@ -18,6 +20,7 @@ RETURNING id,
 model_plan_id,
 content,
 status,
+is_assessment,
 created_by,
 created_dts,
 modified_by,
