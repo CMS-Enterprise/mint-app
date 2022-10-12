@@ -4,18 +4,20 @@ import ReactModal from 'react-modal';
 import { Grid, GridContainer, IconClose } from '@trussworks/react-uswds';
 import noScroll from 'no-scroll';
 
-import PageLoading from 'components/PageLoading';
-import discussions from 'i18n/en-US/draftModelPlan/discussions';
-
 import { DiscussionsProps } from '.';
+
+interface DiscussionModalWrapperProps extends DiscussionsProps {
+  children: React.ReactNode | React.ReactNodeArray;
+}
 
 const DiscussionModalWrapper = ({
   modelID,
   isOpen,
   askAQuestion,
   openModal,
-  closeModal
-}: DiscussionsProps) => {
+  closeModal,
+  children
+}: DiscussionModalWrapperProps) => {
   const { t } = useTranslation('discussions');
   // const { t: h } = useTranslation('draftModelPlan');
 
@@ -52,11 +54,13 @@ const DiscussionModalWrapper = ({
           <h4 className="margin-0">{t('modalHeading')}</h4>
         </div>
         <GridContainer className="padding-y-8">
-          {loading && !discussions ? (
+          {children}
+          {/* {!discussions ? (
             <PageLoading />
           ) : (
             <Grid desktop={{ col: 12 }}>{chooseRenderMethod()}</Grid>
-          )}
+          )} */}
+          <h1>Hello World</h1>
         </GridContainer>
       </div>
     </ReactModal>
