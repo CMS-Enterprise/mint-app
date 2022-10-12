@@ -49,7 +49,7 @@ import { getUnansweredQuestions, sortRepliesByDate } from 'utils/modelPlan';
 
 import './index.scss';
 
-type DiscussionsProps = {
+export type DiscussionsProps = {
   modelID: string;
   isOpen: boolean;
   askAQuestion?: boolean;
