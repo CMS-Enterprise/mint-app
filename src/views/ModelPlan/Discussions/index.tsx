@@ -553,17 +553,24 @@ const Discussions = ({
   };
 
   return (
-    <DiscussionModalWrapper
-      modelID={modelID}
-      isOpen={isOpen}
-      closeModal={() => closeModal()}
-    >
+    // <DiscussionModalWrapper
+    //   modelID={modelID}
+    //   isOpen={isOpen}
+    //   closeModal={() => closeModal()}
+    // >
+    // {loading && !discussions ? (
+    //   <PageLoading />
+    // ) : (
+    //   <Grid desktop={{ col: 12 }}>{chooseRenderMethod()}</Grid>
+    // )}
+    // {/* </DiscussionModalWrapper> */}
+    <>
       {loading && !discussions ? (
         <PageLoading />
       ) : (
         <Grid desktop={{ col: 12 }}>{chooseRenderMethod()}</Grid>
       )}
-    </DiscussionModalWrapper>
+    </>
   );
 };
 
