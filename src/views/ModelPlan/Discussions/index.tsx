@@ -43,15 +43,11 @@ import { getTimeElapsed } from 'utils/date';
 import flattenErrors from 'utils/flattenErrors';
 import { getUnansweredQuestions, sortRepliesByDate } from 'utils/modelPlan';
 
-import DiscussionModalWrapper from './DiscussionModalWrapper';
-
 import './index.scss';
 
 export type DiscussionsProps = {
   modelID: string;
-  isOpen: boolean;
   askAQuestion?: boolean;
-  openModal?: () => void;
   closeModal: () => void;
 };
 
@@ -61,9 +57,7 @@ type DicussionFormPropTypes = {
 
 const Discussions = ({
   modelID,
-  isOpen,
   askAQuestion,
-  openModal,
   closeModal
 }: DiscussionsProps) => {
   const { t } = useTranslation('discussions');
@@ -553,17 +547,6 @@ const Discussions = ({
   };
 
   return (
-    // <DiscussionModalWrapper
-    //   modelID={modelID}
-    //   isOpen={isOpen}
-    //   closeModal={() => closeModal()}
-    // >
-    // {loading && !discussions ? (
-    //   <PageLoading />
-    // ) : (
-    //   <Grid desktop={{ col: 12 }}>{chooseRenderMethod()}</Grid>
-    // )}
-    // {/* </DiscussionModalWrapper> */}
     <>
       {loading && !discussions ? (
         <PageLoading />
