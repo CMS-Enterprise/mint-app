@@ -511,10 +511,11 @@ const Discussions = ({
     if (discussions?.length === 0) {
       return (
         <Alert className="margin-bottom-2" type="info">
-          {status === 'ANSWERED' ? t('noAnswered') : t('noUanswered')}
+          {hasEditAccess ? t('useLinkAbove') : t('nonEditor.noDiscussions')}
         </Alert>
       );
     }
+    return discussionAccordion;
   };
 
   const renderDiscussions = () => {
@@ -559,7 +560,8 @@ const Discussions = ({
             {t('errorFetch')}
           </Alert>
         ) : (
-          discussionAccordion
+          renderDiscussionContent()
+          // discussionAccordion
         )}
       </>
     );
