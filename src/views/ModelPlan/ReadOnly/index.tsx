@@ -141,6 +141,8 @@ const ReadOnly = () => {
     isCollaborator
   } = data?.modelPlan || ({} as GetModelSummaryTypes);
 
+  const editAccess: boolean = isCollaborator || isAssessment(groups);
+
   const formattedApplicationStartDate =
     basics?.applicationsStart && formatDate(basics?.applicationsStart);
 
@@ -223,9 +225,7 @@ const ReadOnly = () => {
       className="model-plan-read-only"
       data-testid="model-plan-read-only"
     >
-      {(isCollaborator || isAssessment(groups)) && (
-        <ModelSubNav modelID={modelID} link="task-list" />
-      )}
+      {editAccess && <ModelSubNav modelID={modelID} link="task-list" />}
 
       <SummaryBox
         heading=""
@@ -388,7 +388,12 @@ const ReadOnly = () => {
         <GridContainer>
           <Grid row gap>
             {!isMobile && (
-              <Grid desktop={{ col: 3 }} className="padding-right-4 sticky-nav">
+              <Grid
+                desktop={{ col: 3 }}
+                className={classnames('padding-right-4 sticky-nav', {
+                  'sticky-nav__collaborator': editAccess
+                })}
+              >
                 <SideNav subComponents={subComponents} />
               </Grid>
             )}
@@ -406,6 +411,7 @@ const ReadOnly = () => {
                       desktop={{ col: 4 }}
                       className={classnames({
                         'sticky-nav': !isMobile,
+                        'sticky-nav__collaborator': editAccess,
                         'desktop:display-none': subinfo === 'documents'
                       })}
                     >

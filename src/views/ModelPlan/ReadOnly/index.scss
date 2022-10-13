@@ -38,6 +38,10 @@
     top: 0;
     padding-top: 1rem;
 
+    &__collaborator {
+      top: 2rem !important;
+    }
+
     @media screen and (min-width: $desktop) {
       margin-top: -1rem;
     }
