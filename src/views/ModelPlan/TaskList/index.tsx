@@ -51,6 +51,7 @@ import {
 import { TaskListSection } from 'types/graphql-global-types';
 import { formatDate } from 'utils/date';
 import { getUnansweredQuestions } from 'utils/modelPlan';
+import { isAssessment } from 'utils/user';
 import { SubscriptionContext } from 'views/SubscriptionWrapper';
 
 import Discussions from '../Discussions';
@@ -95,7 +96,10 @@ const TaskList = () => {
   const { modelID } = useParams<{ modelID: string }>();
   const [isDiscussionOpen, setIsDiscussionOpen] = useState(false);
 
-  const { euaId } = useSelector((state: RootStateOrAny) => state.auth);
+  const { euaId, groups } = useSelector((state: RootStateOrAny) => state.auth);
+
+  // Used to conditonally render role specific text in task list
+  const userRole = isAssessment(groups) ? 'assessment' : 'team';
 
   const { taskListSectionLocks } = useContext(SubscriptionContext);
 
@@ -272,7 +276,7 @@ const TaskList = () => {
                             <div className="model-plan-task-list__task-row display-flex flex-justify flex-align-start">
                               <TaskListDescription>
                                 <p className="margin-top-0">
-                                  {t(`numberedList.${key}.copy`)}
+                                  {t(`numberedList.${key}.${userRole}`)}
                                 </p>
                               </TaskListDescription>
                             </div>
