@@ -47,6 +47,7 @@ import './index.scss';
 
 export type DiscussionsProps = {
   modelID: string;
+  readOnly?: boolean;
   askAQuestion?: boolean;
   closeModal: () => void;
 };
@@ -58,6 +59,7 @@ type DicussionFormPropTypes = {
 const Discussions = ({
   modelID,
   askAQuestion,
+  readOnly,
   closeModal
 }: DiscussionsProps) => {
   const { t } = useTranslation('discussions');
@@ -502,7 +504,10 @@ const Discussions = ({
   const renderDiscussions = () => {
     return (
       <>
-        <PageHeading headingLevel="h1" className="margin-top-0">
+        <PageHeading
+          headingLevel={readOnly ? 'h2' : 'h1'}
+          className="margin-top-0"
+        >
           {t('heading')}
         </PageHeading>
         <div className="display-flex margin-bottom-4">
