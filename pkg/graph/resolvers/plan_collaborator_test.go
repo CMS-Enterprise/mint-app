@@ -32,7 +32,7 @@ func (suite *ResolverSuite) TestCreatePlanCollaborator() {
 	suite.testConfigs.EmailService.
 		EXPECT().
 		Send(
-			gomock.Eq(email.DefaultSender),
+			gomock.Eq("unit-test-execution@mint.cms.gov"),
 			gomock.Eq([]string{collaboratorInput.Email}),
 			gomock.Any(),
 			gomock.Eq(expectedSubject),

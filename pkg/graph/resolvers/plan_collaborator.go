@@ -68,15 +68,15 @@ func sendCollaboratorAddedEmail(
 	}
 
 	emailBody, err := emailTemplate.GetExecutedBody(email.AddedAsCollaboratorBodyContent{
-		Host:      email.GetHostName(),
-		ModelName: modelPlan.ModelName,
-		ModelID:   modelPlan.GetModelPlanID().String(),
+		ClientAddress: emailService.GetConfig().GetClientAddress(),
+		ModelName:     modelPlan.ModelName,
+		ModelID:       modelPlan.GetModelPlanID().String(),
 	})
 	if err != nil {
 		return err
 	}
 
-	err = emailService.Send(email.DefaultSender, []string{receiverEmail}, nil, emailSubject, "text/html", emailBody)
+	err = emailService.Send(emailService.GetConfig().GetDefaultSender(), []string{receiverEmail}, nil, emailSubject, "text/html", emailBody)
 	if err != nil {
 		return err
 	}

@@ -129,11 +129,17 @@ const GRTEmailKey = "GRT_EMAIL"
 // AccessibilityTeamEmailKey is the key for the receiving email for the 508 team
 const AccessibilityTeamEmailKey = "ACCESSIBILITY_TEAM_EMAIL"
 
+// EmailHostKey is the key for getting the email service's host
+const EmailHostKey = "EMAIL_HOST"
+
 // ClientHostKey is the key for getting the client's domain name
 const ClientHostKey = "CLIENT_HOSTNAME"
 
 // ClientProtocolKey is the key for getting the client's protocol
 const ClientProtocolKey = "CLIENT_PROTOCOL"
+
+// ClientAddressKey is the key for getting the client's address
+const ClientAddressKey = "CLIENT_ADDRESS"
 
 // EmailTemplateDirectoryKey is the key for getting the email template directory
 const EmailTemplateDirectoryKey = "EMAIL_TEMPLATE_DIR"

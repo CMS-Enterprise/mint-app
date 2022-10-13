@@ -15,8 +15,10 @@ import (
 type GoSimpleMailServiceConfig struct {
 	Helo           string          `yaml:"helo"`
 	Host           string          `yaml:"host"`
+	ClientAddress  string          `yaml:"clientAddress"`
 	Port           int             `yaml:"port"`
 	Authentication mail.AuthType   `yaml:"authentication"`
+	DefaultSender  string          `yaml:"defaultSender"`
 	Username       string          `yaml:"username"`
 	Password       string          `yaml:"password"`
 	Encryption     mail.Encryption `yaml:"encryption"`
@@ -36,6 +38,16 @@ func (g *GoSimpleMailServiceConfig) GetHost() string {
 	return g.Host
 }
 
+// GetHostName returns the HostName configuration
+func (g *GoSimpleMailServiceConfig) GetHostName() string {
+	return g.Host
+}
+
+// GetClientAddress returns the ClientAddress configuration
+func (g *GoSimpleMailServiceConfig) GetClientAddress() string {
+	return g.ClientAddress
+}
+
 // GetPort returns Port configuration
 func (g *GoSimpleMailServiceConfig) GetPort() int {
 	return g.Port
@@ -44,6 +56,11 @@ func (g *GoSimpleMailServiceConfig) GetPort() int {
 // GetAuthentication returns the Authentication configuration
 func (g *GoSimpleMailServiceConfig) GetAuthentication() mail.AuthType {
 	return g.Authentication
+}
+
+// GetDefaultSender returns the DefaultSender configuration
+func (g *GoSimpleMailServiceConfig) GetDefaultSender() string {
+	return g.DefaultSender
 }
 
 // GetUsername returns the Username configuration

@@ -33,6 +33,20 @@ func (m *MockEmailService) EXPECT() *MockEmailServiceMockRecorder {
 	return m.recorder
 }
 
+// GetConfig mocks base method.
+func (m *MockEmailService) GetConfig() EmailServiceConfig {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetConfig")
+	ret0, _ := ret[0].(EmailServiceConfig)
+	return ret0
+}
+
+// GetConfig indicates an expected call of GetConfig.
+func (mr *MockEmailServiceMockRecorder) GetConfig() *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetConfig", reflect.TypeOf((*MockEmailService)(nil).GetConfig))
+}
+
 // Send mocks base method.
 func (m *MockEmailService) Send(from string, toAddresses, ccAddresses []string, subject, contentType, body string) error {
 	m.ctrl.T.Helper()

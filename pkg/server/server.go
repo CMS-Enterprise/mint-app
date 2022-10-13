@@ -6,8 +6,6 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/cmsgov/mint-app/pkg/email"
-
 	"github.com/cmsgov/mint-app/pkg/shared/pubsub"
 
 	"github.com/gorilla/mux"
@@ -48,9 +46,7 @@ func NewServer(config *viper.Viper) *Server {
 	r := mux.NewRouter()
 
 	// set up server dependencies
-	clientAddress := config.GetString("CLIENT_ADDRESS")
-
-	email.SetHostName(config.GetString(appconfig.ClientHostKey))
+	clientAddress := config.GetString(appconfig.ClientAddressKey)
 
 	s := &Server{
 		router:      r,
