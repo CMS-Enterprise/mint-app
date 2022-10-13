@@ -251,9 +251,11 @@ const Milestones = () => {
                     error={flatErrors.completeICIP}
                   />
 
-                  <legend className="usa-label margin-bottom-neg-2">
-                    {t('clearance')}
-                  </legend>
+                  <legend className="usa-label ">{t('clearance')}</legend>
+
+                  <p className="text-base margin-bottom-neg-2 margin-top-1">
+                    {t('clearanceInfo')}
+                  </p>
 
                   <div className="fieldGroup__wrapper">
                     <MINTDatePicker
