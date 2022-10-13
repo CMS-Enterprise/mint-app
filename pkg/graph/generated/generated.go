@@ -203,6 +203,7 @@ type ComplexityRoot struct {
 		PhasedIn                func(childComplexity int) int
 		PhasedInNote            func(childComplexity int) int
 		Problem                 func(childComplexity int) int
+		ReadyForClearanceBy     func(childComplexity int) int
 		ReadyForClearanceDts    func(childComplexity int) int
 		ReadyForReviewBy        func(childComplexity int) int
 		ReadyForReviewDts       func(childComplexity int) int
@@ -236,6 +237,7 @@ type ComplexityRoot struct {
 		ModifiedDts                           func(childComplexity int) int
 		NumberPeopleImpacted                  func(childComplexity int) int
 		PrecedenceRules                       func(childComplexity int) int
+		ReadyForClearanceBy                   func(childComplexity int) int
 		ReadyForClearanceDts                  func(childComplexity int) int
 		ReadyForReviewBy                      func(childComplexity int) int
 		ReadyForReviewDts                     func(childComplexity int) int
@@ -362,6 +364,7 @@ type ComplexityRoot struct {
 		ParticipationOptionsNote                  func(childComplexity int) int
 		PlanContactUpdated                        func(childComplexity int) int
 		PlanContactUpdatedNote                    func(childComplexity int) int
+		ReadyForClearanceBy                       func(childComplexity int) int
 		ReadyForClearanceDts                      func(childComplexity int) int
 		ReadyForReviewBy                          func(childComplexity int) int
 		ReadyForReviewDts                         func(childComplexity int) int
@@ -549,6 +552,7 @@ type ComplexityRoot struct {
 		QualityReportingStarts                       func(childComplexity int) int
 		QualityReportingStartsNote                   func(childComplexity int) int
 		QualityReportingStartsOther                  func(childComplexity int) int
+		ReadyForClearanceBy                          func(childComplexity int) int
 		ReadyForClearanceDts                         func(childComplexity int) int
 		ReadyForReviewBy                             func(childComplexity int) int
 		ReadyForReviewDts                            func(childComplexity int) int
@@ -618,6 +622,7 @@ type ComplexityRoot struct {
 		ProviderOverlap                   func(childComplexity int) int
 		ProviderOverlapHierarchy          func(childComplexity int) int
 		ProviderOverlapNote               func(childComplexity int) int
+		ReadyForClearanceBy               func(childComplexity int) int
 		ReadyForClearanceDts              func(childComplexity int) int
 		ReadyForReviewBy                  func(childComplexity int) int
 		ReadyForReviewDts                 func(childComplexity int) int
@@ -692,6 +697,7 @@ type ComplexityRoot struct {
 		PlanningToUseInnovationPaymentContractor          func(childComplexity int) int
 		PlanningToUseInnovationPaymentContractorNote      func(childComplexity int) int
 		ProvidingThirdPartyFile                           func(childComplexity int) int
+		ReadyForClearanceBy                               func(childComplexity int) int
 		ReadyForClearanceDts                              func(childComplexity int) int
 		ReadyForReviewBy                                  func(childComplexity int) int
 		ReadyForReviewDts                                 func(childComplexity int) int
@@ -804,6 +810,7 @@ type PlanBasicsResolver interface {
 
 	CmmiGroups(ctx context.Context, obj *models.PlanBasics) ([]model.CMMIGroup, error)
 
+	ReadyForClearanceBy(ctx context.Context, obj *models.PlanBasics) (*string, error)
 	ReadyForClearanceDts(ctx context.Context, obj *models.PlanBasics) (*time.Time, error)
 }
 type PlanBeneficiariesResolver interface {
@@ -811,6 +818,7 @@ type PlanBeneficiariesResolver interface {
 
 	BeneficiarySelectionMethod(ctx context.Context, obj *models.PlanBeneficiaries) ([]model.SelectionMethodType, error)
 
+	ReadyForClearanceBy(ctx context.Context, obj *models.PlanBeneficiaries) (*string, error)
 	ReadyForClearanceDts(ctx context.Context, obj *models.PlanBeneficiaries) (*time.Time, error)
 }
 type PlanDiscussionResolver interface {
@@ -838,6 +846,7 @@ type PlanGeneralCharacteristicsResolver interface {
 
 	WaiversRequiredTypes(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]model.WaiverType, error)
 
+	ReadyForClearanceBy(ctx context.Context, obj *models.PlanGeneralCharacteristics) (*string, error)
 	ReadyForClearanceDts(ctx context.Context, obj *models.PlanGeneralCharacteristics) (*time.Time, error)
 }
 type PlanITToolsResolver interface {
@@ -918,6 +927,7 @@ type PlanOpsEvalAndLearningResolver interface {
 
 	ModelLearningSystems(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]model.ModelLearningSystemType, error)
 
+	ReadyForClearanceBy(ctx context.Context, obj *models.PlanOpsEvalAndLearning) (*string, error)
 	ReadyForClearanceDts(ctx context.Context, obj *models.PlanOpsEvalAndLearning) (*time.Time, error)
 }
 type PlanParticipantsAndProvidersResolver interface {
@@ -933,6 +943,7 @@ type PlanParticipantsAndProvidersResolver interface {
 
 	ProviderLeaveMethod(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.ProviderLeaveType, error)
 
+	ReadyForClearanceBy(ctx context.Context, obj *models.PlanParticipantsAndProviders) (*string, error)
 	ReadyForClearanceDts(ctx context.Context, obj *models.PlanParticipantsAndProviders) (*time.Time, error)
 }
 type PlanPaymentsResolver interface {
@@ -951,6 +962,7 @@ type PlanPaymentsResolver interface {
 
 	AnticipatedPaymentFrequency(ctx context.Context, obj *models.PlanPayments) ([]models.AnticipatedPaymentFrequencyType, error)
 
+	ReadyForClearanceBy(ctx context.Context, obj *models.PlanPayments) (*string, error)
 	ReadyForClearanceDts(ctx context.Context, obj *models.PlanPayments) (*time.Time, error)
 }
 type QueryResolver interface {
@@ -1952,6 +1964,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.PlanBasics.Problem(childComplexity), true
 
+	case "PlanBasics.readyForClearanceBy":
+		if e.complexity.PlanBasics.ReadyForClearanceBy == nil {
+			break
+		}
+
+		return e.complexity.PlanBasics.ReadyForClearanceBy(childComplexity), true
+
 	case "PlanBasics.readyForClearanceDts":
 		if e.complexity.PlanBasics.ReadyForClearanceDts == nil {
 			break
@@ -2161,6 +2180,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.PlanBeneficiaries.PrecedenceRules(childComplexity), true
+
+	case "PlanBeneficiaries.readyForClearanceBy":
+		if e.complexity.PlanBeneficiaries.ReadyForClearanceBy == nil {
+			break
+		}
+
+		return e.complexity.PlanBeneficiaries.ReadyForClearanceBy(childComplexity), true
 
 	case "PlanBeneficiaries.readyForClearanceDts":
 		if e.complexity.PlanBeneficiaries.ReadyForClearanceDts == nil {
@@ -2917,6 +2943,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.PlanGeneralCharacteristics.PlanContactUpdatedNote(childComplexity), true
+
+	case "PlanGeneralCharacteristics.readyForClearanceBy":
+		if e.complexity.PlanGeneralCharacteristics.ReadyForClearanceBy == nil {
+			break
+		}
+
+		return e.complexity.PlanGeneralCharacteristics.ReadyForClearanceBy(childComplexity), true
 
 	case "PlanGeneralCharacteristics.readyForClearanceDts":
 		if e.complexity.PlanGeneralCharacteristics.ReadyForClearanceDts == nil {
@@ -4185,6 +4218,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.PlanOpsEvalAndLearning.QualityReportingStartsOther(childComplexity), true
 
+	case "PlanOpsEvalAndLearning.readyForClearanceBy":
+		if e.complexity.PlanOpsEvalAndLearning.ReadyForClearanceBy == nil {
+			break
+		}
+
+		return e.complexity.PlanOpsEvalAndLearning.ReadyForClearanceBy(childComplexity), true
+
 	case "PlanOpsEvalAndLearning.readyForClearanceDts":
 		if e.complexity.PlanOpsEvalAndLearning.ReadyForClearanceDts == nil {
 			break
@@ -4646,6 +4686,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.PlanParticipantsAndProviders.ProviderOverlapNote(childComplexity), true
+
+	case "PlanParticipantsAndProviders.readyForClearanceBy":
+		if e.complexity.PlanParticipantsAndProviders.ReadyForClearanceBy == nil {
+			break
+		}
+
+		return e.complexity.PlanParticipantsAndProviders.ReadyForClearanceBy(childComplexity), true
 
 	case "PlanParticipantsAndProviders.readyForClearanceDts":
 		if e.complexity.PlanParticipantsAndProviders.ReadyForClearanceDts == nil {
@@ -5143,6 +5190,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.PlanPayments.ProvidingThirdPartyFile(childComplexity), true
+
+	case "PlanPayments.readyForClearanceBy":
+		if e.complexity.PlanPayments.ReadyForClearanceBy == nil {
+			break
+		}
+
+		return e.complexity.PlanPayments.ReadyForClearanceBy(childComplexity), true
 
 	case "PlanPayments.readyForClearanceDts":
 		if e.complexity.PlanPayments.ReadyForClearanceDts == nil {
@@ -5773,6 +5827,7 @@ type PlanBasics {
   modifiedDts: Time
   readyForReviewBy: String
   readyForReviewDts: Time
+  readyForClearanceBy: String
   readyForClearanceDts: Time
   status: TaskStatus!
 }
@@ -5960,6 +6015,7 @@ type PlanGeneralCharacteristics {
   modifiedDts: Time
   readyForReviewBy: String
   readyForReviewDts: Time
+  readyForClearanceBy: String
   readyForClearanceDts: Time
   status: TaskStatus!
 }
@@ -6073,6 +6129,7 @@ type PlanBeneficiaries {
   modifiedDts: Time
   readyForReviewBy: String
   readyForReviewDts: Time
+  readyForClearanceBy: String
   readyForClearanceDts: Time
   status: TaskStatus!
 }
@@ -6176,6 +6233,7 @@ type PlanParticipantsAndProviders {
   modifiedDts: Time
   readyForReviewBy: String
   readyForReviewDts: Time
+  readyForClearanceBy: String
   readyForClearanceDts: Time
   status: TaskStatus!
 
@@ -6334,6 +6392,7 @@ type PlanPayments {
   modifiedDts: Time
   readyForReviewBy: String
   readyForReviewDts: Time
+  readyForClearanceBy: String
   readyForClearanceDts: Time
   status:      TaskStatus!
 }
@@ -6739,6 +6798,7 @@ type PlanOpsEvalAndLearning {
     modifiedDts: Time
     readyForReviewBy: String
     readyForReviewDts: Time
+    readyForClearanceBy: String
     readyForClearanceDts: Time
     status: TaskStatus!
 }
@@ -10496,6 +10556,8 @@ func (ec *executionContext) fieldContext_ModelPlan_basics(ctx context.Context, f
 				return ec.fieldContext_PlanBasics_readyForReviewBy(ctx, field)
 			case "readyForReviewDts":
 				return ec.fieldContext_PlanBasics_readyForReviewDts(ctx, field)
+			case "readyForClearanceBy":
+				return ec.fieldContext_PlanBasics_readyForClearanceBy(ctx, field)
 			case "readyForClearanceDts":
 				return ec.fieldContext_PlanBasics_readyForClearanceDts(ctx, field)
 			case "status":
@@ -10664,6 +10726,8 @@ func (ec *executionContext) fieldContext_ModelPlan_generalCharacteristics(ctx co
 				return ec.fieldContext_PlanGeneralCharacteristics_readyForReviewBy(ctx, field)
 			case "readyForReviewDts":
 				return ec.fieldContext_PlanGeneralCharacteristics_readyForReviewDts(ctx, field)
+			case "readyForClearanceBy":
+				return ec.fieldContext_PlanGeneralCharacteristics_readyForClearanceBy(ctx, field)
 			case "readyForClearanceDts":
 				return ec.fieldContext_PlanGeneralCharacteristics_readyForClearanceDts(ctx, field)
 			case "status":
@@ -10822,6 +10886,8 @@ func (ec *executionContext) fieldContext_ModelPlan_participantsAndProviders(ctx 
 				return ec.fieldContext_PlanParticipantsAndProviders_readyForReviewBy(ctx, field)
 			case "readyForReviewDts":
 				return ec.fieldContext_PlanParticipantsAndProviders_readyForReviewDts(ctx, field)
+			case "readyForClearanceBy":
+				return ec.fieldContext_PlanParticipantsAndProviders_readyForClearanceBy(ctx, field)
 			case "readyForClearanceDts":
 				return ec.fieldContext_PlanParticipantsAndProviders_readyForClearanceDts(ctx, field)
 			case "status":
@@ -10930,6 +10996,8 @@ func (ec *executionContext) fieldContext_ModelPlan_beneficiaries(ctx context.Con
 				return ec.fieldContext_PlanBeneficiaries_readyForReviewBy(ctx, field)
 			case "readyForReviewDts":
 				return ec.fieldContext_PlanBeneficiaries_readyForReviewDts(ctx, field)
+			case "readyForClearanceBy":
+				return ec.fieldContext_PlanBeneficiaries_readyForClearanceBy(ctx, field)
 			case "readyForClearanceDts":
 				return ec.fieldContext_PlanBeneficiaries_readyForClearanceDts(ctx, field)
 			case "status":
@@ -11182,6 +11250,8 @@ func (ec *executionContext) fieldContext_ModelPlan_opsEvalAndLearning(ctx contex
 				return ec.fieldContext_PlanOpsEvalAndLearning_readyForReviewBy(ctx, field)
 			case "readyForReviewDts":
 				return ec.fieldContext_PlanOpsEvalAndLearning_readyForReviewDts(ctx, field)
+			case "readyForClearanceBy":
+				return ec.fieldContext_PlanOpsEvalAndLearning_readyForClearanceBy(ctx, field)
 			case "readyForClearanceDts":
 				return ec.fieldContext_PlanOpsEvalAndLearning_readyForClearanceDts(ctx, field)
 			case "status":
@@ -11578,6 +11648,8 @@ func (ec *executionContext) fieldContext_ModelPlan_payments(ctx context.Context,
 				return ec.fieldContext_PlanPayments_readyForReviewBy(ctx, field)
 			case "readyForReviewDts":
 				return ec.fieldContext_PlanPayments_readyForReviewDts(ctx, field)
+			case "readyForClearanceBy":
+				return ec.fieldContext_PlanPayments_readyForClearanceBy(ctx, field)
 			case "readyForClearanceDts":
 				return ec.fieldContext_PlanPayments_readyForClearanceDts(ctx, field)
 			case "status":
@@ -12742,6 +12814,8 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanBasics(ctx context.C
 				return ec.fieldContext_PlanBasics_readyForReviewBy(ctx, field)
 			case "readyForReviewDts":
 				return ec.fieldContext_PlanBasics_readyForReviewDts(ctx, field)
+			case "readyForClearanceBy":
+				return ec.fieldContext_PlanBasics_readyForClearanceBy(ctx, field)
 			case "readyForClearanceDts":
 				return ec.fieldContext_PlanBasics_readyForClearanceDts(ctx, field)
 			case "status":
@@ -12945,6 +13019,8 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanGeneralCharacteristi
 				return ec.fieldContext_PlanGeneralCharacteristics_readyForReviewBy(ctx, field)
 			case "readyForReviewDts":
 				return ec.fieldContext_PlanGeneralCharacteristics_readyForReviewDts(ctx, field)
+			case "readyForClearanceBy":
+				return ec.fieldContext_PlanGeneralCharacteristics_readyForClearanceBy(ctx, field)
 			case "readyForClearanceDts":
 				return ec.fieldContext_PlanGeneralCharacteristics_readyForClearanceDts(ctx, field)
 			case "status":
@@ -13088,6 +13164,8 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanBeneficiaries(ctx co
 				return ec.fieldContext_PlanBeneficiaries_readyForReviewBy(ctx, field)
 			case "readyForReviewDts":
 				return ec.fieldContext_PlanBeneficiaries_readyForReviewDts(ctx, field)
+			case "readyForClearanceBy":
+				return ec.fieldContext_PlanBeneficiaries_readyForClearanceBy(ctx, field)
 			case "readyForClearanceDts":
 				return ec.fieldContext_PlanBeneficiaries_readyForClearanceDts(ctx, field)
 			case "status":
@@ -13281,6 +13359,8 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanParticipantsAndProvi
 				return ec.fieldContext_PlanParticipantsAndProviders_readyForReviewBy(ctx, field)
 			case "readyForReviewDts":
 				return ec.fieldContext_PlanParticipantsAndProviders_readyForReviewDts(ctx, field)
+			case "readyForClearanceBy":
+				return ec.fieldContext_PlanParticipantsAndProviders_readyForClearanceBy(ctx, field)
 			case "readyForClearanceDts":
 				return ec.fieldContext_PlanParticipantsAndProviders_readyForClearanceDts(ctx, field)
 			case "status":
@@ -13829,6 +13909,8 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanOpsEvalAndLearning(c
 				return ec.fieldContext_PlanOpsEvalAndLearning_readyForReviewBy(ctx, field)
 			case "readyForReviewDts":
 				return ec.fieldContext_PlanOpsEvalAndLearning_readyForReviewDts(ctx, field)
+			case "readyForClearanceBy":
+				return ec.fieldContext_PlanOpsEvalAndLearning_readyForClearanceBy(ctx, field)
 			case "readyForClearanceDts":
 				return ec.fieldContext_PlanOpsEvalAndLearning_readyForClearanceDts(ctx, field)
 			case "status":
@@ -15079,6 +15161,8 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanPayments(ctx context
 				return ec.fieldContext_PlanPayments_readyForReviewBy(ctx, field)
 			case "readyForReviewDts":
 				return ec.fieldContext_PlanPayments_readyForReviewDts(ctx, field)
+			case "readyForClearanceBy":
+				return ec.fieldContext_PlanPayments_readyForClearanceBy(ctx, field)
 			case "readyForClearanceDts":
 				return ec.fieldContext_PlanPayments_readyForClearanceDts(ctx, field)
 			case "status":
@@ -16971,6 +17055,47 @@ func (ec *executionContext) fieldContext_PlanBasics_readyForReviewDts(ctx contex
 	return fc, nil
 }
 
+func (ec *executionContext) _PlanBasics_readyForClearanceBy(ctx context.Context, field graphql.CollectedField, obj *models.PlanBasics) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanBasics_readyForClearanceBy(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.PlanBasics().ReadyForClearanceBy(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanBasics_readyForClearanceBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanBasics",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _PlanBasics_readyForClearanceDts(ctx context.Context, field graphql.CollectedField, obj *models.PlanBasics) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_PlanBasics_readyForClearanceDts(ctx, field)
 	if err != nil {
@@ -18258,6 +18383,47 @@ func (ec *executionContext) fieldContext_PlanBeneficiaries_readyForReviewDts(ctx
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type Time does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanBeneficiaries_readyForClearanceBy(ctx context.Context, field graphql.CollectedField, obj *models.PlanBeneficiaries) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanBeneficiaries_readyForClearanceBy(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.PlanBeneficiaries().ReadyForClearanceBy(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanBeneficiaries_readyForClearanceBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanBeneficiaries",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
 		},
 	}
 	return fc, nil
@@ -23144,6 +23310,47 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_readyForRevi
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type Time does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanGeneralCharacteristics_readyForClearanceBy(ctx context.Context, field graphql.CollectedField, obj *models.PlanGeneralCharacteristics) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanGeneralCharacteristics_readyForClearanceBy(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.PlanGeneralCharacteristics().ReadyForClearanceBy(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_readyForClearanceBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanGeneralCharacteristics",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
 		},
 	}
 	return fc, nil
@@ -31206,6 +31413,47 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_readyForReviewDt
 	return fc, nil
 }
 
+func (ec *executionContext) _PlanOpsEvalAndLearning_readyForClearanceBy(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_readyForClearanceBy(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.PlanOpsEvalAndLearning().ReadyForClearanceBy(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_readyForClearanceBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanOpsEvalAndLearning",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _PlanOpsEvalAndLearning_readyForClearanceDts(ctx context.Context, field graphql.CollectedField, obj *models.PlanOpsEvalAndLearning) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_PlanOpsEvalAndLearning_readyForClearanceDts(ctx, field)
 	if err != nil {
@@ -33530,6 +33778,47 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_readyForRe
 		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type Time does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanParticipantsAndProviders_readyForClearanceBy(ctx context.Context, field graphql.CollectedField, obj *models.PlanParticipantsAndProviders) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanParticipantsAndProviders_readyForClearanceBy(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.PlanParticipantsAndProviders().ReadyForClearanceBy(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_readyForClearanceBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanParticipantsAndProviders",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
 		},
 	}
 	return fc, nil
@@ -36400,6 +36689,47 @@ func (ec *executionContext) fieldContext_PlanPayments_readyForReviewDts(ctx cont
 	return fc, nil
 }
 
+func (ec *executionContext) _PlanPayments_readyForClearanceBy(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanPayments_readyForClearanceBy(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.PlanPayments().ReadyForClearanceBy(rctx, obj)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		return graphql.Null
+	}
+	res := resTmp.(*string)
+	fc.Result = res
+	return ec.marshalOString2ᚖstring(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanPayments_readyForClearanceBy(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanPayments",
+		Field:      field,
+		IsMethod:   true,
+		IsResolver: true,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type String does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _PlanPayments_readyForClearanceDts(ctx context.Context, field graphql.CollectedField, obj *models.PlanPayments) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_PlanPayments_readyForClearanceDts(ctx, field)
 	if err != nil {
@@ -37290,6 +37620,8 @@ func (ec *executionContext) fieldContext_Query_planPayments(ctx context.Context,
 				return ec.fieldContext_PlanPayments_readyForReviewBy(ctx, field)
 			case "readyForReviewDts":
 				return ec.fieldContext_PlanPayments_readyForReviewDts(ctx, field)
+			case "readyForClearanceBy":
+				return ec.fieldContext_PlanPayments_readyForClearanceBy(ctx, field)
 			case "readyForClearanceDts":
 				return ec.fieldContext_PlanPayments_readyForClearanceDts(ctx, field)
 			case "status":
@@ -41497,6 +41829,23 @@ func (ec *executionContext) _PlanBasics(ctx context.Context, sel ast.SelectionSe
 
 			out.Values[i] = ec._PlanBasics_readyForReviewDts(ctx, field, obj)
 
+		case "readyForClearanceBy":
+			field := field
+
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._PlanBasics_readyForClearanceBy(ctx, field, obj)
+				return res
+			}
+
+			out.Concurrently(i, func() graphql.Marshaler {
+				return innerFunc(ctx)
+
+			})
 		case "readyForClearanceDts":
 			field := field
 
@@ -41702,6 +42051,23 @@ func (ec *executionContext) _PlanBeneficiaries(ctx context.Context, sel ast.Sele
 
 			out.Values[i] = ec._PlanBeneficiaries_readyForReviewDts(ctx, field, obj)
 
+		case "readyForClearanceBy":
+			field := field
+
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._PlanBeneficiaries_readyForClearanceBy(ctx, field, obj)
+				return res
+			}
+
+			out.Concurrently(i, func() graphql.Marshaler {
+				return innerFunc(ctx)
+
+			})
 		case "readyForClearanceDts":
 			field := field
 
@@ -42610,6 +42976,23 @@ func (ec *executionContext) _PlanGeneralCharacteristics(ctx context.Context, sel
 
 			out.Values[i] = ec._PlanGeneralCharacteristics_readyForReviewDts(ctx, field, obj)
 
+		case "readyForClearanceBy":
+			field := field
+
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._PlanGeneralCharacteristics_readyForClearanceBy(ctx, field, obj)
+				return res
+			}
+
+			out.Concurrently(i, func() graphql.Marshaler {
+				return innerFunc(ctx)
+
+			})
 		case "readyForClearanceDts":
 			field := field
 
@@ -44075,6 +44458,23 @@ func (ec *executionContext) _PlanOpsEvalAndLearning(ctx context.Context, sel ast
 
 			out.Values[i] = ec._PlanOpsEvalAndLearning_readyForReviewDts(ctx, field, obj)
 
+		case "readyForClearanceBy":
+			field := field
+
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._PlanOpsEvalAndLearning_readyForClearanceBy(ctx, field, obj)
+				return res
+			}
+
+			out.Concurrently(i, func() graphql.Marshaler {
+				return innerFunc(ctx)
+
+			})
 		case "readyForClearanceDts":
 			field := field
 
@@ -44444,6 +44844,23 @@ func (ec *executionContext) _PlanParticipantsAndProviders(ctx context.Context, s
 
 			out.Values[i] = ec._PlanParticipantsAndProviders_readyForReviewDts(ctx, field, obj)
 
+		case "readyForClearanceBy":
+			field := field
+
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._PlanParticipantsAndProviders_readyForClearanceBy(ctx, field, obj)
+				return res
+			}
+
+			out.Concurrently(i, func() graphql.Marshaler {
+				return innerFunc(ctx)
+
+			})
 		case "readyForClearanceDts":
 			field := field
 
@@ -44894,6 +45311,23 @@ func (ec *executionContext) _PlanPayments(ctx context.Context, sel ast.Selection
 
 			out.Values[i] = ec._PlanPayments_readyForReviewDts(ctx, field, obj)
 
+		case "readyForClearanceBy":
+			field := field
+
+			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
+				defer func() {
+					if r := recover(); r != nil {
+						ec.Error(ctx, ec.Recover(ctx, r))
+					}
+				}()
+				res = ec._PlanPayments_readyForClearanceBy(ctx, field, obj)
+				return res
+			}
+
+			out.Concurrently(i, func() graphql.Marshaler {
+				return innerFunc(ctx)
+
+			})
 		case "readyForClearanceDts":
 			field := field
 

@@ -363,6 +363,11 @@ func (r *planBasicsResolver) CmmiGroups(ctx context.Context, obj *models.PlanBas
 	return cmmiGroups, nil
 }
 
+// ReadyForClearanceBy is the resolver for the readyForClearanceBy field.
+func (r *planBasicsResolver) ReadyForClearanceBy(ctx context.Context, obj *models.PlanBasics) (*string, error) {
+	panic(fmt.Errorf("not implemented: ReadyForClearanceBy - readyForClearanceBy"))
+}
+
 // ReadyForClearanceDts is the resolver for the readyForClearanceDts field.
 func (r *planBasicsResolver) ReadyForClearanceDts(ctx context.Context, obj *models.PlanBasics) (*time.Time, error) {
 	panic(fmt.Errorf("not implemented: ReadyForClearanceDts - readyForClearanceDts"))
@@ -378,6 +383,11 @@ func (r *planBeneficiariesResolver) Beneficiaries(ctx context.Context, obj *mode
 func (r *planBeneficiariesResolver) BeneficiarySelectionMethod(ctx context.Context, obj *models.PlanBeneficiaries) ([]model.SelectionMethodType, error) {
 	sTypes := models.ConvertEnums[model.SelectionMethodType](obj.BeneficiarySelectionMethod)
 	return sTypes, nil
+}
+
+// ReadyForClearanceBy is the resolver for the readyForClearanceBy field.
+func (r *planBeneficiariesResolver) ReadyForClearanceBy(ctx context.Context, obj *models.PlanBeneficiaries) (*string, error) {
+	panic(fmt.Errorf("not implemented: ReadyForClearanceBy - readyForClearanceBy"))
 }
 
 // ReadyForClearanceDts is the resolver for the readyForClearanceDts field.
@@ -457,6 +467,11 @@ func (r *planGeneralCharacteristicsResolver) AuthorityAllowances(ctx context.Con
 func (r *planGeneralCharacteristicsResolver) WaiversRequiredTypes(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]model.WaiverType, error) {
 	waiverTypes := models.ConvertEnums[model.WaiverType](obj.WaiversRequiredTypes)
 	return waiverTypes, nil
+}
+
+// ReadyForClearanceBy is the resolver for the readyForClearanceBy field.
+func (r *planGeneralCharacteristicsResolver) ReadyForClearanceBy(ctx context.Context, obj *models.PlanGeneralCharacteristics) (*string, error) {
+	panic(fmt.Errorf("not implemented: ReadyForClearanceBy - readyForClearanceBy"))
 }
 
 // ReadyForClearanceDts is the resolver for the readyForClearanceDts field.
@@ -692,6 +707,11 @@ func (r *planOpsEvalAndLearningResolver) ModelLearningSystems(ctx context.Contex
 	return modelLearningSystemTypes, nil
 }
 
+// ReadyForClearanceBy is the resolver for the readyForClearanceBy field.
+func (r *planOpsEvalAndLearningResolver) ReadyForClearanceBy(ctx context.Context, obj *models.PlanOpsEvalAndLearning) (*string, error) {
+	panic(fmt.Errorf("not implemented: ReadyForClearanceBy - readyForClearanceBy"))
+}
+
 // ReadyForClearanceDts is the resolver for the readyForClearanceDts field.
 func (r *planOpsEvalAndLearningResolver) ReadyForClearanceDts(ctx context.Context, obj *models.PlanOpsEvalAndLearning) (*time.Time, error) {
 	panic(fmt.Errorf("not implemented: ReadyForClearanceDts - readyForClearanceDts"))
@@ -731,6 +751,11 @@ func (r *planParticipantsAndProvidersResolver) ProviderAddMethod(ctx context.Con
 func (r *planParticipantsAndProvidersResolver) ProviderLeaveMethod(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.ProviderLeaveType, error) {
 	providerLeaveTypes := models.ConvertEnums[model.ProviderLeaveType](obj.ProviderLeaveMethod)
 	return providerLeaveTypes, nil
+}
+
+// ReadyForClearanceBy is the resolver for the readyForClearanceBy field.
+func (r *planParticipantsAndProvidersResolver) ReadyForClearanceBy(ctx context.Context, obj *models.PlanParticipantsAndProviders) (*string, error) {
+	panic(fmt.Errorf("not implemented: ReadyForClearanceBy - readyForClearanceBy"))
 }
 
 // ReadyForClearanceDts is the resolver for the readyForClearanceDts field.
@@ -776,6 +801,11 @@ func (r *planPaymentsResolver) NonClaimsPaymentOther(ctx context.Context, obj *m
 // AnticipatedPaymentFrequency is the resolver for the anticipatedPaymentFrequency field.
 func (r *planPaymentsResolver) AnticipatedPaymentFrequency(ctx context.Context, obj *models.PlanPayments) ([]models.AnticipatedPaymentFrequencyType, error) {
 	return models.ConvertEnums[models.AnticipatedPaymentFrequencyType](obj.AnticipatedPaymentFrequency), nil
+}
+
+// ReadyForClearanceBy is the resolver for the readyForClearanceBy field.
+func (r *planPaymentsResolver) ReadyForClearanceBy(ctx context.Context, obj *models.PlanPayments) (*string, error) {
+	panic(fmt.Errorf("not implemented: ReadyForClearanceBy - readyForClearanceBy"))
 }
 
 // ReadyForClearanceDts is the resolver for the readyForClearanceDts field.

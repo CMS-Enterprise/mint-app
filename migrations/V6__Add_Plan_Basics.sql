@@ -61,6 +61,7 @@ CREATE TABLE plan_basics (
 
     ready_for_review_by EUA_ID,
     ready_for_review_dts TIMESTAMP WITH TIME ZONE,
+    ready_for_clearance_by EUA_ID,
     ready_for_clearance_dts TIMESTAMP WITH TIME ZONE,
     status TASK_STATUS NOT NULL DEFAULT 'READY' -- can become and ENUM/TYPE
 );
