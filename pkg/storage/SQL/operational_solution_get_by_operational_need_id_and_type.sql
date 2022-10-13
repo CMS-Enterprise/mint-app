@@ -2,6 +2,7 @@ SELECT
     OpSol.id,
     OpSol.operational_need_id,
     OpSol.solution_type,
+    OpSol.archived,
     COALESCE(pOpSol.full_name, 'Other') AS solution_type_full_name,
     COALESCE(pOpSol.short_name, 'OTHER') AS solution_type_short_name,
     OpSol.solution_other,
