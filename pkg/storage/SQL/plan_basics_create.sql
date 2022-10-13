@@ -26,6 +26,8 @@ INSERT INTO plan_basics (
     modified_by,
     ready_for_review_by,
     ready_for_review_dts,
+    ready_for_clearance_by,
+    ready_for_clearance_dts,
     status
 )
 VALUES (
@@ -56,6 +58,8 @@ VALUES (
     :modified_by,
     :ready_for_review_by,
     :ready_for_review_dts,
+    :ready_for_clearance_by,
+    :ready_for_clearance_dts,
     :status
 )
 RETURNING
@@ -88,4 +92,6 @@ modified_by,
 modified_dts,
 ready_for_review_by,
 ready_for_review_dts,
+ready_for_clearance_by,
+ready_for_clearance_dts,
 status;
