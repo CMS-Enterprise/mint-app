@@ -2772,18 +2772,20 @@ func (e TaskListSection) MarshalGQL(w io.Writer) {
 type TaskStatusInput string
 
 const (
-	TaskStatusInputInProgress     TaskStatusInput = "IN_PROGRESS"
-	TaskStatusInputReadyForReview TaskStatusInput = "READY_FOR_REVIEW"
+	TaskStatusInputInProgress        TaskStatusInput = "IN_PROGRESS"
+	TaskStatusInputReadyForReview    TaskStatusInput = "READY_FOR_REVIEW"
+	TaskStatusInputReadyForClearance TaskStatusInput = "READY_FOR_CLEARANCE"
 )
 
 var AllTaskStatusInput = []TaskStatusInput{
 	TaskStatusInputInProgress,
 	TaskStatusInputReadyForReview,
+	TaskStatusInputReadyForClearance,
 }
 
 func (e TaskStatusInput) IsValid() bool {
 	switch e {
-	case TaskStatusInputInProgress, TaskStatusInputReadyForReview:
+	case TaskStatusInputInProgress, TaskStatusInputReadyForReview, TaskStatusInputReadyForClearance:
 		return true
 	}
 	return false
