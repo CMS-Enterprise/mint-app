@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
-import { useTranslation } from 'react-i18next';
 
 import Discussions from 'views/ModelPlan/Discussions';
 
 const ReadOnlyDiscussions = ({ modelID }: { modelID: string }) => {
-  const { t } = useTranslation('discussions');
   const [isDiscussionOpen, setIsDiscussionOpen] = useState(true);
 
   return (
