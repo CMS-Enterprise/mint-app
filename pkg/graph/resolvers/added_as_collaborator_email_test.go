@@ -6,6 +6,7 @@ import (
 	"github.com/cmsgov/mint-app/pkg/email"
 	"github.com/cmsgov/mint-app/pkg/graph/model"
 	"github.com/cmsgov/mint-app/pkg/models"
+	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
 )
 
 func (s *ResolverSuite) TestAddedAsCollaboratorEmail() {
@@ -21,7 +22,6 @@ func (s *ResolverSuite) TestAddedAsCollaboratorEmail() {
 	}
 
 	testTemplate, expectedSubject, expectedBody := createAddedAsCollaboratorTemplateCacheHelper(planName, plan)
-
 	s.testConfigs.EmailTemplateService.
 		EXPECT().
 		GetEmailTemplate(gomock.Eq(email.AddedAsCollaboratorTemplateName)).
@@ -31,7 +31,7 @@ func (s *ResolverSuite) TestAddedAsCollaboratorEmail() {
 	s.testConfigs.EmailService.
 		EXPECT().
 		Send(
-			gomock.Eq(s.testConfigs.EmailService),
+			gomock.Any(),
 			gomock.Eq([]string{collaboratorInput.Email}),
 			gomock.Any(),
 			gomock.Eq(expectedSubject),
@@ -39,6 +39,17 @@ func (s *ResolverSuite) TestAddedAsCollaboratorEmail() {
 			gomock.Eq(expectedBody),
 		).
 		Times(1)
+
+	emailServiceConfig := &oddmail.GoSimpleMailServiceConfig{
+		ClientAddress: "http://localhost:3005",
+		DefaultSender: "unit-test-execution@mint.cms.gov",
+	}
+
+	s.testConfigs.EmailService.
+		EXPECT().
+		GetConfig().
+		Return(emailServiceConfig).
+		Times(2)
 
 	_, err := CreatePlanCollaborator(
 		s.testConfigs.Logger,
