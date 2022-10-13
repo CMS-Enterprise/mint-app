@@ -507,6 +507,16 @@ const Discussions = ({
       );
     });
 
+  const renderDiscussionContent = () => {
+    if (discussions?.length === 0) {
+      return (
+        <Alert className="margin-bottom-2" type="info">
+          {status === 'ANSWERED' ? t('noAnswered') : t('noUanswered')}
+        </Alert>
+      );
+    }
+  };
+
   const renderDiscussions = () => {
     return (
       <>
