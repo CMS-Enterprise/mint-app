@@ -11,6 +11,7 @@ CREATE TYPE OP_SOLUTION_STATUS AS ENUM (
 CREATE TABLE operational_solution (
     id UUID PRIMARY KEY NOT NULL,
     operational_need_id UUID NOT NULL, --foreign key to operational need
+    archived BOOL NOT NULL DEFAULT FALSE,
     solution_type INT,
     solution_other ZERO_STRING,
 
@@ -49,4 +50,4 @@ ALTER TABLE operational_solution
 ADD CONSTRAINT unique_solution_other_per_plan UNIQUE (operational_need_id, solution_other); -- 1 specifc custom solution per model
 
 ALTER TABLE operational_solution
-ADD CONSTRAINT solution_type_null_if_other CHECK (solution_type IS NULL OR solution_other IS NULL); -- Can't be a custom type and a specifc type at the same time
+ADD CONSTRAINT solution_type_null_if_other CHECK ((solution_type IS NULL OR solution_other IS NULL) AND NOT (solution_type IS NULL AND solution_other IS NULL)); -- Can't be a custom type and a specifc type at the same time. One is required

@@ -1417,6 +1417,7 @@ type OperationalSolution {
     operationalNeedID: UUID!
 
     solutionType: Int
+    archived: Boolean!
     solutionTypeFullName: String!
     solutionTypeShortName: OperationalSolutionKey!
     solutionOther: String
@@ -1433,7 +1434,7 @@ type OperationalSolution {
 }
 
 input OperationalSolutionChanges @goModel(model: "map[string]interface{}"){
-    solutionOther: String # Is this valid?
+    archived: Boolean
     pocName: String     
     pocEmail: String
     mustStartDts: Time
@@ -1456,6 +1457,7 @@ type Query {
   planPayments(id: UUID!): PlanPayments!
   ndaInfo: NDAInfo!
   crTdl(id: UUID!): PlanCrTdl!
+  operationalSolutions(operationalNeedID: UUID!): OperationalSolutions!
   auditChanges(tableName: String!, primaryKey: UUID!): [AuditChange!]!
 }
 
@@ -1550,14 +1552,16 @@ updatePlanCrTdl(id: UUID!, changes: PlanCrTdlChanges!): PlanCrTdl!
 deletePlanCrTdl(id: UUID!): PlanCrTdl!
 @hasRole(role: MINT_USER)
 
-addOrUpdateOperationalNeed(modelPlanID: UUID!, needType: OperationalNeedKey! needed: Boolean!): OperationalNeed! #TODO --> Don't include other here since 
+addOrUpdateOperationalNeed(modelPlanID: UUID!, needType: OperationalNeedKey! needed: Boolean!): OperationalNeed! 
 @hasRole(role: MINT_USER)
 
-addOrUpdateCustomOperationalNeed(modelPlanID: UUID!, customNeedType: String! needed: Boolean!): OperationalNeed! #Maybe just pass the values.
+addOrUpdateCustomOperationalNeed(modelPlanID: UUID!, customNeedType: String! needed: Boolean!): OperationalNeed! 
 @hasRole(role: MINT_USER)
-
 
 addOrUpdateOperationalSolution(operationalNeedID: UUID!, solutionType: OperationalSolutionKey! changes: OperationalSolutionChanges!): OperationalSolution! #Maybe just pass the values.
+@hasRole(role: MINT_USER)
+
+addOrUpdateCustomOperationalSolution(operationalNeedID: UUID!, customSolutionType: String! changes: OperationalSolutionChanges!): OperationalSolution! #TODO update the
 @hasRole(role: MINT_USER)
 }
 

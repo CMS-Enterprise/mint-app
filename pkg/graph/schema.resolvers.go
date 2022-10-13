@@ -376,11 +376,17 @@ func (r *mutationResolver) AddOrUpdateOperationalSolution(ctx context.Context, o
 	return resolvers.OperationalSolutionInsertOrUpdate(logger, operationalNeedID, solutionType, changes, principal, r.store)
 }
 
+// AddOrUpdateCustomOperationalSolution is the resolver for the addOrUpdateCustomOperationalSolution field.
+func (r *mutationResolver) AddOrUpdateCustomOperationalSolution(ctx context.Context, operationalNeedID uuid.UUID, customSolutionType string, changes map[string]interface{}) (*models.OperationalSolution, error) {
+	principal := appcontext.Principal(ctx)
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.OperationalSolutionInsertOrUpdateCustom(logger, operationalNeedID, customSolutionType, changes, principal, r.store)
+}
+
 // Solutions is the resolver for the solutions field.
 func (r *operationalNeedResolver) Solutions(ctx context.Context, obj *models.OperationalNeed) (*model.OperationalSolutions, error) {
 	logger := appcontext.ZLogger(ctx)
-	return resolvers.OperationaSolutionsGetByOPNeed(logger, obj, r.store)
-	// return resolvers.OperationalSolutionCollectionGetByOperationalNeedID(logger, obj.ID, r.store)
+	return resolvers.OperationaSolutionsGetByOPNeed(logger, obj.ID, r.store)
 }
 
 // CmsCenters is the resolver for the cmsCenters field.
@@ -872,6 +878,12 @@ func (r *queryResolver) NdaInfo(ctx context.Context) (*model.NDAInfo, error) {
 func (r *queryResolver) CrTdl(ctx context.Context, id uuid.UUID) (*models.PlanCrTdl, error) {
 	logger := appcontext.ZLogger(ctx)
 	return resolvers.PlanCrTdlGet(logger, id, r.store)
+}
+
+// OperationalSolutions is the resolver for the operationalSolutions field.
+func (r *queryResolver) OperationalSolutions(ctx context.Context, operationalNeedID uuid.UUID) (*model.OperationalSolutions, error) {
+	logger := appcontext.ZLogger(ctx)
+	return resolvers.OperationaSolutionsGetByOPNeed(logger, operationalNeedID, r.store)
 }
 
 // AuditChanges is the resolver for the auditChanges field.

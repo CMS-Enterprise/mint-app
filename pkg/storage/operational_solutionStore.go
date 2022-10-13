@@ -17,8 +17,14 @@ var operationalSolutionCollectionGetByOperationalNeedIDSQL string
 //go:embed SQL/operational_solution_get_by_operational_need_id_and_type.sql
 var operationalSolutionGetByOperationalNeedIDAndTypeSQL string
 
+//go:embed SQL/operational_solution_get_by_operational_need_id_and_other_type.sql
+var operationalSolutionGetByOperationalNeedIDAndOtherTypeSQL string
+
 //go:embed SQL/operational_solution_insert_or_update.sql
 var operationalSolutionInsertOrUpdateSQL string
+
+//go:embed SQL/operational_solution_insert_or_update_other.sql
+var operationalSolutionInsertOrUpdateOtherSQL string
 
 // OperationalSolutionCollectionGetByOperationalNeedID returns Operational Solutions correspondind to an Operational Need
 func (s *Store) OperationalSolutionCollectionGetByOperationalNeedID(logger *zap.Logger, operationalNeedID uuid.UUID) ([]*models.OperationalSolution, error) {
@@ -69,6 +75,32 @@ func (s *Store) OperationalSolutionGetByOperationNeedIDAndType(logger *zap.Logge
 
 }
 
+// OperationalSolutionGetByOperationNeedIDAndOtherType returns an operational solution that matches by operational need an solutionType
+func (s *Store) OperationalSolutionGetByOperationNeedIDAndOtherType(logger *zap.Logger, operationNeedID uuid.UUID, customSolutionType string) (*models.OperationalSolution, error) {
+	solution := models.OperationalSolution{}
+
+	stmt, err := s.db.PrepareNamed(operationalSolutionGetByOperationalNeedIDAndOtherTypeSQL)
+	if err != nil {
+		return nil, err
+	}
+
+	arg := map[string]interface{}{
+		"operational_need_id": operationNeedID,
+		"solution_other":      customSolutionType,
+	}
+	err = stmt.Get(&solution, arg)
+	if err != nil {
+		if err != nil {
+			if err.Error() == "sql: no rows in result set" { //EXPECT THERE TO BE NULL results, don't treat this as an error
+				return nil, nil
+			}
+		}
+		return nil, err
+	}
+	return &solution, err
+
+}
+
 // OperationalSolutionInsertOrUpdate either inserts or updates an operational solution if it already exists
 func (s *Store) OperationalSolutionInsertOrUpdate(logger *zap.Logger, solution *models.OperationalSolution, solutionTypeKey models.OperationalSolutionKey) (*models.OperationalSolution, error) {
 	statement, err := s.db.PrepareNamed(operationalSolutionInsertOrUpdateSQL)
@@ -77,6 +109,21 @@ func (s *Store) OperationalSolutionInsertOrUpdate(logger *zap.Logger, solution *
 	}
 	solution.ID = utilityUUID.ValueOrNewUUID(solution.ID)
 	solution.SolutionTypeShortName = solutionTypeKey
+	err = statement.Get(solution, solution)
+	if err != nil {
+		return nil, genericmodel.HandleModelUpdateError(logger, err, solution) //this could be either update or insert..
+	}
+	return solution, err
+}
+
+// OperationalSolutionInsertOrUpdateOther either inserts or updates an operational solution if it already exists
+func (s *Store) OperationalSolutionInsertOrUpdateOther(logger *zap.Logger, solution *models.OperationalSolution, customSolutionType string) (*models.OperationalSolution, error) {
+	statement, err := s.db.PrepareNamed(operationalSolutionInsertOrUpdateOtherSQL)
+	if err != nil {
+		return nil, genericmodel.HandleModelUpdateError(logger, err, solution)
+	}
+	solution.ID = utilityUUID.ValueOrNewUUID(solution.ID)
+	solution.SolutionOther = &customSolutionType
 	err = statement.Get(solution, solution)
 	if err != nil {
 		return nil, genericmodel.HandleModelUpdateError(logger, err, solution) //this could be either update or insert..
