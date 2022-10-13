@@ -4,6 +4,7 @@ export default gql`
   query GetModelPlanDiscussions($id: UUID!) {
     modelPlan(id: $id) {
       id
+      isCollaborator
       collaborators {
         id
         euaUserID
