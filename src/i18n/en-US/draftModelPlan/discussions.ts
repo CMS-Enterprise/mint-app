@@ -37,9 +37,7 @@ const discussions = {
     noDiscussions:
       'There are no discussions yet. When a question is asked, it will appear here.',
     noQuestions:
-      'There are no questions yet. When a question is asked, it will appear here.',
-    noAnsweredQuestions:
-      'There are no answered questions yet. When a question is answered, it will appear here with the response.'
+      'There are no questions yet. When a question is asked, it will appear here.'
   },
   ariaLabel: 'Discussion Center Modal',
   assessment: 'Model Assessment Team'
