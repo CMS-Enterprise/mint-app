@@ -361,33 +361,41 @@ const BasicsContent = () => {
                     )}
                   />
                 </FieldGroup>
-                {values.basics.cmsCenters.includes(CMSCenter.CMMI) && (
-                  <FieldGroup
-                    error={!!flatErrors['basics.cmmiGroups']}
-                    className="margin-top-4"
-                  >
-                    <Label htmlFor="basics.cmmiGroups">{t('cmmiGroup')}</Label>
-                    <FieldErrorMsg>
-                      {flatErrors['basics.cmmiGroups']}
-                    </FieldErrorMsg>
-                    {Object.keys(CMMIGroup).map(group => {
-                      return (
-                        <Fragment key={group}>
-                          <Field
-                            as={CheckboxField}
-                            id={`new-plan-cmmiGroup-${group}`}
-                            name="basics.cmmiGroups"
-                            label={translateCmmiGroups(group)}
-                            value={group}
-                            checked={values.basics.cmmiGroups.includes(
-                              group as CMMIGroup
-                            )}
-                          />
-                        </Fragment>
-                      );
-                    })}
-                  </FieldGroup>
-                )}
+                <FieldGroup
+                  error={!!flatErrors['basics.cmmiGroups']}
+                  className="margin-top-4"
+                >
+                  <Label htmlFor="basics.cmmiGroups" className="text-normal">
+                    {t('cmmiGroup')}
+                  </Label>
+
+                  <p className="text-base margin-bottom-1 margin-top-1">
+                    {t('cmmiGroupInfo')}
+                  </p>
+
+                  <FieldErrorMsg>
+                    {flatErrors['basics.cmmiGroups']}
+                  </FieldErrorMsg>
+                  {Object.keys(CMMIGroup).map(group => {
+                    return (
+                      <Fragment key={group}>
+                        <Field
+                          as={CheckboxField}
+                          disabled={
+                            !values.basics.cmsCenters.includes(CMSCenter.CMMI)
+                          }
+                          id={`new-plan-cmmiGroup-${group}`}
+                          name="basics.cmmiGroups"
+                          label={translateCmmiGroups(group)}
+                          value={group}
+                          checked={values.basics.cmmiGroups.includes(
+                            group as CMMIGroup
+                          )}
+                        />
+                      </Fragment>
+                    );
+                  })}
+                </FieldGroup>
 
                 <div className="margin-top-6 margin-bottom-3">
                   <Button
