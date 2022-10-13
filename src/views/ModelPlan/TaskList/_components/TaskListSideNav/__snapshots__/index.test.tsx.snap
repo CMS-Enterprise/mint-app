@@ -17,7 +17,7 @@ exports[`The TaskListSideNavActions matches snapshot 1`] = `
     >
       <div>
         <button
-          class="usa-button usa-button--unstyled"
+          class="usa-button usa-button--unstyled display-flex"
           type="button"
         >
           <span>
