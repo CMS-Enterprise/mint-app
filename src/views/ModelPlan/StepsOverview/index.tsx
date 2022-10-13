@@ -19,7 +19,7 @@ import PageHeading from 'components/PageHeading';
 import './index.scss';
 
 const StepsOverview = () => {
-  const { t } = useTranslation('modelPlan');
+  const { t } = useTranslation('modelPlanOverview');
 
   return (
     <MainContent>
@@ -31,20 +31,20 @@ const StepsOverview = () => {
                 <span>Home</span>
               </BreadcrumbLink>
             </Breadcrumb>
-            <Breadcrumb current>{t('stepsOverview.heading')}</Breadcrumb>
+            <Breadcrumb current>{t('heading')}</Breadcrumb>
           </BreadcrumbBar>
-          <PageHeading>{t('stepsOverview.heading')}</PageHeading>
+          <PageHeading>{t('heading')}</PageHeading>
           <SummaryBox
             heading=""
             className="bg-base-lightest border-0 radius-0 padding-y-1 padding-x-2"
           >
-            <p className="margin-top-0">{t('stepsOverview.summaryBox.copy')}</p>
+            <p className="margin-top-0">{t('summaryBox.copy')}</p>
             <ul className="padding-left-3">
-              <li>{t('stepsOverview.summaryBox.listItem.add')}</li>
-              <li>{t('stepsOverview.summaryBox.listItem.upload')}</li>
+              <li>{t('summaryBox.listItem.add')}</li>
+              <li>{t('summaryBox.listItem.upload')}</li>
             </ul>
             <p className="margin-bottom-1">
-              <Trans i18nKey="modelPlan:stepsOverview.summaryBox.email">
+              <Trans i18nKey="modelPlanOverview:summaryBox.email">
                 indexZero
                 <UswdsLink href="mailto:CMS_Section508@cms.hhs.gov">
                   email
@@ -54,31 +54,29 @@ const StepsOverview = () => {
             </p>
           </SummaryBox>
           <PageHeading className="margin-top-7 margin-bottom-1">
-            {t('stepsOverview.steps.heading')}
+            {t('steps.heading')}
           </PageHeading>
-          <p className="font-body-lg margin-y-0">
-            {t('stepsOverview.steps.description')}
-          </p>
+          <p className="font-body-lg margin-y-0">{t('steps.description')}</p>
         </div>
         <div className="tablet:grid-col-6 margin-top-105">
           <ProcessList>
             <ProcessListItem>
               <ProcessListHeading type="h3">
-                {t('stepsOverview.steps.first.heading')}
+                {t('steps.first.heading')}
               </ProcessListHeading>
-              <p>{t('stepsOverview.steps.first.description')}</p>
+              <p>{t('steps.first.description')}</p>
             </ProcessListItem>
             <ProcessListItem>
               <ProcessListHeading type="h3">
-                {t('stepsOverview.steps.second.heading')}
+                {t('steps.second.heading')}
               </ProcessListHeading>
-              <p>{t('stepsOverview.steps.second.description')}</p>
+              <p>{t('steps.second.description')}</p>
             </ProcessListItem>
             <ProcessListItem className="padding-bottom-3">
               <ProcessListHeading type="h3">
-                {t('stepsOverview.steps.third.heading')}
+                {t('steps.third.heading')}
               </ProcessListHeading>
-              <p>{t('stepsOverview.steps.third.description')}</p>
+              <p>{t('steps.third.description')}</p>
             </ProcessListItem>
           </ProcessList>
           <hr className="margin-top-0 margin-bottom-05" />
@@ -89,9 +87,9 @@ const StepsOverview = () => {
           >
             <ProcessListItem>
               <ProcessListHeading type="h3">
-                {t('stepsOverview.steps.fourth.heading')}
+                {t('steps.fourth.heading')}
               </ProcessListHeading>
-              <p>{t('stepsOverview.steps.fourth.description')}</p>
+              <p>{t('steps.fourth.description')}</p>
             </ProcessListItem>
           </ProcessList>
           <UswdsReactLink
@@ -100,7 +98,7 @@ const StepsOverview = () => {
             to="/models/new-plan"
             data-testid="continue-link"
           >
-            {t('stepsOverview.getStartedButton')}
+            {t('getStartedButton')}
           </UswdsReactLink>
         </div>
       </div>
