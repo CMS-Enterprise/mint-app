@@ -49,7 +49,7 @@ func (s *ResolverSuite) TestAddedAsCollaboratorEmail() {
 		EXPECT().
 		GetConfig().
 		Return(emailServiceConfig).
-		Times(2)
+		AnyTimes()
 
 	_, err := CreatePlanCollaborator(
 		s.testConfigs.Logger,
