@@ -3,7 +3,7 @@ const discussions = {
   modalHeading: 'Model discussions',
   askAQuestion: 'Ask a question',
   description:
-    'Need help with something? Ask a question here and someone will get back to you with an answer. If you need help on a specific question or field, please include the name of the question or field and the section it’s located in.',
+    'Need help with something? Ask a question here and someone will reply. Questions and answers will display in Discussions. If you need help on a specific question or field, please include the name of the question or field and the section it’s located in.',
   noDiscussions: 'There are no discussions yet. ',
   askAQuestionLink: 'Ask a question',
   toGetStarted: ' to get started',
