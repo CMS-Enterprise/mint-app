@@ -93,18 +93,18 @@ const TaskListSideNav = ({
         </Button>
         <div className="margin-top-4 margin-bottom-7">
           <h4 className="margin-bottom-1">{t('sideNav.relatedContent')}</h4>
-          <UswdsReactLink
-            aria-label={t('sideNav.ariaLabelForOverview')}
-            className="line-height-body-5"
-            to="/help-and-knowledge/model-plan-overview"
-            variant="external"
-            target="_blank"
+          <Button
+            type="button"
+            onClick={() =>
+              window.open('/help-and-knowledge/model-plan-overview', '_blank')
+            }
+            className="usa-button usa-button--unstyled line-height-body-5"
           >
             <Trans i18nKey="modelPlanTaskList:sideNav.overview">
               indexZero
               <span aria-hidden /> indexTwo
             </Trans>
-          </UswdsReactLink>
+          </Button>
         </div>
         <div>
           <h3 className="margin-bottom-05">{t('sideNav.modelTeam')}</h3>

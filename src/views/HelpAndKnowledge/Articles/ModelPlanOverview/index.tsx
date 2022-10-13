@@ -1,9 +1,6 @@
 import React from 'react';
 import { Trans, useTranslation } from 'react-i18next';
 import {
-  Breadcrumb,
-  BreadcrumbBar,
-  BreadcrumbLink,
   Link as UswdsLink,
   ProcessList,
   ProcessListHeading,
@@ -11,9 +8,10 @@ import {
   SummaryBox
 } from '@trussworks/react-uswds';
 
-import UswdsReactLink from 'components/LinkWrapper';
+import HelpBreadcrumb from 'components/HelpBreadcrumb';
 import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
+import RelatedArticles from 'components/RelatedArticles';
 
 export const ModelPlanOverviewContent = () => {
   const { t } = useTranslation('modelPlanOverview');
@@ -75,14 +73,6 @@ export const ModelPlanOverviewContent = () => {
             <p>{t('steps.fourth.description')}</p>
           </ProcessListItem>
         </ProcessList>
-        <UswdsReactLink
-          className="usa-button margin-bottom-10"
-          variant="unstyled"
-          to="/models/new-plan"
-          data-testid="continue-link"
-        >
-          {t('getStartedButton')}
-        </UswdsReactLink>
       </div>
     </div>
   );
@@ -92,22 +82,18 @@ export const ModelPlanOverview = () => {
   const { t } = useTranslation('modelPlanOverview');
 
   return (
-    <MainContent>
-      <div className="grid-container">
-        <div className="tablet:grid-col-12">
-          <BreadcrumbBar variant="wrap">
-            <Breadcrumb>
-              <BreadcrumbLink asCustom={UswdsReactLink} to="/">
-                <span>{useTranslation('header').t('home')}</span>
-              </BreadcrumbLink>
-            </Breadcrumb>
-            <Breadcrumb current>{t('overviewHeading')}</Breadcrumb>
-          </BreadcrumbBar>
-          <PageHeading>{t('overviewHeading')}</PageHeading>
-          <ModelPlanOverviewContent />
+    <>
+      <MainContent>
+        <div className="grid-container">
+          <div className="tablet:grid-col-12">
+            <HelpBreadcrumb text={t('overviewHeading')} />
+            <PageHeading>{t('overviewHeading')}</PageHeading>
+            <ModelPlanOverviewContent />
+          </div>
         </div>
-      </div>
-    </MainContent>
+      </MainContent>
+      <RelatedArticles currentArticle="Model Plan Overview" />
+    </>
   );
 };
 

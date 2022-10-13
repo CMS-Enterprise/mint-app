@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
-import { NotFoundPartial } from 'views/NotFound';
+import NotFound from 'views/NotFound';
 
 import ModelPlanOverview from './Articles/ModelPlanOverview';
 import HelpAndKnowledgeHome from './home';
@@ -17,7 +17,7 @@ export const HelpAndKnowledge = () => {
         <ModelPlanOverview />
       </Route>
 
-      <Route path="*" render={() => <NotFoundPartial />} />
+      <Route path="*" render={() => <NotFound />} />
     </Switch>
   );
 };

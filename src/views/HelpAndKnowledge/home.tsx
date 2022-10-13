@@ -27,6 +27,8 @@ export const HelpAndKnowledgeHome = () => {
         </GridContainer>
       </SummaryBox>
       <GridContainer>
+        <h2 className="margin-bottom-0">{t('gettingStarted')}</h2>
+        <p className="margin-bottom-3">{t('instructions')}</p>
         <CardGroup className="margin-y-2">
           {helpAndKnowledgeArticles.map(article => (
             <ArticleCard key={article.route} {...article} isLink />
