@@ -30,9 +30,13 @@ const discussions = {
   ago: 'ago',
   justNow: 'Just now',
   noAnswered:
-    'There are no answered questions yet. When a question is answered, it will appear here.',
+    'There are no answered questions yet. When a question is answered, it will appear here with the response.',
   noUanswered:
     'There are no unanswered questions. Ask a question using the link above.',
+  noDiscussion:
+    'There are no discussions yet. When a question is asked, it will appear here.',
+  noQuestions:
+    'There are no questions yet. When a question is asked, it will appear here.',
   ariaLabel: 'Discussion Center Modal',
   assessment: 'Model Assessment Team'
 };
