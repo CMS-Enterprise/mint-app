@@ -133,13 +133,13 @@ const Discussions = ({
 
   // Hook used to conditionally render each discussionType by its setter method
   useEffect(() => {
-    if (discussions?.length === 0 || initQuestion) {
+    if ((discussions?.length === 0 || initQuestion) && !readOnly) {
       setDiscussionType('question');
     } else {
       setDiscussionType('discussion');
     }
     setQuestionCount(getUnansweredQuestions(discussions));
-  }, [discussions, initQuestion]);
+  }, [discussions, initQuestion, readOnly]);
 
   // Handles the default expanded render of accordions based on if there are more than zero questions
   const openStatus = (status: DiscussionStatus) => {
