@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { RootStateOrAny, useSelector } from 'react-redux';
 import { useMutation, useQuery } from '@apollo/client';
 import {
   Accordion,
@@ -42,6 +43,7 @@ import { DiscussionStatus } from 'types/graphql-global-types';
 import { getTimeElapsed } from 'utils/date';
 import flattenErrors from 'utils/flattenErrors';
 import { getUnansweredQuestions, sortRepliesByDate } from 'utils/modelPlan';
+import { isAssessment } from 'utils/user';
 
 import './index.scss';
 
@@ -76,6 +78,10 @@ const Discussions = ({
 
   // Used to map EUA ids to full name
   const collaborators = data?.modelPlan?.collaborators || [];
+
+  const { groups } = useSelector((state: RootStateOrAny) => state.auth);
+  const isCollaborator = data?.modelPlan?.isCollaborator;
+  const hasEditAccess: boolean = isCollaborator || isAssessment(groups);
 
   const discussions = useMemo(() => {
     return data?.modelPlan?.discussions || ([] as DiscussionType[]);
@@ -381,8 +387,8 @@ const Discussions = ({
       >
         <p className="margin-y-0 padding-y-1">{discussion.content}</p>
         <div className="display-flex margin-bottom-2">
-          {/* Rendered a link to answer a question if there are no replies/answers */}
-          {answerQuestion && (
+          {/* Rendered a link to answer a question if there are no replies/answers only for Collaborator and Assessment Users */}
+          {hasEditAccess && answerQuestion && (
             <>
               <IconAnnouncement className="text-primary margin-right-1" />
               <Button
@@ -510,20 +516,25 @@ const Discussions = ({
         >
           {t('heading')}
         </PageHeading>
-        <div className="display-flex margin-bottom-4">
-          <IconAnnouncement className="text-primary margin-right-1" />
-          <Button
-            type="button"
-            unstyled
-            onClick={() => {
-              setReply(null); // Setting reply to null - indicates a new question rather than an answer to a question
-              setDiscussionStatusMessage(''); // Clearing status before asking a new question
-              setDiscussionType('question');
-            }}
-          >
-            {t('askAQuestionLink')}
-          </Button>
-        </div>
+
+        {/* Ask a Question link available to Collaborators and Assessment Users */}
+        {hasEditAccess && (
+          <div className="display-flex margin-bottom-4">
+            <IconAnnouncement className="text-primary margin-right-1" />
+            <Button
+              type="button"
+              unstyled
+              onClick={() => {
+                setReply(null); // Setting reply to null - indicates a new question rather than an answer to a question
+                setDiscussionStatusMessage(''); // Clearing status before asking a new question
+                setDiscussionType('question');
+              }}
+            >
+              {t('askAQuestionLink')}
+            </Button>
+          </div>
+        )}
+
         {/* General error message for mutations that expires after 3 seconds */}
         {discussionStatusMessage && (
           <Expire delay={3000} callback={setDiscussionStatusMessage}>
