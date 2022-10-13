@@ -15,9 +15,10 @@ type TaskStatus string
 
 // These constants represent the different values of TaskStatus
 const (
-	TaskReady          TaskStatus = "READY"
-	TaskInProgress     TaskStatus = "IN_PROGRESS"
-	TaskReadyForReview TaskStatus = "READY_FOR_REVIEW"
+	TaskReady             TaskStatus = "READY"
+	TaskInProgress        TaskStatus = "IN_PROGRESS"
+	TaskReadyForReview    TaskStatus = "READY_FOR_REVIEW"
+	TaskReadyForClearance TaskStatus = "READY_FOR_CLEARANCE"
 )
 
 // TaskSection Represents the possible task sections in the model plan worklist
