@@ -500,7 +500,12 @@ const Discussions = ({
           {/* Sets an infobox beneath each accordion if there are zero questions of that type */}
           {!openStatus(DiscussionStatus[status]) && (
             <Alert className="margin-bottom-2" type="info">
-              {status === 'ANSWERED' ? t('noAnswered') : t('noUanswered')}
+              {hasEditAccess &&
+                (status === 'ANSWERED' ? t('noAnswered') : t('noUanswered'))}
+              {!hasEditAccess &&
+                (status === 'ANSWERED'
+                  ? t('noAnswered')
+                  : t('nonEditor.noQuestions'))}
             </Alert>
           )}
         </div>
