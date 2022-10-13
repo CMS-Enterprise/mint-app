@@ -2,7 +2,7 @@
 version: '3.7'
 services:
   db:
-    image: postgres:11.12
+    image: postgres:14.4
     command: ['postgres', '-c', 'log_statement=all', '-c', 'max_connections=25']
     environment:
       - POSTGRES_PASSWORD=mysecretpassword
@@ -62,6 +62,8 @@ services:
       - SERVER_CERT
       - SERVER_KEY
       - USE_TLS
+      - FAKTORY_URL
+
     depends_on:
       db_migrate:
         condition: service_completed_successfully # Only start if migrations completed successfully
@@ -88,3 +90,16 @@ services:
     ports:
       - "1085:1080"
       - "1030:1025"
+  faktory:
+    image: contribsys/faktory:latest
+    command: /faktory -b :7419 -w :7420 -e production
+    ports:
+      - 7419:7419
+      - 7420:7420
+    environment:
+      - FAKTORY_PASSWORD
+    volumes:
+      - faktory:/var/lib/faktory
+    restart: always
+volumes:
+  faktory:

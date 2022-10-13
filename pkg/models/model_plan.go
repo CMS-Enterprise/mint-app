@@ -21,7 +21,7 @@ func NewModelPlan(createdBy string, modelName string) *ModelPlan {
 
 }
 
-//GetModelPlanID returns the modelPlanID of the task list section
+// GetModelPlanID returns the modelPlanID of the task list section
 func (m ModelPlan) GetModelPlanID() uuid.UUID {
 	return m.ID
 }

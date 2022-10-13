@@ -5,14 +5,22 @@ import { IconFileDownload } from '@trussworks/react-uswds';
 import { Parser, transforms } from 'json2csv';
 
 import GetAllModelPlans from 'queries/GetAllModelData';
+import GetAllSingleModelPlan from 'queries/GetAllSingleModelPlan';
 import {
   GetAllModelData as GetAllModelDataType,
   GetAllModelData_modelPlanCollection as AllModelDataType
 } from 'queries/types/GetAllModelData';
+import {
+  GetAllSingleModelData,
+  GetAllSingleModelData_modelPlan as SingleModelPlanType,
+  GetAllSingleModelDataVariables
+} from 'queries/types/GetAllSingleModelData';
 
 import { csvFields, fieldsToUnwind } from './CsvData';
 
-const csvFormatter = (csvData: AllModelDataType[]) => {
+interface CSVModelPlanType extends AllModelDataType, SingleModelPlanType {}
+
+const csvFormatter = (csvData: CSVModelPlanType[]) => {
   try {
     const transform = [
       transforms.unwind({ paths: fieldsToUnwind, blankOut: true })
@@ -42,14 +50,17 @@ const downloadFile = (data: string) => {
 
 type CsvExportLinkType = {
   includeAll: boolean;
+  modelPlanID?: string;
 };
 
 export const CsvExportLink = ({
-  includeAll
+  includeAll,
+  modelPlanID
 }: CsvExportLinkType): React.ReactElement => {
   const { t } = useTranslation('home');
 
-  const [fetchModelCSVData] = useLazyQuery<GetAllModelDataType>(
+  // Fetches all data from all model plans
+  const [fetchAllModelCSVData] = useLazyQuery<GetAllModelDataType>(
     GetAllModelPlans,
     {
       variables: {
@@ -58,9 +69,26 @@ export const CsvExportLink = ({
     }
   );
 
+  // Fetches all data from a single model plan
+  const [fetchSingleModelCSVData] = useLazyQuery<
+    GetAllSingleModelData,
+    GetAllSingleModelDataVariables
+  >(GetAllSingleModelPlan, {
+    variables: {
+      id: modelPlanID || ''
+    }
+  });
+
   const fetchData = async () => {
-    const modelPlans = await fetchModelCSVData();
-    csvFormatter(modelPlans?.data?.modelPlanCollection || []);
+    if (modelPlanID) {
+      const singlePlan = await fetchSingleModelCSVData();
+      csvFormatter(
+        singlePlan?.data?.modelPlan ? [singlePlan?.data?.modelPlan] : []
+      );
+    } else {
+      const allPlans = await fetchAllModelCSVData();
+      csvFormatter(allPlans?.data?.modelPlanCollection || []);
+    }
   };
 
   return (
@@ -70,8 +98,10 @@ export const CsvExportLink = ({
         className="usa-button usa-button--unstyled"
         onClick={() => fetchData()}
       >
-        <IconFileDownload />
-        <span className="padding-left-1">{t('downloadCSV')}</span>
+        {!modelPlanID && <IconFileDownload className="margin-right-1" />}
+        <span>
+          {modelPlanID ? t('downloadSingleCSV') : t('downloadAllCSV')}
+        </span>
       </button>
     </div>
   );

@@ -4,20 +4,21 @@ const home = {
     'The place to collaborate on new CMMI models and demonstrations and access resources to assist with your model plans.',
   signIn: 'Sign in to start',
   mintPurpose: 'You can use MINT to:',
-  startNow: 'Start a draft model plan',
+  startNow: 'Start a new Model Plan',
   mintTasks: [
     'collaborate on requirements for new CMMI models and demonstrations',
     'access resources to help you complete your model plans'
   ],
   newModelSummaryBox: {
     copy: 'Have a new model or demonstration?',
-    cta: 'Start a draft model plan'
+    cta: 'Start a new Model Plan'
   },
   allModels: {
     copy: 'Don’t see the model you’re looking for?',
     cta: 'View all models'
   },
-  downloadCSV: 'Download all plans as CSV',
+  downloadAllCSV: 'Download all plans as CSV',
+  downloadSingleCSV: 'Download this Model Plan (CSV)',
   requestsTable: {
     basic: {
       heading: 'My model plans'

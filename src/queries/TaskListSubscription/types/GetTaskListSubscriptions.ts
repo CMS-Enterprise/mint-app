@@ -14,6 +14,7 @@ export interface GetTaskListSubscriptions_taskListSectionLocks {
   modelPlanID: UUID;
   section: TaskListSection;
   lockedBy: string;
+  isAssessment: boolean;
 }
 
 export interface GetTaskListSubscriptions {

@@ -80,9 +80,10 @@ type PlanDocumentInput struct {
 }
 
 type TaskListSectionLockStatus struct {
-	ModelPlanID uuid.UUID       `json:"modelPlanID"`
-	Section     TaskListSection `json:"section"`
-	LockedBy    string          `json:"lockedBy"`
+	ModelPlanID  uuid.UUID       `json:"modelPlanID"`
+	Section      TaskListSection `json:"section"`
+	LockedBy     string          `json:"lockedBy"`
+	IsAssessment bool            `json:"isAssessment"`
 }
 
 type TaskListSectionLockStatusChanged struct {

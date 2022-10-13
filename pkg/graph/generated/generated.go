@@ -85,6 +85,7 @@ type ComplexityRoot struct {
 		CreatedDts   func(childComplexity int) int
 		DiscussionID func(childComplexity int) int
 		ID           func(childComplexity int) int
+		IsAssessment func(childComplexity int) int
 		ModifiedBy   func(childComplexity int) int
 		ModifiedDts  func(childComplexity int) int
 		Resolution   func(childComplexity int) int
@@ -321,15 +322,16 @@ type ComplexityRoot struct {
 	}
 
 	PlanDiscussion struct {
-		Content     func(childComplexity int) int
-		CreatedBy   func(childComplexity int) int
-		CreatedDts  func(childComplexity int) int
-		ID          func(childComplexity int) int
-		ModelPlanID func(childComplexity int) int
-		ModifiedBy  func(childComplexity int) int
-		ModifiedDts func(childComplexity int) int
-		Replies     func(childComplexity int) int
-		Status      func(childComplexity int) int
+		Content      func(childComplexity int) int
+		CreatedBy    func(childComplexity int) int
+		CreatedDts   func(childComplexity int) int
+		ID           func(childComplexity int) int
+		IsAssessment func(childComplexity int) int
+		ModelPlanID  func(childComplexity int) int
+		ModifiedBy   func(childComplexity int) int
+		ModifiedDts  func(childComplexity int) int
+		Replies      func(childComplexity int) int
+		Status       func(childComplexity int) int
 	}
 
 	PlanDocument struct {
@@ -796,9 +798,10 @@ type ComplexityRoot struct {
 	}
 
 	TaskListSectionLockStatus struct {
-		LockedBy    func(childComplexity int) int
-		ModelPlanID func(childComplexity int) int
-		Section     func(childComplexity int) int
+		IsAssessment func(childComplexity int) int
+		LockedBy     func(childComplexity int) int
+		ModelPlanID  func(childComplexity int) int
+		Section      func(childComplexity int) int
 	}
 
 	TaskListSectionLockStatusChanged struct {
@@ -1153,6 +1156,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.DiscussionReply.ID(childComplexity), true
+
+	case "DiscussionReply.isAssessment":
+		if e.complexity.DiscussionReply.IsAssessment == nil {
+			break
+		}
+
+		return e.complexity.DiscussionReply.IsAssessment(childComplexity), true
 
 	case "DiscussionReply.modifiedBy":
 		if e.complexity.DiscussionReply.ModifiedBy == nil {
@@ -2709,6 +2719,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.PlanDiscussion.ID(childComplexity), true
+
+	case "PlanDiscussion.isAssessment":
+		if e.complexity.PlanDiscussion.IsAssessment == nil {
+			break
+		}
+
+		return e.complexity.PlanDiscussion.IsAssessment(childComplexity), true
 
 	case "PlanDiscussion.modelPlanID":
 		if e.complexity.PlanDiscussion.ModelPlanID == nil {
@@ -5815,6 +5832,13 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 
 		return e.complexity.Subscription.OnTaskListSectionLocksChanged(childComplexity, args["modelPlanID"].(uuid.UUID)), true
 
+	case "TaskListSectionLockStatus.isAssessment":
+		if e.complexity.TaskListSectionLockStatus.IsAssessment == nil {
+			break
+		}
+
+		return e.complexity.TaskListSectionLockStatus.IsAssessment(childComplexity), true
+
 	case "TaskListSectionLockStatus.lockedBy":
 		if e.complexity.TaskListSectionLockStatus.LockedBy == nil {
 			break
@@ -6149,6 +6173,7 @@ type TaskListSectionLockStatus {
   modelPlanID: UUID!
   section: TaskListSection!
   lockedBy: String!
+  isAssessment: Boolean!
 }
 
 """
@@ -6288,6 +6313,7 @@ type PlanDiscussion  {
 	content: String
 	status: DiscussionStatus!
   replies: [DiscussionReply!]!
+  isAssessment: Boolean!
 
   createdBy: String!
   createdDts: Time!
@@ -6321,6 +6347,7 @@ type DiscussionReply  {
 	discussionID: UUID!
 	content: String
 	resolution: Boolean
+  isAssessment: Boolean!
 
 	createdBy: String!
 	createdDts: Time!
@@ -9781,6 +9808,50 @@ func (ec *executionContext) fieldContext_DiscussionReply_resolution(ctx context.
 	return fc, nil
 }
 
+func (ec *executionContext) _DiscussionReply_isAssessment(ctx context.Context, field graphql.CollectedField, obj *models.DiscussionReply) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_DiscussionReply_isAssessment(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.IsAssessment, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(bool)
+	fc.Result = res
+	return ec.marshalNBoolean2bool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_DiscussionReply_isAssessment(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "DiscussionReply",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _DiscussionReply_createdBy(ctx context.Context, field graphql.CollectedField, obj *models.DiscussionReply) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_DiscussionReply_createdBy(ctx, field)
 	if err != nil {
@@ -12110,6 +12181,8 @@ func (ec *executionContext) fieldContext_ModelPlan_discussions(ctx context.Conte
 				return ec.fieldContext_PlanDiscussion_status(ctx, field)
 			case "replies":
 				return ec.fieldContext_PlanDiscussion_replies(ctx, field)
+			case "isAssessment":
+				return ec.fieldContext_PlanDiscussion_isAssessment(ctx, field)
 			case "createdBy":
 				return ec.fieldContext_PlanDiscussion_createdBy(ctx, field)
 			case "createdDts":
@@ -14879,6 +14952,8 @@ func (ec *executionContext) fieldContext_Mutation_createPlanDiscussion(ctx conte
 				return ec.fieldContext_PlanDiscussion_status(ctx, field)
 			case "replies":
 				return ec.fieldContext_PlanDiscussion_replies(ctx, field)
+			case "isAssessment":
+				return ec.fieldContext_PlanDiscussion_isAssessment(ctx, field)
 			case "createdBy":
 				return ec.fieldContext_PlanDiscussion_createdBy(ctx, field)
 			case "createdDts":
@@ -14978,6 +15053,8 @@ func (ec *executionContext) fieldContext_Mutation_updatePlanDiscussion(ctx conte
 				return ec.fieldContext_PlanDiscussion_status(ctx, field)
 			case "replies":
 				return ec.fieldContext_PlanDiscussion_replies(ctx, field)
+			case "isAssessment":
+				return ec.fieldContext_PlanDiscussion_isAssessment(ctx, field)
 			case "createdBy":
 				return ec.fieldContext_PlanDiscussion_createdBy(ctx, field)
 			case "createdDts":
@@ -15077,6 +15154,8 @@ func (ec *executionContext) fieldContext_Mutation_deletePlanDiscussion(ctx conte
 				return ec.fieldContext_PlanDiscussion_status(ctx, field)
 			case "replies":
 				return ec.fieldContext_PlanDiscussion_replies(ctx, field)
+			case "isAssessment":
+				return ec.fieldContext_PlanDiscussion_isAssessment(ctx, field)
 			case "createdBy":
 				return ec.fieldContext_PlanDiscussion_createdBy(ctx, field)
 			case "createdDts":
@@ -15174,6 +15253,8 @@ func (ec *executionContext) fieldContext_Mutation_createDiscussionReply(ctx cont
 				return ec.fieldContext_DiscussionReply_content(ctx, field)
 			case "resolution":
 				return ec.fieldContext_DiscussionReply_resolution(ctx, field)
+			case "isAssessment":
+				return ec.fieldContext_DiscussionReply_isAssessment(ctx, field)
 			case "createdBy":
 				return ec.fieldContext_DiscussionReply_createdBy(ctx, field)
 			case "createdDts":
@@ -15271,6 +15352,8 @@ func (ec *executionContext) fieldContext_Mutation_updateDiscussionReply(ctx cont
 				return ec.fieldContext_DiscussionReply_content(ctx, field)
 			case "resolution":
 				return ec.fieldContext_DiscussionReply_resolution(ctx, field)
+			case "isAssessment":
+				return ec.fieldContext_DiscussionReply_isAssessment(ctx, field)
 			case "createdBy":
 				return ec.fieldContext_DiscussionReply_createdBy(ctx, field)
 			case "createdDts":
@@ -15368,6 +15451,8 @@ func (ec *executionContext) fieldContext_Mutation_deleteDiscussionReply(ctx cont
 				return ec.fieldContext_DiscussionReply_content(ctx, field)
 			case "resolution":
 				return ec.fieldContext_DiscussionReply_resolution(ctx, field)
+			case "isAssessment":
+				return ec.fieldContext_DiscussionReply_isAssessment(ctx, field)
 			case "createdBy":
 				return ec.fieldContext_DiscussionReply_createdBy(ctx, field)
 			case "createdDts":
@@ -15621,6 +15706,8 @@ func (ec *executionContext) fieldContext_Mutation_unlockAllTaskListSections(ctx 
 				return ec.fieldContext_TaskListSectionLockStatus_section(ctx, field)
 			case "lockedBy":
 				return ec.fieldContext_TaskListSectionLockStatus_lockedBy(ctx, field)
+			case "isAssessment":
+				return ec.fieldContext_TaskListSectionLockStatus_isAssessment(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TaskListSectionLockStatus", field.Name)
 		},
@@ -22011,6 +22098,8 @@ func (ec *executionContext) fieldContext_PlanDiscussion_replies(ctx context.Cont
 				return ec.fieldContext_DiscussionReply_content(ctx, field)
 			case "resolution":
 				return ec.fieldContext_DiscussionReply_resolution(ctx, field)
+			case "isAssessment":
+				return ec.fieldContext_DiscussionReply_isAssessment(ctx, field)
 			case "createdBy":
 				return ec.fieldContext_DiscussionReply_createdBy(ctx, field)
 			case "createdDts":
@@ -22021,6 +22110,50 @@ func (ec *executionContext) fieldContext_PlanDiscussion_replies(ctx context.Cont
 				return ec.fieldContext_DiscussionReply_modifiedDts(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type DiscussionReply", field.Name)
+		},
+	}
+	return fc, nil
+}
+
+func (ec *executionContext) _PlanDiscussion_isAssessment(ctx context.Context, field graphql.CollectedField, obj *models.PlanDiscussion) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_PlanDiscussion_isAssessment(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.IsAssessment, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(bool)
+	fc.Result = res
+	return ec.marshalNBoolean2bool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_PlanDiscussion_isAssessment(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "PlanDiscussion",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
 		},
 	}
 	return fc, nil
@@ -40179,6 +40312,8 @@ func (ec *executionContext) fieldContext_Query_taskListSectionLocks(ctx context.
 				return ec.fieldContext_TaskListSectionLockStatus_section(ctx, field)
 			case "lockedBy":
 				return ec.fieldContext_TaskListSectionLockStatus_lockedBy(ctx, field)
+			case "isAssessment":
+				return ec.fieldContext_TaskListSectionLockStatus_isAssessment(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TaskListSectionLockStatus", field.Name)
 		},
@@ -41114,6 +41249,50 @@ func (ec *executionContext) fieldContext_TaskListSectionLockStatus_lockedBy(ctx 
 	return fc, nil
 }
 
+func (ec *executionContext) _TaskListSectionLockStatus_isAssessment(ctx context.Context, field graphql.CollectedField, obj *model.TaskListSectionLockStatus) (ret graphql.Marshaler) {
+	fc, err := ec.fieldContext_TaskListSectionLockStatus_isAssessment(ctx, field)
+	if err != nil {
+		return graphql.Null
+	}
+	ctx = graphql.WithFieldContext(ctx, fc)
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return obj.IsAssessment, nil
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(bool)
+	fc.Result = res
+	return ec.marshalNBoolean2bool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) fieldContext_TaskListSectionLockStatus_isAssessment(ctx context.Context, field graphql.CollectedField) (fc *graphql.FieldContext, err error) {
+	fc = &graphql.FieldContext{
+		Object:     "TaskListSectionLockStatus",
+		Field:      field,
+		IsMethod:   false,
+		IsResolver: false,
+		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
+			return nil, errors.New("field of type Boolean does not have child fields")
+		},
+	}
+	return fc, nil
+}
+
 func (ec *executionContext) _TaskListSectionLockStatusChanged_changeType(ctx context.Context, field graphql.CollectedField, obj *model.TaskListSectionLockStatusChanged) (ret graphql.Marshaler) {
 	fc, err := ec.fieldContext_TaskListSectionLockStatusChanged_changeType(ctx, field)
 	if err != nil {
@@ -41203,6 +41382,8 @@ func (ec *executionContext) fieldContext_TaskListSectionLockStatusChanged_lockSt
 				return ec.fieldContext_TaskListSectionLockStatus_section(ctx, field)
 			case "lockedBy":
 				return ec.fieldContext_TaskListSectionLockStatus_lockedBy(ctx, field)
+			case "isAssessment":
+				return ec.fieldContext_TaskListSectionLockStatus_isAssessment(ctx, field)
 			}
 			return nil, fmt.Errorf("no field named %q was found under type TaskListSectionLockStatus", field.Name)
 		},
@@ -43572,6 +43753,13 @@ func (ec *executionContext) _DiscussionReply(ctx context.Context, sel ast.Select
 
 			out.Values[i] = ec._DiscussionReply_resolution(ctx, field, obj)
 
+		case "isAssessment":
+
+			out.Values[i] = ec._DiscussionReply_isAssessment(ctx, field, obj)
+
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
 		case "createdBy":
 
 			out.Values[i] = ec._DiscussionReply_createdBy(ctx, field, obj)
@@ -45353,6 +45541,13 @@ func (ec *executionContext) _PlanDiscussion(ctx context.Context, sel ast.Selecti
 				return innerFunc(ctx)
 
 			})
+		case "isAssessment":
+
+			out.Values[i] = ec._PlanDiscussion_isAssessment(ctx, field, obj)
+
+			if out.Values[i] == graphql.Null {
+				atomic.AddUint32(&invalids, 1)
+			}
 		case "createdBy":
 
 			out.Values[i] = ec._PlanDiscussion_createdBy(ctx, field, obj)
@@ -48793,6 +48988,13 @@ func (ec *executionContext) _TaskListSectionLockStatus(ctx context.Context, sel 
 		case "lockedBy":
 
 			out.Values[i] = ec._TaskListSectionLockStatus_lockedBy(ctx, field, obj)
+
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		case "isAssessment":
+
+			out.Values[i] = ec._TaskListSectionLockStatus_isAssessment(ctx, field, obj)
 
 			if out.Values[i] == graphql.Null {
 				invalids++

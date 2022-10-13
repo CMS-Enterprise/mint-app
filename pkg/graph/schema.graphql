@@ -179,6 +179,7 @@ type TaskListSectionLockStatus {
   modelPlanID: UUID!
   section: TaskListSection!
   lockedBy: String!
+  isAssessment: Boolean!
 }
 
 """
@@ -318,6 +319,7 @@ type PlanDiscussion  {
 	content: String
 	status: DiscussionStatus!
   replies: [DiscussionReply!]!
+  isAssessment: Boolean!
 
   createdBy: String!
   createdDts: Time!
@@ -351,6 +353,7 @@ type DiscussionReply  {
 	discussionID: UUID!
 	content: String
 	resolution: Boolean
+  isAssessment: Boolean!
 
 	createdBy: String!
 	createdDts: Time!
