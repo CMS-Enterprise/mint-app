@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "dfb43f64-e9e7-43fd-b373-7d4b78036182",
+		"_postman_id": "010c80bf-f995-4fc8-8c9a-4bd1dbef50aa",
 		"name": "MINT",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "12341016"
+		"_exporter_id": "20320964"
 	},
 	"item": [
 		{
@@ -1027,8 +1027,6 @@
 							"listen": "test",
 							"script": {
 								"exec": [
-									"pm.collectionVariables.set(\"modelPlanID\", \"cb578c3f-4309-41b9-a67c-ea3c65ff0501\");",
-									"",
 									"let responseData = pm.response.json().data.createModelPlan",
 									"",
 									"modelPlanID = responseData.id",
@@ -1114,21 +1112,6 @@
 				{
 					"name": "ModelPlanGet(NameHistory)",
 					"request": {
-						"auth": {
-							"type": "apikey",
-							"apikey": [
-								{
-									"key": "value",
-									"value": "Local {\"EUAID\":\"ABCD\",\"favorLocalAuth\":true}",
-									"type": "string"
-								},
-								{
-									"key": "key",
-									"value": "Authorization",
-									"type": "string"
-								}
-							]
-						},
 						"method": "POST",
 						"header": [],
 						"body": {
@@ -1148,6 +1131,230 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "Operational Needs And Solutions",
+			"item": [
+				{
+					"name": "OperationNeedInsertUpdate",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let responseData = pm.response.json().data.addOrUpdateOperationalNeed",
+									"",
+									"operationalNeedID = responseData.id",
+									"",
+									"pm.collectionVariables.set(\"operationalNeedID\", operationalNeedID);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation OperationalNeed{\n  \n  addOrUpdateOperationalNeed(modelPlanID:\"{{modelPlanID}}\",needType:MANAGE_BEN_OVERLAP ,needed: true){\n    \n        id\n        modelPlanID\n\n        needType\n        needTypeFullName\n        needTypeShortName\n        needOther\n        needed\n        \n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts     \n    }\n  }\n  \n",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "OperationNeedInsertUpdateOther",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let responseData = pm.response.json().data.addOrUpdateCustomOperationalNeed",
+									"",
+									"operationalNeedID = responseData.id",
+									"",
+									"pm.collectionVariables.set(\"operationalNeedID\", operationalNeedID);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation OperationalNeed{\n  \n  addOrUpdateCustomOperationalNeed(\n      modelPlanID:\"{{modelPlanID}}\"\n      ,customNeedType :\"To have a fun day\"\n      ,needed: true)\n      {\n    \n        id\n        modelPlanID\n\n        needType\n        needTypeFullName\n        needTypeShortName\n        needOther\n        needed\n        \n        createdBy\n        createdDts\n        modifiedBy\n        modifiedDts     \n    }\n  }\n  \n",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "OperationSolutionInsertUpdate",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let responseData = pm.response.json().data.addOrUpdateOperationalSolution",
+									"",
+									"operationalSolutionID = responseData.id",
+									"",
+									"pm.collectionVariables.set(\"operationalSolutionID\", operationalSolutionID);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation OperationalSolution{\n  \n  addOrUpdateOperationalSolution(operationalNeedID:\"{{operationalNeedID}}\",solutionType:FFS_COMPETENCY_CENTER, changes: {\n      archived: false\n      pocName: \"The Gump\"\n      pocEmail: \"shrimpKing@gump.com\"\n      status: IN_PROGRESS\n      mustStartDts: \"2023-02-04T21:39:57.484167Z\"\n      mustFinishDts: \"2023-12-04T21:39:57.484167Z\"\n  }){\n    \n        id\n    operationalNeedID\n\n    solutionType\n    solutionTypeFullName\n    solutionTypeShortName\n    solutionOther\n    pocName\n    pocEmail\n    mustStartDts\n    mustFinishDts\n    status\n\n    createdBy\n    createdDts\n    modifiedBy\n    modifiedDts\n    }\n  }\n  \n",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "OperationSolutionInsertUpdateOther",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"let responseData = pm.response.json().data.addOrUpdateCustomOperationalSolution",
+									"",
+									"operationalSolutionID = responseData.id",
+									"",
+									"pm.collectionVariables.set(\"operationalSolutionID\", operationalSolutionID);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation OperationalSolution{\n  \n  addOrUpdateCustomOperationalSolution(operationalNeedID:\"{{operationalNeedID}}\",customSolutionType: \"Barbecue some good meat\", changes: {\n      archived: false\n      pocName: \"Grill Master\"\n      pocEmail: \"bbqKing@gump.com\"\n      status: IN_PROGRESS\n      mustStartDts: \"2023-02-04T21:39:57.484167Z\"\n      mustFinishDts: \"2023-12-04T21:39:57.484167Z\"\n  }){\n    \n    id\n    operationalNeedID\n\n    solutionType\n    solutionTypeFullName\n    solutionTypeShortName\n    solutionOther\n    pocName\n    pocEmail\n    mustStartDts\n    mustFinishDts\n    status\n\n    createdBy\n    createdDts\n    modifiedBy\n    modifiedDts\n    }\n  }\n  \n",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "OperationSolutionsGetByOperationalNeedID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query OperationalSolution{\n  \n  operationalSolutions(operationalNeedID:\"{{operationalNeedID}}\"){\n    \n    \n                solutions {\n                    id\n                    status\n                    mustStartDts\n                    solutionType\n                    solutionOther\n                    solutionTypeShortName   \n                    solutionTypeFullName\n                    pocEmail\n                    pocName     \n                    createdBy\n                    createdDts\n                }\n                possibleSolutions {\n                    id\n                    fullName\n                    shortName                    \n                }\n    \n  }\n}\n",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ModelPlanGetForOpNeeds",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query ModelPlan{\n  \n  modelPlan(id:\"{{modelPlanID}}\"){\n    id\n    modelName\n    operationalNeeds {\n        needs \n        {\n            id\n            modelPlanID\n            needType\n            needTypeFullName\n            needTypeShortName\n            needOther\n            needed\n            solutions {\n                solutions {\n                    id\n                    status\n                    mustStartDts\n                    solutionType\n                    solutionOther\n                    solutionTypeShortName   \n                    pocEmail\n                    pocName     \n                    createdBy\n                    createdDts\n                }\n                possibleSolutions {\n                    id\n                    fullName\n                    shortName                    \n                }\n    \n                \n            }        \n            # createdBy\n            # createdDts\n            # modifiedBy\n            # modifiedDts     \n        }\n        # possibleNeeds {\n        #     id\n        #     fullName\n        #     shortName\n        #     possibleSolutions {\n        #         id\n        #         fullName\n        #         shortName                    \n        #     }\n        # }\n\n    }\n  }\n  \n  \n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "{{url}}",
+							"host": [
+								"{{url}}"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"Response status is 200\", function(){",
+							"    pm.response.to.have.status(200);",
+							"})"
+						]
+					}
+				}
+			]
 		}
 	],
 	"auth": {
@@ -1155,7 +1362,7 @@
 		"apikey": [
 			{
 				"key": "value",
-				"value": "Local {\"EUAID\":\"MINT\",\"jobCodes\":[\"MINT_ASSESSMENT\", \"MINT_USER\"],\"favorLocalAuth\":true}",
+				"value": "Local {\"EUAID\":\"{{EUAID}}\",\"jobCodes\":{{jobCodes}},\"favorLocalAuth\":true}",
 				"type": "string"
 			},
 			{
@@ -1235,6 +1442,14 @@
 		},
 		{
 			"key": "itToolsID",
+			"value": ""
+		},
+		{
+			"key": "operationalNeedID",
+			"value": ""
+		},
+		{
+			"key": "operationalSolutionID",
 			"value": ""
 		}
 	]
