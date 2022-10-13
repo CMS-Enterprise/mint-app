@@ -29,13 +29,6 @@ const ArticleCard = ({
   const { t } = useTranslation(translation);
   const history = useHistory();
 
-  const clickHandler = (e: React.MouseEvent<HTMLElement>, url: string) => {
-    const target = e.target as Element;
-    if (isLink && target.getAttribute('data-testid') !== 'tag') {
-      history.push(url);
-    }
-  };
-
   return (
     <Card
       containerProps={{
@@ -45,7 +38,7 @@ const ArticleCard = ({
       className={classnames('desktop:grid-col-4', 'article', className, {
         'article-card--isLink': isLink
       })}
-      onClick={e => clickHandler(e, `/help-and-knowledge${route}`)}
+      onClick={() => history.push(`/help-and-knowledge${route}`)}
     >
       <CardHeader className="padding-x-3 padding-top-3">
         <h3 className="line-height-body-4 margin-bottom-1">{t('title')}</h3>
@@ -55,7 +48,7 @@ const ArticleCard = ({
       </CardBody>
       <CardFooter className="padding-top-2 article__footer">
         <UswdsReactLink
-          to={`/help-and-knowledge${route}`}
+          to="#"
           className="usa-button usa-button--outline"
           variant="unstyled"
         >

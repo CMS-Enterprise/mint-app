@@ -13,26 +13,33 @@ import MainContent from 'components/MainContent';
 import PageHeading from 'components/PageHeading';
 import RelatedArticles from 'components/RelatedArticles';
 
-export const ModelPlanOverviewContent = () => {
+type ModelPlanOverviewContentProps = {
+  help?: boolean;
+};
+
+export const ModelPlanOverviewContent = ({
+  help
+}: ModelPlanOverviewContentProps) => {
   const { t } = useTranslation('modelPlanOverview');
 
   return (
     <div>
       <SummaryBox
         heading=""
-        className="bg-base-lightest border-0 radius-0 padding-y-1 padding-x-2"
+        className="bg-base-lightest border-0 radius-0 padding-y-2 padding-x-2"
       >
-        <p className="margin-top-0">{t('summaryBox.copy')}</p>
-        <ul className="padding-left-3">
-          <li>{t('summaryBox.listItem.add')}</li>
+        <p className="margin-top-0 margin-bottom-1">
+          {help ? t('summaryBox.copyHelp') : t('summaryBox.copy')}
+        </p>
+        <ul className="padding-left-3 margin-y-0">
+          <li>{t('summaryBox.listItem.start')}</li>
           <li>{t('summaryBox.listItem.upload')}</li>
+          <li>{t('summaryBox.listItem.track')}</li>
         </ul>
-        <p className="margin-bottom-1">
+        <p className="margin-y-1">
           <Trans i18nKey="modelPlanOverview:summaryBox.email">
             indexZero
-            <UswdsLink href="mailto:CMS_Section508@cms.hhs.gov">
-              email
-            </UswdsLink>
+            <UswdsLink href="mailto:MINTTeam@cms.hhs.gov">email</UswdsLink>
             indexTwo
           </Trans>
         </p>
@@ -50,27 +57,33 @@ export const ModelPlanOverviewContent = () => {
             </ProcessListHeading>
             <p>{t('steps.first.description')}</p>
           </ProcessListItem>
+
           <ProcessListItem>
             <ProcessListHeading type="h3">
               {t('steps.second.heading')}
             </ProcessListHeading>
             <p>{t('steps.second.description')}</p>
           </ProcessListItem>
+
           <ProcessListItem className="padding-bottom-3">
             <ProcessListHeading type="h3">
               {t('steps.third.heading')}
             </ProcessListHeading>
             <p>{t('steps.third.description')}</p>
           </ProcessListItem>
-        </ProcessList>
-        <hr className="margin-top-0 margin-bottom-05" />
-        {/* @ts-ignore */}
-        <ProcessList className="model-plan-step-list--counter-reset" start={4}>
+
           <ProcessListItem>
             <ProcessListHeading type="h3">
               {t('steps.fourth.heading')}
             </ProcessListHeading>
             <p>{t('steps.fourth.description')}</p>
+          </ProcessListItem>
+
+          <ProcessListItem>
+            <ProcessListHeading type="h3">
+              {t('steps.fifth.heading')}
+            </ProcessListHeading>
+            <p>{t('steps.fifth.description')}</p>
           </ProcessListItem>
         </ProcessList>
       </div>
@@ -88,7 +101,7 @@ export const ModelPlanOverview = () => {
           <div className="tablet:grid-col-12">
             <HelpBreadcrumb text={t('overviewHeading')} />
             <PageHeading>{t('overviewHeading')}</PageHeading>
-            <ModelPlanOverviewContent />
+            <ModelPlanOverviewContent help />
           </div>
         </div>
       </MainContent>

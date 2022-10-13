@@ -7,14 +7,17 @@ const modelPlanOverview = {
   getStartedButton: 'Get started',
   summaryBox: {
     copy: 'Use this service to:',
+    copyHelp: 'Within MINT, you can:',
     listItem: {
-      add:
-        'add a new Innovation Model request and kick off the model clearance process',
+      start:
+        'start a new Model Plan to analyze the operational and implementation needs of the model',
       upload:
-        'upload and access documents related to your model request, like concept documents or policy papers'
+        'upload and access documents related to your model request, like concept documents or policy papers',
+      track:
+        'track the IT solutions the model will use and track its status through implementation'
     },
     email:
-      'If you have any questions, you can reach the [CMMI POC Team] at: <1>[email]@cms.hhs.gov</1>.'
+      'If you have any questions, you can reach the Model Assessment Team at: <1>MINTTeam@cms.hhs.gov</1>.'
   },
   steps: {
     heading: 'Steps involved in the process',
@@ -29,17 +32,22 @@ const modelPlanOverview = {
     second: {
       heading: 'Upload any existing model documentation',
       description:
-        'Add additional details to your model plan by uploading additional documents such as [DOCUMENT EXAMPLES].'
+        'Add additional details to your Model Plan by uploading documents such as a concept paper, draft ICIP, or other related materials.'
     },
     third: {
       heading: 'Iterate on your draft model plan',
       description:
-        'Work with the Model Intake Team and other administrative teams to Iterate on model requirements such as cost and budget estimates.'
+        'Work with the Model Assessment Team and other administrative teams to iterate on model requirements.'
     },
     fourth: {
-      heading: 'Finalize your model',
+      heading: 'Track your IT solutions',
       description:
-        'Review all forms and confirm with the Model Intake Team that your model is ready for internal clearance processes.'
+        'Work with your IT Lead or BSG to determine which IT solutions your model will use for the operational needs. Then, track the implementation status of those solutions to stay organized throughout the process.'
+    },
+    fifth: {
+      heading: 'Finalize your Model Plan and prepare for clearance',
+      description:
+        'Review all sections of your Model Plan and confirm that your model is ready for internal clearance processes and matches your clearance documentation.'
     }
   }
 };
