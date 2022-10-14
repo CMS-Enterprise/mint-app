@@ -215,10 +215,7 @@ const TaskList = () => {
                       isOpen={isDiscussionOpen}
                       closeModal={() => setIsDiscussionOpen(false)}
                     >
-                      <Discussions
-                        modelID={modelID}
-                        closeModal={() => setIsDiscussionOpen(false)}
-                      />
+                      <Discussions modelID={modelID} />
                     </DiscussionModalWrapper>
                   )}
 

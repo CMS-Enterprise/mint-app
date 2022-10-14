@@ -51,19 +51,13 @@ export type DiscussionsProps = {
   modelID: string;
   readOnly?: boolean;
   askAQuestion?: boolean;
-  closeModal: () => void;
 };
 
 type DicussionFormPropTypes = {
   content: string;
 };
 
-const Discussions = ({
-  modelID,
-  askAQuestion,
-  readOnly,
-  closeModal
-}: DiscussionsProps) => {
+const Discussions = ({ modelID, askAQuestion, readOnly }: DiscussionsProps) => {
   const { t } = useTranslation('discussions');
   const { t: h } = useTranslation('draftModelPlan');
 
@@ -321,8 +315,6 @@ const Discussions = ({
                         if (discussionType) {
                           setDiscussionStatusMessage('');
                           setDiscussionType('discussion');
-                        } else {
-                          closeModal();
                         }
                       }}
                     >

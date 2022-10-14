@@ -20,11 +20,7 @@ const AskAQuestion = ({ modelID }: AskAQuestionType) => {
           isOpen={isDiscussionOpen}
           closeModal={() => setIsDiscussionOpen(false)}
         >
-          <Discussions
-            modelID={modelID}
-            askAQuestion
-            closeModal={() => setIsDiscussionOpen(false)}
-          />
+          <Discussions modelID={modelID} askAQuestion />
         </DiscussionModalWrapper>
       )}
       <div
