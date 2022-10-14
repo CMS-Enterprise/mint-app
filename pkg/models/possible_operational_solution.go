@@ -22,7 +22,6 @@ type OperationalSolutionKey string
 
 //These are the options for OperationalSolutionKey
 const (
-	OpSKOther                     OperationalSolutionKey = "OTHER"
 	OpSKMarx                      OperationalSolutionKey = "MARX"
 	OpSKHpms                      OperationalSolutionKey = "HPMS"
 	OpSKSalesforce                OperationalSolutionKey = "SALESFORCE"

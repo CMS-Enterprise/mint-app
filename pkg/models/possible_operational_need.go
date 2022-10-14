@@ -22,7 +22,6 @@ type OperationalNeedKey string
 
 //These are the options for OperationalNeedKey
 const (
-	OpNKOther                       OperationalNeedKey = "OTHER"
 	OpNKManageCd                    OperationalNeedKey = "MANAGE_CD"
 	OpNKRevColBids                  OperationalNeedKey = "REV_COL_BIDS"
 	OpNKUpdateContract              OperationalNeedKey = "UPDATE_CONTRACT"

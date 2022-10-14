@@ -76,6 +76,38 @@ func (suite *ResolverSuite) createPlanCrTdl(mp *models.ModelPlan, idNumber strin
 	return crTdl
 }
 
+func (suite *ResolverSuite) createOperationalNeed(mp *models.ModelPlan, needType *models.OperationalNeedKey, customNeedType *string, needed bool) *models.OperationalNeed {
+
+	if needType != nil {
+		opNeed, err := OperationalNeedInsertOrUpdate(suite.testConfigs.Logger, mp.ID, *needType, needed, suite.testConfigs.Principal, suite.testConfigs.Store)
+		suite.NoError(err)
+		return opNeed
+	}
+
+	opNeed, err := OperationalNeedInsertOrUpdateCustom(suite.testConfigs.Logger, mp.ID, *customNeedType, needed, suite.testConfigs.Principal, suite.testConfigs.Store)
+	suite.NoError(err)
+	return opNeed
+
+}
+func (suite *ResolverSuite) createOperationalSolution(opNeed *models.OperationalNeed, solutionType *models.OperationalSolutionKey, customSolutionType *string, needed bool) *models.OperationalSolution {
+
+	changes := map[string]interface{}{
+
+		"operational_need_id": opNeed.ID,
+	}
+
+	if solutionType != nil {
+		sol, err := OperationalSolutionInsertOrUpdate(suite.testConfigs.Logger, opNeed.ID, *solutionType, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
+		suite.NoError(err)
+		return sol
+	}
+
+	sol, err := OperationalSolutionInsertOrUpdateCustom(suite.testConfigs.Logger, opNeed.ID, *customSolutionType, changes, suite.testConfigs.Principal, suite.testConfigs.Store)
+	suite.NoError(err)
+	return sol
+
+}
+
 // TestResolverSuite runs the resolver test suite
 func TestResolverSuite(t *testing.T) {
 	rs := new(ResolverSuite)
