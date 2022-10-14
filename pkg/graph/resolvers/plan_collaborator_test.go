@@ -3,6 +3,8 @@ package resolvers
 import (
 	"github.com/golang/mock/gomock"
 
+	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
+
 	"github.com/cmsgov/mint-app/pkg/authentication"
 	"github.com/cmsgov/mint-app/pkg/email"
 	"github.com/cmsgov/mint-app/pkg/graph/model"
@@ -28,6 +30,17 @@ func (suite *ResolverSuite) TestCreatePlanCollaborator() {
 		GetEmailTemplate(gomock.Eq(email.AddedAsCollaboratorTemplateName)).
 		Return(testTemplate, nil).
 		Times(1)
+
+	emailServiceConfig := &oddmail.GoSimpleMailServiceConfig{
+		ClientAddress: "http://localhost:3005",
+		DefaultSender: "unit-test-execution@mint.cms.gov",
+	}
+
+	suite.testConfigs.EmailService.
+		EXPECT().
+		GetConfig().
+		Return(emailServiceConfig).
+		AnyTimes()
 
 	suite.testConfigs.EmailService.
 		EXPECT().

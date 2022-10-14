@@ -100,22 +100,14 @@ func (s *Server) routes(
 
 	// Set up Oddball email Service
 	emailServiceConfig := oddmail.GoSimpleMailServiceConfig{}
-	err = emailServiceConfig.LoadYAML("config/emailServiceConfig.yaml")
-	if err != nil {
-		s.logger.Fatal("Failed to load an email service configuration", zap.Error(err))
-	}
-
 	emailServiceConfig.Host = s.Config.GetString(appconfig.EmailHostKey)
-	fmt.Printf("Email host: %s\n", emailServiceConfig.Host)
-
+	emailServiceConfig.Port = s.Config.GetInt(appconfig.EmailPortKey)
 	emailServiceConfig.ClientAddress = s.Config.GetString(appconfig.ClientAddressKey)
-	fmt.Printf("Client address: %s\n", emailServiceConfig.ClientAddress)
 
 	var emailService *oddmail.GoSimpleMailService
 	emailService, err = oddmail.NewGoSimpleMailService(emailServiceConfig)
 	if err != nil {
 		s.logger.Fatal("Failed to create an email service", zap.Error(err))
-
 	}
 
 	// set up S3 client

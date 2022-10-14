@@ -8,5 +8,4 @@ type EmailServiceConfig interface {
 	GetDefaultSender() string
 	GetUsername() string
 	GetPassword() string
-	LoadYAML(filePath string) error
 }

@@ -132,6 +132,9 @@ const AccessibilityTeamEmailKey = "ACCESSIBILITY_TEAM_EMAIL"
 // EmailHostKey is the key for getting the email service's host
 const EmailHostKey = "EMAIL_HOST"
 
+// EmailPortKey is the key for getting the email service's port
+const EmailPortKey = "EMAIL_PORT"
+
 // ClientHostKey is the key for getting the client's domain name
 const ClientHostKey = "CLIENT_HOSTNAME"
 

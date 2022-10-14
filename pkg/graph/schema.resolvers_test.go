@@ -132,8 +132,11 @@ func TestGraphQLTestSuite(t *testing.T) {
 	s3Client := upload.NewS3ClientUsingClient(&mockClient, s3Config)
 
 	emailServiceConfig := oddmail.GoSimpleMailServiceConfig{}
-	err = emailServiceConfig.LoadYAML("config/test/emailServiceConfig.yaml")
 	assert.NoError(t, err)
+
+	emailServiceConfig.Host = "email"
+	emailServiceConfig.Port = 1025
+	emailServiceConfig.ClientAddress = "http://localhost:3005"
 
 	emailService, err := oddmail.NewGoSimpleMailService(emailServiceConfig)
 	assert.NoError(t, err)
