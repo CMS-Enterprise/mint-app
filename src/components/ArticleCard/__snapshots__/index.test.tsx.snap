@@ -16,26 +16,15 @@ exports[`RelatedArticle matches the snapshot 1`] = `
         <h3
           class="line-height-body-4 margin-bottom-1"
         >
-          Prepare for the Governance Review Team meeting
+          Overview for adding a model
         </h3>
-        <a
-          class="usa-link display-inline-block margin-bottom-1"
-          href="/help/it-governance"
-        >
-          <span
-            class="easi-tag system-profile__tag text-primary-dark bg-primary-lighter padding-bottom-1"
-            data-testid="tag"
-          >
-            IT Governance
-          </span>
-        </a>
       </header>
       <div
         class="usa-card__body padding-top-0 article__body"
         data-testid="CardBody"
       >
         <p>
-          Learn what you need in order to be successful, including what to expect during and after the meeting, what to prepare for, and what to bring to the meeting.
+          Within MINT, you can start a new Model Plan to analyze the operational and implementation needs of the model upload and access documents related to your model request, like concept documents or policy papers track the IT solutions the model will use and track its status through implementation
         </p>
       </div>
       <div
@@ -43,7 +32,7 @@ exports[`RelatedArticle matches the snapshot 1`] = `
         data-testid="CardFooter"
       >
         <a
-          class="usa-link easi-request__button-link padding-x-2"
+          class="usa-button usa-button--outline"
           href="/"
         >
           Read

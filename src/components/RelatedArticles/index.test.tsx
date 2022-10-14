@@ -8,29 +8,19 @@ describe('RelatedArticle', () => {
   it('matches the snapshot', () => {
     const { asFragment } = render(
       <MemoryRouter>
-        <RelatedArticle type="IT Governance" />
+        <RelatedArticle currentArticle="Model Plan Overview" />
       </MemoryRouter>
     );
     expect(asFragment()).toMatchSnapshot();
   });
 
-  it('renders correct itgovernance article type', () => {
+  it('does not render the current article in related articles', () => {
     const { queryAllByText } = render(
       <MemoryRouter>
-        <RelatedArticle type="IT Governance" />
+        <RelatedArticle currentArticle="Model Plan Overview" />
       </MemoryRouter>
     );
 
-    expect(queryAllByText('IT Governance').length).toBe(3);
-  });
-
-  it('renders correct 508 article type', () => {
-    const { queryAllByText } = render(
-      <MemoryRouter>
-        <RelatedArticle type="Section 508" />
-      </MemoryRouter>
-    );
-
-    expect(queryAllByText('Section 508')[0]).toBeInTheDocument();
+    expect(queryAllByText('Model Plan Overview').length).toBe(0);
   });
 });
