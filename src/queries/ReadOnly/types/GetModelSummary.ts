@@ -35,6 +35,7 @@ export interface GetModelSummary_modelPlan {
   isFavorite: boolean;
   basics: GetModelSummary_modelPlan_basics;
   generalCharacteristics: GetModelSummary_modelPlan_generalCharacteristics;
+  isCollaborator: boolean;
   collaborators: GetModelSummary_modelPlan_collaborators[];
 }
 

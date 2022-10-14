@@ -17,7 +17,8 @@ const home = {
     copy: 'Don’t see the model you’re looking for?',
     cta: 'View all models'
   },
-  downloadCSV: 'Download all plans as CSV',
+  downloadAllCSV: 'Download all plans as CSV',
+  downloadSingleCSV: 'Download this Model Plan (CSV)',
   requestsTable: {
     basic: {
       heading: 'My model plans'
