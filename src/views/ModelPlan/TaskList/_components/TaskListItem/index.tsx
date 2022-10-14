@@ -16,7 +16,11 @@ export const TaskListDescription = ({ children }: TaskListDescriptionProps) => {
   );
 };
 
-export const TaskListStatusTag = ({ status }: { status: TaskStatus }) => {
+export const TaskListStatusTag = ({
+  status
+}: {
+  status: TaskStatus | undefined;
+}) => {
   const { t } = useTranslation('modelPlanTaskList');
 
   let tagStyle;
@@ -30,8 +34,12 @@ export const TaskListStatusTag = ({ status }: { status: TaskStatus }) => {
       tagCopy = t('taskListItem.readyForReview');
       tagStyle = 'bg-success-dark text-white';
       break;
-    default:
+    case 'READY':
       tagCopy = t('taskListItem.ready');
+      tagStyle = 'bg-accent-cool';
+      break;
+    default:
+      tagCopy = '';
       tagStyle = 'bg-accent-cool';
   }
 
