@@ -7,6 +7,7 @@ export default gql`
       discussionID
       content
       resolution
+      isAssessment
       createdBy
       createdDts
     }

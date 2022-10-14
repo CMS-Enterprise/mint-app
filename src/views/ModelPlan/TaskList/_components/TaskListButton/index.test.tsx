@@ -16,7 +16,7 @@ import {
 import TaskListButton from './index';
 
 describe('The Header component', () => {
-  const modelPlan = {
+  const modelPlan = ({
     id: '6e224030-09d5-46f7-ad04-4bb851b36eab',
     status: ModelStatus.PLAN_DRAFT,
     modelName: 'Test',
@@ -29,7 +29,7 @@ describe('The Header component', () => {
     cmsOther: 'The Center for Awesomeness ',
     archived: false,
     basics: null
-  } as GetModelPlanTypes;
+  } as unknown) as GetModelPlanTypes;
 
   const modelPlanQuery = (modelPlanDraft: GetModelPlanTypes) => {
     return {
