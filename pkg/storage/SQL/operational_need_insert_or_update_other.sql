@@ -1,7 +1,7 @@
 INSERT INTO operational_need(
     id,
     model_plan_id,
-    need_other,
+    name_other,
     needed,
     created_by,
     created_dts
@@ -9,12 +9,12 @@ INSERT INTO operational_need(
 SELECT
     :id AS id,
     :model_plan_id AS model_plan_id,
-    :need_other AS need_other,
+    :name_other AS name_other,
     :needed AS needed,
     :created_by AS created_by,
     CURRENT_TIMESTAMP AS created_dts
 
-ON CONFLICT(model_plan_id, need_other) DO -- If there is already a record for this, 
+ON CONFLICT(model_plan_id, name_other) DO -- If there is already a record for this, 
 UPDATE
 SET
 needed = EXCLUDED.needed,
@@ -24,9 +24,9 @@ RETURNING
 id,
 model_plan_id,
 need_type,
-'Other' AS need_type_full_name,
-'OTHER' AS need_type_short_name,
-need_other,
+NULL AS name,
+NULL AS key,
+name_other,
 needed,
 created_by,
 created_dts,

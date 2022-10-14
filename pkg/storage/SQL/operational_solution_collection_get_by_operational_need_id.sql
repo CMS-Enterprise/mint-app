@@ -1,11 +1,11 @@
-SELECT 
+SELECT
     OpSol.id,
     OpSol.operational_need_id,
     OpSol.solution_type,
     OpSol.archived,
-    COALESCE(pOpSol.full_name, 'Other') AS solution_type_full_name,
-    COALESCE(pOpSol.short_name, 'OTHER') AS solution_type_short_name,
-    OpSol.solution_other,
+    pOpSol.name AS name,
+    pOpSol.key AS key,
+    OpSol.name_other,
     OpSol.poc_name,
     OpSol.poc_email,
     OpSol.must_start_dts,
@@ -16,6 +16,6 @@ SELECT
     OpSol.modified_by,
     OpSol.modified_dts
 FROM operational_solution AS OpSol
-LEFT JOIN possible_operational_solution AS pOpSol on OpSol.solution_type = pOpSol.id
+LEFT JOIN possible_operational_solution AS pOpSol ON OpSol.solution_type = pOpSol.id
 WHERE OpSol.operational_need_id = :operational_need_id
 ORDER BY OpSol.solution_type ASC;

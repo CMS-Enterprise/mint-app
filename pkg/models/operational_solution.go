@@ -14,7 +14,7 @@ type OperationalSolution struct {
 	Archived          bool                   `json:"archived" db:"archived"`
 	Name              string                 `json:"name" db:"name"`
 	Key               OperationalSolutionKey `json:"key" db:"key"`
-	NameOther         *string                `json:"needOther" db:"need_other"`
+	NameOther         *string                `json:"nameOther" db:"name_other"`
 	PocName           *string                `json:"pocName" db:"poc_name"`
 	PocEmail          *string                `json:"pocEmail" db:"poc_email"`
 	MustStartDts      *time.Time             `json:"mustStartDts" db:"must_start_dts"`

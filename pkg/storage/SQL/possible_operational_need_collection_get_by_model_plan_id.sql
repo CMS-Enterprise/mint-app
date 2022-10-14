@@ -1,7 +1,7 @@
 SELECT
     id,
-    full_name,
-    short_name,
+    name,
+    key,
     created_by,
     created_dts,
     modified_by,

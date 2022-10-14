@@ -10,7 +10,7 @@ type OperationalNeed struct {
 	Name     string             `json:"name" db:"name"` //From Possible Operational Need Table
 	Key      OperationalNeedKey `json:"key" db:"key"`   //From Possible Operational Need Table
 
-	NameOther *string `json:"needOther" db:"need_other"`
+	NameOther *string `json:"nameOther" db:"name_other"`
 	Needed    bool    `json:"needed" db:"needed"`
 }
 
