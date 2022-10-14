@@ -17,7 +17,7 @@ exports[`The TaskListSideNavActions matches snapshot 1`] = `
     >
       <div>
         <button
-          class="usa-button usa-button--unstyled"
+          class="usa-button usa-button--unstyled display-flex"
           type="button"
         >
           <span>
@@ -41,10 +41,10 @@ exports[`The TaskListSideNavActions matches snapshot 1`] = `
       >
         Related Content
       </h4>
-      <a
-        class="usa-link usa-link--external line-height-body-5"
-        href="/"
-        target="_blank"
+      <button
+        class="usa-button usa-button usa-button--unstyled line-height-body-5"
+        data-testid="button"
+        type="button"
       >
         Overview for adding a model 
         <span
@@ -52,7 +52,7 @@ exports[`The TaskListSideNavActions matches snapshot 1`] = `
         >
           (opens in a new tab)
         </span>
-      </a>
+      </button>
     </div>
     <div>
       <h3

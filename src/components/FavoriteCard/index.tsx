@@ -56,7 +56,7 @@ const FavoriteCard = ({
               <IconStar size={5} />
             </Button>
             <h3 className="bookmark__title margin-0">
-              <UswdsReactLink to={`/models/${id}/task-list`}>
+              <UswdsReactLink to={`/models/${id}/read-only`}>
                 {modelName}
               </UswdsReactLink>
             </h3>

@@ -57,19 +57,17 @@ const TaskListStatus = ({
             </p>
           )}
 
-          <div>
-            <UswdsReactLink
-              to={
-                readOnly
-                  ? `/models/${modelID}/task-list`
-                  : `/models/${modelID}/status`
-              }
-              className="display-flex flex-align-center"
-            >
-              {icon && <IconEdit className="margin-right-1" />}
-              {updateLabel && t('update')}
-            </UswdsReactLink>
-          </div>
+          {!readOnly && (
+            <div>
+              <UswdsReactLink
+                to={`/models/${modelID}/status`}
+                className="display-flex flex-align-center"
+              >
+                {icon && <IconEdit className="margin-right-1" />}
+                {updateLabel && t('update')}
+              </UswdsReactLink>
+            </div>
+          )}
         </Grid>
       </Grid>
     </div>

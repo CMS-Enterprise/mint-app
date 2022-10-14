@@ -17,6 +17,7 @@ import AccessibilityStatement from 'views/AccessibilityStatement';
 import AuthenticationWrapper from 'views/AuthenticationWrapper';
 import Cookies from 'views/Cookies';
 import FlagsWrapper from 'views/FlagsWrapper';
+import HelpAndKnowledge from 'views/HelpAndKnowledge';
 import Home from 'views/Home';
 import Login from 'views/Login';
 import ModelAccessWrapper from 'views/ModelAccessWrapper';
@@ -147,6 +148,8 @@ const AppRoutes = () => {
         path="/models/:modelID/task-list/submit-request"
         component={SubmitRequest}
       />
+
+      <SecureRoute path="/help-and-knowledge" component={HelpAndKnowledge} />
 
       <SecureRoute path="/pre-decisional-notice" component={NDA} />
 

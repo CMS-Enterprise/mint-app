@@ -100,7 +100,7 @@ const ReadOnlyParticipantsAndProviders = ({ modelID }: { modelID: string }) => {
     >
       <div className="display-flex flex-justify flex-align-start">
         <h2 className="margin-top-0 margin-bottom-4">{t('heading')}</h2>
-        {status && <TaskListStatusTag status={status} />}
+        <TaskListStatusTag status={status} />
       </div>
 
       <div className="margin-bottom-4 padding-bottom-2 border-bottom-1px border-base-light">

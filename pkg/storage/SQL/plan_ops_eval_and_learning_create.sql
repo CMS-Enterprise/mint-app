@@ -99,6 +99,8 @@ INSERT INTO plan_ops_eval_and_learning(
     modified_by,
     ready_for_review_by,
     ready_for_review_dts,
+    ready_for_clearance_by,
+    ready_for_clearance_dts,
     status
 )
 VALUES (
@@ -202,6 +204,8 @@ VALUES (
     :modified_by,
     :ready_for_review_by,
     :ready_for_review_dts,
+    :ready_for_clearance_by,
+    :ready_for_clearance_dts,
     :status
 ) RETURNING
 id,
@@ -305,4 +309,6 @@ modified_by,
 modified_dts,
 ready_for_review_by,
 ready_for_review_dts,
+ready_for_clearance_by,
+ready_for_clearance_dts,
 status;
