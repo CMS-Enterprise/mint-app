@@ -1,7 +1,7 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import { MockedProvider } from '@apollo/client/testing';
-import { fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import configureMockStore from 'redux-mock-store';
 
@@ -98,15 +98,13 @@ describe('Discussion Component', () => {
   jest.spyOn(window, 'scroll');
 
   it('renders discussions and replies without errors', async () => {
-    const { getByText, getByTestId } = render(
+    const { getByText } = render(
       <MockedProvider mocks={mocks} addTypename={false}>
         <Provider store={store}>
           <Discussions modelID={modelID} closeModal={() => null} />
         </Provider>
       </MockedProvider>
     );
-
-    // expect(getByTestId('discussion-modal')).toBeInTheDocument();
 
     await waitFor(() => {
       expect(getByText(/This is a question./i)).toBeInTheDocument();
