@@ -809,17 +809,11 @@ type PlanBasicsResolver interface {
 	CmsCenters(ctx context.Context, obj *models.PlanBasics) ([]model.CMSCenter, error)
 
 	CmmiGroups(ctx context.Context, obj *models.PlanBasics) ([]model.CMMIGroup, error)
-
-	ReadyForClearanceBy(ctx context.Context, obj *models.PlanBasics) (*string, error)
-	ReadyForClearanceDts(ctx context.Context, obj *models.PlanBasics) (*time.Time, error)
 }
 type PlanBeneficiariesResolver interface {
 	Beneficiaries(ctx context.Context, obj *models.PlanBeneficiaries) ([]model.BeneficiariesType, error)
 
 	BeneficiarySelectionMethod(ctx context.Context, obj *models.PlanBeneficiaries) ([]model.SelectionMethodType, error)
-
-	ReadyForClearanceBy(ctx context.Context, obj *models.PlanBeneficiaries) (*string, error)
-	ReadyForClearanceDts(ctx context.Context, obj *models.PlanBeneficiaries) (*time.Time, error)
 }
 type PlanDiscussionResolver interface {
 	Replies(ctx context.Context, obj *models.PlanDiscussion) ([]*models.DiscussionReply, error)
@@ -845,9 +839,6 @@ type PlanGeneralCharacteristicsResolver interface {
 	AuthorityAllowances(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]model.AuthorityAllowance, error)
 
 	WaiversRequiredTypes(ctx context.Context, obj *models.PlanGeneralCharacteristics) ([]model.WaiverType, error)
-
-	ReadyForClearanceBy(ctx context.Context, obj *models.PlanGeneralCharacteristics) (*string, error)
-	ReadyForClearanceDts(ctx context.Context, obj *models.PlanGeneralCharacteristics) (*time.Time, error)
 }
 type PlanITToolsResolver interface {
 	GcPartCd(ctx context.Context, obj *models.PlanITTools) ([]model.GcPartCDType, error)
@@ -926,9 +917,6 @@ type PlanOpsEvalAndLearningResolver interface {
 	DataCollectionFrequency(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]model.DataFrequencyType, error)
 
 	ModelLearningSystems(ctx context.Context, obj *models.PlanOpsEvalAndLearning) ([]model.ModelLearningSystemType, error)
-
-	ReadyForClearanceBy(ctx context.Context, obj *models.PlanOpsEvalAndLearning) (*string, error)
-	ReadyForClearanceDts(ctx context.Context, obj *models.PlanOpsEvalAndLearning) (*time.Time, error)
 }
 type PlanParticipantsAndProvidersResolver interface {
 	Participants(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.ParticipantsType, error)
@@ -942,9 +930,6 @@ type PlanParticipantsAndProvidersResolver interface {
 	ProviderAddMethod(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.ProviderAddType, error)
 
 	ProviderLeaveMethod(ctx context.Context, obj *models.PlanParticipantsAndProviders) ([]model.ProviderLeaveType, error)
-
-	ReadyForClearanceBy(ctx context.Context, obj *models.PlanParticipantsAndProviders) (*string, error)
-	ReadyForClearanceDts(ctx context.Context, obj *models.PlanParticipantsAndProviders) (*time.Time, error)
 }
 type PlanPaymentsResolver interface {
 	FundingSource(ctx context.Context, obj *models.PlanPayments) ([]models.FundingSource, error)
@@ -961,9 +946,6 @@ type PlanPaymentsResolver interface {
 	NonClaimsPaymentOther(ctx context.Context, obj *models.PlanPayments) (*string, error)
 
 	AnticipatedPaymentFrequency(ctx context.Context, obj *models.PlanPayments) ([]models.AnticipatedPaymentFrequencyType, error)
-
-	ReadyForClearanceBy(ctx context.Context, obj *models.PlanPayments) (*string, error)
-	ReadyForClearanceDts(ctx context.Context, obj *models.PlanPayments) (*time.Time, error)
 }
 type QueryResolver interface {
 	CurrentUser(ctx context.Context) (*model.CurrentUser, error)
@@ -17069,7 +17051,7 @@ func (ec *executionContext) _PlanBasics_readyForClearanceBy(ctx context.Context,
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.PlanBasics().ReadyForClearanceBy(rctx, obj)
+		return obj.ReadyForClearanceBy, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -17087,8 +17069,8 @@ func (ec *executionContext) fieldContext_PlanBasics_readyForClearanceBy(ctx cont
 	fc = &graphql.FieldContext{
 		Object:     "PlanBasics",
 		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
+		IsMethod:   false,
+		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type String does not have child fields")
 		},
@@ -17110,7 +17092,7 @@ func (ec *executionContext) _PlanBasics_readyForClearanceDts(ctx context.Context
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.PlanBasics().ReadyForClearanceDts(rctx, obj)
+		return obj.ReadyForClearanceDts, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -17128,8 +17110,8 @@ func (ec *executionContext) fieldContext_PlanBasics_readyForClearanceDts(ctx con
 	fc = &graphql.FieldContext{
 		Object:     "PlanBasics",
 		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
+		IsMethod:   false,
+		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type Time does not have child fields")
 		},
@@ -18402,7 +18384,7 @@ func (ec *executionContext) _PlanBeneficiaries_readyForClearanceBy(ctx context.C
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.PlanBeneficiaries().ReadyForClearanceBy(rctx, obj)
+		return obj.ReadyForClearanceBy, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -18420,8 +18402,8 @@ func (ec *executionContext) fieldContext_PlanBeneficiaries_readyForClearanceBy(c
 	fc = &graphql.FieldContext{
 		Object:     "PlanBeneficiaries",
 		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
+		IsMethod:   false,
+		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type String does not have child fields")
 		},
@@ -18443,7 +18425,7 @@ func (ec *executionContext) _PlanBeneficiaries_readyForClearanceDts(ctx context.
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.PlanBeneficiaries().ReadyForClearanceDts(rctx, obj)
+		return obj.ReadyForClearanceDts, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -18461,8 +18443,8 @@ func (ec *executionContext) fieldContext_PlanBeneficiaries_readyForClearanceDts(
 	fc = &graphql.FieldContext{
 		Object:     "PlanBeneficiaries",
 		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
+		IsMethod:   false,
+		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type Time does not have child fields")
 		},
@@ -23329,7 +23311,7 @@ func (ec *executionContext) _PlanGeneralCharacteristics_readyForClearanceBy(ctx 
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.PlanGeneralCharacteristics().ReadyForClearanceBy(rctx, obj)
+		return obj.ReadyForClearanceBy, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -23347,8 +23329,8 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_readyForClea
 	fc = &graphql.FieldContext{
 		Object:     "PlanGeneralCharacteristics",
 		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
+		IsMethod:   false,
+		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type String does not have child fields")
 		},
@@ -23370,7 +23352,7 @@ func (ec *executionContext) _PlanGeneralCharacteristics_readyForClearanceDts(ctx
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.PlanGeneralCharacteristics().ReadyForClearanceDts(rctx, obj)
+		return obj.ReadyForClearanceDts, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -23388,8 +23370,8 @@ func (ec *executionContext) fieldContext_PlanGeneralCharacteristics_readyForClea
 	fc = &graphql.FieldContext{
 		Object:     "PlanGeneralCharacteristics",
 		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
+		IsMethod:   false,
+		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type Time does not have child fields")
 		},
@@ -31427,7 +31409,7 @@ func (ec *executionContext) _PlanOpsEvalAndLearning_readyForClearanceBy(ctx cont
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.PlanOpsEvalAndLearning().ReadyForClearanceBy(rctx, obj)
+		return obj.ReadyForClearanceBy, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -31445,8 +31427,8 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_readyForClearanc
 	fc = &graphql.FieldContext{
 		Object:     "PlanOpsEvalAndLearning",
 		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
+		IsMethod:   false,
+		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type String does not have child fields")
 		},
@@ -31468,7 +31450,7 @@ func (ec *executionContext) _PlanOpsEvalAndLearning_readyForClearanceDts(ctx con
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.PlanOpsEvalAndLearning().ReadyForClearanceDts(rctx, obj)
+		return obj.ReadyForClearanceDts, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -31486,8 +31468,8 @@ func (ec *executionContext) fieldContext_PlanOpsEvalAndLearning_readyForClearanc
 	fc = &graphql.FieldContext{
 		Object:     "PlanOpsEvalAndLearning",
 		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
+		IsMethod:   false,
+		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type Time does not have child fields")
 		},
@@ -33797,7 +33779,7 @@ func (ec *executionContext) _PlanParticipantsAndProviders_readyForClearanceBy(ct
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.PlanParticipantsAndProviders().ReadyForClearanceBy(rctx, obj)
+		return obj.ReadyForClearanceBy, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -33815,8 +33797,8 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_readyForCl
 	fc = &graphql.FieldContext{
 		Object:     "PlanParticipantsAndProviders",
 		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
+		IsMethod:   false,
+		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type String does not have child fields")
 		},
@@ -33838,7 +33820,7 @@ func (ec *executionContext) _PlanParticipantsAndProviders_readyForClearanceDts(c
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.PlanParticipantsAndProviders().ReadyForClearanceDts(rctx, obj)
+		return obj.ReadyForClearanceDts, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -33856,8 +33838,8 @@ func (ec *executionContext) fieldContext_PlanParticipantsAndProviders_readyForCl
 	fc = &graphql.FieldContext{
 		Object:     "PlanParticipantsAndProviders",
 		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
+		IsMethod:   false,
+		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type Time does not have child fields")
 		},
@@ -36703,7 +36685,7 @@ func (ec *executionContext) _PlanPayments_readyForClearanceBy(ctx context.Contex
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.PlanPayments().ReadyForClearanceBy(rctx, obj)
+		return obj.ReadyForClearanceBy, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -36721,8 +36703,8 @@ func (ec *executionContext) fieldContext_PlanPayments_readyForClearanceBy(ctx co
 	fc = &graphql.FieldContext{
 		Object:     "PlanPayments",
 		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
+		IsMethod:   false,
+		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type String does not have child fields")
 		},
@@ -36744,7 +36726,7 @@ func (ec *executionContext) _PlanPayments_readyForClearanceDts(ctx context.Conte
 	}()
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.PlanPayments().ReadyForClearanceDts(rctx, obj)
+		return obj.ReadyForClearanceDts, nil
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -36762,8 +36744,8 @@ func (ec *executionContext) fieldContext_PlanPayments_readyForClearanceDts(ctx c
 	fc = &graphql.FieldContext{
 		Object:     "PlanPayments",
 		Field:      field,
-		IsMethod:   true,
-		IsResolver: true,
+		IsMethod:   false,
+		IsResolver: false,
 		Child: func(ctx context.Context, field graphql.CollectedField) (*graphql.FieldContext, error) {
 			return nil, errors.New("field of type Time does not have child fields")
 		},
@@ -41830,39 +41812,13 @@ func (ec *executionContext) _PlanBasics(ctx context.Context, sel ast.SelectionSe
 			out.Values[i] = ec._PlanBasics_readyForReviewDts(ctx, field, obj)
 
 		case "readyForClearanceBy":
-			field := field
 
-			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._PlanBasics_readyForClearanceBy(ctx, field, obj)
-				return res
-			}
+			out.Values[i] = ec._PlanBasics_readyForClearanceBy(ctx, field, obj)
 
-			out.Concurrently(i, func() graphql.Marshaler {
-				return innerFunc(ctx)
-
-			})
 		case "readyForClearanceDts":
-			field := field
 
-			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._PlanBasics_readyForClearanceDts(ctx, field, obj)
-				return res
-			}
+			out.Values[i] = ec._PlanBasics_readyForClearanceDts(ctx, field, obj)
 
-			out.Concurrently(i, func() graphql.Marshaler {
-				return innerFunc(ctx)
-
-			})
 		case "status":
 
 			out.Values[i] = ec._PlanBasics_status(ctx, field, obj)
@@ -42052,39 +42008,13 @@ func (ec *executionContext) _PlanBeneficiaries(ctx context.Context, sel ast.Sele
 			out.Values[i] = ec._PlanBeneficiaries_readyForReviewDts(ctx, field, obj)
 
 		case "readyForClearanceBy":
-			field := field
 
-			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._PlanBeneficiaries_readyForClearanceBy(ctx, field, obj)
-				return res
-			}
+			out.Values[i] = ec._PlanBeneficiaries_readyForClearanceBy(ctx, field, obj)
 
-			out.Concurrently(i, func() graphql.Marshaler {
-				return innerFunc(ctx)
-
-			})
 		case "readyForClearanceDts":
-			field := field
 
-			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._PlanBeneficiaries_readyForClearanceDts(ctx, field, obj)
-				return res
-			}
+			out.Values[i] = ec._PlanBeneficiaries_readyForClearanceDts(ctx, field, obj)
 
-			out.Concurrently(i, func() graphql.Marshaler {
-				return innerFunc(ctx)
-
-			})
 		case "status":
 
 			out.Values[i] = ec._PlanBeneficiaries_status(ctx, field, obj)
@@ -42977,39 +42907,13 @@ func (ec *executionContext) _PlanGeneralCharacteristics(ctx context.Context, sel
 			out.Values[i] = ec._PlanGeneralCharacteristics_readyForReviewDts(ctx, field, obj)
 
 		case "readyForClearanceBy":
-			field := field
 
-			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._PlanGeneralCharacteristics_readyForClearanceBy(ctx, field, obj)
-				return res
-			}
+			out.Values[i] = ec._PlanGeneralCharacteristics_readyForClearanceBy(ctx, field, obj)
 
-			out.Concurrently(i, func() graphql.Marshaler {
-				return innerFunc(ctx)
-
-			})
 		case "readyForClearanceDts":
-			field := field
 
-			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._PlanGeneralCharacteristics_readyForClearanceDts(ctx, field, obj)
-				return res
-			}
+			out.Values[i] = ec._PlanGeneralCharacteristics_readyForClearanceDts(ctx, field, obj)
 
-			out.Concurrently(i, func() graphql.Marshaler {
-				return innerFunc(ctx)
-
-			})
 		case "status":
 
 			out.Values[i] = ec._PlanGeneralCharacteristics_status(ctx, field, obj)
@@ -44459,39 +44363,13 @@ func (ec *executionContext) _PlanOpsEvalAndLearning(ctx context.Context, sel ast
 			out.Values[i] = ec._PlanOpsEvalAndLearning_readyForReviewDts(ctx, field, obj)
 
 		case "readyForClearanceBy":
-			field := field
 
-			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._PlanOpsEvalAndLearning_readyForClearanceBy(ctx, field, obj)
-				return res
-			}
+			out.Values[i] = ec._PlanOpsEvalAndLearning_readyForClearanceBy(ctx, field, obj)
 
-			out.Concurrently(i, func() graphql.Marshaler {
-				return innerFunc(ctx)
-
-			})
 		case "readyForClearanceDts":
-			field := field
 
-			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._PlanOpsEvalAndLearning_readyForClearanceDts(ctx, field, obj)
-				return res
-			}
+			out.Values[i] = ec._PlanOpsEvalAndLearning_readyForClearanceDts(ctx, field, obj)
 
-			out.Concurrently(i, func() graphql.Marshaler {
-				return innerFunc(ctx)
-
-			})
 		case "status":
 
 			out.Values[i] = ec._PlanOpsEvalAndLearning_status(ctx, field, obj)
@@ -44845,39 +44723,13 @@ func (ec *executionContext) _PlanParticipantsAndProviders(ctx context.Context, s
 			out.Values[i] = ec._PlanParticipantsAndProviders_readyForReviewDts(ctx, field, obj)
 
 		case "readyForClearanceBy":
-			field := field
 
-			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._PlanParticipantsAndProviders_readyForClearanceBy(ctx, field, obj)
-				return res
-			}
+			out.Values[i] = ec._PlanParticipantsAndProviders_readyForClearanceBy(ctx, field, obj)
 
-			out.Concurrently(i, func() graphql.Marshaler {
-				return innerFunc(ctx)
-
-			})
 		case "readyForClearanceDts":
-			field := field
 
-			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._PlanParticipantsAndProviders_readyForClearanceDts(ctx, field, obj)
-				return res
-			}
+			out.Values[i] = ec._PlanParticipantsAndProviders_readyForClearanceDts(ctx, field, obj)
 
-			out.Concurrently(i, func() graphql.Marshaler {
-				return innerFunc(ctx)
-
-			})
 		case "status":
 
 			out.Values[i] = ec._PlanParticipantsAndProviders_status(ctx, field, obj)
@@ -45312,39 +45164,13 @@ func (ec *executionContext) _PlanPayments(ctx context.Context, sel ast.Selection
 			out.Values[i] = ec._PlanPayments_readyForReviewDts(ctx, field, obj)
 
 		case "readyForClearanceBy":
-			field := field
 
-			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._PlanPayments_readyForClearanceBy(ctx, field, obj)
-				return res
-			}
+			out.Values[i] = ec._PlanPayments_readyForClearanceBy(ctx, field, obj)
 
-			out.Concurrently(i, func() graphql.Marshaler {
-				return innerFunc(ctx)
-
-			})
 		case "readyForClearanceDts":
-			field := field
 
-			innerFunc := func(ctx context.Context) (res graphql.Marshaler) {
-				defer func() {
-					if r := recover(); r != nil {
-						ec.Error(ctx, ec.Recover(ctx, r))
-					}
-				}()
-				res = ec._PlanPayments_readyForClearanceDts(ctx, field, obj)
-				return res
-			}
+			out.Values[i] = ec._PlanPayments_readyForClearanceDts(ctx, field, obj)
 
-			out.Concurrently(i, func() graphql.Marshaler {
-				return innerFunc(ctx)
-
-			})
 		case "status":
 
 			out.Values[i] = ec._PlanPayments_status(ctx, field, obj)
