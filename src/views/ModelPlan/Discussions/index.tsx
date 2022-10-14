@@ -566,7 +566,6 @@ const Discussions = ({
           </Alert>
         ) : (
           renderDiscussionContent()
-          // discussionAccordion
         )}
       </>
     );
