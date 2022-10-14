@@ -56,4 +56,20 @@ func (suite *PreUpdateSuite) TestBaseTaskListSectionPreUpdate() {
 	suite.EqualValues(*planBasics.ReadyForReviewBy, "REVI")
 	suite.NotNil(planBasics.ReadyForReviewDts)
 
+	//2/5 Ready for Clearance
+	changes["status"] = models.TaskReadyForClearance
+	suite.Principal.EUAID = "REVI"
+	err = BaseTaskListSectionPreUpdate(&zap.Logger{}, planBasics, changes, suite.Principal, &storage.Store{})
+	suite.Nil(err)
+	suite.EqualValues(planBasics.Status, models.TaskReadyForClearance)
+	suite.EqualValues(*planBasics.ReadyForClearanceBy, "REVI")
+	suite.NotNil(planBasics.ReadyForClearanceDts)
+
+	//3/5 When changed from READY_FOR_CLEARANCE it will always be moved to IN_PROGRESS
+	changes["status"] = models.TaskReadyForReview
+	suite.Principal.EUAID = "REVI"
+	err = BaseTaskListSectionPreUpdate(&zap.Logger{}, planBasics, changes, suite.Principal, &storage.Store{})
+	suite.Nil(err)
+	suite.EqualValues(planBasics.Status, models.TaskInProgress)
+
 }

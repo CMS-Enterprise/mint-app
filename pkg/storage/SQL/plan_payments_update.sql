@@ -65,6 +65,8 @@ SET
     modified_dts = CURRENT_TIMESTAMP,
     ready_for_review_by = :ready_for_review_by,
     ready_for_review_dts = :ready_for_review_dts,
+    ready_for_clearance_by = :ready_for_clearance_by,
+    ready_for_clearance_dts = :ready_for_clearance_dts,
     status = :status
 WHERE plan_payments.id = :id
 RETURNING id,
@@ -134,4 +136,6 @@ modified_by,
 modified_dts,
 ready_for_review_by,
 ready_for_review_dts,
+ready_for_clearance_by,
+ready_for_clearance_dts,
 status;
