@@ -9,17 +9,17 @@ import (
 // OperationalSolution represents the specific implemented solution to an Operational Need
 type OperationalSolution struct {
 	baseStruct
-	OperationalNeedID     uuid.UUID              `json:"operationalNeedID" db:"operational_need_id"`
-	SolutionType          *int                   `json:"solutionType" db:"solution_type"`
-	Archived              bool                   `json:"archived" db:"archived"`
-	SolutionTypeFullName  string                 `json:"solutionTypeFullName" db:"solution_type_full_name"`
-	SolutionTypeShortName OperationalSolutionKey `json:"solutionTypeShortName" db:"solution_type_short_name"`
-	SolutionOther         *string                `json:"solutionOther" db:"solution_other"`
-	PocName               *string                `json:"pocName" db:"poc_name"`
-	PocEmail              *string                `json:"pocEmail" db:"poc_email"`
-	MustStartDts          *time.Time             `json:"mustStartDts" db:"must_start_dts"`
-	MustFinishDts         *time.Time             `json:"mustFinishDts" db:"must_finish_dts"`
-	Status                OpSolutionStatus       `json:"status" db:"status"`
+	OperationalNeedID uuid.UUID              `json:"operationalNeedID" db:"operational_need_id"`
+	SolutionType      *int                   `json:"solutionType" db:"solution_type"`
+	Archived          bool                   `json:"archived" db:"archived"`
+	Name              string                 `json:"name" db:"name"`
+	Key               OperationalSolutionKey `json:"key" db:"key"`
+	NameOther         *string                `json:"needOther" db:"need_other"`
+	PocName           *string                `json:"pocName" db:"poc_name"`
+	PocEmail          *string                `json:"pocEmail" db:"poc_email"`
+	MustStartDts      *time.Time             `json:"mustStartDts" db:"must_start_dts"`
+	MustFinishDts     *time.Time             `json:"mustFinishDts" db:"must_finish_dts"`
+	Status            OpSolutionStatus       `json:"status" db:"status"`
 }
 
 // NewOperationalSolution creates a Operation Solution with the required fields

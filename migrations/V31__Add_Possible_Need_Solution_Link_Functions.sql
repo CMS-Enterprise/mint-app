@@ -9,8 +9,8 @@ WITH OPSolKey AS
 ENTRIES AS 
 (
 SELECT OPSolKey.SolSHORT, pos.id as SolID, OPSolKey.NeedSHORT, pon.id as NeedID FROM OPSolKey 
-	JOIN possible_operational_solution AS pos on pos.short_name = OPSolKey.SolSHORT
-	JOIN possible_operational_need AS pon on pon.short_name = OPSolKey.NeedSHORT
+	JOIN possible_operational_solution AS pos on pos.key = OPSolKey.SolSHORT
+	JOIN possible_operational_need AS pon on pon.key = OPSolKey.NeedSHORT
 )
 INSERT INTO possible_need_solution_link (
         need_type,

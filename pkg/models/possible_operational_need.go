@@ -13,8 +13,8 @@ type PossibleOperationalNeed struct {
 	ModifiedBy  *string    `json:"modifiedBy" db:"modified_by"`
 	ModifiedDts *time.Time `json:"modifiedDts" db:"modified_dts"`
 
-	FullName  string             `json:"FullName" db:"full_name"`
-	ShortName OperationalNeedKey `json:"ShortName" db:"short_name"`
+	Name string             `json:"name" db:"name"`
+	Key  OperationalNeedKey `json:"key" db:"key"`
 }
 
 // OperationalNeedKey represents the types of OperationalNeedKey types.

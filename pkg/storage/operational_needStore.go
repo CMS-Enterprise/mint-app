@@ -136,7 +136,7 @@ func (s *Store) OperationalNeedInsertOrUpdate(logger *zap.Logger, need *models.O
 		return nil, genericmodel.HandleModelUpdateError(logger, err, need)
 	}
 	need.ID = utilityUUID.ValueOrNewUUID(need.ID)
-	need.NeedTypeShortName = needTypeKey // This will set the need type id IN the db
+	need.Key = needTypeKey // This will set the need type id IN the db
 
 	err = statement.Get(need, need)
 	if err != nil {
@@ -153,7 +153,7 @@ func (s *Store) OperationalNeedInsertOrUpdateOther(logger *zap.Logger, need *mod
 		return nil, genericmodel.HandleModelUpdateError(logger, err, need)
 	}
 	need.ID = utilityUUID.ValueOrNewUUID(need.ID)
-	need.NeedOther = &customNeedType // This will set the need type id IN the db
+	need.NameOther = &customNeedType // This will set the need type id IN the db
 
 	err = statement.Get(need, need)
 	if err != nil {

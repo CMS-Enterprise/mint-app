@@ -1,5 +1,5 @@
 CREATE TABLE possible_need_solution_link ( -- this is an entry for each solution that works for a need
-    id SERIAL PRIMARY KEY NOT NULL, -- instead of UUID
+    id SERIAL PRIMARY KEY NOT NULL,
     need_type INT NOT NULL,
     solution_type INT NOT NULL,
 

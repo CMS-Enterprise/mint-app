@@ -794,7 +794,7 @@ func (r *planPaymentsResolver) AnticipatedPaymentFrequency(ctx context.Context, 
 // PossibleSolutions is the resolver for the possibleSolutions field.
 func (r *possibleOperationalNeedResolver) PossibleSolutions(ctx context.Context, obj *models.PossibleOperationalNeed) ([]*models.PossibleOperationalSolution, error) {
 	logger := appcontext.ZLogger(ctx)
-	return resolvers.PossibleOperationalSolutionCollectionGetByNeedType(logger, obj.ShortName, r.store)
+	return resolvers.PossibleOperationalSolutionCollectionGetByNeedType(logger, obj.Key, r.store)
 }
 
 // CurrentUser is the resolver for the currentUser field.

@@ -65,7 +65,7 @@ type ModelPlan {
   isCollaborator: Boolean!
   crTdls: [PlanCrTdl!]!
   nameHistory(sort: SortDirection! = DESC): [String!]!
-  operationalNeeds: OperationalNeeds
+  operationalNeeds: OperationalNeeds!
 }
 
 type OperationalNeeds {
@@ -81,13 +81,13 @@ type OperationalNeed {
     id: UUID!
     modelPlanID: UUID!
 
-    needType: Int
-    needOther: String
+    # needType: Int
     needed: Boolean!
-    # solutions: [OperationalSolution!]!
-    solutions: OperationalSolutions
-    needTypeFullName: String!
-    needTypeShortName: OperationalNeedKey!
+    solutions: OperationalSolutions!
+
+    key: OperationalNeedKey
+    name: String
+    nameOther: String
 
     createdBy: String!
     createdDts: Time!
@@ -98,8 +98,8 @@ type OperationalNeed {
 type PossibleOperationalNeed {
     id: Int!
     possibleSolutions: [PossibleOperationalSolution!]!
-    fullName: String!
-    shortName: OperationalNeedKey!
+    name: String!
+    key: OperationalNeedKey!
 
     createdBy: String!
     createdDts: Time!
@@ -108,8 +108,8 @@ type PossibleOperationalNeed {
 }
 type PossibleOperationalSolution {
     id: Int!
-    fullName: String!
-    shortName: OperationalSolutionKey!
+    name: String!
+    key: OperationalSolutionKey!
 
     createdBy: String!
     createdDts: Time!
@@ -1420,12 +1420,6 @@ type AuditChange {
   modifiedDts: Time
 }
 
-# input OperationalNeedChanges @goModel(model: "map[string]interface{}"){
-    
-#     needOther: String
-#     needed: Boolean!
-
-# }
 
 type OperationalSolution {
     id: UUID!
@@ -1433,9 +1427,10 @@ type OperationalSolution {
 
     solutionType: Int
     archived: Boolean!
-    solutionTypeFullName: String!
-    solutionTypeShortName: OperationalSolutionKey!
-    solutionOther: String
+    name: String!
+    key: OperationalSolutionKey!
+    nameOther: String
+    
     pocName: String     
     pocEmail: String
     mustStartDts: Time
@@ -2189,7 +2184,6 @@ enum OpSolutionStatus {
 }
 
 enum OperationalNeedKey{
-  # OTHER
   MANAGE_CD
   REV_COL_BIDS
   UPDATE_CONTRACT
@@ -2220,7 +2214,6 @@ enum OperationalNeedKey{
 }
 
 enum OperationalSolutionKey{
-  # OTHER
   MARX
   HPMS
   SALESFORCE

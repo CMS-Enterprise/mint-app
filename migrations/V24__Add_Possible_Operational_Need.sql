@@ -31,12 +31,10 @@ CREATE TYPE OPERATIONAL_NEED_KEY AS ENUM (
 
 CREATE TABLE possible_operational_need (
     id SERIAL PRIMARY KEY NOT NULL, -- instead of UUID
-    full_name ZERO_STRING NOT NULL,
-    short_name OPERATIONAL_NEED_KEY NOT NULL,
+    name ZERO_STRING NOT NULL,
+    key OPERATIONAL_NEED_KEY NOT NULL,
 
 
-    --TODO add fields
-    -- possible_solutions UUID[], --TODO should this live on the solutions table to identify what the solution will satisfy? Or here?
 
     --META DATA
     created_by EUA_ID NOT NULL,
@@ -48,9 +46,4 @@ CREATE TABLE possible_operational_need (
 
 
 ALTER TABLE possible_operational_need
-ADD CONSTRAINT unique_enum_pos_op_need UNIQUE (short_name);
--- ALTER TABLE operational_need
--- ADD CONSTRAINT fk_cr_tdl_plan FOREIGN KEY (model_plan_id)
--- REFERENCES public.model_plan (id) MATCH SIMPLE
--- ON UPDATE NO ACTION
--- ON DELETE NO ACTION;
+ADD CONSTRAINT unique_enum_pos_op_need UNIQUE (key);

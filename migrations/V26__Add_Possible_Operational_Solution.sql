@@ -40,8 +40,8 @@ CREATE TYPE OPERATIONAL_SOLUTION_KEY AS ENUM (
 
 CREATE TABLE possible_operational_solution (
     id SERIAL PRIMARY KEY NOT NULL,
-    full_name ZERO_STRING NOT NULL,
-    short_name OPERATIONAL_SOLUTION_KEY NOT NULL,
+    name ZERO_STRING NOT NULL,
+    key OPERATIONAL_SOLUTION_KEY NOT NULL,
 
     --TODO add fields
     -- default LINKING TABLE TO default POCS
@@ -55,16 +55,4 @@ CREATE TABLE possible_operational_solution (
 
 );
 ALTER TABLE possible_operational_solution
-ADD CONSTRAINT unique_enum_pos_op_sol UNIQUE (short_name);
--- ALTER TABLE operational_solution
--- ADD CONSTRAINT fk_operational_solution_plan FOREIGN KEY (model_plan_id)
--- REFERENCES public.model_plan (id) MATCH SIMPLE
--- ON UPDATE NO ACTION
--- ON DELETE NO ACTION;
-
-
--- ALTER TABLE possible_operational_solution
--- ADD CONSTRAINT fk_need_possible_need FOREIGN KEY (need_type)
--- REFERENCES public.possible_operational_need (id) MATCH SIMPLE
--- ON UPDATE NO ACTION
--- ON DELETE NO ACTION;
+ADD CONSTRAINT unique_enum_pos_op_sol UNIQUE (key);

@@ -2,7 +2,7 @@ CREATE TABLE operational_need (
     id UUID PRIMARY KEY NOT NULL,
     model_plan_id UUID NOT NULL, --foreign key to model plan
     need_type INT,
-    need_other ZERO_STRING,
+    name_other ZERO_STRING,
 
     needed BOOLEAN DEFAULT TRUE,
 
@@ -30,7 +30,7 @@ ALTER TABLE operational_need
 ADD CONSTRAINT unique_need_per_plan UNIQUE (model_plan_id, need_type); --TODO update this, this will only allow one other type... Maybe leave other out?
 
 ALTER TABLE operational_need
-ADD CONSTRAINT unique_need_other_per_plan UNIQUE (model_plan_id, need_other); --TODO add constraint for either need type or Other filled out
+ADD CONSTRAINT unique_name_other_per_plan UNIQUE (model_plan_id, name_other); --TODO add constraint for either need type or Other filled out
 
 ALTER TABLE operational_need
-ADD CONSTRAINT need_type_null_if_other CHECK ((need_type IS NULL OR need_other IS NULL) AND NOT (need_type IS NULL AND need_other IS NULL) );
+ADD CONSTRAINT need_type_null_if_other CHECK ((need_type IS NULL OR name_other IS NULL) AND NOT (need_type IS NULL AND name_other IS NULL) );

@@ -13,8 +13,8 @@ type PossibleOperationalSolution struct {
 	ModifiedBy  *string    `json:"modifiedBy" db:"modified_by"`
 	ModifiedDts *time.Time `json:"modifiedDts" db:"modified_dts"`
 
-	FullName  string                 `json:"FullName" db:"full_name"`
-	ShortName OperationalSolutionKey `json:"ShortName" db:"short_name"`
+	Name string                 `json:"name" db:"name"`
+	Key  OperationalSolutionKey `json:"key" db:"key"`
 }
 
 // OperationalSolutionKey represents the types of OperationalSolutionKey types.

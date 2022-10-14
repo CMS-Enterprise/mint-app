@@ -108,7 +108,7 @@ func (s *Store) OperationalSolutionInsertOrUpdate(logger *zap.Logger, solution *
 		return nil, genericmodel.HandleModelUpdateError(logger, err, solution)
 	}
 	solution.ID = utilityUUID.ValueOrNewUUID(solution.ID)
-	solution.SolutionTypeShortName = solutionTypeKey
+	solution.Key = solutionTypeKey
 	err = statement.Get(solution, solution)
 	if err != nil {
 		return nil, genericmodel.HandleModelUpdateError(logger, err, solution) //this could be either update or insert..
@@ -123,7 +123,7 @@ func (s *Store) OperationalSolutionInsertOrUpdateOther(logger *zap.Logger, solut
 		return nil, genericmodel.HandleModelUpdateError(logger, err, solution)
 	}
 	solution.ID = utilityUUID.ValueOrNewUUID(solution.ID)
-	solution.SolutionOther = &customSolutionType
+	solution.NameOther = &customSolutionType
 	err = statement.Get(solution, solution)
 	if err != nil {
 		return nil, genericmodel.HandleModelUpdateError(logger, err, solution) //this could be either update or insert..
