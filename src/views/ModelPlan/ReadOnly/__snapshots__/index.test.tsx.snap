@@ -9,8 +9,54 @@ exports[`Read Only Model Plan Summary matches snapshot 1`] = `
     role="main"
     tabindex="-1"
   >
+    <nav
+      aria-label="Navigation toggle between task list and overview"
+      class="position-sticky z-100 top-0 bg-primary-darker text-white padding-105 sub-nav"
+      data-testid="sub-navigation-bar"
+    >
+      <div
+        aria-label="Navigation toggle between task list and overview"
+        class="pointer"
+        data-testid="sub-navigation-link"
+        role="link"
+        tabindex="0"
+      >
+        <div
+          class="grid-container"
+          data-testid="sub-navigation-text"
+        >
+          Need to update this information?  
+          <div
+            class="text-white text-bold display-inline-flex margin-left-05"
+          >
+            <div
+              data-testid="sub-navigation-link-text"
+            >
+               Go to the Model Plan task list 
+            </div>
+            <svg
+              class="usa-icon text-white margin-left-1 right-icon"
+              focusable="false"
+              height="1em"
+              role="img"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M0 0h24v24H0z"
+                fill="none"
+              />
+              <path
+                d="m12 4-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"
+              />
+            </svg>
+          </div>
+        </div>
+      </div>
+    </nav>
     <div
-      class="usa-summary-box padding-y-6 border-0 bg-primary-lighter"
+      class="usa-summary-box padding-y-6 border-0 bg-primary-lighter margin-top-0"
       data-testid="read-only-model-summary"
     >
       <div
@@ -78,7 +124,7 @@ exports[`Read Only Model Plan Summary matches snapshot 1`] = `
             </div>
             <h1
               aria-live="polite"
-              class="mint-h1 margin-0 line-height-sans-2"
+              class="mint-h1 margin-0 line-height-sans-2 minh-6"
               tabindex="-1"
             >
               Testing Model Summary
@@ -94,7 +140,7 @@ exports[`Read Only Model Plan Summary matches snapshot 1`] = `
                   class="description-truncated margin-bottom-2"
                 >
                   <dd
-                    class="description-definition margin-0 font-body-lg line-height-body-5 text-light"
+                    class="description-definition margin-0 font-body-lg line-height-body-5 text-light minh-5"
                     data-testid="read-only-model-summary__description"
                   >
                     This is the goal
@@ -105,7 +151,7 @@ exports[`Read Only Model Plan Summary matches snapshot 1`] = `
                   data-testid="grid"
                 >
                   <div
-                    class="grid-col-6 margin-bottom-2"
+                    class="grid-col-6 margin-bottom-2 minh-7"
                     data-testid="grid"
                   >
                     <dd
@@ -120,7 +166,7 @@ exports[`Read Only Model Plan Summary matches snapshot 1`] = `
                     </dt>
                   </div>
                   <div
-                    class="grid-col-6 margin-bottom-2"
+                    class="grid-col-6 margin-bottom-2 minh-7"
                     data-testid="grid"
                   >
                     <dd
@@ -135,7 +181,7 @@ exports[`Read Only Model Plan Summary matches snapshot 1`] = `
                     </dt>
                   </div>
                   <div
-                    class="grid-col-6 margin-bottom-2 desktop:margin-bottom-0"
+                    class="grid-col-6 margin-bottom-2 desktop:margin-bottom-0 minh-7"
                     data-testid="grid"
                   >
                     <dd
@@ -150,7 +196,7 @@ exports[`Read Only Model Plan Summary matches snapshot 1`] = `
                     </dt>
                   </div>
                   <div
-                    class="grid-col-6 margin-bottom-2 desktop:margin-bottom-0"
+                    class="grid-col-6 margin-bottom-2 desktop:margin-bottom-0 minh-7"
                     data-testid="grid"
                   >
                     <dd
@@ -159,7 +205,7 @@ exports[`Read Only Model Plan Summary matches snapshot 1`] = `
                       CRs and TDLs
                     </dd>
                     <dt
-                      class="text-bold margin-bottom-05 font-body-lg line-height-sans-2 margin-bottom-0"
+                      class="text-bold margin-bottom-05 font-body-lg line-height-sans-2 margin-bottom-0 "
                     >
                       None entered
                     </dt>
@@ -206,7 +252,7 @@ exports[`Read Only Model Plan Summary matches snapshot 1`] = `
         data-testid="gridContainer"
       >
         <div
-          class="padding-y-1"
+          class="padding-y-1 status-min-height"
         >
           <div
             class="padding-0"
@@ -243,31 +289,6 @@ exports[`Read Only Model Plan Summary matches snapshot 1`] = `
                 >
                   Last updated on 8/27/2022
                 </p>
-                <div>
-                  <a
-                    class="usa-link display-flex flex-align-center"
-                    href="/models/ce3405a0-3399-4e3a-88d7-3cfc613d2905/task-list"
-                  >
-                    <svg
-                      class="usa-icon margin-right-1"
-                      focusable="false"
-                      height="1em"
-                      role="img"
-                      viewBox="0 0 24 24"
-                      width="1em"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M0 0h24v24H0z"
-                        fill="none"
-                      />
-                      <path
-                        d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a.996.996 0 0 0 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"
-                      />
-                    </svg>
-                    Update
-                  </a>
-                </div>
               </div>
             </div>
           </div>
@@ -339,7 +360,7 @@ exports[`Read Only Model Plan Summary matches snapshot 1`] = `
           data-testid="grid"
         >
           <div
-            class="desktop:grid-col-3 padding-right-4 sticky-nav"
+            class="desktop:grid-col-3 padding-right-4 sticky-nav sticky-nav__collaborator"
             data-testid="grid"
           >
             <div
@@ -523,7 +544,7 @@ exports[`Read Only Model Plan Summary matches snapshot 1`] = `
                     </div>
                   </div>
                   <div
-                    class="desktop:grid-col-4 sticky-nav"
+                    class="desktop:grid-col-4 sticky-nav sticky-nav__collaborator"
                     data-testid="grid"
                   >
                     <div

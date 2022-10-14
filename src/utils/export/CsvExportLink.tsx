@@ -95,7 +95,7 @@ export const CsvExportLink = ({
     <div>
       <button
         type="button"
-        className="usa-button usa-button--unstyled"
+        className="usa-button usa-button--unstyled display-flex"
         onClick={() => fetchData()}
       >
         {!modelPlanID && <IconFileDownload className="margin-right-1" />}

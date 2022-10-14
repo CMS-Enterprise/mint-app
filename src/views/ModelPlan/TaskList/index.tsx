@@ -23,6 +23,7 @@ import classNames from 'classnames';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
+import ModelSubNav from 'components/ModelSubNav';
 import PageHeading from 'components/PageHeading';
 import Divider from 'components/shared/Divider';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
@@ -168,6 +169,7 @@ const TaskList = () => {
       className="model-plan-task-list"
       data-testid="model-plan-task-list"
     >
+      <ModelSubNav modelID={modelID} link="read-only" />
       <GridContainer>
         <Grid desktop={{ col: 12 }}>
           <BreadcrumbBar variant="wrap">
