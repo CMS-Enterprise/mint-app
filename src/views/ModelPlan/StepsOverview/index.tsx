@@ -36,14 +36,17 @@ const StepsOverview = () => {
           <PageHeading>{t('stepsOverview.heading')}</PageHeading>
           <SummaryBox
             heading=""
-            className="bg-base-lightest border-0 radius-0 padding-y-1 padding-x-2"
+            className="bg-base-lightest border-0 radius-0 padding-y-2 padding-x-2"
           >
-            <p className="margin-top-0">{t('stepsOverview.summaryBox.copy')}</p>
-            <ul className="padding-left-3">
-              <li>{t('stepsOverview.summaryBox.listItem.add')}</li>
+            <p className="margin-top-0 margin-bottom-1">
+              {t('stepsOverview.summaryBox.copy')}
+            </p>
+            <ul className="padding-left-3 margin-y-0">
+              <li>{t('stepsOverview.summaryBox.listItem.start')}</li>
               <li>{t('stepsOverview.summaryBox.listItem.upload')}</li>
+              <li>{t('stepsOverview.summaryBox.listItem.track')}</li>
             </ul>
-            <p className="margin-bottom-1">
+            <p className="margin-y-1">
               <Trans i18nKey="modelPlan:stepsOverview.summaryBox.email">
                 indexZero
                 <UswdsLink href="mailto:CMS_Section508@cms.hhs.gov">
@@ -68,32 +71,36 @@ const StepsOverview = () => {
               </ProcessListHeading>
               <p>{t('stepsOverview.steps.first.description')}</p>
             </ProcessListItem>
+
             <ProcessListItem>
               <ProcessListHeading type="h3">
                 {t('stepsOverview.steps.second.heading')}
               </ProcessListHeading>
               <p>{t('stepsOverview.steps.second.description')}</p>
             </ProcessListItem>
+
             <ProcessListItem className="padding-bottom-3">
               <ProcessListHeading type="h3">
                 {t('stepsOverview.steps.third.heading')}
               </ProcessListHeading>
               <p>{t('stepsOverview.steps.third.description')}</p>
             </ProcessListItem>
-          </ProcessList>
-          <hr className="margin-top-0 margin-bottom-05" />
-          {/* @ts-ignore */}
-          <ProcessList
-            className="model-plan-step-list--counter-reset"
-            start={4}
-          >
+
             <ProcessListItem>
               <ProcessListHeading type="h3">
                 {t('stepsOverview.steps.fourth.heading')}
               </ProcessListHeading>
               <p>{t('stepsOverview.steps.fourth.description')}</p>
             </ProcessListItem>
+
+            <ProcessListItem>
+              <ProcessListHeading type="h3">
+                {t('stepsOverview.steps.fifth.heading')}
+              </ProcessListHeading>
+              <p>{t('stepsOverview.steps.fifth.description')}</p>
+            </ProcessListItem>
           </ProcessList>
+
           <UswdsReactLink
             className="usa-button margin-bottom-10"
             variant="unstyled"

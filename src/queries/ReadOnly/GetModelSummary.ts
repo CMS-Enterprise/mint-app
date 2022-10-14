@@ -15,6 +15,7 @@ export default gql`
       generalCharacteristics {
         keyCharacteristics
       }
+      isCollaborator
       collaborators {
         fullName
         teamRole

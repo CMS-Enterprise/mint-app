@@ -6,6 +6,7 @@ CREATE TABLE plan_discussion (
 
     content ZERO_STRING NOT NULL,
     status DISCUSSION_STATUS NOT NULL DEFAULT 'UNANSWERED',
+    is_assessment BOOLEAN NOT NULL,
 
     created_by EUA_ID NOT NULL,
     created_dts TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -24,6 +25,7 @@ CREATE TABLE discussion_reply (
     discussion_id UUID NOT NULL,
     content ZERO_STRING NOT NULL,
     resolution BOOLEAN NOT NULL,
+    is_assessment BOOLEAN NOT NULL,
 
     created_by EUA_ID NOT NULL,
     created_dts TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT CURRENT_TIMESTAMP,

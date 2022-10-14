@@ -23,6 +23,7 @@ import classNames from 'classnames';
 
 import UswdsReactLink from 'components/LinkWrapper';
 import MainContent from 'components/MainContent';
+import ModelSubNav from 'components/ModelSubNav';
 import PageHeading from 'components/PageHeading';
 import Divider from 'components/shared/Divider';
 import { ErrorAlert, ErrorAlertMessage } from 'components/shared/ErrorAlert';
@@ -51,6 +52,7 @@ import {
 import { TaskListSection } from 'types/graphql-global-types';
 import { formatDate } from 'utils/date';
 import { getUnansweredQuestions } from 'utils/modelPlan';
+import { isAssessment } from 'utils/user';
 import { SubscriptionContext } from 'views/SubscriptionWrapper';
 
 import Discussions from '../Discussions';
@@ -94,7 +96,10 @@ const TaskList = () => {
   const { modelID } = useParams<{ modelID: string }>();
   const [isDiscussionOpen, setIsDiscussionOpen] = useState(false);
 
-  const { euaId } = useSelector((state: RootStateOrAny) => state.auth);
+  const { euaId, groups } = useSelector((state: RootStateOrAny) => state.auth);
+
+  // Used to conditonally render role specific text in task list
+  const userRole = isAssessment(groups) ? 'assessment' : 'team';
 
   const { taskListSectionLocks } = useContext(SubscriptionContext);
 
@@ -163,6 +168,7 @@ const TaskList = () => {
       className="model-plan-task-list"
       data-testid="model-plan-task-list"
     >
+      <ModelSubNav modelID={modelID} link="read-only" />
       <GridContainer>
         <Grid desktop={{ col: 12 }}>
           <BreadcrumbBar variant="wrap">
@@ -267,7 +273,7 @@ const TaskList = () => {
                             <div className="model-plan-task-list__task-row display-flex flex-justify flex-align-start">
                               <TaskListDescription>
                                 <p className="margin-top-0">
-                                  {t(`numberedList.${key}.copy`)}
+                                  {t(`numberedList.${key}.${userRole}`)}
                                 </p>
                               </TaskListDescription>
                             </div>
