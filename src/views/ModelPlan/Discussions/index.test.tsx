@@ -101,7 +101,7 @@ describe('Discussion Component', () => {
     const { getByText } = render(
       <MockedProvider mocks={mocks} addTypename={false}>
         <Provider store={store}>
-          <Discussions modelID={modelID} closeModal={() => null} />
+          <Discussions modelID={modelID} />
         </Provider>
       </MockedProvider>
     );
@@ -120,7 +120,7 @@ describe('Discussion Component', () => {
     const { getByText } = render(
       <MockedProvider mocks={mocks} addTypename={false}>
         <Provider store={store}>
-          <Discussions modelID={modelID} closeModal={() => null} />
+          <Discussions modelID={modelID} />
         </Provider>
       </MockedProvider>
     );
