@@ -1,8 +1,11 @@
 import React from 'react';
+import { Provider } from 'react-redux';
 import { MockedProvider } from '@apollo/client/testing';
 import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import configureMockStore from 'redux-mock-store';
 
+import { ASSESSMENT } from 'constants/jobCodes';
 import GetModelPlanDiscussions from 'queries/Discussions/GetModelPlanDiscussions';
 import { GetModelPlanDiscussions as GetModelPlanDiscussionsType } from 'queries/Discussions/types/GetModelPlanDiscussions';
 
@@ -58,7 +61,16 @@ const mocks = [
   }
 ];
 
-describe('Model Plan Documents page', () => {
+const mockAuthReducer = {
+  isUserSet: true,
+  groups: [ASSESSMENT],
+  euaId: 'ABCD'
+};
+
+const mockStore = configureMockStore();
+const store = mockStore({ auth: mockAuthReducer });
+
+describe('Ask a Question Component', () => {
   // ReactModel is throwing warning - App element is not defined. Please use `Modal.setAppElement(el)`.  The app is being set within the modal but RTL is not picking up on it
   // eslint-disable-next-line
   console.error = jest.fn();
@@ -68,7 +80,9 @@ describe('Model Plan Documents page', () => {
   it('renders the discussion modal init with question', async () => {
     const { getByText, getByTestId } = render(
       <MockedProvider mocks={mocks} addTypename={false}>
-        <AskAQuestion modelID={modelID} />
+        <Provider store={store}>
+          <AskAQuestion modelID={modelID} />
+        </Provider>
       </MockedProvider>
     );
 

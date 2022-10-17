@@ -12,7 +12,7 @@ const discussions = {
   save: 'Save question',
   saveAnswer: 'Save answer',
   useLinkAbove:
-    'There a no discussions yet. Ask a question using the link above to get started.',
+    'There are no discussions yet. Ask a question using the link above to get started.',
   unanswered: 'unanswered question',
   answered: 'answered question',
   viewDiscussions: 'View discussions',
@@ -33,6 +33,12 @@ const discussions = {
     'There are no answered questions yet. When a question is answered, it will appear here with the response.',
   noUanswered:
     'There are no unanswered questions. Ask a question using the link above.',
+  nonEditor: {
+    noDiscussions:
+      'There are no discussions yet. When a question is asked, it will appear here.',
+    noQuestions:
+      'There are no questions yet. When a question is asked, it will appear here.'
+  },
   ariaLabel: 'Discussion Center Modal',
   assessment: 'Model Assessment Team'
 };
