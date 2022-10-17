@@ -26,6 +26,11 @@ export interface GetModelSummary_modelPlan_collaborators {
   teamRole: TeamRole;
 }
 
+export interface GetModelSummary_modelPlan_crTdls {
+  __typename: "PlanCrTdl";
+  idNumber: string;
+}
+
 export interface GetModelSummary_modelPlan {
   __typename: "ModelPlan";
   id: UUID;
@@ -37,6 +42,7 @@ export interface GetModelSummary_modelPlan {
   generalCharacteristics: GetModelSummary_modelPlan_generalCharacteristics;
   isCollaborator: boolean;
   collaborators: GetModelSummary_modelPlan_collaborators[];
+  crTdls: GetModelSummary_modelPlan_crTdls[];
 }
 
 export interface GetModelSummary {
