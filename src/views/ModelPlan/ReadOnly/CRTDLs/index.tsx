@@ -38,6 +38,7 @@ const ReadOnlyCRTDLs = ({ modelID }: { modelID: string }) => {
 
       <CRTDLTable
         modelID={modelID}
+        readOnly
         setCRTDLMessage={setCRTDLMessage}
         setCRTDLStatus={setCRTDLStatus}
       />

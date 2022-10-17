@@ -29,6 +29,7 @@ import {
 type CRTDLTableProps = {
   hiddenColumns?: string[];
   modelID: string;
+  readOnly?: boolean;
   setCRTDLMessage: (value: string) => void;
   setCRTDLStatus: (value: CRTDLStatusType) => void;
 };
@@ -38,6 +39,7 @@ type CRTDLStatusType = 'success' | 'error';
 const CRTDLTable = ({
   hiddenColumns,
   modelID,
+  readOnly,
   setCRTDLMessage,
   setCRTDLStatus
 }: CRTDLTableProps) => {
@@ -85,6 +87,7 @@ const CRTDLTable = ({
       refetch={refetchCRTDLs}
       setCRTDLMessage={setCRTDLMessage}
       setCRTDLStatus={setCRTDLStatus}
+      readOnly={readOnly}
     />
   );
 };
@@ -99,6 +102,7 @@ type TableProps = {
   refetch: () => any | undefined;
   setCRTDLMessage: (value: string) => void;
   setCRTDLStatus: (value: CRTDLStatusType) => void;
+  readOnly?: boolean;
 };
 
 const Table = ({
@@ -108,7 +112,8 @@ const Table = ({
   hiddenColumns,
   refetch,
   setCRTDLMessage,
-  setCRTDLStatus
+  setCRTDLStatus,
+  readOnly
 }: TableProps) => {
   const { t } = useTranslation('crtdl');
   const [isModalOpen, setModalOpen] = useState(false);
@@ -210,7 +215,9 @@ const Table = ({
           return (
             <>
               <UswdsReactLink
-                to={`/models/${modelID}/cr-and-tdl/add-cr-and-tdl/${row.original.id}`}
+                to={`/models/${modelID}/cr-and-tdl/add-cr-and-tdl/${
+                  row.original.id
+                }${readOnly ? '#read-only' : ''}`}
                 className="margin-right-2"
               >
                 {t('crtdlsTable.edit')}
@@ -232,7 +239,7 @@ const Table = ({
         }
       }
     ];
-  }, [t, modelID]);
+  }, [t, modelID, readOnly]);
 
   const {
     getTableProps,
