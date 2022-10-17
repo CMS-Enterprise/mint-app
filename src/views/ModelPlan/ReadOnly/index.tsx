@@ -48,6 +48,7 @@ import ReadOnlyGeneralCharacteristics from './GeneralCharacteristics/index';
 import ReadOnlyModelBasics from './ModelBasics/index';
 import ReadOnlyParticipantsAndProviders from './ParticipantsAndProviders/index';
 import ReadOnlyBeneficiaries from './Beneficiaries';
+import ReadOnlyCRTDLs from './CRTDLs';
 import ReadOnlyDiscussions from './Discussions';
 import ReadOnlyDocuments from './Documents';
 import ReadOnlyPayments from './Payments';
@@ -211,7 +212,7 @@ const ReadOnly = () => {
     },
     'crs-and-tdl': {
       route: `/models/${modelID}/read-only/crs-and-tdl`,
-      component: <h1>crsAndTdls</h1>
+      component: <ReadOnlyCRTDLs modelID={modelID} />
     }
   };
 
@@ -402,20 +403,28 @@ const ReadOnly = () => {
                 <GridContainer className="padding-left-0 padding-right-0">
                   <Grid row gap>
                     {/* Central component */}
-                    <Grid desktop={{ col: subinfo === 'documents' ? 12 : 8 }}>
+                    <Grid
+                      desktop={{
+                        col:
+                          subinfo === 'documents' || subinfo === 'crs-and-tdl'
+                            ? 12
+                            : 8
+                      }}
+                    >
                       {subComponent.component}
                     </Grid>
                     {/* Contact info sidebar */}
-                    <Grid
-                      desktop={{ col: 4 }}
-                      className={classnames({
-                        'sticky-nav': !isMobile,
-                        'sticky-nav__collaborator': editAccess,
-                        'desktop:display-none': subinfo === 'documents'
-                      })}
-                    >
-                      <ContactInfo modelID={modelID} />
-                    </Grid>
+                    {subinfo !== 'documents' && subinfo !== 'crs-and-tdl' && (
+                      <Grid
+                        desktop={{ col: 4 }}
+                        className={classnames({
+                          'sticky-nav': !isMobile,
+                          'sticky-nav__collaborator': editAccess
+                        })}
+                      >
+                        <ContactInfo modelID={modelID} />
+                      </Grid>
+                    )}
                   </Grid>
                 </GridContainer>
               </div>
