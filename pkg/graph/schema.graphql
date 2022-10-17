@@ -216,6 +216,8 @@ type PlanBasics {
   modifiedDts: Time
   readyForReviewBy: String
   readyForReviewDts: Time
+  readyForClearanceBy: String
+  readyForClearanceDts: Time
   status: TaskStatus!
 }
 
@@ -404,6 +406,8 @@ type PlanGeneralCharacteristics {
   modifiedDts: Time
   readyForReviewBy: String
   readyForReviewDts: Time
+  readyForClearanceBy: String
+  readyForClearanceDts: Time
   status: TaskStatus!
 }
 
@@ -516,6 +520,8 @@ type PlanBeneficiaries {
   modifiedDts: Time
   readyForReviewBy: String
   readyForReviewDts: Time
+  readyForClearanceBy: String
+  readyForClearanceDts: Time
   status: TaskStatus!
 }
 
@@ -618,6 +624,8 @@ type PlanParticipantsAndProviders {
   modifiedDts: Time
   readyForReviewBy: String
   readyForReviewDts: Time
+  readyForClearanceBy: String
+  readyForClearanceDts: Time
   status: TaskStatus!
 
 }
@@ -775,6 +783,8 @@ type PlanPayments {
   modifiedDts: Time
   readyForReviewBy: String
   readyForReviewDts: Time
+  readyForClearanceBy: String
+  readyForClearanceDts: Time
   status:      TaskStatus!
 }
 
@@ -1179,6 +1189,8 @@ type PlanOpsEvalAndLearning {
     modifiedDts: Time
     readyForReviewBy: String
     readyForReviewDts: Time
+    readyForClearanceBy: String
+    readyForClearanceDts: Time
     status: TaskStatus!
 }
 
@@ -1486,10 +1498,12 @@ enum TaskStatus {
   READY
   IN_PROGRESS
   READY_FOR_REVIEW
+  READY_FOR_CLEARANCE
 }
 enum TaskStatusInput {
   IN_PROGRESS
   READY_FOR_REVIEW
+  READY_FOR_CLEARANCE
 }
 
 enum TaskListSection {

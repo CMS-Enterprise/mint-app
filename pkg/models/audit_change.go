@@ -39,7 +39,7 @@ type AuditField struct {
 	New interface{} `json:"new" db:"new"`
 }
 
-//Value let's the SQL driver transform the data to the AuditFields type
+// Value let's the SQL driver transform the data to the AuditFields type
 func (a AuditFields) Value() (driver.Value, error) {
 
 	j, err := json.Marshal(a)

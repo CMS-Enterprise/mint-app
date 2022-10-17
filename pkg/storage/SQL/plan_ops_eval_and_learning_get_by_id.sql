@@ -100,6 +100,8 @@ SELECT
     modified_dts,
     ready_for_review_by,
     ready_for_review_dts,
+    ready_for_clearance_by,
+    ready_for_clearance_dts,
     status
 FROM plan_ops_eval_and_learning
 WHERE id = :id;

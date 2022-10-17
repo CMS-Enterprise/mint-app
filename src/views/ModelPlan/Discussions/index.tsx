@@ -1,20 +1,17 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import ReactModal from 'react-modal';
+import { RootStateOrAny, useSelector } from 'react-redux';
 import { useMutation, useQuery } from '@apollo/client';
 import {
   Accordion,
   Button,
   Grid,
-  GridContainer,
   IconAnnouncement,
-  IconClose,
   Label,
   Textarea
 } from '@trussworks/react-uswds';
 import classNames from 'classnames';
 import { Field, Form, Formik, FormikProps } from 'formik';
-import noScroll from 'no-scroll';
 import * as Yup from 'yup';
 
 import PageHeading from 'components/PageHeading';
@@ -48,28 +45,21 @@ import { DiscussionStatus } from 'types/graphql-global-types';
 import { getTimeElapsed } from 'utils/date';
 import flattenErrors from 'utils/flattenErrors';
 import { getUnansweredQuestions, sortRepliesByDate } from 'utils/modelPlan';
+import { isAssessment } from 'utils/user';
 
 import './index.scss';
 
-type DiscussionsProps = {
+export type DiscussionsProps = {
   modelID: string;
-  isOpen: boolean;
+  readOnly?: boolean;
   askAQuestion?: boolean;
-  openModal?: () => void;
-  closeModal: () => void;
 };
 
 type DicussionFormPropTypes = {
   content: string;
 };
 
-const Discussions = ({
-  modelID,
-  isOpen,
-  askAQuestion,
-  openModal,
-  closeModal
-}: DiscussionsProps) => {
+const Discussions = ({ modelID, askAQuestion, readOnly }: DiscussionsProps) => {
   const { t } = useTranslation('discussions');
   const { t: h } = useTranslation('draftModelPlan');
 
@@ -84,6 +74,10 @@ const Discussions = ({
 
   // Used to map EUA ids to full name
   const collaborators = data?.modelPlan?.collaborators || [];
+
+  const { groups } = useSelector((state: RootStateOrAny) => state.auth);
+  const isCollaborator = data?.modelPlan?.isCollaborator;
+  const hasEditAccess: boolean = isCollaborator || isAssessment(groups);
 
   const discussions = useMemo(() => {
     return data?.modelPlan?.discussions || ([] as DiscussionType[]);
@@ -135,26 +129,19 @@ const Discussions = ({
 
   // Hook used to conditionally render each discussionType by its setter method
   useEffect(() => {
-    if (discussions?.length === 0 || initQuestion) {
+    if ((discussions?.length === 0 || initQuestion) && !readOnly) {
       setDiscussionType('question');
     } else {
       setDiscussionType('discussion');
     }
     setQuestionCount(getUnansweredQuestions(discussions));
-  }, [discussions, initQuestion]);
+  }, [discussions, initQuestion, readOnly]);
 
   // Handles the default expanded render of accordions based on if there are more than zero questions
   const openStatus = (status: DiscussionStatus) => {
     return status === 'ANSWERED'
       ? questionCount.answeredQuestions > 0
       : questionCount.unansweredQuestions > 0;
-  };
-
-  const handleOpenModal = () => {
-    noScroll.on();
-    if (openModal) {
-      openModal();
-    }
   };
 
   const handleCreateDiscussion = (formikValues: DicussionFormPropTypes) => {
@@ -330,8 +317,6 @@ const Discussions = ({
                         if (discussionType) {
                           setDiscussionStatusMessage('');
                           setDiscussionType('discussion');
-                        } else {
-                          closeModal();
                         }
                       }}
                     >
@@ -396,8 +381,8 @@ const Discussions = ({
       >
         <p className="margin-y-0 padding-y-1">{discussion.content}</p>
         <div className="display-flex margin-bottom-2">
-          {/* Rendered a link to answer a question if there are no replies/answers */}
-          {answerQuestion && (
+          {/* Rendered a link to answer a question if there are no replies/answers only for Collaborator and Assessment Users */}
+          {hasEditAccess && answerQuestion && (
             <>
               <IconAnnouncement className="text-primary margin-right-1" />
               <Button
@@ -509,33 +494,57 @@ const Discussions = ({
           {/* Sets an infobox beneath each accordion if there are zero questions of that type */}
           {!openStatus(DiscussionStatus[status]) && (
             <Alert className="margin-bottom-2" type="info">
-              {status === 'ANSWERED' ? t('noAnswered') : t('noUanswered')}
+              {hasEditAccess &&
+                (status === 'ANSWERED' ? t('noAnswered') : t('noUanswered'))}
+              {!hasEditAccess &&
+                (status === 'ANSWERED'
+                  ? t('noAnswered')
+                  : t('nonEditor.noQuestions'))}
             </Alert>
           )}
         </div>
       );
     });
 
+  const renderDiscussionContent = () => {
+    if (discussions?.length === 0) {
+      return (
+        <Alert className="margin-bottom-2" type="info">
+          {hasEditAccess ? t('useLinkAbove') : t('nonEditor.noDiscussions')}
+        </Alert>
+      );
+    }
+    return discussionAccordion;
+  };
+
   const renderDiscussions = () => {
     return (
       <>
-        <PageHeading headingLevel="h1" className="margin-top-0">
+        <PageHeading
+          headingLevel={readOnly ? 'h2' : 'h1'}
+          className="margin-top-0"
+        >
           {t('heading')}
         </PageHeading>
-        <div className="display-flex margin-bottom-4">
-          <IconAnnouncement className="text-primary margin-right-1" />
-          <Button
-            type="button"
-            unstyled
-            onClick={() => {
-              setReply(null); // Setting reply to null - indicates a new question rather than an answer to a question
-              setDiscussionStatusMessage(''); // Clearing status before asking a new question
-              setDiscussionType('question');
-            }}
-          >
-            {t('askAQuestionLink')}
-          </Button>
-        </div>
+
+        {/* Ask a Question link available to Collaborators and Assessment Users */}
+        {hasEditAccess && (
+          <div className="display-flex margin-bottom-4">
+            <IconAnnouncement className="text-primary margin-right-1" />
+            <Button
+              type="button"
+              unstyled
+              onClick={() => {
+                setReply(null); // Setting reply to null - indicates a new question rather than an answer to a question
+                setDiscussionStatusMessage(''); // Clearing status before asking a new question
+                setDiscussionType('question');
+              }}
+            >
+              {t('askAQuestionLink')}
+            </Button>
+          </div>
+        )}
+
         {/* General error message for mutations that expires after 3 seconds */}
         {discussionStatusMessage && (
           <Expire delay={3000} callback={setDiscussionStatusMessage}>
@@ -550,7 +559,7 @@ const Discussions = ({
             {t('errorFetch')}
           </Alert>
         ) : (
-          discussionAccordion
+          renderDiscussionContent()
         )}
       </>
     );
@@ -564,39 +573,13 @@ const Discussions = ({
   };
 
   return (
-    <ReactModal
-      isOpen={isOpen}
-      overlayClassName="mint-discussions__overlay overflow-y-scroll"
-      className="mint-discussions__content"
-      onAfterOpen={handleOpenModal}
-      onAfterClose={noScroll.off}
-      onRequestClose={closeModal}
-      shouldCloseOnOverlayClick
-      contentLabel={t('ariaLabel')}
-      appElement={document.getElementById('root')! as HTMLElement}
-    >
-      <div data-testid="discussion-modal">
-        <div className="mint-discussions__x-button-container display-flex text-base flex-align-center">
-          <button
-            type="button"
-            data-testid="close-discussions"
-            className="mint-discussions__x-button margin-right-2"
-            aria-label="Close Modal"
-            onClick={closeModal}
-          >
-            <IconClose size={4} className="text-base" />
-          </button>
-          <h4 className="margin-0">{t('modalHeading')}</h4>
-        </div>
-        <GridContainer className="padding-y-8">
-          {loading && !discussions ? (
-            <PageLoading />
-          ) : (
-            <Grid desktop={{ col: 12 }}>{chooseRenderMethod()}</Grid>
-          )}
-        </GridContainer>
-      </div>
-    </ReactModal>
+    <>
+      {loading && !discussions ? (
+        <PageLoading />
+      ) : (
+        <Grid desktop={{ col: 12 }}>{chooseRenderMethod()}</Grid>
+      )}
+    </>
   );
 };
 

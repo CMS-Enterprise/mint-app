@@ -41,6 +41,7 @@ export interface GetModelPlanDiscussions_modelPlan_discussions {
 export interface GetModelPlanDiscussions_modelPlan {
   __typename: "ModelPlan";
   id: UUID;
+  isCollaborator: boolean;
   collaborators: GetModelPlanDiscussions_modelPlan_collaborators[];
   discussions: GetModelPlanDiscussions_modelPlan_discussions[];
 }

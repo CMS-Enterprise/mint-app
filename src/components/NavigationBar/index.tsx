@@ -22,7 +22,7 @@ export const navLinks = () => [
     label: 'models'
   },
   {
-    link: '/help',
+    link: '/help-and-knowledge',
     label: 'help'
   }
 ];

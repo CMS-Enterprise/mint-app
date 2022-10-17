@@ -56,6 +56,7 @@ import { isAssessment } from 'utils/user';
 import { SubscriptionContext } from 'views/SubscriptionWrapper';
 
 import Discussions from '../Discussions';
+import DiscussionModalWrapper from '../Discussions/DiscussionModalWrapper';
 
 import TaskListButton from './_components/TaskListButton';
 import TaskListItem, { TaskListDescription } from './_components/TaskListItem';
@@ -210,11 +211,12 @@ const TaskList = () => {
 
                   {/* Discussion modal */}
                   {isDiscussionOpen && (
-                    <Discussions
-                      modelID={modelID}
+                    <DiscussionModalWrapper
                       isOpen={isDiscussionOpen}
                       closeModal={() => setIsDiscussionOpen(false)}
-                    />
+                    >
+                      <Discussions modelID={modelID} />
+                    </DiscussionModalWrapper>
                   )}
 
                   <TaskListStatus
