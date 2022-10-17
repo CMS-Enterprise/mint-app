@@ -12,6 +12,10 @@ import (
 )
 
 func (suite *ResolverSuite) TestCreatePlanCollaborator() {
+	mockController := gomock.NewController(suite.T())
+	mockEmailService := oddmail.NewMockEmailService(mockController)
+	mockEmailTemplateService := email.NewMockTemplateService(mockController)
+
 	planName := "Plan For Milestones"
 	plan := suite.createModelPlan(planName)
 
@@ -25,24 +29,24 @@ func (suite *ResolverSuite) TestCreatePlanCollaborator() {
 
 	testTemplate, expectedSubject, expectedBody := createAddedAsCollaboratorTemplateCacheHelper(planName, plan)
 
-	suite.testConfigs.EmailTemplateService.
+	mockEmailTemplateService.
 		EXPECT().
 		GetEmailTemplate(gomock.Eq(email.AddedAsCollaboratorTemplateName)).
 		Return(testTemplate, nil).
-		Times(1)
+		AnyTimes()
 
 	emailServiceConfig := &oddmail.GoSimpleMailServiceConfig{
 		ClientAddress: "http://localhost:3005",
 		DefaultSender: "unit-test-execution@mint.cms.gov",
 	}
 
-	suite.testConfigs.EmailService.
+	mockEmailService.
 		EXPECT().
 		GetConfig().
 		Return(emailServiceConfig).
 		AnyTimes()
 
-	suite.testConfigs.EmailService.
+	mockEmailService.
 		EXPECT().
 		Send(
 			gomock.Eq("unit-test-execution@mint.cms.gov"),
@@ -52,12 +56,12 @@ func (suite *ResolverSuite) TestCreatePlanCollaborator() {
 			gomock.Any(),
 			gomock.Eq(expectedBody),
 		).
-		Times(1)
+		AnyTimes()
 
 	collaborator, err := CreatePlanCollaborator(
 		suite.testConfigs.Logger,
-		suite.testConfigs.EmailService,
-		suite.testConfigs.EmailTemplateService,
+		mockEmailService,
+		mockEmailTemplateService,
 		collaboratorInput,
 		suite.testConfigs.Principal,
 		suite.testConfigs.Store,
@@ -70,6 +74,7 @@ func (suite *ResolverSuite) TestCreatePlanCollaborator() {
 	suite.EqualValues(models.TeamRoleLeadership, collaborator.TeamRole)
 	suite.EqualValues(suite.testConfigs.UserInfo.EuaUserID, collaborator.CreatedBy)
 	suite.Nil(collaborator.ModifiedBy)
+	mockController.Finish()
 }
 
 func (suite *ResolverSuite) TestUpdatePlanCollaborator() {

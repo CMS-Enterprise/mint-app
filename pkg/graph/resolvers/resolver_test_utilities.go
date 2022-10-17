@@ -6,13 +6,9 @@ import (
 
 	"github.com/cmsgov/mint-app/pkg/shared/emailTemplates"
 
-	"github.com/golang/mock/gomock"
-
 	"github.com/cmsgov/mint-app/pkg/appconfig"
 	"github.com/cmsgov/mint-app/pkg/authentication"
-	"github.com/cmsgov/mint-app/pkg/email"
 	"github.com/cmsgov/mint-app/pkg/models"
-	"github.com/cmsgov/mint-app/pkg/shared/oddmail"
 	"github.com/cmsgov/mint-app/pkg/shared/pubsub"
 	"github.com/cmsgov/mint-app/pkg/upload"
 
@@ -25,16 +21,14 @@ import (
 
 // TestConfigs is a struct that contains all the dependencies needed to run a test
 type TestConfigs struct {
-	DBConfig             storage.DBConfig
-	LDClient             *ld.LDClient
-	EmailService         *oddmail.MockEmailService
-	EmailTemplateService *email.MockTemplateService
-	Logger               *zap.Logger
-	UserInfo             *models.UserInfo
-	Store                *storage.Store
-	S3Client             *upload.S3Client
-	PubSub               *pubsub.ServicePubSub
-	Principal            *authentication.EUAPrincipal
+	DBConfig  storage.DBConfig
+	LDClient  *ld.LDClient
+	Logger    *zap.Logger
+	UserInfo  *models.UserInfo
+	Store     *storage.Store
+	S3Client  *upload.S3Client
+	PubSub    *pubsub.ServicePubSub
+	Principal *authentication.EUAPrincipal
 }
 
 // GetDefaultTestConfigs returns a TestConfigs struct with all the dependencies needed to run a test
@@ -58,12 +52,6 @@ func createS3Client() upload.S3Client {
 
 // GetDefaults sets the dependencies for the TestConfigs struct
 func (tc *TestConfigs) GetDefaults(t *testing.T) {
-	mockController := gomock.NewController(t)
-	defer mockController.Finish()
-
-	mockEmailService := oddmail.NewMockEmailService(mockController)
-	mockEmailTemplateService := email.NewMockTemplateService(mockController)
-
 	config, ldClient, logger, userInfo, ps, princ := getTestDependencies()
 	store, _ := storage.NewStore(logger, config, ldClient)
 
@@ -89,8 +77,6 @@ func (tc *TestConfigs) GetDefaults(t *testing.T) {
 	s3Client := createS3Client()
 	tc.DBConfig = config
 	tc.LDClient = ldClient
-	tc.EmailService = mockEmailService
-	tc.EmailTemplateService = mockEmailTemplateService
 	tc.Logger = logger
 	tc.UserInfo = userInfo
 	tc.Store = store
