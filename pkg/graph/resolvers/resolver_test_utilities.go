@@ -55,25 +55,6 @@ func (tc *TestConfigs) GetDefaults(t *testing.T) {
 	config, ldClient, logger, userInfo, ps, princ := getTestDependencies()
 	store, _ := storage.NewStore(logger, config, ldClient)
 
-	// set up Email Template Service
-	/*emailTemplateService, err := email.NewTemplateServiceImpl()
-	if err != nil {
-		panic(fmt.Sprintf("Failed to create an email template service: %v", zap.Error(err)))
-	}*/
-
-	// Set up Oddball email Service
-	//emailServiceConfig := oddmail.GoSimpleMailServiceConfig{}
-	//err = emailServiceConfig.LoadYAML("../../../config/test/emailServiceConfig.yaml")
-	//if err != nil {
-	//	panic(fmt.Sprintf("Failed to load an email service configuration: %v", zap.Error(err)))
-	//}
-
-	//var emailService *oddmail.GoSimpleMailService
-	//emailService, err = oddmail.NewGoSimpleMailService(emailServiceConfig)
-	//if err != nil {
-	//	panic(fmt.Sprintf("Failed to create an email service: %v", zap.Error(err)))
-	//}
-
 	s3Client := createS3Client()
 	tc.DBConfig = config
 	tc.LDClient = ldClient
